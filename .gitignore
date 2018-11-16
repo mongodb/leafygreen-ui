@@ -1,0 +1,5 @@
+# Ignore locally-installed dependencies
+node_modules/
+
+# Lerna debug log
+./lerna-debug.log
