@@ -1,7 +1,7 @@
 {
   "name": "@leafygreen-ui/theme",
   "version": "0.1.0",
-  "description": "MongoDB UI-Kit Button",
+  "description": "leafyGreen UI Kit Theme",
   "files": ["./dist/**.*"],
   "main": "./src/index.js",
   "browser": "./dist/index.js",
