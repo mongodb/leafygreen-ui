@@ -1,0 +1,63 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/react"
+  ],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
+  "globals": {
+    "fetch": true
+  },
+  "rules": {
+    "react/prefer-stateless-function": 0,
+    "react/jsx-filename-extension": [
+      2,
+      {
+        "extensions": [
+          ".js"
+        ]
+      }
+    ],
+    "react/forbid-prop-types": "any",
+    "import/no-extraneous-dependencies": 0,
+    "func-names": 0,
+    "arrow-body-style": 0
+  },
+  "overrides": [
+    {
+      "files": ["packages/**/*.js"],
+      "excludedFiles": ["*.spec.js", "*.story.js"],
+      "env": {
+        "es6": true,
+        "browser": true,
+        "node": false,
+        "mocha": false
+      }
+    },
+    {
+      "files": ["packages/**/*.spec.js"],
+      "globals": {
+        "chai": true,
+        "sinon": true,
+        "expect": true,
+        "should": true
+      },
+      "rules": {
+        "no-unused-expressions": 0,
+        "prefer-arrow-callback": 0
+      }
+    }
+  ]
+}

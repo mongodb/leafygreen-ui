@@ -1,0 +1,79 @@
+{
+  "description": "leafyGreen UI Kit",
+  "contributors": [
+    {
+      "name": "Dave McCarthy",
+      "email": "dave.mccarthy@mongodb.com"
+    },
+    {
+      "name": "Harry Wolff",
+      "email": "harry@mongodb.com"
+    }
+  ],
+  "license": "Apache-2.0",
+  "keywords": [
+    "mongodb",
+    "ui",
+    "kit",
+    "components",
+    "react",
+    "uikit",
+    "leafygreen"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/10gen/leafygreen-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/10gen/leafygreen-ui/issues"
+  },
+  "scripts": {
+    "clean": "rimraf packages/*/dist",
+    "start": "start-storybook -p 9001 -c storybook",
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run --parallel build -- -- --env production",
+    "lint": "eslint \"packages/**/*.js\"",
+    "prettier": "prettier --write",
+    "prettier:all": "prettier --write \"packages/**/*.js\" \"!**/lib/**\"",
+    "test": "npm-run-all --parallel lint test:unit:all",
+    "release": "lerna publish --registry https://nexus.mms-build.10gen.cc/content/repositories/npm-internal"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^3.3.15",
+    "@storybook/addon-knobs": "^3.3.15",
+    "@storybook/addon-links": "^3.3.15",
+    "@storybook/addon-options": "^3.3.15",
+    "@storybook/react": "^3.3.15",
+    "babel-eslint": "^8.2.2",
+    "babel-plugin-emotion": "^9.2.11",
+    "babel-plugin-syntax-object-rest-spread": "^6.13.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "babel-runtime": "^6.26.0",
+    "clean-webpack-plugin": "^0.1.19",
+    "emotion": "^9.2.12",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.7.0",
+    "lerna": "^3.0.0-beta.21",
+    "npm-run-all": "^4.1.2",
+    "nyc": "^11.6.0",
+    "polished": "^2.3.0",
+    "prettier": "^1.11.1",
+    "prop-types": "^15.6.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-emotion": "^9.2.12",
+    "react-router-dom": "^4.3.1",
+    "react-storybook-addon-chapters": "^2.1.3",
+    "storybook-readme": "^3.3.0",
+    "url-loader": "^1.0.1",
+    "webpack-merge": "^4.1.2"
+  }
+}
