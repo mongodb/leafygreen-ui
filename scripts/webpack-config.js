@@ -7,10 +7,9 @@ module.exports = function(env = 'development') {
   const isProduction = env === 'production';
 
   return {
+    mode: env,
     entry: './src/index.js',
-
     target: 'web',
-
     output: {
       path: path.resolve(process.cwd(), 'dist'),
       filename: 'index.js',
@@ -37,7 +36,29 @@ module.exports = function(env = 'development') {
       rules: [
         {
           test: /\.js$/,
-          use: [{ loader: 'babel-loader' }],
+          use: [{
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                "@babel/preset-react",
+                [
+                  "@babel/preset-env",
+                  {
+                    targets: {
+                      browsers: ["last 2 versions", "safari >= 7"]
+                    },
+                    modules: "commonjs",
+                  },
+                ],
+              ],
+              plugins: [
+                "@babel/plugin-proposal-class-properties",
+                "@babel/plugin-proposal-object-rest-spread",
+                "@babel/plugin-proposal-export-default-from",
+                "emotion",
+              ],
+            },
+          }],
           exclude: /node_modules/,
         },
 
@@ -57,31 +78,9 @@ module.exports = function(env = 'development') {
 
         // Defines global variables
         new webpack.DefinePlugin({
-          'process.env': {
-            NODE_ENV: JSON.stringify(
-              isProduction ? 'production' : 'development',
-            ),
-          },
-          __DEV__: JSON.stringify(JSON.parse(isProduction ? 'false' : 'true')),
+          __DEV__: JSON.stringify((!isProduction).toString()),
         }),
       ];
-
-      if (isProduction) {
-        plugins = [
-          ...plugins,
-          new webpack.optimize.ModuleConcatenationPlugin(),
-        ]
-      } else {
-        plugins = [
-          ...plugins,
-
-          // Prints more readable module names in the browser console on HMR updates
-          new webpack.NamedModulesPlugin(),
-
-          // Do not emit compiled assets that include errors
-          new webpack.NoEmitOnErrorsPlugin(),
-        ]
-      }
 
       return plugins;
     })(),

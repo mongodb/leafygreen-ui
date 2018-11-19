@@ -249,7 +249,7 @@ export default class Button extends Component {
     } = this.props
 
     const variantStyle = buttonThemes[variant] || buttonThemes.default;
-    const sizeStyle = buttonSizes[size] || buttonSizes.normal
+    const sizeStyle = buttonSizes[size] || buttonSizes.normal;
 
     return (
       <button
@@ -262,7 +262,6 @@ export default class Button extends Component {
         value={value}
         disabled={disabled}
         type={type}>
-
         {children}
       </button>
     )

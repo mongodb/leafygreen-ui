@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 import { css } from 'react-emotion';
@@ -16,7 +16,7 @@ storiesOf('Button', module).add(
     This component creates a button with all accessibility properties included,
     which triggers a function on click. The class(es), name, label, and click
     handlers are all customizable.`)(() => (
-    <Fragment>
+    <>
       <section className="storybook-container">
         <h2>Extra Small</h2>
 
@@ -198,6 +198,6 @@ storiesOf('Button', module).add(
           Disabled
         </Button>
       </section>
-    </Fragment>
+    </>
   )),
 );
