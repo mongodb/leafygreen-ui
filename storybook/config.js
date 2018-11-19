@@ -5,8 +5,8 @@ import ComponentPreview from './decorators/ComponentPreview';
 
 // Configure the Storybook UI
 setOptions({
-  name: 'MongoDB UI-Kit',
-  url: 'https://github.com/10gen/mongodb-uikit',
+  name: 'leafyGreen UI Kit',
+  url: 'https://github.com/10gen/leafygreen-ui',
 });
 
 // Add decorators globally to wrap our stories with
