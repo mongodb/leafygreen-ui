@@ -1,1 +1,1 @@
-export const ccClassname = (...args) => args.join(' ')
+export {default as ccClassname} from './ccClassname'

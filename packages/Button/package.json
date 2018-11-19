@@ -13,10 +13,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
-    "classnames": "^2.2.5",
+  "peerDependencies": {
     "prop-types": "^15.0.0",
     "react": "^0.14.0 || ^15.0.0-0 || ^16.0.0-0",
+    "polished": "^2.3.0",
+    "react-emotion": "^9.2.0"
+  },
+  "dependencies": {
     "@leafygreen-ui/theme": "0.1.0",
     "@leafygreen-ui/lib": "0.1.0"
   }
