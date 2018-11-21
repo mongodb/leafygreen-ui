@@ -205,7 +205,7 @@ export default class Button extends Component {
   static defaultProps = {
     className: '',
     name: null,
-    value: undefined,
+    value: null,
     disabled: false,
     children: null,
     type: 'button',
@@ -228,8 +228,19 @@ export default class Button extends Component {
     value: PropTypes.string,
     disabled: PropTypes.bool,
     tabIndex: PropTypes.number,
-    variant: PropTypes.string,
-    size: PropTypes.string,
+    variant: PropTypes.oneOf([
+      'default',
+      'primary',
+      'info',
+      'danger',
+      'dark',
+    ]),
+    size: PropTypes.oneOf([
+      'xsmall',
+      'small',
+      'normal',
+      'large',
+    ]),
   }
 
   render() {
