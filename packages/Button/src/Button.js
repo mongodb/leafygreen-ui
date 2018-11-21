@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'react-emotion';
 import { colors } from '@leafygreen-ui/theme';
-import { ccClassname } from '@leafygreen-ui/lib';
+import { ccClassName } from '@leafygreen-ui/lib';
 import { lighten, darken } from 'polished';
 
 const buttonThemes = {
@@ -264,7 +264,7 @@ export default class Button extends Component {
 
     return (
       <button
-        className={ccClassname(buttonStyles(variantStyle, sizeStyle), className)}
+        className={ccClassName(buttonStyles(variantStyle, sizeStyle), className)}
         style={style}
         name={name}
         title={title}

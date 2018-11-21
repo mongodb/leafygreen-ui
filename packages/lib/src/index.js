@@ -1,1 +1,1 @@
-export {default as ccClassname} from './ccClassname'
+export {default as ccClassName} from './ccClassName'
