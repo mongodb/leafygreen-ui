@@ -5,164 +5,185 @@ import { colors } from '@leafygreen-ui/theme';
 import { ccClassName } from '@leafygreen-ui/lib';
 import { lighten, darken } from 'polished';
 
-const buttonThemes = {
-  default: {
-    color: colors.gray[1],
-    backgroundColor: colors.mongodb.white,
-    backgroundImage: `linear-gradient(${colors.mongodb.white}, ${lighten(0.2, colors.gray[5])})`,
-    borderColor: colors.gray[6],
-    boxShadow: `inset 0 -1px 0 ${colors.gray[6]}`,
+const buttonVariants = {
+  default: css`
+    color: ${colors.gray[1]};
+    background-color: ${colors.mongodb.white};
+    background-image: linear-gradient(${colors.mongodb.white}, ${lighten(0.2, colors.gray[5])});
+    border-color: ${colors.gray[6]};
+    box-shadow: inset 0 -1px 0 ${colors.gray[6]};
 
-    hover: {
-      color: colors.gray[0],
-      borderColor: colors.gray[5],
-      backgroundColor: colors.mongodb.white,
-      backgroundImage: `linear-gradient(${lighten(0.5, colors.gray[5])}, ${lighten(0.15, colors.gray[5])})`,
-      boxShadow: `inset 0 -1px 0 ${colors.gray[5]}, 0 1px 4px rgba(0, 0, 0, 0.1)`,
-    },
+    &:focus,
+    &:hover {
+      &:not(:disabled) {
+        color: ${colors.gray[0]};
+        border-color: ${colors.gray[5]};
+        background-color: ${colors.mongodb.white};
+        background-image: linear-gradient(${lighten(0.5, colors.gray[5])}, ${lighten(0.15, colors.gray[5])});
+        box-shadow: inset 0 -1px 0 ${colors.gray[5]}, 0 1px 4px rgba(0, 0, 0, 0.1);
+      }
+    }
 
-    active: {
-      borderColor: colors.gray[5],
-      backgroundImage: `linear-gradient(${lighten(0.15, colors.gray[5])}, ${lighten(0.5, colors.gray[5])})`,
-      boxShadow: 'inset 0 2px 2px rgba(0, 0, 0, 0.1)',
-    },
-  },
+    &:active:not(:disabled) {
+      color: ${colors.gray[1]};
+      background-color: ${colors.mongodb.white};
+      background-image: linear-gradient(${lighten(0.15, colors.gray[5])}, ${lighten(0.5, colors.gray[5])});
+      box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.1);
+      border-color: ${colors.gray[5]};
+    }
+  `,
 
-  primary: {
-    color: colors.mongodb.white,
-    backgroundColor: colors.green[2],
-    backgroundImage: `linear-gradient(${colors.green[2]}, ${lighten(0.025, colors.green[1])})`,
-    borderColor: darken(0.02, colors.green[2]),
-    boxShadow: 'inset 0 -1px 0 rgba(0, 0, 0, 0.15)',
+  primary: css`
+    color: ${colors.mongodb.white};
+    background-color: ${colors.green[2]};
+    background-image: linear-gradient(${colors.green[2]}, ${lighten(0.025, colors.green[1])});
+    border-color: ${darken(0.02, colors.green[2])};
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
 
-    hover: {
-      borderColor: darken(0.07, colors.green[1]),
-      backgroundColor: darken(0.05, colors.green[2]),
-      backgroundImage: `linear-gradient(${darken(0.025, colors.green[2])}, ${darken(0.025, colors.green[1])})`,
-      boxShadow: `inset 0 -1px 0 rgba(0, 0, 0, 0.15), 0 1px 4px rgba(0, 0, 0, 0.1)`,
-    },
+    &:focus,
+    &:hover {
+      &:not(:disabled) {
+        color: ${colors.mongodb.white};
+        border-color: ${darken(0.07, colors.green[1])};
+        background-color: ${darken(0.05, colors.green[2])};
+        background-image: linear-gradient(${darken(0.025, colors.green[2])}, ${darken(0.025, colors.green[1])});
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15), 0 1px 4px rgba(0, 0, 0, 0.1);
+      }
+    }
 
-    active: {
-      color: colors.mongodb.white,
-      backgroundColor: colors.green[2],
-      backgroundImage: `linear-gradient(${darken(0.025, colors.green[1])}, ${darken(0.025, colors.green[2])})`,
-      borderColor: darken(0.07, colors.green[1]),
-      boxShadow: `inset 0 2px 2px rgba(0, 0, 0, 0.2)`,
-    },
-  },
+    &:active:not(:disabled) {
+      color: ${colors.mongodb.white};
+      background-color: ${colors.green[2]};
+      background-image: linear-gradient(${darken(0.025, colors.green[1])}, ${darken(0.025, colors.green[2])});
+      border-color: ${darken(0.07, colors.green[1])};
+      box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.2);
+    }
+  `,
 
-  info: {
-    color: colors.green[2],
-    backgroundColor: 'transparent',
-    borderColor: colors.green[2],
-    boxShadow: 'none',
+  info: css`
+    color: ${colors.green[2]};
+    background-color: transparent;
+    background-image: none;
+    border-color: ${colors.green[2]};
+    box-shadow: none;
 
-    hover: {
-      color: colors.mongodb.white,
-      backgroundColor: darken(0.05, colors.green[2]),
-      backgroundImage: `linear-gradient(${colors.green[2]}, ${lighten(0.025, colors.green[1])})`,
-      borderColor: darken(0.02, colors.green[1]),
-      boxShadow: 'inset 0 -1px rgba(0, 0, 0, 0.15)',
-    },
+    &:focus,
+    &:hover {
+      &:not(:disabled) {
+        color: ${colors.mongodb.white};
+        background-color: ${darken(0.05, colors.green[2])};
+        background-image: linear-gradient(${colors.green[2]}, ${lighten(0.025, colors.green[1])});
+        border-color: ${darken(0.02, colors.green[1])};
+        box-shadow: inset 0 -1px rgba(0, 0, 0, 0.15);
+      }
+    }
 
-    active: {
-      color: colors.mongodb.white,
-      backgroundColor: colors.green[2],
-      backgroundImage: `linear-gradient(${darken(0.025, colors.green[1])}, ${darken(0.025, colors.green[2])})`,
-      borderColor: darken(0.07, colors.green[1]),
-      boxShadow: 'inset 0 2px 2px rgba(0, 0, 0, 0.2)',
-    },
-  },
+    &:active:not(:disabled) {
+      color: ${colors.mongodb.white};
+      background-color: ${colors.green[2]};
+      background-image: linear-gradient(${darken(0.025, colors.green[1])}, ${darken(0.025, colors.green[2])});
+      border-color: ${darken(0.07, colors.green[1])};
+      box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.2);
+    }
+  `,
 
-  danger: {
-    color: colors.mongodb.white,
-    backgroundColor: '#BD180F',
-    backgroundImage: `linear-gradient(${darken(0.1, colors.mongodb.alertRed)}, ${darken(0.2, colors.mongodb.alertRed)})`,
-    borderColor: '#97130C',
-    boxShadow: `inset 0 -1px 0 0 ${darken(0.25, colors.mongodb.alertRed)}`,
+  danger: css`
+    color: ${colors.mongodb.white};
+    background-color: #BD180F;
+    background-image: linear-gradient(${darken(0.1, colors.mongodb.alertRed)}, ${darken(0.2, colors.mongodb.alertRed)});
+    border-color: #97130C;
+    box-shadow: inset 0 -1px 0 0 ${darken(0.25, colors.mongodb.alertRed)};
 
-    hover: {
-      backgroundColor: darken(0.05, '#BD180F'),
-      backgroundImage: `linear-gradient(${darken(0.15, colors.mongodb.alertRed)}, ${darken(0.25, colors.mongodb.alertRed)})`,
-      borderColor: darken(0.1, '#BD180F'),
-      boxShadow: `0 1px 4px rgba(0, 0, 0, 0.1), inset 0 -1px 0 ${darken(0.25, colors.mongodb.alertRed)}`,
-    },
+    &:focus,
+    &:hover {
+      &:not(:disabled) {
+        color: ${colors.mongodb.white};
+        background-color: ${darken(0.05, '#BD180F')};
+        background-image: linear-gradient(${darken(0.15, colors.mongodb.alertRed)}, ${darken(0.25, colors.mongodb.alertRed)});
+        border-color: ${darken(0.1, '#BD180F')};
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), inset 0 -1px 0 ${darken(0.25, colors.mongodb.alertRed)};
+      }
+    }
 
-    active: {
-      backgroundImage: `linear-gradient(${darken(0.2, colors.mongodb.alertRed)}, ${darken(0.1, colors.mongodb.alertRed)})`,
-      boxShadow: 'inset 0 2px 2px rgba(0, 0, 0, 0.1)',
-    },
-  },
+    &:active:not(:disabled) {
+      color: ${colors.mongodb.white};
+      background-color: #BD180F;
+      background-image: linear-gradient(${darken(0.2, colors.mongodb.alertRed)}, ${darken(0.1, colors.mongodb.alertRed)});
+      box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.1);
+      border-color: #97130C;
+    }
+  `,
 
-  dark: {
-    color: colors.mongodb.white,
-    borderColor: colors.gray[0],
-    backgroundImage: `linear-gradient(${colors.gray[3]}, ${colors.gray[1]})`,
-    boxShadow: `inset 0 -1px 0 ${colors.gray[0]}`,
+  dark: css`
+    color: ${colors.mongodb.white};
+    border-color: ${colors.gray[0]};
+    background-image: linear-gradient(${colors.gray[3]}, ${colors.gray[1]});
+    box-shadow: inset 0 -1px 0 ${colors.gray[0]};
 
-    hover: {
-      backgroundImage: 'linear-gradient(#7C7F82, #41474A)',
-      borderColor: '#303030',
-      boxShadow: `inset 0 -1px 0 ${colors.gray[0]}`,
-    },
+    &:focus,
+    &:hover {
+      &:not(:disabled) {
+        color: ${colors.mongodb.white};
+        background-image: linear-gradient(#7C7F82, #41474A);
+        border-color: #303030;
+        box-shadow: inset 0 -1px 0 ${colors.gray[0]};
+      }
+    }
 
-    active: {
-      backgroundImage: `linear-gradient(${colors.gray[1]}, ${colors.gray[3]})`,
-      borderColor: colors.gray[0],
-    },
-  },
-}
-
-const defaultButtonSize = {
-  height: '32px',
-  padding: '0 12px',
-  fontSize: '14px',
-  lineHeight: '32px',
-  textTransform: 'none',
-  fontWeight: 'normal',
+    &:active:not(:disabled) {
+      color: ${colors.mongodb.white};
+      background-image: linear-gradient(${colors.gray[1]}, ${colors.gray[3]});
+      border-color: ${colors.gray[0]};
+      box-shadow: inset 0 -1px 0 ${colors.gray[0]};
+    }
+  `,
 }
 
 const buttonSizes = {
-  xsmall: {
-    ...defaultButtonSize,
-    height: '22px',
-    padding: `0 8px`,
-    fontSize: '11px',
-    lineHeight: '21px',
-    textTransform: 'uppercase',
-    fontWeight: 'bold',
-  },
+  xsmall: css`
+    height: 22px;
+    padding: 0 8px;
+    font-size: 11px;
+    line-height: 21px;
+    text-transform: uppercase;
+    font-weight: bold;
+  `,
 
-  small: {
-    ...defaultButtonSize,
-    height: '25px',
-    padding: `0 10px`,
-    lineHeight: '23px',
-  },
+  small: css`
+    height: 25px;
+    padding: 0 10px;
+    line-height: 23px;
+  `,
 
-  normal: defaultButtonSize,
+  normal: css`
+    height: 32px;
+    padding: 0 12px;
+    font-size: 14px;
+    line-height: 32px;
+    text-transform: none;
+    font-weight: normal;
+  `,
 
-  large: {
-    ...defaultButtonSize,
-    height: '45px',
-    lineHeight: '44px',
-    fontSize: '16px',
-    padding: '0 20px',
-  },
+  large: css`
+    height: 45px;
+    line-height: 44px;
+    font-size: 16px;
+    padding: 0 20px;
+  `,
 }
 
-const buttonStyles = (theme, size) => css`
-  color: ${theme.color};
-  background-color: ${theme.backgroundColor};
-  background-image: ${theme.backgroundImage};
-  border: 1px solid ${theme.borderColor}};
-  box-shadow: ${theme.boxShadow};
-  height: ${size.height};
-  padding: ${size.padding};
-  font-size: ${size.fontSize};
-  font-weight: ${size.fontWeight};
-  line-height: ${size.lineHeight};
-  text-transform: ${size.textTransform};
+const baseStyle = css`
+  color: ${colors.gray[1]};
+  background-color: ${colors.mongodb.white};
+  background-image: linear-gradient(${colors.mongodb.white}, ${lighten(0.2, colors.gray[5])});
+  border: 1px solid ${colors.gray[6]}};
+  box-shadow: inset 0 -1px 0 ${colors.gray[6]};
+  height: 32px;
+  padding: 0 12px;
+  font-size: 14px;
+  line-height: 32px;
+  text-transform: none;
+  font-weight: normal;
   box-sizing: border-box;
   border-radius: 3px;
   display: inline-block;
@@ -170,7 +191,7 @@ const buttonStyles = (theme, size) => css`
   text-decoration: none;
   cursor: pointer;
 
-  &[disabled] {
+  &:disabled {
     color: ${colors.gray[3]};
     border-color: ${colors.gray[5]};
     background-color: ${colors.gray[7]};
@@ -181,22 +202,20 @@ const buttonStyles = (theme, size) => css`
 
   &:focus,
   &:hover {
-    &:not([disabled]) {
-      color: ${theme.hover && theme.hover.color};
-      border-color: ${theme.hover && theme.hover.borderColor};
-      background-color: ${theme.hover && theme.hover.backgroundColor};
-      background-image: ${theme.hover && theme.hover.backgroundImage};
-      box-shadow: ${theme.hover && theme.hover.boxShadow};
+    &:not(:disabled) {
+      color: ${colors.gray[0]};
+      border-color: ${colors.gray[5]};
+      background-color: ${colors.mongodb.white};
+      background-image: linear-gradient(${lighten(0.5, colors.gray[5])}, ${lighten(0.15, colors.gray[5])});
+      box-shadow: inset 0 -1px 0 ${colors.gray[5]}, 0 1px 4px rgba(0, 0, 0, 0.1);
       outline: none;
     }
   }
 
-  &:active:not([disabled]) {
-    color: ${theme.active && theme.active.color};
-    borderColor: ${theme.active && theme.active.borderColor};
-    background-color: ${theme.active && theme.active.backgroundColor};
-    background-image: ${theme.active && theme.active.backgroundImage};
-    box-shadow: ${theme.active && theme.active.boxShadow};
+  &:active:not(:disabled) {
+    border-color: ${colors.gray[5]};
+    background-color: linear-gradient(${lighten(0.15, colors.gray[5])}, ${lighten(0.5, colors.gray[5])});
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.1);
     outline: none;
   }
 `
@@ -259,12 +278,12 @@ export default class Button extends Component {
       size,
     } = this.props
 
-    const variantStyle = buttonThemes[variant] || buttonThemes.default;
+    const variantStyle = buttonVariants[variant] || buttonVariants.default;
     const sizeStyle = buttonSizes[size] || buttonSizes.normal;
 
     return (
       <button
-        className={ccClassName(buttonStyles(variantStyle, sizeStyle), className)}
+        className={ccClassName(css`${baseStyle} ${sizeStyle} ${variantStyle}`, className)}
         style={style}
         name={name}
         title={title}
