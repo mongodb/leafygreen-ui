@@ -245,8 +245,11 @@ export default class Button extends Component {
     title: PropTypes.string,
     children: PropTypes.node,
     value: PropTypes.string,
-    disabled: PropTypes.bool,
     tabIndex: PropTypes.number,
+    disabled: PropTypes.oneOfType([
+      PropTypes.oneOf(['true', 'false']),
+      PropTypes.bool,
+    ]),
     variant: PropTypes.oneOf([
       'default',
       'primary',
