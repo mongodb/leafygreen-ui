@@ -1,15 +1,15 @@
 import { configure, addDecorator } from '@storybook/react';
-import { setOptions } from '@storybook/addon-options';
+import { withOptions } from '@storybook/addon-options';
 import { withKnobs } from '@storybook/addon-knobs';
+import { withInfo } from '@storybook/addon-info';
 import ComponentPreview from './decorators/ComponentPreview';
 
-// Configure the Storybook UI
-setOptions({
+// Add decorators globally to wrap our stories with
+addDecorator(withInfo);
+addDecorator(withOptions({
   name: 'leafyGreen UI Kit',
   url: 'https://github.com/10gen/leafygreen-ui',
-});
-
-// Add decorators globally to wrap our stories with
+}))
 addDecorator(ComponentPreview);
 addDecorator(withKnobs);
 
