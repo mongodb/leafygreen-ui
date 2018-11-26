@@ -37,4 +37,4 @@ export default {
     errorBackground: '#FDD0D1',
     validGreen: '#F1F2ED',
   },
-}
+};

@@ -9,7 +9,10 @@ const buttonVariants = {
   default: css`
     color: ${colors.gray[1]};
     background-color: ${colors.mongodb.white};
-    background-image: linear-gradient(${colors.mongodb.white}, ${lighten(0.2, colors.gray[5])});
+    background-image: linear-gradient(
+      ${colors.mongodb.white},
+      ${lighten(0.2, colors.gray[5])}
+    );
     border-color: ${colors.gray[6]};
     box-shadow: inset 0 -1px 0 ${colors.gray[6]};
 
@@ -19,15 +22,22 @@ const buttonVariants = {
         color: ${colors.gray[0]};
         border-color: ${colors.gray[5]};
         background-color: ${colors.mongodb.white};
-        background-image: linear-gradient(${lighten(0.5, colors.gray[5])}, ${lighten(0.15, colors.gray[5])});
-        box-shadow: inset 0 -1px 0 ${colors.gray[5]}, 0 1px 4px rgba(0, 0, 0, 0.1);
+        background-image: linear-gradient(
+          ${lighten(0.5, colors.gray[5])},
+          ${lighten(0.15, colors.gray[5])}
+        );
+        box-shadow: inset 0 -1px 0 ${colors.gray[5]},
+          0 1px 4px rgba(0, 0, 0, 0.1);
       }
     }
 
     &:active:not(:disabled) {
       color: ${colors.gray[1]};
       background-color: ${colors.mongodb.white};
-      background-image: linear-gradient(${lighten(0.15, colors.gray[5])}, ${lighten(0.5, colors.gray[5])});
+      background-image: linear-gradient(
+        ${lighten(0.15, colors.gray[5])},
+        ${lighten(0.5, colors.gray[5])}
+      );
       box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.1);
       border-color: ${colors.gray[5]};
     }
@@ -36,7 +46,10 @@ const buttonVariants = {
   primary: css`
     color: ${colors.mongodb.white};
     background-color: ${colors.green[2]};
-    background-image: linear-gradient(${colors.green[2]}, ${lighten(0.025, colors.green[1])});
+    background-image: linear-gradient(
+      ${colors.green[2]},
+      ${lighten(0.025, colors.green[1])}
+    );
     border-color: ${darken(0.02, colors.green[2])};
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
 
@@ -46,15 +59,22 @@ const buttonVariants = {
         color: ${colors.mongodb.white};
         border-color: ${darken(0.07, colors.green[1])};
         background-color: ${darken(0.05, colors.green[2])};
-        background-image: linear-gradient(${darken(0.025, colors.green[2])}, ${darken(0.025, colors.green[1])});
-        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15), 0 1px 4px rgba(0, 0, 0, 0.1);
+        background-image: linear-gradient(
+          ${darken(0.025, colors.green[2])},
+          ${darken(0.025, colors.green[1])}
+        );
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+          0 1px 4px rgba(0, 0, 0, 0.1);
       }
     }
 
     &:active:not(:disabled) {
       color: ${colors.mongodb.white};
       background-color: ${colors.green[2]};
-      background-image: linear-gradient(${darken(0.025, colors.green[1])}, ${darken(0.025, colors.green[2])});
+      background-image: linear-gradient(
+        ${darken(0.025, colors.green[1])},
+        ${darken(0.025, colors.green[2])}
+      );
       border-color: ${darken(0.07, colors.green[1])};
       box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.2);
     }
@@ -72,7 +92,10 @@ const buttonVariants = {
       &:not(:disabled) {
         color: ${colors.mongodb.white};
         background-color: ${darken(0.05, colors.green[2])};
-        background-image: linear-gradient(${colors.green[2]}, ${lighten(0.025, colors.green[1])});
+        background-image: linear-gradient(
+          ${colors.green[2]},
+          ${lighten(0.025, colors.green[1])}
+        );
         border-color: ${darken(0.02, colors.green[1])};
         box-shadow: inset 0 -1px rgba(0, 0, 0, 0.15);
       }
@@ -81,7 +104,10 @@ const buttonVariants = {
     &:active:not(:disabled) {
       color: ${colors.mongodb.white};
       background-color: ${colors.green[2]};
-      background-image: linear-gradient(${darken(0.025, colors.green[1])}, ${darken(0.025, colors.green[2])});
+      background-image: linear-gradient(
+        ${darken(0.025, colors.green[1])},
+        ${darken(0.025, colors.green[2])}
+      );
       border-color: ${darken(0.07, colors.green[1])};
       box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.2);
     }
@@ -89,9 +115,12 @@ const buttonVariants = {
 
   danger: css`
     color: ${colors.mongodb.white};
-    background-color: #BD180F;
-    background-image: linear-gradient(${darken(0.1, colors.mongodb.alertRed)}, ${darken(0.2, colors.mongodb.alertRed)});
-    border-color: #97130C;
+    background-color: #bd180f;
+    background-image: linear-gradient(
+      ${darken(0.1, colors.mongodb.alertRed)},
+      ${darken(0.2, colors.mongodb.alertRed)}
+    );
+    border-color: #97130c;
     box-shadow: inset 0 -1px 0 0 ${darken(0.25, colors.mongodb.alertRed)};
 
     &:focus,
@@ -99,18 +128,25 @@ const buttonVariants = {
       &:not(:disabled) {
         color: ${colors.mongodb.white};
         background-color: ${darken(0.05, '#BD180F')};
-        background-image: linear-gradient(${darken(0.15, colors.mongodb.alertRed)}, ${darken(0.25, colors.mongodb.alertRed)});
+        background-image: linear-gradient(
+          ${darken(0.15, colors.mongodb.alertRed)},
+          ${darken(0.25, colors.mongodb.alertRed)}
+        );
         border-color: ${darken(0.1, '#BD180F')};
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), inset 0 -1px 0 ${darken(0.25, colors.mongodb.alertRed)};
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1),
+          inset 0 -1px 0 ${darken(0.25, colors.mongodb.alertRed)};
       }
     }
 
     &:active:not(:disabled) {
       color: ${colors.mongodb.white};
-      background-color: #BD180F;
-      background-image: linear-gradient(${darken(0.2, colors.mongodb.alertRed)}, ${darken(0.1, colors.mongodb.alertRed)});
+      background-color: #bd180f;
+      background-image: linear-gradient(
+        ${darken(0.2, colors.mongodb.alertRed)},
+        ${darken(0.1, colors.mongodb.alertRed)}
+      );
       box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.1);
-      border-color: #97130C;
+      border-color: #97130c;
     }
   `,
 
@@ -124,7 +160,7 @@ const buttonVariants = {
     &:hover {
       &:not(:disabled) {
         color: ${colors.mongodb.white};
-        background-image: linear-gradient(#7C7F82, #41474A);
+        background-image: linear-gradient(#7c7f82, #41474a);
         border-color: #303030;
         box-shadow: inset 0 -1px 0 ${colors.gray[0]};
       }
@@ -137,7 +173,7 @@ const buttonVariants = {
       box-shadow: inset 0 -1px 0 ${colors.gray[0]};
     }
   `,
-}
+};
 
 const buttonSizes = {
   xsmall: css`
@@ -170,12 +206,15 @@ const buttonSizes = {
     font-size: 16px;
     padding: 0 20px;
   `,
-}
+};
 
 const baseStyle = css`
   color: ${colors.gray[1]};
   background-color: ${colors.mongodb.white};
-  background-image: linear-gradient(${colors.mongodb.white}, ${lighten(0.2, colors.gray[5])});
+  background-image: linear-gradient(
+    ${colors.mongodb.white},
+    ${lighten(0.2, colors.gray[5])}
+  );
   border: 1px solid ${colors.gray[6]}};
   box-shadow: inset 0 -1px 0 ${colors.gray[6]};
   height: 32px;
@@ -206,7 +245,10 @@ const baseStyle = css`
       color: ${colors.gray[0]};
       border-color: ${colors.gray[5]};
       background-color: ${colors.mongodb.white};
-      background-image: linear-gradient(${lighten(0.5, colors.gray[5])}, ${lighten(0.15, colors.gray[5])});
+      background-image: linear-gradient(
+        ${lighten(0.5, colors.gray[5])},
+        ${lighten(0.15, colors.gray[5])}
+      );
       box-shadow: inset 0 -1px 0 ${colors.gray[5]}, 0 1px 4px rgba(0, 0, 0, 0.1);
       outline: none;
     }
@@ -214,11 +256,14 @@ const baseStyle = css`
 
   &:active:not(:disabled) {
     border-color: ${colors.gray[5]};
-    background-color: linear-gradient(${lighten(0.15, colors.gray[5])}, ${lighten(0.5, colors.gray[5])});
+    background-color: linear-gradient(
+      ${lighten(0.15, colors.gray[5])},
+      ${lighten(0.5, colors.gray[5])}
+    );
     box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.1);
     outline: none;
   }
-`
+`;
 
 export default class Button extends Component {
   static defaultProps = {
@@ -234,7 +279,7 @@ export default class Button extends Component {
     variant: 'default',
     size: 'normal',
     style: null,
-  }
+  };
 
   static propTypes = {
     onClick: PropTypes.func,
@@ -250,20 +295,9 @@ export default class Button extends Component {
       PropTypes.oneOf(['true', 'false']),
       PropTypes.bool,
     ]),
-    variant: PropTypes.oneOf([
-      'default',
-      'primary',
-      'info',
-      'danger',
-      'dark',
-    ]),
-    size: PropTypes.oneOf([
-      'xsmall',
-      'small',
-      'normal',
-      'large',
-    ]),
-  }
+    variant: PropTypes.oneOf(['default', 'primary', 'info', 'danger', 'dark']),
+    size: PropTypes.oneOf(['xsmall', 'small', 'normal', 'large']),
+  };
 
   render() {
     const {
@@ -279,14 +313,17 @@ export default class Button extends Component {
       title,
       variant,
       size,
-    } = this.props
+    } = this.props;
 
     const variantStyle = buttonVariants[variant] || buttonVariants.default;
     const sizeStyle = buttonSizes[size] || buttonSizes.normal;
 
     return (
       <button
-        className={ccClassName(css`${baseStyle} ${sizeStyle} ${variantStyle}`, className)}
+        className={ccClassName(
+          css`${baseStyle} ${sizeStyle} ${variantStyle}`,
+          className,
+        )}
         style={style}
         name={name}
         title={title}
@@ -294,9 +331,10 @@ export default class Button extends Component {
         tabIndex={tabIndex}
         value={value}
         disabled={disabled}
-        type={type}>
+        type={type}
+      >
         {children}
       </button>
-    )
+    );
   }
 }
