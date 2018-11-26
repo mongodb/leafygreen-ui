@@ -34,7 +34,7 @@
     "bootstrap": "lerna bootstrap",
     "build": "lerna run --parallel build -- -- --env production",
     "lint": "eslint \"packages/**/*.js\"",
-    "prettier": "prettier --write",
+    "prettier": "prettier --write packages/**/*.js",
     "prettier:all": "prettier --write \"packages/**/*.js\" \"!**/lib/**\"",
     "test": "npm-run-all --parallel lint test:unit:all",
     "release": "lerna publish --registry https://nexus.mms-build.10gen.cc/content/repositories/npm-internal"
