@@ -6,7 +6,7 @@
   "main": "./src/index.js",
   "browser": "./dist/index.js",
   "scripts": {
-    "build": "../../node_modules/.bin/webpack --config ../../scripts/webpack-config.js"
+    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
   },
   "keywords": [],
   "license": "Apache-2.0",

@@ -6,7 +6,7 @@
   "main": "./src/index.js",
   "browser": "./dist/index.js",
   "scripts": {
-    "build": "../../node_modules/.bin/webpack --config ../../scripts/webpack-config.js"
+    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
   },
   "keywords": [],
   "license": "Apache-2.0",
@@ -15,8 +15,8 @@
   },
   "peerDependencies": {
     "prop-types": "^15.0.0",
-    "react": "^0.14.0 || ^15.0.0-0 || ^16.0.0-0",
-    "polished": "^2.3.0",
+    "react": "^16.0.0",
+    "polished": "^2.0.0",
     "react-emotion": "^9.2.0"
   },
   "dependencies": {

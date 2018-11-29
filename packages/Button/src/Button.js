@@ -275,7 +275,7 @@ export default class Button extends Component {
     type: 'button',
     title: null,
     onClick: () => {},
-    tabIndex: 0,
+    tabIndex: null,
     variant: 'default',
     size: 'normal',
     style: null,
@@ -291,28 +291,19 @@ export default class Button extends Component {
     children: PropTypes.node,
     value: PropTypes.string,
     tabIndex: PropTypes.number,
-    disabled: PropTypes.oneOfType([
-      PropTypes.oneOf(['true', 'false']),
-      PropTypes.bool,
-    ]),
+    disabled: PropTypes.bool,
     variant: PropTypes.oneOf(['default', 'primary', 'info', 'danger', 'dark']),
     size: PropTypes.oneOf(['xsmall', 'small', 'normal', 'large']),
   };
 
   render() {
     const {
-      onClick,
       className,
-      style,
       children,
-      name,
-      value,
       disabled,
-      type,
-      tabIndex,
-      title,
       variant,
       size,
+      ...rest
     } = this.props;
 
     const variantStyle = buttonVariants[variant] || buttonVariants.default;
@@ -320,18 +311,13 @@ export default class Button extends Component {
 
     return (
       <button
+        {...rest}
         className={ccClassName(
           css`${baseStyle} ${sizeStyle} ${variantStyle}`,
           className,
         )}
-        style={style}
-        name={name}
-        title={title}
-        onClick={onClick}
-        tabIndex={tabIndex}
-        value={value}
         disabled={disabled}
-        type={type}
+        aria-disabled={disabled}
       >
         {children}
       </button>

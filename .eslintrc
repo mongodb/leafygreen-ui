@@ -3,6 +3,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
+    "plugin:jest/recommended",
     "prettier",
     "prettier/react"
   ],
@@ -15,16 +16,12 @@
   "env": {
     "es6": true,
     "browser": true,
-    "node": true,
-    "mocha": true
+    "node": true
   },
   "settings": {
     "react": {
       "version": "16.4.1"
     }
-  },
-  "globals": {
-    "fetch": true
   },
   "rules": {
     "react/prefer-stateless-function": 0,
@@ -53,14 +50,16 @@
     {
       "files": ["packages/**/*.spec.js"],
       "globals": {
-        "chai": true,
-        "sinon": true,
         "expect": true,
-        "should": true
+        "should": true,
+        "jest": true
       },
       "rules": {
         "no-unused-expressions": 0,
-        "prefer-arrow-callback": 0
+        "prefer-arrow-callback": 0,
+        "jest/no-disabled-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/valid-expect": "error"
       }
     }
   ]
