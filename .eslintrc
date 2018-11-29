@@ -36,8 +36,7 @@
     "func-names": 0,
     "arrow-body-style": 0
   },
-  "overrides": [
-    {
+  "overrides": [{
       "files": ["packages/**/*.js"],
       "excludedFiles": ["*.spec.js", "*.story.js"],
       "env": {

@@ -3,8 +3,8 @@ module.exports = (storybookBaseConfig, env) => {
 
   return {
     ...storybookBaseConfig,
-    module: {rules: webpackConfig.module.rules},
+    module: { rules: webpackConfig.module.rules },
     resolve: webpackConfig.resolve,
     plugins: storybookBaseConfig.plugins.concat(webpackConfig.plugins),
-  }
+  };
 };
