@@ -1,11 +1,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import styled, { css } from 'react-emotion';
-import { lighten, darken } from 'polished'
-import { colors } from '.'
+import styled from 'react-emotion';
+import { lighten, darken } from 'polished';
+import { colors } from '.';
 
 const ColorBlock = styled('div')`
-  background-color: ${(props) => props['data-color'] || 'transparent'};
+  background-color: ${props => props['data-color'] || 'transparent'};
   border-top-color: transparent;
   border-radius: 8px;
   display: inline-block;
@@ -14,10 +14,10 @@ const ColorBlock = styled('div')`
   width: 80px;
   margin: 10px;
   margin-bottom: 20px;
-  box-shadow:
-    0 8px 6px -8px rgba(0, 0, 0, 0.2),
-    inset 0 -1px 1px ${(props) => darken(0.05, props['data-color']) || 'transparent'},
-    inset 0 1px 1px ${(props) => lighten(0.03, props['data-color']) || 'transparent'};
+  box-shadow: 0 8px 6px -8px rgba(0, 0, 0, 0.2),
+    inset 0 -1px 1px ${props => darken(0.05, props['data-color']) || 'transparent'},
+    inset 0 1px 1px
+      ${props => lighten(0.03, props['data-color']) || 'transparent'};
 
   &:before {
     content: attr(data-color);
@@ -47,22 +47,20 @@ const ColorBlock = styled('div')`
 `;
 
 const renderColorGroup = (namePrefix, colorGroup) => {
-  const renderedColors = []
-  let index = 0
+  const renderedColors = [];
 
   for (const color in colorGroup) {
     renderedColors.push(
       <ColorBlock
-        key={index}
+        key={color}
         data-color={colorGroup[color]}
         data-name={`${namePrefix} ${color}`}
-      />
-    )
-    index++
+      />,
+    );
   }
 
-  return renderedColors
-}
+  return renderedColors;
+};
 
 storiesOf('colors', module)
   .add('Green', () => (
@@ -79,4 +77,4 @@ storiesOf('colors', module)
     <section className="storybook-container">
       {renderColorGroup('', colors.mongodb)}
     </section>
-  ))
+  ));

@@ -8,21 +8,22 @@ const buttonClass = css`
   & + & {
     margin-left: 0.5rem;
   }
-`
+`;
 
 storiesOf('Buttons', module)
   .add('Extra Small', () => (
     <section className="storybook-container">
       <Button
-        size='xsmall'
+        size="xsmall"
         variant={select(
           'Variant',
           ['default', 'primary', 'info', 'danger', 'dark'],
-          'default'
+          'default',
         )}
         title={text('Title', 'The button title')}
         disabled={boolean('Disabled', false)}
-        className={buttonClass}>
+        className={buttonClass}
+      >
         {text('Children', 'Button')}
       </Button>
     </section>
@@ -30,15 +31,16 @@ storiesOf('Buttons', module)
   .add('Small', () => (
     <section className="storybook-container">
       <Button
-        size='small'
+        size="small"
         variant={select(
           'Variant',
           ['default', 'primary', 'info', 'danger', 'dark'],
-          'default'
+          'default',
         )}
-        title={text('Title', 'The button title')}
+        title={null /* text('Title', 'The button title') */}
         disabled={boolean('Disabled', false)}
-        className={buttonClass}>
+        className={buttonClass}
+      >
         {text('Children', 'Button')}
       </Button>
     </section>
@@ -46,15 +48,16 @@ storiesOf('Buttons', module)
   .add('Normal', () => (
     <section className="storybook-container">
       <Button
-        size='normal'
+        size="normal"
         variant={select(
           'Variant',
           ['default', 'primary', 'info', 'danger', 'dark'],
-          'default'
+          'default',
         )}
         title={text('Title', 'The button title')}
         disabled={boolean('Disabled', false)}
-        className={buttonClass}>
+        className={buttonClass}
+      >
         {text('Children', 'Button')}
       </Button>
     </section>
@@ -62,16 +65,17 @@ storiesOf('Buttons', module)
   .add('Large', () => (
     <section className="storybook-container">
       <Button
-        size='large'
+        size="large"
         variant={select(
           'Variant',
           ['default', 'primary', 'info', 'danger', 'dark'],
-          'default'
+          'default',
         )}
         title={text('Title', 'The button title')}
         disabled={boolean('Disabled', false)}
-        className={buttonClass}>
+        className={buttonClass}
+      >
         {text('Children', 'Button')}
       </Button>
     </section>
-  ))
+  ));

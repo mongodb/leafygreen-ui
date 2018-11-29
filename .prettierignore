@@ -3,4 +3,3 @@ dist/
 lib/
 package-lock.json
 package.json
-*.story.js

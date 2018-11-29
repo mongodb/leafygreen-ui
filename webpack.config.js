@@ -36,29 +36,13 @@ module.exports = function(env = 'development') {
       rules: [
         {
           test: /\.js$/,
-          use: [{
+          use: {
             loader: 'babel-loader',
             options: {
-              presets: [
-                "@babel/preset-react",
-                [
-                  "@babel/preset-env",
-                  {
-                    targets: {
-                      browsers: ["last 2 versions", "safari >= 7"]
-                    },
-                    modules: "commonjs",
-                  },
-                ],
-              ],
-              plugins: [
-                "@babel/plugin-proposal-class-properties",
-                "@babel/plugin-proposal-object-rest-spread",
-                "@babel/plugin-proposal-export-default-from",
-                "emotion",
-              ],
-            },
-          }],
+              // Makes Babel treat the directory containing babel.config.js as the project root
+              rootMode: "upward",
+            }
+          },
           exclude: /node_modules/,
         },
 
