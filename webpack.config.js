@@ -17,14 +17,9 @@ module.exports = function(env = 'development') {
       libraryTarget: isProduction ? 'umd' : undefined,
     },
 
-    externals: isProduction ?
-      [
-        'react',
-        'react-emotion',
-        'polished',
-        'prop-types',
-      ] :
-      [],
+    externals: isProduction
+      ? ['react', 'react-emotion', 'polished', 'prop-types']
+      : [],
 
     resolve: {
       extensions: ['.js', '.json', '.less', '.css'],
@@ -40,8 +35,8 @@ module.exports = function(env = 'development') {
             loader: 'babel-loader',
             options: {
               // Makes Babel treat the directory containing babel.config.js as the project root
-              rootMode: "upward",
-            }
+              rootMode: 'upward',
+            },
           },
           exclude: /node_modules/,
         },

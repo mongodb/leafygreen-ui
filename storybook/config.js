@@ -6,10 +6,12 @@ import ComponentPreview from './decorators/ComponentPreview';
 
 // Add decorators globally to wrap our stories with
 addDecorator(withInfo);
-addDecorator(withOptions({
-  name: 'leafyGreen UI Kit',
-  url: 'https://github.com/10gen/leafygreen-ui',
-}))
+addDecorator(
+  withOptions({
+    name: 'leafyGreen UI Kit',
+    url: 'https://github.com/10gen/leafygreen-ui',
+  }),
+);
 addDecorator(ComponentPreview);
 addDecorator(withKnobs);
 

@@ -1,7 +1,6 @@
 {
   "description": "leafyGreen UI Kit",
-  "contributors": [
-    {
+  "contributors": [{
       "name": "Dave McCarthy",
       "email": "dave.mccarthy@mongodb.com"
     },
@@ -34,7 +33,7 @@
     "bootstrap": "lerna bootstrap",
     "build": "lerna run --parallel build -- -- --env production",
     "lint": "eslint \"packages/**/*.js\"",
-    "prettier": "prettier --write packages/**/*.js",
+    "prettier": "prettier --write \"**/*.js\"",
     "test": "jest --env jsdom",
     "release": "lerna publish --registry https://nexus.mms-build.10gen.cc/content/repositories/npm-internal"
   },
