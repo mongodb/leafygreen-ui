@@ -7,7 +7,7 @@ module.exports = function(api) {
       '@babel/preset-env',
       {
         targets: {
-          browsers: ['last 2 versions', 'safari >= 7'],
+          browsers: ['last 2 versions', 'safari >= 7', 'ie >= 10'],
         },
         modules: 'commonjs',
       },
