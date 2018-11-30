@@ -267,33 +267,19 @@ const baseStyle = css`
 
 export default class Button extends Component {
   static defaultProps = {
-    className: '',
-    name: null,
-    value: null,
-    disabled: false,
-    children: null,
-    type: 'button',
-    title: null,
-    onClick: () => {},
-    tabIndex: null,
     variant: 'default',
     size: 'normal',
-    style: null,
+    className: '',
+    children: null,
+    disabled: false,
   };
 
   static propTypes = {
-    onClick: PropTypes.func,
-    className: PropTypes.string,
-    style: PropTypes.object,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    title: PropTypes.string,
-    children: PropTypes.node,
-    value: PropTypes.string,
-    tabIndex: PropTypes.number,
-    disabled: PropTypes.bool,
     variant: PropTypes.oneOf(['default', 'primary', 'info', 'danger', 'dark']),
     size: PropTypes.oneOf(['xsmall', 'small', 'normal', 'large']),
+    className: PropTypes.string,
+    children: PropTypes.node,
+    disabled: PropTypes.bool,
   };
 
   render() {
