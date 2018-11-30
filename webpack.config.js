@@ -13,7 +13,6 @@ module.exports = function(env = 'development') {
     output: {
       path: path.resolve(process.cwd(), 'dist'),
       filename: 'index.js',
-      library: isProduction ? 'leafygreen' : undefined,
       libraryTarget: isProduction ? 'umd' : undefined,
     },
 

@@ -24,7 +24,6 @@
     }
   },
   "rules": {
-    "react/prefer-stateless-function": 0,
     "react/jsx-filename-extension": [
       "error",
       {
@@ -32,9 +31,7 @@
       }
     ],
     "react/forbid-prop-types": "any",
-    "import/no-extraneous-dependencies": 0,
-    "func-names": 0,
-    "arrow-body-style": 0
+    "import/no-extraneous-dependencies": 0
   },
   "overrides": [{
       "files": ["packages/**/*.js"],
@@ -54,8 +51,6 @@
         "jest": true
       },
       "rules": {
-        "no-unused-expressions": 0,
-        "prefer-arrow-callback": 0,
         "jest/no-disabled-tests": "error",
         "jest/no-identical-title": "error",
         "jest/valid-expect": "error"
