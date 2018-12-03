@@ -1,0 +1,60 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jest/recommended",
+    "prettier",
+    "prettier/react"
+  ],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "settings": {
+    "react": {
+      "version": "16.4.1"
+    }
+  },
+  "rules": {
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        "extensions": [".js"]
+      }
+    ],
+    "react/forbid-prop-types": "any",
+    "import/no-extraneous-dependencies": 0
+  },
+  "overrides": [{
+      "files": ["packages/**/*.js"],
+      "excludedFiles": ["*.spec.js", "*.story.js"],
+      "env": {
+        "es6": true,
+        "browser": true,
+        "node": false,
+        "mocha": false
+      }
+    },
+    {
+      "files": ["packages/**/*.spec.js"],
+      "globals": {
+        "expect": true,
+        "should": true,
+        "jest": true
+      },
+      "rules": {
+        "jest/no-disabled-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/valid-expect": "error"
+      }
+    }
+  ]
+}
