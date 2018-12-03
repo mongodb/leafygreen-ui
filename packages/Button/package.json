@@ -1,0 +1,23 @@
+{
+  "name": "@leafygreen-ui/Button",
+  "version": "0.1.0",
+  "description": "leafyGreen UI Kit Button",
+  "browser": "./dist/index.js",
+  "scripts": {
+    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.0.0",
+    "react": "^16.0.0"
+  },
+  "dependencies": {
+    "@leafygreen-ui/theme": "0.1.0",
+    "@leafygreen-ui/lib": "0.1.0",
+    "polished": "2.3.0",
+    "react-emotion": "9.2.12"
+  }
+}

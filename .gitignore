@@ -1,0 +1,11 @@
+# Locally-installed dependencies
+node_modules/
+
+# Lerna debug log
+lerna-debug.log
+
+# Dist directories
+dist/
+
+# Cache directories
+.cache/
