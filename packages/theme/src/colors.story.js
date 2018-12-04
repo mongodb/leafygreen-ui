@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'react-emotion';
 import { lighten, darken } from 'polished';
-import { colors } from '.';
+import colors from './colors';
 
 const ColorBlock = styled('div')`
   background-color: ${props => props['data-color'] || 'transparent'};
