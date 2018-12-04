@@ -9,5 +9,6 @@
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "1bfce22b8a41568dab0d88b0044e1b4e750584df"
 }

@@ -223,6 +223,7 @@ const baseStyle = css`
   line-height: 32px;
   text-transform: none;
   font-weight: normal;
+  font-family: Akzidenz, "Helvetica Neue", Helvetica, Arial, sans-serif;
   box-sizing: border-box;
   border-radius: 3px;
   display: inline-block;

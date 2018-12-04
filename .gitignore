@@ -4,8 +4,9 @@ node_modules/
 # Lerna debug log
 lerna-debug.log
 
-# Dist directories
+# Dist files
 dist/
+*.tgz
 
 # Cache directories
 .cache/
