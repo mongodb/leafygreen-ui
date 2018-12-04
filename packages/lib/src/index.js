@@ -1,1 +1,2 @@
-export {default as ccClassName} from './ccClassName'
+import ccClassName from './ccClassName'
+export default { ccClassName }
