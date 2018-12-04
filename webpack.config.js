@@ -14,10 +14,11 @@ module.exports = function(env = 'development') {
       path: path.resolve(process.cwd(), 'dist'),
       filename: 'index.js',
       libraryTarget: isProduction ? 'umd' : undefined,
+      libraryExport: 'default',
     },
 
     externals: isProduction
-      ? ['react', 'react-emotion', 'polished', 'prop-types']
+      ? ['react', 'emotion', 'react-emotion', 'polished', 'prop-types']
       : [],
 
     resolve: {

@@ -1,6 +1,7 @@
 {
   "description": "leafyGreen UI Kit",
-  "contributors": [{
+  "contributors": [
+    {
       "name": "Dave McCarthy",
       "email": "dave.mccarthy@mongodb.com"
     },
@@ -28,7 +29,6 @@
     "url": "https://github.com/10gen/leafygreen-ui/issues"
   },
   "scripts": {
-    "clean": "rimraf packages/*/dist",
     "start": "start-storybook -p 9001 -c storybook",
     "bootstrap": "lerna bootstrap",
     "build": "lerna run --parallel build -- -- --env production",
