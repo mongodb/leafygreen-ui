@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'react-emotion';
+// import { css } from 'react-emotion';
 import { colors } from '@leafygreen-ui/theme';
-import { ccClassName } from '@leafygreen-ui/lib';
+import { ccClassName, lgEmotionInstance } from '@leafygreen-ui/lib';
 import { lighten, darken } from 'polished';
+
+const { css } = lgEmotionInstance;
 
 const buttonVariants = {
   default: css`
@@ -223,7 +225,7 @@ const baseStyle = css`
   line-height: 32px;
   text-transform: none;
   font-weight: normal;
-  font-family: Akzidenz, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Akzidenz, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   box-sizing: border-box;
   border-radius: 3px;
   display: inline-block;

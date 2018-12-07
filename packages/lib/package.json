@@ -11,5 +11,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "dependencies": {
+    "emotion": "^9.2.12",
+    "create-emotion": "^9.2.12"
+  },
   "gitHead": "1bfce22b8a41568dab0d88b0044e1b4e750584df"
 }

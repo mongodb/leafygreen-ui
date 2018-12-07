@@ -18,7 +18,14 @@ module.exports = function(env = 'development') {
     },
 
     externals: isProduction
-      ? ['react', 'emotion', 'react-emotion', 'polished', 'prop-types']
+      ? [
+          'react',
+          'emotion',
+          'react-emotion',
+          'create-emotion',
+          'polished',
+          'prop-types',
+        ]
       : [],
 
     resolve: {
