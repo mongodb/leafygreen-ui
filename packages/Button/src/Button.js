@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { css } from 'react-emotion';
 import { colors } from '@leafygreen-ui/theme';
 import { ccClassName, lgEmotionInstance } from '@leafygreen-ui/lib';
 import { lighten, darken } from 'polished';
