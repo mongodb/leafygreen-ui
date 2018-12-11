@@ -20,7 +20,7 @@ A set of CSS styles and React components built with design in mind.
 
 1. Start up storybook to see all UI components that exist.
 
-   `npm run`
+   `npm start`
 
 ## Testing
 
