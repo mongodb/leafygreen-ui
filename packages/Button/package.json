@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/Button",
   "version": "1.0.7",
   "description": "leafyGreen UI Kit Button",
-  "browser": "./dist/index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
   },
