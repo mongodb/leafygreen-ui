@@ -6,22 +6,21 @@ A set of CSS styles and React components built with design in mind.
 
 1. Node >= 6.11.5 required.
 
-    via [homebrew](https://brew.sh/) with `brew install node`
+   via [homebrew](https://brew.sh/) with `brew install node`
 
-    via [nodejs installer](https://nodejs.org/en/)
+   via [nodejs installer](https://nodejs.org/en/)
 
 1. npm >= 6 installed.
 
 1. Install dependencies and link packages.
 
-    `npm install && npm run bootstrap`
-
+   `npm install && npm run bootstrap`
 
 ## Development
 
 1. Start up storybook to see all UI components that exist.
 
-    `npm run storybook`
+   `npm run`
 
 ## Testing
 
@@ -29,18 +28,16 @@ A set of CSS styles and React components built with design in mind.
 
   - `npm run test`
 
-
 ## Publishing
 
-1. Build the compiled version of every UI package. This creates the dist/ folder with the transpiled code ready for distribution.
+1.  Build the compiled version of every UI package. This creates the dist/ folder with the transpiled code ready for distribution.
 
     `npm run build`
 
-2. TODO: Create changelog and update version.
-NOTE(hswolff): Not fully implemented yet. Just does an NPM publish for now, no auto changelog creation.
+2.  TODO: Create changelog and update version.
+    NOTE(hswolff): Not fully implemented yet. Just does an NPM publish for now, no auto changelog creation.
 
-    `npm run release`
-
+        `npm run release`
 
 ## Cleaning
 
