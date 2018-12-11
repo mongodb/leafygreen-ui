@@ -1,4 +1,4 @@
 import ccClassName from './ccClassName';
-import lgEmotionInstance from './lgEmotionInstance';
+import emotion from './emotion';
 
-export default { ccClassName, lgEmotionInstance };
+export default { ccClassName, emotion };

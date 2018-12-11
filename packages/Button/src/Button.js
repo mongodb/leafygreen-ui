@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { colors } from '@leafygreen-ui/theme';
-import { ccClassName, lgEmotionInstance } from '@leafygreen-ui/lib';
+import { ccClassName, emotion } from '@leafygreen-ui/lib';
 import { lighten, darken } from 'polished';
 
-const { css } = lgEmotionInstance;
+const { css } = emotion;
 
 const buttonVariants = {
   default: css`
