@@ -1,2 +1,4 @@
-import ccClassName from './ccClassName'
-export default { ccClassName }
+import ccClassName from './ccClassName';
+import emotion from './emotion';
+
+export default { ccClassName, emotion };
