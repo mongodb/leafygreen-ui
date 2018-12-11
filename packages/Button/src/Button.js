@@ -268,6 +268,8 @@ const baseStyle = css`
 `;
 
 export default class Button extends Component {
+  static displayName = 'Button';
+
   static defaultProps = {
     variant: 'default',
     size: 'normal',
