@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { colors } from '@leafygreen-ui/theme';
-import { ccClassName, emotion } from '@leafygreen-ui/lib';
+import { ccClassName, createDisplayName, emotion } from '@leafygreen-ui/lib';
 import { lighten, darken } from 'polished';
 
 const { css } = emotion;
@@ -268,7 +268,7 @@ const baseStyle = css`
 `;
 
 export default class Button extends Component {
-  static displayName = 'Button';
+  static displayName = createDisplayName('Button');
 
   static defaultProps = {
     variant: 'default',
