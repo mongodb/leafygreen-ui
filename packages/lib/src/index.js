@@ -1,7 +1,7 @@
 import emotion from './emotion';
 
 function createDisplayName(componentName) {
-  return `LG-${componentName}`;
+  return componentName;
 }
 
 const ccClassName = (...args) => args.join(' ');
