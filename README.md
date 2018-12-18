@@ -22,6 +22,12 @@ A set of CSS styles and React components built with design in mind.
 
    `npm start`
 
+2. To actively develop components, there is a script that will link all installed leafygreen-ui components on your application to your local repository. To do so, clone this repository and navigate to the root folder, then run
+
+`bash scripts/link.sh ${PATH_TO_APPLICATION}`
+
+3. This will build the components so they are ready for any changes then scan your application for any installed leafygreen-ui components in your node_modules/@leafygreen-ui folder. If it finds any, it will link the node_modules/@leafygreen-ui component to your local repository. It is important to note that after ay changes you make to your local repository, you must run `npm run build` in the root of your leafygreen-ui repository for the changes to be pushed through to your application.
+
 ## Testing
 
 - Run all tests. This includes linting and running tests.
