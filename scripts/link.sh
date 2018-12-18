@@ -1,5 +1,6 @@
 #!/bin/sh
 
+npm run bootstrap && \
 npm run link && \
 {
     npm run build
