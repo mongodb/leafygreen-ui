@@ -9,6 +9,11 @@ if [ "$1" != "" ]; then
     # done
     npm run bootstrap && \
     npm run link && \
+    cd ./packages/lib && \
+    npm run build && \
+    cd ../theme && \
+    npm run build && \
+    cd ../../ && \
     {
         npm run build
         } || {
