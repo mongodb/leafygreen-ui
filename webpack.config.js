@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 // Base Webpack configuration, used by all other configurations for common settings
-module.exports = function(env = 'development') {
+module.exports = function(env = 'production') {
   const isProduction = env === 'production';
 
   return {
@@ -60,7 +60,7 @@ module.exports = function(env = 'development') {
 
     plugins: (function() {
       let plugins = [
-        new CleanWebpackPlugin([path.resolve(process.cwd(), 'dist')]),
+        // new CleanWebpackPlugin([path.resolve(process.cwd(), 'dist')]),
 
         // Defines global variables
         new webpack.DefinePlugin({
