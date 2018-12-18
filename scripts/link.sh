@@ -6,4 +6,6 @@ npm run link && \
     } || {
         npm run bootstrap
         } && \
-npm run build 
+npm run build && \
+cd ../mms/client && \
+npm link @leafygreen-ui/Button
