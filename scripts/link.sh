@@ -3,10 +3,10 @@
 # $1 the first argument after the command is the relative path to the client
 
 if [ "$1" != "" ]; then
-    ARRAY=()
-    for d in packages/*; do
-        echo $d
-    done
+    # ARRAY=()
+    # for d in packages/*; do
+    #     echo $d
+    # done
     npm run bootstrap && \
     npm run link && \
     {
