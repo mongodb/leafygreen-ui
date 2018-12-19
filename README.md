@@ -26,7 +26,7 @@ A set of CSS styles and React components built with design in mind.
 
 - To actively develop components within an application, running the following script will link all installed leafygreen-ui components on your application to your local repository. This will allow you make changes to a local repository for UI-Kit and see those changes immediately within your running application. To do this, clone this repository and navigate to the root folder, then run
 
-`bash scripts/link.sh ${PATH_TO_APPLICATION}`
+`npm run link -- ${PATH_TO_APPLICATION}`
 
 - The script does several things in order:
   -- This builds the components so they are ready to be linked

@@ -3,11 +3,11 @@ set -e
 # $1 the first argument after the command is the relative or absolute path to the client
 # directory, where you intend to run npm link on installed UI-Kit modules.
 # To run, navigate to your leafygreen-ui folder root, then in the shell run
-# bash scripts/link.sh ${PATH_TO_APPLICATION}
+# npm run link -- ${PATH_TO_APPLICATION}
 
 if [ "$1" != "" ]; then
     npm run bootstrap
-    npm run link
+    npm run lerna-link
     cd ./packages/lib
     npm run build
     cd ../theme
@@ -15,12 +15,12 @@ if [ "$1" != "" ]; then
     cd ../../
     npm run build
     cd $1
-    {
-        cd ./node_modules/@leafygreen-ui
-    } || {
+    if cd ./node_modules/@leafygreen-ui; then
+        echo "leafygreen modules successfully found"
+    else
         echo "The application either does not have it's node_modules installed or does not have leafygreen-ui components installed"
         exit 1
-    }
+    fi
     INSTALLED_PACKAGES_ARRAY=()
     for d in *; do
         echo $d
