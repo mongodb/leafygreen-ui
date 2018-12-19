@@ -28,15 +28,15 @@ A set of CSS styles and React components built with design in mind.
 
 `bash scripts/link.sh ${PATH_TO_APPLICATION}`
 
-2. The script does several things in order:
+2.  The script does several things in order:
 
-- - This builds the components so they are ready to be linked
-- - It scans your application for any installed leafygreen-ui components in your node_modules/@leafygreen-ui folder.
-- - If it finds any, it will link the node_modules/@leafygreen-ui component to your local repository.
+        - This builds the components so they are ready to be linked
+        - It scans your application for any installed leafygreen-ui components in your node_modules/@leafygreen-ui folder.
+        - If it finds any, it will link the node_modules/@leafygreen-ui component to your local repository.
 
-3. After the script completes, you can make changes directly to the component in your local leafygreen-ui repository and run `npm run build` in the root of the leafygreen-ui repository and the changes will be visible on your running application.
+3.  After the script completes, you can make changes directly to the component in your local leafygreen-ui repository and run `npm run build` in the root of the leafygreen-ui repository and the changes will be visible on your running application.
 
-- - Note: after any changes you make to your local repository, you must run `npm run build` in the root of your leafygreen-ui repository for the changes to be pushed through to your application.
+        - Note: after any changes you make to your local repository, you must run `npm run build` in the root of your leafygreen-ui repository for the changes to be pushed through to your application.
 
 ## Testing
 
