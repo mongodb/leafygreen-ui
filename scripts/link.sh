@@ -31,5 +31,6 @@ if [ "$1" != "" ]; then
         npm link @leafygreen-ui/$f
     done
 else
-    echo "Client Folder Path is empty"
+    echo "This script requires a path to the target application from the root folder of this repository."
+    echo "After the bash command, please add a relative or absolute path to the repository of your application where you run your node_modules are located"
 fi
