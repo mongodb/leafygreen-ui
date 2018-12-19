@@ -15,7 +15,12 @@ if [ "$1" != "" ]; then
     cd ../../
     npm run build
     cd $1
-    cd ./node_modules/@leafygreen-ui
+    {
+        cd ./node_modules/@leafygreen-ui
+    } || {
+        echo "The application either does not have it's node_modules installed or does not have leafygreen-ui components installed"
+        exit 1
+    }
     INSTALLED_PACKAGES_ARRAY=()
     for d in *; do
         echo $d
