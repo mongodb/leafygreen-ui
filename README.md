@@ -29,9 +29,10 @@ A set of CSS styles and React components built with design in mind.
 `npm run link -- ${PATH_TO_APPLICATION}`
 
 - The script does several things in order:
-  -- This builds the components so they are ready to be linked
-  -- It scans your application for any installed leafygreen-ui components in your node_modules/@leafygreen-ui folder.
-  -- If it finds any, it will runn npm link to link the node_modules/@leafygreen-ui component to your local repository.
+
+  1. This builds the components so they are ready to be linked
+  2. It scans your application for any installed leafygreen-ui components in your node_modules/@leafygreen-ui folder.
+  3. If it finds any, it will runn npm link to link the node_modules/@leafygreen-ui component to your local repository.
 
 - After the script completes, you can make changes directly to the component in your local leafygreen-ui repository. Once you do this, run `npm run build` in the root of the leafygreen-ui repository and the changes will be visible on your running application.
 
