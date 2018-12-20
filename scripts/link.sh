@@ -6,6 +6,7 @@ set -e
 # npm run link -- ${PATH_TO_APPLICATION}
 
 if [ "$1" != "" ]; then
+    cd `dirname $0`/../
     npm run bootstrap
     npm run lerna-link
     cd ./packages/lib
