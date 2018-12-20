@@ -9,11 +9,11 @@ if [ "$1" != "" ]; then
     cd `dirname $0`/../
     npm run bootstrap
     npm run lerna-link
-    cd ./packages/lib
+    cd `dirname $0`/../packages/lib
     npm run build
-    cd ../theme
+    cd `dirname $0`/../packages/theme
     npm run build
-    cd ../../
+    cd `dirname $0`/../
     npm run build
     cd $1
     if cd ./node_modules/@leafygreen-ui; then
