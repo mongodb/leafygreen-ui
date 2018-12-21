@@ -37,7 +37,8 @@ for d in *; do
         INSTALLED_PACKAGES_ARRAY+=($d)
     fi
 done
-cd ../../
+cd $LEAFYGREEN_HOME
+cd $APPLICATION_HOME
 for f in "${INSTALLED_PACKAGES_ARRAY[@]}"; do
     npm link @leafygreen-ui/$f
 done
