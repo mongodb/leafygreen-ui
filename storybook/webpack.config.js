@@ -1,4 +1,4 @@
-module.exports = (storybookBaseConfig, env) => {
+module.exports = (storybookBaseConfig, env = 'development') => {
   const webpackConfig = require('../webpack.config.js')(env);
 
   return {
