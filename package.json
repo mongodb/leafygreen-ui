@@ -51,6 +51,8 @@
     "@babel/preset-typescript": "^7.3.3",
     "@babel/register": "7.0.0",
     "@babel/runtime": "7.1.5",
+    "@svgr/webpack": "^4.2.0",
+    "@svgr/babel-plugin-replace-jsx-attribute-value": "^4.2.0",
     "@storybook/addon-knobs": "^5.0.5",
     "@storybook/react": "^5.0.5",
     "@storybook/theming": "^5.0.5",

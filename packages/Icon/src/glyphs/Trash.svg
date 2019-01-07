@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54 (76480) - https://sketchapp.com -->
+    <title>Trash</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Trash-Copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" fill="#000000" x="5" y="0" width="6" height="1"></rect>
+        <rect id="Rectangle" fill="#000000" x="5" y="1" width="1" height="1"></rect>
+        <rect id="Rectangle-Copy-3" fill="#000000" x="10" y="1" width="1" height="1"></rect>
+        <rect id="Rectangle" fill="#000000" x="1" y="2" width="14" height="2"></rect>
+        <path d="M2,5 L14,5 L14,14 C14,15.1045695 13.1045695,16 12,16 L4,16 C2.8954305,16 2,15.1045695 2,14 L2,5 Z M4,6 L4,14 L5,14 L5,6 L4,6 Z M7.5,6 L7.5,14 L8.5,14 L8.5,6 L7.5,6 Z M11,6 L11,14 L12,14 L12,6 L11,6 Z" id="Combined-Shape" fill="#000000"></path>
+    </g>
+</svg>

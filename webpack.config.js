@@ -51,6 +51,14 @@ module.exports = function(env = 'production') {
         },
 
         {
+          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+          include: [
+            path.resolve(__dirname, "packages/Icon")
+          ],
+          loader: '@svgr/webpack',
+        },
+
+        {
           test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
           loader: 'url-loader',
           query: {

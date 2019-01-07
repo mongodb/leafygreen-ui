@@ -5,6 +5,7 @@ const rootStyle = css`
   display: flex;
   justify-content: center;
   align-items: center;
+  align-content: center;
   flex-wrap: wrap;
   min-height: 100vh;
 `;
