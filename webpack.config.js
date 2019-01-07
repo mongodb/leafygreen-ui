@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 // Base Webpack configuration, used by all other configurations for common settings
 module.exports = function(env = 'production') {
@@ -59,6 +60,8 @@ module.exports = function(env = 'production') {
 
     plugins: (function() {
       let plugins = [
+        new CleanWebpackPlugin([path.resolve(process.cwd(), 'dist')]),
+
         // Defines global variables
         new webpack.DefinePlugin({
           __DEV__: JSON.stringify((!isProduction).toString()),
