@@ -14,14 +14,6 @@ echo `dirname $1`
 LEAFYGREEN_HOME=$(pwd)/`dirname $0`/../
 echo $LEAFYGREEN_HOME
 cd $LEAFYGREEN_HOME
-npm run bootstrap
-npm run lerna-link
-cd $LEAFYGREEN_HOME/packages/lib
-npm run build
-cd $LEAFYGREEN_HOME/packages/theme
-npm run build
-cd $LEAFYGREEN_HOME
-npm run build
 APPLICATION_HOME=$1
 if cd $APPLICATION_HOME/node_modules/@leafygreen-ui; then
     echo "leafygreen modules successfully found"
@@ -31,13 +23,20 @@ else
 fi
 INSTALLED_PACKAGES_ARRAY=()
 for d in *; do
-    if [ "$d" == "lib" ] || [ "$d" == "theme" ]; then
-        echo "skipping dependecy"
-    else
+    if [ "$d" != "lib" ] && [ "$d" != "theme" ]; then
         INSTALLED_PACKAGES_ARRAY+=($d)
     fi
 done
 cd $LEAFYGREEN_HOME
+npm run bootstrap
+npm run lerna-link
+cd $LEAFYGREEN_HOME/packages/lib
+npm run build
+cd $LEAFYGREEN_HOME/packages/theme
+npm run build
+cd $LEAFYGREEN_HOME
+npm run build
+
 cd $APPLICATION_HOME
 for f in "${INSTALLED_PACKAGES_ARRAY[@]}"; do
     npm link @leafygreen-ui/$f
