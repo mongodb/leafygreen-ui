@@ -7,7 +7,7 @@ set -e
 
 if [ "$1" == "" ]; then
     echo "This script requires a path to the target application from the root folder of this repository."
-    echo "After the bash command, please add a relative or absolute path to the repository of your application where you run your node_modules are located"
+    echo "After the bash command, please add a relative or absolute path to the repository of your application"
     exit 1
 fi
 echo `dirname $1`
