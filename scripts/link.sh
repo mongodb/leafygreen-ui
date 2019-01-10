@@ -7,7 +7,7 @@ set -e
 
 if [ "$1" == "" ]; then
     echo "This script requires a path to the target application from the root folder of this repository."
-    echo "After the bash command, please add a relative or absolute path to the repository of your application"
+    echo "After the bash command, please add a relative or absolute path to the repository of your application."
     exit 1
 fi
 echo `dirname $1`
@@ -36,7 +36,6 @@ cd $LEAFYGREEN_HOME/packages/theme
 npm run build
 cd $LEAFYGREEN_HOME
 npm run build
-
 cd $APPLICATION_HOME
 for f in "${INSTALLED_PACKAGES_ARRAY[@]}"; do
     npm link @leafygreen-ui/$f
