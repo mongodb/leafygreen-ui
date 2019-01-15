@@ -29,7 +29,9 @@ for d in *; do
 done
 cd $LEAFYGREEN_HOME
 npm run bootstrap
+set +e
 npm run lerna-link
+set -e
 cd $LEAFYGREEN_HOME/packages/lib
 npm run build
 cd $LEAFYGREEN_HOME/packages/theme
