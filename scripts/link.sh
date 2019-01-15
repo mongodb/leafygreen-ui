@@ -30,7 +30,7 @@ done
 cd $LEAFYGREEN_HOME
 npm run bootstrap
 set +e
-npm run lerna-link
+npm run link-all-packages
 set -e
 cd $LEAFYGREEN_HOME/packages/lib
 npm run build
