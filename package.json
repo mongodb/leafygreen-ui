@@ -32,7 +32,7 @@
     "start": "start-storybook -p 9001 -c storybook",
     "bootstrap": "lerna bootstrap",
     "build": "lerna run --parallel build -- -- --env production",
-    "lerna-link": "lerna link",
+    "lerna-link": "lerna exec -- npm link",
     "link": "./scripts/link.sh",
     "lint": "eslint \"packages/**/*.js\"",
     "prettier": "prettier --write \"**/*.js\"",
