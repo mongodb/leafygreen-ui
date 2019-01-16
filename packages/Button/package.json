@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/Button",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "leafyGreen UI Kit Button",
   "main": "./dist/index.js",
   "scripts": {
@@ -15,8 +15,8 @@
     "react": "^16.0.0"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^1.3.2",
-    "@leafygreen-ui/theme": "^1.0.2",
+    "@leafygreen-ui/lib": "^1.3.3",
+    "@leafygreen-ui/theme": "^1.0.3",
     "polished": "^2.3.0"
   },
   "gitHead": "1bfce22b8a41568dab0d88b0044e1b4e750584df"
