@@ -36,7 +36,7 @@
     "lint": "eslint \"packages/**/*.js\"",
     "prettier": "prettier --write \"**/*.js\"",
     "test": "jest --env jsdom",
-    "release": "lerna publish --registry http://artifactory.corp.mongodb.com/artifactory/api/npm/mongodb-cloud-local/"
+    "release": "lerna publish --registry https://artifactory.corp.mongodb.com/artifactory/api/npm/mongodb-cloud-local/"
   },
   "devDependencies": {
     "@babel/core": "7.1.6",
