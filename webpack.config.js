@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 // Base Webpack configuration, used by all other configurations for common settings
-module.exports = function(env = 'development') {
+module.exports = function(env = 'production') {
   const isProduction = env === 'production';
 
   return {
