@@ -52,7 +52,7 @@ module.exports = function(env = 'production') {
           test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
           loader: 'url-loader',
           query: {
-            limit: 8192,
+            limit: 50000,
           },
         },
       ],
