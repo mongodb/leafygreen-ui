@@ -129,9 +129,11 @@ const containerStyle = css`
 `;
 
 export default class Checkbox extends PureComponent {
+  inputRef = React.createRef()
+  checkboxId = `checkbox-${Math.floor(Math.random() * 10000000)}`;
+  
   static displayName = 'Button';
-  static checkboxId = `checkbox-${Math.floor(Math.random() * 10000000)}`;
-
+  
   static defaultProps = {
     variant: 'default',
     checked: false,
@@ -148,17 +150,32 @@ export default class Checkbox extends PureComponent {
     disabled: PropTypes.bool,
     indeterminate: PropTypes.bool,
     className: PropTypes.string,
+    onChange: PropTypes.func,
+    onClick: PropTypes.func,
   };
 
   componentDidMount() {
-    this.input.indeterminate = this.props.indeterminate;
+    this.inputRef.current.indeterminate = this.props.indeterminate;
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.indeterminate !== this.props.indeterminate) {
-      this.input.indeterminate = this.props.indeterminate;
+      this.inputRef.current.indeterminate = this.props.indeterminate;
     }
   }
+
+  onClick = e => {
+    const { onClick, onChange } = this.props;
+
+    onClick();
+
+    // For Microsoft Edge and IE, when checkbox is indeterminate, change event does not fire when clicked.
+    // Explicitly call onChange for this case
+    if (this.el && this.el.indeterminate) {
+      onChange(e);
+      e.stopPropagation();
+    }
+  };
 
   render() {
     const labelId = `${this.checkboxId}-label`;
@@ -188,7 +205,7 @@ export default class Checkbox extends PureComponent {
         <input
           {...rest}
           id={this.checkboxId}
-          ref={el => (this.input = el)}
+          ref={this.inputRef}
           className={inputStyle}
           type="checkbox"
           role="checkbox"
@@ -205,23 +222,12 @@ export default class Checkbox extends PureComponent {
           <div className={ccClassName(checkboxStyle, checkboxVariantStyle)} />
         </div>
 
-        <span className={ccClassName(textStyle, textVariantStyle)} id={labelId}>
-          {label}
-        </span>
+        {label &&
+          <span className={ccClassName(textStyle, textVariantStyle)} id={labelId}>
+            {label}
+          </span>
+        }
       </label>
     );
   }
-
-  onClick = e => {
-    const { onClick, onChange } = this.props;
-
-    onClick();
-
-    // For Microsoft Edge and IE, when checkbox is indeterminate, change event does not fire when clicked.
-    // Explicitly call onChange for this case
-    if (this.el && this.el.indeterminate) {
-      onChange(e);
-      e.stopPropagation();
-    }
-  };
 }
