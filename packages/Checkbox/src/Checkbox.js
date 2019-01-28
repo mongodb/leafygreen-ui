@@ -129,11 +129,8 @@ const containerStyle = css`
 `;
 
 export default class Checkbox extends PureComponent {
-  inputRef = React.createRef()
-  checkboxId = `checkbox-${Math.floor(Math.random() * 10000000)}`;
-  
   static displayName = 'Button';
-  
+
   static defaultProps = {
     variant: 'default',
     checked: false,
@@ -141,6 +138,8 @@ export default class Checkbox extends PureComponent {
     disabled: false,
     indeterminate: false,
     className: '',
+    onClick: () => {},
+    onChange: () => {},
   };
 
   static propTypes = {
@@ -163,6 +162,9 @@ export default class Checkbox extends PureComponent {
       this.inputRef.current.indeterminate = this.props.indeterminate;
     }
   }
+
+  inputRef = React.createRef();
+  checkboxId = `checkbox-${Math.floor(Math.random() * 10000000)}`;
 
   onClick = e => {
     const { onClick, onChange } = this.props;
@@ -222,11 +224,14 @@ export default class Checkbox extends PureComponent {
           <div className={ccClassName(checkboxStyle, checkboxVariantStyle)} />
         </div>
 
-        {label &&
-          <span className={ccClassName(textStyle, textVariantStyle)} id={labelId}>
+        {label && (
+          <span
+            className={ccClassName(textStyle, textVariantStyle)}
+            id={labelId}
+          >
             {label}
           </span>
-        }
+        )}
       </label>
     );
   }
