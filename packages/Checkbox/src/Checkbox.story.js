@@ -7,14 +7,18 @@ import { colors } from '@leafygreen-ui/theme';
 import Checkbox from '.';
 
 class Control extends PureComponent {
-  state = { checked: false };
-
   static propTypes = {
     variant: PropTypes.oneOf(['default', 'light']),
     checked: PropTypes.bool,
     disabled: PropTypes.bool,
     indeterminate: PropTypes.bool,
     label: PropTypes.string,
+  };
+
+  state = { checked: false };
+
+  onChange = e => {
+    this.setState({ checked: e.target.checked });
   };
 
   render() {
@@ -41,10 +45,6 @@ class Control extends PureComponent {
       </div>
     );
   }
-
-  onChange = e => {
-    this.setState({ checked: e.target.checked });
-  };
 }
 
 storiesOf('Checkbox', module)
