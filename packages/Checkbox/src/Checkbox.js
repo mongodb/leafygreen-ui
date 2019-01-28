@@ -146,7 +146,7 @@ export default class Checkbox extends PureComponent {
   static propTypes = {
     variant: PropTypes.oneOf(['default', 'light']),
     checked: PropTypes.bool,
-    label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    label: PropTypes.node,
     disabled: PropTypes.bool,
     indeterminate: PropTypes.bool,
     className: PropTypes.string,
