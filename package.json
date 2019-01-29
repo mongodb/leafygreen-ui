@@ -1,7 +1,6 @@
 {
   "description": "leafyGreen UI Kit",
-  "contributors": [
-    {
+  "contributors": [{
       "name": "Dave McCarthy",
       "email": "dave.mccarthy@mongodb.com"
     },
@@ -37,7 +36,7 @@
     "lint": "eslint \"packages/**/*.js\"",
     "prettier": "prettier --write \"**/*.js\"",
     "test": "jest --env jsdom",
-    "release": "lerna publish --registry https://nexus.mms-build.10gen.cc/content/repositories/npm-internal"
+    "release": "lerna publish --registry https://artifactory.corp.mongodb.com/artifactory/api/npm/mongodb-cloud-local/"
   },
   "devDependencies": {
     "@babel/core": "7.1.6",
