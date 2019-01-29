@@ -129,16 +129,14 @@ const containerStyle = css`
 `;
 
 export default class Checkbox extends PureComponent {
-  static displayName = 'Button';
+  static displayName = 'Checkbox';
 
   static defaultProps = {
     variant: 'default',
-    checked: false,
     label: '',
     disabled: false,
     indeterminate: false,
     className: '',
-    onClick: () => {},
     onChange: () => {},
   };
 
@@ -150,8 +148,9 @@ export default class Checkbox extends PureComponent {
     indeterminate: PropTypes.bool,
     className: PropTypes.string,
     onChange: PropTypes.func,
-    onClick: PropTypes.func,
   };
+
+  state = { checked: false };
 
   componentDidMount() {
     this.inputRef.current.indeterminate = this.props.indeterminate;
@@ -167,23 +166,35 @@ export default class Checkbox extends PureComponent {
   checkboxId = `checkbox-${Math.floor(Math.random() * 10000000)}`;
 
   onClick = e => {
-    const { onClick, onChange } = this.props;
+    const { onClick } = this.props;
 
-    onClick();
+    if (onClick) {
+      onClick(e);
+    }
 
     // For Microsoft Edge and IE, when checkbox is indeterminate, change event does not fire when clicked.
     // Explicitly call onChange for this case
-    if (this.el && this.el.indeterminate) {
-      onChange(e);
+    if (this.inputRef && this.inputRef.indeterminate) {
+      this.onChange(e);
       e.stopPropagation();
     }
+  };
+
+  onChange = e => {
+    const { onChange } = this.props;
+
+    if (onChange) {
+      onChange(e);
+    }
+
+    this.setState({ checked: e.target.checked });
   };
 
   render() {
     const labelId = `${this.checkboxId}-label`;
     const {
       name = `${this.checkboxId}`,
-      checked,
+      checked = this.state.checked,
       className,
       label,
       variant,
@@ -218,6 +229,7 @@ export default class Checkbox extends PureComponent {
           aria-checked={checked}
           aria-labelledby={labelId}
           onClick={this.onClick}
+          onChange={this.onChange}
         />
 
         <div className={wrapperStyle}>

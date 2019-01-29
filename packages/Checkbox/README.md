@@ -7,8 +7,7 @@
 	onChange={(event) => {/* Something to handle the click event */}}
 	label='This is how you enable a thing'
 	checked={true}
->
-</Checkbox>
+/>
 ```
 
 **Output HTML**
@@ -35,10 +34,6 @@
 		</span>
   </label>
 ```
-
-    className: PropTypes.string,
-    onChange: PropTypes.func,
-    onClick: PropTypes.func,
 
 ## Properties
 
