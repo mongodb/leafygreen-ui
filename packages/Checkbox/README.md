@@ -3,7 +3,7 @@
 ## Example
 ``` Javascript
 <Checkbox
-  className='my-checkbox'
+	className='my-checkbox'
 	onChange={(event) => {/* Something to handle the click event */}}
 	label='This is how you enable a thing'
 	checked={true}

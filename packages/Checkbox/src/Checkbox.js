@@ -181,13 +181,15 @@ export default class Checkbox extends PureComponent {
   };
 
   onChange = e => {
-    const { onChange } = this.props;
+    const { onChange, checked } = this.props;
 
     if (onChange) {
       onChange(e);
     }
 
-    this.setState({ checked: e.target.checked });
+    if (checked == null) {
+      this.setState({ checked: e.target.checked });
+    }
   };
 
   render() {
