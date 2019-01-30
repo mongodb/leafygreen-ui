@@ -6,7 +6,7 @@
   variant='primary'
   className='create-item-button'
   title='Create an item'
-  onclick={(event) => {/* Something to handle the click event */}}
+  onClick={(event) => {/* Something to handle the click event */}}
 >
   Submit
 </Button>
