@@ -5,26 +5,7 @@ import { colors } from '@leafygreen-ui/theme';
 
 const { css } = emotion;
 
-const height = 20;
-const width = 600;
-
-const grooveStyle = css`
-  transition: 300ms opacity ease-in-out;
-  height: 32\px;
-  width: 64px;
-  display: inline-block;
-  overflow: hidden;
-  flex-shrink: 0;
-  position: relative;
-  opacity: 0.9;
-`;
-
-const checkboxStyle = css`
-  height: ${height}px;
-  width: ${width}px;
-  background-size: contain;
-  background-repeat: no-repeat;
-`;
+const transitionInMS = 150
 
 const inputStyle = css`
   margin: 0;
@@ -33,38 +14,190 @@ const inputStyle = css`
   top: 100%;
   pointer-events: none;
   opacity: 0;
+`;
 
-  &:checked:not(:indeterminate):not(:disabled) + .${grooveStyle} {
-    opacity: 1;
+const grooveStyle = css`
+  transition: ${transitionInMS}ms all ease-in-out, 0 background-color linear;
+  display: inline-block;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  border-radius: 50px;
+  overflow: hidden;
+  
+  // We're animating this pseudo-element in order to give the toggle groove
+  // background an animation in and out.
+  &:before {
+    content: "";
+    transition: ${transitionInMS}ms all ease-in-out;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 50px;
+    background-color: ${colors.mongodb.blue};
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: scale(0.85);
+  }
 
-    & > .${checkboxStyle} {
-      transition: 500ms transform steps(29);
-      transform: translate3d(${-width + height}px, 0, 0);
+  .${inputStyle}:checked:not(:disabled) + & {
+    transition-delay: ${transitionInMS}ms;
+    // We set background-color here to avoid a small issue with overflow clipping
+    // that makes this look less seamless than it should.
+    background-color: ${colors.mongodb.blue};
+    border: 1px solid #2E9ED3;
+
+    &:before {
+      transform: scale(1);
+      opacity: 1
     }
   }
 
-  &:focus + .${grooveStyle}:after {
-    content: '';
-    bottom: 0;
-    left: 3px;
-    right: 3px;
-    height: 2px;
-    position: absolute;
-    background-color: #43b1e5;
-    border-radius: 2px;
+  .${inputStyle}:disabled + & {
+    background-color: rgba(29, 36, 36, 0.08);
+    box-shadow: none;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+
+    &:before {
+      opacity: 0;
+    }
   }
 `;
 
+const grooveVariants = {
+  default: css`
+    background-color: rgba(29, 36, 36, 0.1);
+    border: 1px solid rgba(18, 22, 22, 0.05);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+  `,
+
+  dark: css`
+    background-color: rgba(29, 36, 36, 0.6);
+    border: 1px solid rgba(18, 22, 22, 0.1);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.15);
+  `,
+}
+
+const grooveSizes = {
+  default: css`
+    height: 32px;
+    width: 62px;
+  `,
+
+  small: css`
+    height: 22px;
+    width: 40px;
+  `,
+
+  xsmall: css`
+    height: 14px;
+    width: 26px;
+  `,
+}
+
+
+const sliderStyle = css`
+  transition: all ${transitionInMS}ms ease-in-out;
+  border-radius: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  overflow: hidden;
+
+  &:before, &:after {
+    content: "";
+    transition: opacity ${transitionInMS}ms ease-in-out;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  &:after {
+    opacity: 0;
+    background-image: linear-gradient(rgba(220, 220, 220, 0), rgba(220, 220, 220, 0.5));
+  }
+
+  .${inputStyle}:disabled + .${grooveStyle} > & {
+    background-color: rgba(0, 0, 0, 0.08);
+    background-image: none;
+    box-shadow: none;
+  }
+
+  .${inputStyle}:checked:not(:disabled) + .${grooveStyle} > & {
+    background-color: white;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.25), inset 0 -1px 0 #F1F1F1;
+    border: 1px solid rgba(18, 22, 22, 0.05);
+
+    &:before {
+      opacity: 0;
+    }
+
+    &:after {
+      opacity: 1;
+    }
+  }
+`;
+
+const sliderVariants = {
+  default: css`
+    background-color: white;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.25), inset 0 -1px 0 #F1F1F1;
+
+    &:before {
+      background-image: linear-gradient(rgba(220, 220, 220, 0), rgba(220, 220, 220, 0.5));
+    }
+  `,
+
+  dark: css`
+    background-color: #6F767B;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.25), inset 0 -1px 0 #454D53;
+
+    &:before {
+      background-image: linear-gradient(rgba(88, 95, 98, 0), rgba(88, 95, 98, 0.5));
+    }
+  `,
+}
+
+const sliderSizes = {
+  default: css`
+    height: 28px;
+    width: 28px;
+    left: 1px;
+
+    .${inputStyle}:checked + .${grooveStyle} > & {
+      transform: translate3d(30px, 0, 0);
+    }
+  `,
+
+  small: css`
+    height: 20px;
+    width: 20px;
+    left: 0;
+
+    .${inputStyle}:checked + .${grooveStyle} > & {
+      transform: translate3d(18px, 0, 0);
+    }
+  `,
+
+  xsmall: css`
+    height: 12px;
+    width: 12px;
+    left: 0;
+
+    .${inputStyle}:checked + .${grooveStyle} > & {
+      transform: translate3d(12px, 0, 0);
+    }
+  `,
+}
+
 const containerStyle = css`
   position: relative;
-  display: inline-flex;
-  align-items: flex-start;
-  justify-content: flex-start;
   cursor: pointer;
-
-  &:hover > .${grooveStyle} {
-    opacity: 1;
-  }
 
   /* Use [disabled] instead of &:disabled as this isn't an input element */
   &[disabled] {
@@ -76,62 +209,39 @@ export default class Checkbox extends PureComponent {
   static displayName = 'Checkbox';
 
   static defaultProps = {
+    size: 'default',
     variant: 'default',
     label: '',
     disabled: false,
-    indeterminate: false,
     className: '',
     onChange: () => {},
   };
 
   static propTypes = {
-    variant: PropTypes.oneOf(['default', 'light']),
+    size: PropTypes.oneOf(['default', 'small', 'xsmall']),
+    variant: PropTypes.oneOf(['default', 'dark']),
     checked: PropTypes.bool,
     label: PropTypes.node,
     disabled: PropTypes.bool,
-    indeterminate: PropTypes.bool,
     className: PropTypes.string,
     onChange: PropTypes.func,
   };
 
   state = { checked: false };
 
-  componentDidMount() {
-    this.inputRef.current.indeterminate = this.props.indeterminate;
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.indeterminate !== this.props.indeterminate) {
-      this.inputRef.current.indeterminate = this.props.indeterminate;
-    }
-  }
-
   inputRef = React.createRef();
   checkboxId = `checkbox-${Math.floor(Math.random() * 10000000)}`;
 
-  onClick = e => {
-    const { onClick } = this.props;
-
-    if (onClick) {
-      onClick(e);
-    }
-
-    // For Microsoft Edge and IE, when checkbox is indeterminate, change event does not fire when clicked.
-    // Explicitly call onChange for this case
-    if (this.inputRef && this.inputRef.indeterminate) {
-      this.onChange(e);
-      e.stopPropagation();
-    }
-  };
-
   onChange = e => {
-    const { onChange } = this.props;
+    const { onChange, checked } = this.props;
 
     if (onChange) {
       onChange(e);
     }
 
-    this.setState({ checked: e.target.checked });
+    if (checked == null) {
+      this.setState({ checked: e.target.checked });
+    }
   };
 
   render() {
@@ -141,11 +251,10 @@ export default class Checkbox extends PureComponent {
       className,
       label,
       disabled,
+      size,
+      variant,
       ...rest
     } = this.props;
-
-    // Indeterminate isn't a valid HTML prop
-    delete rest.indeterminate;
 
     return (
       <label
@@ -165,12 +274,11 @@ export default class Checkbox extends PureComponent {
           checked={checked}
           aria-disabled={disabled}
           aria-checked={checked}
-          onClick={this.onClick}
           onChange={this.onChange}
         />
 
-        <div className={grooveStyle}>
-          <div className={checkboxStyle} />
+        <div className={ccClassName(grooveStyle, grooveSizes[size], grooveVariants[variant])}>
+          <div className={ccClassName(sliderStyle, sliderSizes[size], sliderVariants[variant])} />
         </div>
       </label>
     );
