@@ -8,12 +8,9 @@ storiesOf('Toggle', module)
   .add('Default', () => (
     <section className="storybook-container">
       <Toggle
-        size={select(
-          'Size',
-          ['default', 'small', 'xsmall'],
-          'default',
-        )}
-        disabled={boolean('Disabled', false)} />
+        size={select('Size', ['default', 'small', 'xsmall'], 'default')}
+        disabled={boolean('Disabled', false)}
+      />
     </section>
   ))
   .add('Dark', () => (
@@ -24,14 +21,12 @@ storiesOf('Toggle', module)
           background-color: #464C4F;
           padding: 2rem;
         `,
-      )}>
+      )}
+    >
       <Toggle
-        size={select(
-          'Size',
-          ['default', 'small', 'xsmall'],
-          'default',
-        )}
-        variant='dark'
-        disabled={boolean('Disabled', false)} />
+        size={select('Size', ['default', 'small', 'xsmall'], 'default')}
+        variant="dark"
+        disabled={boolean('Disabled', false)}
+      />
     </section>
   ));
