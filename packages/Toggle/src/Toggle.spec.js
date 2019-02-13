@@ -12,11 +12,11 @@ describe('packages/Toggle', () => {
   const controlledContainer = container.firstChild;
   const controlledCheckbox = controlledContainer.children[0];
 
-  test(`renders "${className}" in the Checkbox label's classList`, () => {
+  test(`renders "${className}" in the container label's classList`, () => {
     expect(controlledContainer.classList.contains(className)).toBe(true);
   });
 
-  test('Checkbox is checked when checked prop is set', () => {
+  test('checkbox is checked when checked prop is set', () => {
     expect(controlledCheckbox.checked).toBe(false);
     expect(controlledCheckbox.getAttribute('aria-checked')).toBe('false');
 
@@ -26,7 +26,7 @@ describe('packages/Toggle', () => {
     expect(controlledCheckbox.getAttribute('aria-checked')).toBe('true');
   });
 
-  test('Checkbox is disabled when disabled prop is set', () => {
+  test('checkbox is disabled when disabled prop is set', () => {
     render(<Toggle disabled={true} checked={false} />, { container });
 
     expect(controlledCheckbox.disabled).toBe(true);
@@ -65,10 +65,7 @@ describe('packages/Toggle', () => {
     const uncontrolledOnClick = jest.fn();
     const uncontrolledOnChange = jest.fn();
     const uncontrolledContainer = render(
-      <Toggle
-        onClick={uncontrolledOnClick}
-        onChange={uncontrolledOnChange}
-      />,
+      <Toggle onClick={uncontrolledOnClick} onChange={uncontrolledOnChange} />,
     ).container.firstChild;
     const uncontrolledCheckbox = uncontrolledContainer.children[0];
 
