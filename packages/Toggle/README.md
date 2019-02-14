@@ -11,7 +11,7 @@
 
 **Output HTML**
 ```HTML
-  <label class="my-toggle css-1rgbgdt css-3jdsksdd" title="Create an item" for="toggle-14827892">
+  <label class="my-toggle css-1rgbgdt css-3jdsksdd" for="toggle-14827892">
 		<input
 		  checked
 			type="checkbox"
