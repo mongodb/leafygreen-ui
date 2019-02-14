@@ -38,7 +38,7 @@ export default class Toggle extends PureComponent {
 
   state = { checked: false };
   inputRef = React.createRef();
-  checkboxId = `checkbox-${Math.floor(Math.random() * 10000000)}`;
+  checkboxId = `toggle-${Math.floor(Math.random() * 10000000)}`;
 
   onChange = e => {
     const { onChange, checked } = this.props;

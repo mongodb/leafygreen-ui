@@ -1,37 +1,35 @@
-# Checkbox
+# Toggle
 
 ## Example
 ``` Javascript
-<Checkbox
-  className='my-checkbox'
-	onChange={(event) => {/* Something to handle the click event */}}
-	label='This is how you enable a thing'
+<Toggle
+  className='my-toggle'
+	onChange={(event) => {/* Something to handle the change event */}}
 	checked={true}
 />
 ```
 
 **Output HTML**
 ```HTML
-  <label class="css-1rgbgdt my-checkbox" title="Create an item" for="checkbox-14827892">
+  <label class="my-toggle css-1rgbgdt css-3jdsksdd" title="Create an item" for="toggle-14827892">
 		<input
 		  checked
 			type="checkbox"
 			role="checkbox"
 			class="css-32kjhsdaf"
-			id="checkbox-14827892"
-			name="checkbox-14827892"
+			id="toggle-14827892"
+			name="toggle-14827892"
 			aria-disabled="false"
 			aria-checked="true"
-			aria-labeledby="checkbox-14827892-label"
 		/>
-    
-		<div class="css-34kjkdfg">
-			<div class="css-98sdfjsad"></div>
-		</div>
 
-		<span class="css-8xdsjfh9" id="checkbox-14827892-label">
-			This is how you enable a thing
-		</span>
+		<div class="css-328akljss"></div>
+    
+		<div class="css-34kjkdfg css-8sjlkdjcx">
+			<div class="css-38kjdsjkdf">On</div>
+			<div class="css-22kjdsmncf">Off</div>
+			<div class="css-98sdfjsad css-2dsfdsli css-78kljdfva"></div>
+		</div>
   </label>
 ```
 
@@ -43,7 +41,15 @@
 
 **Default:** `'default'`
 
-Sets the style variant of the checkbox. Valid variants for checkboxes are `'default'` and `'light'`.
+Sets the style variant of the toggle. Valid variants for toggles are `'default'` and `'dark'`.
+
+### size
+
+**Type:** `string`
+
+**Default:** `'default'`
+
+Sets the size of the toggle. Valid sizes for toggles are `'default'`, `'small'`, and `'xsmall'`.
 
 ### checked
 
@@ -51,15 +57,7 @@ Sets the style variant of the checkbox. Valid variants for checkboxes are `'defa
 
 **Default:** `false`
 
-Checks the checkbox.
-
-### label
-
-**Type:** `node`
-
-**Default:** `null`
-
-The label for the checkbox.
+Checks the toggle.
 
 ### disabled
 
@@ -67,15 +65,7 @@ The label for the checkbox.
 
 **Default:** `false`
 
-Disables the checkbox.
-
-### indeterminate
-
-**Type:** `boolean`
-
-**Default:** `false`
-
-Sets the checkbox as indeterminate. **NOTE:** the checkbox will become out of sync with the indeterminate prop when it's clicked. Make sure to unset the `indeterminate` prop on change where you're controlling your input.
+Disables the toggle.
 
 ### className
 
