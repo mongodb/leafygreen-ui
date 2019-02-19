@@ -8,11 +8,11 @@ const { css } = emotion;
 
 const buttonVariants = {
   default: css`
-    color: ${colors.gray[1]};
+    color: ${colors.gray[5]};
     background-color: ${colors.mongodb.white};
     background-image: linear-gradient(
-      ${colors.mongodb.white},
-      ${lighten(0.2, colors.gray[5])}
+      black,
+      ${lighten(0.2, colors.gray[1])}
     );
     border-color: ${colors.gray[6]};
     box-shadow: inset 0 -1px 0 ${colors.gray[6]};
