@@ -13,7 +13,8 @@
   },
   "dependencies": {
     "create-emotion": "^9.2.12",
-    "emotion": "^9.2.12"
+    "emotion": "^9.2.12",
+    "polished": "^2.3.0"
   },
   "gitHead": "1bfce22b8a41568dab0d88b0044e1b4e750584df"
 }

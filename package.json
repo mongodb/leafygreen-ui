@@ -1,6 +1,7 @@
 {
   "description": "leafyGreen UI Kit",
-  "contributors": [{
+  "contributors": [
+    {
       "name": "Dave McCarthy",
       "email": "dave.mccarthy@mongodb.com"
     },
@@ -29,8 +30,8 @@
   },
   "scripts": {
     "start": "start-storybook -p 9001 -c storybook -s ./storybook/static",
-    "bootstrap": "lerna bootstrap",
     "build": "lerna run --parallel build -- -- --env production",
+    "init": "npm install && lerna bootstrap && npm run build",
     "link-all-packages": "lerna exec --ignore @leafygreen-ui/lib --ignore @leafygreen-ui/theme -- npm link ",
     "link": "./scripts/link.sh",
     "lint": "eslint \"packages/**/*.js\"",
