@@ -28,14 +28,10 @@ for d in *; do
     fi
 done
 cd $LEAFYGREEN_HOME
-npm run bootstrap
+npm install && lerna bootstrap
 set +e
 npm run link-all-packages
 set -e
-cd $LEAFYGREEN_HOME/packages/lib
-npm run build
-cd $LEAFYGREEN_HOME/packages/theme
-npm run build
 cd $LEAFYGREEN_HOME
 npm run build
 cd $APPLICATION_HOME
