@@ -1,30 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { ccClassName } from '@leafygreen-ui/lib';
-import {
-  containerStyle,
-  containerSizes,
-  inputStyle,
-  focusState,
-  grooveStyle,
-  grooveVariants,
-  sliderStyle,
-  sliderSizes,
-  sliderVariants,
-  onLabelStyle,
-  offLabelStyle,
-} from './style';
+import * as style from './style';
 
 export default class Toggle extends PureComponent {
   static displayName = 'Toggle';
-
-  static defaultProps = {
-    size: 'default',
-    variant: 'default',
-    disabled: false,
-    className: '',
-    onChange: () => {},
-  };
 
   static propTypes = {
     size: PropTypes.oneOf(['default', 'small', 'xsmall']),
@@ -34,6 +14,14 @@ export default class Toggle extends PureComponent {
     className: PropTypes.string,
     onChange: PropTypes.func,
     name: PropTypes.string,
+  };
+
+  static defaultProps = {
+    size: 'default',
+    variant: 'default',
+    disabled: false,
+    className: '',
+    onChange: () => {},
   };
 
   state = { checked: false };
@@ -66,7 +54,11 @@ export default class Toggle extends PureComponent {
 
     return (
       <label
-        className={ccClassName(className, containerStyle, containerSizes[size])}
+        className={ccClassName(
+          className,
+          style.container,
+          style.containerSizes[size],
+        )}
         htmlFor={this.checkboxId}
         disabled={disabled}
       >
@@ -74,7 +66,7 @@ export default class Toggle extends PureComponent {
           {...rest}
           id={this.checkboxId}
           ref={this.inputRef}
-          className={inputStyle}
+          className={style.input}
           type="checkbox"
           role="checkbox"
           name={name}
@@ -85,21 +77,23 @@ export default class Toggle extends PureComponent {
           onChange={this.onChange}
         />
 
-        <div className={focusState} />
+        <div className={style.focusState} />
 
-        <div className={ccClassName(grooveStyle, grooveVariants[variant])}>
-          {size === 'default' && !disabled &&
+        <div
+          className={ccClassName(style.groove, style.grooveVariants[variant])}
+        >
+          {size === 'default' && !disabled && (
             <>
-              <div className={onLabelStyle}>On</div>
-              <div className={offLabelStyle}>Off</div>
+              <div className={style.onLabel}>On</div>
+              <div className={style.offLabel}>Off</div>
             </>
-          }
+          )}
 
           <div
             className={ccClassName(
-              sliderStyle,
-              sliderSizes[size],
-              sliderVariants[variant],
+              style.slider,
+              style.sliderSizes[size],
+              style.sliderVariants[variant],
             )}
           />
         </div>

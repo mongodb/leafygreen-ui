@@ -4,7 +4,7 @@ import { colors } from '@leafygreen-ui/theme';
 const { css } = emotion;
 const transitionInMS = 150;
 
-export const inputStyle = css`
+export const input = css`
   margin: 0;
   position: absolute;
   left: 100%;
@@ -13,7 +13,7 @@ export const inputStyle = css`
   opacity: 0;
 `;
 
-export const grooveStyle = css`
+export const groove = css`
   transition: ${transitionInMS}ms all ease-in-out, 0 background-color linear;
   display: inline-block;
   overflow: hidden;
@@ -44,7 +44,7 @@ export const grooveStyle = css`
     transform: scale(0.85);
   }
 
-  .${inputStyle}:checked:not(:disabled) ~ & {
+  .${input}:checked:not(:disabled) ~ & {
     transition-delay: ${transitionInMS}ms;
     // We set background-color here to avoid a small issue with overflow clipping
     // that makes this look less seamless than it should.
@@ -64,7 +64,7 @@ export const grooveVariants = {
     border: 1px solid rgba(18, 22, 22, 0.05);
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
 
-    .${inputStyle}:disabled ~ & {
+    .${input}:disabled ~ & {
       background-color: rgba(29, 36, 36, 0.08);
       box-shadow: none;
       border: 1px solid rgba(0, 0, 0, 0.03);
@@ -80,7 +80,7 @@ export const grooveVariants = {
     border: 1px solid rgba(18, 22, 22, 0.1);
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.15);
 
-    .${inputStyle}:disabled ~ & {
+    .${input}:disabled ~ & {
       background-color: rgba(255, 255, 255, 0.15);
       box-shadow: none;
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -92,7 +92,7 @@ export const grooveVariants = {
   `,
 };
 
-export const sliderStyle = css`
+export const slider = css`
   transition: all ${transitionInMS}ms ease-in-out;
   border-radius: 100%;
   position: absolute;
@@ -101,14 +101,14 @@ export const sliderStyle = css`
   margin: auto;
   overflow: hidden;
 
-  .${inputStyle}:disabled ~ .${grooveStyle} > & {
+  .${input}:disabled ~ .${groove} > & {
     &:before,
     &:after {
       display: none;
     }
   }
 
-  .${inputStyle}:not(:disabled) ~ .${grooveStyle} > & {
+  .${input}:not(:disabled) ~ .${groove} > & {
     &:before,
     &:after {
       content: '';
@@ -140,7 +140,7 @@ export const sliderVariants = {
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.25),
       inset 0 -1px 0 #f1f1f1;
 
-    .${inputStyle}:disabled ~ .${grooveStyle} > & {
+    .${input}:disabled ~ .${groove} > & {
       background-color: rgba(0, 0, 0, 0.08);
       background-image: none;
       box-shadow: none;
@@ -159,7 +159,7 @@ export const sliderVariants = {
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.25),
       inset 0 -1px 0 #454d53;
 
-    .${inputStyle}:disabled ~ .${grooveStyle} > & {
+    .${input}:disabled ~ .${groove} > & {
       background-color: rgba(255, 255, 255, 0.15);
       background-image: none;
       box-shadow: none;
@@ -172,18 +172,18 @@ export const sliderVariants = {
       );
     }
 
-    .${inputStyle}:checked:not(:disabled) ~ .${grooveStyle} > & {
+    .${input}:checked:not(:disabled) ~ .${groove} > & {
       background-color: white;
       box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.25),
         inset 0 -1px 0 #f1f1f1;
 
-        &:before {
-          opacity: 0;
-        }
+      &:before {
+        opacity: 0;
+      }
 
-        &:after {
-          opacity: 1;
-        }
+      &:after {
+        opacity: 1;
+      }
     }
   `,
 };
@@ -194,7 +194,7 @@ export const sliderSizes = {
     width: 28px;
     left: 1px;
 
-    .${inputStyle}:checked ~ .${grooveStyle} > & {
+    .${input}:checked ~ .${groove} > & {
       transform: translate3d(30px, 0, 0);
     }
   `,
@@ -204,11 +204,11 @@ export const sliderSizes = {
     width: 20px;
     left: 0;
 
-    .${inputStyle}:checked ~ .${grooveStyle} > & {
+    .${input}:checked ~ .${groove} > & {
       transform: translate3d(18px, 0, 0);
     }
 
-    .${inputStyle}:disabled ~ .${grooveStyle} > & {
+    .${input}:disabled ~ .${groove} > & {
       height: 18px;
       width: 18px;
       left: 1px;
@@ -220,11 +220,11 @@ export const sliderSizes = {
     width: 12px;
     left: 0;
 
-    .${inputStyle}:checked ~ .${grooveStyle} > & {
+    .${input}:checked ~ .${groove} > & {
       transform: translate3d(12px, 0, 0);
     }
 
-    .${inputStyle}:disabled ~ .${grooveStyle} > & {
+    .${input}:disabled ~ .${groove} > & {
       height: 10px;
       width: 10px;
       left: 1px;
@@ -247,13 +247,13 @@ export const focusState = css`
   opacity: 0;
   transform: scale(0.8);
 
-  .${inputStyle}:focus ~ & {
+  .${input}:focus ~ & {
     opacity: 1;
     transform: scale(1);
   }
 `;
 
-export const containerStyle = css`
+export const container = css`
   position: relative;
   display: inline-block;
   cursor: pointer;
@@ -295,18 +295,18 @@ const labelStyleBase = `
   color: white;
 `;
 
-export const onLabelStyle = css`
+export const onLabel = css`
   ${labelStyleBase};
   left: 9px;
   color: #bbebff;
 
-  .${inputStyle}:hover ~ .${grooveStyle} > &,
-  .${inputStyle}:focus ~ .${grooveStyle} > & {
+  .${input}:hover ~ .${groove} > &,
+  .${input}:focus ~ .${groove} > & {
     color: white;
   }
 `;
 
-export const offLabelStyle = css`
+export const offLabel = css`
   ${labelStyleBase};
   right: 6px;
   color: #9fa1a2;
