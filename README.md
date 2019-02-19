@@ -10,11 +10,11 @@ A set of CSS styles and React components built with design in mind.
 
    via [nodejs installer](https://nodejs.org/en/)
 
-1. npm >= 6 installed.
+2. npm >= 6 installed.
 
-1. Install dependencies and link packages.
+3. Install dependencies and link packages.
 
-   `npm install && npm run bootstrap`
+   `npm run init`
 
 ## Development
 
