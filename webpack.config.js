@@ -25,6 +25,8 @@ module.exports = function(env = 'production') {
           'create-emotion',
           'polished',
           'prop-types',
+          '@leafygreen-ui/lib',
+          '@leafygreen-ui/theme',
         ]
       : [],
 
