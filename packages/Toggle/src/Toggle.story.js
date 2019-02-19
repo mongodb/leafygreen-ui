@@ -4,9 +4,11 @@ import { boolean, select } from '@storybook/addon-knobs';
 import { ccClassName, emotion } from '@leafygreen-ui/lib';
 import Toggle from '.';
 
+const containerPadding = emotion.css`padding: 2rem;`;
+
 storiesOf('Toggle', module)
   .add('Default', () => (
-    <section className="storybook-container">
+    <section className={ccClassName('storybook-container', containerPadding)}>
       <Toggle
         size={select('Size', ['default', 'small', 'xsmall'], 'default')}
         disabled={boolean('Disabled', false)}
@@ -18,8 +20,8 @@ storiesOf('Toggle', module)
       className={ccClassName(
         'storybook-container',
         emotion.css`
+          ${containerPadding};
           background-color: #464C4F;
-          padding: 2rem;
         `,
       )}
     >
