@@ -276,6 +276,7 @@ export default class Button extends Component {
     className: '',
     children: null,
     disabled: false,
+    type: 'button',
   };
 
   static propTypes = {
