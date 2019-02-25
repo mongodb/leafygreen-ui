@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 export default class RadioButton extends Component {
     static displayName = 'RadioButton'
 
+    // should i make default value a more complicated string, so that it works??
     static defaultProps = {
         checked: false, 
         disabled: false,
@@ -13,6 +14,7 @@ export default class RadioButton extends Component {
         onChange: () => {},
         value: '',
         id: '', 
+        name: ''
     }
 
     static propTypes = {
@@ -22,7 +24,8 @@ export default class RadioButton extends Component {
         children: PropTypes.node,
         onChange: PropTypes.func,
         value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]), 
-        id: PropTypes.string
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), 
+        name: PropTypes.string,
     } 
 
     render() {
@@ -33,14 +36,20 @@ export default class RadioButton extends Component {
             value, 
             checked, 
             disabled,
+            id,
+            name,
             ...rest
         } = this.props
 
-        return (
-            <div>
-                <label>{children}</label>
+        return (        
+            <label
+                htmlFor={id}
+                disabled={disabled}>
+
                 <input 
                     {...rest}
+                    id={id}
+                    name={name}
                     type="radio" 
                     className={className}
                     onChange={handleChange} 
@@ -48,9 +57,11 @@ export default class RadioButton extends Component {
                     checked={checked} 
                     aria-checked={checked}
                     disabled={disabled}
-                    aria-disabled={disabled}
-                    />
-            </div>
-        )
+                    aria-disabled={disabled}/>
+                
+                {children}
+                
+            </label>
+    )
     }
 }
