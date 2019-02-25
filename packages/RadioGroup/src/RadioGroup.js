@@ -9,17 +9,21 @@ const { css } = emotion;
 
 const groupVariants = {
   default: css`
-    display: flex;
-    flex-direction: column;
-    background-color: ${colors.gray[8]};
-    color: ${colors.gray[1]}
-    padding: 5px;
+    color: ${colors.gray[2]};
+  `,
 
-    &:hover {
-        color: red;
-    }
+  light: css`
+    color: ${colors.gray[6]};
   `,
 };
+
+const baseStyle = css`
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  font-family: Akzidenz, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+`;
 export default class RadioGroup extends Component {
   static displayName = 'RadioGroup';
 
@@ -32,7 +36,7 @@ export default class RadioGroup extends Component {
   };
 
   static propTypes = {
-    variant: PropTypes.oneOf(['default']),
+    variant: PropTypes.oneOf(['default', 'light']),
     size: PropTypes.oneOf(['normal']),
     className: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -71,19 +75,18 @@ export default class RadioGroup extends Component {
         value: child.props.value,
         handleChange: this.handleChange,
         id: index,
+        variant,
         name,
       });
     });
 
     const variantStyle = groupVariants[variant] || groupVariants.default;
 
-    console.log(colors);
-
     return (
       <form
         className={ccClassName(
           css`
-            ${variantStyle}
+            ${variantStyle} +${baseStyle}
           `,
           className,
         )}
