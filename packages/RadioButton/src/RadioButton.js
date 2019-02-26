@@ -5,27 +5,39 @@ import { ccClassName, emotion } from '@leafygreen-ui/lib';
 
 const { css } = emotion;
 
-const labelStyle = css`
-  font-size: 12px;
-  color: ${colors.gray[2]};
-  font-family: Akzidenz, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  cursor: pointer;
+const groupVariants = {
+  default: css`
+    &[disabled] {
+      color: ${colors.gray[5]};
+    }
+  `,
 
+  light: css`
+    &[disabled] {
+      color: ${colors.gray[8]};
+    }
+  `,
+};
+
+const baseLabelStyle = css`
+  cursor: pointer;
+  margin: 0 0 5px 0;
   &[disabled] {
     cursor: not-allowed;
-    color: ${colors.gray[5]};
   }
 `;
 
-const baseStyle = css`
+const baseInputStyle = css`
+  margin-right: 0.5em;
   &:disabled {
     cursor: not-allowed;
   }
 `;
 
-const spanStyle = css`
+const baseSpanStyle = css`
   line-height: 0.9em;
 `;
+
 export default class RadioButton extends Component {
   static displayName = 'RadioButton';
 
@@ -38,6 +50,7 @@ export default class RadioButton extends Component {
     value: '',
     id: '',
     name: '',
+    variant: 'default',
   };
 
   static propTypes = {
@@ -53,6 +66,7 @@ export default class RadioButton extends Component {
     ]),
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     name: PropTypes.string,
+    variant: PropTypes.oneOf(['default', 'light']),
   };
 
   render() {
@@ -65,20 +79,18 @@ export default class RadioButton extends Component {
       disabled,
       id,
       name,
+      variant,
       ...rest
     } = this.props;
 
+    const radioButtonVariantStyle =
+      groupVariants[variant] || groupVariants.default;
     return (
       <label
         htmlFor={id}
         disabled={disabled}
         aria-disabled={disabled}
-        className={ccClassName(
-          css`
-            ${labelStyle}
-          `,
-          className,
-        )}
+        className={ccClassName(baseLabelStyle, radioButtonVariantStyle)}
       >
         <input
           {...rest}
@@ -87,7 +99,7 @@ export default class RadioButton extends Component {
           type="radio"
           className={ccClassName(
             css`
-              ${baseStyle}
+              ${baseInputStyle}
             `,
             className,
           )}
@@ -99,7 +111,7 @@ export default class RadioButton extends Component {
           aria-disabled={disabled}
         />
 
-        <span className={spanStyle}>{children}</span>
+        <span className={baseSpanStyle}>{children}</span>
       </label>
     );
   }
