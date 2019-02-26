@@ -9,12 +9,11 @@ describe('packages/RadioGroup', () => {
   const className = 'test-radiogroup-class';
   const { container } = render(
     <RadioGroup className={className} value="1">
-      <RadioButton value="1">HEY</RadioButton>
+      <RadioButton value="1">Radio Button 1</RadioButton>
     </RadioGroup>,
   );
 
   const controlledContainer = container.firstChild;
-  const controlledRadioGroup = controlledContainer.children[0];
 
   test(`renders "${className}" in the container labels classList`, () => {
     expect(controlledContainer.classList.contains(className)).toBe(true);
@@ -26,8 +25,8 @@ describe('when controlled', () => {
 
   const { container } = render(
     <RadioGroup value="1" onChange={controlledOnChange}>
-      <RadioButton value="1">HEY</RadioButton>
-      <RadioButton value="2">HELLO AGAIN</RadioButton>
+      <RadioButton value="1">Radio Button 1</RadioButton>
+      <RadioButton value="2">Radio Button 2</RadioButton>
     </RadioGroup>,
   );
 
@@ -35,8 +34,7 @@ describe('when controlled', () => {
   const firstButton = controlledContainer.children[0];
   const secondButton = controlledContainer.children[1];
 
-  fireEvent.change(controlledContainer);
-  fireEvent.change(secondButton.firstChild);
+  fireEvent.click(secondButton.firstChild);
 
   test(`initial value set by radio group when prop provided`, () => {
     expect(firstButton.firstChild.checked).toBe(true);
@@ -56,7 +54,7 @@ describe('when uncontrolled', () => {
   const uncontrolledOnChange = jest.fn();
   const uncontrolledContainer = render(
     <RadioGroup onChange={uncontrolledOnChange}>
-      <RadioButton value="option-1">Test 1</RadioButton>
+      <RadioButton value="option-1">Radio Button 1</RadioButton>
     </RadioGroup>,
   ).container.firstChild;
 
@@ -72,6 +70,4 @@ describe('when uncontrolled', () => {
   test('radio button becomes checked when clicked', () => {
     expect(radioButton.firstChild.checked).toBe(true);
   });
-
-  console.log(radioGroup);
 });
