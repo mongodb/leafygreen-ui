@@ -19,7 +19,7 @@
 </RadioGroup>
 ```
 
-### Output HTML
+## Output HTML
 ```html
 <form 
     class="leafygreen-ui-1gj6ct2 my-radio-group">
@@ -49,6 +49,10 @@
 #### Default: `default`
 Sets the style variant of the Radio Group. Valid variants are `default` and `light`
 
+### name 
+#### Type: `string`
+#### Default: ''
+Sets the name of the input group
 
 ### value 
 #### Type: `string` or `integer`
