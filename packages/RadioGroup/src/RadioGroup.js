@@ -29,7 +29,6 @@ export default class RadioGroup extends Component {
 
   static defaultProps = {
     variant: 'default',
-    size: 'normal',
     className: '',
     onChange: () => {},
     name: '',
@@ -37,7 +36,6 @@ export default class RadioGroup extends Component {
 
   static propTypes = {
     variant: PropTypes.oneOf(['default', 'light']),
-    size: PropTypes.oneOf(['normal']),
     className: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onChange: PropTypes.func,
