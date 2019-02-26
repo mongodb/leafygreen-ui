@@ -1,38 +1,27 @@
-# Checkbox
+# Radio Group
 
 ## Example
 ``` Javascript
-<Checkbox
-	className='my-checkbox'
+<RadioGroup
+	className='my-radopgrpi['
 	onChange={(event) => {/* Something to handle the click event */}}
-	label='This is how you enable a thing'
-	checked={true}
+	value='Provide a value to contorl the component'
 />
 ```
 
 **Output HTML**
 ```HTML
-  <label class="css-1rgbgdt my-checkbox" title="Create an item" for="checkbox-14827892">
-		<input
-		  checked
-			type="checkbox"
-			role="checkbox"
-			class="css-32kjhsdaf"
-			id="checkbox-14827892"
-			name="checkbox-14827892"
-			aria-disabled="false"
-			aria-checked="true"
-			aria-labeledby="checkbox-14827892-label"
-		/>
-    
-		<div class="css-34kjkdfg">
-			<div class="css-98sdfjsad"></div>
-		</div>
-
-		<span class="css-8xdsjfh9" id="checkbox-14827892-label">
-			This is how you enable a thing
-		</span>
-  </label>
+  	<form class="leafygreen-ui-1kampq7 ">
+	  	<label for="0" aria-disabled="false" class="leafygreen-ui-167ghcs ">
+		  	<input id="0" name="" type="radio" class="leafygreen-ui-1jxa6s5 " aria-checked="false" aria-disabled="false" value="option-1">
+			  <span class="leafygreen-ui-1qf8api">Option One</span>
+			</label>
+			
+			<label for="3" disabled="" aria-disabled="true" class="leafygreen-ui-167ghcs ">
+				<input id="3" name="" type="radio" class="leafygreen-ui-1jxa6s5 " aria-checked="false" disabled="" aria-disabled="true" value="option-4">
+				<span class="leafygreen-ui-1qf8api">Disabled Option</span>
+			</label>
+	</form>
 ```
 
 ## Properties
