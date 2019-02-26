@@ -39,4 +39,23 @@ storiesOf('RadioGroup', module)
         </RadioButton>
       </RadioGroup>
     </section>
+  ))
+  .add('Test!', () => (
+    <section className="storybook-container">
+      <RadioGroup
+        variant="light"
+        className={emotion.css`
+                background-color: ${colors.gray[1]}
+            `}
+      >
+        <RadioButton>Option One</RadioButton>
+        <RadioButton>
+          {text('Label text', 'Option Two')}
+        </RadioButton>
+        <RadioButton>Option Three</RadioButton>
+        <RadioButton disabled={boolean('Disabled', true)}>
+          Disabled Option
+        </RadioButton>
+      </RadioGroup>
+    </section>
   ));

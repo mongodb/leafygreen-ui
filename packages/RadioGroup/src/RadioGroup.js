@@ -47,6 +47,16 @@ export default class RadioGroup extends Component {
     value: this.props.value,
   };
 
+  addValToRadios = () => {
+      React.Children.map(children, (child) => {
+          if(child.type !== RadioButton) {
+              return child;
+          }
+
+          child.props.value = Math.random()
+      })
+  }
+
   handleChange = e => {
     const { onChange, value } = this.props;
 
@@ -70,7 +80,7 @@ export default class RadioGroup extends Component {
       return React.cloneElement(child, {
         checked: this.state.value === child.props.value,
         disabled: child.props.disabled,
-        value: child.props.value,
+        value: child.props.value || index,
         handleChange: this.handleChange,
         id: index,
         variant,
