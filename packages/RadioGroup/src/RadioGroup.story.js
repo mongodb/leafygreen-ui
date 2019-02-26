@@ -49,9 +49,7 @@ storiesOf('RadioGroup', module)
             `}
       >
         <RadioButton>Option One</RadioButton>
-        <RadioButton>
-          {text('Label text', 'Option Two')}
-        </RadioButton>
+        <RadioButton>{text('Label text', 'Option Two')}</RadioButton>
         <RadioButton>Option Three</RadioButton>
         <RadioButton disabled={boolean('Disabled', true)}>
           Disabled Option

@@ -45,17 +45,24 @@ export default class RadioGroup extends Component {
 
   state = {
     value: this.props.value,
+    updatedChildren: [],
   };
 
-  addValToRadios = () => {
-      React.Children.map(children, (child) => {
-          if(child.type !== RadioButton) {
-              return child;
-          }
+  componentDidMount = () => {
+    const { children } = this.props;
 
-          child.props.value = Math.random()
-      })
-  }
+    const updatedChildren = React.Children.map(children, child => {
+      if (child.type !== RadioButton) {
+        return child;
+      }
+
+      return React.cloneElement(child, {
+        value: child.props.value || Math.floor(Math.random() * 10000000),
+      });
+    });
+
+    this.setState({ updatedChildren });
+  };
 
   handleChange = e => {
     const { onChange, value } = this.props;
@@ -72,21 +79,26 @@ export default class RadioGroup extends Component {
   render() {
     const { children, name, className, variant } = this.props;
 
-    const renderChildren = React.Children.map(children, (child, index) => {
-      if (child.type !== RadioButton) {
-        return child;
-      }
+    const renderChildren = React.Children.map(
+      this.state.updatedChildren,
+      (child, index) => {
+        if (child.type !== RadioButton) {
+          return child;
+        }
 
-      return React.cloneElement(child, {
-        checked: this.state.value === child.props.value,
-        disabled: child.props.disabled,
-        value: child.props.value || index,
-        handleChange: this.handleChange,
-        id: index,
-        variant,
-        name,
-      });
-    });
+        console.log(child.props.value, this.state.value);
+
+        return React.cloneElement(child, {
+          checked: this.state.value == child.props.value,
+          disabled: child.props.disabled,
+          value: child.props.value,
+          handleChange: this.handleChange,
+          id: index,
+          variant,
+          name,
+        });
+      },
+    );
 
     const variantStyle = groupVariants[variant] || groupVariants.default;
 
