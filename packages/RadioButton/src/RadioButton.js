@@ -58,7 +58,7 @@ export default class RadioButton extends PureComponent {
     children: PropTypes.node,
     onChange: PropTypes.func,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    id: PropTypes.string,
     name: PropTypes.string,
     variant: PropTypes.oneOf(['default', 'light']),
   };
