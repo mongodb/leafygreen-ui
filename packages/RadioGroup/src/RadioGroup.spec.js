@@ -14,7 +14,6 @@ describe('packages/RadioGroup', () => {
   );
 
   const controlledContainer = container.firstChild;
-
   test(`renders "${className}" in the container labels classList`, () => {
     expect(controlledContainer.classList.contains(className)).toBe(true);
   });
@@ -31,14 +30,14 @@ describe('when controlled', () => {
   );
 
   const controlledContainer = container.firstChild;
-  const firstButton = controlledContainer.children[0];
-  const secondButton = controlledContainer.children[1];
+  const firstInput = controlledContainer.children[0].firstChild;
+  const secondInput = controlledContainer.children[1].firstChild;
 
-  fireEvent.click(secondButton.firstChild);
+  fireEvent.click(secondInput);
 
   test(`initial value set by radio group when prop provided`, () => {
-    expect(firstButton.firstChild.checked).toBe(true);
-    expect(firstButton.firstChild.getAttribute('aria-checked')).toBe('true');
+    expect(firstInput.checked).toBe(true);
+    expect(firstInput.getAttribute('aria-checked')).toBe('true');
   });
 
   test('onChange fires once when the label is clicked', () => {
@@ -46,7 +45,7 @@ describe('when controlled', () => {
   });
 
   test('radio button does not become checked when clicked', () => {
-    expect(secondButton.firstChild.checked).toBe(false);
+    expect(secondInput.checked).toBe(false);
   });
 });
 
@@ -60,7 +59,7 @@ describe('when uncontrolled', () => {
 
   const radioGroup = uncontrolledContainer;
   const radioLabel = uncontrolledContainer.children[0];
-  const radioButton = radioGroup.firstChild;
+  const radioButton = radioGroup.firstChild.firstChild;
   fireEvent.click(radioLabel.firstChild);
 
   test('onChange fires once when the label is clicked', () => {
@@ -68,6 +67,6 @@ describe('when uncontrolled', () => {
   });
 
   test('radio button becomes checked when clicked', () => {
-    expect(radioButton.firstChild.checked).toBe(true);
+    expect(radioButton.checked).toBe(true);
   });
 });

@@ -4,15 +4,14 @@
 ```js
 <RadioGroup
     className='my-radio-group'
-    variant={'default' || 'light'}
-    onChange={event => {/* Something to handle the change event */}}
-    value={/* Make it a controlled component */}
+    variant='default'
+    onChange={event => () => console.log('hi')}
+    value='option-1'
     name='name-of-input-group'>
 
     <RadioButton 
         className='my-radio-button'
-        value={/* this is a required prop */>}
-        disabled={true || false}>
+        value='option-1'>
     Label Text Goes Here
     </RadioButton>
 
@@ -68,3 +67,8 @@ Adds a className to the outermost element.
 #### Type: `function`
 #### Default: `() => {}`
 The event handler function for the 'onchange' event. Receives the associated event object as the first argument.
+
+### children
+#### Type: `node`
+#### Default: `null`
+Can be any node; however, any `<RadioButton />` components, will be treated as belonging to the `<RadioGroup />` compound component, and will recieve internal state from `<RadioGroup />`
