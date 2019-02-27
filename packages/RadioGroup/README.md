@@ -21,7 +21,7 @@
 
 ## Output HTML
 ```html
-<form 
+<div 
     class="leafygreen-ui-1gj6ct2 my-radio-group">
 
     <label 
@@ -39,7 +39,7 @@
         <span class="leafygreen-ui-1qf8api">Label Text Goes Here</span>
 
     </label>
-</form>
+</div>
 ```
 
 ## Properties 
