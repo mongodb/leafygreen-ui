@@ -23,6 +23,7 @@ const baseStyle = css`
   font-size: 12px;
   font-family: Akzidenz, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 `;
+
 export default class RadioGroup extends Component {
   static displayName = 'RadioGroup';
 
@@ -65,12 +66,9 @@ export default class RadioGroup extends Component {
       if (child.type.displayName !== 'RadioButton') {
         return child;
       }
-
       return React.cloneElement(child, {
         onChange: this.handleChange,
         checked: String(this.state.value) == String(child.props.value),
-        disabled: child.props.disabled,
-        value: child.props.value,
         id: index,
         variant,
         name,
@@ -82,9 +80,7 @@ export default class RadioGroup extends Component {
     return (
       <div
         className={ccClassName(
-          css`
-            ${variantStyle} +${baseStyle}
-          `,
+          css`${variantStyle} +${baseStyle}`,
           className,
         )}
       >

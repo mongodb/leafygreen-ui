@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { colors } from '@leafygreen-ui/theme';
 import { ccClassName, emotion } from '@leafygreen-ui/lib';
@@ -40,7 +40,7 @@ const textStyle = css`
   line-height: 0.9em;
 `;
 
-export default class RadioButton extends Component {
+export default class RadioButton extends PureComponent {
   static displayName = 'RadioButton';
 
   static defaultProps = {
