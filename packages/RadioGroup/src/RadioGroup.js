@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import RadioButton from '../../RadioButton/src/index';
 
 import { colors } from '@leafygreen-ui/theme';
 import { ccClassName, emotion } from '@leafygreen-ui/lib';
@@ -45,7 +44,6 @@ export default class RadioGroup extends Component {
 
   state = {
     value: this.props.value,
-    updatedChildren: [],
   };
 
   handleChange = e => {
@@ -60,19 +58,20 @@ export default class RadioGroup extends Component {
     }
   };
 
+
   render() {
     const { children, name, className, variant } = this.props;
 
     const renderChildren = React.Children.map(children, (child, index) => {
-      if (child.type !== RadioButton) {
+      if (child.type.displayName !== "RadioButton") {
         return child;
       }
 
       return React.cloneElement(child, {
+        onChange: this.handleChange,
         checked: this.state.value == child.props.value,
         disabled: child.props.disabled,
         value: child.props.value,
-        handleChange: this.handleChange,
         id: index,
         variant,
         name,
@@ -82,7 +81,7 @@ export default class RadioGroup extends Component {
     const variantStyle = groupVariants[variant] || groupVariants.default;
 
     return (
-      <form
+      <div
         className={ccClassName(
           css`
             ${variantStyle} +${baseStyle}
@@ -91,7 +90,7 @@ export default class RadioGroup extends Component {
         )}
       >
         {renderChildren}
-      </form>
+      </div>
     );
   }
 }

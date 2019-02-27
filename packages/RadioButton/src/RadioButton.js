@@ -48,7 +48,6 @@ export default class RadioButton extends Component {
     children: null,
     onChange: () => {},
     id: '',
-    name: '',
     variant: 'default',
   };
 
@@ -68,7 +67,7 @@ export default class RadioButton extends Component {
     const {
       children,
       className,
-      handleChange,
+      onChange,
       value,
       checked,
       disabled,
@@ -98,7 +97,7 @@ export default class RadioButton extends Component {
             `,
             className,
           )}
-          onChange={handleChange}
+          onChange={onChange}
           value={value}
           checked={checked}
           aria-checked={checked}

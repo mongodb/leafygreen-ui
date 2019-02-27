@@ -1,21 +1,21 @@
 {
-    "name": "@leafygreen-ui/RadioButton",
-    "version": "1.0.0",
-    "description": "leafyGreen UI Kit RadioButton",
-    "main": "./dist/index.js",
-    "scripts": {
-      "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
-    },
-    "license": "Apache-2.0",
-    "publishConfig": {
-      "access": "public"
-    },
-    "peerDependencies": {
-      "prop-types": "^15.0.0",
-      "react": "^16.0.0"
-    },
-    "dependencies": {
-      "@leafygreen-ui/lib": "^2.0.0",
-      "@leafygreen-ui/theme": "^1.0.5"
-    }
+  "name": "@leafygreen-ui/RadioButton",
+  "version": "1.0.0",
+  "description": "leafyGreen UI Kit RadioButton",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.0.0",
+    "react": "^16.0.0"
+  },
+  "dependencies": {
+    "@leafygreen-ui/lib": "^2.0.0",
+    "@leafygreen-ui/theme": "^1.0.5"
   }
+}
