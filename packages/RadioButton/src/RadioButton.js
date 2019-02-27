@@ -84,7 +84,12 @@ export default class RadioButton extends Component {
         htmlFor={id}
         disabled={disabled}
         aria-disabled={disabled}
-        className={ccClassName(baseLabelStyle, radioButtonVariantStyle)}
+        className={ccClassName(
+          css`
+            ${baseLabelStyle} ${radioButtonVariantStyle}
+          `,
+          className,
+        )}
       >
         <input
           {...rest}
