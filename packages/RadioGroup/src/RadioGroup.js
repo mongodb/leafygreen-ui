@@ -63,24 +63,21 @@ export default class RadioGroup extends Component {
   render() {
     const { children, name, className, variant } = this.props;
 
-    const renderChildren = React.Children.map(
-      children,
-      (child, index) => {
-        if (child.type !== RadioButton) {
-          return child;
-        }
+    const renderChildren = React.Children.map(children, (child, index) => {
+      if (child.type !== RadioButton) {
+        return child;
+      }
 
-        return React.cloneElement(child, {
-          checked: this.state.value == child.props.value,
-          disabled: child.props.disabled,
-          value: child.props.value,
-          handleChange: this.handleChange,
-          id: index,
-          variant,
-          name,
-        });
-      },
-    );
+      return React.cloneElement(child, {
+        checked: this.state.value == child.props.value,
+        disabled: child.props.disabled,
+        value: child.props.value,
+        handleChange: this.handleChange,
+        id: index,
+        variant,
+        name,
+      });
+    });
 
     const variantStyle = groupVariants[variant] || groupVariants.default;
 
