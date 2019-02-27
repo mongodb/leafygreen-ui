@@ -58,12 +58,11 @@ export default class RadioGroup extends Component {
     }
   };
 
-
   render() {
     const { children, name, className, variant } = this.props;
 
     const renderChildren = React.Children.map(children, (child, index) => {
-      if (child.type.displayName !== "RadioButton") {
+      if (child.type.displayName !== 'RadioButton') {
         return child;
       }
 
