@@ -21,7 +21,8 @@ const groupVariants = {
 
 const baseLabelStyle = css`
   cursor: pointer;
-  margin: 0 0 5px 0;
+  margin-bottom: 5px;
+
   &[disabled] {
     cursor: not-allowed;
   }
@@ -29,12 +30,13 @@ const baseLabelStyle = css`
 
 const baseInputStyle = css`
   margin-right: 0.5em;
+
   &:disabled {
     cursor: not-allowed;
   }
 `;
 
-const baseSpanStyle = css`
+const textStyle = css`
   line-height: 0.9em;
 `;
 
@@ -45,9 +47,7 @@ export default class RadioButton extends Component {
     checked: false,
     disabled: false,
     className: '',
-    children: null,
     onChange: () => {},
-    id: '',
     variant: 'default',
   };
 
@@ -82,8 +82,6 @@ export default class RadioButton extends Component {
     return (
       <label
         htmlFor={id}
-        disabled={disabled}
-        aria-disabled={disabled}
         className={ccClassName(
           css`
             ${baseLabelStyle} ${radioButtonVariantStyle}
@@ -110,7 +108,7 @@ export default class RadioButton extends Component {
           aria-disabled={disabled}
         />
 
-        <span className={baseSpanStyle}>{children}</span>
+        <span className={textStyle}>{children}</span>
       </label>
     );
   }

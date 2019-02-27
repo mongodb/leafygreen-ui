@@ -25,12 +25,12 @@
     class="leafygreen-ui-1gj6ct2 my-radio-group">
 
     <label 
-        for="0" 
+        for="0"
+        class="leafygreen-ui-i6tne my-radio-button">  
         <input 
             id="0" 
             name="name-of-input-group" 
             type="radio" 
-            class="leafygreen-ui-i6tne my-radio-button" 
             aria-checked="true" 
             aria-disabled="false" 
             value="option-1" 
