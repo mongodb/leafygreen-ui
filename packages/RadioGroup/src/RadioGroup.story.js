@@ -10,11 +10,11 @@ storiesOf('RadioGroup', module)
   .add('Default', () => (
     <section className="storybook-container">
       <RadioGroup name="radio-group-default">
-        <RadioButton value="option-1">Option One</RadioButton>
-        <RadioButton value="option-2">
+        <RadioButton value="1">Option One</RadioButton>
+        <RadioButton value="2">
           {text('Label text', 'Option Two')}
         </RadioButton>
-        <RadioButton value="option-3">Option Three</RadioButton>
+        <RadioButton value="3">Option Three</RadioButton>
         <RadioButton disabled={boolean('Disabled', true)} value="option-4">
           Disabled Option
         </RadioButton>
@@ -36,7 +36,7 @@ storiesOf('RadioGroup', module)
           {text('Label text', 'Option Two')}
         </RadioButton>
         <RadioButton value="option-3">Option Three</RadioButton>
-        <RadioButton disabled={boolean('Disabled', true)} value="option-4">
+        <RadioButton disabled={boolean('Disabled', true)} value="4">
           Disabled Option
         </RadioButton>
       </RadioGroup>
