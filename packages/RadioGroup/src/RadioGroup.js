@@ -31,7 +31,6 @@ export default class RadioGroup extends Component {
     variant: 'default',
     className: '',
     onChange: () => {},
-    name: '',
   };
 
   static propTypes = {
@@ -40,12 +39,14 @@ export default class RadioGroup extends Component {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onChange: PropTypes.func,
     children: PropTypes.node,
-    name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    name: PropTypes.string,
   };
 
   state = {
     value: this.props.value,
   };
+
+  defaultName = `radio-group-${Math.floor(Math.random() * 1000000)}`;
 
   handleChange = e => {
     const { onChange, value } = this.props;
@@ -60,16 +61,22 @@ export default class RadioGroup extends Component {
   };
 
   render() {
-    const { children, name, className, variant } = this.props;
+    const {
+      children,
+      name = this.defaultName,
+      className,
+      variant,
+    } = this.props;
 
+    // React.Children.map allows us to not pass key as prop while iterating over children
     const renderChildren = React.Children.map(children, (child, index) => {
       if (child.type.displayName !== 'RadioButton') {
         return child;
       }
       return React.cloneElement(child, {
         onChange: this.handleChange,
-        checked: String(this.state.value) == String(child.props.value),
-        id: index,
+        checked: this.state.value === child.props.value,
+        id: child.props.id || `${this.defaultName}-button-${index}`,
         variant,
         name,
       });
@@ -79,10 +86,7 @@ export default class RadioGroup extends Component {
 
     return (
       <div
-        className={ccClassName(
-          css`${variantStyle} +${baseStyle}`,
-          className,
-        )}
+        className={ccClassName(css`${variantStyle} +${baseStyle}`, className)}
       >
         {renderChildren}
       </div>
