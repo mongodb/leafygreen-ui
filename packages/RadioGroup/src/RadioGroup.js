@@ -66,9 +66,10 @@ export default class RadioGroup extends Component {
         return child;
       }
 
+    
       return React.cloneElement(child, {
         onChange: this.handleChange,
-        checked: this.state.value == child.props.value,
+        checked: String(this.state.value) == String(child.props.value),
         disabled: child.props.disabled,
         value: child.props.value,
         id: index,
