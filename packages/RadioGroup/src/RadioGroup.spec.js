@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from 'react-testing-library';
-import RadioGroup from '.';
-import RadioButton from '@leafygreen-ui/RadioButton';
+import RadioGroup from './RadioGroup'
+import RadioButton from './RadioButton'
 
 afterAll(cleanup);
 
