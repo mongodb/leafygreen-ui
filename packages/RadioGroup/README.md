@@ -12,31 +12,26 @@
     <RadioButton 
         className='my-radio-button'
         value='option-1'>
-    Label Text Goes Here
+        Label Text Goes Here
     </RadioButton>
-
 </RadioGroup>
 ```
 
 ## Output HTML
 ```html
-<div 
-    class="leafygreen-ui-1gj6ct2 my-radio-group">
-
+<div class="leafygreen-ui-1gj6ct2 my-radio-group">
     <label 
-        for="0"
-        class="leafygreen-ui-i6tne my-radio-button">  
+        for="radio-group-570638-button-0" 
+        class="leafygreen-ui-14b5mmy my-radio-button">
         <input 
-            id="0" 
-            name="name-of-input-group" 
+            id="radio-group-570638-button-0" 
+            name="radio-group-default" 
             type="radio" 
-            aria-checked="true" 
+            class="leafygreen-ui-i6tne" 
+            aria-checked="false" 
             aria-disabled="false" 
-            value="option-1" 
-        />
-        
-        <span class="leafygreen-ui-1qf8api">Label Text Goes Here</span>
-
+            value="1">
+        <span class="leafygreen-ui-1qf8api">Option One</span>
     </label>
 </div>
 ```
@@ -72,3 +67,5 @@ The event handler function for the 'onchange' event. Receives the associated eve
 #### Type: `node`
 #### Default: `null`
 Can be any node; however, any `<RadioButton />` components, will be treated as belonging to the `<RadioGroup />` compound component, and will recieve internal state from `<RadioGroup />`
+
+# Radio Button
