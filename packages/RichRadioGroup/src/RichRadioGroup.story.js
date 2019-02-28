@@ -5,12 +5,10 @@ import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
 import RichRadioGroup from '.';
 
-
-storiesOf('RadioGroup', module)
-  .add('Default', () => (
-    <section className="storybook-container">
-      <RichRadioGroup name="radio-group-default">
-     
-      </RichRadioGroup>
-    </section>
-  ));
+storiesOf('RichRadioGroup', module).add('Default', () => (
+  <section className="storybook-container">
+    <RichRadioGroup>
+      nlah 
+    </RichRadioGroup>
+  </section>
+));
