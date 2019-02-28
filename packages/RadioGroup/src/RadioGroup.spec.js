@@ -58,9 +58,9 @@ describe('when uncontrolled', () => {
   ).container.firstChild;
 
   const radioGroup = uncontrolledContainer;
-  const radioLabel = uncontrolledContainer.children[0];
+  const radioLabel = uncontrolledContainer.children[0].firstChild;
   const radioButton = radioGroup.firstChild.firstChild;
-  fireEvent.click(radioLabel.firstChild);
+  fireEvent.click(radioLabel);
 
   test('onChange fires once when the label is clicked', () => {
     expect(uncontrolledOnChange.mock.calls.length).toBe(1);

@@ -5,36 +5,32 @@ import { ccClassName, emotion } from '@leafygreen-ui/lib';
 
 const { css } = emotion;
 
-const groupVariants = {
-  default: css`
-    &[disabled] {
-      color: ${colors.gray[5]};
-    }
-  `,
-
-  light: css`
-    &[disabled] {
-      color: ${colors.gray[8]};
-    }
-  `,
-};
-
-const baseLabelStyle = css`
+const labelStyle = css`
   cursor: pointer;
   margin-bottom: 5px;
-
-  &[disabled] {
-    cursor: not-allowed;
-  }
 `;
 
-const baseInputStyle = css`
+const inputStyle = css`
   margin-right: 0.5em;
 
   &:disabled {
     cursor: not-allowed;
   }
 `;
+
+const buttonVariants = {
+  default: css`
+    .${inputStyle}:disabled + & {
+      color: ${colors.gray[5]};
+    }
+  `,
+
+  light: css`
+    .${inputStyle}:disabled + & { 
+      color: ${colors.gray[4]};
+    }
+  `,
+};
 
 const textStyle = css`
   line-height: 0.9em;
@@ -77,29 +73,19 @@ export default class RadioButton extends PureComponent {
       ...rest
     } = this.props;
 
-    const radioButtonVariantStyle =
-      groupVariants[variant] || groupVariants.default;
+    const variantStyle = buttonVariants[variant] 
+
     return (
       <label
         htmlFor={id}
-        className={ccClassName(
-          css`
-            ${baseLabelStyle} ${radioButtonVariantStyle}
-          `,
-          className,
-        )}
+        className={ccClassName(labelStyle, className)}
       >
         <input
           {...rest}
           id={id}
           name={name}
           type="radio"
-          className={ccClassName(
-            css`
-              ${baseInputStyle}
-            `,
-            className,
-          )}
+          className={ccClassName(inputStyle, className)}
           onChange={onChange}
           value={value}
           checked={checked}
@@ -108,7 +94,7 @@ export default class RadioButton extends PureComponent {
           aria-disabled={disabled}
         />
 
-        <span className={textStyle}>{children}</span>
+        <span className={css`${textStyle} ${variantStyle}`}>{children}</span>
       </label>
     );
   }
