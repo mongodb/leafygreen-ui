@@ -69,7 +69,7 @@ export default class RadioGroup extends Component {
       value,
     } = this.props;
 
-    const currentValue = value || this.state.value
+    const currentValue = value || this.state.value;
 
     // React.Children.map allows us to not pass key as prop while iterating over children
     const renderChildren = React.Children.map(children, (child, index) => {
@@ -90,7 +90,12 @@ export default class RadioGroup extends Component {
 
     return (
       <div
-        className={ccClassName(css`${variantStyle} ${baseStyle}`, className)}
+        className={ccClassName(
+          css`
+            ${variantStyle} ${baseStyle}
+          `,
+          className,
+        )}
       >
         {renderChildren}
       </div>
