@@ -1,37 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { colors } from '@leafygreen-ui/theme';
+import * as style from './style.js';
+
 import { ccClassName, emotion } from '@leafygreen-ui/lib';
 
 const { css } = emotion;
-
-const baseStyle = css`
-  display: flex;
-
-  .radio-button {
-    padding: 0;
-    position: relative;
-
-    &:text {
-      cursor: pointer;
-      display: block;
-      margin: 0;
-      text-align: center;
-      padding: 16px 10px;
-    }
-
-    input[type='radio'] {
-      display: block;
-      left: 0;
-      height: 100%;
-      top: 0;
-      position: absolute;
-      visibility: hidden;
-      width: 100%;
-    }
-  }
-`;
 export default class RichRadioGroup extends Component {
   static displayName = 'RichRadioGroup';
 
@@ -40,19 +14,19 @@ export default class RichRadioGroup extends Component {
     onChange: PropTypes.func,
     name: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    size: PropTypes.oneOf(['xsmall', 'small', 'normal', 'large']),
+    size: PropTypes.oneOf(['small', 'medium', 'large', 'tight', 'full']),
   };
 
   static defaultProps = {
     onChange: () => {},
-    size: 'normal'
+    size: 'normal',
   };
 
   state = {
-    value: this.props.value,
+    value: '',
   };
 
-  defaultName = `radio-group-${Math.floor(Math.random() * 1000000)}`;
+  defaultName = `rich-radio-group-${Math.floor(Math.random() * 1000000)}`;
 
   handleChange = e => {
     const { onChange, value } = this.props;
@@ -67,15 +41,18 @@ export default class RichRadioGroup extends Component {
   };
 
   render() {
-    const { children, name, className, size } = this.props;
+    const { children, name=this.defaultName, className, size, value } = this.props;
+
+    const currentValue = value || this.state.value
 
     const renderChildren = React.Children.map(children, (child, index) => {
-      if (child.type.displayName !== 'RadioButton') {
+      if (child.type.displayName !== 'RichRadioInput') {
         return child;
       }
+
       return React.cloneElement(child, {
         onChange: this.handleChange,
-        checked: this.state.value === child.props.value,
+        checked: currentValue === child.props.value,
         id: child.props.id || `${this.defaultName}-button-${index}`,
         size,
         name,
@@ -83,7 +60,7 @@ export default class RichRadioGroup extends Component {
     });
 
     return (
-      <div className={ccClassName(css`${baseStyle}`, className)}>
+      <div className={ccClassName(css`${style.baseGroupStyle}`)}>
         {renderChildren}
       </div>
     );

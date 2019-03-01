@@ -1,1 +1,4 @@
-export default from './RichRadioGroup';
+import RichRadioGroup from './RichRadioGroup'
+import RichRadioInput from './RichRadioInput'
+
+export default { RichRadioGroup, RichRadioInput }
