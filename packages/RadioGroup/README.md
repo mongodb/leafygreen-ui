@@ -19,19 +19,19 @@
 
 ## Output HTML
 ```html
-<div class="leafygreen-ui-1gj6ct2 my-radio-group">
+<div class="leafygreen-ui-16glayc my-radio-group">
     <label 
-        for="radio-group-570638-button-0" 
-        class="leafygreen-ui-14b5mmy my-radio-button">
+        for="radio-group-660118-button-0" 
+        class="leafygreen-ui-11wfvmq my-radio-button">   
         <input 
-            id="radio-group-570638-button-0" 
-            name="radio-group-default" 
+            id="radio-group-660118-button-0" 
+            name="name-of-input-group" 
             type="radio" 
-            class="leafygreen-ui-i6tne" 
-            aria-checked="false" 
+            class="leafygreen-ui-i6tne my-radio-button" 
+            aria-checked="true" 
             aria-disabled="false" 
-            value="1">
-        <span class="leafygreen-ui-1qf8api">Option One</span>
+            value="option-1">      
+        <span class="leafygreen-ui-1l7rt9l">Label Text Goes Here</span>
     </label>
 </div>
 ```
@@ -72,31 +72,26 @@ Can be any node; however, any `<RadioButton />` components, will be treated as b
 
 ## Example
 ```js
-    <RadioButton
-    className='my-radio-button'
-    value={/* this is a required prop */}
-    disabled={true || false}>
-    Label Text Goes Here
+     <RadioButton 
+        className='my-radio-button'
+        value='option-1'
+        disabled={true}>
+        Label Text Goes Here
     </RadioButton>
 ```
 
 ## Output HTML 
 ```html
-    <label 
-    for="0"
-    class="leafygreen-ui-i6tne my-radio-button"> 
+    <label class="leafygreen-ui-11wfvmq my-radio-button">
     <input 
-        id="0" 
-        name="name-of-input-group" 
         type="radio" 
-        aria-checked="true" 
-        aria-disabled="false" 
-        value="option-1" 
-    />
-    
-    <span class="leafygreen-ui-1qf8api">Label Text Goes Here</span>
-
-    </label> 
+        class="leafygreen-ui-i6tne my-radio-button" 
+        aria-checked="false" 
+        disabled="true" 
+        aria-disabled="true" 
+        value="option-1">
+        <span class="leafygreen-ui-1l7rt9l">Label Text Goes Here</span>
+    </label>
 ```
 
 ## Properties
