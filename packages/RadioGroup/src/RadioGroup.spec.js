@@ -57,9 +57,9 @@ describe('when uncontrolled', () => {
     </RadioGroup>,
   ).container.firstChild;
 
-  const radioGroup = uncontrolledContainer;
-  const radioLabel = uncontrolledContainer.children[0].firstChild;
-  const radio = radioGroup.firstChild.firstChild;
+  const radioLabel = uncontrolledContainer.firstChild;
+  const radio = radioLabel.firstChild;
+
   fireEvent.click(radioLabel);
 
   test('onChange fires once when the label is clicked', () => {

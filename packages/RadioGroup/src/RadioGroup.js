@@ -18,8 +18,6 @@ const groupVariants = {
 
 const baseStyle = css`
   padding: 5px;
-  display: flex;
-  flex-direction: column;
   font-size: 12px;
   font-family: Akzidenz, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 `;
