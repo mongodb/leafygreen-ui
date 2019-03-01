@@ -26,7 +26,7 @@ const buttonVariants = {
   `,
 
   light: css`
-    .${inputStyle}:disabled + & { 
+    .${inputStyle}:disabled + & {
       color: ${colors.gray[4]};
     }
   `,
@@ -73,13 +73,10 @@ export default class RadioButton extends PureComponent {
       ...rest
     } = this.props;
 
-    const variantStyle = buttonVariants[variant] 
+    const variantStyle = buttonVariants[variant];
 
     return (
-      <label
-        htmlFor={id}
-        className={ccClassName(labelStyle, className)}
-      >
+      <label htmlFor={id} className={ccClassName(labelStyle, className)}>
         <input
           {...rest}
           id={id}
@@ -94,7 +91,13 @@ export default class RadioButton extends PureComponent {
           aria-disabled={disabled}
         />
 
-        <span className={css`${textStyle} ${variantStyle}`}>{children}</span>
+        <span
+          className={css`
+            ${textStyle} ${variantStyle}
+          `}
+        >
+          {children}
+        </span>
       </label>
     );
   }
