@@ -36,8 +36,8 @@ const textStyle = css`
   line-height: 0.9em;
 `;
 
-export default class RadioButton extends PureComponent {
-  static displayName = 'RadioButton';
+export default class Radio extends PureComponent {
+  static displayName = 'Radio';
 
   static defaultProps = {
     checked: false,

@@ -1,22 +1,22 @@
 import React from 'react';
 import { render, cleanup } from 'react-testing-library';
-import RadioButton from './RadioButton';
+import Radio from './Radio';
 
 afterAll(cleanup);
 
 describe('packages/RadioButton', () => {
   const className = 'radio-button-test-class';
   const { container } = render(
-    <RadioButton disabled value="option-1" className={className}>
+    <Radio disabled value="option-1" className={className}>
       Radio Button 1
-    </RadioButton>,
+    </Radio>,
   );
 
-  const radioButton = container.firstChild;
-  const input = radioButton.firstChild;
+  const radio = container.firstChild;
+  const input = radio.firstChild;
 
   test(`renders "${className}" in the labels's class list`, () => {
-    expect(radioButton.classList.contains(className)).toBe(true);
+    expect(radio.classList.contains(className)).toBe(true);
   });
 
   test(`renders disabled radio button when disabled prop is set`, () => {
@@ -26,9 +26,9 @@ describe('packages/RadioButton', () => {
 
   test(`radio button is checked when value is set`, () => {
     render(
-      <RadioButton value="option-two" checked={true}>
+      <Radio value="option-two" checked={true}>
         Radio Button 2
-      </RadioButton>,
+      </Radio>,
       { container },
     );
     expect(input.checked).toBe(true);

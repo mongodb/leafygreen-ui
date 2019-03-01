@@ -4,18 +4,18 @@ import { text, boolean } from '@storybook/addon-knobs';
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
 import RadioGroup from './RadioGroup';
-import RadioButton from './RadioButton';
+import Radio from './Radio';
 
 storiesOf('RadioGroup', module)
   .add('Default', () => (
     <section className="storybook-container">
       <RadioGroup name="radio-group-default">
-        <RadioButton value="1">Option One</RadioButton>
-        <RadioButton value="2">{text('Label text', 'Option Two')}</RadioButton>
-        <RadioButton value="3">Option Three</RadioButton>
-        <RadioButton disabled={boolean('Disabled', true)} value="option-4">
+        <Radio value="1">Option One</Radio>
+        <Radio value="2">{text('Label text', 'Option Two')}</Radio>
+        <Radio value="3">Option Three</Radio>
+        <Radio disabled={boolean('Disabled', true)} value="option-4">
           Disabled Option
-        </RadioButton>
+        </Radio>
       </RadioGroup>
     </section>
   ))
@@ -28,24 +28,14 @@ storiesOf('RadioGroup', module)
                 background-color: ${colors.gray[1]}
             `}
       >
-        <RadioButton value="option-1">Option One</RadioButton>
-        <RadioButton value="option-2">
+        <Radio value="option-1">Option One</Radio>
+        <Radio value="option-2">
           {text('Label text', 'Option Two')}
-        </RadioButton>
-        <RadioButton value="option-3">Option Three</RadioButton>
-        <RadioButton disabled={boolean('Disabled', true)} value="4">
+        </Radio>
+        <Radio value="option-3">Option Three</Radio>
+        <Radio disabled={boolean('Disabled', true)} value="4">
           Disabled Option
-        </RadioButton>
+        </Radio>
       </RadioGroup>
-    </section>
-  ))
-  .add('HTML Testing', () => (
-    <section className="storybook-container">
-          <RadioButton 
-        className='my-radio-button'
-        value='option-1'
-        disabled={true}>
-        Label Text Goes Here
-    </RadioButton>
     </section>
   ));
