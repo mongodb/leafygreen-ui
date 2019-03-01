@@ -38,4 +38,14 @@ storiesOf('RadioGroup', module)
         </RadioButton>
       </RadioGroup>
     </section>
+  ))
+  .add('HTML Testing', () => (
+    <section className="storybook-container">
+          <RadioButton 
+        className='my-radio-button'
+        value='option-1'
+        disabled={true}>
+        Label Text Goes Here
+    </RadioButton>
+    </section>
   ));
