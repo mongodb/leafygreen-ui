@@ -8,6 +8,7 @@ const { css } = emotion;
 const labelStyle = css`
   cursor: pointer;
   margin-bottom: 5px;
+  display: block;
 `;
 
 const inputStyle = css`

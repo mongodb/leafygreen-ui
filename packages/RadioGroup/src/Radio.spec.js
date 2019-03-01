@@ -4,11 +4,11 @@ import Radio from './Radio';
 
 afterAll(cleanup);
 
-describe('packages/RadioButton', () => {
-  const className = 'radio-button-test-class';
+describe('packages/Radio', () => {
+  const className = 'radio-test-class';
   const { container } = render(
     <Radio disabled value="option-1" className={className}>
-      Radio Button 1
+      Radio 1
     </Radio>,
   );
 
@@ -19,18 +19,19 @@ describe('packages/RadioButton', () => {
     expect(radio.classList.contains(className)).toBe(true);
   });
 
-  test(`renders disabled radio button when disabled prop is set`, () => {
+  test(`renders disabled radio when disabled prop is set`, () => {
     expect(input.disabled).toBe(true);
     expect(input.getAttribute('aria-disabled')).toBe('true');
   });
 
-  test(`radio button is checked when value is set`, () => {
+  test(`radio is checked when value is set`, () => {
     render(
       <Radio value="option-two" checked={true}>
-        Radio Button 2
+        Radio 2
       </Radio>,
       { container },
     );
+
     expect(input.checked).toBe(true);
     expect(input.getAttribute('aria-checked')).toBe('true');
   });
