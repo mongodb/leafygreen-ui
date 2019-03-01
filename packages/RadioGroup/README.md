@@ -9,11 +9,11 @@
     value='option-1'
     name='name-of-input-group'>
 
-    <RadioButton 
-        className='my-radio-button'
+    <Radio 
+        className='my-radio'
         value='option-1'>
         Label Text Goes Here
-    </RadioButton>
+    </Radio>
 </RadioGroup>
 ```
 
@@ -22,12 +22,12 @@
 <div class="leafygreen-ui-16glayc my-radio-group">
     <label 
         for="radio-group-660118-button-0" 
-        class="leafygreen-ui-11wfvmq my-radio-button">   
+        class="leafygreen-ui-11wfvmq my-radio">   
         <input 
             id="radio-group-660118-button-0" 
             name="name-of-input-group" 
             type="radio" 
-            class="leafygreen-ui-i6tne my-radio-button" 
+            class="leafygreen-ui-i6tne my-radio" 
             aria-checked="true" 
             aria-disabled="false" 
             value="option-1">      
@@ -51,7 +51,7 @@ Sets the name of the input group
 ### value 
 #### Type: `string` or `integer`
 #### Default: ``
-Sets the radio button that will apear checked on page load, also makes the component a controlled component 
+Sets the radio that will apear checked on page load, also makes the component a controlled component 
 
 ### className
 #### Type: `string`
@@ -66,26 +66,26 @@ The event handler function for the 'onchange' event. Receives the associated eve
 ### children
 #### Type: `node`
 #### Default: `null`
-Can be any node; however, any `<RadioButton />` components, will be treated as belonging to the `<RadioGroup />` compound component, and will recieve internal state from `<RadioGroup />`
+Can be any node; however, any `<Radio />` components, will be treated as belonging to the `<RadioGroup />` compound component, and will recieve internal state from `<RadioGroup />`
 
-# Radio Button
+# Radio
 
 ## Example
 ```js
-     <RadioButton 
-        className='my-radio-button'
+     <Radio 
+        className='my-radio'
         value='option-1'
         disabled={true}>
         Label Text Goes Here
-    </RadioButton>
+    </Radio>
 ```
 
 ## Output HTML 
 ```html
-    <label class="leafygreen-ui-11wfvmq my-radio-button">
+    <label class="leafygreen-ui-11wfvmq my-radio">
     <input 
         type="radio" 
-        class="leafygreen-ui-i6tne my-radio-button" 
+        class="leafygreen-ui-i6tne my-radio" 
         aria-checked="false" 
         disabled="true" 
         aria-disabled="true" 
@@ -98,7 +98,7 @@ Can be any node; however, any `<RadioButton />` components, will be treated as b
 
 ### value 
 #### Type: `required`, can be a `string` or an `integer`
-Every radio button needs a value prop
+Every radio needs a value prop
 
 ### className
 #### Type: `string`
@@ -108,7 +108,7 @@ Adds a className to the label
 ### disabled 
 #### Type: `boolean`
 #### Default: `false`
-Indicates whether or not the radio button can be clicked by a user
+Indicates whether or not the radio can be clicked by a user
 
 ### children
 #### Type: `node`

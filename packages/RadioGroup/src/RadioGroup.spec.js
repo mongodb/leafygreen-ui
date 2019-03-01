@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from 'react-testing-library';
 import RadioGroup from './RadioGroup';
-import RadioButton from './RadioButton';
+import Radio from './Radio';
 
 afterAll(cleanup);
 
@@ -9,7 +9,7 @@ describe('packages/RadioGroup', () => {
   const className = 'test-radiogroup-class';
   const { container } = render(
     <RadioGroup className={className} value="1">
-      <RadioButton value="1">Radio Button 1</RadioButton>
+      <Radio value="1">Radio Button 1</Radio>
     </RadioGroup>,
   );
 
@@ -24,8 +24,8 @@ describe('when controlled', () => {
 
   const { container } = render(
     <RadioGroup value="1" onChange={controlledOnChange}>
-      <RadioButton value="1">Radio Button 1</RadioButton>
-      <RadioButton value="2">Radio Button 2</RadioButton>
+      <Radio value="1">Radio Button 1</Radio>
+      <Radio value="2">Radio Button 2</Radio>
     </RadioGroup>,
   );
 
@@ -53,13 +53,13 @@ describe('when uncontrolled', () => {
   const uncontrolledOnChange = jest.fn();
   const uncontrolledContainer = render(
     <RadioGroup onChange={uncontrolledOnChange}>
-      <RadioButton value="option-1">Radio Button 1</RadioButton>
+      <Radio value="option-1">Radio Button 1</Radio>
     </RadioGroup>,
   ).container.firstChild;
 
   const radioGroup = uncontrolledContainer;
   const radioLabel = uncontrolledContainer.children[0].firstChild;
-  const radioButton = radioGroup.firstChild.firstChild;
+  const radio = radioGroup.firstChild.firstChild;
   fireEvent.click(radioLabel);
 
   test('onChange fires once when the label is clicked', () => {
@@ -67,6 +67,6 @@ describe('when uncontrolled', () => {
   });
 
   test('radio button becomes checked when clicked', () => {
-    expect(radioButton.checked).toBe(true);
+    expect(radio.checked).toBe(true);
   });
 });

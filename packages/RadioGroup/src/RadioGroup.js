@@ -73,7 +73,7 @@ export default class RadioGroup extends Component {
 
     // React.Children.map allows us to not pass key as prop while iterating over children
     const renderChildren = React.Children.map(children, (child, index) => {
-      if (child.type.displayName !== 'RadioButton') {
+      if (child.type.displayName !== 'Radio') {
         return child;
       }
 
