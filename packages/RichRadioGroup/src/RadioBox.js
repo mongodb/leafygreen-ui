@@ -6,6 +6,7 @@ import * as style from './style.js';
 import { ccClassName, emotion } from '@leafygreen-ui/lib';
 const { css } = emotion;
 
+
 export default class RadioBox extends Component {
   static displayName = 'RadioBox';
 
@@ -43,7 +44,7 @@ export default class RadioBox extends Component {
 
     const radioBoxSize = style.radioBoxSizes[size];
     const checkedStyle = checked && style.checkedStyle;
-
+    
     return (
       <label
         htmlFor={id}

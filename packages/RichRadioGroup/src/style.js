@@ -19,6 +19,7 @@ export const baseInputStyle = css`
   visibility: hidden;
   display: none;
 `;
+
 export const container = css`
   display: block;
   float: left;
