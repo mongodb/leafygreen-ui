@@ -41,9 +41,16 @@ export default class RichRadioGroup extends Component {
   };
 
   render() {
-    const { children, name=this.defaultName, className, size, value } = this.props;
+    const {
+      children,
+      name = this.defaultName,
+      className,
+      size,
+      value,
+      variant,
+    } = this.props;
 
-    const currentValue = value || this.state.value
+    const currentValue = value || this.state.value;
 
     const renderChildren = React.Children.map(children, (child, index) => {
       if (child.type.displayName !== 'RichRadioInput') {
@@ -54,13 +61,20 @@ export default class RichRadioGroup extends Component {
         onChange: this.handleChange,
         checked: currentValue === child.props.value,
         id: child.props.id || `${this.defaultName}-button-${index}`,
+        variant,
         size,
         name,
       });
     });
 
     return (
-      <div className={ccClassName(css`${style.baseGroupStyle}`)}>
+      <div
+        className={ccClassName(
+          css`
+            ${style.baseGroupStyle}
+          `,
+        )}
+      >
         {renderChildren}
       </div>
     );
