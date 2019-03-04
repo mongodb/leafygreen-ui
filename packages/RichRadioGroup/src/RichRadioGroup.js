@@ -14,7 +14,7 @@ export default class RichRadioGroup extends Component {
     onChange: PropTypes.func,
     name: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    size: PropTypes.oneOf(['small', 'medium', 'large', 'tight', 'full']),
+    size: PropTypes.oneOf(['small', 'medium', 'large']),
   };
 
   static defaultProps = {
