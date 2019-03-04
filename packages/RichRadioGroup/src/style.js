@@ -15,14 +15,6 @@ const borderRadiusChecked = 5;
 const mediumWidth = 235;
 const smallWidth = 175;
 
-const borderRadius = 3;
-const borderRadiusChecked = 5;
-
-const largeWidth = 375;
-const mediumWidth = 235;
-const smallWidth = 175;
-
-
 export const baseInputStyle = css`
   visibility: hidden;
   display: none;

@@ -59,7 +59,6 @@ export default class RadioBoxGroup extends Component {
         onChange: this.handleChange,
         checked: value === child.props.value,
         id: child.props.id || `${this.defaultName}-button-${index}`,
-        variant,
         size,
         name,
       });
