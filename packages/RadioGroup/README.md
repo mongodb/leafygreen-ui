@@ -5,7 +5,7 @@
 <RadioGroup
     className='my-radio-group'
     variant='default'
-    onChange={event => () => console.log('hi')}
+    onChange={event => console.log('hi')}
     value='option-1'
     name='name-of-input-group'>
 
