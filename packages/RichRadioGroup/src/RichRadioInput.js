@@ -7,51 +7,64 @@ import { ccClassName, emotion } from '@leafygreen-ui/lib';
 const { css } = emotion;
 
 export default class RichRadioInput extends Component {
-  static displayName = 'RichRadioInput'
+  static displayName = 'RichRadioInput';
 
   static defaultProps = {
-    onChange: () => {}, 
-    checked: false, 
-    disabled: false, 
-    className: '', 
-    variant: 'default', 
-  }
+    onChange: () => {},
+    checked: false,
+    disabled: false,
+    className: '',
+    variant: 'default',
+  };
 
   static propTypes = {
     label: PropTypes.node.isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    onChange: PropTypes.func, 
-    checked: PropTypes.bool, 
-    disabled: PropTypes.bool, 
-    className: PropTypes.string, 
-    variant: PropTypes.oneOf(['default']), 
+    onChange: PropTypes.func,
+    checked: PropTypes.bool,
+    disabled: PropTypes.bool,
+    className: PropTypes.string,
+    variant: PropTypes.oneOf(['default', 'green']),
     id: PropTypes.string,
-    name: PropTypes.string
-  }
+    name: PropTypes.string,
+  };
 
   render() {
-
-    const { 
-      label, 
-      className, 
-      onChange, 
-      value, 
-      checked, 
-      disabled, 
-      id, 
-      name, 
-      variant, 
+    const {
+      label,
+      className,
+      onChange,
+      value,
+      checked,
+      disabled,
+      id,
+      name,
+      variant,
+      size,
       ...rest
-    } = this.props
+    } = this.props;
 
-    checked === true ? console.log('here') : null 
+    let checkedStyle;
+    checked
+      ? (checkedStyle = style.checkedVariant.checked)
+      : (checkedStyle = null);
 
-    return(
+    const richRadioSize =
+      style.richRadioInputSizeVaraints[size] ||
+      style.richRadioInputSizeVaraints.medium;
+
+    const richRadioVariant = style.richRadioInputStyleVariants[variant] || null;
+
+    return (
       <label
-        htmlFor={id} 
-        className={ccClassName(css`${style.baseLabelStyle}`)}>
-
-        <input 
+        htmlFor={id}
+        className={ccClassName(
+          style.baseLabelStyle,
+          checkedStyle,
+          richRadioSize,
+        )}
+      >
+        <input
           {...rest}
           type="radio"
           id={id}
@@ -62,13 +75,19 @@ export default class RichRadioInput extends Component {
           aria-checked={checked}
           disabled={disabled}
           aria-disabled={disabled}
-          className={ccClassName(css`${style.baseInputStyle}`)}
+          className={ccClassName(style.baseInputStyle, richRadioVariant)}
         />
 
-        <div className={ccClassName(css`${style.baseTextStyle}`)}>
+        <div
+          className={ccClassName(
+            css`
+              ${style.baseTextStyle}
+            `,
+          )}
+        >
           {label}
         </div>
       </label>
-    )
+    );
   }
 }
