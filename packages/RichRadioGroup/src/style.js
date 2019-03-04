@@ -15,6 +15,14 @@ const borderRadiusChecked = 5;
 const mediumWidth = 235;
 const smallWidth = 175;
 
+const borderRadius = 3;
+const borderRadiusChecked = 5;
+
+const largeWidth = 375;
+const mediumWidth = 235;
+const smallWidth = 175;
+
+
 export const baseInputStyle = css`
   visibility: hidden;
   display: none;
@@ -36,11 +44,6 @@ export const container = css`
   position: relative;
   text-align: center;
 
-  &:hover {
-    transition: border-color 150ms ease-out;
-    border-color: ${colors.gray[3]};
-  }
-
   &[disabled] {
     background: ${colors.gray[8]};
     border-color: ${colors.gray[7]};
@@ -54,6 +57,7 @@ export const container = css`
     }
   }
 `;
+
 export const baseTextStyle = css`
   font-size: 14px;
   font-weight: bold;
