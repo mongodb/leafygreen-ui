@@ -44,13 +44,16 @@ export default class RichRadioInput extends Component {
     } = this.props;
 
     const richRadioSize = style.richRadioInputSizeVaraints[size];
+    let checkedStyle
 
-    const richRadioVariant = style.richRadioVariants[variant] || null;
+    checked && (checked && (variant === "green") ? checkedStyle = style.checkedVariants.green : checkedStyle = style.checkedVariants.default)
 
+  
     return (
       <label
         htmlFor={id}
-        className={ccClassName(style.container, richRadioSize)}
+        disabled={disabled}
+        className={ccClassName(style.container, richRadioSize, checkedStyle)}
       >
         <input
           {...rest}
@@ -63,10 +66,10 @@ export default class RichRadioInput extends Component {
           aria-checked={checked}
           disabled={disabled}
           aria-disabled={disabled}
-          className={ccClassName(style.baseInputStyle, richRadioVariant)}
+          className={ccClassName(style.baseInputStyle)}
         />
 
-        <div className={ccClassName(style.wrapperStyle, richRadioSize)} />
+        {/* <div className={ccClassName(style.wrapperStyle, richRadioSize)} /> */}
 
         <div className={ccClassName(style.baseTextStyle)}>{label}</div>
       </label>
