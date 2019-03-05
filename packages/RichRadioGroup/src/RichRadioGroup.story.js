@@ -18,7 +18,7 @@ storiesOf('RichRadioGroup', module)
       >
         <RichRadioInput value="option-1">Rich Radio 1</RichRadioInput>
 
-        <RichRadioInput value="option-2">Rich Radio 2</RichRadioInput>
+        <RichRadioInput value="option-2">RichRadio 2 FHSADKFHAKLSJHFAKLJSFHAKLJSRadio 2</RichRadioInput>
 
         <RichRadioInput value="option-3" disabled>
           Rich Radio 3
