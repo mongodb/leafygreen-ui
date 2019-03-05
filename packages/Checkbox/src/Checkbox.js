@@ -216,6 +216,7 @@ export default class Checkbox extends PureComponent {
         className={ccClassName(className, containerStyle)}
         htmlFor={this.checkboxId}
         disabled={disabled}
+        checked={checked}
       >
         <input
           {...rest}

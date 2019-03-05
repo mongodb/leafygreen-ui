@@ -30,6 +30,11 @@ export default class RadioGroup extends PureComponent {
     onChange: PropTypes.func,
     children: PropTypes.node,
     name: PropTypes.string,
+<<<<<<< HEAD:packages/RadioGroup/src/RadioGroup.js
+=======
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    size: PropTypes.oneOf(['small', 'medium', 'large', 'full', 'tight']),
+>>>>>>> checking out previous commit:packages/RichRadioGroup/src/RichRadioGroup.js
   };
 
   static defaultProps = {
