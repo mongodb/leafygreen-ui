@@ -18,6 +18,7 @@ storiesOf('RichRadioGroup', module)
       >
         <RichRadioInput value="option-1" label="Brooke" />
         <RichRadioInput value="option-2" label="Scarlett" />
+        <RichRadioInput value="option-3" disabled label="Scarlett" />
       </RichRadioGroup>
     </section>
   ))

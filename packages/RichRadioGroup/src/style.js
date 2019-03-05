@@ -20,7 +20,6 @@ export const container = css`
   display: flex;
   margin-right: ${externalSpacing}px;
   box-sizing: content-box !important;
-
 `;
 
 export const wrapperStyle = css`
@@ -38,6 +37,15 @@ export const wrapperStyle = css`
     transition: border-color 150ms ease-out;
   }
 `;
+export const baseTextStyle = css`
+  text-align: center;
+  width: 100%;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 16px 10px;
+  box-sizing: content-box;
+  margin: 0px;
+`;
 
 export const baseInputStyle = css`
   visibility: hidden;
@@ -50,32 +58,34 @@ export const baseInputStyle = css`
     transition: border-color 300ms ease-out;
     z-index: -1;
   }
-`;
 
-export const baseTextStyle = css`
-  text-align: center;
-  width: 100%;
-  position: relative;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 16px 10px;
-  margin-left: 5px;
-  box-sizing: content-box;
+  &:disabled {
+    & + .${wrapperStyle} {
+      cursor: default;
+      background: ${colors.gray[8]};
+      border-color: ${colors.gray[7]};
+      z-index: -1;
+    }
+
+    & ~ .${baseTextStyle} {
+      color: ${colors.gray[5]};
+    }
+  }
 `;
 
 export const richRadioVariants = {
   green: css`
     &:checked + .${wrapperStyle} {
       border: 1px solid ${colors.green[2]};
-      background-color: rgba(196, 219, 179, 0.3); 
+      background-color: rgba(196, 219, 179, 0.3);
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) inset;
 
       &:hover {
         border-color: ${colors.green[2]};
       }
     }
-  `
-}
+  `,
+};
 
 export const richSizedVariants = {
   tight: css`
@@ -86,7 +96,7 @@ export const richSizedVariants = {
   full: css`
     width: calc(100% - 36px);
   `,
-}
+};
 
 export const richRadioInputSizeVaraints = {
   small: css`
