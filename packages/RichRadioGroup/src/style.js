@@ -49,8 +49,7 @@ export const container = css`
       border-color: ${colors.gray[7]};
     }
   }
-`;
-
+`
 export const baseTextStyle = css`
   font-size: 14px;
   font-weight: bold;
@@ -92,6 +91,15 @@ export const radioBoxSizes = {
   full: css`
     flex: 1;
   `,
+
+  tight: css`
+    padding-right: 4px;
+    padding-left: 4px;
+  `, 
+
+  full: css`
+    width: calc(100% - 36px)
+  `
 };
 
 export const baseGroupStyle = css`
