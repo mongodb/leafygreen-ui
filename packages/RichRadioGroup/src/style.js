@@ -16,12 +16,10 @@ const largeWidth = 375;
 const mediumWidth = 235;
 const smallWidth = 175;
 
-
 export const baseInputStyle = css`
   visibility: hidden;
-  height: 1px;
-  width: 1px;
-`
+  display: none;
+`;
 export const container = css`
   display: block;
   float: left;
@@ -37,7 +35,7 @@ export const container = css`
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   position: relative;
-  text-align: center;  
+  text-align: center;
 
   &:hover {
     transition: border-color 150ms ease-out;
@@ -47,27 +45,74 @@ export const container = css`
   &[disabled] {
     background: ${colors.gray[8]};
     border-color: ${colors.gray[7]};
+    box-shadow: none;
     color: ${colors.gray[5]};
+    cursor: not-allowed;
 
     &:hover {
       background: ${colors.gray[8]};
       border-color: ${colors.gray[7]};
     }
   }
-
-`
+`;
 export const baseTextStyle = css`
   font-size: 14px;
   font-weight: bold;
   text-align: center;
-  display: inline-block;
-  margin-right: 5px;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-  // padding: 16px 10px;
-`
+  vertical-align: top;
+  overflow-wrap: break-word;
+`;
 
+export const checkedVariants = {
+  default: css`
+    border-radius: ${borderRadiusChecked}px;
+    border: ${selectedBorderSize}px solid ${colors.green[2]};
+    transition: border-color 150ms ease-out;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: ${externalSpacing}px;
+    margin-bottom: ${externalSpacing}px;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      border-color: ${colors.green[2]};
+    }
+  `,
+
+  green: css`
+    background-color: rgba(196, 219, 179, 0.3);
+  `,
+};
+
+export const richRadioInputSizeVaraints = {
+  small: css`
+    width: ${smallWidth - 2 * selectedBorderSize - 2 * internalSpacing}px;
+    padding: ${internalSpacing - 5 * internalSpacing}px;
+  `,
+
+  medium: css`
+    width: ${mediumWidth - 2 * selectedBorderSize - 2 * internalSpacing}px;
+  `,
+
+  large: css`
+    width: ${largeWidth - 2 * selectedBorderSize - 2 * internalSpacing}px;
+    min-height: 120px;
+  `,
+
+  tight: css`
+    padding-right: 4px;
+    padding-left: 4px;
+  `,
+
+  full: css`
+    width: calc(100% - 36px);
+  `,
+};
+
+export const baseGroupStyle = css`
+  display: flex;
+  margin-left: 15px;
+`;
 
 // export const baseInputStyle = css`
 //   border: 2px solid blue;
@@ -153,56 +198,3 @@ export const baseTextStyle = css`
 //     width: calc(100% - 36px);
 //   `,
 // };
-
-export const checkedVariants = {
-  default: css`
-    border-radius: ${borderRadiusChecked}px;
-    border: ${selectedBorderSize}px solid ${colors.green[2]};
-
-    &:hover {
-      border-color: ${colors.green[2]}
-    }
-  `, 
-  
-  green: css`
-    border: 1px solid ${colors.green[2]};
-    background-color: rgba(196, 219, 179, 0.3);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) inset;
-    transition: border-color 150ms ease-out;
-    
-    &:hover {
-      border-color: ${colors.green[2]};
-    }
-  ` 
-}
-
-
-export const richRadioInputSizeVaraints = {
-  small: css`
-    width: ${smallWidth - 2 * selectedBorderSize - 2 * internalSpacing}px;
-    padding: ${internalSpacing - 5 * internalSpacing}px;
-  `,
-
-  medium: css`
-    width: ${mediumWidth - 2 * selectedBorderSize - 2 * internalSpacing}px;
-  `,
-
-  large: css`
-    width: ${largeWidth - 2 * selectedBorderSize - 2 * internalSpacing}px;
-    min-height: 120px;
-  `,
-
-  tight: css`
-    padding-right: 4px;
-    padding-left: 4px;
-  `, 
-
-  full: css`
-    width: calc(100% - 36px)
-  `
-};
-
-export const baseGroupStyle = css`
-  display: flex;
-  margin-left: 15px;
-`;

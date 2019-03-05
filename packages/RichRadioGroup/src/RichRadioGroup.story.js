@@ -16,9 +16,13 @@ storiesOf('RichRadioGroup', module)
           'medium',
         )}
       >
-        <RichRadioInput value="option-1" label="boomshalaklsjkldfjasdlkf broomfdsajflkjfljafkla broofjdsalkfjlkdsa" />
-        <RichRadioInput value="option-2" label="Rich Radio 2" />
-        <RichRadioInput value="option-3" disabled label="Rich Radio 3" />
+        <RichRadioInput value="option-1">Rich Radio 1</RichRadioInput>
+
+        <RichRadioInput value="option-2">Rich Radio 2</RichRadioInput>
+
+        <RichRadioInput value="option-3" disabled>
+          Rich Radio 3
+        </RichRadioInput>
       </RichRadioGroup>
     </section>
   ))
@@ -32,8 +36,8 @@ storiesOf('RichRadioGroup', module)
           'medium',
         )}
       >
-        <RichRadioInput value="option-1" label="Rich Radio 1" />
-        <RichRadioInput value="option-2" label="Rich Radio 2" />
+        <RichRadioInput value="option-1">Rich Radio 1</RichRadioInput>
+        <RichRadioInput value="option-2">Rich Radio 2</RichRadioInput>
       </RichRadioGroup>
     </section>
   ));
