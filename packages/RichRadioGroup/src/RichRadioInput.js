@@ -17,7 +17,6 @@ export default class RichRadioInput extends Component {
   };
 
   static propTypes = {
-    label: PropTypes.node.isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     onChange: PropTypes.func,
     checked: PropTypes.bool,
@@ -26,11 +25,11 @@ export default class RichRadioInput extends Component {
     variant: PropTypes.oneOf(['default', 'green']),
     id: PropTypes.string,
     name: PropTypes.string,
+    children: PropTypes.node,
   };
 
   render() {
     const {
-      label,
       className,
       onChange,
       value,
@@ -40,15 +39,20 @@ export default class RichRadioInput extends Component {
       name,
       variant,
       size,
+      children,
       ...rest
     } = this.props;
 
     const richRadioSize = style.richRadioInputSizeVaraints[size];
-    let checkedStyle
+    const checkedStyle =
+      checked &&
+      (variant === 'green'
+        ? ccClassName(
+            style.checkedVariants.green,
+            style.checkedVariants.default,
+          )
+        : style.checkedVariants.default);
 
-    checked && (checked && (variant === "green") ? checkedStyle = style.checkedVariants.green : checkedStyle = style.checkedVariants.default)
-
-  
     return (
       <label
         htmlFor={id}
@@ -71,7 +75,7 @@ export default class RichRadioInput extends Component {
 
         {/* <div className={ccClassName(style.wrapperStyle, richRadioSize)} /> */}
 
-        <div className={ccClassName(style.baseTextStyle)}>{label}</div>
+        <div className={ccClassName(style.baseTextStyle)}>{children}</div>
       </label>
     );
   }
