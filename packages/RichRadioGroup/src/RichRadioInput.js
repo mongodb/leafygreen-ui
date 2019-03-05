@@ -43,21 +43,15 @@ export default class RichRadioInput extends Component {
       ...rest
     } = this.props;
 
-    const richRadioSize =
-      style.richRadioInputSizeVaraints[size];
+    const richRadioSize = style.richRadioInputSizeVaraints[size];
 
     const richRadioVariant = style.richRadioVariants[variant] || null;
-    
+
     return (
       <label
         htmlFor={id}
         className={ccClassName(style.container, richRadioSize)}
       >
-        <div
-          className={ccClassName(style.baseTextStyle)}>
-          {label}
-        </div>
-
         <input
           {...rest}
           type="radio"
@@ -73,6 +67,8 @@ export default class RichRadioInput extends Component {
         />
 
         <div className={ccClassName(style.wrapperStyle, richRadioSize)} />
+
+        <div className={ccClassName(style.baseTextStyle)}>{label}</div>
       </label>
     );
   }
