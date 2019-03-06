@@ -1,7 +1,7 @@
 {
-  "name": "@leafygreen-ui/RichRadioGroup",
+  "name": "@leafygreen-ui/RadioBoxGroup",
   "version": "1.0.0",
-  "description": "leafyGreen UI Kit RichRadioGroup",
+  "description": "leafyGreen UI Kit RadioBoxGroup",
   "main": "./dist/index.js",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"

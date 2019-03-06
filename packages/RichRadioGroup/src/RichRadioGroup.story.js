@@ -3,30 +3,26 @@ import { storiesOf } from '@storybook/react';
 import { text, boolean, select } from '@storybook/addon-knobs';
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
-import RichRadioGroup from './RichRadioGroup';
-import RichRadioInput from './RichRadioInput';
+import RadioBoxGroup from './RadioBoxGroup';
+import RadioBox from './RadioBox';
 
-storiesOf('RichRadioGroup', module)
-  .add('Default', () => (
-    <section className="storybook-container">
-      <RichRadioGroup
-        style={{flexDirection: 'column'}}
-        size={select(
-          'Size',
-          ['tightContentBox', 'full', 'small', 'medium'],
-          'medium',
-        )}
-      >
-        <RichRadioInput value="option-1">Rich Radio 1</RichRadioInput>
+storiesOf('RadioBoxGroup', module).add('Default', () => (
+  <section className="storybook-container">
+    <RadioBoxGroup
+      style={{ flexDirection: 'column' }}
+      size={select(
+        'Size',
+        ['tightContentBox', 'full', 'small', 'medium'],
+        'medium',
+      )}
+    >
+      <RadioBox value="option-1">Radio Box 1</RadioBox>
 
-        <RichRadioInput value="option-2">
-          Rich Radio 2
+      <RadioBox value="option-2">Radio Box 2</RadioBox>
 
-        </RichRadioInput>
-
-        <RichRadioInput value="option-3" disabled>
-          Rich Radio 3
-        </RichRadioInput>
-      </RichRadioGroup>
-    </section>
-  ));
+      <RadioBox value="option-3" disabled>
+        Radio Box 3
+      </RadioBox>
+    </RadioBoxGroup>
+  </section>
+));
