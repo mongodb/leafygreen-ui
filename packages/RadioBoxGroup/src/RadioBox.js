@@ -7,12 +7,9 @@ import { ccClassName, emotion } from '@leafygreen-ui/lib';
 const { css } = emotion;
 
 
-<<<<<<< HEAD:packages/RadioBoxGroup/src/RadioBox.js
 export default class RadioBox extends Component {
   static displayName = 'RadioBox';
 
-=======
->>>>>>> passing tests, readME completed:packages/RichRadioGroup/src/RichRadioInput.js
   static propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     onChange: PropTypes.func,
@@ -45,16 +42,9 @@ export default class RadioBox extends Component {
       ...rest
     } = this.props;
 
-<<<<<<< HEAD:packages/RadioBoxGroup/src/RadioBox.js
     const radioBoxSize = style.radioBoxSizes[size];
     const checkedStyle = checked && style.checkedStyle;
     
-=======
-    const richRadioSize = style.richRadioInputSizeVaraints[size];
-    const checkedStyle =
-      checked && style.checkedStyle
-
->>>>>>> removed large size; removed variant:packages/RichRadioGroup/src/RichRadioInput.js
     return (
       <label
         htmlFor={id}
