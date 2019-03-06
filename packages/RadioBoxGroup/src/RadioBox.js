@@ -45,9 +45,16 @@ export default class RadioBox extends Component {
       ...rest
     } = this.props;
 
+<<<<<<< HEAD:packages/RadioBoxGroup/src/RadioBox.js
     const radioBoxSize = style.radioBoxSizes[size];
     const checkedStyle = checked && style.checkedStyle;
     
+=======
+    const richRadioSize = style.richRadioInputSizeVaraints[size];
+    const checkedStyle =
+      checked && style.checkedStyle
+
+>>>>>>> removed large size; removed variant:packages/RichRadioGroup/src/RichRadioInput.js
     return (
       <label
         htmlFor={id}
