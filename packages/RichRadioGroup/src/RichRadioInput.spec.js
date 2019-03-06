@@ -5,27 +5,29 @@ import RichRadioInput from './RichRadioInput';
 afterAll(cleanup);
 
 describe('packages/Radio', () => {
-
   const className = 'test-rich-radio-input-class'
   const { container } = render(
-    <RichRadioInput value='rich-radio-1' className={className} checked={false}>
+    <RichRadioInput value='rich-radio-1' className={className} checked={true}>
       Rich Radio Input 1
     </RichRadioInput>
   );
 
-  const testContainer = container.firstChild
-  const radioInput = testContainer.firstChild 
+  const richRadioContainer = container.firstChild
+  const richRadioInput = richRadioContainer.firstChild
 
-  test('TEST BLAH', () => {
-    console.log(container)
-    console.log('---')
-    console.log(radioInput)
-  })
   // classname
-
-  // disabled 
+  test(`renders "${className}" in RichRadioInput's classList`, () => {
+    expect(richRadioContainer.classList.contains(className)).toBe(true)
+  })
 
   // checked when prop is set
+  test('renders as checked, when the checked prop is set', () => {
+    expect(richRadioInput.checked).toBe(true)
+    expect(richRadioInput.getAttribute('aria-checked')).toBe('true')
+  })
 
-  // variant, size?
+  // disabled 
+  test('renders as disabled, when the disabled prop is set', () => {
+    render(<RichRadioInput disabled={true}>Rich Radio Input 3</RichRadioInput>)
+  })
 })
