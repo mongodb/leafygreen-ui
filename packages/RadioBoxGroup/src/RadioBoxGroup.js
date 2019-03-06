@@ -47,9 +47,12 @@ export default class RadioBoxGroup extends Component {
       name = this.defaultName,
       className,
 <<<<<<< HEAD:packages/RadioBoxGroup/src/RadioBoxGroup.js
+<<<<<<< HEAD:packages/RadioBoxGroup/src/RadioBoxGroup.js
 =======
       variant,
 >>>>>>> passing tests, readME completed:packages/RichRadioGroup/src/RichRadioGroup.js
+=======
+>>>>>>> removed large size; removed variant:packages/RichRadioGroup/src/RichRadioGroup.js
       size,
       value = this.state.value,
     } = this.props;
