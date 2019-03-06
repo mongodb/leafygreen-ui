@@ -52,7 +52,7 @@ Sets the style variant of the Rich Radio Group. Valid variants are `default` and
 ### size
 #### Type: `string`
 #### Default: `medium`
-Sets the style of the Rich Radio Group. Valid sizes are `tight`, `full`, `small`, `medium`, `large`
+Sets the style of the Rich Radio Group. Valid sizes are `tightContentBox`, `full`, `small` and `medium`
 
 ### name
 #### Type: `string`

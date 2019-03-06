@@ -14,8 +14,8 @@ export default class RichRadioGroup extends Component {
     onChange: PropTypes.func,
     name: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    size: PropTypes.oneOf(['small', 'medium', 'large', 'full', 'tight']),
-    variant: PropTypes.oneOf(['default', 'green']),
+    size: PropTypes.oneOf(['tightContentBox', 'small', 'medium', 'full']),
+    className: PropTypes.string,
   };
 
   static defaultProps = {
@@ -46,7 +46,6 @@ export default class RichRadioGroup extends Component {
       children,
       name = this.defaultName,
       className,
-      variant,
       size,
       value = this.state.value,
     } = this.props;
@@ -60,7 +59,6 @@ export default class RichRadioGroup extends Component {
         onChange: this.handleChange,
         checked: value === child.props.value,
         id: child.props.id || `${this.defaultName}-button-${index}`,
-        variant,
         size,
         name,
       });

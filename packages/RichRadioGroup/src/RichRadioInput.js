@@ -15,7 +15,6 @@ export default class RichRadioInput extends Component {
     checked: PropTypes.bool,
     disabled: PropTypes.bool,
     className: PropTypes.string,
-    variant: PropTypes.oneOf(['default', 'green']),
     id: PropTypes.string,
     name: PropTypes.string,
     children: PropTypes.node,
@@ -37,7 +36,6 @@ export default class RichRadioInput extends Component {
       disabled,
       id,
       name,
-      variant,
       size,
       children,
       ...rest
@@ -45,13 +43,7 @@ export default class RichRadioInput extends Component {
 
     const richRadioSize = style.richRadioInputSizeVaraints[size];
     const checkedStyle =
-      checked &&
-      (variant === 'green'
-        ? ccClassName(
-            style.checkedVariants.green,
-            style.checkedVariants.default,
-          )
-        : style.checkedVariants.default);
+      checked && style.checkedStyle
 
     return (
       <label

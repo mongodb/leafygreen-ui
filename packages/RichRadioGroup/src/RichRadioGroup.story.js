@@ -10,36 +10,23 @@ storiesOf('RichRadioGroup', module)
   .add('Default', () => (
     <section className="storybook-container">
       <RichRadioGroup
+        style={{flexDirection: 'column'}}
         size={select(
           'Size',
-          ['tight', 'full', 'small', 'medium', 'large'],
+          ['tightContentBox', 'full', 'small', 'medium'],
           'medium',
         )}
       >
         <RichRadioInput value="option-1">Rich Radio 1</RichRadioInput>
 
         <RichRadioInput value="option-2">
-          RichRadio 2 FHSADKFHAKLSJHFAKLJSFHAKLJSRadio 2
+          Rich Radio 2
+
         </RichRadioInput>
 
         <RichRadioInput value="option-3" disabled>
           Rich Radio 3
         </RichRadioInput>
-      </RichRadioGroup>
-    </section>
-  ))
-  .add('Green', () => (
-    <section className="storybook-container">
-      <RichRadioGroup
-        variant="green"
-        size={select(
-          'Size',
-          ['tight', 'full', 'small', 'medium', 'large'],
-          'medium',
-        )}
-      >
-        <RichRadioInput value="option-1">Rich Radio 1</RichRadioInput>
-        <RichRadioInput value="option-2">Rich Radio 2</RichRadioInput>
       </RichRadioGroup>
     </section>
   ));
