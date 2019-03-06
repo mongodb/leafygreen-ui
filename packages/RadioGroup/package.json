@@ -1,7 +1,13 @@
 {
+<<<<<<< HEAD:packages/RadioGroup/package.json
   "name": "@leafygreen-ui/RadioGroup",
   "version": "1.1.0",
   "description": "leafyGreen UI Kit RadioGroup",
+=======
+  "name": "@leafygreen-ui/RadioBoxGroup",
+  "version": "1.0.0",
+  "description": "leafyGreen UI Kit RadioBoxGroup",
+>>>>>>> renamed component -> Radio Box Group and Radio Box:packages/RichRadioGroup/package.json
   "main": "./dist/index.js",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
