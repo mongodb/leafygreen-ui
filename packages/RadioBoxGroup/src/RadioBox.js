@@ -7,9 +7,12 @@ import { ccClassName, emotion } from '@leafygreen-ui/lib';
 const { css } = emotion;
 
 
+<<<<<<< HEAD:packages/RadioBoxGroup/src/RadioBox.js
 export default class RadioBox extends Component {
   static displayName = 'RadioBox';
 
+=======
+>>>>>>> passing tests, readME completed:packages/RichRadioGroup/src/RichRadioInput.js
   static propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     onChange: PropTypes.func,
