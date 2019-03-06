@@ -24,9 +24,7 @@ storiesOf('RadioGroup', module)
       <RadioGroup
         name="radio-group-light"
         variant="light"
-        className={emotion.css`
-                background-color: ${colors.gray[1]}
-            `}
+        className={emotion.css`background-color: ${colors.gray[1]}`}
       >
         <Radio value="option-1">Option One</Radio>
         <Radio value="option-2">{text('Label text', 'Option Two')}</Radio>
