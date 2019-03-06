@@ -40,7 +40,6 @@ describe('when controlled', () => {
   const { container } = render(
     <RichRadioGroup
       value="option-1"
-      variant="green"
       onChange={controlledOnChange}
     >
       <RichRadioInput value="option-1">Option 1</RichRadioInput>
@@ -73,7 +72,7 @@ describe('when uncontrolled', () => {
   const uncontrolledOnChange = jest.fn();
 
   const { container } = render(
-    <RichRadioGroup variant="green" onChange={uncontrolledOnChange}>
+    <RichRadioGroup onChange={uncontrolledOnChange}>
       <RichRadioInput value="option-1">Option 1</RichRadioInput>
       <RichRadioInput disabled value="option-2">Option 2</RichRadioInput>
     </RichRadioGroup>,
