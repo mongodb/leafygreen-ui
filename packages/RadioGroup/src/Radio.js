@@ -40,14 +40,6 @@ const textStyle = css`
 export default class Radio extends PureComponent {
   static displayName = 'Radio';
 
-  static defaultProps = {
-    checked: false,
-    disabled: false,
-    className: '',
-    onChange: () => {},
-    variant: 'default',
-  };
-
   static propTypes = {
     checked: PropTypes.bool,
     disabled: PropTypes.bool,
@@ -58,6 +50,14 @@ export default class Radio extends PureComponent {
     id: PropTypes.string,
     name: PropTypes.string,
     variant: PropTypes.oneOf(['default', 'light']),
+  };
+
+  static defaultProps = {
+    checked: false,
+    disabled: false,
+    className: '',
+    onChange: () => {},
+    variant: 'default',
   };
 
   render() {
@@ -91,14 +91,7 @@ export default class Radio extends PureComponent {
           disabled={disabled}
           aria-disabled={disabled}
         />
-
-        <span
-          className={css`
-            ${textStyle} ${variantStyle}
-          `}
-        >
-          {children}
-        </span>
+        <span className={ccClassName(textStyle, variantStyle)}>{children}</span>
       </label>
     );
   }

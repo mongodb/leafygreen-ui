@@ -8,7 +8,6 @@
     onChange={event => console.log('hi')}
     value='option-1'
     name='name-of-input-group'>
-
     <Radio 
         className='my-radio'
         value='option-1'>

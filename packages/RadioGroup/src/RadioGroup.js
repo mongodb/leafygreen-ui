@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import { colors } from '@leafygreen-ui/theme';
@@ -18,18 +18,10 @@ const groupVariants = {
 
 const baseStyle = css`
   padding: 5px;
-  font-size: 12px;
-  font-family: Akzidenz, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 `;
 
-export default class RadioGroup extends Component {
+export default class RadioGroup extends PureComponent {
   static displayName = 'RadioGroup';
-
-  static defaultProps = {
-    variant: 'default',
-    className: '',
-    onChange: () => {},
-  };
 
   static propTypes = {
     variant: PropTypes.oneOf(['default', 'light']),
@@ -38,6 +30,12 @@ export default class RadioGroup extends Component {
     onChange: PropTypes.func,
     children: PropTypes.node,
     name: PropTypes.string,
+  };
+
+  static defaultProps = {
+    variant: 'default',
+    className: '',
+    onChange: () => {},
   };
 
   state = {
@@ -64,10 +62,9 @@ export default class RadioGroup extends Component {
       name = this.defaultName,
       className,
       variant,
-      value,
     } = this.props;
 
-    const currentValue = value || this.state.value;
+    const { value = this.state.value } = this.props;
 
     // React.Children.map allows us to not pass key as prop while iterating over children
     const renderChildren = React.Children.map(children, (child, index) => {
@@ -77,7 +74,7 @@ export default class RadioGroup extends Component {
 
       return React.cloneElement(child, {
         onChange: this.handleChange,
-        checked: currentValue === child.props.value,
+        checked: value === child.props.value,
         id: child.props.id || `${this.defaultName}-button-${index}`,
         variant,
         name,
