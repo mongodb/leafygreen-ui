@@ -61,6 +61,13 @@ export default class Radio extends PureComponent {
     variant: 'default',
   };
 
+  static defaultProps = {
+    onChange: () => {},
+    checked: false,
+    disabled: false,
+    className: '',
+  };
+
   render() {
     const {
       children,
