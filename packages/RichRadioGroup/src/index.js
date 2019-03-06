@@ -1,4 +1,4 @@
-import RichRadioGroup from './RichRadioGroup';
-import RichRadioInput from './RichRadioInput';
+import RadioBoxGroup from './RadioBoxGroup';
+import RadioBox from './RadioBox';
 
-export default { RichRadioGroup, RichRadioInput };
+export default { RadioBoxGroup, RadioBox };

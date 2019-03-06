@@ -6,8 +6,8 @@ import * as style from './style.js';
 import { ccClassName, emotion } from '@leafygreen-ui/lib';
 
 const { css } = emotion;
-export default class RichRadioGroup extends Component {
-  static displayName = 'RichRadioGroup';
+export default class RadioBoxGroup extends Component {
+  static displayName = 'RadioBoxGroup';
 
   static propTypes = {
     children: PropTypes.node,
@@ -27,7 +27,7 @@ export default class RichRadioGroup extends Component {
     value: '',
   };
 
-  defaultName = `rich-radio-group-${Math.floor(Math.random() * 1000000)}`;
+  defaultName = `radio-box-group-${Math.floor(Math.random() * 1000000)}`;
 
   handleChange = e => {
     const { onChange, value } = this.props;
@@ -51,7 +51,7 @@ export default class RichRadioGroup extends Component {
     } = this.props;
 
     const renderChildren = React.Children.map(children, (child, index) => {
-      if (child.type.displayName !== 'RichRadioInput') {
+      if (child.type.displayName !== 'RadioBox') {
         return child;
       }
 

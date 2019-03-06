@@ -6,8 +6,8 @@ import * as style from './style.js';
 import { ccClassName, emotion } from '@leafygreen-ui/lib';
 const { css } = emotion;
 
-export default class RichRadioInput extends Component {
-  static displayName = 'RichRadioInput';
+export default class RadioBox extends Component {
+  static displayName = 'RadioBox';
 
   static propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -41,9 +41,8 @@ export default class RichRadioInput extends Component {
       ...rest
     } = this.props;
 
-    const richRadioSize = style.richRadioInputSizeVaraints[size];
-    const checkedStyle =
-      checked && style.checkedStyle
+    const radioBoxSize = style.radioBoxSizes[size];
+    const checkedStyle = checked && style.checkedStyle;
 
     return (
       <label
@@ -51,7 +50,7 @@ export default class RichRadioInput extends Component {
         disabled={disabled}
         className={ccClassName(
           style.container,
-          richRadioSize,
+          radioBoxSize,
           checkedStyle,
           className,
         )}

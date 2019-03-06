@@ -77,7 +77,7 @@ export const checkedStyle = css`
   }
 `;
 
-export const richRadioInputSizeVaraints = {
+export const radioBoxSizes = {
   small: css`
     width: ${smallWidth - 2 * selectedBorderSize - 2 * internalSpacing}px;
     padding: ${internalSpacing - 5 * internalSpacing}px;
