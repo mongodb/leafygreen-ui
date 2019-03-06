@@ -57,7 +57,7 @@ export default class RichRadioInput extends Component {
       <label
         htmlFor={id}
         disabled={disabled}
-        className={ccClassName(style.container, richRadioSize, checkedStyle)}
+        className={ccClassName(style.container, richRadioSize, checkedStyle, className)}
       >
         <input
           {...rest}
