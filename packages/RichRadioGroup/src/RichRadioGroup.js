@@ -15,11 +15,12 @@ export default class RichRadioGroup extends Component {
     name: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     size: PropTypes.oneOf(['small', 'medium', 'large', 'full', 'tight']),
+    variant: PropTypes.oneOf(['default', 'green']),
   };
 
   static defaultProps = {
     onChange: () => {},
-    size: 'normal',
+    size: 'medium',
   };
 
   state = {
@@ -45,12 +46,10 @@ export default class RichRadioGroup extends Component {
       children,
       name = this.defaultName,
       className,
-      size,
-      value,
       variant,
+      size,
+      value = this.state.value,
     } = this.props;
-
-    const currentValue = value || this.state.value;
 
     const renderChildren = React.Children.map(children, (child, index) => {
       if (child.type.displayName !== 'RichRadioInput') {
@@ -59,7 +58,7 @@ export default class RichRadioGroup extends Component {
 
       return React.cloneElement(child, {
         onChange: this.handleChange,
-        checked: currentValue === child.props.value,
+        checked: value === child.props.value,
         id: child.props.id || `${this.defaultName}-button-${index}`,
         variant,
         size,
@@ -68,13 +67,7 @@ export default class RichRadioGroup extends Component {
     });
 
     return (
-      <div
-        className={ccClassName(
-          css`
-            ${style.baseGroupStyle}
-          `,
-        )}
-      >
+      <div className={ccClassName(style.baseGroupStyle, className)}>
         {renderChildren}
       </div>
     );
