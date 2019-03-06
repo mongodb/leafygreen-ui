@@ -9,13 +9,6 @@ const { css } = emotion;
 export default class RichRadioInput extends Component {
   static displayName = 'RichRadioInput';
 
-  static defaultProps = {
-    onChange: () => {},
-    checked: false,
-    disabled: false,
-    className: '',
-  };
-
   static propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     onChange: PropTypes.func,
@@ -26,6 +19,13 @@ export default class RichRadioInput extends Component {
     id: PropTypes.string,
     name: PropTypes.string,
     children: PropTypes.node,
+  };
+
+  static defaultProps = {
+    onChange: () => {},
+    checked: false,
+    disabled: false,
+    className: '',
   };
 
   render() {
@@ -57,7 +57,12 @@ export default class RichRadioInput extends Component {
       <label
         htmlFor={id}
         disabled={disabled}
-        className={ccClassName(style.container, richRadioSize, checkedStyle, className)}
+        className={ccClassName(
+          style.container,
+          richRadioSize,
+          checkedStyle,
+          className,
+        )}
       >
         <input
           {...rest}
@@ -72,9 +77,6 @@ export default class RichRadioInput extends Component {
           aria-disabled={disabled}
           className={ccClassName(style.baseInputStyle)}
         />
-
-        {/* <div className={ccClassName(style.wrapperStyle, richRadioSize)} /> */}
-
         <div className={ccClassName(style.baseTextStyle)}>{children}</div>
       </label>
     );
