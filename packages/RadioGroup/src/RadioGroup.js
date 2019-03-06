@@ -62,9 +62,8 @@ export default class RadioGroup extends PureComponent {
       name = this.defaultName,
       className,
       variant,
+      value = this.state.value,
     } = this.props;
-
-    const { value = this.state.value } = this.props;
 
     // React.Children.map allows us to not pass key as prop while iterating over children
     const renderChildren = React.Children.map(children, (child, index) => {
