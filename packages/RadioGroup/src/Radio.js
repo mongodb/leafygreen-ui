@@ -13,6 +13,7 @@ const labelStyle = css`
 
 const inputStyle = css`
   margin-right: 0.5em;
+  cursor: pointer;
 
   &:disabled {
     cursor: not-allowed;
