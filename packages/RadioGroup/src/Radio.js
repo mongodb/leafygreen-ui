@@ -84,7 +84,6 @@ export default class Radio extends PureComponent {
 
     const variantStyle = buttonVariants[variant];
 
-  
     return (
       <label htmlFor={id} className={ccClassName(labelStyle, className)}>
         <input
