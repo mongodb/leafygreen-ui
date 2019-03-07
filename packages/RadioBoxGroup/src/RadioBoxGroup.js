@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import * as style from './style.js';
 
-import { ccClassName, } from '@leafygreen-ui/lib';
+import { ccClassName } from '@leafygreen-ui/lib';
 
-export default class RadioBoxGroup extends Component {
+export default class RadioBoxGroup extends PureComponent {
   static displayName = 'RadioBoxGroup';
 
   static propTypes = {
@@ -13,13 +13,13 @@ export default class RadioBoxGroup extends Component {
     onChange: PropTypes.func,
     name: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    size: PropTypes.oneOf(['tightContentBox', 'small', 'medium', 'full']),
+    size: PropTypes.oneOf(['tightContentBox', 'default', 'full']),
     className: PropTypes.string,
   };
 
   static defaultProps = {
     onChange: () => {},
-    size: 'medium',
+    size: 'default',
   };
 
   state = {
@@ -31,8 +31,11 @@ export default class RadioBoxGroup extends Component {
   handleChange = e => {
     const { onChange, value } = this.props;
 
+    // Exposing both event and event.target.value, rather than just one or the other
+    // Stopped propagation to prevent event from bubbling with new target, and thus value coming back as undefined
     if (onChange) {
-      onChange(e);
+      onChange(e, e.target.value);
+      e.stopPropagation()
     }
 
     if (!value) {
@@ -47,6 +50,7 @@ export default class RadioBoxGroup extends Component {
       className,
       size,
       value = this.state.value,
+      ...rest
     } = this.props;
 
     const renderChildren = React.Children.map(children, (child, index) => {
@@ -64,7 +68,9 @@ export default class RadioBoxGroup extends Component {
     });
 
     return (
-      <div className={ccClassName(style.baseGroupStyle, className)}>
+      <div
+        {...rest} 
+        className={ccClassName(style.baseGroupStyle, className)}>
         {renderChildren}
       </div>
     );

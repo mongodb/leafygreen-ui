@@ -13,7 +13,7 @@
 <div class="leafygreen-ui-aht7rx radio-box-group-style">
   <label 
     for="radio-box-group-71270-button-0"
-    class="leafygreen-ui-1aaryka leafygreen-ui-1yje6go false ">  
+    class="leafygreen-ui-1aaryka leafygreen-ui-1yje6go">  
     <input 
       type="radio" 
       id="radio-box-group-71270-button-0" 
@@ -27,7 +27,7 @@
   
   <label 
     for="radio-box-group-71270-button-1" 
-    class="leafygreen-ui-1aaryka leafygreen-ui-1yje6go false ">
+    class="leafygreen-ui-1aaryka leafygreen-ui-1yje6go">
     <input 
       type="radio" 
       id="radio-box-group-71270-button-1" 
@@ -49,7 +49,7 @@
 #### Default: `medium`
 Sets the style of the Radio Box Group. Valid sizes are `tightContentBox`, `full`, `small` and `medium`
   * `tightContentBox` adds padding to text, so there is no fixed width amongst a collection of boxes 
-  * `small` and `medium` sizes are fixed widths, text will wrap accordingly 
+  * `default` has a fixed width and text will wrap accordingly 
   * `full` radio boxes will scale depending on available space (will take up 100% of their parent container). All boxes will tbe the same size
 
 ### name
@@ -65,19 +65,23 @@ Sets the radio that will apear checked on page load, also makes the component a 
 ### className
 ### Type: `string`
 ### Default: ''
-Adds a className to the outermost element.
+Adds a className to the root element
 
 ### onChange
 #### Type: `function`
 #### Default: `() => {}`
-The event handler function for the 'onchange' event. Receives the associated event object as the first argument.
+The event handler function for the 'onchange' event. Receives the associated event object as the first argument and the event target's value (string) as the second.
+* Signature function(event: object, value: string)
+  * Event: The event source of the callback
+  * Value: The value of the selected radio
 
 ### children
 #### Type: `node`
 #### Default: `null`
-Can be any node; however, any <RadioBox /> components, will be treated as belonging to the <RadioBoxGroup /> compound component, and will recieve internal state from <RadioBoxGroup />
+Content of the component
 
-
+### Any other properties supplied will be spread on the root element.
+ 
 # Rich Radio Input
 
 ## Example 
@@ -112,12 +116,12 @@ Every radio needs a value prop
 ### className
 #### Type: string
 #### Default: ``
-Adds a className to the label
+Adds a className to the root element
 
 ### checked 
 #### Type: `boolean`
 #### Default: `false`
-Indicates whether or not the input will be checked. Unless using the component as a standalone, do not use this prop. Instead, use the value prop on the Radio Box Group to indicate which input should be marked as checked. 
+Indicates whether or not the box will be checked
 
 ### disabled
 #### Type: `boolean`
@@ -127,4 +131,6 @@ Indicates whether or not the radio can be clicked by a user
 ### children
 #### Type: `node`
 #### Default: `null`
-Text that appears adjacent to the radio inpt; label text.
+Content that appears inside the Radio Box component
+
+### Any other properties supplied will be spread on the root element.
