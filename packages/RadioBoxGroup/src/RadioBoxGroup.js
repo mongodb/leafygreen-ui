@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 
 import * as style from './style.js';
 
-import { ccClassName, emotion } from '@leafygreen-ui/lib';
+import { ccClassName, } from '@leafygreen-ui/lib';
 
-const { css } = emotion;
 export default class RadioBoxGroup extends Component {
   static displayName = 'RadioBoxGroup';
 
