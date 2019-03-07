@@ -49,6 +49,13 @@ export const container = css`
       border-color: ${colors.gray[7]};
     }
   }
+
+  &:focus {
+    transition: all 150ms ease-in-out;
+    outline: none;
+    border: 2px solid rgba(196, 219, 179, 0.7);
+    transform: scale(1);
+  }
 `
 export const baseTextStyle = css`
   font-size: 14px;
