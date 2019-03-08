@@ -66,7 +66,6 @@ export default class RadioBox extends PureComponent {
           aria-disabled={disabled}
           className={ccClassName(style.baseInputStyle)}
         />
-        <div className={ccClassName(style.focusedState)}></div>
         <div className={ccClassName(style.baseTextStyle)}>{children}</div>
       </label>
     );
