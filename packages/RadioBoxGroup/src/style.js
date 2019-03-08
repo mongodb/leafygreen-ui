@@ -1,19 +1,12 @@
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
-import { border } from 'polished';
 
 const { css } = emotion;
 
-const defaultBorderSize = 1;
 const selectedBorderSize = 3;
 const borderDifference = 2;
 const externalSpacing = 10;
 const internalSpacing = 15;
-
-const borderRadius = 3;
-const borderRadiusChecked = 5;
-
-const defaultWidth = 175;
 
 export const baseInputStyle = css`
   visibility: hidden;
@@ -21,19 +14,16 @@ export const baseInputStyle = css`
 `;
 
 export const container = css`
-  display: block;
-  float: left;
   box-sizing: content-box;
   padding: ${internalSpacing}px;
-  border: ${defaultBorderSize}px solid ${colors.gray[5]};
-  border-radius: ${borderRadius}px;
+  border: 1px solid ${colors.gray[5]};
+  border-radius: 3px;
   margin-top: ${borderDifference}px;
   margin-right: ${externalSpacing + borderDifference}px;
   margin-bottom: ${externalSpacing + borderDifference}px;
   font-weight: normal;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   cursor: pointer;
-  position: relative;
   text-align: center;
 
   &[disabled] {
@@ -65,6 +55,7 @@ export const container = css`
     margin-right: 0px;
   }
 `;
+
 export const baseTextStyle = css`
   font-size: 14px;
   font-weight: bold;
@@ -74,7 +65,7 @@ export const baseTextStyle = css`
 `;
 
 export const checkedStyle = css`
-  border-radius: ${borderRadiusChecked}px;
+  border-radius: 5px;
   border: ${selectedBorderSize}px solid ${colors.green[2]};
   transition: border-color 150ms ease-out;
   margin-top: 0px;
@@ -95,7 +86,7 @@ export const checkedStyle = css`
 
 export const radioBoxSizes = {
   default: css`
-    width: ${defaultWidth - 2 * selectedBorderSize - 2 * internalSpacing}px;
+    width: ${175 - 2 * selectedBorderSize - 2 * internalSpacing}px;
     padding: ${internalSpacing - 5 * internalSpacing}px;
   `,
 
