@@ -35,7 +35,7 @@ export default class RadioBoxGroup extends PureComponent {
     // Stopped propagation to prevent event from bubbling with new target, and thus value coming back as undefined
     if (onChange) {
       onChange(e, e.target.value);
-      e.stopPropagation()
+      e.stopPropagation();
     }
 
     if (!value) {
@@ -68,9 +68,7 @@ export default class RadioBoxGroup extends PureComponent {
     });
 
     return (
-      <div
-        {...rest} 
-        className={ccClassName(style.baseGroupStyle, className)}>
+      <div {...rest} className={ccClassName(style.baseGroupStyle, className)}>
         {renderChildren}
       </div>
     );

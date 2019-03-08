@@ -1,5 +1,6 @@
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
+import { border } from 'polished';
 
 const { css } = emotion;
 
@@ -27,7 +28,6 @@ export const container = css`
   border: ${defaultBorderSize}px solid ${colors.gray[5]};
   border-radius: ${borderRadius}px;
   margin-top: ${borderDifference}px;
-  // margin-left: ${borderDifference}px;
   margin-right: ${externalSpacing + borderDifference}px;
   margin-bottom: ${externalSpacing + borderDifference}px;
   font-weight: normal;
@@ -51,7 +51,7 @@ export const container = css`
 
   &:hover {
     transition: border-color 150ms ease-out;
-    border-color: ${colors.gray[3]}
+    border-color: ${colors.gray[3]};
   }
 
   &:focus {
@@ -59,6 +59,10 @@ export const container = css`
     border: 2px solid rgba(196, 219, 179, 0.7);
     transform: scale(1.05);
     outline: transparent;
+  }
+
+  &:last-of-type {
+    margin-right: 0px;
   }
 `;
 export const baseTextStyle = css`
@@ -80,9 +84,12 @@ export const checkedStyle = css`
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.15);
   transition: border-color 150ms ease-out;
 
-
   &:hover {
     border-color: ${colors.green[2]};
+  }
+
+  &:last-of-type {
+    margin-right: -2px;
   }
 `;
 
@@ -99,7 +106,7 @@ export const radioBoxSizes = {
 
   full: css`
     flex: 1;
-  `
+  `,
 };
 
 export const baseGroupStyle = css`
