@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
 import * as style from './style.js';
-
 import { ccClassName } from '@leafygreen-ui/lib';
 export default class RadioBox extends PureComponent {
   static displayName = 'RadioBox';
@@ -33,7 +31,6 @@ export default class RadioBox extends PureComponent {
       checked,
       disabled,
       id,
-      name,
       size,
       children,
       ...rest
@@ -64,9 +61,9 @@ export default class RadioBox extends PureComponent {
           aria-checked={checked}
           disabled={disabled}
           aria-disabled={disabled}
-          className={ccClassName(style.baseInputStyle)}
+          className={style.baseInputStyle}
         />
-        <div className={ccClassName(style.baseTextStyle)}>{children}</div>
+        <div className={style.baseTextStyle}>{children}</div>
       </label>
     );
   }

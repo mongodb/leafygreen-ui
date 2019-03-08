@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
 import * as style from './style.js';
-
 import { ccClassName } from '@leafygreen-ui/lib';
 
 export default class RadioBoxGroup extends PureComponent {
@@ -34,8 +32,8 @@ export default class RadioBoxGroup extends PureComponent {
     // Exposing both event and event.target.value, rather than just one or the other
     // Stopped propagation to prevent event from bubbling with new target, and thus value coming back as undefined
     if (onChange) {
-      onChange(e, e.target.value);
       e.stopPropagation();
+      onChange(e, e.target.value);
     }
 
     if (!value) {
@@ -53,7 +51,7 @@ export default class RadioBoxGroup extends PureComponent {
       ...rest
     } = this.props;
 
-    const renderChildren = React.Children.map(children, (child, index) => {
+    const renderedChildren = React.Children.map(children, (child, index) => {
       if (child.type.displayName !== 'RadioBox') {
         return child;
       }
@@ -69,7 +67,7 @@ export default class RadioBoxGroup extends PureComponent {
 
     return (
       <div {...rest} className={ccClassName(style.baseGroupStyle, className)}>
-        {renderChildren}
+        {renderedChildren}
       </div>
     );
   }
