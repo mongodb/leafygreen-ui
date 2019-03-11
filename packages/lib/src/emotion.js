@@ -9,5 +9,5 @@ export default (() => {
 
   head.insertBefore(config.container, head.firstChild);
 
-  return createEmotion({}, config);
+  return createEmotion(config);
 })();
