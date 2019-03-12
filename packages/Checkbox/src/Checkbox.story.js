@@ -17,7 +17,7 @@ class Control extends PureComponent {
 
   state = { checked: false };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ checked: e.target.checked });
   };
 
