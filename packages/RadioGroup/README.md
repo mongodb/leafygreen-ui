@@ -60,12 +60,18 @@ Adds a className to the outermost element.
 ### onChange 
 #### Type: `function`
 #### Default: `() => {}`
-The event handler function for the 'onchange' event. Receives the associated event object as the first argument.
+The event handler function for the 'onchange' event. Receives the associated event object as the first argument and the event target's value (string) as the second.
+* Signature `function(event: object, value: string`
+    * Event: The event source of the callback
+    * Value: The value of the selected radio
+
 
 ### children
 #### Type: `node`
 #### Default: `null`
 Can be any node; however, any `<Radio />` components, will be treated as belonging to the `<RadioGroup />` compound component, and will recieve internal state from `<RadioGroup />`
+
+#### Any other properties will be spread on the root element. 
 
 # Radio
 
@@ -113,3 +119,5 @@ Indicates whether or not the radio can be clicked by a user
 #### Type: `node`
 #### Default: `null`
 Text that appears adjacent to the radio inpt; label text.
+
+#### Any other properties will be spread on the input element. 
