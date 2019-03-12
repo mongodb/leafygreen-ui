@@ -81,4 +81,7 @@ Adds a className to the outermost element.
 
 **Default:** `() => {}`
 
-The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument.
+The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument, and a `boolean` indicating whether or not the event.target is checked as the second argument.
+	* Signature `function(event: object, checked: boolean)`
+		* Event: The event source of the callback
+		* Checked: The event target's checked state
