@@ -175,7 +175,7 @@ export default class Checkbox extends PureComponent {
     // For Microsoft Edge and IE, when checkbox is indeterminate, change event does not fire when clicked.
     // Explicitly call onChange for this case
     if (this.inputRef && this.inputRef.indeterminate) {
-      this.onChange(e);
+      this.onChange(e);v
       e.stopPropagation();
     }
   };
