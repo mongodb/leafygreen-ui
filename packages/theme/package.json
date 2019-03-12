@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/theme",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "leafyGreen UI Kit Theme",
   "main": "./dist/index.js",
   "scripts": {

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/lib",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "leafyGreen UI Kit Internal Library",
   "main": "./dist/index.js",
   "scripts": {

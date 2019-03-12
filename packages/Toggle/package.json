@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/Toggle",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "LeafyGreen UI Kit Toggle",
   "main": "./dist/index.js",
   "scripts": {
@@ -15,8 +15,8 @@
     "react": "^16.0.0"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^2.0.1",
-    "@leafygreen-ui/theme": "^1.0.6"
+    "@leafygreen-ui/lib": "^2.1.0",
+    "@leafygreen-ui/theme": "^1.1.0"
   },
   "gitHead": "1bfce22b8a41568dab0d88b0044e1b4e750584df"
 }
