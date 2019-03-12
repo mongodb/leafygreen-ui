@@ -18,7 +18,6 @@ export default class RadioBox extends PureComponent {
 
   static defaultProps = {
     onChange: () => {},
-    checked: false,
     disabled: false,
     className: '',
   };
