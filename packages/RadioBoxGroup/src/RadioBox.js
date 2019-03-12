@@ -36,19 +36,17 @@ export default class RadioBox extends PureComponent {
       ...rest
     } = this.props;
 
+    // not sure of the cleanest way to do this, but the full size
+    // has to live on the wrapper, whereas the other two sizes
+    // live on the display box, because the full is responding
+    // to the group's flex container whereas the rest are fix pixels or padding
     const radioBoxSize = style.radioBoxSizes[size];
-    const checkedStyle = checked && style.checkedStyle;
+    const full = size === 'full' ? style.radioBoxSizes[size] : null;
 
     return (
       <label
         htmlFor={id}
-        disabled={disabled}
-        className={ccClassName(
-          style.container,
-          radioBoxSize,
-          checkedStyle,
-          className,
-        )}
+        className={ccClassName(style.radioWrapper, full, className)}
       >
         <input
           {...rest}
@@ -61,9 +59,11 @@ export default class RadioBox extends PureComponent {
           aria-checked={checked}
           disabled={disabled}
           aria-disabled={disabled}
-          className={style.baseInputStyle}
+          className={style.radioInput}
         />
-        <div className={style.baseTextStyle}>{children}</div>
+        <div className={ccClassName(style.radioDisplay, radioBoxSize)}>
+          {children}
+        </div>
       </label>
     );
   }
