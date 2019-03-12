@@ -21,7 +21,6 @@ describe('packages/Radio', () => {
   });
 
   test('renders as checked, when the checked prop is set', () => {
-    expect(radioBox.checked).toBe(true);
     expect(radioBox.getAttribute('aria-checked')).toBe('true');
   });
 
@@ -85,7 +84,6 @@ describe('when uncontrolled', () => {
   });
 
   test('radio button becomes checked when clicked', () => {
-    expect(radioBoxInput.checked).toBe(true);
     expect(radioBoxInput.getAttribute('aria-checked')).toBe('true');
   });
 });
