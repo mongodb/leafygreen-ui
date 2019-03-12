@@ -30,9 +30,10 @@ export default class Toggle extends PureComponent {
 
   onChange = e => {
     const { onChange, checked } = this.props;
-
+   
+    // Exposing both the native event, as well as the event target's checked value
     if (onChange) {
-      onChange(e);
+      onChange(e, e.target.checked);
     }
 
     if (checked == null) {
