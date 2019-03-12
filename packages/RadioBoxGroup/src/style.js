@@ -102,7 +102,7 @@ export const radioWrapper = css`
     margin-right: 0px;
   }
 
-  &:last-of-type > .${radioInput}:checked ~ .${radioDisplay}{
+  &:last-of-type > .${radioInput}:checked ~ .${radioDisplay} {
     margin-right: -2px;
   }
 `;
