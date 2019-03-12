@@ -168,8 +168,9 @@ export default class Checkbox extends PureComponent {
   onClick = e => {
     const { onClick } = this.props;
 
+    // Exposing the native event, as well as if the event's target is checked or not
     if (onClick) {
-      onClick(e);
+      onClick(e, e.target.checked);
     }
 
     // For Microsoft Edge and IE, when checkbox is indeterminate, change event does not fire when clicked.
