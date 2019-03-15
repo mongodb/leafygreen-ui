@@ -80,27 +80,17 @@ export default class Badge extends PureComponent {
     className: '',
     variant: 'default',
     tag: 'span',
-    children: null
+    children: null,
   };
 
   render() {
-    let {
-      children,
-      variant,
-      className,
-      tag: Tag,
-      ...rest
-    } = this.props;
-
-    if (rest.href) {
-      Tag = 'a';
-    }
+    let { children, variant, className, ...rest } = this.props;
 
     const variantStyle = badgeVariants[variant];
-    const clickStyle = rest.onClick || rest.href && clickable;
+    const clickStyle = rest.onClick && clickable;
 
     return (
-      <Tag
+      <span
         {...rest}
         className={ccClassName(
           css`${baseStyle} ${variantStyle} ${clickStyle}`,
@@ -108,7 +98,7 @@ export default class Badge extends PureComponent {
         )}
       >
         {children}
-      </Tag>
+      </span>
     );
   }
 }
