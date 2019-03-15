@@ -27,19 +27,4 @@ describe('packages/Badge', () => {
   test('renders a span tag, when href prop is not set', () => {
     expect(badge.tagName).toBe('SPAN');
   });
-
-  test(`renders an a tag, when href prop is set`, () => {
-    const hrefContainer = render(
-      <Badge
-        className={className}
-        onClick={onClick}
-        href={'mongodb.design'}
-      >
-        {child}
-      </Badge>,
-    );
-
-    const hrefBadge = hrefContainer.container.firstChild;
-    expect(hrefBadge.tagName).toBe('A');
-  });
 });

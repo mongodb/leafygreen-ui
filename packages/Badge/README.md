@@ -46,4 +46,4 @@ The content that will appear inside of the  `<Badge />` component.
 
 
 ### Custom Properties
-You can use any custom properties and they will be spread against the root node. Additionally, if you supply an `href` attribute the `<Badge />` will be rendered as an `<a>` tag and the cursor will be changed to a pointer. Specifying the `onClick` attribute will also change the cursor style to pointer. 
+You can use any custom properties and they will be spread against the root node. Specifying the `onClick` attribute will change the cursor style to pointer. 
