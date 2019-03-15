@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+
 import PropTypes from 'prop-types';
 import * as style from './style.js';
 import { ccClassName } from '@leafygreen-ui/lib';

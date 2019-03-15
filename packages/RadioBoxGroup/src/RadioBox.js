@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+
 import PropTypes from 'prop-types';
 import * as style from './style.js';
 import { ccClassName } from '@leafygreen-ui/lib';
@@ -40,7 +41,7 @@ export default class RadioBox extends PureComponent {
     // live on the display box, because the full is responding
     // to the group's flex container whereas the rest are fix pixels or padding
     const radioBoxSize = style.radioBoxSizes[size];
-    const full = size === 'full' ? style.radioBoxSizes[size] : null;
+    const full = size === 'full' && style.radioBoxSizes[size];
 
     return (
       <label
