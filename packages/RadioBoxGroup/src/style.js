@@ -19,10 +19,14 @@ export const radioBoxSizes = {
     padding-left: 4px;
   `,
 
-  full: css`flex: 1;`,
+  full: css`
+    flex: 1;
+  `,
 };
 
-export const baseGroupStyle = css`display: flex;`;
+export const baseGroupStyle = css`
+  display: flex;
+`;
 
 export const radioDisplay = css`
   box-sizing: content-box;
@@ -30,7 +34,7 @@ export const radioDisplay = css`
   border: 1px solid ${colors.gray[5]};
   border-radius: 3px;
   margin-top: ${borderDifference}px;
-  margin-right: 12px; 
+  margin-right: 12px;
   margin-bottom: 12px;
   font-weight: normal;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);

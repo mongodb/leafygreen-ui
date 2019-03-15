@@ -14,7 +14,6 @@ const { container } = render(
 );
 
 describe('packages/Radio', () => {
-
   const radioBoxContainer = container.firstChild;
   const radioBox = radioBoxContainer.firstChild;
   test(`renders "${className}" in RadioBox's classList`, () => {
@@ -37,7 +36,6 @@ describe('packages/Radio', () => {
 });
 
 describe('when controlled', () => {
-  
   const controlledOnChange = jest.fn();
 
   render(
