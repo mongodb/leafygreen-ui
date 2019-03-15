@@ -14,6 +14,7 @@ const { container } = render(
 );
 
 describe('packages/Radio', () => {
+
   const radioBoxContainer = container.firstChild;
   const radioBox = radioBoxContainer.firstChild;
   test(`renders "${className}" in RadioBox's classList`, () => {
@@ -21,7 +22,6 @@ describe('packages/Radio', () => {
   });
 
   test('renders as checked, when the checked prop is set', () => {
-    // console.log(radioBox.checked)
     expect(radioBox.checked).toBe(true);
     expect(radioBox.getAttribute('aria-checked')).toBe('true');
   });
@@ -37,6 +37,7 @@ describe('packages/Radio', () => {
 });
 
 describe('when controlled', () => {
+  
   const controlledOnChange = jest.fn();
 
   render(
@@ -53,6 +54,7 @@ describe('when controlled', () => {
   const secondRadioBoxInput = radioBoxGroup.children[1].firstChild;
 
   fireEvent.click(secondRadioBoxInput);
+
   test(`initial value set by radio box group when prop provided`, () => {
     expect(firstRadioBoxInput.checked).toBe(true);
     expect(firstRadioBoxInput.getAttribute('aria-checked')).toBe('true');

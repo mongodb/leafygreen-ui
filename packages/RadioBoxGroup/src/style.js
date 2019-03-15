@@ -19,14 +19,10 @@ export const radioBoxSizes = {
     padding-left: 4px;
   `,
 
-  full: css`
-    flex: 1;
-  `,
+  full: css`flex: 1;`,
 };
 
-export const baseGroupStyle = css`
-  display: flex;
-`;
+export const baseGroupStyle = css`display: flex;`;
 
 export const radioDisplay = css`
   box-sizing: content-box;
@@ -34,7 +30,7 @@ export const radioDisplay = css`
   border: 1px solid ${colors.gray[5]};
   border-radius: 3px;
   margin-top: ${borderDifference}px;
-  margin-right: 12px;
+  margin-right: 12px; 
   margin-bottom: 12px;
   font-weight: normal;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
@@ -45,14 +41,15 @@ export const radioDisplay = css`
   text-align: center;
   vertical-align: top;
   overflow-wrap: break-word;
+
   &:hover {
     transition: border-color 150ms ease-out;
     border-color: ${colors.gray[3]};
   }
+
   &:focus {
     transition: all 150ms ease-in-out;
     border: 2px solid rgba(196, 219, 179, 0.7);
-    transform: scale(1.05);
     outline: transparent;
   }
 `;
@@ -61,6 +58,7 @@ export const radioInput = css`
   visibility: hidden;
   position: absolute;
   pointer-events: none;
+
   &:checked + .${radioDisplay} {
     border-radius: 5px;
     border: ${selectedBorderSize}px solid ${colors.green[2]};
@@ -71,16 +69,19 @@ export const radioInput = css`
     margin-bottom: ${externalSpacing}px;
     box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.15);
     transition: border-color 150ms ease-out;
+
     &:hover {
       border-color: ${colors.green[2]};
     }
   }
+
   &:disabled + .${radioDisplay} {
     background: ${colors.gray[8]};
     border-color: ${colors.gray[7]};
     box-shadow: none;
     color: ${colors.gray[5]};
     cursor: not-allowed;
+
     &:hover {
       background: ${colors.gray[8]};
       border-color: ${colors.gray[7]};
@@ -90,9 +91,11 @@ export const radioInput = css`
 
 export const radioWrapper = css`
   display: flex;
+
   &:last-of-type > .${radioDisplay} {
     margin-right: 0px;
   }
+
   &:last-of-type > .${radioInput}:checked ~ .${radioDisplay} {
     margin-right: -2px;
   }
