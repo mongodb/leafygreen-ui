@@ -118,6 +118,6 @@ Indicates whether or not the radio can be clicked by a user
 ### children
 #### Type: `node`
 #### Default: `null`
-Text that appears adjacent to the radio inpt; label text.
+Text that appears adjacent to the radio input; label text.
 
 #### Any other properties will be spread on the input element. 
