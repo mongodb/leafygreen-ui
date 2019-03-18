@@ -95,3 +95,5 @@ The event handler function for the 'onchange' event. Receives the associated `ev
 	* Signature `function(event: object, checked: boolean)`
 		* Event: The event source of the callback
 		* Checked: The event target's checked state
+
+#### Any other properties will be spread on the `input` element. 

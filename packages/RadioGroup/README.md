@@ -120,4 +120,4 @@ Indicates whether or not the radio can be clicked by a user
 #### Default: `null`
 Text that appears adjacent to the radio input; label text.
 
-#### Any other properties will be spread on the input element. 
+#### Any other properties will be spread on the `input` element. 
