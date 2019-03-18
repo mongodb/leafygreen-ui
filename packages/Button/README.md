@@ -78,6 +78,14 @@ Sets the HTML `value` attribute.
 
 Disables the button.
 
-### Custom Properties
+### as 
 
-You can use any custom, standard properties you'd like such as `title`, `name`, `tabIndex`, `data-*`, or `aria-*`. and it will be applied 1:1 to the rendered button.
+**Type:** `HTML string` or `React Element`
+
+**Default:** `button`
+
+Determines the root HTML element. For example, `Link` or `a` tags can be supplied to replace `button` from being the DOM element that wraps the component.
+
+
+#### Any other properties will be spread on the input element.
+Note: if an `href` prop is supplied, without an `as` prop, the component will automatically render in `a` tags, as opposed to `button` tags.
