@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import * as style from './style.js';
 import { ccClassName } from '@leafygreen-ui/lib';
+
 export default class RadioBox extends PureComponent {
   static displayName = 'RadioBox';
 
@@ -36,12 +37,7 @@ export default class RadioBox extends PureComponent {
       ...rest
     } = this.props;
 
-    // not sure of the cleanest way to do this, but the full size
-    // has to live on the wrapper, whereas the other two sizes
-    // live on the display box, because the full is responding
-    // to the group's flex container whereas the rest are fix pixels or padding
-    const radioBoxSize = style.radioBoxSizes[size];
-    const full = size === 'full' && style.radioBoxSizes[size];
+    const full = size === 'full' ? style.radioBoxSizes[size] : '';
 
     return (
       <label
@@ -61,7 +57,7 @@ export default class RadioBox extends PureComponent {
           aria-disabled={disabled}
           className={style.radioInput}
         />
-        <div className={ccClassName(style.radioDisplay, radioBoxSize)}>
+        <div className={ccClassName(style.radioDisplay, style.radioBoxSizes[size])}>
           {children}
         </div>
       </label>

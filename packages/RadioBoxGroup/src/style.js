@@ -34,7 +34,6 @@ export const radioDisplay = css`
   border: 1px solid ${colors.gray[5]};
   border-radius: 3px;
   margin-top: ${borderDifference}px;
-  margin-right: 12px;
   margin-bottom: 12px;
   font-weight: normal;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
@@ -69,7 +68,6 @@ export const radioInput = css`
     transition: border-color 150ms ease-out;
     margin-top: 0px;
     margin-left: -2px;
-    margin-right: ${externalSpacing}px;
     margin-bottom: ${externalSpacing}px;
     box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.15);
     transition: border-color 150ms ease-out;
@@ -96,8 +94,16 @@ export const radioInput = css`
 export const radioWrapper = css`
   display: flex;
 
+  &:not(:last-of-type) > .${radioDisplay} {
+    margin-right: 12px;
+  }
+
   &:last-of-type > .${radioDisplay} {
     margin-right: 0px;
+  }
+
+  &:not(:last-of-type) > .${radioInput}:checked ~ .${radioDisplay} {
+    margin-right: ${externalSpacing}px;
   }
 
   &:last-of-type > .${radioInput}:checked ~ .${radioDisplay} {
