@@ -57,7 +57,9 @@ export default class RadioBox extends PureComponent {
           aria-disabled={disabled}
           className={style.radioInput}
         />
-        <div className={ccClassName(style.radioDisplay, style.radioBoxSizes[size])}>
+        <div
+          className={ccClassName(style.radioDisplay, style.radioBoxSizes[size])}
+        >
           {children}
         </div>
       </label>
