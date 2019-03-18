@@ -36,7 +36,6 @@
       aria-disabled="false" 
       class="leafygreen-ui-51phbe" 
       value="option-2">
-
     <div class="leafygreen-ui-14cn59g">Radio Box 2</div>
   </label>
 </div>
