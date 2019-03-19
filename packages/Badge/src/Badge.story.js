@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { select } from '@storybook/addon-knobs';
+import { text, select } from '@storybook/addon-knobs';
 import Badge from './Badge';
 
 storiesOf('Badge', module).add('Default', () => (
@@ -21,7 +21,7 @@ storiesOf('Badge', module).add('Default', () => (
         'darkBlue',
       )}
     >
-      Sandbox
+      {text('Badge Text', 'Badge')}
     </Badge>
   </section>
 ));

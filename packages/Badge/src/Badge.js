@@ -54,7 +54,6 @@ export const badgeVariants = {
 
 export const clickable = css`
   cursor: pointer;
-  text-decoration: none;
 `;
 
 export default class Badge extends PureComponent {
@@ -63,7 +62,6 @@ export default class Badge extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
-    tag: PropTypes.oneOf(['span', 'a']),
     variant: PropTypes.oneOf([
       'default',
       'danger',
@@ -79,8 +77,6 @@ export default class Badge extends PureComponent {
   static defaultProps = {
     className: '',
     variant: 'default',
-    tag: 'span',
-    children: null,
   };
 
   render() {
@@ -90,15 +86,12 @@ export default class Badge extends PureComponent {
     const clickStyle = rest.onClick && clickable;
 
     return (
-      <span
+      <div
         {...rest}
-        className={ccClassName(
-          css`${baseStyle} ${variantStyle} ${clickStyle}`,
-          className,
-        )}
+        className={ccClassName(baseStyle, variantStyle, clickStyle, className)}
       >
         {children}
-      </span>
+      </div>
     );
   }
 }
