@@ -40,7 +40,14 @@ export const radioDisplay = css`
   vertical-align: top;
   overflow-wrap: break-word;
   background-color: white;
+  border: 1px solid ${colors.gray[5]};
+  border-radius: 2px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   z-index: 5;
+
+  &:hover {
+    border-color: ${colors.gray[3]};
+  }
 
   &:focus {
     transition: all 150ms ease-in-out;
@@ -53,6 +60,11 @@ export const radioInput = css`
   visibility: hidden;
   position: absolute;
   pointer-events: none;
+  
+  &:checked ~ .${radioDisplay} {
+    border-color: ${colors.green[2]};
+    transition: border-color 0ms; 
+  }
 
   &:disabled ~ .${radioDisplay} {
     background: ${colors.gray[8]};
@@ -72,36 +84,31 @@ export const radioInput = css`
 // because said pseudo-element would need to be on the label element
 // which can't use the contained input's checked pseudo-class.
 export const checkedState = css`
-  position: absolute;
-  background-color: ${colors.gray[5]};
-  top: -1px;
-  bottom: -1px;
-  right: -1px;
-  left: -1px;
-  border-radius: 2px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
-  transition: all 150ms ease-in-out;
-
-  .${radioInput}:hover:not(:disabled):not(:checked) + & {
-    background-color: ${colors.gray[3]};
-  }
+    position: absolute;
+    -webkit-transition: all 150ms ease-in-out;
+    transition: all 150ms ease-in-out;
+    top: -2px;
+    bottom: -2px;
+    right: -2px;
+    transform: scale(0.9, 0.8);
+    left: -2px;
+    opacity: 0;
 
   .${radioInput}:checked + & {
     border-radius: 3px;
     background-color: ${colors.green[2]};
     z-index: -1;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
     opacity: 1;
-    top: -3px;
-    bottom: -3px;
-    right: -3px;
-    left: -3px;
   }
 `;
 
 export const radioWrapper = css`
   display: flex;
   position: relative;
-  
+
   &:not(:last-of-type) {
     margin-right: 12px;
   }

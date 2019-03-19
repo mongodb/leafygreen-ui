@@ -58,7 +58,7 @@ export default class RadioBox extends PureComponent {
           className={style.radioInput}
         />
 
-        <div className={style.checkedState}></div>
+        <div className={style.checkedState} />
 
         <div
           className={ccClassName(style.radioDisplay, style.radioBoxSizes[size])}
