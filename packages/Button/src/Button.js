@@ -305,12 +305,11 @@ export default class Button extends Component {
     const sizeStyle = buttonSizes[size] || buttonSizes.normal;
 
     if (as) {
-      Tag = as
+      Tag = as;
     } else if (rest.href) {
-      Tag = 'a'
+      Tag = 'a';
     }
 
-    console.log(as)
     return (
       <Tag
         {...rest}
