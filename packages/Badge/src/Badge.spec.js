@@ -23,8 +23,4 @@ describe('packages/Badge', () => {
   test(`renders "${child}" as the button's textContent`, () => {
     expect(badge.textContent).toBe(child);
   });
-
-  test('renders a span tag, when href prop is not set', () => {
-    expect(badge.tagName).toBe('SPAN');
-  });
 });

@@ -2,12 +2,12 @@
 
 ## Example
 ``` Javascript
-<Badge
-  variant='lightBlue'
-  className='my-badge'
->
-  New
-</Badge>
+  <Badge
+    variant='lightBlue'
+    className='my-badge'
+  >
+    New
+  </Badge>
 ```
 
 **Output HTML**
@@ -44,6 +44,5 @@ Adds a className to the class attribute.
 The content that will appear inside of the  `<Badge />` component.
 
 
-
-### Custom Properties
-You can use any custom properties and they will be spread against the root node. Specifying the `onClick` attribute will change the cursor style to pointer. 
+#### Any other properties will be spread on the root element. 
+Note: Specifying the `onClick` attribute will change the cursor style to pointer. 
