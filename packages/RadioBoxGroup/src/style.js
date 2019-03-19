@@ -31,12 +31,7 @@ export const baseGroupStyle = css`
 export const radioDisplay = css`
   box-sizing: content-box;
   padding: ${internalSpacing}px;
-  border: 1px solid ${colors.gray[5]};
-  border-radius: 3px;
-  margin-top: ${borderDifference}px;
-  margin-bottom: 12px;
   font-weight: normal;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   text-align: center;
   font-size: 14px;
@@ -44,11 +39,8 @@ export const radioDisplay = css`
   text-align: center;
   vertical-align: top;
   overflow-wrap: break-word;
-
-  &:hover {
-    transition: border-color 150ms ease-out;
-    border-color: ${colors.gray[3]};
-  }
+  background-color: white;
+  z-index: 5;
 
   &:focus {
     transition: all 150ms ease-in-out;
@@ -62,22 +54,7 @@ export const radioInput = css`
   position: absolute;
   pointer-events: none;
 
-  &:checked + .${radioDisplay} {
-    border-radius: 5px;
-    border: ${selectedBorderSize}px solid ${colors.green[2]};
-    transition: border-color 150ms ease-out;
-    margin-top: 0px;
-    margin-left: -2px;
-    margin-bottom: ${externalSpacing}px;
-    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.15);
-    transition: border-color 150ms ease-out;
-
-    &:hover {
-      border-color: ${colors.green[2]};
-    }
-  }
-
-  &:disabled + .${radioDisplay} {
+  &:disabled ~ .${radioDisplay} {
     background: ${colors.gray[8]};
     border-color: ${colors.gray[7]};
     box-shadow: none;
@@ -91,22 +68,41 @@ export const radioInput = css`
   }
 `;
 
+// We use a div for the checked state rather than a pseudo-element
+// because said pseudo-element would need to be on the label element
+// which can't use the contained input's checked pseudo-class.
+export const checkedState = css`
+  position: absolute;
+  background-color: ${colors.gray[5]};
+  top: -1px;
+  bottom: -1px;
+  right: -1px;
+  left: -1px;
+  border-radius: 2px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+  transition: all 150ms ease-in-out;
+
+  .${radioInput}:hover:not(:disabled):not(:checked) + & {
+    background-color: ${colors.gray[3]};
+  }
+
+  .${radioInput}:checked + & {
+    border-radius: 3px;
+    background-color: ${colors.green[2]};
+    z-index: -1;
+    opacity: 1;
+    top: -3px;
+    bottom: -3px;
+    right: -3px;
+    left: -3px;
+  }
+`;
+
 export const radioWrapper = css`
   display: flex;
-
-  &:not(:last-of-type) > .${radioDisplay} {
+  position: relative;
+  
+  &:not(:last-of-type) {
     margin-right: 12px;
-  }
-
-  &:last-of-type > .${radioDisplay} {
-    margin-right: 0px;
-  }
-
-  &:not(:last-of-type) > .${radioInput}:checked ~ .${radioDisplay} {
-    margin-right: ${externalSpacing}px;
-  }
-
-  &:last-of-type > .${radioInput}:checked ~ .${radioDisplay} {
-    margin-right: -2px;
   }
 `;
