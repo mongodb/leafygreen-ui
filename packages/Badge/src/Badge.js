@@ -52,10 +52,6 @@ export const badgeVariants = {
   `,
 };
 
-export const clickable = css`
-  cursor: pointer;
-`;
-
 export default class Badge extends PureComponent {
   static displayName = 'Badge';
 
@@ -83,12 +79,11 @@ export default class Badge extends PureComponent {
     let { children, variant, className, ...rest } = this.props;
 
     const variantStyle = badgeVariants[variant];
-    const clickStyle = rest.onClick && clickable;
 
     return (
       <div
         {...rest}
-        className={ccClassName(baseStyle, variantStyle, clickStyle, className)}
+        className={ccClassName(baseStyle, variantStyle, className)}
       >
         {children}
       </div>
