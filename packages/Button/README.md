@@ -84,8 +84,8 @@ Disables the button.
 
 **Default:** `button`
 
-Determines the root HTML element. For example, `Link` or `a` tags can be supplied to replace `button` from being the DOM element that wraps the component.
+Determines the root element. For example, `Link` or `a` tags can be supplied to replace `button` from being the DOM element that wraps the component.
 
 
 #### Any other properties will be spread on the input element.
-Note: if an `href` prop is supplied, without an `as` prop, the component will automatically render in `a` tags, as opposed to `button` tags.
+Note: if an `href` prop is supplied, without an `as` prop, the component will automatically render in an `a` tag, as opposed to a `button` tag.

@@ -277,7 +277,7 @@ export default class Button extends Component {
     children: null,
     disabled: false,
     type: 'button',
-    tag: 'button',
+    root: 'button',
   };
 
   static propTypes = {
@@ -286,7 +286,7 @@ export default class Button extends Component {
     className: PropTypes.string,
     children: PropTypes.node,
     disabled: PropTypes.bool,
-    tag: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    root: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   };
 
   render() {
@@ -297,7 +297,7 @@ export default class Button extends Component {
       variant,
       size,
       as,
-      tag: Tag,
+      root: Root,
       ...rest
     } = this.props;
 
@@ -305,13 +305,13 @@ export default class Button extends Component {
     const sizeStyle = buttonSizes[size] || buttonSizes.normal;
 
     if (as) {
-      Tag = as;
+      Root = as;
     } else if (rest.href) {
-      Tag = 'a';
+      Root = 'a';
     }
 
     return (
-      <Tag
+      <Root
         {...rest}
         className={ccClassName(
           css`${baseStyle} ${sizeStyle} ${variantStyle}`,
@@ -321,7 +321,7 @@ export default class Button extends Component {
         aria-disabled={disabled}
       >
         {children}
-      </Tag>
+      </Root>
     );
   }
 }
