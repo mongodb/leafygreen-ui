@@ -40,7 +40,18 @@ export const radioDisplay = css`
   vertical-align: top;
   overflow-wrap: break-word;
   background-color: white;
+  border: 1px solid ${colors.gray[5]};
+  border-radius: 2px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   z-index: 5;
+
+  &:hover {
+    border-color: ${colors.gray[3]}
+
+    &:checked {
+      border-color: ${colors.green[2]}
+    }
+  }
 
   &:focus {
     transition: all 150ms ease-in-out;
@@ -73,35 +84,26 @@ export const radioInput = css`
 // which can't use the contained input's checked pseudo-class.
 export const checkedState = css`
   position: absolute;
-  background-color: ${colors.gray[5]};
-  top: -1px;
-  bottom: -1px;
-  right: -1px;
-  left: -1px;
-  border-radius: 2px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
-  transition: all 150ms ease-in-out;
-
-  .${radioInput}:hover:not(:disabled):not(:checked) + & {
-    background-color: ${colors.gray[3]};
-  }
+  transition: opacity 300ms ease-in-out;
+  top: -3px;
+  bottom: -3px;
+  right: -3px;
+  left: -3px;
+  opacity: 0;
 
   .${radioInput}:checked + & {
     border-radius: 3px;
     background-color: ${colors.green[2]};
     z-index: -1;
+    transform: scale(1);
     opacity: 1;
-    top: -3px;
-    bottom: -3px;
-    right: -3px;
-    left: -3px;
   }
 `;
 
 export const radioWrapper = css`
   display: flex;
   position: relative;
-  
+
   &:not(:last-of-type) {
     margin-right: 12px;
   }
