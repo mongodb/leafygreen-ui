@@ -4,8 +4,6 @@ import { colors } from '@leafygreen-ui/theme';
 const { css } = emotion;
 
 const selectedBorderSize = 3;
-const borderDifference = 2;
-const externalSpacing = 10;
 const internalSpacing = 15;
 
 export const radioBoxSizes = {
