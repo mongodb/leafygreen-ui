@@ -78,12 +78,10 @@ export default class Badge extends PureComponent {
   render() {
     let { children, variant, className, ...rest } = this.props;
 
-    const variantStyle = badgeVariants[variant];
-
     return (
       <div
         {...rest}
-        className={ccClassName(baseStyle, variantStyle, className)}
+        className={ccClassName(baseStyle, badgeVariants[variant], className)}
       >
         {children}
       </div>
