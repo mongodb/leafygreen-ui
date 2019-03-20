@@ -13,15 +13,11 @@ const buttonClass = css`
 `;
 
 storiesOf('Buttons', module)
-  .add('Extra Small', () => (
+  .add('Default', () => (
     <section className="storybook-container">
       <Button
-        size="xsmall"
-        variant={select(
-          'Variant',
-          ['default', 'primary', 'info', 'danger', 'dark'],
-          'default',
-        )}
+        size={select('Size', ['xsmall', 'small', 'normal', 'large'], 'normal')}
+        variant='default'
         title={text('Title', 'The button title')}
         disabled={boolean('Disabled', false)}
         className={buttonClass}
@@ -30,15 +26,11 @@ storiesOf('Buttons', module)
       </Button>
     </section>
   ))
-  .add('Small', () => (
+  .add('Primary', () => (
     <section className="storybook-container">
       <Button
-        size="small"
-        variant={select(
-          'Variant',
-          ['default', 'primary', 'info', 'danger', 'dark'],
-          'default',
-        )}
+        size={select('Size', ['xsmall', 'small', 'normal', 'large'], 'normal')}
+        variant='primary'
         title={null /* text('Title', 'The button title') */}
         disabled={boolean('Disabled', false)}
         className={buttonClass}
@@ -47,15 +39,11 @@ storiesOf('Buttons', module)
       </Button>
     </section>
   ))
-  .add('Normal', () => (
+  .add('Info', () => (
     <section className="storybook-container">
       <Button
-        size="normal"
-        variant={select(
-          'Variant',
-          ['default', 'primary', 'info', 'danger', 'dark'],
-          'default',
-        )}
+        size={select('Size', ['xsmall', 'small', 'normal', 'large'], 'normal')}
+        variant='info'
         title={text('Title', 'The button title')}
         disabled={boolean('Disabled', false)}
         className={buttonClass}
@@ -64,16 +52,24 @@ storiesOf('Buttons', module)
       </Button>
     </section>
   ))
-  .add('Large', () => (
+  .add('Danger', () => (
     <section className="storybook-container">
       <Button
-        size="large"
-        href="https://google.com"
-        variant={select(
-          'Variant',
-          ['default', 'primary', 'info', 'danger', 'dark'],
-          'default',
-        )}
+        size={select('Size', ['xsmall', 'small', 'normal', 'large'], 'normal')}
+        variant='danger'
+        title={text('Title', 'The button title')}
+        disabled={boolean('Disabled', false)}
+        className={buttonClass}
+      >
+        {text('Children', 'Button')}
+      </Button>
+    </section>
+  ))
+  .add('Dark', () => (
+    <section className="storybook-container">
+      <Button
+        size={select('Size', ['xsmall', 'small', 'normal', 'large'], 'normal')}        
+        variant='dark'
         title={text('Title', 'The button title')}
         disabled={boolean('Disabled', false)}
         className={buttonClass}
