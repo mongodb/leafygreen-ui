@@ -290,16 +290,17 @@ export default class Button extends Component {
   };
 
   render() {
-    let {
+    const {
       className,
       children,
       disabled,
       variant,
       size,
       as,
-      root: Root,
       ...rest
     } = this.props;
+
+    let { root: Root } = this.props;
 
     const variantStyle = buttonVariants[variant] || buttonVariants.default;
     const sizeStyle = buttonSizes[size] || buttonSizes.normal;
