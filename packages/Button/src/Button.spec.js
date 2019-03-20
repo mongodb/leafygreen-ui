@@ -53,9 +53,7 @@ describe('packages/Button', () => {
 
   test(`renders component inside of a tag when href prop is set`, () => {
     const { container } = render(
-      <Button title="title" href="http://mongodb.design">
-        Click me!
-      </Button>,
+      <Button href="http://mongodb.design">Click me!</Button>,
     );
     const buttonComponent = container.firstChild;
     expect(buttonComponent.tagName.toLowerCase()).toBe('a');
