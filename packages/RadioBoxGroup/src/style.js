@@ -3,13 +3,10 @@ import { colors } from '@leafygreen-ui/theme';
 
 const { css } = emotion;
 
-const selectedBorderSize = 3;
-const internalSpacing = 15;
-
 export const radioBoxSizes = {
   default: css`
-    width: ${175 - 2 * selectedBorderSize - 2 * internalSpacing}px;
-    padding: ${internalSpacing - 5 * internalSpacing}px;
+    width: ${175 - 2 * 3 - 2 * 15}px;
+    padding: ${15 - 5 * 15}px;
   `,
 
   tightContentBox: css`
@@ -28,7 +25,7 @@ export const baseGroupStyle = css`
 
 export const radioDisplay = css`
   box-sizing: content-box;
-  padding: ${internalSpacing}px;
+  padding: 15px;
   font-weight: normal;
   cursor: pointer;
   text-align: center;
@@ -48,9 +45,8 @@ export const radioDisplay = css`
   }
 
   &:focus {
-    transition: all 150ms ease-in-out;
-    border: 2px solid rgba(196, 219, 179, 0.7);
-    outline: transparent;
+    background-color: white;
+    z-index: 5;
   }
 `;
 
@@ -82,15 +78,15 @@ export const radioInput = css`
 // because said pseudo-element would need to be on the label element
 // which can't use the contained input's checked pseudo-class.
 export const checkedState = css`
-    position: absolute;
-    -webkit-transition: all 150ms ease-in-out;
-    transition: all 150ms ease-in-out;
-    top: -2px;
-    bottom: -2px;
-    right: -2px;
-    transform: scale(0.9, 0.8);
-    left: -2px;
-    opacity: 0;
+  position: absolute;
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 150ms ease-in-out;
+  top: -2px;
+  bottom: -2px;
+  right: -2px;
+  left: -2px;
+  transform: scale(0.9, 0.8);
+  opacity: 0;
 
   .${radioInput}:checked + & {
     border-radius: 3px;
@@ -100,6 +96,12 @@ export const checkedState = css`
     -ms-transform: scale(1);
     transform: scale(1);
     opacity: 1;
+  }
+
+  & ~ .${radioDisplay}:focus {
+    border-color: rgba(67, 177, 229, 0.25);
+    border-radius: 3px;
+    outline: none;
   }
 `;
 
