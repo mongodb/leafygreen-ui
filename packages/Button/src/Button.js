@@ -296,10 +296,11 @@ export default class Button extends Component {
       variant,
       size,
       as,
+      href,
       ...rest
     } = this.props;
 
-    const Root = as || (rest.href ? 'a' : 'button');
+    const Root = as || (href ? 'a' : 'button');
 
     const variantStyle = buttonVariants[variant] || buttonVariants.default;
     const sizeStyle = buttonSizes[size] || buttonSizes.normal;
@@ -307,6 +308,7 @@ export default class Button extends Component {
     return (
       <Root
         {...rest}
+        href={href}
         className={ccClassName(
           css`${baseStyle} ${sizeStyle} ${variantStyle}`,
           className,

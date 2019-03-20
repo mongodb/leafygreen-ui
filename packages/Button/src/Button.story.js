@@ -68,6 +68,7 @@ storiesOf('Buttons', module)
     <section className="storybook-container">
       <Button
         size="large"
+        href="https://google.com"
         variant={select(
           'Variant',
           ['default', 'primary', 'info', 'danger', 'dark'],
