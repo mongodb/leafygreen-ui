@@ -34,6 +34,7 @@ export default class RadioBox extends PureComponent {
       id,
       size,
       children,
+      name,
       ...rest
     } = this.props;
 

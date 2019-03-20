@@ -10,33 +10,38 @@
 
 ## Output HTML
 ```html
-<div class="leafygreen-ui-aht7rx radio-box-group-style">
+<div class="leafygreen-ui-k008qs ">
   <label 
-    for="radio-box-group-71270-button-0"
-    class="leafygreen-ui-1aaryka leafygreen-ui-1yje6go">  
+    for="radio-box-group-850132-button-0" 
+    class="leafygreen-ui-i6e9um"
+  >
     <input 
       type="radio" 
-      id="radio-box-group-71270-button-0" 
-      name="radio-box-group-71270" 
+      id="radio-box-group-850132-button-0" 
+      name="radio-box-group-850132" 
       aria-checked="false" 
       aria-disabled="false" 
-      class="leafygreen-ui-51phbe" 
-      value="option-1">
-    <div class="leafygreen-ui-14cn59g">Radio Box 1</div>
+      class="leafygreen-ui-10udnlm" 
+      value="option-1"
+    >
+    <div class="leafygreen-ui-1rd79mb"></div>
+    <div class="leafygreen-ui-1m9u12l leafygreen-ui-tv1yok">Radio Box 1</div>
   </label>
-  
   <label 
-    for="radio-box-group-71270-button-1" 
-    class="leafygreen-ui-1aaryka leafygreen-ui-1yje6go">
+    for="radio-box-group-850132-button-1" 
+    class="leafygreen-ui-i6e9um"
+  >
     <input 
       type="radio" 
-      id="radio-box-group-71270-button-1" 
-      name="radio-box-group-71270" 
+      id="radio-box-group-850132-button-1" 
+      name="radio-box-group-850132" 
       aria-checked="false" 
       aria-disabled="false" 
-      class="leafygreen-ui-51phbe" 
-      value="option-2">
-    <div class="leafygreen-ui-14cn59g">Radio Box 2</div>
+      class="leafygreen-ui-10udnlm" 
+      value="option-2"
+    >
+    <div class="leafygreen-ui-1rd79mb"></div>
+    <div class="leafygreen-ui-1m9u12l leafygreen-ui-tv1yok">Radio Box 2</div>
   </label>
 </div>
 ```
@@ -45,8 +50,8 @@
 
 ### size
 **Type:** `string`
-**Default:** `medium`
-Sets the style of the Radio Box Group. Valid sizes are `tightContentBox`, `full`, `small` and `medium`
+**Default:** `default`
+Sets the style of the Radio Box Group. Valid sizes are `tightContentBox`, `full` and `default`
   * `tightContentBox` adds padding to text, so there is no fixed width amongst a collection of boxes 
   * `default` has a fixed width and text will wrap accordingly 
   * `full` radio boxes will scale depending on available space (will take up 100% of their parent container). All boxes will tbe the same size
@@ -69,10 +74,7 @@ Adds a className to the root element
 ### onChange
 **Type:** `function`
 **Default:** `() => {}`
-The event handler function for the 'onchange' event. Receives the associated event object as the first argument and the event target's value (string) as the second.
-* Signature function(event: object, value: string)
-  * Event: The event source of the callback
-  * Value: The value of the selected radio
+The event handler function for the 'onchange' event. Receives the associated event object as the first argument.
 
 ### children
 **Type:** `node`
@@ -91,19 +93,21 @@ Content of the component
 ## Output HTML
 ```html
   <label 
-    for="radio-box-group-71270-button-2" 
-    class="leafygreen-ui-1aaryka leafygreen-ui-1yje6go false "> 
+    for="radio-box-group-746930-button-1" 
+    class="leafygreen-ui-i6e9um"
+  >  
     <input 
       type="radio" 
-      id="radio-box-group-71270-button-2" 
-      name="radio-box-group-71270" 
+      id="radio-box-group-746930-button-1" 
+      name="radio-box-group-746930"
       aria-checked="false" 
-      disabled="" 
-      aria-disabled="true" 
-      class="leafygreen-ui-51phbe" 
-      value="option-3">
-    <div class="leafygreen-ui-14cn59g">Radio Box 3</div>
-  </label> 
+      aria-disabled="false" 
+      class="leafygreen-ui-10udnlm" 
+      value="option-2"
+    >
+    <div class="leafygreen-ui-1rd79mb"></div>
+    <div class="leafygreen-ui-1m9u12l leafygreen-ui-tv1yok">Radio Box 2</div>
+  </label>
 ```
 
 ## Properties
