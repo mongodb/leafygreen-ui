@@ -270,6 +270,15 @@ const baseStyle = css`
 export default class Button extends Component {
   static displayName = 'Button';
 
+  static propTypes = {
+    variant: PropTypes.oneOf(['default', 'primary', 'info', 'danger', 'dark']),
+    size: PropTypes.oneOf(['xsmall', 'small', 'normal', 'large']),
+    className: PropTypes.string,
+    children: PropTypes.node,
+    disabled: PropTypes.bool,
+    as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  };
+
   static defaultProps = {
     variant: 'default',
     size: 'normal',
@@ -277,16 +286,6 @@ export default class Button extends Component {
     children: null,
     disabled: false,
     type: 'button',
-    root: 'button',
-  };
-
-  static propTypes = {
-    variant: PropTypes.oneOf(['default', 'primary', 'info', 'danger', 'dark']),
-    size: PropTypes.oneOf(['xsmall', 'small', 'normal', 'large']),
-    className: PropTypes.string,
-    children: PropTypes.node,
-    disabled: PropTypes.bool,
-    root: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   };
 
   render() {
@@ -300,16 +299,10 @@ export default class Button extends Component {
       ...rest
     } = this.props;
 
-    let { root: Root } = this.props;
+    const Root = as || (rest.href ? 'a' : 'button');
 
     const variantStyle = buttonVariants[variant] || buttonVariants.default;
     const sizeStyle = buttonSizes[size] || buttonSizes.normal;
-
-    if (as) {
-      Root = as;
-    } else if (rest.href) {
-      Root = 'a';
-    }
 
     return (
       <Root

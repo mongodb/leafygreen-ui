@@ -4,6 +4,8 @@ import { text, select, boolean } from '@storybook/addon-knobs';
 import { css } from 'react-emotion';
 import Button from '.';
 
+import Radio from '../../RadioGroup/src/Radio';
+
 const buttonClass = css`
   & + & {
     margin-left: 0.5rem;
