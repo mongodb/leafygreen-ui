@@ -2,7 +2,7 @@
 
 ## Example
 ```js
-<RadioBoxGroup size="medium" className="radio-box-group-style">
+<RadioBoxGroup className="radio-box-group-style">
   <RadioBox value="option-1">Radio Box 1</RadioBox>
   <RadioBox value="option-2">Radio Box 2</RadioBox>
 </RadioBoxGroup>
@@ -10,7 +10,7 @@
 
 ## Output HTML
 ```html
-<div class="leafygreen-ui-k008qs ">
+<div class="leafygreen-ui-k008qs radio-box-group-style">
   <label 
     for="radio-box-group-850132-button-0" 
     class="leafygreen-ui-i6e9um"
@@ -87,7 +87,7 @@ Content of the component
 
 ## Example 
 ```js
-  <RadioBox value="option-disabled" disabled>Radio Box</RadioBox>
+  <RadioBox value="option-2">Radio Box 2</RadioBox>
 ```
 
 ## Output HTML
