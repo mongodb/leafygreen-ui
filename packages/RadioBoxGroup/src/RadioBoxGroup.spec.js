@@ -16,6 +16,7 @@ const { container } = render(
 describe('packages/Radio', () => {
   const radioBoxContainer = container.firstChild;
   const radioBox = radioBoxContainer.firstChild;
+
   test(`renders "${className}" in RadioBox's classList`, () => {
     expect(radioBoxContainer.classList.contains(className)).toBe(true);
   });

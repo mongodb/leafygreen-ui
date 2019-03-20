@@ -54,10 +54,10 @@ export const radioInput = css`
   visibility: hidden;
   position: absolute;
   pointer-events: none;
-  
+
   &:checked ~ .${radioDisplay} {
     border-color: ${colors.green[2]};
-    transition: border-color 0ms; 
+    transition: border-color 0ms;
   }
 
   &:disabled ~ .${radioDisplay} {

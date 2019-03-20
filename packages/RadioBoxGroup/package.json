@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/RadioBoxGroup",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "leafyGreen UI Kit RadioBoxGroup",
   "main": "./dist/index.js",
   "scripts": {
