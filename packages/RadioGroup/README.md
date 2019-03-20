@@ -37,35 +37,57 @@
 
 ## Properties 
 
-### variant 
-#### Type: `string`
-#### Default: `default`
-Sets the style variant of the Radio Group. Valid variants are `default` and `light`
+### variant
+
+**Type:** `string`
+
+**Default:** `'default'`
+
+Sets the style variant of the toggle. Valid variants for toggles are `'default'` and `'light'`.
+
 
 ### name 
-#### Type: `string`
-#### Default: ''
+
+**Type:** `string`
+
+**Default:** ''
+
 Sets the name of the input group
 
+
 ### value 
-#### Type: `string` or `integer`
-#### Default: ``
+
+**Type:** `string` or `integer`
+
+**Default:** ``
+
 Sets the radio that will apear checked on page load, also makes the component a controlled component 
 
-### className
-#### Type: `string`
-##### Default: ''
-Adds a className to the outermost element.
 
-### onChange 
-#### Type: `function`
-#### Default: `() => {}`
-The event handler function for the 'onchange' event. Receives the associated event object as the first argument.
+### className
+
+**Type:** `string`
+
+**Default:** `''`
+
+Adds a className to the root element.
+
+
+### onChange
+
+**Type:** `function`
+
+**Default:** `() => {}`
+
+The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument.
+
 
 ### children
-#### Type: `node`
-#### Default: `null`
+**Type:** `node`
+**Default:** `null`
 Can be any node; however, any `<Radio />` components, will be treated as belonging to the `<RadioGroup />` compound component, and will recieve internal state from `<RadioGroup />`
+
+#### Any other properties will be spread on the root element. 
 
 # Radio
 
@@ -96,20 +118,37 @@ Can be any node; however, any `<Radio />` components, will be treated as belongi
 ## Properties
 
 ### value 
-#### Type: `required`, can be a `string` or an `integer`
+
+**Type:** `required`, can be a `string` or an `integer`
+
 Every radio needs a value prop
 
+
 ### className
-#### Type: `string`
-#### Default: ``
+
+**Type:** `string`
+
+**Default:** ``
+
 Adds a className to the label 
 
+
 ### disabled 
-#### Type: `boolean`
-#### Default: `false`
+
+**Type:** `boolean`
+
+**Default:** `false`
+
 Indicates whether or not the radio can be clicked by a user
 
+
 ### children
-#### Type: `node`
-#### Default: `null`
-Text that appears adjacent to the radio inpt; label text.
+
+**Type:** `node`
+
+**Default:** `null`
+
+Text that appears adjacent to the radio input; label text.
+
+
+#### Any other properties will be spread on the `input` element. 
