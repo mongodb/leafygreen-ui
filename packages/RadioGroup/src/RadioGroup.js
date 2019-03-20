@@ -47,9 +47,8 @@ export default class RadioGroup extends PureComponent {
   handleChange = e => {
     const { onChange, value } = this.props;
 
-    // Exposing both event and event.target.value, rather than just one or the other
     if (onChange) {
-      onChange(e, e.target.value);
+      onChange(e);
     }
 
     if (!value) {

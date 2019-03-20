@@ -183,9 +183,8 @@ export default class Checkbox extends PureComponent {
   onChange = e => {
     const { onChange, checked } = this.props;
 
-    // Exposing the native event, as well as if the event's target is checked or not
     if (onChange) {
-      onChange(e, e.target.checked);
+      onChange(e);
     }
 
     if (checked == null) {
