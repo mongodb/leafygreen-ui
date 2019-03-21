@@ -276,7 +276,7 @@ export default class Button extends Component {
     className: PropTypes.string,
     children: PropTypes.node,
     disabled: PropTypes.bool,
-    as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    as: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   };
 
   static defaultProps = {

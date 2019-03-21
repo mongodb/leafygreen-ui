@@ -51,6 +51,10 @@ describe('packages/Button', () => {
     expect(renderedButton.getAttribute('aria-disabled')).toBe('true');
   });
 
+  test(`renders inside of a button tag when href prop is not set and no as prop is passed`, () => {
+    expect(renderedButton.tagName.toLowerCase()).toBe('button');
+  });
+
   test(`renders component inside of a tag when href prop is set`, () => {
     const { container } = render(
       <Button href="http://mongodb.design">Click me!</Button>,
