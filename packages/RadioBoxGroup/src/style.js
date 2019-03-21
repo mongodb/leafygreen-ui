@@ -38,20 +38,14 @@ export const radioDisplay = css`
   border: 1px solid ${colors.gray[5]};
   border-radius: 2px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
-  z-index: 5;
-
+ 
   &:hover {
     border-color: ${colors.gray[3]};
-  }
-
-  &:focus {
-    background-color: white;
-    z-index: 5;
   }
 `;
 
 export const radioInput = css`
-  visibility: hidden;
+  opacity: 0;
   position: absolute;
   pointer-events: none;
 
@@ -59,6 +53,11 @@ export const radioInput = css`
     border-color: ${colors.green[2]};
     transition: border-color 0ms;
   }
+
+  &:focus ~ .${radioDisplay} {
+    border-color: rgba(67, 177, 229, 0.25);
+    border-radius: 3px;
+  } 
 
   &:disabled ~ .${radioDisplay} {
     background: ${colors.gray[8]};
@@ -79,7 +78,6 @@ export const radioInput = css`
 // which can't use the contained input's checked pseudo-class.
 export const checkedState = css`
   position: absolute;
-  -webkit-transition: all 200ms ease-in-out;
   transition: all 150ms ease-in-out;
   top: -2px;
   bottom: -2px;
@@ -87,21 +85,14 @@ export const checkedState = css`
   left: -2px;
   transform: scale(0.9, 0.8);
   opacity: 0;
+  z-index: -1;
 
-  .${radioInput}:checked + & {
+
+  .${radioInput}:checked ~ & {
     border-radius: 3px;
     background-color: ${colors.green[2]};
-    z-index: -1;
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
     transform: scale(1);
     opacity: 1;
-  }
-
-  & ~ .${radioDisplay}:focus {
-    border-color: rgba(67, 177, 229, 0.25);
-    border-radius: 3px;
-    outline: none;
   }
 `;
 
