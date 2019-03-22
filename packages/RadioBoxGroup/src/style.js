@@ -55,10 +55,10 @@ export const radioInput = css`
     transition: border-color 0ms;
   }
 
-  &:focus ~ .${radioDisplay} {
-    border-color: rgba(67, 177, 229, 0.25);
-    border-radius: 3px;
-  }
+  // &:focus ~ .${radioDisplay} {
+  //   border-color: rgba(67, 177, 229, 0.25);
+  //   border-radius: 3px;
+  // }
 
   &:disabled ~ .${radioDisplay} {
     background: ${colors.gray[8]};
