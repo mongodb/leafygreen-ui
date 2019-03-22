@@ -30,8 +30,8 @@ export default class RadioBoxGroup extends PureComponent {
   handleChange = e => {
     const { onChange, value } = this.props;
 
-    // Stopped propagation to prevent event from bubbling with new target, and thus value coming back as undefined
     if (onChange) {
+      // Stopped propagation to prevent event from bubbling with new target, and thus value coming back as undefined
       e.stopPropagation();
       onChange(e);
     }
