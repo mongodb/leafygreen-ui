@@ -51,15 +51,31 @@ describe('packages/Button', () => {
     expect(renderedButton.getAttribute('aria-disabled')).toBe('true');
   });
 
-  test(`renders inside of a button tag when href prop is not set and no as prop is passed`, () => {
+  test(`renders inside of a button tag when "href" prop is not set and no as prop is passed`, () => {
     expect(renderedButton.tagName.toLowerCase()).toBe('button');
   });
 
-  test(`renders component inside of a tag when href prop is set`, () => {
+  test(`renders component inside of a tag when "href" prop is set`, () => {
     const { container } = render(
       <Button href="http://mongodb.design">Click me!</Button>,
     );
     const buttonComponent = container.firstChild;
     expect(buttonComponent.tagName.toLowerCase()).toBe('a');
+  });
+
+  test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
+    const { container } = render(<Button as="div">Click me!</Button>);
+    const buttonComponent = container.firstChild;
+    expect(buttonComponent.tagName.toLowerCase()).toBe('div');
+  });
+
+  test(`renders component inside of a React Element/HTML tag based on as prop, even when "href" is set`, () => {
+    const { container } = render(
+      <Button as="div" href="http://mongodb.design">
+        Click me!
+      </Button>,
+    );
+    const buttonComponent = container.firstChild;
+    expect(buttonComponent.tagName.toLowerCase()).toBe('div');
   });
 });

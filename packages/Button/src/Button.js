@@ -277,6 +277,7 @@ export default class Button extends Component {
     children: PropTypes.node,
     disabled: PropTypes.bool,
     as: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    href: PropTypes.string,
   };
 
   static defaultProps = {
@@ -300,7 +301,11 @@ export default class Button extends Component {
       ...rest
     } = this.props;
 
-    const Root = as || (href ? 'a' : 'button');
+    let Root = href ? 'a' : 'button';
+
+    if (as) {
+      Root = as;
+    }
 
     const variantStyle = buttonVariants[variant] || buttonVariants.default;
     const sizeStyle = buttonSizes[size] || buttonSizes.normal;
