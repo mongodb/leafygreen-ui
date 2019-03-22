@@ -51,7 +51,7 @@ describe('packages/Button', () => {
     expect(renderedButton.getAttribute('aria-disabled')).toBe('true');
   });
 
-  test(`renders inside of a button tag when href prop is not set and no as prop is passed`, () => {
+  test(`renders inside of a button tag when "href" prop is not set and no "as" prop is passed`, () => {
     expect(renderedButton.tagName.toLowerCase()).toBe('button');
   });
 
