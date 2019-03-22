@@ -21,10 +21,8 @@ class Control extends Component {
   state = { on: false };
 
   render() {
-    console.log(document.getElementById('root'));
     return (
       <div>
-        <div id="poop" />
         <Button
           size="small"
           onClick={() => this.setState({ on: !this.state.on })}
