@@ -38,7 +38,8 @@ export const radioDisplay = css`
   border: 1px solid ${colors.gray[5]};
   border-radius: 2px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
- 
+  z-index: 5;
+
   &:hover {
     border-color: ${colors.gray[3]};
   }
@@ -57,7 +58,7 @@ export const radioInput = css`
   &:focus ~ .${radioDisplay} {
     border-color: rgba(67, 177, 229, 0.25);
     border-radius: 3px;
-  } 
+  }
 
   &:disabled ~ .${radioDisplay} {
     background: ${colors.gray[8]};
@@ -87,12 +88,12 @@ export const checkedState = css`
   opacity: 0;
   z-index: -1;
 
-
   .${radioInput}:checked ~ & {
     border-radius: 3px;
     background-color: ${colors.green[2]};
     transform: scale(1);
     opacity: 1;
+    z-index: 1;
   }
 `;
 
