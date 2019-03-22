@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import Portal from './Portal';
-import Button from '../../Button';
 import { storiesOf } from '@storybook/react';
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
 
 const { css } = emotion;
 
-const portalStyle = css`
+const triggeredStyle = css`
   position: absolute;
   top: 10px;
   right: 20px;
@@ -23,15 +22,14 @@ class Control extends Component {
   render() {
     return (
       <div>
-        <Button
-          size="small"
+        <button
           onClick={() => this.setState({ on: !this.state.on })}
         >
           Toggle Portal
-        </Button>
+        </button>
         {this.state.on && (
           <Portal node={document.getElementById('root')}>
-            <div className={portalStyle}>
+            <div className={triggeredStyle}>
               I have been portaled to the end of the DOM!
             </div>
           </Portal>
@@ -43,8 +41,6 @@ class Control extends Component {
 
 storiesOf('Portal', module).add('Default', () => (
   <section className="storybook-container">
-    <div>
       <Control />
-    </div>
   </section>
 ));

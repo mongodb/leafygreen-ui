@@ -7,26 +7,26 @@ export default class Portal extends Component {
 
   static propTypes = {
     children: PropTypes.node,
-    node: PropTypes.any,
+    container: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
   };
 
   static defaultProps = {
-    node: document.createElement('div'),
+    container: document.createElement('div'),
   };
 
   componentDidMount = () => {
-    const { node } = this.props;
-    document.body.appendChild(node);
+    const { container } = this.props;
+    document.body.appendChild(container);
     this.forceUpdate();
   };
 
   componentWillUnmount = () => {
-    const { node } = this.props;
-    document.body.removeChild(node);
+    const { container } = this.props;
+    document.body.removeChild(container);
   };
 
   render() {
-    const { node } = this.props;
-    return createPortal(this.props.children, node);
+    const { container } = this.props;
+    return createPortal(this.props.children, container);
   }
 }

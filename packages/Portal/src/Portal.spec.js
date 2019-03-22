@@ -28,7 +28,7 @@ describe('packages/Portal', () => {
     render(<div id="custom-container" />, { container });
 
     render(
-      <Portal node={document.getElementById('custom-container')}>
+      <Portal container={document.getElementById('custom-container')}>
         Portaled to a custom node
       </Portal>,
       { container },
