@@ -32,12 +32,12 @@ Major versions will be given the most scrutiny as they will potentially break a 
 ### Content
 1. At the very top, link directly to the relevant Jira ticket.
 2. List the changes
-   a. List changes made to each component.
-   b. Include details about any newly-established patterns, or architectural decisions made (if relevant).
-   c. If the reason behind the changes isn’t clear, please add detail as to why it’s necessary
+   - List changes made to each component.
+   - Include details about any newly-established patterns, or architectural decisions made (if relevant).
+   - If the reason behind the changes isn’t clear, please add detail as to why it’s necessary
 3. Add relevant screenshots / gifs
-   a. Take screenshots of the component if a new component is added or a component style is updated.
-   b. Record a gif of the component if motion is a major component of it.
+   - Take screenshots of the component if a new component is added or a component style is updated.
+   - Record a gif of the component if motion is a major component of it.
 
 ### Merging
 Pull requests require at least one approval after review. Once you’ve received approval, you can merge! Please use GitHub’s “Squash and Merge” option when doing so, that way we maintain a clean commit history.
