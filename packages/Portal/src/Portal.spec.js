@@ -14,7 +14,7 @@ describe('packages/Portal', () => {
     </div>,
   );
 
-  test(`appends portal to document body`, () => {
+  test(`appends new div, which contains the Portal component's children, to document body`, () => {
     expect(document.body.firstChild.outerHTML).toBe(
       '<div><div>Existing content on the DOM</div></div>',
     );
@@ -24,7 +24,7 @@ describe('packages/Portal', () => {
     );
   });
 
-  test(`appends portal to a custom node`, () => {
+  test(`appends new div, which contains the Poral component's children, to the end of a supplied container`, () => {
     const div = document.createElement('div');
     div.id = 'custom-container';
     document.body.appendChild(div);
