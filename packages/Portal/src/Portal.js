@@ -17,17 +17,15 @@ export default class Portal extends Component {
     }
   };
 
+  defaultContainer = document.createElement('div');
+
   render() {
-    const { container } = this.props;
+    const { container, children } = this.props;
 
     if (!container) {
-      this.defaultContainer = document.createElement('div');
       document.body.appendChild(this.defaultContainer);
     }
 
-    return createPortal(
-      this.props.children,
-      container || this.defaultContainer,
-    );
+    return createPortal(children, container || this.defaultContainer);
   }
 }

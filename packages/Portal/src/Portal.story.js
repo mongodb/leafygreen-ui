@@ -26,7 +26,7 @@ class Control extends Component {
           Toggle Portal
         </button>
         {this.state.on && (
-          <Portal>
+          <Portal container={document.getElementById('root')}>
             <div className={triggeredStyle}>
               I have been portaled to the end of the DOM!
             </div>
