@@ -44,9 +44,9 @@ export default class RadioBoxGroup extends PureComponent {
   render() {
     const {
       children,
-      name = this.defaultName,
       className,
       size,
+      name = this.defaultName,
       value = this.state.value,
       ...rest
     } = this.props;
