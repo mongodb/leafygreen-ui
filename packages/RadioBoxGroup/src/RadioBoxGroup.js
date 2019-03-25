@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import * as style from './style.js';
 import { ccClassName } from '@leafygreen-ui/lib';
+import RadioBox from './RadioBox';
 
 export default class RadioBoxGroup extends PureComponent {
   static displayName = 'RadioBoxGroup';
@@ -52,7 +53,7 @@ export default class RadioBoxGroup extends PureComponent {
     } = this.props;
 
     const renderedChildren = React.Children.map(children, (child, index) => {
-      if (child.type.displayName !== 'RadioBox') {
+      if (child.type.displayName !== RadioBox.displayName) {
         return child;
       }
 

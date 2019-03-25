@@ -39,7 +39,7 @@ describe('packages/RadioBox', () => {
   });
 });
 
-describe('packages/Radio Box Group', () => {
+describe('packages/RadioBoxGroup', () => {
   const { container } = render(
     <RadioBoxGroup>
       <RadioBox value="option-1">Input 1</RadioBox>
@@ -48,11 +48,11 @@ describe('packages/Radio Box Group', () => {
     </RadioBoxGroup>,
   );
 
-  const radioGroupContainer = container.firstChild;
-  const text = radioGroupContainer.children[1];
+  const radioBoxGroupContainer = container.firstChild;
+  const text = radioBoxGroupContainer.children[1];
 
   test(`renders children of Radio Box Group, that are not themselves Radio Boxes, as is, without converting them to RadioBoxes`, () => {
-    expect(text.tagName.toLowerCase()).toBe('h1')
+    expect(text.tagName.toLowerCase()).toBe('h1');
   });
 });
 

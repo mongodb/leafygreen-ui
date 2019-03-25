@@ -62,7 +62,7 @@ Sets the style of the Radio Box Group. Valid sizes are `tightContentBox`, `full`
 Sets the name of the input group
 
 ### value
-**Type:** `string` or `integer`
+**Type:** `string` or `number`
 **Default:** ``
 Sets the radio that will apear checked on page load, also makes the component a controlled component
 
@@ -74,7 +74,7 @@ Adds a className to the root element
 ### onChange
 **Type:** `function`
 **Default:** `() => {}`
-The event handler function for the 'onchange' event. Receives the associated event object as the first argument.
+The event handler function for the 'onChange' event. Receives the associated event object as the first argument.
 
 ### children
 **Type:** `node`
@@ -113,7 +113,7 @@ Content of the component
 ## Properties
 
 ### value
-**Type:** required, can be a `string` or an `integer`
+**Type:** required, can be a `string` or an `number`
 Every radio needs a value prop
 
 ### className
