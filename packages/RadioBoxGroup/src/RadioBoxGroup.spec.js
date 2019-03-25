@@ -25,6 +25,7 @@ describe('packages/RadioBox', () => {
     expect(radioBox.checked).toBe(true);
     expect(radioBox.getAttribute('aria-checked')).toBe('true');
   });
+  
 
   test('renders as disabled, when the disabled prop is set', () => {
     const { container } = render(
@@ -54,62 +55,62 @@ describe('packages/RadioBoxGroup', () => {
   test(`renders children of Radio Box Group, that are not themselves Radio Boxes, as is, without converting them to RadioBoxes`, () => {
     expect(text.tagName.toLowerCase()).toBe('h1');
   });
-});
 
-describe('Radio Box Group when controlled', () => {
-  const controlledOnChange = jest.fn();
+  describe('RadioBoxGroup when controlled', () => {
+    const controlledOnChange = jest.fn();
 
-  render(
-    <RadioBoxGroup value="option-1" onChange={controlledOnChange}>
-      <RadioBox value="option-1">Option 1</RadioBox>
-      <RadioBox value="option-2">Option 2</RadioBox>
-    </RadioBoxGroup>,
-    { container },
-  );
+    render(
+      <RadioBoxGroup value="option-1" onChange={controlledOnChange}>
+        <RadioBox value="option-1">Option 1</RadioBox>
+        <RadioBox value="option-2">Option 2</RadioBox>
+      </RadioBoxGroup>,
+      { container },
+    );
 
-  const radioBoxGroup = container.firstChild;
-  const firstRadioBoxLabel = radioBoxGroup.firstChild;
-  const firstRadioBoxInput = firstRadioBoxLabel.firstChild;
-  const secondRadioBoxInput = radioBoxGroup.children[1].firstChild;
+    const radioBoxGroup = container.firstChild;
+    const firstRadioBoxLabel = radioBoxGroup.firstChild;
+    const firstRadioBoxInput = firstRadioBoxLabel.firstChild;
+    const secondRadioBoxInput = radioBoxGroup.children[1].firstChild;
 
-  fireEvent.click(secondRadioBoxInput);
+    fireEvent.click(secondRadioBoxInput);
 
-  test(`initial value set by radio box group when prop provided`, () => {
-    expect(firstRadioBoxInput.checked).toBe(true);
-    expect(firstRadioBoxInput.getAttribute('aria-checked')).toBe('true');
+    test(`initial value set by radio box group when prop provided`, () => {
+      expect(firstRadioBoxInput.checked).toBe(true);
+      expect(firstRadioBoxInput.getAttribute('aria-checked')).toBe('true');
+    });
+
+    test('onChange fires once when the label is clicked', () => {
+      expect(controlledOnChange.mock.calls.length).toBe(1);
+    });
+
+    test('radio input does not become checked when clicked', () => {
+      expect(secondRadioBoxInput.checked).toBe(false);
+    });
   });
 
-  test('onChange fires once when the label is clicked', () => {
-    expect(controlledOnChange.mock.calls.length).toBe(1);
-  });
+  describe('RadioBoxGroup when uncontrolled', () => {
+    const uncontrolledOnChange = jest.fn();
 
-  test('radio input does not become checked when clicked', () => {
-    expect(secondRadioBoxInput.checked).toBe(false);
-  });
-});
+    render(
+      <RadioBoxGroup onChange={uncontrolledOnChange}>
+        <RadioBox value="option-1">Option 1</RadioBox>
+      </RadioBoxGroup>,
+      { container },
+    );
 
-describe('Radio Box Group when uncontrolled', () => {
-  const uncontrolledOnChange = jest.fn();
+    const radioBoxGroup = container.firstChild;
+    const radioBoxLabel = radioBoxGroup.firstChild;
+    const radioBoxInput = radioBoxLabel.firstChild;
 
-  render(
-    <RadioBoxGroup onChange={uncontrolledOnChange}>
-      <RadioBox value="option-1">Option 1</RadioBox>
-    </RadioBoxGroup>,
-    { container },
-  );
+    fireEvent.click(radioBoxLabel);
 
-  const radioBoxGroup = container.firstChild;
-  const radioBoxLabel = radioBoxGroup.firstChild;
-  const radioBoxInput = radioBoxLabel.firstChild;
+    test('onChange fires once when the label is clicked', () => {
+      expect(uncontrolledOnChange.mock.calls.length).toBe(1);
+    });
 
-  fireEvent.click(radioBoxLabel);
-
-  test('onChange fires once when the label is clicked', () => {
-    expect(uncontrolledOnChange.mock.calls.length).toBe(1);
-  });
-
-  test('radio button becomes checked when clicked', () => {
-    expect(radioBoxInput.getAttribute('aria-checked')).toBe('true');
-    expect(radioBoxInput.checked).toBe(true);
+    test('radio button becomes checked when clicked', () => {
+      expect(radioBoxInput.getAttribute('aria-checked')).toBe('true');
+      expect(radioBoxInput.checked).toBe(true);
+    });
   });
 });
