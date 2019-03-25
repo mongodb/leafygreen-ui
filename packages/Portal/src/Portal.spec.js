@@ -25,12 +25,16 @@ describe('packages/Portal', () => {
   });
 
   test(`appends portal to a custom node`, () => {
-    render(<div id="custom-container" />, { container });
+    let div = document.createElement('div');
+    div.id = 'custom-container';
+    document.body.appendChild(div);
 
     render(
-      <Portal container={document.getElementById('custom-container')}>
-        Portaled to a custom node
-      </Portal>,
+      <div>
+        <Portal container={document.getElementById('custom-container')}>
+          Portaled to a custom node
+        </Portal>
+      </div>,
       { container },
     );
 

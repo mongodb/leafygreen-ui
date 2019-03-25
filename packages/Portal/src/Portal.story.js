@@ -22,18 +22,22 @@ class Control extends Component {
   render() {
     return (
       <div>
-        <button
-          onClick={() => this.setState({ on: !this.state.on })}
-        >
+        <button onClick={() => this.setState({ on: !this.state.on })}>
           Toggle Portal
         </button>
         {this.state.on && (
-          <Portal node={document.getElementById('root')}>
+          <Portal>
             <div className={triggeredStyle}>
               I have been portaled to the end of the DOM!
             </div>
           </Portal>
         )}
+        <p>
+          Open the inspector to watch the DOM change when the Portal is toggled
+          on and off. When the Portal is active, a <code>div</code> is appended
+          to the end of the <code>documet.body</code> containing the Portal
+          components children.
+        </p>
       </div>
     );
   }
@@ -41,6 +45,6 @@ class Control extends Component {
 
 storiesOf('Portal', module).add('Default', () => (
   <section className="storybook-container">
-      <Control />
+    <Control />
   </section>
 ));
