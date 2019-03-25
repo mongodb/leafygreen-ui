@@ -15,8 +15,7 @@
     "react": "^16.0.0"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^2.1.0",
-    "@leafygreen-ui/theme": "^1.1.0"
+    "@leafygreen-ui/lib": "^2.1.0"
   },
   "gitHead": "1bfce22b8a41568dab0d88b0044e1b4e750584df"
 }
