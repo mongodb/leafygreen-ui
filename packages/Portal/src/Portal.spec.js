@@ -25,7 +25,7 @@ describe('packages/Portal', () => {
   });
 
   test(`appends portal to a custom node`, () => {
-    let div = document.createElement('div');
+    const div = document.createElement('div');
     div.id = 'custom-container';
     document.body.appendChild(div);
 
