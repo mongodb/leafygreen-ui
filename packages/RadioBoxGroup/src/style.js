@@ -5,8 +5,8 @@ const { css } = emotion;
 
 export const radioBoxSizes = {
   default: css`
-    width: ${175 - 2 * 3 - 2 * 15}px;
-    padding: ${15 - 5 * 15}px;
+    width: 139px;
+    padding: -60px;
   `,
 
   tightContentBox: css`
@@ -38,7 +38,7 @@ export const radioDisplay = css`
   border: 1px solid ${colors.gray[5]};
   border-radius: 2px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
-  z-index: 5;
+  z-index: 2;
 
   &:hover {
     border-color: ${colors.gray[3]};
