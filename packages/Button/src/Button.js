@@ -270,6 +270,16 @@ const baseStyle = css`
 export default class Button extends Component {
   static displayName = 'Button';
 
+  static propTypes = {
+    variant: PropTypes.oneOf(['default', 'primary', 'info', 'danger', 'dark']),
+    size: PropTypes.oneOf(['xsmall', 'small', 'normal', 'large']),
+    className: PropTypes.string,
+    children: PropTypes.node,
+    disabled: PropTypes.bool,
+    as: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    href: PropTypes.string,
+  };
+
   static defaultProps = {
     variant: 'default',
     size: 'normal',
@@ -279,14 +289,6 @@ export default class Button extends Component {
     type: 'button',
   };
 
-  static propTypes = {
-    variant: PropTypes.oneOf(['default', 'primary', 'info', 'danger', 'dark']),
-    size: PropTypes.oneOf(['xsmall', 'small', 'normal', 'large']),
-    className: PropTypes.string,
-    children: PropTypes.node,
-    disabled: PropTypes.bool,
-  };
-
   render() {
     const {
       className,
@@ -294,15 +296,24 @@ export default class Button extends Component {
       disabled,
       variant,
       size,
+      as,
+      href,
       ...rest
     } = this.props;
 
-    const variantStyle = buttonVariants[variant] || buttonVariants.default;
-    const sizeStyle = buttonSizes[size] || buttonSizes.normal;
+    let Root = href ? 'a' : 'button';
+
+    if (as) {
+      Root = as;
+    }
+
+    const variantStyle = buttonVariants[variant];
+    const sizeStyle = buttonSizes[size];
 
     return (
-      <button
+      <Root
         {...rest}
+        href={href}
         className={ccClassName(
           css`${baseStyle} ${sizeStyle} ${variantStyle}`,
           className,
@@ -311,7 +322,7 @@ export default class Button extends Component {
         aria-disabled={disabled}
       >
         {children}
-      </button>
+      </Root>
     );
   }
 }

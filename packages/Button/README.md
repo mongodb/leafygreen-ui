@@ -78,6 +78,20 @@ Sets the HTML `value` attribute.
 
 Disables the button.
 
-### Custom Properties
+### as 
 
-You can use any custom, standard properties you'd like such as `title`, `name`, `tabIndex`, `data-*`, or `aria-*`. and it will be applied 1:1 to the rendered button.
+**Type:** `HTML Tag` or `React Element`
+
+**Default:** `button`
+
+Determines the root element. For example, `Link` or `a` tags can be supplied to replace `button` from being the DOM element that wraps the component.
+
+### href 
+**Type:** `string` 
+
+**Default:** `null`
+
+If a href is supplied it willl change the `as` value, such that the component renders inside of an `a` tag instead of inside of a `button` tag.
+
+#### Any other properties will be spread on the input element.
+Note: In order to make this Component act as a submit button, the recommended approach is to pass `submit` as the `type` prop. Note it is also valid to pass `input` to the `as` prop, and the button's content's to the `value` prop -- in this case, do not supply children to the component.
