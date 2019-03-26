@@ -25,7 +25,6 @@ describe('packages/RadioBox', () => {
     expect(radioBox.checked).toBe(true);
     expect(radioBox.getAttribute('aria-checked')).toBe('true');
   });
-  
 
   test('renders as disabled, when the disabled prop is set', () => {
     const { container } = render(
@@ -52,11 +51,11 @@ describe('packages/RadioBoxGroup', () => {
   const radioBoxGroupContainer = container.firstChild;
   const text = radioBoxGroupContainer.children[1];
 
-  test(`renders children of Radio Box Group, that are not themselves Radio Boxes, as is, without converting them to RadioBoxes`, () => {
+  test('renders children of Radio Box Group, that are not themselves Radio Boxes, as is, without converting them to RadioBoxes', () => {
     expect(text.tagName.toLowerCase()).toBe('h1');
   });
 
-  describe('RadioBoxGroup when controlled', () => {
+  describe('when controlled', () => {
     const controlledOnChange = jest.fn();
 
     render(
@@ -74,7 +73,7 @@ describe('packages/RadioBoxGroup', () => {
 
     fireEvent.click(secondRadioBoxInput);
 
-    test(`initial value set by radio box group when prop provided`, () => {
+    test('initial value set by radio box group when prop provided', () => {
       expect(firstRadioBoxInput.checked).toBe(true);
       expect(firstRadioBoxInput.getAttribute('aria-checked')).toBe('true');
     });
@@ -88,7 +87,7 @@ describe('packages/RadioBoxGroup', () => {
     });
   });
 
-  describe('RadioBoxGroup when uncontrolled', () => {
+  describe('when uncontrolled', () => {
     const uncontrolledOnChange = jest.fn();
 
     render(

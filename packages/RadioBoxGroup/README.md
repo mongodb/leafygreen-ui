@@ -51,8 +51,8 @@
 ### size
 **Type:** `string`
 **Default:** `default`
-Sets the style of the Radio Box Group. Valid sizes are `tightContentBox`, `full` and `default`
-  * `tightContentBox` adds padding to text, so there is no fixed width amongst a collection of boxes 
+Sets the style of the Radio Box Group. Valid sizes are `compact`, `full` and `default`
+  * `compact` adds padding to text, so there is no fixed width amongst a collection of boxes 
   * `default` has a fixed width and text will wrap accordingly 
   * `full` radio boxes will scale depending on available space (will take up 100% of their parent container). All boxes will tbe the same size
 
