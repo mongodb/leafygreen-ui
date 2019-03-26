@@ -6,7 +6,6 @@ const { css } = emotion;
 export const radioBoxSizes = {
   default: css`
     width: 139px;
-    padding: -60px;
   `,
 
   compact: css`
