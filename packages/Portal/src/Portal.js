@@ -10,8 +10,8 @@ export default class Portal extends Component {
     container: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
   };
 
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
 
     if (!this.props.container) {
       document.body.appendChild(this.defaultContainer);
@@ -19,11 +19,11 @@ export default class Portal extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { container } = this.props
+    const { container } = this.props;
     if (nextProps.container !== container && !container) {
       document.body.removeChild(this.defaultContainer);
     }
-    return true
+    return true;
   }
 
   componentWillUnmount = () => {
