@@ -38,7 +38,7 @@ export default class RadioBox extends PureComponent {
       ...rest
     } = this.props;
 
-    const full = size === 'full' ? style.radioBoxSizes[size] : '';
+    const full = size === 'full' ? style.radioBoxSizes['full'] : '';
 
     return (
       <label

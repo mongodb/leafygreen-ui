@@ -13,7 +13,7 @@ export default class RadioBoxGroup extends PureComponent {
     onChange: PropTypes.func,
     name: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    size: PropTypes.oneOf(['tightContentBox', 'default', 'full']),
+    size: PropTypes.oneOf(['compact', 'default', 'full']),
     className: PropTypes.string,
   };
 

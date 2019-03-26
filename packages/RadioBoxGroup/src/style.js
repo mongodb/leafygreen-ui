@@ -9,7 +9,7 @@ export const radioBoxSizes = {
     padding: -60px;
   `,
 
-  tightContentBox: css`
+  compact: css`
     padding-right: 4px;
     padding-left: 4px;
   `,
