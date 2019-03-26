@@ -91,6 +91,7 @@ Determines the root element. For example, `Link` or `a` tags can be supplied to 
 
 **Default:** `null`
 
-If an href is supplied it willl change the `as` value, such that the component renders inside of an `a` tag instead of inside of a `button` tag.
+If a href is supplied it willl change the `as` value, such that the component renders inside of an `a` tag instead of inside of a `button` tag.
 
 #### Any other properties will be spread on the input element.
+Note: In order to make this Component act as a submit button, the recommended approach is to pass `submit` as the `type` prop. Note it is also valid to pass `input` to the `as` prop, and the button's content's to the `value` prop -- in this case, do not supply children to the component.
