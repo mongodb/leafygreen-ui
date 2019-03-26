@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/Badge",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "leafyGreen UI Kit Badge",
   "main": "./dist/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "react": "^16.0.0"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^2.1.0",
-    "@leafygreen-ui/theme": "^1.1.0"
+    "@leafygreen-ui/lib": "^2.1.1",
+    "@leafygreen-ui/theme": "^1.1.1"
   }
 }
