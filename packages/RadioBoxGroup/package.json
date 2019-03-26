@@ -1,0 +1,21 @@
+{
+  "name": "@leafygreen-ui/RadioBoxGroup",
+  "version": "0.1.0",
+  "description": "leafyGreen UI Kit RadioBoxGroup",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.0.0",
+    "react": "^16.0.0"
+  },
+  "dependencies": {
+    "@leafygreen-ui/lib": "^2.1.0",
+    "@leafygreen-ui/theme": "^1.0.5"
+  }
+}
