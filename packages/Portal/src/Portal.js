@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 
-export default class Portal extends PureComponent {
+export default class Portal extends Component {
   static displayName = 'Portal';
 
   static propTypes = {
@@ -18,6 +18,14 @@ export default class Portal extends PureComponent {
     }
   }
 
+  shouldComponentUpdate(nextProps) {
+    const { container } = this.props
+    if (nextProps.container !== container && !container) {
+      document.body.removeChild(this.defaultContainer);
+    }
+    return true
+  }
+
   componentWillUnmount = () => {
     if (!this.props.container) {
       document.body.removeChild(this.defaultContainer);
@@ -27,8 +35,8 @@ export default class Portal extends PureComponent {
   defaultContainer = document.createElement('div');
 
   render() {
-    const { container, children } = this.props;
+    const { container = this.defaultContainer, children } = this.props;
 
-    return createPortal(children, container || this.defaultContainer);
+    return createPortal(children, container);
   }
 }
