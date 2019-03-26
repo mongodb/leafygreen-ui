@@ -307,8 +307,8 @@ export default class Button extends Component {
       Root = as;
     }
 
-    const variantStyle = buttonVariants[variant] || buttonVariants.default;
-    const sizeStyle = buttonSizes[size] || buttonSizes.normal;
+    const variantStyle = buttonVariants[variant];
+    const sizeStyle = buttonSizes[size];
 
     return (
       <Root
