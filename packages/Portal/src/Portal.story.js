@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Portal from './Portal';
 import { storiesOf } from '@storybook/react';
 import { emotion } from '@leafygreen-ui/lib';
-import { colors } from '@leafygreen-ui/theme';
 
 const { css } = emotion;
 
