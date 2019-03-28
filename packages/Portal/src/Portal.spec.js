@@ -42,4 +42,19 @@ describe('packages/Portal', () => {
       `<div id="custom-container">Portaled to a custom node</div>`,
     );
   });
+
+  test(`removes portal content from custom node`, () => {
+    const div = document.createElement('div');
+    div.id = 'custom-container';
+    document.body.appendChild(div);
+
+    const { container, unmount } = render(
+      <Portal container={document.getElementById('custom-container')}>
+        Portaled
+      </Portal>,
+    );
+    unmount();
+
+    expect(container.innerHTML).toBe('');
+  });
 });
