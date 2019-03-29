@@ -43,6 +43,28 @@ describe('packages/Portal', () => {
     );
   });
 
+  test('does not portal contents to new container, when the container prop is changed', () => {
+    document.body.innerHTML =
+      '<div id="root"></div><div id="custom-container"></div>';
+    let customContainer = document.getElementById('root');
+
+    const changeContainer = () => {
+      customContainer = document.getElementById('custom-container');
+    };
+
+    const { container } = render(
+      <Portal container={customContainer}>Some text here</Portal>,
+    );
+
+    expect(document.body.innerHTML).toBe(
+      '<div id="root">Some text here</div><div id="custom-container"></div><div></div>',
+    );
+    changeContainer();
+    expect(document.body.innerHTML).toBe(
+      '<div id="root">Some text here</div><div id="custom-container"></div><div></div>',
+    );
+  });
+
   test(`removes portal content from custom container`, () => {
     const div = document.createElement('div');
     div.id = 'custom-container';
