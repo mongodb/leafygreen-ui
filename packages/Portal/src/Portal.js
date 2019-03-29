@@ -10,6 +10,8 @@ export default class Portal extends Component {
     container: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
   };
 
+  defaultContainer = document.createElement('div');
+
   constructor(props) {
     super(props);
 
@@ -32,7 +34,6 @@ export default class Portal extends Component {
     }
   };
 
-  defaultContainer = document.createElement('div');
 
   render() {
     const { container = this.defaultContainer, children } = this.props;
