@@ -12,21 +12,12 @@ export default class Portal extends Component {
 
   defaultContainer = document.createElement('div');
 
-  constructor(props) {
-    super(props);
-
+  componentDidMount = () => {
     if (!this.props.container) {
       document.body.appendChild(this.defaultContainer);
+      this.forceUpdate();
     }
-  }
-
-  // Checking to see if the container rendering the Portal has changed and if we'd created the inital container
-  // If so, we remove the previously created container
-  componentDidUpdate(prevProps) {
-    if (!prevProps.container && this.props.container) {
-      document.body.removeChild(this.defaultContainer);
-    }
-  }
+  };
 
   componentWillUnmount = () => {
     if (!this.props.container) {
@@ -34,10 +25,9 @@ export default class Portal extends Component {
     }
   };
 
-
   render() {
     const { container = this.defaultContainer, children } = this.props;
 
-    return createPortal(children, container);
+    return children && createPortal(children, container);
   }
 }
