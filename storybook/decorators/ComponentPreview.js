@@ -3,13 +3,10 @@ import { css } from 'react-emotion';
 
 const rootStyle = css`
   display: flex;
-  border: 1px solid #90c566;
-  margin: 10px;
-  padding: 10px;
-
-  & > div {
-    width: 100%;
-  }
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 100vh;
 `;
 
 // eslint-disable-next-line react/display-name
