@@ -10,24 +10,52 @@ export default class Portal extends Component {
     container: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
   };
 
-  defaultContainer = document.createElement('div');
+  static createPortalContainer = nodeType => {
+    const el = document.createElement(nodeType || 'div');
+    document.body.appendChild(el);
+
+    return {
+      el,
+      remove: () => document.body.removeChild(el),
+    };
+  };
+
+  state = { defaultContainer: null };
 
   componentDidMount = () => {
     if (!this.props.container) {
-      document.body.appendChild(this.defaultContainer);
-      this.forceUpdate();
+      this.setState({ defaultContainer: Portal.createPortalContainer() });
     }
   };
 
+  shouldComponentUpdate = nextProps => {
+    if (nextProps.container !== this.props.container) {
+      console.error(
+        'Changing the Portal container is not supported behavior and may cause unintended side effects. Instead, create a new Portal instance',
+      );
+      return false;
+    }
+    return true;
+  };
+
   componentWillUnmount = () => {
-    if (!this.props.container) {
-      document.body.removeChild(this.defaultContainer);
+    if (this.state.defaultContainer) {
+      const {
+        defaultContainer: { el, remove },
+      } = this.state;
+      if (!this.props.container) {
+        remove();
+      }
     }
   };
 
   render() {
-    const { container = this.defaultContainer, children } = this.props;
+    const { defaultContainer } = this.state;
+    const {
+      container = defaultContainer && defaultContainer.el,
+      children,
+    } = this.props;
 
-    return children && createPortal(children, container);
+    return container && createPortal(children, container);
   }
 }
