@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup } from 'react-testing-library';
+import { render, rerender, cleanup } from 'react-testing-library';
 import Portal from '.';
 
 afterAll(cleanup);
@@ -43,26 +43,21 @@ describe('packages/Portal', () => {
     );
   });
 
-  test('does not portal contents to new container, when the container prop is changed', () => {
-    document.body.innerHTML =
-      '<div id="root"></div><div id="custom-container"></div>';
-    let customContainer = document.getElementById('root');
-
-    const changeContainer = () => {
-      customContainer = document.getElementById('custom-container');
-    };
-
-    const { container } = render(
-      <Portal container={customContainer}>Some text here</Portal>,
+  test('does not move Portaled content when the container props is changed, and consoles an error', () => {
+    const { container, rerender } = render(
+      <div>
+        <Portal>Moving Portaled Content</Portal>
+      </div>,
     );
 
-    expect(document.body.innerHTML).toBe(
-      '<div id="root">Some text here</div><div id="custom-container"></div><div></div>',
+    rerender(
+      <div>
+        <Portal container={document.getElementById('custom-container')}>
+          Moving Portaled Content
+        </Portal>
+      </div>,
     );
-    changeContainer();
-    expect(document.body.innerHTML).toBe(
-      '<div id="root">Some text here</div><div id="custom-container"></div><div></div>',
-    );
+    expect(document.body.lastChild.innerHTML).toBe('Moving Portaled Content');
   });
 
   test(`removes portal content from custom container`, () => {
@@ -76,7 +71,16 @@ describe('packages/Portal', () => {
       </Portal>,
     );
     unmount();
-
     expect(container.innerHTML).toBe('');
   });
+});
+
+test('cleans up default container', () => {
+  const { container, unmount } = render(
+    <div>
+      <Portal>Portaled</Portal>
+    </div>,
+  );
+  unmount();
+  expect(container.innerHTML).toBe('');
 });
