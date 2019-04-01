@@ -1,11 +1,12 @@
 import { configure, addDecorator, addParameters } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import ComponentPreview from './decorators/ComponentPreview';
+import theme from './theme';
 
 addParameters({
   options: {
-    brandTitle: 'leafyGreen UI Kit',
-    brandUrl: 'https://github.com/10gen/leafygreen-ui',
+    name: 'LeafyGreen UI',
+    theme,
   },
 });
 
