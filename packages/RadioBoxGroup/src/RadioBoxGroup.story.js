@@ -1,12 +1,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, boolean, select } from '@storybook/addon-knobs';
+import { emotion } from '@leafygreen-ui/lib';
 
 import RadioBoxGroup from './RadioBoxGroup';
 import RadioBox from './RadioBox';
 
 storiesOf('RadioBoxGroup', module).add('Default', () => (
-  <section className="storybook-container">
+  <div className={emotion.css`width: 100%; padding: 2rem;`}>
     <RadioBoxGroup
       size={select('Size', ['compact', 'default', 'full'], 'default')}
     >
@@ -16,5 +17,5 @@ storiesOf('RadioBoxGroup', module).add('Default', () => (
         Radio Box 3
       </RadioBox>
     </RadioBoxGroup>
-  </section>
+  </div>
 ));

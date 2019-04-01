@@ -49,21 +49,17 @@ class Control extends PureComponent {
 
 storiesOf('Checkbox', module)
   .add('Default', () => (
-    <section className="storybook-container">
-      <Control
-        disabled={boolean('Disabled', false)}
-        indeterminate={boolean('Indeterminate', false)}
-        label={text('Label', 'I agree to this thing.')}
-      />
-    </section>
+    <Control
+      disabled={boolean('Disabled', false)}
+      indeterminate={boolean('Indeterminate', false)}
+      label={text('Label', 'I agree to this thing.')}
+    />
   ))
   .add('Light', () => (
-    <section className="storybook-container">
-      <Control
-        disabled={boolean('Disabled', false)}
-        indeterminate={boolean('Indeterminate', false)}
-        label={text('Label', 'I agree to this thing.')}
-        variant="light"
-      />
-    </section>
+    <Control
+      disabled={boolean('Disabled', false)}
+      indeterminate={boolean('Indeterminate', false)}
+      label={text('Label', 'I agree to this thing.')}
+      variant="light"
+    />
   ));
