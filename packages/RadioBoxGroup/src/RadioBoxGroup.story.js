@@ -6,7 +6,6 @@ import { emotion } from '@leafygreen-ui/lib';
 import RadioBoxGroup from './RadioBoxGroup';
 import RadioBox from './RadioBox';
 
-
 storiesOf('RadioBoxGroup', module).add('Default', () => (
   <div className={emotion.css`width: 100%; padding: 2rem;`}>
     <RadioBoxGroup

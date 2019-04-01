@@ -1,7 +1,7 @@
 import { configure, addDecorator, addParameters } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import ComponentPreview from './decorators/ComponentPreview';
-import theme from './theme'
+import theme from './theme';
 
 addParameters({
   options: {
