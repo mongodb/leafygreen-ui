@@ -1,16 +1,15 @@
 import { create } from '@storybook/theming';
 
 export default create({
-	name: 'leafygreen',
+  name: 'leafygreen',
 
-	base: 'light',
+  base: 'light',
 
   brandTitle: 'LeafyGreen UI',
   brandUrl: 'https://github.com/10gen/leafygreen-ui',
-	brandImage: 'logo.svg',
+  brandImage: 'logo.svg',
 
-
-	colorPrimary: '#13AA52',
+  colorPrimary: '#13AA52',
   colorSecondary: '#13AA52',
 
   // UI
@@ -37,4 +36,4 @@ export default create({
   inputBorder: '#D7DBDB',
   inputTextColor: '#303434',
   inputBorderRadius: 4,
-})
+});

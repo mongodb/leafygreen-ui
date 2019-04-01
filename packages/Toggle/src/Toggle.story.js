@@ -4,7 +4,7 @@ import { boolean, select } from '@storybook/addon-knobs';
 import { emotion } from '@leafygreen-ui/lib';
 import Toggle from '.';
 
-const containerStyle = emotion.css`padding: 2rem; text-align: center;`
+const containerStyle = emotion.css`padding: 2rem; text-align: center;`;
 
 storiesOf('Toggle', module)
   .add('Default', () => (
@@ -17,12 +17,10 @@ storiesOf('Toggle', module)
   ))
   .add('Dark', () => (
     <div
-      className={
-        emotion.css`
+      className={emotion.css`
           ${containerStyle};
           background-color: #464C4F;
-        `
-      }
+        `}
     >
       <Toggle
         size={select('Size', ['default', 'small', 'xsmall'], 'default')}
