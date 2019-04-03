@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, rerender, cleanup } from 'react-testing-library';
+import { render, cleanup } from 'react-testing-library';
 import Portal from '.';
 
 afterAll(cleanup);
