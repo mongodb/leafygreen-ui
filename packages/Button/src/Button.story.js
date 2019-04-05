@@ -11,71 +11,63 @@ const buttonClass = css`
 `;
 
 storiesOf('Buttons', module)
-  .add('Extra Small', () => (
-    <section className="storybook-container">
-      <Button
-        size="xsmall"
-        variant={select(
-          'Variant',
-          ['default', 'primary', 'info', 'danger', 'dark'],
-          'default',
-        )}
-        title={text('Title', 'The button title')}
-        disabled={boolean('Disabled', false)}
-        className={buttonClass}
-      >
-        {text('Children', 'Button')}
-      </Button>
-    </section>
+  .add('Default', () => (
+    <Button
+      size={select('Size', ['xsmall', 'small', 'normal', 'large'], 'normal')}
+      variant="default"
+      title={text('Title', 'The button title')}
+      disabled={boolean('Disabled', false)}
+      href={select('Href', ['http://mongodb.design', null], null)}
+      className={buttonClass}
+    >
+      {text('Children', 'Button')}
+    </Button>
   ))
-  .add('Small', () => (
-    <section className="storybook-container">
-      <Button
-        size="small"
-        variant={select(
-          'Variant',
-          ['default', 'primary', 'info', 'danger', 'dark'],
-          'default',
-        )}
-        title={null /* text('Title', 'The button title') */}
-        disabled={boolean('Disabled', false)}
-        className={buttonClass}
-      >
-        {text('Children', 'Button')}
-      </Button>
-    </section>
+  .add('Primary', () => (
+    <Button
+      size={select('Size', ['xsmall', 'small', 'normal', 'large'], 'normal')}
+      variant="primary"
+      title={null /* text('Title', 'The button title') */}
+      disabled={boolean('Disabled', false)}
+      href={select('Href', ['http://mongodb.design', null], null)}
+      className={buttonClass}
+    >
+      {text('Children', 'Button')}
+    </Button>
   ))
-  .add('Normal', () => (
-    <section className="storybook-container">
-      <Button
-        size="normal"
-        variant={select(
-          'Variant',
-          ['default', 'primary', 'info', 'danger', 'dark'],
-          'default',
-        )}
-        title={text('Title', 'The button title')}
-        disabled={boolean('Disabled', false)}
-        className={buttonClass}
-      >
-        {text('Children', 'Button')}
-      </Button>
-    </section>
+  .add('Info', () => (
+    <Button
+      size={select('Size', ['xsmall', 'small', 'normal', 'large'], 'normal')}
+      variant="info"
+      title={text('Title', 'The button title')}
+      disabled={boolean('Disabled', false)}
+      href={select('Href', ['http://mongodb.design', null], null)}
+      className={buttonClass}
+    >
+      {text('Children', 'Button')}
+    </Button>
   ))
-  .add('Large', () => (
-    <section className="storybook-container">
-      <Button
-        size="large"
-        variant={select(
-          'Variant',
-          ['default', 'primary', 'info', 'danger', 'dark'],
-          'default',
-        )}
-        title={text('Title', 'The button title')}
-        disabled={boolean('Disabled', false)}
-        className={buttonClass}
-      >
-        {text('Children', 'Button')}
-      </Button>
-    </section>
+  .add('Danger', () => (
+    <Button
+      size={select('Size', ['xsmall', 'small', 'normal', 'large'], 'normal')}
+      variant="danger"
+      title={text('Title', 'The button title')}
+      disabled={boolean('Disabled', false)}
+      href={select('Href', ['http://mongodb.design', null], null)}
+      className={buttonClass}
+    >
+      {text('Children', 'Button')}
+    </Button>
+  ))
+  .add('Dark', () => (
+    <Button
+      size={select('Size', ['xsmall', 'small', 'normal', 'large'], 'normal')}
+      variant="dark"
+      title={text('Title', 'The button title')}
+      disabled={boolean('Disabled', false)}
+      href={select('Href', ['http://mongodb.design', null], null)}
+      className={buttonClass}
+    >
+      {text('Children', 'Button')}
+    </Button>
   ));

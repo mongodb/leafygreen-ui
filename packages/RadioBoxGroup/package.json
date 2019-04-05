@@ -1,7 +1,7 @@
 {
-  "name": "@leafygreen-ui/Checkbox",
-  "version": "1.1.1",
-  "description": "LeafyGreen UI Kit Checkbox",
+  "name": "@leafygreen-ui/RadioBoxGroup",
+  "version": "1.0.0",
+  "description": "leafyGreen UI Kit RadioBoxGroup",
   "main": "./dist/index.js",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
@@ -17,6 +17,5 @@
   "dependencies": {
     "@leafygreen-ui/lib": "^2.1.1",
     "@leafygreen-ui/theme": "^1.1.1"
-  },
-  "gitHead": "1bfce22b8a41568dab0d88b0044e1b4e750584df"
+  }
 }
