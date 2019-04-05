@@ -44,15 +44,19 @@ describe('packages/Portal', () => {
   });
 
   test('does not move Portaled content when the container props is changed, and logs an error to the console', () => {
-    const { container, rerender } = render(<div>
+    const { container, rerender } = render(
+      <div>
         <Portal>Moving Portaled Content</Portal>
-      </div>);
+      </div>,
+    );
 
-    rerender(<div>
+    rerender(
+      <div>
         <Portal container={document.getElementById('custom-container')}>
           Moving Portaled Content
         </Portal>
-      </div>);
+      </div>,
+    );
     expect(document.body.lastChild.innerHTML).toBe('Moving Portaled Content');
   });
 
