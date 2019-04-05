@@ -63,18 +63,6 @@ const renderColorGroup = (namePrefix, colorGroup) => {
 };
 
 storiesOf('colors', module)
-  .add('Green', () => (
-    <section className="storybook-container">
-      {renderColorGroup('Green', colors.green)}
-    </section>
-  ))
-  .add('Gray', () => (
-    <section className="storybook-container">
-      {renderColorGroup('Gray', colors.gray)}
-    </section>
-  ))
-  .add('MongoDB', () => (
-    <section className="storybook-container">
-      {renderColorGroup('', colors.mongodb)}
-    </section>
-  ));
+  .add('Green', () => renderColorGroup('Green', colors.green))
+  .add('Gray', () => renderColorGroup('Gray', colors.gray))
+  .add('MongoDB', () => renderColorGroup('', colors.mongodb));

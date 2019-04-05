@@ -82,3 +82,6 @@ Adds a className to the outermost element.
 **Default:** `() => {}`
 
 The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument.
+
+
+#### Any other properties will be spread on the `input` element. 
