@@ -11,6 +11,10 @@
   "publishConfig": {
     "access": "public"
   },
+  "peerDependencies": {
+    "prop-types": "^15.0.0",
+    "react": "^16.0.0"
+  },
   "dependencies": {
     "create-emotion": "^10.0.7",
     "emotion": "^10.0.7",
