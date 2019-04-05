@@ -25,7 +25,6 @@ export default class Toggle extends PureComponent {
   };
 
   state = { checked: false };
-  inputRef = React.createRef();
   checkboxId = `toggle-${Math.floor(Math.random() * 10000000)}`;
 
   onChange = e => {
@@ -65,7 +64,6 @@ export default class Toggle extends PureComponent {
         <input
           {...rest}
           id={this.checkboxId}
-          ref={this.inputRef}
           className={style.input}
           type="checkbox"
           role="checkbox"
