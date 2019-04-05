@@ -69,14 +69,14 @@ describe('packages/Portal', () => {
     unmount();
     expect(container.innerHTML).toBe('');
   });
-});
 
-test('cleans up default container', () => {
-  const { container, unmount } = render(
-    <div>
-      <Portal>Portaled</Portal>
-    </div>,
-  );
-  unmount();
-  expect(container.innerHTML).toBe('');
+  test('cleans up default container', () => {
+    const { container, unmount } = render(
+      <div>
+        <Portal>Portaled</Portal>
+      </div>,
+    );
+    unmount();
+    expect(container.innerHTML).toBe('');
+  });
 });
