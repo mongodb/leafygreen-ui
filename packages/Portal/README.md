@@ -2,7 +2,7 @@
 
 ## Example 
 ```js 
-  <Portal container={document.getElementById('root')}>
+  <Portal>
     <div>
       Portals transport their children to a div that is appended to
       the end of the document.body to or a node that
@@ -13,7 +13,7 @@
 
 **Output HTML**
 ```HTML 
-  <div id="root">
+  <div>
     <div class="leafygreen-ui-xi606m">
       Portals transport their children to a div that is appended to the end of the document.body to or a node that can be specified with a container prop.
     </div>
