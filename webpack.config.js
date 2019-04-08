@@ -31,13 +31,15 @@ module.exports = function(env = 'production') {
       : [],
 
     resolve: {
-      extensions: ['.js', '.json', '.less', '.css'],
+      extensions: ['.js', '.json', '.less', '.css', '.tsx', '.ts'],
     },
 
     devtool: isProduction ? 'source-map' : 'eval-source-map',
 
     module: {
       rules: [
+        { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
+
         {
           test: /\.js$/,
           use: {

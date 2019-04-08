@@ -3,6 +3,8 @@ import Portal from './Portal';
 import { storiesOf } from '@storybook/react';
 import { emotion } from '@leafygreen-ui/lib';
 
+import Hello from './Hello.tsx';
+
 const { css } = emotion;
 
 const portalChildrenStyle = css`
@@ -10,13 +12,12 @@ const portalChildrenStyle = css`
 `;
 
 storiesOf('Portal', module).add('Default', () => (
-  <section className="storybook-container">
-    <Portal>
-      <div className={portalChildrenStyle}>
-        Portals transport their children to a <code>div</code> that is appended
-        to the end of the <code>documet.body</code> to or a <code>node</code>{' '}
-        that can be specified with a <code>container</code> prop.
-      </div>
-    </Portal>
-  </section>
+  <Portal container={document.getElementById('root')}>
+    <div className={portalChildrenStyle}>
+      Portals transport their children to a <code>div</code> that is appended to
+      the end of the <code>documet.body</code> to or a <code>node</code> that
+      can be specified with a <code>container</code> prop.
+    </div>
+    <Hello compiler={3} />
+  </Portal>
 ));
