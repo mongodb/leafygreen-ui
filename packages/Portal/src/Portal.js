@@ -46,8 +46,7 @@ export default class Portal extends Component {
   componentWillUnmount() {
     const { defaultContainer } = this.state;
     if (defaultContainer) {
-      const { remove } = defaultContainer;
-      remove();
+      defaultContainer.remove();
     }
   }
 
@@ -57,7 +56,7 @@ export default class Portal extends Component {
       container = defaultContainer && defaultContainer.el,
       children,
     } = this.props;
-
+  
     return container && createPortal(children, container);
   }
 }
