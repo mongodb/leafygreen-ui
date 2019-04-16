@@ -38,10 +38,8 @@ module.exports = function(env = 'production') {
 
     module: {
       rules: [
-        { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
-
         {
-          test: /\.js$/,
+          test: /\.(t|j)sx?$/,
           use: {
             loader: 'babel-loader',
             options: {

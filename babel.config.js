@@ -22,5 +22,5 @@ module.exports = function(api) {
     'emotion',
   ];
 
-  return { presets, plugins };aa
+  return { presets, plugins };
 };

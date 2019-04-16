@@ -3,8 +3,6 @@ import Portal from './Portal';
 import { storiesOf } from '@storybook/react';
 import { emotion } from '@leafygreen-ui/lib';
 
-import Hello from './Hello.tsx';
-
 const { css } = emotion;
 
 const portalChildrenStyle = css`
@@ -18,6 +16,5 @@ storiesOf('Portal', module).add('Default', () => (
       the end of the <code>documet.body</code> to or a <code>node</code> that
       can be specified with a <code>container</code> prop.
     </div>
-    <Hello compiler={3} />
   </Portal>
 ));
