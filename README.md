@@ -73,3 +73,7 @@ If you have an MMS Repository and instance running and you wanted to make and se
 To clean generated assets run.
 
     `npm run clean`
+
+
+## License
+The source files in this repository are made available under the terms of the Apache License, version 2.0.
