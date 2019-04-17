@@ -56,7 +56,7 @@ export default class Portal extends Component {
       container = defaultContainer && defaultContainer.el,
       children,
     } = this.props;
-  
+
     return container && createPortal(children, container);
   }
 }

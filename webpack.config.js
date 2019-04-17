@@ -31,7 +31,7 @@ module.exports = function(env = 'production') {
       : [],
 
     resolve: {
-      extensions: ['.js', '.json', '.less', '.css'],
+      extensions: ['.js', '.json', '.less', '.css', '.tsx', '.ts'],
     },
 
     devtool: isProduction ? 'source-map' : 'eval-source-map',
@@ -39,7 +39,7 @@ module.exports = function(env = 'production') {
     module: {
       rules: [
         {
-          test: /\.js$/,
+          test: /\.(t|j)sx?$/,
           use: {
             loader: 'babel-loader',
             options: {
