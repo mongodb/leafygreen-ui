@@ -46,7 +46,7 @@ If you have an MMS Repository and instance running and you wanted to make and se
 
 1. From the root folder of the MMS Repository go up one folder using `../` and type in `git clone https://github.com/10gen/leafygreen-ui`
 2. When that completes navigate to `leafygreen-ui` and run `npm run link -- ../mms/client`.
-  **NOTE:** If the package is new and unpublished/not installed, you will need to create a directory for the new component within your application inside `node_modules/@leafygreen-ui` before running this command.
+   **NOTE:** If the package is new and unpublished/not installed, you will need to create a directory for the new component within your application inside `node_modules/@leafygreen-ui` before running this command.
 3. Once the script completes you can make your changes the `leafygreen-ui` components (note: these changes will not yet be visible in the MMS instance that is running)
 4. From the root folder of `leafygreen-ui` run `npm run build`
 5. After a refresh the changes will be visible in the MMS instance
@@ -74,6 +74,13 @@ To clean generated assets run.
 
     `npm run clean`
 
+## Deploy gh-pages
+
+You can deploy a static build of our Storybook site to gh-pages.
+
+1. First be sure you've built a static version of Storybook: `npm run build:storybook`
+2. Then deploy to gh-pages: `npm run release:site`
 
 ## License
+
 The source files in this repository are made available under the terms of the Apache License, version 2.0.
