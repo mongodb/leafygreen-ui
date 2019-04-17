@@ -1,5 +1,5 @@
 {
-  "name": "@leafygreen-ui/Badge",
+  "name": "@leafygreen-ui/badge",
   "version": "1.0.0",
   "description": "leafyGreen UI Kit Badge",
   "main": "./dist/index.js",
