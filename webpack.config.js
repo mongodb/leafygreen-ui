@@ -52,9 +52,6 @@ module.exports = function(env = 'production') {
 
         {
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-          include: [
-            path.resolve(__dirname, "packages/Icon")
-          ],
           loader: '@svgr/webpack',
         },
 

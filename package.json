@@ -1,6 +1,7 @@
 {
   "description": "leafyGreen UI Kit",
-  "contributors": [{
+  "contributors": [
+    {
       "name": "Dave McCarthy",
       "email": "dave.mccarthy@mongodb.com"
     },

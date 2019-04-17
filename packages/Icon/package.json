@@ -1,5 +1,5 @@
 {
-    "name": "@leafygreen-ui/Icon",
+    "name": "@leafygreen-ui/icon",
     "version": "0.9.0",
     "description": "LeafyGreen UI Kit Icons",
     "main": "./dist/index.js",

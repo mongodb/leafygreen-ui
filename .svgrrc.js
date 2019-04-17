@@ -1,3 +1,4 @@
+// https://www.smooth-code.com/open-source/svgr/docs/configuration-files/
 module.exports = {
   titleProp: true,
   svgProps: {
@@ -6,6 +7,10 @@ module.exports = {
     width: '{props.size}',
     viewBox: '0 0 16 16',
   },
+
+  // There's *some* documentation on templates found here:
+  //
+  // https://www.smooth-code.com/open-source/svgr/docs/cli/#use-a-specific-template
   template: function(
     { template },
     opts,

@@ -16,14 +16,14 @@ export default glyphs => {
       size: 'default',
     };
 
-    get humanReadableTitle() {
+    getHumanReadableTitle() {
       const { glyph } = this.props;
 
       const transformedName = glyph.replace(/([A-Z][a-z])/g, ' $1');
       return `${transformedName} Icon`;
     }
 
-    get sizeInPixels() {
+    getSizeInPixels() {
       const { size } = this.props;
 
       if (typeof size === 'number') {
@@ -50,8 +50,8 @@ export default glyphs => {
       return (
         <SVGComponent
           {...rest}
-          title={this.humanReadableTitle}
-          size={this.sizeInPixels}
+          title={this.getHumanReadableTitle()}
+          size={this.getSizeInPixels()}
         />
       );
     }
