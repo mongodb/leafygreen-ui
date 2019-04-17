@@ -1,6 +1,6 @@
 {
-  "name": "@leafygreen-ui/RadioGroup",
-  "version": "1.1.1",
+  "name": "@leafygreen-ui/radio-group",
+  "version": "1.1.2",
   "description": "leafyGreen UI Kit RadioGroup",
   "main": "./dist/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^2.1.1",
-    "@leafygreen-ui/theme": "^1.1.1"
+    "@leafygreen-ui/lib": "^2.1.2",
+    "@leafygreen-ui/theme": "^1.1.2"
   }
 }

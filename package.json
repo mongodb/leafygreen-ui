@@ -1,7 +1,6 @@
 {
   "description": "leafyGreen UI Kit",
-  "contributors": [
-    {
+  "contributors": [{
       "name": "Dave McCarthy",
       "email": "dave.mccarthy@mongodb.com"
     },
@@ -39,7 +38,8 @@
     "prettier": "prettier --write \"**/*.js\"",
     "test": "jest --env jsdom",
     "types": "tsc --project tsconfig.json",
-    "release": "lerna publish --registry https://artifactory.corp.mongodb.com/artifactory/api/npm/mongodb-cloud-local/"
+    "release": "lerna publish",
+    "release:site": "gh-pages --dist storybook/public"
   },
   "devDependencies": {
     "@babel/core": "7.1.6",
@@ -65,6 +65,7 @@
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jest": "22.1.0",
     "eslint-plugin-react": "7.11.1",
+    "gh-pages": "^2.0.1",
     "jest": "23.6.0",
     "lerna": "3.4.3",
     "prettier": "1.15.2",
