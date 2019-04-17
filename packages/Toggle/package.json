@@ -1,5 +1,5 @@
 {
-  "name": "@leafygreen-ui/Toggle",
+  "name": "@leafygreen-ui/toggle",
   "version": "1.1.1",
   "description": "LeafyGreen UI Kit Toggle",
   "main": "./dist/index.js",

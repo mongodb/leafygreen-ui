@@ -1,5 +1,5 @@
 {
-  "name": "@leafygreen-ui/Button",
+  "name": "@leafygreen-ui/button",
   "version": "2.2.0",
   "description": "leafyGreen UI Kit Button",
   "main": "./dist/index.js",
