@@ -2,16 +2,16 @@
 
 ## Example 
 ```js
-	import Icon from '@leafygreen-ui/Icon';
-	
-	const SomeComponent = () => (
-		<Icon glyph="plus" fill="#FF0000" />
-	)
+import Icon from '@leafygreen-ui/Icon';
+
+const SomeComponent = () => (
+	<Icon glyph="plus" fill="#FF0000" />
+)
 ```
 
 **Output HTML**
 ```HTML 
-  <svg width="16" height="16" role="img" viewBox="0 0 16 16" fill="#000000" size="16">
+	<svg width="16" height="16" role="img" viewBox="0 0 16 16" fill="#000000" size="16">
 		<title>Plus Icon</title>
 		<path d="M9 7h4v2H9v4H7V9H3V7h4V3h2v4z" fill="#FF0000" fill-rule="evenodd"></path>
 	</svg>
@@ -59,7 +59,7 @@ const myGlyphs = {
 	MyCustomGlyph: () => <svg></svg>,
 }
 
-// The createIconComponent function returns your custom component
+// The createIconComponent function returns your custom Icon component.
 const MyIconComponent = createIconComponent(myGlyphs);
 
 // Your icon is now ready to use!

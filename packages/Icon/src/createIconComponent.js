@@ -6,7 +6,7 @@ export default glyphs => {
     default: 16,
     large: 24,
     xlarge: 32,
-  }
+  };
 
   const Icon = ({ glyph, size, ...rest }) => {
     const SVGComponent = glyphs[glyph];
@@ -14,16 +14,18 @@ export default glyphs => {
     // Converts a camel-case name to a human-readable name
     //
     // GlyphName => Glyph Name Icon
-    const humanReadableTitle = `${glyph.replace(/([A-Z][a-z])/g, ' $1')} Icon`
+    const humanReadableTitle = `${glyph.replace(/([A-Z][a-z])/g, ' $1')} Icon`;
 
     return (
       <SVGComponent
         {...rest}
         title={humanReadableTitle}
-        size={typeof size === 'number' ? size : sizeMap[size] || sizeMap.default}
+        size={
+          typeof size === 'number' ? size : sizeMap[size] || sizeMap.default
+        }
       />
     );
-  }
+  };
 
   Icon.displayName = 'Icon';
 
@@ -39,5 +41,5 @@ export default glyphs => {
     size: 'default',
   };
 
-  return Icon
-}
+  return Icon;
+};
