@@ -11,10 +11,10 @@ const SomeComponent = () => (
 
 **Output HTML**
 ```HTML 
-	<svg width="16" height="16" role="img" viewBox="0 0 16 16" fill="#000000" size="16">
-		<title>Plus Icon</title>
-		<path d="M9 7h4v2H9v4H7V9H3V7h4V3h2v4z" fill="#FF0000" fill-rule="evenodd"></path>
-	</svg>
+<svg width="16" height="16" role="img" viewBox="0 0 16 16" fill="#000000" size="16">
+	<title>Plus Icon</title>
+	<path d="M9 7h4v2H9v4H7V9H3V7h4V3h2v4z" fill="#FF0000" fill-rule="evenodd"></path>
+</svg>
 ```
 
 ## Properties
@@ -78,7 +78,7 @@ import { createIconComponent, glyphs } from '@leafygreen-ui/Icon;
 const myGlyphs = {
 	...glyphs,
 	MyCustomGlyph: () => <svg></svg>,
-}
+};
 
 const MyIconComponent = createIconComponent(myGlyphs);
 ```
