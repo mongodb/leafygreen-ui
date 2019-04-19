@@ -1,59 +1,43 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 export default glyphs => {
-  return class Icon extends PureComponent {
-    static displayName = 'Icon';
-    static propTypes = {
-      glyph: PropTypes.oneOf(Object.keys(glyphs)).isRequired,
-      size: PropTypes.oneOfType([
-        PropTypes.oneOf(['default', 'large', 'xlarge']),
-        PropTypes.number,
-      ]),
-    };
+  const sizeMap = {
+    default: 16,
+    large: 24,
+    xlarge: 32,
+  }
 
-    static defaultProps = {
-      size: 'default',
-    };
+  const Icon = ({ glyph, size, ...rest }) => {
+    const SVGComponent = glyphs[glyph];
 
-    getHumanReadableTitle() {
-      const { glyph } = this.props;
+    // Converts a camel-case name to a human-readable name
+    //
+    // GlyphName => Glyph Name Icon
+    const humanReadableTitle = `${glyph.replace(/([A-Z][a-z])/g, ' $1')} Icon`
 
-      const transformedName = glyph.replace(/([A-Z][a-z])/g, ' $1');
-      return `${transformedName} Icon`;
-    }
+    return (
+      <SVGComponent
+        {...rest}
+        title={humanReadableTitle}
+        size={typeof size === 'number' ? size : sizeMap[size] || sizeMap.default}
+      />
+    );
+  }
 
-    getSizeInPixels() {
-      const { size } = this.props;
+  Icon.displayName = 'Icon';
 
-      if (typeof size === 'number') {
-        return size;
-      }
-
-      switch (size) {
-        case 'large':
-          return 24;
-
-        case 'xlarge':
-          return 32;
-
-        case 'default':
-        default:
-          return 16;
-      }
-    }
-
-    render() {
-      const { glyph, ...rest } = this.props;
-      const SVGComponent = glyphs[glyph];
-
-      return (
-        <SVGComponent
-          {...rest}
-          title={this.getHumanReadableTitle()}
-          size={this.getSizeInPixels()}
-        />
-      );
-    }
+  Icon.propTypes = {
+    glyph: PropTypes.oneOf(Object.keys(glyphs)).isRequired,
+    size: PropTypes.oneOfType([
+      PropTypes.oneOf(Object.keys(sizeMap)),
+      PropTypes.number,
+    ]),
   };
-};
+
+  Icon.defaultProps = {
+    size: 'default',
+  };
+
+  return Icon
+}

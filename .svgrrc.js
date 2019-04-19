@@ -43,7 +43,9 @@ module.exports = {
   jsx: {
     babelConfig: {
       plugins: [
-        [
+        [ 
+          // This plugin lets us transform the JSX output to change instances of
+          // #000000 and #000 (the fill for our SVG glyphs) to use `this.props.fill` instead.
           '@svgr/babel-plugin-replace-jsx-attribute-value',
           {
             values: [
