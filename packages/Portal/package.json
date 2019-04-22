@@ -11,7 +11,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^2.1.2"
+    "@leafygreen-ui/lib": "^2.1.1"
   },
   "gitHead": "1bfce22b8a41568dab0d88b0044e1b4e750584df"
 }
