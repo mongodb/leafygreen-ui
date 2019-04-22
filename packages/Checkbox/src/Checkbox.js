@@ -200,37 +200,23 @@ export default class Checkbox extends PureComponent {
       switch (variant) {
         case 'light': {
           if (disabled) {
-            return css`
-              background-image: url(${disabledLight});
-            `;
+            return disabledLight;
           }
 
           if (indeterminate) {
-            return css`
-              background-image: url(${indeterminateLight});
-            `;
+            return indeterminateLight;
           }
-
-          return css`
-            background-image: url(${spritesheetLight});
-          `;
+          return spritesheetLight;
         }
         default: {
           if (disabled) {
-            return css`
-              background-image: url(${disabledDark});
-            `;
+            return disabledDark;
           }
 
           if (indeterminate) {
-            return css`
-              background-image: url(${indeterminateDark});
-            `;
+            return indeterminateDark;
           }
-
-          return css`
-            background-image: url(${spritesheetDark});
-          `;
+          return spritesheetDark;
         }
       }
     })();
@@ -265,9 +251,15 @@ export default class Checkbox extends PureComponent {
           })}
         >
           <div
-            className={cx(checkboxStyle, checkboxBackgroundImage, {
-              [checkboxStyleChecked]: checked && !indeterminate && !disabled,
-            })}
+            className={cx(
+              checkboxStyle,
+              css`
+                background-image: url(${checkboxBackgroundImage});
+              `,
+              {
+                [checkboxStyleChecked]: checked && !indeterminate && !disabled,
+              },
+            )}
           />
         </div>
 
