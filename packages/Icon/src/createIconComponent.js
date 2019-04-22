@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default glyphs => {
+export default function createIconComponent(glyphs) {
   const sizeMap = {
     default: 16,
     large: 24,

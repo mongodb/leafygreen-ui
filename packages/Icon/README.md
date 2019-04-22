@@ -73,7 +73,7 @@ const SomeComponent = () => (
 We also export the default icon set for you! If you want to include our glyphs with your custom glyphs, you can do something like this:
 
 ```js
-import { createIconComponent, glyphs } from '@leafygreen-ui/Icon;
+import { createIconComponent, glyphs } from '@leafygreen-ui/Icon';
 
 const myGlyphs = {
 	...glyphs,
