@@ -5,7 +5,7 @@ import createEmotion from 'create-emotion';
 // being done here:
 //
 // https://github.com/emotion-js/emotion/blob/master/packages/create-emotion/src/index.js
-export default (() => {
+function createEmotionInstance() {
   const head = document.head;
   const config = {
     container: document.createElement('div'),
@@ -15,4 +15,6 @@ export default (() => {
   head.insertBefore(config.container, head.firstChild);
 
   return createEmotion(config);
-})();
+}
+
+export default createEmotionInstance();

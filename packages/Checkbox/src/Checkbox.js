@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { ccClassName, emotion } from '@leafygreen-ui/lib';
+import { emotion, createDataProp } from '@leafygreen-ui/lib';
 import { cx } from 'emotion';
 import { colors } from '@leafygreen-ui/theme';
 import {
@@ -14,15 +14,6 @@ import {
 
 const { css } = emotion;
 
-function createDataProp(name) {
-  const prefix = 'data-leafygreen-ui';
-  return {
-    prop: {
-      [prefix]: name,
-    },
-    selector: `[${prefix}="${name}"]`,
-  };
-}
 const checkboxWrapper = createDataProp('checkbox-wrapper');
 
 const height = 20;
@@ -237,7 +228,7 @@ export default class Checkbox extends PureComponent {
 
     return (
       <label
-        className={ccClassName(className, containerStyle)}
+        className={cx(className, containerStyle)}
         htmlFor={this.checkboxId}
         disabled={disabled}
       >
@@ -273,7 +264,7 @@ export default class Checkbox extends PureComponent {
 
         {label && (
           <span
-            className={cx(ccClassName(textStyle, textVariantStyle), {
+            className={cx(textStyle, textVariantStyle, {
               [disabledTextStyle]: disabled,
             })}
             id={labelId}
