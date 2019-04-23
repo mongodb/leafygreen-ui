@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { ccClassName, emotion } from '@leafygreen-ui/lib';
+import { emotion, createDataProp } from '@leafygreen-ui/lib';
+import { cx } from 'emotion';
 import { colors } from '@leafygreen-ui/theme';
 import {
   spritesheetLight,
@@ -12,6 +13,8 @@ import {
 } from './img';
 
 const { css } = emotion;
+
+const checkboxWrapper = createDataProp('checkbox-wrapper');
 
 const height = 20;
 const width = 600;
@@ -42,16 +45,7 @@ const inputStyle = css`
   pointer-events: none;
   opacity: 0;
 
-  &:checked:not(:indeterminate):not(:disabled) + .${wrapperStyle} {
-    opacity: 1;
-
-    & > .${checkboxStyle} {
-      transition: 500ms transform steps(29);
-      transform: translate3d(${-width + height}px, 0, 0);
-    }
-  }
-
-  &:focus + .${wrapperStyle}:after {
+  &:focus + ${checkboxWrapper.selector}:after {
     content: '';
     bottom: 0;
     left: 3px;
@@ -63,31 +57,14 @@ const inputStyle = css`
   }
 `;
 
-const checkboxVariants = {
-  default: css`
-    background-image: url(${spritesheetDark});
+const wrapperStyleChecked = css`
+  opacity: 1;
+`;
 
-    .${inputStyle}:indeterminate:not(:disabled) + .${wrapperStyle} > & {
-      background-image: url(${indeterminateDark});
-    }
-
-    .${inputStyle}:disabled + .${wrapperStyle} > & {
-      background-image: url(${disabledDark});
-    }
-  `,
-
-  light: css`
-    background-image: url(${spritesheetLight});
-
-    .${inputStyle}:indeterminate:not(:disabled) + .${wrapperStyle} > & {
-      background-image: url(${indeterminateLight});
-    }
-
-    .${inputStyle}:disabled + .${wrapperStyle} > & {
-      background-image: url(${disabledLight});
-    }
-  `,
-};
+const checkboxStyleChecked = css`
+  transition: 500ms transform steps(29);
+  transform: translate3d(${-width + height}px, 0, 0);
+`;
 
 const textVariants = {
   default: css`
@@ -114,18 +91,18 @@ const containerStyle = css`
   justify-content: flex-start;
   cursor: pointer;
 
-  &:hover > .${wrapperStyle} {
+  &:hover > ${checkboxWrapper.selector} {
     opacity: 1;
   }
 
   /* Use [disabled] instead of &:disabled as this isn't an input element */
   &[disabled] {
     cursor: not-allowed;
-
-    & > .${textStyle} {
-      color: ${colors.gray[5]};
-    }
   }
+`;
+
+const disabledTextStyle = css`
+  color: ${colors.gray[5]};
 `;
 
 export default class Checkbox extends PureComponent {
@@ -174,7 +151,7 @@ export default class Checkbox extends PureComponent {
 
     // For Microsoft Edge and IE, when checkbox is indeterminate, change event does not fire when clicked.
     // Explicitly call onChange for this case
-    if (this.inputRef && this.inputRef.indeterminate) {
+    if (this.inputRef.current && this.inputRef.current.indeterminate) {
       this.onChange(e);
       e.stopPropagation();
     }
@@ -201,19 +178,57 @@ export default class Checkbox extends PureComponent {
       label,
       variant,
       disabled,
+      indeterminate,
       ...rest
     } = this.props;
 
-    const checkboxVariantStyle =
-      checkboxVariants[variant] || checkboxVariants.default;
     const textVariantStyle = textVariants[variant] || textVariants.default;
 
     // Indeterminate isn't a valid HTML prop
     delete rest.indeterminate;
 
+    const checkboxBackgroundImage = (() => {
+      switch (variant) {
+        case 'light': {
+          if (disabled) {
+            return css`
+              background-image: url(${disabledLight});
+            `;
+          }
+
+          if (indeterminate) {
+            return css`
+              background-image: url(${indeterminateLight});
+            `;
+          }
+
+          return css`
+            background-image: url(${spritesheetLight});
+          `;
+        }
+        default: {
+          if (disabled) {
+            return css`
+              background-image: url(${disabledDark});
+            `;
+          }
+
+          if (indeterminate) {
+            return css`
+              background-image: url(${indeterminateDark});
+            `;
+          }
+
+          return css`
+            background-image: url(${spritesheetDark});
+          `;
+        }
+      }
+    })();
+
     return (
       <label
-        className={ccClassName(className, containerStyle)}
+        className={cx(className, containerStyle)}
         htmlFor={this.checkboxId}
         disabled={disabled}
       >
@@ -234,13 +249,24 @@ export default class Checkbox extends PureComponent {
           onChange={this.onChange}
         />
 
-        <div className={wrapperStyle}>
-          <div className={ccClassName(checkboxStyle, checkboxVariantStyle)} />
+        <div
+          {...checkboxWrapper.prop}
+          className={cx(wrapperStyle, {
+            [wrapperStyleChecked]: checked && !indeterminate && !disabled,
+          })}
+        >
+          <div
+            className={cx(checkboxStyle, checkboxBackgroundImage, {
+              [checkboxStyleChecked]: checked && !indeterminate && !disabled,
+            })}
+          />
         </div>
 
         {label && (
           <span
-            className={ccClassName(textStyle, textVariantStyle)}
+            className={cx(textStyle, textVariantStyle, {
+              [disabledTextStyle]: disabled,
+            })}
             id={labelId}
           >
             {label}

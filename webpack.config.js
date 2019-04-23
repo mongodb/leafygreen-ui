@@ -8,13 +8,12 @@ module.exports = function(env = 'production') {
 
   return {
     mode: env,
-    entry: './src/index.js',
+    entry: './src/index',
     target: 'web',
     output: {
       path: path.resolve(process.cwd(), 'dist'),
       filename: 'index.js',
       libraryTarget: isProduction ? 'umd' : undefined,
-      libraryExport: 'default',
     },
 
     externals: isProduction
