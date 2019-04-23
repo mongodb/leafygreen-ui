@@ -27,10 +27,6 @@ export default function createIconComponent(glyphs) {
     );
   };
 
-  Icon.createIconComponent = createIconComponent;
-
-  Icon.glyphs = glyphs;
-
   Icon.displayName = 'Icon';
 
   Icon.propTypes = {
