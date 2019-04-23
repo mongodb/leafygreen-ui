@@ -2,13 +2,14 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
-    "jsx": "preserve", 
+    "jsx": "preserve",
     "allowJs": false,
     "noEmit": true,
     "pretty": true,
     "strictNullChecks": true,
     "noUnusedLocals": true,
     "strict": true,
+    "noImplicitAny": false, // Turn on when all files have been typed
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "typeRoots": [
