@@ -1,6 +1,6 @@
 import emotion from './emotion';
 
-const ccClassName = (...args) => args.join(' ');
+export const ccClassName = (...args) => args.join(' ');
 
 /**
  * Utility for making it easier to couple a React Component to a css selector.
@@ -13,7 +13,7 @@ const ccClassName = (...args) => args.join(' ');
  *  <div {...checkboxWrapper.prop} />
  * @param {string} name Name of element we want to reference.
  */
-function createDataProp(name) {
+export function createDataProp(name) {
   const prefix = 'data-leafygreen-ui';
   return {
     prop: {
@@ -23,4 +23,4 @@ function createDataProp(name) {
   };
 }
 
-export default { emotion, ccClassName, createDataProp };
+export { emotion };
