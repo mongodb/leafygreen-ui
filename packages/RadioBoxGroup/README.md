@@ -2,6 +2,8 @@
 
 ## Example
 ```js
+import RadioBox, { RadioBoxGroup } from '@leafygreen-ui/RadioBoxGroup'
+
 <RadioBoxGroup className="radio-box-group-style">
   <RadioBox value="option-1">Radio Box 1</RadioBox>
   <RadioBox value="option-2">Radio Box 2</RadioBox>
