@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { emotion, createDataProp } from '@leafygreen-ui/lib';
-import { cx } from 'emotion';
 import { colors } from '@leafygreen-ui/theme';
 import {
   spritesheetLight,
@@ -12,7 +11,7 @@ import {
   indeterminateDark,
 } from './img';
 
-const { css } = emotion;
+const { css, cx } = emotion;
 
 const checkboxWrapper = createDataProp('checkbox-wrapper');
 
@@ -228,7 +227,7 @@ export default class Checkbox extends PureComponent {
 
     return (
       <label
-        className={cx(className, containerStyle)}
+        className={cx(containerStyle, className)}
         htmlFor={this.checkboxId}
         disabled={disabled}
       >
