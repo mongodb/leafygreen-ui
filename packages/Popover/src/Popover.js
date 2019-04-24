@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Portal from '../../Portal/src/index';
+import Portal from '@leafygreen-ui/portal';
 import { emotion } from '@leafygreen-ui/lib';
 import { cx } from 'emotion';
 

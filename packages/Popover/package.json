@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/lib": "^2.1.2",
-    "@leafygreen-ui/theme": "^1.1.1"
+    "@leafygreen-ui/theme": "^1.1.1", 
+    "@leafygreen-ui/portal": "^1.0.0"
   }
 }
