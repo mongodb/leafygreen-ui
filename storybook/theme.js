@@ -7,7 +7,7 @@ export default create({
 
   brandTitle: 'LeafyGreen UI',
   brandUrl: 'https://github.com/mongodb/leafygreen-ui',
-   brandImage: 'logo.svg',
+  brandImage: 'logo.svg',
 
   colorPrimary: '#13AA52',
   colorSecondary: '#13AA52',
