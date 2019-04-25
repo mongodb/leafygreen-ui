@@ -41,6 +41,7 @@
     "prettier:lint": "prettier --check \"**/*.{js,ts,tsx}\"",
     "test": "jest --env jsdom",
     "types": "tsc --project tsconfig.json",
+    "prepublishOnly": "npm run lint && npm run test && npm run build",
     "release": "lerna publish",
     "release:site": "gh-pages --dist storybook/public"
   },
