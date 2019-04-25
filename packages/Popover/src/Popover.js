@@ -35,6 +35,7 @@ export default class Popover extends Component {
   static defaultProps = {
     align: 'top',
     justify: 'start',
+    active: false,
   };
 
   state = {
@@ -57,6 +58,7 @@ export default class Popover extends Component {
 
     const posPropsUpdated =
       prevProps.align !== align || prevProps.justify !== justify;
+
     const windowUpdated =
       prevState.windowWidth !== windowWidth ||
       prevState.windowHeight !== windowHeight;
@@ -78,28 +80,24 @@ export default class Popover extends Component {
   };
 
   // If refEl is not a supplied prop, determines an appropriate refEl, rather than error
-  getParentRef() {
-    const { withoutPortal } = this.props;
-
-    if (withoutPortal) {
-      return this.getRefPosition({
-        current: this.contentRef.current.parentNode,
-      });
-    } else {
-      return this.getRefPosition({
-        current: this.createRefEl.current.parentNode,
-      });
-    }
-  }
-
-  // Sets referenceElPos in state based on our determination of an appropriate reference element
+  // And sets referenceElPos in state based on our determination of an appropriate reference element
   setRefEl() {
-    const { refEl } = this.props;
+    const { refEl, withoutPortal } = this.props;
+    let referenceElPos;
 
     if (!refEl) {
-      const referenceElPos = this.getParentRef();
-      this.setState({ referenceElPos });
+      if (!withoutPortal) {
+        referenceElPos = this.getRefPosition({
+          current: this.createRefEl.current.parentNode,
+        });
+      } else {
+        referenceElPos = this.getRefPosition({
+          current: this.contentRef.current.parentNode,
+        });
+      }
     }
+
+    this.setState({ referenceElPos });
   }
 
   // Gets top offset, left offset, width and height dimensions for a node
@@ -109,8 +107,7 @@ export default class Popover extends Component {
     }
 
     const { top, bottom, left, right } = current.getBoundingClientRect();
-    const height = current.offsetHeight;
-    const width = current.offsetWidth;
+    const { offsetHeight: height, offsetWidth: width } = current;
 
     return { top, bottom, left, right, height, width };
   }
@@ -135,23 +132,24 @@ export default class Popover extends Component {
     const top = withoutPortal
       ? this.calcWithoutPortalTop({ alignment, justification })
       : this.calcTop({ alignment, justification });
+
     const left = withoutPortal
       ? this.calcWithoutPortalLeft({ alignment, justification })
       : this.calcLeft({ alignment, justification });
+
     const transformOrigin = this.getTransformOrigin({
       alignment,
       justification,
     });
+
     const transform = this.getTransform(alignment);
 
-    if (top && left && transformOrigin && transform) {
-      return {
-        top,
-        left,
-        transformOrigin,
-        transform,
-      };
-    } 
+    return {
+      top,
+      left,
+      transformOrigin,
+      transform,
+    };
   }
 
   // Determines the alignment to render based on an order of alignment fallbacks
@@ -185,7 +183,7 @@ export default class Popover extends Component {
   // defaulting to the justify prop if all justifications fail.
   getJustification(alignment) {
     const { justify } = this.props;
-    let justifications = {};
+    let justifications;
 
     switch (alignment) {
       case 'top':
@@ -251,7 +249,6 @@ export default class Popover extends Component {
     const left = withoutPortal
       ? this.calcWithoutPortalLeft({ justification })
       : this.calcLeft({ justification });
-
     if (['top', 'bottom', 'center-vertical'].includes(justification)) {
       return this.checkVerticalWindowCollision(top);
     }
@@ -282,60 +279,52 @@ export default class Popover extends Component {
     const { referenceElPos } = this.state;
     const contentRefPos = this.getRefPosition(this.contentRef);
 
-    if (alignment) {
-      switch (alignment) {
-        case 'top':
-          return referenceElPos.top - contentRefPos.height;
+    switch (alignment) {
+      case 'top':
+        return referenceElPos.top - contentRefPos.height;
 
-        case 'bottom':
-          return referenceElPos.top + referenceElPos.height;
-      }
+      case 'bottom':
+        return referenceElPos.top + referenceElPos.height;
     }
 
-    if (justification) {
-      switch (justification) {
-        case 'top':
-          return referenceElPos.top;
+    switch (justification) {
+      case 'top':
+        return referenceElPos.top;
 
-        case 'bottom':
-          return (
-            referenceElPos.top + referenceElPos.height - contentRefPos.height
-          );
+      case 'bottom':
+        return (
+          referenceElPos.top + referenceElPos.height - contentRefPos.height
+        );
 
-        case 'center-vertical':
-          return (
-            referenceElPos.top +
-            referenceElPos.height / 2 -
-            contentRefPos.height / 2
-          );
-      }
+      case 'center-vertical':
+        return (
+          referenceElPos.top +
+          referenceElPos.height / 2 -
+          contentRefPos.height / 2
+        );
     }
   }
 
   calcWithoutPortalTop({ alignment, justification }) {
     const contentRefPos = this.getRefPosition(this.contentRef);
 
-    if (alignment) {
-      switch (alignment) {
-        case 'top':
-          return `${0 - contentRefPos.height}px`;
+    switch (alignment) {
+      case 'top':
+        return `${0 - contentRefPos.height}px`;
 
-        case 'bottom':
-          return '100%';
-      }
+      case 'bottom':
+        return '100%';
     }
 
-    if (justification) {
-      switch (justification) {
-        case 'top':
-          return 0;
+    switch (justification) {
+      case 'top':
+        return 0;
 
-        case 'bottom':
-          return `calc(100% - ${contentRefPos.height}px)`;
+      case 'bottom':
+        return `calc(100% - ${contentRefPos.height}px)`;
 
-        case 'center-vertical':
-          return `calc(50% - ${contentRefPos.height / 2}px)`;
-      }
+      case 'center-vertical':
+        return `calc(50% - ${contentRefPos.height / 2}px)`;
     }
   }
 
@@ -344,40 +333,34 @@ export default class Popover extends Component {
     const { referenceElPos } = this.state;
     const contentRefPos = this.getRefPosition(this.contentRef);
 
-    if (alignment) {
-      switch (alignment) {
-        case 'left':
-          return referenceElPos.left - contentRefPos.width;
+    switch (alignment) {
+      case 'left':
+        return referenceElPos.left - contentRefPos.width;
 
-        case 'right':
-          return referenceElPos.left + referenceElPos.width;
-      }
+      case 'right':
+        return referenceElPos.left + referenceElPos.width;
     }
 
-    if (justification) {
-      switch (justification) {
-        case 'left':
-          return referenceElPos.left;
+    switch (justification) {
+      case 'left':
+        return referenceElPos.left;
 
-        case 'right':
-          return (
-            referenceElPos.left + referenceElPos.width - contentRefPos.width
-          );
+      case 'right':
+        return referenceElPos.left + referenceElPos.width - contentRefPos.width;
 
-        case 'center-horizontal':
-          return (
-            referenceElPos.left +
-            referenceElPos.width / 2 -
-            contentRefPos.width / 2
-          );
-      }
+      case 'center-horizontal':
+        return (
+          referenceElPos.left +
+          referenceElPos.width / 2 -
+          contentRefPos.width / 2
+        );
     }
   }
 
   calcWithoutPortalLeft({ alignment, justification }) {
     const contentRefPos = this.getRefPosition(this.contentRef);
 
-    if (contentRefPos && alignment) {
+    if (contentRefPos) {
       switch (alignment) {
         case 'left':
           return `${0 - contentRefPos.width}px`;
@@ -385,9 +368,7 @@ export default class Popover extends Component {
         case 'right':
           return '100%';
       }
-    }
 
-    if (justification) {
       switch (justification) {
         case 'left':
           return 0;
@@ -485,18 +466,16 @@ export default class Popover extends Component {
       ...rest
     } = this.props;
 
-    // const { position } = this.state;
     const position = this.calculatePosition();
 
     const Root = withoutPortal ? Fragment : Portal;
 
-    const activeStyle = {
+    const activeStyle = active && {
       transform: 'translate3d(0, 0, 0) scale(1)',
       opacity: 1,
-      pointerEvents: 'initial',
     };
 
-    const style = { ...position, ...(active && activeStyle) };
+    const style = { ...position, ...activeStyle };
 
     return (
       <>
@@ -505,7 +484,7 @@ export default class Popover extends Component {
           <div
             {...rest}
             ref={this.contentRef}
-            className={cx(className, rootPopoverStyle)}
+            className={cx(rootPopoverStyle, className)}
             style={style}
           >
             {children}
