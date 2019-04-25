@@ -23,10 +23,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/10gen/leafygreen-ui.git"
+    "url": "https://github.com/mongodb/leafygreen-ui.git"
   },
   "bugs": {
-    "url": "https://github.com/10gen/leafygreen-ui/issues"
+    "url": "https://github.com/mongodb/leafygreen-ui/issues"
   },
   "scripts": {
     "start": "start-storybook -p 9001 -c storybook -s ./storybook/static",
