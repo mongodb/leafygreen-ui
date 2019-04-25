@@ -1,4 +1,2 @@
-import RadioBoxGroup from './RadioBoxGroup';
-import RadioBox from './RadioBox';
-
-export { RadioBoxGroup, RadioBox };
+export { default as RadioBox } from './RadioBox';
+export { default as RadioBoxGroup } from './RadioBoxGroup';
