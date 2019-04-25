@@ -27,7 +27,7 @@ export default class Popover extends Component {
     className: PropTypes.string,
     align: PropTypes.oneOf(['top', 'bottom', 'left', 'right']),
     justify: PropTypes.oneOf(['start', 'middle', 'end']),
-    refEl: PropTypes.any,
+    refEl: PropTypes.object,
     withoutPortal: PropTypes.bool,
     getUpdatePosition: PropTypes.func,
   };
@@ -144,12 +144,14 @@ export default class Popover extends Component {
     });
     const transform = this.getTransform(alignment);
 
-    return {
-      top,
-      left,
-      transformOrigin,
-      transform,
-    };
+    if (top && left && transformOrigin && transform) {
+      return {
+        top,
+        left,
+        transformOrigin,
+        transform,
+      };
+    } 
   }
 
   // Determines the alignment to render based on an order of alignment fallbacks

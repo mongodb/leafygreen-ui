@@ -75,7 +75,7 @@ describe('packages/Popover', () => {
   });
 
   // Testing methods that do not rely on props within Popover component
-  describe('Unit tests', () => {
+  describe('Unit test', () => {
     const trigger = document.createElement('div');
     trigger.id = 'trigger';
     document.body.appendChild(trigger);

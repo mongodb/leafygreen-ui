@@ -28,7 +28,7 @@ module.exports = function(env = 'production') {
             'badge',
             'button',
             'checkbox',
-            'Icon',
+            'icon',
             'lib',
             'popover',
             'portal',
