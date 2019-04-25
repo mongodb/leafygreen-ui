@@ -286,52 +286,56 @@ export default class Popover extends Component {
     const { referenceElPos } = this.state;
     const contentRefPos = this.getRefPosition(this.contentRef);
 
-    switch (alignment) {
-      case 'top':
-        return referenceElPos.top - contentRefPos.height;
+    if (referenceElPos && this.contentRef.current) {
+      switch (alignment) {
+        case 'top':
+          return referenceElPos.top - contentRefPos.height;
 
-      case 'bottom':
-        return referenceElPos.top + referenceElPos.height;
-    }
+        case 'bottom':
+          return referenceElPos.top + referenceElPos.height;
+      }
 
-    switch (justification) {
-      case 'top':
-        return referenceElPos.top;
+      switch (justification) {
+        case 'top':
+          return referenceElPos.top;
 
-      case 'bottom':
-        return (
-          referenceElPos.top + referenceElPos.height - contentRefPos.height
-        );
+        case 'bottom':
+          return (
+            referenceElPos.top + referenceElPos.height - contentRefPos.height
+          );
 
-      case 'center-vertical':
-        return (
-          referenceElPos.top +
-          referenceElPos.height / 2 -
-          contentRefPos.height / 2
-        );
+        case 'center-vertical':
+          return (
+            referenceElPos.top +
+            referenceElPos.height / 2 -
+            contentRefPos.height / 2
+          );
+      }
     }
   }
 
   calcWithoutPortalTop({ alignment, justification }) {
     const contentRefPos = this.getRefPosition(this.contentRef);
 
-    switch (alignment) {
-      case 'top':
-        return `${0 - contentRefPos.height}px`;
+    if (this.contentRef.current) {
+      switch (alignment) {
+        case 'top':
+          return `${0 - contentRefPos.height}px`;
 
-      case 'bottom':
-        return '100%';
-    }
+        case 'bottom':
+          return '100%';
+      }
 
-    switch (justification) {
-      case 'top':
-        return 0;
+      switch (justification) {
+        case 'top':
+          return 0;
 
-      case 'bottom':
-        return `calc(100% - ${contentRefPos.height}px)`;
+        case 'bottom':
+          return `calc(100% - ${contentRefPos.height}px)`;
 
-      case 'center-vertical':
-        return `calc(50% - ${contentRefPos.height / 2}px)`;
+        case 'center-vertical':
+          return `calc(50% - ${contentRefPos.height / 2}px)`;
+      }
     }
   }
 
@@ -340,34 +344,38 @@ export default class Popover extends Component {
     const { referenceElPos } = this.state;
     const contentRefPos = this.getRefPosition(this.contentRef);
 
-    switch (alignment) {
-      case 'left':
-        return referenceElPos.left - contentRefPos.width;
+    if (referenceElPos && this.contentRef.current) {
+      switch (alignment) {
+        case 'left':
+          return referenceElPos.left - contentRefPos.width;
 
-      case 'right':
-        return referenceElPos.left + referenceElPos.width;
-    }
+        case 'right':
+          return referenceElPos.left + referenceElPos.width;
+      }
 
-    switch (justification) {
-      case 'left':
-        return referenceElPos.left;
+      switch (justification) {
+        case 'left':
+          return referenceElPos.left;
 
-      case 'right':
-        return referenceElPos.left + referenceElPos.width - contentRefPos.width;
+        case 'right':
+          return (
+            referenceElPos.left + referenceElPos.width - contentRefPos.width
+          );
 
-      case 'center-horizontal':
-        return (
-          referenceElPos.left +
-          referenceElPos.width / 2 -
-          contentRefPos.width / 2
-        );
+        case 'center-horizontal':
+          return (
+            referenceElPos.left +
+            referenceElPos.width / 2 -
+            contentRefPos.width / 2
+          );
+      }
     }
   }
 
   calcWithoutPortalLeft({ alignment, justification }) {
     const contentRefPos = this.getRefPosition(this.contentRef);
 
-    if (contentRefPos) {
+    if (this.contentRef.current) {
       switch (alignment) {
         case 'left':
           return `${0 - contentRefPos.width}px`;

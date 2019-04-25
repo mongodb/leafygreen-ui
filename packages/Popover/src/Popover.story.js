@@ -33,7 +33,7 @@ class Testing extends Component {
         <Popover
           align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
           justify={select('justify', ['start', 'middle', 'end'], 'start')}
-          refEl={this.popoverTest}
+          // refEl={this.popoverTest}
           active={this.state.active}
           withoutPortal={boolean('Without Portal', false)}
         >
