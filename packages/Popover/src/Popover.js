@@ -53,7 +53,7 @@ export default class Popover extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { align, justify } = this.props;
+    const { align, justify, refEl } = this.props;
     const { windowWidth, windowHeight } = this.state;
 
     const posPropsUpdated =
@@ -64,6 +64,13 @@ export default class Popover extends Component {
       prevState.windowHeight !== windowHeight;
 
     if (posPropsUpdated || windowUpdated) {
+      if (refEl) {
+        const referenceElPos = refEl && this.getRefPosition(refEl);
+        this.setState({ referenceElPos });
+      } else {
+        this.setRefEl();
+      }
+
       this.forceUpdate();
     }
   }
