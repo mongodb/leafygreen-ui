@@ -6,7 +6,7 @@ export default create({
   base: 'light',
 
   brandTitle: 'LeafyGreen UI',
-  brandUrl: 'https://github.com/10gen/leafygreen-ui',
+  brandUrl: 'https://github.com/mongodb/leafygreen-ui',
   brandImage: 'logo.svg',
 
   colorPrimary: '#13AA52',
