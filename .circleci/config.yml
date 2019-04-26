@@ -5,9 +5,15 @@ jobs:
       - image: circleci/node:10.15
     steps:
       - checkout
-      - run: npm ci
-      - run: npx lerna bootstrap
-      - run: npm run build
+      - restore_cache:
+          keys:
+            - node-cache-{{ checksum "package-lock.lock" }}
+            - node-cache
+      - run: npm run init
       - run:
           name: Tests
           command: npm run test -- --no-cache --ci --runInBand
+      - save_cache:
+        paths:
+          - node_modules
+        key: node-cache-{{ checksum "package-lock.lock" }}
