@@ -22,7 +22,6 @@ A set of CSS styles and React components built with design in mind.
 
    `npm start`
 
-
 ## Development within an Application
 
 To actively develop `leafygreen-ui` components within an application, the following script will link all `leafygreen-ui` components within your application to the local `leafygreen-ui` repository.
@@ -40,12 +39,11 @@ The script does several things in order:
 1. This builds every `leafygreen-ui` component so they are ready to be linked
 
 2. It scans your application for any installed `leafygreen-ui` components in your `node_modules/@leafygreen-ui` folder.
-    **NOTE:** If the package is new and unpublished/not installed, you will need to create a directory for the new component within your application inside `node_modules/@leafygreen-ui` before running this command.
+   **NOTE:** If the package is new and unpublished/not installed, you will need to create a directory for the new component within your application inside `node_modules/@leafygreen-ui` before running this command.
 
 3. If any `leafygreen-ui` components are found then the script uses `npm link` to link every `node_modules/@leafygreen-ui` module to your local `leafygreen-ui` repository.
 
 After the script completes, you can make changes directly to the component in your local `leafygreen-ui` repository. Once you do this, run `npm run build` in the root of the `leafygreen-ui` repository and the changes will be visible on your running application.
-
 
 ## Linting
 
@@ -60,7 +58,6 @@ To lint all files in the repository, run the following:
 npm run lint
 ```
 
-
 ## Testing
 
 To run the unit tests for our components, run the following:
@@ -68,7 +65,6 @@ To run the unit tests for our components, run the following:
 ```
 npm run test
 ```
-
 
 ## Publishing
 
@@ -88,14 +84,12 @@ npm run release
 
 4. Push the branch you created, and make a pull request. It will contain all `package.json` changes for your publish.
 
-
 ## Deploy gh-pages
 
 You can deploy a static build of our Storybook site to gh-pages.
 
 1. First be sure you've built a static version of Storybook: `npm run build:storybook`
 2. Then deploy to gh-pages: `npm run release:site`
-
 
 ## License
 
