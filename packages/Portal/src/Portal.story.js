@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Portal from './Portal';
 import { storiesOf } from '@storybook/react';
 import { emotion } from '@leafygreen-ui/lib';
