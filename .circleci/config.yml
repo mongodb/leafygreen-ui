@@ -20,6 +20,6 @@ jobs:
           name: tests
           command: npm run test -- --no-cache --ci --runInBand
       - save_cache:
-        key: node-cache-{{ checksum "package-lock.lock" }}
-        paths:
-          - node_modules
+          key: node-cache-{{ checksum "package-lock.lock" }}
+          paths:
+            - node_modules
