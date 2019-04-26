@@ -21,6 +21,9 @@ jobs:
       - run:
           name: tests
           command: npm run test -- --no-cache --ci --runInBand
+      - run:
+          name: types
+          command: npm run types
       - save_cache:
           key: node-cache-{{ checksum "package-lock.json" }}
           paths:
