@@ -30,3 +30,7 @@ jobs:
           key: node-cache-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
