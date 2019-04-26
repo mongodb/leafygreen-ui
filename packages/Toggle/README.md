@@ -1,7 +1,8 @@
 # Toggle
 
 ## Example
-``` Javascript
+
+```Javascript
 <Toggle
   className='my-toggle'
 	onChange={(event) => {/* Something to handle the change event */}}
@@ -10,6 +11,7 @@
 ```
 
 **Output HTML**
+
 ```HTML
   <label class="my-toggle css-1rgbgdt css-3jdsksdd" for="toggle-14827892">
 		<input
@@ -24,7 +26,7 @@
 		/>
 
 		<div class="css-328akljss"></div>
-    
+
 		<div class="css-34kjkdfg css-8sjlkdjcx">
 			<div class="css-38kjdsjkdf">On</div>
 			<div class="css-22kjdsmncf">Off</div>
@@ -83,5 +85,4 @@ Adds a className to the outermost element.
 
 The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument.
 
-
-#### Any other properties will be spread on the `input` element. 
+#### Any other properties will be spread on the `input` element.

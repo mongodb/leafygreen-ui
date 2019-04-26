@@ -1,18 +1,19 @@
-# Portal 
+# Portal
 
-## Example 
-```js 
-  <Portal>
-    <div>
-      Portals transport their children to a div that is appended to
-      the end of the document.body to or a node that
-      can be specified with a container prop.
-    </div>
-  </Portal>
+## Example
+
+```js
+<Portal>
+  <div>
+    Portals transport their children to a div that is appended to the end of the
+    document.body to or a node that can be specified with a container prop.
+  </div>
+</Portal>
 ```
 
 **Output HTML**
-```HTML 
+
+```HTML
   <div>
     <div class="leafygreen-ui-xi606m">
       Portals transport their children to a div that is appended to the end of the document.body to or a node that can be specified with a container prop.
@@ -28,9 +29,9 @@
 
 **Default:** `document.createElement('div')`
 
-Sets the container node, which will contain all of the portaled content. If no container is supplied, a div will be created and appened to the end of the `document.body`. 
+Sets the container node, which will contain all of the portaled content. If no container is supplied, a div will be created and appened to the end of the `document.body`.
 
-### children 
+### children
 
 **Type:** `Node`
 

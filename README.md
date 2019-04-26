@@ -24,55 +24,65 @@ A set of CSS styles and React components built with design in mind.
 
 ## Development within an Application
 
-To actively develop `leafygreen-ui` components within an application (e.g. Cloud, Stitch, Charts), the following script will link all `leafygreen-ui` components within your application to the local `leafygreen-ui` repository.
+To actively develop `leafygreen-ui` components within an application, the following script will link all `leafygreen-ui` components within your application to the local `leafygreen-ui` repository.
 
 This will allow you to make changes to your local repository of `leafygreen-ui` and see those changes immediately reflected within your running application. This allows you to develop both in isolation (within `leafygreen-ui`) and in the context of your application.
 
-To do this, clone this repository and navigate to the root folder, then run
+To do this, clone this repository and navigate to the root directory (where `package.json` is located), then run the following:
 
-`npm run link -- ${PATH_TO_APPLICATION}`
+```
+npm run link -- ${PATH_TO_APPLICATION}
+```
 
 The script does several things in order:
 
 1. This builds every `leafygreen-ui` component so they are ready to be linked
+
 2. It scans your application for any installed `leafygreen-ui` components in your `node_modules/@leafygreen-ui` folder.
+   **NOTE:** If the package is new and unpublished/not installed, you will need to create a directory for the new component within your application inside `node_modules/@leafygreen-ui` before running this command.
+
 3. If any `leafygreen-ui` components are found then the script uses `npm link` to link every `node_modules/@leafygreen-ui` module to your local `leafygreen-ui` repository.
 
 After the script completes, you can make changes directly to the component in your local `leafygreen-ui` repository. Once you do this, run `npm run build` in the root of the `leafygreen-ui` repository and the changes will be visible on your running application.
 
-### MMS Repository Linking Example
+## Linting
 
-If you have an MMS Repository and instance running and you wanted to make and see changes to the `leafygreen-ui` components used by MMS, you could link them by doing this:
+When you run `npm run lint`, we do the following:
 
-1. From the root folder of the MMS Repository go up one folder using `../` and type in `git clone https://github.com/mongodb/leafygreen-ui`
-2. When that completes navigate to `leafygreen-ui` and run `npm run link -- ../mms/client`.
-   **NOTE:** If the package is new and unpublished/not installed, you will need to create a directory for the new component within your application inside `node_modules/@leafygreen-ui` before running this command.
-3. Once the script completes you can make your changes the `leafygreen-ui` components (note: these changes will not yet be visible in the MMS instance that is running)
-4. From the root folder of `leafygreen-ui` run `npm run build`
-5. After a refresh the changes will be visible in the MMS instance
+- We check to ensure `npm run prettier` has been run so that we have consistently formatted code.
+- We run `eslint` to catch any syntax errors, unused variables, and any other easy-to-catch issues.
+
+To lint all files in the repository, run the following:
+
+```
+npm run lint
+```
 
 ## Testing
 
-- Run all tests. This includes linting and running tests.
+To run the unit tests for our components, run the following:
 
-  - `npm run test`
+```
+npm run test
+```
 
 ## Publishing
 
 1.  Build the compiled version of every UI package. This creates the dist/ folder with the transpiled code ready for distribution.
 
-    `npm run build`
+```
+npm run build
+```
 
-2.  TODO: Create changelog and update version.
-    NOTE(hswolff): Not fully implemented yet. Just does an NPM publish for now, no auto changelog creation.
+2. Create a new branch, and make sure to push it. This is where package version updates, and git tags will be pushed from.
 
-        `npm run release`
+3. Publish all packages to NPM using Lerna. In the future, this will also include automatic changelog creation.
 
-## Cleaning
+```
+npm run release
+```
 
-To clean generated assets run.
-
-    `npm run clean`
+4. Push the branch you created, and make a pull request. It will contain all `package.json` changes for your publish.
 
 ## Deploy gh-pages
 
