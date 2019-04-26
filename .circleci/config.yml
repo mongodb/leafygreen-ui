@@ -9,7 +9,9 @@ jobs:
           keys:
             - node-cache-{{ checksum "package-lock.json" }}
             - node-cache
-      - run: npm run init
+      - run: npm run install
+      - run: npx lerna bootstrap
+      - run: npm run build
       - run:
           name: prettier
           command: npm run prettier
