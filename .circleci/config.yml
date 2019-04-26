@@ -11,9 +11,15 @@ jobs:
             - node-cache
       - run: npm run init
       - run:
-          name: Tests
+          name: prettier
+          command: npm run prettier
+      - run:
+          name: lint
+          command: npm run lint
+      - run:
+          name: tests
           command: npm run test -- --no-cache --ci --runInBand
       - save_cache:
+        key: node-cache-{{ checksum "package-lock.lock" }}
         paths:
           - node_modules
-        key: node-cache-{{ checksum "package-lock.lock" }}
