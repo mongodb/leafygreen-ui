@@ -1,0 +1,36 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10.15
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-cache-{{ checksum "package-lock.json" }}
+            - node-cache
+      - run: npm install
+      - run: npx lerna bootstrap
+      - run: npm run build
+      - run:
+          name: prettier
+          command: npm run prettier:check
+      - run:
+          name: lint
+          command: npm run eslint -- --format junit -o reports/junit/js-lint-results.xml
+      - run:
+          name: tests
+          command: npm run test -- --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
+      - run:
+          name: types
+          command: npm run types
+      - save_cache:
+          key: node-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
