@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/node:10.15
+    steps:
+      - checkout
+      - run: npm ci
+      - run: lerna bootstrap
+      - run: npm run build
+      - run:
+          name: Tests
+          command: npm run test -- --no-cache --ci --runInBand
