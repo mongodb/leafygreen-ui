@@ -11,3 +11,6 @@ storybook/public/
 
 # Cache directories
 .cache/
+
+# JUnit report files
+reports

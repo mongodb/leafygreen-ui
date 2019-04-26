@@ -83,6 +83,7 @@
     "gh-pages": "^2.0.1",
     "husky": "^2.1.0",
     "jest": "23.6.0",
+    "jest-junit": "^6.3.0",
     "lerna": "3.4.3",
     "prettier": "^1.17.0",
     "prop-types": "15.6.2",
