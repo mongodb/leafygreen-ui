@@ -9,7 +9,7 @@ jobs:
           keys:
             - node-cache-{{ checksum "package-lock.json" }}
             - node-cache
-      - run: npm run install
+      - run: npm install
       - run: npx lerna bootstrap
       - run: npm run build
       - run:
