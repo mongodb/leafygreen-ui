@@ -10,6 +10,7 @@ const { css } = emotion;
 const containerStyle = css`
   position: relative;
 `;
+
 const popoverStyle = css`
   border: 1px solid ${colors.gray[5]};
   text-align: center;
@@ -17,17 +18,11 @@ const popoverStyle = css`
   background-color: ${colors.mongodb.white};
 `;
 
-type Alignment = 'top' | 'bottom' | 'left' | 'right'
-type Justify = 'start' | 'middle' | 'end'
-
 class Testing extends Component {
   state = { active: false };
-  popoverTest = React.createRef<HTMLButtonElement>();
+  popoverTest = React.createRef();
 
   render() {
-    const align: Alignment = select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')
-    const justify: Justify = select('justify', ['start', 'middle', 'end'], 'start')
-
     return (
       <div className={containerStyle}>
         <button
@@ -38,8 +33,8 @@ class Testing extends Component {
         </button>
 
         <Popover
-          align={align}
-          justify={justify}
+          align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
+          justify={select('justify', ['start', 'middle', 'end'], 'start')}
           refEl={this.popoverTest}
           active={this.state.active}
           withoutPortal={boolean('Without Portal', false)}
