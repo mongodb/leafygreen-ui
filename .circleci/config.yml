@@ -17,7 +17,7 @@ jobs:
           command: npm run prettier
       - run:
           name: lint
-          command: npm run lint -- --format junit -o reports/junit/js-lint-results.xml
+          command: npm run eslint -- --format junit -o reports/junit/js-lint-results.xml
       - run:
           name: tests
           command: npm run test -- --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
