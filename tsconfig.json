@@ -6,6 +6,7 @@
     "allowJs": false,
     "noEmit": true,
     "pretty": true,
+    "declaration": true,
     "strictNullChecks": true,
     "noUnusedLocals": true,
     "strict": true,

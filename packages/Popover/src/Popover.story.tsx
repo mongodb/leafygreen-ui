@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Popover from './Popover';
 import { storiesOf } from '@storybook/react';
-import { select, boolean } from '@storybook/addon-knobs';
+import { select, boolean } from '@storybook/addon-knobs'
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
 
@@ -17,11 +17,17 @@ const popoverStyle = css`
   background-color: ${colors.mongodb.white};
 `;
 
+type Alignment = 'top' | 'bottom' | 'left' | 'right'
+type Justify = 'start' | 'middle' | 'end'
+
 class Testing extends Component {
   state = { active: false };
-  popoverTest = React.createRef();
+  popoverTest = React.createRef<HTMLButtonElement>();
 
   render() {
+    const align: Alignment = select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')
+    const justify: Justify = select('justify', ['start', 'middle', 'end'], 'start')
+
     return (
       <div className={containerStyle}>
         <button
@@ -30,10 +36,11 @@ class Testing extends Component {
         >
           Popover
         </button>
+
         <Popover
-          align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
-          justify={select('justify', ['start', 'middle', 'end'], 'start')}
-          // refEl={this.popoverTest}
+          align={align}
+          justify={justify}
+          refEl={this.popoverTest}
           active={this.state.active}
           withoutPortal={boolean('Without Portal', false)}
         >
