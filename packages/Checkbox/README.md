@@ -1,7 +1,8 @@
 # Checkbox
 
 ## Example
-``` Javascript
+
+```Javascript
 <Checkbox
 	className='my-checkbox'
 	onChange={(event) => {/* Something to handle the click event */}}
@@ -11,6 +12,7 @@
 ```
 
 **Output HTML**
+
 ```HTML
   <label class="css-1rgbgdt my-checkbox" title="Create an item" for="checkbox-14827892">
 		<input
@@ -24,7 +26,7 @@
 			aria-checked="true"
 			aria-labeledby="checkbox-14827892-label"
 		/>
-    
+
 		<div class="css-34kjkdfg">
 			<div class="css-98sdfjsad"></div>
 		</div>
@@ -93,4 +95,4 @@ Adds a className to the outermost element.
 
 The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument.
 
-#### Any other properties will be spread on the `input` element. 
+#### Any other properties will be spread on the `input` element.

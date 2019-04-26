@@ -44,7 +44,7 @@ describe('packages/Portal', () => {
   });
 
   test('does not move Portaled content when the container props is changed, and logs an error to the console', () => {
-    const { container, rerender } = render(
+    const { rerender } = render(
       <div>
         <Portal>Moving Portaled Content</Portal>
       </div>,

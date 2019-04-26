@@ -1,43 +1,46 @@
 # RadioGroup
 
 ## Example
+
 ```js
-import { Radio, RadioGroup } from '@leafygreen-ui/RadioGroup'
+import { Radio, RadioGroup } from '@leafygreen-ui/RadioGroup';
 
 <RadioGroup
-    className='my-radio-group'
-    variant='default'
-    onChange={event => console.log('hi')}
-    value='option-1'
-    name='name-of-input-group'>
-    <Radio 
-        className='my-radio'
-        value='option-1'>
-        Label Text Goes Here
-    </Radio>
-</RadioGroup>
+  className="my-radio-group"
+  variant="default"
+  onChange={event => console.log('hi')}
+  value="option-1"
+  name="name-of-input-group"
+>
+  <Radio className="my-radio" value="option-1">
+    Label Text Goes Here
+  </Radio>
+</RadioGroup>;
 ```
 
 ## Output HTML
+
 ```html
 <div class="leafygreen-ui-16glayc my-radio-group">
-    <label 
-        for="radio-group-660118-button-0" 
-        class="leafygreen-ui-11wfvmq my-radio">   
-        <input 
-            id="radio-group-660118-button-0" 
-            name="name-of-input-group" 
-            type="radio" 
-            class="leafygreen-ui-i6tne my-radio" 
-            aria-checked="true" 
-            aria-disabled="false" 
-            value="option-1">      
-        <span class="leafygreen-ui-1l7rt9l">Label Text Goes Here</span>
-    </label>
+  <label
+    for="radio-group-660118-button-0"
+    class="leafygreen-ui-11wfvmq my-radio"
+  >
+    <input
+      id="radio-group-660118-button-0"
+      name="name-of-input-group"
+      type="radio"
+      class="leafygreen-ui-i6tne my-radio"
+      aria-checked="true"
+      aria-disabled="false"
+      value="option-1"
+    />
+    <span class="leafygreen-ui-1l7rt9l">Label Text Goes Here</span>
+  </label>
 </div>
 ```
 
-## Properties 
+## Properties
 
 ### variant
 
@@ -47,8 +50,7 @@ import { Radio, RadioGroup } from '@leafygreen-ui/RadioGroup'
 
 Sets the style variant of the toggle. Valid variants for toggles are `'default'` and `'light'`.
 
-
-### name 
+### name
 
 **Type:** `string`
 
@@ -56,15 +58,13 @@ Sets the style variant of the toggle. Valid variants for toggles are `'default'`
 
 Sets the name of the input group
 
-
-### value 
+### value
 
 **Type:** `string` or `integer`
 
 **Default:** ``
 
-Sets the radio that will apear checked on page load, also makes the component a controlled component 
-
+Sets the radio that will apear checked on page load, also makes the component a controlled component
 
 ### className
 
@@ -74,7 +74,6 @@ Sets the radio that will apear checked on page load, also makes the component a 
 
 Adds a className to the root element.
 
-
 ### onChange
 
 **Type:** `function`
@@ -83,48 +82,47 @@ Adds a className to the root element.
 
 The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument.
 
-
 ### children
+
 **Type:** `node`
 **Default:** `null`
 Can be any node; however, any `<Radio />` components, will be treated as belonging to the `<RadioGroup />` compound component, and will recieve internal state from `<RadioGroup />`
 
-#### Any other properties will be spread on the root element. 
+#### Any other properties will be spread on the root element.
 
 # Radio
 
 ## Example
+
 ```js
-     <Radio 
-        className='my-radio'
-        value='option-1'
-        disabled={true}>
-        Label Text Goes Here
-    </Radio>
+<Radio className="my-radio" value="option-1" disabled={true}>
+  Label Text Goes Here
+</Radio>
 ```
 
-## Output HTML 
+## Output HTML
+
 ```html
-    <label class="leafygreen-ui-11wfvmq my-radio">
-    <input 
-        type="radio" 
-        class="leafygreen-ui-i6tne my-radio" 
-        aria-checked="false" 
-        disabled="true" 
-        aria-disabled="true" 
-        value="option-1">
-        <span class="leafygreen-ui-1l7rt9l">Label Text Goes Here</span>
-    </label>
+<label class="leafygreen-ui-11wfvmq my-radio">
+  <input
+    type="radio"
+    class="leafygreen-ui-i6tne my-radio"
+    aria-checked="false"
+    disabled="true"
+    aria-disabled="true"
+    value="option-1"
+  />
+  <span class="leafygreen-ui-1l7rt9l">Label Text Goes Here</span>
+</label>
 ```
 
 ## Properties
 
-### value 
+### value
 
 **Type:** `required`, can be a `string` or an `integer`
 
 Every radio needs a value prop
-
 
 ### className
 
@@ -132,17 +130,15 @@ Every radio needs a value prop
 
 **Default:** ``
 
-Adds a className to the label 
+Adds a className to the label
 
-
-### disabled 
+### disabled
 
 **Type:** `boolean`
 
 **Default:** `false`
 
 Indicates whether or not the radio can be clicked by a user
-
 
 ### children
 
@@ -152,5 +148,4 @@ Indicates whether or not the radio can be clicked by a user
 
 Text that appears adjacent to the radio input; label text.
 
-
-#### Any other properties will be spread on the `input` element. 
+#### Any other properties will be spread on the `input` element.

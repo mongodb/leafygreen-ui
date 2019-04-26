@@ -35,12 +35,20 @@
     "init": "npm install && lerna bootstrap && npm run build",
     "link-all-packages": "lerna exec --ignore @leafygreen-ui/lib --ignore @leafygreen-ui/theme -- npm link ",
     "link": "./scripts/link.sh",
-    "lint": "eslint \"packages/**/*.js\"",
-    "prettier": "prettier --write \"**/*.js\"",
+    "lint": "npm run prettier:check && npm run eslint",
+    "eslint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prettier": "prettier --write \"**/*.{js,ts,tsx,md}\"",
+    "prettier:check": "prettier --check \"**/*.{js,ts,tsx,md}\"",
     "test": "jest --env jsdom",
     "types": "tsc --project tsconfig.json",
+    "prepublishOnly": "npm run lint && npm run test && npm run build",
     "release": "lerna publish",
     "release:site": "gh-pages --dist storybook/public"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint"
+    }
   },
   "devDependencies": {
     "@babel/core": "7.1.6",
@@ -52,11 +60,15 @@
     "@babel/preset-typescript": "^7.3.3",
     "@babel/register": "7.0.0",
     "@babel/runtime": "7.1.5",
-    "@svgr/webpack": "^4.2.0",
-    "@svgr/babel-plugin-replace-jsx-attribute-value": "^4.2.0",
     "@storybook/addon-knobs": "^5.0.5",
     "@storybook/react": "^5.0.5",
     "@storybook/theming": "^5.0.5",
+    "@svgr/babel-plugin-replace-jsx-attribute-value": "^4.2.0",
+    "@svgr/webpack": "^4.2.0",
+    "@types/jest": "^24.0.11",
+    "@types/node": "^11.13.4",
+    "@types/react": "^16.8.13",
+    "@types/react-dom": "^16.8.4",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "10.0.1",
     "babel-jest": "23.6.0",
@@ -69,9 +81,10 @@
     "eslint-plugin-jest": "22.1.0",
     "eslint-plugin-react": "7.11.1",
     "gh-pages": "^2.0.1",
+    "husky": "^2.1.0",
     "jest": "23.6.0",
     "lerna": "3.4.3",
-    "prettier": "1.15.2",
+    "prettier": "^1.17.0",
     "prop-types": "15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
@@ -82,10 +95,6 @@
     "typescript": "^3.4.3",
     "url-loader": "1.1.2",
     "webpack": "4.26.0",
-    "webpack-cli": "3.1.2",
-    "@types/jest": "^24.0.11",
-    "@types/node": "^11.13.4",
-    "@types/react": "^16.8.13",
-    "@types/react-dom": "^16.8.4"
+    "webpack-cli": "3.1.2"
   }
 }
