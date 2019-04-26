@@ -63,12 +63,23 @@ module.exports = {
   // ],
 
   // An array of file extensions your modules use
-  // moduleFileExtensions: [
-  //   "js",
-  //   "json",
-  //   "jsx",
-  //   "node"
-  // ],
+  moduleFileExtensions: [
+    'js',
+    'jsx',
+    'ts',
+    'tsx',
+    'json',
+    'node',
+    'png',
+    'jpg',
+    'jpeg',
+    'gif',
+    'svg',
+    'woff',
+    'woff2',
+    'ttf',
+    'eot',
+  ],
 
   // A map from regular expressions to module names that allow to stub out resources with a single module
   moduleNameMapper: {
@@ -107,7 +118,7 @@ module.exports = {
   // restoreMocks: false,
 
   // The root directory that Jest should scan for tests and modules within
-  // rootDir: null,
+  // rootDir: "./packages/",
 
   // A list of paths to directories that Jest should use to search for files in
   // roots: [
@@ -142,7 +153,8 @@ module.exports = {
   testPathIgnorePatterns: ['/node_modules/'],
 
   // The regexp pattern Jest uses to detect test files
-  testRegex: '.spec.js',
+  testRegex: '.spec.[jt]sx?',
+
 
   // This option allows the use of a custom results processor
   // testResultsProcessor: null,
@@ -160,6 +172,10 @@ module.exports = {
   // transform: {
   //   "^.+\\.jsx?$": "./jestTransformer.js"
   // },
+
+  transform: {
+    '^.+\\.[jt]sx?$': 'babel-jest',
+  },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
