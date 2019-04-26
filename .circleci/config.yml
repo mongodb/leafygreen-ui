@@ -7,7 +7,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - node-cache-{{ checksum "package-lock.lock" }}
+            - node-cache-{{ checksum "package-lock.json" }}
             - node-cache
       - run: npm run init
       - run:
