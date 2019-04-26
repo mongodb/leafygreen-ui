@@ -155,7 +155,6 @@ module.exports = {
   // The regexp pattern Jest uses to detect test files
   testRegex: '.spec.[jt]sx?',
 
-
   // This option allows the use of a custom results processor
   // testResultsProcessor: null,
 
