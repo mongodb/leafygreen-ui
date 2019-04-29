@@ -40,7 +40,7 @@ const focusStateStyle = css`
   }
 `;
 
-const labelStyleBase = `
+const labelStyleBase = css`
   transition: all ${transitionInMS}ms ease-in-out;
   position: absolute;
   top: 0;
@@ -56,7 +56,6 @@ const labelStyleBase = `
 `;
 
 const onLabelStyle = css`
-  ${labelStyleBase};
   left: 9px;
   color: #bbebff;
 
@@ -67,30 +66,29 @@ const onLabelStyle = css`
 `;
 
 const offLabelStyle = css`
-  ${labelStyleBase};
   right: 6px;
   color: #9fa1a2;
 `;
 
 const getStatefulContainerStyles = ({ size, disabled }) => {
-  const baseStyle = css`
+  const baseStyle = `
     position: relative;
     display: inline-block;
     cursor: ${disabled ? 'not-allowed' : 'pointer'};
   `;
 
   const sizeStyle = {
-    default: css`
+    default: `
       height: 32px;
       width: 62px;
     `,
 
-    small: css`
+    small: `
       height: 22px;
       width: 40px;
     `,
 
-    xsmall: css`
+    xsmall: `
       height: 14px;
       width: 26px;
     `,
@@ -102,7 +100,7 @@ const getStatefulContainerStyles = ({ size, disabled }) => {
 };
 
 const getStatefulGrooveStyles = ({ variant, checked, disabled }) => {
-  const baseStyles = `
+  let baseStyle = `
     transition: ${transitionInMS}ms all ease-in-out, 0 background-color linear;
     display: inline-block;
     overflow: hidden;
@@ -133,20 +131,16 @@ const getStatefulGrooveStyles = ({ variant, checked, disabled }) => {
       opacity: 0;
       transform: scale(0.85);
     }
+  `;
 
-    ${
-      disabled
-        ? `
+  if (disabled) {
+    baseStyle += `
       &:before {
         opacity: 0;
       }
-    `
-        : ''
-    }
-
-    ${
-      checked && !disabled
-        ? `
+    `;
+  } else if (checked) {
+    baseStyle += `
       // We set background-color here to avoid a small issue with overflow clipping
       // that makes this look less seamless than it should.
       background-color: ${colors.mongodb.blue};
@@ -157,51 +151,59 @@ const getStatefulGrooveStyles = ({ variant, checked, disabled }) => {
         transform: scale(1);
         opacity: 1;
       }
-    `
-        : ''
-    }
-  `;
+    `;
+  }
 
   const variants = {
-    default: css`
-      ${disabled
-        ? `
-        background-color: rgba(29, 36, 36, 0.1);
-        border-color: rgba(18, 22, 22, 0.05);
-      `
-        : `
-        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-      `}
+    default: (() => {
+      let variantStyle = '';
 
-      ${!checked && !disabled
-        ? `
-        background-color: rgba(29, 36, 36, 0.08);
-        border-color: rgba(0, 0, 0, 0.03);
-      `
-        : ''}
-    `,
+      if (disabled) {
+        variantStyle += `
+          background-color: rgba(29, 36, 36, 0.1);
+          border-color: rgba(18, 22, 22, 0.05);
+        `;
+      } else {
+        variantStyle += `
+          box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+        `;
 
-    dark: css`
-      ${disabled
-        ? `
-        background-color: rgba(255, 255, 255, 0.15);
-        border-color: rgba(255, 255, 255, 0.1);
-      `
-        : `
-        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.15);
-      `}
+        if (!checked) {
+          variantStyle += `
+            background-color: rgba(29, 36, 36, 0.08);
+            border-color: rgba(0, 0, 0, 0.03);
+          `;
+        }
+      }
 
-      ${!checked && !disabled
-        ? `
-        background-color: rgba(29, 36, 36, 0.6);
-        border-color: rgba(18, 22, 22, 0.1);
-      `
-        : ''}
-    `,
+      return variantStyle;
+    })(),
+
+    dark: (() => {
+      let style = '';
+
+      if (disabled) {
+        style += `
+          background-color: rgba(255, 255, 255, 0.15);
+          border-color: rgba(255, 255, 255, 0.1);
+        `;
+      } else {
+        style += 'box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.15);';
+
+        if (!checked) {
+          style += `
+            background-color: rgba(29, 36, 36, 0.6);
+            border-color: rgba(18, 22, 22, 0.1);
+          `;
+        }
+      }
+
+      return css(style);
+    })(),
   };
 
   return css`
-    ${baseStyles} ${variants[variant]}
+    ${baseStyle} ${variants[variant]}
   `;
 };
 
@@ -212,19 +214,13 @@ const getStatefulSliderStyles = ({ size, variant, checked, disabled }) => {
     xsmall: 12,
   };
 
-  const sizes = disabled
-    ? {
-        default: 28,
-        small: 18,
-        xsmall: 10,
-      }
-    : {
-        default: 28,
-        small: 20,
-        xsmall: 12,
-      };
+  const sizes = {
+    default: 28,
+    small: disabled ? 18 : 20,
+    xsmall: disabled ? 10 : 12,
+  };
 
-  const baseStyles = `
+  let baseStyles = `
     transition: all ${transitionInMS}ms ease-in-out;
     border-radius: 100%;
     position: absolute;
@@ -235,18 +231,19 @@ const getStatefulSliderStyles = ({ size, variant, checked, disabled }) => {
     height: ${sizes[size]}px;
     width: ${sizes[size]}px;
     transform: translate3d(${checked ? transformBySize[size] : 0}px, 0, 0);
+  `;
 
-    ${
-      disabled
-        ? `
+  if (disabled) {
+    baseStyles += `
       left: 1px;
 
       &:before,
       &:after {
         display: none;
       }
-    `
-        : `
+    `;
+  } else {
+    baseStyles += `
       left: ${size === 'default' ? 1 : 0}px;
 
       &:before,
@@ -271,70 +268,75 @@ const getStatefulSliderStyles = ({ size, variant, checked, disabled }) => {
           rgba(220, 220, 220, 0.5)
         );
       }
-    `
-    }
-  `;
+    `;
+  }
 
   const sliderVariants = {
-    default: `
-      &:before {
-        background-image: linear-gradient(
-          rgba(220, 220, 220, 0),
-          rgba(220, 220, 220, 0.5)
-        );
-      }
-
-      ${
-        disabled
-          ? `
-        background-color: rgba(0, 0, 0, 0.08);
-      `
-          : `
-        background-color: white;
-        box-shadow:
-          0 0 2px rgba(0, 0, 0, 0.08),
-          0 1px 2px rgba(0, 0, 0, 0.25),
-          inset 0 -1px 0 #f1f1f1;
-      `
-      }
-    `,
-
-    dark: `
-      ${
-        disabled
-          ? `
-        background-color: rgba(255, 255, 255, 0.15);
-        background-image: none;
-      `
-          : `
-        background-color: #6f767b;
-        box-shadow:
-          0 0 2px rgba(0, 0, 0, 0.15),
-          0 1px 2px rgba(0, 0, 0, 0.25),
-          inset 0 -1px 0 #454d53;
-      `
-      }
-
-      ${
-        !disabled && checked
-          ? `
-        background-color: white;
-        box-shadow:
-          0 0 2px rgba(0, 0, 0, 0.08),
-          0 1px 2px rgba(0, 0, 0, 0.25),
-          inset 0 -1px 0 #f1f1f1;
-
+    default: (() => {
+      let variantStyle = `
         &:before {
-          opacity: 0;
+          background-image: linear-gradient(
+            rgba(220, 220, 220, 0),
+            rgba(220, 220, 220, 0.5)
+          );
         }
+      `;
 
-        &:after {
-          opacity: 1;
-        }
-      `
-          : ''
+      if (disabled) {
+        variantStyle += `
+          background-color: rgba(0, 0, 0, 0.08);
+        `;
+      } else {
+        variantStyle += `
+          background-color: white;
+          box-shadow:
+            0 0 2px rgba(0, 0, 0, 0.08),
+            0 1px 2px rgba(0, 0, 0, 0.25),
+            inset 0 -1px 0 #f1f1f1;
+        `;
       }
-    `,
+
+      return variantStyle;
+    })(),
+
+    dark: (() => {
+      let variantStyle = '';
+
+      if (disabled) {
+        variantStyle += `
+          background-color: rgba(255, 255, 255, 0.15);
+          background-image: none;
+        `;
+      } else {
+        variantStyle += `
+          background-color: #6f767b;
+          box-shadow:
+            0 0 2px rgba(0, 0, 0, 0.15),
+            0 1px 2px rgba(0, 0, 0, 0.25),
+            inset 0 -1px 0 #454d53;
+        `;
+
+        if (checked) {
+          variantStyle += `
+            background-color: white;
+            box-shadow:
+              0 0 2px rgba(0, 0, 0, 0.08),
+              0 1px 2px rgba(0, 0, 0, 0.25),
+              inset 0 -1px 0 #f1f1f1;
+
+            &:before {
+              opacity: 0;
+            }
+
+            &:after {
+              opacity: 1;
+            }
+          `;
+        }
+      }
+
+      return variantStyle;
+    })(),
   };
 
   return css`
@@ -425,11 +427,11 @@ export default class Toggle extends PureComponent {
 
         <div className={focusStateStyle} />
 
-        <div {...toggleGroove.prop} className={statefulStyles.groove}>
+        <div {...toggleGroove.prop} className={cx(statefulStyles.groove)}>
           {size === 'default' && !disabled && (
             <>
-              <div className={onLabelStyle}>On</div>
-              <div className={offLabelStyle}>Off</div>
+              <div className={cx(labelStyleBase, onLabelStyle)}>On</div>
+              <div className={cx(labelStyleBase, offLabelStyle)}>Off</div>
             </>
           )}
 
