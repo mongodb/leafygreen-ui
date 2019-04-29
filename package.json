@@ -86,8 +86,8 @@
     "jest-junit": "^6.3.0",
     "lerna": "3.4.3",
     "prettier": "^1.17.0",
-    "prop-types": "15.6.2",
-    "react": "^16.4.2",
+    "prop-types": "^15.0.0",
+    "react": "^16.0.0",
     "react-dom": "^16.4.2",
     "react-emotion": "~9.0.0",
     "react-router-dom": "4.3.1",
@@ -96,6 +96,9 @@
     "typescript": "^3.4.3",
     "url-loader": "1.1.2",
     "webpack": "4.26.0",
-    "webpack-cli": "3.1.2"
+    "webpack-cli": "3.1.2",
+    "create-emotion": "^10.0.7",
+    "emotion": "^10.0.7",
+    "polished": "^2.3.0"
   }
 }
