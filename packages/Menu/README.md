@@ -115,6 +115,8 @@ Contents to appear inside of `MenuItem` component
 
 **Default:** ``
 
+Classname applied to `li` element
+
 ### onSelect
 
 **Type:** `function`
