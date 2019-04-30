@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Popover from './Popover';
 import { storiesOf } from '@storybook/react';
-import { select, boolean } from '@storybook/addon-knobs'
+import { select, boolean } from '@storybook/addon-knobs';
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
 

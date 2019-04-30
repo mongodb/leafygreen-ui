@@ -1,20 +1,24 @@
-# Popover 
+# Popover
 
-## Example 
-```js 
-  <Popover 
-    active
-    align='top'
-    justify='center'
-    refEl={document.getElementById('root')}>
-      Popover!
-  </Popover>
+## Example
+
+```js
+<Popover
+  active
+  align="top"
+  justify="center"
+  refEl={document.getElementById('root')}
+>
+  Popover!
+</Popover>
 ```
 
 ## Output HTML
-```html 
-  <div>Popover!</div>
+
+```html
+<div>Popover!</div>
 ```
+
 ### refEl
 
 **Type:** `object`
@@ -23,7 +27,7 @@
 
 Required. Ref to the element to which the popover component should be positioned against
 
-### active 
+### active
 
 **Type:** `boolean`
 
@@ -39,7 +43,7 @@ Determines whether the Popover is active or inactive
 
 A string that determines the aligment of the popover relative to the `refEl`. There are four options: `top`, `bottom`, `left`, or `right`
 
-### justify 
+### justify
 
 **Type:** `string`
 
@@ -47,7 +51,7 @@ A string that determines the aligment of the popover relative to the `refEl`. Th
 
 A string that determines the justification of the popover relative to the `refEl`. There are three options `start`, `middle`, and `end`, which will be defined relative to the `align` prop
 
-### children 
+### children
 
 **Type:** `node`
 
@@ -55,7 +59,7 @@ A string that determines the justification of the popover relative to the `refEl
 
 Content that will appear inside of the Popver component
 
-### withoutPortal 
+### withoutPortal
 
 **Type:** `boolean`
 
