@@ -1,5 +1,7 @@
 # Button
 
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/button.svg)
+
 ## Example
 
 ```Javascript
