@@ -11,10 +11,28 @@
     "access": "public"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@leafygreen-ui/lib": "^2.1.7",
     "@leafygreen-ui/portal": "^1.0.5",
     "@leafygreen-ui/theme": "^1.1.7",
+=======
+<<<<<<< HEAD
+    "@leafygreen-ui/lib": "^2.1.6",
+    "@leafygreen-ui/portal": "^1.0.4",
+    "@leafygreen-ui/theme": "^1.1.6",
+>>>>>>> groundwork
     "lodash": "^4.17.11"
   },
   "gitHead": "53385cfed5ecf3101d098d26dedc6a40b27c402a"
+=======
+    "@leafygreen-ui/lib": "^2.1.2",
+    "@leafygreen-ui/theme": "^1.1.1", 
+<<<<<<< HEAD
+    "@leafygreen-ui/portal": "^1.0.0",
+    "lodash": "^4.17.11"
+=======
+    "@leafygreen-ui/portal": "^1.0.0"
+>>>>>>> groundwork
+  }
+>>>>>>> groundwork
 }
