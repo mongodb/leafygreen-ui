@@ -1,5 +1,7 @@
 # Badge
 
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/badge.svg)
+
 ## Example
 
 ```Javascript
