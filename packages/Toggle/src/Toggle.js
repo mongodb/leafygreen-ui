@@ -42,28 +42,30 @@ const focusStateStyle = css`
 
 const getContainerStyles = ({ size, disabled }) => {
   const sizeStyle = {
-    default: `
+    default: css`
       height: 32px;
       width: 62px;
     `,
 
-    small: `
+    small: css`
       height: 22px;
       width: 40px;
     `,
 
-    xsmall: `
+    xsmall: css`
       height: 14px;
       width: 26px;
     `,
   };
 
-  return css`
-    position: relative;
-    display: inline-block;
-    cursor: ${disabled ? 'not-allowed' : 'pointer'};
-    ${sizeStyle[size]}
-  `;
+  return cx(
+    css`
+      position: relative;
+      display: inline-block;
+      cursor: ${disabled ? 'not-allowed' : 'pointer'};
+    `,
+    sizeStyle[size],
+  );
 };
 
 const getGrooveStyles = ({ variant, checked, disabled }) => {
@@ -130,48 +132,50 @@ const getGrooveStyles = ({ variant, checked, disabled }) => {
           background-color: rgba(29, 36, 36, 0.1);
           border-color: rgba(18, 22, 22, 0.05);
         `;
-      } else {
-        variantStyle += `
-          box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-        `;
 
-        if (!checked) {
-          variantStyle += `
-            background-color: rgba(29, 36, 36, 0.08);
-            border-color: rgba(0, 0, 0, 0.03);
-          `;
-        }
+        return css(variantStyle);
       }
 
-      return variantStyle;
+      variantStyle += `
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+      `;
+
+      if (!checked) {
+        variantStyle += `
+          background-color: rgba(29, 36, 36, 0.08);
+          border-color: rgba(0, 0, 0, 0.03);
+        `;
+      }
+
+      return css(variantStyle);
     })(),
 
     dark: (() => {
-      let style = '';
+      let variantStyle = '';
 
       if (disabled) {
-        style += `
+        variantStyle += `
           background-color: rgba(255, 255, 255, 0.15);
           border-color: rgba(255, 255, 255, 0.1);
         `;
-      } else {
-        style += 'box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.15);';
 
-        if (!checked) {
-          style += `
-            background-color: rgba(29, 36, 36, 0.6);
-            border-color: rgba(18, 22, 22, 0.1);
-          `;
-        }
+        return css(variantStyle);
       }
 
-      return css(style);
+      variantStyle += 'box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.15);';
+
+      if (!checked) {
+        variantStyle += `
+          background-color: rgba(29, 36, 36, 0.6);
+          border-color: rgba(18, 22, 22, 0.1);
+        `;
+      }
+
+      return css(variantStyle);
     })(),
   };
 
-  return css`
-    ${baseStyle} ${variants[variant]}
-  `;
+  return cx(css(baseStyle), variants[variant]);
 };
 
 const getSliderStyles = ({ size, variant, checked, disabled }) => {
@@ -254,9 +258,9 @@ const getSliderStyles = ({ size, variant, checked, disabled }) => {
           background-color: rgba(0, 0, 0, 0.08);
         `;
 
-        return variantStyle
+        return css(variantStyle);
       }
-      
+
       variantStyle += `
         background-color: white;
         box-shadow:
@@ -265,7 +269,7 @@ const getSliderStyles = ({ size, variant, checked, disabled }) => {
           inset 0 -1px 0 #f1f1f1;
       `;
 
-      return variantStyle;
+      return css(variantStyle);
     })(),
 
     dark: (() => {
@@ -277,9 +281,9 @@ const getSliderStyles = ({ size, variant, checked, disabled }) => {
           background-image: none;
         `;
 
-        return variantStyle
+        return css(variantStyle);
       }
-      
+
       variantStyle += `
         background-color: #6f767b;
         box-shadow:
@@ -306,13 +310,11 @@ const getSliderStyles = ({ size, variant, checked, disabled }) => {
         `;
       }
 
-      return variantStyle;
+      return css(variantStyle);
     })(),
   };
 
-  return css`
-    ${baseStyles} ${sliderVariants[variant]}
-  `;
+  return cx(css(baseStyles), sliderVariants[variant]);
 };
 
 const labelStyleBase = css`
@@ -428,7 +430,7 @@ export default class Toggle extends PureComponent {
 
         <div className={focusStateStyle} />
 
-        <div {...toggleGroove.prop} className={cx(statefulStyles.groove)}>
+        <div {...toggleGroove.prop} className={statefulStyles.groove}>
           {size === 'default' && !disabled && (
             <>
               <div className={cx(labelStyleBase, onLabelStyle)}>On</div>
