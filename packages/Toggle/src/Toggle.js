@@ -40,13 +40,7 @@ const focusStateStyle = css`
   }
 `;
 
-const getStatefulContainerStyles = ({ size, disabled }) => {
-  const baseStyle = `
-    position: relative;
-    display: inline-block;
-    cursor: ${disabled ? 'not-allowed' : 'pointer'};
-  `;
-
+const getContainerStyles = ({ size, disabled }) => {
   const sizeStyle = {
     default: `
       height: 32px;
@@ -65,11 +59,14 @@ const getStatefulContainerStyles = ({ size, disabled }) => {
   };
 
   return css`
-    ${baseStyle} ${sizeStyle[size]}
+    position: relative;
+    display: inline-block;
+    cursor: ${disabled ? 'not-allowed' : 'pointer'};
+    ${sizeStyle[size]}
   `;
 };
 
-const getStatefulGrooveStyles = ({ variant, checked, disabled }) => {
+const getGrooveStyles = ({ variant, checked, disabled }) => {
   let baseStyle = `
     transition: ${transitionInMS}ms all ease-in-out, 0 background-color linear;
     display: inline-block;
@@ -177,7 +174,7 @@ const getStatefulGrooveStyles = ({ variant, checked, disabled }) => {
   `;
 };
 
-const getStatefulSliderStyles = ({ size, variant, checked, disabled }) => {
+const getSliderStyles = ({ size, variant, checked, disabled }) => {
   const transformBySize = {
     default: 30,
     small: 18,
@@ -349,9 +346,9 @@ const offLabelStyle = css`
 `;
 
 const getStatefulStyles = states => ({
-  slider: getStatefulSliderStyles(states),
-  groove: getStatefulGrooveStyles(states),
-  container: getStatefulContainerStyles(states),
+  slider: getSliderStyles(states),
+  groove: getGrooveStyles(states),
+  container: getContainerStyles(states),
 });
 
 export default class Toggle extends PureComponent {
