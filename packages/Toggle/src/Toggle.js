@@ -40,36 +40,6 @@ const focusStateStyle = css`
   }
 `;
 
-const labelStyleBase = css`
-  transition: all ${transitionInMS}ms ease-in-out;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  height: 11px;
-  line-height: 11px;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 11px;
-  color: white;
-  user-select: none;
-`;
-
-const onLabelStyle = css`
-  left: 9px;
-  color: #bbebff;
-
-  ${toggleInput.selector}:hover ~ ${toggleGroove.selector} > &,
-  ${toggleInput.selector}:focus ~ ${toggleGroove.selector} > & {
-    color: white;
-  }
-`;
-
-const offLabelStyle = css`
-  right: 6px;
-  color: #9fa1a2;
-`;
-
 const getStatefulContainerStyles = ({ size, disabled }) => {
   const baseStyle = `
     position: relative;
@@ -286,15 +256,17 @@ const getStatefulSliderStyles = ({ size, variant, checked, disabled }) => {
         variantStyle += `
           background-color: rgba(0, 0, 0, 0.08);
         `;
-      } else {
-        variantStyle += `
-          background-color: white;
-          box-shadow:
-            0 0 2px rgba(0, 0, 0, 0.08),
-            0 1px 2px rgba(0, 0, 0, 0.25),
-            inset 0 -1px 0 #f1f1f1;
-        `;
+
+        return variantStyle
       }
+      
+      variantStyle += `
+        background-color: white;
+        box-shadow:
+          0 0 2px rgba(0, 0, 0, 0.08),
+          0 1px 2px rgba(0, 0, 0, 0.25),
+          inset 0 -1px 0 #f1f1f1;
+      `;
 
       return variantStyle;
     })(),
@@ -307,32 +279,34 @@ const getStatefulSliderStyles = ({ size, variant, checked, disabled }) => {
           background-color: rgba(255, 255, 255, 0.15);
           background-image: none;
         `;
-      } else {
+
+        return variantStyle
+      }
+      
+      variantStyle += `
+        background-color: #6f767b;
+        box-shadow:
+          0 0 2px rgba(0, 0, 0, 0.15),
+          0 1px 2px rgba(0, 0, 0, 0.25),
+          inset 0 -1px 0 #454d53;
+      `;
+
+      if (checked) {
         variantStyle += `
-          background-color: #6f767b;
+          background-color: white;
           box-shadow:
-            0 0 2px rgba(0, 0, 0, 0.15),
+            0 0 2px rgba(0, 0, 0, 0.08),
             0 1px 2px rgba(0, 0, 0, 0.25),
-            inset 0 -1px 0 #454d53;
+            inset 0 -1px 0 #f1f1f1;
+
+          &:before {
+            opacity: 0;
+          }
+
+          &:after {
+            opacity: 1;
+          }
         `;
-
-        if (checked) {
-          variantStyle += `
-            background-color: white;
-            box-shadow:
-              0 0 2px rgba(0, 0, 0, 0.08),
-              0 1px 2px rgba(0, 0, 0, 0.25),
-              inset 0 -1px 0 #f1f1f1;
-
-            &:before {
-              opacity: 0;
-            }
-
-            &:after {
-              opacity: 1;
-            }
-          `;
-        }
       }
 
       return variantStyle;
@@ -343,6 +317,36 @@ const getStatefulSliderStyles = ({ size, variant, checked, disabled }) => {
     ${baseStyles} ${sliderVariants[variant]}
   `;
 };
+
+const labelStyleBase = css`
+  transition: all ${transitionInMS}ms ease-in-out;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  height: 11px;
+  line-height: 11px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 11px;
+  color: white;
+  user-select: none;
+`;
+
+const onLabelStyle = css`
+  left: 9px;
+  color: #bbebff;
+
+  ${toggleInput.selector}:hover ~ ${toggleGroove.selector} > &,
+  ${toggleInput.selector}:focus ~ ${toggleGroove.selector} > & {
+    color: white;
+  }
+`;
+
+const offLabelStyle = css`
+  right: 6px;
+  color: #9fa1a2;
+`;
 
 const getStatefulStyles = states => ({
   slider: getStatefulSliderStyles(states),
