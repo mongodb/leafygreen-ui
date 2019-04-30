@@ -27,7 +27,7 @@
     "react/jsx-filename-extension": [
       "error",
       {
-        "extensions": [".js"]
+        "extensions": [".js", ".tsx"]
       }
     ],
     "react/forbid-prop-types": "any",
