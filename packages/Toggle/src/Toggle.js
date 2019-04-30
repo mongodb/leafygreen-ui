@@ -69,7 +69,59 @@ const getContainerStyles = ({ size, disabled }) => {
 };
 
 const getGrooveStyles = ({ variant, checked, disabled }) => {
-  let baseStyle = `
+  const variants = {
+    default: (() => {
+      if (disabled) {
+        return css`
+          background-color: rgba(29, 36, 36, 0.1);
+          border-color: rgba(18, 22, 22, 0.05);
+        `;
+      }
+
+      const variantStyle = css`
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+      `;
+
+      if (checked) {
+        return variantStyle;
+      }
+
+      return cx(
+        variantStyle,
+        css`
+          background-color: rgba(29, 36, 36, 0.08);
+          border-color: rgba(0, 0, 0, 0.03);
+        `,
+      );
+    })(),
+
+    dark: (() => {
+      if (disabled) {
+        return css`
+          background-color: rgba(255, 255, 255, 0.15);
+          border-color: rgba(255, 255, 255, 0.1);
+        `;
+      }
+
+      const variantStyle = css`
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.15);
+      `;
+
+      if (checked) {
+        return variantStyle;
+      }
+
+      return cx(
+        variantStyle,
+        css`
+          background-color: rgba(29, 36, 36, 0.6);
+          border-color: rgba(18, 22, 22, 0.1);
+        `,
+      );
+    })(),
+  };
+
+  const baseStyle = css`
     transition: ${transitionInMS}ms all ease-in-out, 0 background-color linear;
     display: inline-block;
     overflow: hidden;
@@ -103,82 +155,103 @@ const getGrooveStyles = ({ variant, checked, disabled }) => {
   `;
 
   if (disabled) {
-    baseStyle += `
-      &:before {
-        opacity: 0;
-      }
-    `;
-  } else if (checked) {
-    baseStyle += `
-      // We set background-color here to avoid a small issue with overflow clipping
-      // that makes this look less seamless than it should.
-      background-color: ${colors.mongodb.blue};
-      border-color: #2e9ed3;
-      transition-delay: ${transitionInMS}ms;
-
-      &:before {
-        transform: scale(1);
-        opacity: 1;
-      }
-    `;
+    return cx(
+      baseStyle,
+      css`
+        &:before {
+          opacity: 0;
+        }
+      `,
+      variants[variant],
+    );
   }
 
-  const variants = {
-    default: (() => {
-      let variantStyle = '';
+  if (checked) {
+    return cx(
+      baseStyle,
+      css`
+        // We set background-color here to avoid a small issue with overflow clipping
+        // that makes this look less seamless than it should.
+        background-color: ${colors.mongodb.blue};
+        border-color: #2e9ed3;
+        transition-delay: ${transitionInMS}ms;
 
-      if (disabled) {
-        variantStyle += `
-          background-color: rgba(29, 36, 36, 0.1);
-          border-color: rgba(18, 22, 22, 0.05);
-        `;
+        &:before {
+          transform: scale(1);
+          opacity: 1;
+        }
+      `,
+      variants[variant],
+    );
+  }
 
-        return css(variantStyle);
-      }
-
-      variantStyle += `
-        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-      `;
-
-      if (!checked) {
-        variantStyle += `
-          background-color: rgba(29, 36, 36, 0.08);
-          border-color: rgba(0, 0, 0, 0.03);
-        `;
-      }
-
-      return css(variantStyle);
-    })(),
-
-    dark: (() => {
-      let variantStyle = '';
-
-      if (disabled) {
-        variantStyle += `
-          background-color: rgba(255, 255, 255, 0.15);
-          border-color: rgba(255, 255, 255, 0.1);
-        `;
-
-        return css(variantStyle);
-      }
-
-      variantStyle += 'box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.15);';
-
-      if (!checked) {
-        variantStyle += `
-          background-color: rgba(29, 36, 36, 0.6);
-          border-color: rgba(18, 22, 22, 0.1);
-        `;
-      }
-
-      return css(variantStyle);
-    })(),
-  };
-
-  return cx(css(baseStyle), variants[variant]);
+  return cx(baseStyle, variants[variant]);
 };
 
 const getSliderStyles = ({ size, variant, checked, disabled }) => {
+  const sliderVariants = {
+    default: (() => {
+      const variantStyle = css`
+        &:before {
+          background-image: linear-gradient(
+            rgba(220, 220, 220, 0),
+            rgba(220, 220, 220, 0.5)
+          );
+        }
+      `;
+
+      if (disabled) {
+        return cx(
+          variantStyle,
+          css`
+            background-color: rgba(0, 0, 0, 0.08);
+          `,
+        );
+      }
+
+      return cx(
+        variantStyle,
+        css`
+          ${variantStyle}
+          background-color: white;
+          box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.25),
+            inset 0 -1px 0 #f1f1f1;
+        `,
+      );
+    })(),
+
+    dark: (() => {
+      if (disabled) {
+        return css`
+          background-color: rgba(255, 255, 255, 0.15);
+          background-image: none;
+        `;
+      }
+
+      if (checked) {
+        return css`
+          background-color: white;
+          box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.25),
+            inset 0 -1px 0 #f1f1f1;
+
+          &:before {
+            opacity: 0;
+          }
+
+          &:after {
+            opacity: 1;
+          }
+        `;
+      }
+
+      return css`
+        background-color: #6f767b;
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.25),
+          inset 0 -1px 0 #454d53;
+      `;
+    })(),
+  };
+
   const transformBySize = {
     default: 30,
     small: 18,
@@ -191,7 +264,7 @@ const getSliderStyles = ({ size, variant, checked, disabled }) => {
     xsmall: disabled ? 10 : 12,
   };
 
-  let baseStyles = `
+  const baseStyles = css`
     transition: all ${transitionInMS}ms ease-in-out;
     border-radius: 100%;
     position: absolute;
@@ -205,16 +278,23 @@ const getSliderStyles = ({ size, variant, checked, disabled }) => {
   `;
 
   if (disabled) {
-    baseStyles += `
-      left: 1px;
+    return cx(
+      baseStyles,
+      css`
+        left: 1px;
 
-      &:before,
-      &:after {
-        display: none;
-      }
-    `;
-  } else {
-    baseStyles += `
+        &:before,
+        &:after {
+          display: none;
+        }
+      `,
+      sliderVariants[variant],
+    );
+  }
+
+  return cx(
+    baseStyles,
+    css`
       left: ${size === 'default' ? 1 : 0}px;
 
       &:before,
@@ -239,85 +319,12 @@ const getSliderStyles = ({ size, variant, checked, disabled }) => {
           rgba(220, 220, 220, 0.5)
         );
       }
-    `;
-  }
-
-  const sliderVariants = {
-    default: (() => {
-      let variantStyle = `
-        &:before {
-          background-image: linear-gradient(
-            rgba(220, 220, 220, 0),
-            rgba(220, 220, 220, 0.5)
-          );
-        }
-      `;
-
-      if (disabled) {
-        variantStyle += `
-          background-color: rgba(0, 0, 0, 0.08);
-        `;
-
-        return css(variantStyle);
-      }
-
-      variantStyle += `
-        background-color: white;
-        box-shadow:
-          0 0 2px rgba(0, 0, 0, 0.08),
-          0 1px 2px rgba(0, 0, 0, 0.25),
-          inset 0 -1px 0 #f1f1f1;
-      `;
-
-      return css(variantStyle);
-    })(),
-
-    dark: (() => {
-      let variantStyle = '';
-
-      if (disabled) {
-        variantStyle += `
-          background-color: rgba(255, 255, 255, 0.15);
-          background-image: none;
-        `;
-
-        return css(variantStyle);
-      }
-
-      variantStyle += `
-        background-color: #6f767b;
-        box-shadow:
-          0 0 2px rgba(0, 0, 0, 0.15),
-          0 1px 2px rgba(0, 0, 0, 0.25),
-          inset 0 -1px 0 #454d53;
-      `;
-
-      if (checked) {
-        variantStyle += `
-          background-color: white;
-          box-shadow:
-            0 0 2px rgba(0, 0, 0, 0.08),
-            0 1px 2px rgba(0, 0, 0, 0.25),
-            inset 0 -1px 0 #f1f1f1;
-
-          &:before {
-            opacity: 0;
-          }
-
-          &:after {
-            opacity: 1;
-          }
-        `;
-      }
-
-      return css(variantStyle);
-    })(),
-  };
-
-  return cx(css(baseStyles), sliderVariants[variant]);
+    `,
+    sliderVariants[variant],
+  );
 };
 
-const labelStyleBase = css`
+const baseLabelStyle = css`
   transition: all ${transitionInMS}ms ease-in-out;
   position: absolute;
   top: 0;
@@ -332,20 +339,26 @@ const labelStyleBase = css`
   user-select: none;
 `;
 
-const onLabelStyle = css`
-  left: 9px;
-  color: #bbebff;
+const onLabelStyle = cx(
+  baseLabelStyle,
+  css`
+    left: 9px;
+    color: #bbebff;
 
-  ${toggleInput.selector}:hover ~ ${toggleGroove.selector} > &,
-  ${toggleInput.selector}:focus ~ ${toggleGroove.selector} > & {
-    color: white;
-  }
-`;
+    ${toggleInput.selector}:hover ~ ${toggleGroove.selector} > &,
+    ${toggleInput.selector}:focus ~ ${toggleGroove.selector} > & {
+      color: white;
+    }
+  `,
+);
 
-const offLabelStyle = css`
-  right: 6px;
-  color: #9fa1a2;
-`;
+const offLabelStyle = cx(
+  baseLabelStyle,
+  css`
+    right: 6px;
+    color: #9fa1a2;
+  `,
+);
 
 const getStatefulStyles = states => ({
   slider: getSliderStyles(states),
@@ -433,8 +446,8 @@ export default class Toggle extends PureComponent {
         <div {...toggleGroove.prop} className={statefulStyles.groove}>
           {size === 'default' && !disabled && (
             <>
-              <div className={cx(labelStyleBase, onLabelStyle)}>On</div>
-              <div className={cx(labelStyleBase, offLabelStyle)}>Off</div>
+              <div className={onLabelStyle}>On</div>
+              <div className={offLabelStyle}>Off</div>
             </>
           )}
 
