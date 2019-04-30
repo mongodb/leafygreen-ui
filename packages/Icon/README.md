@@ -1,5 +1,7 @@
 # Icon
 
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/icon.svg)
+
 ## Example
 
 ```js
