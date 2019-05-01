@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "start-storybook -p 9001 -c storybook -s ./storybook/static",
-    "build": "lerna run --parallel build -- -- --env production",
+    "build": "lerna run --parallel build -- -- --env production && npm run emit-types",
     "build:storybook": "build-storybook -c storybook -o ./storybook/public -s ./storybook/static",
     "format": "npm run prettier && npm run eslint:format",
     "init": "npm install && lerna bootstrap && npm run build",
@@ -42,7 +42,8 @@
     "prettier": "prettier --write \"**/*.{js,ts,tsx,md}\"",
     "prettier:check": "prettier --check \"**/*.{js,ts,tsx,md}\"",
     "test": "jest --env jsdom",
-    "types": "tsc --project tsconfig.json",
+    "emit-types": "lerna run emit-types",
+    "types": "tsc --project tsconfig.json --noEmit",
     "prepublishOnly": "npm run lint && npm run test && npm run build",
     "release": "lerna publish",
     "release:site": "gh-pages --dist storybook/public"
