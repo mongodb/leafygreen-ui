@@ -10,6 +10,7 @@
 	onChange={(event) => {/* Something to handle the click event */}}
 	label='This is how you enable a thing'
 	checked={true}
+	bold={false}
 />
 ```
 
@@ -88,6 +89,14 @@ Sets the checkbox as indeterminate. **NOTE:** the checkbox will become out of sy
 **Default:** `''`
 
 Adds a className to the outermost element.
+
+### bold
+
+**Type:** `boolean`
+
+**Default:** `false`
+
+Determines whether the text will be bold or not
 
 ### onChange
 
