@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { colors } from '@leafygreen-ui/theme';
-import { ccClassName, emotion } from '@leafygreen-ui/lib';
+import { emotion } from '@leafygreen-ui/lib';
 import { lighten, darken } from 'polished';
 
-const { css } = emotion;
+const { css, cx } = emotion;
 
 const buttonVariants = {
   default: css`
@@ -314,10 +314,7 @@ export default class Button extends Component {
       <Root
         {...rest}
         href={href}
-        className={ccClassName(
-          css`${baseStyle} ${sizeStyle} ${variantStyle}`,
-          className,
-        )}
+        className={cx(baseStyle, sizeStyle, variantStyle, className)}
         disabled={disabled}
         aria-disabled={disabled}
       >
