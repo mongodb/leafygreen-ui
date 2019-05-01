@@ -25,7 +25,7 @@
 
 **Default:** `null`
 
-Required. Ref to the element to which the popover component should be positioned against
+Ref to the element to which the popover component should be positioned relative to. If not set, the popover will be positioned relative to its parent.
 
 ### active
 
@@ -39,7 +39,7 @@ Determines whether the Popover is active or inactive
 
 **Type:** `string`
 
-**Default:** `top`
+**Default:** `bottom`
 
 A string that determines the aligment of the popover relative to the `refEl`. There are four options: `top`, `bottom`, `left`, or `right`
 

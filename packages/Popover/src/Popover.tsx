@@ -57,13 +57,19 @@ type AbstractPosition = {
 
 type Props = {
   children?: ReactNode;
-  active: boolean;
+  active?: boolean;
   className?: string;
-  align: 'top' | 'bottom' | 'left' | 'right';
-  justify: Justify;
+  align?: Alignment;
+  justify?: Justify;
   refEl?: RefObject<HTMLElement>;
   withoutPortal?: boolean;
   getUpdatePosition?: Function;
+};
+
+type DefaultProps = {
+  align: Alignment;
+  justify: Justify;
+  active: boolean;
 };
 
 type State = {
@@ -75,7 +81,7 @@ type State = {
   referenceElement: HTMLElement | null;
 };
 
-export default class Popover extends Component<Props, State> {
+export default class Popover extends Component<Props & DefaultProps, State> {
   static displayName = 'Popover';
 
   static propTypes = {
@@ -89,8 +95,8 @@ export default class Popover extends Component<Props, State> {
     getUpdatePosition: PropTypes.func,
   };
 
-  static defaultProps: Props = {
-    align: 'top',
+  static defaultProps: DefaultProps = {
+    align: 'bottom',
     justify: 'start',
     active: false,
   };
