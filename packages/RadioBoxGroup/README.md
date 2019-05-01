@@ -1,5 +1,7 @@
 # Radio Box Group
 
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/radio-box-group.svg)
+
 ## Example
 
 ```js

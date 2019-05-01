@@ -1,5 +1,7 @@
 # Portal
 
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/portal.svg)
+
 ## Example
 
 ```js
