@@ -189,7 +189,6 @@ export default class Checkbox extends PureComponent {
     } = this.props;
 
     const textVariantStyle = textVariants[variant] || textVariants.default;
-    const makeBold = bold && boldTextStyle;
 
     // Indeterminate isn't a valid HTML prop
     delete rest.indeterminate;
@@ -272,8 +271,9 @@ export default class Checkbox extends PureComponent {
 
         {label && (
           <span
-            className={cx(baseTextStyle, textVariantStyle, makeBold, {
+            className={cx(baseTextStyle, textVariantStyle, {
               [disabledTextStyle]: disabled,
+              [boldTextStyle]: bold,
             })}
             id={labelId}
           >

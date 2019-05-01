@@ -96,7 +96,7 @@ Adds a className to the outermost element.
 
 **Default:** `false`
 
-Determines whether the text will be bold or not
+Determines whether the text will be bold or not.
 
 ### onChange
 

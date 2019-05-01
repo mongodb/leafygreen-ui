@@ -61,7 +61,7 @@ storiesOf('Checkbox', module)
       disabled={boolean('Disabled', false)}
       indeterminate={boolean('Indeterminate', false)}
       label={text('Label', 'I agree to this thing.')}
-      bold={boolean('Bold text', false)}
+      bold={boolean('Bold', false)}
     />
   ))
   .add('Light', () => (
@@ -70,6 +70,6 @@ storiesOf('Checkbox', module)
       indeterminate={boolean('Indeterminate', false)}
       label={text('Label', 'I agree to this thing.')}
       variant="light"
-      bold={boolean('Bold text', false)}
+      bold={boolean('Bold', false)}
     />
   ));
