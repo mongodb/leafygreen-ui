@@ -13,6 +13,7 @@ class Control extends PureComponent {
     disabled: PropTypes.bool,
     indeterminate: PropTypes.bool,
     label: PropTypes.string,
+    bold: PropTypes.bool,
   };
 
   state = { checked: false };
@@ -22,7 +23,13 @@ class Control extends PureComponent {
   };
 
   render() {
-    const { indeterminate, label, disabled, variant = 'default' } = this.props;
+    const {
+      bold,
+      indeterminate,
+      label,
+      disabled,
+      variant = 'default',
+    } = this.props;
     const { checked } = this.state;
 
     return (
@@ -41,6 +48,7 @@ class Control extends PureComponent {
           onChange={this.onChange}
           label={label}
           variant={variant}
+          bold={bold}
         />
       </div>
     );
@@ -53,6 +61,7 @@ storiesOf('Checkbox', module)
       disabled={boolean('Disabled', false)}
       indeterminate={boolean('Indeterminate', false)}
       label={text('Label', 'I agree to this thing.')}
+      bold={boolean('Bold', false)}
     />
   ))
   .add('Light', () => (
@@ -61,5 +70,6 @@ storiesOf('Checkbox', module)
       indeterminate={boolean('Indeterminate', false)}
       label={text('Label', 'I agree to this thing.')}
       variant="light"
+      bold={boolean('Bold', false)}
     />
   ));
