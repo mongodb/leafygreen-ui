@@ -40,11 +40,13 @@ export default class Portal extends Component {
       );
       return false;
     }
+
     return true;
   }
 
   componentWillUnmount() {
     const { defaultContainer } = this.state;
+
     if (defaultContainer) {
       defaultContainer.remove();
     }
