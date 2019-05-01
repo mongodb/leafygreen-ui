@@ -307,14 +307,16 @@ export default class Button extends Component {
       Root = as;
     }
 
-    const variantStyle = buttonVariants[variant];
-    const sizeStyle = buttonSizes[size];
-
     return (
       <Root
         {...rest}
         href={href}
-        className={cx(baseStyle, sizeStyle, variantStyle, className)}
+        className={cx(
+          baseStyle,
+          buttonSizes[size],
+          buttonVariants[variant],
+          className,
+        )}
         disabled={disabled}
         aria-disabled={disabled}
       >
