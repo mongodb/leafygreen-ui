@@ -65,7 +65,7 @@ module.exports = function(env = 'production') {
     },
 
     plugins: (function() {
-      let plugins = [
+      const plugins = [
         new CleanWebpackPlugin([path.resolve(process.cwd(), 'dist')]),
 
         // Defines global variables

@@ -32,7 +32,14 @@
     ],
     "react/forbid-prop-types": "any",
     "react/sort-comp": "error",
-    "import/no-extraneous-dependencies": 0
+    "import/no-extraneous-dependencies": 0, 
+    "padding-line-between-statements": [
+      "error", 
+      { "blankLine": "always", "prev": ["block-like", "const", "let", "case", "if", "while", "return"], "next": "block-like"}, 
+      { "blankLine": "always", "prev": "block-like", "next": ["block-like", "const", "let", "case", "if", "while", "return"]}
+    ], 
+    "no-var": 1, 
+    "prefer-const": 1
   },
   "overrides": [{
       "files": ["packages/**/*.js"],
