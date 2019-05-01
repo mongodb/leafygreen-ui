@@ -22,28 +22,6 @@ export const radioBoxSizes = {
   `,
 };
 
-export const radioDisplay = css`
-  box-sizing: content-box;
-  padding: 15px;
-  font-weight: normal;
-  cursor: pointer;
-  text-align: center;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  vertical-align: top;
-  overflow-wrap: break-word;
-  background-color: white;
-  border: 1px solid ${colors.gray[5]};
-  border-radius: 2px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
-  z-index: 2;
-
-  &:hover {
-    border-color: ${colors.gray[3]};
-  }
-`;
-
 const inputStyles = css`
   opacity: 0;
   position: absolute;
@@ -52,6 +30,7 @@ const inputStyles = css`
 
 const getRadioDisplayStyles = ({ checked, disabled }) => {
   const baseStyles = css`
+    transition: box-shadow 150ms ease-in-out;
     box-sizing: content-box;
     padding: 15px;
     font-weight: normal;
@@ -67,10 +46,6 @@ const getRadioDisplayStyles = ({ checked, disabled }) => {
     border-radius: 2px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
     z-index: 2;
-
-    &:hover {
-      border-color: ${colors.gray[3]};
-    }
   `;
 
   if (disabled) {
@@ -96,7 +71,12 @@ const getRadioDisplayStyles = ({ checked, disabled }) => {
       baseStyles,
       css`
         border-color: ${colors.green[2]};
-        transition: border-color 0ms;
+        transition: box-shadow 150ms ease-in-out, border-color 0ms;
+        box-shadow: none;
+
+        &:hover {
+          border-color: ${colors.green[3]};
+        }
       `,
     );
   }
@@ -107,6 +87,10 @@ const getRadioDisplayStyles = ({ checked, disabled }) => {
       ${radioBoxInput.selector}:focus ~ & {
         border-color: rgba(67, 177, 229, 0.25);
         border-radius: 3px;
+      }
+
+      &:hover {
+        border-color: ${colors.gray[3]};
       }
     `,
   );
@@ -137,6 +121,7 @@ const getCheckedStateStyle = ({ checked }) => {
         transform: scale(1);
         opacity: 1;
         z-index: 1;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
       `,
     );
   }
