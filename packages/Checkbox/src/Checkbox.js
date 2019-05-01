@@ -75,12 +75,15 @@ const textVariants = {
   `,
 };
 
-const textStyle = css`
+const baseTextStyle = css`
   margin-left: 0.3em;
   font-size: 14px;
-  font-weight: bold;
   line-height: 1.3em;
   margin-top: 1px;
+`;
+
+const boldTextStyle = css`
+  font-weight: bold;
 `;
 
 const containerStyle = css`
@@ -107,15 +110,6 @@ const disabledTextStyle = css`
 export default class Checkbox extends PureComponent {
   static displayName = 'Checkbox';
 
-  static defaultProps = {
-    variant: 'default',
-    label: '',
-    disabled: false,
-    indeterminate: false,
-    className: '',
-    onChange: () => {},
-  };
-
   static propTypes = {
     variant: PropTypes.oneOf(['default', 'light']),
     checked: PropTypes.bool,
@@ -124,6 +118,17 @@ export default class Checkbox extends PureComponent {
     indeterminate: PropTypes.bool,
     className: PropTypes.string,
     onChange: PropTypes.func,
+    bold: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    variant: 'default',
+    label: '',
+    disabled: false,
+    indeterminate: false,
+    className: '',
+    onChange: () => {},
+    bold: false,
   };
 
   state = { checked: false };
@@ -179,6 +184,7 @@ export default class Checkbox extends PureComponent {
       variant,
       disabled,
       indeterminate,
+      bold,
       ...rest
     } = this.props;
 
@@ -265,8 +271,9 @@ export default class Checkbox extends PureComponent {
 
         {label && (
           <span
-            className={cx(textStyle, textVariantStyle, {
+            className={cx(baseTextStyle, textVariantStyle, {
               [disabledTextStyle]: disabled,
+              [boldTextStyle]: bold,
             })}
             id={labelId}
           >
