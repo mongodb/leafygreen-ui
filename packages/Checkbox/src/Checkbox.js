@@ -139,6 +139,7 @@ export default class Checkbox extends PureComponent {
   }
 
   inputRef = React.createRef();
+
   checkboxId = `checkbox-${Math.floor(Math.random() * 10000000)}`;
 
   onClick = e => {
@@ -205,6 +206,7 @@ export default class Checkbox extends PureComponent {
             background-image: url(${spritesheetLight});
           `;
         }
+
         default: {
           if (disabled) {
             return css`
