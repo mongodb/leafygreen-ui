@@ -594,7 +594,7 @@ export default class Popover extends Component<Props, State> {
       position: withoutPortal && 'absolute',
     };
 
-    const style = { ...position, ...activeStyle };
+    const style = css({ ...position, ...activeStyle });
 
     return (
       <>
@@ -608,8 +608,7 @@ export default class Popover extends Component<Props, State> {
           <div
             {...rest}
             ref={this.contentRef}
-            className={cx(rootPopoverStyle, className)}
-            style={style}
+            className={cx(rootPopoverStyle, style, className)}
           >
             {children}
           </div>
