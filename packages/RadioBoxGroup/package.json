@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/radio-box-group",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "leafyGreen UI Kit RadioBoxGroup",
   "main": "./dist/index.js",
   "scripts": {
@@ -11,7 +11,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^2.1.2",
-    "@leafygreen-ui/theme": "^1.1.2"
-  }
+    "@leafygreen-ui/lib": "^2.1.3",
+    "@leafygreen-ui/theme": "^1.1.3"
+  },
+  "gitHead": "bf431409f0e214d729ced5d82d379b6fb442e0b5"
 }
