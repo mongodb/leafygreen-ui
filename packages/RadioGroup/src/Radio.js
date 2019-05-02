@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { colors } from '@leafygreen-ui/theme';
-import { ccClassName, emotion } from '@leafygreen-ui/lib';
+import { emotion } from '@leafygreen-ui/lib';
 
-const { css } = emotion;
+const { css, cx } = emotion;
 
 const labelStyle = css`
   cursor: pointer;
@@ -20,17 +20,13 @@ const inputStyle = css`
   }
 `;
 
-const buttonVariants = {
+const disabledButtonVariant = {
   default: css`
-    .${inputStyle}:disabled + & {
-      color: ${colors.gray[5]};
-    }
+    color: ${colors.gray[5]};
   `,
 
   light: css`
-    .${inputStyle}:disabled + & {
-      color: ${colors.gray[4]};
-    }
+    color: ${colors.gray[4]};
   `,
 };
 
@@ -75,16 +71,14 @@ export default class Radio extends PureComponent {
       ...rest
     } = this.props;
 
-    const variantStyle = buttonVariants[variant];
-
     return (
-      <label htmlFor={id} className={ccClassName(labelStyle, className)}>
+      <label htmlFor={id} className={cx(labelStyle, className)}>
         <input
           {...rest}
           id={id}
           name={name}
           type="radio"
-          className={ccClassName(inputStyle, className)}
+          className={cx(inputStyle, className)}
           onChange={onChange}
           value={value}
           checked={checked}
@@ -92,7 +86,13 @@ export default class Radio extends PureComponent {
           disabled={disabled}
           aria-disabled={disabled}
         />
-        <span className={ccClassName(textStyle, variantStyle)}>{children}</span>
+        <span
+          className={cx(textStyle, {
+            [disabledButtonVariant[variant]]: disabled,
+          })}
+        >
+          {children}
+        </span>
       </label>
     );
   }
