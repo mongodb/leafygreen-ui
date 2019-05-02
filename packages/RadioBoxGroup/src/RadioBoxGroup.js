@@ -1,9 +1,13 @@
 import React, { PureComponent } from 'react';
-
 import PropTypes from 'prop-types';
-import * as style from './style.js';
-import { ccClassName } from '@leafygreen-ui/lib';
+import { emotion } from '@leafygreen-ui/lib';
 import RadioBox from './RadioBox';
+
+const { css, cx } = emotion;
+
+const baseGroupStyle = css`
+  display: flex;
+`;
 
 export default class RadioBoxGroup extends PureComponent {
   static displayName = 'RadioBoxGroup';
@@ -67,7 +71,7 @@ export default class RadioBoxGroup extends PureComponent {
     });
 
     return (
-      <div {...rest} className={ccClassName(style.baseGroupStyle, className)}>
+      <div {...rest} className={cx(baseGroupStyle, className)}>
         {renderedChildren}
       </div>
     );
