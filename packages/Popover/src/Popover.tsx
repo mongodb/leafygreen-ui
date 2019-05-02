@@ -55,24 +55,18 @@ type AbstractPosition = {
   justification?: Justification;
 };
 
-type Props = {
+interface Props {
   children?: ReactNode;
-  active?: boolean;
+  active: boolean;
   className?: string;
-  align?: Alignment;
-  justify?: Justify;
+  align: Alignment;
+  justify: Justify;
   refEl?: RefObject<HTMLElement>;
   withoutPortal?: boolean;
   getUpdatePosition?: Function;
 };
 
-type DefaultProps = {
-  align: Alignment;
-  justify: Justify;
-  active: boolean;
-};
-
-type State = {
+interface State {
   windowHeight: number;
   windowWidth: number;
   hasMounted: boolean;
@@ -81,7 +75,7 @@ type State = {
   referenceElement: HTMLElement | null;
 };
 
-export default class Popover extends Component<Props & DefaultProps, State> {
+export default class Popover extends Component<Props, State> {
   static displayName = 'Popover';
 
   static propTypes = {
