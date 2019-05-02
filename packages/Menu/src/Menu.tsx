@@ -38,6 +38,7 @@ interface Props {
   children?: React.ReactNode;
   className?: string;
   refEl?: React.RefObject<HTMLElement>;
+  withoutPortal?: boolean;
 }
 
 function Menu({
@@ -47,10 +48,17 @@ function Menu({
   children,
   className,
   refEl,
+  withoutPortal,
   ...rest
 }: Props) {
   return (
-    <Popover active={active} align={align} justify={justify} refEl={refEl}>
+    <Popover
+      active={active}
+      align={align}
+      justify={justify}
+      refEl={refEl}
+      withoutPortal={withoutPortal}
+    >
       <ul
         {...rest}
         className={cx(rootMenuStyle, active && activeMenuStyle, className)}
@@ -70,11 +78,13 @@ Menu.propTypes = {
   align: PropTypes.oneOf(['top', 'bottom', 'left', 'right']),
   justify: PropTypes.oneOf(['start', 'middle', 'end']),
   refEl: PropTypes.object,
+  withoutPortal: PropTypes.bool,
 };
 
 Menu.defaultProps = {
   align: 'bottom',
   justify: 'start',
+  withoutPortal: false,
 };
 
 export default Menu;

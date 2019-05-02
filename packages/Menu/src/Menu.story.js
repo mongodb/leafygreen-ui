@@ -23,9 +23,7 @@ class TestClass extends Component {
         <Menu
           align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
           justify={select('justify', ['start', 'middle', 'end'], 'start')}
-          refEl={this.myRef}
           active={active}
-          withoutPortal
         >
           <MenuList>
             <MenuItem>Element A</MenuItem>
