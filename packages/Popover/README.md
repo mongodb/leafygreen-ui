@@ -59,13 +59,13 @@ A string that determines the justification of the popover relative to the `refEl
 
 Content that will appear inside of the Popver component
 
-### withoutPortal
+### usePortal
 
 **Type:** `boolean`
 
-**Default:** `false`
+**Default:** `true`
 
-Will position the contents of the Popover component absolutely to a parent element, which should be position `relative.` The popover contents will appear linearly in the DOM, rather than being portaled to the end.
+Will position Popover's children relative to its parent without using a Portal, if `usePortal` is set to false. NOTE: The parent element should be CSS position relative, fixed, or absolute if using this option.
 
 ### getUpdatePosition
 

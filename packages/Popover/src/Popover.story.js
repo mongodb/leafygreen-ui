@@ -37,7 +37,7 @@ class Testing extends Component {
           justify={select('justify', ['start', 'middle', 'end'], 'start')}
           refEl={this.popoverTest}
           active={this.state.active}
-          withoutPortal={boolean('Without Portal', false)}
+          usePortal={boolean('usePortal', true)}
         >
           <div className={popoverStyle}>Popover content</div>
         </Popover>

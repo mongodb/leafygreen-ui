@@ -50,13 +50,13 @@ describe('packages/Popover', () => {
     ).toBe(false);
   });
 
-  test('Does not Portal Popover component, when withoutPortal prop is set', () => {
+  test('Does not Portal Popover component, when usePortal is false', () => {
     const { container } = render(
       <>
         <button ref={triggerRef}>Trigger Element</button>
         <Popover
-          withoutPortal
           active
+          usePortal={false}
           justify="start"
           align="top"
           refEl={triggerRef}

@@ -37,38 +37,43 @@ const defaultRefPosition = {
   width: 0,
 };
 
-type Alignment = 'top' | 'bottom' | 'left' | 'right';
-type Justify = 'start' | 'middle' | 'end';
+enum Align {
+  top = 'top',
+  bottom = 'bottom',
+  left = 'left',
+  right = 'right',
+}
+
+enum Justify {
+  start = 'start',
+  middle = 'middle',
+  end = 'end',
+}
 
 // We transform 'middle' into 'center-vertical' or 'center-horizontal' for internal use,
 // So both Justify and Justification are needed, where the same is not true for Alignment.
-type Justification =
-  | 'top'
-  | 'bottom'
-  | 'left'
-  | 'right'
-  | 'center-vertical'
-  | 'center-horizontal';
+enum Justification {
+  top = 'top',
+  bottom = 'bottom',
+  left = 'left',
+  right = 'right',
+  'center-vertical' = 'center-vertical',
+  'center-horizontal' = 'center-horizontal',
+}
 
 type AbstractPosition = {
-  alignment?: Alignment;
+  alignment?: Align;
   justification?: Justification;
-};
-
-type DefaultProps = {
-  align: Alignment;
-  justify: Justify;
-  active: boolean;
 };
 
 interface Props {
   children?: ReactNode;
   active: boolean;
   className?: string;
-  align: Alignment;
+  align: Align;
   justify: Justify;
   refEl?: RefObject<HTMLElement>;
-  withoutPortal?: boolean;
+  usePortal?: boolean;
   getUpdatePosition?: Function;
 }
 interface State {
@@ -87,20 +92,21 @@ export default class Popover extends Component<Props, State> {
     children: PropTypes.node,
     active: PropTypes.bool,
     className: PropTypes.string,
-    align: PropTypes.oneOf(['top', 'bottom', 'left', 'right']),
-    justify: PropTypes.oneOf(['start', 'middle', 'end']),
-    refEl: PropTypes.object,
-    withoutPortal: PropTypes.bool,
+    align: PropTypes.oneOf(Object.keys(Align)),
+    justify: PropTypes.oneOf(Object.keys(Justify)),
+    refEl: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+    usePortal: PropTypes.bool,
     getUpdatePosition: PropTypes.func,
   };
 
-  static defaultProps: DefaultProps = {
-    align: 'bottom',
-    justify: 'start',
+  static defaultProps = {
+    align: Align.bottom,
+    justify: Justify.start,
     active: false,
+    usePortal: true,
   };
 
-  state = {
+  state: State = {
     windowHeight: window.innerHeight,
     windowWidth: window.innerWidth,
     hasMounted: false,
@@ -241,7 +247,7 @@ export default class Popover extends Component<Props, State> {
 
   // Returns the style object that is used to position and transition the popover component
   calculatePosition() {
-    const { withoutPortal } = this.props;
+    const { usePortal } = this.props;
     const { referenceElement, contentElPos } = this.state;
 
     // Forced second render to make sure that
@@ -270,7 +276,7 @@ export default class Popover extends Component<Props, State> {
 
     const transform = this.getTransform(alignment);
 
-    if (withoutPortal) {
+    if (!usePortal) {
       return {
         ...this.calcPositionWithoutPortal({ alignment, justification }),
         transformOrigin,
@@ -293,15 +299,15 @@ export default class Popover extends Component<Props, State> {
     const { align } = this.props;
 
     const alignments: {
-      top: Array<Alignment>;
-      bottom: Array<Alignment>;
-      left: Array<Alignment>;
-      right: Array<Alignment>;
+      top: ReadonlyArray<Align>;
+      bottom: ReadonlyArray<Align>;
+      left: ReadonlyArray<Align>;
+      right: ReadonlyArray<Align>;
     } = {
-      top: ['top', 'bottom'],
-      bottom: ['bottom', 'top'],
-      left: ['left', 'right'],
-      right: ['right', 'left'],
+      top: [Align.top, Align.bottom],
+      bottom: [Align.bottom, Align.top],
+      left: [Align.left, Align.right],
+      right: [Align.right, Align.left],
     };
 
     return (
@@ -313,22 +319,34 @@ export default class Popover extends Component<Props, State> {
   // Determines the justification to render based on an order of justification fallbacks
   // Returns the first justification that doesn't collide with the window,
   // defaulting to the justify prop if all justifications fail.
-  getJustification(alignment: Alignment) {
+  getJustification(alignment: Align) {
     const { justify } = this.props;
 
     let justifications: {
-      start: Array<Justification>;
-      middle: Array<Justification>;
-      end: Array<Justification>;
+      start: ReadonlyArray<Justification>;
+      middle: ReadonlyArray<Justification>;
+      end: ReadonlyArray<Justification>;
     };
 
     switch (alignment) {
       case 'left':
       case 'right': {
         justifications = {
-          start: ['top', 'bottom', 'center-vertical'],
-          middle: ['center-vertical', 'bottom', 'top'],
-          end: ['bottom', 'top', 'center-vertical'],
+          start: [
+            Justification.top,
+            Justification.bottom,
+            Justification['center-vertical'],
+          ],
+          middle: [
+            Justification['center-vertical'],
+            Justification.bottom,
+            Justification.top,
+          ],
+          end: [
+            Justification.bottom,
+            Justification.top,
+            Justification['center-vertical'],
+          ],
         };
         break;
       }
@@ -337,9 +355,21 @@ export default class Popover extends Component<Props, State> {
       case 'bottom':
       default: {
         justifications = {
-          start: ['left', 'right', 'center-horizontal'],
-          middle: ['center-horizontal', 'right', 'left'],
-          end: ['right', 'left', 'center-horizontal'],
+          start: [
+            Justification.left,
+            Justification.right,
+            Justification['center-horizontal'],
+          ],
+          middle: [
+            Justification['center-horizontal'],
+            Justification.right,
+            Justification.left,
+          ],
+          end: [
+            Justification.right,
+            Justification.left,
+            Justification['center-horizontal'],
+          ],
         };
         break;
       }
@@ -353,7 +383,7 @@ export default class Popover extends Component<Props, State> {
   }
 
   // Checks that an alignment will not cause the popover to collide with the window.
-  checkAlignment(alignment: Alignment) {
+  checkAlignment(alignment: Align) {
     const top = this.calcTop({ alignment });
     const left = this.calcLeft({ alignment });
 
@@ -405,13 +435,13 @@ export default class Popover extends Component<Props, State> {
     const { referenceElPos, contentElPos } = this.state;
 
     switch (justification) {
-      case 'top':
+      case Justification.top:
         return referenceElPos.top;
 
-      case 'bottom':
+      case Justification.bottom:
         return referenceElPos.top + referenceElPos.height - contentElPos.height;
 
-      case 'center-vertical':
+      case Justification['center-vertical']:
         return (
           referenceElPos.top +
           referenceElPos.height / 2 -
@@ -420,10 +450,10 @@ export default class Popover extends Component<Props, State> {
     }
 
     switch (alignment) {
-      case 'top':
+      case Align.top:
         return referenceElPos.top - contentElPos.height;
 
-      case 'bottom':
+      case Align.bottom:
       default:
         return referenceElPos.top + referenceElPos.height;
     }
@@ -434,25 +464,25 @@ export default class Popover extends Component<Props, State> {
     const { referenceElPos, contentElPos } = this.state;
 
     switch (alignment) {
-      case 'left':
+      case Align.left:
         return referenceElPos.left - contentElPos.width;
 
-      case 'right':
+      case Align.right:
         return referenceElPos.left + referenceElPos.width;
     }
 
     switch (justification) {
-      case 'right':
+      case Justification.right:
         return referenceElPos.left + referenceElPos.width - contentElPos.width;
 
-      case 'center-horizontal':
+      case Justification['center-horizontal']:
         return (
           referenceElPos.left +
           referenceElPos.width / 2 -
           contentElPos.width / 2
         );
 
-      case 'left':
+      case Justification.left:
       default:
         return referenceElPos.left;
     }
@@ -464,45 +494,45 @@ export default class Popover extends Component<Props, State> {
     const positionObject: AbsolutePositionObject = {};
 
     switch (alignment) {
-      case 'top':
+      case Align.top:
         positionObject.bottom = '100%';
         break;
 
-      case 'bottom':
+      case Align.bottom:
         positionObject.top = '100%';
         break;
 
-      case 'left':
+      case Align.left:
         positionObject.right = '100%';
         break;
 
-      case 'right':
+      case Align.right:
         positionObject.left = '100%';
         break;
     }
 
     switch (justification) {
-      case 'top':
+      case Justification.top:
         positionObject.top = 0;
         break;
 
-      case 'bottom':
+      case Justification.bottom:
         positionObject.bottom = 0;
         break;
 
-      case 'left':
+      case Justification.left:
         positionObject.left = 0;
         break;
 
-      case 'right':
+      case Justification.right:
         positionObject.right = 0;
         break;
 
-      case 'center-horizontal':
+      case Justification['center-horizontal']:
         positionObject.left = referenceElPos.width / 2 - contentElPos.width / 2;
         break;
 
-      case 'center-vertical':
+      case Justification['center-vertical']:
         positionObject.top =
           referenceElPos.height / 2 - contentElPos.height / 2;
         break;
@@ -512,21 +542,21 @@ export default class Popover extends Component<Props, State> {
   }
 
   // Get transform styles for position object
-  getTransform(alignment: string) {
+  getTransform(alignment: Align) {
     const transformAmount = 12;
     const scaleAmount = 0.8;
 
     switch (alignment) {
-      case 'top':
+      case Align.top:
         return `translate3d(0, ${transformAmount}px, 0) scale(${scaleAmount})`;
 
-      case 'bottom':
+      case Align.bottom:
         return `translate3d(0, -${transformAmount}px, 0) scale(${scaleAmount})`;
 
-      case 'left':
+      case Align.left:
         return `translate3d(${transformAmount}px, 0, 0) scale(${scaleAmount})`;
 
-      case 'right':
+      case Align.right:
         return `translate3d(-${transformAmount}px, 0, 0) scale(${scaleAmount})`;
     }
   }
@@ -537,45 +567,45 @@ export default class Popover extends Component<Props, State> {
     let y: string = '';
 
     switch (alignment) {
-      case 'left':
+      case Align.left:
         x = 'right';
         break;
 
-      case 'right':
+      case Align.right:
         x = 'left';
         break;
 
-      case 'bottom':
+      case Align.bottom:
         y = 'top';
         break;
 
-      case 'top':
+      case Align.top:
         y = 'bottom';
         break;
     }
 
     switch (justification) {
-      case 'left':
+      case Justification.left:
         x = 'left';
         break;
 
-      case 'right':
+      case Justification.right:
         x = 'right';
         break;
 
-      case 'bottom':
+      case Justification.bottom:
         y = 'top';
         break;
 
-      case 'top':
+      case Justification.top:
         y = 'bottom';
         break;
 
-      case 'center-horizontal':
+      case Justification['center-horizontal']:
         x = 'center';
         break;
 
-      case 'center-vertical':
+      case Justification['center-vertical']:
         y = 'center';
         break;
     }
@@ -587,18 +617,18 @@ export default class Popover extends Component<Props, State> {
   placeholderRef = React.createRef<HTMLDivElement>();
 
   render() {
-    const { children, active, className, withoutPortal, ...rest } = this.props;
+    const { children, active, className, usePortal, ...rest } = this.props;
 
     delete rest.refEl;
 
     const position = this.calculatePosition();
 
-    const Root = withoutPortal ? Fragment : Portal;
+    const Root = usePortal ? Portal : Fragment;
 
     const activeStyle = active && {
       transform: 'translate3d(0, 0, 0) scale(1)',
       opacity: 1,
-      position: withoutPortal && 'absolute',
+      position: !usePortal && 'absolute',
     };
 
     const style = css({ ...position, ...activeStyle });
