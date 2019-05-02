@@ -143,7 +143,7 @@ const getStatefulStyles = states => ({
   checkedState: getCheckedStateStyle(states),
 });
 
-function RadioBox({
+export default function RadioBox({
   className,
   onChange,
   value,
@@ -209,5 +209,3 @@ RadioBox.defaultProps = {
   disabled: false,
   className: '',
 };
-
-export default RadioBox;
