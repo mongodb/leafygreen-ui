@@ -8,7 +8,6 @@ import { cx } from 'emotion';
 const { css } = emotion;
 
 const rootMenuStyle = css`
-  opacity: 0;
   width: 202px;
   border: 1px solid ${colors.gray[7]};
   border-radius: 3px;
@@ -21,12 +20,6 @@ const rootMenuStyle = css`
   margin-block-start: 5px;
   margin-block-end: 5px;
   pointer-events: none;
-`;
-
-const activeMenuStyle = css`
-  transform: translate3d(0, 0, 0) scale(1);
-  opacity: 1;
-  pointer-events: initial;
 `;
 
 type Align = 'top' | 'bottom' | 'left' | 'right';
@@ -59,10 +52,7 @@ function Menu({
       refEl={refEl}
       withoutPortal={withoutPortal}
     >
-      <ul
-        {...rest}
-        className={cx(rootMenuStyle, active && activeMenuStyle, className)}
-      >
+      <ul {...rest} className={cx(rootMenuStyle, className)}>
         {children}
       </ul>
     </Popover>
