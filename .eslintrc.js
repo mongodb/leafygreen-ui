@@ -58,6 +58,14 @@ module.exports = {
         // The regular rule thinks imported types are unused
         'no-unused-vars': 0,
         '@typescript-eslint/no-unused-vars': 1,
+        '@typescript-eslint/adjacent-overload-signatures': 2,
+        '@typescript-eslint/array-type': ['error', 'generic'],
+        '@typescript-eslint/class-name-casing': 2,
+        '@typescript-eslint/explicit-function-return-type': 0,
+        '@typescript-eslint/interface-name-prefix': ['error', 'never'],
+        '@typescript-eslint/no-angle-bracket-type-assertion': 'error',
+        '@typescript-eslint/no-inferrable-types': 'warn',
+        '@typescript-eslint/prefer-interface': 'error',
       },
     },
     {
