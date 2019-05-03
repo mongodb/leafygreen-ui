@@ -4,17 +4,12 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const fs = require('fs');
 
 function getAllPackages(dir) {
-  let results = [];
-
   const dirList = fs.readdirSync(dir);
-  dirList.forEach(function(subDir) {
+  return dirList.map(function(subDir) {
     subDir = path.resolve(dir, subDir);
-    const data = fs.readFileSync(`${subDir}/package.json`, 'utf-8');
-    const pkg = data.match(/(?=@leafygreen-ui)[^"\d]+/gi)[0];
-    results.push(pkg);
+    const json = require(`${subDir}/package.json`);
+    return json.name;
   });
-
-  return results;
 }
 
 // Base Webpack configuration, used by all other configurations for common settings
@@ -39,7 +34,7 @@ module.exports = function(env = 'production') {
           'create-emotion',
           'polished',
           'prop-types',
-          ...getAllPackages('../../packages').map(pkg => pkg),
+          ...getAllPackages('../../packages'),
         ]
       : [],
 
