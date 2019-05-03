@@ -1,9 +1,16 @@
 const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const fs = require('fs')
+
 
 // Base Webpack configuration, used by all other configurations for common settings
 module.exports = function(env = 'production') {
+  //  fs.readFile('package.json', 'utf-8', function(err, data) {
+  //   const pkg = data.match(/(?=leafygreen-ui)[^"\d]+/gi)[0].split('/')[1];
+  //   console.log(pkg)
+  // });
+
   const isProduction = env === 'production';
 
   return {
