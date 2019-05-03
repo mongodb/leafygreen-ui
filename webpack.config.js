@@ -1,16 +1,24 @@
 const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const fs = require('fs')
+const fs = require('fs');
 
+function getAllPackages(dir) {
+  let results = [];
+
+  const dirList = fs.readdirSync(dir);
+  dirList.forEach(function(subDir) {
+    subDir = path.resolve(dir, subDir);
+    const data = fs.readFileSync(`${subDir}/package.json`, 'utf-8');
+    const pkg = data.match(/(?=@leafygreen-ui)[^"\d]+/gi)[0];
+    results.push(pkg);
+  });
+
+  return results;
+}
 
 // Base Webpack configuration, used by all other configurations for common settings
 module.exports = function(env = 'production') {
-  //  fs.readFile('package.json', 'utf-8', function(err, data) {
-  //   const pkg = data.match(/(?=leafygreen-ui)[^"\d]+/gi)[0].split('/')[1];
-  //   console.log(pkg)
-  // });
-
   const isProduction = env === 'production';
 
   return {
@@ -31,19 +39,7 @@ module.exports = function(env = 'production') {
           'create-emotion',
           'polished',
           'prop-types',
-          ...[
-            'badge',
-            'button',
-            'checkbox',
-            'icon',
-            'lib',
-            'popover',
-            'portal',
-            'radio-box-group',
-            'radio-group',
-            'theme',
-            'toggle',
-          ].map(pkg => `@leafygreen-ui/${pkg}`),
+          ...getAllPackages('../../packages').map(pkg => pkg),
         ]
       : [],
 
