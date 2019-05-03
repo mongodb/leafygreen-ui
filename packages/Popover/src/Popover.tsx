@@ -2,6 +2,7 @@ import React, { Component, Fragment, ReactNode, RefObject } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
 import { emotion } from '@leafygreen-ui/lib';
+import { Align, Justify, Justification } from '.';
 
 const { css, cx } = emotion;
 
@@ -19,52 +20,19 @@ interface RefPosition {
   right: number;
   height: number;
   width: number;
-};
+}
 
 interface AbsolutePositionObject {
   top?: string | number;
   bottom?: string | number;
   left?: string | number;
   right?: string | number;
-};
-
-const defaultRefPosition = {
-  top: 0,
-  bottom: 0,
-  left: 0,
-  right: 0,
-  height: 0,
-  width: 0,
-};
-
-enum Align {
-  top = 'top',
-  bottom = 'bottom',
-  left = 'left',
-  right = 'right',
-}
-
-enum Justify {
-  start = 'start',
-  middle = 'middle',
-  end = 'end',
-}
-
-// We transform 'middle' into 'center-vertical' or 'center-horizontal' for internal use,
-// So both Justify and Justification are needed, where the same is not true for Alignment.
-enum Justification {
-  top = 'top',
-  bottom = 'bottom',
-  left = 'left',
-  right = 'right',
-  'center-vertical' = 'center-vertical',
-  'center-horizontal' = 'center-horizontal',
 }
 
 interface AbstractPosition {
   alignment?: Align;
   justification?: Justification;
-};
+}
 
 interface Props {
   children?: ReactNode;
@@ -83,6 +51,87 @@ interface State {
   referenceElPos: RefPosition;
   contentElPos: RefPosition;
   referenceElement: HTMLElement | null;
+}
+
+const defaultRefPosition = {
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 0,
+  height: 0,
+  width: 0,
+};
+
+// Constructs the transform origin for any given pair of alignment / justification
+function getTransformOrigin({ alignment, justification }: AbstractPosition) {
+  let x = '';
+  let y = '';
+
+  switch (alignment) {
+    case Align.left:
+      x = 'right';
+      break;
+
+    case Align.right:
+      x = 'left';
+      break;
+
+    case Align.bottom:
+      y = 'top';
+      break;
+
+    case Align.top:
+      y = 'bottom';
+      break;
+  }
+
+  switch (justification) {
+    case Justification.left:
+      x = 'left';
+      break;
+
+    case Justification.right:
+      x = 'right';
+      break;
+
+    case Justification.bottom:
+      y = 'bottom';
+      break;
+
+    case Justification.top:
+      y = 'top';
+      break;
+
+    case Justification['center-horizontal']:
+      x = 'center';
+      break;
+
+    case Justification['center-vertical']:
+      y = 'center';
+      break;
+  }
+
+  return `${x} ${y}`;
+}
+
+// Get transform styles for position object
+function getTransform(alignment: Align) {
+  const transformAmount = 12;
+  const scaleAmount = 0.8;
+
+  switch (alignment) {
+    case Align.top:
+      return `translate3d(0, ${transformAmount}px, 0) scale(${scaleAmount})`;
+
+    case Align.bottom:
+      return `translate3d(0, -${transformAmount}px, 0) scale(${scaleAmount})`;
+
+    case Align.left:
+      return `translate3d(${transformAmount}px, 0, 0) scale(${scaleAmount})`;
+
+    case Align.right:
+      return `translate3d(-${transformAmount}px, 0, 0) scale(${scaleAmount})`;
+  }
 }
 
 export default class Popover extends Component<Props, State> {
@@ -116,7 +165,6 @@ export default class Popover extends Component<Props, State> {
   };
 
   componentDidMount() {
-    this.setReferenceElement();
     this.setState({ hasMounted: true });
 
     window.addEventListener('resize', this.handleWindowResize);
@@ -145,7 +193,19 @@ export default class Popover extends Component<Props, State> {
     }
 
     if (posPropsUpdated || windowUpdated) {
-      this.updateReferencePositions();
+      const newReferenceElPos = this.getRefPosition(referenceElement);
+      const contentEl = this.contentRef && this.contentRef.current;
+
+      if (!contentEl) {
+        this.setState({ referenceElPos: newReferenceElPos });
+
+        return;
+      }
+
+      this.setState({
+        contentElPos: this.getRefPosition(contentEl),
+        referenceElPos: newReferenceElPos,
+      });
     }
   }
 
@@ -160,29 +220,16 @@ export default class Popover extends Component<Props, State> {
         windowWidth: window.innerWidth,
       },
       () => {
-        this.setContentElPosition();
+        const contentEl = this.contentRef.current;
+
+        if (contentEl && !this.state.contentElPos) {
+          this.setState({
+            contentElPos: this.getRefPosition(contentEl),
+          });
+        }
       },
     );
   };
-
-  updateReferencePositions() {
-    const { referenceElement } = this.state;
-    const newReferenceElPos = this.getRefPosition(referenceElement);
-    const contentEl = this.contentRef && this.contentRef.current;
-
-    if (!contentEl) {
-      this.setState({
-        referenceElPos: newReferenceElPos,
-      });
-
-      return;
-    }
-
-    this.setState({
-      contentElPos: this.getRefPosition(contentEl),
-      referenceElPos: newReferenceElPos,
-    });
-  }
 
   // Sets the element to position relative to based on passed props,
   // and stores it, and it's position in state.
@@ -222,17 +269,6 @@ export default class Popover extends Component<Props, State> {
     });
   }
 
-  setContentElPosition() {
-    const { contentElPos } = this.state;
-    const contentEl = this.contentRef && this.contentRef.current;
-
-    if (contentEl && !contentElPos) {
-      this.setState({
-        contentElPos: this.getRefPosition(contentEl),
-      });
-    }
-  }
-
   // Gets top offset, left offset, width and height dimensions for a node
   getRefPosition(element: HTMLElement | null) {
     if (!element) {
@@ -262,19 +298,26 @@ export default class Popover extends Component<Props, State> {
     }
 
     if (!contentElPos) {
-      this.setContentElPosition();
+      const contentEl = this.contentRef.current;
+
+      if (contentEl) {
+        this.setState({
+          contentElPos: this.getRefPosition(contentEl),
+        });
+      }
+
       return;
     }
 
     const alignment = this.getAlignment();
     const justification = this.getJustification(alignment);
 
-    const transformOrigin = this.getTransformOrigin({
+    const transformOrigin = getTransformOrigin({
       alignment,
       justification,
     });
 
-    const transform = this.getTransform(alignment);
+    const transform = getTransform(alignment);
 
     if (!usePortal) {
       return {
@@ -539,78 +582,6 @@ export default class Popover extends Component<Props, State> {
     }
 
     return positionObject;
-  }
-
-  // Get transform styles for position object
-  getTransform(alignment: Align) {
-    const transformAmount = 12;
-    const scaleAmount = 0.8;
-
-    switch (alignment) {
-      case Align.top:
-        return `translate3d(0, ${transformAmount}px, 0) scale(${scaleAmount})`;
-
-      case Align.bottom:
-        return `translate3d(0, -${transformAmount}px, 0) scale(${scaleAmount})`;
-
-      case Align.left:
-        return `translate3d(${transformAmount}px, 0, 0) scale(${scaleAmount})`;
-
-      case Align.right:
-        return `translate3d(-${transformAmount}px, 0, 0) scale(${scaleAmount})`;
-    }
-  }
-
-  // Constructs the transform origin for any given pair of alignment / justification
-  getTransformOrigin({ alignment, justification }: AbstractPosition) {
-    let x = '';
-    let y = '';
-
-    switch (alignment) {
-      case Align.left:
-        x = 'right';
-        break;
-
-      case Align.right:
-        x = 'left';
-        break;
-
-      case Align.bottom:
-        y = 'top';
-        break;
-
-      case Align.top:
-        y = 'bottom';
-        break;
-    }
-
-    switch (justification) {
-      case Justification.left:
-        x = 'left';
-        break;
-
-      case Justification.right:
-        x = 'right';
-        break;
-
-      case Justification.bottom:
-        y = 'top';
-        break;
-
-      case Justification.top:
-        y = 'bottom';
-        break;
-
-      case Justification['center-horizontal']:
-        x = 'center';
-        break;
-
-      case Justification['center-vertical']:
-        y = 'center';
-        break;
-    }
-
-    return `${x} ${y}`;
   }
 
   contentRef = React.createRef<HTMLDivElement>();
