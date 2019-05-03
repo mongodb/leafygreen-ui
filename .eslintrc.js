@@ -1,0 +1,77 @@
+module.exports = {
+  parser: 'babel-eslint',
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:jest/recommended',
+    'prettier',
+    'prettier/react',
+  ],
+  parserOptions: {
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  env: {
+    es6: true,
+    browser: true,
+    node: true,
+  },
+  settings: {
+    react: {
+      version: '16.4.1',
+    },
+  },
+  rules: {
+    'react/jsx-filename-extension': [
+      'error',
+      {
+        extensions: ['.js', '.tsx'],
+      },
+    ],
+    'react/forbid-prop-types': 'any',
+    'react/sort-comp': 'error',
+    'import/no-extraneous-dependencies': 0,
+    'padding-line-between-statements': [
+      'error',
+      {
+        blankLine: 'always',
+        prev: ['block-like', 'const', 'let', 'if', 'while', 'return'],
+        next: 'block-like',
+      },
+      {
+        blankLine: 'always',
+        prev: 'block-like',
+        next: ['block-like', 'const', 'let', 'case', 'if', 'while', 'return'],
+      },
+    ],
+    'no-var': 1,
+    'prefer-const': 1,
+  },
+  overrides: [
+    {
+      files: ['**/*.ts', '**/*.tsx'],
+      parser: '@typescript-eslint/parser',
+      plugins: ['@typescript-eslint'],
+      rules: {
+        // The regular rule thinks imported types are unused
+        'no-unused-vars': 0,
+        '@typescript-eslint/no-unused-vars': 1,
+      },
+    },
+    {
+      files: ['packages/**/*.spec.js'],
+      globals: {
+        expect: true,
+        should: true,
+        jest: true,
+      },
+      rules: {
+        'jest/no-disabled-tests': 'error',
+        'jest/no-identical-title': 'error',
+        'jest/valid-expect': 'error',
+      },
+    },
+  ],
+};
