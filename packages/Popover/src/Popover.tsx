@@ -12,7 +12,7 @@ const rootPopoverStyle = css`
   opacity: 0;
 `;
 
-type RefPosition = {
+interface RefPosition {
   top: number;
   bottom: number;
   left: number;
@@ -21,7 +21,7 @@ type RefPosition = {
   width: number;
 };
 
-type AbsolutePositionObject = {
+interface AbsolutePositionObject {
   top?: string | number;
   bottom?: string | number;
   left?: string | number;
@@ -61,7 +61,7 @@ enum Justification {
   'center-horizontal' = 'center-horizontal',
 }
 
-type AbstractPosition = {
+interface AbstractPosition {
   alignment?: Align;
   justification?: Justification;
 };
@@ -563,8 +563,8 @@ export default class Popover extends Component<Props, State> {
 
   // Constructs the transform origin for any given pair of alignment / justification
   getTransformOrigin({ alignment, justification }: AbstractPosition) {
-    let x: string = '';
-    let y: string = '';
+    let x = '';
+    let y = '';
 
     switch (alignment) {
       case Align.left:
