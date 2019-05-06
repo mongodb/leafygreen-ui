@@ -14,7 +14,9 @@ export const ccClassName = (...args: Array<string>) => args.join(' ');
  * @param {string} name Name of element we want to reference.
  */
 export function createDataProp(name: string) {
-  const prefix = 'data-leafygreen-ui';
+  // emit-types throws an error if this is not typed. Usually this can be inferred.
+  const prefix: string = 'data-leafygreen-ui';
+
   return {
     prop: {
       [prefix]: name,
