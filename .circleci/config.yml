@@ -25,7 +25,7 @@ jobs:
             JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
       - run:
           name: types
-          command: npm run types
+          command: npm run ts:check
       - save_cache:
           key: node-cache-{{ checksum "package-lock.json" }}
           paths:

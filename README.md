@@ -47,6 +47,13 @@ The script does several things in order:
 
 After the script completes, you can make changes directly to the component in your local `leafygreen-ui` repository. Once you do this, run `npm run build` in the root of the `leafygreen-ui` repository and the changes will be visible on your running application.
 
+## Creating New Component
+
+### package.json
+
+1. Each of the packages needs it's own `build`, and `ts:emit` (TypeScript packages only) scripts so that lerna can build the package correctly.
+2. For TypeScript packages, a `types` field needs to be specified that points at the built `.d.ts` definition file.
+
 ## Linting
 
 When you run `npm run lint`, we do the following:
