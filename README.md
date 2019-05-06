@@ -47,7 +47,7 @@ The script does several things in order:
 
 After the script completes, you can make changes directly to the component in your local `leafygreen-ui` repository. Once you do this, run `npm run build` in the root of the `leafygreen-ui` repository and the changes will be visible on your running application.
 
-## Notes when creating a new component
+## Creating New Component
 
 ### package.json
 

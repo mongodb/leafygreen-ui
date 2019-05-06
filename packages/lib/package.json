@@ -6,7 +6,7 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js",
-    "emit-types": "tsc --project ../../tsconfig.json --declaration --declarationDir dist --emitDeclarationOnly"
+    "ts:emit": "tsc --project ../../package.tsconfig.json --declarationDir dist"
   },
   "keywords": [],
   "license": "Apache-2.0",
