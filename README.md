@@ -51,7 +51,7 @@ After the script completes, you can make changes directly to the component in yo
 
 ### package.json
 
-1. Each of the packages needs it's own `build`, and `emit-types` (TypeScript packages only) script so that lerna can build the package correctly.
+1. Each of the packages needs it's own `build`, and `ts:emit` (TypeScript packages only) scripts so that lerna can build the package correctly.
 2. For TypeScript packages, a `types` field needs to be specified that points at the built `.d.ts` definition file.
 
 ## Linting
