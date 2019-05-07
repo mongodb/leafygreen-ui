@@ -20,22 +20,17 @@ const popoverStyle = css`
 
 class Testing extends Component {
   state = { active: false };
-  popoverTest = React.createRef();
 
   render() {
     return (
       <div className={containerStyle}>
-        <button
-          ref={this.popoverTest}
-          onClick={() => this.setState({ active: !this.state.active })}
-        >
+        <button onClick={() => this.setState({ active: !this.state.active })}>
           Popover
         </button>
 
         <Popover
           align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
           justify={select('justify', ['start', 'middle', 'end'], 'start')}
-          refEl={this.popoverTest}
           active={this.state.active}
           usePortal={boolean('usePortal', true)}
         >

@@ -3,29 +3,36 @@
 ## Example
 
 ```js
-<Popover
-  active
-  align="top"
-  justify="center"
-  refEl={document.getElementById('root')}
->
-  Popover!
-</Popover>
+<div className={containerStyle}>
+  <button onClick={() => this.setState({ active: !this.state.active })}>
+    Popover
+  </button>
+  <Popover
+    align='bottom'
+    justify='start'
+    active={this.state.active}
+    usePortal={true}
+  >
+    <div className={popoverStyle}>Popover content</div>
+  </Popover>
+</div>
 ```
 
 ## Output HTML
 
 ```html
-<div>Popover!</div>
+<div class="leafygreen-ui-79elbk">
+  <button>Popover</button>
+  <div class="leafygreen-ui-1hyfx7x"></div>
+</div>
+
+<div align="bottom" justify="start" class="leafygreen-ui-1t5dnko">
+  <div class="leafygreen-ui-ii2v5b">Popover content</div>
+</div>
 ```
 
-### refEl
-
-**Type:** `object`
-
-**Default:** `null`
-
-Ref to the element to which the popover component should be positioned relative to. If not set, the popover will be positioned relative to its parent.
+## Simple Use Case
+The popover component will be automatically positioned relative to its neartest parent, which has position `absolute` specified.
 
 ### active
 
@@ -82,5 +89,15 @@ Callback to execute and force a position recalculation when the DOM has changed
 **Default:** ''
 
 Classname to apply to popover-content container
+
+## Advanced Use Case 
+
+### refEl
+
+**Type:** `object`
+
+**Default:** `null`
+
+You can supply a `refEl` prop, if you do not want the popover to be positioned relative to it's nearest parent. Ref to the element to which the popover component should be positioned relative to. 
 
 #### Any other properties will be spread on the popover-content container
