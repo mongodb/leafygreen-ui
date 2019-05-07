@@ -35,7 +35,7 @@
 
 ## Simple Use Case
 
-The popover component will be automatically positioned relative to its neartest parent, which has position `absolute` specified.
+The popover component will be automatically positioned relative to its nearest parent. If `usePortal` is set to `false`, then it will be positioned relative to its nearest ancestor with the CSS property: `position: absolute | relative | fixed`.
 
 ### active
 
