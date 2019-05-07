@@ -10,11 +10,31 @@ const borderStyle = css`
   border-bottom: 1px solid ${colors.gray[7]};
 `;
 interface Props {
+  /**
+   * Content that will appear inside of MenuList component.
+   */
   children: React.ReactNode;
+
+  /**
+   * Class name that will be applied to root MenuList element.
+   */
   className?: string;
 }
 
-function MenuList({ children, className }: Props) {
+/**
+ * # MenuList
+ *
+ * `''
+<MenuList>
+  <MenuItem>Hello World!</MenuItem>
+</MenuList>
+ * `''
+ * ---
+ * @param props.className Classname applied to MenuList.
+ * @param props.children Content to appear inside of the MenuList.
+ *
+ */
+export default function MenuList({ children, className }: Props) {
   return (
     <div role="menu" className={cx(borderStyle, className)}>
       {children}
@@ -28,5 +48,3 @@ MenuList.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
 };
-
-export default MenuList;

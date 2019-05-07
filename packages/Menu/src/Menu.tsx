@@ -17,31 +17,90 @@ const rootMenuStyle = css`
   flex-direction: column;
   justify-content: flex-start;
   background-color: ${colors.mongodb.white};
-  margin-block-start: 5px;
-  margin-block-end: 5px;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
   pointer-events: none;
 `;
 
 type Align = 'top' | 'bottom' | 'left' | 'right';
 type Justify = 'start' | 'middle' | 'end';
 interface Props {
+  /**
+   * Determines the active state of the Menu.
+   *
+   * default: `false`
+   */
   active: boolean;
+
+  /**
+   * Determines the alignment of the Menu relative to a trigger element.
+   *
+   * default: `bottom`
+   */
   align: Align;
+
+  /**
+   * Determines the justification of the Menu relative to a trigger element.
+   *
+   * default: `end`
+   */
   justify: Justify;
+
+  /**
+   * Content that will appear inside of the Menu.
+   */
   children?: React.ReactNode;
+
+  /**
+   * Class name applied to Menu.
+   */
   className?: string;
+
+  /**
+   * A reference to the element against which the Menu will be positioned.
+   */
   refEl?: React.RefObject<HTMLElement>;
-  withoutPortal?: boolean;
+
+  /**
+   * Specifies that the popover content will appear portaled to the end of the DOM,
+   * rather than in the DOM tree.
+   *
+   * default: `true`
+   */
+  usePortal?: boolean;
 }
 
-function Menu({
+/**
+ * # Menu
+ *
+ * Menu component
+ *
+ * `''
+<button>
+  <Menu active={true}>
+    <MenuItem>Hello World!</MenuItem>
+  </Menu>
+</button>
+    `''
+ * ---
+ * @param props.children Content to appear inside of Menu.
+ * @param props.active Boolean to describe whether or not Menu is active.
+ * @param props.className Classname applied to Menu.
+ * @param props.align Alignment of Menu relative to another element: `top`, `bottom`, `left`, `right`.
+ * @param props.justify Justification of Menu relative to another element: `start`, `middle`, `end`.
+ * @param props.refEl Reference element that Menu should be positioned against.
+ * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
+ *
+ *
+ */
+export default function Menu({
   active,
-  align = 'bottom',
-  justify = 'end',
+  align,
+  justify,
   children,
   className,
   refEl,
-  withoutPortal,
+  usePortal,
   ...rest
 }: Props) {
   return (
@@ -50,7 +109,7 @@ function Menu({
       align={align}
       justify={justify}
       refEl={refEl}
-      withoutPortal={withoutPortal}
+      usePortal={usePortal}
     >
       <ul {...rest} className={cx(rootMenuStyle, className)}>
         {children}
@@ -68,13 +127,11 @@ Menu.propTypes = {
   align: PropTypes.oneOf(['top', 'bottom', 'left', 'right']),
   justify: PropTypes.oneOf(['start', 'middle', 'end']),
   refEl: PropTypes.object,
-  withoutPortal: PropTypes.bool,
+  usePortal: PropTypes.bool,
 };
 
 Menu.defaultProps = {
   align: 'bottom',
-  justify: 'start',
-  withoutPortal: false,
+  justify: 'end',
+  usePortal: true,
 };
-
-export default Menu;

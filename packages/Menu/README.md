@@ -69,6 +69,14 @@ Determines the justification of the `Menu` component (based on the alignment) re
 
 Pass a reference to an element that the `Menu` component should be positioned against
 
+### usePortal
+
+**Type:** `boolean`
+
+**Default:** `true`
+
+Will position Menu's children relative to its parent without using a Portal, if `usePortal` is set to false. NOTE: The parent element should be CSS position relative, fixed, or absolute if using this option.
+
 # MenuList
 
 ## Properties
