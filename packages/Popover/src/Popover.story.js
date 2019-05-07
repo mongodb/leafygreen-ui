@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Popover from './Popover';
 import { storiesOf } from '@storybook/react';
-import { select, boolean } from '@storybook/addon-knobs';
+import { select, boolean, number } from '@storybook/addon-knobs';
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
 
@@ -23,20 +23,21 @@ class Testing extends Component {
 
   render() {
     return (
-      <div className={containerStyle}>
-        <button onClick={() => this.setState({ active: !this.state.active })}>
-          Popover
-        </button>
-
+      <button
+        className={containerStyle}
+        onClick={() => this.setState({ active: !this.state.active })}
+      >
+        Popover
         <Popover
           align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
           justify={select('justify', ['start', 'middle', 'end'], 'start')}
           active={this.state.active}
           usePortal={boolean('usePortal', true)}
+          spacing={number('spacing', 10)}
         >
           <div className={popoverStyle}>Popover content</div>
         </Popover>
-      </div>
+      </button>
     );
   }
 }

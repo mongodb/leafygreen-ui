@@ -79,6 +79,13 @@ interface Props {
    * default: `true`
    */
   usePortal?: boolean;
+
+  /**
+   * Specifies the amount of spacing (in pixels) between the trigger element and the Popover content.
+   *
+   * default: `10`
+   */
+  spacing: number;
 }
 interface State {
   windowHeight: number;
@@ -151,8 +158,7 @@ function getTransformOrigin({ alignment, justification }: AbstractPosition) {
 }
 
 // Get transform styles for position object
-function getTransform(alignment: Align) {
-  const transformAmount = 12;
+function getTransform(alignment: Align, transformAmount: number) {
   const scaleAmount = 0.8;
 
   switch (alignment) {
@@ -202,6 +208,7 @@ export default class Popover extends Component<Props, State> {
     justify: PropTypes.oneOf(Object.keys(Justify)),
     refEl: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
     usePortal: PropTypes.bool,
+    spacing: PropTypes.number,
   };
 
   static defaultProps = {
@@ -209,6 +216,7 @@ export default class Popover extends Component<Props, State> {
     justify: Justify.start,
     active: false,
     usePortal: true,
+    spacing: 10,
   };
 
   state: State = {
@@ -339,7 +347,7 @@ export default class Popover extends Component<Props, State> {
 
   // Returns the style object that is used to position and transition the popover component
   calculatePosition() {
-    const { usePortal } = this.props;
+    const { usePortal, spacing } = this.props;
     const { referenceElement, contentElPos } = this.state;
 
     // Forced second render to make sure that
@@ -373,7 +381,7 @@ export default class Popover extends Component<Props, State> {
       justification,
     });
 
-    const transform = getTransform(alignment);
+    const transform = getTransform(alignment, spacing);
 
     if (!usePortal) {
       return {
@@ -531,6 +539,7 @@ export default class Popover extends Component<Props, State> {
 
   // Returns the 'top' position in pixels for a valid alignment or justification.
   calcTop({ alignment, justification }: AbstractPosition) {
+    const { spacing } = this.props;
     const { referenceElPos, contentElPos } = this.state;
 
     switch (justification) {
@@ -550,24 +559,25 @@ export default class Popover extends Component<Props, State> {
 
     switch (alignment) {
       case Align.top:
-        return referenceElPos.top - contentElPos.height;
+        return referenceElPos.top - contentElPos.height - spacing;
 
       case Align.bottom:
       default:
-        return referenceElPos.top + referenceElPos.height;
+        return referenceElPos.top + referenceElPos.height + spacing;
     }
   }
 
   // Returns the 'left' position in pixels for a valid alignment or justification.
   calcLeft({ alignment, justification }: AbstractPosition) {
+    const { spacing } = this.props;
     const { referenceElPos, contentElPos } = this.state;
 
     switch (alignment) {
       case Align.left:
-        return referenceElPos.left - contentElPos.width;
+        return referenceElPos.left - contentElPos.width - spacing;
 
       case Align.right:
-        return referenceElPos.left + referenceElPos.width;
+        return referenceElPos.left + referenceElPos.width + spacing;
     }
 
     switch (justification) {
@@ -589,24 +599,25 @@ export default class Popover extends Component<Props, State> {
 
   // Returns positioning for an element absolutely positioned within it's relative parent
   calcPositionWithoutPortal({ alignment, justification }: AbstractPosition) {
+    const { spacing } = this.props;
     const { referenceElPos, contentElPos } = this.state;
     const positionObject: AbsolutePositionObject = {};
 
     switch (alignment) {
       case Align.top:
-        positionObject.bottom = '100%';
+        positionObject.bottom = `calc(100% + ${spacing}px)`;
         break;
 
       case Align.bottom:
-        positionObject.top = '100%';
+        positionObject.top = `calc(100% + ${spacing}px)`;
         break;
 
       case Align.left:
-        positionObject.right = '100%';
+        positionObject.right = `calc(100% + ${spacing}px)`;
         break;
 
       case Align.right:
-        positionObject.left = '100%';
+        positionObject.left = `calc(100% + ${spacing}px)`;
         break;
     }
 

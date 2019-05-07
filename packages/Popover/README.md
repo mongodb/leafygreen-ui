@@ -3,28 +3,30 @@
 ## Example
 
 ```js
-<div className={containerStyle}>
-  <button onClick={() => this.setState({ active: !this.state.active })}>
-    Popover
-  </button>
+<button
+  className={containerStyle}
+  onClick={() => this.setState({ active: !this.state.active })}
+>
+  Popover
   <Popover
-    align="bottom"
-    justify="start"
+    align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
+    justify={select('justify', ['start', 'middle', 'end'], 'start')}
     active={this.state.active}
-    usePortal={true}
+    usePortal={boolean('usePortal', true)}
+    spacing={number('spacing', 10)}
   >
     <div className={popoverStyle}>Popover content</div>
   </Popover>
-</div>
+</button>
 ```
 
 ## Output HTML
 
 ```html
-<div class="leafygreen-ui-79elbk">
-  <button>Popover</button>
+<button class="leafygreen-ui-79elbk">
+  Popover
   <div class="leafygreen-ui-1hyfx7x"></div>
-</div>
+</button>
 
 <div align="bottom" justify="start" class="leafygreen-ui-1t5dnko">
   <div class="leafygreen-ui-ii2v5b">Popover content</div>
@@ -75,13 +77,13 @@ Content that will appear inside of the Popver component
 
 Will position Popover's children relative to its parent without using a Portal, if `usePortal` is set to false. NOTE: The parent element should be CSS position relative, fixed, or absolute if using this option.
 
-### getUpdatePosition
+### spacing
 
-**Type:** `function`
+**Type:** `number`
 
-**Default:** `() => {}`
+**Default:** `10`
 
-Callback to execute and force a position recalculation when the DOM has changed
+Specifies the amount of spacing (in pixels) between the trigger element and the content element.
 
 ### className
 
