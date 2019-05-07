@@ -8,8 +8,8 @@
     Popover
   </button>
   <Popover
-    align='bottom'
-    justify='start'
+    align="bottom"
+    justify="start"
     active={this.state.active}
     usePortal={true}
   >
@@ -32,6 +32,7 @@
 ```
 
 ## Simple Use Case
+
 The popover component will be automatically positioned relative to its neartest parent, which has position `absolute` specified.
 
 ### active
@@ -90,7 +91,7 @@ Callback to execute and force a position recalculation when the DOM has changed
 
 Classname to apply to popover-content container
 
-## Advanced Use Case 
+## Advanced Use Case
 
 ### refEl
 
@@ -98,6 +99,6 @@ Classname to apply to popover-content container
 
 **Default:** `null`
 
-You can supply a `refEl` prop, if you do not want the popover to be positioned relative to it's nearest parent. Ref to the element to which the popover component should be positioned relative to. 
+You can supply a `refEl` prop, if you do not want the popover to be positioned relative to it's nearest parent. Ref to the element to which the popover component should be positioned relative to.
 
 #### Any other properties will be spread on the popover-content container

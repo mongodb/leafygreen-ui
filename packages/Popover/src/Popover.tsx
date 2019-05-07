@@ -35,14 +35,50 @@ interface AbstractPosition {
 }
 
 interface Props {
+  /**
+   * Content that will appear inside of the popover component.
+   */
+
   children?: ReactNode;
+
+  /**
+   * Determines the active state of the popover component
+   *
+   * default: `false`
+   */
   active: boolean;
+
+  /**
+   * Class name applied to popover content container.
+   */
   className?: string;
+
+  /**
+   * Determines the alignment of the popover content relative to the trigger element
+   *
+   * default: `bottom`
+   */
   align: Align;
+
+  /**
+   * Determines the justification of the popover content relative to the trigger element
+   *
+   * default: `start`
+   */
   justify: Justify;
+
+  /**
+   * A reference to the element against which the popover component will be positioned.
+   */
   refEl?: RefObject<HTMLElement>;
+
+  /**
+   * Specifies that the popover content will appear portaled to the end of the DOM,
+   * rather than in the DOM tree.
+   *
+   * default: `true`
+   */
   usePortal?: boolean;
-  getUpdatePosition?: Function;
 }
 interface State {
   windowHeight: number;
@@ -134,6 +170,27 @@ function getTransform(alignment: Align) {
   }
 }
 
+/**
+ * # Popover
+ * 
+ * React Component that handles positioning of content relative to another element.
+ * 
+ * `''
+<button>
+  <Popover active={true}>Hello world!</Popover>
+</button>
+    `''
+ * ---
+ * @param props.children Content to appear inside of Popover container.
+ * @param props.active Boolean to describe whether or not Popover is active.
+ * @param props.className Classname applied to Popover container.
+ * @param props.align Alignment of Popover component relative to another element: `top`, `bottom`, `left`, `right`.
+ * @param props.justify Justification of Popover component relative to another element: `start`, `middle`, `end`.
+ * @param props.refEl Reference element that Popover component should be positioned against.
+ * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
+ * 
+ * 
+ */
 export default class Popover extends Component<Props, State> {
   static displayName = 'Popover';
 
@@ -145,7 +202,6 @@ export default class Popover extends Component<Props, State> {
     justify: PropTypes.oneOf(Object.keys(Justify)),
     refEl: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
     usePortal: PropTypes.bool,
-    getUpdatePosition: PropTypes.func,
   };
 
   static defaultProps = {
