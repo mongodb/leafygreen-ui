@@ -13,27 +13,27 @@ const rootPopoverStyle = css`
 `;
 
 export enum Align {
-  top = 'top',
-  bottom = 'bottom',
-  left = 'left',
-  right = 'right',
+  Top = 'top',
+  Bottom = 'bottom',
+  Left = 'left',
+  Right = 'right',
 }
 
 export enum Justify {
-  start = 'start',
-  middle = 'middle',
-  end = 'end',
+  Start = 'start',
+  Middle = 'middle',
+  End = 'end',
 }
 
 // We transform 'middle' into 'center-vertical' or 'center-horizontal' for internal use,
 // So both Justify and Justification are needed, where the same is not true for Alignment.
 export enum Justification {
-  top = 'top',
-  bottom = 'bottom',
-  left = 'left',
-  right = 'right',
-  'center-vertical' = 'center-vertical',
-  'center-horizontal' = 'center-horizontal',
+  Top = 'top',
+  Bottom = 'bottom',
+  Left = 'left',
+  Right = 'right',
+  CenterVertical = 'center-vertical',
+  CenterHorizontal = 'center-horizontal',
 }
 
 interface RefPosition {
@@ -134,45 +134,45 @@ function getTransformOrigin({ alignment, justification }: AbstractPosition) {
   let y = '';
 
   switch (alignment) {
-    case Align.left:
+    case Align.Left:
       x = 'right';
       break;
 
-    case Align.right:
+    case Align.Right:
       x = 'left';
       break;
 
-    case Align.bottom:
+    case Align.Bottom:
       y = 'top';
       break;
 
-    case Align.top:
+    case Align.Top:
       y = 'bottom';
       break;
   }
 
   switch (justification) {
-    case Justification.left:
+    case Justification.Left:
       x = 'left';
       break;
 
-    case Justification.right:
+    case Justification.Right:
       x = 'right';
       break;
 
-    case Justification.bottom:
+    case Justification.Bottom:
       y = 'bottom';
       break;
 
-    case Justification.top:
+    case Justification.Top:
       y = 'top';
       break;
 
-    case Justification['center-horizontal']:
+    case Justification.CenterHorizontal:
       x = 'center';
       break;
 
-    case Justification['center-vertical']:
+    case Justification.CenterVertical:
       y = 'center';
       break;
   }
@@ -185,16 +185,16 @@ function getTransform(alignment: Align, transformAmount: number) {
   const scaleAmount = 0.8;
 
   switch (alignment) {
-    case Align.top:
+    case Align.Top:
       return `translate3d(0, ${transformAmount}px, 0) scale(${scaleAmount})`;
 
-    case Align.bottom:
+    case Align.Bottom:
       return `translate3d(0, -${transformAmount}px, 0) scale(${scaleAmount})`;
 
-    case Align.left:
+    case Align.Left:
       return `translate3d(${transformAmount}px, 0, 0) scale(${scaleAmount})`;
 
-    case Align.right:
+    case Align.Right:
       return `translate3d(-${transformAmount}px, 0, 0) scale(${scaleAmount})`;
   }
 }
@@ -235,8 +235,8 @@ export default class Popover extends Component<Props, State> {
   };
 
   static defaultProps = {
-    align: Align.bottom,
-    justify: Justify.start,
+    align: Align.Bottom,
+    justify: Justify.Start,
     active: false,
     usePortal: true,
     spacing: 10,
@@ -434,10 +434,10 @@ export default class Popover extends Component<Props, State> {
       left: ReadonlyArray<Align>;
       right: ReadonlyArray<Align>;
     } = {
-      top: [Align.top, Align.bottom],
-      bottom: [Align.bottom, Align.top],
-      left: [Align.left, Align.right],
-      right: [Align.right, Align.left],
+      top: [Align.Top, Align.Bottom],
+      bottom: [Align.Bottom, Align.Top],
+      left: [Align.Left, Align.Right],
+      right: [Align.Right, Align.Left],
     };
 
     return (
@@ -463,19 +463,19 @@ export default class Popover extends Component<Props, State> {
       case 'right': {
         justifications = {
           start: [
-            Justification.top,
-            Justification.bottom,
-            Justification['center-vertical'],
+            Justification.Top,
+            Justification.Bottom,
+            Justification.CenterVertical,
           ],
           middle: [
-            Justification['center-vertical'],
-            Justification.bottom,
-            Justification.top,
+            Justification.CenterVertical,
+            Justification.Bottom,
+            Justification.Top,
           ],
           end: [
-            Justification.bottom,
-            Justification.top,
-            Justification['center-vertical'],
+            Justification.Bottom,
+            Justification.Top,
+            Justification.CenterVertical,
           ],
         };
         break;
@@ -486,19 +486,19 @@ export default class Popover extends Component<Props, State> {
       default: {
         justifications = {
           start: [
-            Justification.left,
-            Justification.right,
-            Justification['center-horizontal'],
+            Justification.Left,
+            Justification.Right,
+            Justification.CenterHorizontal,
           ],
           middle: [
-            Justification['center-horizontal'],
-            Justification.right,
-            Justification.left,
+            Justification.CenterHorizontal,
+            Justification.Right,
+            Justification.Left,
           ],
           end: [
-            Justification.right,
-            Justification.left,
-            Justification['center-horizontal'],
+            Justification.Right,
+            Justification.Left,
+            Justification.CenterHorizontal,
           ],
         };
         break;
@@ -566,13 +566,13 @@ export default class Popover extends Component<Props, State> {
     const { referenceElPos, contentElPos } = this.state;
 
     switch (justification) {
-      case Justification.top:
+      case Justification.Top:
         return referenceElPos.top;
 
-      case Justification.bottom:
+      case Justification.Bottom:
         return referenceElPos.top + referenceElPos.height - contentElPos.height;
 
-      case Justification['center-vertical']:
+      case Justification.CenterVertical:
         return (
           referenceElPos.top +
           referenceElPos.height / 2 -
@@ -581,10 +581,10 @@ export default class Popover extends Component<Props, State> {
     }
 
     switch (alignment) {
-      case Align.top:
+      case Align.Top:
         return referenceElPos.top - contentElPos.height - spacing;
 
-      case Align.bottom:
+      case Align.Bottom:
       default:
         return referenceElPos.top + referenceElPos.height + spacing;
     }
@@ -596,25 +596,25 @@ export default class Popover extends Component<Props, State> {
     const { referenceElPos, contentElPos } = this.state;
 
     switch (alignment) {
-      case Align.left:
+      case Align.Left:
         return referenceElPos.left - contentElPos.width - spacing;
 
-      case Align.right:
+      case Align.Right:
         return referenceElPos.left + referenceElPos.width + spacing;
     }
 
     switch (justification) {
-      case Justification.right:
+      case Justification.Right:
         return referenceElPos.left + referenceElPos.width - contentElPos.width;
 
-      case Justification['center-horizontal']:
+      case Justification.CenterHorizontal:
         return (
           referenceElPos.left +
           referenceElPos.width / 2 -
           contentElPos.width / 2
         );
 
-      case Justification.left:
+      case Justification.Left:
       default:
         return referenceElPos.left;
     }
@@ -627,45 +627,45 @@ export default class Popover extends Component<Props, State> {
     const positionObject: AbsolutePositionObject = {};
 
     switch (alignment) {
-      case Align.top:
+      case Align.Top:
         positionObject.bottom = `calc(100% + ${spacing}px)`;
         break;
 
-      case Align.bottom:
+      case Align.Bottom:
         positionObject.top = `calc(100% + ${spacing}px)`;
         break;
 
-      case Align.left:
+      case Align.Left:
         positionObject.right = `calc(100% + ${spacing}px)`;
         break;
 
-      case Align.right:
+      case Align.Right:
         positionObject.left = `calc(100% + ${spacing}px)`;
         break;
     }
 
     switch (justification) {
-      case Justification.top:
+      case Justification.Top:
         positionObject.top = 0;
         break;
 
-      case Justification.bottom:
+      case Justification.Bottom:
         positionObject.bottom = 0;
         break;
 
-      case Justification.left:
+      case Justification.Left:
         positionObject.left = 0;
         break;
 
-      case Justification.right:
+      case Justification.Right:
         positionObject.right = 0;
         break;
 
-      case Justification['center-horizontal']:
+      case Justification.CenterHorizontal:
         positionObject.left = referenceElPos.width / 2 - contentElPos.width / 2;
         break;
 
-      case Justification['center-vertical']:
+      case Justification.CenterVertical:
         positionObject.top =
           referenceElPos.height / 2 - contentElPos.height / 2;
         break;
