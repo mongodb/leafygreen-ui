@@ -73,21 +73,4 @@ describe('packages/Popover', () => {
     unmount();
     expect(container.innerHTML).toBe('');
   });
-
-  // Testing methods that do not rely on props within Popover component
-  describe('Unit test', () => {
-    const trigger = document.createElement('div');
-    trigger.id = 'trigger';
-    document.body.appendChild(trigger);
-    test('It returns the proper alignment when getTransform() is called', () => {
-      expect(
-        new Popover({
-          justify: 'middle',
-          align: 'top',
-          refEl: { current: trigger },
-          active: true,
-        }).getTransform('top'),
-      ).toBe('translate3d(0, 12px, 0) scale(0.8)');
-    });
-  });
 });
