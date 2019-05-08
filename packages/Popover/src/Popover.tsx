@@ -2,6 +2,12 @@ import React, { Component, Fragment, ReactNode, RefObject } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
 import { emotion } from '@leafygreen-ui/lib';
+import {
+  getTransformOrigin,
+  getTransform,
+  getElementPosition,
+  defaultElementPosition,
+} from './positionUtils';
 
 const { css, cx } = emotion;
 
@@ -36,7 +42,7 @@ export enum Justification {
   CenterHorizontal = 'center-horizontal',
 }
 
-interface RefPosition {
+export interface RefPosition {
   top: number;
   bottom: number;
   left: number;
@@ -52,7 +58,7 @@ interface AbsolutePositionObject {
   right?: string | 0;
 }
 
-interface AbstractPosition {
+export interface AbstractPosition {
   alignment?: Alignment;
   justification?: Justification;
 }
@@ -120,89 +126,6 @@ interface State {
   referenceElement: HTMLElement | null;
 }
 
-const defaultRefPosition = {
-  top: 0,
-  bottom: 0,
-  left: 0,
-  right: 0,
-  height: 0,
-  width: 0,
-};
-
-// Constructs the transform origin for any given pair of alignment / justification
-function getTransformOrigin({
-  alignment,
-  justification,
-}: AbstractPosition): string {
-  let x = '';
-  let y = '';
-
-  switch (alignment) {
-    case Alignment.Left:
-      x = 'right';
-      break;
-
-    case Alignment.Right:
-      x = 'left';
-      break;
-
-    case Alignment.Bottom:
-      y = 'top';
-      break;
-
-    case Alignment.Top:
-      y = 'bottom';
-      break;
-  }
-
-  switch (justification) {
-    case Justification.Left:
-      x = 'left';
-      break;
-
-    case Justification.Right:
-      x = 'right';
-      break;
-
-    case Justification.Bottom:
-      y = 'bottom';
-      break;
-
-    case Justification.Top:
-      y = 'top';
-      break;
-
-    case Justification.CenterHorizontal:
-      x = 'center';
-      break;
-
-    case Justification.CenterVertical:
-      y = 'center';
-      break;
-  }
-
-  return `${x} ${y}`;
-}
-
-// Get transform styles for position object
-function getTransform(alignment: Alignment, transformAmount: number): string {
-  const scaleAmount = 0.8;
-
-  switch (alignment) {
-    case Alignment.Top:
-      return `translate3d(0, ${transformAmount}px, 0) scale(${scaleAmount})`;
-
-    case Alignment.Bottom:
-      return `translate3d(0, -${transformAmount}px, 0) scale(${scaleAmount})`;
-
-    case Alignment.Left:
-      return `translate3d(${transformAmount}px, 0, 0) scale(${scaleAmount})`;
-
-    case Alignment.Right:
-      return `translate3d(-${transformAmount}px, 0, 0) scale(${scaleAmount})`;
-  }
-}
-
 /**
  * # Popover
  *
@@ -250,8 +173,8 @@ export default class Popover extends Component<Props, State> {
     windowHeight: window.innerHeight,
     windowWidth: window.innerWidth,
     hasMounted: false,
-    referenceElPos: defaultRefPosition,
-    contentElPos: defaultRefPosition,
+    referenceElPos: defaultElementPosition,
+    contentElPos: defaultElementPosition,
     referenceElement: null,
   };
 
@@ -284,7 +207,7 @@ export default class Popover extends Component<Props, State> {
     }
 
     if (posPropsUpdated || windowUpdated) {
-      const newReferenceElPos = this.getRefPosition(referenceElement);
+      const newReferenceElPos = getElementPosition(referenceElement);
       const contentEl = this.contentRef && this.contentRef.current;
 
       if (!contentEl) {
@@ -294,7 +217,7 @@ export default class Popover extends Component<Props, State> {
       }
 
       this.setState({
-        contentElPos: this.getRefPosition(contentEl),
+        contentElPos: getElementPosition(contentEl),
         referenceElPos: newReferenceElPos,
       });
     }
@@ -315,7 +238,7 @@ export default class Popover extends Component<Props, State> {
 
         if (contentEl && !this.state.contentElPos) {
           this.setState({
-            contentElPos: this.getRefPosition(contentEl),
+            contentElPos: getElementPosition(contentEl),
           });
         }
       },
@@ -331,7 +254,7 @@ export default class Popover extends Component<Props, State> {
     if (referenceElement) {
       if (!referenceElPos) {
         this.setState({
-          referenceElPos: this.getRefPosition(referenceElement),
+          referenceElPos: getElementPosition(referenceElement),
         });
       }
 
@@ -356,20 +279,8 @@ export default class Popover extends Component<Props, State> {
 
     this.setState({
       referenceElement: newReferenceElement,
-      referenceElPos: this.getRefPosition(newReferenceElement),
+      referenceElPos: getElementPosition(newReferenceElement),
     });
-  }
-
-  // Gets top offset, left offset, width and height dimensions for a node
-  getRefPosition(element: HTMLElement | null): RefPosition {
-    if (!element) {
-      return defaultRefPosition;
-    }
-
-    const { top, bottom, left, right } = element.getBoundingClientRect();
-    const { offsetHeight: height, offsetWidth: width } = element;
-
-    return { top, bottom, left, right, height, width };
   }
 
   // Returns the style object that is used to position and transition the popover component
@@ -393,7 +304,7 @@ export default class Popover extends Component<Props, State> {
 
       if (contentEl) {
         this.setState({
-          contentElPos: this.getRefPosition(contentEl),
+          contentElPos: getElementPosition(contentEl),
         });
       }
 
