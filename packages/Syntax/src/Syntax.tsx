@@ -1,30 +1,36 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import highlight from 'highlight.js'
 import hljs from 'highlight.js/lib/highlight';
+import SyntaxTheme from './SyntaxTheme'
 
-// const supportedLanguages = [
-// 	'javascript',
-// 	'typescript',
-// 	'cal', // C/AL
-// 	'csp', // C#
-// 	'cpp', // C++
-// 	'go',
-// 	'java',
-// 	'perl',
-// 	'php',
-// 	'python',
-// 	'ruby',
-// 	'scala',
-// 	'bash',
-// 	'shell',
-// 	'sql',
-// 	'yaml',
-// 	'json',
-// ]
+const supportedLanguages = [
+	'javascript',
+	'typescript',
+	'cal', // C/AL
+	'csp', // C#
+	'cpp', // C++
+	'go',
+	'java',
+	'perl',
+	'php',
+	'python',
+	'ruby',
+	'scala',
+	'bash',
+	'shell',
+	'sql',
+	'yaml',
+	'json',
+]
 
-// const languages = supportedLanguages.reduce((acc, val) => {
-// 	return acc[val] = require(`highlight.js/lib/languages/${val}`)
-// }, {})
+const languages = supportedLanguages.reduce((acc, val) => {
+  const language = require(`highlight.js/lib/languages/${val}`)
+	return {
+    ...acc,
+    [val]: language,
+  }
+}, {})
 
 export default class Syntax extends Component {
   static displayName = 'Syntax';
@@ -34,18 +40,29 @@ export default class Syntax extends Component {
   };
 
   componentDidMount() {
-    // Object.keys(languages).forEach((language) => {
-    // 	hljs.registerLanguage(language, languages[language]);
-    // })
+    Object.keys(languages).forEach((language) => {
+    	hljs.registerLanguage(language, languages[language]);
+    })
 
-    hljs.initHighlightingOnLoad();
+    hljs.configure({
+      languages: Object.keys(languages),
+      classPrefix: 'lg-highlight-',
+    })
 
-    const rootRef = this.rootRef.current;
+    this.highlightContent()
+  }
 
-    if (rootRef instanceof HTMLElement) {
-      hljs.highlightBlock(rootRef);
-    } else {
-      debugger; // eslint-disable-line
+  componentDidUpdate(prevProps) {
+    if (prevProps.children !== this.props.children) {
+      this.highlightContent()
+    }
+  }
+
+  highlightContent() {
+    const container = this.rootRef.current
+
+    if (container instanceof HTMLElement) {
+      hljs.highlightBlock(container);
     }
   }
 
@@ -54,6 +71,11 @@ export default class Syntax extends Component {
   render() {
     const { children } = this.props;
 
-    return <div ref={this.rootRef}>{children}</div>;
+    return (
+      <>
+        <code ref={this.rootRef}>{children}</code>
+        <SyntaxTheme />
+      </>
+    );
   }
 }
