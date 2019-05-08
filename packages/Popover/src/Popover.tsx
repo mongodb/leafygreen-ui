@@ -312,7 +312,7 @@ export default class Popover extends Component<Props, State> {
     }
 
     const alignment = this.getWindowSafeAlignment(align);
-    const justification = this.getJustification(alignment);
+    const justification = this.getWindowSafeJustification(alignment);
 
     const transformOrigin = getTransformOrigin({
       alignment,
@@ -375,7 +375,7 @@ export default class Popover extends Component<Props, State> {
   // Determines the justification to render based on an order of justification fallbacks
   // Returns the first justification that doesn't collide with the window,
   // defaulting to the justify prop if all justifications fail.
-  getJustification(alignment: Alignment): Justification {
+  getWindowSafeJustification(alignment: Alignment): Justification {
     const { justify } = this.props;
 
     let justifications: {
