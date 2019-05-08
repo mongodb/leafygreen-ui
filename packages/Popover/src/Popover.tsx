@@ -2,7 +2,6 @@ import React, { Component, Fragment, ReactNode, RefObject } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
 import { emotion } from '@leafygreen-ui/lib';
-import { Align, Justify, Justification } from '.';
 
 const { css, cx } = emotion;
 
@@ -12,6 +11,30 @@ const rootPopoverStyle = css`
   pointer-events: none;
   opacity: 0;
 `;
+
+export enum Align {
+  top = 'top',
+  bottom = 'bottom',
+  left = 'left',
+  right = 'right',
+}
+
+export enum Justify {
+  start = 'start',
+  middle = 'middle',
+  end = 'end',
+}
+
+// We transform 'middle' into 'center-vertical' or 'center-horizontal' for internal use,
+// So both Justify and Justification are needed, where the same is not true for Alignment.
+export enum Justification {
+  top = 'top',
+  bottom = 'bottom',
+  left = 'left',
+  right = 'right',
+  'center-vertical' = 'center-vertical',
+  'center-horizontal' = 'center-horizontal',
+}
 
 interface RefPosition {
   top: number;
@@ -178,9 +201,9 @@ function getTransform(alignment: Align, transformAmount: number) {
 
 /**
  * # Popover
- * 
+ *
  * React Component that handles positioning of content relative to another element.
- * 
+ *
  * `''
 <button>
   <Popover active={true}>Hello world!</Popover>
@@ -194,8 +217,8 @@ function getTransform(alignment: Align, transformAmount: number) {
  * @param props.justify Justification of Popover component relative to another element: `start`, `middle`, `end`.
  * @param props.refEl Reference element that Popover component should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
- * 
- * 
+ *
+ *
  */
 export default class Popover extends Component<Props, State> {
   static displayName = 'Popover';
