@@ -110,6 +110,7 @@ interface Props {
    */
   spacing: number;
 }
+
 interface State {
   windowHeight: number;
   windowWidth: number;
@@ -442,8 +443,21 @@ export default class Popover extends Component<Props, State> {
     };
 
     return (
-      alignments[align].find(candidate => this.checkAlignment(candidate)) ||
-      align
+      alignments[align].find(alignment => {
+        // Check that an alignment will not cause the popover to collide with the window.
+
+        if ([Alignment.Top, Alignment.Bottom].includes(alignment)) {
+          const top = this.calcTop({ alignment });
+          return this.checkVerticalWindowCollision(top);
+        }
+
+        if ([Alignment.Left, Alignment.Right].includes(alignment)) {
+          const left = this.calcLeft({ alignment });
+          return this.checkHorizontalWindowCollision(left);
+        }
+
+        return false;
+      }) || align
     );
   }
 
@@ -460,8 +474,8 @@ export default class Popover extends Component<Props, State> {
     };
 
     switch (alignment) {
-      case 'left':
-      case 'right': {
+      case Alignment.Left:
+      case Alignment.Right: {
         justifications = {
           start: [
             Justification.Top,
@@ -482,8 +496,8 @@ export default class Popover extends Component<Props, State> {
         break;
       }
 
-      case 'top':
-      case 'bottom':
+      case Alignment.Top:
+      case Alignment.Bottom:
       default: {
         justifications = {
           start: [
@@ -507,42 +521,34 @@ export default class Popover extends Component<Props, State> {
     }
 
     return (
-      justifications[justify].find(candidate => {
-        return this.checkJustification(candidate);
+      justifications[justify].find(justification => {
+        // Check that a justification will not cause the popover to collide with the window.
+
+        if (
+          [
+            Justification.Top,
+            Justification.Bottom,
+            Justification.CenterVertical,
+          ].includes(justification)
+        ) {
+          const top = this.calcTop({ justification });
+          return this.checkVerticalWindowCollision(top);
+        }
+
+        if (
+          [
+            Justification.Left,
+            Justification.Right,
+            Justification.CenterHorizontal,
+          ].includes(justification)
+        ) {
+          const left = this.calcLeft({ justification });
+          return this.checkHorizontalWindowCollision(left);
+        }
+
+        return false;
       }) || justifications[justify][0]
     );
-  }
-
-  // Checks that an alignment will not cause the popover to collide with the window.
-  checkAlignment(alignment: Alignment): boolean {
-    const top = this.calcTop({ alignment });
-    const left = this.calcLeft({ alignment });
-
-    if (['top', 'bottom'].includes(alignment)) {
-      return this.checkVerticalWindowCollision(top);
-    }
-
-    if (['left', 'right'].includes(alignment)) {
-      return this.checkHorizontalWindowCollision(left);
-    }
-
-    return false;
-  }
-
-  // Checks that a justification will not cause the popover to collide with the window.
-  checkJustification(justification: Justification): boolean {
-    const top = this.calcTop({ justification });
-    const left = this.calcLeft({ justification });
-
-    if (['top', 'bottom', 'center-vertical'].includes(justification)) {
-      return this.checkVerticalWindowCollision(top);
-    }
-
-    if (['left', 'right', 'center-horizontal'].includes(justification)) {
-      return this.checkHorizontalWindowCollision(left);
-    }
-
-    return false;
   }
 
   // Check if horizontal position collides with edge of window
@@ -562,7 +568,7 @@ export default class Popover extends Component<Props, State> {
   }
 
   // Returns the 'top' position in pixels for a valid alignment or justification.
-  calcTop({ alignment, justification }: AbstractPosition) {
+  calcTop({ alignment, justification }: AbstractPosition): number {
     const { spacing } = this.props;
     const { referenceElPos, contentElPos } = this.state;
 
@@ -592,7 +598,7 @@ export default class Popover extends Component<Props, State> {
   }
 
   // Returns the 'left' position in pixels for a valid alignment or justification.
-  calcLeft({ alignment, justification }: AbstractPosition) {
+  calcLeft({ alignment, justification }: AbstractPosition): number {
     const { spacing } = this.props;
     const { referenceElPos, contentElPos } = this.state;
 
