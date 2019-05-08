@@ -1,3 +1,4 @@
-import Syntax from './Syntax';
+import Syntax, { SupportedLanguages } from './Syntax';
 
+export { SupportedLanguages }
 export default Syntax;

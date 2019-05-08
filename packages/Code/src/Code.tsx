@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import Syntax, { SupportedLanguages } from '@leafygreen-ui/syntax';
+
 
 const preStyle = css`
   margin: 0;
@@ -44,6 +46,11 @@ interface Props {
    * The children to render inside Code. This is usually going to be a formatted code block or line.
    */
   children?: React.ReactNode,
+  
+  /**
+   * An additional CSS class added to the root element of Code
+   */
+  className: string,
 
   /**
    * When true, whitespace and line breaks will be preserved.
@@ -53,9 +60,11 @@ interface Props {
   multiline: boolean,
 
   /**
-   * An additional CSS class added to the root element of Code
+   * The language used for syntax highlighting.
+   * 
+   * default: `'auto'`
    */
-  className: string,
+  lang: SupportedLanguages,
 }
 
 /**
@@ -67,15 +76,16 @@ interface Props {
 <Code>Hello world!</Code>
 	```
  * ---
- * @param props.children Any React node
- * @param props.className An additional CSS class added to the root element of Code
+ * @param props.children Any React node.
+ * @param props.className An additional CSS class added to the root element of Code.
  * @param props.multiline When true, whitespace and line breaks will be preserved.
+ * @param props.lang The language used for syntax highlighing.
  */
-export default function Code({ children, className, multiline }: Props) {
+export default function Code({ children, className, multiline, lang }: Props) {
   if (!multiline) {
     return (
       <Wrapper className={className}>
-        <CodeBlock>{children}</CodeBlock>
+        <Syntax lang={lang}>{children}</Syntax>
       </Wrapper>
     );
   }
@@ -83,7 +93,7 @@ export default function Code({ children, className, multiline }: Props) {
   return (
     <Wrapper className={className}>
       <pre className={preStyle}>
-        <CodeBlock>{children}</CodeBlock>
+        <Syntax lang={lang}>{children}</Syntax>
       </pre>
     </Wrapper>
   );
@@ -98,4 +108,5 @@ Code.propTypes = {
 
 Code.defaultProps = {
   multiline: true,
+  lang: 'auto',
 };
