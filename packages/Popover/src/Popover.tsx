@@ -19,7 +19,7 @@ const rootPopoverStyle = css`
   opacity: 0;
 `;
 
-export enum Alignment {
+export enum Align {
   Top = 'top',
   Bottom = 'bottom',
   Left = 'left',
@@ -53,7 +53,7 @@ export interface RefPosition {
 }
 
 export interface AbstractPosition {
-  alignment?: Alignment;
+  alignment?: Align;
   justification?: Justification;
 }
 
@@ -81,7 +81,7 @@ interface Props {
    *
    * default: `bottom`
    */
-  align: Alignment;
+  align: Align;
 
   /**
    * Determines the justification of the popover content relative to the trigger element
@@ -148,7 +148,7 @@ export default class Popover extends Component<Props, State> {
     children: PropTypes.node,
     active: PropTypes.bool,
     className: PropTypes.string,
-    align: PropTypes.oneOf(Object.values(Alignment)),
+    align: PropTypes.oneOf(Object.values(Align)),
     justify: PropTypes.oneOf(Object.values(Justify)),
     refEl: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
     usePortal: PropTypes.bool,
@@ -156,7 +156,7 @@ export default class Popover extends Component<Props, State> {
   };
 
   static defaultProps: Props = {
-    align: Alignment.Bottom,
+    align: Align.Bottom,
     justify: Justify.Start,
     active: false,
     usePortal: true,
@@ -337,29 +337,29 @@ export default class Popover extends Component<Props, State> {
   // Determines the alignment to render based on an order of alignment fallbacks
   // Returns the first alignment that doesn't collide with the window,
   // defaulting to the align prop if all alignments fail.
-  getWindowSafeAlignment(align: Alignment): Alignment {
+  getWindowSafeAlignment(align: Align): Align {
     const alignments: {
-      top: ReadonlyArray<Alignment>;
-      bottom: ReadonlyArray<Alignment>;
-      left: ReadonlyArray<Alignment>;
-      right: ReadonlyArray<Alignment>;
+      top: ReadonlyArray<Align>;
+      bottom: ReadonlyArray<Align>;
+      left: ReadonlyArray<Align>;
+      right: ReadonlyArray<Align>;
     } = {
-      top: [Alignment.Top, Alignment.Bottom],
-      bottom: [Alignment.Bottom, Alignment.Top],
-      left: [Alignment.Left, Alignment.Right],
-      right: [Alignment.Right, Alignment.Left],
+      top: [Align.Top, Align.Bottom],
+      bottom: [Align.Bottom, Align.Top],
+      left: [Align.Left, Align.Right],
+      right: [Align.Right, Align.Left],
     };
 
     return (
       alignments[align].find(alignment => {
         // Check that an alignment will not cause the popover to collide with the window.
 
-        if ([Alignment.Top, Alignment.Bottom].includes(alignment)) {
+        if ([Align.Top, Align.Bottom].includes(alignment)) {
           const top = this.calcTop({ alignment });
           return this.checkVerticalWindowCollision(top);
         }
 
-        if ([Alignment.Left, Alignment.Right].includes(alignment)) {
+        if ([Align.Left, Align.Right].includes(alignment)) {
           const left = this.calcLeft({ alignment });
           return this.checkHorizontalWindowCollision(left);
         }
@@ -372,30 +372,30 @@ export default class Popover extends Component<Props, State> {
   // Determines the justification to render based on an order of justification fallbacks
   // Returns the first justification that doesn't collide with the window,
   // defaulting to the justify prop if all justifications fail.
-  getWindowSafeJustification(alignment: Alignment): Justification {
+  getWindowSafeJustification(alignment: Align): Justification {
     const { justify } = this.props;
 
     let justifications: {
-      start: ReadonlyArray<Justification>;
-      middle: ReadonlyArray<Justification>;
-      end: ReadonlyArray<Justification>;
+      [Justify.Start]: ReadonlyArray<Justification>;
+      [Justify.Middle]: ReadonlyArray<Justification>;
+      [Justify.End]: ReadonlyArray<Justification>;
     };
 
     switch (alignment) {
-      case Alignment.Left:
-      case Alignment.Right: {
+      case Align.Left:
+      case Align.Right: {
         justifications = {
-          start: [
+          [Justify.Start]: [
             Justification.Top,
             Justification.Bottom,
             Justification.CenterVertical,
           ],
-          middle: [
+          [Justify.Middle]: [
             Justification.CenterVertical,
             Justification.Bottom,
             Justification.Top,
           ],
-          end: [
+          [Justify.End]: [
             Justification.Bottom,
             Justification.Top,
             Justification.CenterVertical,
@@ -404,21 +404,21 @@ export default class Popover extends Component<Props, State> {
         break;
       }
 
-      case Alignment.Top:
-      case Alignment.Bottom:
+      case Align.Top:
+      case Align.Bottom:
       default: {
         justifications = {
-          start: [
+          [Justify.Start]: [
             Justification.Left,
             Justification.Right,
             Justification.CenterHorizontal,
           ],
-          middle: [
+          [Justify.Middle]: [
             Justification.CenterHorizontal,
             Justification.Right,
             Justification.Left,
           ],
-          end: [
+          [Justify.End]: [
             Justification.Right,
             Justification.Left,
             Justification.CenterHorizontal,
@@ -496,10 +496,10 @@ export default class Popover extends Component<Props, State> {
     }
 
     switch (alignment) {
-      case Alignment.Top:
+      case Align.Top:
         return referenceElPos.top - contentElPos.height - spacing;
 
-      case Alignment.Bottom:
+      case Align.Bottom:
       default:
         return referenceElPos.top + referenceElPos.height + spacing;
     }
@@ -511,10 +511,10 @@ export default class Popover extends Component<Props, State> {
     const { referenceElPos, contentElPos } = this.state;
 
     switch (alignment) {
-      case Alignment.Left:
+      case Align.Left:
         return referenceElPos.left - contentElPos.width - spacing;
 
-      case Alignment.Right:
+      case Align.Right:
         return referenceElPos.left + referenceElPos.width + spacing;
     }
 

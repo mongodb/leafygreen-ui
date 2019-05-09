@@ -1,9 +1,4 @@
-import {
-  AbstractPosition,
-  Alignment,
-  Justification,
-  RefPosition,
-} from './Popover';
+import { AbstractPosition, Align, Justification, RefPosition } from './Popover';
 
 // Constructs the transform origin for any given pair of alignment / justification
 export function getTransformOrigin({
@@ -14,19 +9,19 @@ export function getTransformOrigin({
   let y = '';
 
   switch (alignment) {
-    case Alignment.Left:
+    case Align.Left:
       x = 'right';
       break;
 
-    case Alignment.Right:
+    case Align.Right:
       x = 'left';
       break;
 
-    case Alignment.Bottom:
+    case Align.Bottom:
       y = 'top';
       break;
 
-    case Alignment.Top:
+    case Align.Top:
       y = 'bottom';
       break;
   }
@@ -62,22 +57,22 @@ export function getTransformOrigin({
 
 // Get transform styles for position object
 export function getTransform(
-  alignment: Alignment,
+  alignment: Align,
   transformAmount: number,
 ): string {
   const scaleAmount = 0.8;
 
   switch (alignment) {
-    case Alignment.Top:
+    case Align.Top:
       return `translate3d(0, ${transformAmount}px, 0) scale(${scaleAmount})`;
 
-    case Alignment.Bottom:
+    case Align.Bottom:
       return `translate3d(0, -${transformAmount}px, 0) scale(${scaleAmount})`;
 
-    case Alignment.Left:
+    case Align.Left:
       return `translate3d(${transformAmount}px, 0, 0) scale(${scaleAmount})`;
 
-    case Alignment.Right:
+    case Align.Right:
       return `translate3d(-${transformAmount}px, 0, 0) scale(${scaleAmount})`;
   }
 }
@@ -111,7 +106,7 @@ interface AbsolutePositionObject {
 }
 
 interface CalcRelativePositionArgs {
-  alignment: Alignment;
+  alignment: Align;
   justification: Justification;
   referenceElPos: RefPosition;
   contentElPos: RefPosition;
@@ -129,19 +124,19 @@ export function calcRelativePosition({
   const positionObject: AbsolutePositionObject = {};
 
   switch (alignment) {
-    case Alignment.Top:
+    case Align.Top:
       positionObject.bottom = `calc(100% + ${spacing}px)`;
       break;
 
-    case Alignment.Bottom:
+    case Align.Bottom:
       positionObject.top = `calc(100% + ${spacing}px)`;
       break;
 
-    case Alignment.Left:
+    case Align.Left:
       positionObject.right = `calc(100% + ${spacing}px)`;
       break;
 
-    case Alignment.Right:
+    case Align.Right:
       positionObject.left = `calc(100% + ${spacing}px)`;
       break;
   }
