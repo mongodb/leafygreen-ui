@@ -245,52 +245,44 @@ export default class Popover extends Component<Props, State> {
     );
   };
 
+  findCorrectReferenceElement(): HTMLElement | undefined {
+    const { refEl } = this.props;
+    let referenceElement: HTMLElement | undefined;
+
+    if (refEl && refEl.current) {
+      referenceElement = refEl.current;
+    } else if (this.placeholderRef.current) {
+      const parent = this.placeholderRef.current.parentNode;
+
+      if (parent && parent instanceof HTMLElement) {
+        referenceElement = parent;
+      }
+    }
+
+    return referenceElement;
+  }
+
   // Sets the element to position relative to based on passed props,
   // and stores it, and it's position in state.
   setReferenceElement(): void {
-    const { refEl: passedRef } = this.props;
-    const { referenceElement, referenceElPos } = this.state;
+    const newReferenceElement = this.findCorrectReferenceElement();
 
-    if (referenceElement) {
-      if (!referenceElPos) {
-        this.setState({
-          referenceElPos: getElementPosition(referenceElement),
-        });
-      }
-
-      return;
+    if (newReferenceElement) {
+      this.setState({
+        referenceElement: newReferenceElement,
+        referenceElPos: getElementPosition(newReferenceElement),
+      });
     }
-
-    const newReferenceElement = (() => {
-      if (passedRef && passedRef.current) {
-        return passedRef.current;
-      }
-
-      if (this.placeholderRef && this.placeholderRef.current) {
-        const parent = this.placeholderRef.current.parentNode;
-
-        if (parent && parent instanceof HTMLElement) {
-          return parent;
-        }
-      }
-
-      return null;
-    })();
-
-    this.setState({
-      referenceElement: newReferenceElement,
-      referenceElPos: getElementPosition(newReferenceElement),
-    });
   }
 
   // Returns the style object that is used to position and transition the popover component
   calculatePosition() {
     const { usePortal, spacing, align } = this.props;
-    const { referenceElement, contentElPos } = this.state;
+    const { hasMounted, referenceElement, contentElPos } = this.state;
 
     // Forced second render to make sure that
     // we have access to refs
-    if (!this.state.hasMounted) {
+    if (!hasMounted) {
       return;
     }
 
