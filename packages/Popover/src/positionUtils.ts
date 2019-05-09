@@ -102,3 +102,77 @@ export function getElementPosition(element: HTMLElement | null): RefPosition {
 
   return { top, bottom, left, right, height, width };
 }
+
+interface AbsolutePositionObject {
+  top?: string | 0;
+  bottom?: string | 0;
+  left?: string | 0;
+  right?: string | 0;
+}
+
+interface CalcRelativePositionArgs {
+  alignment: Alignment;
+  justification: Justification;
+  referenceElPos: RefPosition;
+  contentElPos: RefPosition;
+  spacing: number;
+}
+
+// Returns positioning for an element absolutely positioned within it's relative parent
+export function calcRelativePosition({
+  alignment,
+  justification,
+  referenceElPos,
+  contentElPos,
+  spacing,
+}: CalcRelativePositionArgs): AbsolutePositionObject {
+  const positionObject: AbsolutePositionObject = {};
+
+  switch (alignment) {
+    case Alignment.Top:
+      positionObject.bottom = `calc(100% + ${spacing}px)`;
+      break;
+
+    case Alignment.Bottom:
+      positionObject.top = `calc(100% + ${spacing}px)`;
+      break;
+
+    case Alignment.Left:
+      positionObject.right = `calc(100% + ${spacing}px)`;
+      break;
+
+    case Alignment.Right:
+      positionObject.left = `calc(100% + ${spacing}px)`;
+      break;
+  }
+
+  switch (justification) {
+    case Justification.Top:
+      positionObject.top = 0;
+      break;
+
+    case Justification.Bottom:
+      positionObject.bottom = 0;
+      break;
+
+    case Justification.Left:
+      positionObject.left = 0;
+      break;
+
+    case Justification.Right:
+      positionObject.right = 0;
+      break;
+
+    case Justification.CenterHorizontal:
+      positionObject.left = `${referenceElPos.width / 2 -
+        contentElPos.width / 2}px`;
+      break;
+
+    case Justification.CenterVertical:
+      positionObject.top = `${referenceElPos.height / 2 -
+        contentElPos.height / 2}px`;
+      break;
+  }
+
+  return positionObject;
+}

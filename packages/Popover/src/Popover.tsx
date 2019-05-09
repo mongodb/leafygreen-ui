@@ -7,6 +7,7 @@ import {
   getTransform,
   getElementPosition,
   defaultElementPosition,
+  calcRelativePosition,
 } from './positionUtils';
 
 const { css, cx } = emotion;
@@ -49,13 +50,6 @@ export interface RefPosition {
   right: number;
   height: number;
   width: number;
-}
-
-interface AbsolutePositionObject {
-  top?: string | 0;
-  bottom?: string | 0;
-  left?: string | 0;
-  right?: string | 0;
 }
 
 export interface AbstractPosition {
@@ -278,7 +272,12 @@ export default class Popover extends Component<Props, State> {
   // Returns the style object that is used to position and transition the popover component
   calculatePosition() {
     const { usePortal, spacing, align } = this.props;
-    const { hasMounted, referenceElement, contentElPos } = this.state;
+    const {
+      hasMounted,
+      referenceElement,
+      referenceElPos,
+      contentElPos,
+    } = this.state;
 
     // Forced second render to make sure that
     // we have access to refs
@@ -315,7 +314,13 @@ export default class Popover extends Component<Props, State> {
 
     if (!usePortal) {
       return {
-        ...this.calcPositionWithoutPortal({ alignment, justification }),
+        ...calcRelativePosition({
+          alignment,
+          justification,
+          referenceElPos,
+          contentElPos,
+          spacing,
+        }),
         transformOrigin,
         transform,
       };
@@ -528,61 +533,6 @@ export default class Popover extends Component<Props, State> {
       default:
         return referenceElPos.left;
     }
-  }
-
-  // Returns positioning for an element absolutely positioned within it's relative parent
-  calcPositionWithoutPortal({ alignment, justification }: AbstractPosition) {
-    const { spacing } = this.props;
-    const { referenceElPos, contentElPos } = this.state;
-    const positionObject: AbsolutePositionObject = {};
-
-    switch (alignment) {
-      case Alignment.Top:
-        positionObject.bottom = `calc(100% + ${spacing}px)`;
-        break;
-
-      case Alignment.Bottom:
-        positionObject.top = `calc(100% + ${spacing}px)`;
-        break;
-
-      case Alignment.Left:
-        positionObject.right = `calc(100% + ${spacing}px)`;
-        break;
-
-      case Alignment.Right:
-        positionObject.left = `calc(100% + ${spacing}px)`;
-        break;
-    }
-
-    switch (justification) {
-      case Justification.Top:
-        positionObject.top = 0;
-        break;
-
-      case Justification.Bottom:
-        positionObject.bottom = 0;
-        break;
-
-      case Justification.Left:
-        positionObject.left = 0;
-        break;
-
-      case Justification.Right:
-        positionObject.right = 0;
-        break;
-
-      case Justification.CenterHorizontal:
-        positionObject.left = `${referenceElPos.width / 2 -
-          contentElPos.width / 2}px`;
-        break;
-
-      case Justification.CenterVertical:
-        positionObject.top = `${referenceElPos.height / 2 -
-          contentElPos.height / 2}px`;
-        break;
-    }
-
-    return positionObject;
   }
 
   contentRef = React.createRef<HTMLDivElement>();
