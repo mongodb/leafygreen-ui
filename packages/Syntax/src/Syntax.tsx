@@ -1,87 +1,104 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { emotion } from '@leafygreen-ui/lib';
 import hljs from 'highlight.js/lib/highlight';
-import SyntaxTheme from './SyntaxTheme'
+import SyntaxTheme from './SyntaxTheme';
+import { Variants, SupportedLanguages } from './types';
 
-export enum SupportedLanguages {
-  javascript = 'javascript',
-  typescript = 'typescript',
-  cal = 'cal', // C/AL
-  csp = 'csp', // C#
-  cpp = 'cpp', // C++
-  go = 'go',
-  java = 'java',
-  perl = 'perl',
-  php = 'php',
-  python = 'python',
-  ruby = 'ruby',
-  scala = 'scala',
-  bash = 'bash',
-  shell = 'shell',
-  sql = 'sql',
-  yaml = 'yaml',
-  json = 'json',
+const { cx } = emotion;
+
+Object.keys(SupportedLanguages).forEach(language => {
+  hljs.registerLanguage(
+    language,
+    require(`highlight.js/lib/languages/${language}`),
+  );
+});
+
+hljs.configure({
+  languages: Object.keys(SupportedLanguages),
+  classPrefix: 'lg-highlight-',
+  tabReplace: '  ',
+});
+
+export interface Props {
+  /**
+   * The children to render inside Code. This is usually going to be a formatted code block or line.
+   */
+  children: string;
+
+  /**
+   * An additional CSS class applied to the root element
+   */
+  className?: string;
+
+  /**
+   * The language used for syntax highlighting.
+   *
+   * default: `'auto'`
+   */
+  lang: SupportedLanguages | 'auto' | 'none';
+
+  /**
+   * The variant for the syntax-highlighted block.
+   *
+   * default: `'light'`
+   */
+  variant: Variants;
 }
 
-const languages = Object.keys(SupportedLanguages).reduce((acc, val) => {
-  const language = require(`highlight.js/lib/languages/${val}`)
-	return {
-    ...acc,
-    [val]: language,
-  }
-}, {})
+function Syntax({
+  children,
+  lang,
+  className,
+  variant = Variants.Light,
+}: Props): React.ReactElement {
+  const highlightedContent = {
+    __html: (() => {
+      if (!children) {
+        return '';
+      }
 
-interface Props {
-  lang: SupportedLanguages | 'auto',
-}
+      if (lang === 'none') {
+        return children;
+      }
 
-export default class Syntax extends Component<Props> {
-  static displayName = 'Syntax';
+      if (lang === 'auto') {
+        return hljs.highlightAuto(children).value;
+      }
 
-  static propTypes = {
-    children: PropTypes.string,
+      return hljs.highlight(lang, children).value;
+    })(),
   };
 
-  static defaultProps = {
-    lang: 'auto',
-  }
+  return (
+    <>
+      <code
+        className={cx(
+          'lg-highlight-hljs',
+          {
+            [SupportedLanguages[lang]]: lang !== 'auto',
+          },
+          className,
+        )}
+        dangerouslySetInnerHTML={highlightedContent}
+      />
 
-  componentDidMount() {
-    Object.keys(languages).forEach((language) => {
-    	hljs.registerLanguage(language, languages[language]);
-    })
-
-    hljs.configure({
-      languages: Object.keys(languages),
-      classPrefix: 'lg-highlight-',
-    })
-
-    this.highlightContent()
-  }
-
-  componentDidUpdate() {
-    // We need to do this any time the component re-renders
-    this.highlightContent()
-  }
-
-  highlightContent() {
-    const container = this.rootRef.current
-
-    if (container instanceof HTMLElement) {
-      hljs.highlightBlock(container);
-    }
-  }
-
-  rootRef = React.createRef<HTMLDivElement>();
-
-  render() {
-    const { children, lang } = this.props;
-
-    return (
-      <>
-        <code ref={this.rootRef} className={lang && SupportedLanguages[lang]}>{children}</code>
-        <SyntaxTheme />
-      </>
-    );
-  }
+      <SyntaxTheme variant={variant} />
+    </>
+  );
 }
+
+Syntax.displayName = 'Syntax';
+
+Syntax.propTypes = {
+  children: PropTypes.string,
+  lang: PropTypes.oneOf([...Object.keys(SupportedLanguages), 'auto', 'none']),
+  className: PropTypes.string,
+};
+
+Syntax.defaultProps = {
+  lang: 'auto',
+  variant: Variants.Light,
+};
+
+export default Syntax;

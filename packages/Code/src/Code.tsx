@@ -1,70 +1,77 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import Syntax, { SupportedLanguages } from '@leafygreen-ui/syntax';
+import Syntax, {
+  SupportedLanguages,
+  Props as SyntaxProps,
+  Variants,
+} from '@leafygreen-ui/syntax';
 
+const codeWhiteSpace = 12;
 
-const preStyle = css`
+const wrapperStyle = css`
+  overflow-x: auto;
+  border: 1px solid;
+  border-left-width: 3px;
+  border-radius: 4px;
+  padding: ${codeWhiteSpace}px;
   margin: 0;
+  position: relative;
 `;
 
-const textStyle = css`
-  font-size: 14px;
+const wrapperStyleWithLineNumbers = css`
+  padding-left: ${codeWhiteSpace * 3.5}px;
+`;
+
+const wrapperVariants: { readonly [K in Variants]: string } = {
+  [Variants.Light]: css`
+    border-color: #e7eeec;
+    background-color: #f9fbfa;
+    color: #21313c;
+  `,
+
+  [Variants.Dark]: css`
+    border-color: #061621;
+    background-color: #21313c;
+    color: #f9fbfa;
+  `,
+};
+
+const lineNumberStyles = css`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: ${codeWhiteSpace}px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-size: 13px;
   line-height: 24px;
 `;
 
-const Wrapper = ({ children, className }) => (
-  <div
-    className={cx(
-      css`
-        border-left: 3px solid #dee0e3;
-        background-color: #f4f6f7;
-        padding: 12px;
-      `,
-      className,
-    )}
-  >
-    {children}
-  </div>
-);
+const lineNumberVariants: { readonly [K in Variants]: string } = {
+  [Variants.Light]: css`
+    color: #b8c4c2;
+  `,
 
-Wrapper.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
+  [Variants.Dark]: css`
+    color: #5d6c74;
+  `,
 };
 
-const CodeBlock = ({ children }) => (
-  <code className={textStyle}>{children}</code>
-);
-
-CodeBlock.propTypes = {
-  children: PropTypes.node,
-};
-
-interface Props {
-  /**
-   * The children to render inside Code. This is usually going to be a formatted code block or line.
-   */
-  children?: React.ReactNode,
-  
-  /**
-   * An additional CSS class added to the root element of Code
-   */
-  className: string,
-
+interface Props extends SyntaxProps {
   /**
    * When true, whitespace and line breaks will be preserved.
    *
    * default: `true`
    * */
-  multiline: boolean,
+  multiline: boolean;
 
   /**
-   * The language used for syntax highlighting.
-   * 
-   * default: `'auto'`
+   * Shows line numbers in preformatted code blocks.
+   *
+   * default: `false`
    */
-  lang: SupportedLanguages,
+  showLineNumbers?: boolean;
 }
 
 /**
@@ -81,21 +88,60 @@ interface Props {
  * @param props.multiline When true, whitespace and line breaks will be preserved.
  * @param props.lang The language used for syntax highlighing.
  */
-export default function Code({ children, className, multiline, lang }: Props) {
+export default function Code({
+  children,
+  className,
+  multiline = true,
+  lang = 'auto',
+  variant = Variants.Light,
+  showLineNumbers = false,
+}: Props) {
+  const lineNumbers = (() => {
+    if (!showLineNumbers || !children.length) {
+      return null;
+    }
+
+    const lines = children.split('\n');
+
+    if (lines[lines.length - 1] === '') {
+      lines.pop();
+    }
+
+    return (
+      <div className={cx(lineNumberStyles, lineNumberVariants[variant])}>
+        {lines.map((line, i) => (
+          <div key={i}>{i + 1}</div>
+        ))}
+      </div>
+    );
+  })();
+
+  const wrapperClassName = cx(
+    wrapperStyle,
+    wrapperVariants[variant],
+    {
+      [wrapperStyleWithLineNumbers]: showLineNumbers,
+    },
+    className,
+  );
+
   if (!multiline) {
     return (
-      <Wrapper className={className}>
-        <Syntax lang={lang}>{children}</Syntax>
-      </Wrapper>
+      <div className={wrapperClassName}>
+        <Syntax variant={variant} lang={lang}>
+          {children}
+        </Syntax>
+      </div>
     );
   }
 
   return (
-    <Wrapper className={className}>
-      <pre className={preStyle}>
-        <Syntax lang={lang}>{children}</Syntax>
-      </pre>
-    </Wrapper>
+    <pre className={wrapperClassName}>
+      {lineNumbers}
+      <Syntax variant={variant} lang={lang}>
+        {children}
+      </Syntax>
+    </pre>
   );
 }
 
@@ -104,9 +150,6 @@ Code.displayName = 'Code';
 Code.propTypes = {
   children: PropTypes.node,
   multiline: PropTypes.bool,
-};
-
-Code.defaultProps = {
-  multiline: true,
-  lang: 'auto',
+  lang: PropTypes.oneOf([...Object.keys(SupportedLanguages), 'auto']),
+  variant: PropTypes.oneOf(Object.values(Variants)),
 };

@@ -1,4 +1,5 @@
-import Syntax, { SupportedLanguages } from './Syntax';
+import Syntax from './Syntax';
 
-export { SupportedLanguages }
+export { Variants, SupportedLanguages } from './types';
+export { Props } from './Syntax';
 export default Syntax;
