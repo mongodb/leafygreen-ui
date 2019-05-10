@@ -84,11 +84,11 @@ interface PopoverProps {
  *
  * React Component that handles positioning of content relative to another element.
  *
- * `''
+ * ```
 <button>
   <Popover active={true}>Hello world!</Popover>
 </button>
-    `''
+```
  * ---
  * @param props.children Content to appear inside of Popover container.
  * @param props.active Boolean to describe whether or not Popover is active.
@@ -97,8 +97,6 @@ interface PopoverProps {
  * @param props.justify Justification of Popover component relative to another element: `start`, `middle`, `end`.
  * @param props.refEl Reference element that Popover component should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
- *
- *
  */
 export default class Popover extends Component<PopoverProps> {
   static displayName = 'Popover';
@@ -184,13 +182,15 @@ export default class Popover extends Component<PopoverProps> {
       contentElPos,
     });
 
-    const activeStyle = active && {
-      transform: 'translate3d(0, 0, 0) scale(1)',
-      opacity: 1,
-      position: !usePortal && 'absolute',
-    };
+    const activeStyle =
+      active &&
+      ({
+        transform: 'translate3d(0, 0, 0) scale(1)',
+        opacity: 1,
+        position: usePortal ? undefined : 'absolute',
+      } as const);
 
-    const style = css({ ...position, ...activeStyle } as {});
+    const style = css({ ...position, ...activeStyle });
 
     const Root = usePortal ? Portal : Fragment;
 
