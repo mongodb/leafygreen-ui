@@ -1,11 +1,27 @@
-import {
-  Align,
-  Justify,
-  Justification,
-  RefPosition,
-  ReferencePosition,
-  ContentPosition,
-} from './Popover';
+import { Align, Justify } from './Popover';
+
+// We transform 'middle' into 'center-vertical' or 'center-horizontal' for internal use,
+// So both Justify and Justification are needed, where the same is not true for Alignment.
+enum Justification {
+  Top = 'top',
+  Bottom = 'bottom',
+  Left = 'left',
+  Right = 'right',
+  CenterVertical = 'center-vertical',
+  CenterHorizontal = 'center-horizontal',
+}
+
+interface RefPosition {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+  height: number;
+  width: number;
+}
+
+type ReferencePosition = RefPosition;
+type ContentPosition = RefPosition;
 
 interface TransformOriginArgs {
   alignment: Align;
@@ -13,7 +29,7 @@ interface TransformOriginArgs {
 }
 
 // Constructs the transform origin for any given pair of alignment / justification
-export function getTransformOrigin({
+function getTransformOrigin({
   alignment,
   justification,
 }: TransformOriginArgs): string {
@@ -68,10 +84,7 @@ export function getTransformOrigin({
 }
 
 // Get transform styles for position object
-export function getTransform(
-  alignment: Align,
-  transformAmount: number,
-): string {
+function getTransform(alignment: Align, transformAmount: number): string {
   const scaleAmount = 0.8;
 
   switch (alignment) {
@@ -126,7 +139,7 @@ interface CalcRelativePositionArgs {
 }
 
 // Returns positioning for an element absolutely positioned within it's relative parent
-export function calcRelativePosition({
+function calcRelativePosition({
   alignment,
   justification,
   referenceElPos,
@@ -193,7 +206,7 @@ interface CalculatePositionArgs {
 }
 
 // Returns the 'top' position in pixels for a valid alignment or justification.
-export function calcTop({
+function calcTop({
   alignment,
   justification,
   contentElPos,
@@ -224,7 +237,7 @@ export function calcTop({
 }
 
 // Returns the 'left' position in pixels for a valid alignment or justification.
-export function calcLeft({
+function calcLeft({
   alignment,
   justification,
   contentElPos,
@@ -255,7 +268,7 @@ export function calcLeft({
 }
 
 // Check if horizontal position is safely within edge of window
-export function safelyWithinHorizontalWindow({
+function safelyWithinHorizontalWindow({
   left,
   windowWidth,
   contentWidth,
@@ -270,7 +283,7 @@ export function safelyWithinHorizontalWindow({
 }
 
 // Check if vertical position is safely within edge of window
-export function safelyWithinVerticalWindow({
+function safelyWithinVerticalWindow({
   top,
   windowHeight,
   contentHeight,
@@ -295,7 +308,7 @@ interface WindowSafeCommonArgs {
 // Determines the alignment to render based on an order of alignment fallbacks
 // Returns the first alignment that doesn't collide with the window,
 // defaulting to the align prop if all alignments fail.
-export function getWindowSafeAlignment(
+function getWindowSafeAlignment(
   align: Align,
   windowSafeCommon: WindowSafeCommonArgs,
 ): Align {
@@ -359,7 +372,7 @@ export function getWindowSafeAlignment(
 // Determines the justification to render based on an order of justification fallbacks
 // Returns the first justification that doesn't collide with the window,
 // defaulting to the justify prop if all justifications fail.
-export function getWindowSafeJustification(
+function getWindowSafeJustification(
   justify: Justify,
   alignment: Align,
   windowSafeCommon: WindowSafeCommonArgs,

@@ -30,29 +30,6 @@ export enum Justify {
   End = 'end',
 }
 
-// We transform 'middle' into 'center-vertical' or 'center-horizontal' for internal use,
-// So both Justify and Justification are needed, where the same is not true for Alignment.
-export enum Justification {
-  Top = 'top',
-  Bottom = 'bottom',
-  Left = 'left',
-  Right = 'right',
-  CenterVertical = 'center-vertical',
-  CenterHorizontal = 'center-horizontal',
-}
-
-export interface RefPosition {
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-  height: number;
-  width: number;
-}
-
-export type ReferencePosition = RefPosition;
-export type ContentPosition = RefPosition;
-
 interface Props {
   /**
    * Content that will appear inside of the popover component.
