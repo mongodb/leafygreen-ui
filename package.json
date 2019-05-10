@@ -50,7 +50,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint"
+      "pre-push": "npm run lint" 
     }
   },
   "devDependencies": {
