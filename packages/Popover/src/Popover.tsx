@@ -338,6 +338,8 @@ export default class Popover extends Component<Props, State> {
   // Returns the first alignment that doesn't collide with the window,
   // defaulting to the align prop if all alignments fail.
   getWindowSafeAlignment(align: Align): Align {
+    const { contentElPos, windowWidth, windowHeight } = this.state;
+
     const alignments: {
       top: ReadonlyArray<Align>;
       bottom: ReadonlyArray<Align>;
@@ -356,12 +358,20 @@ export default class Popover extends Component<Props, State> {
 
         if ([Align.Top, Align.Bottom].includes(alignment)) {
           const top = this.calcTop({ alignment });
-          return this.safelyWithinVerticalWindow(top);
+          return this.safelyWithinVerticalWindow({
+            top,
+            windowHeight,
+            contentHeight: contentElPos.height,
+          });
         }
 
         if ([Align.Left, Align.Right].includes(alignment)) {
           const left = this.calcLeft({ alignment });
-          return this.safelyWithinHorizontalWindow(left);
+          return this.safelyWithinHorizontalWindow({
+            left,
+            windowWidth,
+            contentWidth: contentElPos.width,
+          });
         }
 
         return false;
@@ -374,6 +384,7 @@ export default class Popover extends Component<Props, State> {
   // defaulting to the justify prop if all justifications fail.
   getWindowSafeJustification(alignment: Align): Justification {
     const { justify } = this.props;
+    const { contentElPos, windowWidth, windowHeight } = this.state;
 
     let justifications: {
       [Justify.Start]: ReadonlyArray<Justification>;
@@ -440,7 +451,11 @@ export default class Popover extends Component<Props, State> {
           ].includes(justification)
         ) {
           const top = this.calcTop({ justification });
-          return this.safelyWithinVerticalWindow(top);
+          return this.safelyWithinVerticalWindow({
+            top,
+            windowHeight,
+            contentHeight: contentElPos.height,
+          });
         }
 
         if (
@@ -451,7 +466,11 @@ export default class Popover extends Component<Props, State> {
           ].includes(justification)
         ) {
           const left = this.calcLeft({ justification });
-          return this.safelyWithinHorizontalWindow(left);
+          return this.safelyWithinHorizontalWindow({
+            left,
+            windowWidth,
+            contentWidth: contentElPos.width,
+          });
         }
 
         return false;
@@ -460,17 +479,31 @@ export default class Popover extends Component<Props, State> {
   }
 
   // Check if horizontal position is safely within edge of window
-  safelyWithinHorizontalWindow(left: number): boolean {
-    const { contentElPos, windowWidth } = this.state;
-    const tooWide = left + contentElPos.width > windowWidth;
+  safelyWithinHorizontalWindow({
+    left,
+    windowWidth,
+    contentWidth,
+  }: {
+    left: number;
+    windowWidth: number;
+    contentWidth: number;
+  }): boolean {
+    const tooWide = left + contentWidth > windowWidth;
 
     return left >= 0 && !tooWide;
   }
 
   // Check if vertical position is safely within edge of window
-  safelyWithinVerticalWindow(top: number): boolean {
-    const { contentElPos, windowHeight } = this.state;
-    const tooTall = top + contentElPos.height > windowHeight;
+  safelyWithinVerticalWindow({
+    top,
+    windowHeight,
+    contentHeight,
+  }: {
+    top: number;
+    windowHeight: number;
+    contentHeight: number;
+  }): boolean {
+    const tooTall = top + contentHeight > windowHeight;
 
     return top >= 0 && !tooTall;
   }
