@@ -182,3 +182,73 @@ export function calcRelativePosition({
 
   return positionObject;
 }
+
+interface CalculatePositionArgs {
+  alignment?: Align;
+  justification?: Justification;
+  spacing: number;
+  referenceElPos: ReferencePosition;
+  contentElPos: ContentPosition;
+}
+
+// Returns the 'top' position in pixels for a valid alignment or justification.
+export function calcTop({
+  alignment,
+  justification,
+  contentElPos,
+  referenceElPos,
+  spacing,
+}: CalculatePositionArgs): number {
+  switch (justification) {
+    case Justification.Top:
+      return referenceElPos.top;
+
+    case Justification.Bottom:
+      return referenceElPos.top + referenceElPos.height - contentElPos.height;
+
+    case Justification.CenterVertical:
+      return (
+        referenceElPos.top + referenceElPos.height / 2 - contentElPos.height / 2
+      );
+  }
+
+  switch (alignment) {
+    case Align.Top:
+      return referenceElPos.top - contentElPos.height - spacing;
+
+    case Align.Bottom:
+    default:
+      return referenceElPos.top + referenceElPos.height + spacing;
+  }
+}
+
+// Returns the 'left' position in pixels for a valid alignment or justification.
+export function calcLeft({
+  alignment,
+  justification,
+  contentElPos,
+  referenceElPos,
+  spacing,
+}: CalculatePositionArgs): number {
+  switch (alignment) {
+    case Align.Left:
+      return referenceElPos.left - contentElPos.width - spacing;
+
+    case Align.Right:
+      return referenceElPos.left + referenceElPos.width + spacing;
+  }
+
+  switch (justification) {
+    case Justification.Right:
+      return referenceElPos.left + referenceElPos.width - contentElPos.width;
+
+    case Justification.CenterHorizontal:
+      return (
+        referenceElPos.left + referenceElPos.width / 2 - contentElPos.width / 2
+      );
+
+    case Justification.Left:
+    default:
+      return referenceElPos.left;
+  }
+}

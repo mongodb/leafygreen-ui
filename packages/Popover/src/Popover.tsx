@@ -8,6 +8,8 @@ import {
   getElementPosition,
   defaultElementPosition,
   calcRelativePosition,
+  calcLeft,
+  calcTop,
 } from './positionUtils';
 
 const { css, cx } = emotion;
@@ -54,14 +56,6 @@ export interface RefPosition {
 
 export type ReferencePosition = RefPosition;
 export type ContentPosition = RefPosition;
-
-interface CalculatePositionArgs {
-  alignment?: Align;
-  justification?: Justification;
-  spacing: number;
-  referenceElPos: ReferencePosition;
-  contentElPos: ContentPosition;
-}
 
 interface Props {
   /**
@@ -333,14 +327,14 @@ export default class Popover extends Component<Props, State> {
     }
 
     return {
-      top: this.calcTop({
+      top: calcTop({
         alignment,
         justification,
         contentElPos,
         referenceElPos,
         spacing,
       }),
-      left: this.calcLeft({
+      left: calcLeft({
         alignment,
         justification,
         contentElPos,
@@ -381,7 +375,7 @@ export default class Popover extends Component<Props, State> {
         // Check that an alignment will not cause the popover to collide with the window.
 
         if ([Align.Top, Align.Bottom].includes(alignment)) {
-          const top = this.calcTop({
+          const top = calcTop({
             alignment,
             contentElPos,
             referenceElPos,
@@ -395,7 +389,7 @@ export default class Popover extends Component<Props, State> {
         }
 
         if ([Align.Left, Align.Right].includes(alignment)) {
-          const left = this.calcLeft({
+          const left = calcLeft({
             alignment,
             contentElPos,
             referenceElPos,
@@ -489,7 +483,7 @@ export default class Popover extends Component<Props, State> {
             Justification.CenterVertical,
           ].includes(justification)
         ) {
-          const top = this.calcTop({
+          const top = calcTop({
             justification,
             contentElPos,
             referenceElPos,
@@ -509,7 +503,7 @@ export default class Popover extends Component<Props, State> {
             Justification.CenterHorizontal,
           ].includes(justification)
         ) {
-          const left = this.calcLeft({
+          const left = calcLeft({
             justification,
             contentElPos,
             referenceElPos,
@@ -555,72 +549,6 @@ export default class Popover extends Component<Props, State> {
     const tooTall = top + contentHeight > windowHeight;
 
     return top >= 0 && !tooTall;
-  }
-
-  // Returns the 'top' position in pixels for a valid alignment or justification.
-  calcTop({
-    alignment,
-    justification,
-    contentElPos,
-    referenceElPos,
-    spacing,
-  }: CalculatePositionArgs): number {
-    switch (justification) {
-      case Justification.Top:
-        return referenceElPos.top;
-
-      case Justification.Bottom:
-        return referenceElPos.top + referenceElPos.height - contentElPos.height;
-
-      case Justification.CenterVertical:
-        return (
-          referenceElPos.top +
-          referenceElPos.height / 2 -
-          contentElPos.height / 2
-        );
-    }
-
-    switch (alignment) {
-      case Align.Top:
-        return referenceElPos.top - contentElPos.height - spacing;
-
-      case Align.Bottom:
-      default:
-        return referenceElPos.top + referenceElPos.height + spacing;
-    }
-  }
-
-  // Returns the 'left' position in pixels for a valid alignment or justification.
-  calcLeft({
-    alignment,
-    justification,
-    contentElPos,
-    referenceElPos,
-    spacing,
-  }: CalculatePositionArgs): number {
-    switch (alignment) {
-      case Align.Left:
-        return referenceElPos.left - contentElPos.width - spacing;
-
-      case Align.Right:
-        return referenceElPos.left + referenceElPos.width + spacing;
-    }
-
-    switch (justification) {
-      case Justification.Right:
-        return referenceElPos.left + referenceElPos.width - contentElPos.width;
-
-      case Justification.CenterHorizontal:
-        return (
-          referenceElPos.left +
-          referenceElPos.width / 2 -
-          contentElPos.width / 2
-        );
-
-      case Justification.Left:
-      default:
-        return referenceElPos.left;
-    }
   }
 
   contentRef = React.createRef<HTMLDivElement>();
