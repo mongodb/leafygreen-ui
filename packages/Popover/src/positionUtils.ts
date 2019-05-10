@@ -1,10 +1,21 @@
-import { AbstractPosition, Align, Justification, RefPosition } from './Popover';
+import {
+  Align,
+  Justification,
+  RefPosition,
+  ReferencePosition,
+  ContentPosition,
+} from './Popover';
+
+interface TransformOriginArgs {
+  alignment: Align;
+  justification: Justification;
+}
 
 // Constructs the transform origin for any given pair of alignment / justification
 export function getTransformOrigin({
   alignment,
   justification,
-}: AbstractPosition): string {
+}: TransformOriginArgs): string {
   let x = '';
   let y = '';
 
@@ -108,8 +119,8 @@ interface AbsolutePositionObject {
 interface CalcRelativePositionArgs {
   alignment: Align;
   justification: Justification;
-  referenceElPos: RefPosition;
-  contentElPos: RefPosition;
+  referenceElPos: ReferencePosition;
+  contentElPos: ContentPosition;
   spacing: number;
 }
 

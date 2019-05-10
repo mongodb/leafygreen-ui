@@ -52,9 +52,15 @@ export interface RefPosition {
   width: number;
 }
 
-export interface AbstractPosition {
+export type ReferencePosition = RefPosition;
+export type ContentPosition = RefPosition;
+
+interface CalculatePositionArgs {
   alignment?: Align;
   justification?: Justification;
+  spacing: number;
+  referenceElPos: ReferencePosition;
+  contentElPos: ContentPosition;
 }
 
 interface Props {
@@ -115,8 +121,8 @@ interface State {
   windowHeight: number;
   windowWidth: number;
   hasMounted: boolean;
-  referenceElPos: RefPosition;
-  contentElPos: RefPosition;
+  referenceElPos: ReferencePosition;
+  contentElPos: ContentPosition;
   referenceElement: HTMLElement | null;
 }
 
@@ -327,8 +333,20 @@ export default class Popover extends Component<Props, State> {
     }
 
     return {
-      top: this.calcTop({ alignment, justification }),
-      left: this.calcLeft({ alignment, justification }),
+      top: this.calcTop({
+        alignment,
+        justification,
+        contentElPos,
+        referenceElPos,
+        spacing,
+      }),
+      left: this.calcLeft({
+        alignment,
+        justification,
+        contentElPos,
+        referenceElPos,
+        spacing,
+      }),
       transformOrigin,
       transform,
     };
@@ -338,7 +356,13 @@ export default class Popover extends Component<Props, State> {
   // Returns the first alignment that doesn't collide with the window,
   // defaulting to the align prop if all alignments fail.
   getWindowSafeAlignment(align: Align): Align {
-    const { contentElPos, windowWidth, windowHeight } = this.state;
+    const { spacing } = this.props;
+    const {
+      contentElPos,
+      windowWidth,
+      windowHeight,
+      referenceElPos,
+    } = this.state;
 
     const alignments: {
       top: ReadonlyArray<Align>;
@@ -357,7 +381,12 @@ export default class Popover extends Component<Props, State> {
         // Check that an alignment will not cause the popover to collide with the window.
 
         if ([Align.Top, Align.Bottom].includes(alignment)) {
-          const top = this.calcTop({ alignment });
+          const top = this.calcTop({
+            alignment,
+            contentElPos,
+            referenceElPos,
+            spacing,
+          });
           return this.safelyWithinVerticalWindow({
             top,
             windowHeight,
@@ -366,7 +395,12 @@ export default class Popover extends Component<Props, State> {
         }
 
         if ([Align.Left, Align.Right].includes(alignment)) {
-          const left = this.calcLeft({ alignment });
+          const left = this.calcLeft({
+            alignment,
+            contentElPos,
+            referenceElPos,
+            spacing,
+          });
           return this.safelyWithinHorizontalWindow({
             left,
             windowWidth,
@@ -383,8 +417,13 @@ export default class Popover extends Component<Props, State> {
   // Returns the first justification that doesn't collide with the window,
   // defaulting to the justify prop if all justifications fail.
   getWindowSafeJustification(alignment: Align): Justification {
-    const { justify } = this.props;
-    const { contentElPos, windowWidth, windowHeight } = this.state;
+    const { justify, spacing } = this.props;
+    const {
+      contentElPos,
+      windowWidth,
+      windowHeight,
+      referenceElPos,
+    } = this.state;
 
     let justifications: {
       [Justify.Start]: ReadonlyArray<Justification>;
@@ -450,7 +489,12 @@ export default class Popover extends Component<Props, State> {
             Justification.CenterVertical,
           ].includes(justification)
         ) {
-          const top = this.calcTop({ justification });
+          const top = this.calcTop({
+            justification,
+            contentElPos,
+            referenceElPos,
+            spacing,
+          });
           return this.safelyWithinVerticalWindow({
             top,
             windowHeight,
@@ -465,7 +509,12 @@ export default class Popover extends Component<Props, State> {
             Justification.CenterHorizontal,
           ].includes(justification)
         ) {
-          const left = this.calcLeft({ justification });
+          const left = this.calcLeft({
+            justification,
+            contentElPos,
+            referenceElPos,
+            spacing,
+          });
           return this.safelyWithinHorizontalWindow({
             left,
             windowWidth,
@@ -509,10 +558,13 @@ export default class Popover extends Component<Props, State> {
   }
 
   // Returns the 'top' position in pixels for a valid alignment or justification.
-  calcTop({ alignment, justification }: AbstractPosition): number {
-    const { spacing } = this.props;
-    const { referenceElPos, contentElPos } = this.state;
-
+  calcTop({
+    alignment,
+    justification,
+    contentElPos,
+    referenceElPos,
+    spacing,
+  }: CalculatePositionArgs): number {
     switch (justification) {
       case Justification.Top:
         return referenceElPos.top;
@@ -539,10 +591,13 @@ export default class Popover extends Component<Props, State> {
   }
 
   // Returns the 'left' position in pixels for a valid alignment or justification.
-  calcLeft({ alignment, justification }: AbstractPosition): number {
-    const { spacing } = this.props;
-    const { referenceElPos, contentElPos } = this.state;
-
+  calcLeft({
+    alignment,
+    justification,
+    contentElPos,
+    referenceElPos,
+    spacing,
+  }: CalculatePositionArgs): number {
     switch (alignment) {
       case Align.Left:
         return referenceElPos.left - contentElPos.width - spacing;
