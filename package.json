@@ -84,6 +84,7 @@
     "babel-plugin-emotion": "9.2.11",
     "clean-webpack-plugin": "1.0.0",
     "create-emotion": "^10.0.7",
+    "cz-conventional-changelog": "^2.1.0",
     "emotion": "^10.0.7",
     "eslint": "5.9.0",
     "eslint-config-prettier": "3.3.0",
@@ -108,5 +109,10 @@
     "url-loader": "1.1.2",
     "webpack": "4.26.0",
     "webpack-cli": "3.1.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
