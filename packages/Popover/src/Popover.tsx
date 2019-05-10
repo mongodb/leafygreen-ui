@@ -59,6 +59,14 @@ export interface RefPosition {
 export type ReferencePosition = RefPosition;
 export type ContentPosition = RefPosition;
 
+interface WindowSafeCommonArgs {
+  windowWidth: number;
+  windowHeight: number;
+  referenceElPos: ReferencePosition;
+  contentElPos: ContentPosition;
+  spacing: number;
+}
+
 interface Props {
   /**
    * Content that will appear inside of the popover component.
@@ -273,12 +281,14 @@ export default class Popover extends Component<Props, State> {
 
   // Returns the style object that is used to position and transition the popover component
   calculatePosition() {
-    const { usePortal, spacing, align } = this.props;
+    const { usePortal, spacing, align, justify } = this.props;
     const {
       hasMounted,
       referenceElement,
       referenceElPos,
       contentElPos,
+      windowHeight,
+      windowWidth,
     } = this.state;
 
     // Forced second render to make sure that
@@ -304,8 +314,19 @@ export default class Popover extends Component<Props, State> {
       return;
     }
 
-    const alignment = this.getWindowSafeAlignment(align);
-    const justification = this.getWindowSafeJustification(alignment);
+    const windowSafeCommonArgs = {
+      windowWidth,
+      windowHeight,
+      referenceElPos,
+      contentElPos,
+      spacing,
+    };
+    const alignment = this.getWindowSafeAlignment(align, windowSafeCommonArgs);
+    const justification = this.getWindowSafeJustification(
+      justify,
+      alignment,
+      windowSafeCommonArgs,
+    );
 
     const transformOrigin = getTransformOrigin({
       alignment,
@@ -351,14 +372,17 @@ export default class Popover extends Component<Props, State> {
   // Determines the alignment to render based on an order of alignment fallbacks
   // Returns the first alignment that doesn't collide with the window,
   // defaulting to the align prop if all alignments fail.
-  getWindowSafeAlignment(align: Align): Align {
-    const { spacing } = this.props;
+  getWindowSafeAlignment(
+    align: Align,
+    windowSafeCommon: WindowSafeCommonArgs,
+  ): Align {
     const {
+      spacing,
       contentElPos,
       windowWidth,
       windowHeight,
       referenceElPos,
-    } = this.state;
+    } = windowSafeCommon;
 
     const alignments: {
       top: ReadonlyArray<Align>;
@@ -412,14 +436,18 @@ export default class Popover extends Component<Props, State> {
   // Determines the justification to render based on an order of justification fallbacks
   // Returns the first justification that doesn't collide with the window,
   // defaulting to the justify prop if all justifications fail.
-  getWindowSafeJustification(alignment: Align): Justification {
-    const { justify, spacing } = this.props;
+  getWindowSafeJustification(
+    justify: Justify,
+    alignment: Align,
+    windowSafeCommon: WindowSafeCommonArgs,
+  ): Justification {
     const {
+      spacing,
       contentElPos,
       windowWidth,
       windowHeight,
       referenceElPos,
-    } = this.state;
+    } = windowSafeCommon;
 
     let justifications: {
       [Justify.Start]: ReadonlyArray<Justification>;
