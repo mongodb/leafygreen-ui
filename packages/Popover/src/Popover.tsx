@@ -586,7 +586,7 @@ export default class Popover extends Component<Props, State> {
       position: !usePortal && 'absolute',
     };
 
-    const style = css({ ...position, ...activeStyle });
+    const style = css({ ...position, ...activeStyle } as {});
 
     return (
       <>
