@@ -252,3 +252,33 @@ export function calcLeft({
       return referenceElPos.left;
   }
 }
+
+// Check if horizontal position is safely within edge of window
+export function safelyWithinHorizontalWindow({
+  left,
+  windowWidth,
+  contentWidth,
+}: {
+  left: number;
+  windowWidth: number;
+  contentWidth: number;
+}): boolean {
+  const tooWide = left + contentWidth > windowWidth;
+
+  return left >= 0 && !tooWide;
+}
+
+// Check if vertical position is safely within edge of window
+export function safelyWithinVerticalWindow({
+  top,
+  windowHeight,
+  contentHeight,
+}: {
+  top: number;
+  windowHeight: number;
+  contentHeight: number;
+}): boolean {
+  const tooTall = top + contentHeight > windowHeight;
+
+  return top >= 0 && !tooTall;
+}

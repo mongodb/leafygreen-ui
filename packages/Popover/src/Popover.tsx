@@ -10,6 +10,8 @@ import {
   calcRelativePosition,
   calcLeft,
   calcTop,
+  safelyWithinHorizontalWindow,
+  safelyWithinVerticalWindow,
 } from './positionUtils';
 
 const { css, cx } = emotion;
@@ -381,7 +383,7 @@ export default class Popover extends Component<Props, State> {
             referenceElPos,
             spacing,
           });
-          return this.safelyWithinVerticalWindow({
+          return safelyWithinVerticalWindow({
             top,
             windowHeight,
             contentHeight: contentElPos.height,
@@ -395,7 +397,7 @@ export default class Popover extends Component<Props, State> {
             referenceElPos,
             spacing,
           });
-          return this.safelyWithinHorizontalWindow({
+          return safelyWithinHorizontalWindow({
             left,
             windowWidth,
             contentWidth: contentElPos.width,
@@ -489,7 +491,7 @@ export default class Popover extends Component<Props, State> {
             referenceElPos,
             spacing,
           });
-          return this.safelyWithinVerticalWindow({
+          return safelyWithinVerticalWindow({
             top,
             windowHeight,
             contentHeight: contentElPos.height,
@@ -509,7 +511,7 @@ export default class Popover extends Component<Props, State> {
             referenceElPos,
             spacing,
           });
-          return this.safelyWithinHorizontalWindow({
+          return safelyWithinHorizontalWindow({
             left,
             windowWidth,
             contentWidth: contentElPos.width,
@@ -519,36 +521,6 @@ export default class Popover extends Component<Props, State> {
         return false;
       }) || justifications[justify][0]
     );
-  }
-
-  // Check if horizontal position is safely within edge of window
-  safelyWithinHorizontalWindow({
-    left,
-    windowWidth,
-    contentWidth,
-  }: {
-    left: number;
-    windowWidth: number;
-    contentWidth: number;
-  }): boolean {
-    const tooWide = left + contentWidth > windowWidth;
-
-    return left >= 0 && !tooWide;
-  }
-
-  // Check if vertical position is safely within edge of window
-  safelyWithinVerticalWindow({
-    top,
-    windowHeight,
-    contentHeight,
-  }: {
-    top: number;
-    windowHeight: number;
-    contentHeight: number;
-  }): boolean {
-    const tooTall = top + contentHeight > windowHeight;
-
-    return top >= 0 && !tooTall;
   }
 
   contentRef = React.createRef<HTMLDivElement>();
