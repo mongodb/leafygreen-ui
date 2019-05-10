@@ -1,5 +1,6 @@
 import {
   Align,
+  Justify,
   Justification,
   RefPosition,
   ReferencePosition,
@@ -281,4 +282,194 @@ export function safelyWithinVerticalWindow({
   const tooTall = top + contentHeight > windowHeight;
 
   return top >= 0 && !tooTall;
+}
+
+interface WindowSafeCommonArgs {
+  windowWidth: number;
+  windowHeight: number;
+  referenceElPos: ReferencePosition;
+  contentElPos: ContentPosition;
+  spacing: number;
+}
+
+// Determines the alignment to render based on an order of alignment fallbacks
+// Returns the first alignment that doesn't collide with the window,
+// defaulting to the align prop if all alignments fail.
+export function getWindowSafeAlignment(
+  align: Align,
+  windowSafeCommon: WindowSafeCommonArgs,
+): Align {
+  const {
+    spacing,
+    contentElPos,
+    windowWidth,
+    windowHeight,
+    referenceElPos,
+  } = windowSafeCommon;
+
+  const alignments: {
+    top: ReadonlyArray<Align>;
+    bottom: ReadonlyArray<Align>;
+    left: ReadonlyArray<Align>;
+    right: ReadonlyArray<Align>;
+  } = {
+    top: [Align.Top, Align.Bottom],
+    bottom: [Align.Bottom, Align.Top],
+    left: [Align.Left, Align.Right],
+    right: [Align.Right, Align.Left],
+  };
+
+  return (
+    alignments[align].find(alignment => {
+      // Check that an alignment will not cause the popover to collide with the window.
+
+      if ([Align.Top, Align.Bottom].includes(alignment)) {
+        const top = calcTop({
+          alignment,
+          contentElPos,
+          referenceElPos,
+          spacing,
+        });
+        return safelyWithinVerticalWindow({
+          top,
+          windowHeight,
+          contentHeight: contentElPos.height,
+        });
+      }
+
+      if ([Align.Left, Align.Right].includes(alignment)) {
+        const left = calcLeft({
+          alignment,
+          contentElPos,
+          referenceElPos,
+          spacing,
+        });
+        return safelyWithinHorizontalWindow({
+          left,
+          windowWidth,
+          contentWidth: contentElPos.width,
+        });
+      }
+
+      return false;
+    }) || align
+  );
+}
+
+// Determines the justification to render based on an order of justification fallbacks
+// Returns the first justification that doesn't collide with the window,
+// defaulting to the justify prop if all justifications fail.
+export function getWindowSafeJustification(
+  justify: Justify,
+  alignment: Align,
+  windowSafeCommon: WindowSafeCommonArgs,
+): Justification {
+  const {
+    spacing,
+    contentElPos,
+    windowWidth,
+    windowHeight,
+    referenceElPos,
+  } = windowSafeCommon;
+
+  let justifications: {
+    [Justify.Start]: ReadonlyArray<Justification>;
+    [Justify.Middle]: ReadonlyArray<Justification>;
+    [Justify.End]: ReadonlyArray<Justification>;
+  };
+
+  switch (alignment) {
+    case Align.Left:
+    case Align.Right: {
+      justifications = {
+        [Justify.Start]: [
+          Justification.Top,
+          Justification.Bottom,
+          Justification.CenterVertical,
+        ],
+        [Justify.Middle]: [
+          Justification.CenterVertical,
+          Justification.Bottom,
+          Justification.Top,
+        ],
+        [Justify.End]: [
+          Justification.Bottom,
+          Justification.Top,
+          Justification.CenterVertical,
+        ],
+      };
+      break;
+    }
+
+    case Align.Top:
+    case Align.Bottom:
+    default: {
+      justifications = {
+        [Justify.Start]: [
+          Justification.Left,
+          Justification.Right,
+          Justification.CenterHorizontal,
+        ],
+        [Justify.Middle]: [
+          Justification.CenterHorizontal,
+          Justification.Right,
+          Justification.Left,
+        ],
+        [Justify.End]: [
+          Justification.Right,
+          Justification.Left,
+          Justification.CenterHorizontal,
+        ],
+      };
+      break;
+    }
+  }
+
+  return (
+    justifications[justify].find(justification => {
+      // Check that a justification will not cause the popover to collide with the window.
+
+      if (
+        [
+          Justification.Top,
+          Justification.Bottom,
+          Justification.CenterVertical,
+        ].includes(justification)
+      ) {
+        const top = calcTop({
+          justification,
+          contentElPos,
+          referenceElPos,
+          spacing,
+        });
+        return safelyWithinVerticalWindow({
+          top,
+          windowHeight,
+          contentHeight: contentElPos.height,
+        });
+      }
+
+      if (
+        [
+          Justification.Left,
+          Justification.Right,
+          Justification.CenterHorizontal,
+        ].includes(justification)
+      ) {
+        const left = calcLeft({
+          justification,
+          contentElPos,
+          referenceElPos,
+          spacing,
+        });
+        return safelyWithinHorizontalWindow({
+          left,
+          windowWidth,
+          contentWidth: contentElPos.width,
+        });
+      }
+
+      return false;
+    }) || justifications[justify][0]
+  );
 }
