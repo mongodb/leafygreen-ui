@@ -2,11 +2,7 @@ import React, { Component, Fragment, ReactNode, RefObject } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
 import { emotion } from '@leafygreen-ui/lib';
-import {
-  calculatePosition,
-  getElementPosition,
-  defaultElementPosition,
-} from './positionUtils';
+import { calculatePosition, getElementPosition } from './positionUtils';
 
 const { css, cx } = emotion;
 
@@ -172,11 +168,13 @@ export default class Popover extends Component<PopoverProps> {
       justify,
       ...rest
     } = this.props;
+
     delete rest.refEl;
 
     const referenceElement = this.findCorrectReferenceElement();
     const referenceElPos = getElementPosition(referenceElement);
     const contentElPos = getElementPosition(this.contentRef.current);
+
     const position = calculatePosition({
       useRelativePositioning: !usePortal,
       spacing,
@@ -185,7 +183,6 @@ export default class Popover extends Component<PopoverProps> {
       referenceElPos,
       contentElPos,
     });
-    const Root = usePortal ? Portal : Fragment;
 
     const activeStyle = active && {
       transform: 'translate3d(0, 0, 0) scale(1)',
@@ -194,6 +191,8 @@ export default class Popover extends Component<PopoverProps> {
     };
 
     const style = css({ ...position, ...activeStyle } as {});
+
+    const Root = usePortal ? Portal : Fragment;
 
     return (
       <>

@@ -102,7 +102,7 @@ function getTransform(alignment: Align, transformAmount: number): string {
   }
 }
 
-export const defaultElementPosition = {
+const defaultElementPosition = {
   top: 0,
   bottom: 0,
   left: 0,
@@ -502,8 +502,8 @@ export function calculatePosition({
   spacing,
   align,
   justify,
-  referenceElPos,
-  contentElPos,
+  referenceElPos = defaultElementPosition,
+  contentElPos = defaultElementPosition,
 }: PositionArgs) {
   const windowHeight = window.innerHeight;
   const windowWidth = window.innerWidth;
