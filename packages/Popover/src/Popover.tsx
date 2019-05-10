@@ -30,7 +30,7 @@ export enum Justify {
   End = 'end',
 }
 
-interface Props {
+interface PopoverProps {
   /**
    * Content that will appear inside of the popover component.
    */
@@ -83,10 +83,6 @@ interface Props {
   spacing: number;
 }
 
-interface State {
-  hasMounted: boolean;
-}
-
 /**
  * # Popover
  *
@@ -108,7 +104,7 @@ interface State {
  *
  *
  */
-export default class Popover extends Component<Props, State> {
+export default class Popover extends Component<PopoverProps> {
   static displayName = 'Popover';
 
   static propTypes = {
@@ -122,7 +118,7 @@ export default class Popover extends Component<Props, State> {
     spacing: PropTypes.number,
   };
 
-  static defaultProps: Props = {
+  static defaultProps: PopoverProps = {
     children: undefined,
     align: Align.Bottom,
     justify: Justify.Start,
@@ -131,13 +127,7 @@ export default class Popover extends Component<Props, State> {
     spacing: 10,
   };
 
-  state: State = {
-    hasMounted: false,
-  };
-
   componentDidMount() {
-    this.setState({ hasMounted: true });
-
     window.addEventListener('resize', this.handleWindowResize);
   }
 
@@ -182,28 +172,19 @@ export default class Popover extends Component<Props, State> {
       justify,
       ...rest
     } = this.props;
-    const { hasMounted } = this.state;
-
     delete rest.refEl;
 
-    let position;
-
-    if (hasMounted) {
-      const referenceElement = this.findCorrectReferenceElement();
-      const referenceElPos = getElementPosition(referenceElement);
-      const contentElPos = getElementPosition(this.contentRef.current);
-      position = calculatePosition({
-        useRelativePositioning: !usePortal,
-        spacing,
-        align,
-        justify,
-        referenceElPos,
-        contentElPos,
-      });
-    } else {
-      position = defaultElementPosition;
-    }
-
+    const referenceElement = this.findCorrectReferenceElement();
+    const referenceElPos = getElementPosition(referenceElement);
+    const contentElPos = getElementPosition(this.contentRef.current);
+    const position = calculatePosition({
+      useRelativePositioning: !usePortal,
+      spacing,
+      align,
+      justify,
+      referenceElPos,
+      contentElPos,
+    });
     const Root = usePortal ? Portal : Fragment;
 
     const activeStyle = active && {
