@@ -473,3 +473,79 @@ export function getWindowSafeJustification(
     }) || justifications[justify][0]
   );
 }
+
+interface PositionArgs {
+  useRelativePositioning: boolean;
+  spacing: number;
+  align: Align;
+  justify: Justify;
+  referenceElPos: ReferencePosition;
+  contentElPos: ContentPosition;
+}
+
+// Returns the style object that is used to position and transition the popover component
+export function calculatePosition({
+  useRelativePositioning,
+  spacing,
+  align,
+  justify,
+  referenceElPos,
+  contentElPos,
+}: PositionArgs) {
+  const windowHeight = window.innerHeight;
+  const windowWidth = window.innerWidth;
+
+  const windowSafeCommonArgs = {
+    windowWidth,
+    windowHeight,
+    referenceElPos,
+    contentElPos,
+    spacing,
+  };
+  const alignment = getWindowSafeAlignment(align, windowSafeCommonArgs);
+  const justification = getWindowSafeJustification(
+    justify,
+    alignment,
+    windowSafeCommonArgs,
+  );
+
+  const transformOrigin = getTransformOrigin({
+    alignment,
+    justification,
+  });
+
+  const transform = getTransform(alignment, spacing);
+
+  if (useRelativePositioning) {
+    return {
+      ...calcRelativePosition({
+        alignment,
+        justification,
+        referenceElPos,
+        contentElPos,
+        spacing,
+      }),
+      transformOrigin,
+      transform,
+    };
+  }
+
+  return {
+    top: calcTop({
+      alignment,
+      justification,
+      contentElPos,
+      referenceElPos,
+      spacing,
+    }),
+    left: calcLeft({
+      alignment,
+      justification,
+      contentElPos,
+      referenceElPos,
+      spacing,
+    }),
+    transformOrigin,
+    transform,
+  };
+}
