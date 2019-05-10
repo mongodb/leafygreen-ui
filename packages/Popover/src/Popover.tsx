@@ -59,6 +59,15 @@ export interface RefPosition {
 export type ReferencePosition = RefPosition;
 export type ContentPosition = RefPosition;
 
+interface PositionArgs {
+  useRelativePositioning: boolean;
+  spacing: number;
+  align: Align;
+  justify: Justify;
+  referenceElPos: ReferencePosition;
+  contentElPos: ContentPosition;
+}
+
 interface Props {
   /**
    * Content that will appear inside of the popover component.
@@ -114,12 +123,7 @@ interface Props {
 }
 
 interface State {
-  windowHeight: number;
-  windowWidth: number;
   hasMounted: boolean;
-  referenceElPos: ReferencePosition;
-  contentElPos: ContentPosition;
-  referenceElement: HTMLElement | null;
 }
 
 /**
@@ -166,12 +170,7 @@ export default class Popover extends Component<Props, State> {
   };
 
   state: State = {
-    windowHeight: window.innerHeight,
-    windowWidth: window.innerWidth,
     hasMounted: false,
-    referenceElPos: defaultElementPosition,
-    contentElPos: defaultElementPosition,
-    referenceElement: null,
   };
 
   componentDidMount() {
@@ -180,70 +179,18 @@ export default class Popover extends Component<Props, State> {
     window.addEventListener('resize', this.handleWindowResize);
   }
 
-  componentDidUpdate(prevProps: Props, prevState: State) {
-    const { align, justify, active } = this.props;
-    const {
-      windowWidth,
-      windowHeight,
-      referenceElement,
-      referenceElPos,
-    } = this.state;
-
-    const posPropsUpdated =
-      prevProps.active !== active ||
-      prevProps.align !== align ||
-      prevProps.justify !== justify;
-
-    const windowUpdated =
-      prevState.windowWidth !== windowWidth ||
-      prevState.windowHeight !== windowHeight;
-
-    if (!referenceElement || !referenceElPos) {
-      this.setReferenceElement();
-    }
-
-    if (posPropsUpdated || windowUpdated) {
-      const newReferenceElPos = getElementPosition(referenceElement);
-      const contentEl = this.contentRef && this.contentRef.current;
-
-      if (!contentEl) {
-        this.setState({ referenceElPos: newReferenceElPos });
-
-        return;
-      }
-
-      this.setState({
-        contentElPos: getElementPosition(contentEl),
-        referenceElPos: newReferenceElPos,
-      });
-    }
-  }
-
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
+  // TODO: debounce this
   handleWindowResize = () => {
-    this.setState(
-      {
-        windowHeight: window.innerHeight,
-        windowWidth: window.innerWidth,
-      },
-      () => {
-        const contentEl = this.contentRef.current;
-
-        if (contentEl && !this.state.contentElPos) {
-          this.setState({
-            contentElPos: getElementPosition(contentEl),
-          });
-        }
-      },
-    );
+    this.forceUpdate();
   };
 
-  findCorrectReferenceElement(): HTMLElement | undefined {
+  findCorrectReferenceElement(): HTMLElement | null {
     const { refEl } = this.props;
-    let referenceElement: HTMLElement | undefined;
+    let referenceElement: HTMLElement | null = null;
 
     if (refEl && refEl.current) {
       referenceElement = refEl.current;
@@ -258,53 +205,17 @@ export default class Popover extends Component<Props, State> {
     return referenceElement;
   }
 
-  // Sets the element to position relative to based on passed props,
-  // and stores it, and it's position in state.
-  setReferenceElement(): void {
-    const newReferenceElement = this.findCorrectReferenceElement();
-
-    if (newReferenceElement) {
-      this.setState({
-        referenceElement: newReferenceElement,
-        referenceElPos: getElementPosition(newReferenceElement),
-      });
-    }
-  }
-
   // Returns the style object that is used to position and transition the popover component
-  calculatePosition() {
-    const { usePortal, spacing, align, justify } = this.props;
-    const {
-      hasMounted,
-      referenceElement,
-      referenceElPos,
-      contentElPos,
-      windowHeight,
-      windowWidth,
-    } = this.state;
-
-    // Forced second render to make sure that
-    // we have access to refs
-    if (!hasMounted) {
-      return;
-    }
-
-    if (!referenceElement) {
-      this.setReferenceElement();
-      return;
-    }
-
-    if (!contentElPos) {
-      const contentEl = this.contentRef.current;
-
-      if (contentEl) {
-        this.setState({
-          contentElPos: getElementPosition(contentEl),
-        });
-      }
-
-      return;
-    }
+  calculatePosition({
+    useRelativePositioning,
+    spacing,
+    align,
+    justify,
+    referenceElPos,
+    contentElPos,
+  }: PositionArgs) {
+    const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
 
     const windowSafeCommonArgs = {
       windowWidth,
@@ -327,7 +238,7 @@ export default class Popover extends Component<Props, State> {
 
     const transform = getTransform(alignment, spacing);
 
-    if (!usePortal) {
+    if (useRelativePositioning) {
       return {
         ...calcRelativePosition({
           alignment,
@@ -365,11 +276,37 @@ export default class Popover extends Component<Props, State> {
   placeholderRef = React.createRef<HTMLDivElement>();
 
   render() {
-    const { children, active, className, usePortal, ...rest } = this.props;
+    const {
+      children,
+      active,
+      className,
+      usePortal,
+      spacing,
+      align,
+      justify,
+      ...rest
+    } = this.props;
+    const { hasMounted } = this.state;
 
     delete rest.refEl;
 
-    const position = this.calculatePosition();
+    let position;
+
+    if (hasMounted) {
+      const referenceElement = this.findCorrectReferenceElement();
+      const referenceElPos = getElementPosition(referenceElement);
+      const contentElPos = getElementPosition(this.contentRef.current);
+      position = this.calculatePosition({
+        useRelativePositioning: !usePortal,
+        spacing,
+        align,
+        justify,
+        referenceElPos,
+        contentElPos,
+      });
+    } else {
+      position = defaultElementPosition;
+    }
 
     const Root = usePortal ? Portal : Fragment;
 
