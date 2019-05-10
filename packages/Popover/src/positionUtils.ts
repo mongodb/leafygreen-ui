@@ -1,5 +1,124 @@
 import { Align, Justify } from './Popover';
 
+interface ElementPosition {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+  height: number;
+  width: number;
+}
+
+type ReferencePosition = ElementPosition;
+type ContentPosition = ElementPosition;
+
+interface ElementPositions {
+  spacing: number;
+  referenceElPos: ReferencePosition;
+  contentElPos: ContentPosition;
+}
+
+interface WindowSize {
+  windowWidth: number;
+  windowHeight: number;
+}
+
+interface CalculatePosition extends ElementPositions, Partial<WindowSize> {
+  useRelativePositioning: boolean;
+  align: Align;
+  justify: Justify;
+}
+
+// Returns the style object that is used to position and transition the popover component
+export function calculatePosition({
+  useRelativePositioning,
+  spacing,
+  align,
+  justify,
+  referenceElPos = defaultElementPosition,
+  contentElPos = defaultElementPosition,
+  windowHeight = window.innerHeight,
+  windowWidth = window.innerWidth,
+}: CalculatePosition) {
+  const windowSafeCommonArgs = {
+    windowWidth,
+    windowHeight,
+    referenceElPos,
+    contentElPos,
+    spacing,
+  };
+
+  const alignment = getWindowSafeAlignment(align, windowSafeCommonArgs);
+  const justification = getWindowSafeJustification(
+    justify,
+    alignment,
+    windowSafeCommonArgs,
+  );
+
+  const transformOrigin = getTransformOrigin({
+    alignment,
+    justification,
+  });
+
+  const transform = getTransform(alignment, spacing);
+
+  if (useRelativePositioning) {
+    return {
+      ...calcRelativePosition({
+        alignment,
+        justification,
+        referenceElPos,
+        contentElPos,
+        spacing,
+      }),
+      transformOrigin,
+      transform,
+    };
+  }
+
+  return {
+    top: calcTop({
+      alignment,
+      justification,
+      contentElPos,
+      referenceElPos,
+      spacing,
+    }),
+    left: calcLeft({
+      alignment,
+      justification,
+      contentElPos,
+      referenceElPos,
+      spacing,
+    }),
+    transformOrigin,
+    transform,
+  };
+}
+
+const defaultElementPosition = {
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 0,
+  height: 0,
+  width: 0,
+};
+
+// Gets top offset, left offset, width and height dimensions for a node
+export function getElementPosition(
+  element: HTMLElement | null,
+): ElementPosition {
+  if (!element) {
+    return defaultElementPosition;
+  }
+
+  const { top, bottom, left, right } = element.getBoundingClientRect();
+  const { offsetHeight: height, offsetWidth: width } = element;
+
+  return { top, bottom, left, right, height, width };
+}
+
 // We transform 'middle' into 'center-vertical' or 'center-horizontal' for internal use,
 // So both Justify and Justification are needed, where the same is not true for Alignment.
 enum Justification {
@@ -10,18 +129,6 @@ enum Justification {
   CenterVertical = 'center-vertical',
   CenterHorizontal = 'center-horizontal',
 }
-
-interface RefPosition {
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-  height: number;
-  width: number;
-}
-
-type ReferencePosition = RefPosition;
-type ContentPosition = RefPosition;
 
 interface TransformOriginArgs {
   alignment: Align;
@@ -102,27 +209,6 @@ function getTransform(alignment: Align, transformAmount: number): string {
   }
 }
 
-const defaultElementPosition = {
-  top: 0,
-  bottom: 0,
-  left: 0,
-  right: 0,
-  height: 0,
-  width: 0,
-};
-
-// Gets top offset, left offset, width and height dimensions for a node
-export function getElementPosition(element: HTMLElement | null): RefPosition {
-  if (!element) {
-    return defaultElementPosition;
-  }
-
-  const { top, bottom, left, right } = element.getBoundingClientRect();
-  const { offsetHeight: height, offsetWidth: width } = element;
-
-  return { top, bottom, left, right, height, width };
-}
-
 interface AbsolutePositionObject {
   top?: string | 0;
   bottom?: string | 0;
@@ -130,12 +216,9 @@ interface AbsolutePositionObject {
   right?: string | 0;
 }
 
-interface CalcRelativePositionArgs {
+interface CalcRelativePositionArgs extends ElementPositions {
   alignment: Align;
   justification: Justification;
-  referenceElPos: ReferencePosition;
-  contentElPos: ContentPosition;
-  spacing: number;
 }
 
 // Returns positioning for an element absolutely positioned within it's relative parent
@@ -197,12 +280,9 @@ function calcRelativePosition({
   return positionObject;
 }
 
-interface CalculatePositionArgs {
+interface CalcPosition extends ElementPositions {
   alignment?: Align;
   justification?: Justification;
-  spacing: number;
-  referenceElPos: ReferencePosition;
-  contentElPos: ContentPosition;
 }
 
 // Returns the 'top' position in pixels for a valid alignment or justification.
@@ -212,7 +292,7 @@ function calcTop({
   contentElPos,
   referenceElPos,
   spacing,
-}: CalculatePositionArgs): number {
+}: CalcPosition): number {
   switch (justification) {
     case Justification.Top:
       return referenceElPos.top;
@@ -243,7 +323,7 @@ function calcLeft({
   contentElPos,
   referenceElPos,
   spacing,
-}: CalculatePositionArgs): number {
+}: CalcPosition): number {
   switch (alignment) {
     case Align.Left:
       return referenceElPos.left - contentElPos.width - spacing;
@@ -297,13 +377,7 @@ function safelyWithinVerticalWindow({
   return top >= 0 && !tooTall;
 }
 
-interface WindowSafeCommonArgs {
-  windowWidth: number;
-  windowHeight: number;
-  referenceElPos: ReferencePosition;
-  contentElPos: ContentPosition;
-  spacing: number;
-}
+interface WindowSafeCommonArgs extends ElementPositions, WindowSize {}
 
 // Determines the alignment to render based on an order of alignment fallbacks
 // Returns the first alignment that doesn't collide with the window,
@@ -485,80 +559,4 @@ function getWindowSafeJustification(
       return false;
     }) || justifications[justify][0]
   );
-}
-
-interface PositionArgs {
-  useRelativePositioning: boolean;
-  spacing: number;
-  align: Align;
-  justify: Justify;
-  referenceElPos: ReferencePosition;
-  contentElPos: ContentPosition;
-}
-
-// Returns the style object that is used to position and transition the popover component
-export function calculatePosition({
-  useRelativePositioning,
-  spacing,
-  align,
-  justify,
-  referenceElPos = defaultElementPosition,
-  contentElPos = defaultElementPosition,
-}: PositionArgs) {
-  const windowHeight = window.innerHeight;
-  const windowWidth = window.innerWidth;
-
-  const windowSafeCommonArgs = {
-    windowWidth,
-    windowHeight,
-    referenceElPos,
-    contentElPos,
-    spacing,
-  };
-  const alignment = getWindowSafeAlignment(align, windowSafeCommonArgs);
-  const justification = getWindowSafeJustification(
-    justify,
-    alignment,
-    windowSafeCommonArgs,
-  );
-
-  const transformOrigin = getTransformOrigin({
-    alignment,
-    justification,
-  });
-
-  const transform = getTransform(alignment, spacing);
-
-  if (useRelativePositioning) {
-    return {
-      ...calcRelativePosition({
-        alignment,
-        justification,
-        referenceElPos,
-        contentElPos,
-        spacing,
-      }),
-      transformOrigin,
-      transform,
-    };
-  }
-
-  return {
-    top: calcTop({
-      alignment,
-      justification,
-      contentElPos,
-      referenceElPos,
-      spacing,
-    }),
-    left: calcLeft({
-      alignment,
-      justification,
-      contentElPos,
-      referenceElPos,
-      spacing,
-    }),
-    transformOrigin,
-    transform,
-  };
 }
