@@ -34,8 +34,7 @@ interface Props {
   /**
    * Content that will appear inside of the popover component.
    */
-
-  children?: ReactNode;
+  children: ReactNode;
 
   /**
    * Determines the active state of the popover component
@@ -74,7 +73,7 @@ interface Props {
    *
    * default: `true`
    */
-  usePortal?: boolean;
+  usePortal: boolean;
 
   /**
    * Specifies the amount of spacing (in pixels) between the trigger element and the Popover content.
@@ -124,6 +123,7 @@ export default class Popover extends Component<Props, State> {
   };
 
   static defaultProps: Props = {
+    children: undefined,
     align: Align.Bottom,
     justify: Justify.Start,
     active: false,
@@ -168,6 +168,7 @@ export default class Popover extends Component<Props, State> {
   }
 
   contentRef = React.createRef<HTMLDivElement>();
+
   placeholderRef = React.createRef<HTMLDivElement>();
 
   render() {
