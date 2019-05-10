@@ -356,12 +356,12 @@ export default class Popover extends Component<Props, State> {
 
         if ([Align.Top, Align.Bottom].includes(alignment)) {
           const top = this.calcTop({ alignment });
-          return this.checkVerticalWindowCollision(top);
+          return this.safelyWithinVerticalWindow(top);
         }
 
         if ([Align.Left, Align.Right].includes(alignment)) {
           const left = this.calcLeft({ alignment });
-          return this.checkHorizontalWindowCollision(left);
+          return this.safelyWithinHorizontalWindow(left);
         }
 
         return false;
@@ -440,7 +440,7 @@ export default class Popover extends Component<Props, State> {
           ].includes(justification)
         ) {
           const top = this.calcTop({ justification });
-          return this.checkVerticalWindowCollision(top);
+          return this.safelyWithinVerticalWindow(top);
         }
 
         if (
@@ -451,7 +451,7 @@ export default class Popover extends Component<Props, State> {
           ].includes(justification)
         ) {
           const left = this.calcLeft({ justification });
-          return this.checkHorizontalWindowCollision(left);
+          return this.safelyWithinHorizontalWindow(left);
         }
 
         return false;
@@ -459,20 +459,20 @@ export default class Popover extends Component<Props, State> {
     );
   }
 
-  // Check if horizontal position collides with edge of window
-  checkHorizontalWindowCollision(left: number): boolean {
+  // Check if horizontal position is safely within edge of window
+  safelyWithinHorizontalWindow(left: number): boolean {
     const { contentElPos, windowWidth } = this.state;
     const tooWide = left + contentElPos.width > windowWidth;
 
-    return !(left < 0 || tooWide);
+    return left >= 0 && !tooWide;
   }
 
-  // Check if vertical position collides with edge of window
-  checkVerticalWindowCollision(top: number): boolean {
+  // Check if vertical position is safely within edge of window
+  safelyWithinVerticalWindow(top: number): boolean {
     const { contentElPos, windowHeight } = this.state;
     const tooTall = top + contentElPos.height > windowHeight;
 
-    return !(top < 0 || tooTall);
+    return top >= 0 && !tooTall;
   }
 
   // Returns the 'top' position in pixels for a valid alignment or justification.
