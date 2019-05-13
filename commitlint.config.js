@@ -1,6 +1,6 @@
 const lernaScopesConfig = require('@commitlint/config-lerna-scopes');
 
-const scopes = ['tooling'];
+const scopes = ['tooling', 'XX'];
 
 const getScopes = (initialEnum = []) => (ctx) =>
   lernaScopesConfig.utils
@@ -14,3 +14,4 @@ module.exports = {
     'scope-enum': (ctx) => getScopes(scopes)(ctx),
   },
 };
+
