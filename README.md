@@ -47,6 +47,13 @@ The script does several things in order:
 
 After the script completes, you can make changes directly to the component in your local `leafygreen-ui` repository. Once you do this, run `npm run build` in the root of the `leafygreen-ui` repository and the changes will be visible on your running application.
 
+## Creating New Component
+
+### package.json
+
+1. Each of the packages needs it's own `build`, and `ts:emit` (TypeScript packages only) scripts so that lerna can build the package correctly.
+2. For TypeScript packages, a `types` field needs to be specified that points at the built `.d.ts` definition file.
+
 ## Linting
 
 When you run `npm run lint`, we do the following:
@@ -67,6 +74,20 @@ To run the unit tests for our components, run the following:
 ```
 npm run test
 ```
+
+## Commiting
+
+We follow conventional commits with our commit messages.
+
+```
+<type>[optional scope]: <description>
+```
+
+### Options:
+
+**Types:** `fix:` (patch), `feat:` (minor change), `breaking change:` (major change), `chore:`, `docs:`, `style:`, `perf:`, `test:`. For more information visit [Conventional Commits.](https://www.conventionalcommits.org/en/v1.0.0-beta.4/)
+
+**Scopes:** can be any of the components within the `packages` directory. If your commit does not directly relate to one of the packages, or includes multiple, omit the optional scope.
 
 ## Publishing
 

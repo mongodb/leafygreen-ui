@@ -4,7 +4,6 @@
     "target": "esnext",
     "jsx": "preserve",
     "allowJs": false,
-    "noEmit": true,
     "pretty": true,
     "declaration": true,
     "strictNullChecks": true,
@@ -16,7 +15,7 @@
     "typeRoots": [
       "./typings",
       "./node_modules/@types"
-    ],
+    ]
   },
   "include": [
     "./packages/**/*"

@@ -80,6 +80,7 @@ const baseTextStyle = css`
   font-size: 14px;
   line-height: 1.3em;
   margin-top: 1px;
+  flex-grow: 1;
 `;
 
 const boldTextStyle = css`
@@ -88,7 +89,7 @@ const boldTextStyle = css`
 
 const containerStyle = css`
   position: relative;
-  display: inline-flex;
+  display: flex;
   align-items: flex-start;
   justify-content: flex-start;
   cursor: pointer;
@@ -180,6 +181,7 @@ export default class Checkbox extends PureComponent {
       name = `${this.checkboxId}`,
       checked = this.state.checked,
       className,
+      style,
       label,
       variant,
       disabled,
@@ -236,6 +238,7 @@ export default class Checkbox extends PureComponent {
     return (
       <label
         className={cx(containerStyle, className)}
+        style={style}
         htmlFor={this.checkboxId}
         disabled={disabled}
       >
