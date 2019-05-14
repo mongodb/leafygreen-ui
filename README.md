@@ -87,7 +87,7 @@ We follow conventional commits with our commit messages.
 
 **Types:** `fix:` (patch), `feat:` (minor change), `breaking change:` (major change), `chore:`, `docs:`, `style:`, `perf:`, `test:`. For more information visit [Conventional Commits.](https://www.conventionalcommits.org/en/v1.0.0-beta.4/)
 
-**Scopes:** Scope can be any of the components within the `packages` directory. If your commit does not directly relate to one of the packages, or touches multiple, omit the optional scope.
+**Scopes:** can be any of the components within the `packages` directory. If your commit does not directly relate to one of the packages, or includes multiple, omit the optional scope.
 
 ## Publishing
 
