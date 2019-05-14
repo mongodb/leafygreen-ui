@@ -75,6 +75,19 @@ To run the unit tests for our components, run the following:
 npm run test
 ```
 
+## Commiting
+
+We follow conventional commits with our commit messages.
+
+```
+<type>[optional scope]: <description>
+```
+
+Options:
+Types: `fix:` (patch), `feat:` (minor change), `breaking change:` (major change), `chore:`, `docs:`, `style:`, `perf:`, `test:`. For more information visit [Conventional Commits.](https://www.conventionalcommits.org/en/v1.0.0-beta.4/)
+
+Scopes: Scope can be any of the components within the `packages` directory. If your commit does not directly relate to one of the packages, or touches multiple, omit the optional scope.
+
 ## Publishing
 
 1.  Build the compiled version of every UI package. This creates the dist/ folder with the transpiled code ready for distribution.
