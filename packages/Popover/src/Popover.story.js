@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Popover from './Popover';
 import { storiesOf } from '@storybook/react';
 import { select, boolean, number } from '@storybook/addon-knobs';
@@ -18,28 +18,23 @@ const popoverStyle = css`
   background-color: ${colors.mongodb.white};
 `;
 
-class Testing extends Component {
-  state = { active: false };
+function Testing() {
+  const [active, setActive] = useState(false);
 
-  render() {
-    return (
-      <button
-        className={containerStyle}
-        onClick={() => this.setState({ active: !this.state.active })}
+  return (
+    <button className={containerStyle} onClick={() => setActive(!active)}>
+      Popover
+      <Popover
+        align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
+        justify={select('justify', ['start', 'middle', 'end'], 'start')}
+        active={active}
+        usePortal={boolean('usePortal', true)}
+        spacing={number('spacing', 10)}
       >
-        Popover
-        <Popover
-          align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
-          justify={select('justify', ['start', 'middle', 'end'], 'start')}
-          active={this.state.active}
-          usePortal={boolean('usePortal', true)}
-          spacing={number('spacing', 10)}
-        >
-          <div className={popoverStyle}>Popover content</div>
-        </Popover>
-      </button>
-    );
-  }
+        <div className={popoverStyle}>Popover content</div>
+      </Popover>
+    </button>
+  );
 }
 
 storiesOf('Popover', module).add('Default', () => <Testing />);

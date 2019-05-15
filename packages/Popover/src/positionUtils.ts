@@ -515,7 +515,6 @@ function getWindowSafeJustification(
   return (
     justifications[justify].find(justification => {
       // Check that a justification will not cause the popover to collide with the window.
-
       if (
         [
           Justification.Top,
@@ -529,6 +528,7 @@ function getWindowSafeJustification(
           referenceElPos,
           spacing,
         });
+
         return safelyWithinVerticalWindow({
           top,
           windowHeight,
@@ -549,6 +549,7 @@ function getWindowSafeJustification(
           referenceElPos,
           spacing,
         });
+
         return safelyWithinHorizontalWindow({
           left,
           windowWidth,

@@ -1,6 +1,16 @@
-import React, { Component, Fragment, ReactNode, RefObject } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useMemo,
+  Fragment,
+  ReactNode,
+  RefObject,
+  ReactElement,
+} from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
+import { debounce } from 'lodash';
 import { emotion } from '@leafygreen-ui/lib';
 import { calculatePosition, getElementPosition } from './positionUtils';
 
@@ -98,120 +108,119 @@ interface PopoverProps {
  * @param props.refEl Reference element that Popover component should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
  */
-export default class Popover extends Component<PopoverProps> {
-  static displayName = 'Popover';
+function Popover({
+  children,
+  active,
+  className,
+  usePortal,
+  spacing,
+  align,
+  justify,
+  refEl,
+  ...rest
+}: PopoverProps): ReactElement {
+  const placeholderRef: React.RefObject<HTMLDivElement> = useRef(null);
+  const contentRef: React.RefObject<HTMLDivElement> = useRef(null);
 
-  static propTypes = {
-    children: PropTypes.node,
-    active: PropTypes.bool,
-    className: PropTypes.string,
-    align: PropTypes.oneOf(Object.values(Align)),
-    justify: PropTypes.oneOf(Object.values(Justify)),
-    refEl: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-    usePortal: PropTypes.bool,
-    spacing: PropTypes.number,
-  };
+  // We use this to force a re-render on window resize
+  const [windowUpdateVal, setWindowUpdateVal] = useState(true);
 
-  static defaultProps: PopoverProps = {
-    children: undefined,
-    align: Align.Bottom,
-    justify: Justify.Start,
-    active: false,
-    usePortal: true,
-    spacing: 10,
-  };
+  useEffect(() => {
+    const forceUpdate = debounce(
+      () => setWindowUpdateVal(!windowUpdateVal),
+      100,
+    );
 
-  componentDidMount() {
-    window.addEventListener('resize', this.handleWindowResize);
-  }
+    window.addEventListener('resize', forceUpdate);
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowResize);
-  }
+    return () => window.removeEventListener('resize', forceUpdate);
+  });
 
-  // TODO: debounce this
-  handleWindowResize = () => {
-    this.forceUpdate();
-  };
+  let referenceElement: HTMLElement | null = null;
 
-  findCorrectReferenceElement(): HTMLElement | null {
-    const { refEl } = this.props;
-    let referenceElement: HTMLElement | null = null;
+  if (refEl && refEl.current) {
+    referenceElement = refEl.current;
+  } else if (placeholderRef.current) {
+    const parent = placeholderRef.current.parentNode;
 
-    if (refEl && refEl.current) {
-      referenceElement = refEl.current;
-    } else if (this.placeholderRef.current) {
-      const parent = this.placeholderRef.current.parentNode;
-
-      if (parent && parent instanceof HTMLElement) {
-        referenceElement = parent;
-      }
+    if (parent && parent instanceof HTMLElement) {
+      referenceElement = parent;
     }
-
-    return referenceElement;
   }
 
-  contentRef = React.createRef<HTMLDivElement>();
+  const referenceElPos = useMemo(() => getElementPosition(referenceElement), [
+    referenceElement,
+    windowUpdateVal,
+  ]);
 
-  placeholderRef = React.createRef<HTMLDivElement>();
+  const contentElPos = useMemo(() => getElementPosition(contentRef.current), [
+    contentRef.current,
+    windowUpdateVal,
+  ]);
 
-  render() {
-    const {
-      children,
-      active,
-      className,
-      usePortal,
-      spacing,
-      align,
-      justify,
-      ...rest
-    } = this.props;
-
-    delete rest.refEl;
-
-    const referenceElement = this.findCorrectReferenceElement();
-    const referenceElPos = getElementPosition(referenceElement);
-    const contentElPos = getElementPosition(this.contentRef.current);
-
-    const position = calculatePosition({
+  const position = css(
+    calculatePosition({
       useRelativePositioning: !usePortal,
       spacing,
       align,
       justify,
       referenceElPos,
       contentElPos,
-    });
+    }),
+  );
 
-    const activeStyle =
-      active &&
-      ({
-        transform: 'translate3d(0, 0, 0) scale(1)',
-        opacity: 1,
-        position: usePortal ? undefined : 'absolute',
-      } as const);
+  const activeStyle = css`
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+    position: ${usePortal ? '' : 'absolute'};
+  `;
 
-    const style = css({ ...position, ...activeStyle });
+  const contentStyle = cx(
+    rootPopoverStyle,
+    position,
+    { [activeStyle]: active },
+    className,
+  );
 
-    const Root = usePortal ? Portal : Fragment;
+  const Root = usePortal ? Portal : Fragment;
 
-    return (
-      <>
-        <div
-          ref={this.placeholderRef}
-          className={css`
-            display: none;
-          `}
-        />
-        <Root>
-          <div
-            {...rest}
-            ref={this.contentRef}
-            className={cx(rootPopoverStyle, style, className)}
-          >
-            {children}
-          </div>
-        </Root>
-      </>
-    );
-  }
+  return (
+    <>
+      <div
+        ref={placeholderRef}
+        className={css`
+          display: none;
+        `}
+      />
+      <Root>
+        <div {...rest} ref={contentRef} className={contentStyle}>
+          {children}
+        </div>
+      </Root>
+    </>
+  );
 }
+
+Popover.displayName = 'Popover';
+
+Popover.propTypes = {
+  children: PropTypes.node,
+  active: PropTypes.bool,
+  className: PropTypes.string,
+  align: PropTypes.oneOf(Object.values(Align)),
+  justify: PropTypes.oneOf(Object.values(Justify)),
+  refEl: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  usePortal: PropTypes.bool,
+  spacing: PropTypes.number,
+};
+
+Popover.defaultProps = {
+  children: undefined,
+  align: Align.Bottom,
+  justify: Justify.Start,
+  active: false,
+  usePortal: true,
+  spacing: 10,
+};
+
+export default Popover;
