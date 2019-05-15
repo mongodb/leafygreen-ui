@@ -53,6 +53,29 @@ export enum Justify {
   End = 'end',
 }
 
+function getWindowSize() {
+  return {
+    width: window.innerWidth,
+    height: window.innerHeight,
+  };
+}
+
+function useWindowResize() {
+  const [windowSize, setWindowUpdateVal] = useState(getWindowSize());
+
+  function calcResize() {
+    debounce(setWindowUpdateVal(getWindowSize()));
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', calcResize);
+
+    return () => window.removeEventListener('resize', calcResize);
+  });
+
+  return windowSize;
+}
+
 interface PopoverProps {
   /**
    * Content that will appear inside of the popover component.
@@ -139,29 +162,6 @@ function Popover({
   const placeholderRef: React.RefObject<HTMLDivElement> = useRef(null);
   const contentRef: React.RefObject<HTMLDivElement> = useRef(null);
 
-  function getWindowSize() {
-    return {
-      width: window.innerWidth,
-      height: window.innerHeight,
-    };
-  }
-
-  function useWindowResize() {
-    const [windowSize, setWindowUpdateVal] = useState(getWindowSize());
-
-    function calcResize() {
-      debounce(setWindowUpdateVal(getWindowSize()));
-    }
-
-    useEffect(() => {
-      window.addEventListener('resize', calcResize);
-
-      return () => window.removeEventListener('resize', calcResize);
-    });
-
-    return windowSize;
-  }
-
   let referenceElement: HTMLElement | null = null;
 
   if (refEl && refEl.current) {
@@ -174,14 +174,16 @@ function Popover({
     }
   }
 
+  const windowSize = useWindowResize();
+
   const referenceElPos = useMemo(() => getElementPosition(referenceElement), [
     referenceElement,
-    useWindowResize(),
+    windowSize,
   ]);
 
   const contentElPos = useMemo(() => getElementPosition(contentRef.current), [
     contentRef.current,
-    useWindowResize(),
+    windowSize,
   ]);
 
   const position = css(
