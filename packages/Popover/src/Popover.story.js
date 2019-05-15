@@ -18,7 +18,7 @@ const popoverStyle = css`
   background-color: ${colors.mongodb.white};
 `;
 
-function Testing() {
+function Example() {
   const [active, setActive] = useState(false);
 
   return (
@@ -37,4 +37,4 @@ function Testing() {
   );
 }
 
-storiesOf('Popover', module).add('Default', () => <Testing />);
+storiesOf('Popover', module).add('Default', () => <Example />);

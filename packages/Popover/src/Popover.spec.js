@@ -15,13 +15,13 @@ describe('packages/Popover', () => {
     </>,
   );
 
-  test('Should show popover when trigger is clicked', () => {
+  test('should show popover when trigger is clicked', () => {
     expect(document.body.children[1].firstChild.innerHTML).toBe(
       'Content to appear inside of Popover component',
     );
   });
 
-  test('Renders children inside of a portaled component', () => {
+  test('renders children inside of a portaled component', () => {
     expect(
       container.innerHTML.includes('<button>Trigger Element</button>'),
     ).toBe(true);
@@ -33,7 +33,7 @@ describe('packages/Popover', () => {
     ).toBe(false);
   });
 
-  test('Does not render children when active is false', () => {
+  test('does not render children when active is false', () => {
     const wrapper = render(
       <>
         <button ref={triggerRef}>Trigger Element</button>
@@ -50,7 +50,7 @@ describe('packages/Popover', () => {
     ).toBe(false);
   });
 
-  test('Does not Portal Popover component, when usePortal is false', () => {
+  test('does not Portal Popover component, when usePortal is false', () => {
     const { container } = render(
       <>
         <button ref={triggerRef}>Trigger Element</button>
@@ -69,7 +69,7 @@ describe('packages/Popover', () => {
     expect(container.innerHTML.includes('Popover in DOM')).toBe(true);
   });
 
-  test('Removes Popover instance on unmount', () => {
+  test('removes Popover instance on unmount', () => {
     unmount();
     expect(container.innerHTML).toBe('');
   });

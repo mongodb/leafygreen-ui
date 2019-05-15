@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
-import { debounce } from 'lodash';
+import debounce from 'lodash/lodash';
 import { emotion } from '@leafygreen-ui/lib';
 import { calculatePosition, getElementPosition } from './positionUtils';
 
@@ -23,6 +23,15 @@ const rootPopoverStyle = css`
   opacity: 0;
 `;
 
+/**
+ * Options to determine the alignment of the popover relative to
+ * the other component
+ * ---
+ * @param Top will align content above other element
+ * @param Bottom will align content below other element
+ * @param Left will align content to the left of other element
+ * @param Right will align content to the right of other element
+ */
 export enum Align {
   Top = 'top',
   Bottom = 'bottom',
@@ -30,6 +39,14 @@ export enum Align {
   Right = 'right',
 }
 
+/**
+ * Options to determine the justification of the popover relative to
+ * the other component
+ * ---
+ * @param Start will justify content against the start of other element
+ * @param Middle will justify content against the middle of other element
+ * @param Bottom will justify content against the end of other element
+ */
 export enum Justify {
   Start = 'start',
   Middle = 'middle',
@@ -175,13 +192,6 @@ function Popover({
     position: ${usePortal ? '' : 'absolute'};
   `;
 
-  const contentStyle = cx(
-    rootPopoverStyle,
-    position,
-    { [activeStyle]: active },
-    className,
-  );
-
   const Root = usePortal ? Portal : Fragment;
 
   return (
@@ -193,7 +203,16 @@ function Popover({
         `}
       />
       <Root>
-        <div {...rest} ref={contentRef} className={contentStyle}>
+        <div
+          {...rest}
+          ref={contentRef}
+          className={cx(
+            rootPopoverStyle,
+            position,
+            { [activeStyle]: active },
+            className,
+          )}
+        >
           {children}
         </div>
       </Root>
