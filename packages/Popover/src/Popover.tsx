@@ -139,19 +139,28 @@ function Popover({
   const placeholderRef: React.RefObject<HTMLDivElement> = useRef(null);
   const contentRef: React.RefObject<HTMLDivElement> = useRef(null);
 
-  // We use this to force a re-render on window resize
-  const [windowUpdateVal, setWindowUpdateVal] = useState(true);
+  function getWindowSize() {
+    return {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
+  }
 
-  useEffect(() => {
-    const forceUpdate = debounce(
-      () => setWindowUpdateVal(!windowUpdateVal),
-      100,
-    );
+  function useWindowResize() {
+    const [windowSize, setWindowUpdateVal] = useState(getWindowSize());
 
-    window.addEventListener('resize', forceUpdate);
+    function calcResize() {
+      debounce(setWindowUpdateVal(getWindowSize()));
+    }
 
-    return () => window.removeEventListener('resize', forceUpdate);
-  });
+    useEffect(() => {
+      window.addEventListener('resize', calcResize);
+
+      return () => window.removeEventListener('resize', calcResize);
+    });
+
+    return windowSize;
+  }
 
   let referenceElement: HTMLElement | null = null;
 
@@ -167,12 +176,12 @@ function Popover({
 
   const referenceElPos = useMemo(() => getElementPosition(referenceElement), [
     referenceElement,
-    windowUpdateVal,
+    useWindowResize(),
   ]);
 
   const contentElPos = useMemo(() => getElementPosition(contentRef.current), [
     contentRef.current,
-    windowUpdateVal,
+    useWindowResize(),
   ]);
 
   const position = css(
