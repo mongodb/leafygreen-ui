@@ -184,7 +184,7 @@ describe('unit tests', () => {
     expect(pos.transform).toBe('translate3d(-10px, 0, 0) scale(0.8)');
   });
 
-  test('START: it justifies content to end, when there is no space at desired alignment', () => {
+  test('START: it justifies content to end, when there is no space at desired justification', () => {
     const pos = calculatePosition({
       useRelativePositioning: false,
       spacing: SPACING,
@@ -214,7 +214,7 @@ describe('unit tests', () => {
     expect(pos.transform).toBe('translate3d(0, -10px, 0) scale(0.8)');
   });
 
-  test('END: it justifies content to start, when there is no space at desired alignment', () => {
+  test('END: it justifies content to start, when there is no space at desired justification', () => {
     const pos = calculatePosition({
       useRelativePositioning: false,
       spacing: SPACING,
@@ -244,7 +244,7 @@ describe('unit tests', () => {
     expect(pos.transform).toBe('translate3d(0, -10px, 0) scale(0.8)');
   });
 
-  test('MIDDLE: it justifies content to start, when there is no space at desired alignment', () => {
+  test('MIDDLE: it justifies content to start, when there is no space at desired justification', () => {
     const pos = calculatePosition({
       useRelativePositioning: false,
       spacing: SPACING,
