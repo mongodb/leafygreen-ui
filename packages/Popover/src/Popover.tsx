@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
-import debounce from 'lodash/lodash';
+import debounce from 'lodash/debounce';
 import { emotion } from '@leafygreen-ui/lib';
 import { calculatePosition, getElementPosition } from './positionUtils';
 
@@ -26,7 +26,6 @@ const rootPopoverStyle = css`
 /**
  * Options to determine the alignment of the popover relative to
  * the other component
- * ---
  * @param Top will align content above other element
  * @param Bottom will align content below other element
  * @param Left will align content to the left of other element
@@ -42,7 +41,6 @@ export enum Align {
 /**
  * Options to determine the justification of the popover relative to
  * the other component
- * ---
  * @param Start will justify content against the start of other element
  * @param Middle will justify content against the middle of other element
  * @param Bottom will justify content against the end of other element
@@ -65,10 +63,6 @@ function useViewportSize() {
 
   useEffect(() => {
     const calcResize = debounce(() => setWindowUpdateVal(getWindowSize()), 100);
-
-    // function calcResize() {
-    //   setWindowUpdateVal(getWindowSize());
-    // }
 
     window.addEventListener('resize', calcResize);
 
@@ -141,7 +135,6 @@ interface PopoverProps {
   <Popover active={true}>Hello world!</Popover>
 </button>
 ```
- * ---
  * @param props.children Content to appear inside of Popover container.
  * @param props.active Boolean to describe whether or not Popover is active.
  * @param props.className Classname applied to Popover container.
