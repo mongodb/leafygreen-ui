@@ -22,7 +22,11 @@ function Example() {
   const [active, setActive] = useState(false);
 
   return (
-    <button className={containerStyle} onClick={() => setActive(!active)}>
+    <button
+      className={containerStyle}
+      onClick={() => setActive(!active)}
+      style={{ position: 'fixed', top: 0, left: 0 }}
+    >
       Popover
       <Popover
         align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}

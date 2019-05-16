@@ -188,21 +188,6 @@ function Popover({
     windowSize,
   ]);
 
-  // console.log(
-  //   window.innerWidth,
-  //   window.innerHeight,
-  //   referenceElPos,
-  //   contentElPos,
-  //   calculatePosition({
-  //     useRelativePositioning: !usePortal,
-  //     spacing,
-  //     align,
-  //     justify,
-  //     referenceElPos,
-  //     contentElPos,
-  //   }),
-  // );
-
   const position = css(
     calculatePosition({
       useRelativePositioning: !usePortal,
