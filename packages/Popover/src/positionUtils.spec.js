@@ -219,7 +219,7 @@ describe('unit tests', () => {
       useRelativePositioning: false,
       spacing: SPACING,
       align: Align.Bottom,
-      justify: Justify.Start,
+      justify: Justify.End,
       referenceElPos: TOP_LEFT_REFELPOS,
       contentElPos: CONTENTELPOS,
     });
@@ -249,7 +249,7 @@ describe('unit tests', () => {
       useRelativePositioning: false,
       spacing: SPACING,
       align: Align.Bottom,
-      justify: Justify.Start,
+      justify: Justify.Middle,
       referenceElPos: TOP_LEFT_REFELPOS,
       contentElPos: CONTENTELPOS,
     });
