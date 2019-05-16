@@ -25,7 +25,6 @@ function Example() {
     <button
       className={containerStyle}
       onClick={() => setActive(!active)}
-      style={{ position: 'fixed', top: 0, left: 0 }}
     >
       Popover
       <Popover
