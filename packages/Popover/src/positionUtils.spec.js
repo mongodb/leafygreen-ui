@@ -360,6 +360,64 @@ describe('unit tests', () => {
     expect(pos.transform).toBe('translate3d(0, -10px, 0) scale(0.8)');
   });
 
+  test('MIDDLE: it justifies content to middle, when there is space available and the prop is set', () => {
+    const pos = calculatePosition({
+      useRelativePositioning: false,
+      spacing: SPACING,
+      align: Align.Bottom,
+      justify: Justify.Middle,
+      referenceElPos: {
+        bottom: 393.3948802947998,
+        height: 19,
+        left: 482.585205078125,
+        right: 541.0511131286621,
+        top: 374.78692626953125,
+        width: 58,
+      },
+      contentElPos: {
+        bottom: 48.8636360168457,
+        height: 61,
+        left: 0,
+        right: 123.21591186523438,
+        top: 0,
+        width: 154,
+      },
+    });
+    expect(pos.top).toBe(403.78692626953125);
+    expect(pos.left).toBe(434.585205078125);
+    expect(pos.transformOrigin).toBe('center top');
+    expect(pos.transform).toBe('translate3d(0, -10px, 0) scale(0.8)');
+  });
+
+  test('MIDDLE: it justifies content to start, when there is no space at desired alignment', () => {
+    const pos = calculatePosition({
+      useRelativePositioning: false,
+      spacing: SPACING,
+      align: Align.Bottom,
+      justify: Justify.Start,
+      referenceElPos: {
+        bottom: 18.607954025268555,
+        height: 19,
+        left: 0,
+        right: 58.46590805053711,
+        top: 0,
+        width: 58,
+      },
+      contentElPos: {
+        bottom: 48.8636360168457,
+        height: 61,
+        left: 0,
+        right: 123.21591186523438,
+        top: 0,
+        width: 154,
+      },
+    });
+    expect(pos.top).toBe(29);
+    expect(pos.left).toBe(0);
+    expect(pos.transformOrigin).toBe('left top');
+    expect(pos.transform).toBe('translate3d(0, -10px, 0) scale(0.8)');
+  });
+
   test('getElementPosition returns an object with expected values', () => {
     const el = document.createElement('div');
     document.body.appendChild(el);
