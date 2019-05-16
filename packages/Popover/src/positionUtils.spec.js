@@ -5,6 +5,30 @@ import { calculatePosition, getElementPosition } from './positionUtils';
 afterAll(cleanup);
 
 const SPACING = 10;
+const CENTERED_REFELPOS = {
+  bottom: 393.3948802947998,
+  height: 19,
+  left: 482.585205078125,
+  right: 541.0511131286621,
+  top: 374.78692626953125,
+  width: 58,
+};
+const TOP_START_REFELPOS = {
+  bottom: 18.607954025268555,
+  height: 19,
+  left: 0,
+  right: 58.46590805053711,
+  top: 0,
+  width: 58,
+};
+const CONTENTELPOS = {
+  bottom: 48.8636360168457,
+  height: 61,
+  left: 0,
+  right: 123.21591186523438,
+  top: 0,
+  width: 154,
+};
 global.window.innerWidth = 1024;
 global.window.innerHeight = 768;
 
@@ -46,22 +70,8 @@ describe('unit tests', () => {
         spacing: SPACING,
         align: Align.Top,
         justify: Justify.Start,
-        referenceElPos: {
-          bottom: 18.607954025268555,
-          height: 19,
-          left: 0,
-          right: 58.46590805053711,
-          top: 0,
-          width: 58,
-        },
-        contentElPos: {
-          bottom: 48.8636360168457,
-          height: 61,
-          left: 0,
-          right: 123.21591186523438,
-          top: 0,
-          width: 154,
-        },
+        referenceElPos: TOP_START_REFELPOS,
+        contentElPos: CONTENTELPOS,
       });
       expect(pos.top).toBe(29);
       expect(pos.left).toBe(0);
@@ -76,22 +86,8 @@ describe('unit tests', () => {
       spacing: SPACING,
       align: Align.Bottom,
       justify: Justify.Start,
-      referenceElPos: {
-        bottom: 393.3948802947998,
-        height: 19,
-        left: 482.585205078125,
-        right: 541.0511131286621,
-        top: 374.78692626953125,
-        width: 58,
-      },
-      contentElPos: {
-        bottom: 48.8636360168457,
-        height: 61,
-        left: 0,
-        right: 123.21591186523438,
-        top: 0,
-        width: 154,
-      },
+      referenceElPos: CENTERED_REFELPOS,
+      contentElPos: CONTENTELPOS,
     });
     expect(pos.top).toBe(403.78692626953125);
     expect(pos.left).toBe(482.585205078125);
@@ -113,14 +109,7 @@ describe('unit tests', () => {
         top: 749.5738525390625,
         width: 58,
       },
-      contentElPos: {
-        bottom: 48.8636360168457,
-        height: 61,
-        left: 0,
-        right: 123.21591186523438,
-        top: 0,
-        width: 154,
-      },
+      contentElPos: CONTENTELPOS,
     });
     expect(pos.top).toBe(678.5738525390625);
     expect(pos.left).toBe(0);
@@ -142,14 +131,7 @@ describe('unit tests', () => {
         top: 284.78692626953125,
         width: 58,
       },
-      contentElPos: {
-        bottom: 48.8636360168457,
-        height: 61,
-        left: 0,
-        right: 123.21591186523438,
-        top: 0,
-        width: 154,
-      },
+      contentElPos: CONTENTELPOS,
     });
     expect(pos.top).toBe(284.78692626953125);
     expect(pos.left).toBe(318.585205078125);
@@ -163,22 +145,8 @@ describe('unit tests', () => {
       spacing: SPACING,
       align: Align.Left,
       justify: Justify.Start,
-      referenceElPos: {
-        bottom: 18.607954025268555,
-        height: 19,
-        left: 0,
-        right: 58.46590805053711,
-        top: 0,
-        width: 58,
-      },
-      contentElPos: {
-        bottom: 48.8636360168457,
-        height: 61,
-        left: 0,
-        right: 123.21591186523438,
-        top: 0,
-        width: 154,
-      },
+      referenceElPos: TOP_START_REFELPOS,
+      contentElPos: CONTENTELPOS,
     });
     expect(pos.top).toBe(0);
     expect(pos.left).toBe(68);
@@ -192,22 +160,8 @@ describe('unit tests', () => {
       spacing: SPACING,
       align: Align.Right,
       justify: Justify.Start,
-      referenceElPos: {
-        bottom: 393.3948802947998,
-        height: 19,
-        left: 482.585205078125,
-        right: 541.0511131286621,
-        top: 374.78692626953125,
-        width: 58,
-      },
-      contentElPos: {
-        bottom: 48.8636360168457,
-        height: 61,
-        left: 0,
-        right: 123.21591186523438,
-        top: 0,
-        width: 154,
-      },
+      referenceElPos: CENTERED_REFELPOS,
+      contentElPos: CONTENTELPOS,
     });
     expect(pos.top).toBe(374.78692626953125);
     expect(pos.left).toBe(550.585205078125);
@@ -229,14 +183,7 @@ describe('unit tests', () => {
         top: 0,
         width: 58,
       },
-      contentElPos: {
-        bottom: 48.8636360168457,
-        height: 61,
-        left: 0,
-        right: 123.21591186523438,
-        top: 0,
-        width: 154,
-      },
+      contentElPos: CONTENTELPOS,
     });
     expect(pos.top).toBe(0);
     expect(pos.left).toBe(801.17041015625);
@@ -250,22 +197,8 @@ describe('unit tests', () => {
       spacing: SPACING,
       align: Align.Right,
       justify: Justify.Start,
-      referenceElPos: {
-        bottom: 393.3948802947998,
-        height: 19,
-        left: 482.585205078125,
-        right: 541.0511131286621,
-        top: 374.78692626953125,
-        width: 58,
-      },
-      contentElPos: {
-        bottom: 48.8636360168457,
-        height: 61,
-        left: 0,
-        right: 123.21591186523438,
-        top: 0,
-        width: 154,
-      },
+      referenceElPos: CENTERED_REFELPOS,
+      contentElPos: CONTENTELPOS,
     });
     expect(pos.top).toBe(374.78692626953125);
     expect(pos.left).toBe(550.585205078125);
@@ -287,14 +220,7 @@ describe('unit tests', () => {
         top: 0,
         width: 58,
       },
-      contentElPos: {
-        bottom: 48.8636360168457,
-        height: 61,
-        left: 0,
-        right: 123.21591186523438,
-        top: 0,
-        width: 154,
-      },
+      contentElPos: CONTENTELPOS,
     });
     expect(pos.top).toBe(29);
     expect(pos.left).toBe(869.17041015625);
@@ -308,14 +234,7 @@ describe('unit tests', () => {
       spacing: SPACING,
       align: Align.Bottom,
       justify: Justify.End,
-      referenceElPos: {
-        bottom: 393.3948802947998,
-        height: 19,
-        left: 482.585205078125,
-        right: 541.0511131286621,
-        top: 374.78692626953125,
-        width: 58,
-      },
+      referenceElPos: CENTERED_REFELPOS,
       contentElPos: {
         bottom: 442.1022529602051,
         height: 61,
@@ -337,22 +256,8 @@ describe('unit tests', () => {
       spacing: SPACING,
       align: Align.Bottom,
       justify: Justify.Start,
-      referenceElPos: {
-        bottom: 18.607954025268555,
-        height: 19,
-        left: 0,
-        right: 58.46590805053711,
-        top: 0,
-        width: 58,
-      },
-      contentElPos: {
-        bottom: 48.8636360168457,
-        height: 61,
-        left: 0,
-        right: 123.21591186523438,
-        top: 0,
-        width: 154,
-      },
+      referenceElPos: TOP_START_REFELPOS,
+      contentElPos: CONTENTELPOS,
     });
     expect(pos.top).toBe(29);
     expect(pos.left).toBe(0);
@@ -366,22 +271,8 @@ describe('unit tests', () => {
       spacing: SPACING,
       align: Align.Bottom,
       justify: Justify.Middle,
-      referenceElPos: {
-        bottom: 393.3948802947998,
-        height: 19,
-        left: 482.585205078125,
-        right: 541.0511131286621,
-        top: 374.78692626953125,
-        width: 58,
-      },
-      contentElPos: {
-        bottom: 48.8636360168457,
-        height: 61,
-        left: 0,
-        right: 123.21591186523438,
-        top: 0,
-        width: 154,
-      },
+      referenceElPos: CENTERED_REFELPOS,
+      contentElPos: CONTENTELPOS,
     });
     expect(pos.top).toBe(403.78692626953125);
     expect(pos.left).toBe(434.585205078125);
@@ -395,22 +286,8 @@ describe('unit tests', () => {
       spacing: SPACING,
       align: Align.Bottom,
       justify: Justify.Start,
-      referenceElPos: {
-        bottom: 18.607954025268555,
-        height: 19,
-        left: 0,
-        right: 58.46590805053711,
-        top: 0,
-        width: 58,
-      },
-      contentElPos: {
-        bottom: 48.8636360168457,
-        height: 61,
-        left: 0,
-        right: 123.21591186523438,
-        top: 0,
-        width: 154,
-      },
+      referenceElPos: TOP_START_REFELPOS,
+      contentElPos: CONTENTELPOS,
     });
     expect(pos.top).toBe(29);
     expect(pos.left).toBe(0);

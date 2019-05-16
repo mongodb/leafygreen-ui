@@ -66,6 +66,10 @@ function useViewportSize() {
   useEffect(() => {
     const calcResize = debounce(() => setWindowUpdateVal(getWindowSize()), 100);
 
+    // function calcResize() {
+    //   setWindowUpdateVal(getWindowSize());
+    // }
+
     window.addEventListener('resize', calcResize);
 
     return () => window.removeEventListener('resize', calcResize);
