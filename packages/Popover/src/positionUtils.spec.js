@@ -158,7 +158,7 @@ describe('unit tests', () => {
     const pos = calculatePosition({
       useRelativePositioning: false,
       spacing: SPACING,
-      align: Align.Left,
+      align: Align.Right,
       justify: Justify.Start,
       referenceElPos: TOP_RIGHT_REFELPOS,
       contentElPos: CONTENTELPOS,
