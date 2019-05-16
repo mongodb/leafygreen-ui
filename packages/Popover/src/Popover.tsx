@@ -60,18 +60,16 @@ function getWindowSize() {
   };
 }
 
-function useWindowResize() {
-  const [windowSize, setWindowUpdateVal] = useState(getWindowSize());
-
-  function calcResize() {
-    debounce(setWindowUpdateVal(getWindowSize()));
-  }
+function useViewportSize() {
+  const [windowSize, setWindowUpdateVal] = useState(getWindowSize);
 
   useEffect(() => {
+    const calcResize = debounce(() => setWindowUpdateVal(getWindowSize()), 100);
+
     window.addEventListener('resize', calcResize);
 
     return () => window.removeEventListener('resize', calcResize);
-  });
+  }, []);
 
   return windowSize;
 }
@@ -174,7 +172,7 @@ function Popover({
     }
   }
 
-  const windowSize = useWindowResize();
+  const windowSize = useViewportSize();
 
   const referenceElPos = useMemo(() => getElementPosition(referenceElement), [
     referenceElement,
@@ -185,6 +183,21 @@ function Popover({
     contentRef.current,
     windowSize,
   ]);
+
+  // console.log(
+  //   window.innerWidth,
+  //   window.innerHeight,
+  //   referenceElPos,
+  //   contentElPos,
+  //   calculatePosition({
+  //     useRelativePositioning: !usePortal,
+  //     spacing,
+  //     align,
+  //     justify,
+  //     referenceElPos,
+  //     contentElPos,
+  //   }),
+  // );
 
   const position = css(
     calculatePosition({

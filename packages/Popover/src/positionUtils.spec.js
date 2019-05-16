@@ -1,0 +1,375 @@
+import { cleanup } from 'react-testing-library';
+import { Align, Justify } from './Popover';
+import { calculatePosition, getElementPosition } from './positionUtils';
+
+afterAll(cleanup);
+
+const SPACING = 10;
+global.window.innerWidth = 1024;
+global.window.innerHeight = 768;
+
+describe('unit tests', () => {
+  describe('calculatePosition', () => {
+    test('TOP: it aligns content to top, when the space is available and the prop is set', () => {
+      const pos = calculatePosition({
+        useRelativePositioning: false,
+        spacing: SPACING,
+        align: Align.Top,
+        justify: Justify.Start,
+        referenceElPos: {
+          bottom: 303.3948802947998,
+          height: 19,
+          left: 417.13067626953125,
+          right: 475.59658432006836,
+          top: 284.78692626953125,
+          width: 58,
+        },
+        contentElPos: {
+          bottom: 274.8579406738281,
+          height: 61,
+          left: 432.13067626953125,
+          right: 586.1505584716797,
+          top: 213.7783966064453,
+          width: 155,
+        },
+      });
+
+      expect(pos.top).toBe(213.78692626953125);
+      expect(pos.left).toBe(417.13067626953125);
+      expect(pos.transformOrigin).toBe('left bottom');
+      expect(pos.transform).toBe('translate3d(0, 10px, 0) scale(0.8)');
+    });
+
+    test('TOP: it aligns content to bottom, when there is no space at desired alignment', () => {
+      const pos = calculatePosition({
+        useRelativePositioning: false,
+        spacing: SPACING,
+        align: Align.Top,
+        justify: Justify.Start,
+        referenceElPos: {
+          bottom: 18.607954025268555,
+          height: 19,
+          left: 0,
+          right: 58.46590805053711,
+          top: 0,
+          width: 58,
+        },
+        contentElPos: {
+          bottom: 48.8636360168457,
+          height: 61,
+          left: 0,
+          right: 123.21591186523438,
+          top: 0,
+          width: 154,
+        },
+      });
+      expect(pos.top).toBe(29);
+      expect(pos.left).toBe(0);
+      expect(pos.transformOrigin).toBe('left top');
+      expect(pos.transform).toBe('translate3d(0, -10px, 0) scale(0.8)');
+    });
+  });
+
+  test('BOTTOM: it aligns content to bottom, when the space is available and the prop is set', () => {
+    const pos = calculatePosition({
+      useRelativePositioning: false,
+      spacing: SPACING,
+      align: Align.Bottom,
+      justify: Justify.Start,
+      referenceElPos: {
+        bottom: 393.3948802947998,
+        height: 19,
+        left: 482.585205078125,
+        right: 541.0511131286621,
+        top: 374.78692626953125,
+        width: 58,
+      },
+      contentElPos: {
+        bottom: 48.8636360168457,
+        height: 61,
+        left: 0,
+        right: 123.21591186523438,
+        top: 0,
+        width: 154,
+      },
+    });
+    expect(pos.top).toBe(403.78692626953125);
+    expect(pos.left).toBe(482.585205078125);
+    expect(pos.transformOrigin).toBe('left top');
+    expect(pos.transform).toBe('translate3d(0, -10px, 0) scale(0.8)');
+  });
+
+  test('BOTTOM: it aligns content to top, when there is no space at desired alignment', () => {
+    const pos = calculatePosition({
+      useRelativePositioning: false,
+      spacing: SPACING,
+      align: Align.Bottom,
+      justify: Justify.Start,
+      referenceElPos: {
+        bottom: 768.181806564331,
+        height: 18,
+        left: 0,
+        right: 58.46590805053711,
+        top: 749.5738525390625,
+        width: 58,
+      },
+      contentElPos: {
+        bottom: 48.8636360168457,
+        height: 61,
+        left: 0,
+        right: 123.21591186523438,
+        top: 0,
+        width: 154,
+      },
+    });
+    expect(pos.top).toBe(678.5738525390625);
+    expect(pos.left).toBe(0);
+    expect(pos.transformOrigin).toBe('left bottom');
+    expect(pos.transform).toBe('translate3d(0, 10px, 0) scale(0.8)');
+  });
+
+  test('LEFT: it aligns content to left, when there is space available and the prop is set', () => {
+    const pos = calculatePosition({
+      useRelativePositioning: false,
+      spacing: SPACING,
+      align: Align.Left,
+      justify: Justify.Start,
+      referenceElPos: {
+        bottom: 303.3948802947998,
+        height: 19,
+        left: 482.585205078125,
+        right: 541.0511131286621,
+        top: 284.78692626953125,
+        width: 58,
+      },
+      contentElPos: {
+        bottom: 48.8636360168457,
+        height: 61,
+        left: 0,
+        right: 123.21591186523438,
+        top: 0,
+        width: 154,
+      },
+    });
+    expect(pos.top).toBe(284.78692626953125);
+    expect(pos.left).toBe(318.585205078125);
+    expect(pos.transformOrigin).toBe('right top');
+    expect(pos.transform).toBe('translate3d(10px, 0, 0) scale(0.8)');
+  });
+
+  test('LEFT: it aligns content to right, when there is no space at desired alignment', () => {
+    const pos = calculatePosition({
+      useRelativePositioning: false,
+      spacing: SPACING,
+      align: Align.Left,
+      justify: Justify.Start,
+      referenceElPos: {
+        bottom: 18.607954025268555,
+        height: 19,
+        left: 0,
+        right: 58.46590805053711,
+        top: 0,
+        width: 58,
+      },
+      contentElPos: {
+        bottom: 48.8636360168457,
+        height: 61,
+        left: 0,
+        right: 123.21591186523438,
+        top: 0,
+        width: 154,
+      },
+    });
+    expect(pos.top).toBe(0);
+    expect(pos.left).toBe(68);
+    expect(pos.transformOrigin).toBe('left top');
+    expect(pos.transform).toBe('translate3d(-10px, 0, 0) scale(0.8)');
+  });
+
+  test('RIGHT: it aligns content to right, when there is space available and the prop is set', () => {
+    const pos = calculatePosition({
+      useRelativePositioning: false,
+      spacing: SPACING,
+      align: Align.Right,
+      justify: Justify.Start,
+      referenceElPos: {
+        bottom: 393.3948802947998,
+        height: 19,
+        left: 482.585205078125,
+        right: 541.0511131286621,
+        top: 374.78692626953125,
+        width: 58,
+      },
+      contentElPos: {
+        bottom: 48.8636360168457,
+        height: 61,
+        left: 0,
+        right: 123.21591186523438,
+        top: 0,
+        width: 154,
+      },
+    });
+    expect(pos.top).toBe(374.78692626953125);
+    expect(pos.left).toBe(550.585205078125);
+    expect(pos.transformOrigin).toBe('left top');
+    expect(pos.transform).toBe('translate3d(-10px, 0, 0) scale(0.8)');
+  });
+
+  test('RIGHT: it aligns content to left, when there is no space at desired alignment', () => {
+    const pos = calculatePosition({
+      useRelativePositioning: false,
+      spacing: SPACING,
+      align: Align.Left,
+      justify: Justify.Start,
+      referenceElPos: {
+        bottom: 18.607954025268555,
+        height: 19,
+        left: 965.17041015625,
+        right: 1023.6363182067871,
+        top: 0,
+        width: 58,
+      },
+      contentElPos: {
+        bottom: 48.8636360168457,
+        height: 61,
+        left: 0,
+        right: 123.21591186523438,
+        top: 0,
+        width: 154,
+      },
+    });
+    expect(pos.top).toBe(0);
+    expect(pos.left).toBe(801.17041015625);
+    expect(pos.transformOrigin).toBe('right top');
+    expect(pos.transform).toBe('translate3d(10px, 0, 0) scale(0.8)');
+  });
+
+  test('START: it aligns content to start, when there is space available and the prop is set', () => {
+    const pos = calculatePosition({
+      useRelativePositioning: false,
+      spacing: SPACING,
+      align: Align.Right,
+      justify: Justify.Start,
+      referenceElPos: {
+        bottom: 393.3948802947998,
+        height: 19,
+        left: 482.585205078125,
+        right: 541.0511131286621,
+        top: 374.78692626953125,
+        width: 58,
+      },
+      contentElPos: {
+        bottom: 48.8636360168457,
+        height: 61,
+        left: 0,
+        right: 123.21591186523438,
+        top: 0,
+        width: 154,
+      },
+    });
+    expect(pos.top).toBe(374.78692626953125);
+    expect(pos.left).toBe(550.585205078125);
+    expect(pos.transformOrigin).toBe('left top');
+    expect(pos.transform).toBe('translate3d(-10px, 0, 0) scale(0.8)');
+  });
+
+  test('START: it justifies content to end, when there is no space at desired alignment', () => {
+    const pos = calculatePosition({
+      useRelativePositioning: false,
+      spacing: SPACING,
+      align: Align.Bottom,
+      justify: Justify.Start,
+      referenceElPos: {
+        bottom: 18.607954025268555,
+        height: 19,
+        left: 965.17041015625,
+        right: 1023.6363182067871,
+        top: 0,
+        width: 58,
+      },
+      contentElPos: {
+        bottom: 48.8636360168457,
+        height: 61,
+        left: 0,
+        right: 123.21591186523438,
+        top: 0,
+        width: 154,
+      },
+    });
+    expect(pos.top).toBe(29);
+    expect(pos.left).toBe(869.17041015625);
+    expect(pos.transformOrigin).toBe('right top');
+    expect(pos.transform).toBe('translate3d(0, -10px, 0) scale(0.8)');
+  });
+
+  test('END: it justifies content to end, when there is space available and the prop is set', () => {
+    const pos = calculatePosition({
+      useRelativePositioning: false,
+      spacing: SPACING,
+      align: Align.Bottom,
+      justify: Justify.End,
+      referenceElPos: {
+        bottom: 393.3948802947998,
+        height: 19,
+        left: 482.585205078125,
+        right: 541.0511131286621,
+        top: 374.78692626953125,
+        width: 58,
+      },
+      contentElPos: {
+        bottom: 442.1022529602051,
+        height: 61,
+        left: 416.3863525390625,
+        right: 539.6022644042969,
+        top: 393.2386169433594,
+        width: 155,
+      },
+    });
+    expect(pos.top).toBe(403.78692626953125);
+    expect(pos.left).toBe(385.585205078125);
+    expect(pos.transformOrigin).toBe('right top');
+    expect(pos.transform).toBe('translate3d(0, -10px, 0) scale(0.8)');
+  });
+
+  test('END: it justifies content to start, when there is no space at desired alignment', () => {
+    const pos = calculatePosition({
+      useRelativePositioning: false,
+      spacing: SPACING,
+      align: Align.Bottom,
+      justify: Justify.Start,
+      referenceElPos: {
+        bottom: 18.607954025268555,
+        height: 19,
+        left: 0,
+        right: 58.46590805053711,
+        top: 0,
+        width: 58,
+      },
+      contentElPos: {
+        bottom: 48.8636360168457,
+        height: 61,
+        left: 0,
+        right: 123.21591186523438,
+        top: 0,
+        width: 154,
+      },
+    });
+    expect(pos.top).toBe(29);
+    expect(pos.left).toBe(0);
+    expect(pos.transformOrigin).toBe('left top');
+    expect(pos.transform).toBe('translate3d(0, -10px, 0) scale(0.8)');
+  });
+
+  test('getElementPosition returns an object with expected values', () => {
+    const el = document.createElement('div');
+    document.body.appendChild(el);
+
+    const refPos = getElementPosition(el);
+    expect(refPos.top).toBe(0);
+    expect(refPos.bottom).toBe(0);
+    expect(refPos.left).toBe(0);
+    expect(refPos.right).toBe(0);
+    expect(refPos.height).toBe(0);
+    expect(refPos.width).toBe(0);
+  });
+});
