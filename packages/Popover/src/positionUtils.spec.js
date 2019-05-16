@@ -64,8 +64,8 @@ const contentElPos = {
 describe('positionUtils', () => {
   describe('calculatePosition', () => {
     describe('when the reference element is on the top', () => {
-      describe('it correcly calculates alignment, when justification is constant', () => {
-        test('Align.Top repositions to Align.Bottom based on available space', () => {
+      describe('Align.Top', () => {
+        test('Align.Top respositions to Align.Bottom based on available space', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
@@ -82,8 +82,10 @@ describe('positionUtils', () => {
           expect(pos.transformOrigin).toBe('left top');
           expect(pos.transform).toBe('translate3d(0, -5px, 0) scale(0.8)');
         });
+      });
 
-        test('Align.Right works', () => {
+      describe('Align.Right', () => {
+        test('Justify.Start works', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
@@ -101,7 +103,45 @@ describe('positionUtils', () => {
           expect(pos.transform).toBe('translate3d(-5px, 0, 0) scale(0.8)');
         });
 
-        test('Align.Bottom works', () => {
+        test('Justify.Middle respoistions to Justify.Start based on available space', () => {
+          const pos = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOWHEIGHT,
+            windowWidth: WINDOWWIDTH,
+            useRelativePositioning: false,
+            align: Align.Right,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(pos.top).toBe(0);
+          expect(pos.left).toBe(60);
+          expect(pos.transformOrigin).toBe('left top');
+          expect(pos.transform).toBe('translate3d(-5px, 0, 0) scale(0.8)');
+        });
+
+        test('Justify.Bottom repositions to Justify.Start based on available space', () => {
+          const pos = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOWHEIGHT,
+            windowWidth: WINDOWWIDTH,
+            useRelativePositioning: false,
+            align: Align.Right,
+            justify: Justify.End,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(pos.top).toBe(0);
+          expect(pos.left).toBe(60);
+          expect(pos.transformOrigin).toBe('left top');
+          expect(pos.transform).toBe('translate3d(-5px, 0, 0) scale(0.8)');
+        });
+      });
+
+      describe('Align.Bottom', () => {
+        test('Justify.Start works', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
@@ -118,86 +158,135 @@ describe('positionUtils', () => {
           expect(pos.transformOrigin).toBe('left top');
           expect(pos.transform).toBe('translate3d(0, -5px, 0) scale(0.8)');
         });
-
-        test('Align.Left works', () => {
+        test('Justify.Middle works', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
             windowWidth: WINDOWWIDTH,
             useRelativePositioning: false,
-            align: Align.Left,
-            justify: Justify.Start,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
-          });
-
-          expect(pos.top).toBe(0);
-          expect(pos.left).toBe(20);
-          expect(pos.transformOrigin).toBe('right top');
-          expect(pos.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
-        });
-      });
-
-      describe('it correctly calculates justification, when alignment is constant', () => {
-        test('Justify.Start works', () => {
-          const pos = calculatePosition({
-            spacing: SPACING,
-            windowHeight: WINDOWHEIGHT,
-            windowWidth: WINDOWWIDTH,
-            useRelativePositioning: false,
-            align: Align.Left,
-            justify: Justify.Start,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
-          });
-
-          expect(pos.top).toBe(0);
-          expect(pos.left).toBe(20);
-          expect(pos.transformOrigin).toBe('right top');
-          expect(pos.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
-        });
-
-        test('Justify.Center respositions to Justify.Start based on available space', () => {
-          const pos = calculatePosition({
-            spacing: SPACING,
-            windowHeight: WINDOWHEIGHT,
-            windowWidth: WINDOWWIDTH,
-            useRelativePositioning: false,
-            align: Align.Left,
+            align: Align.Bottom,
             justify: Justify.Middle,
             referenceElPos: refElPos.top,
             contentElPos: contentElPos,
           });
 
-          expect(pos.top).toBe(0);
-          expect(pos.left).toBe(20);
-          expect(pos.transformOrigin).toBe('right top');
-          expect(pos.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
+          expect(pos.top).toBe(15);
+          expect(pos.left).toBe(40);
+          expect(pos.transformOrigin).toBe('center top');
+          expect(pos.transform).toBe('translate3d(0, -5px, 0) scale(0.8)');
         });
-
-        test('Justification.End respositions to Justify.Start based on available space', () => {
+        test('Justify.End works', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
             windowWidth: WINDOWWIDTH,
             useRelativePositioning: false,
-            align: Align.Left,
+            align: Align.Bottom,
             justify: Justify.End,
             referenceElPos: refElPos.top,
             contentElPos: contentElPos,
           });
 
-          expect(pos.top).toBe(0);
-          expect(pos.left).toBe(20);
+          expect(pos.top).toBe(15);
+          expect(pos.left).toBe(35);
           expect(pos.transformOrigin).toBe('right top');
-          expect(pos.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
+          expect(pos.transform).toBe('translate3d(0, -5px, 0) scale(0.8)');
         });
       });
     });
 
+    describe('Align.Left', () => {
+      test('Justify.Start', () => {
+        const pos = calculatePosition({
+          spacing: SPACING,
+          windowHeight: WINDOWHEIGHT,
+          windowWidth: WINDOWWIDTH,
+          useRelativePositioning: false,
+          align: Align.Left,
+          justify: Justify.Start,
+          referenceElPos: refElPos.top,
+          contentElPos: contentElPos,
+        });
+
+        expect(pos.top).toBe(0);
+        expect(pos.left).toBe(20);
+        expect(pos.transformOrigin).toBe('right top');
+        expect(pos.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
+      });
+      test('Justify.Center respositions to Justify.Start based on available space', () => {
+        const pos = calculatePosition({
+          spacing: SPACING,
+          windowHeight: WINDOWHEIGHT,
+          windowWidth: WINDOWWIDTH,
+          useRelativePositioning: false,
+          align: Align.Left,
+          justify: Justify.Middle,
+          referenceElPos: refElPos.top,
+          contentElPos: contentElPos,
+        });
+
+        expect(pos.top).toBe(0);
+        expect(pos.left).toBe(20);
+        expect(pos.transformOrigin).toBe('right top');
+        expect(pos.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
+      });
+
+      test('Justify.End respositions to Justify.Start based on available space', () => {
+        const pos = calculatePosition({
+          spacing: SPACING,
+          windowHeight: WINDOWHEIGHT,
+          windowWidth: WINDOWWIDTH,
+          useRelativePositioning: false,
+          align: Align.Left,
+          justify: Justify.End,
+          referenceElPos: refElPos.top,
+          contentElPos: contentElPos,
+        });
+
+        expect(pos.top).toBe(0);
+        expect(pos.left).toBe(20);
+        expect(pos.transformOrigin).toBe('right top');
+        expect(pos.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
+      });
+    });
+
     describe('when the reference element is on the right', () => {
-      describe('it correctly calculates alignment, when justification is constant', () => {
-        test('Align.Top works', () => {
+      describe('Align.Top', () => {
+        test('Justify.Start repositions to Justify.End based on available space', () => {
+          const pos = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOWHEIGHT,
+            windowWidth: WINDOWWIDTH,
+            useRelativePositioning: false,
+            align: Align.Top,
+            justify: Justify.Start,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
+
+          expect(pos.top).toBe(20);
+          expect(pos.left).toBe(80);
+          expect(pos.transformOrigin).toBe('right bottom');
+          expect(pos.transform).toBe('translate3d(0, 5px, 0) scale(0.8)');
+        });
+        test('Justify.Middle repositions to Justify.Start based on available space', () => {
+          const pos = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOWHEIGHT,
+            windowWidth: WINDOWWIDTH,
+            useRelativePositioning: false,
+            align: Align.Top,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
+
+          expect(pos.top).toBe(20);
+          expect(pos.left).toBe(80);
+          expect(pos.transformOrigin).toBe('right bottom');
+          expect(pos.transform).toBe('translate3d(0, 5px, 0) scale(0.8)');
+        });
+        test('Justify.End works', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
@@ -214,26 +303,62 @@ describe('positionUtils', () => {
           expect(pos.transformOrigin).toBe('right bottom');
           expect(pos.transform).toBe('translate3d(0, 5px, 0) scale(0.8)');
         });
-
-        test('Align.Right repositions to Align.Left based on available space', () => {
+      });
+      describe('Align.Right', () => {
+        test('Align.Right respositions to Align.Left based on available space', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
             windowWidth: WINDOWWIDTH,
             useRelativePositioning: false,
             align: Align.Right,
-            justify: Justify.End,
+            justify: Justify.Start,
             referenceElPos: refElPos.right,
             contentElPos: contentElPos,
           });
 
-          expect(pos.top).toBe(35);
+          expect(pos.top).toBe(45);
           expect(pos.left).toBe(65);
-          expect(pos.transformOrigin).toBe('right bottom');
+          expect(pos.transformOrigin).toBe('right top');
           expect(pos.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
         });
+      });
+      describe('Align.Bottom', () => {
+        test('Justify.Start repositions to Justify.End based on available space', () => {
+          const pos = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOWHEIGHT,
+            windowWidth: WINDOWWIDTH,
+            useRelativePositioning: false,
+            align: Align.Bottom,
+            justify: Justify.Start,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
 
-        test('Align.Bottom works', () => {
+          expect(pos.top).toBe(60);
+          expect(pos.left).toBe(80);
+          expect(pos.transformOrigin).toBe('right top');
+          expect(pos.transform).toBe('translate3d(0, -5px, 0) scale(0.8)');
+        });
+        test('Justify.Middle repositions to Justify.End based on available space', () => {
+          const pos = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOWHEIGHT,
+            windowWidth: WINDOWWIDTH,
+            useRelativePositioning: false,
+            align: Align.Bottom,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
+
+          expect(pos.top).toBe(60);
+          expect(pos.left).toBe(80);
+          expect(pos.transformOrigin).toBe('right top');
+          expect(pos.transform).toBe('translate3d(0, -5px, 0) scale(0.8)');
+        });
+        test('Justify.End works', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
@@ -250,27 +375,8 @@ describe('positionUtils', () => {
           expect(pos.transformOrigin).toBe('right top');
           expect(pos.transform).toBe('translate3d(0, -5px, 0) scale(0.8)');
         });
-
-        test('Align.Left works', () => {
-          const pos = calculatePosition({
-            spacing: SPACING,
-            windowHeight: WINDOWHEIGHT,
-            windowWidth: WINDOWWIDTH,
-            useRelativePositioning: false,
-            align: Align.Left,
-            justify: Justify.End,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
-          });
-
-          expect(pos.top).toBe(35);
-          expect(pos.left).toBe(65);
-          expect(pos.transformOrigin).toBe('right bottom');
-          expect(pos.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
-        });
       });
-
-      describe('it correctly calculates jusitification, when alignment is constant', () => {
+      describe('Align.Left', () => {
         test('Justify.Start works', () => {
           const pos = calculatePosition({
             spacing: SPACING,
@@ -288,8 +394,7 @@ describe('positionUtils', () => {
           expect(pos.transformOrigin).toBe('right top');
           expect(pos.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
         });
-
-        test('Justify.Center works', () => {
+        test('Justify.Middle works', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
@@ -307,7 +412,7 @@ describe('positionUtils', () => {
           expect(pos.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
         });
 
-        test('Justification.End works', () => {
+        test('Justify.End works', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
@@ -328,8 +433,44 @@ describe('positionUtils', () => {
     });
 
     describe('when reference element is on the bottom', () => {
-      describe('it correcly calculates alignment, when justification is constant', () => {
-        test('Align.Top works', () => {
+      describe('Align.Top', () => {
+        test('Justify.Start works', () => {
+          const pos = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOWHEIGHT,
+            windowWidth: WINDOWWIDTH,
+            useRelativePositioning: false,
+            align: Align.Top,
+            justify: Justify.Start,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          expect(pos.top).toBe(65);
+          expect(pos.left).toBe(45);
+          expect(pos.transformOrigin).toBe('left bottom');
+          expect(pos.transform).toBe('translate3d(0, 5px, 0) scale(0.8)');
+        });
+
+        test('Justify.Middle works', () => {
+          const pos = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOWHEIGHT,
+            windowWidth: WINDOWWIDTH,
+            useRelativePositioning: false,
+            align: Align.Top,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          expect(pos.top).toBe(65);
+          expect(pos.left).toBe(40);
+          expect(pos.transformOrigin).toBe('center bottom');
+          expect(pos.transform).toBe('translate3d(0, 5px, 0) scale(0.8)');
+        });
+
+        test('Justify.End works', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
@@ -346,8 +487,45 @@ describe('positionUtils', () => {
           expect(pos.transformOrigin).toBe('right bottom');
           expect(pos.transform).toBe('translate3d(0, 5px, 0) scale(0.8)');
         });
+      });
 
-        test('Align.Right works', () => {
+      describe('Align.Right', () => {
+        test('Justify.Start repositions to Justify.End based on available space', () => {
+          const pos = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOWHEIGHT,
+            windowWidth: WINDOWWIDTH,
+            useRelativePositioning: false,
+            align: Align.Right,
+            justify: Justify.Start,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          expect(pos.top).toBe(80);
+          expect(pos.left).toBe(60);
+          expect(pos.transformOrigin).toBe('left bottom');
+          expect(pos.transform).toBe('translate3d(-5px, 0, 0) scale(0.8)');
+        });
+        test('Justify.Middle repositions to Justify.End based on available space', () => {
+          const pos = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOWHEIGHT,
+            windowWidth: WINDOWWIDTH,
+            useRelativePositioning: false,
+            align: Align.Right,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          expect(pos.top).toBe(80);
+          expect(pos.left).toBe(60);
+          expect(pos.transformOrigin).toBe('left bottom');
+          expect(pos.transform).toBe('translate3d(-5px, 0, 0) scale(0.8)');
+        });
+
+        test('Justify.End works', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
@@ -364,46 +542,29 @@ describe('positionUtils', () => {
           expect(pos.transformOrigin).toBe('left bottom');
           expect(pos.transform).toBe('translate3d(-5px, 0, 0) scale(0.8)');
         });
-
-        test('Align.Bottom repositions to Align.Top based on available space', () => {
+      });
+      describe('Align.Bottom', () => {
+        test('Align.Bottom repositions to Align.Start based on available space', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
             windowWidth: WINDOWWIDTH,
             useRelativePositioning: false,
             align: Align.Bottom,
-            justify: Justify.End,
+            justify: Justify.Start,
             referenceElPos: refElPos.bottom,
             contentElPos: contentElPos,
           });
 
           expect(pos.top).toBe(65);
-          expect(pos.left).toBe(35);
-          expect(pos.transformOrigin).toBe('right bottom');
+          expect(pos.left).toBe(45);
+          expect(pos.transformOrigin).toBe('left bottom');
           expect(pos.transform).toBe('translate3d(0, 5px, 0) scale(0.8)');
-        });
-
-        test('Align.Left works', () => {
-          const pos = calculatePosition({
-            spacing: SPACING,
-            windowHeight: WINDOWHEIGHT,
-            windowWidth: WINDOWWIDTH,
-            useRelativePositioning: false,
-            align: Align.Left,
-            justify: Justify.End,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
-          });
-
-          expect(pos.top).toBe(80);
-          expect(pos.left).toBe(20);
-          expect(pos.transformOrigin).toBe('right bottom');
-          expect(pos.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
         });
       });
 
-      describe('it correcly calculates justification, when alignment is constant', () => {
-        test('Justification.Start repositions to Justification.End based on available space', () => {
+      describe('Align.Left', () => {
+        test('Justify.Start repositions to Justify.End based on available space', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
@@ -421,7 +582,7 @@ describe('positionUtils', () => {
           expect(pos.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
         });
 
-        test('Justification.Middle repositions to Justification.End based on available space', () => {
+        test('Justify.Middle repositions to Justify.End based on available space', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
@@ -439,7 +600,7 @@ describe('positionUtils', () => {
           expect(pos.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
         });
 
-        test('Justification.End works', () => {
+        test('Justify.End works', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
@@ -460,8 +621,8 @@ describe('positionUtils', () => {
     });
 
     describe('when reference element is on the left', () => {
-      describe('it correcly calculates alignment, when justification is constant', () => {
-        test('Align.Top works', () => {
+      describe('Align.Top', () => {
+        test('Justify.Start works', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
@@ -478,8 +639,44 @@ describe('positionUtils', () => {
           expect(pos.transformOrigin).toBe('left bottom');
           expect(pos.transform).toBe('translate3d(0, 5px, 0) scale(0.8)');
         });
+        test('Justify.Middle repositions to Justify.Start based on available space', () => {
+          const pos = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOWHEIGHT,
+            windowWidth: WINDOWWIDTH,
+            useRelativePositioning: false,
+            align: Align.Top,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
 
-        test('Align.Right works', () => {
+          expect(pos.top).toBe(20);
+          expect(pos.left).toBe(0);
+          expect(pos.transformOrigin).toBe('left bottom');
+          expect(pos.transform).toBe('translate3d(0, 5px, 0) scale(0.8)');
+        });
+        test('Justify.End repositions to Justify.Start based on available space', () => {
+          const pos = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOWHEIGHT,
+            windowWidth: WINDOWWIDTH,
+            useRelativePositioning: false,
+            align: Align.Top,
+            justify: Justify.End,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          expect(pos.top).toBe(20);
+          expect(pos.left).toBe(0);
+          expect(pos.transformOrigin).toBe('left bottom');
+          expect(pos.transform).toBe('translate3d(0, 5px, 0) scale(0.8)');
+        });
+      });
+
+      describe('Align.Right', () => {
+        test('Justify.Start works', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
@@ -496,8 +693,43 @@ describe('positionUtils', () => {
           expect(pos.transformOrigin).toBe('left top');
           expect(pos.transform).toBe('translate3d(-5px, 0, 0) scale(0.8)');
         });
+        test('Justify.Middle works', () => {
+          const pos = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOWHEIGHT,
+            windowWidth: WINDOWWIDTH,
+            useRelativePositioning: false,
+            align: Align.Right,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
 
-        test('Align.Bottom works', () => {
+          expect(pos.top).toBe(40);
+          expect(pos.left).toBe(15);
+          expect(pos.transformOrigin).toBe('left center');
+          expect(pos.transform).toBe('translate3d(-5px, 0, 0) scale(0.8)');
+        });
+        test('Justify.End works', () => {
+          const pos = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOWHEIGHT,
+            windowWidth: WINDOWWIDTH,
+            useRelativePositioning: false,
+            align: Align.Right,
+            justify: Justify.End,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          expect(pos.top).toBe(35);
+          expect(pos.left).toBe(15);
+          expect(pos.transformOrigin).toBe('left bottom');
+          expect(pos.transform).toBe('translate3d(-5px, 0, 0) scale(0.8)');
+        });
+      });
+      describe('Align.Bottom', () => {
+        test('Justify.Start works', () => {
           const pos = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOWHEIGHT,
@@ -515,6 +747,44 @@ describe('positionUtils', () => {
           expect(pos.transform).toBe('translate3d(0, -5px, 0) scale(0.8)');
         });
 
+        test('Justify.Middle repositions to Justify.Start based on available space', () => {
+          const pos = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOWHEIGHT,
+            windowWidth: WINDOWWIDTH,
+            useRelativePositioning: false,
+            align: Align.Bottom,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          expect(pos.top).toBe(60);
+          expect(pos.left).toBe(0);
+          expect(pos.transformOrigin).toBe('left top');
+          expect(pos.transform).toBe('translate3d(0, -5px, 0) scale(0.8)');
+        });
+
+        test('Justify.End repositions to Justify.Start based on available space', () => {
+          const pos = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOWHEIGHT,
+            windowWidth: WINDOWWIDTH,
+            useRelativePositioning: false,
+            align: Align.Bottom,
+            justify: Justify.End,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          expect(pos.top).toBe(60);
+          expect(pos.left).toBe(0);
+          expect(pos.transformOrigin).toBe('left top');
+          expect(pos.transform).toBe('translate3d(0, -5px, 0) scale(0.8)');
+        });
+      });
+
+      describe('Align.Left', () => {
         test('Align.Left repositions to Align.Right based on available space', () => {
           const pos = calculatePosition({
             spacing: SPACING,
@@ -530,62 +800,6 @@ describe('positionUtils', () => {
           expect(pos.top).toBe(45);
           expect(pos.left).toBe(15);
           expect(pos.transformOrigin).toBe('left top');
-          expect(pos.transform).toBe('translate3d(-5px, 0, 0) scale(0.8)');
-        });
-      });
-
-      describe('it correctly calculates justification, when alignment is constant', () => {
-        test('Justification.Start works', () => {
-          const pos = calculatePosition({
-            spacing: SPACING,
-            windowHeight: WINDOWHEIGHT,
-            windowWidth: WINDOWWIDTH,
-            useRelativePositioning: false,
-            align: Align.Left,
-            justify: Justify.Start,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
-          });
-
-          expect(pos.top).toBe(45);
-          expect(pos.left).toBe(15);
-          expect(pos.transformOrigin).toBe('left top');
-          expect(pos.transform).toBe('translate3d(-5px, 0, 0) scale(0.8)');
-        });
-
-        test('Justification.Middle works', () => {
-          const pos = calculatePosition({
-            spacing: SPACING,
-            windowHeight: WINDOWHEIGHT,
-            windowWidth: WINDOWWIDTH,
-            useRelativePositioning: false,
-            align: Align.Left,
-            justify: Justify.Middle,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
-          });
-
-          expect(pos.top).toBe(40);
-          expect(pos.left).toBe(15);
-          expect(pos.transformOrigin).toBe('left center');
-          expect(pos.transform).toBe('translate3d(-5px, 0, 0) scale(0.8)');
-        });
-
-        test('Justification.End works', () => {
-          const pos = calculatePosition({
-            spacing: SPACING,
-            windowHeight: WINDOWHEIGHT,
-            windowWidth: WINDOWWIDTH,
-            useRelativePositioning: false,
-            align: Align.Left,
-            justify: Justify.End,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
-          });
-
-          expect(pos.top).toBe(35);
-          expect(pos.left).toBe(15);
-          expect(pos.transformOrigin).toBe('left bottom');
           expect(pos.transform).toBe('translate3d(-5px, 0, 0) scale(0.8)');
         });
       });
