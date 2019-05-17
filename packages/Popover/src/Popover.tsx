@@ -165,7 +165,7 @@ function Popover({
     () => Date.now(),
   );
 
-  const lastTimeContentlMutated = useMutationObserver(
+  const lastTimeContentElMutated = useMutationObserver(
     contentRef.current,
     mutationOptions,
     () => Date.now(),
@@ -180,7 +180,7 @@ function Popover({
   const contentElPos = useMemo(() => getElementPosition(contentRef.current), [
     contentRef.current,
     windowSize,
-    lastTimeContentlMutated,
+    lastTimeContentElMutated,
   ]);
 
   const position = css(
