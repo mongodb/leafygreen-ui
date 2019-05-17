@@ -162,17 +162,13 @@ function Popover({
   const lastTimeRefElMutated = useMutationObserver(
     referenceElement,
     mutationOptions,
-    () => {
-      return Date.now();
-    },
+    () => Date.now(),
   );
 
   const lastTimeContentlMutated = useMutationObserver(
     contentRef.current,
     mutationOptions,
-    () => {
-      return Date.now();
-    },
+    () => Date.now(),
   );
 
   const referenceElPos = useMemo(() => getElementPosition(referenceElement), [
