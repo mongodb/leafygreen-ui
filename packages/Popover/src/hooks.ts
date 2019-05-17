@@ -48,9 +48,7 @@ export function useMutationObserver<Value>(
       observer.observe(target, options);
     }
 
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, [target, options, callback, enabled]);
 
   return value;
