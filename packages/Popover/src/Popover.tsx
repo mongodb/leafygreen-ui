@@ -117,7 +117,7 @@ interface PopoverProps {
    *
    * default: false
    */
-  autoAdjustPosition: boolean;
+  adjustOnMutation: boolean;
 }
 
 /**
@@ -137,7 +137,7 @@ interface PopoverProps {
  * @param props.justify Justification of Popover component relative to another element: `start`, `middle`, `end`.
  * @param props.refEl Reference element that Popover component should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
- * @param props.autoAdjustPosition Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
+ * @param props.adjustOnMutation Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
  */
 function Popover({
   children,
@@ -148,7 +148,7 @@ function Popover({
   align,
   justify,
   refEl,
-  autoAdjustPosition,
+  adjustOnMutation,
   ...rest
 }: PopoverProps): ReactElement {
   const placeholderRef: React.RefObject<HTMLDivElement> = useRef(null);
@@ -172,14 +172,14 @@ function Popover({
     referenceElement,
     mutationOptions,
     () => Date.now(),
-    autoAdjustPosition,
+    adjustOnMutation,
   );
 
   const lastTimeContentElMutated = useMutationObserver(
     contentRef.current,
     mutationOptions,
     () => Date.now(),
-    autoAdjustPosition,
+    adjustOnMutation,
   );
 
   const referenceElPos = useMemo(() => getElementPosition(referenceElement), [
@@ -250,7 +250,7 @@ Popover.propTypes = {
   refEl: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   usePortal: PropTypes.bool,
   spacing: PropTypes.number,
-  autoAdjustPosition: PropTypes.bool,
+  adjustOnMutation: PropTypes.bool,
 };
 
 Popover.defaultProps = {
@@ -260,7 +260,7 @@ Popover.defaultProps = {
   active: false,
   usePortal: true,
   spacing: 10,
-  autoAdjustPosition: false,
+  adjustOnMutation: false,
 };
 
 export default Popover;
