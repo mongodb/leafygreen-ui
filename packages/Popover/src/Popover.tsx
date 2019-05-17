@@ -21,6 +21,17 @@ const rootPopoverStyle = css`
   opacity: 0;
 `;
 
+const mutationOptions = {
+  // If attributes changes, such as className which affects layout
+  attributes: true,
+  // Watch if text changes in the node
+  characterData: true,
+  // Watch for any immediate children are modified
+  childList: true,
+  // Extend watching to entire sub tree to make sure we catch any modifications
+  subtree: true,
+};
+
 /**
  * Options to determine the alignment of the popover relative to
  * the other component
@@ -147,17 +158,6 @@ function Popover({
   }
 
   const windowSize = useViewportSize();
-
-  const mutationOptions = {
-    // If attributes changes, such as className which affects layout
-    attributes: true,
-    // Watch if text changes in the node
-    characterData: true,
-    // Watch for any immediate children are modified
-    childList: true,
-    // Extend watching to entire sub tree to make sure we catch any modifications
-    subtree: true,
-  };
 
   const lastTimeRefElMutated = useMutationObserver(
     referenceElement,
