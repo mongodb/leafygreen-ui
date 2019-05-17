@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Popover from './Popover';
 import { storiesOf } from '@storybook/react';
-import { select, boolean, number } from '@storybook/addon-knobs';
+import { select, boolean, number, text } from '@storybook/addon-knobs';
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
 
@@ -53,7 +53,7 @@ function Example() {
         ],
       )}
     >
-      Popover
+      {text('Button Content', 'Popover')}
       <Popover
         align={select('Align', ['top', 'right', 'bottom', 'left'], 'top')}
         justify={select('justify', ['start', 'middle', 'end'], 'start')}

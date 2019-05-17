@@ -1,6 +1,4 @@
 import React, {
-  useEffect,
-  useState,
   useRef,
   useMemo,
   Fragment,
@@ -10,9 +8,9 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
-import debounce from 'lodash/debounce';
 import { emotion } from '@leafygreen-ui/lib';
 import { calculatePosition, getElementPosition } from './positionUtils';
+import { useViewportSize, useMutationObserver } from './hooks';
 
 const { css, cx } = emotion;
 
@@ -49,27 +47,6 @@ export enum Justify {
   Start = 'start',
   Middle = 'middle',
   End = 'end',
-}
-
-function getWindowSize() {
-  return {
-    width: window.innerWidth,
-    height: window.innerHeight,
-  };
-}
-
-function useViewportSize() {
-  const [windowSize, setWindowUpdateVal] = useState(getWindowSize);
-
-  useEffect(() => {
-    const calcResize = debounce(() => setWindowUpdateVal(getWindowSize()), 100);
-
-    window.addEventListener('resize', calcResize);
-
-    return () => window.removeEventListener('resize', calcResize);
-  }, []);
-
-  return windowSize;
 }
 
 interface PopoverProps {
@@ -171,14 +148,43 @@ function Popover({
 
   const windowSize = useViewportSize();
 
+  const mutationOptions = {
+    // If attributes changes, such as className which affects layout
+    attributes: true,
+    // Watch if text changes in the node
+    characterData: true,
+    // Watch for any immediate children are modified
+    childList: true,
+    // Extend watching to entire sub tree to make sure we catch any modifications
+    subtree: true,
+  };
+
+  const lastTimeRefElMutated = useMutationObserver(
+    referenceElement,
+    mutationOptions,
+    () => {
+      return Date.now();
+    },
+  );
+
+  const lastTimeContentlMutated = useMutationObserver(
+    contentRef.current,
+    mutationOptions,
+    () => {
+      return Date.now();
+    },
+  );
+
   const referenceElPos = useMemo(() => getElementPosition(referenceElement), [
     referenceElement,
     windowSize,
+    lastTimeRefElMutated,
   ]);
 
   const contentElPos = useMemo(() => getElementPosition(contentRef.current), [
     contentRef.current,
     windowSize,
+    lastTimeContentlMutated,
   ]);
 
   const position = css(
