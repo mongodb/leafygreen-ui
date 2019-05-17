@@ -5,10 +5,10 @@ import { select, boolean, number } from '@storybook/addon-knobs';
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
 
-const { css } = emotion;
+const { css, cx } = emotion;
 
 const containerStyle = css`
-  position: relative;
+  position: absolute;
 `;
 
 const popoverStyle = css`
@@ -18,17 +18,44 @@ const popoverStyle = css`
   background-color: ${colors.mongodb.white};
 `;
 
+const referenceElPositions = {
+  centered: css`
+    position: relative;
+  `,
+  top: css`
+    top: 0;
+  `,
+  right: css`
+    right: 0;
+  `,
+  bottom: css`
+    bottom: 0;
+  `,
+  left: css`
+    left: 0;
+  `,
+};
+
 function Example() {
   const [active, setActive] = useState(false);
 
   return (
     <button
-      className={containerStyle}
       onClick={() => setActive(!active)}
+      className={cx(
+        containerStyle,
+        referenceElPositions[
+          select(
+            'Reference Element Position',
+            ['center', 'top', 'right', 'bottom', 'left'],
+            'center',
+          )
+        ],
+      )}
     >
       Popover
       <Popover
-        align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
+        align={select('Align', ['top', 'right', 'bottom', 'left'], 'top')}
         justify={select('justify', ['start', 'middle', 'end'], 'start')}
         active={active}
         usePortal={boolean('usePortal', true)}
