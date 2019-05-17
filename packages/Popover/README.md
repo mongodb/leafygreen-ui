@@ -93,6 +93,14 @@ Specifies the amount of spacing (in pixels) between the trigger element and the 
 
 Classname to apply to popover-content container
 
+### autoAdjustPosition
+
+**Type:** `boolean`
+
+**Default:** 'false'
+
+Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
+
 ## Advanced Use Case
 
 ### refEl

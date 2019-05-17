@@ -60,6 +60,7 @@ function Example() {
         active={active}
         usePortal={boolean('usePortal', true)}
         spacing={number('spacing', 10)}
+        autoAdjustPosition={boolean('autoAdjustPosition', false)}
       >
         <div className={popoverStyle}>Popover content</div>
       </Popover>
