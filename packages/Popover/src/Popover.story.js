@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Popover from './Popover';
 import { storiesOf } from '@storybook/react';
 import { select, boolean, number, text } from '@storybook/addon-knobs';
@@ -36,7 +36,7 @@ const referenceElPositions = {
   `,
 };
 
-function Example() {
+function DefaultExample() {
   const [active, setActive] = useState(false);
 
   return (
@@ -68,4 +68,41 @@ function Example() {
   );
 }
 
-storiesOf('Popover', module).add('Default', () => <Example />);
+function AdvancedExample() {
+  const [active, setActive] = useState(false);
+  const refEl = useRef(null);
+
+  return (
+    <button
+      ref={refEl}
+      onClick={() => setActive(!active)}
+      className={cx(
+        containerStyle,
+        referenceElPositions[
+          select(
+            'Reference Element Position',
+            ['center', 'top', 'right', 'bottom', 'left'],
+            'center',
+          )
+        ],
+      )}
+    >
+      {text('Button Content', 'Popover')}
+      <Popover
+        align={select('Align', ['top', 'right', 'bottom', 'left'], 'top')}
+        justify={select('justify', ['start', 'middle', 'end'], 'start')}
+        active={active}
+        usePortal={boolean('usePortal', true)}
+        spacing={number('spacing', 10)}
+        adjustOnMutation={boolean('adjustOnMutation', false)}
+        refEl={refEl}
+      >
+        <div className={popoverStyle}>Popover content</div>
+      </Popover>
+    </button>
+  );
+}
+
+storiesOf('Popover', module)
+  .add('Default', () => <DefaultExample />)
+  .add('Advanced', () => <AdvancedExample />);
