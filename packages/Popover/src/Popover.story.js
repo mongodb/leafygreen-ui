@@ -73,21 +73,23 @@ function AdvancedExample() {
   const refEl = useRef(null);
 
   return (
-    <button
-      ref={refEl}
-      onClick={() => setActive(!active)}
-      className={cx(
-        containerStyle,
-        referenceElPositions[
-          select(
-            'Reference Element Position',
-            ['center', 'top', 'right', 'bottom', 'left'],
-            'center',
-          )
-        ],
-      )}
-    >
-      {text('Button Content', 'Popover')}
+    <>
+      <button
+        ref={refEl}
+        onClick={() => setActive(!active)}
+        className={cx(
+          containerStyle,
+          referenceElPositions[
+            select(
+              'Reference Element Position',
+              ['center', 'top', 'right', 'bottom', 'left'],
+              'center',
+            )
+          ],
+        )}
+      >
+        {text('Button Content', 'Popover')}
+      </button>
       <Popover
         align={select('Align', ['top', 'right', 'bottom', 'left'], 'top')}
         justify={select('justify', ['start', 'middle', 'end'], 'start')}
@@ -99,7 +101,7 @@ function AdvancedExample() {
       >
         <div className={popoverStyle}>Popover content</div>
       </Popover>
-    </button>
+    </>
   );
 }
 
