@@ -5,6 +5,7 @@
     "jsx": "preserve",
     "allowJs": false,
     "pretty": true,
+    "declaration": true,
     "strictNullChecks": true,
     "noUnusedLocals": true,
     "strict": true,

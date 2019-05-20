@@ -1,6 +1,16 @@
 const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const fs = require('fs');
+
+function getAllPackages(dir) {
+  const dirList = fs.readdirSync(dir);
+  return dirList.map(function(subDir) {
+    subDir = path.resolve(dir, subDir);
+    const json = require(`${subDir}/package.json`);
+    return json.name;
+  });
+}
 
 // Base Webpack configuration, used by all other configurations for common settings
 module.exports = function(env = 'production') {
@@ -24,8 +34,7 @@ module.exports = function(env = 'production') {
           'create-emotion',
           'polished',
           'prop-types',
-          '@leafygreen-ui/lib',
-          '@leafygreen-ui/theme',
+          ...getAllPackages('../../packages'),
         ]
       : [],
 

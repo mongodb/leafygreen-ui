@@ -19,7 +19,7 @@ addDecorator(withKnobs);
 const req = require.context(
   '../packages',
   true,
-  /^((?!node_modules).)*[.]story[.]js$/im,
+  /^((?!node_modules).)*[.]story[.](t|j)sx?$/im,
 );
 
 const loadStories = () => req.keys().forEach(filename => req(filename));
