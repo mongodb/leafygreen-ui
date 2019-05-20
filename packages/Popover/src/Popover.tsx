@@ -166,7 +166,7 @@ function Popover({
     }
   }
 
-  const windowSize = useViewportSize();
+  const viewportSize = useViewportSize();
 
   const lastTimeRefElMutated = useMutationObserver(
     referenceElement,
@@ -184,13 +184,13 @@ function Popover({
 
   const referenceElPos = useMemo(() => getElementPosition(referenceElement), [
     referenceElement,
-    windowSize,
+    viewportSize,
     lastTimeRefElMutated,
   ]);
 
   const contentElPos = useMemo(() => getElementPosition(contentRef.current), [
     contentRef.current,
-    windowSize,
+    viewportSize,
     lastTimeContentElMutated,
   ]);
 

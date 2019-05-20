@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
 
-function getWindowSize() {
+function getViewportSize() {
   return {
     width: window.innerWidth,
     height: window.innerHeight,
@@ -9,17 +9,20 @@ function getWindowSize() {
 }
 
 export function useViewportSize() {
-  const [windowSize, setWindowUpdateVal] = useState(getWindowSize);
+  const [viewportSize, setViewportUpdateVal] = useState(getViewportSize);
 
   useEffect(() => {
-    const calcResize = debounce(() => setWindowUpdateVal(getWindowSize()), 100);
+    const calcResize = debounce(
+      () => setViewportUpdateVal(getViewportSize()),
+      100,
+    );
 
     window.addEventListener('resize', calcResize);
 
     return () => window.removeEventListener('resize', calcResize);
   }, []);
 
-  return windowSize;
+  return viewportSize;
 }
 
 type MutationHandler<Value> = (
