@@ -13,9 +13,7 @@ class Example extends Component {
     const { active } = this.state;
     return (
       <>
-        <button
-          onClick={() => this.setState({ active: !active })}
-        >
+        <button onClick={() => this.setState({ active: !active })}>
           TRIGGER
         </button>
         <Menu
