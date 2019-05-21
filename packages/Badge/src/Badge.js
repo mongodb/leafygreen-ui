@@ -11,7 +11,7 @@ export const baseStyle = css`
   font-size: 11px;
   line-height: 20px;
   border-radius: 10px;
-  padding: 0px 9px;
+  padding: 1px 9px;
   text-transform: uppercase;
   color: ${colors.mongodb.white};
 `;
@@ -49,6 +49,7 @@ export const badgeVariants = {
   outline: css`
     border: 1px solid ${colors.gray[3]};
     color: ${colors.gray[3]};
+    padding: 0px 8px;
   `,
 };
 
