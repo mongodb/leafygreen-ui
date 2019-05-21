@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import Popover from '@leafygreen-ui/popover';
+import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
 import { cx } from 'emotion';
@@ -22,8 +22,6 @@ const rootMenuStyle = css`
   pointer-events: none;
 `;
 
-type Align = 'top' | 'bottom' | 'left' | 'right';
-type Justify = 'start' | 'middle' | 'end';
 interface Props {
   /**
    * Determines the active state of the Menu.

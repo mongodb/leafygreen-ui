@@ -6,16 +6,14 @@ import Menu from './Menu.tsx';
 import MenuItem from './MenuItem.tsx';
 import MenuList from './MenuList.tsx';
 
-class TestClass extends Component {
+class Example extends Component {
   state = { active: false };
-  myRef = React.createRef();
 
   render() {
     const { active } = this.state;
     return (
       <>
         <button
-          ref={this.myRef}
           onClick={() => this.setState({ active: !active })}
         >
           TRIGGER
@@ -38,6 +36,6 @@ class TestClass extends Component {
 
 storiesOf('Menu', module).add('Default', () => (
   <div>
-    <TestClass />
+    <Example />
   </div>
 ));

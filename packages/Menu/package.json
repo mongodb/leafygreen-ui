@@ -11,8 +11,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^2.1.2",
-    "@leafygreen-ui/theme": "^1.1.1", 
+    "@leafygreen-ui/lib": "^2.1.5",
+    "@leafygreen-ui/theme": "^1.1.5", 
     "@leafygreen-ui/popover": "^0.9.0"
   }
 }
