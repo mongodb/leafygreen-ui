@@ -6,12 +6,15 @@ import { ccClassName, emotion } from '@leafygreen-ui/lib';
 const { css } = emotion;
 
 export const baseStyle = css`
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   font-weight: bold;
   font-size: 11px;
   line-height: 20px;
-  border-radius: 10px;
-  padding: 0px 9px;
+  border-radius: 50px;
+  height: 20px;
+  padding-left: 9px;
+  padding-right: 9px;
   text-transform: uppercase;
   color: ${colors.mongodb.white};
 `;
