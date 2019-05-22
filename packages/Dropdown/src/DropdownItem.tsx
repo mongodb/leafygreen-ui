@@ -38,36 +38,36 @@ interface Props {
   href?: string;
 
   /**
-   * Content that will appear inside of MenuItem component.
+   * Content that will appear inside of DropdownItem component.
    */
   children?: React.ReactNode;
 
   /**
-   * Class name that will be applied to root MenuItem element.
+   * Class name that will be applied to root DropdownItem element.
    */
   className?: string;
 
   /**
-   * Callback function to be executed when MenuItem is clicked.
+   * Callback function to be executed when DropdownItem is clicked.
    */
   onSelect?: React.MouseEventHandler;
 }
 
 /**
- * # MenuItem
+ * # DropdownItem
  *
  * `''
-<MenuItem>Hello World!</MenuItem>
+<DropdownItem>Hello World!</DropdownItem>
  * `''
  * ---
- * @param props.href If supplied, MenuItem will render inside of `a` tags.
- * @param props.onSelect Function to be executed when MenuItem is clicked.
- * @param props.className Classname applied to MenuItem.
- * @param props.children Content to appear inside of the MenuItem.
+ * @param props.href If supplied, DropdownItem will render inside of `a` tags.
+ * @param props.onSelect Function to be executed when DropdownItem is clicked.
+ * @param props.className Classname applied to DropdownItem.
+ * @param props.children Content to appear inside of the DropdownItem.
  *
  *
  */
-export default function MenuItem({
+export default function DropdownItem({
   href,
   onSelect,
   children,
@@ -84,9 +84,9 @@ export default function MenuItem({
   );
 }
 
-MenuItem.displayName = 'MenuItem';
+DropdownItem.displayName = 'DropdownItem';
 
-MenuItem.propTypes = {
+DropdownItem.propTypes = {
   href: PropTypes.string,
   onSelect: PropTypes.func,
   children: PropTypes.node,

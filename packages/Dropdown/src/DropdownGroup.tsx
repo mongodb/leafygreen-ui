@@ -11,30 +11,30 @@ const borderStyle = css`
 `;
 interface Props {
   /**
-   * Content that will appear inside of MenuList component.
+   * Content that will appear inside of DropdownGroup component.
    */
   children: React.ReactNode;
 
   /**
-   * Class name that will be applied to root MenuList element.
+   * Class name that will be applied to root DropdownGroup element.
    */
   className?: string;
 }
 
 /**
- * # MenuList
+ * # DropdownGroup
  *
  * `''
-<MenuList>
+<DropdownGroup>
   <MenuItem>Hello World!</MenuItem>
-</MenuList>
+</DropdownGroup>
  * `''
  * ---
- * @param props.className Classname applied to MenuList.
- * @param props.children Content to appear inside of the MenuList.
+ * @param props.className Classname applied to DropdownGroup.
+ * @param props.children Content to appear inside of the DropdownGroup.
  *
  */
-export default function MenuList({ children, className }: Props) {
+export default function DropdownGroup({ children, className }: Props) {
   return (
     <div role="menu" className={cx(borderStyle, className)}>
       {children}
@@ -42,9 +42,9 @@ export default function MenuList({ children, className }: Props) {
   );
 }
 
-MenuList.displayName = 'MenuList';
+DropdownGroup.displayName = 'DropdownGroup';
 
-MenuList.propTypes = {
+DropdownGroup.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
 };
