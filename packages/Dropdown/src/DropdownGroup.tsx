@@ -16,6 +16,11 @@ interface Props {
   children: React.ReactNode;
 
   /**
+   * Text to appear before DropdownGroup components.
+   */
+  title: string;
+
+  /**
    * Class name that will be applied to root DropdownGroup element.
    */
   className?: string;
@@ -29,14 +34,15 @@ interface Props {
   <MenuItem>Hello World!</MenuItem>
 </DropdownGroup>
  * `''
- * ---
  * @param props.className Classname applied to DropdownGroup.
  * @param props.children Content to appear inside of the DropdownGroup.
+ * @param props.title Text to appear before DropdownGroup components.
  *
  */
-export default function DropdownGroup({ children, className }: Props) {
+export default function DropdownGroup({ children, className, title }: Props) {
   return (
     <div role="menu" className={cx(borderStyle, className)}>
+      {title && <p>{title}</p>}
       {children}
     </div>
   );
@@ -47,4 +53,5 @@ DropdownGroup.displayName = 'DropdownGroup';
 DropdownGroup.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  title: PropTypes.string,
 };

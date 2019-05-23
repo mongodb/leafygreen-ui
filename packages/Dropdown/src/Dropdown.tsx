@@ -19,7 +19,6 @@ const rootDropdownStyle = css`
   background-color: ${colors.mongodb.white};
   margin-block-start: 0px;
   margin-block-end: 0px;
-  pointer-events: none;
 `;
 
 interface Props {
@@ -84,8 +83,7 @@ interface Props {
     <DropdownItem>Hello World!</DropdownItem>
   </Dropdown>
 </button>
-    `''
- * ---
+ * `''
  * @param props.children Content to appear inside of Dropdown.
  * @param props.active Boolean to describe whether or not Dropdown is active.
  * @param props.className Classname applied to Dropdown.
@@ -93,7 +91,7 @@ interface Props {
  * @param props.justify Justification of Dropdown relative to another element: `start`, `middle`, `end`.
  * @param props.refEl Reference element that Dropdown should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
- *
+ * @param props.trigger Trigger element to set active state of Dropdown, makes component controlled
  *
  */
 export default function Dropdown({

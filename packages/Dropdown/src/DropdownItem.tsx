@@ -54,6 +54,12 @@ const activeStyle = css`
   }
 `;
 
+const disabledStyle = css`
+  background: ${colors.gray[8]};
+  color: ${colors.gray[5]};
+  cursor: not-allowed;
+`;
+
 interface Props {
   /**
    * If supplied, Menu Item will be rendered inside of `a` tags.
@@ -97,12 +103,14 @@ interface Props {
  * `''
 <DropdownItem>Hello World!</DropdownItem>
  * `''
- * ---
  * @param props.href If supplied, DropdownItem will render inside of `a` tags.
  * @param props.onClick Function to be executed when DropdownItem is clicked.
  * @param props.className Classname applied to DropdownItem.
  * @param props.children Content to appear inside of the DropdownItem.
- *
+ * @param props.title Main text to appear inside of DropdownItem
+ * @param props.description Subtext to appear inside of DropdownItem
+ * @param props.disabled Determines if the DropdownItem is disabled
+ * @param props.active Determines whether the DropdownItem will appear as active
  *
  */
 export default function DropdownItem({
@@ -121,9 +129,15 @@ export default function DropdownItem({
   return (
     <li
       {...rest}
-      className={cx(containerStyle, className, active && activeStyle)}
+      className={cx(
+        containerStyle,
+        baseTextStyle,
+        active && activeStyle,
+        disabled && disabledStyle,
+        className,
+      )}
     >
-      <Root onClick={clickHandler} href={href} className={baseTextStyle}>
+      <Root onClick={clickHandler} href={href}>
         <p className={cx(titleTextStyle)}>{title}</p>
         {description && (
           <p className={cx(descriptionTextStyle)}>{description}</p>

@@ -15,7 +15,11 @@ class Controlled extends Component {
         trigger={<button>trigger</button>}
       >
         <DropdownGroup>
-          <DropdownItem title="Atlas" description="cloud.mongodb.com" />
+          <DropdownItem
+            disabled
+            title="Atlas"
+            description="cloud.mongodb.com"
+          />
           <DropdownItem
             title="University"
             description="university.mongodb.com"
