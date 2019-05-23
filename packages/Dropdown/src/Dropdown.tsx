@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, EventHandler } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import { emotion } from '@leafygreen-ui/lib';
@@ -47,7 +47,7 @@ interface Props {
   /**
    * Content that will appear inside of the Dropdown.
    */
-  children?: React.ReactNode;
+  children?: React.ReactElement;
 
   /**
    * Class name applied to Dropdown.
@@ -60,9 +60,9 @@ interface Props {
   refEl?: React.RefObject<HTMLElement>;
 
   /**
-   * A reference to the element against which the Dropdown will be positioned.
+   * A reference to the passed in trigger element.
    */
-  trigger?: React.ReactNode;
+  trigger?: React.ReactElement;
 
   /**
    * Specifies that the popover content will appear portaled to the end of the DOM,
@@ -107,37 +107,61 @@ export default function Dropdown({
   trigger,
   ...rest
 }: Props) {
-  let triggerElement;
   const [isActive, setActiveState] = useState(false);
-  const triggerRef = useRef(null);
 
-  function handleClick() {
+  const syntheticToggleEventHandler: EventHandler<React.SyntheticEvent> = e => {
+    e.nativeEvent.stopImmediatePropagation();
     setActiveState(!isActive);
-  }
+  };
+
+  const nativeToggleEventHandler = (e: Event) => {
+    e.stopImmediatePropagation();
+    setActiveState(!isActive);
+  };
+
+  const handleEscape = (e: KeyboardEvent) => {
+    e.keyCode === 27 && nativeToggleEventHandler(e);
+  };
+
+  let triggerElement: React.ReactNode = null;
+
+  const popoverContent = (
+    <Popover
+      key="popover"
+      active={trigger ? isActive : active}
+      align={align}
+      justify={justify}
+      refEl={refEl}
+      usePortal={usePortal}
+    >
+      <ul {...rest} className={cx(rootDropdownStyle, className)}>
+        {children}
+      </ul>
+    </Popover>
+  );
 
   if (trigger) {
+    useEffect(() => {
+      if (isActive) {
+        document.addEventListener('click', nativeToggleEventHandler, {
+          once: true,
+        });
+        document.addEventListener('keydown', handleEscape, { once: true });
+      }
+
+      return () => {
+        document.removeEventListener('click', nativeToggleEventHandler);
+        document.removeEventListener('keydown', handleEscape);
+      };
+    });
+
     triggerElement = React.cloneElement(trigger, {
-      onClick: handleClick,
-      ref: triggerRef,
+      onClick: syntheticToggleEventHandler,
+      children: [...trigger.props.children, popoverContent],
     });
   }
 
-  return (
-    <>
-      {trigger && triggerElement}
-      <Popover
-        active={trigger ? isActive : active}
-        align={align}
-        justify={justify}
-        refEl={trigger ? triggerElement : refEl}
-        usePortal={usePortal}
-      >
-        <ul {...rest} className={cx(rootDropdownStyle, className)}>
-          {children}
-        </ul>
-      </Popover>
-    </>
-  );
+  return triggerElement ? triggerElement : popoverContent;
 }
 
 Dropdown.displayName = 'Dropdown';

@@ -12,13 +12,13 @@ describe('packages/Dropdown', () => {
   const { getByTestId, getByText, getByRole } = render(
     <Dropdown active data-testid="test-dropdown">
       <DropdownGroup>
-        <DropdownItem className={className} onSelect={onSelect}>
-          Item A
-        </DropdownItem>
-        <DropdownItem href="http://mongodb.design">Item B</DropdownItem>
+        <DropdownItem className={className} onClick={onSelect} title="Item A" />
+        <DropdownItem href="http://mongodb.design" title="Item B" />
       </DropdownGroup>
     </Dropdown>,
   );
+
+  const dropdown = getByTestId('test-dropdown');
 
   test('Appears on DOM when active prop is set', () => {
     const dropdown = getByTestId('test-dropdown');
@@ -47,13 +47,12 @@ describe('packages/Dropdown', () => {
   });
 
   test(`renders "${className}" in the DropdownItem container's classList`, () => {
-    const dropdownItem = getByText('Item A').parentElement;
-    dropdownItem &&
-      expect(dropdownItem.classList.contains(className)).toBe(true);
+    const itemA = dropdown.firstChild.firstChild;
+    itemA && expect(itemA.classList.contains(className)).toBe(true);
   });
 
   test('Renders inside of an `a` instead of a `span` tag, when `href` prop is supplied', () => {
-    const dropdownItem = getByText('Item B');
-    expect(dropdownItem.tagName.toLowerCase()).toBe('a');
+    const itemB = dropdown.firstChild.children[1].firstChild;
+    expect(itemB.tagName.toLowerCase()).toBe('a');
   });
 });

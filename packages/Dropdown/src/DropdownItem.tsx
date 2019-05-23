@@ -22,13 +22,36 @@ const containerStyle = css`
   }
 `;
 
-const textStyle = css`
-  font-size: 14px;
-  line-height: 16px;
+const baseTextStyle = css`
   cursor: pointer;
-  margin: 0px;
   color: ${colors.gray[1]};
   text-decoration: none;
+  margin: 0px;
+`;
+
+const titleTextStyle = css`
+  font-size: 14px;
+  line-height: 16px;
+  margin: 4px 0px;
+`;
+
+const descriptionTextStyle = css`
+  font-size: 12px;
+  margin: 2px 0px;
+`;
+
+const activeStyle = css`
+  background-color: ${colors.gray[8]};
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    width: 3px;
+    top: 0;
+    bottom: 0;
+    left: -1px;
+    background-color: ${colors.green[3]};
+  }
 `;
 
 interface Props {
@@ -38,11 +61,6 @@ interface Props {
   href?: string;
 
   /**
-   * Content that will appear inside of DropdownItem component.
-   */
-  children?: React.ReactNode;
-
-  /**
    * Class name that will be applied to root DropdownItem element.
    */
   className?: string;
@@ -50,7 +68,27 @@ interface Props {
   /**
    * Callback function to be executed when DropdownItem is clicked.
    */
-  onSelect?: React.MouseEventHandler;
+  onClick?: React.MouseEventHandler;
+
+  /**
+   * Main text displayed in DropdownItem.
+   */
+  title?: string;
+
+  /**
+   * Description text displayed below title in DropdownItem.
+   */
+  description?: string;
+
+  /**
+   * Determines whether or not the DropdownItem is diabled.
+   */
+  disabled?: boolean;
+
+  /**
+   * Determines whether or not the DropdownItem is active.
+   */
+  active?: boolean;
 }
 
 /**
@@ -61,7 +99,7 @@ interface Props {
  * `''
  * ---
  * @param props.href If supplied, DropdownItem will render inside of `a` tags.
- * @param props.onSelect Function to be executed when DropdownItem is clicked.
+ * @param props.onClick Function to be executed when DropdownItem is clicked.
  * @param props.className Classname applied to DropdownItem.
  * @param props.children Content to appear inside of the DropdownItem.
  *
@@ -69,16 +107,27 @@ interface Props {
  */
 export default function DropdownItem({
   href,
-  onSelect,
-  children,
+  onClick,
   className,
+  title,
+  description,
+  disabled,
+  active,
+  ...rest
 }: Props) {
   const Root = href ? 'a' : 'span';
+  const clickHandler = !disabled ? onClick : undefined;
 
   return (
-    <li className={cx(containerStyle, className)}>
-      <Root onClick={onSelect} href={href} className={textStyle}>
-        {children}
+    <li
+      {...rest}
+      className={cx(containerStyle, className, active && activeStyle)}
+    >
+      <Root onClick={clickHandler} href={href} className={baseTextStyle}>
+        <p className={cx(titleTextStyle)}>{title}</p>
+        {description && (
+          <p className={cx(descriptionTextStyle)}>{description}</p>
+        )}
       </Root>
     </li>
   );
@@ -88,7 +137,15 @@ DropdownItem.displayName = 'DropdownItem';
 
 DropdownItem.propTypes = {
   href: PropTypes.string,
-  onSelect: PropTypes.func,
-  children: PropTypes.node,
+  onClick: PropTypes.func,
   className: PropTypes.string,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  disabled: PropTypes.bool,
+  active: PropTypes.bool,
+};
+
+DropdownItem.defaultProps = {
+  disabled: false,
+  active: false,
 };

@@ -7,22 +7,25 @@ import DropdownItem from './DropdownItem.tsx';
 import DropdownGroup from './DropdownGroup.tsx';
 
 class Controlled extends Component {
-  state = { active: false };
-
   render() {
-    const { active } = this.state;
     return (
       <Dropdown
         align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
         justify={select('justify', ['start', 'middle', 'end'], 'start')}
-        active={active}
         trigger={<button>trigger</button>}
       >
         <DropdownGroup>
-          <DropdownItem>Element A</DropdownItem>
-          <DropdownItem>Element B</DropdownItem>
+          <DropdownItem title="Atlas" description="cloud.mongodb.com" />
+          <DropdownItem
+            title="University"
+            description="university.mongodb.com"
+          />
+          <DropdownItem
+            title="Cloud Support"
+            description="support.mongodb.com"
+          />
         </DropdownGroup>
-        <DropdownItem>Element C</DropdownItem>
+        <DropdownItem title="Logout" />
       </Dropdown>
     );
   }
@@ -45,10 +48,21 @@ class Uncontrolled extends Component {
           active={active}
         >
           <DropdownGroup>
-            <DropdownItem>Element A</DropdownItem>
-            <DropdownItem>Element B</DropdownItem>
+            <DropdownItem
+              active
+              title="Atlas"
+              description="cloud.mongodb.com"
+            />
+            <DropdownItem
+              title="University"
+              description="university.mongodb.com"
+            />
+            <DropdownItem
+              title="Cloud Support"
+              description="support.mongodb.com"
+            />
           </DropdownGroup>
-          <DropdownItem>Element C</DropdownItem>
+          <DropdownItem title="Logout" />
         </Dropdown>
       </>
     );
