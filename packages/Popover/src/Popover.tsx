@@ -150,10 +150,9 @@ function Popover({
   adjustOnMutation,
   ...rest
 }: PopoverProps): ReactElement {
-  const [
-    placeholderNode,
-    setPlaceholderNode,
-  ] = useElementNode<HTMLDivElement | null>();
+  const [placeholderNode, setPlaceholderNode] = useElementNode<
+    HTMLDivElement
+  >();
   const [contentNode, setContentNode] = useElementNode<HTMLDivElement>();
 
   let referenceElement: HTMLElement | null = null;

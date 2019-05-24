@@ -57,17 +57,14 @@ export function useMutationObserver<Value>(
   return value;
 }
 
-export function useElementNode<ElementType = HTMLElement>(): [
-  ElementType | null,
-  (node: ElementType | null) => void
-] {
+export function useElementNode<ElementType = HTMLElement>() {
   const [element, setElement] = useState<ElementType | null>(null);
 
-  const elementRefCallback = useCallback(node => {
+  const elementRefCallback = useCallback((node: ElementType | null) => {
     if (node !== null) {
-      setElement(node as ElementType);
+      setElement(node);
     }
   }, []);
 
-  return [element, elementRefCallback];
+  return [element, elementRefCallback] as const;
 }
