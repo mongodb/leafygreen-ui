@@ -61,7 +61,7 @@ export function useElementNode<ElementType = HTMLElement>() {
   const [element, setElement] = useState<ElementType | null>(null);
 
   const elementRefCallback = useCallback((node: ElementType | null) => {
-    if (node !== null) {
+    if (node) {
       setElement(node);
     }
   }, []);
