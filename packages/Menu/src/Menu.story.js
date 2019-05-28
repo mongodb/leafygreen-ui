@@ -25,12 +25,6 @@ function Controlled() {
           description="support.mongodb.com"
           active={boolean('active', true)}
         />
-        <MenuGroup>
-          <MenuItem
-            title={text('title text', 'Title text')}
-            description={text('descriptiontext text', 'Description text')}
-          />
-        </MenuGroup>
       </MenuGroup>
       <MenuItem title="Logout" />
     </Menu>

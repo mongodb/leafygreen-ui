@@ -9,7 +9,12 @@ const { css } = emotion;
 export const menuGroup = createDataProp('menu-group-section');
 
 const borderStyle = css`
-  border-bottom: 1px solid ${colors.gray[7]};
+  // border-bottom: 1px solid ${colors.gray[7]};s
+`;
+
+const titleStyle = css`
+  font-size: 16px;
+  padding-left: 16px;
 `;
 interface Props {
   /**
@@ -48,7 +53,7 @@ export default function MenuGroup({ children, className, title }: Props) {
       role="menu"
       className={cx(borderStyle, className)}
     >
-      {title && <div>{title}</div>}
+      {title && <div className={titleStyle}>{title}</div>}
       {children}
     </section>
   );

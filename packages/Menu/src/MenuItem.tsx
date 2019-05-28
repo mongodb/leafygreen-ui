@@ -23,6 +23,14 @@ const containerStyle = css`
     transition: background 300ms ease-in-out;
   }
 
+  &:first-child ~ ${menuGroup.selector} {
+    border-top: 1px solid ${colors.gray[7]};
+  }
+
+  ${menuGroup.selector} + & {
+    border-top: 1px solid ${colors.gray[7]};
+  }
+
   ${menuGroup.selector} ${menuGroup.selector} & {
     padding-left: ${indentation * 2}px;
   }
