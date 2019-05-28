@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import debounce from 'lodash/debounce';
 
 function getViewportSize() {
@@ -55,4 +55,16 @@ export function useMutationObserver<Value>(
   }, [target, options, callback, enabled]);
 
   return value;
+}
+
+export function useElementNode<ElementType = HTMLElement>() {
+  const [element, setElement] = useState<ElementType | null>(null);
+
+  const elementRefCallback = useCallback((node: ElementType | null) => {
+    if (node) {
+      setElement(node);
+    }
+  }, []);
+
+  return [element, elementRefCallback] as const;
 }

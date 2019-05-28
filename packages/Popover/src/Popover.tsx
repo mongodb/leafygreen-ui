@@ -1,5 +1,4 @@
 import React, {
-  useRef,
   useMemo,
   Fragment,
   ReactNode,
@@ -10,7 +9,7 @@ import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
 import { emotion } from '@leafygreen-ui/lib';
 import { calculatePosition, getElementPosition } from './positionUtils';
-import { useViewportSize, useMutationObserver } from './hooks';
+import { useViewportSize, useMutationObserver, useElementNode } from './hooks';
 
 const { css, cx } = emotion;
 
@@ -151,15 +150,15 @@ function Popover({
   adjustOnMutation,
   ...rest
 }: PopoverProps): ReactElement {
-  const placeholderRef: React.RefObject<HTMLDivElement> = useRef(null);
-  const contentRef: React.RefObject<HTMLDivElement> = useRef(null);
+  const [placeholderNode, setPlaceholderNode] = useElementNode();
+  const [contentNode, setContentNode] = useElementNode();
 
   let referenceElement: HTMLElement | null = null;
 
   if (refEl && refEl.current) {
     referenceElement = refEl.current;
-  } else if (placeholderRef.current) {
-    const parent = placeholderRef.current.parentNode;
+  } else if (placeholderNode) {
+    const parent = placeholderNode.parentNode;
 
     if (parent && parent instanceof HTMLElement) {
       referenceElement = parent;
@@ -176,7 +175,7 @@ function Popover({
   );
 
   const lastTimeContentElMutated = useMutationObserver(
-    contentRef.current,
+    contentNode,
     mutationOptions,
     () => Date.now(),
     adjustOnMutation,
@@ -188,8 +187,8 @@ function Popover({
     lastTimeRefElMutated,
   ]);
 
-  const contentElPos = useMemo(() => getElementPosition(contentRef.current), [
-    contentRef.current,
+  const contentElPos = useMemo(() => getElementPosition(contentNode), [
+    contentNode,
     viewportSize,
     lastTimeContentElMutated,
   ]);
@@ -217,7 +216,7 @@ function Popover({
   return (
     <>
       <div
-        ref={placeholderRef}
+        ref={setPlaceholderNode}
         className={css`
           display: none;
         `}
@@ -225,7 +224,7 @@ function Popover({
       <Root>
         <div
           {...rest}
-          ref={contentRef}
+          ref={setContentNode}
           className={cx(
             rootPopoverStyle,
             position,
