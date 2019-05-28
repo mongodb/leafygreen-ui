@@ -10,7 +10,6 @@ const { css } = emotion;
 const indentation = 16;
 
 const containerStyle = css`
-  list-style: none;
   min-height: 42px;
   display: flex;
   flex-direction: column;
@@ -134,7 +133,7 @@ export default function MenuItem({
   const clickHandler = !disabled ? onClick : undefined;
 
   return (
-    <li
+    <div
       {...rest}
       className={cx(
         containerStyle,
@@ -143,6 +142,7 @@ export default function MenuItem({
         disabled && disabledStyle,
         className,
       )}
+      role="menuitem"
     >
       <Root onClick={clickHandler} href={href}>
         <p className={cx(titleTextStyle)}>{title}</p>
@@ -150,7 +150,7 @@ export default function MenuItem({
           <p className={cx(descriptionTextStyle)}>{description}</p>
         )}
       </Root>
-    </li>
+    </div>
   );
 }
 

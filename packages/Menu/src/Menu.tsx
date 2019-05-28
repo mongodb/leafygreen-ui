@@ -131,9 +131,9 @@ export default function Menu({
       refEl={refEl}
       usePortal={usePortal}
     >
-      <ul {...rest} className={cx(rootMenuStyle, className)}>
+      <div {...rest} className={cx(rootMenuStyle, className)} role="menu">
         {children}
-      </ul>
+      </div>
     </Popover>
   );
 
