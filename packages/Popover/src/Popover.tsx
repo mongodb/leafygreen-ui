@@ -1,7 +1,5 @@
 import React, {
   useMemo,
-  useLayoutEffect,
-  useState,
   Fragment,
   ReactNode,
   RefObject,
@@ -183,26 +181,9 @@ function Popover({
     adjustOnMutation,
   );
 
-  const memoedRefPosition = useMemo(
-    () => getElementPosition(referenceElement),
-    [referenceElement, viewportSize, lastTimeRefElMutated],
-  );
-
-  const memoedContentPosition = useMemo(
-    () => getElementPosition(contentRef.current),
-    [contentRef.current, viewportSize, lastTimeContentElMutated],
-  );
-
-  const [referenceElPos, setReferenceElPos] = useState();
-  const [contentElPos, setContentElPos] = useState();
-
-  useLayoutEffect(() => {
-    setReferenceElPos(memoedRefPosition);
-  }, [
+  const referenceElPos = useMemo(() => getElementPosition(referenceElement), [
     referenceElement,
-    contentRef.current,
     viewportSize,
-    lastTimeContentElMutated,
     lastTimeRefElMutated,
   ]);
 
@@ -210,22 +191,7 @@ function Popover({
     contentNode,
     viewportSize,
     lastTimeContentElMutated,
-    lastTimeRefElMutated,
   ]);
-
-  // function useReferenceElPos() {
-  //   const getReferenceElPos = useMemo(() => getElementPosition(referenceElement), [
-  //     referenceElement,
-  //     viewportSize,
-  //     lastTimeRefElMutated,
-  //   ]);
-
-  //   useLayoutEffect(() => {
-  //     setReferenceElPos(getReferenceElPos)
-  //   }, [referenceElement]);
-
-  //   return referenceElPos
-  // }
 
   const position = css(
     calculatePosition({
