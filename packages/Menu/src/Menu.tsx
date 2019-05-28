@@ -7,9 +7,8 @@ import { cx } from 'emotion';
 
 const { css } = emotion;
 
-const rootDropdownStyle = css`
+const rootMenuStyle = css`
   width: 202px;
-  border: 1px solid ${colors.gray[7]};
   border-radius: 3px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
   padding: 0px;
@@ -23,38 +22,38 @@ const rootDropdownStyle = css`
 
 interface Props {
   /**
-   * Determines the active state of the Dropdown.
+   * Determines the active state of the Menu.
    *
    * default: `false`
    */
   active: boolean;
 
   /**
-   * Determines the alignment of the Dropdown relative to a trigger element.
+   * Determines the alignment of the Menu relative to a trigger element.
    *
    * default: `bottom`
    */
   align: Align;
 
   /**
-   * Determines the justification of the Dropdown relative to a trigger element.
+   * Determines the justification of the Menu relative to a trigger element.
    *
    * default: `end`
    */
   justify: Justify;
 
   /**
-   * Content that will appear inside of the Dropdown.
+   * Content that will appear inside of the Menu.
    */
   children?: React.ReactElement;
 
   /**
-   * Class name applied to Dropdown.
+   * Class name applied to Menu.
    */
   className?: string;
 
   /**
-   * A reference to the element against which the Dropdown will be positioned.
+   * A reference to the element against which the Menu will be positioned.
    */
   refEl?: React.RefObject<HTMLElement>;
 
@@ -73,28 +72,28 @@ interface Props {
 }
 
 /**
- * # Dropdown
+ * # Menu
  *
- * Dropdown component
+ * Menu component
  *
- * `''
+ * ```
 <button>
-  <Dropdown active={true}>
-    <DropdownItem>Hello World!</DropdownItem>
-  </Dropdown>
+  <Menu active={true}>
+    <MenuItem>Hello World!</MenuItem>
+  </Menu>
 </button>
- * `''
- * @param props.children Content to appear inside of Dropdown.
- * @param props.active Boolean to describe whether or not Dropdown is active.
- * @param props.className Classname applied to Dropdown.
- * @param props.align Alignment of Dropdown relative to another element: `top`, `bottom`, `left`, `right`.
- * @param props.justify Justification of Dropdown relative to another element: `start`, `middle`, `end`.
- * @param props.refEl Reference element that Dropdown should be positioned against.
+ * ```
+ * @param props.children Content to appear inside of Menu.
+ * @param props.active Boolean to describe whether or not Menu is active.
+ * @param props.className Classname applied to Menu.
+ * @param props.align Alignment of Menu relative to another element: `top`, `bottom`, `left`, `right`.
+ * @param props.justify Justification of Menu relative to another element: `start`, `middle`, `end`.
+ * @param props.refEl Reference element that Menu should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
- * @param props.trigger Trigger element to set active state of Dropdown, makes component controlled
+ * @param props.trigger Trigger element to set active state of Menu, makes component controlled
  *
  */
-export default function Dropdown({
+export default function Menu({
   active,
   align,
   justify,
@@ -132,7 +131,7 @@ export default function Dropdown({
       refEl={refEl}
       usePortal={usePortal}
     >
-      <ul {...rest} className={cx(rootDropdownStyle, className)}>
+      <ul {...rest} className={cx(rootMenuStyle, className)}>
         {children}
       </ul>
     </Popover>
@@ -162,9 +161,9 @@ export default function Dropdown({
   return triggerElement ? triggerElement : popoverContent;
 }
 
-Dropdown.displayName = 'Dropdown';
+Menu.displayName = 'Menu';
 
-Dropdown.propTypes = {
+Menu.propTypes = {
   children: PropTypes.node,
   active: PropTypes.bool,
   className: PropTypes.string,
@@ -175,7 +174,7 @@ Dropdown.propTypes = {
   trigger: PropTypes.node,
 };
 
-Dropdown.defaultProps = {
+Menu.defaultProps = {
   align: 'bottom',
   justify: 'end',
   usePortal: true,

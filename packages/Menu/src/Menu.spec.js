@@ -1,7 +1,7 @@
 import * as React from 'react';
 import 'jest-dom/extend-expect';
 import { render, fireEvent, cleanup } from 'react-testing-library';
-import Dropdown, { DropdownItem, DropdownGroup } from './index';
+import Menu, { MenuGroup, MenuItem } from './index';
 
 afterAll(cleanup);
 
@@ -10,49 +10,49 @@ describe('packages/Dropdown', () => {
   const className = 'test-className';
 
   const { getByTestId, getByText, getByRole } = render(
-    <Dropdown active data-testid="test-dropdown">
-      <DropdownGroup>
-        <DropdownItem className={className} onClick={onSelect} title="Item A" />
-        <DropdownItem href="http://mongodb.design" title="Item B" />
-      </DropdownGroup>
-    </Dropdown>,
+    <Menu active data-testid="test-menu">
+      <MenuGroup>
+        <MenuItem className={className} onClick={onSelect} title="Item A" />
+        <MenuItem href="http://mongodb.design" title="Item B" />
+      </MenuGroup>
+    </Menu>,
   );
 
-  const dropdown = getByTestId('test-dropdown');
+  const menu = getByTestId('test-menu');
 
   test('Appears on DOM when active prop is set', () => {
-    const dropdown = getByTestId('test-dropdown');
-    expect(dropdown).toBeVisible();
+    const menu = getByTestId('test-menu');
+    expect(menu).toBeVisible();
   });
 
   test('Renders children to the DOM', () => {
-    const dropdownItem = getByText('Item A');
-    expect(dropdownItem).toBeInTheDocument();
+    const menuItem = getByText('Item A');
+    expect(menuItem).toBeInTheDocument();
   });
 
   describe('packages/DropdownGroup', () => {
     test('Creates a dropdown group div with role menu', () => {
-      const dropdownGroup = getByRole('menu');
-      const dropdownItem = getByText('Item A');
-      expect(dropdownGroup).toContainElement(dropdownItem);
+      const menuGroup = getByRole('menu');
+      const menuItem = getByText('Item A');
+      expect(menuGroup).toContainElement(menuItem);
     });
   });
 
   describe('packages/DropdownItem', () => {
     test('Fires onSelect callback, when clicked', () => {
-      const dropdownItem = getByText('Item A');
-      fireEvent.click(dropdownItem);
+      const menuItem = getByText('Item A');
+      fireEvent.click(menuItem);
       expect(onSelect.mock.calls.length).toBe(1);
     });
   });
 
   test(`renders "${className}" in the DropdownItem container's classList`, () => {
-    const itemA = dropdown.firstChild.firstChild;
+    const itemA = menu.firstChild.firstChild;
     itemA && expect(itemA.classList.contains(className)).toBe(true);
   });
 
   test('Renders inside of an `a` instead of a `span` tag, when `href` prop is supplied', () => {
-    const itemB = dropdown.firstChild.children[1].firstChild;
+    const itemB = menu.firstChild.children[1].firstChild;
     expect(itemB.tagName.toLowerCase()).toBe('a');
   });
 });

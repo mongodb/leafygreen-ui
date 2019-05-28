@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
 import { cx } from 'emotion';
+import { menuGroup } from './MenuGroup';
 
 const { css } = emotion;
+
+const indentation = 16;
 
 const containerStyle = css`
   list-style: none;
@@ -13,12 +16,16 @@ const containerStyle = css`
   flex-direction: column;
   text-align: left;
   justify-content: center;
-  padding-left: 16px;
+  padding-left: ${indentation}px;
   text-decoration: none;
   margin: 0px;
   &:hover {
     background-color: ${colors.gray[8]};
     transition: background 300ms ease-in-out;
+  }
+
+  ${menuGroup.selector} ${menuGroup.selector} & {
+    padding-left: ${indentation * 2}px;
   }
 `;
 
@@ -62,58 +69,58 @@ const disabledStyle = css`
 
 interface Props {
   /**
-   * If supplied, Menu Item will be rendered inside of `a` tags.
+   * If supplied, MenuItem will be rendered inside of `a` tags.
    */
   href?: string;
 
   /**
-   * Class name that will be applied to root DropdownItem element.
+   * Class name that will be applied to root MenuItem element.
    */
   className?: string;
 
   /**
-   * Callback function to be executed when DropdownItem is clicked.
+   * Callback function to be executed when MenuItem is clicked.
    */
   onClick?: React.MouseEventHandler;
 
   /**
-   * Main text displayed in DropdownItem.
+   * Main text displayed in MenuItem.
    */
   title?: string;
 
   /**
-   * Description text displayed below title in DropdownItem.
+   * Description text displayed below title in MenuItem.
    */
   description?: string;
 
   /**
-   * Determines whether or not the DropdownItem is diabled.
+   * Determines whether or not the MenuItem is diabled.
    */
   disabled?: boolean;
 
   /**
-   * Determines whether or not the DropdownItem is active.
+   * Determines whether or not the MenuItem is active.
    */
   active?: boolean;
 }
 
 /**
- * # DropdownItem
+ * # MenuItem
  *
- * `''
-<DropdownItem>Hello World!</DropdownItem>
- * `''
- * @param props.href If supplied, DropdownItem will render inside of `a` tags.
- * @param props.onClick Function to be executed when DropdownItem is clicked.
- * @param props.className Classname applied to DropdownItem.
- * @param props.children Content to appear inside of the DropdownItem.
- * @param props.title Main text to appear inside of DropdownItem
- * @param props.description Subtext to appear inside of DropdownItem
- * @param props.disabled Determines if the DropdownItem is disabled
- * @param props.active Determines whether the DropdownItem will appear as active
+ * ```
+<MenuItem>Hello World!</MenuItem>
+ * ```
+ * @param props.href If supplied, MenuItem will render inside of `a` tags.
+ * @param props.onClick Function to be executed when MenuItem is clicked.
+ * @param props.className Classname applied to MenuItem.
+ * @param props.children Content to appear inside of the MenuItem.
+ * @param props.title Main text to appear inside of MenuItem
+ * @param props.description Subtext to appear inside of MenuItem
+ * @param props.disabled Determines if the MenuItem is disabled
+ * @param props.active Determines whether the MenuItem will appear as active
  *
  */
-export default function DropdownItem({
+export default function MenuItem({
   href,
   onClick,
   className,
@@ -147,9 +154,9 @@ export default function DropdownItem({
   );
 }
 
-DropdownItem.displayName = 'DropdownItem';
+MenuItem.displayName = 'MenuItem';
 
-DropdownItem.propTypes = {
+MenuItem.propTypes = {
   href: PropTypes.string,
   onClick: PropTypes.func,
   className: PropTypes.string,
@@ -159,7 +166,7 @@ DropdownItem.propTypes = {
   active: PropTypes.bool,
 };
 
-DropdownItem.defaultProps = {
+MenuItem.defaultProps = {
   disabled: false,
   active: false,
 };

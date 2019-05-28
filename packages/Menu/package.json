@@ -1,7 +1,7 @@
 {
-  "name": "@leafygreen-ui/dropdown",
+  "name": "@leafygreen-ui/menu",
   "version": "0.9.0",
-  "description": "LeafyGreen UI Kit Dropdown",
+  "description": "LeafyGreen UI Kit Menu",
   "main": "./dist/index.js",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/lib": "^2.1.5",
-    "@leafygreen-ui/theme": "^1.1.5", 
+    "@leafygreen-ui/theme": "^1.1.5",
     "@leafygreen-ui/popover": "^1.0.0"
   }
 }
