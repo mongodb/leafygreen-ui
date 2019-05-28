@@ -1,59 +1,75 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { select } from '@storybook/addon-knobs';
+import { select, boolean, text } from '@storybook/addon-knobs';
 
 import Menu from './Menu.tsx';
 import MenuItem from './MenuItem.tsx';
 import MenuGroup from './MenuGroup.tsx';
 
-class Controlled extends Component {
-  render() {
-    return (
+function Controlled() {
+  return (
+    <Menu
+      align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
+      justify={select('justify', ['start', 'middle', 'end'], 'start')}
+      trigger={<button>trigger</button>}
+    >
+      <MenuGroup>
+        <MenuItem
+          title="Atlas"
+          description="cloud.mongodb.com"
+          disabled={boolean('disabled', false)}
+        />
+        <MenuItem title="University" description="university.mongodb.com" />
+        <MenuItem
+          title="Cloud Support"
+          description="support.mongodb.com"
+          active={boolean('active', true)}
+        />
+        <MenuGroup>
+          <MenuItem
+            title={text('title text', 'Title text')}
+            description={text('descriptiontext text', 'Description text')}
+          />
+        </MenuGroup>
+      </MenuGroup>
+      <MenuItem title="Logout" />
+    </Menu>
+  );
+}
+
+function Uncontrolled() {
+  const [active, setActive] = useState(false);
+  return (
+    <>
+      <button onClick={() => setActive(!active)}>TRIGGER</button>
       <Menu
         align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
         justify={select('justify', ['start', 'middle', 'end'], 'start')}
-        trigger={<button>trigger</button>}
+        active={active}
       >
         <MenuGroup>
-          <MenuItem disabled title="Atlas" description="cloud.mongodb.com" />
+          <MenuItem
+            title="Atlas"
+            description="cloud.mongodb.com"
+            disabled={boolean('disabled', false)}
+          />
           <MenuItem title="University" description="university.mongodb.com" />
-          <MenuItem title="Cloud Support" description="support.mongodb.com" />
+          <MenuItem
+            title="Cloud Support"
+            description="support.mongodb.com"
+            active={boolean('active', true)}
+          />
           <MenuGroup>
-            <MenuItem title="TEST" />
+            <MenuItem
+              title={text('title text', 'Title text')}
+              description={text('descriptiontext text', 'Description text')}
+            />
           </MenuGroup>
         </MenuGroup>
         <MenuItem title="Logout" />
       </Menu>
-    );
-  }
-}
-
-class Uncontrolled extends Component {
-  state = { active: false };
-
-  render() {
-    const { active } = this.state;
-    return (
-      <>
-        <button onClick={() => this.setState({ active: !active })}>
-          TRIGGER
-        </button>
-
-        <Menu
-          align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
-          justify={select('justify', ['start', 'middle', 'end'], 'start')}
-          active={active}
-        >
-          <MenuGroup>
-            <MenuItem active title="Atlas" description="cloud.mongodb.com" />
-            <MenuItem title="University" description="university.mongodb.com" />
-            <MenuItem title="Cloud Support" description="support.mongodb.com" />
-          </MenuGroup>
-          <MenuItem title="Logout" />
-        </Menu>
-      </>
-    );
-  }
+    </>
+  );
 }
 
 storiesOf('Dropdown', module)
