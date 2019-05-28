@@ -76,15 +76,17 @@ const textVariants = {
 };
 
 const baseTextStyle = css`
-  margin-left: 0.3em;
+  margin-left: 3px;
   font-size: 14px;
   line-height: 1.3em;
-  margin-top: 1px;
   flex-grow: 1;
+  position: relative;
+  top: 2px;
 `;
 
 const boldTextStyle = css`
   font-weight: bold;
+  top: 1px;
 `;
 
 const containerStyle = css`
