@@ -11,7 +11,7 @@ const indentation = 16;
 
 const containerStyle = css`
   list-style: none;
-  height: 100%;
+  min-height: 42px;
   display: flex;
   flex-direction: column;
   text-align: left;
