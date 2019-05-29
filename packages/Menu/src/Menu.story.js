@@ -35,33 +35,35 @@ function Uncontrolled() {
   const [active, setActive] = useState(false);
   return (
     <>
-      <button onClick={() => setActive(!active)}>TRIGGER</button>
-      <Menu
-        align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
-        justify={select('justify', ['start', 'middle', 'end'], 'start')}
-        active={active}
-      >
-        <MenuGroup>
-          <MenuItem
-            title="Atlas"
-            description="cloud.mongodb.com"
-            disabled={boolean('disabled', false)}
-          />
-          <MenuItem title="University" description="university.mongodb.com" />
-          <MenuItem
-            title="Cloud Support"
-            description="support.mongodb.com"
-            active={boolean('active', true)}
-          />
+      <button onClick={() => setActive(!active)}>
+        trigger
+        <Menu
+          align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
+          justify={select('justify', ['start', 'middle', 'end'], 'start')}
+          active={active}
+        >
           <MenuGroup>
             <MenuItem
-              title={text('title text', 'Title text')}
-              description={text('descriptiontext text', 'Description text')}
+              title="Atlas"
+              description="cloud.mongodb.com"
+              disabled={boolean('disabled', false)}
             />
+            <MenuItem title="University" description="university.mongodb.com" />
+            <MenuItem
+              title="Cloud Support"
+              description="support.mongodb.com"
+              active={boolean('active', true)}
+            />
+            <MenuGroup>
+              <MenuItem
+                title={text('title text', 'Title text')}
+                description={text('descriptiontext text', 'Description text')}
+              />
+            </MenuGroup>
           </MenuGroup>
-        </MenuGroup>
-        <MenuItem title="Logout" />
-      </Menu>
+          <MenuItem title="Logout" />
+        </Menu>
+      </button>
     </>
   );
 }

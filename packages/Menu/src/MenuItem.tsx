@@ -21,7 +21,7 @@ const containerStyle = css`
 
   &:hover {
     background-color: ${colors.gray[8]};
-    transition: background 300ms ease-in-out;
+    transition: background-color 200ms ease-in-out;
   }
 
   &:first-child ~ ${menuGroup.selector} {
