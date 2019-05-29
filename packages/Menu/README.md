@@ -174,4 +174,4 @@ Function that will be called when a `MenuItem` is clicked
 
 **Default:** ``
 
-Description text that will appear main content of `MenuItem`
+Description text that will appear below the main content of `MenuItem`

@@ -11,7 +11,7 @@ const titleStyle = css`
   padding-left: 16px;
 `;
 
-interface Props {
+interface MenuGroupProps {
   /**
    * Content that will appear inside of MenuGroup component.
    */
@@ -41,8 +41,7 @@ interface Props {
  * @param props.title Text to appear before MenuGroup components.
  *
  */
-
-function MenuGroup({ children, className, title, ...rest }: Props) {
+function MenuGroup({ children, className, title, ...rest }: MenuGroupProps) {
   return (
     <section {...rest} {...menuGroup.prop} role="menu" className={className}>
       {title && <div className={titleStyle}>{title}</div>}

@@ -5,7 +5,7 @@ import Menu, { MenuGroup, MenuItem } from './index';
 
 afterAll(cleanup);
 
-describe('packages/Dropdown', () => {
+describe('packages/Menu', () => {
   const onSelect = jest.fn();
   const className = 'test-className';
 
@@ -32,7 +32,7 @@ describe('packages/Dropdown', () => {
     expect(menuItem).toBeInTheDocument();
   });
 
-  describe('packages/DropdownGroup', () => {
+  describe('packages/MenuGroup', () => {
     test('Creates a dropdown group div with role menu', () => {
       const menuGroup = getByRole('menu');
       const menuItem = getByText('Item A');
@@ -40,7 +40,7 @@ describe('packages/Dropdown', () => {
     });
   });
 
-  describe('packages/DropdownItem', () => {
+  describe('packages/MenuItem', () => {
     test('Fires onSelect callback, when clicked', () => {
       const menuItem = getByText('Item A');
       fireEvent.click(menuItem);
@@ -50,7 +50,7 @@ describe('packages/Dropdown', () => {
 
   test(`renders "${className}" in the DropdownItem container's classList`, () => {
     const itemA = menu.firstChild.firstChild;
-    itemA && expect(itemA.classList.contains(className)).toBe(true);
+    expect(itemA.classList.contains(className)).toBe(true);
   });
 
   test('Renders inside of an `a` instead of a `span` tag, when `href` prop is supplied', () => {

@@ -14,7 +14,7 @@ const rootMenuStyle = css`
   background-color: ${colors.mongodb.white};
 `;
 
-interface Props {
+interface MenuProps {
   /**
    * Determines the active state of the Menu.
    *
@@ -86,35 +86,19 @@ interface Props {
  * @param props.refEl Reference element that Menu should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
  * @param props.trigger Trigger element to set active state of Menu, makes component controlled
- *
  */
-
 function Menu({
+  align = 'bottom',
+  justify = 'end',
+  usePortal = true,
   active,
-  align,
-  justify,
   children,
   className,
   refEl,
-  usePortal,
   trigger,
   ...rest
-}: Props) {
+}: MenuProps) {
   const [isActive, setActiveState] = useState(false);
-
-  const syntheticToggleEventHandler: EventHandler<React.SyntheticEvent> = e => {
-    e.nativeEvent.stopImmediatePropagation();
-    setActiveState(!isActive);
-  };
-
-  const nativeToggleEventHandler = (e: Event) => {
-    e.stopImmediatePropagation();
-    setActiveState(!isActive);
-  };
-
-  const handleEscape = (e: KeyboardEvent) => {
-    e.keyCode === 27 && nativeToggleEventHandler(e);
-  };
 
   const popoverContent = (
     <Popover
@@ -132,6 +116,20 @@ function Menu({
   );
 
   let triggerElement: React.ReactNode = null;
+
+  const syntheticToggleEventHandler: EventHandler<React.SyntheticEvent> = e => {
+    e.nativeEvent.stopImmediatePropagation();
+    setActiveState(!isActive);
+  };
+
+  const nativeToggleEventHandler = (e: Event) => {
+    e.stopImmediatePropagation();
+    setActiveState(!isActive);
+  };
+
+  const handleEscape = (e: KeyboardEvent) => {
+    e.keyCode === 27 && nativeToggleEventHandler(e);
+  };
 
   if (trigger) {
     useEffect(() => {
@@ -168,12 +166,6 @@ Menu.propTypes = {
   refEl: PropTypes.object,
   usePortal: PropTypes.bool,
   trigger: PropTypes.node,
-};
-
-Menu.defaultProps = {
-  align: 'bottom',
-  justify: 'end',
-  usePortal: true,
 };
 
 export default Menu;

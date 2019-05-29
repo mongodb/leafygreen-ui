@@ -71,7 +71,7 @@ const disabledStyle = css`
   cursor: not-allowed;
 `;
 
-interface Props {
+interface MenuItemProps {
   /**
    * If supplied, MenuItem will be rendered inside of `a` tags.
    */
@@ -123,17 +123,16 @@ interface Props {
  * @param props.active Determines whether the MenuItem will appear as active
  *
  */
-
 function MenuItem({
+  disabled = false,
+  active = false,
   href,
   onClick,
   className,
   children,
   description,
-  disabled,
-  active,
   ...rest
-}: Props) {
+}: MenuItemProps): React.ReactElement {
   const Root = href ? 'a' : 'span';
 
   return (
@@ -166,11 +165,6 @@ MenuItem.propTypes = {
   disabled: PropTypes.bool,
   active: PropTypes.bool,
   children: PropTypes.node,
-};
-
-MenuItem.defaultProps = {
-  disabled: false,
-  active: false,
 };
 
 export default MenuItem;
