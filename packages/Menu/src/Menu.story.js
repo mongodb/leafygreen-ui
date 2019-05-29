@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { select, boolean, text } from '@storybook/addon-knobs';
+import { select, boolean } from '@storybook/addon-knobs';
 
 import Menu from './Menu.tsx';
 import MenuItem from './MenuItem.tsx';
@@ -15,18 +15,20 @@ function Controlled() {
     >
       <MenuGroup>
         <MenuItem
-          title="Atlas"
           description="cloud.mongodb.com"
           disabled={boolean('disabled', false)}
-        />
-        <MenuItem title="University" description="university.mongodb.com" />
+        >
+          Atlas
+        </MenuItem>
+        <MenuItem description="university.mongodb.com">University</MenuItem>
         <MenuItem
-          title="Cloud Support"
           description="support.mongodb.com"
           active={boolean('active', true)}
-        />
+        >
+          Cloud Support
+        </MenuItem>
       </MenuGroup>
-      <MenuItem title="Logout" />
+      <MenuItem>Logout</MenuItem>
     </Menu>
   );
 }
@@ -44,38 +46,26 @@ function Uncontrolled() {
         >
           <MenuGroup>
             <MenuItem
-              title="Atlas"
               description="cloud.mongodb.com"
               disabled={boolean('disabled', false)}
-            />
-            <MenuItem title="University" description="university.mongodb.com" />
+            >
+              Atlas
+            </MenuItem>
+            <MenuItem description="university.mongodb.com">University</MenuItem>
             <MenuItem
-              title="Cloud Support"
               description="support.mongodb.com"
               active={boolean('active', true)}
-            />
-            <MenuGroup>
-              <MenuItem
-                title={text('title text', 'Title text')}
-                description={text('descriptiontext text', 'Description text')}
-              />
-            </MenuGroup>
+            >
+              Cloud Support
+            </MenuItem>
           </MenuGroup>
-          <MenuItem title="Logout" />
+          <MenuItem>Logout</MenuItem>
         </Menu>
       </button>
     </>
   );
 }
 
-storiesOf('Dropdown', module)
-  .add('Controlled', () => (
-    <div>
-      <Controlled />
-    </div>
-  ))
-  .add('Uncontrolled', () => (
-    <div>
-      <Uncontrolled />
-    </div>
-  ));
+storiesOf('Menu', module)
+  .add('Controlled', () => <Controlled />)
+  .add('Uncontrolled', () => <Uncontrolled />);

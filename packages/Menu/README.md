@@ -150,7 +150,7 @@ If supplied, will render the `MenuItem` inside of an `<a>` tag, rather than a `<
 
 **Default:** `null`
 
-Contents to appear inside of `MenuItem` component
+Main content to appear inside of `MenuItem` component
 
 ### className
 
@@ -168,18 +168,10 @@ Classname applied to `li` element
 
 Function that will be called when a `MenuItem` is clicked
 
-### title
-
-**Type:** `string`
-
-**Default:** ``
-
-Main text that will be displayed inside of the `MenuItem`
-
 ### description
 
 **Type:** `string`
 
 **Default:** ``
 
-Description text that will appear below title text in `MenuItem`
+Description text that will appear main content of `MenuItem`

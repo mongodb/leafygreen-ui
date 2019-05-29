@@ -88,9 +88,9 @@ interface Props {
   onClick?: React.MouseEventHandler;
 
   /**
-   * Main text displayed in MenuItem.
+   * Main content displayed in MenuItem.
    */
-  title?: string;
+  children?: React.ReactNode;
 
   /**
    * Description text displayed below title in MenuItem.
@@ -118,17 +118,17 @@ interface Props {
  * @param props.onClick Function to be executed when MenuItem is clicked.
  * @param props.className Classname applied to MenuItem.
  * @param props.children Content to appear inside of the MenuItem.
- * @param props.title Main text to appear inside of MenuItem
  * @param props.description Subtext to appear inside of MenuItem
  * @param props.disabled Determines if the MenuItem is disabled
  * @param props.active Determines whether the MenuItem will appear as active
  *
  */
-export default function MenuItem({
+
+function MenuItem({
   href,
   onClick,
   className,
-  title,
+  children,
   description,
   disabled,
   active,
@@ -148,7 +148,7 @@ export default function MenuItem({
       role="menuitem"
     >
       <Root onClick={disabled ? undefined : onClick} href={href}>
-        <p className={titleTextStyle}>{title}</p>
+        <p className={titleTextStyle}>{children}</p>
         {description && <p className={descriptionTextStyle}>{description}</p>}
       </Root>
     </div>
@@ -165,9 +165,12 @@ MenuItem.propTypes = {
   description: PropTypes.string,
   disabled: PropTypes.bool,
   active: PropTypes.bool,
+  children: PropTypes.node,
 };
 
 MenuItem.defaultProps = {
   disabled: false,
   active: false,
 };
+
+export default MenuItem;

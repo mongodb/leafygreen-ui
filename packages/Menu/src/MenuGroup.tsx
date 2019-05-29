@@ -41,12 +41,8 @@ interface Props {
  * @param props.title Text to appear before MenuGroup components.
  *
  */
-export default function MenuGroup({
-  children,
-  className,
-  title,
-  ...rest
-}: Props) {
+
+function MenuGroup({ children, className, title, ...rest }: Props) {
   return (
     <section {...rest} {...menuGroup.prop} role="menu" className={className}>
       {title && <div className={titleStyle}>{title}</div>}
@@ -62,3 +58,5 @@ MenuGroup.propTypes = {
   className: PropTypes.string,
   title: PropTypes.string,
 };
+
+export default MenuGroup;

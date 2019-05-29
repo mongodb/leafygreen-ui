@@ -12,8 +12,10 @@ describe('packages/Dropdown', () => {
   const { getByTestId, getByText, getByRole } = render(
     <Menu active data-testid="test-menu">
       <MenuGroup>
-        <MenuItem className={className} onClick={onSelect} title="Item A" />
-        <MenuItem href="http://mongodb.design" title="Item B" />
+        <MenuItem className={className} onClick={onSelect}>
+          Item A
+        </MenuItem>
+        <MenuItem href="http://mongodb.design">Item B</MenuItem>
       </MenuGroup>
     </Menu>,
   );

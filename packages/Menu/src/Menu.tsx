@@ -88,7 +88,8 @@ interface Props {
  * @param props.trigger Trigger element to set active state of Menu, makes component controlled
  *
  */
-export default function Menu({
+
+function Menu({
   active,
   align,
   justify,
@@ -174,3 +175,5 @@ Menu.defaultProps = {
   justify: 'end',
   usePortal: true,
 };
+
+export default Menu;
