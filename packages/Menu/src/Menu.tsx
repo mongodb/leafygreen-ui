@@ -11,13 +11,7 @@ const rootMenuStyle = css`
   width: 202px;
   border-radius: 3px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  padding: 0px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
   background-color: ${colors.mongodb.white};
-  margin-block-start: 0px;
-  margin-block-end: 0px;
 `;
 
 interface Props {
@@ -48,7 +42,7 @@ interface Props {
   children?: React.ReactElement;
 
   /**
-   * Class name applied to Menu.
+   * className applied to Menu.
    */
   className?: string;
 
@@ -58,13 +52,14 @@ interface Props {
   refEl?: React.RefObject<HTMLElement>;
 
   /**
-   * A reference to the passed in trigger element.
+   * A slot for the element used to trigger the Menu. Passing a trigger allows
+   * Menu to control opening and closing itself internally.
    */
   trigger?: React.ReactElement;
 
   /**
    * Specifies that the popover content will appear portaled to the end of the DOM,
-   * rather than in the DOM tree.
+   * rather than in the React subset of the DOM tree.
    *
    * default: `true`
    */
@@ -120,8 +115,6 @@ export default function Menu({
     e.keyCode === 27 && nativeToggleEventHandler(e);
   };
 
-  let triggerElement: React.ReactNode = null;
-
   const popoverContent = (
     <Popover
       key="popover"
@@ -136,6 +129,8 @@ export default function Menu({
       </div>
     </Popover>
   );
+
+  let triggerElement: React.ReactNode = null;
 
   if (trigger) {
     useEffect(() => {
@@ -158,7 +153,7 @@ export default function Menu({
     });
   }
 
-  return triggerElement ? triggerElement : popoverContent;
+  return triggerElement || popoverContent;
 }
 
 Menu.displayName = 'Menu';

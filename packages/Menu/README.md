@@ -3,35 +3,70 @@
 ## Example
 
 ```js
-<Menu active={active}>
-  <MenuList>
-    <MenuItem>Element A</MenuItem>
-    <MenuItem>Element B</MenuItem>
-  </MenuList>
-  <MenuItem>Element C</MenuItem>
+<Menu
+  align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
+  justify={select('justify', ['start', 'middle', 'end'], 'start')}
+  trigger={<button>trigger</button>}
+>
+  <MenuGroup>
+    <MenuItem
+      title="Atlas"
+      description="cloud.mongodb.com"
+      disabled={boolean('disabled', false)}
+    />
+    <MenuItem title="University" description="university.mongodb.com" />
+    <MenuItem
+      title="Cloud Support"
+      description="support.mongodb.com"
+      active={boolean('active', true)}
+    />
+  </MenuGroup>
+  <MenuItem title="Logout" />
 </Menu>
 ```
 
 **Output HTML**
 
 ```html
-<div
-  class="leafygreen-ui-1mgywk9"
-  style="top: 314px; left: 184.641px; transform-origin: left bottom; transform: translate3d(0px, 0px, 0px) scale(1); opacity: 1;"
->
-  <ul class="leafygreen-ui-1pmg95n leafygreen-ui-a4vi4u">
-    <div role="menu" class="leafygreen-ui-nr6zi2">
-      <li class="leafygreen-ui-qgvq6k">
-        <span class="leafygreen-ui-t0k4ub">Element A</span>
-      </li>
-      <li class="leafygreen-ui-qgvq6k">
-        <span class="leafygreen-ui-t0k4ub">Element B</span>
-      </li>
+<button>
+  trigger
+  <div class="leafygreen-ui-1hyfx7x"></div>
+</button>
+<div class="leafygreen-ui-1l5xdq6">
+  <div class="leafygreen-ui-e4n0rk" role="menu">
+    <section
+      data-leafygreen-ui="menu-group-section"
+      role="menu"
+      class="leafygreen-ui-0"
+    >
+      <div class="leafygreen-ui-ukwa9q leafygreen-ui-1jdnb2e" role="menuitem">
+        <span>
+          <p class="leafygreen-ui-cd8qtr">Atlas</p>
+          <p class="leafygreen-ui-1al7n0m">cloud.mongodb.com</p>
+        </span>
+      </div>
+      <div class="leafygreen-ui-ukwa9q leafygreen-ui-1jdnb2e" role="menuitem">
+        <span>
+          <p class="leafygreen-ui-cd8qtr">University</p>
+          <p class="leafygreen-ui-1al7n0m">university.mongodb.com</p>
+        </span>
+      </div>
+      <div
+        class="leafygreen-ui-ukwa9q leafygreen-ui-1jdnb2e leafygreen-ui-16ht5zo"
+        role="menuitem"
+      >
+        <span>
+          <p class="leafygreen-ui-cd8qtr">Cloud Support</p>
+          <p class="leafygreen-ui-1al7n0m">support.mongodb.com</p>
+        </span>
+      </div>
+    </section>
+    <div class="leafygreen-ui-ukwa9q leafygreen-ui-1jdnb2e" role="menuitem">
+      <span>
+        <p class="leafygreen-ui-cd8qtr">Logout</p>
+      </span>
     </div>
-    <li class="leafygreen-ui-qgvq6k">
-      <span class="leafygreen-ui-t0k4ub">Element C</span>
-    </li>
-  </ul>
+  </div>
 </div>
 ```
 
@@ -77,7 +112,7 @@ Pass a reference to an element that the `Menu` component should be positioned ag
 
 Will position Menu's children relative to its parent without using a Portal, if `usePortal` is set to false. NOTE: The parent element should be CSS position relative, fixed, or absolute if using this option.
 
-# MenuList
+# MenuGroup
 
 ## Properties
 
@@ -95,7 +130,7 @@ Children that will be rendered inside this group of `MenuItem` components
 
 **Default:** ``
 
-Style to be applied to the `MenuList` component
+Style to be applied to the `MenuGroup` component
 
 # MenuItem
 
@@ -132,3 +167,19 @@ Classname applied to `li` element
 **Default:** `() => {}`
 
 Function that will be called when a `MenuItem` is clicked
+
+### title
+
+**Type:** `string`
+
+**Default:** ``
+
+Main text that will be displayed inside of the `MenuItem`
+
+### description
+
+**Type:** `string`
+
+**Default:** ``
+
+Description text that will appear below title text in `MenuItem`

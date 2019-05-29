@@ -12,12 +12,13 @@ const indentation = 16;
 const containerStyle = css`
   min-height: 42px;
   display: flex;
-  flex-direction: column;
-  text-align: left;
-  justify-content: center;
+  align-items: center;
   padding-left: ${indentation}px;
   text-decoration: none;
-  margin: 0px;
+  cursor: pointer;
+  color: ${colors.gray[1]};
+  text-decoration: none;
+
   &:hover {
     background-color: ${colors.gray[8]};
     transition: background 300ms ease-in-out;
@@ -36,27 +37,23 @@ const containerStyle = css`
   }
 `;
 
-const baseTextStyle = css`
-  cursor: pointer;
-  color: ${colors.gray[1]};
-  text-decoration: none;
-  margin: 0px;
-`;
-
 const titleTextStyle = css`
   font-size: 14px;
   line-height: 16px;
-  margin: 4px 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 `;
 
 const descriptionTextStyle = css`
   font-size: 12px;
-  margin: 2px 0px;
+  margin-top: 2px;
+  margin-bottom: 2px;
 `;
 
 const activeStyle = css`
   background-color: ${colors.gray[8]};
   position: relative;
+
   &:before {
     content: '';
     position: absolute;
@@ -138,25 +135,21 @@ export default function MenuItem({
   ...rest
 }: Props) {
   const Root = href ? 'a' : 'span';
-  const clickHandler = !disabled ? onClick : undefined;
 
   return (
     <div
       {...rest}
       className={cx(
         containerStyle,
-        baseTextStyle,
         active && activeStyle,
         disabled && disabledStyle,
         className,
       )}
       role="menuitem"
     >
-      <Root onClick={clickHandler} href={href}>
-        <p className={cx(titleTextStyle)}>{title}</p>
-        {description && (
-          <p className={cx(descriptionTextStyle)}>{description}</p>
-        )}
+      <Root onClick={disabled ? undefined : onClick} href={href}>
+        <p className={titleTextStyle}>{title}</p>
+        {description && <p className={descriptionTextStyle}>{description}</p>}
       </Root>
     </div>
   );

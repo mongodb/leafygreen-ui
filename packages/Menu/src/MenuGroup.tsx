@@ -1,21 +1,16 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { emotion, createDataProp } from '@leafygreen-ui/lib';
-import { colors } from '@leafygreen-ui/theme';
-import { cx } from 'emotion';
 
 const { css } = emotion;
 
 export const menuGroup = createDataProp('menu-group-section');
 
-const borderStyle = css`
-  // border-bottom: 1px solid ${colors.gray[7]};s
-`;
-
 const titleStyle = css`
   font-size: 16px;
   padding-left: 16px;
 `;
+
 interface Props {
   /**
    * Content that will appear inside of MenuGroup component.
@@ -28,7 +23,7 @@ interface Props {
   title: string;
 
   /**
-   * Class name that will be applied to root MenuGroup element.
+   * className that will be applied to root MenuGroup element.
    */
   className?: string;
 }
@@ -46,13 +41,14 @@ interface Props {
  * @param props.title Text to appear before MenuGroup components.
  *
  */
-export default function MenuGroup({ children, className, title }: Props) {
+export default function MenuGroup({
+  children,
+  className,
+  title,
+  ...rest
+}: Props) {
   return (
-    <section
-      {...menuGroup.prop}
-      role="menu"
-      className={cx(borderStyle, className)}
-    >
+    <section {...rest} {...menuGroup.prop} role="menu" className={className}>
       {title && <div className={titleStyle}>{title}</div>}
       {children}
     </section>
