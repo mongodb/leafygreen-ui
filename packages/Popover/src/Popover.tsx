@@ -139,13 +139,13 @@ export interface PopoverProps {
  * @param props.adjustOnMutation Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
  */
 function Popover({
-  children = undefined,
   active = false,
   usePortal = true,
   spacing = 10,
   align = Align.Bottom,
   justify = Justify.Start,
   adjustOnMutation = false,
+  children,
   className,
   refEl,
   ...rest
