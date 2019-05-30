@@ -67,7 +67,7 @@ const activeStyle = css`
 
 const disabledStyle = css`
   background: ${colors.gray[8]};
-  color: ${colors.gray[5]};
+  color: ${colors.gray[4]};
   cursor: not-allowed;
 `;
 

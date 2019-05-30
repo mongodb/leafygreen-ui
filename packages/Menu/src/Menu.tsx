@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback, EventHandler } from 'react';
+import React, { useState, useCallback, EventHandler } from 'react';
 import PropTypes from 'prop-types';
-import Popover, { Align, Justify } from '@leafygreen-ui/popover';
+import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
+import { useNativeEventListener } from './hooks';
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
 import { cx } from 'emotion';
@@ -14,56 +15,18 @@ const rootMenuStyle = css`
   background-color: ${colors.mongodb.white};
 `;
 
-interface MenuProps {
-  /**
-   * Determines the active state of the Menu.
-   *
-   * default: `false`
-   */
-  active: boolean;
+type ExcludeProps = Exclude<keyof PopoverProps, 'spacing'>;
 
-  /**
-   * Determines the alignment of the Menu relative to a trigger element.
-   *
-   * default: `bottom`
-   */
-  align: Align;
+type MenuTypes = Pick<PopoverProps, ExcludeProps>;
 
-  /**
-   * Determines the justification of the Menu relative to a trigger element.
-   *
-   * default: `end`
-   */
-  justify: Justify;
+// type MenuTypes = Omit<PopoverProps, "spacing">
 
-  /**
-   * Content that will appear inside of the Menu.
-   */
-  children?: React.ReactElement;
-
-  /**
-   * className applied to Menu.
-   */
-  className?: string;
-
-  /**
-   * A reference to the element against which the Menu will be positioned.
-   */
-  refEl?: React.RefObject<HTMLElement>;
-
+interface MenuProps extends MenuTypes {
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
    * Menu to control opening and closing itself internally.
    */
   trigger?: React.ReactElement;
-
-  /**
-   * Specifies that the popover content will appear portaled to the end of the DOM,
-   * rather than in the React subset of the DOM tree.
-   *
-   * default: `true`
-   */
-  usePortal?: boolean;
 }
 
 /**
@@ -88,8 +51,8 @@ interface MenuProps {
  * @param props.trigger Trigger element to set active state of Menu, makes component controlled
  */
 function Menu({
-  align = 'bottom',
-  justify = 'end',
+  align = Align.Bottom,
+  justify = Justify.End,
   usePortal = true,
   active,
   children,
@@ -136,19 +99,24 @@ function Menu({
     e.keyCode === 27 && nativeToggleEventHandler(e);
   };
 
-  useEffect(() => {
-    if (trigger && isActive) {
-      document.addEventListener('click', nativeToggleEventHandler, {
-        once: true,
-      });
-      document.addEventListener('keydown', handleEscape, { once: true });
-    }
+  let enabled = false;
 
-    return () => {
-      document.removeEventListener('click', nativeToggleEventHandler);
-      document.removeEventListener('keydown', handleEscape);
-    };
-  });
+  if (trigger && isActive) {
+    enabled = true;
+  }
+
+  useNativeEventListener(
+    enabled,
+    'click',
+    nativeToggleEventHandler,
+    { once: true },
+    [isActive, trigger],
+  );
+
+  useNativeEventListener(enabled, 'keydown', handleEscape, { once: true }, [
+    isActive,
+    trigger,
+  ]);
 
   if (trigger) {
     triggerElement = React.cloneElement(trigger, {
