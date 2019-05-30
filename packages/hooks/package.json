@@ -1,0 +1,14 @@
+{
+  "name": "@leafygreen-ui/hooks",
+  "version": "0.9.0",
+  "description": "LeafyGreen UI Kit Custom Hooks",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "53385cfed5ecf3101d098d26dedc6a40b27c402a"
+}
