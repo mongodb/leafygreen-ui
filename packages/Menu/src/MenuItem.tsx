@@ -24,7 +24,7 @@ const containerStyle = css`
     transition: background-color 200ms ease-in-out;
   }
 
-  &:first-child ~ ${menuGroup.selector} {
+  &:first-of-type ~ ${menuGroup.selector} {
     border-top: 1px solid ${colors.gray[7]};
   }
 

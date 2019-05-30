@@ -1,4 +1,4 @@
-import React, { useState, useEffect, EventHandler } from 'react';
+import React, { useState, useEffect, useCallback, EventHandler } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import { emotion } from '@leafygreen-ui/lib';
@@ -117,10 +117,15 @@ function Menu({
 
   let triggerElement: React.ReactNode = null;
 
-  const syntheticToggleEventHandler: EventHandler<React.SyntheticEvent> = e => {
-    e.nativeEvent.stopImmediatePropagation();
-    setActiveState(!isActive);
-  };
+  const syntheticToggleEventHandler: EventHandler<
+    React.SyntheticEvent
+  > = useCallback(
+    e => {
+      e.nativeEvent.stopImmediatePropagation();
+      setActiveState(!isActive);
+    },
+    [isActive],
+  );
 
   const nativeToggleEventHandler = (e: Event) => {
     e.stopImmediatePropagation();
