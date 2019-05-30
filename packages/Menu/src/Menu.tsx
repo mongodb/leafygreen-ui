@@ -1,7 +1,7 @@
 import React, { useState, useCallback, EventHandler } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
-import { useNativeEventListener } from './hooks';
+import { useDocumentEventListener } from './hooks';
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
 import { cx } from 'emotion';
@@ -105,7 +105,7 @@ function Menu({
     enabled = true;
   }
 
-  useNativeEventListener(
+  useDocumentEventListener(
     enabled,
     'click',
     nativeToggleEventHandler,
@@ -113,7 +113,7 @@ function Menu({
     [isActive, trigger],
   );
 
-  useNativeEventListener(enabled, 'keydown', handleEscape, { once: true }, [
+  useDocumentEventListener(enabled, 'keydown', handleEscape, { once: true }, [
     isActive,
     trigger,
   ]);

@@ -140,8 +140,10 @@ function MenuItem({
       {...rest}
       className={cx(
         containerStyle,
-        active && activeStyle,
-        disabled && disabledStyle,
+        {
+          [activeStyle]: active,
+          [disabledStyle]: disabled,
+        },
         className,
       )}
       role="menuitem"

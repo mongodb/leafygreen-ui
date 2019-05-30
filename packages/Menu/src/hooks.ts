@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
-export function useNativeEventListener(
+export function useDocumentEventListener(
   enabled: boolean,
   type: string,
-  callback: (e) => void,
+  eventCallback: (e) => void,
   options?: object,
   dependencies?: Array<any>,
 ) {
@@ -12,10 +12,10 @@ export function useNativeEventListener(
       return;
     }
 
-    document.addEventListener(type, callback, options);
+    document.addEventListener(type, eventCallback, options);
 
     return () => {
-      document.removeEventListener(type, callback);
+      document.removeEventListener(type, eventCallback);
     };
   }, dependencies);
 }
