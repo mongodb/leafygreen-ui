@@ -136,21 +136,21 @@ function Menu({
     e.keyCode === 27 && nativeToggleEventHandler(e);
   };
 
+  useEffect(() => {
+    if (trigger && isActive) {
+      document.addEventListener('click', nativeToggleEventHandler, {
+        once: true,
+      });
+      document.addEventListener('keydown', handleEscape, { once: true });
+    }
+
+    return () => {
+      document.removeEventListener('click', nativeToggleEventHandler);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  });
+
   if (trigger) {
-    useEffect(() => {
-      if (isActive) {
-        document.addEventListener('click', nativeToggleEventHandler, {
-          once: true,
-        });
-        document.addEventListener('keydown', handleEscape, { once: true });
-      }
-
-      return () => {
-        document.removeEventListener('click', nativeToggleEventHandler);
-        document.removeEventListener('keydown', handleEscape);
-      };
-    });
-
     triggerElement = React.cloneElement(trigger, {
       onClick: syntheticToggleEventHandler,
       children: [...trigger.props.children, popoverContent],
