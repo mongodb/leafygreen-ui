@@ -13,7 +13,6 @@ function Controlled() {
       justify={select('justify', ['start', 'middle', 'end'], 'start')}
       trigger={<button>trigger</button>}
     >
-      <MenuItem>BROOKE</MenuItem>
       <MenuGroup>
         <MenuItem
           description="cloud.mongodb.com"

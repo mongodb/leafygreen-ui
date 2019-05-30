@@ -59,7 +59,7 @@ export enum Justify {
   End = 'end',
 }
 
-export interface PopoverProps {
+interface PopoverProps {
   /**
    * Content that will appear inside of the popover component.
    */
@@ -251,6 +251,16 @@ Popover.propTypes = {
   usePortal: PropTypes.bool,
   spacing: PropTypes.number,
   adjustOnMutation: PropTypes.bool,
+};
+
+Popover.defaultProps = {
+  children: undefined,
+  align: Align.Bottom,
+  justify: Justify.Start,
+  active: false,
+  usePortal: true,
+  spacing: 10,
+  adjustOnMutation: false,
 };
 
 export default Popover;
