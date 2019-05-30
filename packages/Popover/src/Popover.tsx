@@ -59,7 +59,7 @@ export enum Justify {
   End = 'end',
 }
 
-interface PopoverProps {
+export interface PopoverProps {
   /**
    * Content that will appear inside of the popover component.
    */
@@ -139,15 +139,15 @@ interface PopoverProps {
  * @param props.adjustOnMutation Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
  */
 function Popover({
-  children,
-  active,
+  children = undefined,
+  active = false,
+  usePortal = true,
+  spacing = 10,
+  align = Align.Bottom,
+  justify = Justify.Start,
+  adjustOnMutation = false,
   className,
-  usePortal,
-  spacing,
-  align,
-  justify,
   refEl,
-  adjustOnMutation,
   ...rest
 }: PopoverProps): ReactElement {
   const [placeholderNode, setPlaceholderNode] = useElementNode();
@@ -251,16 +251,6 @@ Popover.propTypes = {
   usePortal: PropTypes.bool,
   spacing: PropTypes.number,
   adjustOnMutation: PropTypes.bool,
-};
-
-Popover.defaultProps = {
-  children: undefined,
-  align: Align.Bottom,
-  justify: Justify.Start,
-  active: false,
-  usePortal: true,
-  spacing: 10,
-  adjustOnMutation: false,
 };
 
 export default Popover;
