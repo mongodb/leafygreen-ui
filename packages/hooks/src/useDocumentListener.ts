@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
 export default function useDocumentEventListener(
-  enabled: boolean,
+  enabled: boolean = true,
   type: string,
-  eventCallback: (e) => void,
+  eventCallback: EventListener,
   options?: object,
   dependencies?: Array<any>,
 ) {
