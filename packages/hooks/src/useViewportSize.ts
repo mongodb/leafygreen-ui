@@ -10,7 +10,7 @@ function getViewportSize() {
 
 /**
  * Hook to subscribe to changes in viewport size.
-*/
+ */
 export default function useViewportSize() {
   const [viewportSize, setViewportUpdateVal] = useState(getViewportSize);
 
