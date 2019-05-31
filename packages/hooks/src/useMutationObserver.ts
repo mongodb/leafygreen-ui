@@ -5,6 +5,13 @@ type MutationHandler<Value> = (
   observer: MutationObserver,
 ) => Value;
 
+/**
+ * Hook to subscribe to changes on the DOM.
+ * @param target HTML element that is subscribed to DOM changes.
+ * @param options Object with information about what DOM changes to subscribe to.
+ * @param callback Callback function to execute inside of MutationObserver instance.
+ * @param enabled Determines whether or not the hook should run, defaults to true.
+ */
 export default function useMutationObserver<Value>(
   target: HTMLElement | null,
   options: MutationObserverInit,
