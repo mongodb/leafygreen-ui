@@ -9,7 +9,7 @@ import { cx } from 'emotion';
 const { css } = emotion;
 
 const rootMenuStyle = css`
-  width: 202px;
+  width: 200px;
   border-radius: 3px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
   background-color: ${colors.mongodb.white};
@@ -71,6 +71,7 @@ function Menu({
       justify={justify}
       refEl={refEl}
       usePortal={usePortal}
+      spacing={15}
     >
       <div {...rest} className={cx(rootMenuStyle, className)} role="menu">
         {children}

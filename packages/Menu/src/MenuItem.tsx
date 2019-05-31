@@ -42,12 +42,14 @@ const titleTextStyle = css`
   line-height: 16px;
   margin-top: 4px;
   margin-bottom: 4px;
+  font-weight: normal;
 `;
 
 const descriptionTextStyle = css`
   font-size: 12px;
   margin-top: 2px;
   margin-bottom: 2px;
+  font-weight: normal;
 `;
 
 const activeStyle = css`
@@ -149,8 +151,8 @@ function MenuItem({
       role="menuitem"
     >
       <Root onClick={disabled ? undefined : onClick} href={href}>
-        <p className={titleTextStyle}>{children}</p>
-        {description && <p className={descriptionTextStyle}>{description}</p>}
+        <h4 className={titleTextStyle}>{children}</h4>
+        {description && <h6 className={descriptionTextStyle}>{description}</h6>}
       </Root>
     </div>
   );
