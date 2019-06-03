@@ -1,16 +1,20 @@
 import React, { useEffect } from 'react';
 import { act, renderHook } from 'react-hooks-testing-library';
 import { render, cleanup } from 'react-testing-library';
-import { useDocumentListener, useElementNode, useViewportSize } from './index';
+import {
+  useDocumentEventListener,
+  useElementNode,
+  useViewportSize,
+} from './index';
 
 afterAll(cleanup);
 
 describe('packages/hooks', () => {
-  describe('useDocumentListener', () => {
+  describe('useDocumentEventListener', () => {
     test('event callback should fire when enabled is true', () => {
       const eventCallback = jest.fn();
 
-      renderHook(() => useDocumentListener('click', eventCallback));
+      renderHook(() => useDocumentEventListener('click', eventCallback));
 
       act(() => {
         document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -23,7 +27,11 @@ describe('packages/hooks', () => {
       const eventCallback = jest.fn();
 
       renderHook(() =>
-        useDocumentListener({ type: 'click', eventCallback, enabled: false }),
+        useDocumentEventListener({
+          type: 'click',
+          eventCallback,
+          enabled: false,
+        }),
       );
 
       act(() => {
@@ -65,22 +73,37 @@ describe('packages/hooks', () => {
   });
 
   describe('useViewportSize', () => {
-    test('responds to window resize event and returns an object with updated width and height', () => {
-      const { result, rerender } = renderHook(() => useViewportSize());
+    const { result, rerender } = renderHook(() => useViewportSize());
 
+    test('returns updated width', () => {
       act(() => {
-        window.innerWidth = 500;
+        window.innerWidth = 1024;
         window.dispatchEvent(new Event('resize'));
         rerender();
       });
-      expect(result.current.width).toBe(500);
-
+      expect(result.current.width).toBe(1024);
       act(() => {
-        window.innerHeight = 500;
+        window.innerWidth = 769;
         window.dispatchEvent(new Event('resize'));
         rerender();
       });
-      expect(result.current.height).toBe(500);
+      expect(result.current.width).toBe(769);
+    });
+
+    test('returns updated height', () => {
+      act(() => {
+        window.innerHeight = 768;
+        window.dispatchEvent(new Event('resize'));
+        rerender();
+      });
+      expect(result.current.height).toBe(768);
+
+      act(() => {
+        window.innerHeight = 1024;
+        window.dispatchEvent(new Event('resize'));
+        rerender();
+      });
+      expect(result.current.height).toBe(1024);
     });
   });
 });

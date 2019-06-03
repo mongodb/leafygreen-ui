@@ -1,10 +1,10 @@
-import useDocumentListener from './useDocumentListener';
+import useDocumentEventListener from './useDocumentEventListener';
 import useElementNode from './useElementNode';
 import useMutationObserver from './useMutationObserver';
 import useViewportSize from './useViewportSize';
 
 export {
-  useDocumentListener,
+  useDocumentEventListener,
   useElementNode,
   useMutationObserver,
   useViewportSize,
