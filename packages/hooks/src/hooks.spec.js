@@ -1,4 +1,6 @@
-import { act, cleanup, renderHook } from 'react-hooks-testing-library';
+import React, { useEffect } from 'react';
+import { act, renderHook } from 'react-hooks-testing-library';
+import { render, cleanup } from 'react-testing-library';
 import { useDocumentListener, useElementNode, useViewportSize } from './index';
 
 afterAll(cleanup);
@@ -8,7 +10,7 @@ describe('packages/hooks', () => {
     test('event callback should fire when enabled is true', () => {
       const eventCallback = jest.fn();
 
-      renderHook(() => useDocumentListener('click', eventCallback, true));
+      renderHook(() => useDocumentListener('click', eventCallback));
 
       act(() => {
         document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -20,7 +22,9 @@ describe('packages/hooks', () => {
     test('event callback should not fire when enabled is false', () => {
       const eventCallback = jest.fn();
 
-      renderHook(() => useDocumentListener('click', eventCallback, false));
+      renderHook(() =>
+        useDocumentListener({ type: 'click', eventCallback, enabled: false }),
+      );
 
       act(() => {
         document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -30,9 +34,25 @@ describe('packages/hooks', () => {
     });
   });
 
-  // describe('useMutationObserver', () => {})
+  describe.skip('useMutationObserver', () => {}); //eslint-disable-line jest/no-disabled-tests
 
   describe('useElementNode', () => {
+    let count = 1;
+
+    function TestUseElementNode() {
+      const [refEl, setRefEl] = useElementNode();
+      useEffect(() => {
+        count += 1;
+      }, [refEl]);
+      return <div ref={setRefEl} />;
+    }
+
+    render(<TestUseElementNode />);
+
+    test('it gets called twice', () => {
+      expect(count).toEqual(2);
+    });
+
     const { result } = renderHook(() => useElementNode());
 
     test('returns an array where the first element refers to the ref node', () => {
@@ -46,17 +66,21 @@ describe('packages/hooks', () => {
 
   describe('useViewportSize', () => {
     test('responds to window resize event and returns an object with updated width and height', () => {
-      const hook = renderHook(() => useViewportSize());
+      const { result, rerender } = renderHook(() => useViewportSize());
 
       act(() => {
         window.innerWidth = 500;
-        window.innerHeight = 200;
         window.dispatchEvent(new Event('resize'));
-        hook.rerender();
+        rerender();
       });
+      expect(result.current.width).toBe(500);
 
-      expect(hook.result.current.width).toBe(500);
-      expect(hook.result.current.height).toBe(200);
+      act(() => {
+        window.innerHeight = 500;
+        window.dispatchEvent(new Event('resize'));
+        rerender();
+      });
+      expect(result.current.height).toBe(500);
     });
   });
 });
