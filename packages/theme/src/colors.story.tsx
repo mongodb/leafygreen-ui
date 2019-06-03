@@ -46,8 +46,11 @@ const ColorBlock = styled('div')`
   }
 `;
 
-const renderColorGroup = (namePrefix, colorGroup) => {
-  const renderedColors = [];
+const renderColorGroup = (
+  namePrefix: string,
+  colorGroup: { [Key: string]: string },
+) => {
+  const renderedColors: Array<JSX.Element> = [];
 
   for (const color in colorGroup) {
     renderedColors.push(
