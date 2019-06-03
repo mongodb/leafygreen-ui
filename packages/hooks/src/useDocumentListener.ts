@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 /**
- * Hook to subcribe to an event listener.
+ * Hook to subscribe to an event listener.
  * @param type Represents the event type to listen for.
  * @param eventCallback Event listener callback function.
  * @param enabled Determines whether or not the hook should run, defaults to true.
@@ -11,9 +11,9 @@ import { useEffect } from 'react';
 export default function useDocumentEventListener(
   type: string,
   eventCallback: EventListener,
-  enabled: boolean = true,
   options?: object,
   dependencies?: Array<any>,
+  enabled: boolean = true,
 ) {
   useEffect(() => {
     if (!enabled) {
