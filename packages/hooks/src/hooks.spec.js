@@ -45,7 +45,7 @@ describe('packages/hooks', () => {
   });
 
   describe('useViewportSize', () => {
-    test('XXXX', () => {
+    test('responds to window resize event and returns an object with updated width and height', () => {
       const hook = renderHook(() => useViewportSize());
 
       act(() => {
