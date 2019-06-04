@@ -147,6 +147,7 @@ export default class Checkbox extends PureComponent {
     }
   }
 
+  checkboxId = `checkbox-${Math.floor(Math.random() * 10000000)}`;
   inputRef = React.createRef();
 
   onClick = e => {
@@ -177,7 +178,7 @@ export default class Checkbox extends PureComponent {
   };
 
   render() {
-    const checkboxId = id || `checkbox-${Math.floor(Math.random() * 10000000)}`;
+    const checkboxId = this.props.id || this.checkboxId;
     const labelId = `${checkboxId}-label`;
 
     const {
@@ -190,7 +191,6 @@ export default class Checkbox extends PureComponent {
       disabled,
       indeterminate,
       bold,
-      id,
       ...rest
     } = this.props;
 
