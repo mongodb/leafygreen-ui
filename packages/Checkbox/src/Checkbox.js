@@ -122,6 +122,7 @@ export default class Checkbox extends PureComponent {
     className: PropTypes.string,
     onChange: PropTypes.func,
     bold: PropTypes.bool,
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   };
 
   static defaultProps = {
@@ -147,8 +148,6 @@ export default class Checkbox extends PureComponent {
   }
 
   inputRef = React.createRef();
-
-  checkboxId = `checkbox-${Math.floor(Math.random() * 10000000)}`;
 
   onClick = e => {
     const { onClick } = this.props;
@@ -178,7 +177,6 @@ export default class Checkbox extends PureComponent {
   };
 
   render() {
-    const labelId = `${this.checkboxId}-label`;
     const {
       name = `${this.checkboxId}`,
       checked = this.state.checked,
@@ -189,10 +187,13 @@ export default class Checkbox extends PureComponent {
       disabled,
       indeterminate,
       bold,
+      id,
       ...rest
     } = this.props;
 
     const textVariantStyle = textVariants[variant] || textVariants.default;
+    const checkboxId = id || `checkbox-${Math.floor(Math.random() * 10000000)}`;
+    const labelId = `${checkboxId}-label`;
 
     // Indeterminate isn't a valid HTML prop
     delete rest.indeterminate;
@@ -241,12 +242,12 @@ export default class Checkbox extends PureComponent {
       <label
         className={cx(containerStyle, className)}
         style={style}
-        htmlFor={this.checkboxId}
+        htmlFor={checkboxId}
         disabled={disabled}
       >
         <input
           {...rest}
-          id={this.checkboxId}
+          id={checkboxId}
           ref={this.inputRef}
           className={inputStyle}
           type="checkbox"

@@ -402,7 +402,6 @@ export default class Toggle extends PureComponent {
       this.setState({ checked: e.target.checked });
     }
   };
-
   render() {
     const {
       name = this.checkboxId,
@@ -423,15 +422,17 @@ export default class Toggle extends PureComponent {
       variant,
     });
 
+    const checkboxId = id || `toggle-${Math.floor(Math.random() * 10000000)}`;
+
     return (
       <label
         className={cx(statefulStyles.container, className)}
-        htmlFor={id || this.checkboxId}
+        htmlFor={checkboxId}
       >
         <input
           {...toggleInput.prop}
           {...rest}
-          id={id || this.checkboxId}
+          id={checkboxId}
           className={inputStyle}
           type="checkbox"
           role="checkbox"

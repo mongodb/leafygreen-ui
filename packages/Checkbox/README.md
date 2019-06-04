@@ -98,6 +98,14 @@ Adds a className to the outermost element.
 
 Determines whether the text will be bold or not.
 
+### id
+
+**Type:** `string` || `number`
+
+**Default:** randomly generated string
+
+Adds an id to the input element and corresponding label element.
+
 ### onChange
 
 **Type:** `function`
