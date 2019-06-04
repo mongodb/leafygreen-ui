@@ -9,8 +9,18 @@ const portalChildrenStyle = css`
   text-align: center;
 `;
 
+function getRoot() {
+  const root = document.getElementById('root');
+
+  if (root == null) {
+    throw new Error('Could not find root element');
+  }
+
+  return root;
+}
+
 storiesOf('Portal', module).add('Default', () => (
-  <Portal container={document.getElementById('root')}>
+  <Portal container={getRoot()}>
     <div className={portalChildrenStyle}>
       Portals transport their children to a <code>div</code> that is appended to
       the end of the <code>documet.body</code> to or a <code>node</code> that
