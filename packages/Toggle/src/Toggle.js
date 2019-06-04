@@ -403,15 +403,15 @@ export default class Toggle extends PureComponent {
     }
   };
   render() {
+    const checkboxId = this.props.id || this.checkboxId;
     const {
-      name = this.checkboxId,
+      name = checkboxId,
       checked = this.state.checked,
       className,
       label,
       disabled,
       size,
       variant,
-      id,
       ...rest
     } = this.props;
 
@@ -421,8 +421,6 @@ export default class Toggle extends PureComponent {
       size,
       variant,
     });
-
-    const checkboxId = id || `toggle-${Math.floor(Math.random() * 10000000)}`;
 
     return (
       <label

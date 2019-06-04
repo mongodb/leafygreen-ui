@@ -177,8 +177,11 @@ export default class Checkbox extends PureComponent {
   };
 
   render() {
+    const checkboxId = id || `checkbox-${Math.floor(Math.random() * 10000000)}`;
+    const labelId = `${checkboxId}-label`;
+
     const {
-      name = `${this.checkboxId}`,
+      name = checkboxId,
       checked = this.state.checked,
       className,
       style,
@@ -192,8 +195,6 @@ export default class Checkbox extends PureComponent {
     } = this.props;
 
     const textVariantStyle = textVariants[variant] || textVariants.default;
-    const checkboxId = id || `checkbox-${Math.floor(Math.random() * 10000000)}`;
-    const labelId = `${checkboxId}-label`;
 
     // Indeterminate isn't a valid HTML prop
     delete rest.indeterminate;
