@@ -16,7 +16,19 @@ describe('packages/Button', () => {
     </Button>,
   );
 
+  function isElement(el: Node): el is HTMLElement {
+    return el.nodeType === Node.ELEMENT_NODE;
+  }
+
+  function isButton(el: Node): el is HTMLButtonElement {
+    return isElement(el) && el.tagName.toLowerCase() === 'button';
+  }
+
   const renderedButton = renderedComponent.container.firstChild;
+
+  if (renderedButton == null || !isElement(renderedButton)) {
+    throw new Error('Button component failed to render');
+  }
 
   test(`renders "${className}" in the button's classList`, () => {
     expect(renderedButton.classList.contains(className)).toBe(true);
@@ -47,6 +59,10 @@ describe('packages/Button', () => {
       </Button>,
     );
 
+    if (!isButton(renderedButton)) {
+      throw new Error('Rendered element is not a button');
+    }
+
     expect(renderedButton.disabled).toBe(true);
     expect(renderedButton.getAttribute('aria-disabled')).toBe('true');
   });
@@ -60,12 +76,22 @@ describe('packages/Button', () => {
       <Button href="http://mongodb.design">Click me!</Button>,
     );
     const buttonComponent = container.firstChild;
+
+    if (buttonComponent == null || !isElement(buttonComponent)) {
+      throw new Error('No element was rendered');
+    }
+
     expect(buttonComponent.tagName.toLowerCase()).toBe('a');
   });
 
   test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
     const { container } = render(<Button as="div">Click me!</Button>);
     const buttonComponent = container.firstChild;
+
+    if (buttonComponent == null || !isElement(buttonComponent)) {
+      throw new Error('No element was rendered');
+    }
+
     expect(buttonComponent.tagName.toLowerCase()).toBe('div');
   });
 
@@ -76,6 +102,11 @@ describe('packages/Button', () => {
       </Button>,
     );
     const buttonComponent = container.firstChild;
+
+    if (buttonComponent == null || !isElement(buttonComponent)) {
+      throw new Error('No element was rendered');
+    }
+
     expect(buttonComponent.tagName.toLowerCase()).toBe('div');
   });
 });
