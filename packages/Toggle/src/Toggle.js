@@ -377,6 +377,7 @@ export default class Toggle extends PureComponent {
     className: PropTypes.string,
     onChange: PropTypes.func,
     name: PropTypes.string,
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   };
 
   static defaultProps = {
@@ -411,6 +412,7 @@ export default class Toggle extends PureComponent {
       disabled,
       size,
       variant,
+      id,
       ...rest
     } = this.props;
 
@@ -424,12 +426,12 @@ export default class Toggle extends PureComponent {
     return (
       <label
         className={cx(statefulStyles.container, className)}
-        htmlFor={this.checkboxId}
+        htmlFor={id || this.checkboxId}
       >
         <input
           {...toggleInput.prop}
           {...rest}
-          id={this.checkboxId}
+          id={id || this.checkboxId}
           className={inputStyle}
           type="checkbox"
           role="checkbox"

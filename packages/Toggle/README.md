@@ -79,6 +79,14 @@ Disables the toggle.
 
 Adds a className to the outermost element.
 
+### id
+
+**Type:** `string` || `number`
+
+**Default:** randomly generated string
+
+Adds an id to the input and respective label elements.
+
 ### onChange
 
 **Type:** `function`
