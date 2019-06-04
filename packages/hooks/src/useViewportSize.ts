@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import debounce from 'lodash/debounce';
 
 function getViewportSize() {
   return {
@@ -7,14 +8,14 @@ function getViewportSize() {
   };
 }
 
-/**
- * Hook to subscribe to changes in viewport size.
- */
-const useViewportSize = () => {
+export default function useViewportSize() {
   const [viewportSize, setViewportUpdateVal] = useState(getViewportSize);
 
   useEffect(() => {
-    const calcResize = () => setViewportUpdateVal(getViewportSize());
+    const calcResize = debounce(
+      () => setViewportUpdateVal(getViewportSize()),
+      100,
+    );
 
     window.addEventListener('resize', calcResize);
 
@@ -22,6 +23,4 @@ const useViewportSize = () => {
   }, []);
 
   return viewportSize;
-};
-
-export default useViewportSize;
+}

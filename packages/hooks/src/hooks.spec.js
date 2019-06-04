@@ -75,35 +75,46 @@ describe('packages/hooks', () => {
   describe('useViewportSize', () => {
     const { result, rerender } = renderHook(() => useViewportSize());
 
-    test('returns updated width', () => {
+    test('responds to updates in window width', () => {
       act(() => {
-        window.innerWidth = 1024;
+        window.width = 200;
         window.dispatchEvent(new Event('resize'));
         rerender();
       });
-      expect(result.current.width).toBe(1024);
+      setTimeout(() => {
+        expect(result.current.width).toBe(200);
+      }, 100);
+
       act(() => {
-        window.innerWidth = 769;
+        window.width = 1024;
         window.dispatchEvent(new Event('resize'));
         rerender();
       });
-      expect(result.current.width).toBe(769);
+
+      setTimeout(() => {
+        expect(result.current.width).toBe(1024);
+      }, 200);
     });
 
-    test('returns updated height', () => {
+    test('responds to updates in window height', () => {
       act(() => {
-        window.innerHeight = 768;
+        window.innerHeight = 200;
         window.dispatchEvent(new Event('resize'));
         rerender();
       });
-      expect(result.current.height).toBe(768);
+      setTimeout(() => {
+        expect(result.current.height).toBe(200);
+      }, 100);
 
       act(() => {
         window.innerHeight = 1024;
         window.dispatchEvent(new Event('resize'));
         rerender();
       });
-      expect(result.current.height).toBe(1024);
+
+      setTimeout(() => {
+        expect(result.current.height).toBe(1024);
+      }, 200);
     });
   });
 });
