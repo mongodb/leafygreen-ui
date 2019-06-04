@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
 
-import Menu from './Menu.tsx';
-import MenuItem from './MenuItem.tsx';
-import MenuGroup from './MenuGroup.tsx';
+import { Menu, MenuGroup, MenuItem } from './index';
 
 function Controlled() {
   return (

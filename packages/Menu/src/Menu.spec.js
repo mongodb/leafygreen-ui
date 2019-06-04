@@ -1,18 +1,19 @@
-import * as React from 'react';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
 import 'jest-dom/extend-expect';
 import { render, fireEvent, cleanup } from 'react-testing-library';
-import Menu, { MenuGroup, MenuItem } from './index';
+import { Menu, MenuGroup, MenuItem } from './index';
 
 afterAll(cleanup);
 
 describe('packages/Menu', () => {
-  const onSelect = jest.fn();
+  const onClick = jest.fn();
   const className = 'test-className';
 
   const { getByTestId, getByText, getByRole } = render(
     <Menu active data-testid="test-menu">
       <MenuGroup>
-        <MenuItem className={className} onClick={onSelect}>
+        <MenuItem className={className} onClick={onClick}>
           Item A
         </MenuItem>
         <MenuItem href="http://mongodb.design">Item B</MenuItem>
@@ -41,10 +42,13 @@ describe('packages/Menu', () => {
   });
 
   describe('packages/MenuItem', () => {
-    test('Fires onSelect callback, when clicked', () => {
-      const menuItem = getByText('Item A');
+    test('Fires onClick callback, when clicked', () => {
+      const menuItem = menu.firstChild.firstChild.firstChild;
+      act(() => {
+        fireEvent.click(menuItem);
+      });
       fireEvent.click(menuItem);
-      expect(onSelect.mock.calls.length).toBe(1);
+      expect(onClick.mock.calls.length).toBe(1);
     });
   });
 

@@ -15,11 +15,7 @@ const rootMenuStyle = css`
   background-color: ${colors.mongodb.white};
 `;
 
-type ExcludeProps = Exclude<keyof PopoverProps, 'spacing'>;
-
-type MenuTypes = Pick<PopoverProps, ExcludeProps>;
-
-// type MenuTypes = Omit<PopoverProps, "spacing">
+type MenuTypes = Omit<PopoverProps, 'spacing'>;
 
 interface MenuProps extends MenuTypes {
   /**
@@ -40,7 +36,7 @@ interface MenuProps extends MenuTypes {
     <MenuItem>Hello World!</MenuItem>
   </Menu>
 </button>
- * ```
+```
  * @param props.children Content to appear inside of Menu.
  * @param props.active Boolean to describe whether or not Menu is active.
  * @param props.className Classname applied to Menu.
@@ -79,54 +75,53 @@ function Menu({
     </Popover>
   );
 
-  let triggerElement: React.ReactNode = null;
-
   const syntheticToggleEventHandler: EventHandler<
     React.SyntheticEvent
-  > = useCallback(
-    e => {
-      e.nativeEvent.stopImmediatePropagation();
-      setActiveState(!isActive);
-    },
-    [isActive],
-  );
+  > = useCallback(e => {
+    e.nativeEvent.stopImmediatePropagation();
+    setActiveState(current => !current);
+  }, []);
 
-  const nativeToggleEventHandler = (e: Event) => {
+  const nativeToggleEventHandler = useCallback((e: Event) => {
     e.stopImmediatePropagation();
-    setActiveState(!isActive);
-  };
+    setActiveState(current => !current);
+  }, []);
 
   const handleEscape = (e: KeyboardEvent) => {
-    e.keyCode === 27 && nativeToggleEventHandler(e);
+    const EscapeKey = 27;
+    e.keyCode === EscapeKey && nativeToggleEventHandler(e);
   };
 
-  let enabled = false;
+  let enabled = trigger && isActive;
 
   if (trigger && isActive) {
     enabled = true;
   }
 
   useDocumentEventListener(
-    enabled,
     'click',
     nativeToggleEventHandler,
     { once: true },
     [isActive, trigger],
+    enabled,
   );
 
-  useDocumentEventListener(enabled, 'keydown', handleEscape, { once: true }, [
-    isActive,
-    trigger,
-  ]);
+  useDocumentEventListener(
+    'keydown',
+    handleEscape,
+    { once: true },
+    [isActive, trigger],
+    enabled,
+  );
 
   if (trigger) {
-    triggerElement = React.cloneElement(trigger, {
+    return React.cloneElement(trigger, {
       onClick: syntheticToggleEventHandler,
       children: [...trigger.props.children, popoverContent],
     });
   }
 
-  return triggerElement || popoverContent;
+  return trigger || popoverContent;
 }
 
 Menu.displayName = 'Menu';

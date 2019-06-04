@@ -10,16 +10,18 @@
 >
   <MenuGroup>
     <MenuItem
-      title="Atlas"
       description="cloud.mongodb.com"
       disabled={boolean('disabled', false)}
-    />
-    <MenuItem title="University" description="university.mongodb.com" />
+    >
+      Atlas
+    </MenuItem>
+    <MenuItem description="university.mongodb.com">University</MenuItem>
     <MenuItem
-      title="Cloud Support"
       description="support.mongodb.com"
       active={boolean('active', true)}
-    />
+    >
+      Cloud Support
+    </MenuItem>
   </MenuGroup>
   <MenuItem title="Logout" />
 </Menu>

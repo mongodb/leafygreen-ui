@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 
 export function useDocumentEventListener(
-  enabled: boolean,
   type: string,
   eventCallback: (e) => void,
   options?: object,
   dependencies?: Array<any>,
+  enabled: boolean = true,
 ) {
   useEffect(() => {
     if (!enabled) {
