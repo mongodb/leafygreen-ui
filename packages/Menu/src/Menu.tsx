@@ -22,7 +22,7 @@ interface MenuProps extends MenuTypes {
    * A slot for the element used to trigger the Menu. Passing a trigger allows
    * Menu to control opening and closing itself internally.
    */
-  trigger?: React.ReactElement;
+  trigger?: React.ReactElement | Function;
 }
 
 /**
@@ -115,6 +115,13 @@ function Menu({
   );
 
   if (trigger) {
+    if (typeof trigger === 'function') {
+      return trigger({
+        onClick: syntheticToggleEventHandler,
+        children: popoverContent,
+      });
+    }
+
     return React.cloneElement(trigger, {
       onClick: syntheticToggleEventHandler,
       children: [...trigger.props.children, popoverContent],
@@ -134,7 +141,7 @@ Menu.propTypes = {
   justify: PropTypes.oneOf(['start', 'middle', 'end']),
   refEl: PropTypes.object,
   usePortal: PropTypes.bool,
-  trigger: PropTypes.node,
+  trigger: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };
 
 export default Menu;

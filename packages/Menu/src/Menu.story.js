@@ -9,7 +9,12 @@ function Controlled() {
     <Menu
       align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
       justify={select('justify', ['start', 'middle', 'end'], 'start')}
-      trigger={<button>trigger</button>}
+      trigger={({ onClick, children }) => (
+        <button onClick={onClick}>
+          trigger test
+          {children}
+        </button>
+      )}
     >
       <MenuGroup>
         <MenuItem
