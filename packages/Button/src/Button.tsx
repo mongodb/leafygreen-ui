@@ -320,7 +320,9 @@ type ButtonProps =
   | ButtonButtonProps
   | CustomElementButtonProps;
 
-function hasCustomRoot(props: ButtonProps): props is CustomElementButtonProps {
+function usesCustomElement(
+  props: ButtonProps,
+): props is CustomElementButtonProps {
   return (props as any).as != null;
 }
 
@@ -329,15 +331,6 @@ function hasLinkRoot(
 ): props is LinkButtonProps {
   return props.href != null;
 }
-
-const omitProps = [
-  'as',
-  'className',
-  'disabled',
-  'size',
-  'variant',
-  'children',
-] as const;
 
 export default class Button extends Component<ButtonProps> {
   static displayName = 'Button';
@@ -364,9 +357,17 @@ export default class Button extends Component<ButtonProps> {
       'aria-disabled': disabled,
     };
 
-    if (hasCustomRoot(this.props)) {
+    const rest = omit(this.props, [
+      'as',
+      'className',
+      'disabled',
+      'size',
+      'variant',
+      'children',
+    ]);
+
+    if (usesCustomElement(this.props)) {
       const Root = this.props.as;
-      const rest = omit(this.props, omitProps);
 
       return (
         <Root {...rest} {...commonProps}>
@@ -376,19 +377,20 @@ export default class Button extends Component<ButtonProps> {
     }
 
     if (hasLinkRoot(this.props)) {
-      const rest: HTMLElementProps<'a'> = omit(this.props, omitProps);
       return (
-        <a {...rest} {...commonProps}>
+        <a {...rest as HTMLElementProps<'a'>} {...commonProps}>
           {children}
         </a>
       );
     }
 
-    const rest: HTMLElementProps<'button'> = omit(this.props, omitProps);
-
     // NOTE(JeT): The button's `type` will be overridden if it is in the passed-in props
     return (
-      <button type="button" {...rest} {...commonProps}>
+      <button
+        type="button"
+        {...rest as HTMLElementProps<'button'>}
+        {...commonProps}
+      >
         {children}
       </button>
     );
