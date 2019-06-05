@@ -344,6 +344,24 @@ export default class Button extends Component<ButtonProps> {
     disabled: false,
   };
 
+  /*
+  NOTE(JeT):
+  Without the `any` type annotation here, @types/react will try to infer TS prop types from it,
+  merging them together with ButtonProps (see LibraryManagedAttributes and MergePropTypes in @types/react).
+  Unfortunately, this merging uses keyof, which appears to drop the [key: string] index signature, meaning TS won't
+  allow us to pass unrecognized props down to custom components when we're using the `as` prop. This workaround avoids
+  the attempt at merging, while still getting runtime type-checking for non-TS consumers of the library.
+  */
+  static propTypes: any = {
+    variant: PropTypes.oneOf(['default', 'primary', 'info', 'danger', 'dark']),
+    size: PropTypes.oneOf(['xsmall', 'small', 'normal', 'large']),
+    className: PropTypes.string,
+    children: PropTypes.node,
+    disabled: PropTypes.bool,
+    as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    href: PropTypes.string,
+  };
+
   render() {
     const { className, children, disabled, variant, size } = this.props;
 
@@ -397,22 +415,3 @@ export default class Button extends Component<ButtonProps> {
     );
   }
 }
-
-/*
-NOTE(JeT):
-When this is defined inside the actual component, React will try to infer prop types from it,
-merging them together with ButtonProps (see LibraryManagedAttributes and MergePropTypes in @types/react).
-Unfortunately, this merging uses keyof, which appears to drop the [key: string] index signature, meaning TS won't 
-allow us to pass unrecognized props down to custom components when we're using the `as` prop. This workaround avoids
-the attempt at merging, while still getting runtime type-checking for non-TS consumers of the library.
-*/
-// @ts-ignore
-Button.propTypes = {
-  variant: PropTypes.oneOf(['default', 'primary', 'info', 'danger', 'dark']),
-  size: PropTypes.oneOf(['xsmall', 'small', 'normal', 'large']),
-  className: PropTypes.string,
-  children: PropTypes.node,
-  disabled: PropTypes.bool,
-  as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  href: PropTypes.string,
-};
