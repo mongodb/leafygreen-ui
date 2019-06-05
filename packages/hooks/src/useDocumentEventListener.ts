@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
  * Hook to subscribe to an event listener.
@@ -10,20 +10,28 @@ import { useEffect } from 'react';
  */
 export default function useDocumentEventListener(
   type: string,
-  eventCallback: EventListener,
+  eventCallback: (e) => void,
   options?: object,
   dependencies?: Array<any>,
   enabled: boolean = true,
 ) {
+  const memoizedEventCallback = useRef(e => {}); //eslint-disable-line @typescript-eslint/no-unused-vars
+
+  useEffect(() => {
+    memoizedEventCallback.current = eventCallback;
+  }, [eventCallback]);
+
   useEffect(() => {
     if (!enabled) {
       return;
     }
 
-    document.addEventListener(type, eventCallback, options);
+    const callback = e => memoizedEventCallback.current(e);
+
+    document.addEventListener(type, callback, options);
 
     return () => {
       document.removeEventListener(type, eventCallback);
     };
-  }, [dependencies]);
+  }, dependencies);
 }
