@@ -59,7 +59,7 @@ export enum Justify {
   End = 'end',
 }
 
-interface PopoverProps {
+export interface PopoverProps {
   /**
    * Content that will appear inside of the popover component.
    */

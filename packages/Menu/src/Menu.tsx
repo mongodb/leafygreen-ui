@@ -54,7 +54,7 @@ function Menu({
   refEl,
   trigger,
   ...rest
-}: MenuProps) {
+}: MenuProps): React.ReactElement {
   const [isActive, setActiveState] = useState(false);
 
   const popoverContent = (

@@ -2,10 +2,9 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
-import { cx } from 'emotion';
 import { menuGroup } from './MenuGroup';
 
-const { css } = emotion;
+const { css, cx } = emotion;
 
 const indentation = 16;
 
@@ -100,14 +99,14 @@ interface MenuItemProps {
   description?: string;
 
   /**
-   * Determines whether or not the MenuItem is diabled.
+   * Determines whether or not the MenuItem is disabled.
    */
   disabled?: boolean;
 
   /**
    * Determines whether or not the MenuItem is active.
    */
-  active?: boolean;
+  active: boolean;
 }
 
 /**
