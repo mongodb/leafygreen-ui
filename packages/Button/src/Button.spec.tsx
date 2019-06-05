@@ -16,17 +16,17 @@ describe('packages/Button', () => {
     </Button>,
   );
 
-  function isElement(el: Node): el is HTMLElement {
-    return el.nodeType === Node.ELEMENT_NODE;
+  function isElement(el: Node | null): el is HTMLElement {
+    return el != null && el.nodeType === Node.ELEMENT_NODE;
   }
 
-  function isButton(el: Node): el is HTMLButtonElement {
+  function isButton(el: Node | null): el is HTMLButtonElement {
     return isElement(el) && el.tagName.toLowerCase() === 'button';
   }
 
   const renderedButton = renderedComponent.container.firstChild;
 
-  if (renderedButton == null || !isElement(renderedButton)) {
+  if (!isElement(renderedButton)) {
     throw new Error('Button component failed to render');
   }
 
@@ -71,13 +71,32 @@ describe('packages/Button', () => {
     expect(renderedButton.tagName.toLowerCase()).toBe('button');
   });
 
+  test(`renders a button with the "button" type by default`, () => {
+    if (!isButton(renderedButton)) {
+      throw new Error('Rendered element is not a button');
+    }
+
+    expect(renderedButton.type).toBe('button');
+  });
+
+  test(`renders a button with the given type when one is set`, () => {
+    const submitButton = render(<Button type="submit">My submit button</Button>)
+      .container.firstChild;
+
+    if (!isButton(submitButton)) {
+      throw new Error('Rendered element is not a button');
+    }
+
+    expect(submitButton.type).toBe('submit');
+  });
+
   test(`renders component inside of a tag when "href" prop is set`, () => {
     const { container } = render(
       <Button href="http://mongodb.design">Click me!</Button>,
     );
     const buttonComponent = container.firstChild;
 
-    if (buttonComponent == null || !isElement(buttonComponent)) {
+    if (!isElement(buttonComponent)) {
       throw new Error('No element was rendered');
     }
 
@@ -88,7 +107,7 @@ describe('packages/Button', () => {
     const { container } = render(<Button as="div">Click me!</Button>);
     const buttonComponent = container.firstChild;
 
-    if (buttonComponent == null || !isElement(buttonComponent)) {
+    if (!isElement(buttonComponent)) {
       throw new Error('No element was rendered');
     }
 
@@ -103,7 +122,7 @@ describe('packages/Button', () => {
     );
     const buttonComponent = container.firstChild;
 
-    if (buttonComponent == null || !isElement(buttonComponent)) {
+    if (!isElement(buttonComponent)) {
       throw new Error('No element was rendered');
     }
 

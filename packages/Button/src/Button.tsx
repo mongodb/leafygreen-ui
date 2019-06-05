@@ -14,6 +14,7 @@ export enum Variant {
   Danger = 'danger',
   Dark = 'dark',
 }
+
 export enum Size {
   XSmall = 'xsmall',
   Small = 'small',
