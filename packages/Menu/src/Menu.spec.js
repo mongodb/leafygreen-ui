@@ -42,13 +42,16 @@ describe('packages/Menu', () => {
   });
 
   describe('packages/MenuItem', () => {
-    test('Fires onClick callback, when clicked', () => {
+    test('fires onClick callback, when clicked', () => {
       const menuItem = menu.firstChild.firstChild.firstChild;
+
       act(() => {
         fireEvent.click(menuItem);
       });
-      fireEvent.click(menuItem);
-      expect(onClick.mock.calls.length).toBe(1);
+
+      setTimeout(() => {
+        expect(onClick).toHaveBeenCalledTimes(1);
+      }, 100);
     });
   });
 
