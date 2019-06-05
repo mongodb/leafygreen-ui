@@ -29,8 +29,7 @@ describe('packages/Portal', () => {
   }
 
   test(`appends portal content to document body`, () => {
-    const firstChild = document.body.firstChild;
-    const lastChild = document.body.lastChild;
+    const { firstChild, lastChild } = document.body;
 
     if (firstChild == null || !isElement(firstChild)) {
       throw new Error('Could not find firstChild element');
