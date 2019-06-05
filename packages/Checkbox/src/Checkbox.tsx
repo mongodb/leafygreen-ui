@@ -18,6 +18,11 @@ const checkboxWrapper = createDataProp('checkbox-wrapper');
 const height = 20;
 const width = 600;
 
+export enum Variant {
+  Default = 'default',
+  Light = 'light',
+}
+
 const wrapperStyle = css`
   transition: 300ms opacity ease-in-out;
   height: ${height}px;
@@ -65,7 +70,7 @@ const checkboxStyleChecked = css`
   transform: translate3d(${-width + height}px, 0, 0);
 `;
 
-const textVariants = {
+const textVariants: { [K in Variant]: string } = {
   default: css`
     color: ${colors.gray[1]};
   `,
@@ -99,18 +104,31 @@ const containerStyle = css`
   &:hover > ${checkboxWrapper.selector} {
     opacity: 1;
   }
+`;
 
-  /* Use [disabled] instead of &:disabled as this isn't an input element */
-  &[disabled] {
-    cursor: not-allowed;
-  }
+/** &:disabled won't work and [disabled] isn't a valid property because this isn't an input */
+const disabledContainerStyle = css`
+  cursor: not-allowed;
 `;
 
 const disabledTextStyle = css`
   color: ${colors.gray[5]};
 `;
 
-export default class Checkbox extends PureComponent {
+interface CheckboxProps {
+  variant: Variant;
+  checked?: boolean;
+  label: React.ReactNode;
+  disabled: boolean;
+  indeterminate: boolean;
+  className: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  bold: boolean;
+}
+
+export default class Checkbox extends PureComponent<
+  CheckboxProps & React.InputHTMLAttributes<HTMLInputElement>
+> {
   static displayName = 'Checkbox';
 
   static propTypes = {
@@ -138,19 +156,26 @@ export default class Checkbox extends PureComponent {
   state = { checked: false };
 
   componentDidMount() {
+    if (this.inputRef.current == null) {
+      return;
+    }
+
     this.inputRef.current.indeterminate = this.props.indeterminate;
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.indeterminate !== this.props.indeterminate) {
+    if (
+      prevProps.indeterminate !== this.props.indeterminate &&
+      this.inputRef.current != null
+    ) {
       this.inputRef.current.indeterminate = this.props.indeterminate;
     }
   }
 
   checkboxId = `checkbox-${Math.floor(Math.random() * 10000000)}`;
-  inputRef = React.createRef();
+  inputRef = React.createRef<HTMLInputElement>();
 
-  onClick = e => {
+  onClick = (e: React.MouseEvent<HTMLInputElement>) => {
     const { onClick } = this.props;
 
     if (onClick) {
@@ -160,12 +185,14 @@ export default class Checkbox extends PureComponent {
     // For Microsoft Edge and IE, when checkbox is indeterminate, change event does not fire when clicked.
     // Explicitly call onChange for this case
     if (this.inputRef.current && this.inputRef.current.indeterminate) {
-      this.onChange(e);
+      // Event bubbling means that TS can't make assumptions about the event's target.
+      // To be safe, we override with `currentTarget`.
+      this.onChange({ ...e, target: e.currentTarget });
       e.stopPropagation();
     }
   };
 
-  onChange = e => {
+  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { onChange, checked } = this.props;
 
     if (onChange) {
@@ -195,9 +222,6 @@ export default class Checkbox extends PureComponent {
     } = this.props;
 
     const textVariantStyle = textVariants[variant] || textVariants.default;
-
-    // Indeterminate isn't a valid HTML prop
-    delete rest.indeterminate;
 
     const checkboxBackgroundImage = (() => {
       switch (variant) {
@@ -241,10 +265,11 @@ export default class Checkbox extends PureComponent {
 
     return (
       <label
-        className={cx(containerStyle, className)}
+        className={cx(containerStyle, className, {
+          [disabledContainerStyle]: disabled,
+        })}
         style={style}
         htmlFor={checkboxId}
-        disabled={disabled}
       >
         <input
           {...rest}
