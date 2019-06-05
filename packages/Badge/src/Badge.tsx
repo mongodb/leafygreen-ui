@@ -5,6 +5,17 @@ import { ccClassName, emotion } from '@leafygreen-ui/lib';
 
 const { css } = emotion;
 
+export enum Variant {
+  Default = 'default',
+  Dark = 'dark',
+  Danger = 'danger',
+  Warning = 'warning',
+  DarkBlue = 'darkBlue',
+  LightBlue = 'lightBlue',
+  Primary = 'primary',
+  Outline = 'outline',
+}
+
 export const baseStyle = css`
   display: inline-flex;
   align-items: center;
@@ -19,7 +30,7 @@ export const baseStyle = css`
   color: ${colors.mongodb.white};
 `;
 
-export const badgeVariants = {
+export const badgeVariants: { readonly [K in Variant]: string } = {
   default: css`
     background-color: ${colors.gray[6]};
     color: ${colors.gray[3]};
@@ -55,7 +66,15 @@ export const badgeVariants = {
   `,
 };
 
-export default class Badge extends PureComponent {
+interface BadgeProps {
+  className: string;
+  children?: React.ReactNode;
+  variant: Variant;
+}
+
+export default class Badge extends PureComponent<
+  BadgeProps & React.HTMLAttributes<HTMLDivElement>
+> {
   static displayName = 'Badge';
 
   static propTypes = {
@@ -75,7 +94,7 @@ export default class Badge extends PureComponent {
 
   static defaultProps = {
     className: '',
-    variant: 'default',
+    variant: Variant.Default,
   };
 
   render() {
