@@ -326,7 +326,7 @@ function usesCustomElement(
   return (props as any).as != null;
 }
 
-function hasLinkRoot(
+function usesLinkElement(
   props: LinkButtonProps | ButtonButtonProps,
 ): props is LinkButtonProps {
   return props.href != null;
@@ -376,7 +376,7 @@ export default class Button extends Component<ButtonProps> {
       );
     }
 
-    if (hasLinkRoot(this.props)) {
+    if (usesLinkElement(this.props)) {
       return (
         <a {...rest as HTMLElementProps<'a'>} {...commonProps}>
           {children}
