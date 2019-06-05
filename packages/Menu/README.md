@@ -96,7 +96,7 @@ Determines the alignment of the `Menu` component relative to a reference element
 
 **Default:** `start`
 
-Determines the justification of the `Menu` component (based on the alignment) relative to ar eference element or the element's nearest parent
+Determines the justification of the `Menu` component (based on the alignment) relative to a reference element or the element's nearest parent
 
 ### refEl
 
@@ -106,13 +106,19 @@ Determines the justification of the `Menu` component (based on the alignment) re
 
 Pass a reference to an element that the `Menu` component should be positioned against
 
+### trigger
+
+**Type:** `HTMLElement` or `ReactNode`
+
+An `HTMLElement` or `ReactNode` against which the Menu will be positioned. If this prop is present, the Menu's state will be managed internally.
+
 ### usePortal
 
 **Type:** `boolean`
 
 **Default:** `true`
 
-Will position Menu's children relative to its parent without using a Portal, if `usePortal` is set to false. NOTE: The parent element should be CSS position relative, fixed, or absolute if using this option.
+Will position Menu's children relative to its parent without using a Portal if `usePortal` is set to false. NOTE: The parent element should be CSS position relative, fixed, or absolute if using this option.
 
 #### Any other properties will be spread on the Menu `div` container
 
@@ -239,8 +245,6 @@ Description text that will appear below the main content of `MenuItem`
 
 ### trigger
 
-**Type:** `function`
+**Type:** `function` or `ReactNode`
 
-**Default** `() => {}`
-
-The trigger prop can also support being passed a function. To work as expected, the function must accept an argument of `children`, which should be rendered below the desired trigger content.
+The trigger prop can also support being passed a function. To work as expected, the function must accept an argument of `children`, which should be rendered inside of the function passed to trigger.

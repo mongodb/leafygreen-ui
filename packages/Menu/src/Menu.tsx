@@ -15,9 +15,7 @@ const rootMenuStyle = css`
   background-color: ${colors.mongodb.white};
 `;
 
-type MenuTypes = Omit<PopoverProps, 'spacing'>;
-
-interface MenuProps extends MenuTypes {
+interface MenuProps extends Omit<PopoverProps, 'spacing'> {
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
    * Menu to control opening and closing itself internally.
@@ -44,7 +42,7 @@ interface MenuProps extends MenuTypes {
  * @param props.justify Justification of Menu relative to another element: `start`, `middle`, `end`.
  * @param props.refEl Reference element that Menu should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
- * @param props.trigger Trigger element to set active state of Menu, makes component controlled
+ * @param props.trigger Trigger element can be ReactNode or function, and, if present, internally manages active state of Menu.
  */
 function Menu({
   align = Align.Bottom,
@@ -92,11 +90,7 @@ function Menu({
     e.keyCode === EscapeKey && nativeToggleEventHandler(e);
   };
 
-  let enabled = trigger && isActive;
-
-  if (trigger && isActive) {
-    enabled = true;
-  }
+  const enabled = trigger && isActive;
 
   useDocumentEventListener(
     'click',
