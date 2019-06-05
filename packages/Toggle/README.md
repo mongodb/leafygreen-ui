@@ -79,6 +79,14 @@ Disables the toggle.
 
 Adds a className to the outermost element.
 
+### id
+
+**Type:** `string` || `number`
+
+**Default:** randomly generated string
+
+Adds an ID only to the input, and it's used elsewhere for accessibility props.
+
 ### onChange
 
 **Type:** `function`
