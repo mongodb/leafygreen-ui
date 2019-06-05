@@ -33,5 +33,5 @@ export default function useDocumentEventListener(
     return () => {
       document.removeEventListener(type, eventCallback);
     };
-  }, dependencies);
+  }, [enabled, ...(dependencies ? dependencies : [])]);
 }
