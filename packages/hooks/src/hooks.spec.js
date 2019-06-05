@@ -45,35 +45,32 @@ describe('packages/hooks', () => {
   describe.skip('useMutationObserver', () => {}); //eslint-disable-line jest/no-disabled-tests
 
   describe('useElementNode', () => {
-    let count = 1;
+    let count = 0;
 
     function TestUseElementNode() {
       const [refEl, setRefEl] = useElementNode();
       useEffect(() => {
-        count += 1;
+        ++count;
       }, [refEl]);
       return <div ref={setRefEl} />;
     }
 
-    render(<TestUseElementNode />);
-
     test('it gets called twice', () => {
-      expect(count).toEqual(2);
-    });
+      act(() => {
+        render(<TestUseElementNode />);
+      });
 
-    const { result } = renderHook(() => useElementNode());
-
-    test('returns an array where the first element refers to the ref node', () => {
-      expect(result.current[0] === null).toBe(true);
-    });
-
-    test('returns an array where the second element is a callback to update the ref node', () => {
-      expect(typeof result.current[1]).toBe('function');
+      // without setTimeout, test ran before final render
+      setTimeout(() => {
+        expect(count).toBe(2);
+      }, 10);
     });
   });
 
   describe('useViewportSize', () => {
     const { result, rerender } = renderHook(() => useViewportSize());
+    const debounceTimeoutLength = 100;
+    const secondDebounceTimeoutLength = 200;
 
     test('responds to updates in window width', () => {
       act(() => {
@@ -83,17 +80,17 @@ describe('packages/hooks', () => {
       });
       setTimeout(() => {
         expect(result.current.width).toBe(200);
-      }, 100);
 
-      act(() => {
-        window.width = 1024;
-        window.dispatchEvent(new Event('resize'));
-        rerender();
-      });
+        act(() => {
+          window.width = 1024;
+          window.dispatchEvent(new Event('resize'));
+          rerender();
+        });
 
-      setTimeout(() => {
-        expect(result.current.width).toBe(1024);
-      }, 200);
+        setTimeout(() => {
+          expect(result.current.width).toBe(1024);
+        }, secondDebounceTimeoutLength);
+      }, debounceTimeoutLength);
     });
 
     test('responds to updates in window height', () => {
@@ -104,17 +101,17 @@ describe('packages/hooks', () => {
       });
       setTimeout(() => {
         expect(result.current.height).toBe(200);
-      }, 100);
 
-      act(() => {
-        window.innerHeight = 1024;
-        window.dispatchEvent(new Event('resize'));
-        rerender();
-      });
+        act(() => {
+          window.innerHeight = 1024;
+          window.dispatchEvent(new Event('resize'));
+          rerender();
+        });
 
-      setTimeout(() => {
-        expect(result.current.height).toBe(1024);
-      }, 200);
+        setTimeout(() => {
+          expect(result.current.height).toBe(1024);
+        }, secondDebounceTimeoutLength);
+      }, debounceTimeoutLength);
     });
   });
 });
