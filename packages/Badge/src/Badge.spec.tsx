@@ -9,6 +9,10 @@ describe('packages/Badge', () => {
   const className = 'test-pill-class';
   const child = 'Bubble Pill';
 
+  function isElement(node: Node): node is Element {
+    return node.nodeType === Node.ELEMENT_NODE;
+  }
+
   const { container } = render(
     <Badge className={className} onClick={onClick}>
       {child}
@@ -16,6 +20,11 @@ describe('packages/Badge', () => {
   );
 
   const badge = container.firstChild;
+
+  if (badge == null || !isElement(badge)) {
+    throw new Error('Badge element not found');
+  }
+
   test(`renders "${className}" in the button's classList`, () => {
     expect(badge.classList.contains(className)).toBe(true);
   });
