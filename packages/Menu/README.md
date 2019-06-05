@@ -180,6 +180,22 @@ Classname applied to `li` element
 
 Function that will be called when a `MenuItem` is clicked
 
+### active
+
+**Type:** `boolean`
+
+**Default:** `false`
+
+Determines if the MenuItem is `active`
+
+### disabled
+
+**Type:** `boolean`
+
+**Default:** `false`
+
+Determines if the MenuItem is `disabled`
+
 ### description
 
 **Type:** `string`
