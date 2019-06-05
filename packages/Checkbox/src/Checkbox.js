@@ -122,6 +122,7 @@ export default class Checkbox extends PureComponent {
     className: PropTypes.string,
     onChange: PropTypes.func,
     bold: PropTypes.bool,
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   };
 
   static defaultProps = {
@@ -146,9 +147,8 @@ export default class Checkbox extends PureComponent {
     }
   }
 
-  inputRef = React.createRef();
-
   checkboxId = `checkbox-${Math.floor(Math.random() * 10000000)}`;
+  inputRef = React.createRef();
 
   onClick = e => {
     const { onClick } = this.props;
@@ -178,9 +178,11 @@ export default class Checkbox extends PureComponent {
   };
 
   render() {
-    const labelId = `${this.checkboxId}-label`;
+    const checkboxId = this.props.id || this.checkboxId;
+    const labelId = `${checkboxId}-label`;
+
     const {
-      name = `${this.checkboxId}`,
+      name = checkboxId,
       checked = this.state.checked,
       className,
       style,
@@ -241,12 +243,12 @@ export default class Checkbox extends PureComponent {
       <label
         className={cx(containerStyle, className)}
         style={style}
-        htmlFor={this.checkboxId}
+        htmlFor={checkboxId}
         disabled={disabled}
       >
         <input
           {...rest}
-          id={this.checkboxId}
+          id={checkboxId}
           ref={this.inputRef}
           className={inputStyle}
           type="checkbox"

@@ -98,6 +98,14 @@ Adds a className to the outermost element.
 
 Determines whether the text will be bold or not.
 
+### id
+
+**Type:** `string` || `number`
+
+**Default:** randomly generated string
+
+Adds an ID only to the input, and it's used elsewhere for accessibility props.
+
 ### onChange
 
 **Type:** `function`
