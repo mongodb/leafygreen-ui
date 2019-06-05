@@ -7,8 +7,19 @@ import omit from 'lodash/omit';
 
 const { css, cx } = emotion;
 
-export type Variant = 'default' | 'primary' | 'info' | 'danger' | 'dark';
-export type Size = 'xsmall' | 'small' | 'normal' | 'large';
+export enum Variant {
+  Default = 'default',
+  Primary = 'primary',
+  Info = 'info',
+  Danger = 'danger',
+  Dark = 'dark',
+}
+export enum Size {
+  XSmall = 'xsmall',
+  Small = 'small',
+  Normal = 'normal',
+  Large = 'large',
+}
 
 /** Helper type to extract an HTML element's valid props */
 type HTMLElementProps<
@@ -21,7 +32,7 @@ type HTMLElementProps<
   : never;
 
 const buttonVariants: { readonly [K in Variant]: string } = {
-  default: css`
+  [Variant.Default]: css`
     color: ${colors.gray[1]};
     background-color: ${colors.mongodb.white};
     background-image: linear-gradient(
@@ -58,7 +69,7 @@ const buttonVariants: { readonly [K in Variant]: string } = {
     }
   `,
 
-  primary: css`
+  [Variant.Primary]: css`
     color: ${colors.mongodb.white};
     background-color: ${colors.green[2]};
     background-image: linear-gradient(
@@ -95,7 +106,7 @@ const buttonVariants: { readonly [K in Variant]: string } = {
     }
   `,
 
-  info: css`
+  [Variant.Info]: css`
     color: ${colors.green[2]};
     background-color: transparent;
     background-image: none;
@@ -128,7 +139,7 @@ const buttonVariants: { readonly [K in Variant]: string } = {
     }
   `,
 
-  danger: css`
+  [Variant.Danger]: css`
     color: ${colors.mongodb.white};
     background-color: #bd180f;
     background-image: linear-gradient(
@@ -165,7 +176,7 @@ const buttonVariants: { readonly [K in Variant]: string } = {
     }
   `,
 
-  dark: css`
+  [Variant.Dark]: css`
     color: ${colors.mongodb.white};
     border-color: ${colors.gray[0]};
     background-image: linear-gradient(${colors.gray[3]}, ${colors.gray[1]});
@@ -191,7 +202,7 @@ const buttonVariants: { readonly [K in Variant]: string } = {
 };
 
 const buttonSizes: { readonly [K in Size]: string } = {
-  xsmall: css`
+  [Size.XSmall]: css`
     height: 22px;
     padding: 0 8px;
     font-size: 11px;
@@ -200,13 +211,13 @@ const buttonSizes: { readonly [K in Size]: string } = {
     font-weight: bold;
   `,
 
-  small: css`
+  [Size.Small]: css`
     height: 25px;
     padding: 0 10px;
     line-height: 23px;
   `,
 
-  normal: css`
+  [Size.Normal]: css`
     height: 32px;
     padding: 0 12px;
     font-size: 14px;
@@ -215,7 +226,7 @@ const buttonSizes: { readonly [K in Size]: string } = {
     font-weight: normal;
   `,
 
-  large: css`
+  [Size.Large]: css`
     height: 45px;
     line-height: 44px;
     font-size: 16px;
@@ -332,8 +343,8 @@ export default class Button extends Component<ButtonProps> {
   static displayName = 'Button';
 
   static defaultProps = {
-    variant: 'default',
-    size: 'normal',
+    variant: Variant.Default,
+    size: Size.Normal,
     className: '',
     children: null,
     disabled: false,

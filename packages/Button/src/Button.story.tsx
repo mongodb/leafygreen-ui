@@ -27,12 +27,8 @@ function CustomElement({
 storiesOf('Buttons', module)
   .add('Default', () => (
     <Button
-      size={select<Size>(
-        'Size',
-        ['xsmall', 'small', 'normal', 'large'],
-        'normal',
-      )}
-      variant="default"
+      size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
+      variant={Variant.Default}
       title={text('Title', 'The button title')}
       disabled={boolean('Disabled', false)}
       href={
@@ -55,12 +51,8 @@ storiesOf('Buttons', module)
   ))
   .add('Primary', () => (
     <Button
-      size={select<Size>(
-        'Size',
-        ['xsmall', 'small', 'normal', 'large'],
-        'normal',
-      )}
-      variant="primary"
+      size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
+      variant={Variant.Primary}
       title={text('Title', 'The button title')}
       disabled={boolean('Disabled', false)}
       href={
@@ -77,12 +69,8 @@ storiesOf('Buttons', module)
   ))
   .add('Info', () => (
     <Button
-      size={select<Size>(
-        'Size',
-        ['xsmall', 'small', 'normal', 'large'],
-        'normal',
-      )}
-      variant="info"
+      size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
+      variant={Variant.Info}
       title={text('Title', 'The button title')}
       disabled={boolean('Disabled', false)}
       href={
@@ -99,12 +87,8 @@ storiesOf('Buttons', module)
   ))
   .add('Danger', () => (
     <Button
-      size={select<Size>(
-        'Size',
-        ['xsmall', 'small', 'normal', 'large'],
-        'normal',
-      )}
-      variant="danger"
+      size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
+      variant={Variant.Danger}
       title={text('Title', 'The button title')}
       disabled={boolean('Disabled', false)}
       href={
@@ -121,12 +105,8 @@ storiesOf('Buttons', module)
   ))
   .add('Dark', () => (
     <Button
-      size={select<Size>(
-        'Size',
-        ['xsmall', 'small', 'normal', 'large'],
-        'normal',
-      )}
-      variant="dark"
+      size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
+      variant={Variant.Dark}
       title={text('Title', 'The button title')}
       disabled={boolean('Disabled', false)}
       href={
@@ -145,15 +125,11 @@ storiesOf('Buttons', module)
     <Button
       as={CustomElement}
       customProp={text('Custom Prop', 'custom')}
-      size={select<Size>(
-        'Size',
-        ['xsmall', 'small', 'normal', 'large'],
-        'normal',
-      )}
-      variant={select<Variant>(
+      size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
+      variant={select(
         'Variant',
-        ['default', 'primary', 'info', 'danger', 'dark'],
-        'default',
+        Object.values(Variant) as Array<Variant>,
+        Variant.Default,
       )}
       title={text('Title', 'The button title')}
       disabled={boolean('Disabled', false)}
