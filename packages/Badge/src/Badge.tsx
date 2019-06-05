@@ -5,15 +5,16 @@ import { ccClassName, emotion } from '@leafygreen-ui/lib';
 
 const { css } = emotion;
 
-export type Variant =
-  | 'default'
-  | 'dark'
-  | 'danger'
-  | 'warning'
-  | 'darkBlue'
-  | 'lightBlue'
-  | 'primary'
-  | 'outline';
+export enum Variant {
+  Default = 'default',
+  Dark = 'dark',
+  Danger = 'danger',
+  Warning = 'warning',
+  DarkBlue = 'darkBlue',
+  LightBlue = 'lightBlue',
+  Primary = 'primary',
+  Outline = 'outline',
+}
 
 export const baseStyle = css`
   display: inline-flex;
@@ -93,7 +94,7 @@ export default class Badge extends PureComponent<
 
   static defaultProps = {
     className: '',
-    variant: 'default',
+    variant: Variant.Default,
   };
 
   render() {

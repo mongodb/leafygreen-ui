@@ -6,19 +6,10 @@ import { Variant } from '.';
 
 storiesOf('Badge', module).add('Default', () => (
   <Badge
-    variant={select<Variant>(
+    variant={select(
       'Variant',
-      [
-        'default',
-        'danger',
-        'warning',
-        'darkBlue',
-        'lightBlue',
-        'primary',
-        'outline',
-        'dark',
-      ],
-      'darkBlue',
+      Object.values(Variant) as Array<Variant>,
+      Variant.DarkBlue,
     )}
   >
     {text('Badge Text', 'Badge')}
