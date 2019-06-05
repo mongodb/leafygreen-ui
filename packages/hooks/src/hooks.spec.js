@@ -42,6 +42,7 @@ describe('packages/hooks', () => {
     });
   });
 
+  // Difficult to test a hook that measures changes to the DOM without having access to the DOM
   describe.skip('useMutationObserver', () => {}); //eslint-disable-line jest/no-disabled-tests
 
   describe('useElementNode', () => {
@@ -89,27 +90,6 @@ describe('packages/hooks', () => {
 
         setTimeout(() => {
           expect(result.current.width).toBe(1024);
-        }, secondDebounceTimeoutLength);
-      }, debounceTimeoutLength);
-    });
-
-    test('responds to updates in window height', () => {
-      act(() => {
-        window.innerHeight = 200;
-        window.dispatchEvent(new Event('resize'));
-        rerender();
-      });
-      setTimeout(() => {
-        expect(result.current.height).toBe(200);
-
-        act(() => {
-          window.innerHeight = 1024;
-          window.dispatchEvent(new Event('resize'));
-          rerender();
-        });
-
-        setTimeout(() => {
-          expect(result.current.height).toBe(1024);
         }, secondDebounceTimeoutLength);
       }, debounceTimeoutLength);
     });
