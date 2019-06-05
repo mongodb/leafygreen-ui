@@ -104,7 +104,7 @@ Determines whether the text will be bold or not.
 
 **Default:** randomly generated string
 
-Adds an id to the input element and corresponding label element.
+Adds an ID only to the input, and it's used elsewhere for accessibility props.
 
 ### onChange
 
