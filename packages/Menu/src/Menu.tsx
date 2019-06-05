@@ -80,7 +80,7 @@ function Menu({
     setActiveState(current => !current);
   }, []);
 
-  const nativeToggleEventHandler = useCallback((e: Event) => {
+  const nativeToggleEventHandler: EventListener = useCallback((e: Event) => {
     e.stopImmediatePropagation();
     setActiveState(current => !current);
   }, []);
