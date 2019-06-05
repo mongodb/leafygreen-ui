@@ -1,3 +1,3 @@
-import Badge, { Variant } from './Badge';
+import Badge from './Badge';
+export { Variant } from './Badge';
 export default Badge;
-export { Variant };
