@@ -253,4 +253,14 @@ Popover.propTypes = {
   adjustOnMutation: PropTypes.bool,
 };
 
+Popover.defaultProps = {
+  children: undefined,
+  align: Align.Bottom,
+  justify: Justify.Start,
+  active: false,
+  usePortal: true,
+  spacing: 10,
+  adjustOnMutation: false,
+};
+
 export default Popover;
