@@ -2,7 +2,21 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 
-export default class Portal extends Component {
+interface PortalContainer {
+  el: Element;
+  remove: () => Element;
+}
+
+interface PortalProps {
+  children?: React.ReactNode;
+  container?: HTMLElement;
+}
+
+interface PortalState {
+  defaultContainer: PortalContainer | null;
+}
+
+export default class Portal extends Component<PortalProps, PortalState> {
   static displayName = 'Portal';
 
   static propTypes = {
@@ -10,7 +24,9 @@ export default class Portal extends Component {
     container: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
   };
 
-  static createPortalContainer(nodeType = 'div') {
+  static createPortalContainer(
+    nodeType: keyof HTMLElementTagNameMap = 'div',
+  ): PortalContainer {
     const el = document.createElement(nodeType);
     document.body.appendChild(el);
 
@@ -20,7 +36,7 @@ export default class Portal extends Component {
     };
   }
 
-  state = { defaultContainer: null };
+  state: PortalState = { defaultContainer: null };
 
   componentDidMount() {
     if (!this.props.container) {
