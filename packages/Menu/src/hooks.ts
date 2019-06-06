@@ -4,15 +4,16 @@ export function useDocumentEventListener(
   type: string,
   eventCallback: (e) => void,
   options?: object,
-  dependencies?: Array<any>,
+  dependencies: Array<any> = [type, eventCallback, options],
   enabled: boolean = true,
+  element: HTMLElement | Document = document
 ) {
   useEffect(() => {
     if (!enabled) {
       return;
     }
 
-    document.addEventListener(type, eventCallback, options);
+    element.addEventListener(type, eventCallback, options);
 
     return () => {
       document.removeEventListener(type, eventCallback);
