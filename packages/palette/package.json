@@ -1,0 +1,19 @@
+{
+  "name": "@leafygreen-ui/palette",
+  "version": "0.9.0",
+  "description": "LeafyGreen UI Kit Icons",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+  "scripts": {
+		"build": "../../node_modules/.bin/webpack --config ../../webpack.config.js",
+		"ts:emit": "tsc --project ./tsconfig.json"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/lib": "^2.1.7"
+  },
+  "gitHead": "53385cfed5ecf3101d098d26dedc6a40b27c402a"
+}
