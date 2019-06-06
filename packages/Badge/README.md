@@ -5,6 +5,8 @@
 ## Example
 
 ```Javascript
+import Badge from '@leafygreen-ui/badge';
+
   <Badge
     variant='lightBlue'
     className='my-badge'
