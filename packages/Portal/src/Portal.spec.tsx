@@ -14,12 +14,36 @@ describe('packages/Portal', () => {
     </div>,
   );
 
+  function isElement(el: Node | null): el is HTMLElement {
+    return el != null && el.nodeType === Node.ELEMENT_NODE;
+  }
+
+  function getByIdOrThrow(id: string) {
+    const el = document.getElementById(id);
+
+    if (el == null) {
+      throw new Error(`Could not find element: ${id}`);
+    }
+
+    return el;
+  }
+
   test(`appends portal content to document body`, () => {
-    expect(document.body.firstChild.outerHTML).toBe(
+    const { firstChild, lastChild } = document.body;
+
+    if (!isElement(firstChild)) {
+      throw new Error('Could not find firstChild element');
+    }
+
+    if (!isElement(lastChild)) {
+      throw new Error('Could not find lastChild element');
+    }
+
+    expect(firstChild.outerHTML).toBe(
       '<div><div>Existing content on the DOM</div></div>',
     );
 
-    expect(document.body.lastChild.outerHTML).toBe(
+    expect(lastChild.outerHTML).toBe(
       '<div><div>Content portaled to the end of the DOM</div></div>',
     );
   });
@@ -31,14 +55,14 @@ describe('packages/Portal', () => {
 
     render(
       <div>
-        <Portal container={document.getElementById('custom-container')}>
+        <Portal container={getByIdOrThrow('custom-container')}>
           Portaled to a custom node
         </Portal>
       </div>,
       { container },
     );
 
-    expect(document.getElementById('custom-container').outerHTML).toBe(
+    expect(getByIdOrThrow('custom-container').outerHTML).toBe(
       `<div id="custom-container">Portaled to a custom node</div>`,
     );
   });
@@ -52,12 +76,19 @@ describe('packages/Portal', () => {
 
     rerender(
       <div>
-        <Portal container={document.getElementById('custom-container')}>
+        <Portal container={getByIdOrThrow('custom-container')}>
           Moving Portaled Content
         </Portal>
       </div>,
     );
-    expect(document.body.lastChild.innerHTML).toBe('Moving Portaled Content');
+
+    const lastChild = document.body.lastChild;
+
+    if (!isElement(lastChild)) {
+      throw new Error('Could not find lastChild element');
+    }
+
+    expect(lastChild.innerHTML).toBe('Moving Portaled Content');
   });
 
   test(`removes portal content from custom container`, () => {
@@ -66,9 +97,7 @@ describe('packages/Portal', () => {
     document.body.appendChild(div);
 
     const { container, unmount } = render(
-      <Portal container={document.getElementById('custom-container')}>
-        Portaled
-      </Portal>,
+      <Portal container={getByIdOrThrow('custom-container')}>Portaled</Portal>,
     );
     unmount();
     expect(container.innerHTML).toBe('');
