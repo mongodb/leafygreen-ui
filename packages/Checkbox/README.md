@@ -5,6 +5,8 @@
 ## Example
 
 ```Javascript
+import Checkbox from '@leafygreen-ui/checkbox';
+
 <Checkbox
 	className='my-checkbox'
 	onChange={(event) => {/* Something to handle the click event */}}
