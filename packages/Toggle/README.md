@@ -5,6 +5,8 @@
 ## Example
 
 ```Javascript
+import Toggle from '@leafygreen-ui/toggle'
+
 <Toggle
   className='my-toggle'
 	onChange={(event) => {/* Something to handle the change event */}}

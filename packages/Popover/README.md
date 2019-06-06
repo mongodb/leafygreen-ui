@@ -3,6 +3,8 @@
 ## Example
 
 ```js
+import Popover from '@leafygreen-ui/popover';
+
 <button
   className={containerStyle}
   onClick={() => this.setState({ active: !this.state.active })}
@@ -17,7 +19,7 @@
   >
     <div className={popoverStyle}>Popover content</div>
   </Popover>
-</button>
+</button>;
 ```
 
 ## Output HTML
