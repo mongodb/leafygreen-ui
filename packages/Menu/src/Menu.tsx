@@ -15,6 +15,8 @@ const rootMenuStyle = css`
   background-color: ${colors.mongodb.white};
 `;
 
+const EscapeKey = 27;
+
 interface MenuProps extends Omit<PopoverProps, 'spacing'> {
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
@@ -56,7 +58,6 @@ function Menu({
   ...rest
 }: MenuProps) {
   const [isActive, setActiveState] = useState(false);
-  const EscapeKey = 27;
 
   const popoverContent = (
     <Popover
