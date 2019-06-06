@@ -51,7 +51,7 @@ describe('packages/hooks', () => {
     function TestUseElementNode() {
       const [refEl, setRefEl] = useElementNode();
       useEffect(() => {
-        ++count;
+        count += 1;
       }, [refEl]);
       return <div ref={setRefEl} />;
     }
@@ -61,36 +61,38 @@ describe('packages/hooks', () => {
         render(<TestUseElementNode />);
       });
 
-      // without setTimeout, test ran before final render
+      // using jest default timeout so that the component has enough
+      // time to render before the tests are called
       setTimeout(() => {
         expect(count).toBe(2);
-      }, 10);
+      }, 4500);
     });
   });
 
   describe('useViewportSize', () => {
     const { result, rerender } = renderHook(() => useViewportSize());
     const debounceTimeoutLength = 100;
-    const secondDebounceTimeoutLength = 200;
+    const initialWidth = 200;
+    const updateWidth = 1024;
 
     test('responds to updates in window width', () => {
       act(() => {
-        window.width = 200;
+        window.width = initialWidth;
         window.dispatchEvent(new Event('resize'));
         rerender();
       });
       setTimeout(() => {
-        expect(result.current.width).toBe(200);
+        expect(result.current.width).toBe(initialWidth);
 
         act(() => {
-          window.width = 1024;
+          window.width = updateWidth;
           window.dispatchEvent(new Event('resize'));
           rerender();
         });
 
         setTimeout(() => {
-          expect(result.current.width).toBe(1024);
-        }, secondDebounceTimeoutLength);
+          expect(result.current.width).toBe(updateWidth);
+        }, debounceTimeoutLength * 2);
       }, debounceTimeoutLength);
     });
   });
