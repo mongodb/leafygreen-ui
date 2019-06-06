@@ -7,6 +7,7 @@ import { useEffect, useRef } from 'react';
  * @param enabled Determines whether or not the hook should run, defaults to true.
  * @param options Optional parameter to specify options passed to the eventListener.
  * @param dependencies Optional array to be passed to useEffect hook, such that the hook will only run if the array's values have changed.
+ * @param element Optional value to be passed as target of event handler. Will default to document.
  */
 export default function useDocumentEventListener(
   type: string,
