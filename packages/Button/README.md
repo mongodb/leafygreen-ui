@@ -5,6 +5,8 @@
 ## Example
 
 ```Javascript
+import Button from '@leafygreen-ui/button';
+
 <Button
   variant='primary'
   className='create-item-button'

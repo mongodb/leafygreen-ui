@@ -5,7 +5,7 @@
 ## Example
 
 ```js
-import { Radio, RadioGroup } from '@leafygreen-ui/RadioGroup';
+import { Radio, RadioGroup } from '@leafygreen-ui/radio-group';
 
 <RadioGroup
   className="my-radio-group"
