@@ -5,12 +5,14 @@
 ## Example
 
 ```js
+import Portal from '@leafygreen-ui/portal';
+
 <Portal>
   <div>
     Portals transport their children to a div that is appended to the end of the
     document.body to or a node that can be specified with a container prop.
   </div>
-</Portal>
+</Portal>;
 ```
 
 **Output HTML**
