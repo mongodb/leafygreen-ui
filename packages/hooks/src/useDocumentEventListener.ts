@@ -1,5 +1,11 @@
 import { useEffect, useRef } from 'react';
 
+interface useDocumentOptions {
+  dependencies?: Array<any>,
+  enabled: boolean,
+  element: Document | HTMLElement
+}
+
 /**
  * Hook to subscribe to an event listener.
  * @param type Represents the event type to listen for.
@@ -13,9 +19,11 @@ export default function useDocumentEventListener(
   type: string,
   eventCallback: (e) => void,
   options?: object,
-  dependencies?: Array<any>,
-  enabled: boolean = true,
-  element: Document | HTMLElement = document,
+  obj: useDocumentOptions = {
+    dependencies: undefined, 
+    enabled: true,
+    element: document
+  }
 ) {
   const memoizedEventCallback = useRef(e => {}); //eslint-disable-line @typescript-eslint/no-unused-vars
 
@@ -24,19 +32,19 @@ export default function useDocumentEventListener(
   }, [eventCallback]);
 
   useEffect(() => {
-    if (!enabled) {
+    if (!obj.enabled) {
       return;
     }
 
     const callback = e => memoizedEventCallback.current(e);
 
-    element.addEventListener(type, callback, options);
+    obj.element.addEventListener(type, callback, options);
 
     return () => {
       document.removeEventListener(type, eventCallback);
     };
   }, [
-    enabled,
-    ...(dependencies ? dependencies : [type, eventCallback, options]),
+    obj.enabled,
+      ...(obj.dependencies ? obj.dependencies : [type, eventCallback, options]),
   ]);
 }
