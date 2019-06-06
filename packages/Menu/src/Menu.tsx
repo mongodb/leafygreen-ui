@@ -54,7 +54,7 @@ function Menu({
   refEl,
   trigger,
   ...rest
-}: MenuProps): React.ReactElement {
+}: MenuProps) {
   const [isActive, setActiveState] = useState(false);
   const EscapeKey = 27;
 

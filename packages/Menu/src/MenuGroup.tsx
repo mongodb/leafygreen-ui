@@ -28,11 +28,7 @@ interface MenuGroupProps {
  * @param props.children Content to appear inside of the MenuGroup.
  *
  */
-function MenuGroup({
-  children,
-  className,
-  ...rest
-}: MenuGroupProps): React.ReactElement {
+function MenuGroup({ children, className, ...rest }: MenuGroupProps) {
   return (
     <section {...rest} {...menuGroup.prop} className={className}>
       {children}

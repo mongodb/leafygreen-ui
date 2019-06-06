@@ -133,7 +133,7 @@ function MenuItem({
   children,
   description,
   ...rest
-}: MenuItemProps): React.ReactElement {
+}: MenuItemProps) {
   const Root = href ? 'a' : 'span';
 
   return (
