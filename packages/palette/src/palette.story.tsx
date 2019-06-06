@@ -43,6 +43,9 @@ const ColorBlock = styled('div')`
     right: -10px;
   }
 `;
+/**
+ *
+ */
 
 function renderColors() {
   const ranges: Array<string> = Object.keys(uiColors);
