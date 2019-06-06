@@ -3,11 +3,37 @@ import PropTypes from 'prop-types';
 import { colors } from '@leafygreen-ui/theme';
 import { emotion } from '@leafygreen-ui/lib';
 import { lighten, darken } from 'polished';
+import omit from 'lodash/omit';
 
 const { css, cx } = emotion;
 
-const buttonVariants = {
-  default: css`
+export enum Variant {
+  Default = 'default',
+  Primary = 'primary',
+  Info = 'info',
+  Danger = 'danger',
+  Dark = 'dark',
+}
+
+export enum Size {
+  XSmall = 'xsmall',
+  Small = 'small',
+  Normal = 'normal',
+  Large = 'large',
+}
+
+/** Helper type to extract an HTML element's valid props */
+type HTMLElementProps<
+  Element extends keyof JSX.IntrinsicElements
+> = JSX.IntrinsicElements[Element] extends React.DetailedHTMLProps<
+  infer Props,
+  any
+>
+  ? Props
+  : never;
+
+const buttonVariants: { readonly [K in Variant]: string } = {
+  [Variant.Default]: css`
     color: ${colors.gray[1]};
     background-color: ${colors.mongodb.white};
     background-image: linear-gradient(
@@ -44,7 +70,7 @@ const buttonVariants = {
     }
   `,
 
-  primary: css`
+  [Variant.Primary]: css`
     color: ${colors.mongodb.white};
     background-color: ${colors.green[2]};
     background-image: linear-gradient(
@@ -81,7 +107,7 @@ const buttonVariants = {
     }
   `,
 
-  info: css`
+  [Variant.Info]: css`
     color: ${colors.green[2]};
     background-color: transparent;
     background-image: none;
@@ -114,7 +140,7 @@ const buttonVariants = {
     }
   `,
 
-  danger: css`
+  [Variant.Danger]: css`
     color: ${colors.mongodb.white};
     background-color: #bd180f;
     background-image: linear-gradient(
@@ -151,7 +177,7 @@ const buttonVariants = {
     }
   `,
 
-  dark: css`
+  [Variant.Dark]: css`
     color: ${colors.mongodb.white};
     border-color: ${colors.gray[0]};
     background-image: linear-gradient(${colors.gray[3]}, ${colors.gray[1]});
@@ -176,8 +202,8 @@ const buttonVariants = {
   `,
 };
 
-const buttonSizes = {
-  xsmall: css`
+const buttonSizes: { readonly [K in Size]: string } = {
+  [Size.XSmall]: css`
     height: 22px;
     padding: 0 8px;
     font-size: 11px;
@@ -186,13 +212,13 @@ const buttonSizes = {
     font-weight: bold;
   `,
 
-  small: css`
+  [Size.Small]: css`
     height: 25px;
     padding: 0 10px;
     line-height: 23px;
   `,
 
-  normal: css`
+  [Size.Normal]: css`
     height: 32px;
     padding: 0 12px;
     font-size: 14px;
@@ -201,7 +227,7 @@ const buttonSizes = {
     font-weight: normal;
   `,
 
-  large: css`
+  [Size.Large]: css`
     height: 45px;
     line-height: 44px;
     font-size: 16px;
@@ -267,61 +293,125 @@ const baseStyle = css`
   }
 `;
 
-export default class Button extends Component {
+interface SharedButtonProps {
+  variant: Variant;
+  size: Size;
+  className?: string;
+  children?: React.ReactNode;
+  disabled?: boolean;
+}
+
+interface LinkButtonProps extends HTMLElementProps<'a'>, SharedButtonProps {
+  href: string;
+}
+
+interface ButtonButtonProps
+  extends HTMLElementProps<'button'>,
+    SharedButtonProps {
+  href?: null;
+}
+
+type CustomElementButtonProps = SharedButtonProps & {
+  as: React.ElementType<any>;
+  [key: string]: any;
+};
+
+type ButtonProps =
+  | LinkButtonProps
+  | ButtonButtonProps
+  | CustomElementButtonProps;
+
+function usesCustomElement(
+  props: ButtonProps,
+): props is CustomElementButtonProps {
+  return (props as any).as != null;
+}
+
+function usesLinkElement(
+  props: LinkButtonProps | ButtonButtonProps,
+): props is LinkButtonProps {
+  return props.href != null;
+}
+
+export default class Button extends Component<ButtonProps> {
   static displayName = 'Button';
 
-  static propTypes = {
+  static defaultProps = {
+    variant: Variant.Default,
+    size: Size.Normal,
+    className: '',
+    children: null,
+    disabled: false,
+  };
+
+  /*
+  NOTE(JeT):
+  Without the `any` type annotation here, @types/react will try to infer TS prop types from it,
+  merging them together with ButtonProps (see LibraryManagedAttributes and MergePropTypes in @types/react).
+  Unfortunately, this merging uses keyof, which appears to drop the [key: string] index signature, meaning TS won't
+  allow us to pass unrecognized props down to custom components when we're using the `as` prop. This workaround avoids
+  the attempt at merging, while still getting runtime type-checking for non-TS consumers of the library.
+  */
+  static propTypes: any = {
     variant: PropTypes.oneOf(['default', 'primary', 'info', 'danger', 'dark']),
     size: PropTypes.oneOf(['xsmall', 'small', 'normal', 'large']),
     className: PropTypes.string,
     children: PropTypes.node,
     disabled: PropTypes.bool,
-    as: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     href: PropTypes.string,
   };
 
-  static defaultProps = {
-    variant: 'default',
-    size: 'normal',
-    className: '',
-    children: null,
-    disabled: false,
-    type: 'button',
-  };
-
   render() {
-    const {
-      className,
-      children,
+    const { className, children, disabled, variant, size } = this.props;
+
+    const commonProps = {
+      className: cx(
+        baseStyle,
+        buttonSizes[size],
+        buttonVariants[variant],
+        className,
+      ),
       disabled,
-      variant,
-      size,
-      as,
-      href,
-      ...rest
-    } = this.props;
+      'aria-disabled': disabled,
+    };
 
-    let Root = href ? 'a' : 'button';
+    const rest = omit(this.props, [
+      'as',
+      'className',
+      'disabled',
+      'size',
+      'variant',
+      'children',
+    ]);
 
-    if (as) {
-      Root = as;
+    if (usesCustomElement(this.props)) {
+      const Root = this.props.as;
+
+      return (
+        <Root {...rest} {...commonProps}>
+          {children}
+        </Root>
+      );
     }
 
+    if (usesLinkElement(this.props)) {
+      return (
+        <a {...rest as HTMLElementProps<'a'>} {...commonProps}>
+          {children}
+        </a>
+      );
+    }
+
+    // NOTE(JeT): The button's `type` will be overridden if it is in the passed-in props
     return (
-      <Root
-        {...rest}
-        href={href}
-        className={cx(
-          baseStyle,
-          buttonSizes[size],
-          buttonVariants[variant],
-          className,
-        )}
-        disabled={disabled}
-        aria-disabled={disabled}
+      <button
+        type="button"
+        {...rest as HTMLElementProps<'button'>}
+        {...commonProps}
       >
         {children}
-      </Root>
+      </button>
     );
   }
 }
