@@ -56,6 +56,7 @@ function Menu({
   ...rest
 }: MenuProps): React.ReactElement {
   const [isActive, setActiveState] = useState(false);
+  const EscapeKey = 27;
 
   const popoverContent = (
     <Popover
@@ -85,10 +86,9 @@ function Menu({
     setActiveState(current => !current);
   }, []);
 
-  const handleEscape = (e: KeyboardEvent) => {
-    const EscapeKey = 27;
+  const handleEscape = useCallback((e: KeyboardEvent) => {
     e.keyCode === EscapeKey && nativeToggleEventHandler(e);
-  };
+  }, []);
 
   const enabled = trigger && isActive;
 
@@ -122,7 +122,7 @@ function Menu({
     });
   }
 
-  return trigger || popoverContent;
+  return popoverContent;
 }
 
 Menu.displayName = 'Menu';
