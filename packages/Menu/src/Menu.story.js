@@ -3,12 +3,13 @@ import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
 
 import { Menu, MenuGroup, MenuItem } from './index';
+import { Align, Justify } from '@leafygreen-ui/popover';
 
 function Controlled() {
   return (
     <Menu
-      align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
-      justify={select('justify', ['start', 'middle', 'end'], 'start')}
+      align={select('Align', Object.values(Align), Align.Bottom)}
+      justify={select('Justify', Object.values(Justify), Justify.Start)}
       trigger={<button>trigger</button>}
     >
       <MenuGroup>
@@ -38,8 +39,8 @@ function Uncontrolled() {
       <button onClick={() => setActive(!active)}>
         trigger
         <Menu
-          align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
-          justify={select('justify', ['start', 'middle', 'end'], 'start')}
+          align={select('Align', Object.values(Align), Align.Bottom)}
+          justify={select('Justify', Object.values(Justify), Justify.Start)}
           active={active}
         >
           <MenuGroup>
