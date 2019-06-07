@@ -13,17 +13,17 @@ interface UseEventOptions {
  * @param eventCallback Event listener callback function.
  * @param optional Optional third argument passed to function with implementation specifications
  * @param optional.options Parameter to specify options passed to the eventListener.
- * @param optional.dependencies Array to be passed to useEffect hook, such that the hook will only run if the array's values have changed.
  * @param optional.enabled Determines whether or not the useEffect hook should run.
+ * @param optional.dependencies Array to be passed to useEffect hook, such that the hook will only run if the array's values have changed.
  * @param optional.element Value to be passed as target of event handler, will default to document.
  */
 export default function useEventListener(
-  type: string,
+  type: keyof GlobalEventHandlersEventMap,
   eventCallback: (e) => void,
   {
     options = undefined,
-    dependencies = [type, eventCallback],
     enabled = true,
+    dependencies = [enabled, type],
     element = document,
   }: UseEventOptions = {},
 ) {
@@ -43,7 +43,7 @@ export default function useEventListener(
     element.addEventListener(type, callback, options);
 
     return () => {
-      document.removeEventListener(type, eventCallback);
+      document.removeEventListener(type, eventCallback, options);
     };
   }, dependencies);
 }

@@ -82,34 +82,29 @@ function Menu({
     setActiveState(current => !current);
   }, []);
 
-  const nativeToggleEventHandler: EventListener = useCallback(
-    (e: Event) => {
-      e.stopImmediatePropagation();
-      setActiveState(false);
-    },
-    [isActive],
-  );
+  const closeMenuNativeHandler: EventListener = useCallback((e: Event) => {
+    e.stopImmediatePropagation();
+    setActiveState(false);
+  }, []);
 
   const handleEscape = useCallback((e: KeyboardEvent) => {
     if (e.keyCode === EscapeKey) {
-      nativeToggleEventHandler(e);
+      closeMenuNativeHandler(e);
     }
   }, []);
 
   const enabled = trigger && isActive;
 
-  useEventListener('click', nativeToggleEventHandler, {
+  useEventListener('click', closeMenuNativeHandler, {
     options: { once: true },
     dependencies: [isActive, trigger],
     enabled,
-    element: document,
   });
 
   useEventListener('keydown', handleEscape, {
     options: { once: true },
     dependencies: [isActive, trigger],
     enabled,
-    element: document,
   });
 
   if (trigger) {
