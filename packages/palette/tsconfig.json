@@ -1,9 +1,7 @@
 {
-	"extends": "../../package.tsconfig.json",
-	"compilerOptions": {
-		"declarationDir": "dist"
-	},
-	"include": [
-		"./**/*"
-	]
+  "extends": "../../package.tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "dist"
+  },
+  "include": ["./**/*"]
 }
