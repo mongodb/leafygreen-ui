@@ -4,9 +4,18 @@ import { storiesOf } from '@storybook/react';
 import { text, boolean } from '@storybook/addon-knobs';
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
-import Checkbox from '.';
+import Checkbox, { Variant } from '.';
 
-class Control extends PureComponent {
+interface ControlProps {
+  variant?: Variant;
+  checked?: boolean;
+  bold?: boolean;
+  indeterminate?: boolean;
+  label?: string;
+  disabled?: boolean;
+}
+
+class Control extends PureComponent<ControlProps> {
   static propTypes = {
     variant: PropTypes.oneOf(['default', 'light']),
     checked: PropTypes.bool,
@@ -18,7 +27,7 @@ class Control extends PureComponent {
 
   state = { checked: false };
 
-  onChange = e => {
+  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ checked: e.target.checked });
   };
 
@@ -28,7 +37,7 @@ class Control extends PureComponent {
       indeterminate,
       label,
       disabled,
-      variant = 'default',
+      variant = Variant.Default,
     } = this.props;
     const { checked } = this.state;
 
@@ -69,7 +78,7 @@ storiesOf('Checkbox', module)
       disabled={boolean('Disabled', false)}
       indeterminate={boolean('Indeterminate', false)}
       label={text('Label', 'I agree to this thing.')}
-      variant="light"
+      variant={Variant.Light}
       bold={boolean('Bold', false)}
     />
   ));

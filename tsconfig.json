@@ -14,5 +14,5 @@
     "moduleResolution": "node",
     "typeRoots": ["./typings", "./node_modules/@types"]
   },
-  "include": ["./packages/**/*"]
+  "include": ["./packages/**/*", "./typings"]
 }
