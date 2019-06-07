@@ -12,12 +12,7 @@
     "noImplicitAny": false, // Turn on when all files have been typed
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
-    "typeRoots": [
-      "./typings",
-      "./node_modules/@types"
-    ]
+    "typeRoots": ["./typings", "./node_modules/@types"]
   },
-  "include": [
-    "./packages/**/*"
-  ]
+  "include": ["./packages/**/*", "./typings"]
 }

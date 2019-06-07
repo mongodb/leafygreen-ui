@@ -10,7 +10,24 @@ describe('packages/Checkbox', () => {
     <Checkbox className={className} checked={false} />,
   );
   const controlledContainer = container.firstChild;
+
+  function isElement(el: Node | null): el is HTMLElement {
+    return el != null && el.nodeType === Node.ELEMENT_NODE;
+  }
+
+  function isInput(el: Node | null): el is HTMLInputElement {
+    return isElement(el) && el.tagName.toLowerCase() === 'input';
+  }
+
+  if (!isElement(controlledContainer)) {
+    throw new Error('Could not find controlled container component');
+  }
+
   const controlledCheckbox = controlledContainer.children[0];
+
+  if (!isInput(controlledCheckbox)) {
+    throw new Error('Could not find checkbox input element');
+  }
 
   test(`renders "${className}" in the Checkbox label's classList`, () => {
     expect(controlledContainer.classList.contains(className)).toBe(true);
@@ -70,9 +87,18 @@ describe('packages/Checkbox', () => {
         onChange={uncontrolledOnChange}
       />,
     ).container.firstChild;
+
+    if (!isElement(uncontrolledContainer)) {
+      throw new Error('Could not find uncontrolled container component');
+    }
+
     const uncontrolledCheckbox = uncontrolledContainer.children[0];
 
-    fireEvent.click(uncontrolledContainer.firstChild);
+    if (!isInput(uncontrolledCheckbox)) {
+      throw new Error('Could not find checkbox input element');
+    }
+
+    fireEvent.click(uncontrolledContainer);
 
     test('onClick fires once when the label is clicked', () => {
       expect(uncontrolledOnClick.mock.calls.length).toBe(1);
