@@ -3,7 +3,7 @@
 ## Example
 
 ```js
-import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/Menu';
+import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
 
 <Menu
   align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
@@ -213,7 +213,7 @@ Description text that will appear below the main content of `MenuItem`
 ## Example
 
 ```js
-import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/Menu';
+import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
 
 <Menu
   align="bottom"
