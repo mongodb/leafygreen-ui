@@ -1,20 +1,16 @@
 import React, { useEffect } from 'react';
 import { act, renderHook } from 'react-hooks-testing-library';
 import { render, cleanup } from 'react-testing-library';
-import {
-  useDocumentEventListener,
-  useElementNode,
-  useViewportSize,
-} from './index';
+import { useEventListener, useElementNode, useViewportSize } from './index';
 
 afterAll(cleanup);
 
 describe('packages/hooks', () => {
-  describe('useDocumentEventListener', () => {
+  describe('useEventListener', () => {
     test('event callback should fire when enabled is true', () => {
       const eventCallback = jest.fn();
 
-      renderHook(() => useDocumentEventListener('click', eventCallback));
+      renderHook(() => useEventListener('click', eventCallback));
 
       act(() => {
         document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -27,7 +23,7 @@ describe('packages/hooks', () => {
       const eventCallback = jest.fn();
 
       renderHook(() =>
-        useDocumentEventListener({
+        useEventListener({
           type: 'click',
           eventCallback,
           enabled: false,
