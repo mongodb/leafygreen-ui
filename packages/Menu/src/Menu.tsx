@@ -96,7 +96,7 @@ function Menu({
     }
   }, []);
 
-  const enabled = (trigger && isActive) || true;
+  const enabled = trigger && isActive;
 
   useEventListener('click', nativeToggleEventHandler, {
     options: { once: true },

@@ -25,7 +25,7 @@ export default function useEventListener(
     dependencies = [type, eventCallback],
     enabled = true,
     element = document,
-  } : UseEventOptions
+  }: UseEventOptions = {},
 ) {
   const memoizedEventCallback = useRef(e => {}); //eslint-disable-line @typescript-eslint/no-unused-vars
 
@@ -40,11 +40,7 @@ export default function useEventListener(
 
     const callback = e => memoizedEventCallback.current(e);
 
-    element.addEventListener(
-      type,
-      callback,
-      options,
-    );
+    element.addEventListener(type, callback, options);
 
     return () => {
       document.removeEventListener(type, eventCallback);
