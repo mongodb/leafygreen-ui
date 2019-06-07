@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 import { lighten, darken, readableColor, transparentize } from 'polished';
 import * as uiColors from './uiColors';
 
