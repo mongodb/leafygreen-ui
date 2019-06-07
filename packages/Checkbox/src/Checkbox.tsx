@@ -156,14 +156,10 @@ export default class Checkbox extends PureComponent<
   state = { checked: false };
 
   componentDidMount() {
-    if (this.inputRef.current == null) {
-      return;
-    }
-
-    this.inputRef.current.indeterminate = this.props.indeterminate;
+    this.inputRef.current!.indeterminate = this.props.indeterminate;
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: CheckboxProps) {
     if (
       prevProps.indeterminate !== this.props.indeterminate &&
       this.inputRef.current != null
@@ -175,7 +171,9 @@ export default class Checkbox extends PureComponent<
   checkboxId = `checkbox-${Math.floor(Math.random() * 10000000)}`;
   inputRef = React.createRef<HTMLInputElement>();
 
-  onClick = (e: React.MouseEvent<HTMLInputElement>) => {
+  onClick = (
+    e: React.MouseEvent<HTMLInputElement> & { target: HTMLInputElement },
+  ) => {
     const { onClick } = this.props;
 
     if (onClick) {
@@ -185,9 +183,7 @@ export default class Checkbox extends PureComponent<
     // For Microsoft Edge and IE, when checkbox is indeterminate, change event does not fire when clicked.
     // Explicitly call onChange for this case
     if (this.inputRef.current && this.inputRef.current.indeterminate) {
-      // Event bubbling means that TS can't make assumptions about the event's target.
-      // To be safe, we override with `currentTarget`.
-      this.onChange({ ...e, target: e.currentTarget });
+      this.onChange(e);
       e.stopPropagation();
     }
   };
@@ -221,7 +217,8 @@ export default class Checkbox extends PureComponent<
       ...rest
     } = this.props;
 
-    const textVariantStyle = textVariants[variant] || textVariants.default;
+    const textVariantStyle =
+      textVariants[variant] || textVariants[Variant.Default];
 
     const checkboxBackgroundImage = (() => {
       switch (variant) {
