@@ -98,7 +98,7 @@ describe('packages/Checkbox', () => {
       throw new Error('Could not find checkbox input element');
     }
 
-    fireEvent.click(uncontrolledCheckbox);
+    fireEvent.click(uncontrolledContainer);
 
     test('onClick fires once when the label is clicked', () => {
       expect(uncontrolledOnClick.mock.calls.length).toBe(1);
