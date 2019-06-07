@@ -1,0 +1,71 @@
+# Palette
+
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/palette.svg)
+
+This package contains the colors for the following palettes:
+
+- **UI**: MongoDB-branded, general-use UI palette.
+- _Chart (coming soon)_: Color palette for accessible charting colors.
+- _Syntax (coming soon)_: Color palette for accessible syntax-highlighting themes.
+
+## UI Palette
+
+### Usage
+
+```shell
+npm install @leafygreen-ui/palette
+```
+
+```js
+import { uiColors } from `@leafygreen-ui/palette`;
+
+/**
+ * uiColors = {
+ * 	 black,
+ *   white,
+ *   gray: {
+ *     dark3,
+ *     dark2,
+ *     dark1,
+ *     base,
+ *     light1,
+ *     light2,
+ *     light3,
+ *   },
+ *   green: {
+ *     dark3,
+ *     dark2,
+ *     base,
+ *     light2,
+ *     light3,
+ *   },
+ *   blue: {
+ *     dark3,
+ *     dark2,
+ *     base,
+ *     light2,
+ *     light3,
+ *   },
+ *   yellow: {
+ *     dark3,
+ *     dark2,
+ *     base,
+ *     light2,
+ *     light3,
+ *   },
+ *   red: {
+ *     dark3,
+ *     dark2,
+ *     base,
+ *     light2,
+ *     light3,
+ *   },
+ * }
+ */
+
+const example = () => (
+	<span style={{ color: uiColors.gray.dark1 }}>
+		Hello World
+	</span>
+)
+```
