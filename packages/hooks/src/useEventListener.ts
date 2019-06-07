@@ -2,9 +2,9 @@ import { useEffect, useRef } from 'react';
 
 interface UseEventOptions {
   options?: object;
-  dependencies: Array<any>;
-  enabled: boolean;
-  element: Document | HTMLElement;
+  dependencies?: Array<any>;
+  enabled?: boolean;
+  element?: Document | HTMLElement;
 }
 
 /**
@@ -20,12 +20,12 @@ interface UseEventOptions {
 export default function useEventListener(
   type: string,
   eventCallback: (e) => void,
-  useEventOptions: UseEventOptions = {
-    options: undefined,
-    dependencies: [type, eventCallback],
-    enabled: true,
-    element: document,
-  },
+  {
+    options = undefined,
+    dependencies = [type, eventCallback],
+    enabled = true,
+    element = document,
+  } : UseEventOptions
 ) {
   const memoizedEventCallback = useRef(e => {}); //eslint-disable-line @typescript-eslint/no-unused-vars
 
@@ -34,20 +34,20 @@ export default function useEventListener(
   }, [eventCallback]);
 
   useEffect(() => {
-    if (!useEventOptions.enabled) {
+    if (!enabled) {
       return;
     }
 
     const callback = e => memoizedEventCallback.current(e);
 
-    useEventOptions.element.addEventListener(
+    element.addEventListener(
       type,
       callback,
-      useEventOptions.options,
+      options,
     );
 
     return () => {
       document.removeEventListener(type, eventCallback);
     };
-  }, useEventOptions.dependencies);
+  }, dependencies);
 }
