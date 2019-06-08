@@ -5,6 +5,17 @@ import { colors } from '@leafygreen-ui/theme';
 
 const { css, cx } = emotion;
 
+export enum Size {
+  Default = 'default',
+  Small = 'small',
+  XSmall = 'xsmall',
+}
+
+export enum Variant {
+  Default = 'default',
+  Dark = 'dark',
+}
+
 const toggleInput = createDataProp('toggle-input');
 const toggleGroove = createDataProp('toggle-groove');
 
@@ -40,19 +51,26 @@ const focusStateStyle = css`
   }
 `;
 
-const getContainerStyles = ({ size, disabled }) => {
-  const sizeStyle = {
-    default: css`
+interface StateForStyle {
+  size: Size;
+  variant: Variant;
+  checked: boolean;
+  disabled: boolean;
+}
+
+const getContainerStyles = ({ size, disabled }: StateForStyle) => {
+  const sizeStyle: { [K in Size]: string } = {
+    [Size.Default]: css`
       height: 32px;
       width: 62px;
     `,
 
-    small: css`
+    [Size.Small]: css`
       height: 22px;
       width: 40px;
     `,
 
-    xsmall: css`
+    [Size.XSmall]: css`
       height: 14px;
       width: 26px;
     `,
@@ -68,9 +86,9 @@ const getContainerStyles = ({ size, disabled }) => {
   );
 };
 
-const getGrooveStyles = ({ variant, checked, disabled }) => {
-  const variants = {
-    default: (() => {
+const getGrooveStyles = ({ variant, checked, disabled }: StateForStyle) => {
+  const variants: { [K in Variant]: string } = {
+    [Variant.Default]: (() => {
       if (disabled) {
         return css`
           background-color: rgba(29, 36, 36, 0.1);
@@ -95,7 +113,7 @@ const getGrooveStyles = ({ variant, checked, disabled }) => {
       );
     })(),
 
-    dark: (() => {
+    [Variant.Dark]: (() => {
       if (disabled) {
         return css`
           background-color: rgba(255, 255, 255, 0.15);
@@ -188,9 +206,14 @@ const getGrooveStyles = ({ variant, checked, disabled }) => {
   return cx(baseStyle, variants[variant]);
 };
 
-const getSliderStyles = ({ size, variant, checked, disabled }) => {
-  const sliderVariants = {
-    default: (() => {
+const getSliderStyles = ({
+  size,
+  variant,
+  checked,
+  disabled,
+}: StateForStyle) => {
+  const sliderVariants: { [K in Variant]: string } = {
+    [Variant.Default]: (() => {
       const variantStyle = css`
         &:before {
           background-image: linear-gradient(
@@ -220,7 +243,7 @@ const getSliderStyles = ({ size, variant, checked, disabled }) => {
       );
     })(),
 
-    dark: (() => {
+    [Variant.Dark]: (() => {
       if (disabled) {
         return css`
           background-color: rgba(255, 255, 255, 0.15);
@@ -252,13 +275,13 @@ const getSliderStyles = ({ size, variant, checked, disabled }) => {
     })(),
   };
 
-  const transformBySize = {
+  const transformBySize: { [K in Size]: number } = {
     default: 30,
     small: 18,
     xsmall: 12,
   };
 
-  const sizes = {
+  const sizes: { [K in Size]: number } = {
     default: 28,
     small: disabled ? 18 : 20,
     xsmall: disabled ? 10 : 12,
@@ -360,13 +383,31 @@ const offLabelStyle = cx(
   `,
 );
 
-const getStatefulStyles = states => ({
+const getStatefulStyles = (states: StateForStyle) => ({
   slider: getSliderStyles(states),
   groove: getGrooveStyles(states),
   container: getContainerStyles(states),
 });
 
-export default class Toggle extends PureComponent {
+interface ToggleProps {
+  size: Size;
+  variant: Variant;
+  checked?: boolean;
+  disabled: boolean;
+  className?: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  id?: string | number;
+}
+
+interface ToggleState {
+  checked: boolean;
+}
+
+export default class Toggle extends PureComponent<
+  ToggleProps &
+    Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof ToggleProps>,
+  ToggleState
+> {
   static displayName = 'Toggle';
 
   static propTypes = {
@@ -381,17 +422,17 @@ export default class Toggle extends PureComponent {
   };
 
   static defaultProps = {
-    size: 'default',
-    variant: 'default',
+    size: Size.Default,
+    variant: Variant.Default,
     disabled: false,
     className: '',
     onChange: () => {},
   };
 
-  state = { checked: false };
+  state: ToggleState = { checked: false };
   checkboxId = `toggle-${Math.floor(Math.random() * 10000000)}`;
 
-  onChange = e => {
+  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { onChange, checked } = this.props;
 
     if (onChange) {
@@ -403,12 +444,13 @@ export default class Toggle extends PureComponent {
     }
   };
   render() {
-    const checkboxId = this.props.id || this.checkboxId;
+    const checkboxId = this.props.id
+      ? this.props.id.toString()
+      : this.checkboxId;
     const {
       name = checkboxId,
       checked = this.state.checked,
       className,
-      label,
       disabled,
       size,
       variant,
