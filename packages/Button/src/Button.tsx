@@ -397,7 +397,8 @@ export default class Button extends Component<ButtonProps> {
 
     if (usesLinkElement(this.props)) {
       return (
-        <a {...(rest as HTMLElementProps<'a'>)} {...commonProps}>
+        // eslint-disable-next-line
+        <a {...rest as HTMLElementProps<'a'>} {...commonProps}> 
           {children}
         </a>
       );
@@ -407,7 +408,7 @@ export default class Button extends Component<ButtonProps> {
     return (
       <button
         type="button"
-        {...(rest as HTMLElementProps<'button'>)}
+        {...rest as HTMLElementProps<'button'>} //eslint-disable-line 
         {...commonProps}
       >
         {children}
