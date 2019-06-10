@@ -12,8 +12,25 @@ describe('packages/Radio', () => {
     </Radio>,
   );
 
+  function isElement(el: Node | null): el is HTMLElement {
+    return el != null && el.nodeType === Node.ELEMENT_NODE;
+  }
+
+  function isInput(el: Node | null): el is HTMLInputElement {
+    return isElement(el) && el.tagName.toLowerCase() === 'input';
+  }
+
   const radio = container.firstChild;
+
+  if (!isElement(radio)) {
+    throw new Error('Could not find controlled container component');
+  }
+
   const input = radio.firstChild;
+
+  if (!isInput(input)) {
+    throw new Error('Could not find input element');
+  }
 
   test(`renders "${className}" in the labels's class list`, () => {
     expect(radio.classList.contains(className)).toBe(true);

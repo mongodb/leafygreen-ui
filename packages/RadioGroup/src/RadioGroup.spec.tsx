@@ -5,6 +5,14 @@ import Radio from './Radio';
 
 afterAll(cleanup);
 
+function isElement(el: Node | null): el is HTMLElement {
+  return el != null && el.nodeType === Node.ELEMENT_NODE;
+}
+
+function isInput(el: Node | null): el is HTMLInputElement {
+  return isElement(el) && el.tagName.toLowerCase() === 'input';
+}
+
 describe('packages/RadioGroup', () => {
   const className = 'test-radiogroup-class';
   const { container } = render(
@@ -14,6 +22,11 @@ describe('packages/RadioGroup', () => {
   );
 
   const controlledContainer = container.firstChild;
+
+  if (!isElement(controlledContainer)) {
+    throw new Error('Could not find controlled container component');
+  }
+
   test(`renders "${className}" in the container labels classList`, () => {
     expect(controlledContainer.classList.contains(className)).toBe(true);
   });
@@ -30,8 +43,21 @@ describe('when controlled', () => {
   );
 
   const controlledContainer = container.firstChild;
+
+  if (!isElement(controlledContainer)) {
+    throw new Error('Could not find controlled container component');
+  }
+
   const firstInput = controlledContainer.children[0].firstChild;
   const secondInput = controlledContainer.children[1].firstChild;
+
+  if (!isInput(firstInput)) {
+    throw new Error('Could not find the first radio input element');
+  }
+
+  if (!isInput(secondInput)) {
+    throw new Error('Could not find the second radio input element');
+  }
 
   fireEvent.click(secondInput);
 
@@ -57,8 +83,21 @@ describe('when uncontrolled', () => {
     </RadioGroup>,
   ).container.firstChild;
 
+  if (!isElement(uncontrolledContainer)) {
+    throw new Error('Could not find uncontrolled container component');
+  }
+
   const radioLabel = uncontrolledContainer.firstChild;
+
+  if (!isElement(radioLabel)) {
+    throw new Error('Could not find the label element');
+  }
+
   const radio = radioLabel.firstChild;
+
+  if (!isInput(radio)) {
+    throw new Error('Could not find the radio input element');
+  }
 
   fireEvent.click(radioLabel);
 
