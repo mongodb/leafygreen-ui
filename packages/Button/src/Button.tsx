@@ -42,7 +42,6 @@ const buttonVariants: { readonly [K in Variant]: string } = {
     );
     border-color: ${colors.gray[6]};
     box-shadow: inset 0 -1px 0 ${colors.gray[6]};
-
     &:focus,
     &:hover {
       &:not(:disabled) {
@@ -57,7 +56,6 @@ const buttonVariants: { readonly [K in Variant]: string } = {
           0 1px 4px rgba(0, 0, 0, 0.1);
       }
     }
-
     &:active:not(:disabled) {
       color: ${colors.gray[1]};
       background-color: ${colors.mongodb.white};
@@ -79,7 +77,6 @@ const buttonVariants: { readonly [K in Variant]: string } = {
     );
     border-color: ${darken(0.02, colors.green[2])};
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-
     &:focus,
     &:hover {
       &:not(:disabled) {
@@ -94,7 +91,6 @@ const buttonVariants: { readonly [K in Variant]: string } = {
           0 1px 4px rgba(0, 0, 0, 0.1);
       }
     }
-
     &:active:not(:disabled) {
       color: ${colors.mongodb.white};
       background-color: ${colors.green[2]};
@@ -113,7 +109,6 @@ const buttonVariants: { readonly [K in Variant]: string } = {
     background-image: none;
     border-color: ${colors.green[2]};
     box-shadow: none;
-
     &:focus,
     &:hover {
       &:not(:disabled) {
@@ -127,7 +122,6 @@ const buttonVariants: { readonly [K in Variant]: string } = {
         box-shadow: inset 0 -1px rgba(0, 0, 0, 0.15);
       }
     }
-
     &:active:not(:disabled) {
       color: ${colors.mongodb.white};
       background-color: ${colors.green[2]};
@@ -149,7 +143,6 @@ const buttonVariants: { readonly [K in Variant]: string } = {
     );
     border-color: #97130c;
     box-shadow: inset 0 -1px 0 0 ${darken(0.25, colors.mongodb.alertRed)};
-
     &:focus,
     &:hover {
       &:not(:disabled) {
@@ -164,7 +157,6 @@ const buttonVariants: { readonly [K in Variant]: string } = {
           inset 0 -1px 0 ${darken(0.25, colors.mongodb.alertRed)};
       }
     }
-
     &:active:not(:disabled) {
       color: ${colors.mongodb.white};
       background-color: #bd180f;
@@ -182,7 +174,6 @@ const buttonVariants: { readonly [K in Variant]: string } = {
     border-color: ${colors.gray[0]};
     background-image: linear-gradient(${colors.gray[3]}, ${colors.gray[1]});
     box-shadow: inset 0 -1px 0 ${colors.gray[0]};
-
     &:focus,
     &:hover {
       &:not(:disabled) {
@@ -192,7 +183,6 @@ const buttonVariants: { readonly [K in Variant]: string } = {
         box-shadow: inset 0 -1px 0 ${colors.gray[0]};
       }
     }
-
     &:active:not(:disabled) {
       color: ${colors.mongodb.white};
       background-image: linear-gradient(${colors.gray[1]}, ${colors.gray[3]});
@@ -257,7 +247,6 @@ const baseStyle = css`
   transition: all 120ms ease;
   text-decoration: none;
   cursor: pointer;
-
   &:disabled {
     color: ${colors.gray[3]};
     border-color: ${colors.gray[5]};
@@ -266,7 +255,6 @@ const baseStyle = css`
     box-shadow: none;
     cursor: not-allowed;
   }
-
   &:focus,
   &:hover {
     &:not(:disabled) {
@@ -281,7 +269,6 @@ const baseStyle = css`
       outline: none;
     }
   }
-
   &:active:not(:disabled) {
     border-color: ${colors.gray[5]};
     background-color: linear-gradient(
@@ -305,7 +292,9 @@ interface LinkButtonProps extends HTMLElementProps<'a'>, SharedButtonProps {
   href: string;
 }
 
-interface ButtonButtonProps extends SharedButtonProps, SharedButtonProps {
+interface ButtonButtonProps
+  extends HTMLElementProps<'button'>,
+    SharedButtonProps {
   href?: null;
 }
 
@@ -405,7 +394,7 @@ export default class Button extends Component<ButtonProps> {
     return (
       <button
         type="button"
-        {...(rest as HTMLElementProps<'button'>)} //eslint-disable-line
+        {...(rest as HTMLElementProps<'button'>)}
         {...commonProps}
       >
         {children}
