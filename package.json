@@ -34,7 +34,7 @@
     "build:storybook": "build-storybook -c storybook -o ./storybook/public -s ./storybook/static",
     "format": "yarn prettier && yarn eslint:format",
     "init": "yarn && yarn build",
-    "link-all-packages": "lerna exec --ignore @leafygreen-ui/lib --ignore @leafygreen-ui/theme -- yarn link ",
+    "link-all-packages": "lerna exec --ignore @leafygreen-ui/lib --ignore @leafygreen-ui/theme -- yarn link",
     "link": "./scripts/link.sh",
     "lint": "yarn prettier:check && yarn eslint && yarn ts:check",
     "eslint": "eslint \"**/*.{js,ts,tsx}\"",
