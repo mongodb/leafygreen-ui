@@ -102,7 +102,7 @@ yarn build
 3. Publish all packages to NPM using Lerna. In the future, this will also include automatic changelog creation.
 
 ```
-yarn run release
+yarn release
 ```
 
 4. Push the branch you created, and make a pull request. It will contain all `package.json` changes for your publish.
@@ -111,8 +111,8 @@ yarn run release
 
 You can deploy a static build of our Storybook site to gh-pages.
 
-1. First be sure you've built a static version of Storybook: `yarn run build:storybook`
-2. Then deploy to gh-pages: `yarn run release:site`
+1. First be sure you've built a static version of Storybook: `yarn build:storybook`
+2. Then deploy to gh-pages: `yarn release:site`
 
 ## License
 
