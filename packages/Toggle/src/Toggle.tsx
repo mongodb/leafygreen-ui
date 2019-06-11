@@ -396,7 +396,7 @@ interface ToggleProps {
   disabled: boolean;
   className?: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
-  id?: string | number;
+  id?: string;
 }
 
 interface ToggleState {
@@ -418,7 +418,7 @@ export default class Toggle extends PureComponent<
     className: PropTypes.string,
     onChange: PropTypes.func,
     name: PropTypes.string,
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    id: PropTypes.string,
   };
 
   static defaultProps = {
@@ -444,9 +444,7 @@ export default class Toggle extends PureComponent<
     }
   };
   render() {
-    const checkboxId = this.props.id
-      ? this.props.id.toString()
-      : this.checkboxId;
+    const checkboxId = this.props.id || this.checkboxId;
     const {
       name = checkboxId,
       checked = this.state.checked,
