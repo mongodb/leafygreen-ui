@@ -1,8 +1,9 @@
 {
-  "name": "@leafygreen-ui/icon",
-  "version": "1.0.4",
-  "description": "LeafyGreen UI Kit Icons",
+  "name": "@leafygreen-ui/hooks",
+  "version": "0.9.0",
+  "description": "LeafyGreen UI Kit Custom Hooks",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js",
     "ts:emit": "tsc --project ./tsconfig.json"
@@ -10,10 +11,6 @@
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "@leafygreen-ui/lib": "^2.1.7",
-    "@leafygreen-ui/theme": "^1.1.7"
   },
   "gitHead": "53385cfed5ecf3101d098d26dedc6a40b27c402a"
 }
