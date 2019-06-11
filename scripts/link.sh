@@ -28,12 +28,12 @@ for d in *; do
     fi
 done
 cd $LEAFYGREEN_HOME
-yarn && lerna bootstrap
+yarn
 set +e
 yarn run link-all-packages
 set -e
 cd $LEAFYGREEN_HOME
-yarn run build
+yarn build
 cd $APPLICATION_HOME
 for f in "${INSTALLED_PACKAGES_ARRAY[@]}"; do
     yarn link @leafygreen-ui/$f
