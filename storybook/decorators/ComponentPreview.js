@@ -1,5 +1,5 @@
 import React from 'react';
-import { emotion } from '@leafygreen-ui/lib';
+import emotion from '@leafygreen-ui/emotion';
 
 const { css } = emotion;
 

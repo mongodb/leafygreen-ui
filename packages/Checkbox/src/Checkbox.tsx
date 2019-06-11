@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { emotion, createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp } from '@leafygreen-ui/lib';
+import emotion from '@leafygreen-ui/emotion';
 import { colors } from '@leafygreen-ui/theme';
 import {
   spritesheetLight,

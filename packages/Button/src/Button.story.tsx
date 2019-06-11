@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, select, boolean } from '@storybook/addon-knobs';
-import { emotion } from '@leafygreen-ui/lib';
+import emotion from '@leafygreen-ui/emotion';
 import Button, { Size, Variant } from '.';
 
 const { css } = emotion;

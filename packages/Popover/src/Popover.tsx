@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
-import { emotion } from '@leafygreen-ui/lib';
+import emotion from '@leafygreen-ui/emotion';
 import {
   useViewportSize,
   useMutationObserver,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, boolean } from '@storybook/addon-knobs';
-import { emotion } from '@leafygreen-ui/lib';
+import emotion from '@leafygreen-ui/emotion';
 import { colors } from '@leafygreen-ui/theme';
 import RadioGroup from './RadioGroup';
 import Radio from './Radio';

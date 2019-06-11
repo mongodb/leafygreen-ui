@@ -1,7 +1,3 @@
-import emotion from './emotion';
-
-export const ccClassName = (...args: Array<string>) => args.join(' ');
-
 /**
  * Utility for making it easier to couple a React Component to a css selector.
  * Useful when writing css selectors that rely on interactivity, i.e. :hover.
@@ -24,5 +20,3 @@ export function createDataProp(name: string) {
     selector: `[${prefix}="${name}"]`,
   };
 }
-
-export { emotion };
