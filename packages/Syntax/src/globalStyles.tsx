@@ -1,4 +1,3 @@
-import React from 'react';
 import { Variants } from './types';
 
 interface Base16Palette {
@@ -60,92 +59,86 @@ const variantColors: { readonly [K in Variants]: Base16Palette } = {
   },
 };
 
-const getStyles = (colors: Base16Palette) => `
-  .lg-highlight-hljs {
-    display: block;
-    color: inherit;
-    font-size: 13px;
-    line-height: 24px;
-  }
+const getStyles = (variant: Variants) => `
+  .lg-highlight-hljs-${variant} {
+    &.lg-highlight-hljs {
+      display: block;
+      color: inherit;
+      font-size: 13px;
+      line-height: 24px;
+    }
+    
+    .lg-highlight-quote,
+    .lg-highlight-literal,
+    .lg-highlight-class,
+    .lg-highlight-section,
+    .lg-highlight-name,
+    .lg-highlight-class > .lg-highlight-keyword,
+    .lg-highlight-function > .lg-highlight-keyword {
+      color: ${variantColors[variant]['0D']};
+    }
   
-  .lg-highlight-quote,
-  .lg-highlight-literal,
-  .lg-highlight-class,
-  .lg-highlight-section,
-  .lg-highlight-name,
-  .lg-highlight-class > .lg-highlight-keyword,
-  .lg-highlight-function > .lg-highlight-keyword {
-    color: ${colors['0D']};
-  }
-
-  .lg-highlight-regexp,
-  .lg-highlight-params,
-  .lg-highlight-meta,
-  .lg-highlight-meta-string {
-    color: ${colors['0C']};
-  }
-
-  .lg-highlight-comment,
-  .lg-highlight-doctag {
-    color: ${colors['03']};
-  }
-
-  .lg-highlight-keyword,
-  .lg-highlight-selector-tag,
-  .lg-highlight-selector-attr,
-  .lg-highlight-selector-pseudo,
-  .lg-highlight-selector-id,
-  .lg-highlight-selector-class {
-    color: ${colors['0E']};
-  }
-
-  .lg-highlight-addition {
-    color: ${colors['05']};
-  }
-
-  .lg-highlight-variable,
-  .lg-highlight-deletion,
-  .lg-highlight-symbol,
-  .lg-highlight-bullet,
-  .lg-highlight-subst,
-  .lg-highlight-meta,
-  .lg-highlight-link {
-    color: ${colors['08']}
-  }
-
-  .lg-highlight-number,
-  .lg-highlight-attr,
-  .lg-highlight-attribute,
-  .lg-highlight-built_in,
-  .lg-highlight-template-variable,
-  .lg-highlight-type {
-    color: ${colors['09']};
-  }
-
-  .lg-highlight-string,
-  .lg-highlight-title {
-    color: ${colors['0B']};
-  }
-
-  .lg-highlight-formula {
-    background: ${colors['02']};
-  }
-
-  .lg-highlight-emphasis {
-    font-style: italic;
-  }
-
-  .lg-highlight-strong {
-    font-weight: bold;
+    .lg-highlight-regexp,
+    .lg-highlight-params,
+    .lg-highlight-meta,
+    .lg-highlight-meta-string {
+      color: ${variantColors[variant]['0C']};
+    }
+  
+    .lg-highlight-comment,
+    .lg-highlight-doctag {
+      color: ${variantColors[variant]['03']};
+    }
+  
+    .lg-highlight-keyword,
+    .lg-highlight-selector-tag,
+    .lg-highlight-selector-attr,
+    .lg-highlight-selector-pseudo,
+    .lg-highlight-selector-id,
+    .lg-highlight-selector-class {
+      color: ${variantColors[variant]['0E']};
+    }
+  
+    .lg-highlight-addition {
+      color: ${variantColors[variant]['05']};
+    }
+  
+    .lg-highlight-variable,
+    .lg-highlight-deletion,
+    .lg-highlight-symbol,
+    .lg-highlight-bullet,
+    .lg-highlight-subst,
+    .lg-highlight-meta,
+    .lg-highlight-link {
+      color: ${variantColors[variant]['08']}
+    }
+  
+    .lg-highlight-number,
+    .lg-highlight-attr,
+    .lg-highlight-attribute,
+    .lg-highlight-built_in,
+    .lg-highlight-template-variable,
+    .lg-highlight-type {
+      color: ${variantColors[variant]['09']};
+    }
+  
+    .lg-highlight-string,
+    .lg-highlight-title {
+      color: ${variantColors[variant]['0B']};
+    }
+  
+    .lg-highlight-formula {
+      background: ${variantColors[variant]['02']};
+    }
+  
+    .lg-highlight-emphasis {
+      font-style: italic;
+    }
+  
+    .lg-highlight-strong {
+      font-weight: bold;
+    }
   }
 `;
 
-interface Props {
-  variant: Variants;
-}
-
-export default function SyntaxTheme({
-  variant = Variants.Light,
-}: Props): React.ReactElement {
-  return <style>{getStyles(variantColors[variant])}</style>;
-}
+export default Object.values(Variants).map(getStyles)

@@ -1,7 +1,12 @@
 export enum Variants {
   Light = 'light',
-  Dark = 'Dark',
+  Dark = 'dark',
 }
+
+// const Variants = {
+//   Light: 'light',
+//   Dark: 'dark',
+// }
 
 export enum SupportedLanguages {
   javascript = 'javascript',

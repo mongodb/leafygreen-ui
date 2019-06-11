@@ -23,7 +23,7 @@ const wrapperStyleWithLineNumbers = css`
   padding-left: ${codeWhiteSpace * 3.5}px;
 `;
 
-const wrapperVariants: { readonly [K in Variants]: string } = {
+const wrapperVariants: { [K in Variants]: string } = {
   [Variants.Light]: css`
     border-color: #e7eeec;
     background-color: #f9fbfa;
@@ -35,7 +35,7 @@ const wrapperVariants: { readonly [K in Variants]: string } = {
     background-color: #21313c;
     color: #f9fbfa;
   `,
-};
+} as const;
 
 const lineNumberStyles = css`
   position: absolute;
@@ -48,7 +48,7 @@ const lineNumberStyles = css`
   line-height: 24px;
 `;
 
-const lineNumberVariants: { readonly [K in Variants]: string } = {
+const lineNumberVariants: { [K in Variants]: string } = {
   [Variants.Light]: css`
     color: #b8c4c2;
   `,
@@ -56,7 +56,7 @@ const lineNumberVariants: { readonly [K in Variants]: string } = {
   [Variants.Dark]: css`
     color: #5d6c74;
   `,
-};
+} as const;
 
 interface Props extends SyntaxProps {
   /**
@@ -86,9 +86,10 @@ interface Props extends SyntaxProps {
  * @param props.children Any React node.
  * @param props.className An additional CSS class added to the root element of Code.
  * @param props.multiline When true, whitespace and line breaks will be preserved.
+ * @param props.showLineNumbers When true, shows line numbers in preformatted code blocks.
  * @param props.lang The language used for syntax highlighing.
  */
-export default function Code({
+function Code({
   children,
   className,
   multiline = true,
@@ -96,12 +97,12 @@ export default function Code({
   variant = Variants.Light,
   showLineNumbers = false,
 }: Props) {
-  const lineNumbers = (() => {
+  const lineNumbers: React.ReactNode | null = (() => {
     if (!showLineNumbers || !children.length) {
       return null;
     }
 
-    const lines = children.split('\n');
+    const lines: Array<string> = children.split('\n');
 
     if (lines[lines.length - 1] === '') {
       lines.pop();
@@ -109,9 +110,7 @@ export default function Code({
 
     return (
       <div className={cx(lineNumberStyles, lineNumberVariants[variant])}>
-        {lines.map((line, i) => (
-          <div key={i}>{i + 1}</div>
-        ))}
+        {lines.map((line, i) => <div key={i}>{i + 1}</div>)}
       </div>
     );
   })();
@@ -138,6 +137,7 @@ export default function Code({
   return (
     <pre className={wrapperClassName}>
       {lineNumbers}
+
       <Syntax variant={variant} lang={lang}>
         {children}
       </Syntax>
@@ -153,3 +153,5 @@ Code.propTypes = {
   lang: PropTypes.oneOf([...Object.keys(SupportedLanguages), 'auto']),
   variant: PropTypes.oneOf(Object.values(Variants)),
 };
+
+export default Code;

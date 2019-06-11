@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { emotion } from '@leafygreen-ui/lib';
 import hljs from 'highlight.js/lib/highlight';
-import SyntaxTheme from './SyntaxTheme';
+import variantStyles from './globalStyles';
 import { Variants, SupportedLanguages } from './types';
 
-const { cx } = emotion;
+const { cx, injectGlobal } = emotion;
 
-Object.keys(SupportedLanguages).forEach(language => {
+variantStyles.forEach(style => injectGlobal(style))
+
+const SupportedLanguagesList = Object.values(SupportedLanguages)
+
+SupportedLanguagesList.forEach(language => {
   hljs.registerLanguage(
     language,
     require(`highlight.js/lib/languages/${language}`),
@@ -15,7 +19,7 @@ Object.keys(SupportedLanguages).forEach(language => {
 });
 
 hljs.configure({
-  languages: Object.keys(SupportedLanguages),
+  languages: SupportedLanguagesList,
   classPrefix: 'lg-highlight-',
   tabReplace: '  ',
 });
@@ -43,47 +47,47 @@ export interface Props {
    *
    * default: `'light'`
    */
-  variant: Variants;
+  variant: typeof Variants[keyof typeof Variants];
+  
 }
 
 function Syntax({
   children,
-  lang,
+  lang = 'auto',
   className,
-  variant = Variants.Light,
+  variant = 'light',
 }: Props): React.ReactElement {
-  const highlightedContent = {
-    __html: (() => {
-      if (!children) {
-        return '';
-      }
+  const codeClassName = cx(
+    `lg-highlight-hljs-${variant}`,
+    'lg-highlight-hljs',
+    {
+      [SupportedLanguages[lang]]: lang !== 'auto',
+    },
+    className,
+  );
 
-      if (lang === 'none') {
-        return children;
-      }
+  if (!children) {
+    return <code className={codeClassName} />;
+  }
 
-      if (lang === 'auto') {
-        return hljs.highlightAuto(children).value;
-      }
+  if (lang === 'none') {
+    return <code className={codeClassName}>{children}</code>;
+  }
 
-      return hljs.highlight(lang, children).value;
-    })(),
-  };
+  const highlightedContent: string = useMemo(() => {
+    if (lang === 'auto') {
+      return hljs.highlightAuto(children).value;
+    }
+
+    return hljs.highlight(lang, children).value;
+  }, [lang, children]);
 
   return (
     <>
       <code
-        className={cx(
-          'lg-highlight-hljs',
-          {
-            [SupportedLanguages[lang]]: lang !== 'auto',
-          },
-          className,
-        )}
-        dangerouslySetInnerHTML={highlightedContent}
+        className={codeClassName}
+        dangerouslySetInnerHTML={{ __html: highlightedContent }}
       />
-
-      <SyntaxTheme variant={variant} />
     </>
   );
 }
@@ -92,13 +96,9 @@ Syntax.displayName = 'Syntax';
 
 Syntax.propTypes = {
   children: PropTypes.string,
-  lang: PropTypes.oneOf([...Object.keys(SupportedLanguages), 'auto', 'none']),
+  lang: PropTypes.oneOf([...SupportedLanguagesList, 'auto', 'none']),
   className: PropTypes.string,
-};
-
-Syntax.defaultProps = {
-  lang: 'auto',
-  variant: Variants.Light,
+  variant: PropTypes.oneOf(Object.values(Variants))
 };
 
 export default Syntax;

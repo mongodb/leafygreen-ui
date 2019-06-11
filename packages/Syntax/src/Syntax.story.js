@@ -44,13 +44,24 @@ client.connect(function(err) {
 `;
 
 storiesOf('Syntax', module).add('Syntax', () => (
-  <Syntax
-    lang={select(
-      'language',
-      [...Object.values(SupportedLanguages), 'auto'],
-      'auto',
-    )}
-  >
-    {codeSnippet}
-  </Syntax>
+  <>
+    <Syntax
+      lang={select(
+        'language',
+        [...Object.values(SupportedLanguages), 'auto'],
+        'auto',
+      )}
+    >
+      {codeSnippet}
+    </Syntax>
+    <Syntax
+      lang={select(
+        'language',
+        [...Object.values(SupportedLanguages), 'auto'],
+        'auto',
+      )}
+    >
+      {codeSnippet}
+    </Syntax>
+  </>
 ));
