@@ -5,16 +5,20 @@ import { colors } from '@leafygreen-ui/theme';
 
 const { css, cx } = emotion;
 
-export enum Size {
-  Default = 'default',
-  Small = 'small',
-  XSmall = 'xsmall',
-}
+export const Size = {
+  Default: 'default',
+  Small: 'small',
+  XSmall: 'xsmall',
+} as const;
 
-export enum Variant {
-  Default = 'default',
-  Dark = 'dark',
-}
+export type Size = typeof Size[keyof typeof Size];
+
+export const Variant = {
+  Default: 'default',
+  Dark: 'dark',
+} as const;
+
+export type Variant = typeof Variant[keyof typeof Variant];
 
 const toggleInput = createDataProp('toggle-input');
 const toggleGroove = createDataProp('toggle-groove');

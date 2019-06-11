@@ -7,20 +7,24 @@ import omit from 'lodash/omit';
 
 const { css, cx } = emotion;
 
-export enum Variant {
-  Default = 'default',
-  Primary = 'primary',
-  Info = 'info',
-  Danger = 'danger',
-  Dark = 'dark',
-}
+export const Variant = {
+  Default: 'default',
+  Primary: 'primary',
+  Info: 'info',
+  Danger: 'danger',
+  Dark: 'dark',
+} as const;
 
-export enum Size {
-  XSmall = 'xsmall',
-  Small = 'small',
-  Normal = 'normal',
-  Large = 'large',
-}
+export type Variant = typeof Variant[keyof typeof Variant];
+
+export const Size = {
+  XSmall: 'xsmall',
+  Small: 'small',
+  Normal: 'normal',
+  Large: 'large',
+} as const;
+
+export type Size = typeof Size[keyof typeof Size];
 
 /** Helper type to extract an HTML element's valid props */
 type HTMLElementProps<

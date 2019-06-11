@@ -43,12 +43,14 @@ const mutationOptions = {
  * @param Left will align content to the left of other element
  * @param Right will align content to the right of other element
  */
-export enum Align {
-  Top = 'top',
-  Bottom = 'bottom',
-  Left = 'left',
-  Right = 'right',
-}
+export const Align = {
+  Top: 'top',
+  Bottom: 'bottom',
+  Left: 'left',
+  Right: 'right',
+} as const;
+
+export type Align = typeof Align[keyof typeof Align];
 
 /**
  * Options to determine the justification of the popover relative to
@@ -57,11 +59,13 @@ export enum Align {
  * @param Middle will justify content against the middle of other element
  * @param Bottom will justify content against the end of other element
  */
-export enum Justify {
-  Start = 'start',
-  Middle = 'middle',
-  End = 'end',
-}
+export const Justify = {
+  Start: 'start',
+  Middle: 'middle',
+  End: 'end',
+} as const;
+
+export type Justify = typeof Justify[keyof typeof Justify];
 
 export interface PopoverProps {
   /**
