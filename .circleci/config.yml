@@ -7,8 +7,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - node-cache-{{ checksum "package-lock.json" }}
-            - node-cache
+            - node-cache-v1-{{ checksum "yarn.lock" }}
+            - node-cache-v1
       - run: yarn install
       - run: yarn build
       - run:
@@ -16,7 +16,7 @@ jobs:
           command: yarn prettier:check
       - run:
           name: lint
-          command: yarn eslint -- --format junit -o reports/junit/js-lint-results.xml
+          command: yarn eslint --format junit -o reports/junit/js-lint-results.xml
       - run:
           name: tests
           command: yarn test -- --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
@@ -26,7 +26,7 @@ jobs:
           name: types
           command: yarn ts:check
       - save_cache:
-          key: node-cache-{{ checksum "package-lock.json" }}
+          key: node-cache-v1-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
       - store_test_results:
