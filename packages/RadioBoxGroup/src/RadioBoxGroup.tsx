@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { emotion } from '@leafygreen-ui/lib';
-import RadioBox, { SizeValues, RadioBoxProps } from './RadioBox';
+import RadioBox, { Size, RadioBoxProps } from './RadioBox';
 
 const { css, cx } = emotion;
 
@@ -14,7 +14,7 @@ interface RadioBoxGroupProps {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   name?: string;
   value?: string | number;
-  size: SizeValues;
+  size: Size;
   className?: string;
 }
 

@@ -13,9 +13,9 @@ export const Size = {
   Full: 'full',
 } as const;
 
-export type SizeValues = typeof Size[keyof typeof Size];
+export type Size = typeof Size[keyof typeof Size];
 
-export const radioBoxSizes: { [K in SizeValues]: string } = {
+export const radioBoxSizes: { [K in Size]: string } = {
   default: css`
     width: 139px;
   `,
@@ -151,9 +151,9 @@ export const radioWrapper = css`
   }
 `;
 
-const getStatefulStyles = (states: StateForStyles) => ({
-  radioDisplay: getRadioDisplayStyles(states),
-  checkedState: getCheckedStateStyle(states),
+const getStatefulStyles = (state: StateForStyles) => ({
+  radioDisplay: getRadioDisplayStyles(state),
+  checkedState: getCheckedStateStyle(state),
 });
 
 export interface RadioBoxProps {
@@ -163,7 +163,7 @@ export interface RadioBoxProps {
   checked?: boolean;
   disabled?: boolean;
   id?: string;
-  size?: SizeValues;
+  size?: Size;
   children?: React.ReactNode;
   name?: string;
 }
