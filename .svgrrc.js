@@ -18,6 +18,8 @@ module.exports = {
   ) {
     componentName = componentName.name.replace('Svg', '');
 
+    // NOTE:
+    // If any props on the generated component get changed, make sure to also update SVGR.ComponentProps in typings/images.d.ts
     return template.ast`
 			${imports}
 			import PropTypes from 'prop-types';
