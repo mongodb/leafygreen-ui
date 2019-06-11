@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from '@testing-library/react';
-import Button, { Variant, Size } from './Button';
+import Button from './Button';
 
 afterAll(cleanup);
 
@@ -104,11 +104,7 @@ describe('packages/Button', () => {
   });
 
   test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
-    const { container } = render(
-      <Button as="div" variant={Variant.Default} size={Size.Normal}>
-        Click me!
-      </Button>,
-    );
+    const { container } = render(<Button as="div">Click me!</Button>);
     const buttonComponent = container.firstChild;
 
     if (!isElement(buttonComponent)) {
