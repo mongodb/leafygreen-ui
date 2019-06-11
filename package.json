@@ -33,7 +33,7 @@
     "build": "lerna run --parallel build -- -- --env production && yarn ts:emit",
     "build:storybook": "build-storybook -c storybook -o ./storybook/public -s ./storybook/static",
     "format": "yarn prettier && yarn eslint:format",
-    "init": "lerna bootstrap && yarn build",
+    "init": "yarn && lerna bootstrap && yarn build",
     "link-all-packages": "lerna exec --ignore @leafygreen-ui/lib --ignore @leafygreen-ui/theme -- yarn link ",
     "link": "./scripts/link.sh",
     "lint": "yarn prettier:check && yarn eslint && yarn ts:check",
