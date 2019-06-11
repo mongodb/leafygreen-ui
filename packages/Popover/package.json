@@ -14,6 +14,7 @@
     "@leafygreen-ui/lib": "^2.1.7",
     "@leafygreen-ui/portal": "^1.0.5",
     "@leafygreen-ui/theme": "^1.1.7",
+    "@leafygreen-ui/hooks": "^0.9.0",
     "lodash": "^4.17.11"
   },
   "gitHead": "53385cfed5ecf3101d098d26dedc6a40b27c402a"

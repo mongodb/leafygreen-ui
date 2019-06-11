@@ -1,7 +1,7 @@
 import React, { useState, useCallback, EventHandler } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
-import { useDocumentEventListener } from './hooks';
+import { useEventListener } from '@leafygreen-ui/hooks';
 import { emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
 import { cx } from 'emotion';
@@ -82,32 +82,30 @@ function Menu({
     setActiveState(current => !current);
   }, []);
 
-  const nativeToggleEventHandler: EventListener = useCallback((e: Event) => {
+  const closeMenuNativeHandler: EventListener = useCallback((e: Event) => {
     e.stopImmediatePropagation();
-    setActiveState(current => !current);
+    setActiveState(false);
   }, []);
 
   const handleEscape = useCallback((e: KeyboardEvent) => {
-    e.keyCode === EscapeKey && nativeToggleEventHandler(e);
+    if (e.keyCode === EscapeKey) {
+      closeMenuNativeHandler(e);
+    }
   }, []);
 
   const enabled = trigger && isActive;
 
-  useDocumentEventListener(
-    'click',
-    nativeToggleEventHandler,
-    { once: true },
-    [isActive, trigger],
+  useEventListener('click', closeMenuNativeHandler, {
+    options: { once: true },
+    dependencies: [isActive, trigger],
     enabled,
-  );
+  });
 
-  useDocumentEventListener(
-    'keydown',
-    handleEscape,
-    { once: true },
-    [isActive, trigger],
+  useEventListener('keydown', handleEscape, {
+    options: { once: true },
+    dependencies: [isActive, trigger],
     enabled,
-  );
+  });
 
   if (trigger) {
     if (typeof trigger === 'function') {
