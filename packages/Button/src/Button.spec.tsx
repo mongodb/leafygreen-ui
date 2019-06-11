@@ -11,13 +11,7 @@ describe('packages/Button', () => {
   const child = 'Button child';
 
   const renderedComponent = render(
-    <Button
-      className={className}
-      title={title}
-      onClick={onClick}
-      variant={Variant.Default}
-      size={Size.Normal}
-    >
+    <Button className={className} title={title} onClick={onClick}>
       {child}
     </Button>,
   );
@@ -60,8 +54,6 @@ describe('packages/Button', () => {
         title={title}
         onClick={onClick}
         disabled={true}
-        variant={Variant.Default}
-        size={Size.Normal}
       >
         {child}
       </Button>,
@@ -88,11 +80,8 @@ describe('packages/Button', () => {
   });
 
   test(`renders a button with the given type when one is set`, () => {
-    const submitButton = render(
-      <Button type="submit" variant={Variant.Default} size={Size.Normal}>
-        My submit button
-      </Button>,
-    ).container.firstChild;
+    const submitButton = render(<Button type="submit">My submit button</Button>)
+      .container.firstChild;
 
     if (!isButton(submitButton)) {
       throw new Error('Rendered element is not a button');
@@ -103,13 +92,7 @@ describe('packages/Button', () => {
 
   test(`renders component inside of a tag when "href" prop is set`, () => {
     const { container } = render(
-      <Button
-        href="http://mongodb.design"
-        variant={Variant.Default}
-        size={Size.Normal}
-      >
-        Click me!
-      </Button>,
+      <Button href="http://mongodb.design">Click me!</Button>,
     );
     const buttonComponent = container.firstChild;
 
@@ -137,12 +120,7 @@ describe('packages/Button', () => {
 
   test(`renders component inside of a React Element/HTML tag based on as prop, even when "href" is set`, () => {
     const { container } = render(
-      <Button
-        as="div"
-        href="http://mongodb.design"
-        variant={Variant.Default}
-        size={Size.Normal}
-      >
+      <Button as="div" href="http://mongodb.design">
         Click me!
       </Button>,
     );

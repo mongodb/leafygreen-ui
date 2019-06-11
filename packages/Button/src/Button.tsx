@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { colors } from '@leafygreen-ui/theme';
 import { emotion } from '@leafygreen-ui/lib';
@@ -281,8 +281,8 @@ const baseStyle = css`
 `;
 
 interface SharedButtonProps {
-  variant: Variant;
-  size: Size;
+  variant?: Variant;
+  size?: Size;
   className?: string;
   children?: React.ReactNode;
   disabled?: boolean;
@@ -320,85 +320,81 @@ function usesLinkElement(
   return props.href != null;
 }
 
-export default class Button extends Component<ButtonProps> {
-  static displayName = 'Button';
+export default function Button(props: ButtonProps) {
+  const {
+    className = '',
+    children = null,
+    disabled = false,
+    variant = Variant.Default,
+    size = Size.Normal,
+  } = props;
 
-  static defaultProps = {
-    variant: Variant.Default,
-    size: Size.Normal,
-    className: '',
-    children: null,
-    disabled: false,
+  const commonProps = {
+    className: cx(
+      baseStyle,
+      buttonSizes[size],
+      buttonVariants[variant],
+      className,
+    ),
+    disabled,
+    'aria-disabled': disabled,
   };
 
-  /*
-  NOTE(JeT):
-  Without the `any` type annotation here, @types/react will try to infer TS prop types from it,
-  merging them together with ButtonProps (see LibraryManagedAttributes and MergePropTypes in @types/react).
-  Unfortunately, this merging uses keyof, which appears to drop the [key: string] index signature, meaning TS won't
-  allow us to pass unrecognized props down to custom components when we're using the `as` prop. This workaround avoids
-  the attempt at merging, while still getting runtime type-checking for non-TS consumers of the library.
-  */
-  static propTypes: any = {
-    variant: PropTypes.oneOf(['default', 'primary', 'info', 'danger', 'dark']),
-    size: PropTypes.oneOf(['xsmall', 'small', 'normal', 'large']),
-    className: PropTypes.string,
-    children: PropTypes.node,
-    disabled: PropTypes.bool,
-    as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-    href: PropTypes.string,
-  };
+  const rest = omit(props, [
+    'as',
+    'className',
+    'disabled',
+    'size',
+    'variant',
+    'children',
+  ]);
 
-  render() {
-    const { className, children, disabled, variant, size } = this.props;
+  if (usesCustomElement(props)) {
+    const Root = props.as;
 
-    const commonProps = {
-      className: cx(
-        baseStyle,
-        buttonSizes[size],
-        buttonVariants[variant],
-        className,
-      ),
-      disabled,
-      'aria-disabled': disabled,
-    };
-
-    const rest = omit(this.props, [
-      'as',
-      'className',
-      'disabled',
-      'size',
-      'variant',
-      'children',
-    ]);
-
-    if (usesCustomElement(this.props)) {
-      const Root = this.props.as;
-
-      return (
-        <Root {...rest} {...commonProps}>
-          {children}
-        </Root>
-      );
-    }
-
-    if (usesLinkElement(this.props)) {
-      return (
-        <a {...(rest as HTMLElementProps<'a'>)} {...commonProps}>
-          {children}
-        </a>
-      );
-    }
-
-    // NOTE(JeT): The button's `type` will be overridden if it is in the passed-in props
     return (
-      <button
-        type="button"
-        {...(rest as HTMLElementProps<'button'>)}
-        {...commonProps}
-      >
+      <Root {...rest} {...commonProps}>
         {children}
-      </button>
+      </Root>
     );
   }
+
+  if (usesLinkElement(props)) {
+    return (
+      <a {...(rest as HTMLElementProps<'a'>)} {...commonProps}>
+        {children}
+      </a>
+    );
+  }
+
+  // NOTE(JeT): The button's `type` will be overridden if it is in the passed-in props
+  return (
+    <button
+      type="button"
+      {...(rest as HTMLElementProps<'button'>)}
+      {...commonProps}
+    >
+      {children}
+    </button>
+  );
 }
+
+/*
+NOTE(JeT):
+Without the `as any` type annotation here, @types/react will try to infer TS prop types from it,
+merging them together with ButtonProps (see LibraryManagedAttributes and MergePropTypes in @types/react).
+Unfortunately, this merging uses keyof, which appears to drop the [key: string] index signature, meaning TS won't
+allow us to pass unrecognized props down to custom components when we're using the `as` prop. This workaround avoids
+the attempt at merging, while still getting runtime type-checking for non-TS consumers of the library.
+*/
+Button.propTypes = {
+  variant: PropTypes.oneOf(['default', 'primary', 'info', 'danger', 'dark']),
+  size: PropTypes.oneOf(['xsmall', 'small', 'normal', 'large']),
+  className: PropTypes.string,
+  children: PropTypes.node,
+  disabled: PropTypes.bool,
+  as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  href: PropTypes.string,
+} as any;
+
+Button.displayName = 'Button';
