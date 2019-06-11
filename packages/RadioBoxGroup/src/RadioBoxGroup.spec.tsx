@@ -13,9 +13,26 @@ const { container } = render(
   </RadioBox>,
 );
 
+function isElement(el: Node | null): el is HTMLElement {
+  return el != null && el.nodeType === Node.ELEMENT_NODE;
+}
+
+function isInput(el: Node | null): el is HTMLInputElement {
+  return isElement(el) && el.tagName.toLowerCase() === 'input';
+}
+
 describe('packages/RadioBox', () => {
   const radioBoxContainer = container.firstChild;
+
+  if (!isElement(radioBoxContainer)) {
+    throw new Error('Could not find radio box container element');
+  }
+
   const radioBox = radioBoxContainer.firstChild;
+
+  if (!isInput(radioBox)) {
+    throw new Error('Could not find radio box input element');
+  }
 
   test(`renders "${className}" in RadioBox's classList`, () => {
     expect(radioBoxContainer.classList.contains(className)).toBe(true);
@@ -34,7 +51,17 @@ describe('packages/RadioBox', () => {
     );
 
     const radioBoxContainer = container.firstChild;
+
+    if (!isElement(radioBoxContainer)) {
+      throw new Error('Could not find radio box container element');
+    }
+
     const radioBox = radioBoxContainer.firstChild;
+
+    if (!isInput(radioBox)) {
+      throw new Error('Could not find radio box input element');
+    }
+
     expect(radioBox.getAttribute('aria-disabled')).toBe('true');
   });
 });
@@ -49,6 +76,11 @@ describe('packages/RadioBoxGroup', () => {
   );
 
   const radioBoxGroupContainer = container.firstChild;
+
+  if (!isElement(radioBoxGroupContainer)) {
+    throw new Error('Could not find radio box group container element');
+  }
+
   const text = radioBoxGroupContainer.children[1];
 
   test('renders children of Radio Box Group, that are not themselves Radio Boxes, as is, without converting them to RadioBoxes', () => {
@@ -67,9 +99,23 @@ describe('packages/RadioBoxGroup', () => {
     );
 
     const radioBoxGroup = container.firstChild;
+
+    if (!isElement(radioBoxGroup)) {
+      throw new Error('Could not find radio box group element');
+    }
+
     const firstRadioBoxLabel = radioBoxGroup.firstChild;
+
+    if (!isElement(firstRadioBoxLabel)) {
+      throw new Error('Could not find label element');
+    }
+
     const firstRadioBoxInput = firstRadioBoxLabel.firstChild;
     const secondRadioBoxInput = radioBoxGroup.children[1].firstChild;
+
+    if (!isInput(firstRadioBoxInput) || !isInput(secondRadioBoxInput)) {
+      throw new Error('Could not find input element');
+    }
 
     fireEvent.click(secondRadioBoxInput);
 
@@ -98,8 +144,22 @@ describe('packages/RadioBoxGroup', () => {
     );
 
     const radioBoxGroup = container.firstChild;
+
+    if (!isElement(radioBoxGroup)) {
+      throw new Error('Could not find radio box group element');
+    }
+
     const radioBoxLabel = radioBoxGroup.firstChild;
+
+    if (!isElement(radioBoxLabel)) {
+      throw new Error('Could not find label element');
+    }
+
     const radioBoxInput = radioBoxLabel.firstChild;
+
+    if (!isInput(radioBoxInput)) {
+      throw new Error('Could not find radio box input element');
+    }
 
     fireEvent.click(radioBoxLabel);
 

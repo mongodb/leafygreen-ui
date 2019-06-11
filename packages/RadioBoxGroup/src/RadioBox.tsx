@@ -7,7 +7,15 @@ const { css, cx } = emotion;
 
 const radioBoxInput = createDataProp('radio-box-input');
 
-export const radioBoxSizes = {
+export const Size = {
+  Default: 'default',
+  Compact: 'compact',
+  Full: 'full',
+} as const;
+
+export type SizeValues = typeof Size[keyof typeof Size];
+
+export const radioBoxSizes: { [K in SizeValues]: string } = {
   default: css`
     width: 139px;
   `,
@@ -28,7 +36,12 @@ const inputStyles = css`
   pointer-events: none;
 `;
 
-const getRadioDisplayStyles = ({ checked, disabled }) => {
+interface StateForStyles {
+  checked: boolean;
+  disabled: boolean;
+}
+
+const getRadioDisplayStyles = ({ checked, disabled }: StateForStyles) => {
   const baseStyles = css`
     transition: box-shadow 150ms ease-in-out;
     box-sizing: content-box;
@@ -99,7 +112,7 @@ const getRadioDisplayStyles = ({ checked, disabled }) => {
 // We use a div for the checked state rather than a pseudo-element
 // because said pseudo-element would need to be on the label element
 // which can't use the contained input's checked pseudo-class.
-const getCheckedStateStyle = ({ checked }) => {
+const getCheckedStateStyle = ({ checked }: StateForStyles) => {
   const baseStyles = css`
     position: absolute;
     transition: all 150ms ease-in-out;
@@ -138,23 +151,35 @@ export const radioWrapper = css`
   }
 `;
 
-const getStatefulStyles = states => ({
+const getStatefulStyles = (states: StateForStyles) => ({
   radioDisplay: getRadioDisplayStyles(states),
   checkedState: getCheckedStateStyle(states),
 });
 
+export interface RadioBoxProps {
+  className?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  value: string | number;
+  checked?: boolean;
+  disabled?: boolean;
+  id?: string;
+  size?: SizeValues;
+  children?: React.ReactNode;
+  name?: string;
+}
+
 export default function RadioBox({
-  className,
+  className = '',
   onChange,
   value,
-  checked,
-  disabled,
+  checked = false,
+  disabled = false,
   id,
-  size,
+  size = Size.Default,
   children,
   name,
   ...rest
-}) {
+}: RadioBoxProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>) {
   const styles = getStatefulStyles({ checked, disabled });
 
   return (
@@ -202,10 +227,4 @@ RadioBox.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   children: PropTypes.node,
-};
-
-RadioBox.defaultProps = {
-  onChange: () => {},
-  disabled: false,
-  className: '',
 };

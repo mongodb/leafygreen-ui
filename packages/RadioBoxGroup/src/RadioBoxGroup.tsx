@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { emotion } from '@leafygreen-ui/lib';
-import RadioBox from './RadioBox';
+import RadioBox, { SizeValues, RadioBoxProps } from './RadioBox';
 
 const { css, cx } = emotion;
 
@@ -9,7 +9,34 @@ const baseGroupStyle = css`
   display: flex;
 `;
 
-export default class RadioBoxGroup extends PureComponent {
+interface RadioBoxGroupProps {
+  children?: React.ReactNode;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  name?: string;
+  value?: string | number;
+  size: SizeValues;
+  className?: string;
+}
+
+interface RadioBoxGroupState {
+  value: string | number;
+}
+
+function isRadioBoxElement(
+  element: React.ReactNode,
+): element is React.ReactElement<RadioBoxProps, typeof RadioBox> {
+  return (
+    element != null &&
+    typeof element === 'object' &&
+    'type' in element &&
+    (element.type as any).displayName === 'RadioBox'
+  );
+}
+
+export default class RadioBoxGroup extends PureComponent<
+  RadioBoxGroupProps & React.HTMLAttributes<HTMLDivElement>,
+  RadioBoxGroupState
+> {
   static displayName = 'RadioBoxGroup';
 
   static propTypes = {
@@ -26,13 +53,13 @@ export default class RadioBoxGroup extends PureComponent {
     size: 'default',
   };
 
-  state = {
+  state: RadioBoxGroupState = {
     value: '',
   };
 
   defaultName = `radio-box-group-${Math.floor(Math.random() * 1000000)}`;
 
-  handleChange = e => {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { onChange, value } = this.props;
 
     if (onChange) {
@@ -57,7 +84,7 @@ export default class RadioBoxGroup extends PureComponent {
     } = this.props;
 
     const renderedChildren = React.Children.map(children, (child, index) => {
-      if (child.type.displayName !== RadioBox.displayName) {
+      if (!isRadioBoxElement(child)) {
         return child;
       }
 
