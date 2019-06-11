@@ -305,9 +305,7 @@ interface LinkButtonProps extends HTMLElementProps<'a'>, SharedButtonProps {
   href: string;
 }
 
-interface ButtonButtonProps
-  extends HTMLElementProps<'button'>,
-    SharedButtonProps {
+interface ButtonButtonProps extends SharedButtonProps, SharedButtonProps {
   href?: null;
 }
 
@@ -397,8 +395,7 @@ export default class Button extends Component<ButtonProps> {
 
     if (usesLinkElement(this.props)) {
       return (
-        // eslint-disable-next-line
-        <a {...rest as HTMLElementProps<'a'>} {...commonProps}> 
+        <a {...(rest as HTMLElementProps<'a'>)} {...commonProps}>
           {children}
         </a>
       );
@@ -408,7 +405,7 @@ export default class Button extends Component<ButtonProps> {
     return (
       <button
         type="button"
-        {...rest as HTMLElementProps<'button'>} //eslint-disable-line 
+        {...(rest as HTMLElementProps<'button'>)} //eslint-disable-line
         {...commonProps}
       >
         {children}
