@@ -2,9 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import { colors } from '@leafygreen-ui/theme';
-import emotion from '@leafygreen-ui/emotion';
-
-const { css, cx } = emotion;
+import { css, cx } from '@leafygreen-ui/emotion';
 
 const groupVariants = {
   default: css`

@@ -1,10 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp } from '@leafygreen-ui/lib';
-import emotion from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { colors } from '@leafygreen-ui/theme';
-
-const { css, cx } = emotion;
 
 const toggleInput = createDataProp('toggle-input');
 const toggleGroove = createDataProp('toggle-groove');

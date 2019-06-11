@@ -2,10 +2,8 @@ import React, { useState, useCallback, EventHandler } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { useEventListener } from '@leafygreen-ui/hooks';
-import emotion from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { colors } from '@leafygreen-ui/theme';
-
-const { css, cx } = emotion;
 
 const rootMenuStyle = css`
   width: 200px;
