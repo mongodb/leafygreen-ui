@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { color, select } from '@storybook/addon-knobs';
 import { emotion } from '@leafygreen-ui/lib';
-import Icon, { glyphs } from '.';
+import Icon, { glyphs, Size } from '.';
 
 const { css } = emotion;
 
@@ -27,12 +27,12 @@ const textStyle = css`
 `;
 
 storiesOf('Icons', module).add('Icon', () =>
-  Object.keys(glyphs).map(glyph => (
+  (Object.keys(glyphs) as Array<keyof typeof glyphs>).map(glyph => (
     <div key={glyph} className={containerStyle}>
       <Icon
         glyph={glyph}
         fill={color('Fill', '#000000')}
-        size={select('size', ['default', 'large', 'xlarge'], 'default')}
+        size={select('size', Object.values(Size) as Array<Size>, Size.Default)}
       />
       <div className={textStyle}>{glyph}</div>
     </div>

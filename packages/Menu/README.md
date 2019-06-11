@@ -3,6 +3,8 @@
 ## Example
 
 ```js
+import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
+
 <Menu
   align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
   justify={select('justify', ['start', 'middle', 'end'], 'start')}
@@ -24,7 +26,7 @@
     </MenuItem>
   </MenuGroup>
   <MenuItem title="Logout" />
-</Menu>
+</Menu>;
 ```
 
 **Output HTML**
@@ -211,6 +213,8 @@ Description text that will appear below the main content of `MenuItem`
 ## Example
 
 ```js
+import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
+
 <Menu
   align="bottom"
   justify="start"
@@ -226,7 +230,7 @@ Description text that will appear below the main content of `MenuItem`
     <MenuItem>Menu Item 2</MenuItem>
   </MenuGroup>
   <MenuItem>Menu Item 3</MenuItem>
-</Menu>
+</Menu>;
 ```
 
 ## Output HTML
