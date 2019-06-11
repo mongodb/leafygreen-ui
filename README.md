@@ -43,7 +43,7 @@ The script does several things in order:
 2. It scans your application for any installed `leafygreen-ui` components in your `node_modules/@leafygreen-ui` folder.
    **NOTE:** If the package is new and unpublished/not installed, you will need to create a directory for the new component within your application inside `node_modules/@leafygreen-ui` before running this command.
 
-3. If any `leafygreen-ui` components are found then the script uses `yarn run link` to link every `node_modules/@leafygreen-ui` module to your local `leafygreen-ui` repository.
+3. If any `leafygreen-ui` components are found then the script uses `yarn link` to link every `node_modules/@leafygreen-ui` module to your local `leafygreen-ui` repository.
 
 After the script completes, you can make changes directly to the component in your local `leafygreen-ui` repository. Once you do this, run `yarn build` in the root of the `leafygreen-ui` repository and the changes will be visible on your running application.
 
