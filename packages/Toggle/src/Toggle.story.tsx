@@ -1,10 +1,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, select } from '@storybook/addon-knobs';
-import emotion from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import Toggle, { Size, Variant } from '.';
 
-const containerStyle = emotion.css`padding: 2rem; text-align: center;`;
+const containerStyle = css`
+  padding: 2rem;
+  text-align: center;
+`;
 
 storiesOf('Toggle', module)
   .add('Default', () => (
@@ -17,10 +20,10 @@ storiesOf('Toggle', module)
   ))
   .add('Dark', () => (
     <div
-      className={emotion.css`
-          ${containerStyle};
-          background-color: #464C4F;
-        `}
+      className={css`
+        ${containerStyle};
+        background-color: #464c4f;
+      `}
     >
       <Toggle
         size={select('Size', Object.values(Size) as Array<Size>, Size.Default)}

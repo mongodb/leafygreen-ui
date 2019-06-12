@@ -1,13 +1,18 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, boolean, select } from '@storybook/addon-knobs';
-import emotion from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 
 import RadioBoxGroup from './RadioBoxGroup';
 import RadioBox from './RadioBox';
 
 storiesOf('RadioBoxGroup', module).add('Default', () => (
-  <div className={emotion.css`width: 100%; padding: 2rem;`}>
+  <div
+    className={css`
+      width: 100%;
+      padding: 2rem;
+    `}
+  >
     <RadioBoxGroup
       size={select('Size', ['compact', 'default', 'full'], 'default')}
     >
