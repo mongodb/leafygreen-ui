@@ -126,7 +126,6 @@ storiesOf('Buttons', module)
   .add('as custom component', () => (
     <Button
       as={CustomElement}
-      customProp={text('Custom Prop', 'custom')}
       size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
       variant={select(
         'Variant',
