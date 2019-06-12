@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { colors } from '@leafygreen-ui/theme';
 import { emotion } from '@leafygreen-ui/lib';
+import Variant from './Variant';
 
 const { css, cx } = emotion;
 
@@ -34,7 +35,20 @@ const textStyle = css`
   line-height: 0.9em;
 `;
 
-export default class Radio extends PureComponent {
+export interface RadioProps {
+  checked: boolean;
+  disabled: boolean;
+  className: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  value: string | number;
+  id?: string;
+  name?: string;
+  variant: Variant;
+}
+
+export default class Radio extends PureComponent<
+  RadioProps & React.InputHTMLAttributes<HTMLInputElement>
+> {
   static displayName = 'Radio';
 
   static propTypes = {
@@ -54,7 +68,7 @@ export default class Radio extends PureComponent {
     disabled: false,
     className: '',
     onChange: () => {},
-    variant: 'default',
+    variant: Variant.Default,
   };
 
   render() {
