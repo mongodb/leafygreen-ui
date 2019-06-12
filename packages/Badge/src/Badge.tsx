@@ -1,9 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { colors } from '@leafygreen-ui/theme';
-import { ccClassName, emotion } from '@leafygreen-ui/lib';
-
-const { css } = emotion;
+import { css, cx } from '@leafygreen-ui/emotion';
 
 export const Variant = {
   Default: 'default',
@@ -96,7 +94,7 @@ export default class Badge extends PureComponent<
     return (
       <div
         {...rest}
-        className={ccClassName(baseStyle, badgeVariants[variant], className)}
+        className={cx(baseStyle, badgeVariants[variant], className)}
       >
         {children}
       </div>

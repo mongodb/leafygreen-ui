@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { storiesOf } from '@storybook/react';
 import { text, boolean } from '@storybook/addon-knobs';
-import { emotion } from '@leafygreen-ui/lib';
+import { css } from '@leafygreen-ui/emotion';
 import { colors } from '@leafygreen-ui/theme';
 import Checkbox, { Variant } from '.';
 
@@ -43,12 +43,12 @@ class Control extends PureComponent<ControlProps> {
 
     return (
       <div
-        className={emotion.css`
-        background-color: ${
-          variant === 'light' ? colors.gray[1] : colors.gray[8]
-        };
-        padding: 20px;
-      `}
+        className={css`
+          background-color: ${variant === 'light'
+            ? colors.gray[1]
+            : colors.gray[8]};
+          padding: 20px;
+        `}
       >
         <Checkbox
           checked={checked}

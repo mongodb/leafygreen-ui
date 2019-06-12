@@ -1,12 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean, number, text } from '@storybook/addon-knobs';
-import { emotion } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { colors } from '@leafygreen-ui/theme';
 
 import Popover, { Align, Justify } from '.';
-
-const { css, cx } = emotion;
 
 const containerStyle = css`
   position: absolute;

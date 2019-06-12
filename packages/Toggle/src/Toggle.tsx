@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { createDataProp, emotion } from '@leafygreen-ui/lib';
+import { createDataProp } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { colors } from '@leafygreen-ui/theme';
-
-const { css, cx } = emotion;
 
 export const Size = {
   Default: 'default',

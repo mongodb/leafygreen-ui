@@ -1,7 +1,5 @@
 import React from 'react';
-import { emotion } from '@leafygreen-ui/lib';
-
-const { css } = emotion;
+import { css } from '@leafygreen-ui/emotion';
 
 const rootStyle = css`
   display: flex;
