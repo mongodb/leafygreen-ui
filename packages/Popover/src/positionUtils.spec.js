@@ -1,4 +1,5 @@
-import { Align, Justify } from './Popover';
+import Align from './Align';
+import Justify from './Justify';
 import { calculatePosition, getElementPosition } from './positionUtils';
 
 // These values were explicitly created to test Popover positioning against a clearly defined window size.

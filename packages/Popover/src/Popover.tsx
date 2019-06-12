@@ -13,6 +13,8 @@ import {
   useMutationObserver,
   useElementNode,
 } from '@leafygreen-ui/hooks';
+import Align from './Align';
+import Justify from './Justify';
 import { calculatePosition, getElementPosition } from './positionUtils';
 
 const rootPopoverStyle = css`
@@ -32,34 +34,6 @@ const mutationOptions = {
   // Extend watching to entire sub tree to make sure we catch any modifications
   subtree: true,
 };
-
-/**
- * Options to determine the alignment of the popover relative to
- * the other component
- * @param Top will align content above other element
- * @param Bottom will align content below other element
- * @param Left will align content to the left of other element
- * @param Right will align content to the right of other element
- */
-export enum Align {
-  Top = 'top',
-  Bottom = 'bottom',
-  Left = 'left',
-  Right = 'right',
-}
-
-/**
- * Options to determine the justification of the popover relative to
- * the other component
- * @param Start will justify content against the start of other element
- * @param Middle will justify content against the middle of other element
- * @param Bottom will justify content against the end of other element
- */
-export enum Justify {
-  Start = 'start',
-  Middle = 'middle',
-  End = 'end',
-}
 
 export interface PopoverProps {
   /**

@@ -5,11 +5,13 @@ interface GlyphMap {
   [glyph: string]: SVGR.Component;
 }
 
-export enum Size {
-  Default = 'default',
-  Large = 'large',
-  XLarge = 'xlarge',
-}
+export const Size = {
+  Default: 'default',
+  Large: 'large',
+  XLarge: 'xlarge',
+} as const;
+
+export type Size = typeof Size[keyof typeof Size];
 
 export interface IconProps<G extends GlyphMap>
   extends Omit<SVGR.ComponentProps, 'size'> {

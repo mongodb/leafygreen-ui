@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import { colors } from '@leafygreen-ui/theme';
 import { css, cx } from '@leafygreen-ui/emotion';
 
-export enum Variant {
-  Default = 'default',
-  Dark = 'dark',
-  Danger = 'danger',
-  Warning = 'warning',
-  DarkBlue = 'darkBlue',
-  LightBlue = 'lightBlue',
-  Primary = 'primary',
-  Outline = 'outline',
-}
+export const Variant = {
+  Default: 'default',
+  Dark: 'dark',
+  Danger: 'danger',
+  Warning: 'warning',
+  DarkBlue: 'darkBlue',
+  LightBlue: 'lightBlue',
+  Primary: 'primary',
+  Outline: 'outline',
+} as const;
+
+export type Variant = typeof Variant[keyof typeof Variant];
 
 export const baseStyle = css`
   display: inline-flex;
@@ -78,16 +80,7 @@ export default class Badge extends PureComponent<
   static propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
-    variant: PropTypes.oneOf([
-      'default',
-      'danger',
-      'warning',
-      'darkBlue',
-      'lightBlue',
-      'primary',
-      'outline',
-      'dark',
-    ]),
+    variant: PropTypes.oneOf(Object.values(Variant)),
   };
 
   static defaultProps = {

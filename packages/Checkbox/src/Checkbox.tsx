@@ -17,10 +17,12 @@ const checkboxWrapper = createDataProp('checkbox-wrapper');
 const height = 20;
 const width = 600;
 
-export enum Variant {
-  Default = 'default',
-  Light = 'light',
-}
+export const Variant = {
+  Default: 'default',
+  Light: 'light',
+} as const;
+
+export type Variant = typeof Variant[keyof typeof Variant];
 
 const wrapperStyle = css`
   transition: 300ms opacity ease-in-out;
