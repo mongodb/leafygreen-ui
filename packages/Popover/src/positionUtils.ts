@@ -1,4 +1,5 @@
-import { Align, Justify } from './Popover';
+import Align from './Align';
+import Justify from './Justify';
 
 interface ElementPosition {
   top: number;
@@ -121,14 +122,16 @@ export function getElementPosition(
 
 // We transform 'middle' into 'center-vertical' or 'center-horizontal' for internal use,
 // So both Justify and Justification are needed, where the same is not true for Alignment.
-enum Justification {
-  Top = 'top',
-  Bottom = 'bottom',
-  Left = 'left',
-  Right = 'right',
-  CenterVertical = 'center-vertical',
-  CenterHorizontal = 'center-horizontal',
-}
+const Justification = {
+  Top: 'top',
+  Bottom: 'bottom',
+  Left: 'left',
+  Right: 'right',
+  CenterVertical: 'center-vertical',
+  CenterHorizontal: 'center-horizontal',
+} as const;
+
+type Justification = typeof Justification[keyof typeof Justification];
 
 interface TransformOriginArgs {
   alignment: Align;
@@ -410,7 +413,7 @@ function getWindowSafeAlignment(
     alignments[align].find(alignment => {
       // Check that an alignment will not cause the popover to collide with the window.
 
-      if ([Align.Top, Align.Bottom].includes(alignment)) {
+      if (([Align.Top, Align.Bottom] as Array<Align>).includes(alignment)) {
         const top = calcTop({
           alignment,
           contentElPos,
@@ -424,7 +427,7 @@ function getWindowSafeAlignment(
         });
       }
 
-      if ([Align.Left, Align.Right].includes(alignment)) {
+      if (([Align.Left, Align.Right] as Array<Align>).includes(alignment)) {
         const left = calcLeft({
           alignment,
           contentElPos,
@@ -516,11 +519,11 @@ function getWindowSafeJustification(
     justifications[justify].find(justification => {
       // Check that a justification will not cause the popover to collide with the window.
       if (
-        [
+        ([
           Justification.Top,
           Justification.Bottom,
           Justification.CenterVertical,
-        ].includes(justification)
+        ] as Array<Justification>).includes(justification)
       ) {
         const top = calcTop({
           justification,
@@ -537,11 +540,11 @@ function getWindowSafeJustification(
       }
 
       if (
-        [
+        ([
           Justification.Left,
           Justification.Right,
           Justification.CenterHorizontal,
-        ].includes(justification)
+        ] as Array<Justification>).includes(justification)
       ) {
         const left = calcLeft({
           justification,
