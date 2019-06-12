@@ -1,7 +1,7 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import 'jest-dom/extend-expect';
-import { render, fireEvent, cleanup } from 'react-testing-library';
+import { render, fireEvent, cleanup } from '@testing-library/react';
 import { Menu, MenuGroup, MenuItem } from './index';
 
 afterAll(cleanup);
