@@ -2,30 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp, emotion } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
+import Size from './Size';
 
 const { css, cx } = emotion;
 
 const radioBoxInput = createDataProp('radio-box-input');
 
-export const Size = {
-  Default: 'default',
-  Compact: 'compact',
-  Full: 'full',
-} as const;
-
-export type Size = typeof Size[keyof typeof Size];
-
 export const radioBoxSizes: { [K in Size]: string } = {
-  default: css`
+  [Size.Default]: css`
     width: 139px;
   `,
 
-  compact: css`
+  [Size.Compact]: css`
     padding-right: 4px;
     padding-left: 4px;
   `,
 
-  full: css`
+  [Size.Full]: css`
     flex: 1;
   `,
 };
