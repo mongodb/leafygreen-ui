@@ -18,7 +18,8 @@ jobs:
           command: yarn eslint --format junit -o reports/junit/js-lint-results.xml
       - run:
           name: tests
-          command: yarn test -- --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
+          command: yarn test --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
+
           environment:
             JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
       - run:
