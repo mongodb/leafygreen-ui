@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { colors } from '@leafygreen-ui/theme';
-import { emotion } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { lighten, darken } from 'polished';
 import omit from 'lodash/omit';
-
-const { css, cx } = emotion;
 
 export enum Variant {
   Default = 'default',
