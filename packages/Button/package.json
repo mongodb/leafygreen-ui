@@ -3,6 +3,7 @@
   "version": "2.2.6",
   "description": "leafyGreen UI Kit Button",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
   },
