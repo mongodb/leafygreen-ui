@@ -7,15 +7,13 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
-import { emotion } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 import {
   useViewportSize,
   useMutationObserver,
   useElementNode,
 } from '@leafygreen-ui/hooks';
 import { calculatePosition, getElementPosition } from './positionUtils';
-
-const { css, cx } = emotion;
 
 const rootPopoverStyle = css`
   transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;

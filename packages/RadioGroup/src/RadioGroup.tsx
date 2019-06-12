@@ -2,11 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import { colors } from '@leafygreen-ui/theme';
-import { ccClassName, emotion } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 import Variant from './Variant';
 import Radio, { RadioProps } from './Radio';
-
-const { css } = emotion;
 
 const groupVariants: { [K in Variant]: string } = {
   default: css`
@@ -113,7 +111,7 @@ export default class RadioGroup extends PureComponent<
 
     return (
       <div
-        className={ccClassName(
+        className={cx(
           css`
             ${variantStyle} ${baseStyle}
           `,

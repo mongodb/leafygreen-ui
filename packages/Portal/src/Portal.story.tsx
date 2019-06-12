@@ -1,9 +1,7 @@
 import React from 'react';
 import Portal from './Portal';
 import { storiesOf } from '@storybook/react';
-import { emotion } from '@leafygreen-ui/lib';
-
-const { css } = emotion;
+import { css } from '@leafygreen-ui/emotion';
 
 const portalChildrenStyle = css`
   text-align: center;
