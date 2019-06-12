@@ -1,6 +1,8 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
-import Popover, { Align, Justify } from './Popover';
+import Popover from './Popover';
+import Align from './Align';
+import Justify from './Justify';
 
 afterAll(cleanup);
 
