@@ -55,8 +55,16 @@ function DefaultExample() {
     >
       {text('Button Content', 'Popover')}
       <Popover
-        align={select('Align', ['top', 'right', 'bottom', 'left'], 'top')}
-        justify={select('justify', ['start', 'middle', 'end'], 'start')}
+        align={select(
+          'Align',
+          ['top', 'right', 'bottom', 'left'] as const,
+          'top',
+        )}
+        justify={select(
+          'justify',
+          ['start', 'middle', 'end'] as const,
+          'start',
+        )}
         active={active}
         usePortal={boolean('usePortal', true)}
         spacing={number('spacing', 10)}
@@ -91,8 +99,16 @@ function AdvancedExample() {
         {text('Button Content', 'Popover')}
       </button>
       <Popover
-        align={select('Align', ['top', 'right', 'bottom', 'left'], 'top')}
-        justify={select('justify', ['start', 'middle', 'end'], 'start')}
+        align={select(
+          'Align',
+          ['top', 'right', 'bottom', 'left'] as const,
+          'top',
+        )}
+        justify={select(
+          'justify',
+          ['start', 'middle', 'end'] as const,
+          'start',
+        )}
         active={active}
         usePortal={boolean('usePortal', true)}
         spacing={number('spacing', 10)}

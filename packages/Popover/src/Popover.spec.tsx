@@ -16,8 +16,18 @@ describe('packages/Popover', () => {
     </>,
   );
 
+  function isElement(node: Node | null): node is Element {
+    return node != null && node.nodeType === Node.ELEMENT_NODE;
+  }
+
   test('should show popover when trigger is clicked', () => {
-    expect(document.body.children[1].firstChild.innerHTML).toBe(
+    const { firstChild } = document.body.children[1];
+
+    if (!isElement(firstChild)) {
+      throw new Error('Could not find element');
+    }
+
+    expect(firstChild.innerHTML).toBe(
       'Content to appear inside of Popover component',
     );
   });
