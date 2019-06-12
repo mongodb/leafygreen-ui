@@ -334,7 +334,7 @@ export default function Button(props: ButtonProps) {
 
   if (usesLinkElement(props)) {
     return (
-      <a {...rest as HTMLElementProps<'a'>} {...commonProps}>
+      <a {...(rest as HTMLElementProps<'a'>)} {...commonProps}>
         {children}
       </a>
     );
@@ -344,7 +344,7 @@ export default function Button(props: ButtonProps) {
   return (
     <button
       type="button"
-      {...rest as HTMLElementProps<'button'>}
+      {...(rest as HTMLElementProps<'button'>)}
       {...commonProps}
     >
       {children}
