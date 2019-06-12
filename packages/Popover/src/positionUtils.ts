@@ -1,4 +1,5 @@
-import { Align, Justify } from './Popover';
+import Align from './Align';
+import Justify from './Justify';
 
 interface ElementPosition {
   top: number;
