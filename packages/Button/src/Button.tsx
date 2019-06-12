@@ -25,10 +25,10 @@ export enum Size {
 /** Helper type to extract an HTML element's valid props */
 type HTMLElementProps<
   Element extends keyof JSX.IntrinsicElements
-  > = JSX.IntrinsicElements[Element] extends React.DetailedHTMLProps<
-    infer Props,
-    any
-  >
+> = JSX.IntrinsicElements[Element] extends React.DetailedHTMLProps<
+  infer Props,
+  any
+>
   ? Props
   : never;
 
@@ -265,7 +265,7 @@ interface LinkButtonProps extends HTMLElementProps<'a'>, SharedButtonProps {
 
 interface ButtonButtonProps
   extends HTMLElementProps<'button'>,
-  SharedButtonProps {
+    SharedButtonProps {
   href?: null;
 }
 
@@ -332,7 +332,7 @@ export default function Button(props: ButtonProps) {
 
   if (usesLinkElement(props)) {
     return (
-      <a {...rest as HTMLElementProps<'a'>} {...commonProps}>
+      <a {...(rest as HTMLElementProps<'a'>)} {...commonProps}>
         {children}
       </a>
     );
@@ -342,7 +342,7 @@ export default function Button(props: ButtonProps) {
   return (
     <button
       type="button"
-      {...rest as HTMLElementProps<'button'>}
+      {...(rest as HTMLElementProps<'button'>)}
       {...commonProps}
     >
       {children}
