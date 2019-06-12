@@ -1,15 +1,5 @@
 {
   "description": "leafyGreen UI Kit",
-  "contributors": [
-    {
-      "name": "Dave McCarthy",
-      "email": "dave.mccarthy@mongodb.com"
-    },
-    {
-      "name": "Harry Wolff",
-      "email": "harry@mongodb.com"
-    }
-  ],
   "license": "Apache-2.0",
   "private": true,
   "keywords": [
@@ -30,7 +20,7 @@
   },
   "scripts": {
     "start": "start-storybook -p 9001 -c storybook -s ./storybook/static",
-    "build": "lerna run --parallel build -- -- --env production && yarn ts:emit",
+    "build": "lerna run --parallel build -- --env production && yarn ts:emit",
     "build:storybook": "build-storybook -c storybook -o ./storybook/public -s ./storybook/static",
     "format": "yarn prettier && yarn eslint:format",
     "init": "yarn && yarn build",
@@ -67,6 +57,7 @@
     "@commitlint/cli": "^7.6.1",
     "@commitlint/config-conventional": "^7.6.0",
     "@commitlint/config-lerna-scopes": "^7.6.0",
+    "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.11",
     "@leafygreen-ui/lib": "^2.1.7",
     "@storybook/addon-knobs": "^5.0.11",
@@ -109,7 +100,6 @@
     "prop-types": "^15.0.0",
     "react": "^16.0.0",
     "react-dom": "^16.4.2",
-    "react-emotion": "~9.0.0",
     "react-hooks-testing-library": "^0.5.1",
     "react-router-dom": "4.3.1",
     "react-test-renderer": "^16.8.6",

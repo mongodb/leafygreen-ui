@@ -14,6 +14,6 @@ declare module '*.gif' {
 }
 
 declare module '*.svg' {
-  const value: string;
+  const value: SVGR.Component;
   export = value;
 }

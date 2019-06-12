@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 
 import { colors } from '@leafygreen-ui/theme';
 import { css, cx } from '@leafygreen-ui/emotion';
+import Variant from './Variant';
+import Radio, { RadioProps } from './Radio';
 
-const groupVariants = {
+const groupVariants: { [K in Variant]: string } = {
   default: css`
     color: ${colors.gray[2]};
   `,
@@ -18,7 +20,34 @@ const baseStyle = css`
   padding: 5px;
 `;
 
-export default class RadioGroup extends PureComponent {
+function isRadioElement(
+  element: React.ReactNode,
+): element is React.ReactElement<RadioProps, typeof Radio> {
+  return (
+    element != null &&
+    typeof element === 'object' &&
+    'type' in element &&
+    (element.type as any).displayName === 'Radio'
+  );
+}
+
+interface RadioGroupProps {
+  variant: Variant;
+  className: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  children: React.ReactNode;
+  name?: string;
+  value?: string | number | null;
+}
+
+interface RadioGroupState {
+  value: string | number | null;
+}
+
+export default class RadioGroup extends PureComponent<
+  RadioGroupProps,
+  RadioGroupState
+> {
   static displayName = 'RadioGroup';
 
   static propTypes = {
@@ -31,18 +60,18 @@ export default class RadioGroup extends PureComponent {
   };
 
   static defaultProps = {
-    variant: 'default',
+    variant: Variant.Default,
     className: '',
     onChange: () => {},
   };
 
-  state = {
-    value: '',
+  state: RadioGroupState = {
+    value: null,
   };
 
   defaultName = `radio-group-${Math.floor(Math.random() * 1000000)}`;
 
-  handleChange = e => {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { onChange, value } = this.props;
 
     if (onChange) {
@@ -65,7 +94,7 @@ export default class RadioGroup extends PureComponent {
 
     // React.Children.map allows us to not pass key as prop while iterating over children
     const renderChildren = React.Children.map(children, (child, index) => {
-      if (child.type.displayName !== 'Radio') {
+      if (!isRadioElement(child)) {
         return child;
       }
 

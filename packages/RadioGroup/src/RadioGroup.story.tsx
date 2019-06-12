@@ -3,8 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { text, boolean } from '@storybook/addon-knobs';
 import emotion from '@leafygreen-ui/emotion';
 import { colors } from '@leafygreen-ui/theme';
-import RadioGroup from './RadioGroup';
-import Radio from './Radio';
+import { Radio, RadioGroup, Variant } from '.';
 
 storiesOf('RadioGroup', module)
   .add('Default', () => (
@@ -20,7 +19,7 @@ storiesOf('RadioGroup', module)
   .add('Light', () => (
     <RadioGroup
       name="radio-group-light"
-      variant="light"
+      variant={Variant.Light}
       className={emotion.css`background-color: ${colors.gray[1]}`}
     >
       <Radio value="option-1">Option One</Radio>

@@ -224,12 +224,6 @@ const buttonSizes: { readonly [K in Size]: string } = {
 };
 
 const baseStyle = css`
-  color: ${colors.gray[1]};
-  background-color: ${colors.mongodb.white};
-  background-image: linear-gradient(
-    ${colors.mongodb.white},
-    ${lighten(0.2, colors.gray[5])}
-  );
   border: 1px solid ${colors.gray[6]}};
   box-shadow: inset 0 -1px 0 ${colors.gray[6]};
   height: 32px;
@@ -252,29 +246,6 @@ const baseStyle = css`
     background-image: none;
     box-shadow: none;
     cursor: not-allowed;
-  }
-  &:focus,
-  &:hover {
-    &:not(:disabled) {
-      color: ${colors.gray[0]};
-      border-color: ${colors.gray[5]};
-      background-color: ${colors.mongodb.white};
-      background-image: linear-gradient(
-        ${lighten(0.5, colors.gray[5])},
-        ${lighten(0.15, colors.gray[5])}
-      );
-      box-shadow: inset 0 -1px 0 ${colors.gray[5]}, 0 1px 4px rgba(0, 0, 0, 0.1);
-      outline: none;
-    }
-  }
-  &:active:not(:disabled) {
-    border-color: ${colors.gray[5]};
-    background-color: linear-gradient(
-      ${lighten(0.15, colors.gray[5])},
-      ${lighten(0.5, colors.gray[5])}
-    );
-    box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.1);
-    outline: none;
   }
 `;
 
@@ -377,14 +348,6 @@ export default function Button(props: ButtonProps) {
   );
 }
 
-/*
-NOTE(JeT):
-Without the `as any` type annotation here, @types/react will try to infer TS prop types from it,
-merging them together with ButtonProps (see LibraryManagedAttributes and MergePropTypes in @types/react).
-Unfortunately, this merging uses keyof, which appears to drop the [key: string] index signature, meaning TS won't
-allow us to pass unrecognized props down to custom components when we're using the `as` prop. This workaround avoids
-the attempt at merging, while still getting runtime type-checking for non-TS consumers of the library.
-*/
 Button.propTypes = {
   variant: PropTypes.oneOf(['default', 'primary', 'info', 'danger', 'dark']),
   size: PropTypes.oneOf(['xsmall', 'small', 'normal', 'large']),
@@ -393,6 +356,6 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   href: PropTypes.string,
-} as any;
+};
 
 Button.displayName = 'Button';
