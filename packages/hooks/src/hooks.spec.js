@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { act, renderHook } from 'react-hooks-testing-library';
-import { render, cleanup } from 'react-testing-library';
+import { render, cleanup } from '@testing-library/react';
 import { useEventListener, useElementNode, useViewportSize } from './index';
 
 afterAll(cleanup);
