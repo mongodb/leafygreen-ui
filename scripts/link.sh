@@ -1,9 +1,9 @@
 #!/bin/sh
 set -e
 # $1 the first argument after the command is the relative or absolute path to the client
-# directory, where you intend to run npm link on installed UI-Kit modules.
+# directory, where you intend to run yarn link on installed UI-Kit modules.
 # To run, navigate to your leafygreen-ui folder root, then in the shell run
-# npm run link -- ${PATH_TO_APPLICATION}
+# yarn run link -- ${PATH_TO_APPLICATION}
 
 if [ "$1" == "" ]; then
     echo "This script requires a path to the target application from the root folder of this repository."
@@ -28,14 +28,14 @@ for d in *; do
     fi
 done
 cd $LEAFYGREEN_HOME
-npm install && lerna bootstrap
+yarn
 set +e
-npm run link-all-packages
+yarn run link-all-packages
 set -e
 cd $LEAFYGREEN_HOME
-npm run build
+yarn build
 cd $APPLICATION_HOME
 for f in "${INSTALLED_PACKAGES_ARRAY[@]}"; do
-    npm link @leafygreen-ui/$f
+    yarn link @leafygreen-ui/$f
 done
 

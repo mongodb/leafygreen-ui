@@ -7,27 +7,26 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - node-cache-{{ checksum "package-lock.json" }}
-            - node-cache
-      - run: npm install
-      - run: npx lerna bootstrap
-      - run: npm run build
+            - node-cache-v1-{{ checksum "yarn.lock" }}
+      - run: yarn install
+      - run: yarn build
       - run:
           name: prettier
-          command: npm run prettier:check
+          command: yarn prettier:check
       - run:
           name: lint
-          command: npm run eslint -- --format junit -o reports/junit/js-lint-results.xml
+          command: yarn eslint --format junit -o reports/junit/js-lint-results.xml
       - run:
           name: tests
-          command: npm run test -- --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
+          command: yarn test --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
+
           environment:
             JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
       - run:
           name: types
-          command: npm run ts:check
+          command: yarn ts:check
       - save_cache:
-          key: node-cache-{{ checksum "package-lock.json" }}
+          key: node-cache-v1-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
       - store_test_results:
