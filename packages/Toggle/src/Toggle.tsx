@@ -1,20 +1,23 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { createDataProp, emotion } from '@leafygreen-ui/lib';
+import { createDataProp } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { colors } from '@leafygreen-ui/theme';
 
-const { css, cx } = emotion;
+export const Size = {
+  Default: 'default',
+  Small: 'small',
+  XSmall: 'xsmall',
+} as const;
 
-export enum Size {
-  Default = 'default',
-  Small = 'small',
-  XSmall = 'xsmall',
-}
+export type Size = typeof Size[keyof typeof Size];
 
-export enum Variant {
-  Default = 'default',
-  Dark = 'dark',
-}
+export const Variant = {
+  Default: 'default',
+  Dark: 'dark',
+} as const;
+
+export type Variant = typeof Variant[keyof typeof Variant];
 
 const toggleInput = createDataProp('toggle-input');
 const toggleGroove = createDataProp('toggle-groove');

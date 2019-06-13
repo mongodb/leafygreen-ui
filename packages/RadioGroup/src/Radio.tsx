@@ -1,10 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { colors } from '@leafygreen-ui/theme';
-import { emotion } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 import Variant from './Variant';
-
-const { css, cx } = emotion;
 
 const labelStyle = css`
   cursor: pointer;

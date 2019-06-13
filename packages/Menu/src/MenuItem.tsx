@@ -1,10 +1,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { emotion } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { colors } from '@leafygreen-ui/theme';
 import { menuGroup } from './MenuGroup';
-
-const { css, cx } = emotion;
 
 const indentation = 16;
 

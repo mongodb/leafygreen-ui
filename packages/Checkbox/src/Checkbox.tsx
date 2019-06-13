@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { emotion, createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { colors } from '@leafygreen-ui/theme';
 import {
   spritesheetLight,
@@ -11,17 +12,17 @@ import {
   indeterminateDark,
 } from './img';
 
-const { css, cx } = emotion;
-
 const checkboxWrapper = createDataProp('checkbox-wrapper');
 
 const height = 20;
 const width = 600;
 
-export enum Variant {
-  Default = 'default',
-  Light = 'light',
-}
+export const Variant = {
+  Default: 'default',
+  Light: 'light',
+} as const;
+
+export type Variant = typeof Variant[keyof typeof Variant];
 
 const wrapperStyle = css`
   transition: 300ms opacity ease-in-out;

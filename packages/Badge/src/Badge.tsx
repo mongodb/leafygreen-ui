@@ -1,20 +1,20 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { colors } from '@leafygreen-ui/theme';
-import { ccClassName, emotion } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 
-const { css } = emotion;
+export const Variant = {
+  Default: 'default',
+  Dark: 'dark',
+  Danger: 'danger',
+  Warning: 'warning',
+  DarkBlue: 'darkBlue',
+  LightBlue: 'lightBlue',
+  Primary: 'primary',
+  Outline: 'outline',
+} as const;
 
-export enum Variant {
-  Default = 'default',
-  Dark = 'dark',
-  Danger = 'danger',
-  Warning = 'warning',
-  DarkBlue = 'darkBlue',
-  LightBlue = 'lightBlue',
-  Primary = 'primary',
-  Outline = 'outline',
-}
+export type Variant = typeof Variant[keyof typeof Variant];
 
 export const baseStyle = css`
   display: inline-flex;
@@ -80,16 +80,7 @@ export default class Badge extends PureComponent<
   static propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
-    variant: PropTypes.oneOf([
-      'default',
-      'danger',
-      'warning',
-      'darkBlue',
-      'lightBlue',
-      'primary',
-      'outline',
-      'dark',
-    ]),
+    variant: PropTypes.oneOf(Object.values(Variant)),
   };
 
   static defaultProps = {
@@ -103,7 +94,7 @@ export default class Badge extends PureComponent<
     return (
       <div
         {...rest}
-        className={ccClassName(baseStyle, badgeVariants[variant], className)}
+        className={cx(baseStyle, badgeVariants[variant], className)}
       >
         {children}
       </div>

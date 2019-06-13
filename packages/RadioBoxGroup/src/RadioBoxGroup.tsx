@@ -1,10 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { emotion } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 import RadioBox, { RadioBoxProps } from './RadioBox';
 import Size from './Size';
-
-const { css, cx } = emotion;
 
 const baseGroupStyle = css`
   display: flex;

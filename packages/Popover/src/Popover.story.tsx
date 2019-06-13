@@ -1,11 +1,10 @@
 import React, { useState, useRef } from 'react';
-import Popover from './Popover';
 import { storiesOf } from '@storybook/react';
 import { select, boolean, number, text } from '@storybook/addon-knobs';
-import { emotion } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { colors } from '@leafygreen-ui/theme';
 
-const { css, cx } = emotion;
+import Popover, { Align, Justify } from '.';
 
 const containerStyle = css`
   position: absolute;
@@ -55,8 +54,8 @@ function DefaultExample() {
     >
       {text('Button Content', 'Popover')}
       <Popover
-        align={select('Align', ['top', 'right', 'bottom', 'left'], 'top')}
-        justify={select('justify', ['start', 'middle', 'end'], 'start')}
+        align={select('Align', Object.values(Align), 'top')}
+        justify={select('justify', Object.values(Justify), 'start')}
         active={active}
         usePortal={boolean('usePortal', true)}
         spacing={number('spacing', 10)}
@@ -91,8 +90,8 @@ function AdvancedExample() {
         {text('Button Content', 'Popover')}
       </button>
       <Popover
-        align={select('Align', ['top', 'right', 'bottom', 'left'], 'top')}
-        justify={select('justify', ['start', 'middle', 'end'], 'start')}
+        align={select('Align', Object.values(Align), 'top')}
+        justify={select('justify', Object.values(Justify), 'start')}
         active={active}
         usePortal={boolean('usePortal', true)}
         spacing={number('spacing', 10)}
