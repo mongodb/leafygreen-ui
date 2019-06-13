@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 interface UseEventOptions {
-  options?: object;
+  options?: EventListenerOptions;
   dependencies?: Array<any>;
   enabled?: boolean;
   element?: Document | HTMLElement;
@@ -17,17 +17,21 @@ interface UseEventOptions {
  * @param optional.dependencies Array to be passed to useEffect hook, such that the hook will only run if the array's values have changed.
  * @param optional.element Value to be passed as target of event handler, will default to document.
  */
-export default function useEventListener(
-  type: keyof GlobalEventHandlersEventMap,
-  eventCallback: (e) => void,
+export default function useEventListener<
+  Type extends keyof GlobalEventHandlersEventMap
+>(
+  type: Type,
+  eventCallback: (e: GlobalEventHandlersEventMap[Type]) => void,
   {
-    options = undefined,
+    options,
     enabled = true,
     dependencies = [enabled, type],
     element = document,
   }: UseEventOptions = {},
 ) {
-  const memoizedEventCallback = useRef(e => {}); //eslint-disable-line @typescript-eslint/no-unused-vars
+  const memoizedEventCallback: React.MutableRefObject<
+    (e: GlobalEventHandlersEventMap[Type]) => void
+  > = useRef(() => {});
 
   useEffect(() => {
     memoizedEventCallback.current = eventCallback;
@@ -38,12 +42,18 @@ export default function useEventListener(
       return;
     }
 
-    const callback = e => memoizedEventCallback.current(e);
+    const callback = (e: GlobalEventHandlersEventMap[Type]) =>
+      memoizedEventCallback.current(e);
 
-    element.addEventListener(type, callback, options);
+    // NOTE(JeT): I'm pretty sure there should be a way to avoid this type assertion, but I couldn't figure it out.
+    element.addEventListener(type, callback as EventListener, options);
 
     return () => {
-      document.removeEventListener(type, eventCallback, options);
+      element.removeEventListener(
+        type,
+        eventCallback as EventListener,
+        options,
+      );
     };
   }, dependencies);
 }

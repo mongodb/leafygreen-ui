@@ -44,7 +44,7 @@ export default class Portal extends Component<PortalProps, PortalState> {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: PortalProps) {
     if (this.props.container !== nextProps.container) {
       // Sending consumer console error to control how this component is used
       // and prevent unintended side-effects
