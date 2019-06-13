@@ -1,15 +1,10 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { emotion } from '@leafygreen-ui/lib';
+import { cx } from '@leafygreen-ui/emotion';
 import hljs from 'highlight.js/lib/highlight';
-import variantStyles from './globalStyles';
-import { Variants, SupportedLanguages } from './types';
-
-const { cx, injectGlobal } = emotion;
-
-variantStyles.forEach(style => injectGlobal(style))
-
-const SupportedLanguagesList = Object.values(SupportedLanguages)
+import { Variant, SupportedLanguages, Lang } from './types';
+import './globalStyles';
+const SupportedLanguagesList = Object.values(SupportedLanguages);
 
 SupportedLanguagesList.forEach(language => {
   hljs.registerLanguage(
@@ -40,42 +35,46 @@ export interface Props {
    *
    * default: `'auto'`
    */
-  lang: SupportedLanguages | 'auto' | 'none';
+  lang?: Lang;
 
   /**
    * The variant for the syntax-highlighted block.
    *
    * default: `'light'`
    */
-  variant: typeof Variants[keyof typeof Variants];
-  
+  variant?: Variant;
 }
 
 function Syntax({
   children,
-  lang = 'auto',
+  lang = Lang.Auto,
   className,
   variant = 'light',
-}: Props): React.ReactElement {
+  ...rest
+}: Props & React.HTMLAttributes<HTMLElement>) {
   const codeClassName = cx(
     `lg-highlight-hljs-${variant}`,
     'lg-highlight-hljs',
     {
-      [SupportedLanguages[lang]]: lang !== 'auto',
+      [SupportedLanguages[lang]]: lang !== Lang.Auto,
     },
     className,
   );
 
   if (!children) {
-    return <code className={codeClassName} />;
+    return <code {...rest} className={codeClassName} />;
   }
 
-  if (lang === 'none') {
-    return <code className={codeClassName}>{children}</code>;
+  if (lang === Lang.None) {
+    return (
+      <code {...rest} className={codeClassName}>
+        {children}
+      </code>
+    );
   }
 
   const highlightedContent: string = useMemo(() => {
-    if (lang === 'auto') {
+    if (lang === Lang.Auto) {
       return hljs.highlightAuto(children).value;
     }
 
@@ -83,22 +82,21 @@ function Syntax({
   }, [lang, children]);
 
   return (
-    <>
-      <code
-        className={codeClassName}
-        dangerouslySetInnerHTML={{ __html: highlightedContent }}
-      />
-    </>
+    <code
+      {...rest}
+      className={codeClassName}
+      dangerouslySetInnerHTML={{ __html: highlightedContent }}
+    />
   );
 }
 
 Syntax.displayName = 'Syntax';
 
 Syntax.propTypes = {
-  children: PropTypes.string,
-  lang: PropTypes.oneOf([...SupportedLanguagesList, 'auto', 'none']),
+  children: PropTypes.string.isRequired,
+  lang: PropTypes.oneOf(Object.values(Lang)),
   className: PropTypes.string,
-  variant: PropTypes.oneOf(Object.values(Variants))
+  variant: PropTypes.oneOf(Object.values(Variant)),
 };
 
 export default Syntax;

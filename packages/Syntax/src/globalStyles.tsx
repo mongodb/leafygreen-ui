@@ -1,65 +1,51 @@
-import { Variants } from './types';
+import { Variant } from './types';
+import { injectGlobal } from '@leafygreen-ui/emotion';
 
 interface Base16Palette {
-  '00': string; // Default Background
-  '01': string; // Lighter Background (Used for status bars)
-  '02': string; // Selection Background
-  '03': string; // Comments, Invisibles, Line Highlighting
-  '04': string; // Dark Foreground (Used for status bars)
-  '05': string; // Default Foreground, Caret, Delimiters, Operators
-  '06': string; // Light Foreground (Not often used)
-  '07': string; // Light Background (Not often used)
-  '08': string; // Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
-  '09': string; // Integers, Boolean, Constants, XML Attributes, Markup Link Url
-  '0A': string; // Classes, Markup Bold, Search Text Background
-  '0B': string; // Strings, Inherited Class, Markup Code, Diff Inserted
-  '0C': string; // Support, Regular Expressions, Escape Characters, Markup Quotes
-  '0D': string; // Functions, Methods, Attribute IDs, Headings
-  '0E': string; // Keywords, Storage, Selector, Markup Italic, Diff Changed
-  '0F': string; // Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
+  '00': string; // Background // DONE
+  '01': string; // Borders / non-text graphical accents // DONE
+  '02': string; // Comments, Doctags, Formulas // DONE
+  '03': string; // Default Text // DONE
+  '04': string; // Highlights // DONE
+  '05': string; // Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
+  '06': string; // Classes, Markup Bold, Search Text Background
+  '07': string; // Strings, Inherited Class, Markup Code, Diff Inserted
+  '08': string; // Support, Regular Expressions, Escape Characters, Markup Quotes
+  '09': string; // Functions, Methods, Classes, Names, Sections, Literals // DONE
+  '10': string; // Keywords, Storage, Selector, Markup Italic, Diff Changed
 }
 
-const variantColors: { readonly [K in Variants]: Base16Palette } = {
-  [Variants.Light]: {
-    '00': '#21313C',
-    '01': '#3D4F58',
-    '02': '#B8C4C2', // Fail
-    '03': '#5D6C74',
-    '04': '#B8C4C2', // Fail
-    '05': '#E7EEEC', // Fail
-    '06': '#F9FBFA', // Fail
-    '07': '#FFFFFF', // Fail
-    '08': '#CA4821',
-    '09': '#E78735', // Fail
-    '0A': '#EDB20E', // Fail
-    '0B': '#13AA52', // Fail #116149 ?
-    '0C': '#63AEB9', // Fail
-    '0D': '#007CAD',
-    '0E': '#CC3887',
-    '0F': '#DB9F5A', // Fail
+export const variantColors: { readonly [K in Variant]: Base16Palette } = {
+  [Variant.Light]: {
+    '00': '#F9FBFA',
+    '01': '#E7EEEC',
+    '02': '#3D4F58',
+    '04': '#FFFFFF',
+    '03': '#061621',
+    '05': '#CA4821',
+    '06': '#EDB210', // Fail
+    '07': '#12824D',
+    '08': '#1A567E',
+    '09': '#007CAD',
+    '10': '#CC3887',
   },
 
-  [Variants.Dark]: {
+  [Variant.Dark]: {
     '00': '#21313C',
-    '01': '#3D4F58',
-    '02': '#5D6C74',
-    '03': '#89989B',
-    '04': '#B8C4C2',
-    '05': '#E7EEEC',
-    '06': '#F9FBFA',
-    '07': '#FFFFFF',
-    '08': '#FF6F44',
-    '09': '#FFAC65',
-    '0A': '#EDB20E',
-    '0B': '#35DE7B',
-    '0C': '#a5e3ff',
-    '0D': '#2DC4FF',
-    '0E': '#FF7DC3',
-    '0F': '#DB9F5A',
+    '01': '#061621',
+    '02': '#89989B',
+    '03': '#f9fbfa',
+    '04': '#061621',
+    '05': '#FF6F44',
+    '06': '#EDB210',
+    '07': '#35DE7B',
+    '08': '#a5e3ff',
+    '09': '#2DC4FF',
+    '10': '#FF7DC3',
   },
 };
 
-const getStyles = (variant: Variants) => `
+const getStyles = (variant: Variant): string => `
   .lg-highlight-hljs-${variant} {
     &.lg-highlight-hljs {
       display: block;
@@ -75,18 +61,19 @@ const getStyles = (variant: Variants) => `
     .lg-highlight-name,
     .lg-highlight-class > .lg-highlight-keyword,
     .lg-highlight-function > .lg-highlight-keyword {
-      color: ${variantColors[variant]['0D']};
+      color: ${variantColors[variant]['09']};
     }
   
     .lg-highlight-regexp,
     .lg-highlight-params,
     .lg-highlight-meta,
     .lg-highlight-meta-string {
-      color: ${variantColors[variant]['0C']};
+      color: ${variantColors[variant]['08']};
     }
   
     .lg-highlight-comment,
-    .lg-highlight-doctag {
+    .lg-highlight-doctag,
+    .lg-highlight-formula {
       color: ${variantColors[variant]['03']};
     }
   
@@ -96,11 +83,11 @@ const getStyles = (variant: Variants) => `
     .lg-highlight-selector-pseudo,
     .lg-highlight-selector-id,
     .lg-highlight-selector-class {
-      color: ${variantColors[variant]['0E']};
+      color: ${variantColors[variant]['10']};
     }
   
     .lg-highlight-addition {
-      color: ${variantColors[variant]['05']};
+      color: ${variantColors[variant]['04']};
     }
   
     .lg-highlight-variable,
@@ -109,26 +96,19 @@ const getStyles = (variant: Variants) => `
     .lg-highlight-bullet,
     .lg-highlight-subst,
     .lg-highlight-meta,
-    .lg-highlight-link {
-      color: ${variantColors[variant]['08']}
-    }
-  
+    .lg-highlight-link,
     .lg-highlight-number,
     .lg-highlight-attr,
     .lg-highlight-attribute,
     .lg-highlight-built_in,
     .lg-highlight-template-variable,
     .lg-highlight-type {
-      color: ${variantColors[variant]['09']};
+      color: ${variantColors[variant]['05']}
     }
   
     .lg-highlight-string,
     .lg-highlight-title {
-      color: ${variantColors[variant]['0B']};
-    }
-  
-    .lg-highlight-formula {
-      background: ${variantColors[variant]['02']};
+      color: ${variantColors[variant]['07']};
     }
   
     .lg-highlight-emphasis {
@@ -141,4 +121,4 @@ const getStyles = (variant: Variants) => `
   }
 `;
 
-export default Object.values(Variants).map(getStyles)
+Object.values(Variant).forEach(variant => injectGlobal(getStyles(variant)));

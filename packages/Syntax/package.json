@@ -17,7 +17,7 @@
     "@leafygreen-ui/lib": "^2.1.4",
     "@leafygreen-ui/theme": "^1.1.4",
     "@leafygreen-ui/portal": "^1.0.5",
-    "highlight.js": "^9.15.6",
-    "highlightjs-line-numbers.js": "^2.7.0"
+    "@types/highlight.js": "^9.12.3",
+    "highlight.js": "^9.15.6"
   }
 }

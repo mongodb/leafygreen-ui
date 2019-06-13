@@ -1,16 +1,16 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
-import { emotion } from '@leafygreen-ui/lib';
-import { Variants } from '@leafygreen-ui/syntax';
-import Code from './index.ts';
+import { css } from '@leafygreen-ui/emotion';
+import { Variant, Lang } from '@leafygreen-ui/syntax';
+import Code from '.';
 
-const { css } = emotion;
-
-const jsSnippet = `\
+const codeSnippets: { [K in string]: string } = {
+  [Lang.Javascript]: `\
 const insertDocuments = function(db, callback) {
   // Get the documents collection
   const collection = db.collection('documents');
+  
   // Insert some documents
   collection.insertMany([
     {a : 1}, {a : 2}, {a : 3}
@@ -44,136 +44,9 @@ client.connect(function(err) {
     client.close();
   });
 });
-`;
+`,
 
-const javaSnippet = `\
-package com.mongodb;
-
-import com.mongodb.lang.Nullable;
-import org.bson.BsonDocument;
-import org.bson.BsonString;
-
-import static com.mongodb.assertions.Assertions.notNull;
-
-/**
- * A read concern allows clients to choose a level of isolation for their reads.
- *
- * @mongodb.server.release 3.2
- * @mongodb.driver.manual reference/readConcern/ Read Concern
- * @since 3.2
- */
-public final class ReadConcern {
-  private final ReadConcernLevel level;
-
-  /**
-   * Construct a new read concern
-   *
-   * @param level the read concern level
-   */
-  public ReadConcern(final ReadConcernLevel level) {
-    this.level = notNull("level", level);
-  }
-
-  /**
-   * Use the servers default read concern.
-   */
-  public static final ReadConcern DEFAULT = new ReadConcern();
-
-  /**
-   * The local read concern.
-   */
-  public static final ReadConcern LOCAL = new ReadConcern(ReadConcernLevel.LOCAL);
-
-  /**
-   * The majority read concern.
-   */
-  public static final ReadConcern MAJORITY = new ReadConcern(ReadConcernLevel.MAJORITY);
-
-  /**
-   * The linearizable read concern.
-   *
-   * <p>
-   * This read concern is only compatible with {@link ReadPreference#primary()}.
-   * </p>
-   *
-   * @since 3.4
-   * @mongodb.server.release 3.4
-   */
-  public static final ReadConcern LINEARIZABLE = new ReadConcern(ReadConcernLevel.LINEARIZABLE);
-
-  /**
-   * The snapshot read concern.
-   *
-   * @since 3.8
-   * @mongodb.server.release 4.0
-   */
-  public static final ReadConcern SNAPSHOT = new ReadConcern(ReadConcernLevel.SNAPSHOT);
-
-  /**
-   * The available read concern.
-   *
-   * @since 3.9
-   * @mongodb.server.release 3.6
-   */
-  public static final ReadConcern AVAILABLE = new ReadConcern(ReadConcernLevel.AVAILABLE);
-
-  /**
-   * Gets the read concern level.
-   *
-   * @return the read concern level, which may be null (which indicates to use the server's default level)
-   * @since 3.6
-   */
-  @Nullable
-  public ReadConcernLevel getLevel() {
-    return level;
-  }
-
-  /**
-   * @return true if this is the server default read concern
-   */
-  public boolean isServerDefault() {
-    return level == null;
-  }
-
-  /**
-   * Gets this read concern as a document.
-   *
-   * @return The read concern as a BsonDocument
-   */
-  public BsonDocument asDocument() {
-    BsonDocument readConcern = new BsonDocument();
-    if (level != null) {
-        readConcern.put("level", new BsonString(level.getValue()));
-    }
-    return readConcern;
-  }
-
-  @Override
-  public boolean equals(final Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-
-    ReadConcern that = (ReadConcern) o;
-
-    return level == that.level;
-  }
-
-  @Override
-  public int hashCode() {
-    return level != null ? level.hashCode() : 0;
-  }
-
-  private ReadConcern() {
-    this.level = null;
-  }
-}
-`;
-
-const rubySnippet = `\
+  [Lang.Ruby]: `\
 require 'mongo/collection/view/builder'
 require 'mongo/collection/view/immutable'
 require 'mongo/collection/view/iterable'
@@ -220,9 +93,9 @@ module Mongo
 
       # Delegate necessary operations to the collection.
       def_delegators :collection,
-                     :client,
-                     :cluster,
-                     :database
+                      :client,
+                      :cluster,
+                      :database
 
       # Delegate to the cluster for the next primary.
       def_delegators :cluster, :next_primary
@@ -368,19 +241,157 @@ module Mongo
     end
   end
 end
-`;
+  `,
 
-storiesOf('Code', module).add('Multiline', () => (
-  <div
-    className={css`
-      margin: 50px;
-    `}
-  >
-    <Code
-      showLineNumbers={boolean('Show line numbers', true)}
-      variant={select('Theme', Object.values(Variants), 'light')}
+  [Lang.Java]: `\
+package com.mongodb;
+
+import com.mongodb.lang.Nullable;
+import org.bson.BsonDocument;
+import org.bson.BsonString;
+
+import static com.mongodb.assertions.Assertions.notNull;
+
+/**
+ * A read concern allows clients to choose a level of isolation for their reads.
+ *
+ * @mongodb.server.release 3.2
+ * @mongodb.driver.manual reference/readConcern/ Read Concern
+ * @since 3.2
+ */
+public final class ReadConcern {
+  private final ReadConcernLevel level;
+
+  /**
+   * Construct a new read concern
+   *
+   * @param level the read concern level
+   */
+  public ReadConcern(final ReadConcernLevel level) {
+    this.level = notNull("level", level);
+  }
+
+  /**
+   * Use the servers default read concern.
+   */
+  public static final ReadConcern DEFAULT = new ReadConcern();
+
+  /**
+   * The local read concern.
+   */
+  public static final ReadConcern LOCAL = new ReadConcern(ReadConcernLevel.LOCAL);
+
+  /**
+   * The majority read concern.
+   */
+  public static final ReadConcern MAJORITY = new ReadConcern(ReadConcernLevel.MAJORITY);
+
+  /**
+   * The linearizable read concern.
+   *
+   * <p>
+   * This read concern is only compatible with {@link ReadPreference#primary()}.
+   * </p>
+   *
+   * @since 3.4
+   * @mongodb.server.release 3.4
+   */
+  public static final ReadConcern LINEARIZABLE = new ReadConcern(ReadConcernLevel.LINEARIZABLE);
+
+  /**
+   * The snapshot read concern.
+   *
+   * @since 3.8
+   * @mongodb.server.release 4.0
+   */
+  public static final ReadConcern SNAPSHOT = new ReadConcern(ReadConcernLevel.SNAPSHOT);
+
+  /**
+   * The available read concern.
+   *
+   * @since 3.9
+   * @mongodb.server.release 3.6
+   */
+  public static final ReadConcern AVAILABLE = new ReadConcern(ReadConcernLevel.AVAILABLE);
+
+  /**
+   * Gets the read concern level.
+   *
+   * @return the read concern level, which may be null (which indicates to use the server's default level)
+   * @since 3.6
+   */
+  @Nullable
+  public ReadConcernLevel getLevel() {
+    return level;
+  }
+
+  /**
+   * @return true if this is the server default read concern
+   */
+  public boolean isServerDefault() {
+    return level == null;
+  }
+
+  /**
+   * Gets this read concern as a document.
+   *
+   * @return The read concern as a BsonDocument
+   */
+  public BsonDocument asDocument() {
+    BsonDocument readConcern = new BsonDocument();
+    if (level != null) {
+        readConcern.put("level", new BsonString(level.getValue()));
+    }
+    return readConcern;
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    ReadConcern that = (ReadConcern) o;
+
+    return level == that.level;
+  }
+
+  @Override
+  public int hashCode() {
+    return level != null ? level.hashCode() : 0;
+  }
+
+  private ReadConcern() {
+    this.level = null;
+  }
+}
+  `,
+};
+
+storiesOf('Code', module).add('Multiline', () => {
+  const language = select(
+    'Language',
+    Object.keys(codeSnippets),
+    Lang.Javascript,
+  );
+  const margin = 50;
+
+  return (
+    <div
+      className={css`
+        margin: ${margin}px;
+        max-width: calc(100% - ${margin * 2}px);
+      `}
     >
-      {rubySnippet}
-    </Code>
-  </div>
-));
+      <Code
+        showLineNumbers={boolean('Show line numbers', true)}
+        variant={select('Variant', Object.values(Variant), Variant.Light)}
+      >
+        {codeSnippets[language]}
+      </Code>
+    </div>
+  );
+});
