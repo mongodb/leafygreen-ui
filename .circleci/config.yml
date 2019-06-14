@@ -8,7 +8,6 @@ jobs:
       - restore_cache:
           keys:
             - node-cache-v1-{{ checksum "yarn.lock" }}
-      - run: lerna clean
       - run: yarn install
       - run: yarn build
       - run:
