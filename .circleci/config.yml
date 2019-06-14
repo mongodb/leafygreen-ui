@@ -7,7 +7,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - node-cache-v1-{{ checksum "yarn.lock" }}
+            - node-cache-v2-{{ checksum "yarn.lock" }}
       - run: yarn install
       - run: yarn build
       - run:
@@ -26,7 +26,7 @@ jobs:
           name: types
           command: yarn ts:check
       - save_cache:
-          key: node-cache-v1-{{ checksum "yarn.lock" }}
+          key: node-cache-v2-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
       - store_test_results:
