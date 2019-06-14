@@ -9,7 +9,6 @@
     "strictNullChecks": true,
     "noUnusedLocals": true,
     "strict": true,
-    "noImplicitAny": false, // Turn on when all files have been typed
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "typeRoots": ["./typings", "./node_modules/@types"]
