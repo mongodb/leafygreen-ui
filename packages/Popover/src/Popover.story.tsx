@@ -46,8 +46,8 @@ function DefaultExample() {
         referenceElPositions[
           select(
             'Reference Element Position',
-            ['center', 'top', 'right', 'bottom', 'left'],
-            'center',
+            ['centered', 'top', 'right', 'bottom', 'left'],
+            'centered',
           )
         ],
       )}
@@ -81,8 +81,8 @@ function AdvancedExample() {
           referenceElPositions[
             select(
               'Reference Element Position',
-              ['center', 'top', 'right', 'bottom', 'left'],
-              'center',
+              ['centered', 'top', 'right', 'bottom', 'left'],
+              'centered',
             )
           ],
         )}
