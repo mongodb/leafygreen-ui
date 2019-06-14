@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 interface UseEventOptions {
-  options?: EventListenerOptions;
+  options?: AddEventListenerOptions;
   dependencies?: Array<any>;
   enabled?: boolean;
   element?: Document | HTMLElement;
