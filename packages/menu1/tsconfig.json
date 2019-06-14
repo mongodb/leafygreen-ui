@@ -1,7 +1,0 @@
-{
-  "extends": "../../package.tsconfig.json",
-  "compilerOptions": {
-    "declarationDir": "../menu/dist"
-  },
-  "include": ["../menu/**/*"]
-}
