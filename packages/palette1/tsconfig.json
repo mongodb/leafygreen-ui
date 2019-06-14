@@ -1,0 +1,7 @@
+{
+  "extends": "../../package.tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "../palette/dist"
+  },
+  "include": ["../palette/**/*"]
+}
