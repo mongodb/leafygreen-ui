@@ -4,8 +4,13 @@ import styled from '@emotion/styled';
 import { lighten, darken, readableColor, transparentize } from 'polished';
 import * as uiColors from './uiColors';
 
-const ColorBlock = styled('div')`
-  background-color: ${props => props['data-color'] || 'transparent'};
+interface ColorBlockProps {
+  color: string;
+  name: string;
+}
+
+const ColorBlock = styled<'div', ColorBlockProps>('div')`
+  background-color: ${props => props.color};
   border-top-color: transparent;
   display: inline-block;
   position: relative;
@@ -14,8 +19,9 @@ const ColorBlock = styled('div')`
   border-radius: 8px;
   margin: 10px;
   margin-bottom: 20px;
-  box-shadow: 0 8px 6px -8px ${props => transparentize(0.7, darken(0.2, props['data-color']))},
-    0 2px 3px ${props => transparentize(0.8, darken(0.5, props['data-color']))};
+  box-shadow: 0 8px 6px -8px ${props =>
+    transparentize(0.7, darken(0.2, props.color))},
+    0 2px 3px ${props => transparentize(0.8, darken(0.5, props.color))};
 
   &:before {
     content: attr(data-color);
@@ -26,13 +32,13 @@ const ColorBlock = styled('div')`
     font-size: 12px;
     text-align: center;
     padding: 3px 0.3rem;
-    color: ${props => readableColor(lighten(0.2, props['data-color']))};
-    background-color: ${props => lighten(0.2, props['data-color'])};
+    color: ${props => readableColor(lighten(0.2, props.color))};
+    background-color: ${props => lighten(0.2, props.color)};
     border-radius: 4px;
   }
 
   &:after {
-    content: attr(data-name);
+    content: "${props => props.name}";
     position: absolute;
     top: calc(100% + 8px);
     font-size: 12px;
@@ -48,26 +54,26 @@ const ColorBlock = styled('div')`
  */
 
 function renderColors() {
-  const ranges: Array<string> = Object.keys(uiColors);
+  const ranges = Object.keys(uiColors) as Array<keyof typeof uiColors>;
 
   const renderedRanges = ranges.map(range => {
     const currentVal = uiColors[range];
 
     if (typeof currentVal === 'string') {
-      return (
-        <ColorBlock key={range} data-color={currentVal} data-name={range} />
-      );
+      return <ColorBlock key={range} color={currentVal} name={range} />;
     }
 
     return (
       <div key={range}>
-        {Object.keys(currentVal).map(name => (
-          <ColorBlock
-            key={currentVal[name]}
-            data-color={currentVal[name]}
-            data-name={`${range} ${name}`}
-          />
-        ))}
+        {(Object.keys(currentVal) as Array<keyof typeof currentVal>).map(
+          name => (
+            <ColorBlock
+              key={currentVal[name]}
+              color={currentVal[name]}
+              name={`${range} ${name}`}
+            />
+          ),
+        )}
       </div>
     );
   });
