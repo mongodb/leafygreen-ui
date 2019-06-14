@@ -10,11 +10,32 @@ interface HueRange {
   light3: string;
 }
 
+const requiredKeys = new Set(['dark3', 'base', 'light3']);
+const optionalKeys = new Set(['dark2', 'dark1', 'light1', 'light2']);
+
 const allColors: Array<string | HueRange> = Object.values(uiColors);
 describe('packages/palette', function() {
-  // eslint-disable-next-line no-console
-  console.log(
-    `Dummy test to trigger a type error if any of the exported colors don't match the expected interface`,
-    allColors,
-  );
+  test('all colors have only expected hues', () => {
+    allColors.forEach(color => {
+      if (typeof color === 'string') {
+        return;
+      }
+
+      Object.keys(color).forEach(hue => {
+        expect(requiredKeys.has(hue) || optionalKeys.has(hue)).toBeTruthy();
+      });
+    });
+  });
+
+  test('all colors have all required hues', () => {
+    allColors.forEach(color => {
+      if (typeof color === 'string') {
+        return;
+      }
+
+      requiredKeys.forEach(hue => {
+        expect(hue in color).toBeTruthy();
+      });
+    });
+  });
 });
