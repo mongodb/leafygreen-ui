@@ -4,6 +4,17 @@ import Icon, { Size } from '@leafygreen-ui/icon';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 
+export const ModalSize = {
+  XXSmall: 'xxsmall',
+  XSmaill: 'xsmall',
+  Small: 'small',
+  Normal: 'normal',
+  Large: 'large',
+  XLarge: 'xlarge',
+} as const;
+
+export type ModalSize = typeof ModalSize[keyof typeof ModalSize];
+
 const overlayStyle = css`
   animation: fade-in 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
   -webkit-animation: fade-in 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -40,7 +51,7 @@ const modalBodyStyle = css`
   padding: 18px 0;
 `;
 
-const modalSize = {
+const modalSizes: { readonly [K in ModalSize]: string } = {
   xxsmall: css`
     min-width: inherit;
     max-width: inherit;
@@ -95,14 +106,68 @@ const titleStyle = css`
 
 const EscapeKey = 27;
 
+//
+// const [isActive, setActiveState] = useState(false)
+
+// export function useModalState(activeState=false) {
+//   setActiveState(activeState)
+
+//   return {
+//     active: activeState
+//   }
+
+// }
+//
+
+interface ModalProps {
+  /**
+   * Content that will appear inside of the popover component.
+   */
+  children: React.ReactNode;
+
+  /**
+   * Determines the active state of the modal
+   *
+   * default: `false`
+   */
+  active: boolean;
+
+  /**
+   * Specifies that the popover content will appear portaled to the end of the DOM,
+   * rather than in the DOM tree.
+   *
+   * default: `true`
+   */
+  usePortal: boolean;
+
+  /**
+   * Specifies the size of the modal.
+   *
+   * default: `normal`
+   */
+  size: ModalSize;
+
+  /**
+   * Specifies the title of the modal.
+   *
+   */
+  title?: string;
+
+  /**
+   * Callback invoked when modal is closed.
+   *
+   */
+  onRequestClose: () => void;
+}
+
 export function Modal({
-  active,
-  usePortal,
+  active = false,
+  usePortal = true,
+  size = ModalSize.Normal,
   children,
   onRequestClose,
-  size,
   title,
-}) {
+}: ModalProps) {
   const [isActive, setActiveState] = useState(active);
   const contentRef = useRef(null);
 
@@ -137,7 +202,7 @@ export function Modal({
     <Root>
       <div className={overlayStyle} onClick={handleDocumentClick}>
         <div
-          className={cx(modalContentStyle, modalSize[size])}
+          className={cx(modalContentStyle, modalSizes[size])}
           tabIndex={-1}
           ref={contentRef}
         >
