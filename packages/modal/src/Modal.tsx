@@ -1,4 +1,5 @@
 import React, { Fragment, useCallback, useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
 import Icon, { Size } from '@leafygreen-ui/icon';
 import { useEventListener } from '@leafygreen-ui/hooks';
@@ -160,7 +161,7 @@ interface ModalProps {
   onRequestClose: () => void;
 }
 
-export function Modal({
+function Modal({
   active = false,
   usePortal = true,
   size = ModalSize.Normal,
@@ -171,24 +172,24 @@ export function Modal({
   const [isActive, setActiveState] = useState(active);
   const contentRef = useRef(null);
 
-  const handleClose = e => {
+  const handleClose = () => {
     setActiveState(false);
     onRequestClose();
   };
 
   const handleEscape = useCallback((e: KeyboardEvent) => {
     if (e.keyCode === EscapeKey) {
-      handleClose(e);
+      handleClose();
     }
   }, []);
 
-  const handleDocumentClick = e => {
+  const handleDocumentClick = (e: React.SyntheticEvent) => {
     if (!contentRef.current) {
       return;
     }
 
     if (!contentRef.current.contains(e.target)) {
-      handleClose(e)
+      handleClose();
     }
   };
 
@@ -230,3 +231,15 @@ export function Modal({
   ) : null;
 }
 
+Modal.displayName = 'Modal';
+
+Modal.propTypes = {
+  active: PropTypes.bool,
+  usePortal: PropTypes.bool,
+  size: PropTypes.string,
+  children: PropTypes.node,
+  onRequestClose: PropTypes.func,
+  title: PropTypes.string,
+};
+
+export default Modal;
