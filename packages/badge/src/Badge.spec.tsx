@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
+import { typeIs } from '@leafygreen-ui/lib';
 import Badge from './Badge';
 
 afterAll(cleanup);
@@ -9,10 +10,6 @@ describe('packages/Badge', () => {
   const className = 'test-pill-class';
   const child = 'Bubble Pill';
 
-  function isElement(node: Node): node is Element {
-    return node.nodeType === Node.ELEMENT_NODE;
-  }
-
   const { container } = render(
     <Badge className={className} onClick={onClick}>
       {child}
@@ -21,7 +18,7 @@ describe('packages/Badge', () => {
 
   const badge = container.firstChild;
 
-  if (badge == null || !isElement(badge)) {
+  if (!typeIs.element(badge)) {
     throw new Error('Badge element not found');
   }
 

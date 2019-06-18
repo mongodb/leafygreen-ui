@@ -1,3 +1,5 @@
+import * as typeIs from './typeIs';
+
 /**
  * Utility for making it easier to couple a React Component to a css selector.
  * Useful when writing css selectors that rely on interactivity, i.e. :hover.
@@ -20,3 +22,5 @@ export function createDataProp(name: string) {
     selector: `[${prefix}="${name}"]`,
   };
 }
+
+export { typeIs };

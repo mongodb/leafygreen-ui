@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
+import { typeIs } from '@leafygreen-ui/lib';
 import RadioBox from './RadioBox';
 import RadioBoxGroup from './RadioBoxGroup';
 
@@ -13,24 +14,16 @@ const { container } = render(
   </RadioBox>,
 );
 
-function isElement(el: Node | null): el is HTMLElement {
-  return el != null && el.nodeType === Node.ELEMENT_NODE;
-}
-
-function isInput(el: Node | null): el is HTMLInputElement {
-  return isElement(el) && el.tagName.toLowerCase() === 'input';
-}
-
 describe('packages/RadioBox', () => {
   const radioBoxContainer = container.firstChild;
 
-  if (!isElement(radioBoxContainer)) {
+  if (!typeIs.element(radioBoxContainer)) {
     throw new Error('Could not find radio box container element');
   }
 
   const radioBox = radioBoxContainer.firstChild;
 
-  if (!isInput(radioBox)) {
+  if (!typeIs.input(radioBox)) {
     throw new Error('Could not find radio box input element');
   }
 
@@ -52,13 +45,13 @@ describe('packages/RadioBox', () => {
 
     const radioBoxContainer = container.firstChild;
 
-    if (!isElement(radioBoxContainer)) {
+    if (!typeIs.element(radioBoxContainer)) {
       throw new Error('Could not find radio box container element');
     }
 
     const radioBox = radioBoxContainer.firstChild;
 
-    if (!isInput(radioBox)) {
+    if (!typeIs.input(radioBox)) {
       throw new Error('Could not find radio box input element');
     }
 
@@ -77,7 +70,7 @@ describe('packages/RadioBoxGroup', () => {
 
   const radioBoxGroupContainer = container.firstChild;
 
-  if (!isElement(radioBoxGroupContainer)) {
+  if (!typeIs.element(radioBoxGroupContainer)) {
     throw new Error('Could not find radio box group container element');
   }
 
@@ -100,20 +93,23 @@ describe('packages/RadioBoxGroup', () => {
 
     const radioBoxGroup = container.firstChild;
 
-    if (!isElement(radioBoxGroup)) {
+    if (!typeIs.element(radioBoxGroup)) {
       throw new Error('Could not find radio box group element');
     }
 
     const firstRadioBoxLabel = radioBoxGroup.firstChild;
 
-    if (!isElement(firstRadioBoxLabel)) {
+    if (!typeIs.element(firstRadioBoxLabel)) {
       throw new Error('Could not find label element');
     }
 
     const firstRadioBoxInput = firstRadioBoxLabel.firstChild;
     const secondRadioBoxInput = radioBoxGroup.children[1].firstChild;
 
-    if (!isInput(firstRadioBoxInput) || !isInput(secondRadioBoxInput)) {
+    if (
+      !typeIs.input(firstRadioBoxInput) ||
+      !typeIs.input(secondRadioBoxInput)
+    ) {
       throw new Error('Could not find input element');
     }
 
@@ -145,19 +141,19 @@ describe('packages/RadioBoxGroup', () => {
 
     const radioBoxGroup = container.firstChild;
 
-    if (!isElement(radioBoxGroup)) {
+    if (!typeIs.element(radioBoxGroup)) {
       throw new Error('Could not find radio box group element');
     }
 
     const radioBoxLabel = radioBoxGroup.firstChild;
 
-    if (!isElement(radioBoxLabel)) {
+    if (!typeIs.element(radioBoxLabel)) {
       throw new Error('Could not find label element');
     }
 
     const radioBoxInput = radioBoxLabel.firstChild;
 
-    if (!isInput(radioBoxInput)) {
+    if (!typeIs.input(radioBoxInput)) {
       throw new Error('Could not find radio box input element');
     }
 
