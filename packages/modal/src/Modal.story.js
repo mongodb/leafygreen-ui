@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, select, boolean } from '@storybook/addon-knobs';
-import Modal, { ModalSize } from './Modal';
+import Modal, { ModalSize, useModalState } from './index';
 
 function Example() {
-  const [active, setActive] = useState(false);
+  const { active, setActive } = useModalState();
 
   return (
     <>
@@ -12,6 +12,7 @@ function Example() {
       {active && (
         <Modal
           active={active}
+          setActive={setActive}
           usePortal={boolean('usePortal', true)}
           onRequestClose={() => setActive(active => !active)}
           size={select('size', Object.values(ModalSize), ModalSize.Normal)}

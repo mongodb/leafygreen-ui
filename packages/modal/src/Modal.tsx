@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState, useRef } from 'react';
+import React, { Fragment, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
 import Icon, { Size } from '@leafygreen-ui/icon';
@@ -107,19 +107,6 @@ const titleStyle = css`
 
 const EscapeKey = 27;
 
-//
-// const [isActive, setActiveState] = useState(false)
-
-// export function useModalState(activeState=false) {
-//   setActiveState(activeState)
-
-//   return {
-//     active: activeState
-//   }
-
-// }
-//
-
 interface ModalProps {
   /**
    * Content that will appear inside of the popover component.
@@ -155,26 +142,26 @@ interface ModalProps {
   title?: string;
 
   /**
-   * Callback invoked when modal is closed.
+   * Callback to change the active state of the Modal.
    *
    */
-  onRequestClose: () => void;
+  setActive: (bool?: boolean) => void;
 }
 
 function Modal({
   active = false,
   usePortal = true,
   size = ModalSize.Normal,
+  setActive,
   children,
-  onRequestClose,
   title,
 }: ModalProps) {
-  const [isActive, setActiveState] = useState(active);
+  // const [isActive, setActiveState] = useState(active);
   const contentRef = useRef(null);
 
   const handleClose = () => {
-    setActiveState(false);
-    onRequestClose();
+    setActive(false);
+    // onRequestClose();
   };
 
   const handleEscape = useCallback((e: KeyboardEvent) => {
@@ -199,7 +186,7 @@ function Modal({
 
   const Root = usePortal ? Portal : Fragment;
 
-  return isActive ? (
+  return active ? (
     <Root>
       <div className={overlayStyle} onClick={handleDocumentClick}>
         <div
