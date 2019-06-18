@@ -13,7 +13,7 @@ import * as typeIs from './typeIs';
  */
 export function createDataProp(name: string) {
   // ts:emit throws an error if this is not typed. Usually this can be inferred.
-  const prefix: string = 'data-leafygreen-ui';
+  const prefix = 'data-leafygreen-ui' as string;
 
   return {
     prop: {
@@ -22,5 +22,15 @@ export function createDataProp(name: string) {
     selector: `[${prefix}="${name}"]`,
   };
 }
+
+/** Helper type to extract an HTML element's valid props */
+export type HTMLElementProps<
+  Element extends keyof JSX.IntrinsicElements
+> = JSX.IntrinsicElements[Element] extends React.DetailedHTMLProps<
+  infer Props,
+  any
+>
+  ? Props
+  : never;
 
 export { typeIs };
