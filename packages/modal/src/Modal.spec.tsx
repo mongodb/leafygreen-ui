@@ -11,7 +11,6 @@ describe('packages/Modal', () => {
   const modalId = 'modal';
   const modalTitle = 'Modal Title';
   const modalContent = 'Modal Content';
-  const bgId = 'bgId';
   const onRequestClose = jest.fn();
 
   describe('when rendered with content', () => {

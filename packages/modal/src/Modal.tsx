@@ -126,14 +126,14 @@ interface ModalProps {
    *
    * default: `true`
    */
-  usePortal: boolean;
+  usePortal?: boolean;
 
   /**
    * Specifies the size of the Modal.
    *
    * default: `normal`
    */
-  size: ModalSize;
+  size?: ModalSize;
 
   /**
    * Specifies the title of the Modal.
@@ -145,7 +145,7 @@ interface ModalProps {
    * Callback to change the active state of the Modal.
    *
    */
-  setActive: (bool?: boolean) => void;
+  setActive?: () => void | React.SetStateAction<boolean>;
 
   /**
    * Callback invoked when Modal closes.
@@ -157,7 +157,7 @@ interface ModalProps {
    * className applied to root overlay div.
    *
    */
-  className: string;
+  className?: string;
 }
 
 /**
@@ -165,7 +165,7 @@ interface ModalProps {
  *
  *  Modals place content on top of main window.
  *
- * ```
+```
 <Modal
   active
   usePortal
@@ -205,7 +205,9 @@ function Modal({
       onRequestClose();
     }
 
-    setActive(false);
+    if (setActive) {
+      setActive(false);
+    }
   };
 
   const handleEscape = useCallback((e: KeyboardEvent) => {
