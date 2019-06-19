@@ -1371,6 +1371,15 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
+"@leafygreen-ui/lib@^2.1.7":
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-2.1.7.tgz#1b8e062fe763a67005da220f945c1208d35999d9"
+  integrity sha512-xl7R8VrEq188vsHSnXrdiigEAjFaVSVYkbs0Zs8Si+8mjV1kibPhVS9phA7rI9MUYvZTg+BGD18nyy/t3XHfCQ==
+  dependencies:
+    create-emotion "^10.0.7"
+    emotion "^10.0.7"
+    polished "^2.3.0"
+
 "@lerna/add@^3.4.1":
   version "3.15.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.15.0.tgz#10be562f43cde59b60f299083d54ac39520ec60a"
