@@ -9,17 +9,15 @@ function Example() {
   return (
     <>
       <button onClick={() => setActive(active => !active)}>Open Modal</button>
-      {active && (
-        <Modal
-          active={active}
-          setActive={setActive}
-          usePortal={boolean('usePortal', true)}
-          size={select('size', Object.values(ModalSize), ModalSize.Normal)}
-          title={text('title', 'Modal Title')}
-        >
-          Modal Content goes here
-        </Modal>
-      )}
+      <Modal
+        active={active}
+        setActive={setActive}
+        usePortal={boolean('usePortal', true)}
+        size={select('size', Object.values(ModalSize), ModalSize.Normal)}
+        title={text('title', 'Modal Title')}
+      >
+        Modal Content goes here
+      </Modal>
     </>
   );
 }

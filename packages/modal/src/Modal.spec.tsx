@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { render, cleanup } from '@testing-library/react';
 import 'jest-dom/extend-expect';
@@ -55,21 +56,34 @@ describe('packages/Modal', () => {
   });
 
   describe('when onRequestClose prop is supplied', () => {
-    const { getByTestId } = render(
-      <div data-testid={bgId}>
-        <Modal active onRequestClose={onRequestClose}>
-          Modal Children
-        </Modal>
-      </div>,
-    );
+    // const { getByTestId } = render(
+    // <div data-testid={bgId}>
+    //   <Modal active onRequestClose={onRequestClose}>
+    //     Modal Children
+    //   </Modal>
+    // </div>,
+    // );
+    let container: HTMLElement;
+    beforeEach(() => {
+      container = document.createElement('div');
+      document.body.appendChild(container);
+    });
 
     test('it fires onRequestClose when the background is clicked', () => {
-      const bg = getByTestId(bgId);
-
       act(() => {
-        bg.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+        ReactDOM.render(
+          <Modal active onRequestClose={onRequestClose}>
+            Modal Children
+          </Modal>,
+          container,
+        );
       });
 
+      act(() => {
+        window.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+
+      // expect(onRequestClose).toHaveBeenCalledTimes(1);
       setTimeout(() => {
         expect(onRequestClose).toHaveBeenCalledTimes(1);
       }, 100);
