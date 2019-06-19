@@ -152,6 +152,12 @@ interface ModalProps {
    *
    */
   onRequestClose?: () => void;
+
+  /**
+   * className applied to root overlay div.
+   *
+   */
+  className: string;
 }
 
 /**
@@ -178,6 +184,8 @@ interface ModalProps {
  * @param props.children Content to appear inside of Modal container.
  * @param props.title Title for the Modal, will appear inside header tags.
  * @param props.onRequestClose Callback invoked when Modal is closed.
+ * @param props.className className applied to overlay div.
+ *
  */
 function Modal({
   active = false,
@@ -187,6 +195,8 @@ function Modal({
   children,
   title,
   onRequestClose,
+  className,
+  ...rest
 }: ModalProps) {
   const contentRef = useRef(null);
 
@@ -225,9 +235,9 @@ function Modal({
 
   return active ? (
     <Root>
-      <div className={overlayStyle} onClick={handleDocumentClick}>
+      <div {...rest} className={overlayStyle} onClick={handleDocumentClick}>
         <div
-          className={cx(modalContentStyle, modalSizes[size])}
+          className={cx(modalContentStyle, modalSizes[size], className)}
           tabIndex={-1}
           ref={contentRef}
         >
@@ -264,6 +274,7 @@ Modal.propTypes = {
   children: PropTypes.node,
   onRequestClose: PropTypes.func,
   title: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default Modal;
