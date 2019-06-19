@@ -109,7 +109,7 @@ const EscapeKey = 27;
 
 interface ModalProps {
   /**
-   * Content that will appear inside of the popover component.
+   * Content that will appear inside of the Modal component.
    */
   children: React.ReactNode;
 
@@ -121,22 +121,22 @@ interface ModalProps {
   active: boolean;
 
   /**
-   * Specifies that the popover content will appear portaled to the end of the DOM,
-   * rather than in the DOM tree.
+   * Specifies that the Modal content will appear portaled to the end of the DOM,
+   * rather than in the React DOM tree.
    *
    * default: `true`
    */
   usePortal: boolean;
 
   /**
-   * Specifies the size of the modal.
+   * Specifies the size of the Modal.
    *
    * default: `normal`
    */
   size: ModalSize;
 
   /**
-   * Specifies the title of the modal.
+   * Specifies the title of the Modal.
    *
    */
   title?: string;
@@ -146,8 +146,39 @@ interface ModalProps {
    *
    */
   setActive: (bool?: boolean) => void;
+
+  /**
+   * Callback invoked when Modal closes.
+   *
+   */
+  onRequestClose?: () => void;
 }
 
+/**
+ * # Modal
+ *
+ *  Modals place content on top of main window.
+ *
+ * ```
+<Modal
+  active
+  usePortal
+  size="large"
+  setActive={setActive}
+  title="My Modal"
+  onRequestClose={() => console.log('Modal is closing now!')}
+  >  
+  Modal content!
+</Modal>
+```
+ * @param props.active Boolean to describe whether or not Modal is active.
+ * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in React DOM tree.
+ * @param props.size String to determine size of Modal. ['xxsmall', 'xsmall', 'small', 'normal', 'large', 'xlarge']
+ * @param props.setActive Callback to change the active state of Modal.
+ * @param props.children Content to appear inside of Modal container.
+ * @param props.title Title for the Modal, will appear inside header tags.
+ * @param props.onRequestClose Callback invoked when Modal is closed.
+ */
 function Modal({
   active = false,
   usePortal = true,
@@ -155,13 +186,16 @@ function Modal({
   setActive,
   children,
   title,
+  onRequestClose,
 }: ModalProps) {
-  // const [isActive, setActiveState] = useState(active);
   const contentRef = useRef(null);
 
   const handleClose = () => {
+    if (onRequestClose) {
+      onRequestClose();
+    }
+
     setActive(false);
-    // onRequestClose();
   };
 
   const handleEscape = useCallback((e: KeyboardEvent) => {
@@ -175,7 +209,10 @@ function Modal({
       return;
     }
 
-    if (!contentRef.current.contains(e.target)) {
+    if (
+      !contentRef.current !== null &&
+      !contentRef.current.contains(e.target)
+    ) {
       handleClose();
     }
   };

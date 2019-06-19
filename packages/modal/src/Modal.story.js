@@ -14,7 +14,6 @@ function Example() {
           active={active}
           setActive={setActive}
           usePortal={boolean('usePortal', true)}
-          onRequestClose={() => setActive(active => !active)}
           size={select('size', Object.values(ModalSize), ModalSize.Normal)}
           title={text('title', 'Modal Title')}
         >
