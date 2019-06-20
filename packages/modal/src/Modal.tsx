@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useRef } from 'react';
+import React, { Fragment, useCallback, useRef, SetStateAction } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
 import Icon, { Size } from '@leafygreen-ui/icon';
@@ -145,7 +145,9 @@ interface ModalProps {
    * Callback to change the active state of the Modal.
    *
    */
-  setActive?: () => void | React.SetStateAction<boolean>;
+  setActive?: (
+    active: boolean,
+  ) => void | React.Dispatch<SetStateAction<boolean>>;
 
   /**
    * Callback invoked when Modal closes.
@@ -198,7 +200,7 @@ function Modal({
   className,
   ...rest
 }: ModalProps) {
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const handleClose = () => {
     if (onRequestClose) {
@@ -221,10 +223,7 @@ function Modal({
       return;
     }
 
-    if (
-      !contentRef.current !== null &&
-      !contentRef.current.contains(e.target)
-    ) {
+    if (!contentRef.current.contains(e.target as Node)) {
       handleClose();
     }
   };

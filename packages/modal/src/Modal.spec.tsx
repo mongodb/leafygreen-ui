@@ -55,13 +55,6 @@ describe('packages/Modal', () => {
   });
 
   describe('when onRequestClose prop is supplied', () => {
-    // const { getByTestId } = render(
-    // <div data-testid={bgId}>
-    //   <Modal active onRequestClose={onRequestClose}>
-    //     Modal Children
-    //   </Modal>
-    // </div>,
-    // );
     let container: HTMLElement;
     beforeEach(() => {
       container = document.createElement('div');
@@ -82,7 +75,6 @@ describe('packages/Modal', () => {
         window.dispatchEvent(new MouseEvent('click', { bubbles: true }));
       });
 
-      // expect(onRequestClose).toHaveBeenCalledTimes(1);
       setTimeout(() => {
         expect(onRequestClose).toHaveBeenCalledTimes(1);
       }, 100);
