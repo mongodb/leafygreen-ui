@@ -7,7 +7,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 
 export const ModalSize = {
   XXSmall: 'xxsmall',
-  XSmaill: 'xsmall',
+  XSmall: 'xsmall',
   Small: 'small',
   Normal: 'normal',
   Large: 'large',
