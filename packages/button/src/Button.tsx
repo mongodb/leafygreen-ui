@@ -238,14 +238,18 @@ const baseStyle = css`
   transition: all 120ms ease;
   text-decoration: none;
   cursor: pointer;
-  &:disabled {
-    color: ${colors.gray[3]};
-    border-color: ${colors.gray[5]};
-    background-color: ${colors.gray[7]};
-    background-image: none;
-    box-shadow: none;
-    cursor: not-allowed;
-  }
+`;
+
+const disabledStyle = css`
+  color: ${colors.gray[3]};
+  border-color: ${colors.gray[5]};
+  background-color: ${colors.gray[7]};
+  background-image: none;
+  box-shadow: none;
+`;
+
+const disabledAnchor = css`
+  pointer-events: none;
 `;
 
 interface SharedButtonProps {
@@ -302,6 +306,8 @@ export default function Button(props: ButtonProps) {
       baseStyle,
       buttonSizes[size],
       buttonVariants[variant],
+      { [disabledStyle]: disabled },
+      { [disabledAnchor]: disabled && usesLinkElement(props) },
       className,
     ),
     disabled,
