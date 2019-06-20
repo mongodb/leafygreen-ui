@@ -1,17 +1,10 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from '@testing-library/react';
+import { typeIs } from '@leafygreen-ui/lib';
 import RadioGroup from './RadioGroup';
 import Radio from './Radio';
 
 afterAll(cleanup);
-
-function isElement(el: Node | null): el is HTMLElement {
-  return el != null && el.nodeType === Node.ELEMENT_NODE;
-}
-
-function isInput(el: Node | null): el is HTMLInputElement {
-  return isElement(el) && el.tagName.toLowerCase() === 'input';
-}
 
 describe('packages/RadioGroup', () => {
   const className = 'test-radiogroup-class';
@@ -23,7 +16,7 @@ describe('packages/RadioGroup', () => {
 
   const controlledContainer = container.firstChild;
 
-  if (!isElement(controlledContainer)) {
+  if (!typeIs.element(controlledContainer)) {
     throw new Error('Could not find controlled container component');
   }
 
@@ -44,18 +37,18 @@ describe('when controlled', () => {
 
   const controlledContainer = container.firstChild;
 
-  if (!isElement(controlledContainer)) {
+  if (!typeIs.element(controlledContainer)) {
     throw new Error('Could not find controlled container component');
   }
 
   const firstInput = controlledContainer.children[0].firstChild;
   const secondInput = controlledContainer.children[1].firstChild;
 
-  if (!isInput(firstInput)) {
+  if (!typeIs.input(firstInput)) {
     throw new Error('Could not find the first radio input element');
   }
 
-  if (!isInput(secondInput)) {
+  if (!typeIs.input(secondInput)) {
     throw new Error('Could not find the second radio input element');
   }
 
@@ -83,19 +76,19 @@ describe('when uncontrolled', () => {
     </RadioGroup>,
   ).container.firstChild;
 
-  if (!isElement(uncontrolledContainer)) {
+  if (!typeIs.element(uncontrolledContainer)) {
     throw new Error('Could not find uncontrolled container component');
   }
 
   const radioLabel = uncontrolledContainer.firstChild;
 
-  if (!isElement(radioLabel)) {
+  if (!typeIs.element(radioLabel)) {
     throw new Error('Could not find the label element');
   }
 
   const radio = radioLabel.firstChild;
 
-  if (!isInput(radio)) {
+  if (!typeIs.input(radio)) {
     throw new Error('Could not find the radio input element');
   }
 

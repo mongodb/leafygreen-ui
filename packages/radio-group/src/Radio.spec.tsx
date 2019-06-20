@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
+import { typeIs } from '@leafygreen-ui/lib';
 import Radio from './Radio';
 
 afterAll(cleanup);
@@ -12,23 +13,15 @@ describe('packages/Radio', () => {
     </Radio>,
   );
 
-  function isElement(el: Node | null): el is HTMLElement {
-    return el != null && el.nodeType === Node.ELEMENT_NODE;
-  }
-
-  function isInput(el: Node | null): el is HTMLInputElement {
-    return isElement(el) && el.tagName.toLowerCase() === 'input';
-  }
-
   const radio = container.firstChild;
 
-  if (!isElement(radio)) {
+  if (!typeIs.element(radio)) {
     throw new Error('Could not find controlled container component');
   }
 
   const input = radio.firstChild;
 
-  if (!isInput(input)) {
+  if (!typeIs.input(input)) {
     throw new Error('Could not find input element');
   }
 
