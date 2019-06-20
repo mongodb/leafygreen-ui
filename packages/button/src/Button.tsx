@@ -190,7 +190,6 @@ const buttonSizes: { readonly [K in Size]: string } = {
     height: 22px;
     padding: 0 8px;
     font-size: 11px;
-    line-height: 21px;
     text-transform: uppercase;
     font-weight: bold;
   `,
@@ -198,21 +197,18 @@ const buttonSizes: { readonly [K in Size]: string } = {
   [Size.Small]: css`
     height: 25px;
     padding: 0 10px;
-    line-height: 23px;
   `,
 
   [Size.Normal]: css`
     height: 32px;
     padding: 0 12px;
     font-size: 14px;
-    line-height: 32px;
     text-transform: none;
     font-weight: normal;
   `,
 
   [Size.Large]: css`
     height: 45px;
-    line-height: 44px;
     font-size: 16px;
     padding: 0 20px;
   `,
@@ -224,7 +220,6 @@ const baseStyle = css`
   height: 32px;
   padding: 0 12px;
   font-size: 14px;
-  line-height: 32px;
   text-transform: none;
   font-weight: normal;
   font-family: Akzidenz, 'Helvetica Neue', Helvetica, Arial, sans-serif;
