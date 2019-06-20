@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
+import { typeIs } from '@leafygreen-ui/lib';
 import Portal from '.';
 
 afterAll(cleanup);
@@ -14,10 +15,6 @@ describe('packages/Portal', () => {
     </div>,
   );
 
-  function isElement(el: Node | null): el is HTMLElement {
-    return el != null && el.nodeType === Node.ELEMENT_NODE;
-  }
-
   function getByIdOrThrow(id: string) {
     const el = document.getElementById(id);
 
@@ -31,11 +28,11 @@ describe('packages/Portal', () => {
   test(`appends portal content to document body`, () => {
     const { firstChild, lastChild } = document.body;
 
-    if (!isElement(firstChild)) {
+    if (!typeIs.element(firstChild)) {
       throw new Error('Could not find firstChild element');
     }
 
-    if (!isElement(lastChild)) {
+    if (!typeIs.element(lastChild)) {
       throw new Error('Could not find lastChild element');
     }
 
@@ -84,7 +81,7 @@ describe('packages/Portal', () => {
 
     const lastChild = document.body.lastChild;
 
-    if (!isElement(lastChild)) {
+    if (!typeIs.element(lastChild)) {
       throw new Error('Could not find lastChild element');
     }
 

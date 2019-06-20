@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from '@testing-library/react';
+import { typeIs } from '@leafygreen-ui/lib';
 import Toggle from '.';
 
 afterAll(cleanup);
@@ -11,21 +12,13 @@ describe('packages/Toggle', () => {
   );
   const controlledContainer = container.firstChild;
 
-  function isElement(el: Node | null): el is HTMLElement {
-    return el != null && el.nodeType === Node.ELEMENT_NODE;
-  }
-
-  function isInput(el: Node | null): el is HTMLInputElement {
-    return isElement(el) && el.tagName.toLowerCase() === 'input';
-  }
-
-  if (!isElement(controlledContainer)) {
+  if (!typeIs.element(controlledContainer)) {
     throw new Error('Could not find controlled container element');
   }
 
   const controlledCheckbox = controlledContainer.children[0];
 
-  if (!isInput(controlledCheckbox)) {
+  if (!typeIs.input(controlledCheckbox)) {
     throw new Error('Could not find controlled checkbox input element');
   }
 
@@ -85,13 +78,13 @@ describe('packages/Toggle', () => {
       <Toggle onClick={uncontrolledOnClick} onChange={uncontrolledOnChange} />,
     ).container.firstChild;
 
-    if (!isElement(uncontrolledContainer)) {
+    if (!typeIs.element(uncontrolledContainer)) {
       throw new Error('Could not find uncontrolled container element');
     }
 
     const uncontrolledCheckbox = uncontrolledContainer.children[0];
 
-    if (!isInput(uncontrolledCheckbox)) {
+    if (!typeIs.input(uncontrolledCheckbox)) {
       throw new Error('Could not find uncontrolled checkbox input element');
     }
 
