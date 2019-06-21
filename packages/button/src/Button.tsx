@@ -237,9 +237,6 @@ const disabledStyle = css`
   background-color: ${colors.gray[7]};
   background-image: none;
   box-shadow: none;
-`;
-
-const disabledAnchor = css`
   pointer-events: none;
 `;
 
@@ -298,7 +295,6 @@ export default function Button(props: ButtonProps) {
       buttonSizes[size],
       buttonVariants[variant],
       { [disabledStyle]: disabled },
-      { [disabledAnchor]: disabled && usesLinkElement(props) },
       className,
     ),
     // only add a disabled prop if not an anchor
