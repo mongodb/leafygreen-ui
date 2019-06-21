@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { lighten, darken } from 'polished';
@@ -23,16 +24,6 @@ export const Size = {
 } as const;
 
 export type Size = typeof Size[keyof typeof Size];
-
-/** Helper type to extract an HTML element's valid props */
-type HTMLElementProps<
-  Element extends keyof JSX.IntrinsicElements
-> = JSX.IntrinsicElements[Element] extends React.DetailedHTMLProps<
-  infer Props,
-  any
->
-  ? Props
-  : never;
 
 const buttonVariants: { readonly [K in Variant]: string } = {
   [Variant.Default]: css`

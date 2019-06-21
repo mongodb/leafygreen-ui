@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
+import { typeIs } from '@leafygreen-ui/lib';
 import Popover from './Popover';
 import Align from './Align';
 import Justify from './Justify';
@@ -16,14 +17,10 @@ describe('packages/Popover', () => {
     </>,
   );
 
-  function isElement(node: Node | null): node is Element {
-    return node != null && node.nodeType === Node.ELEMENT_NODE;
-  }
-
   test('should show popover when trigger is clicked', () => {
     const { firstChild } = document.body.children[1];
 
-    if (!isElement(firstChild)) {
+    if (!typeIs.element(firstChild)) {
       throw new Error('Could not find element');
     }
 
