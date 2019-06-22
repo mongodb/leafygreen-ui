@@ -5,7 +5,7 @@ import { css } from '@leafygreen-ui/emotion';
 import Icon, { glyphs, Size } from '.';
 
 const containerStyle = css`
-  width: 100px;
+  width: 150px;
   height: 70px;
   flex-shrink: 0;
   text-align: center;
@@ -24,8 +24,10 @@ const textStyle = css`
   margin-top: 0.5rem;
 `;
 
+const glyphList = Object.keys(glyphs) as Array<keyof typeof glyphs>;
+
 storiesOf('Icons', module).add('Icon', () =>
-  (Object.keys(glyphs) as Array<keyof typeof glyphs>).map(glyph => (
+  glyphList.map(glyph => (
     <div key={glyph} className={containerStyle}>
       <Icon
         glyph={glyph}
