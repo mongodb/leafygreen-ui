@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
+import { typeIs } from '@leafygreen-ui/lib';
 import { createIconComponent } from '.';
 
 afterAll(cleanup);
@@ -16,10 +17,6 @@ const glyphs = {
 };
 
 describe('packages/Icon/createIconComponent', () => {
-  function isElement(el: Node | null): el is HTMLElement {
-    return el != null && el.nodeType === Node.ELEMENT_NODE;
-  }
-
   const IconComponent = createIconComponent(glyphs);
 
   test('createIconComponent returns a function', () => {
@@ -34,7 +31,7 @@ describe('packages/Icon/createIconComponent', () => {
   const glyph = renderedIcon.container.firstChild;
 
   test('The function returned by createIconComponent renders the glyph specified', () => {
-    if (!isElement(glyph)) {
+    if (!typeIs.element(glyph)) {
       throw new Error('Glyph was not rendered');
     }
 

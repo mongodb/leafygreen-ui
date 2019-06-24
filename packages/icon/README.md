@@ -27,7 +27,7 @@ const SomeComponent = () => <Icon glyph="plus" fill="#FF0000" />;
 
 Specifies the glyph to use. This can be one of the following:
 
-`Copy`, `Bell`, `Building`, `CaretUp`, `CaretDown`, `CaretRight`, `CaretLeft`, `ChevronUp`, `ChevronDown`, `ChevronRight`, `ChevronLeft`, `Charts`, `Cloud`, `CreditCard`, `Edit`, `Ellipsis`, `Laptop`, `Lock`, `Menu`, `Person`, `PersonWithLock`, `Plus`, `PlusWithCircle`, `Refresh`, `Save`, `Settings`, `Stitch`, `Support`, `Trash`, `X`, `XWithCircle`
+`Copy`, `Bell`, `Building`, `CaretUp`, `CaretDown`, `CaretRight`, `CaretLeft`, `Checkmark`, `CheckmarkWithCircle`, `ChevronUp`, `ChevronDown`, `ChevronRight`, `ChevronLeft`, `Charts`, `Cloud`, `CreditCard`, `Edit`, `Ellipsis`, `InfoWithCircle`, `Laptop`, `Lock`, `MagnifyingGlass`, `Menu`, `NotAllowed`, `Person`, `PersonWithLock`, `Plus`, `PlusWithCircle`, `QuestionMarkWithCircle`, `Refresh`, `Save`, `Settings`, `Stitch`, `Support`, `Trash`, `Warning`, `X`, `XWithCircle`
 
 ### size
 

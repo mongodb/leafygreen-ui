@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from '@testing-library/react';
+import { typeIs } from '@leafygreen-ui/lib';
 import Button from './Button';
 
 afterAll(cleanup);
@@ -16,17 +17,9 @@ describe('packages/Button', () => {
     </Button>,
   );
 
-  function isElement(el: Node | null): el is HTMLElement {
-    return el != null && el.nodeType === Node.ELEMENT_NODE;
-  }
-
-  function isButton(el: Node | null): el is HTMLButtonElement {
-    return isElement(el) && el.tagName.toLowerCase() === 'button';
-  }
-
   const renderedButton = renderedComponent.container.firstChild;
 
-  if (!isElement(renderedButton)) {
+  if (!typeIs.element(renderedButton)) {
     throw new Error('Button component failed to render');
   }
 
@@ -59,7 +52,7 @@ describe('packages/Button', () => {
       </Button>,
     );
 
-    if (!isButton(renderedButton)) {
+    if (!typeIs.button(renderedButton)) {
       throw new Error('Rendered element is not a button');
     }
 
@@ -72,7 +65,7 @@ describe('packages/Button', () => {
   });
 
   test(`renders a button with the "button" type by default`, () => {
-    if (!isButton(renderedButton)) {
+    if (!typeIs.button(renderedButton)) {
       throw new Error('Rendered element is not a button');
     }
 
@@ -83,7 +76,7 @@ describe('packages/Button', () => {
     const submitButton = render(<Button type="submit">My submit button</Button>)
       .container.firstChild;
 
-    if (!isButton(submitButton)) {
+    if (!typeIs.button(submitButton)) {
       throw new Error('Rendered element is not a button');
     }
 
@@ -96,18 +89,35 @@ describe('packages/Button', () => {
     );
     const buttonComponent = container.firstChild;
 
-    if (!isElement(buttonComponent)) {
+    if (!typeIs.element(buttonComponent)) {
       throw new Error('No element was rendered');
     }
 
     expect(buttonComponent.tagName.toLowerCase()).toBe('a');
   });
 
+  test(`does not renders the disabled attributes when disabled is set and it's an anchor`, () => {
+    const { container } = render(
+      <Button href="http://mongodb.design" disabled>
+        Click me!
+      </Button>,
+    );
+
+    const buttonComponent = container.firstChild;
+
+    if (!typeIs.element(buttonComponent)) {
+      throw new Error('No element was rendered');
+    }
+
+    expect(buttonComponent.getAttribute('disabled')).toBeNull();
+    expect(buttonComponent.getAttribute('aria-disabled')).toBe('true');
+  });
+
   test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
     const { container } = render(<Button as="div">Click me!</Button>);
     const buttonComponent = container.firstChild;
 
-    if (!isElement(buttonComponent)) {
+    if (!typeIs.element(buttonComponent)) {
       throw new Error('No element was rendered');
     }
 
@@ -122,7 +132,7 @@ describe('packages/Button', () => {
     );
     const buttonComponent = container.firstChild;
 
-    if (!isElement(buttonComponent)) {
+    if (!typeIs.element(buttonComponent)) {
       throw new Error('No element was rendered');
     }
 
