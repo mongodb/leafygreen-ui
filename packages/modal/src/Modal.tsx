@@ -20,8 +20,8 @@ export type ModalSize = typeof ModalSize[keyof typeof ModalSize];
 const overlayStyle = css`
   animation: fade-in 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
   -webkit-animation: fade-in 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
-  background-color: #000;
-  opacity: 0.5;
+  background-color: ${uiColors.black};
+  opacity: 0.6;
   position: fixed;
   top: 0;
   right: 0;
