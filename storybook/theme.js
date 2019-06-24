@@ -1,4 +1,5 @@
 import { create } from '@storybook/theming';
+import { uiColors } from '../packages/palette'
 
 export default create({
   name: 'leafygreen',
@@ -9,13 +10,13 @@ export default create({
   brandUrl: 'https://github.com/mongodb/leafygreen-ui',
   brandImage: 'logo.svg',
 
-  colorPrimary: '#13AA52',
-  colorSecondary: '#13AA52',
+  colorPrimary: uiColors.green.base,
+  colorSecondary: uiColors.green.base,
 
   // UI
-  appBg: '#F4F6F6',
-  appContentBg: '#FFFFFF',
-  appBorderColor: '#D7DBDB',
+  appBg: uiColors.gray.light3,
+  appContentBg: uiColors.white,
+  appBorderColor: uiColors.gray.light2,
   appBorderRadius: 4,
 
   // Typography
@@ -23,17 +24,17 @@ export default create({
   fontCode: 'monospace',
 
   // Text colors
-  textColor: '#303434',
-  textInverseColor: 'rgba(255,255,255,0.9)',
+  textColor: uiColors.gray.dark3,
+  textInverseColor: 'rgba(255, 255, 255, 0.9)',
 
   // Toolbar default and active colors
   barTextColor: 'silver',
-  barSelectedColor: '#13AA52',
-  barBg: '#FFFFFF',
+  barSelectedColor: uiColors.green.base,
+  barBg: uiColors.white,
 
   // Form colors
-  inputBg: '#F4F6F6',
-  inputBorder: '#D7DBDB',
-  inputTextColor: '#303434',
+  inputBg: uiColors.gray.light3,
+  inputBorder: uiColors.gray.light2,
+  inputTextColor: uiColors.gray.dark3,
   inputBorderRadius: 4,
 });
