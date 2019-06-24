@@ -1,6 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { act } from 'react-dom/test-utils';
 import { render, cleanup } from '@testing-library/react';
 import 'jest-dom/extend-expect';
 import Modal from './Modal';
@@ -11,7 +9,7 @@ describe('packages/Modal', () => {
   const modalId = 'modal';
   const modalTitle = 'Modal Title';
   const modalContent = 'Modal Content';
-  const onRequestClose = jest.fn();
+  // const onRequestClose = jest.fn();
 
   describe('when rendered with content', () => {
     const { getByText, getByTestId } = render(
@@ -54,30 +52,39 @@ describe('packages/Modal', () => {
     });
   });
 
-  describe('when onRequestClose prop is supplied', () => {
-    let container: HTMLElement;
-    beforeEach(() => {
-      container = document.createElement('div');
-      document.body.appendChild(container);
+  describe('when modalShouldClose prop is supplied', () => {
+    test('when modalShouldClose returns false', () => {
+      const { getByTestId } = render(
+        <Modal
+          active={true}
+          data-testid="falseModalShouldClose"
+          modalShouldClose={() => false}
+        >
+          <h4>test content</h4>
+        </Modal>,
+      );
+
+      const modal = getByTestId('falseModalShouldClose');
+      window.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
+      expect(modal).toBeVisible();
     });
 
-    test('it fires onRequestClose when the background is clicked', () => {
-      act(() => {
-        ReactDOM.render(
-          <Modal active onRequestClose={onRequestClose}>
-            Modal Children
-          </Modal>,
-          container,
-        );
-      });
+    test('when modalShouldClose returns true', () => {
+      const { getByTestId } = render(
+        <Modal
+          active={true}
+          data-testid="trueModalShouldClose"
+          modalShouldClose={() => true}
+        >
+          <h4>test content</h4>
+        </Modal>,
+      );
 
-      act(() => {
-        window.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-      });
+      const modal = getByTestId('trueModalShouldClose');
+      window.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 
-      setTimeout(() => {
-        expect(onRequestClose).toHaveBeenCalledTimes(1);
-      }, 100);
+      !expect(modal).toBeVisible();
     });
   });
 });

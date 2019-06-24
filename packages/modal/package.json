@@ -15,7 +15,7 @@
   "dependencies": {
     "@leafygreen-ui/lib": "^3.0.0",
     "@leafygreen-ui/portal": "^1.1.0",
-    "@leafygreen-ui/theme": "^1.2.0",
+    "@leafygreen-ui/palette": "^1.0.0",
     "@leafygreen-ui/hooks": "^1.0.0",
     "@leafygreen-ui/icon": "^1.0.4",
     "lodash": "^4.17.11"

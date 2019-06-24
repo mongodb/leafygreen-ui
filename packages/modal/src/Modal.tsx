@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
 import Icon, { Size } from '@leafygreen-ui/icon';
 import { useEventListener } from '@leafygreen-ui/hooks';
+import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
 export const ModalSize = {
   XXSmall: 'xxsmall',
   XSmall: 'xsmall',
   Small: 'small',
-  Normal: 'normal',
+  Default: 'default',
   Large: 'large',
   XLarge: 'xlarge',
 } as const;
@@ -26,9 +27,7 @@ const overlayStyle = css`
   right: 0;
   bottom: 0;
   left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
 `;
 
 const modalContentStyle = css`
@@ -36,16 +35,18 @@ const modalContentStyle = css`
   max-width: 1270px;
   min-width: 944px;
   padding: 30px;
-  align-self: flex-start;
-  text-align: left;
-  color: black;
-  position: relative;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: ${uiColors.gray.dark3};
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: ${uiColors.white};
+  border: 1px solid ${uiColors.gray.light3};
   border-radius: 3px;
-  outline: 0;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  margin-right: auto;
+  margin-left: auto;
+  overflow: scroll;
 `;
 
 const modalBodyStyle = css`
@@ -71,7 +72,7 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
     width: 562px;
   `,
 
-  normal: css`
+  default: css`
     min-width: inherit;
     max-width: inherit;
     width: 700px;
@@ -91,13 +92,10 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
 };
 
 const closeButton = css`
-  font-weight: 200;
-  color: #464c4f;
-  position: relative;
-  float: right;
-  top: -18px;
-  right: -10px;
-  margin-top: -2px;
+  color: ${uiColors.gray.dark1};
+  position: absolute;
+  right: 10px;
+  top: 10px;
   cursor: pointer;
 `;
 
@@ -131,7 +129,7 @@ interface ModalProps {
   /**
    * Specifies the size of the Modal.
    *
-   * default: `normal`
+   * default: `default`
    */
   size?: ModalSize;
 
@@ -150,10 +148,10 @@ interface ModalProps {
   ) => void | React.Dispatch<SetStateAction<boolean>>;
 
   /**
-   * Callback invoked when Modal closes.
+   * Callback to determine whether or not Modal should close when user tries to close it.
    *
    */
-  onRequestClose?: () => void;
+  modalShouldClose?: () => bool;
 
   /**
    * className applied to root overlay div.
@@ -174,37 +172,38 @@ interface ModalProps {
   size="large"
   setActive={setActive}
   title="My Modal"
-  onRequestClose={() => console.log('Modal is closing now!')}
+  modalShouldClose={() => console.log('Modal is closing now!')}
   >  
   Modal content!
 </Modal>
 ```
  * @param props.active Boolean to describe whether or not Modal is active.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in React DOM tree.
- * @param props.size String to determine size of Modal. ['xxsmall', 'xsmall', 'small', 'normal', 'large', 'xlarge']
+ * @param props.size String to determine size of Modal. ['xxsmall', 'xsmall', 'small', 'default', 'large', 'xlarge']
  * @param props.setActive Callback to change the active state of Modal.
  * @param props.children Content to appear inside of Modal container.
  * @param props.title Title for the Modal, will appear inside header tags.
- * @param props.onRequestClose Callback invoked when Modal is closed.
+ * @param props.modalShouldClose Callback to determine whether or not Modal should close when user tries to close it.
  * @param props.className className applied to overlay div.
  *
  */
 function Modal({
   active = false,
   usePortal = true,
-  size = ModalSize.Normal,
+  size = ModalSize.Default,
   setActive,
   children,
   title,
-  onRequestClose,
+  modalShouldClose,
   className,
   ...rest
 }: ModalProps) {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const handleClose = () => {
-    if (onRequestClose) {
-      onRequestClose();
+    // Don't close modal if modalShouldClose returns false
+    if (modalShouldClose && modalShouldClose() === false) {
+      return;
     }
 
     if (setActive) {
@@ -223,7 +222,7 @@ function Modal({
       return;
     }
 
-    if (!contentRef.current.contains(e.target as Node)) {
+    if (e.target !== contentRef.current) {
       handleClose();
     }
   };
@@ -234,36 +233,43 @@ function Modal({
 
   const Root = usePortal ? Portal : Fragment;
 
-  return active ? (
+  if (!active) {
+    return null;
+  }
+
+  return (
     <Root>
-      <div {...rest} className={overlayStyle} onClick={handleDocumentClick}>
-        <div
-          className={cx(modalContentStyle, modalSizes[size], className)}
-          tabIndex={-1}
-          ref={contentRef}
-        >
-          <Icon
-            glyph="X"
-            fill={'#000'}
-            size={Size.Large}
-            onClick={handleClose}
-            className={closeButton}
-            data-dismiss="modal"
-            aria-hidden="true"
-          />
+      <div
+        {...rest}
+        className={overlayStyle}
+        onClick={handleDocumentClick}
+      ></div>
+      <div
+        className={cx(modalContentStyle, modalSizes[size], className)}
+        tabIndex={-1}
+        ref={contentRef}
+      >
+        <Icon
+          glyph="X"
+          fill={'#5D6C74'}
+          size={Size.Large}
+          onClick={handleClose}
+          className={closeButton}
+          data-dismiss="modal"
+          aria-hidden="true"
+        />
 
-          {title && (
-            <header>
-              <h3 className={titleStyle}>{title}</h3>
-              <hr />
-            </header>
-          )}
+        {title && (
+          <header>
+            <h3 className={titleStyle}>{title}</h3>
+            <hr />
+          </header>
+        )}
 
-          <div className={modalBodyStyle}>{children}</div>
-        </div>
+        <div className={modalBodyStyle}>{children}</div>
       </div>
     </Root>
-  ) : null;
+  );
 }
 
 Modal.displayName = 'Modal';
@@ -273,7 +279,7 @@ Modal.propTypes = {
   usePortal: PropTypes.bool,
   size: PropTypes.string,
   children: PropTypes.node,
-  onRequestClose: PropTypes.func,
+  modalShouldClose: PropTypes.func,
   title: PropTypes.string,
   className: PropTypes.string,
 };

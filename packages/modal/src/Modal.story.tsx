@@ -13,7 +13,7 @@ function Example() {
         active={active}
         setActive={setActive}
         usePortal={boolean('usePortal', true)}
-        size={select('size', Object.values(ModalSize), ModalSize.Normal)}
+        size={select('size', Object.values(ModalSize), ModalSize.Default)}
         title={text('title', 'Modal Title')}
       >
         Modal Content goes here

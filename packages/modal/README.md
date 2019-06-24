@@ -82,9 +82,9 @@ Callback to set active state of Modal component. `setActive` optionally accepts 
 
 **Type:** `string`
 
-**Default:** `normal`
+**Default:** `default`
 
-Determines `Modal` size. Options: `['xxsmall', 'xsmall', 'small', 'normal', 'large', 'xlarge']`
+Determines `Modal` size. Options: `['xxsmall', 'xsmall', 'small', 'default', 'large', 'xlarge']`
 
 ### title
 
