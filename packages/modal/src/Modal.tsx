@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useRef, SetStateAction } from 'react';
+import React, { Fragment, useCallback, SetStateAction } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
 import Icon, { Size } from '@leafygreen-ui/icon';
@@ -151,7 +151,7 @@ interface ModalProps {
    * Callback to determine whether or not Modal should close when user tries to close it.
    *
    */
-  modalShouldClose?: () => bool;
+  modalShouldClose?: () => boolean;
 
   /**
    * className applied to root overlay div.
@@ -198,17 +198,17 @@ function Modal({
   className,
   ...rest
 }: ModalProps) {
-  const contentRef = useRef<HTMLDivElement>(null);
+  if (!active) {
+    return null;
+  }
 
   const handleClose = () => {
-    // Don't close modal if modalShouldClose returns false
-    if (modalShouldClose && modalShouldClose() === false) {
+    // Don't close modal if modalShouldClose returns false or no setActive callback is passed
+    if (!setActive || (modalShouldClose && !modalShouldClose())) {
       return;
     }
 
-    if (setActive) {
-      setActive(false);
-    }
+    setActive(false);
   };
 
   const handleEscape = useCallback((e: KeyboardEvent) => {
@@ -217,37 +217,18 @@ function Modal({
     }
   }, []);
 
-  const handleDocumentClick = (e: React.SyntheticEvent) => {
-    if (!contentRef.current) {
-      return;
-    }
-
-    if (e.target !== contentRef.current) {
-      handleClose();
-    }
-  };
-
   useEventListener('keydown', handleEscape, {
     options: { once: true },
   });
 
   const Root = usePortal ? Portal : Fragment;
 
-  if (!active) {
-    return null;
-  }
-
   return (
     <Root>
-      <div
-        {...rest}
-        className={overlayStyle}
-        onClick={handleDocumentClick}
-      ></div>
+      <div {...rest} className={overlayStyle} onClick={handleClose}></div>
       <div
         className={cx(modalContentStyle, modalSizes[size], className)}
         tabIndex={-1}
-        ref={contentRef}
       >
         <Icon
           glyph="X"

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, select, boolean } from '@storybook/addon-knobs';
-import Modal, { ModalSize, useModalState } from './index';
+import Modal, { ModalSize } from './index';
 
 function Example() {
-  const { active, setActive } = useModalState();
+  const [active, setActive] = useState(false);
 
   return (
     <>

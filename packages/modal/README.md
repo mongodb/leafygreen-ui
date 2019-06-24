@@ -102,13 +102,13 @@ Determines whether or not a header will appear inside `Modal` component, contain
 
 Children that will be rendered inside `Modal` component.
 
-### onRequestClose
+### modalShouldClose
 
 **Type:** `function`
 
-**Default:** `() => {}`
+**Default:** `() => bool`
 
-Callback invoked when `Modal` is closed.
+Callback invoked when user tries to close modal. If function returns false, the modal will not close.
 
 ### className
 
@@ -125,9 +125,5 @@ Style to be applied to the overlay container's root node.
 **Default:** `true`
 
 Will position `Modal` children relative to its parent without using a Portal if `usePortal` is set to false. NOTE: The parent element should be CSS position relative, fixed, or absolute if using this option.
-
-## useModalState Hook
-
-An optional useModalState hook can be imported, as a named import, from the Modal package. This hook returns an object, where the first element is `active: currentState`, and the second element is `setActive: setCurrentState(bool)`. By leveraging this hook, you are able to keep your local state in sync with Modal state in the event of document clicks or the Escape key closing the modal.
 
 #### Any other properties will be spread on the overlay container's root node.
