@@ -96,6 +96,23 @@ describe('packages/Button', () => {
     expect(buttonComponent.tagName.toLowerCase()).toBe('a');
   });
 
+  test(`does not renders the disabled attributes when disabled is set and it's an anchor`, () => {
+    const { container } = render(
+      <Button href="http://mongodb.design" disabled>
+        Click me!
+      </Button>,
+    );
+
+    const buttonComponent = container.firstChild;
+
+    if (!typeIs.element(buttonComponent)) {
+      throw new Error('No element was rendered');
+    }
+
+    expect(buttonComponent.getAttribute('disabled')).toBeNull();
+    expect(buttonComponent.getAttribute('aria-disabled')).toBe('true');
+  });
+
   test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
     const { container } = render(<Button as="div">Click me!</Button>);
     const buttonComponent = container.firstChild;

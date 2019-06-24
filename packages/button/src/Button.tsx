@@ -33,7 +33,7 @@ const buttonVariants: { readonly [K in Variant]: string } = {
       ${colors.mongodb.white},
       ${lighten(0.2, colors.gray[5])}
     );
-    border-color: ${colors.gray[6]};
+    border: 1px solid ${colors.gray[6]}};
     box-shadow: inset 0 -1px 0 ${colors.gray[6]};
     &:focus,
     &:hover {
@@ -68,7 +68,7 @@ const buttonVariants: { readonly [K in Variant]: string } = {
       ${colors.green[2]},
       ${lighten(0.025, colors.green[1])}
     );
-    border-color: ${darken(0.02, colors.green[2])};
+    border: 1px solid ${darken(0.02, colors.green[2])};
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
     &:focus,
     &:hover {
@@ -100,6 +100,7 @@ const buttonVariants: { readonly [K in Variant]: string } = {
     color: ${colors.green[2]};
     background-color: transparent;
     background-image: none;
+    border: 1px solid ${colors.green[2]};
     border-color: ${colors.green[2]};
     box-shadow: none;
     &:focus,
@@ -134,7 +135,7 @@ const buttonVariants: { readonly [K in Variant]: string } = {
       ${darken(0.1, colors.mongodb.alertRed)},
       ${darken(0.2, colors.mongodb.alertRed)}
     );
-    border-color: #97130c;
+    border: 1px solid #97130c;
     box-shadow: inset 0 -1px 0 0 ${darken(0.25, colors.mongodb.alertRed)};
     &:focus,
     &:hover {
@@ -164,7 +165,7 @@ const buttonVariants: { readonly [K in Variant]: string } = {
 
   [Variant.Dark]: css`
     color: ${colors.mongodb.white};
-    border-color: ${colors.gray[0]};
+    border: 1px solid ${colors.gray[0]}};
     background-image: linear-gradient(${colors.gray[3]}, ${colors.gray[1]});
     box-shadow: inset 0 -1px 0 ${colors.gray[0]};
     &:focus,
@@ -197,14 +198,13 @@ const buttonSizes: { readonly [K in Size]: string } = {
   [Size.Small]: css`
     height: 25px;
     padding: 0 10px;
+    font-size: 14px;
   `,
 
   [Size.Normal]: css`
     height: 32px;
     padding: 0 12px;
     font-size: 14px;
-    text-transform: none;
-    font-weight: normal;
   `,
 
   [Size.Large]: css`
@@ -215,28 +215,29 @@ const buttonSizes: { readonly [K in Size]: string } = {
 };
 
 const baseStyle = css`
-  border: 1px solid ${colors.gray[6]}};
-  box-shadow: inset 0 -1px 0 ${colors.gray[6]};
-  height: 32px;
-  padding: 0 12px;
-  font-size: 14px;
-  text-transform: none;
-  font-weight: normal;
-  font-family: Akzidenz, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  box-sizing: border-box;
   border-radius: 3px;
-  display: inline-block;
-  transition: all 120ms ease;
-  text-decoration: none;
+  box-sizing: border-box;
   cursor: pointer;
-  &:disabled {
-    color: ${colors.gray[3]};
-    border-color: ${colors.gray[5]};
-    background-color: ${colors.gray[7]};
-    background-image: none;
-    box-shadow: none;
-    cursor: not-allowed;
+  display: inline-flex;
+  align-items: center;
+  font-family: Akzidenz, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  text-decoration: none;
+  text-transform: none;
+  transition: all 120ms ease;
+  user-select: none;
+  &:hover {
+    text-decoration: none;
   }
+`;
+
+const disabledStyle = css`
+  color: ${colors.gray[3]};
+  border-color: ${colors.gray[5]};
+  background-color: ${colors.gray[7]};
+  background-image: none;
+  box-shadow: none;
+  pointer-events: none;
 `;
 
 interface SharedButtonProps {
@@ -293,9 +294,11 @@ export default function Button(props: ButtonProps) {
       baseStyle,
       buttonSizes[size],
       buttonVariants[variant],
+      { [disabledStyle]: disabled },
       className,
     ),
-    disabled,
+    // only add a disabled prop if not an anchor
+    ...(!usesLinkElement(props) && { disabled }),
     'aria-disabled': disabled,
   };
 
