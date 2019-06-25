@@ -7,11 +7,11 @@ const containerStyle = css`
   background-color: white;
   border: 1px solid ${uiColors.gray.light2};
   box-shadow: 0px 4px 10px -4px ${uiColors.gray.light1};
-  cursor: pointer;
+  transition: border 300ms ease-in-out, box-shadow 300ms ease-in-out;
 
   &:hover {
     border: 1px solid ${uiColors.gray.light2};
-    box-shadow: 0px 4px 10px -4px ${uiColors.gray.base};
+    box-shadow: 0px 3px 6px -2px ${uiColors.gray.base};
   }
 `;
 
@@ -23,6 +23,7 @@ interface CardProps {
 
 function Card({ children, as = 'div', className, ...rest }: CardProps) {
   const Root = as;
+
   return (
     <Root {...rest} className={cx(containerStyle, className)}>
       {children}
