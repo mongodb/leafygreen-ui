@@ -7,12 +7,11 @@ afterAll(cleanup);
 
 describe('packages/Modal', () => {
   const modalId = 'modal';
-  const modalTitle = 'Modal Title';
   const modalContent = 'Modal Content';
 
   describe('when rendered with content', () => {
     const { getByText, getByTestId } = render(
-      <Modal active title={modalTitle} data-testid={modalId}>
+      <Modal active data-testid={modalId}>
         <h4>{modalContent}</h4>
       </Modal>,
     );
@@ -20,11 +19,6 @@ describe('packages/Modal', () => {
     test('it appears on DOM when active prop is set', () => {
       const modal = getByTestId(modalId);
       expect(modal).toBeVisible();
-    });
-
-    test('it renders the title as expected', () => {
-      const title = getByText(modalTitle);
-      expect(title).toBeInTheDocument();
     });
 
     test('it renders the children as expected', () => {
@@ -35,7 +29,7 @@ describe('packages/Modal', () => {
 
   describe('when rendered with active equal to false', () => {
     const { container } = render(
-      <Modal active={false} title={modalTitle} data-testid={modalId}>
+      <Modal active={false} data-testid={modalId}>
         <h4>{modalContent}</h4>
       </Modal>,
     );

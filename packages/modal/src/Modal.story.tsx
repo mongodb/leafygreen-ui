@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, select } from '@storybook/addon-knobs';
+import { select } from '@storybook/addon-knobs';
 import Modal, { ModalSize } from './index';
 
 function Example() {
@@ -13,7 +13,6 @@ function Example() {
         active={active}
         setActive={setActive}
         size={select('size', Object.values(ModalSize), ModalSize.Default)}
-        title={text('title', 'Modal Title')}
       >
         Modal Content goes here
       </Modal>

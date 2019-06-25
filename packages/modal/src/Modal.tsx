@@ -98,11 +98,7 @@ const closeButton = css`
   cursor: pointer;
 `;
 
-const titleStyle = css`
-  margin: 0;
-`;
-
-const EscapeKey = 27;
+const escapeKey = 27;
 
 interface ModalProps {
   /**
@@ -123,12 +119,6 @@ interface ModalProps {
    * default: `default`
    */
   size?: ModalSize;
-
-  /**
-   * Specifies the title of the Modal.
-   *
-   */
-  title?: string;
 
   /**
    * Callback to change the active state of the Modal.
@@ -161,7 +151,6 @@ interface ModalProps {
   active
   size="large"
   setActive={setActive}
-  title="My Modal"
   modalShouldClose={() => console.log('Modal is closing now!')}
   >  
   Modal content!
@@ -171,7 +160,6 @@ interface ModalProps {
  * @param props.size String to determine size of Modal. ['xxsmall', 'xsmall', 'small', 'default', 'large', 'xlarge']
  * @param props.setActive Callback to change the active state of Modal.
  * @param props.children Content to appear inside of Modal container.
- * @param props.title Title for the Modal, will appear inside header tags.
  * @param props.modalShouldClose Callback to determine whether or not Modal should close when user tries to close it.
  * @param props.className className applied to overlay div.
  *
@@ -181,7 +169,6 @@ function Modal({
   size = ModalSize.Default,
   setActive,
   children,
-  title,
   modalShouldClose,
   className,
   ...rest
@@ -200,7 +187,7 @@ function Modal({
   };
 
   const handleEscape = useCallback((e: KeyboardEvent) => {
-    if (e.keyCode === EscapeKey) {
+    if (e.keyCode === escapeKey) {
       handleClose();
     }
   }, []);
@@ -226,13 +213,6 @@ function Modal({
           aria-hidden="true"
         />
 
-        {title && (
-          <header>
-            <h3 className={titleStyle}>{title}</h3>
-            <hr />
-          </header>
-        )}
-
         <div className={modalBodyStyle}>{children}</div>
       </div>
     </Portal>
@@ -246,7 +226,6 @@ Modal.propTypes = {
   size: PropTypes.string,
   children: PropTypes.node,
   modalShouldClose: PropTypes.func,
-  title: PropTypes.string,
   className: PropTypes.string,
 };
 

@@ -13,12 +13,7 @@ function ExampleComponent() {
   return (
     <>
       <button onClick={() => setActive(active => !active)}>Open Modal</button>
-      <Modal
-        active={active}
-        setActive={setActive}
-        usePortal
-        title="Modal Title"
-      >
+      <Modal active={active} setActive={setActive}>
         Modal Content goes here
       </Modal>
     </>
@@ -51,10 +46,6 @@ function ExampleComponent() {
         fill-rule="evenodd"
       ></path>
     </svg>
-    <header>
-      <h3 class="leafygreen-ui-1uk1gs8">Modal Title</h3>
-      <hr />
-    </header>
     <div class="leafygreen-ui-j88j89">Modal Content goes here</div>
   </div>
 </div>
@@ -86,14 +77,6 @@ Callback to set active state of Modal component. `setActive` optionally accepts 
 
 Determines `Modal` size. Options: `['xxsmall', 'xsmall', 'small', 'default', 'large', 'xlarge']`
 
-### title
-
-**Type:** `string`
-
-**Default:** ``
-
-Determines whether or not a header will appear inside `Modal` component, containing title information displayed.
-
 ### children
 
 **Type:** `node`
@@ -117,13 +100,5 @@ Callback invoked when user tries to close modal. If function returns false, the 
 **Default:** ``
 
 Style to be applied to the overlay container's root node.
-
-### usePortal
-
-**Type:** `boolean`
-
-**Default:** `true`
-
-Will position `Modal` children relative to its parent without using a Portal if `usePortal` is set to false. NOTE: The parent element should be CSS position relative, fixed, or absolute if using this option.
 
 #### Any other properties will be spread on the overlay container's root node.
