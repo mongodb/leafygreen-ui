@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, select, boolean } from '@storybook/addon-knobs';
+import { text, select } from '@storybook/addon-knobs';
 import Modal, { ModalSize } from './index';
 
 function Example() {
@@ -12,7 +12,6 @@ function Example() {
       <Modal
         active={active}
         setActive={setActive}
-        usePortal={boolean('usePortal', true)}
         size={select('size', Object.values(ModalSize), ModalSize.Default)}
         title={text('title', 'Modal Title')}
       >

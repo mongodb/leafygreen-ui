@@ -9,7 +9,6 @@ describe('packages/Modal', () => {
   const modalId = 'modal';
   const modalTitle = 'Modal Title';
   const modalContent = 'Modal Content';
-  // const onRequestClose = jest.fn();
 
   describe('when rendered with content', () => {
     const { getByText, getByTestId } = render(
@@ -35,20 +34,14 @@ describe('packages/Modal', () => {
   });
 
   describe('when rendered with active equal to false', () => {
-    const { getByText, getByTestId } = render(
+    const { container } = render(
       <Modal active={false} title={modalTitle} data-testid={modalId}>
         <h4>{modalContent}</h4>
       </Modal>,
     );
 
     test('it does not display the modal', () => {
-      const modal = getByTestId(modalId);
-      const title = getByText(modalTitle);
-      const content = getByText(modalContent);
-
-      !expect(modal).toBeVisible();
-      !expect(title).toBeInTheDocument();
-      !expect(content).toBeInTheDocument();
+      expect(container.innerHTML).toBe('');
     });
   });
 

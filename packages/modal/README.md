@@ -30,15 +30,16 @@ function ExampleComponent() {
 
 ```html
 <button>Open Modal</button>
-<div class="leafygreen-ui-np1ghg">
-  <div class="leafygreen-ui-zbhk5h" tabindex="-1">
+<div>
+  <div class="leafygreen-ui-1wmxgfm"></div>
+  <div class="leafygreen-ui-2fvy7h" tabindex="-1">
     <svg
       width="24"
       height="24"
       role="img"
       viewBox="0 0 16 16"
-      fill="#000"
-      class="leafygreen-ui-eg8nsy"
+      fill="#5D6C74"
+      class="leafygreen-ui-6hgda2"
       data-dismiss="modal"
       aria-hidden="true"
       size="24"
@@ -46,7 +47,7 @@ function ExampleComponent() {
       <title>X Icon</title>
       <path
         d="M9.414 8l3.182 3.182-1.414 1.414L8 9.414l-3.182 3.182-1.414-1.414L6.586 8 3.404 4.818l1.414-1.414L8 6.586l3.182-3.182 1.414 1.414L9.414 8z"
-        fill="#000"
+        fill="#5D6C74"
         fill-rule="evenodd"
       ></path>
     </svg>
@@ -54,7 +55,6 @@ function ExampleComponent() {
       <h3 class="leafygreen-ui-1uk1gs8">Modal Title</h3>
       <hr />
     </header>
-
     <div class="leafygreen-ui-j88j89">Modal Content goes here</div>
   </div>
 </div>
