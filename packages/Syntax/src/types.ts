@@ -20,7 +20,7 @@ export type Variant = UnionFromValues<typeof Variant>;
 
 // When adding additional language support, be sure to also add
 // the language in webpack.config.js
-export const SupportedLanguages: { [K: string]: string } = {
+export const SupportedLanguages = {
   Javascript: 'javascript',
   Typescript: 'typescript',
   Cal: 'cal', // C/AL
@@ -38,7 +38,7 @@ export const SupportedLanguages: { [K: string]: string } = {
   Sql: 'sql',
   Yaml: 'yaml',
   Json: 'json',
-};
+} as const;
 
 export type SupportedLanguages = UnionFromValues<typeof SupportedLanguages>;
 

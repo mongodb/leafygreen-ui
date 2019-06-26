@@ -12,7 +12,7 @@ const lineNumberStyles = css`
   padding-bottom: 12px;
   font-size: 13px;
   line-height: 24px;
-  user-select: no-select;
+  user-select: none;
 `;
 
 const lineNumberVariants: { [K in Variant]: string } = {
@@ -28,11 +28,13 @@ const lineNumberVariants: { [K in Variant]: string } = {
 interface Props {
   content: string;
   variant: Variant;
+  className: string;
 }
 
 function LineNumbers({
   content = '',
   variant,
+  className,
   ...rest
 }: Props & React.HTMLAttributes<HTMLDivElement>) {
   if (!content.length) {
@@ -52,7 +54,7 @@ function LineNumbers({
   return (
     <div
       {...rest}
-      className={cx(lineNumberStyles, lineNumberVariants[variant])}
+      className={cx(lineNumberStyles, lineNumberVariants[variant], className)}
     >
       {lines.map((line, i) => (
         <div key={i}>{i + 1}</div>

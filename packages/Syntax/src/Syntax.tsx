@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { cx } from '@leafygreen-ui/emotion';
+import { cx, css } from '@leafygreen-ui/emotion';
 import hljs from 'highlight.js/lib/highlight';
 import { Variant, SupportedLanguages, Lang } from './types';
 import './globalStyles';
@@ -54,16 +54,16 @@ function Syntax({
 }: Props & React.HTMLAttributes<HTMLElement>) {
   const codeClassName = cx(
     `lg-highlight-hljs-${variant}`,
-    'lg-highlight-hljs',
+    css`
+      color: inherit;
+      font-size: 13px;
+      line-height: 24px;
+    `,
     {
-      [SupportedLanguages[lang]]: lang !== Lang.Auto,
+      [lang]: lang !== Lang.Auto,
     },
     className,
   );
-
-  if (!children) {
-    return <code {...rest} className={codeClassName} />;
-  }
 
   if (lang === Lang.None) {
     return (

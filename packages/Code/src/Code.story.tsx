@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { select, boolean } from '@storybook/addon-knobs';
+import { select, boolean, text } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { Variant, Lang } from '@leafygreen-ui/syntax';
 import Code from '.';
@@ -367,8 +367,7 @@ public final class ReadConcern {
   private ReadConcern() {
     this.level = null;
   }
-}
-  `,
+}`,
 };
 
 storiesOf('Code', module).add('Multiline', () => {
@@ -387,7 +386,10 @@ storiesOf('Code', module).add('Multiline', () => {
       `}
     >
       <Code
-        showLineNumbers={boolean('Show line numbers', true)}
+        showLineNumbers={boolean('Show line numbers', false)}
+        showWindowChrome={boolean('Show window chrome', false)}
+        multiline={boolean('Multiline', true)}
+        chromeLabel={text('Chrome label', 'directory/fileName.js')}
         variant={select('Variant', Object.values(Variant), Variant.Light)}
       >
         {codeSnippets[language]}

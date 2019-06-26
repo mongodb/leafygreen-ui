@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { select } from '@storybook/addon-knobs';
 import Syntax from '.';
-import { SupportedLanguages } from './types';
+import { Lang } from './types';
 
 const codeSnippet = `\
 const insertDocuments = function(db, callback) {
@@ -44,24 +44,5 @@ client.connect(function(err) {
 `;
 
 storiesOf('Syntax', module).add('Syntax', () => (
-  <>
-    <Syntax
-      lang={select(
-        'language',
-        [...Object.values(SupportedLanguages), 'auto'],
-        'auto',
-      )}
-    >
-      {codeSnippet}
-    </Syntax>
-    <Syntax
-      lang={select(
-        'language',
-        [...Object.values(SupportedLanguages), 'auto'],
-        'auto',
-      )}
-    >
-      {codeSnippet}
-    </Syntax>
-  </>
+  <Syntax lang={select('language', Lang, 'auto')}>{codeSnippet}</Syntax>
 ));

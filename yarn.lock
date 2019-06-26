@@ -1371,7 +1371,7 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
-"@leafygreen-ui/lib@^2.1.4", "@leafygreen-ui/lib@^2.1.7":
+"@leafygreen-ui/lib@^2.1.7":
   version "2.1.7"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-2.1.7.tgz#1b8e062fe763a67005da220f945c1208d35999d9"
   integrity sha512-xl7R8VrEq188vsHSnXrdiigEAjFaVSVYkbs0Zs8Si+8mjV1kibPhVS9phA7rI9MUYvZTg+BGD18nyy/t3XHfCQ==

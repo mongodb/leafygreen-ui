@@ -8,6 +8,7 @@ import Syntax, {
   variantColors,
 } from '@leafygreen-ui/syntax';
 import LineNumbers from './LineNumbers';
+import WindowChrome, { windowChromeHeight } from './WindowChrome';
 
 const whiteSpace = 12;
 
@@ -25,7 +26,12 @@ const wrapperStyleWithLineNumbers = css`
   padding-left: ${whiteSpace * 3.5}px;
 `;
 
-function getVariantStyle(variant: Variant): string {
+const wrapperStyleWithWindowChrome = css`
+  padding-top: ${windowChromeHeight + whiteSpace}px;
+  border-left-width: 1px;
+`;
+
+function getWrapperVariantStyle(variant: Variant): string {
   const colors = variantColors[variant];
 
   return css`
@@ -36,8 +42,8 @@ function getVariantStyle(variant: Variant): string {
 }
 
 const wrapperVariants: { [K in Variant]: string } = {
-  [Variant.Light]: getVariantStyle(Variant.Light),
-  [Variant.Dark]: getVariantStyle(Variant.Dark),
+  [Variant.Light]: getWrapperVariantStyle(Variant.Light),
+  [Variant.Dark]: getWrapperVariantStyle(Variant.Dark),
 } as const;
 
 interface Props extends SyntaxProps {
@@ -49,15 +55,29 @@ interface Props extends SyntaxProps {
   showLineNumbers?: boolean;
 
   /**
+   * Shows window chrome for code block;
+   *
+   * default: `false`
+   */
+  showWindowChrome?: boolean;
+
+  /**
+   * chromeLabel
+   */
+  chromeLabel?: string,
+
+  /**
    * When true, whitespace and line breaks will be preserved.
    *
    * default: `true`
    * */
-  multiline: boolean;
+  multiline?: boolean;
 }
 
-type DetailedPreProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLPreElement>, HTMLPreElement>;
-type DetailedDivProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+type DetailedElementProps<T> = React.DetailedHTMLProps<
+  React.HTMLAttributes<T>,
+  T
+>;
 
 /**
  * # Code
@@ -70,10 +90,10 @@ type DetailedDivProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElem
  * ---
  * @param props.children The string to be formatted.
  * @param props.className An additional CSS class added to the root element of Code.
- * @param props.variant Determines if the code block is rendered with a dark or light background. Default: 'light'
  * @param props.multiline When true, whitespace and line breaks will be preserved. Default: `true`
- * @param props.showLineNumbers When true, shows line numbers in preformatted code blocks. Default: `false`
  * @param props.lang The language used for syntax highlighing. Default: `auto`
+ * @param props.variant Determines if the code block is rendered with a dark or light background. Default: 'light'
+ * @param props.showLineNumbers When true, shows line numbers in preformatted code blocks. Default: `false`
  */
 function Code({
   children = '',
@@ -82,20 +102,28 @@ function Code({
   lang = Lang.Auto,
   variant = Variant.Light,
   showLineNumbers = false,
+  showWindowChrome = false,
+  chromeLabel = '',
   ...rest
 }: Props) {
   const wrapperClassName = cx(
     wrapperStyle,
     wrapperVariants[variant],
     {
-      [wrapperStyleWithLineNumbers]: showLineNumbers,
+      [wrapperStyleWithLineNumbers]: multiline && showLineNumbers,
+      [wrapperStyleWithWindowChrome]: showWindowChrome,
     },
     className,
   );
 
   if (!multiline) {
     return (
-      <div {...(rest as DetailedDivProps)} className={wrapperClassName}>
+      <div
+        {...(rest as DetailedElementProps<HTMLDivElement>)}
+        className={wrapperClassName}
+      >
+        {showWindowChrome && <WindowChrome chromeLabel={chromeLabel} variant={variant} />}
+
         <Syntax variant={variant} lang={lang}>
           {children}
         </Syntax>
@@ -104,8 +132,25 @@ function Code({
   }
 
   return (
-    <pre {...(rest as DetailedPreProps)} className={wrapperClassName}>
-      {showLineNumbers && <LineNumbers variant={variant} content={children} />}
+    <pre
+      {...(rest as DetailedElementProps<HTMLPreElement>)}
+      className={wrapperClassName}
+    >
+      {showWindowChrome && <WindowChrome chromeLabel={chromeLabel} variant={variant} />}
+
+      {showLineNumbers && (
+        <LineNumbers
+          variant={variant}
+          content={children}
+          className={
+            showWindowChrome
+              ? css`
+                  top: ${windowChromeHeight}px;
+                `
+              : ''
+          }
+        />
+      )}
 
       <Syntax variant={variant} lang={lang}>
         {children}

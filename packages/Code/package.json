@@ -14,8 +14,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^2.1.4",
-    "@leafygreen-ui/theme": "^1.1.4",
+    "@leafygreen-ui/lib": "^3.0.0",
     "@leafygreen-ui/syntax": "^0.9.0"
   }
 }
