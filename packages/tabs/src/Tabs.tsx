@@ -15,27 +15,22 @@ const listTitle = css`
 
 interface TabsProps {
   children: React.ReactNode;
-  onChange: React.ReactEventHandler;
-  selected?: string;
+  onChange?: React.ReactEventHandler;
   defaultSelected?: string;
-  vertial?: boolean;
 }
 
 function Tabs({
   children,
   onChange,
-  selected,
-  defaultSelected,
-  vertical,
 }: TabsProps) {
-  const [activeTab, setActiveTab] = useState(defaultSelected);
+  const [activeTab, setActiveTab] = useState(null);
 
-  function handleChange(e: React.PointerEvent) {
-    if (defaultSelected) {
-      setActiveTab(e.target.id);
+  function handleChange(e: React.SyntheticEvent<Element, MouseEvent>) {
+    setActiveTab((e.target as HTMLLIElement).getAttribute('data-tab-id'));
+
+    if (onChange) {
+      onChange(e);
     }
-
-    onChange(e);
   }
 
   function isTab(
@@ -49,31 +44,33 @@ function Tabs({
     );
   }
 
-  const tabs = React.Children.map(children, child => {
+  const tabs: Array<React.ReactNode> = React.Children.map(children, (child: React.ReactNode) => {
     if (!isTab(child)) {
       return child;
     }
-
+  
     return React.cloneElement(child, {
-      active: child.props.id === activeTab || child.props.id === selected,
-      key: child.props.id,
-      handleChange,
+      active: child.props.active || (activeTab ? child.props.value === activeTab : child.props.default),
+      key: child.props.value,
     });
   });
 
   return (
     <div>
       <ul className={listStyle}>
-        {tabs.map(tab => (
+        {tabs.map((tab, i) => tab && (
           <li
+            key={i}
             className={listTitle}
             id={tab.props.id}
-            onClick={!tab.props.disabled ? handleChange : null}
+            data-tab-id={tab.props.value}
+            onClick={!tab.props.disabled ? handleChange : undefined}
           >
             {tab.props.title}
           </li>
         ))}
       </ul>
+
       {tabs}
     </div>
   );
@@ -84,9 +81,7 @@ Tabs.displayName = 'Tabs';
 Tabs.propTypes = {
   children: PropTypes.node,
   onChange: PropTypes.func,
-  selected: PropTypes.string,
   defaultSelected: PropTypes.string,
-  vertical: PropTypes.bool,
 };
 
 export default Tabs;

@@ -2,23 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export interface TabProps {
-  id: string;
+  value: string;
   active?: boolean;
   title?: string;
   children?: React.ReactNode;
   disabled?: boolean;
   as?: React.ElementType<any>;
-  handleChange: React.ReactEventHandler;
+  default?: boolean;
 }
 
 function Tab({
-  id,
-  active = false,
-  title,
+  value,
+  active,
   children,
   disabled = false,
   as = 'div',
-  handleChange,
 }: TabProps) {
   if (!active) {
     return null;
@@ -27,7 +25,7 @@ function Tab({
   const Root = as;
 
   return (
-    <Root disabled={disabled} aria-disabled={disabled} id={id}>
+    <Root disabled={disabled} aria-disabled={disabled} data-tab-id={value}>
       {children}
     </Root>
   );
@@ -36,7 +34,7 @@ function Tab({
 Tab.displayName = 'Tab';
 
 Tab.propTypes = {
-  id: PropTypes.string,
+  value: PropTypes.string,
   active: PropTypes.bool,
   title: PropTypes.string,
   content: PropTypes.node,
