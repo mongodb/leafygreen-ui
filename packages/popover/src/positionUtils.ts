@@ -127,7 +127,7 @@ const Justification = {
   Bottom: 'bottom',
   Left: 'left',
   Right: 'right',
-  CenterVertical: 'center-',
+  CenterVertical: 'center-vertical',
   CenterHorizontal: 'center-horizontal',
 } as const;
 
