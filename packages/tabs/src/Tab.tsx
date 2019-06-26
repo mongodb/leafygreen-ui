@@ -8,7 +8,7 @@ export interface TabProps {
   children?: React.ReactNode;
   disabled?: boolean;
   as?: React.ElementType<any>;
-  onChange?: (e) => void;
+  handleChange: React.ReactEventHandler;
 }
 
 function Tab({
@@ -17,13 +17,19 @@ function Tab({
   title,
   children,
   disabled = false,
-  onChange,
   as = 'div',
+  handleChange,
 }: TabProps) {
+  if (!active) {
+    return null;
+  }
+
   const Root = as;
 
-  return(
-    <Root id={id}>{children}</Root>
+  return (
+    <Root disabled={disabled} aria-disabled={disabled} id={id}>
+      {children}
+    </Root>
   );
 }
 

@@ -1,12 +1,17 @@
-import React, {
-  useState,
-  ReactElement,
-  ReactNode,
-  ReactChild,
-  ReactComponentElement,
-} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { css, cx } from '@leafygreen-ui/emotion';
 import Tab, { TabProps } from './Tab';
+
+const listStyle = css`
+  display: flex;
+  list-style: none;
+`;
+
+const listTitle = css`
+  margin-left: 5px;
+  margin-right: 5px;
+`;
 
 interface TabsProps {
   children: React.ReactNode;
@@ -23,11 +28,9 @@ function Tabs({
   defaultSelected,
   vertical,
 }: TabsProps) {
-  const [activeTab, setActiveTab] = useState(selected);
+  const [activeTab, setActiveTab] = useState(defaultSelected);
 
   function handleChange(e: React.PointerEvent) {
-    console.log('hi')
-    
     if (defaultSelected) {
       setActiveTab(e.target.id);
     }
@@ -42,24 +45,35 @@ function Tabs({
       element != null &&
       typeof element === 'object' &&
       'type' in element &&
-      (element.type as any).displayName === 'RadioBox'
+      (element.type as any).displayName === 'Tab'
     );
   }
-  
+
   const tabs = React.Children.map(children, child => {
     if (!isTab(child)) {
       return child;
     }
 
     return React.cloneElement(child, {
-      onChange: handleChange,
       active: child.props.id === activeTab || child.props.id === selected,
+      key: child.props.id,
+      handleChange,
     });
   });
 
   return (
     <div>
-      <ul>{tabs.map(tab => <p onClick={handleChange}>{tab.props.title}</p>)}</ul>
+      <ul className={listStyle}>
+        {tabs.map(tab => (
+          <li
+            className={listTitle}
+            id={tab.props.id}
+            onClick={!tab.props.disabled ? handleChange : null}
+          >
+            {tab.props.title}
+          </li>
+        ))}
+      </ul>
       {tabs}
     </div>
   );
