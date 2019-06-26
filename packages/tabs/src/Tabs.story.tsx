@@ -10,22 +10,24 @@ function ControlledTabs() {
   };
 
   return (
-    <Tabs onChange={changeHandler} selected={activeTab}>
-      <Tab value="test1" title="Title 1">
-        Hello 1
-      </Tab>
-      <Tab value="test2" title="Title 2">
-        Hello 2
-      </Tab>
-      <Tab value="test3" title="Title 3">
-        Hello 3
-      </Tab>
-    </Tabs>
+    <div>
+      <Tabs onChange={changeHandler} selected={activeTab}>
+        <Tab value="test1" title="Title 1">
+          Hello 1
+        </Tab>
+        <Tab value="test2" title="Title 2">
+          Hello 2
+        </Tab>
+        <Tab value="test3" title="Title 3">
+          Hello 3
+        </Tab>
+      </Tabs>
+    </div>
   );
 }
 
 storiesOf('Tabs', module)
-  .add('uncontrolled', () => (
+  .add('Uncontrolled', () => (
     <Tabs>
       <Tab value="test1" title="Title 1">
         Hello 1
@@ -38,4 +40,4 @@ storiesOf('Tabs', module)
       </Tab>
     </Tabs>
   ))
-  .add('controlled', () => <ControlledTabs />);
+  .add('Controlled', () => <ControlledTabs />);

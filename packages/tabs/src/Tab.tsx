@@ -27,6 +27,9 @@ function Tab({
 
   const Root = as;
 
+  // default is not an HTML property
+  delete rest.default;
+
   return (
     <Root
       disabled={disabled}

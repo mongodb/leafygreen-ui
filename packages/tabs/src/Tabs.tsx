@@ -1,16 +1,49 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { uiColors } from '@leafygreen-ui/palette';
 import Tab, { TabProps } from './Tab';
 
 const listStyle = css`
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   list-style: none;
+  padding: 0px;
+  margin: 20px 0px 5px 0;
+  border-bottom: 3px solid ${uiColors.gray.light2};
 `;
 
 const listTitle = css`
-  margin-left: 5px;
-  margin-right: 5px;
+  display: inline-block;
+  background-color: ${uiColors.white};
+  color: ${uiColors.gray.base};
+  border-bottom: 3px solid ${uiColors.gray.light2};
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 1;
+  text-transform: capitalize;
+  margin-bottom: -3px;
+  padding: 8px 24px;
+
+  &:hover {
+    background-color: ${uiColors.white};
+  }
+`;
+
+const activeStyle = css`
+  background-color: ${uiColors.white};
+  border-bottom: 3px solid ${uiColors.green.base};
+  color: ${uiColors.gray.dark3};
+`;
+
+const disabledStyle = css`
+  cursor: not-allowed;
+  color: ${uiColors.gray.light2};
+
+  &:hover {
+    background-color: ${uiColors.gray.light3};
+  }
 `;
 
 interface TabsProps {
@@ -65,7 +98,10 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
             tab && (
               <li
                 key={i}
-                className={listTitle}
+                className={cx(listTitle, {
+                  [activeStyle]: tab.props.active,
+                  [disabledStyle]: tab.props.disabled,
+                })}
                 id={tab.props.id}
                 data-tab-id={tab.props.value}
                 onClick={!tab.props.disabled ? handleChange : undefined}
