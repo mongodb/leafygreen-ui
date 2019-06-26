@@ -9,6 +9,7 @@ export interface TabProps {
   disabled?: boolean;
   as?: React.ElementType<any>;
   default?: boolean;
+  className?: string;
 }
 
 function Tab({
@@ -17,6 +18,8 @@ function Tab({
   children,
   disabled = false,
   as = 'div',
+  className,
+  ...rest
 }: TabProps) {
   if (!active) {
     return null;
@@ -25,7 +28,13 @@ function Tab({
   const Root = as;
 
   return (
-    <Root disabled={disabled} aria-disabled={disabled} data-tab-id={value}>
+    <Root
+      disabled={disabled}
+      aria-disabled={disabled}
+      data-tab-id={value}
+      className={className}
+      {...rest}
+    >
       {children}
     </Root>
   );
@@ -40,6 +49,7 @@ Tab.propTypes = {
   content: PropTypes.node,
   disabled: PropTypes.bool,
   as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  className: PropTypes.string,
 };
 
 export default Tab;

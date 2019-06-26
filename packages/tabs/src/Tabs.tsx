@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import Tab, { TabProps } from './Tab';
 
 const listStyle = css`
@@ -16,17 +16,17 @@ const listTitle = css`
 interface TabsProps {
   children: React.ReactNode;
   onChange?: React.ReactEventHandler;
-  defaultSelected?: string;
+  selected?: string | null;
+  className?: string;
 }
 
-function Tabs({
-  children,
-  onChange,
-}: TabsProps) {
-  const [activeTab, setActiveTab] = useState(null);
+function Tabs({ children, onChange, selected, className }: TabsProps) {
+  const [activeTab, setActiveTab] = useState();
 
   function handleChange(e: React.SyntheticEvent<Element, MouseEvent>) {
-    setActiveTab((e.target as HTMLLIElement).getAttribute('data-tab-id'));
+    if (!selected) {
+      setActiveTab((e.target as HTMLLIElement).getAttribute('data-tab-id'));
+    }
 
     if (onChange) {
       onChange(e);
@@ -44,31 +44,36 @@ function Tabs({
     );
   }
 
-  const tabs: Array<React.ReactNode> = React.Children.map(children, (child: React.ReactNode) => {
+  const tabs = React.Children.map(children, (child: React.ReactNode) => {
     if (!isTab(child)) {
       return child;
     }
-  
+
     return React.cloneElement(child, {
-      active: child.props.active || (activeTab ? child.props.value === activeTab : child.props.default),
+      active:
+        selected === child.props.value ||
+        (activeTab ? child.props.value === activeTab : child.props.default),
       key: child.props.value,
     });
-  });
+  }) as Array<React.ReactElement>;
 
   return (
-    <div>
+    <div className={className}>
       <ul className={listStyle}>
-        {tabs.map((tab, i) => tab && (
-          <li
-            key={i}
-            className={listTitle}
-            id={tab.props.id}
-            data-tab-id={tab.props.value}
-            onClick={!tab.props.disabled ? handleChange : undefined}
-          >
-            {tab.props.title}
-          </li>
-        ))}
+        {tabs.map(
+          (tab, i) =>
+            tab && (
+              <li
+                key={i}
+                className={listTitle}
+                id={tab.props.id}
+                data-tab-id={tab.props.value}
+                onClick={!tab.props.disabled ? handleChange : undefined}
+              >
+                {tab.props.title}
+              </li>
+            ),
+        )}
       </ul>
 
       {tabs}
@@ -81,7 +86,8 @@ Tabs.displayName = 'Tabs';
 Tabs.propTypes = {
   children: PropTypes.node,
   onChange: PropTypes.func,
-  defaultSelected: PropTypes.string,
+  selected: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default Tabs;
