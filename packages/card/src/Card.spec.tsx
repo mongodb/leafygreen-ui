@@ -25,8 +25,8 @@ describe('packages/Card', () => {
     expect(renderedCard.textContent).toBe(children);
   });
 
-  test(`renders inside of a div tag by default`, () => {
-    expect(renderedCard.tagName.toLowerCase()).toBe('div');
+  test(`renders inside of a section tag by default`, () => {
+    expect(renderedCard.tagName.toLowerCase()).toBe('section');
   });
 
   test(`renders component inside of a React Element/HTML tag based on as prop`, () => {

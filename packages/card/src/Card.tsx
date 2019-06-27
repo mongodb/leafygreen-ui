@@ -21,7 +21,7 @@ interface CardProps {
   className?: string;
 }
 
-function Card({ children, as = 'div', className, ...rest }: CardProps) {
+function Card({ children, as = 'section', className, ...rest }: CardProps) {
   const Root = as;
 
   return (

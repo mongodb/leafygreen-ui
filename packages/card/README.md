@@ -8,7 +8,7 @@
 import Card from '@leafygreen-ui/card';
 
 <Card
-  as='section'
+  as='div'
   className='card-styles'
 >
   This is my card component
@@ -18,7 +18,7 @@ import Card from '@leafygreen-ui/card';
 **Output HTML**
 
 ```HTML
- <section class="leafygreen-ui-1xf4bcx">This is a card component</section>
+ <div class="leafygreen-ui-1xf4bcx">This is a card component</div>
 ```
 
 ## Properties
@@ -43,7 +43,7 @@ The children of the rendered `Card` component.
 
 **Type:** `HTML Tag` or `React Element`
 
-**Default:** `div`
+**Default:** `section`
 
 Determines the root element. For example, `Link` or `a` tags can be supplied to replace `div` from being the DOM element that wraps the component.
 
