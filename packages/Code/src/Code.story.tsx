@@ -6,7 +6,7 @@ import { Variant, Lang } from '@leafygreen-ui/syntax';
 import Code from '.';
 
 const codeSnippets: { [K in string]: string } = {
-  [Lang.Javascript]: `\
+  [Lang.Javascript]: `
 const insertDocuments = function(db, callback) {
   // Get the documents collection
   const collection = db.collection('documents');
@@ -243,7 +243,7 @@ module Mongo
 end
   `,
 
-  [Lang.Java]: `\
+  [Lang.Java]: `
 package com.mongodb;
 
 import com.mongodb.lang.Nullable;
@@ -376,20 +376,20 @@ storiesOf('Code', module).add('Multiline', () => {
     Object.keys(codeSnippets),
     Lang.Javascript,
   );
+
   const margin = 50;
+  const wrapperStyle = css`
+    margin: ${margin}px;
+    max-width: calc(100% - ${margin * 2}px);
+  `;
 
   return (
-    <div
-      className={css`
-        margin: ${margin}px;
-        max-width: calc(100% - ${margin * 2}px);
-      `}
-    >
+    <div className={wrapperStyle}>
       <Code
         showLineNumbers={boolean('Show line numbers', false)}
         showWindowChrome={boolean('Show window chrome', false)}
         multiline={boolean('Multiline', true)}
-        chromeLabel={text('Chrome label', 'directory/fileName.js')}
+        chromeTitle={text('Chrome label', 'directory/fileName.js')}
         variant={select('Variant', Object.values(Variant), Variant.Light)}
       >
         {codeSnippets[language]}

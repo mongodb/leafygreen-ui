@@ -41,11 +41,6 @@ function getWrapperVariantStyle(variant: Variant): string {
   `;
 }
 
-const wrapperVariants: { [K in Variant]: string } = {
-  [Variant.Light]: getWrapperVariantStyle(Variant.Light),
-  [Variant.Dark]: getWrapperVariantStyle(Variant.Dark),
-} as const;
-
 interface Props extends SyntaxProps {
   /**
    * Shows line numbers in preformatted code blocks.
@@ -62,9 +57,9 @@ interface Props extends SyntaxProps {
   showWindowChrome?: boolean;
 
   /**
-   * chromeLabel
+   * Renders a file name or other descriptor for a block of code
    */
-  chromeLabel?: string,
+  chromeTitle?: string,
 
   /**
    * When true, whitespace and line breaks will be preserved.
@@ -103,12 +98,12 @@ function Code({
   variant = Variant.Light,
   showLineNumbers = false,
   showWindowChrome = false,
-  chromeLabel = '',
+  chromeTitle = '',
   ...rest
 }: Props) {
   const wrapperClassName = cx(
     wrapperStyle,
-    wrapperVariants[variant],
+    getWrapperVariantStyle(variant),
     {
       [wrapperStyleWithLineNumbers]: multiline && showLineNumbers,
       [wrapperStyleWithWindowChrome]: showWindowChrome,
@@ -122,7 +117,7 @@ function Code({
         {...(rest as DetailedElementProps<HTMLDivElement>)}
         className={wrapperClassName}
       >
-        {showWindowChrome && <WindowChrome chromeLabel={chromeLabel} variant={variant} />}
+        {showWindowChrome && <WindowChrome chromeTitle={chromeTitle} variant={variant} />}
 
         <Syntax variant={variant} lang={lang}>
           {children}
@@ -136,7 +131,7 @@ function Code({
       {...(rest as DetailedElementProps<HTMLPreElement>)}
       className={wrapperClassName}
     >
-      {showWindowChrome && <WindowChrome chromeLabel={chromeLabel} variant={variant} />}
+      {showWindowChrome && <WindowChrome chromeTitle={chromeTitle} variant={variant} />}
 
       {showLineNumbers && (
         <LineNumbers

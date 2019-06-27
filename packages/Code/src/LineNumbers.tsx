@@ -27,13 +27,13 @@ const lineNumberVariants: { [K in Variant]: string } = {
 
 interface Props {
   content: string;
-  variant: Variant;
-  className: string;
+  variant?: Variant;
+  className?: string;
 }
 
 function LineNumbers({
-  content = '',
-  variant,
+  content,
+  variant = Variant.Light,
   className,
   ...rest
 }: Props & React.HTMLAttributes<HTMLDivElement>) {
@@ -42,8 +42,18 @@ function LineNumbers({
   }
 
   const lines = useMemo(() => {
-    const splitContent = content.split('\n');
+    const splitContent = content.split(/\r|\n/);
 
+    // If first line is blank, remove the first line.
+    // This is likely to be common when someone assigns a template literal
+    // string to a variable, and doesn't add an '\' escape character after
+    // breaking to a new line before the first line of code.
+    if (splitContent[0] === '') {
+      splitContent.shift();
+    }
+
+    // If the last line is blank, remove the last line of code.
+    // This is a similar issue to the one above.
     if (splitContent[splitContent.length - 1] === '') {
       splitContent.pop();
     }
@@ -56,9 +66,7 @@ function LineNumbers({
       {...rest}
       className={cx(lineNumberStyles, lineNumberVariants[variant], className)}
     >
-      {lines.map((line, i) => (
-        <div key={i}>{i + 1}</div>
-      ))}
+      {lines.map((l, i) => <div key={i}>{i + 1}</div>)}
     </div>
   );
 }
@@ -67,7 +75,8 @@ LineNumbers.displayName = 'LineNumbers';
 
 LineNumbers.propTypes = {
   content: PropTypes.string,
-  variant: PropTypes.oneOf(Object.values(Variant)).isRequired,
+  variant: PropTypes.oneOf(Object.values(Variant)),
+  className: PropTypes.string,
 };
 
 export default LineNumbers;

@@ -6,33 +6,18 @@ import { darken } from 'polished';
 
 export const windowChromeHeight = 28;
 
-function WindowControl({ color }: { color: string }) {
-	return (
-		<div
-			className={css`
-				background-color: ${color};
-				border: 1px solid ${darken(0.03, color)};
-				height: 12px;
-				width: 12px;
-				border-radius: 50px;
-				margin-right: 8px;
-			`}
-		/>
-	);
-}
-
 const windowChromeStyle = css`
-  height: ${windowChromeHeight}px;
-  position: absolute;
-  top: 0;
-  left: 0;
+	height: ${windowChromeHeight}px;
+	position: absolute;
+	top: 0;
+	left: 0;
 	right: 0;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 `;
 
-const windowControlGroupStyle = css`
+const windowControlsStyle = css`
 	position: absolute;
 	left: 12px;
 	top: 0;
@@ -40,15 +25,27 @@ const windowControlGroupStyle = css`
 	height: 12px;
 	margin: auto;
 	display: flex;
-`
+`;
 
-function WindowChrome({
-	variant,
-	chromeLabel = '',
-}: {
-	variant: Variant,
-	chromeLabel: string,
-}) {
+function WindowControl({ color }: { color: string }) {
+	return (
+		<div className={css`
+			height: 12px;
+			width: 12px;
+			border-radius: 50px;
+			margin-right: 8px;
+			background-color: ${color};
+			border: 1px solid ${darken(0.03, color)};
+		`} />
+	)
+}
+
+interface Props {
+	variant?: Variant;
+	chromeTitle?: string;
+}
+
+function WindowChrome({variant = Variant.Light, chromeTitle = ''}: Props) {
 	const colors = variantColors[variant];
 
 	return (
@@ -56,13 +53,13 @@ function WindowChrome({
 			background-color: ${colors['01']};
 			color: ${colors['02']};
 		`)}>
-			<div className={windowControlGroupStyle}>
-				<WindowControl color="#FF5952" />
-				<WindowControl color="#E7BF2A" />
-				<WindowControl color="#54C22C" />
+			<div className={windowControlsStyle}>
+				{["#FF5952", "#E7BF2A", "#54C22C"].map(color => (
+					<WindowControl key={color} color={color} />
+				))}
 			</div>
 		
-			<span>{chromeLabel}</span>
+			{chromeTitle}
 		</div>
 	);
 };
@@ -70,7 +67,8 @@ function WindowChrome({
 WindowChrome.displayName = 'WindowChrome';
 
 WindowChrome.propTypes = {
-  variant: PropTypes.oneOf(Object.values(Variant)),
+	variant: PropTypes.oneOf(Object.values(Variant)),
+	chromeTitle: PropTypes.string,
 };
 
 export default WindowChrome;

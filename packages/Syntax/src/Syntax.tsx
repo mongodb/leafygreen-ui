@@ -81,6 +81,8 @@ function Syntax({
     return hljs.highlight(lang, children).value;
   }, [lang, children]);
 
+  // We use dangerouslySetInnerHTML here because the other Highlight.js API mutates the DOM
+  // after rendering, and limits the flexibility to explicitly specify a language.
   return (
     <code
       {...rest}
