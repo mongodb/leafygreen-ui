@@ -2,10 +2,16 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/icon.svg)
 
+### Usage
+
+```shell
+npm install @leafygreen-ui/icon
+```
+
 ## Example
 
 ```js
-import Icon from '@leafygreen-ui/Icon';
+import Icon from '@leafygreen-ui/icon';
 
 const SomeComponent = () => <Icon glyph="plus" fill="#FF0000" />;
 ```
