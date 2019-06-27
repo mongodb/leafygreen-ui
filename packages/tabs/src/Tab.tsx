@@ -34,8 +34,10 @@ function Tab({
     <Root
       disabled={disabled}
       aria-disabled={disabled}
+      aria-selected={active}
       data-tab-id={value}
       className={className}
+      role="tabpanel"
       {...rest}
     >
       {children}

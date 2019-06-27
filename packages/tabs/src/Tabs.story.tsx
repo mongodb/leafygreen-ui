@@ -15,7 +15,7 @@ function ControlledTabs() {
         <Tab value="test1" title="Title 1">
           Hello 1
         </Tab>
-        <Tab value="test2" title="Title 2">
+        <Tab disabled value="test2" title="Title 2">
           Hello 2
         </Tab>
         <Tab value="test3" title="Title 3">

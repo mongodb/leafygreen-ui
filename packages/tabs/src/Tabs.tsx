@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -25,9 +25,10 @@ const listTitle = css`
   text-transform: capitalize;
   margin-bottom: -3px;
   padding: 8px 24px;
+  cursor: pointer;
 
   &:hover {
-    background-color: ${uiColors.white};
+    color: ${uiColors.gray.dark3};
   }
 `;
 
@@ -42,12 +43,12 @@ const disabledStyle = css`
   color: ${uiColors.gray.light2};
 
   &:hover {
-    background-color: ${uiColors.gray.light3};
+    color: ${uiColors.gray.light2};
   }
 `;
 
 interface TabsProps {
-  children: React.ReactNode;
+  children: Array<React.ReactElement>;
   onChange?: React.ReactEventHandler;
   selected?: string | null;
   className?: string;
@@ -55,6 +56,34 @@ interface TabsProps {
 
 function Tabs({ children, onChange, selected, className }: TabsProps) {
   const [activeTab, setActiveTab] = useState();
+  const [currentIndex, setCurrentIndex] = useState();
+
+  useEffect(() => {
+    const currIdx = React.Children.map(
+      children,
+      (child: React.ReactElement, index) => {
+        if (child === null || child === undefined) {
+          return;
+        }
+
+        if (selected) {
+          return child.props.value === selected ? index : null;
+        }
+
+        if (activeTab) {
+          return child.props.value === activeTab ? index : null;
+        }
+
+        if (child.props.default) {
+          return index;
+        }
+
+        return null;
+      },
+    ).filter(index => index !== null);
+
+    setCurrentIndex(currIdx[0]);
+  });
 
   function handleChange(e: React.SyntheticEvent<Element, MouseEvent>) {
     if (!selected) {
@@ -63,6 +92,31 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
 
     if (onChange) {
       onChange(e);
+    }
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent) {
+    const enabledIndexes = React.Children.map(
+      children,
+      (child: React.ReactElement, index) => {
+        return !child.props.disabled ? index : null;
+      },
+    ).filter(index => index !== null);
+
+    let idx: number;
+
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+        idx = (currentIndex + 1) % enabledIndexes.length;
+        setActiveTab(children[idx].props.value);
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        idx =
+          (currentIndex - 1 + enabledIndexes.length) % enabledIndexes.length;
+        setActiveTab(children[idx].props.value);
+        break;
     }
   }
 
@@ -92,7 +146,7 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
 
   return (
     <div className={className}>
-      <ul className={listStyle}>
+      <ul className={listStyle} role="tablist" onKeyDown={handleKeyDown}>
         {tabs.map(
           (tab, i) =>
             tab && (
@@ -103,8 +157,13 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
                   [disabledStyle]: tab.props.disabled,
                 })}
                 id={tab.props.id}
+                role="tab"
                 data-tab-id={tab.props.value}
                 onClick={!tab.props.disabled ? handleChange : undefined}
+                onKeyDown={handleKeyDown}
+                aria-controls={`list-${i}`}
+                aria-selected={tab.props.active}
+                tabIndex={0}
               >
                 {tab.props.title}
               </li>
