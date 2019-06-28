@@ -47,6 +47,39 @@ const disabledStyle = css`
   }
 `;
 
+function TabTitle({children, key, className, id, dataTabId, onClick, onKeyDown, ariaControls, ariaSelected, ariaDisabled, onFocus, onBlur}) {
+  const titleRef = useRef(null)
+
+  const handleClick = (e) => {
+    onClick()
+
+    if (!ariaDisabled) {
+      
+    }
+  }
+
+  return (
+    <li
+      ref={titleRef}
+      key={key}
+      className={className}
+      id={id}
+      role="tab"
+      data-tab-id={dataTabId}
+      onClick={handleClick}
+      onKeyDown={onKeyDown}
+      aria-controls={ariaControls}
+      aria-selected={ariaSelected}
+      aria-disabled={ariaDisabled}
+      tabIndex={0}
+      onFocus={onFocus}
+      onBlur={onBlur}
+    >
+      {children}
+    </li>
+  );
+}
+
 interface TabsProps {
   children: Array<React.ReactElement>;
   onChange?: React.ReactEventHandler;
@@ -169,7 +202,7 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
         {tabs.map(
           (tab, i) =>
             tab && (
-              <li
+              <TabTitle
                 key={i}
                 className={cx(listTitle, {
                   [activeStyle]: tab.props.active,
@@ -180,14 +213,15 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
                 data-tab-id={tab.props.value}
                 onClick={!tab.props.disabled ? handleChange : undefined}
                 onKeyDown={handleKeyDown}
-                aria-controls={`list-${i}`}
-                aria-selected={tab.props.active}
+                ariaControls={`list-${i}`}
+                ariaSelected={tab.props.active}
+                ariaDisabled={tab.props.disabled}
                 tabIndex={0}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
-              >
-                {tab.props.title}
-              </li>
+                >
+                  {tab.props.title}
+              </TabTitle>
             ),
         )}
       </ul>
@@ -207,3 +241,6 @@ Tabs.propTypes = {
 };
 
 export default Tabs;
+
+
+
