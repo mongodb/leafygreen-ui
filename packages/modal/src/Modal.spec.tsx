@@ -34,7 +34,7 @@ describe('packages/Modal', () => {
       </Modal>,
     );
 
-    test('it does not display the modal', () => {
+    test('it is not rendered within the DOM', () => {
       expect(container.innerHTML).toBe('');
     });
   });
