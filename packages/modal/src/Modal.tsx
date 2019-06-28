@@ -1,4 +1,4 @@
-import React, { useCallback, SetStateAction } from 'react';
+import React, { useCallback, SetStateAction, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
 import { Global } from '@emotion/core';
@@ -32,6 +32,19 @@ const overlayStyle = css`
   left: 0;
 `;
 
+const scrollContainer = css`
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  pointer-events: initial;
+`;
+
 const modalContentStyle = css`
   margin: ${defaultSpacing}px auto;
   max-width: 1270px;
@@ -43,6 +56,7 @@ const modalContentStyle = css`
   border-radius: 3px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   pointer-events: all;
+  height: 200vh;
 `;
 
 const modalBodyStyle = css`
@@ -89,9 +103,7 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
 
 const closeButton = css`
   color: ${uiColors.gray.dark1};
-  position: absolute;
-  right: 10px;
-  top: 10px;
+  float: right;
   cursor: pointer;
 `;
 
@@ -170,6 +182,12 @@ function Modal({
   className,
   ...rest
 }: ModalProps) {
+  if (!active) {
+    return null;
+  }
+
+  const contentRef = useRef<HTMLDivElement>(null);
+
   const handleClose = () => {
     // Don't close modal if modalShouldClose returns false or no setActive callback is passed
     if (!setActive || (modalShouldClose && !modalShouldClose())) {
@@ -177,6 +195,16 @@ function Modal({
     }
 
     setActive(false);
+  };
+
+  const handleDocumentClick = (e: React.SyntheticEvent) => {
+    if (!contentRef.current) {
+      return;
+    }
+
+    if (!contentRef.current.contains(e.target as Node)) {
+      handleClose();
+    }
   };
 
   const handleEscape = useCallback((e: KeyboardEvent) => {
@@ -188,10 +216,6 @@ function Modal({
   useEventListener('keydown', handleEscape, {
     options: { once: true },
   });
-
-  if (!active) {
-    return null;
-  }
 
   return (
     <Portal>
@@ -209,23 +233,11 @@ function Modal({
 
       <div {...rest} className={overlayStyle} onClick={handleClose} />
 
-      <div
-        className={css`
-          overflow-y: auto;
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          pointer-events: none;
-          display: flex;
-          justify-content: center;
-          align-items: flex-start;
-        `}
-      >
+      <div onClick={handleDocumentClick} className={scrollContainer}>
         <div
           className={cx(modalContentStyle, modalSizes[size], className)}
           tabIndex={-1}
+          ref={contentRef}
         >
           <Icon
             glyph="X"
