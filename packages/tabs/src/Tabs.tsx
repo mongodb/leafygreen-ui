@@ -57,6 +57,7 @@ interface TabsProps {
 function Tabs({ children, onChange, selected, className }: TabsProps) {
   const [activeTab, setActiveTab] = useState();
   const [currentIndex, setCurrentIndex] = useState();
+  const [focusedTab, setFocusedTab] = useState()
 
   useEffect(() => {
     const currIdx = React.Children.map(
@@ -121,10 +122,21 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
         setActiveTab(children[idx].props.value);
         break;
       case 'Enter':
-        console.log(children[currentIndex]);
+      case 'Space':
+        e.preventDefault()
 
-      // children[currentIndex].listRef.focus();
+        if (focusedTab) {
+          setActiveTab(focusedTab)
+        }
     }
+  }
+
+  const handleFocus = (e) => {
+    setFocusedTab(e.target.getAttribute('data-tab-id'));
+  }
+
+  const handleBlur = (e) => {
+    setFocusedTab(null)
   }
 
   function isTab(
@@ -171,6 +183,8 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
                 aria-controls={`list-${i}`}
                 aria-selected={tab.props.active}
                 tabIndex={0}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
               >
                 {tab.props.title}
               </li>
