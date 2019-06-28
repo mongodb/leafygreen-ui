@@ -20,19 +20,11 @@ export type ModalSize = typeof ModalSize[keyof typeof ModalSize];
 
 const defaultSpacing = 18;
 
-const overlayStyle = css`
+const scrollContainer = css`
   animation: fade-in 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
   -webkit-animation: fade-in 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
   background-color: ${uiColors.black};
   opacity: 0.6;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-`;
-
-const scrollContainer = css`
   overflow-y: auto;
   position: fixed;
   top: 0;
@@ -231,9 +223,7 @@ function Modal({
       `}
       />
 
-      <div {...rest} className={overlayStyle} onClick={handleClose} />
-
-      <div onClick={handleDocumentClick} className={scrollContainer}>
+      <div {...rest} onClick={handleDocumentClick} className={scrollContainer}>
         <div
           className={cx(modalContentStyle, modalSizes[size], className)}
           tabIndex={-1}
