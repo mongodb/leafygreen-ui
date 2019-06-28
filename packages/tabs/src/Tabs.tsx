@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -96,12 +96,15 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {
-    const enabledIndexes = React.Children.map(
-      children,
-      (child: React.ReactElement, index) => {
-        return !child.props.disabled ? index : null;
+    const enabledIndexes = React.Children.toArray(children).reduce(
+      (acc, child, index) => {
+        if (child.props.disabled) {
+          return acc;
+        }
+        return [...acc, index];
       },
-    ).filter(index => index !== null);
+      [] as Array<number>,
+    );
 
     let idx: number;
 
@@ -117,6 +120,10 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
           (currentIndex - 1 + enabledIndexes.length) % enabledIndexes.length;
         setActiveTab(children[idx].props.value);
         break;
+      case 'Enter':
+        console.log(children[currentIndex]);
+
+      // children[currentIndex].listRef.focus();
     }
   }
 
