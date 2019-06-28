@@ -6,27 +6,24 @@ import LineNumbers from './LineNumbers';
 afterAll(cleanup);
 
 const className = 'test-class';
-const codeSnippet = `
-const greeting = "Hello";\rgreeting += ", world!";
-console.log(greeting);
-`;
+const lineCount = 24;
 
 describe('packages/Syntax', () => {
-	const { container } = render(
-		<LineNumbers content={codeSnippet} className={className} />,
-	);
+  const { container } = render(
+    <LineNumbers lineCount={lineCount} className={className} />,
+  );
 
-	const rootElement = container.firstChild as HTMLElement;
+  const rootElement = container.firstChild as HTMLElement;
 
-	if (!rootElement || !typeIs.element(rootElement)) {
+  if (!rootElement || !typeIs.element(rootElement)) {
     throw new Error('Code element not found');
-	}
+  }
 
-	test(`renders "${className}" in the root element's classList`, () => {
+  test(`renders "${className}" in the root element's classList`, () => {
     expect(rootElement.classList.contains(className)).toBe(true);
   });
-	
-	test('renders a number for each new line in string', () => {
-		expect(rootElement.children.length).toBe(3)
-	})
-})
+
+  test(`renders ${lineCount} line numbers`, () => {
+    expect(rootElement.children.length).toBe(lineCount);
+  });
+});

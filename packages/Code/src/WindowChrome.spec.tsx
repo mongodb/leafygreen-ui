@@ -5,18 +5,18 @@ import WindowChrome from './WindowChrome';
 
 afterAll(cleanup);
 
-const title = 'chrome/title.js'
+const title = 'chrome/title.js';
 
 describe('packages/Syntax', () => {
-	const { container } = render(<WindowChrome chromeTitle={title} />);
+  const { container } = render(<WindowChrome chromeTitle={title} />);
 
-	const windowChromeContainer = container.firstChild as HTMLElement;
+  const windowChromeContainer = container.firstChild as HTMLElement;
 
-	if (!windowChromeContainer || !typeIs.element(windowChromeContainer)) {
+  if (!windowChromeContainer || !typeIs.element(windowChromeContainer)) {
     throw new Error('Code element not found');
-	}
-	
-	test(`renders ${title} within the simulated window chrome`, () => {
-		expect(windowChromeContainer.textContent).toBe(title)
-	})
-})
+  }
+
+  test(`renders ${title} within the simulated window chrome`, () => {
+    expect(windowChromeContainer.textContent).toBe(title);
+  });
+});

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Syntax, {
@@ -9,6 +9,48 @@ import Syntax, {
 } from '@leafygreen-ui/syntax';
 import LineNumbers from './LineNumbers';
 import WindowChrome, { windowChromeHeight } from './WindowChrome';
+
+function stringFragmentIsInvalid(str: string): str is '' | ' ' {
+  return str === '' || str === ' ';
+}
+
+interface ProcessedCodeSnippet {
+  /**
+   * A processed string where any line breaks at the beginning or end
+   * of the string are trimmed.
+   */
+  content: string;
+
+  /**
+   * A count of the number of separate lines in a given string.
+   */
+  lineCount: number;
+}
+
+function useProcessedCodeSnippet(snippet: string): ProcessedCodeSnippet {
+  return useMemo(() => {
+    const splitString = snippet.split(/\r|\n/);
+
+    // If first line is blank, remove the first line.
+    // This is likely to be common when someone assigns a template literal
+    // string to a variable, and doesn't add an '\' escape character after
+    // breaking to a new line before the first line of code.
+    while (stringFragmentIsInvalid(splitString[0])) {
+      splitString.shift();
+    }
+
+    // If the last line is blank, remove the last line of code.
+    // This is a similar issue to the one above.
+    while (stringFragmentIsInvalid(splitString[splitString.length - 1])) {
+      splitString.pop();
+    }
+
+    return {
+      content: splitString.join('\n'),
+      lineCount: splitString.length,
+    };
+  }, [snippet]);
+}
 
 const whiteSpace = 12;
 
@@ -59,7 +101,7 @@ interface Props extends SyntaxProps {
   /**
    * Renders a file name or other descriptor for a block of code
    */
-  chromeTitle?: string,
+  chromeTitle?: string;
 
   /**
    * When true, whitespace and line breaks will be preserved.
@@ -111,16 +153,20 @@ function Code({
     className,
   );
 
+  const { content, lineCount } = useProcessedCodeSnippet(children);
+
   if (!multiline) {
     return (
       <div
         {...(rest as DetailedElementProps<HTMLDivElement>)}
         className={wrapperClassName}
       >
-        {showWindowChrome && <WindowChrome chromeTitle={chromeTitle} variant={variant} />}
+        {showWindowChrome && (
+          <WindowChrome chromeTitle={chromeTitle} variant={variant} />
+        )}
 
         <Syntax variant={variant} lang={lang}>
-          {children}
+          {content}
         </Syntax>
       </div>
     );
@@ -131,12 +177,14 @@ function Code({
       {...(rest as DetailedElementProps<HTMLPreElement>)}
       className={wrapperClassName}
     >
-      {showWindowChrome && <WindowChrome chromeTitle={chromeTitle} variant={variant} />}
+      {showWindowChrome && (
+        <WindowChrome chromeTitle={chromeTitle} variant={variant} />
+      )}
 
       {showLineNumbers && (
         <LineNumbers
           variant={variant}
-          content={children}
+          lineCount={lineCount}
           className={
             showWindowChrome
               ? css`
@@ -148,7 +196,7 @@ function Code({
       )}
 
       <Syntax variant={variant} lang={lang}>
-        {children}
+        {content}
       </Syntax>
     </pre>
   );
@@ -163,6 +211,8 @@ Code.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)),
   className: PropTypes.string,
   showLineNumbers: PropTypes.bool,
+  showWindowChrome: PropTypes.bool,
+  chromeTitle: PropTypes.string,
 };
 
 export default Code;

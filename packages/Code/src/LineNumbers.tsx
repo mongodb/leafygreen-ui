@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Variant } from '@leafygreen-ui/syntax';
@@ -26,47 +26,29 @@ const lineNumberVariants: { [K in Variant]: string } = {
 } as const;
 
 interface Props {
-  content: string;
+  lineCount: number;
   variant?: Variant;
   className?: string;
 }
 
 function LineNumbers({
-  content,
+  lineCount,
   variant = Variant.Light,
   className,
   ...rest
 }: Props & React.HTMLAttributes<HTMLDivElement>) {
-  if (!content.length) {
-    return null;
+  const renderedLines = [];
+
+  for (let i = 0; i < lineCount; i++) {
+    renderedLines.push(<div key={i}>{i + 1}</div>);
   }
-
-  const lines = useMemo(() => {
-    const splitContent = content.split(/\r|\n/);
-
-    // If first line is blank, remove the first line.
-    // This is likely to be common when someone assigns a template literal
-    // string to a variable, and doesn't add an '\' escape character after
-    // breaking to a new line before the first line of code.
-    if (splitContent[0] === '') {
-      splitContent.shift();
-    }
-
-    // If the last line is blank, remove the last line of code.
-    // This is a similar issue to the one above.
-    if (splitContent[splitContent.length - 1] === '') {
-      splitContent.pop();
-    }
-
-    return splitContent;
-  }, [content]);
 
   return (
     <div
       {...rest}
       className={cx(lineNumberStyles, lineNumberVariants[variant], className)}
     >
-      {lines.map((l, i) => <div key={i}>{i + 1}</div>)}
+      {renderedLines}
     </div>
   );
 }
@@ -74,7 +56,7 @@ function LineNumbers({
 LineNumbers.displayName = 'LineNumbers';
 
 LineNumbers.propTypes = {
-  content: PropTypes.string,
+  lineCount: PropTypes.number,
   variant: PropTypes.oneOf(Object.values(Variant)),
   className: PropTypes.string,
 };

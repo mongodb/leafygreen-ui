@@ -9,39 +9,43 @@ const codeSnippet = 'const greeting = "Hello, world!";';
 const className = 'test-class';
 
 describe('packages/Syntax', () => {
-	describe('when multiline is true', () => {
-		const {container: { firstChild: codeRoot }} = render(
-			<Code className={className}>{codeSnippet}</Code>
-		);
+  describe('when multiline is true', () => {
+    const {
+      container: { firstChild: codeRoot },
+    } = render(<Code className={className}>{codeSnippet}</Code>);
 
-		if (!codeRoot || !typeIs.element(codeRoot)) {
-			throw new Error('Multiline code element not found');
-		}
-	
-		test('root element renders as a <pre> tag', () => {
-			expect(codeRoot.tagName).toBe('PRE')
-		})
+    if (!codeRoot || !typeIs.element(codeRoot)) {
+      throw new Error('Multiline code element not found');
+    }
 
-		test(`renders "${className}" in the root element's classList`, () => {
-			expect(codeRoot.classList.contains(className)).toBe(true);
-		});
-	})
+    test('root element renders as a <pre> tag', () => {
+      expect(codeRoot.tagName).toBe('PRE');
+    });
 
-	describe('when multiline is false', () => {
-		const {container: { firstChild: codeRoot }} = render(
-			<Code className={className} multiline={false}>{codeSnippet}</Code>
-		);
+    test(`renders "${className}" in the root element's classList`, () => {
+      expect(codeRoot.classList.contains(className)).toBe(true);
+    });
+  });
 
-		if (!codeRoot || !typeIs.element(codeRoot)) {
-			throw new Error('Single line code element not found');
-		}
-	
-		test('root element renders as a <div> tag', () => {
-			expect(codeRoot.tagName).toBe('DIV')
-		})
+  describe('when multiline is false', () => {
+    const {
+      container: { firstChild: codeRoot },
+    } = render(
+      <Code className={className} multiline={false}>
+        {codeSnippet}
+      </Code>,
+    );
 
-		test(`renders "${className}" in the root element's classList`, () => {
-			expect(codeRoot.classList.contains(className)).toBe(true);
-		});
-	})
-})
+    if (!codeRoot || !typeIs.element(codeRoot)) {
+      throw new Error('Single line code element not found');
+    }
+
+    test('root element renders as a <div> tag', () => {
+      expect(codeRoot.tagName).toBe('DIV');
+    });
+
+    test(`renders "${className}" in the root element's classList`, () => {
+      expect(codeRoot.classList.contains(className)).toBe(true);
+    });
+  });
+});

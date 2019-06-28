@@ -10,7 +10,9 @@ const className = 'test-class';
 
 describe('packages/Syntax', () => {
   const { container } = render(
-    <Syntax lang='none' className={className}>{codeSnippet}</Syntax>,
+    <Syntax lang="none" className={className}>
+      {codeSnippet}
+    </Syntax>,
   );
 
   const code = container.firstChild as HTMLElement;
@@ -31,23 +33,27 @@ describe('packages/Syntax', () => {
     expect(code.children.length).toBe(0);
   });
 
-  test ("highlights code when lang is 'javascript'", () => {
+  test("highlights code when lang is 'javascript'", () => {
     render(
-      <Syntax className={className} lang='javascript'>{codeSnippet}</Syntax>,
+      <Syntax className={className} lang="javascript">
+        {codeSnippet}
+      </Syntax>,
       { container },
     );
 
     // We test for more than one node rather than a specific number here and below to ensure
     // we're testing this component rather than the underlying library's implementation.
     expect(code.children.length).toBeGreaterThan(1);
-  })
+  });
 
-  test ("highlights code when lang is 'auto'", () => {
+  test("highlights code when lang is 'auto'", () => {
     render(
-      <Syntax className={className} lang='auto'>{codeSnippet}</Syntax>,
+      <Syntax className={className} lang="auto">
+        {codeSnippet}
+      </Syntax>,
       { container },
     );
 
     expect(code.children.length).toBeGreaterThan(1);
-  })
+  });
 });
