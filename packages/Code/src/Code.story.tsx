@@ -6,7 +6,7 @@ import { Variant, Lang } from '@leafygreen-ui/syntax';
 import Code from '.';
 
 const codeSnippets: { [K in string]: string } = {
-  [Lang.Javascript]: `
+  [Lang.JavaScript]: `
 function greeting(entity) {
   return \`Hello, \${entity}!\`;
 }
@@ -342,7 +342,7 @@ storiesOf('Code', module).add('Multiline', () => {
   const language = select(
     'Language',
     Object.keys(codeSnippets),
-    Lang.Javascript,
+    Lang.JavaScript,
   );
 
   const margin = 50;

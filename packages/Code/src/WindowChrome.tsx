@@ -42,12 +42,15 @@ function WindowControl({ color }: { color: string }) {
   );
 }
 
-interface Props {
+interface WindowChromeProps {
   variant?: Variant;
   chromeTitle?: string;
 }
 
-function WindowChrome({ variant = Variant.Light, chromeTitle = '' }: Props) {
+function WindowChrome({
+  variant = Variant.Light,
+  chromeTitle = '',
+}: WindowChromeProps) {
   const colors = variantColors[variant];
 
   return (

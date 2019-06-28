@@ -1,29 +1,15 @@
-/**
- * Takes an object type or interface as a parameter, and
- * returns a union type composed of the values of each property.
- *
- * ```
- * const MyObject = { First: 'first', Second: 'second' }
- * type MyObjectType = StringUnionFromObjectType<typeof MyObject>
- *
- * // MyObjectType: 'first' | 'second'
- * ```
- */
-type UnionFromValues<T> = T[keyof T];
-
 export const Variant = {
   Light: 'light',
   Dark: 'dark',
 } as const;
 
-export type Variant = UnionFromValues<typeof Variant>;
+export type Variant = typeof Variant[keyof typeof Variant];
 
 // When adding additional language support, be sure to also add
 // the language in webpack.config.js
 export const SupportedLanguages = {
-  Javascript: 'javascript',
-  Typescript: 'typescript',
-  Cal: 'cal', // C/AL
+  JavaScript: 'javascript',
+  TypeScript: 'typescript',
   Csp: 'csp', // C#
   Cpp: 'cpp', // C++
   Go: 'go',
@@ -40,7 +26,7 @@ export const SupportedLanguages = {
   Json: 'json',
 } as const;
 
-export type SupportedLanguages = UnionFromValues<typeof SupportedLanguages>;
+export type SupportedLanguages = typeof SupportedLanguages[keyof typeof SupportedLanguages];
 
 export const Lang = {
   ...SupportedLanguages,
@@ -48,4 +34,4 @@ export const Lang = {
   None: 'none',
 } as const;
 
-export type Lang = UnionFromValues<typeof Lang>;
+export type Lang = typeof Lang[keyof typeof Lang];

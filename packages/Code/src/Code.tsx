@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Syntax, {
-  Props as SyntaxProps,
+  SyntaxProps,
   Variant,
   Lang,
   variantColors,
@@ -10,7 +10,7 @@ import Syntax, {
 import LineNumbers from './LineNumbers';
 import WindowChrome, { windowChromeHeight } from './WindowChrome';
 
-function stringFragmentIsInvalid(str: string): str is '' | ' ' {
+function stringFragmentIsBlank(str: string): str is '' | ' ' {
   return str === '' || str === ' ';
 }
 
@@ -35,13 +35,13 @@ function useProcessedCodeSnippet(snippet: string): ProcessedCodeSnippet {
     // This is likely to be common when someone assigns a template literal
     // string to a variable, and doesn't add an '\' escape character after
     // breaking to a new line before the first line of code.
-    while (stringFragmentIsInvalid(splitString[0])) {
+    while (stringFragmentIsBlank(splitString[0])) {
       splitString.shift();
     }
 
     // If the last line is blank, remove the last line of code.
     // This is a similar issue to the one above.
-    while (stringFragmentIsInvalid(splitString[splitString.length - 1])) {
+    while (stringFragmentIsBlank(splitString[splitString.length - 1])) {
       splitString.pop();
     }
 
@@ -83,7 +83,7 @@ function getWrapperVariantStyle(variant: Variant): string {
   `;
 }
 
-interface Props extends SyntaxProps {
+interface CodeProps extends SyntaxProps {
   /**
    * Shows line numbers in preformatted code blocks.
    *
@@ -142,7 +142,7 @@ function Code({
   showWindowChrome = false,
   chromeTitle = '',
   ...rest
-}: Props) {
+}: CodeProps) {
   const wrapperClassName = cx(
     wrapperStyle,
     getWrapperVariantStyle(variant),

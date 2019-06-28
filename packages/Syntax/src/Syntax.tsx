@@ -19,7 +19,7 @@ hljs.configure({
   tabReplace: '  ',
 });
 
-export interface Props {
+export interface SyntaxProps {
   /**
    * The children to render inside Code. This is usually going to be a formatted code block or line.
    */
@@ -51,7 +51,7 @@ function Syntax({
   className,
   variant = 'light',
   ...rest
-}: Props & React.HTMLAttributes<HTMLElement>) {
+}: SyntaxProps & React.HTMLAttributes<HTMLElement>) {
   const codeClassName = cx(
     `lg-highlight-hljs-${variant}`,
     css`

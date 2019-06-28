@@ -73,7 +73,7 @@ This prop determines whether or not the code snippet will visually retain line b
 
 **Default:** `'auto'`
 
-The language to render the code block as. When set to `'none'`, no syntax highlighting will be applied. When set to `'auto'`, the component will attempt to do it's best to guess what language the code snippet is.
+The language to render the code block as. When set to `'none'`, no syntax highlighting will be applied. When set to `'auto'`, the component will attempt to do its best to guess what language the code snippet is.
 
 **We recommend explicitly setting the language if you know what language will be rendered.**
 

@@ -25,7 +25,7 @@ const lineNumberVariants: { [K in Variant]: string } = {
   `,
 } as const;
 
-interface Props {
+interface LineNumbersProps {
   lineCount: number;
   variant?: Variant;
   className?: string;
@@ -36,7 +36,7 @@ function LineNumbers({
   variant = Variant.Light,
   className,
   ...rest
-}: Props & React.HTMLAttributes<HTMLDivElement>) {
+}: LineNumbersProps & React.HTMLAttributes<HTMLDivElement>) {
   const renderedLines = [];
 
   for (let i = 0; i < lineCount; i++) {
