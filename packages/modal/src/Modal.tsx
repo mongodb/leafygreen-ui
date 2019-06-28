@@ -1,6 +1,7 @@
 import React, { useCallback, SetStateAction } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
+import { Global } from '@emotion/core';
 import Icon, { Size } from '@leafygreen-ui/icon';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -37,15 +38,11 @@ const modalContentStyle = css`
   min-width: 944px;
   padding: 30px;
   color: ${uiColors.gray.dark3};
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
   background-color: ${uiColors.white};
   border: 1px solid ${uiColors.gray.light3};
   border-radius: 3px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  overflow: scroll;
+  pointer-events: all;
 `;
 
 const modalBodyStyle = css`
@@ -173,10 +170,6 @@ function Modal({
   className,
   ...rest
 }: ModalProps) {
-  if (!active) {
-    return null;
-  }
-
   const handleClose = () => {
     // Don't close modal if modalShouldClose returns false or no setActive callback is passed
     if (!setActive || (modalShouldClose && !modalShouldClose())) {
@@ -196,24 +189,56 @@ function Modal({
     options: { once: true },
   });
 
+  if (!active) {
+    return null;
+  }
+
   return (
     <Portal>
-      <div {...rest} className={overlayStyle} onClick={handleClose}></div>
-      <div
-        className={cx(modalContentStyle, modalSizes[size], className)}
-        tabIndex={-1}
-      >
-        <Icon
-          glyph="X"
-          fill={'#5D6C74'}
-          size={Size.Large}
-          onClick={handleClose}
-          className={closeButton}
-          data-dismiss="modal"
-          aria-hidden="true"
-        />
+      <Global
+        styles={`
+        html, body {
+          overflow: hidden;
+        }
 
-        <div className={modalBodyStyle}>{children}</div>
+        body {
+          position: relative;
+        }
+      `}
+      />
+
+      <div {...rest} className={overlayStyle} onClick={handleClose} />
+
+      <div
+        className={css`
+          overflow-y: auto;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          pointer-events: none;
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+        `}
+      >
+        <div
+          className={cx(modalContentStyle, modalSizes[size], className)}
+          tabIndex={-1}
+        >
+          <Icon
+            glyph="X"
+            fill={'#5D6C74'}
+            size={Size.Large}
+            onClick={handleClose}
+            className={closeButton}
+            data-dismiss="modal"
+            aria-hidden="true"
+          />
+
+          <div className={modalBodyStyle}>{children}</div>
+        </div>
       </div>
     </Portal>
   );
