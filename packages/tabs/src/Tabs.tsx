@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useMutationObserver } from '@leafygreen-ui/hooks'
+import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Tab, { TabProps } from './Tab';
+
+const tabListItem = createDataProp('tab-li-item');
 
 const listStyle = css`
   display: flex;
@@ -58,27 +62,11 @@ function TabTitle({children, key, className, id, dataTabId, onClick, onKeyDown, 
     }
   }
 
-  return (
-    <li
-      ref={titleRef}
-      key={key}
-      className={className}
-      id={id}
-      role="tab"
-      data-tab-id={dataTabId}
-      onClick={handleClick}
-      onKeyDown={onKeyDown}
-      aria-controls={ariaControls}
-      aria-selected={ariaSelected}
-      aria-disabled={ariaDisabled}
-      tabIndex={0}
-      onFocus={onFocus}
-      onBlur={onBlur}
-    >
-      {children}
-    </li>
-  );
-}
+const focusedStyle = css`
+  &:${tabListItem}:focus {
+    background-color: ${uiColors.blue.light2};
+  }
+`;
 
 interface TabsProps {
   children: Array<React.ReactElement>;
@@ -90,7 +78,9 @@ interface TabsProps {
 function Tabs({ children, onChange, selected, className }: TabsProps) {
   const [activeTab, setActiveTab] = useState();
   const [currentIndex, setCurrentIndex] = useState();
-  const [focusedTab, setFocusedTab] = useState()
+  const [isFocused, setFocusedState] = useState(false)
+  const listRef = useRef<HTMLUListElement>(null);
+
 
   useEffect(() => {
     const currIdx = React.Children.map(
@@ -119,6 +109,7 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
     setCurrentIndex(currIdx[0]);
   });
 
+  
   function handleChange(e: React.SyntheticEvent<Element, MouseEvent>) {
     if (!selected) {
       setActiveTab((e.target as HTMLLIElement).getAttribute('data-tab-id'));
@@ -140,19 +131,24 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
       [] as Array<number>,
     );
 
+    const enabledCurrentIndex = enabledIndexes.indexOf(currentIndex);
+
     let idx: number;
 
     switch (e.key) {
       case 'ArrowRight':
       case 'ArrowDown':
-        idx = (currentIndex + 1) % enabledIndexes.length;
-        setActiveTab(children[idx].props.value);
+        idx = (enabledCurrentIndex + 1) % enabledIndexes.length;
+        const next = enabledIndexes[idx];
+        setActiveTab(children[next].props.value);
         break;
       case 'ArrowLeft':
       case 'ArrowUp':
         idx =
-          (currentIndex - 1 + enabledIndexes.length) % enabledIndexes.length;
-        setActiveTab(children[idx].props.value);
+          (enabledCurrentIndex - 1 + enabledIndexes.length) %
+          enabledIndexes.length;
+        const prev = enabledIndexes[idx]
+        setActiveTab(children[prev].props.value);
         break;
       case 'Enter':
       case 'Space':
@@ -196,6 +192,18 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
     });
   }) as Array<React.ReactElement>;
 
+  // console.log(document.activeElement, tabListItem)
+  // console.log(document.activeElement.getAttribute(['data-leafygreen-ui']))
+  // useEffect(() => {
+  //   console.log('here')
+  //   if (document.hasFocus() && document.activeElement.getAttribute(['data-leafygreen-ui']) === 'tab-li-item') {
+  //     setFocusedState(true)
+  //     return;
+  //   }
+  //   setFocusedState(false)
+  // })
+  console.log(isFocused)
+
   return (
     <div className={className}>
       <ul className={listStyle} role="tablist" onKeyDown={handleKeyDown}>
@@ -203,6 +211,7 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
           (tab, i) =>
             tab && (
               <TabTitle
+                {...tabListItem.prop}
                 key={i}
                 className={cx(listTitle, {
                   [activeStyle]: tab.props.active,
@@ -225,7 +234,6 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
             ),
         )}
       </ul>
-
       {tabs}
     </div>
   );

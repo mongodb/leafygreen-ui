@@ -15,7 +15,7 @@ function ControlledTabs() {
         <Tab value="test1" title="Title 1">
           Hello 1
         </Tab>
-        <Tab disabled value="test2" title="Title 2">
+        <Tab value="test2" title="Title 2">
           Hello 2
         </Tab>
         <Tab value="test3" title="Title 3">
@@ -29,10 +29,10 @@ function ControlledTabs() {
 storiesOf('Tabs', module)
   .add('Uncontrolled', () => (
     <Tabs>
-      <Tab value="test1" title="Title 1">
+      <Tab default value="test1" title="Title 1">
         Hello 1
       </Tab>
-      <Tab default value="test2" title="Title 2">
+      <Tab disabled value="test2" title="Title 2">
         Hello 2
       </Tab>
       <Tab value="test3" title="Title 3">
