@@ -14,3 +14,6 @@ storybook/public/
 
 # JUnit report files
 reports
+
+# Yarn Error Log
+yarn-error.log
