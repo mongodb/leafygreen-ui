@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/palette",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "LeafyGreen UI Palettes",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,5 +11,6 @@
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "5a89ae7074a6e9500cd123c88196f106163c67e6"
 }
