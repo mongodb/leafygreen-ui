@@ -1,7 +1,7 @@
 import React, { useCallback, SetStateAction, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
-import { Global } from '@emotion/core';
+import { injectGlobal } from '@leafygreen-ui/emotion';
 import Icon, { Size } from '@leafygreen-ui/icon';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -21,8 +21,8 @@ export type ModalSize = typeof ModalSize[keyof typeof ModalSize];
 const defaultSpacing = 18;
 
 const scrollContainer = css`
-  animation: fade-in 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
-  -webkit-animation: fade-in 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  animation: fade-in 250ms ease-in-out;
+  -webkit-animation: fade-in 250ms ease-in-out;
   background-color: ${uiColors.black};
   opacity: 0.6;
   overflow-y: auto;
@@ -133,7 +133,7 @@ interface ModalProps {
    * Callback to determine whether or not Modal should close when user tries to close it.
    *
    */
-  modalShouldClose?: () => boolean;
+  shouldClose?: () => boolean;
 
   /**
    * className applied to root overlay div.
@@ -152,7 +152,7 @@ interface ModalProps {
   active
   size="large"
   setActive={setActive}
-  modalShouldClose={() => console.log('Modal is closing now!')}
+  shouldClose={() => console.log('Modal is closing now!')}
   >  
   Modal content!
 </Modal>
@@ -161,7 +161,7 @@ interface ModalProps {
  * @param props.size String to determine size of Modal. ['xxsmall', 'xsmall', 'small', 'default', 'large', 'xlarge']
  * @param props.setActive Callback to change the active state of Modal.
  * @param props.children Content to appear inside of Modal container.
- * @param props.modalShouldClose Callback to determine whether or not Modal should close when user tries to close it.
+ * @param props.shouldClose Callback to determine whether or not Modal should close when user tries to close it.
  * @param props.className className applied to overlay div.
  *
  */
@@ -170,7 +170,7 @@ function Modal({
   size = ModalSize.Default,
   setActive,
   children,
-  modalShouldClose,
+  shouldClose,
   className,
   ...rest
 }: ModalProps) {
@@ -181,8 +181,8 @@ function Modal({
   const contentRef = useRef<HTMLDivElement>(null);
 
   const handleClose = () => {
-    // Don't close modal if modalShouldClose returns false or no setActive callback is passed
-    if (!setActive || (modalShouldClose && !modalShouldClose())) {
+    // Don't close modal if shouldClose returns false or no setActive callback is passed
+    if (!setActive || (shouldClose && !shouldClose())) {
       return;
     }
 
@@ -209,20 +209,18 @@ function Modal({
     options: { once: true },
   });
 
+  injectGlobal(`
+    html, body {
+      overflow: hidden;
+    }
+
+    body {
+      position: relative;
+    }
+  `);
+
   return (
     <Portal>
-      <Global
-        styles={`
-        html, body {
-          overflow: hidden;
-        }
-
-        body {
-          position: relative;
-        }
-      `}
-      />
-
       <div {...rest} onClick={handleDocumentClick} className={scrollContainer}>
         <div
           className={cx(modalContentStyle, modalSizes[size], className)}
@@ -252,7 +250,7 @@ Modal.propTypes = {
   active: PropTypes.bool,
   size: PropTypes.string,
   children: PropTypes.node,
-  modalShouldClose: PropTypes.func,
+  shouldClose: PropTypes.func,
   className: PropTypes.string,
 };
 

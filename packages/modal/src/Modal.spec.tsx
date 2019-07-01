@@ -39,36 +39,36 @@ describe('packages/Modal', () => {
     });
   });
 
-  describe('when modalShouldClose prop is supplied', () => {
-    test('when modalShouldClose returns false', () => {
+  describe('when shouldClose prop is supplied', () => {
+    test('when shouldClose returns false', () => {
       const { getByTestId } = render(
         <Modal
           active={true}
-          data-testid="falseModalShouldClose"
-          modalShouldClose={() => false}
+          data-testid="falseshouldClose"
+          shouldClose={() => false}
         >
           <h4>test content</h4>
         </Modal>,
       );
 
-      const modal = getByTestId('falseModalShouldClose');
+      const modal = getByTestId('falseshouldClose');
       window.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 
       expect(modal).toBeVisible();
     });
 
-    test('when modalShouldClose returns true', () => {
+    test('when shouldClose returns true', () => {
       const { getByTestId } = render(
         <Modal
           active={true}
-          data-testid="trueModalShouldClose"
-          modalShouldClose={() => true}
+          data-testid="trueshouldClose"
+          shouldClose={() => true}
         >
           <h4>test content</h4>
         </Modal>,
       );
 
-      const modal = getByTestId('trueModalShouldClose');
+      const modal = getByTestId('trueshouldClose');
       window.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 
       !expect(modal).toBeVisible();
