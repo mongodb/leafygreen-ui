@@ -48,6 +48,7 @@ module.exports = {
     ],
     'no-var': 1,
     'prefer-const': 1,
+    'no-trailing-spaces': 'error',
   },
   overrides: [
     {

@@ -12,9 +12,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
+  "devDependencies": {
     "@leafygreen-ui/lib": "^3.0.1",
-    "@leafygreen-ui/theme": "^1.2.1"
+    "@leafygreen-ui/theme": "^1.2.1",
+    "xml2json": "^0.11.2"
   },
   "gitHead": "5a89ae7074a6e9500cd123c88196f106163c67e6"
 }
