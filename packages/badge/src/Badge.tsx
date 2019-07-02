@@ -1,17 +1,15 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { colors } from '@leafygreen-ui/theme';
+import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
 export const Variant = {
-  Default: 'default',
-  Dark: 'dark',
-  Danger: 'danger',
-  Warning: 'warning',
-  DarkBlue: 'darkBlue',
-  LightBlue: 'lightBlue',
-  Primary: 'primary',
-  Outline: 'outline',
+  DarkGray: 'darkgray',
+  LightGray: 'lightgray',
+  Red: 'red',
+  Yellow: 'yellow',
+  Blue: 'blue',
+  Green: 'green',
 } as const;
 
 export type Variant = typeof Variant[keyof typeof Variant];
@@ -27,77 +25,85 @@ export const baseStyle = css`
   padding-left: 9px;
   padding-right: 9px;
   text-transform: uppercase;
-  color: ${colors.mongodb.white};
+  border: 1px solid;
 `;
 
-export const badgeVariants: { readonly [K in Variant]: string } = {
-  default: css`
-    background-color: ${colors.gray[6]};
-    color: ${colors.gray[3]};
+export const badgeVariants: { [K in Variant]: string } = {
+  [Variant.LightGray]: css`
+    background-color: ${uiColors.gray.light3};
+    border-color: ${uiColors.gray.light2};
+    color: ${uiColors.gray.dark1};
   `,
 
-  dark: css`
-    background-color: ${colors.gray[2]};
+  [Variant.DarkGray]: css`
+    background-color: ${uiColors.gray.dark2};
+    border-color: ${uiColors.gray.dark3};
+    color: ${uiColors.white};
   `,
 
-  danger: css`
-    background-color: ${colors.mongodb.red};
+  [Variant.Red]: css`
+    background-color: ${uiColors.red.light3};
+    border-color: ${uiColors.red.light2};
+    color: ${uiColors.red.dark2};
   `,
 
-  warning: css`
-    background-color: ${colors.mongodb.yellow};
+  [Variant.Yellow]: css`
+    background-color: ${uiColors.yellow.light3};
+    border-color: ${uiColors.yellow.light2};
+    color: ${uiColors.yellow.dark2};
   `,
 
-  darkBlue: css`
-    background-color: ${colors.mongodb.navyBlue};
+  [Variant.Blue]: css`
+    background-color: ${uiColors.blue.light3};
+    border-color: ${uiColors.blue.light2};
+    color: ${uiColors.blue.dark2};
   `,
 
-  lightBlue: css`
-    background-color: ${colors.mongodb.blue};
+  [Variant.Green]: css`
+    background-color: ${uiColors.green.light3};
+    border-color: ${uiColors.green.light2};
+    color: ${uiColors.green.dark2};
   `,
-
-  primary: css`
-    background-color: ${colors.mongodb.green};
-  `,
-
-  outline: css`
-    border: 1px solid ${colors.gray[3]};
-    color: ${colors.gray[3]};
-  `,
-};
+} as const;
 
 interface BadgeProps {
-  className: string;
+  /**
+   * An additional className to add to the component's classList
+   */
+  className?: string;
+
+  /**
+   * The content to render within the badge
+   */
   children?: React.ReactNode;
-  variant: Variant;
+
+  /**
+   * The Badge's style variant
+   *
+   * Default: `'lightgray'`
+   */
+  variant?: Variant;
 }
 
-export default class Badge extends PureComponent<
-  BadgeProps & React.HTMLAttributes<HTMLDivElement>
-> {
-  static displayName = 'Badge';
-
-  static propTypes = {
-    className: PropTypes.string,
-    children: PropTypes.node,
-    variant: PropTypes.oneOf(Object.values(Variant)),
-  };
-
-  static defaultProps = {
-    className: '',
-    variant: Variant.Default,
-  };
-
-  render() {
-    const { children, variant, className, ...rest } = this.props;
-
-    return (
-      <div
-        {...rest}
-        className={cx(baseStyle, badgeVariants[variant], className)}
-      >
-        {children}
-      </div>
-    );
-  }
+function Badge({
+  children,
+  variant = Variant.LightGray,
+  className,
+  ...rest
+}: BadgeProps & React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div {...rest} className={cx(baseStyle, badgeVariants[variant], className)}>
+      {children}
+    </div>
+  );
 }
+
+Badge.displayName = 'Badge';
+
+Badge.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.node,
+  variant: PropTypes.oneOf(Object.values(Variant)),
+};
+
+export default Badge;
