@@ -10,7 +10,7 @@ describe('packages/Tabs', () => {
   const tabClassName = 'tab-classname';
   const onChange = jest.fn();
 
-  const { container, getByText } = render(
+  const { getByText } = render(
     <Tabs className={tabsClassName} selected="b" onChange={onChange}>
       <Tab className={tabClassName} value="a" title="Title A">
         Test Content 1
@@ -27,7 +27,7 @@ describe('packages/Tabs', () => {
     fireEvent.click(tabListItem);
 
     setTimeout(() => {
-      expect(onChange).toBeCalledTimes(1);
+      expect(onChange).toHaveBeenCalledTimes(1);
     }, 500);
   });
 
@@ -37,33 +37,62 @@ describe('packages/Tabs', () => {
     expect(tabListItem).toHaveAttribute('aria-disabled');
   });
 
-  // describe('when the component is controlled', () => {
+  describe('when the component is controlled', () => {
+    test('selected tab is active on first render', () => {
+      const activeTab = getByText('Test Content 2');
+      expect(activeTab).toBeVisible();
+    });
 
-  //   test('selected tab is active on first render', () => {
+    // test('clicking a tab changes the active tab', () => {
 
-  //   })
+    // })
 
-  //   test('clicking a tab changes the active tab', () => {
+    test('keyboard nav is not supported', () => {
+      const activeTabListItem = getByText('Title B');
+      const activeTab = getByText('Test Content 2');
+      fireEvent.keyDown(activeTabListItem, { key: 'ArrowLeft', code: 37 });
+      expect(activeTab).toBeVisible();
+    });
+  });
 
-  //   })
+  describe('when the component is uncontrolled', () => {
+    const { getByText } = render(
+      <Tabs className={tabsClassName} onChange={onChange}>
+        <Tab className={tabClassName} value="first" title="Title First">
+          First Content
+        </Tab>
+        <Tab default value="second" title="Title Second">
+          Second Content
+        </Tab>
+        <Tab value="third" title="Title Third" disabled>
+          Third Content
+        </Tab>
+      </Tabs>,
+    );
 
-  //   test('keyboard nav is not supported', () => {
+    test('default tab is active on first render', () => {
+      const defaultTab = getByText('Second Content');
+      expect(defaultTab).toBeInTheDocument();
+    });
 
-  //   })
-  // })
+    // test('keyboard nav is supported', () => {
+    //   const activeTabListItem = getByText('Title B');
+    //   const nextActiveTab = getByText('Test Content 1');
+    //   fireEvent.keyDown(activeTabListItem, { key: 'ArrowLeft', code: 37 });
 
-  // describe('when the component is uncontrolled', () => {
+    //   setTimeout(() => {
+    //     expect(nextActiveTab).toBeVisible();
+    //   }, 500)
+    // })
 
-  //   test('default tab is active on first render', () => {
+    test('keyboard nav skips tab if tab is disabled', () => {
+      const activeTabListItem = getByText('Title Second');
+      const activeTab = getByText('Second Content');
+      // const nextActiveTab = getByText('Third Content');
+      fireEvent.keyDown(activeTabListItem, { key: 'ArrowRight', code: 39 });
 
-  //   })
-
-  //   test('keyboard nav is supported', () => {
-
-  //   })
-
-  //   test('keyboard nav skips tab if tab is disabled', () => {
-
-  //   })
-  // })
+      // !expect(nextActiveTab).toBeInTheDocument;
+      expect(activeTab).toBeVisible();
+    });
+  });
 });

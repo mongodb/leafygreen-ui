@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, SetStateAction } from 'react';
 import PropTypes from 'prop-types';
 
 interface TabTitleProps {
@@ -11,6 +11,7 @@ interface TabTitleProps {
   onClick?: React.MouseEventHandler;
   onKeyDown?: React.KeyboardEventHandler;
   ariaControls?: string;
+  setFocusedState?: Dispatch<SetStateAction<Array<string>>>;
 }
 
 function TabTitle({
@@ -32,7 +33,7 @@ function TabTitle({
     if (titleRef && titleRef.current && active && !disabled) {
       titleRef.current.focus();
     }
-  });
+  }, [active]);
 
   return (
     <li
@@ -48,6 +49,14 @@ function TabTitle({
       aria-selected={active}
       aria-disabled={disabled}
       tabIndex={active ? 0 : -1}
+      onBlur={() =>
+        setFocusedState((curr: Array<string>) =>
+          curr.filter(el => dataTabId !== el),
+        )
+      }
+      onFocus={() =>
+        setFocusedState((curr: Array<string>) => [...curr, dataTabId])
+      }
     >
       {children}
     </li>
