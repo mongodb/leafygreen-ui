@@ -118,9 +118,9 @@ type DetailedElementProps<T> = React.DetailedHTMLProps<
 
 /**
  * # Code
- * 
+ *
  * React Component that outputs single-line and multi-line code blocks.
- * 
+ *
  * ```
 <Code>Hello world!</Code>
 	```
