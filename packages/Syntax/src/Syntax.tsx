@@ -3,21 +3,29 @@ import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
 import hljs from 'highlight.js/lib/highlight';
 import { Variant, SupportedLanguages, Lang } from './types';
-import './globalStyles';
+
 const SupportedLanguagesList = Object.values(SupportedLanguages);
 
-SupportedLanguagesList.forEach(language => {
-  hljs.registerLanguage(
-    language,
-    require(`highlight.js/lib/languages/${language}`),
-  );
-});
+let syntaxHighlightingInitialized = false;
 
-hljs.configure({
-  languages: SupportedLanguagesList,
-  classPrefix: 'lg-highlight-',
-  tabReplace: '  ',
-});
+function initializeSyntaxHighlighting() {
+  syntaxHighlightingInitialized = true;
+
+  require('./globalStyles');
+
+  SupportedLanguagesList.forEach(language => {
+    hljs.registerLanguage(
+      language,
+      require(`highlight.js/lib/languages/${language}`),
+    );
+  });
+
+  hljs.configure({
+    languages: SupportedLanguagesList,
+    classPrefix: 'lg-highlight-',
+    tabReplace: '  ',
+  });
+}
 
 export interface SyntaxProps {
   /**
@@ -49,9 +57,13 @@ function Syntax({
   children,
   lang = Lang.Auto,
   className,
-  variant = 'light',
+  variant = Variant.Light,
   ...rest
 }: SyntaxProps & React.HTMLAttributes<HTMLElement>) {
+  if (!syntaxHighlightingInitialized) {
+    initializeSyntaxHighlighting();
+  }
+
   const codeClassName = cx(
     `lg-highlight-hljs-${variant}`,
     css`

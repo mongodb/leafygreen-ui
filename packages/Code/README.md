@@ -69,7 +69,7 @@ This prop determines whether or not the code snippet will visually retain line b
 
 ### lang
 
-**Type:** `'javascript'` | `'typescript'` | `'cal'` | `'csp'` | `'cpp'` | `'go'` | `'java'` | `'perl'` | `'php'` | `'python'` | `'ruby'` | `'scala'` | `'bash'` | `'shell'` | `'sql'` | `'yaml'` | `'json'` | `'auto'` | `'none'`
+**Type:** `'javascript'` | `'typescript'` | `'csp'` | `'cpp'` | `'go'` | `'java'` | `'perl'` | `'php'` | `'python'` | `'ruby'` | `'scala'` | `'bash'` | `'shell'` | `'sql'` | `'yaml'` | `'json'` | `'auto'` | `'none'`
 
 **Default:** `'auto'`
 

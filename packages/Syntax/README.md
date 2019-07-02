@@ -59,7 +59,7 @@ This is the code snippet that will be rendered in the code block.
 
 ### lang
 
-**Type:** `'javascript'` | `'typescript'` | `'cal'` | `'csp'` | `'cpp'` | `'go'` | `'java'` | `'perl'` | `'php'` | `'python'` | `'ruby'` | `'scala'` | `'bash'` | `'shell'` | `'sql'` | `'yaml'` | `'json'` | `'auto'` | `'none'`
+**Type:** `'javascript'` | `'typescript'` | `'csp'` | `'cpp'` | `'go'` | `'java'` | `'perl'` | `'php'` | `'python'` | `'ruby'` | `'scala'` | `'bash'` | `'shell'` | `'sql'` | `'yaml'` | `'json'` | `'auto'` | `'none'`
 
 **Default:** `'auto'`
 
