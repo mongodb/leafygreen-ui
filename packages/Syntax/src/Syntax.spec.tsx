@@ -25,7 +25,7 @@ describe('packages/Syntax', () => {
     expect(code.classList.contains(className)).toBe(true);
   });
 
-  test("doesn't highlight code when lang is 'none'", () => {
+  test("doesn't highlight code when language is 'none'", () => {
     // Text nodes in HTMLCollections are ignored since they are not considered "elements",
     // so we check that children is empty here since we expect a text node to be rendered.
     //
@@ -33,9 +33,9 @@ describe('packages/Syntax', () => {
     expect(code.children.length).toBe(0);
   });
 
-  test("highlights code when lang is 'javascript'", () => {
+  test("highlights code when language is 'javascript'", () => {
     render(
-      <Syntax className={className} lang="javascript">
+      <Syntax className={className} language="javascript">
         {codeSnippet}
       </Syntax>,
       { container },
@@ -46,7 +46,7 @@ describe('packages/Syntax', () => {
     expect(code.children.length).toBeGreaterThan(1);
   });
 
-  test("highlights code when lang is 'auto'", () => {
+  test("highlights code when language is 'auto'", () => {
     render(
       <Syntax className={className} language="auto">
         {codeSnippet}
