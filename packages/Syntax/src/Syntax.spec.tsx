@@ -10,7 +10,7 @@ const className = 'test-class';
 
 describe('packages/Syntax', () => {
   const { container } = render(
-    <Syntax lang="none" className={className}>
+    <Syntax language="none" className={className}>
       {codeSnippet}
     </Syntax>,
   );
@@ -48,7 +48,7 @@ describe('packages/Syntax', () => {
 
   test("highlights code when lang is 'auto'", () => {
     render(
-      <Syntax className={className} lang="auto">
+      <Syntax className={className} language="auto">
         {codeSnippet}
       </Syntax>,
       { container },
