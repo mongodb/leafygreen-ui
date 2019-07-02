@@ -26,7 +26,7 @@ module.exports = {
 
   // A map from regular expressions to module names that allow to stub out resources with a single module
   moduleNameMapper: {
-    '.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$':
+    '.(png|jpg|jpeg|gif|woff|woff2|ttf|eot)$':
       '<rootDir>/__mocks__/fileMock.js',
   },
 
@@ -42,6 +42,7 @@ module.exports = {
   // A map from regular expressions to paths to transformers
   transform: {
     '^.+\\.[jt]sx?$': 'babel-jest',
+    '.svg': '<rootDir>/__mocks__/svgTransformer.js',
   },
 
   setupFiles: ['<rootDir>/scripts/jestSetup.js'],
