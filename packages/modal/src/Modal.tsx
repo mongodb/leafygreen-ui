@@ -48,11 +48,6 @@ const modalContentStyle = css`
   border-radius: 3px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   pointer-events: all;
-  height: 200vh;
-`;
-
-const modalBodyStyle = css`
-  padding: ${defaultSpacing}px 0;
 `;
 
 const modalSizes: { readonly [K in ModalSize]: string } = {
@@ -95,6 +90,7 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
 
 const closeButton = css`
   color: ${uiColors.gray.dark1};
+  position: aboslute;
   float: right;
   cursor: pointer;
 `;
@@ -237,7 +233,7 @@ function Modal({
             aria-hidden="true"
           />
 
-          <div className={modalBodyStyle}>{children}</div>
+          {children}
         </div>
       </div>
     </Portal>
