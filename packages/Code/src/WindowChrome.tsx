@@ -58,8 +58,8 @@ function WindowChrome({
       className={cx(
         windowChromeStyle,
         css`
-          background-color: ${colors['01']};
-          color: ${colors['02']};
+          background-color: ${colors[1]};
+          color: ${colors[2]};
         `,
       )}
     >

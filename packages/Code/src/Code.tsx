@@ -4,7 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import Syntax, {
   SyntaxProps,
   Variant,
-  Lang,
+  Language,
   variantColors,
 } from '@leafygreen-ui/syntax';
 import LineNumbers from './LineNumbers';
@@ -77,9 +77,9 @@ function getWrapperVariantStyle(variant: Variant): string {
   const colors = variantColors[variant];
 
   return css`
-    border-color: ${colors['01']};
-    background-color: ${colors['00']};
-    color: ${colors['03']};
+    border-color: ${colors[1]};
+    background-color: ${colors[0]};
+    color: ${colors[3]};
   `;
 }
 
@@ -136,7 +136,7 @@ function Code({
   children = '',
   className,
   multiline = true,
-  lang = Lang.Auto,
+  language = Language.Auto,
   variant = Variant.Light,
   showLineNumbers = false,
   showWindowChrome = false,
@@ -155,19 +155,25 @@ function Code({
 
   const { content, lineCount } = useProcessedCodeSnippet(children);
 
+  const renderedCommonContent = (
+    <>
+      {showWindowChrome && (
+        <WindowChrome chromeTitle={chromeTitle} variant={variant} />
+      )}
+
+      <Syntax variant={variant} language={language}>
+        {content}
+      </Syntax>
+    </>
+  );
+
   if (!multiline) {
     return (
       <div
         {...(rest as DetailedElementProps<HTMLDivElement>)}
         className={wrapperClassName}
       >
-        {showWindowChrome && (
-          <WindowChrome chromeTitle={chromeTitle} variant={variant} />
-        )}
-
-        <Syntax variant={variant} lang={lang}>
-          {content}
-        </Syntax>
+        {renderedCommonContent}
       </div>
     );
   }
@@ -177,10 +183,6 @@ function Code({
       {...(rest as DetailedElementProps<HTMLPreElement>)}
       className={wrapperClassName}
     >
-      {showWindowChrome && (
-        <WindowChrome chromeTitle={chromeTitle} variant={variant} />
-      )}
-
       {showLineNumbers && (
         <LineNumbers
           variant={variant}
@@ -195,9 +197,7 @@ function Code({
         />
       )}
 
-      <Syntax variant={variant} lang={lang}>
-        {content}
-      </Syntax>
+      {renderedCommonContent}
     </pre>
   );
 }
@@ -207,7 +207,7 @@ Code.displayName = 'Code';
 Code.propTypes = {
   children: PropTypes.string.isRequired,
   multiline: PropTypes.bool,
-  lang: PropTypes.oneOf(Object.values(Lang)),
+  language: PropTypes.oneOf(Object.values(Language)),
   variant: PropTypes.oneOf(Object.values(Variant)),
   className: PropTypes.string,
   showLineNumbers: PropTypes.bool,

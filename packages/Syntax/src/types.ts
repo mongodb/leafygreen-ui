@@ -28,10 +28,10 @@ export const SupportedLanguages = {
 
 export type SupportedLanguages = typeof SupportedLanguages[keyof typeof SupportedLanguages];
 
-export const Lang = {
+export const Language = {
   ...SupportedLanguages,
   Auto: 'auto',
   None: 'none',
 } as const;
 
-export type Lang = typeof Lang[keyof typeof Lang];
+export type Language = typeof Language[keyof typeof Language];
