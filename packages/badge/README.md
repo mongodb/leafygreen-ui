@@ -7,7 +7,7 @@
 ```Javascript
 import Badge from '@leafygreen-ui/badge';
 
-<Badge variant='Blue' className='my-badge'>
+<Badge variant='blue' className='my-badge'>
   New
 </Badge>
 ```
@@ -24,9 +24,9 @@ import Badge from '@leafygreen-ui/badge';
 
 **Type:** `string`
 
-**Default:** `'LightGray'`
+**Default:** `'lightgray'`
 
-Sets the style variant of the badge. Valid variants for badges are `'LightGray'`, `'DarkGray'`, `'Red'`, `'Blue'`, `'Green'`, and `'Yellow'`
+Sets the style variant of the badge. Valid variants for badges are `'lightgray'`, `'darkgray'`, `'red'`, `'blue'`, `'green'`, and `'yellow'`
 
 ### className
 
