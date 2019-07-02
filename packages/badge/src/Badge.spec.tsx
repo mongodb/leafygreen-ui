@@ -22,11 +22,11 @@ describe('packages/Badge', () => {
     throw new Error('Badge element not found');
   }
 
-  test(`renders "${className}" in the button's classList`, () => {
+  test(`renders "${className}" in the badge's classList`, () => {
     expect(badge.classList.contains(className)).toBe(true);
   });
 
-  test(`renders "${child}" as the button's textContent`, () => {
+  test(`renders "${child}" as the badge's textContent`, () => {
     expect(badge.textContent).toBe(child);
   });
 });
