@@ -5,13 +5,7 @@ import Badge from './Badge';
 import { Variant } from '.';
 
 storiesOf('Badge', module).add('Default', () => (
-  <Badge
-    variant={select(
-      'Variant',
-      Object.values(Variant) as Array<Variant>,
-      Variant.DarkBlue,
-    )}
-  >
+  <Badge variant={select('Variant', Object.values(Variant), Variant.LightGray)}>
     {text('Badge Text', 'Badge')}
   </Badge>
 ));
