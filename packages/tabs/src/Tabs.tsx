@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useMutationObserver } from '@leafygreen-ui/hooks'
+import { useMutationObserver } from '@leafygreen-ui/hooks';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -78,9 +78,8 @@ interface TabsProps {
 function Tabs({ children, onChange, selected, className }: TabsProps) {
   const [activeTab, setActiveTab] = useState();
   const [currentIndex, setCurrentIndex] = useState();
-  const [isFocused, setFocusedState] = useState(false)
+  const [isFocused, setFocusedState] = useState(false);
   const listRef = useRef<HTMLUListElement>(null);
-
 
   useEffect(() => {
     const currIdx = React.Children.map(
@@ -109,7 +108,6 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
     setCurrentIndex(currIdx[0]);
   });
 
-  
   function handleChange(e: React.SyntheticEvent<Element, MouseEvent>) {
     if (!selected) {
       setActiveTab((e.target as HTMLLIElement).getAttribute('data-tab-id'));
@@ -147,7 +145,7 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
         idx =
           (enabledCurrentIndex - 1 + enabledIndexes.length) %
           enabledIndexes.length;
-        const prev = enabledIndexes[idx]
+        const prev = enabledIndexes[idx];
         setActiveTab(children[prev].props.value);
         break;
       case 'Enter':
@@ -179,7 +177,28 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
     );
   }
 
-  const tabs = React.Children.map(children, (child: React.ReactNode) => {
+  function calcStyle() {
+    if (!listRef || !listRef.current || typeof currentIndex !== 'number') {
+      return css``;
+    }
+
+    const tabListChildren: Array<Element> = Array.from(
+      listRef.current.children,
+    );
+
+    let computedX = 0;
+
+    for (let i = 0; i < currentIndex || 0; i++) {
+      computedX += tabListChildren[i].scrollWidth;
+    }
+
+    return css`
+      transform: translate3d(${computedX}px, 0, 0);
+      width: ${tabListChildren[currentIndex].scrollWidth}px;
+    `;
+  }
+
+  const tabs = React.Children.map(children, (child: React.ReactNode, index) => {
     if (!isTab(child)) {
       return child;
     }
@@ -189,6 +208,7 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
         selected === child.props.value ||
         (activeTab ? child.props.value === activeTab : child.props.default),
       key: child.props.value,
+      index,
     });
   }) as Array<React.ReactElement>;
 
@@ -202,7 +222,7 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
   //   }
   //   setFocusedState(false)
   // })
-  console.log(isFocused)
+  // console.log(isFocused);
 
   return (
     <div className={className}>
@@ -222,14 +242,11 @@ function Tabs({ children, onChange, selected, className }: TabsProps) {
                 data-tab-id={tab.props.value}
                 onClick={!tab.props.disabled ? handleChange : undefined}
                 onKeyDown={handleKeyDown}
-                ariaControls={`list-${i}`}
-                ariaSelected={tab.props.active}
-                ariaDisabled={tab.props.disabled}
-                tabIndex={0}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                >
-                  {tab.props.title}
+                ariaControls={`tab-${i}`}
+                disabled={tab.props.disabled}
+                active={tab.props.active}
+              >
+                {tab.props.title}
               </TabTitle>
             ),
         )}

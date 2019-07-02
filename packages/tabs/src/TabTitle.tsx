@@ -32,7 +32,6 @@ function TabTitle({
     if (titleRef && titleRef.current && active && !disabled) {
       titleRef.current.focus();
     }
-
   });
 
   return (

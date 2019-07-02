@@ -10,6 +10,7 @@ export interface TabProps {
   as?: React.ElementType<any>;
   default?: boolean;
   className?: string;
+  index?: number;
 }
 
 function Tab({
@@ -19,6 +20,7 @@ function Tab({
   disabled = false,
   as = 'div',
   className,
+  index,
   ...rest
 }: TabProps) {
   if (!active) {
@@ -35,6 +37,7 @@ function Tab({
       disabled={disabled}
       aria-disabled={disabled}
       aria-selected={active}
+      aria-controls={`tab-${index}`}
       data-tab-id={value}
       className={className}
       role="tabpanel"
