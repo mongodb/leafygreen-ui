@@ -4,7 +4,7 @@ import fs from 'fs';
 import { toJson } from 'xml2json';
 import { render, cleanup } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
-import { createIconComponent } from '.';
+import { createIconComponent, glyphs } from '.';
 
 afterAll(cleanup);
 
@@ -17,42 +17,44 @@ describe('packages/Icon/glyphs/', () => {
      */
     .filter(path => /.*\.svg$/.test(path));
 
+  test('exported glyphs match files in glyphs directory', () => {
+    // Test that any export in the glyphs directory has a corresponding file,
+    // and return an array of SVG files not exported.
+    const extraGlyphs = Object.keys(glyphs).reduce((glyphsInDir, glyph) => {
+      expect(glyphsInDir.find(el => el === glyph)).toBe(glyph);
+
+      return glyphsInDir.filter(el => el !== glyph);
+    }, glyphPaths.map(path => path.replace('.svg', '')));
+
+    expect(extraGlyphs.length).toBe(0);
+  });
+
   glyphPaths.forEach(glyphPath => {
     describe(`${glyphPath}`, () => {
       const { svg } = require(path.resolve(__dirname, `./glyphs/${glyphPath}`));
-
-      if (!svg) {
-        return;
-      }
 
       type SVGNodeObject = { readonly [K in string]: string | SVGNodeObject };
 
       const rootGlyphObject: SVGNodeObject = toJson(svg, { object: true });
 
-      let isValid = true;
-
-      function processGlyphObject(obj: SVGNodeObject) {
+      function validateGlyphObject(obj: SVGNodeObject) {
         Object.keys(obj).forEach(key => {
           const currentValue = obj[key];
 
           if (typeof currentValue === 'object') {
-            processGlyphObject(currentValue);
+            validateGlyphObject(currentValue);
           } else {
             if (key === 'fill') {
               const validFills = ['#000', '#000000', 'none'];
 
-              if (!validFills.includes(currentValue)) {
-                isValid = false;
-              }
+              expect(validFills.includes(currentValue)).toBeTruthy();
             }
           }
         });
       }
 
-      processGlyphObject(rootGlyphObject);
-
       test('all fills used in SVG files are "none", "#000", or "#000000"', () => {
-        expect(isValid).toBe(true);
+        validateGlyphObject(rootGlyphObject);
       });
     });
   });
@@ -65,10 +67,10 @@ const MyGlyph: React.FC<React.SVGProps<SVGSVGElement>> = () => (
   <div>{text}</div>
 );
 
-const glyphs = { MyGlyph };
+const customGlyphs = { MyGlyph };
 
 describe('packages/Icon/createIconComponent', () => {
-  const IconComponent = createIconComponent(glyphs);
+  const IconComponent = createIconComponent(customGlyphs);
 
   test('createIconComponent returns a function', () => {
     expect(typeof IconComponent).toBe('function');
