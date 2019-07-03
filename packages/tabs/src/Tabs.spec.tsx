@@ -10,12 +10,17 @@ describe('packages/Tabs', () => {
   const tabClassName = 'tab-classname';
   const onChange = jest.fn();
 
-  const { getByText } = render(
-    <Tabs className={tabsClassName} selected="b" onChange={onChange}>
-      <Tab className={tabClassName} value="a" title="Title A">
+  const { getByText, getByTestId } = render(
+    <Tabs
+      className={tabsClassName}
+      selected="b"
+      onChange={onChange}
+      data-testid="tabs-component"
+    >
+      <Tab value="a" title="Title A">
         Test Content 1
       </Tab>
-      <Tab value="b" title="Title B">
+      <Tab className={tabClassName} value="b" title="Title B">
         Test Content 2
       </Tab>
       <Tab value="c" title="Title C" disabled></Tab>
@@ -35,6 +40,16 @@ describe('packages/Tabs', () => {
     const tabListItem = getByText('Title C');
 
     expect(tabListItem).toHaveAttribute('aria-disabled');
+  });
+
+  test(`renders "${tabsClassName}" in the Tabs componenet's classList`, () => {
+    const tabs = getByTestId('tabs-component');
+    expect(tabs.classList.contains(tabsClassName)).toBe(true);
+  });
+
+  test(`renders "${tabClassName}" in the Tab component's classList`, () => {
+    const tab = getByText('Test Content 2');
+    expect(tab.classList.contains(tabClassName)).toBe(true);
   });
 
   describe('when the component is controlled', () => {

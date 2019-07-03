@@ -124,6 +124,7 @@ function Tabs({
   as = 'button',
   ...rest
 }: TabsProps) {
+function Tabs({ children, onChange, selected, className, ...rest }: TabsProps) {
   const [activeTab, setActiveTab] = useState();
   const [currentIndex, setCurrentIndex] = useState();
   const [focusedState, setFocusedState] = useState([] as Array<string>);

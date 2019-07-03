@@ -11,7 +11,7 @@ interface TabTitleProps {
   onClick?: React.MouseEventHandler;
   onKeyDown?: React.KeyboardEventHandler;
   ariaControls?: string;
-  setFocusedState?: Dispatch<SetStateAction<Array<string>>>;
+  setFocusedState: React.Dispatch<SetStateAction<Array<string>>>;
 }
 
 function TabTitle({
