@@ -133,7 +133,7 @@ interface ModalProps {
 </Modal>
 ```
  * @param props.active Boolean to describe whether or not Modal is active.
- * @param props.size String to determine size of Modal. ['xxsmall', 'xsmall', 'small', 'default', 'large', 'xlarge']
+ * @param props.size String to determine size of Modal. ['small', 'default', 'large']
  * @param props.setActive Callback to change the active state of Modal.
  * @param props.children Content to appear inside of Modal container.
  * @param props.shouldClose Callback to determine whether or not Modal should close when user tries to close it.
