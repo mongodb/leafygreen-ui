@@ -59,11 +59,13 @@ describe('packages/Tabs', () => {
     });
 
     test('clicking a tab changes the active tab', () => {
-      const tab = getByText('Title A')
-      fireEvent.click(tab)
-      
-      setTimeout(() => {console.log(container.innerHTML)}, 4500)
-    })
+      const tab = getByText('Title A');
+      fireEvent.click(tab);
+
+      setTimeout(() => {
+        console.log(container.innerHTML);
+      }, 4500);
+    });
 
     test('keyboard nav is not supported', () => {
       const activeTabListItem = getByText('Title B');

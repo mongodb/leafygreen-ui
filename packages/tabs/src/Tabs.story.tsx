@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { select, boolean, text } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
 import { Tab, Tabs } from './index';
 
 function ControlledTabs() {
@@ -12,10 +12,7 @@ function ControlledTabs() {
 
   return (
     <div>
-      <Tabs
-        onChange={changeHandler}
-        selected={select('selected', ['test1', 'test2', 'test3'], activeTab)}
-      >
+      <Tabs onChange={changeHandler} selected={activeTab}>
         <Tab value="test1" title={text('title', 'Title 1')}>
           {text('Tab Content', 'Hello 1')}
         </Tab>
