@@ -36,7 +36,6 @@ const scrollContainer = css`
   position: absolute;
   top: 0;
   right: 0;
-  bottom: 0;
   left: 0;
   overflow-y: auto;
   display: flex;
@@ -211,6 +210,7 @@ function Modal({
 
     body {
       position: relative;
+      color: pink !important;
     }
   `);
 
