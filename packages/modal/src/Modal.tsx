@@ -1,7 +1,6 @@
 import React, { useCallback, SetStateAction, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
-import { injectGlobal } from '@leafygreen-ui/emotion';
 import Icon, { Size } from '@leafygreen-ui/icon';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -202,17 +201,6 @@ function Modal({
   useEventListener('keydown', handleEscape, {
     options: { once: true },
   });
-
-  injectGlobal(`
-    html, body {
-      overflow: hidden;
-    }
-
-    body {
-      position: relative;
-      color: pink !important;
-    }
-  `);
 
   return (
     <Portal>
