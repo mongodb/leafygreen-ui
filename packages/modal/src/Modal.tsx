@@ -8,12 +8,9 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
 export const ModalSize = {
-  XXSmall: 'xxsmall',
-  XSmall: 'xsmall',
   Small: 'small',
   Default: 'default',
   Large: 'large',
-  XLarge: 'xlarge',
 } as const;
 
 export type ModalSize = typeof ModalSize[keyof typeof ModalSize];
@@ -56,14 +53,6 @@ const modalContentStyle = css`
 `;
 
 const modalSizes: { readonly [K in ModalSize]: string } = {
-  xxsmall: css`
-    width: 366px;
-  `,
-
-  xsmall: css`
-    width: 418px;
-  `,
-
   small: css`
     width: 562px;
   `,
@@ -74,10 +63,6 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
 
   large: css`
     width: 800px;
-  `,
-
-  xlarge: css`
-    width: 1270px;
   `,
 };
 
