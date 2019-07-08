@@ -182,14 +182,14 @@ function Modal({
 
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     // Don't close modal if shouldClose returns false or no setActive callback is passed
     if (!setActive || (shouldClose && !shouldClose())) {
       return;
     }
 
     setActive(false);
-  };
+  }, [setActive]);
 
   const handleDocumentClick = (e: React.SyntheticEvent) => {
     if (!contentRef.current) {
@@ -205,7 +205,7 @@ function Modal({
     if (e.keyCode === escapeKey) {
       handleClose();
     }
-  }, []);
+  }, [handleClose]);
 
   useEventListener('keydown', handleEscape, {
     options: { once: true },
