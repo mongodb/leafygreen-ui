@@ -22,7 +22,6 @@ const defaultSpacing = 18;
 
 const mainContainer = css`
   animation: fade-in 250ms ease-in-out;
-  -webkit-animation: fade-in 250ms ease-in-out;
   background-color: ${uiColors.black};
   opacity: 0.6;
   overflow-y: auto;
@@ -53,52 +52,43 @@ const modalContentStyle = css`
   border-radius: 3px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   pointer-events: all;
-  height: 200vh;
+  min-width: inherit;
+  max-width: inherit;
+  position: relative;
 `;
 
 const modalSizes: { readonly [K in ModalSize]: string } = {
   xxsmall: css`
-    min-width: inherit;
-    max-width: inherit;
     width: 366px;
   `,
 
   xsmall: css`
-    min-width: inherit;
-    max-width: inherit;
     width: 418px;
   `,
 
   small: css`
-    min-width: inherit;
-    max-width: inherit;
     width: 562px;
   `,
 
   default: css`
-    min-width: inherit;
-    max-width: inherit;
     width: 700px;
   `,
 
   large: css`
-    min-width: inherit;
-    max-width: inherit;
     width: 800px;
   `,
 
   xlarge: css`
-    min-width: inherit;
-    max-width: inherit;
     width: 1270px;
   `,
 };
 
 const closeButton = css`
   color: ${uiColors.gray.dark1};
-  position: aboslute;
-  float: right;
+  position: absolute;
   cursor: pointer;
+  right: 12px;
+  top: 12px;
 `;
 
 const escapeKey = 27;
@@ -201,11 +191,14 @@ function Modal({
     }
   };
 
-  const handleEscape = useCallback((e: KeyboardEvent) => {
-    if (e.keyCode === escapeKey) {
-      handleClose();
-    }
-  }, [handleClose]);
+  const handleEscape = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.keyCode === escapeKey) {
+        handleClose();
+      }
+    },
+    [handleClose],
+  );
 
   useEventListener('keydown', handleEscape, {
     options: { once: true },
