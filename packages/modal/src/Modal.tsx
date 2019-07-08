@@ -20,7 +20,7 @@ export type ModalSize = typeof ModalSize[keyof typeof ModalSize];
 
 const defaultSpacing = 18;
 
-const scrollContainer = css`
+const mainContainer = css`
   animation: fade-in 250ms ease-in-out;
   -webkit-animation: fade-in 250ms ease-in-out;
   background-color: ${uiColors.black};
@@ -31,10 +31,22 @@ const scrollContainer = css`
   left: 0;
   right: 0;
   bottom: 0;
+  // display: flex;
+  // justify-content: center;
+  // align-items: flex-start;
+  // pointer-events: initial;
+`;
+
+const scrollContainer = css`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
   display: flex;
+  // align-items: center;
   justify-content: center;
-  align-items: flex-start;
-  pointer-events: initial;
 `;
 
 const modalContentStyle = css`
@@ -48,6 +60,7 @@ const modalContentStyle = css`
   border-radius: 3px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   pointer-events: all;
+  height: 200vh;
 `;
 
 const modalSizes: { readonly [K in ModalSize]: string } = {
@@ -217,23 +230,25 @@ function Modal({
 
   return (
     <Portal>
-      <div {...rest} onClick={handleDocumentClick} className={scrollContainer}>
-        <div
-          className={cx(modalContentStyle, modalSizes[size], className)}
-          tabIndex={-1}
-          ref={contentRef}
-        >
-          <Icon
-            glyph="X"
-            fill={'#5D6C74'}
-            size={Size.Large}
-            onClick={handleClose}
-            className={closeButton}
-            data-dismiss="modal"
-            aria-hidden="true"
-          />
+      <div {...rest} onClick={handleDocumentClick} className={mainContainer}>
+        <div className={scrollContainer}>
+          <div
+            className={cx(modalContentStyle, modalSizes[size], className)}
+            tabIndex={-1}
+            ref={contentRef}
+          >
+            <Icon
+              glyph="X"
+              fill={'#5D6C74'}
+              size={Size.Large}
+              onClick={handleClose}
+              className={closeButton}
+              data-dismiss="modal"
+              aria-hidden="true"
+            />
 
-          {children}
+            {children}
+          </div>
         </div>
       </div>
     </Portal>
