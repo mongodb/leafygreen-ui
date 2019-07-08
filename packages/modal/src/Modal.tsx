@@ -31,10 +31,6 @@ const mainContainer = css`
   left: 0;
   right: 0;
   bottom: 0;
-  // display: flex;
-  // justify-content: center;
-  // align-items: flex-start;
-  // pointer-events: initial;
 `;
 
 const scrollContainer = css`
@@ -45,14 +41,11 @@ const scrollContainer = css`
   left: 0;
   overflow-y: auto;
   display: flex;
-  // align-items: center;
   justify-content: center;
 `;
 
 const modalContentStyle = css`
   margin: ${defaultSpacing}px auto;
-  max-width: 1270px;
-  min-width: 944px;
   padding: 30px;
   color: ${uiColors.gray.dark3};
   background-color: ${uiColors.white};
