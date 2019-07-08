@@ -1,5 +1,6 @@
 import React, { useCallback, SetStateAction, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { transparentize } from 'polished';
 import Portal from '@leafygreen-ui/portal';
 import Icon, { Size } from '@leafygreen-ui/icon';
 import { useEventListener } from '@leafygreen-ui/hooks';
@@ -21,8 +22,7 @@ const defaultSpacing = 18;
 
 const mainContainer = css`
   animation: fade-in 250ms ease-in-out;
-  background-color: ${uiColors.black};
-  opacity: 0.6;
+  background-color: ${transparentize(0.4, uiColors.black)};
   overflow-y: auto;
   position: fixed;
   top: 0;
