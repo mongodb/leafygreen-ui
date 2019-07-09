@@ -142,7 +142,7 @@ interface ModalProps {
   size="large"
   setActive={setActive}
   shouldClose={() => console.log('Modal is closing now!')}
-  >  
+  >
   Modal content!
 </Modal>
 ```
