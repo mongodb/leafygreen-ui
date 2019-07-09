@@ -10,7 +10,7 @@ describe('packages/Tabs', () => {
   const tabClassName = 'tab-classname';
   const onChange = jest.fn();
 
-  const { container, getByText, getByTestId } = render(
+  const { getByText, getByTestId } = render(
     <Tabs
       className={tabsClassName}
       selected="b"
@@ -58,14 +58,14 @@ describe('packages/Tabs', () => {
       expect(activeTab).toBeVisible();
     });
 
-    test('clicking a tab changes the active tab', () => {
-      const tab = getByText('Title A');
-      fireEvent.click(tab);
+    // test('clicking a tab changes the active tab', () => {
+    //   const tab = getByText('Title A');
+    //   fireEvent.click(tab);
 
-      setTimeout(() => {
-        console.log(container.innerHTML);
-      }, 4500);
-    });
+    //   setTimeout(() => {
+    //     console.log(container.innerHTML);
+    //   }, 4500);
+    // });
 
     test('keyboard nav is not supported', () => {
       const activeTabListItem = getByText('Title B');

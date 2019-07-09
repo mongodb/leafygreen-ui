@@ -23,20 +23,13 @@ const listTitle = css`
   padding: 3px 24px;
   cursor: pointer;
   transition: 150ms color ease-in-out;
-<<<<<<< HEAD
   border: none;
   background: none;
-=======
-
->>>>>>> feat(tabs): proofreading
   &:focus {
     color: ${uiColors.blue.base};
     outline: none;
   }
-<<<<<<< HEAD
-=======
-
->>>>>>> feat(tabs): proofreading
+  
   &:hover:not(:focus) {
     color: ${uiColors.gray.dark3};
   }
@@ -192,22 +185,13 @@ function Tabs({ children, onChange, selected, className, ...rest }: TabsProps) {
 
     const enabledCurrentIndex = enabledIndexes.indexOf(currentIndex);
 
-<<<<<<< HEAD
     let index: number;
-=======
-    let idx: number;
->>>>>>> feat(tabs): proofreading
 
     switch (e.key) {
       case 'ArrowRight':
       case 'ArrowDown':
-<<<<<<< HEAD
         index = (enabledCurrentIndex + 1) % enabledIndexes.length;
         setActiveTab(children[enabledIndexes[index]].props.value);
-=======
-        idx = (enabledCurrentIndex + 1) % enabledIndexes.length;
-        setActiveTab(children[enabledIndexes[idx]].props.value);
->>>>>>> feat(tabs): proofreading
         break;
 
       case 'ArrowLeft':
@@ -215,30 +199,11 @@ function Tabs({ children, onChange, selected, className, ...rest }: TabsProps) {
         index =
           (enabledCurrentIndex - 1 + enabledIndexes.length) %
           enabledIndexes.length;
-<<<<<<< HEAD
         setActiveTab(children[enabledIndexes[index]].props.value);
-=======
-        setActiveTab(children[enabledIndexes[idx]].props.value);
->>>>>>> feat(tabs): proofreading
         break;
     }
   }
 
-<<<<<<< HEAD
-=======
-  function isTab(
-    element: React.ReactNode,
-  ): element is React.ReactElement<TabProps, typeof Tab> {
-    if (
-      !(element != null && typeof element === 'object' && 'type' in element)
-    ) {
-      return false;
-    }
-
-    return (element.type as any).displayName === 'Tab';
-  }
-
->>>>>>> feat(tabs): proofreading
   function calcStyle() {
     if (
       !tabListRef ||
