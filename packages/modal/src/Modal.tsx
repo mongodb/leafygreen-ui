@@ -1,6 +1,7 @@
 import React, { useCallback, SetStateAction, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { transparentize } from 'polished';
+import facepaint from 'facepaint';
 import Portal from '@leafygreen-ui/portal';
 import Icon, { Size } from '@leafygreen-ui/icon';
 import { useEventListener } from '@leafygreen-ui/hooks';
@@ -14,6 +15,17 @@ export const ModalSize = {
 } as const;
 
 export type ModalSize = typeof ModalSize[keyof typeof ModalSize];
+
+// breakpoints for different screen sizes
+const small = '767px'; // mobile screens, from 0px - 767px
+const medium = '768px'; // tablet screens, from 768px - 1024px
+const large = '1025px'; // laptops/desktop screens, from 1025px and above
+
+export const mq = facepaint([
+  `@media only screen and (max-width: ${small})`,
+  `@media only screen and (min-width: ${medium})`,
+  `@media only screen and (min-width: ${large})`,
+]);
 
 const defaultSpacing = 18;
 
@@ -62,7 +74,9 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
   `,
 
   large: css`
-    width: 800px;
+    ${mq({
+      width: ['700px', '750px', '800px'],
+    })}
   `,
 };
 

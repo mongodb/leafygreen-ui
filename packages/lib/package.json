@@ -18,7 +18,12 @@
     "react": "^16.0.0"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@leafygreen-ui/emotion": "^1.0.4",
+=======
+    "@leafygreen-ui/emotion": "^1.0.0",
+    "facepaint": "^1.2.1",
+>>>>>>> feat: added facepaint
     "polished": "^2.3.0"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0"

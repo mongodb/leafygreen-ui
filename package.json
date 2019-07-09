@@ -120,5 +120,8 @@
     "packages": [
       "packages/*"
     ]
+  },
+  "dependencies": {
+    "@types/facepaint": "^1.2.0"
   }
 }
