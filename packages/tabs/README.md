@@ -73,8 +73,6 @@ If property is used, will ensure that component behaves as a controlled componen
 
 # Tab
 
-as?: React.ElementType<any>;
-
 ## Properties
 
 ### value
@@ -85,7 +83,7 @@ Every `Tab` needs a value prop
 
 ### title
 
-**Type:** `string`
+**Type:** required, `string`
 
 **Default:** ``
 
