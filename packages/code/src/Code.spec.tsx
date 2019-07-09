@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
-import Code from './Code';
+import Code from './code';
 
 afterAll(cleanup);
 

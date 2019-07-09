@@ -52,7 +52,7 @@ const scrollContainer = css`
 
 const modalContentStyle = css`
   margin: ${defaultSpacing}px auto;
-  padding: 30px;
+  padding: 36px;
   color: ${uiColors.gray.dark3};
   background-color: ${uiColors.white};
   border: 1px solid ${uiColors.gray.light3};
@@ -66,16 +66,16 @@ const modalContentStyle = css`
 
 const modalSizes: { readonly [K in ModalSize]: string } = {
   small: css`
-    width: 562px;
+    width: 400px;
   `,
 
   default: css`
-    width: 700px;
+    width: 720px;
   `,
 
   large: css`
     ${mq({
-      width: ['700px', '750px', '800px'],
+      width: ['720px', '720px', '960px'],
     })}
   `,
 };

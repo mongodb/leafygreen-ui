@@ -14,7 +14,7 @@ function Example() {
         setActive={setActive}
         size={select('size', Object.values(ModalSize), ModalSize.Default)}
       >
-        Modal Content goes here
+        Modal Content goes here.
       </Modal>
     </>
   );
