@@ -38,6 +38,7 @@ const mainContainer = css`
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 1000;
 `;
 
 const scrollContainer = css`
@@ -48,6 +49,7 @@ const scrollContainer = css`
   overflow-y: auto;
   display: flex;
   justify-content: center;
+  z-index: 1000;
 `;
 
 const modalContentStyle = css`
@@ -61,6 +63,8 @@ const modalContentStyle = css`
   min-width: inherit;
   max-width: inherit;
   position: relative;
+  pointer-events: all;
+  z-index: 1000;
 `;
 
 const modalSizes: { readonly [K in ModalSize]: string } = {
