@@ -46,6 +46,9 @@ export interface TabProps {
    * Used internally. Index to determine order of tabs for keyboard navigation.
    */
   index?: number;
+
+
+  ariaControl: string;
 }
 
 /**
