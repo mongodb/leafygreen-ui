@@ -6,7 +6,7 @@ import Portal from '@leafygreen-ui/portal';
 import Icon, { Size } from '@leafygreen-ui/icon';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 
 export const ModalSize = {
   Small: 'small',
@@ -29,6 +29,17 @@ export const mq = facepaint([
 
 const defaultSpacing = 18;
 
+const fadein = keyframes`
+  from {
+    margin-top: 50px;
+    opacity: 0;
+  }
+  to {
+    margin-top: 0;
+    opacity: 1;
+  }
+`;
+
 const mainContainer = css`
   animation: fade-in 250ms ease-in-out;
   background-color: ${transparentize(0.4, uiColors.black)};
@@ -39,7 +50,8 @@ const mainContainer = css`
   right: 0;
   bottom: 0;
   z-index: 1000;
-`;
+  animation: ${fadein} 300ms ease-in-out;
+}`;
 
 const scrollContainer = css`
   position: absolute;
@@ -65,6 +77,7 @@ const modalContentStyle = css`
   position: relative;
   pointer-events: all;
   z-index: 1000;
+  transition: all 200ms ease-in-out;
 `;
 
 const modalSizes: { readonly [K in ModalSize]: string } = {
