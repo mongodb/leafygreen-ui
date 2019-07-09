@@ -58,7 +58,6 @@ const modalContentStyle = css`
   border: 1px solid ${uiColors.gray.light3};
   border-radius: 3px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  pointer-events: all;
   min-width: inherit;
   max-width: inherit;
   position: relative;
@@ -176,7 +175,7 @@ function Modal({
     }
 
     setActive(false);
-  }, [setActive]);
+  }, [setActive, shouldClose]);
 
   const handleDocumentClick = (e: React.SyntheticEvent) => {
     if (!contentRef.current) {
@@ -236,6 +235,7 @@ Modal.propTypes = {
   children: PropTypes.node,
   shouldClose: PropTypes.func,
   className: PropTypes.string,
+  setActive: PropTypes.func,
 };
 
 export default Modal;

@@ -67,7 +67,7 @@ Determines active state of `Modal` component
 
 **Default:** `(bool) => {}`
 
-Callback to set active state of Modal component. `setActive` optionally accepts a boolean value, which will determine the active state of `Modal` component.
+Callback to set active state of Modal component. `setActive` accepts a boolean value, which will determine the active state of `Modal` component.
 
 ### size
 
