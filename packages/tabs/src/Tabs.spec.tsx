@@ -40,7 +40,6 @@ describe('packages/Tabs', () => {
 
   test('tab renders as disabled when the prop is set', () => {
     const tabListItem = getByText('Title C');
-
     expect(tabListItem).toHaveAttribute('aria-disabled');
   });
 
@@ -113,7 +112,7 @@ describe('packages/Tabs', () => {
       fireEvent.keyDown(activeTabListItem, { key: 'ArrowLeft', code: 37 });
 
       setTimeout(() => {
-        const nextActiveTab = getByText('Test Content 1');
+        const nextActiveTab = getByText('First Content');
         expect(nextActiveTab).toBeVisible();
       }, 500);
     });
@@ -123,7 +122,7 @@ describe('packages/Tabs', () => {
       fireEvent.keyDown(activeTabListItem, { key: 'ArrowRight', code: 39 });
 
       setTimeout(() => {
-        const activeTab = getByText('Second Content');
+        const activeTab = getByText('First Content');
         expect(activeTab).toBeVisible();
       }, 500);
     });
