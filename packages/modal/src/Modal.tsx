@@ -199,7 +199,7 @@ function Modal({
       return;
     }
 
-    if (!contentRef.current.contains(e.target as Node)) {
+    if (e.target !== contentRef.current) {
       handleClose();
     }
   };
