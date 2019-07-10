@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select } from '@storybook/addon-knobs';
-import Modal, { ModalSize } from './index';
+import Modal, { ModalSize } from './Modal';
 
 function Example() {
   const [active, setActive] = useState(false);

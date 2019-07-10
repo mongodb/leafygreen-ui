@@ -40,8 +40,7 @@ const fadein = keyframes`
   }
 `;
 
-const mainContainer = css`
-  animation: fade-in 250ms ease-in-out;
+const backdrop = css`
   background-color: ${transparentize(0.4, uiColors.black)};
   overflow-y: auto;
   position: fixed;
@@ -50,7 +49,7 @@ const mainContainer = css`
   right: 0;
   bottom: 0;
   z-index: 1000;
-  animation: ${fadein} 300ms ease-in-out;
+  animation: ${fadein} 150ms ease-in-out;
 }`;
 
 const scrollContainer = css`
@@ -65,19 +64,16 @@ const scrollContainer = css`
 `;
 
 const modalContentStyle = css`
+  transition: all 200ms ease-in-out;
   margin: ${defaultSpacing}px auto;
   padding: 36px;
   color: ${uiColors.gray.dark3};
   background-color: ${uiColors.white};
-  border: 1px solid ${uiColors.gray.light3};
   border-radius: 3px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  min-width: inherit;
-  max-width: inherit;
   position: relative;
   pointer-events: all;
   z-index: 1000;
-  transition: all 200ms ease-in-out;
 `;
 
 const modalSizes: { readonly [K in ModalSize]: string } = {
@@ -194,7 +190,7 @@ function Modal({
     setActive(false);
   }, [setActive, shouldClose]);
 
-  const handleDocumentClick = (e: React.SyntheticEvent) => {
+  const handleBackdropClick = (e: React.SyntheticEvent) => {
     if (!contentRef.current) {
       return;
     }
@@ -219,7 +215,7 @@ function Modal({
 
   return (
     <Portal>
-      <div {...rest} onClick={handleDocumentClick} className={mainContainer}>
+      <div {...rest} onClick={handleBackdropClick} className={backdrop}>
         <div className={scrollContainer}>
           <div
             className={cx(modalContentStyle, modalSizes[size], className)}
