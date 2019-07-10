@@ -157,11 +157,8 @@ function Code({
   const { content, lineCount } = useProcessedCodeSnippet(children);
 
   const renderedWindowChrome = showWindowChrome && (
-    <WindowChrome
-      chromeTitle={chromeTitle}
-      variant={variant}
-    />
-  )
+    <WindowChrome chromeTitle={chromeTitle} variant={variant} />
+  );
 
   const renderedSyntaxComponent = (
     <Syntax variant={variant} language={language}>
@@ -185,7 +182,11 @@ function Code({
   }
 
   return (
-    <div className={css`display: inline-block;`}>
+    <div
+      className={css`
+        display: inline-block;
+      `}
+    >
       {renderedWindowChrome}
 
       <pre
@@ -193,10 +194,7 @@ function Code({
         className={wrapperClassName}
       >
         {showLineNumbers && (
-          <LineNumbers
-            variant={variant}
-            lineCount={lineCount}
-          />
+          <LineNumbers variant={variant} lineCount={lineCount} />
         )}
 
         {renderedSyntaxComponent}
