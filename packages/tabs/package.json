@@ -15,6 +15,5 @@
   "dependencies": {
     "@leafygreen-ui/lib": "^3.0.0",
     "@leafygreen-ui/theme": "^1.2.0"
-  },
-  "gitHead": "53385cfed5ecf3101d098d26dedc6a40b27c402a"
+  }
 }
