@@ -14,7 +14,7 @@ describe('packages/Syntax', () => {
       container: { firstChild: containerRoot },
     } = render(<Code className={className}>{codeSnippet}</Code>);
 
-    const codeRoot = (containerRoot as HTMLElement).firstChild;
+    const codeRoot = (containerRoot as HTMLElement).lastChild;
 
     if (!codeRoot || !typeIs.element(codeRoot)) {
       throw new Error('Multiline code element not found');
@@ -31,12 +31,14 @@ describe('packages/Syntax', () => {
 
   describe('when multiline is false', () => {
     const {
-      container: { firstChild: codeRoot },
+      container: { firstChild: containerRoot },
     } = render(
       <Code className={className} multiline={false}>
         {codeSnippet}
       </Code>,
     );
+
+    const codeRoot = (containerRoot as HTMLElement).lastChild;
 
     if (!codeRoot || !typeIs.element(codeRoot)) {
       throw new Error('Single line code element not found');
