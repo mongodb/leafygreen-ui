@@ -8,7 +8,7 @@ function Example() {
 
   return (
     <>
-      <button onClick={() => setActive(active => !active)}>Open Modal</button>
+      <button onClick={() => setActive(!active)}>Open Modal</button>
       <Modal
         active={active}
         setActive={setActive}

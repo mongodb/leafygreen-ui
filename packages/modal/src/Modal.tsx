@@ -31,12 +31,12 @@ const defaultSpacing = 18;
 
 const fadein = keyframes`
   from {
-    margin-top: 50px;
     opacity: 0;
+    transform: translate3d(0, 50px, 0);
   }
   to {
-    margin-top: 0;
     opacity: 1;
+    transform: translate3d(0, 0px, 0);
   }
 `;
 
@@ -49,8 +49,7 @@ const backdrop = css`
   right: 0;
   bottom: 0;
   z-index: 1000;
-  animation: ${fadein} 150ms ease-in-out;
-}`;
+`;
 
 const scrollContainer = css`
   position: absolute;
@@ -61,6 +60,7 @@ const scrollContainer = css`
   display: flex;
   justify-content: center;
   z-index: 1000;
+  animation: ${fadein} 150ms ease-in-out;
 `;
 
 const modalContentStyle = css`
@@ -224,7 +224,7 @@ function Modal({
           >
             <Icon
               glyph="X"
-              fill={'#5D6C74'}
+              fill={uiColors.gray.dark1}
               size={Size.Large}
               onClick={handleClose}
               className={closeButton}

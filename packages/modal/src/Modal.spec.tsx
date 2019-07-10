@@ -16,14 +16,19 @@ describe('packages/Modal', () => {
       </Modal>,
     );
 
-    test('it appears on DOM when active prop is set', () => {
+    test('it appears on page when active prop is set', () => {
       const modal = getByTestId(modalId);
       expect(modal).toBeVisible();
     });
 
-    test('it renders the children as expected', () => {
+    test('it is rendered to the DOM when the active prop is set', () => {
+      const modal = getByTestId(modalId);
+      expect(modal).toBeInTheDocument();
+    });
+
+    test(`it renders the ${modalContent} as expected`, () => {
       const content = getByText(modalContent);
-      expect(content).toBeInTheDocument();
+      expect(content).toBeVisible();
     });
   });
 
@@ -58,7 +63,7 @@ describe('packages/Modal', () => {
     });
 
     test('when shouldClose returns true', () => {
-      const { getByTestId } = render(
+      const { container } = render(
         <Modal
           active={true}
           data-testid="trueshouldClose"
@@ -68,10 +73,8 @@ describe('packages/Modal', () => {
         </Modal>,
       );
 
-      const modal = getByTestId('trueshouldClose');
       window.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-
-      !expect(modal).toBeVisible();
+      expect(container.innerHTML).toBe('');
     });
   });
 });
