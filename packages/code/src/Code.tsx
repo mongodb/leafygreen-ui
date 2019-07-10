@@ -53,25 +53,21 @@ function useProcessedCodeSnippet(snippet: string): ProcessedCodeSnippet {
 }
 
 const whiteSpace = 12;
-const borderRadius = 4;
 
-const wrapperStyle = css`
+const codeWrapperStyle = css`
   overflow-x: auto;
-  border: 1px solid;
-  border-left-width: 3px;
-  border-radius: ${borderRadius}px;
+  border-left: 2px solid;
   padding: ${whiteSpace}px;
   margin: 0;
   position: relative;
 `;
 
-const wrapperStyleWithLineNumbers = css`
+const codeWrapperStyleWithLineNumbers = css`
   padding-left: ${whiteSpace * 3.5}px;
 `;
 
-const wrapperStyleWithWindowChrome = css`
-  border-left-width: 1px;
-  border-radius: 0 0 ${borderRadius}px ${borderRadius}px;
+const codeWrapperStyleWithWindowChrome = css`
+  border-left: 0;
 `;
 
 function getWrapperVariantStyle(variant: Variant): string {
@@ -144,12 +140,19 @@ function Code({
   chromeTitle = '',
   ...rest
 }: CodeProps) {
+  const wrapperStyle = css`
+    display: inline-block;
+    border: 1px solid ${variantColors[variant][1]};
+    border-radius: 4px;
+    overflow: hidden;
+  `;
+
   const wrapperClassName = cx(
-    wrapperStyle,
+    codeWrapperStyle,
     getWrapperVariantStyle(variant),
     {
-      [wrapperStyleWithLineNumbers]: multiline && showLineNumbers,
-      [wrapperStyleWithWindowChrome]: showWindowChrome,
+      [codeWrapperStyleWithLineNumbers]: multiline && showLineNumbers,
+      [codeWrapperStyleWithWindowChrome]: showWindowChrome,
     },
     className,
   );
@@ -168,7 +171,7 @@ function Code({
 
   if (!multiline) {
     return (
-      <>
+      <div className={wrapperStyle}>
         {renderedWindowChrome}
 
         <div
@@ -177,16 +180,12 @@ function Code({
         >
           {renderedSyntaxComponent}
         </div>
-      </>
+      </div>
     );
   }
 
   return (
-    <div
-      className={css`
-        display: inline-block;
-      `}
-    >
+    <div className={wrapperStyle}>
       {renderedWindowChrome}
 
       <pre
