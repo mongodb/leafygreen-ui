@@ -124,7 +124,7 @@ Determines the root element. For example, `Link` or `a` tags can be supplied to 
 
 **Type:** required, can be a `string` or an `number`
 
-Every `Tab` needs a value prop
+Every `Tab` needs a value prop.
 
 ### title
 
@@ -140,7 +140,7 @@ String that will appear in the list of `Tabs`.
 
 **Default:** ``
 
-Adds a className to the root element
+Adds a className to the root element.
 
 ### disabled
 
@@ -148,7 +148,7 @@ Adds a className to the root element
 
 **Default:** `false`
 
-Indicates whether or not the `Tab` can be clicked by a user
+Indicates whether or not the `Tab` can be clicked by a user.
 
 ### default
 

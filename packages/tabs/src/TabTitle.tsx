@@ -26,7 +26,7 @@ function TabTitle({
   as,
   ...rest
 }: TabTitleProps) {
-  const titleRef = useRef<HTMLLIElement>(null);
+  const titleRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (titleRef && titleRef.current && active && !disabled) {

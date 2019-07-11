@@ -75,7 +75,7 @@ function Tab({
     return null;
   }
 
-  // default is not an HTML property
+  // default and title are not an HTML properties
   delete rest.default, rest.title;
 
   return (
