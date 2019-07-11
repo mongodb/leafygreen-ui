@@ -48,7 +48,6 @@ const backdrop = css`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1000;
 `;
 
 const scrollContainer = css`
@@ -56,10 +55,8 @@ const scrollContainer = css`
   top: 0;
   right: 0;
   left: 0;
+  bottom: 0;
   overflow-y: auto;
-  display: flex;
-  justify-content: center;
-  z-index: 1000;
   animation: ${fadein} 150ms ease-in-out;
 `;
 
@@ -73,7 +70,6 @@ const modalContentStyle = css`
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   position: relative;
   pointer-events: all;
-  z-index: 1000;
 `;
 
 const modalSizes: { readonly [K in ModalSize]: string } = {
@@ -179,7 +175,7 @@ function Modal({
     return null;
   }
 
-  const contentRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const handleClose = useCallback(() => {
     // Don't close modal if shouldClose returns false or no setActive callback is passed
@@ -191,11 +187,11 @@ function Modal({
   }, [setActive, shouldClose]);
 
   const handleBackdropClick = (e: React.SyntheticEvent) => {
-    if (!contentRef.current) {
+    if (!scrollContainerRef.current) {
       return;
     }
 
-    if (e.target !== contentRef.current) {
+    if (e.target === scrollContainerRef.current) {
       handleClose();
     }
   };
@@ -216,11 +212,10 @@ function Modal({
   return (
     <Portal>
       <div {...rest} onClick={handleBackdropClick} className={backdrop}>
-        <div className={scrollContainer}>
+        <div className={scrollContainer} ref={scrollContainerRef}>
           <div
             className={cx(modalContentStyle, modalSizes[size], className)}
             tabIndex={-1}
-            ref={contentRef}
           >
             <Icon
               glyph="X"
