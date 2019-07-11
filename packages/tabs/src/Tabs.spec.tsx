@@ -53,6 +53,28 @@ describe('packages/Tabs', () => {
     expect(tab.classList.contains(tabClassName)).toBe(true);
   });
 
+  test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
+    const { container } = render(
+      <Tabs as="div">
+        <Tab default value="hello1" title="Tab 1">
+          Tab 1
+        </Tab>
+        <Tab value="hello2" title="Hello 2">
+          Hello 2
+        </Tab>
+      </Tabs>,
+    );
+
+    const tab =
+      container.firstChild && (container.firstChild.firstChild as HTMLElement);
+
+    if (!tab) {
+      throw new Error('No element was rendered');
+    }
+
+    expect(tab.tagName.toLowerCase()).toBe('div');
+  });
+
   describe('when the component is controlled', () => {
     test('selected tab is active on first render', () => {
       const activeTab = getByText('Test Content 2');
