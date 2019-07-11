@@ -5,34 +5,42 @@ import { Variant, variantColors } from '@leafygreen-ui/syntax';
 import { darken } from 'polished';
 
 export const windowChromeHeight = 28;
+const controlSize = 12;
+const controlSpacing = 8;
+const borderRadius = 4;
 
 const windowChromeStyle = css`
-  height: ${windowChromeHeight}px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  height: ${windowChromeHeight}px;
+  padding-left: ${controlSize}px;
+  padding-right: ${controlSize}px;
+  border-radius: ${borderRadius}px ${borderRadius}px 0 0;
 `;
 
 const windowControlsStyle = css`
-  position: absolute;
-  left: 12px;
-  top: 0;
-  bottom: 0;
-  height: 12px;
-  margin: auto;
   display: flex;
+  height: ${controlSize}px;
+`;
+
+const fakeControlsStyle = css`
+  height: ${controlSize}px;
+  width: ${controlSpacing * 3 + controlSize * 3}px;
+`;
+
+const textStyle = css`
+  padding-left: ${controlSpacing}px;
+  padding-right: ${controlSpacing}px;
+  font-size: 14px;
 `;
 
 function WindowControl({ color }: { color: string }) {
   return (
     <div
       className={css`
-        height: 12px;
-        width: 12px;
+        height: ${controlSize}px;
+        width: ${controlSize}px;
         border-radius: 50px;
         margin-right: 8px;
         background-color: ${color};
@@ -69,7 +77,9 @@ function WindowChrome({
         ))}
       </div>
 
-      {chromeTitle}
+      <div className={textStyle}>{chromeTitle}</div>
+
+      <div className={fakeControlsStyle} />
     </div>
   );
 }

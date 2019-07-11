@@ -8,7 +8,7 @@ import Syntax, {
   variantColors,
 } from '@leafygreen-ui/syntax';
 import LineNumbers from './LineNumbers';
-import WindowChrome, { windowChromeHeight } from './WindowChrome';
+import WindowChrome from './WindowChrome';
 
 function stringFragmentIsBlank(str: string): str is '' | ' ' {
   return str === '' || str === ' ';
@@ -54,23 +54,20 @@ function useProcessedCodeSnippet(snippet: string): ProcessedCodeSnippet {
 
 const whiteSpace = 12;
 
-const wrapperStyle = css`
+const codeWrapperStyle = css`
   overflow-x: auto;
-  border: 1px solid;
-  border-left-width: 3px;
-  border-radius: 4px;
+  border-left: 2px solid;
   padding: ${whiteSpace}px;
   margin: 0;
   position: relative;
 `;
 
-const wrapperStyleWithLineNumbers = css`
+const codeWrapperStyleWithLineNumbers = css`
   padding-left: ${whiteSpace * 3.5}px;
 `;
 
-const wrapperStyleWithWindowChrome = css`
-  padding-top: ${windowChromeHeight + whiteSpace}px;
-  border-left-width: 1px;
+const codeWrapperStyleWithWindowChrome = css`
+  border-left: 0;
 `;
 
 function getWrapperVariantStyle(variant: Variant): string {
@@ -143,62 +140,65 @@ function Code({
   chromeTitle = '',
   ...rest
 }: CodeProps) {
+  const wrapperStyle = css`
+    display: inline-block;
+    border: 1px solid ${variantColors[variant][1]};
+    border-radius: 4px;
+    overflow: hidden;
+  `;
+
   const wrapperClassName = cx(
-    wrapperStyle,
+    codeWrapperStyle,
     getWrapperVariantStyle(variant),
     {
-      [wrapperStyleWithLineNumbers]: multiline && showLineNumbers,
-      [wrapperStyleWithWindowChrome]: showWindowChrome,
+      [codeWrapperStyleWithLineNumbers]: multiline && showLineNumbers,
+      [codeWrapperStyleWithWindowChrome]: showWindowChrome,
     },
     className,
   );
 
   const { content, lineCount } = useProcessedCodeSnippet(children);
 
-  const renderedCommonContent = (
-    <>
-      {showWindowChrome && (
-        <WindowChrome chromeTitle={chromeTitle} variant={variant} />
-      )}
+  const renderedWindowChrome = showWindowChrome && (
+    <WindowChrome chromeTitle={chromeTitle} variant={variant} />
+  );
 
-      <Syntax variant={variant} language={language}>
-        {content}
-      </Syntax>
-    </>
+  const renderedSyntaxComponent = (
+    <Syntax variant={variant} language={language}>
+      {content}
+    </Syntax>
   );
 
   if (!multiline) {
     return (
-      <div
-        {...(rest as DetailedElementProps<HTMLDivElement>)}
-        className={wrapperClassName}
-      >
-        {renderedCommonContent}
+      <div className={wrapperStyle}>
+        {renderedWindowChrome}
+
+        <div
+          {...(rest as DetailedElementProps<HTMLDivElement>)}
+          className={wrapperClassName}
+        >
+          {renderedSyntaxComponent}
+        </div>
       </div>
     );
   }
 
   return (
-    <pre
-      {...(rest as DetailedElementProps<HTMLPreElement>)}
-      className={wrapperClassName}
-    >
-      {showLineNumbers && (
-        <LineNumbers
-          variant={variant}
-          lineCount={lineCount}
-          className={
-            showWindowChrome
-              ? css`
-                  top: ${windowChromeHeight}px;
-                `
-              : ''
-          }
-        />
-      )}
+    <div className={wrapperStyle}>
+      {renderedWindowChrome}
 
-      {renderedCommonContent}
-    </pre>
+      <pre
+        {...(rest as DetailedElementProps<HTMLPreElement>)}
+        className={wrapperClassName}
+      >
+        {showLineNumbers && (
+          <LineNumbers variant={variant} lineCount={lineCount} />
+        )}
+
+        {renderedSyntaxComponent}
+      </pre>
+    </div>
   );
 }
 

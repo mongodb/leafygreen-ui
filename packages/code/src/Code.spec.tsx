@@ -11,8 +11,10 @@ const className = 'test-class';
 describe('packages/Syntax', () => {
   describe('when multiline is true', () => {
     const {
-      container: { firstChild: codeRoot },
+      container: { firstChild: containerRoot },
     } = render(<Code className={className}>{codeSnippet}</Code>);
+
+    const codeRoot = (containerRoot as HTMLElement).lastChild;
 
     if (!codeRoot || !typeIs.element(codeRoot)) {
       throw new Error('Multiline code element not found');
@@ -29,18 +31,20 @@ describe('packages/Syntax', () => {
 
   describe('when multiline is false', () => {
     const {
-      container: { firstChild: codeRoot },
+      container: { firstChild: containerRoot },
     } = render(
       <Code className={className} multiline={false}>
         {codeSnippet}
       </Code>,
     );
 
+    const codeRoot = (containerRoot as HTMLElement).lastChild;
+
     if (!codeRoot || !typeIs.element(codeRoot)) {
       throw new Error('Single line code element not found');
     }
 
-    test('root element renders as a <div> tag', () => {
+    test('code wrapper element renders as a <div> tag', () => {
       expect(codeRoot.tagName).toBe('DIV');
     });
 
