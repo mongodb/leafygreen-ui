@@ -29,11 +29,6 @@ export interface TabProps extends HTMLElementProps<'div'> {
   disabled?: boolean;
 
   /**
-   * Determines the HTML element the Tab panel will be wrapped in.
-   */
-  as?: React.ElementType<any>;
-
-  /**
    * If Tabs component is uncontrolled, this determines what Tab will be active on first render.
    */
   default?: boolean;
@@ -65,7 +60,6 @@ export interface TabProps extends HTMLElementProps<'div'> {
  * @param props.children Content that will appear inside of Tab panel.
  * @param props.disabled Boolean that determines if the Tab is disabled.
  * @param props.title Title that will appear in Tab List.
- * @param props.as Determines the HTML element the Tab panel will be wrapped in.
  * @param props.ariaControl Value supplied to aria-control attribute.
  * @param props.default If Tabs component is uncontrolled, this determines what Tab will be active on first render.
  */
@@ -74,7 +68,6 @@ function Tab({
   active,
   children,
   disabled = false,
-  as = 'div',
   ariaControl,
   ...rest
 }: TabProps) {
@@ -82,13 +75,11 @@ function Tab({
     return null;
   }
 
-  const Root = as;
-
   // default is not an HTML property
   delete rest.default;
 
   return (
-    <Root
+    <div
       {...rest}
       aria-disabled={disabled}
       aria-selected={active}
@@ -97,7 +88,7 @@ function Tab({
       role="tabpanel"
     >
       {children}
-    </Root>
+    </div>
   );
 }
 
@@ -109,7 +100,6 @@ Tab.propTypes = {
   title: PropTypes.string,
   content: PropTypes.node,
   disabled: PropTypes.bool,
-  as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   ariaControl: PropTypes.string,
 };
 

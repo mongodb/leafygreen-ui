@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useCallback, SetStateAction } from 'react';
 import PropTypes from 'prop-types';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-interface TabTitleProps extends HTMLElementProps<'li'> {
+interface TabTitleProps extends HTMLElementProps<'button'> {
   active: boolean;
   children: Array<React.ReactElement>;
   disabled?: boolean;
@@ -11,6 +11,7 @@ interface TabTitleProps extends HTMLElementProps<'li'> {
   onKeyDown?: React.KeyboardEventHandler;
   ariaControls?: string;
   setFocusedState: React.Dispatch<SetStateAction<Array<string>>>;
+  as: React.ElementType<any>;
 }
 
 function TabTitle({
@@ -22,6 +23,7 @@ function TabTitle({
   onKeyDown,
   ariaControls,
   setFocusedState,
+  as,
   ...rest
 }: TabTitleProps) {
   const titleRef = useRef<HTMLLIElement>(null);
@@ -42,8 +44,10 @@ function TabTitle({
     setFocusedState((curr: Array<string>) => [...curr, dataTabId]);
   }, [setFocusedState]);
 
+  const Root = as;
+
   return (
-    <li
+    <Root
       {...rest}
       ref={titleRef}
       role="tab"
@@ -58,7 +62,7 @@ function TabTitle({
       onFocus={onFocus}
     >
       {children}
-    </li>
+    </Root>
   );
 }
 
@@ -72,6 +76,7 @@ TabTitle.propTypes = {
   onClick: PropTypes.func,
   onKeyDown: PropTypes.func,
   ariaControls: PropTypes.string,
+  as: PropTypes.string,
 };
 
 export default TabTitle;
