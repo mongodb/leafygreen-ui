@@ -76,7 +76,7 @@ function Tab({
   }
 
   // default is not an HTML property
-  delete rest.default;
+  delete rest.default, rest.title;
 
   return (
     <div
@@ -97,6 +97,7 @@ Tab.displayName = 'Tab';
 Tab.propTypes = {
   value: PropTypes.string,
   active: PropTypes.bool,
+  children: PropTypes.node,
   title: PropTypes.string,
   content: PropTypes.node,
   disabled: PropTypes.bool,

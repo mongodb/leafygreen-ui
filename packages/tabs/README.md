@@ -8,10 +8,10 @@
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
 
 <Tabs>
-  <Tab value="test1" title="Title 1">
+  <Tab default value="test1" title="Title 1">
     Hello 1
   </Tab>
-  <Tab default value="test2" title="Title 2">
+  <Tab value="test2" title="Title 2">
     Hello 2
   </Tab>
   <Tab value="test3" title="Title 3">
@@ -24,12 +24,47 @@ import { Tabs, Tab } from '@leafygreen-ui/tabs';
 
 ```html
 <div>
-  <ul class="leafygreen-ui-1dj4xsu">
-    <li class="leafygreen-ui-19hzp2t" data-tab-id="test1">Title 1</li>
-    <li class="leafygreen-ui-1ti8pf9" data-tab-id="test2">Title 2</li>
-    <li class="leafygreen-ui-19hzp2t" data-tab-id="test3">Title 3</li>
-  </ul>
-  <div aria-disabled="false" data-tab-id="test2" title="Title 2">Hello 2</div>
+  <div class="leafygreen-ui-ohrh5k" role="tablist">
+    <button
+      class="leafygreen-ui-oy1280"
+      role="tab"
+      data-tab-id="test1"
+      aria-controls="tab-0"
+      aria-selected="true"
+      tabindex="0"
+    >
+      Title 1</button
+    ><button
+      class="leafygreen-ui-1i13m9b"
+      role="tab"
+      data-tab-id="test2"
+      aria-controls="tab-1"
+      aria-disabled="true"
+      tabindex="-1"
+    >
+      Title 2</button
+    ><button
+      class="leafygreen-ui-1xd1z7d"
+      role="tab"
+      data-tab-id="test3"
+      aria-controls="tab-2"
+      tabindex="-1"
+    >
+      Title 3
+    </button>
+  </div>
+  <div class="leafygreen-ui-1k5h8zu">
+    <div class="leafygreen-ui-p15qvm"></div>
+  </div>
+  <div
+    aria-disabled="false"
+    aria-selected="true"
+    aria-controls="tab-0"
+    data-tab-id="test1"
+    role="tabpanel"
+  >
+    Hello 1
+  </div>
 </div>
 ```
 
@@ -68,6 +103,14 @@ The event handler function for the 'onChange' event. Receives the associated eve
 **Default:** ``
 
 If property is used, will ensure that component behaves as a controlled component. The value passed here should match the value property of the `Tab` component that should appear active.
+
+### as
+
+**Type:** `HTML Tag` or `React Element`
+
+**Default:** `button`
+
+Determines the root element. For example, `Link` or `a` tags can be supplied to replace `button` from being the element that wraps the component.
 
 ### Any other properties supplied will be spread on the root element.
 
@@ -112,14 +155,6 @@ Indicates whether or not the `Tab` can be clicked by a user
 **Default:** `false`
 
 Should be supplied when using the Uncontrolled `Tabs` component. This determines which tab will be active by default.
-
-### as
-
-**Type:** `HTML Tag` or `React Element`
-
-**Default:** `div`
-
-Determines the root element. For example, `Link` or `a` tags can be supplied to replace `div` from being the DOM element that wraps the component.
 
 ### children
 
