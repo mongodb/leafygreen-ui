@@ -33,8 +33,9 @@ import { Tabs, Tab } from '@leafygreen-ui/tabs';
       aria-selected="true"
       tabindex="0"
     >
-      Title 1</button
-    ><button
+      Title 1
+    </button>
+    <button
       class="leafygreen-ui-1i13m9b"
       role="tab"
       data-tab-id="test2"
@@ -42,8 +43,9 @@ import { Tabs, Tab } from '@leafygreen-ui/tabs';
       aria-disabled="true"
       tabindex="-1"
     >
-      Title 2</button
-    ><button
+      Title 2
+    </button>
+    <button
       class="leafygreen-ui-1xd1z7d"
       role="tab"
       data-tab-id="test3"
