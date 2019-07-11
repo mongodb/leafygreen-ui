@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useCallback, SetStateAction } from 'react';
 import PropTypes from 'prop-types';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-interface TabTitleProps {
+interface TabTitleProps extends HTMLElementProps<'li'> {
   active: boolean;
   children: Array<React.ReactElement>;
   disabled?: boolean;
