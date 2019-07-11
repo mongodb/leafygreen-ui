@@ -1,12 +1,10 @@
-import React, { useRef, useEffect, SetStateAction } from 'react';
+import React, { useRef, useEffect, useCallback, SetStateAction } from 'react';
 import PropTypes from 'prop-types';
 
 interface TabTitleProps {
   active: boolean;
   children: Array<React.ReactElement>;
   disabled?: boolean;
-  className?: string;
-  id?: string;
   dataTabId: string;
   onClick?: React.MouseEventHandler;
   onKeyDown?: React.KeyboardEventHandler;
@@ -18,8 +16,6 @@ function TabTitle({
   active,
   children,
   disabled,
-  className,
-  id,
   dataTabId,
   onClick,
   onKeyDown,
@@ -35,12 +31,20 @@ function TabTitle({
     }
   }, [active]);
 
+  const onBlur = useCallback(() => {
+    setFocusedState((curr: Array<string>) =>
+      curr.filter(el => dataTabId !== el),
+    );
+  }, [setFocusedState]);
+
+  const onFocus = useCallback(() => {
+    setFocusedState((curr: Array<string>) => [...curr, dataTabId]);
+  }, [setFocusedState]);
+
   return (
     <li
       {...rest}
       ref={titleRef}
-      className={className}
-      id={id}
       role="tab"
       data-tab-id={dataTabId}
       onClick={onClick}
@@ -49,14 +53,8 @@ function TabTitle({
       aria-selected={active}
       aria-disabled={disabled}
       tabIndex={active ? 0 : -1}
-      onBlur={() =>
-        setFocusedState((curr: Array<string>) =>
-          curr.filter(el => dataTabId !== el),
-        )
-      }
-      onFocus={() =>
-        setFocusedState((curr: Array<string>) => [...curr, dataTabId])
-      }
+      onBlur={onBlur}
+      onFocus={onFocus}
     >
       {children}
     </li>
@@ -69,8 +67,6 @@ TabTitle.propTypes = {
   active: PropTypes.bool,
   children: PropTypes.node,
   disabled: PropTypes.bool,
-  className: PropTypes.string,
-  id: PropTypes.string,
   dataTabId: PropTypes.string,
   onClick: PropTypes.func,
   onKeyDown: PropTypes.func,

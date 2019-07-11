@@ -38,7 +38,7 @@ export interface TabProps {
   default?: boolean;
 
   /**
-   * className supplied to the Tab panel.
+   * Value supplied to aria-control attribute.
    */
   className?: string;
 
@@ -64,8 +64,7 @@ export interface TabProps {
  * @param props.children Content that will appear inside of Tab panel.
  * @param props.disabled Boolean that determines if the Tab is disabled.
  * @param props.as Determines the HTML element the Tab panel will be wrapped in.
- * @param props.className Classname applied to Tab panel container.
- * @param props.index Used internally. Index to determine order of tabs for keyboard navigation.
+ * @param props.ariaControl Value supplied to aria-control attribute.
  * @param props.default If Tabs component is uncontrolled, this determines what Tab will be active on first render.
  */
 function Tab({
@@ -74,8 +73,7 @@ function Tab({
   children,
   disabled = false,
   as = 'div',
-  className,
-  index,
+  ariaControl,
   ...rest
 }: TabProps) {
   if (!active) {
@@ -90,12 +88,10 @@ function Tab({
   return (
     <Root
       {...rest}
-      disabled={disabled}
       aria-disabled={disabled}
       aria-selected={active}
-      aria-controls={`tab-${index}`}
+      aria-controls={ariaControl}
       data-tab-id={value}
-      className={className}
       role="tabpanel"
     >
       {children}
@@ -112,7 +108,7 @@ Tab.propTypes = {
   content: PropTypes.node,
   disabled: PropTypes.bool,
   as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  className: PropTypes.string,
+  ariaControl: PropTypes.string,
 };
 
 export default Tab;
