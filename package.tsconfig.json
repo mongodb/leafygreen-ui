@@ -15,9 +15,7 @@
     "typeRoots": ["./typings", "./node_modules/@types"],
     "baseUrl": ".",
     "paths": {
-      "@leafygreen-ui/*": [
-        "packages/*/src"
-      ]
+      "@leafygreen-ui/*": ["packages/*/src"]
     },
     "emitDeclarationOnly": true,
     "composite": true

@@ -4,7 +4,8 @@
     "declarationDir": "dist"
   },
   "include": ["src/**/*"],
-  "references": [{
+  "references": [
+    {
       "path": "../../packages/emotion"
     },
     {
@@ -21,6 +22,6 @@
     },
     {
       "path": "../../packages/theme"
-    },
+    }
   ]
 }
