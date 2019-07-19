@@ -3,5 +3,18 @@
   "compilerOptions": {
     "declarationDir": "dist"
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "references": [{
+      "path": "../../packages/emotion"
+    },
+    {
+      "path": "../../packages/lib"
+    },
+    {
+      "path": "../../packages/palette"
+    },
+    {
+      "path": "../../packages/theme"
+    },
+  ]
 }

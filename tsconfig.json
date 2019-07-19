@@ -1,17 +1,50 @@
 {
-  "compilerOptions": {
-    "module": "esnext",
-    "target": "esnext",
-    "jsx": "preserve",
-    "allowJs": false,
-    "pretty": true,
-    "declaration": true,
-    "strictNullChecks": true,
-    "noUnusedLocals": true,
-    "strict": true,
-    "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
-    "typeRoots": ["./typings", "./node_modules/@types"]
-  },
-  "include": ["./packages/**/*", "./typings"]
+  "files": [],
+  "include": [],
+  "references": [{
+      "path": "./packages/badge"
+    },
+    {
+      "path": "./packages/button"
+    },
+    {
+      "path": "./packages/checkbox"
+    },
+    {
+      "path": "./packages/emotion"
+    },
+    {
+      "path": "./packages/hooks"
+    },
+    {
+      "path": "./packages/icon"
+    },
+    {
+      "path": "./packages/lib"
+    },
+    {
+      "path": "./packages/menu"
+    },
+    {
+      "path": "./packages/palette"
+    },
+    {
+      "path": "./packages/popover"
+    },
+    {
+      "path": "./packages/portal"
+    },
+    {
+      "path": "./packages/radio-box-group"
+    },
+    {
+      "path": "./packages/radio-group"
+    },
+    {
+      "path": "./packages/theme"
+    },
+    {
+      "path": "./packages/toggle"
+    }
+  ]
 }

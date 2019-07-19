@@ -3,5 +3,15 @@
   "compilerOptions": {
     "declarationDir": "dist"
   },
-  "include": ["src/**/*", "../../typings"]
+  "include": ["src/**/*", "../../typings/*"],
+  "references": [{
+      "path": "../../packages/emotion"
+    },
+    {
+      "path": "../../packages/lib"
+    },
+    {
+      "path": "../../packages/theme"
+    },
+  ]
 }

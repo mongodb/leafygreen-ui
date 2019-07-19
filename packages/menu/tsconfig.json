@@ -3,5 +3,24 @@
   "compilerOptions": {
     "declarationDir": "dist"
   },
-  "include": ["./**/*"]
+  "include": ["src/**/*"],
+  "references": [{
+      "path": "../../packages/emotion"
+    },
+    {
+      "path": "../../packages/hooks"
+    },
+    {
+      "path": "../../packages/lib"
+    },
+    {
+      "path": "../../packages/popover"
+    },
+    {
+      "path": "../../packages/portal"
+    },
+    {
+      "path": "../../packages/theme"
+    },
+  ]
 }
