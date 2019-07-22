@@ -165,9 +165,9 @@ interface ModalProps {
 function Modal({
   active = false,
   size = ModalSize.Default,
-  setActive,
+  setActive = () => {},
+  shouldClose = () => true,
   children,
-  shouldClose,
   className,
   ...rest
 }: ModalProps) {
@@ -179,7 +179,7 @@ function Modal({
 
   const handleClose = useCallback(() => {
     // Don't close modal if shouldClose returns false or no setActive callback is passed
-    if (!setActive || (shouldClose && !shouldClose())) {
+    if (!setActive || !shouldClose()) {
       return;
     }
 
@@ -205,9 +205,7 @@ function Modal({
     [handleClose],
   );
 
-  useEventListener('keydown', handleEscape, {
-    options: { once: true },
-  });
+  useEventListener('keydown', handleEscape);
 
   return (
     <Portal>

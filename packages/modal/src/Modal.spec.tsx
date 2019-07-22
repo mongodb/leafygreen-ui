@@ -9,7 +9,7 @@ describe('packages/Modal', () => {
   const modalId = 'modal';
   const modalContent = 'Modal Content';
 
-  describe('when rendered with content', () => {
+  describe('when rendered with content and set as active', () => {
     const { getByText, getByTestId } = render(
       <Modal active data-testid={modalId}>
         <h4>{modalContent}</h4>
@@ -18,15 +18,11 @@ describe('packages/Modal', () => {
 
     test('it appears on page when active prop is set', () => {
       const modal = getByTestId(modalId);
+      expect(modal).toBeInTheDocument();
       expect(modal).toBeVisible();
     });
 
-    test('it is rendered to the DOM when the active prop is set', () => {
-      const modal = getByTestId(modalId);
-      expect(modal).toBeInTheDocument();
-    });
-
-    test(`it renders the ${modalContent} as expected`, () => {
+    test(`it renders the modal content as expected`, () => {
       const content = getByText(modalContent);
       expect(content).toBeVisible();
     });
