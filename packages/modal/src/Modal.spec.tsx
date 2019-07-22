@@ -10,7 +10,7 @@ describe('packages/Modal', () => {
   const modalContent = 'Modal Content';
 
   describe('when rendered with content and set as active', () => {
-    const { getByText, getByTestId } = render(
+    const { container, getByText, getByTestId } = render(
       <Modal active data-testid={modalId}>
         <h4>{modalContent}</h4>
       </Modal>,
@@ -26,6 +26,11 @@ describe('packages/Modal', () => {
       const content = getByText(modalContent);
       expect(content).toBeVisible();
     });
+
+    test('when a user clicks the escape key', () => {
+      window.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'Escape' }));
+      expect(container.innerHTML).toBe('');
+    })
   });
 
   describe('when rendered with active equal to false', () => {
