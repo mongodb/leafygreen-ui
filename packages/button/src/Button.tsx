@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { colors } from '@leafygreen-ui/theme';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { lighten, darken } from 'polished';
+import { uiColors } from '@leafygreen-ui/palette';
+import { transparentize } from 'polished';
 import omit from 'lodash/omit';
 
 export const Variant = {
@@ -27,161 +27,138 @@ export type Size = typeof Size[keyof typeof Size];
 
 const buttonVariants: { readonly [K in Variant]: string } = {
   [Variant.Default]: css`
-    color: ${colors.gray[1]};
-    background-color: ${colors.mongodb.white};
+    color: ${uiColors.gray.dark2};
+    border: 1px solid ${uiColors.gray.light1};
+    background-color: ${uiColors.gray.light3};
     background-image: linear-gradient(
-      ${colors.mongodb.white},
-      ${lighten(0.2, colors.gray[5])}
+      ${uiColors.white},
+      ${uiColors.gray.light2}
     );
-    border: 1px solid ${colors.gray[6]}};
-    box-shadow: inset 0 -1px 0 ${colors.gray[6]};
-    &:focus,
-    &:hover {
-      &:not(:disabled) {
-        color: ${colors.gray[0]};
-        border-color: ${colors.gray[5]};
-        background-color: ${colors.mongodb.white};
-        background-image: linear-gradient(
-          ${lighten(0.5, colors.gray[5])},
-          ${lighten(0.15, colors.gray[5])}
-        );
-        box-shadow: inset 0 -1px 0 ${colors.gray[5]},
-          0 1px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 -1px 0 ${uiColors.gray.light1};
+
+    &:not(:disabled) {
+      &:focus,
+      &:hover {
+        border-color: ${uiColors.gray.light1};
+        background-color: ${uiColors.gray.light2};
+        background-image: linear-gradient(${uiColors.gray.light3}, #DDE4E2);
+        box-shadow: inset 0 -1px 0 ${uiColors.gray.light1},
+          0 1px 4px ${transparentize(0.9, uiColors.black)};
       }
-    }
-    &:active:not(:disabled) {
-      color: ${colors.gray[1]};
-      background-color: ${colors.mongodb.white};
-      background-image: linear-gradient(
-        ${lighten(0.15, colors.gray[5])},
-        ${lighten(0.5, colors.gray[5])}
-      );
-      box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.1);
-      border-color: ${colors.gray[5]};
+
+      &:active {
+        border-color: ${uiColors.gray.light1};
+        background-color: ${uiColors.gray.light3};
+        background-image: linear-gradient(#DDE4E2, ${uiColors.gray.light3});
+        box-shadow: inset 0 2px 2px ${transparentize(0.9, uiColors.black)};
+      }
     }
   `,
 
   [Variant.Primary]: css`
-    color: ${colors.mongodb.white};
-    background-color: ${colors.green[2]};
-    background-image: linear-gradient(
-      ${colors.green[2]},
-      ${lighten(0.025, colors.green[1])}
-    );
-    border: 1px solid ${darken(0.02, colors.green[2])};
-    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-    &:focus,
-    &:hover {
-      &:not(:disabled) {
-        color: ${colors.mongodb.white};
-        border-color: ${darken(0.07, colors.green[1])};
-        background-color: ${darken(0.05, colors.green[2])};
-        background-image: linear-gradient(
-          ${darken(0.025, colors.green[2])},
-          ${darken(0.025, colors.green[1])}
-        );
-        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15),
-          0 1px 4px rgba(0, 0, 0, 0.1);
+    color: ${uiColors.white};
+    border: 1px solid #158242;
+    background-color: ${uiColors.green.base};
+    background-image: linear-gradient(${uiColors.green.base}, #18964c);
+    box-shadow: inset 0 -1px 0 #158242;
+
+    &:not(:disabled) {
+      &:focus,
+      &:hover {
+        background-color: #129f4c;
+        background-image: linear-gradient(#129f4c, #148040);
+        box-shadow: 0 1px 4px ${transparentize(0.9, uiColors.black)},
+          inset 0 -1px 0 #158242;
       }
-    }
-    &:active:not(:disabled) {
-      color: ${colors.mongodb.white};
-      background-color: ${colors.green[2]};
-      background-image: linear-gradient(
-        ${darken(0.025, colors.green[1])},
-        ${darken(0.025, colors.green[2])}
-      );
-      border-color: ${darken(0.07, colors.green[1])};
-      box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.2);
+
+      &:active {
+        background-color: ${uiColors.green.base};
+        background-image: linear-gradient(#148040, #129f4c);
+        box-shadow: inset 0 2px 2px #158242;
+      }
     }
   `,
 
   [Variant.Info]: css`
-    color: ${colors.green[2]};
+    color: ${uiColors.green.base};
     background-color: transparent;
     background-image: none;
-    border: 1px solid ${colors.green[2]};
-    border-color: ${colors.green[2]};
+    border: 1px solid ${uiColors.green.base};
     box-shadow: none;
-    &:focus,
-    &:hover {
-      &:not(:disabled) {
-        color: ${colors.mongodb.white};
-        background-color: ${darken(0.05, colors.green[2])};
-        background-image: linear-gradient(
-          ${colors.green[2]},
-          ${lighten(0.025, colors.green[1])}
-        );
-        border-color: ${darken(0.02, colors.green[1])};
-        box-shadow: inset 0 -1px rgba(0, 0, 0, 0.15);
+
+    &:not(:disabled) {
+      &:focus,
+      &:hover {
+        color: ${uiColors.white};
+        border-color: #158242;
+        background-color: #129f4c;
+        background-image: linear-gradient(#129f4c, #148040);
+        box-shadow: 0 1px 4px ${transparentize(0.9, uiColors.black)},
+          inset 0 -1px 0 #158242;
       }
-    }
-    &:active:not(:disabled) {
-      color: ${colors.mongodb.white};
-      background-color: ${colors.green[2]};
-      background-image: linear-gradient(
-        ${darken(0.025, colors.green[1])},
-        ${darken(0.025, colors.green[2])}
-      );
-      border-color: ${darken(0.07, colors.green[1])};
-      box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.2);
+
+      &:active {
+        color: ${uiColors.white};
+        border-color: #158242;
+        background-color: ${uiColors.green.base};
+        background-image: linear-gradient(#148040, #129f4c);
+        box-shadow: inset 0 2px 2px #158242;
+      }
     }
   `,
 
   [Variant.Danger]: css`
-    color: ${colors.mongodb.white};
-    background-color: #bd180f;
-    background-image: linear-gradient(
-      ${darken(0.1, colors.mongodb.alertRed)},
-      ${darken(0.2, colors.mongodb.alertRed)}
-    );
-    border: 1px solid #97130c;
-    box-shadow: inset 0 -1px 0 0 ${darken(0.25, colors.mongodb.alertRed)};
-    &:focus,
-    &:hover {
-      &:not(:disabled) {
-        color: ${colors.mongodb.white};
-        background-color: ${darken(0.05, '#BD180F')};
-        background-image: linear-gradient(
-          ${darken(0.15, colors.mongodb.alertRed)},
-          ${darken(0.25, colors.mongodb.alertRed)}
-        );
-        border-color: ${darken(0.1, '#BD180F')};
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1),
-          inset 0 -1px 0 ${darken(0.25, colors.mongodb.alertRed)};
+    color: ${uiColors.white};
+    border: 1px solid ${uiColors.red.dark2};
+    background-color: ${uiColors.red.base};
+    background-image: linear-gradient(#e45b26, #b63016);
+    box-shadow: inset 0 -1px 0 0 ${uiColors.red.dark2};
+
+    &:not(:disabled) {
+      &:focus,
+      &:hover {
+        background-color: ${uiColors.red.dark2};
+        background-image: linear-gradient(#e45b26, ${uiColors.red.dark2});
+        box-shadow: 0 1px 4px ${transparentize(0.9, uiColors.black)},
+          inset 0 -1px 0 ${uiColors.red.dark2};
       }
-    }
-    &:active:not(:disabled) {
-      color: ${colors.mongodb.white};
-      background-color: #bd180f;
-      background-image: linear-gradient(
-        ${darken(0.2, colors.mongodb.alertRed)},
-        ${darken(0.1, colors.mongodb.alertRed)}
-      );
-      box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.1);
-      border-color: #97130c;
+
+      &:active {
+        background-color: ${uiColors.red.dark2};
+        background-image: linear-gradient(${uiColors.red.dark2}, #e45b26);
+        box-shadow: inset 0 1px 0 ${uiColors.red.dark2};
+      }
     }
   `,
 
   [Variant.Dark]: css`
-    color: ${colors.mongodb.white};
-    border: 1px solid ${colors.gray[0]}};
-    background-image: linear-gradient(${colors.gray[3]}, ${colors.gray[1]});
-    box-shadow: inset 0 -1px 0 ${colors.gray[0]};
-    &:focus,
-    &:hover {
-      &:not(:disabled) {
-        color: ${colors.mongodb.white};
-        background-image: linear-gradient(#7c7f82, #41474a);
-        border-color: #303030;
-        box-shadow: inset 0 -1px 0 ${colors.gray[0]};
+    color: ${uiColors.white};
+    border: 1px solid ${uiColors.gray.dark2};
+    background-color: ${uiColors.gray.dark1};
+    background-image: linear-gradient(
+      ${uiColors.gray.base},
+      ${uiColors.gray.dark1}
+    );
+    box-shadow: inset 0 -1px 0 ${uiColors.gray.dark2};
+
+    &:not(:disabled) {
+      &:focus,
+      &:hover {
+        background-image: linear-gradient(
+          ${uiColors.gray.base},
+          ${uiColors.gray.dark2}
+        );
+        box-shadow: 0 1px 4px ${transparentize(0.9, uiColors.black)},
+          inset 0 -1px 0 ${uiColors.gray.dark2};
       }
-    }
-    &:active:not(:disabled) {
-      color: ${colors.mongodb.white};
-      background-image: linear-gradient(${colors.gray[1]}, ${colors.gray[3]});
-      border-color: ${colors.gray[0]};
-      box-shadow: inset 0 -1px 0 ${colors.gray[0]};
+
+      &:active {
+        background-image: linear-gradient(
+          ${uiColors.gray.dark1},
+          ${uiColors.gray.base}
+        );
+        box-shadow: inset 0 -1px 0 ${uiColors.gray.dark2};
+      }
     }
   `,
 };
@@ -232,9 +209,9 @@ const baseStyle = css`
 `;
 
 const disabledStyle = css`
-  color: ${colors.gray[3]};
-  border-color: ${colors.gray[5]};
-  background-color: ${colors.gray[7]};
+  color: ${uiColors.gray.base};
+  border-color: ${uiColors.gray.light1};
+  background-color: ${uiColors.gray.light2};
   background-image: none;
   box-shadow: none;
   pointer-events: none;
