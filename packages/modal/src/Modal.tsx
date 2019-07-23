@@ -94,6 +94,10 @@ const closeButton = css`
   cursor: pointer;
   right: 12px;
   top: 12px;
+
+  &:hover {
+    transition: color 100ms ${uiColors.gray.dark2};
+  }
 `;
 
 const escapeKey = 27;

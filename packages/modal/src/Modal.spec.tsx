@@ -28,9 +28,11 @@ describe('packages/Modal', () => {
     });
 
     test('when a user clicks the escape key', () => {
-      window.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'Escape' }));
+      window.dispatchEvent(
+        new KeyboardEvent('keydown', { bubbles: true, key: 'Escape' }),
+      );
       expect(container.innerHTML).toBe('');
-    })
+    });
   });
 
   describe('when rendered with active equal to false', () => {
