@@ -109,11 +109,11 @@ interface ModalProps {
   children: React.ReactNode;
 
   /**
-   * Determines the active state of the modal
+   * Determines the open state of the modal
    *
    * default: `false`
    */
-  active: boolean;
+  open: boolean;
 
   /**
    * Specifies the size of the Modal.
@@ -123,12 +123,10 @@ interface ModalProps {
   size?: ModalSize;
 
   /**
-   * Callback to change the active state of the Modal.
+   * Callback to change the open state of the Modal.
    *
    */
-  setActive?: (
-    active: boolean,
-  ) => void | React.Dispatch<SetStateAction<boolean>>;
+  setOpen?: (open: boolean) => void | React.Dispatch<SetStateAction<boolean>>;
 
   /**
    * Callback to determine whether or not Modal should close when user tries to close it.
@@ -150,45 +148,45 @@ interface ModalProps {
  *
 ```
 <Modal
-  active
+  open
   size="large"
-  setActive={setActive}
+  setOpen={setOpen}
   shouldClose={() => console.log('Modal is closing now!')}
   >
   Modal content!
 </Modal>
 ```
- * @param props.active Boolean to describe whether or not Modal is active.
+ * @param props.open Boolean to describe whether or not Modal is open.
  * @param props.size String to determine size of Modal. ['small', 'default', 'large']
- * @param props.setActive Callback to change the active state of Modal.
+ * @param props.setOpen Callback to change the open state of Modal.
  * @param props.children Content to appear inside of Modal container.
  * @param props.shouldClose Callback to determine whether or not Modal should close when user tries to close it.
  * @param props.className className applied to overlay div.
  *
  */
 function Modal({
-  active = false,
+  open = false,
   size = ModalSize.Default,
-  setActive = () => {},
+  setOpen = () => {},
   shouldClose = () => true,
   children,
   className,
   ...rest
 }: ModalProps) {
-  if (!active) {
+  if (!open) {
     return null;
   }
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const handleClose = useCallback(() => {
-    // Don't close modal if shouldClose returns false or no setActive callback is passed
-    if (!setActive || !shouldClose()) {
+    // Don't close modal if shouldClose returns false or no setOpen callback is passed
+    if (!setOpen || !shouldClose()) {
       return;
     }
 
-    setActive(false);
-  }, [setActive, shouldClose]);
+    setOpen(false);
+  }, [setOpen, shouldClose]);
 
   const handleBackdropClick = (e: React.SyntheticEvent) => {
     if (!scrollContainerRef.current) {
@@ -240,12 +238,12 @@ function Modal({
 Modal.displayName = 'Modal';
 
 Modal.propTypes = {
-  active: PropTypes.bool,
+  open: PropTypes.bool,
   size: PropTypes.string,
   children: PropTypes.node,
   shouldClose: PropTypes.func,
   className: PropTypes.string,
-  setActive: PropTypes.func,
+  setOpen: PropTypes.func,
 };
 
 export default Modal;

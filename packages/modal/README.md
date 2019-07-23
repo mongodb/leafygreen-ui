@@ -8,12 +8,12 @@
 import Modal, { ModalSize, useModalState } from '@leafygreen-ui/Menu';
 
 function ExampleComponent() {
-  const { active, setActive } = useModalState();
+  const { open, setOpen } = useModalState();
 
   return (
     <>
-      <button onClick={() => setActive(active => !active)}>Open Modal</button>
-      <Modal active={active} setActive={setActive}>
+      <button onClick={() => setOpen(open => !open)}>Open Modal</button>
+      <Modal open={open} setOpen={setOpen}>
         Modal Content goes here
       </Modal>
     </>
@@ -53,21 +53,21 @@ function ExampleComponent() {
 
 ## Properties
 
-### active
+### open
 
 **Type:** `boolean`
 
 **Default:** `false`
 
-Determines active state of `Modal` component
+Determines open state of `Modal` component
 
-### setActive
+### setOpen
 
 **Type:** `function`
 
 **Default:** `(bool) => {}`
 
-Callback to set active state of Modal component. `setActive` accepts a boolean value, which will determine the active state of `Modal` component.
+Callback to set open state of Modal component. `setOpen` accepts a boolean value, which will determine the open state of `Modal` component.
 
 ### size
 

@@ -9,14 +9,14 @@ describe('packages/Modal', () => {
   const modalId = 'modal';
   const modalContent = 'Modal Content';
 
-  describe('when rendered with content and set as active', () => {
+  describe('when rendered with content and set as open', () => {
     const { container, getByText, getByTestId } = render(
-      <Modal active data-testid={modalId}>
+      <Modal open data-testid={modalId}>
         <h4>{modalContent}</h4>
       </Modal>,
     );
 
-    test('it appears on page when active prop is set', () => {
+    test('it appears on page when open prop is set', () => {
       const modal = getByTestId(modalId);
       expect(modal).toBeInTheDocument();
       expect(modal).toBeVisible();
@@ -35,9 +35,9 @@ describe('packages/Modal', () => {
     });
   });
 
-  describe('when rendered with active equal to false', () => {
+  describe('when rendered with open equal to false', () => {
     const { container } = render(
-      <Modal active={false} data-testid={modalId}>
+      <Modal open={false} data-testid={modalId}>
         <h4>{modalContent}</h4>
       </Modal>,
     );
@@ -51,7 +51,7 @@ describe('packages/Modal', () => {
     test('when shouldClose returns false', () => {
       const { getByTestId } = render(
         <Modal
-          active={true}
+          open={true}
           data-testid="falseshouldClose"
           shouldClose={() => false}
         >
@@ -68,7 +68,7 @@ describe('packages/Modal', () => {
     test('when shouldClose returns true', () => {
       const { container } = render(
         <Modal
-          active={true}
+          open={true}
           data-testid="trueshouldClose"
           shouldClose={() => true}
         >

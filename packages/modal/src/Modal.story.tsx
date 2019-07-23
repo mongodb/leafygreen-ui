@@ -4,14 +4,14 @@ import { select } from '@storybook/addon-knobs';
 import Modal, { ModalSize } from './Modal';
 
 function Example() {
-  const [active, setActive] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
-      <button onClick={() => setActive(!active)}>Open Modal</button>
+      <button onClick={() => setOpen(!open)}>Open Modal</button>
       <Modal
-        active={active}
-        setActive={setActive}
+        open={open}
+        setOpen={setOpen}
         size={select('size', Object.values(ModalSize), ModalSize.Default)}
       >
         Modal Content goes here.
