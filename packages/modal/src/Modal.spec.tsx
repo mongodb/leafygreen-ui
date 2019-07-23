@@ -16,7 +16,7 @@ describe('packages/Modal', () => {
       </Modal>,
     );
 
-    test('it appears on page when open prop is set', () => {
+    test('it appears on page', () => {
       const modal = getByTestId(modalId);
       expect(modal).toBeInTheDocument();
       expect(modal).toBeVisible();
