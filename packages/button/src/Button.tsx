@@ -36,22 +36,19 @@ const buttonVariants: { readonly [K in Variant]: string } = {
     );
     box-shadow: inset 0 -1px 0 ${uiColors.gray.light1};
 
-    &:not(:disabled) {
-      &:focus,
-      &:hover {
-        border-color: ${uiColors.gray.light1};
-        background-color: ${uiColors.gray.light2};
-        background-image: linear-gradient(${uiColors.gray.light3}, #DDE4E2);
-        box-shadow: inset 0 -1px 0 ${uiColors.gray.light1},
-          0 1px 4px ${transparentize(0.9, uiColors.black)};
-      }
+    &:before {
+      border-color: ${uiColors.gray.light1};
+      background-color: ${uiColors.gray.light2};
+      background-image: linear-gradient(${uiColors.gray.light3}, #dde4e2);
+      box-shadow: inset 0 -1px 0 ${uiColors.gray.light1},
+        0 1px 4px ${transparentize(0.9, uiColors.black)};
+    }
 
-      &:active {
-        border-color: ${uiColors.gray.light1};
-        background-color: ${uiColors.gray.light3};
-        background-image: linear-gradient(#DDE4E2, ${uiColors.gray.light3});
-        box-shadow: inset 0 2px 2px ${transparentize(0.9, uiColors.black)};
-      }
+    &:after {
+      border-color: ${uiColors.gray.light1};
+      background-color: ${uiColors.gray.light3};
+      background-image: linear-gradient(#dde4e2, ${uiColors.gray.light3});
+      box-shadow: inset 0 2px 2px ${transparentize(0.9, uiColors.black)};
     }
   `,
 
@@ -62,20 +59,17 @@ const buttonVariants: { readonly [K in Variant]: string } = {
     background-image: linear-gradient(${uiColors.green.base}, #18964c);
     box-shadow: inset 0 -1px 0 #158242;
 
-    &:not(:disabled) {
-      &:focus,
-      &:hover {
-        background-color: #129f4c;
-        background-image: linear-gradient(#129f4c, #148040);
-        box-shadow: 0 1px 4px ${transparentize(0.9, uiColors.black)},
-          inset 0 -1px 0 #158242;
-      }
+    &:before {
+      background-color: #129f4c;
+      background-image: linear-gradient(#129f4c, #148040);
+      box-shadow: 0 1px 4px ${transparentize(0.9, uiColors.black)},
+        inset 0 -1px 0 #158242;
+    }
 
-      &:active {
-        background-color: ${uiColors.green.base};
-        background-image: linear-gradient(#148040, #129f4c);
-        box-shadow: inset 0 2px 2px #158242;
-      }
+    &:after {
+      background-color: ${uiColors.green.base};
+      background-image: linear-gradient(#148040, #129f4c);
+      box-shadow: inset 0 2px 2px ${uiColors.green.dark2};
     }
   `,
 
@@ -86,23 +80,25 @@ const buttonVariants: { readonly [K in Variant]: string } = {
     border: 1px solid ${uiColors.green.base};
     box-shadow: none;
 
+    &:before {
+      background-color: #129f4c;
+      background-image: linear-gradient(#129f4c, #148040);
+      box-shadow: 0 1px 4px ${transparentize(0.9, uiColors.black)},
+        inset 0 -1px 0 #158242;
+    }
+
+    &:after {
+      background-color: ${uiColors.green.base};
+      background-image: linear-gradient(#148040, #129f4c);
+      box-shadow: inset 0 2px 2px ${uiColors.green.dark2};
+    }
+
     &:not(:disabled) {
       &:focus,
-      &:hover {
-        color: ${uiColors.white};
-        border-color: #158242;
-        background-color: #129f4c;
-        background-image: linear-gradient(#129f4c, #148040);
-        box-shadow: 0 1px 4px ${transparentize(0.9, uiColors.black)},
-          inset 0 -1px 0 #158242;
-      }
-
+      &:hover,
       &:active {
-        color: ${uiColors.white};
         border-color: #158242;
-        background-color: ${uiColors.green.base};
-        background-image: linear-gradient(#148040, #129f4c);
-        box-shadow: inset 0 2px 2px #158242;
+        color: ${uiColors.white};
       }
     }
   `,
@@ -114,20 +110,17 @@ const buttonVariants: { readonly [K in Variant]: string } = {
     background-image: linear-gradient(#e45b26, #b63016);
     box-shadow: inset 0 -1px 0 0 ${uiColors.red.dark2};
 
-    &:not(:disabled) {
-      &:focus,
-      &:hover {
-        background-color: ${uiColors.red.dark2};
-        background-image: linear-gradient(#e45b26, ${uiColors.red.dark2});
-        box-shadow: 0 1px 4px ${transparentize(0.9, uiColors.black)},
-          inset 0 -1px 0 ${uiColors.red.dark2};
-      }
+    &:before {
+      background-color: ${uiColors.red.dark2};
+      background-image: linear-gradient(#e45b26, ${uiColors.red.dark2});
+      box-shadow: 0 1px 4px ${transparentize(0.9, uiColors.black)},
+        inset 0 -1px 0 ${uiColors.red.dark2};
+    }
 
-      &:active {
-        background-color: ${uiColors.red.dark2};
-        background-image: linear-gradient(${uiColors.red.dark2}, #e45b26);
-        box-shadow: inset 0 1px 0 ${uiColors.red.dark2};
-      }
+    &:after {
+      background-color: ${uiColors.red.dark2};
+      background-image: linear-gradient(#ad231b, #e45b26);
+      box-shadow: inset 0 2px 2px ${uiColors.red.dark2};
     }
   `,
 
@@ -141,24 +134,21 @@ const buttonVariants: { readonly [K in Variant]: string } = {
     );
     box-shadow: inset 0 -1px 0 ${uiColors.gray.dark2};
 
-    &:not(:disabled) {
-      &:focus,
-      &:hover {
-        background-image: linear-gradient(
-          ${uiColors.gray.base},
-          ${uiColors.gray.dark2}
-        );
-        box-shadow: 0 1px 4px ${transparentize(0.9, uiColors.black)},
-          inset 0 -1px 0 ${uiColors.gray.dark2};
-      }
+    &:before {
+      background-image: linear-gradient(
+        ${uiColors.gray.base},
+        ${uiColors.gray.dark2}
+      );
+      box-shadow: 0 1px 4px ${transparentize(0.9, uiColors.black)},
+        inset 0 -1px 0 ${uiColors.gray.dark2};
+    }
 
-      &:active {
-        background-image: linear-gradient(
-          ${uiColors.gray.dark1},
-          ${uiColors.gray.base}
-        );
-        box-shadow: inset 0 -1px 0 ${uiColors.gray.dark2};
-      }
+    &:after {
+      background-image: linear-gradient(
+        ${uiColors.gray.dark1},
+        ${uiColors.gray.base}
+      );
+      box-shadow: inset 0 2px 2px ${uiColors.gray.dark2};
     }
   `,
 };
@@ -192,6 +182,7 @@ const buttonSizes: { readonly [K in Size]: string } = {
 };
 
 const baseStyle = css`
+  position: relative;
   border-radius: 3px;
   box-sizing: border-box;
   cursor: pointer;
@@ -203,8 +194,37 @@ const baseStyle = css`
   text-transform: none;
   transition: all 120ms ease;
   user-select: none;
+  overflow: hidden;
+
   &:hover {
     text-decoration: none;
+  }
+
+  // We're using CSS pseudo elements here in order to
+  // transition the gradients between button pseudo classes.
+  &:before,
+  &:after {
+    content: '';
+    transition: 0.15s opacity ease-in-out;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  &:not(:disabled) {
+    &:focus,
+    &:hover {
+      &:before {
+        opacity: 1;
+      }
+    }
+
+    &:active:after {
+      opacity: 1;
+    }
   }
 `;
 
@@ -313,7 +333,14 @@ export default function Button(props: ButtonProps) {
       {...(rest as HTMLElementProps<'button'>)}
       {...commonProps}
     >
-      {children}
+      <span
+        className={css`
+          position: relative;
+          z-index: 1;
+        `}
+      >
+        {children}
+      </span>
     </button>
   );
 }
