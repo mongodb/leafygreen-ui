@@ -56,7 +56,7 @@ const greenBorder = css`
   top: 0;
   bottom: 0;
   background-color: ${uiColors.green.base};
-  transition: 150ms transform ease-in-out, 150ms width ease-in-out;
+  transition: 150ms transform ease-in-out, 150ms width ease-in-out 10ms;
 `;
 
 const focusedStyle = css`
