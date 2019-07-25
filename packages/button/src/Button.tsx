@@ -337,8 +337,8 @@ export default function Button(props: ButtonProps) {
 }
 
 Button.propTypes = {
-  variant: PropTypes.oneOf(Object.keys(Variant)),
-  size: PropTypes.oneOf(Object.keys(Size)),
+  variant: PropTypes.oneOf(Object.values(Variant)),
+  size: PropTypes.oneOf(Object.values(Size)),
   className: PropTypes.string,
   children: PropTypes.node,
   disabled: PropTypes.bool,
