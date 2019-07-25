@@ -29,7 +29,7 @@ const listTitle = css`
     color: ${uiColors.blue.base};
     outline: none;
   }
-  
+
   &:hover:not(:focus) {
     color: ${uiColors.gray.dark3};
   }
@@ -125,7 +125,6 @@ function Tabs({
   as = 'button',
   ...rest
 }: TabsProps) {
-function Tabs({ children, onChange, selected, className, ...rest }: TabsProps) {
   const [activeTab, setActiveTab] = useState();
   const [currentIndex, setCurrentIndex] = useState();
   const [focusedState, setFocusedState] = useState([] as Array<string>);

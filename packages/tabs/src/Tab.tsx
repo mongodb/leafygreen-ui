@@ -43,8 +43,7 @@ export interface TabProps extends HTMLElementProps<'div'> {
    */
   index?: number;
 
-
-  ariaControl: string;
+  ariaControl?: string;
 }
 
 /**
