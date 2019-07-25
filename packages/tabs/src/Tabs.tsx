@@ -228,10 +228,21 @@ function Tabs({
     `;
   }
 
+  const valuesArray: Array<string> = [];
+
   const tabs = React.Children.map(children, (child: React.ReactNode, index) => {
     if (!isTab(child)) {
       return child;
     }
+
+    if (valuesArray.length && valuesArray.includes(child.props.value)) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'You are using the same value for one or more tabs. Please make sure all values are unique',
+      );
+    }
+
+    valuesArray.push(child.props.value);
 
     const active =
       selected === child.props.value ||

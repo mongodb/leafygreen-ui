@@ -4,6 +4,8 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 interface TabTitleProps extends HTMLElementProps<'button'> {
   active: boolean;
+  className?: string;
+  id?: string;
   children: Array<React.ReactElement>;
   disabled?: boolean;
   dataTabId: string;
@@ -70,6 +72,8 @@ TabTitle.displayName = 'TabTitle';
 
 TabTitle.propTypes = {
   active: PropTypes.bool,
+  className: PropTypes.string,
+  id: PropTypes.string,
   children: PropTypes.node,
   disabled: PropTypes.bool,
   dataTabId: PropTypes.string,

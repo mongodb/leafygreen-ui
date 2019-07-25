@@ -44,7 +44,7 @@ storiesOf('Tabs', module)
       >
         Hello 2
       </Tab>
-      <Tab value="test3" title="Dave Scott McCarthy">
+      <Tab value="test3" title="David Scott McCarthy">
         Hello 3
       </Tab>
     </Tabs>
