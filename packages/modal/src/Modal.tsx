@@ -1,12 +1,13 @@
 import React, { useCallback, SetStateAction, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { Transition } from 'react-transition-group';
 import { transparentize } from 'polished';
 import facepaint from 'facepaint';
 import Portal from '@leafygreen-ui/portal';
 import Icon, { Size } from '@leafygreen-ui/icon';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
-import { css, cx, keyframes } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 
 export const ModalSize = {
   Small: 'small',
@@ -29,17 +30,6 @@ export const mq = facepaint([
 
 const defaultSpacing = 18;
 
-const fadein = keyframes`
-  from {
-    opacity: 0;
-    transform: translate3d(0, 50px, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0px, 0);
-  }
-`;
-
 const backdrop = css`
   background-color: ${transparentize(0.4, uiColors.black)};
   overflow-y: auto;
@@ -48,6 +38,12 @@ const backdrop = css`
   left: 0;
   right: 0;
   bottom: 0;
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+`;
+
+const visibleBackdrop = css`
+  opacity: 1;
 `;
 
 const scrollContainer = css`
@@ -57,11 +53,10 @@ const scrollContainer = css`
   left: 0;
   bottom: 0;
   overflow-y: auto;
-  animation: ${fadein} 150ms ease-in-out;
 `;
 
 const modalContentStyle = css`
-  transition: all 200ms ease-in-out;
+  transition: all 150ms ease-in-out;
   margin: ${defaultSpacing}px auto;
   padding: 36px;
   color: ${uiColors.gray.dark3};
@@ -70,6 +65,13 @@ const modalContentStyle = css`
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   position: relative;
   pointer-events: all;
+  transform: translate3d(0, -16px, 0);
+  opacity: 0;
+`;
+
+const visibleModalContentStyle = css`
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
 `;
 
 const modalSizes: { readonly [K in ModalSize]: string } = {
@@ -173,10 +175,6 @@ function Modal({
   className,
   ...rest
 }: ModalProps) {
-  if (!open) {
-    return null;
-  }
-
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const handleClose = useCallback(() => {
@@ -210,28 +208,45 @@ function Modal({
   useEventListener('keydown', handleEscape);
 
   return (
-    <Portal>
-      <div {...rest} onClick={handleBackdropClick} className={backdrop}>
-        <div className={scrollContainer} ref={scrollContainerRef}>
+    <Transition in={open} timeout={500} mountOnEnter unmountOnExit>
+      {(state: string) => (
+        <Portal>
           <div
-            className={cx(modalContentStyle, modalSizes[size], className)}
-            tabIndex={-1}
+            {...rest}
+            onClick={handleBackdropClick}
+            className={cx(backdrop, {
+              [visibleBackdrop]: state === 'entered',
+            })}
           >
-            <Icon
-              glyph="X"
-              fill={uiColors.gray.dark1}
-              size={Size.Large}
-              onClick={handleClose}
-              className={closeButton}
-              data-dismiss="modal"
-              aria-hidden="true"
-            />
+            <div className={scrollContainer} ref={scrollContainerRef}>
+              <div
+                className={cx(
+                  modalContentStyle,
+                  modalSizes[size],
+                  {
+                    [visibleModalContentStyle]: state === 'entered',
+                  },
+                  className,
+                )}
+                tabIndex={-1}
+              >
+                <Icon
+                  glyph="X"
+                  fill={uiColors.gray.dark1}
+                  size={Size.Large}
+                  onClick={handleClose}
+                  className={closeButton}
+                  data-dismiss="modal"
+                  aria-hidden="true"
+                />
 
-            {children}
+                {children}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </Portal>
+        </Portal>
+      )}
+    </Transition>
   );
 }
 
