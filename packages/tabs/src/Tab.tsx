@@ -9,11 +9,6 @@ export interface TabProps extends HTMLElementProps<'div'> {
   value: string;
 
   /**
-   * Set internally. Used to determine if the Tab is active.
-   */
-  active?: boolean;
-
-  /**
    * Content that will appear as the title in the Tab list.
    */
   title: string;
@@ -37,10 +32,9 @@ export interface TabProps extends HTMLElementProps<'div'> {
    * Value supplied to aria-control attribute.
    */
   className?: string;
-
-  /**
-   * Used internally. Index to determine order of tabs for keyboard navigation.
-   */
+  
+  active?: boolean;
+ 
   index?: number;
 
   ariaControl?: string;
