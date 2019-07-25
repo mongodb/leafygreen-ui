@@ -308,29 +308,10 @@ export default function Button(props: ButtonProps) {
     'children',
   ]);
 
-  if (usesCustomElement(props)) {
-    const Root = props.as;
-
-    return (
-      <Root {...rest} {...commonProps}>
-        {children}
-      </Root>
-    );
-  }
-
-  if (usesLinkElement(props)) {
-    return (
-      <a {...(rest as HTMLElementProps<'a'>)} {...commonProps}>
-        {children}
-      </a>
-    );
-  }
-
-  // NOTE(JeT): The button's `type` will be overridden if it is in the passed-in props
-  return (
-    <button
-      type="button"
-      {...(rest as HTMLElementProps<'button'>)}
+  const renderButton = (Root: React.ElementType<any> = 'button') => (
+    <Root
+      type={Root === 'button' ? 'button' : null}
+      {...(rest as HTMLElementProps<any>)}
       {...commonProps}
     >
       <span
@@ -341,13 +322,23 @@ export default function Button(props: ButtonProps) {
       >
         {children}
       </span>
-    </button>
+    </Root>
   );
+
+  if (usesCustomElement(props)) {
+    return renderButton(props.as);
+  }
+
+  if (usesLinkElement(props)) {
+    return renderButton('a');
+  }
+
+  return renderButton();
 }
 
 Button.propTypes = {
-  variant: PropTypes.oneOf(['default', 'primary', 'info', 'danger', 'dark']),
-  size: PropTypes.oneOf(['xsmall', 'small', 'normal', 'large']),
+  variant: PropTypes.oneOf(Object.keys(Variant)),
+  size: PropTypes.oneOf(Object.keys(Size)),
   className: PropTypes.string,
   children: PropTypes.node,
   disabled: PropTypes.bool,
