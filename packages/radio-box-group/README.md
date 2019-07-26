@@ -151,8 +151,6 @@ Content that appears inside the Radio Box component
 
 **Type:** `boolean`
 
-**Default:** `false`
-
 If RadioBoxGroup is uncontrolled, the default property makes this RadioBox checked on the initial render.
 
 ### Any other properties supplied will be spread on the root element.

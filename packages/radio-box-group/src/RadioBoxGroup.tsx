@@ -9,11 +9,34 @@ const baseGroupStyle = css`
 `;
 
 interface RadioBoxGroupProps {
+  /**
+   * Content that will appear inside of RadioGroup component.
+   */
   children?: React.ReactNode;
+
+  /**
+   * Callback to be executed when a Radio is selected.
+   */
   onChange: React.ChangeEventHandler<HTMLInputElement>;
+
+  /**
+   * Name passed to each Radio belonging to the RadioGroup.
+   */
   name?: string;
+
+  /**
+   * Determines what radio will be checked on default. Component will be controlled if this prop is used.
+   */
   value?: string | number;
+
+  /**
+   * Determines size of RadioBox components ['default', 'compact', 'full'].
+   */
   size: Size;
+
+  /**
+   * className supplied to RadioGroup container.
+   */
   className?: string;
 }
 
@@ -32,6 +55,24 @@ function isRadioBoxElement(
   );
 }
 
+/**
+ * # RadioBoxGroup
+ *
+ * RadioBoxGroup component
+ *
+ * ```
+<RadioBoxGroup onChange={() => execute callback onChange}>
+  <RadioBox value='RadioBox-1'>RadioBox 1</RadioBox>
+  <RadioBox value='RadioBox-2'>RadioBox 2</RadioBox>
+</RadioBoxGroup>
+```
+ * @param props.children Content to appear inside of RadioBoxGroup component.
+ * @param props.onChange Callback to be executed when a RadioBox is selected.
+ * @param props.name Name passed to each RadioBox belonging to the RadioBoxGroup.
+ * @param props.value RadioBox that should appear checked. If value passed, component will be controlled by consumer.
+ * @param props.className classname applied to RadioBoxGroup container.
+ * @param props.size Determines size of RadioBox components ['default', 'compact', 'full'].
+ */
 export default class RadioBoxGroup extends PureComponent<
   RadioBoxGroupProps & React.HTMLAttributes<HTMLDivElement>,
   RadioBoxGroupState
@@ -87,10 +128,15 @@ export default class RadioBoxGroup extends PureComponent<
         return child;
       }
 
+      const checked =
+        this.props.value === child.props.value || value
+          ? value === child.props.value
+          : child.props.default;
+
       return React.cloneElement(child, {
         onChange: this.handleChange,
-        checked: value === child.props.value,
         id: child.props.id || `${this.defaultName}-button-${index}`,
+        checked,
         size,
         name,
       });

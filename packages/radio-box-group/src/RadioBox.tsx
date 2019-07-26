@@ -149,20 +149,58 @@ const getStatefulStyles = (state: StateForStyles) => ({
 });
 
 export interface RadioBoxProps {
-  className?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  value: string | number;
   checked?: boolean;
-  disabled?: boolean;
-  id?: string;
   size?: Size;
-  children?: React.ReactNode;
   name?: string;
-  defaultChecked?: boolean;
+
+  /**
+   * className supplied to RadioBox container.
+   */
+  className?: string;
+
+  /**
+   * Used to determine what RadioBox is checked.
+   */
+  value: string | number;
+
+  /**
+   * Boolean that determines if the RadioBox is disabled.
+   */
+  disabled?: boolean;
+
+  /**
+   * Id for RadioBox and respective label.
+   */
+  id?: string;
+
+  /**
+   * Content that will appear inside of the RadioBox component's label.
+   */
+  children?: React.ReactNode;
+
+  /**
+   * If RadioBoxGroup is uncontrolled, the default property makes this RadioBox checked on the initial render.
+   */
+  default?: boolean;
 }
 
+/**
+ * # RadioBox
+ *
+ * RadioBox component
+ *
+ * ```
+  <RadioBox value='radio-box-1'>RadioBox 1</RadioBox>
+```
+ * @param props.className className supplied to RadioBox container.
+ * @param props.value Used to determine what RadioBox is active.
+ * @param props.disabled Boolean that determines if the RadioBox is disabled.
+ * @param props.id Id for RadioBox and respective label.
+ * @param props.children Content that will appear inside of RadioBox.
+ * @param props.default If RadioBoxGroup is uncontrolled, the default property makes this RadioBox checked on the initial render.
+ */
 export default function RadioBox({
-  defaultChecked = false,
   className = '',
   onChange,
   value,
