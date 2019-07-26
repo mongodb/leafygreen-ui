@@ -106,7 +106,6 @@ export default class Radio extends PureComponent<
   static defaultProps = {
     checked: false,
     disabled: false,
-    default: false,
     className: '',
     onChange: () => {},
     variant: Variant.Default,
