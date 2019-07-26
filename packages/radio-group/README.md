@@ -154,8 +154,6 @@ Text that appears adjacent to the radio input; label text.
 
 **Type:** `boolean`
 
-**Default:** `false`
-
 If RadioGroup is uncontrolled, the default property makes this Radio checked on the initial render.
 
 #### Any other properties will be spread on the `input` element.
