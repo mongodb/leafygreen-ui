@@ -101,4 +101,23 @@ describe('when uncontrolled', () => {
   test('radio button becomes checked when clicked', () => {
     expect(radio.checked).toBe(true);
   });
+
+  describe('and the default prop is set', () => {
+    const uncontrolledContainer = render(
+      <RadioGroup onChange={uncontrolledOnChange}>
+        <Radio value="option-1">Radio Button 1</Radio>
+        <Radio default value="option-2">
+          Radio Button 1
+        </Radio>
+      </RadioGroup>,
+    ).container.firstChild;
+
+    const defaultRadio =
+      uncontrolledContainer &&
+      (uncontrolledContainer as HTMLElement).children[1].firstChild;
+
+    test('radio button is checked when default prop is set', () => {
+      expect((defaultRadio as HTMLInputElement).checked).toBe(true);
+    });
+  });
 });
