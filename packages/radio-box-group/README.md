@@ -147,4 +147,12 @@ Indicates whether or not the radio can be clicked by a user
 **Default:** `null`
 Content that appears inside the Radio Box component
 
+### default
+
+**Type:** `boolean`
+
+**Default:** `false`
+
+If RadioBoxGroup is uncontrolled, the default property makes this RadioBox checked on the initial render.
+
 ### Any other properties supplied will be spread on the root element.

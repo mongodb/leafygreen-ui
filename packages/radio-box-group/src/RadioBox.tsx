@@ -158,9 +158,11 @@ export interface RadioBoxProps {
   size?: Size;
   children?: React.ReactNode;
   name?: string;
+  defaultChecked?: boolean;
 }
 
 export default function RadioBox({
+  defaultChecked = false,
   className = '',
   onChange,
   value,
@@ -219,4 +221,5 @@ RadioBox.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   children: PropTypes.node,
+  default: PropTypes.bool,
 };
