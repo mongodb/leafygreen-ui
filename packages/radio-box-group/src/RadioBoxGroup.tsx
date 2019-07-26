@@ -10,22 +10,22 @@ const baseGroupStyle = css`
 
 interface RadioBoxGroupProps {
   /**
-   * Content that will appear inside of RadioGroup component.
+   * Content that will appear inside of RadioBoxGroup component.
    */
   children?: React.ReactNode;
 
   /**
-   * Callback to be executed when a Radio is selected.
+   * Callback to be executed when a RadioBox is selected.
    */
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 
   /**
-   * Name passed to each Radio belonging to the RadioGroup.
+   * Name passed to each RadioBox belonging to the RadioGroup.
    */
   name?: string;
 
   /**
-   * Determines what radio will be checked on default. Component will be controlled if this prop is used.
+   * Determines what RadioBox will be checked on default. Component will be controlled if this prop is used.
    */
   value?: string | number;
 
@@ -35,7 +35,7 @@ interface RadioBoxGroupProps {
   size: Size;
 
   /**
-   * className supplied to RadioGroup container.
+   * className supplied to RadioBoxGroup container.
    */
   className?: string;
 }

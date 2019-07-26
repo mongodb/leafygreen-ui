@@ -8,10 +8,10 @@ import RadioBox from './RadioBox';
 import Size from './Size';
 
 function ControlledRadioBoxGroup() {
-  const [activeRadio, setActiveRadio] = useState<any>('test1');
+  const [activeRadioBox, setActiveRadioBox] = useState<any>('test1');
 
   const changeHandler = (e: React.FormEvent) => {
-    setActiveRadio((e.target as HTMLInputElement).value);
+    setActiveRadioBox((e.target as HTMLInputElement).value);
   };
 
   return (
@@ -23,7 +23,7 @@ function ControlledRadioBoxGroup() {
     >
       <RadioBoxGroup
         onChange={changeHandler}
-        value={activeRadio}
+        value={activeRadioBox}
         size={select('Size', Object.values(Size) as Array<Size>, Size.Default)}
       >
         <RadioBox value="test1">
@@ -46,7 +46,7 @@ storiesOf('RadioBoxGroup', module)
     >
       <RadioBoxGroup
         size={select('Size', Object.values(Size) as Array<Size>, Size.Default)}
-        name="radio-group-default"
+        name="radio-box-group-default"
       >
         <RadioBox value="1">Option One</RadioBox>
         <RadioBox value="2">{text('Label text', 'Option Two')}</RadioBox>
