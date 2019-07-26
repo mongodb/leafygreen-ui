@@ -74,14 +74,14 @@ interface RadioGroupState {
  *
  * ```
 <RadioGroup onChange={() => execute callback onChange}>
-  <Radio value='Radio-1' title='First Radio'>Radio 1</Radio>
-  <Radio value='Radio-2' title='Second Radio'>Radio 2</Radio>
+  <Radio value='Radio-1'>Radio 1</Radio>
+  <Radio value='Radio-2'>Radio 2</Radio>
 </RadioGroup>
 ```
  * @param props.children Content to appear inside of RadioGroup component.
  * @param props.onChange Callback to be executed when a Radio is selected.
  * @param props.value Radio that should appear checked. If value passed, component will be controlled by consumer.
- * @param props.className Classname applied to RadioGroup container.
+ * @param props.className classname applied to RadioGroup container.
  * @param props.name Name passed to each Radio belonging to the RadioGroup.
  * @param props.variant Variant to determine if component will appear `default` or `light`.
  */

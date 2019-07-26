@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, boolean, select } from '@storybook/addon-knobs';
+import { text, boolean } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { colors } from '@leafygreen-ui/theme';
 import { Radio, RadioGroup, Variant } from '.';
@@ -17,11 +17,7 @@ function ControlledRadioGroup() {
       <RadioGroup
         onChange={changeHandler}
         value={activeRadio}
-        variant={select(
-          'Variant',
-          Object.values(Variant) as Array<Variant>,
-          Variant.Default,
-        )}
+        variant={Variant.Light}
         className={css`
           background-color: ${colors.gray[1]};
         `}
@@ -36,14 +32,7 @@ function ControlledRadioGroup() {
 
 storiesOf('RadioGroup', module)
   .add('Uncontrolled', () => (
-    <RadioGroup
-      name="radio-group-default"
-      variant={select(
-        'Variant',
-        Object.values(Variant) as Array<Variant>,
-        Variant.Default,
-      )}
-    >
+    <RadioGroup name="radio-group-default">
       <Radio value="1">Option One</Radio>
       <Radio value="2">{text('Label text', 'Option Two')}</Radio>
       <Radio default value="3">

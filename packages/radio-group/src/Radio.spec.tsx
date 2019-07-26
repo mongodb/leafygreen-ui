@@ -34,17 +34,6 @@ describe('packages/Radio', () => {
     expect(input.getAttribute('aria-disabled')).toBe('true');
   });
 
-  test('radio is checked when default is set', () => {
-    render(
-      <Radio value="option-two" default={true}>
-        Radio 2
-      </Radio>,
-      { container },
-    );
-
-    expect(radio.getAttribute('aria-checked')).toBe('true');
-  });
-
   test(`radio is checked when value is set`, () => {
     render(
       <Radio value="option-two" checked={true}>
