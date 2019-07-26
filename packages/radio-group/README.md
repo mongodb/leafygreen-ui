@@ -150,4 +150,12 @@ Indicates whether or not the radio can be clicked by a user
 
 Text that appears adjacent to the radio input; label text.
 
+### default
+
+**Type:** `boolean`
+
+**Default:** `false`
+
+If RadioGroup component is uncontrolled, this determines what Radio will be active on first render.
+
 #### Any other properties will be spread on the `input` element.
