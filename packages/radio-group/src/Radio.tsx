@@ -50,7 +50,7 @@ export interface RadioProps {
   className: string;
 
   /**
-   * Used to determine what Radio is active.
+   * Used to determine what Radio is checked.
    */
   value: string | number;
 
@@ -60,7 +60,7 @@ export interface RadioProps {
   id?: string;
 
   /**
-   * If RadioGroup component is uncontrolled, this determines what Radio will be active on first render.
+   * If RadioGroup is uncontrolled, the default property makes this Radio checked on the initial render.
    */
   default?: boolean;
 
@@ -76,13 +76,13 @@ export interface RadioProps {
  * Radio component
  *
  * ```
-  <Radio value='radio-1' title='First Radio'>Radio 1</Radio>
+  <Radio value='radio-1'>Radio 1</Radio>
 ```
  * @param props.disabled Boolean that determines if the Radio is disabled.
  * @param props.children Content that will appear inside of Radio.
  * @param props.value Used to determine what Radio is active.
  * @param props.id Id for Radio and respective label.
- * @param props.default If RadioGroup component is uncontrolled, this determines what Radio will be active on first render.
+ * @param props.default If RadioGroup is uncontrolled, the default property makes this Radio checked on the initial render.
  * @param props.className className supplied to Radio container.
  */
 export default class Radio extends PureComponent<
@@ -106,6 +106,7 @@ export default class Radio extends PureComponent<
   static defaultProps = {
     checked: false,
     disabled: false,
+    default: false,
     className: '',
     onChange: () => {},
     variant: Variant.Default,
