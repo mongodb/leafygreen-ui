@@ -310,7 +310,7 @@ export default function Button(props: ButtonProps) {
 
   const renderButton = (Root: React.ElementType<any> = 'button') => (
     <Root
-      type={Root === 'button' ? 'button' : null}
+      type={Root === 'button' ? 'button' : undefined}
       {...(rest as HTMLElementProps<any>)}
       {...commonProps}
     >
