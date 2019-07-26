@@ -10,20 +10,6 @@ const buttonClass = css`
   }
 `;
 
-function CustomElement({
-  customProp,
-  ...rest
-}: {
-  customProp: string;
-}): React.ReactElement {
-  return (
-    <div>
-      Lookit, {customProp}!<br />
-      <button {...rest} />
-    </div>
-  );
-}
-
 storiesOf('Buttons', module)
   .add('Default', () => (
     <Button
@@ -121,24 +107,30 @@ storiesOf('Buttons', module)
       {text('Children', 'Button')}
     </Button>
   ))
-  .add('as custom component', () => (
-    <Button
-      as={CustomElement}
-      size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
-      variant={select(
-        'Variant',
-        Object.values(Variant) as Array<Variant>,
-        Variant.Default,
-      )}
-      title={text('Title', 'The button title')}
-      disabled={boolean('Disabled', false)}
-      href={select(
-        'Href',
-        { 'mongodb.design': 'http://mongodb.design', none: null },
-        null,
-      )}
-      className={buttonClass}
-    >
-      {text('Children', 'Button')}
-    </Button>
-  ));
+  .add('as custom component', () => {
+    const CustomRoot = select(
+      'div',
+      { div: 'div', span: 'span', button: 'button' },
+      'div',
+    );
+
+    function CustomElement(props: object): React.ReactElement {
+      return <CustomRoot {...props} />;
+    }
+
+    return (
+      <Button
+        as={CustomElement}
+        size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
+        variant={select(
+          'Variant',
+          Object.values(Variant) as Array<Variant>,
+          Variant.Default,
+        )}
+        disabled={boolean('Disabled', false)}
+        className={buttonClass}
+      >
+        {text('Children', 'Button')}
+      </Button>
+    );
+  });
