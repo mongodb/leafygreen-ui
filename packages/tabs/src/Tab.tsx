@@ -32,9 +32,9 @@ export interface TabProps extends HTMLElementProps<'div'> {
    * Value supplied to aria-control attribute.
    */
   className?: string;
-  
+
   active?: boolean;
- 
+
   index?: number;
 
   ariaControl?: string;
