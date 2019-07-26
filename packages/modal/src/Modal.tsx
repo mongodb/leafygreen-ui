@@ -96,10 +96,6 @@ const closeButton = css`
   cursor: pointer;
   right: 12px;
   top: 12px;
-
-  &:hover {
-    transition: color 100ms ${uiColors.gray.dark2};
-  }
 `;
 
 const escapeKey = 27;
@@ -178,20 +174,13 @@ function Modal({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const handleClose = useCallback(() => {
-    // Don't close modal if shouldClose returns false or no setOpen callback is passed
-    if (!setOpen || !shouldClose()) {
-      return;
+    if (setOpen && shouldClose()) {
+      setOpen(false);
     }
-
-    setOpen(false);
   }, [setOpen, shouldClose]);
 
   const handleBackdropClick = (e: React.SyntheticEvent) => {
-    if (!scrollContainerRef.current) {
-      return;
-    }
-
-    if (e.target === scrollContainerRef.current) {
+    if (scrollContainerRef.current && e.target === scrollContainerRef.current) {
       handleClose();
     }
   };
@@ -228,7 +217,6 @@ function Modal({
                   },
                   className,
                 )}
-                tabIndex={-1}
               >
                 <Icon
                   glyph="X"
