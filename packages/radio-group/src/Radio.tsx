@@ -35,15 +35,56 @@ const textStyle = css`
 
 export interface RadioProps {
   checked: boolean;
-  disabled: boolean;
-  className: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
-  value: string | number;
-  id?: string;
   name?: string;
   variant: Variant;
+
+  /**
+   * Boolean that determines if the Radio is disabled.
+   */
+  disabled: boolean;
+
+  /**
+   * className supplied to Radio container.
+   */
+  className: string;
+
+  /**
+   * Used to determine what Radio is checked.
+   */
+  value: string | number;
+
+  /**
+   * Id for Radio and respective label.
+   */
+  id?: string;
+
+  /**
+   * If RadioGroup is uncontrolled, the default property makes this Radio checked on the initial render.
+   */
+  default?: boolean;
+
+  /**
+   * Content that will appear inside of the Radio component's label.
+   */
+  children?: React.ReactNode;
 }
 
+/**
+ * # Radio
+ *
+ * Radio component
+ *
+ * ```
+  <Radio value='radio-1'>Radio 1</Radio>
+```
+ * @param props.disabled Boolean that determines if the Radio is disabled.
+ * @param props.children Content that will appear inside of Radio.
+ * @param props.value Used to determine what Radio is active.
+ * @param props.id Id for Radio and respective label.
+ * @param props.default If RadioGroup is uncontrolled, the default property makes this Radio checked on the initial render.
+ * @param props.className className supplied to Radio container.
+ */
 export default class Radio extends PureComponent<
   RadioProps & React.InputHTMLAttributes<HTMLInputElement>
 > {
@@ -59,11 +100,13 @@ export default class Radio extends PureComponent<
     id: PropTypes.string,
     name: PropTypes.string,
     variant: PropTypes.oneOf(['default', 'light']),
+    default: PropTypes.bool,
   };
 
   static defaultProps = {
     checked: false,
     disabled: false,
+    default: false,
     className: '',
     onChange: () => {},
     variant: Variant.Default,

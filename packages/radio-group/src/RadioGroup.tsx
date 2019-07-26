@@ -32,11 +32,34 @@ function isRadioElement(
 }
 
 interface RadioGroupProps {
+  /**
+   * Determines if the component will appear in default or light mode.
+   */
   variant: Variant;
+
+  /**
+   * className supplied to RadioGroup container.
+   */
   className: string;
+
+  /**
+   * Callback to be executed when a Radio is selected.
+   */
   onChange: React.ChangeEventHandler<HTMLInputElement>;
+
+  /**
+   * Content that will appear inside of RadioGroup component.
+   */
   children: React.ReactNode;
+
+  /**
+   * Name passed to each Radio belonging to the RadioGroup.
+   */
   name?: string;
+
+  /**
+   * Determines what radio will be checked on default. Component will be controlled if this prop is used.
+   */
   value?: string | number | null;
 }
 
@@ -44,6 +67,24 @@ interface RadioGroupState {
   value: string | number | null;
 }
 
+/**
+ * # RadioGroup
+ *
+ * RadioGroup component
+ *
+ * ```
+<RadioGroup onChange={() => execute callback onChange}>
+  <Radio value='Radio-1'>Radio 1</Radio>
+  <Radio value='Radio-2'>Radio 2</Radio>
+</RadioGroup>
+```
+ * @param props.children Content to appear inside of RadioGroup component.
+ * @param props.onChange Callback to be executed when a Radio is selected.
+ * @param props.value Radio that should appear checked. If value passed, component will be controlled by consumer.
+ * @param props.className classname applied to RadioGroup container.
+ * @param props.name Name passed to each Radio belonging to the RadioGroup.
+ * @param props.variant Variant to determine if component will appear `default` or `light`.
+ */
 export default class RadioGroup extends PureComponent<
   RadioGroupProps,
   RadioGroupState
@@ -98,10 +139,15 @@ export default class RadioGroup extends PureComponent<
         return child;
       }
 
+      const checked =
+        this.props.value === child.props.value || value
+          ? value === child.props.value
+          : child.props.default;
+
       return React.cloneElement(child, {
         onChange: this.handleChange,
-        checked: value === child.props.value,
         id: child.props.id || `${this.defaultName}-button-${index}`,
+        checked,
         variant,
         name,
       });
