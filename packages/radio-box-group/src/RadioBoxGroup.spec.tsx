@@ -163,9 +163,28 @@ describe('packages/RadioBoxGroup', () => {
       expect(uncontrolledOnChange.mock.calls.length).toBe(1);
     });
 
-    test('radio button becomes checked when clicked', () => {
+    test('radio box becomes checked when clicked', () => {
       expect(radioBoxInput.getAttribute('aria-checked')).toBe('true');
       expect(radioBoxInput.checked).toBe(true);
+    });
+
+    describe('and the default prop is set', () => {
+      const uncontrolledContainer = render(
+        <RadioBoxGroup onChange={uncontrolledOnChange}>
+          <RadioBox value="option-1">RadioBox Button 1</RadioBox>
+          <RadioBox default value="option-2">
+            RadioBox Button 1
+          </RadioBox>
+        </RadioBoxGroup>,
+      ).container.firstChild;
+
+      const defaultRadioBox =
+        uncontrolledContainer &&
+        (uncontrolledContainer as HTMLElement).children[1].firstChild;
+
+      test('radio box is checked when default prop is set', () => {
+        expect((defaultRadioBox as HTMLInputElement).checked).toBe(true);
+      });
     });
   });
 });

@@ -48,6 +48,7 @@ const getRadioDisplayStyles = ({ checked, disabled }: StateForStyles) => {
     overflow-wrap: break-word;
     background-color: white;
     border: 1px solid ${colors.gray[5]};
+    color: ${colors.gray[1]};
     border-radius: 2px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
     z-index: 2;
@@ -149,17 +150,57 @@ const getStatefulStyles = (state: StateForStyles) => ({
 });
 
 export interface RadioBoxProps {
-  className?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  value: string | number;
   checked?: boolean;
-  disabled?: boolean;
-  id?: string;
   size?: Size;
-  children?: React.ReactNode;
   name?: string;
+
+  /**
+   * className supplied to RadioBox container.
+   */
+  className?: string;
+
+  /**
+   * Used to determine what RadioBox is checked.
+   */
+  value: string | number;
+
+  /**
+   * Boolean that determines if the RadioBox is disabled.
+   */
+  disabled?: boolean;
+
+  /**
+   * Id for RadioBox and respective label.
+   */
+  id?: string;
+
+  /**
+   * Content that will appear inside of the RadioBox component's label.
+   */
+  children?: React.ReactNode;
+
+  /**
+   * If RadioBoxGroup is uncontrolled, the default property makes this RadioBox checked on the initial render.
+   */
+  default?: boolean;
 }
 
+/**
+ * # RadioBox
+ *
+ * RadioBox component
+ *
+ * ```
+  <RadioBox value='radio-box-1'>RadioBox 1</RadioBox>
+```
+ * @param props.className className supplied to RadioBox container.
+ * @param props.value Used to determine what RadioBox is active.
+ * @param props.disabled Boolean that determines if the RadioBox is disabled.
+ * @param props.id Id for RadioBox and respective label.
+ * @param props.children Content that will appear inside of RadioBox.
+ * @param props.default If RadioBoxGroup is uncontrolled, the default property makes this RadioBox checked on the initial render.
+ */
 export default function RadioBox({
   className = '',
   onChange,
@@ -219,4 +260,5 @@ RadioBox.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   children: PropTypes.node,
+  default: PropTypes.bool,
 };
