@@ -48,6 +48,7 @@ const getRadioDisplayStyles = ({ checked, disabled }: StateForStyles) => {
     overflow-wrap: break-word;
     background-color: white;
     border: 1px solid ${colors.gray[5]};
+    color: ${colors.gray[1]};
     border-radius: 2px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
     z-index: 2;
