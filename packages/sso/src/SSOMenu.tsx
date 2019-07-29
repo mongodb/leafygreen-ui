@@ -1,0 +1,260 @@
+import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
+import { uiColors } from '@leafygreen-ui/palette';
+import { css, cx } from 'emotion';
+import Button from '@leafygreen-ui/button';
+import Icon from '@leafygreen-ui/icon';
+import { useEventListener } from '@leafygreen-ui/hooks';
+import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
+
+const menuButtonStyle = css`
+  height: 29x;
+  padding: 7px 14px;
+  border: 1px solid ${uiColors.gray.base};
+  border-radius: 14.5px;
+  cursor: pointer;
+  transition: background 200ms ease-in-out;
+  display: flex;
+  justify-content: center;
+  color: ${uiColors.gray.dark1};
+  font-size: 12px;
+  line-height: 15px;
+  position: relative;
+
+  &:hover {
+    background-color: ${uiColors.gray.light1};
+    color: ${uiColors.gray.dark2};
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const activeMenuButtonStyle = css`
+  background-color: ${uiColors.gray.base};
+  color: ${uiColors.white};
+
+  &:hover {
+    background-color: ${uiColors.gray.base};
+    color: ${uiColors.white};
+  }
+`;
+
+const nameStyle = css`
+  font-size: 16px;
+  color: ${uiColors.gray.dark1};
+  margin-top: 4px;
+  margin-bottom: 2px;
+  margin-right: 0px;
+  margin-left: 0px;
+`;
+
+const truncate = css`
+  width: 162px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const accountMenuGroupStyle = css`
+  padding: 14px 15px;
+`;
+
+const accountButtonStyle = css`
+  margin-top: 10px;
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+`;
+
+const productContainerHeight = css`
+  height: 42px;
+
+  &:hover {
+    background-color: ${uiColors.gray.light2};
+  }
+`;
+
+const activeMenuItemStyle = css`
+  background-color: ${uiColors.gray.light2};
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    width: 3px;
+    top: 0;
+    bottom: 0;
+    left: -1px;
+    background-color: ${uiColors.green.base};
+  }
+`;
+
+const menuItemTextStyle = css`
+  font-size: 14px;
+  line-height: 16px;
+  cursor: pointer;
+  margin: 0px;
+`;
+
+const descriptionStyle = css`
+  margin: 0px;
+  display: block;
+  font-weight: normal;
+  font-size: 12px;
+  color: ${uiColors.gray.dark2};
+  text-decoration: none;
+`;
+
+const logoutContainerHeight = css`
+  height: 46px;
+
+  &:hover {
+    background-color: ${uiColors.gray.light2};
+  }
+`;
+
+const menuItems: Array<{
+  displayName: string;
+  description: string;
+  href: string;
+  slug: string;
+}> = [
+  {
+    displayName: 'Atlas',
+    description: 'cloud.mongodb.com',
+    href: 'https://cloud.mongodb.com',
+    slug: 'atlas',
+  },
+  {
+    displayName: 'University',
+    description: 'university.mongodb.com',
+    href: 'https://university.mongodb.com',
+    slug: 'university',
+  },
+  {
+    displayName: 'Cloud Support',
+    description: 'support.mongodb.com',
+    href: 'https://support.mongodb.com',
+    slug: 'support',
+  },
+];
+
+const escapeKey = 27;
+
+interface SSOMenuProps {
+  userInfo: { name: string; email: string };
+  activeProduct: string;
+  onLogout?: React.MouseEventHandler;
+  onProductChange?: React.MouseEventHandler;
+  onAccountClick?: React.MouseEventHandler;
+}
+
+function SSOMenu({
+  userInfo: { name, email },
+  activeProduct,
+  onLogout,
+  onProductChange,
+  onAccountClick,
+}: SSOMenuProps) {
+  const [active, setActive] = useState(false);
+  const triggerRef = useRef(null);
+
+  const handleClose = () => {
+    setActive(false);
+  };
+
+  const handleEscape = (e: KeyboardEvent) => {
+    if (e.keyCode === escapeKey) {
+      handleClose();
+    }
+  };
+
+  const handleBackdropClick = (e: MouseEvent) => {
+    if (active && triggerRef.current && e.target !== triggerRef.current) {
+      handleClose();
+    }
+  };
+
+  useEventListener('click', handleBackdropClick);
+
+  useEventListener('keydown', handleEscape);
+
+  return (
+    <>
+      <button
+        ref={triggerRef}
+        type="button"
+        onClick={() => setActive(active => !active)}
+        className={cx(menuButtonStyle, {
+          [activeMenuButtonStyle]: active,
+        })}
+      >
+        <span style={{ marginRight: '2px', marginLeft: '2px' }}>{name}</span>
+        {active ? (
+          <Icon glyph="CaretUp" fill={uiColors.white} />
+        ) : (
+          <Icon glyph="CaretDown" fill={uiColors.gray.dark1} />
+        )}
+      </button>
+
+      <Menu
+        active={active}
+        align="bottom"
+        justify="end"
+        refEl={triggerRef}
+        usePortal={true}
+        trigger={undefined}
+        adjustOnMutation={true}
+      >
+        <MenuGroup className={accountMenuGroupStyle}>
+          <h3 className={cx(nameStyle, truncate)}>{name}</h3>
+          <p className={descriptionStyle}>{email}</p>
+          <Button
+            size="small"
+            onClick={onAccountClick}
+            className={accountButtonStyle}
+          >
+            MongoDB Account
+          </Button>
+        </MenuGroup>
+        <MenuGroup>
+          {menuItems.map(el => (
+            <MenuItem
+              onClick={onProductChange}
+              key={el.displayName}
+              className={cx(productContainerHeight, {
+                [activeMenuItemStyle]: el.slug === activeProduct,
+              })}
+              active={el.slug === activeProduct}
+            >
+              <p className={menuItemTextStyle}>{el.displayName}</p>
+              <a href={el.href} className={descriptionStyle}>
+                {el.description}
+              </a>
+            </MenuItem>
+          ))}
+        </MenuGroup>
+        <MenuItem
+          active={false}
+          onClick={onLogout}
+          className={cx(logoutContainerHeight, menuItemTextStyle)}
+        >
+          Logout
+        </MenuItem>
+      </Menu>
+    </>
+  );
+}
+
+SSOMenu.displayName = 'SSOMenu';
+
+SSOMenu.propTypes = {
+  userInfo: PropTypes.object,
+  activeProduct: PropTypes.oneOf(['atlas', 'support', 'university']),
+  onLogout: PropTypes.func,
+  onProductChange: PropTypes.func,
+  onAccountClick: PropTypes.func,
+};
+
+export default SSOMenu;
