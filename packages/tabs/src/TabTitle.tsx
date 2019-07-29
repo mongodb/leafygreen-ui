@@ -1,10 +1,34 @@
 import React, { useRef, useEffect, useCallback, SetStateAction } from 'react';
 import PropTypes from 'prop-types';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { uiColors } from '@leafygreen-ui/palette';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+
+const listTitle = css`
+  display: inline-block;
+  background-color: ${uiColors.white};
+  color: ${uiColors.gray.base};
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 1;
+  padding: 3px 24px;
+  cursor: pointer;
+  transition: 150ms color ease-in-out;
+  border: none;
+  background: none;
+
+  &:focus {
+    color: ${uiColors.blue.base};
+    outline: none;
+  }
+
+  &:hover:not(:focus) {
+    color: ${uiColors.gray.dark3};
+  }
+`;
 
 interface TabTitleProps extends HTMLElementProps<'button'> {
   active: boolean;
-  className?: string;
   id?: string;
   children: Array<React.ReactElement>;
   disabled?: boolean;
@@ -19,6 +43,7 @@ interface TabTitleProps extends HTMLElementProps<'button'> {
 function TabTitle({
   active,
   children,
+  className,
   disabled,
   dataTabId,
   onClick,
@@ -52,6 +77,7 @@ function TabTitle({
     <Root
       {...rest}
       ref={titleRef}
+      className={cx(listTitle, className)}
       role="tab"
       data-tab-id={dataTabId}
       onClick={onClick}

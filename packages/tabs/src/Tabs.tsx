@@ -12,29 +12,6 @@ const listStyle = css`
   margin-bottom: 5px;
 `;
 
-const listTitle = css`
-  display: inline-block;
-  background-color: ${uiColors.white};
-  color: ${uiColors.gray.base};
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 1;
-  text-transform: capitalize;
-  padding: 3px 24px;
-  cursor: pointer;
-  transition: 150ms color ease-in-out;
-  border: none;
-  background: none;
-  &:focus {
-    color: ${uiColors.blue.base};
-    outline: none;
-  }
-
-  &:hover:not(:focus) {
-    color: ${uiColors.gray.dark3};
-  }
-`;
-
 const activeStyle = css`
   color: ${uiColors.gray.dark3};
   cursor: default;
@@ -268,7 +245,7 @@ function Tabs({
             tab && (
               <TabTitle
                 key={i}
-                className={cx(listTitle, {
+                className={cx({
                   [activeStyle]: tab.props.active,
                   [disabledStyle]: tab.props.disabled,
                 })}
@@ -306,7 +283,7 @@ Tabs.propTypes = {
   onChange: PropTypes.func,
   selected: PropTypes.string,
   className: PropTypes.string,
-  as: PropTypes.oneOf([PropTypes.string, PropTypes.func]),
+  as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 };
 
 export default Tabs;
