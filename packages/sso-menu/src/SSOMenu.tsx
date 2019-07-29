@@ -68,28 +68,6 @@ const accountButtonStyle = css`
   justify-content: center;
 `;
 
-const productContainerHeight = css`
-  height: 42px;
-
-  &:hover {
-    background-color: ${uiColors.gray.light2};
-  }
-`;
-
-const activeMenuItemStyle = css`
-  background-color: ${uiColors.gray.light2};
-  position: relative;
-  &:before {
-    content: '';
-    position: absolute;
-    width: 3px;
-    top: 0;
-    bottom: 0;
-    left: -1px;
-    background-color: ${uiColors.green.base};
-  }
-`;
-
 const menuItemTextStyle = css`
   font-size: 14px;
   line-height: 16px;
@@ -108,10 +86,6 @@ const descriptionStyle = css`
 
 const logoutContainerHeight = css`
   height: 46px;
-
-  &:hover {
-    background-color: ${uiColors.gray.light2};
-  }
 `;
 
 const menuItems: Array<{
@@ -143,13 +117,51 @@ const menuItems: Array<{
 const escapeKey = 27;
 
 interface SSOMenuProps {
+  /**
+   * Object that contains information about the active user. {name: 'string', email: 'string'}
+   */
   userInfo: { name: string; email: string };
+
+  /**
+   * MongoDB product that is currently active: ['atlas', 'university', 'support'].
+   */
   activeProduct: string;
+
+  /**
+   * Callback invoked when user logs out.
+   */
   onLogout?: React.MouseEventHandler;
+
+  /**
+   * Callback invoked when user switches products.
+   */
   onProductChange?: React.MouseEventHandler;
+
+  /**
+   * Callback invoked when user views their MDB account.
+   */
   onAccountClick?: React.MouseEventHandler;
 }
 
+/**
+ * # SSOMenu
+ *
+ * ```
+<SSOMenu
+    userInfo={{ name: 'Alex Smith', email: 'alex.smith@youwork.com' }}
+    activeProduct="atlas"
+    onAccountClick={() => console.log('Viewing account information')}
+    onLogout={() => console.log('On logout')}
+    onProductChange={() => console.log('Switching products')}
+  />
+ * ```
+ * @param props.userInfo Object that contains information about the active user. {name: 'string', email: 'string'}
+ * @param props.activeProduct  MongoDB product that is currently active: ['atlas', 'university', 'support'].
+ * @param props.onLogout Callback invoked when user logs out.
+ * @param props.onAccountClick Callback invoked when user views their MDB account.
+ * @param props.onProductChange Callback invoked when user switches products.
+ *
+ */
 function SSOMenu({
   userInfo: { name, email },
   activeProduct,
@@ -223,9 +235,6 @@ function SSOMenu({
             <MenuItem
               onClick={onProductChange}
               key={el.displayName}
-              className={cx(productContainerHeight, {
-                [activeMenuItemStyle]: el.slug === activeProduct,
-              })}
               active={el.slug === activeProduct}
             >
               <p className={menuItemTextStyle}>{el.displayName}</p>
