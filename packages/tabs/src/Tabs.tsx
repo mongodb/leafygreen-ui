@@ -5,11 +5,12 @@ import { uiColors } from '@leafygreen-ui/palette';
 import Tab, { TabProps } from './Tab';
 import TabTitle from './TabTitle';
 
+const borderHeight = 3;
+
 const listStyle = css`
   list-style: none;
   padding: 0px;
   margin-top: 20px;
-  margin-bottom: 5px;
 `;
 
 const activeStyle = css`
@@ -23,9 +24,12 @@ const disabledStyle = css`
 `;
 
 const grayBorder = css`
-  height: 3px;
+  height: ${borderHeight}px;
   background-color: ${uiColors.gray.light2};
   position: relative;
+  // Makes border overlap with box-model for TabTitle components
+  margin-top: -${borderHeight}px;
+  pointer-events: none;
 `;
 
 const greenBorder = css`

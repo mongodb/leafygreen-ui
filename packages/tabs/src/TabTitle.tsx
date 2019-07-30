@@ -11,7 +11,8 @@ const listTitle = css`
   font-weight: bold;
   font-size: 16px;
   line-height: 1;
-  padding: 3px 24px;
+  // padding-bottom dervied from border height + 5px
+  padding: 3px 20px 8px;
   cursor: pointer;
   transition: 150ms color ease-in-out;
   border: none;
