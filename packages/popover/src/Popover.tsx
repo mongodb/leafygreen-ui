@@ -58,14 +58,14 @@ export interface PopoverProps {
    *
    * default: `bottom`
    */
-  align: Align;
+  align?: Align;
 
   /**
    * Determines the justification of the popover content relative to the trigger element
    *
    * default: `start`
    */
-  justify: Justify;
+  justify?: Justify;
 
   /**
    * A reference to the element against which the popover component will be positioned.
@@ -78,21 +78,21 @@ export interface PopoverProps {
    *
    * default: `true`
    */
-  usePortal: boolean;
+  usePortal?: boolean;
 
   /**
    * Specifies the amount of spacing (in pixels) between the trigger element and the Popover content.
    *
    * default: `10`
    */
-  spacing: number;
+  spacing?: number;
 
   /**
    * Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
    *
    * default: false
    */
-  adjustOnMutation: boolean;
+  adjustOnMutation?: boolean;
 }
 
 /**
