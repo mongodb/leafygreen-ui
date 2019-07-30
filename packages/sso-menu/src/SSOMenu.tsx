@@ -7,15 +7,20 @@ import Icon from '@leafygreen-ui/icon';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
 
+//  fix margin/border situation
+//  fix what happens when you click name
+
 const menuButtonStyle = css`
-  height: 29x;
-  padding: 7px 14px;
+  height: 29px;
+  padding-left: 14px;
+  padding-right: 14px;
   border: 1px solid ${uiColors.gray.base};
   border-radius: 14.5px;
   cursor: pointer;
   transition: background 200ms ease-in-out;
   display: flex;
   justify-content: center;
+  align-items: center;
   color: ${uiColors.gray.dark1};
   font-size: 12px;
   line-height: 15px;
@@ -57,8 +62,13 @@ const truncate = css`
   text-overflow: ellipsis;
 `;
 
+const iconStyle = css`
+  position: relative;
+  top: 1px;
+`
+
 const accountMenuGroupStyle = css`
-  padding: 14px 15px;
+  padding: 14px;
 `;
 
 const accountButtonStyle = css`
@@ -183,6 +193,7 @@ function SSOMenu({
   };
 
   const handleBackdropClick = (e: MouseEvent) => {
+    console.log(triggerRef.current)
     if (active && triggerRef.current && e.target !== triggerRef.current) {
       handleClose();
     }
@@ -193,22 +204,20 @@ function SSOMenu({
   useEventListener('keydown', handleEscape);
 
   return (
-    <>
-      <button
-        ref={triggerRef}
-        type="button"
-        onClick={() => setActive(active => !active)}
-        className={cx(menuButtonStyle, {
-          [activeMenuButtonStyle]: active,
-        })}
-      >
-        <span style={{ marginRight: '2px', marginLeft: '2px' }}>{name}</span>
-        {active ? (
-          <Icon glyph="CaretUp" fill={uiColors.white} />
-        ) : (
-          <Icon glyph="CaretDown" fill={uiColors.gray.dark1} />
-        )}
-      </button>
+    <button
+      ref={triggerRef}
+      type="button"
+      onClick={() => setActive(!active)}
+      className={cx(menuButtonStyle, {
+        [activeMenuButtonStyle]: active,
+      })}
+    >
+      <span style={{ marginRight: '2px', marginLeft: '2px'}}>{name}</span>
+      {active ? (
+        <Icon glyph="CaretUp" fill={uiColors.white} className={iconStyle}/>
+      ) : (
+        <Icon glyph="CaretDown" fill={uiColors.gray.dark1} className={iconStyle}/>
+      )}
 
       <Menu
         active={active}
@@ -217,7 +226,7 @@ function SSOMenu({
         refEl={triggerRef}
         usePortal={true}
         trigger={undefined}
-        adjustOnMutation={true}
+        adjustOnMutation={false}
       >
         <MenuGroup className={accountMenuGroupStyle}>
           <h3 className={cx(nameStyle, truncate)}>{name}</h3>
@@ -228,7 +237,7 @@ function SSOMenu({
             className={accountButtonStyle}
           >
             MongoDB Account
-          </Button>
+        </Button>
         </MenuGroup>
         <MenuGroup>
           {menuItems.map(el => (
@@ -250,9 +259,9 @@ function SSOMenu({
           className={cx(logoutContainerHeight, menuItemTextStyle)}
         >
           Logout
-        </MenuItem>
+      </MenuItem>
       </Menu>
-    </>
+    </button>
   );
 }
 
