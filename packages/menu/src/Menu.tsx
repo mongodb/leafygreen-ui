@@ -47,6 +47,7 @@ function Menu({
   align = Align.Bottom,
   justify = Justify.End,
   usePortal = true,
+  adjustOnMutation = false,
   active,
   children,
   className,
@@ -65,6 +66,7 @@ function Menu({
       refEl={refEl}
       usePortal={usePortal}
       spacing={15}
+      adjustOnMutation={adjustOnMutation}
     >
       <div {...rest} className={cx(rootMenuStyle, className)} role="menu">
         {children}
