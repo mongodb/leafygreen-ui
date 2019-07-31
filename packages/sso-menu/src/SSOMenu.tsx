@@ -7,9 +7,6 @@ import Icon from '@leafygreen-ui/icon';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
 
-//  fix margin/border situation
-//  fix what happens when you click name
-
 const menuButtonStyle = css`
   height: 29px;
   padding-left: 14px;
@@ -65,10 +62,10 @@ const truncate = css`
 const iconStyle = css`
   position: relative;
   top: 1px;
-`
+`;
 
 const accountMenuGroupStyle = css`
-  padding: 14px;
+  padding: 20px;
 `;
 
 const accountButtonStyle = css`
@@ -92,6 +89,10 @@ const descriptionStyle = css`
   font-size: 12px;
   color: ${uiColors.gray.dark2};
   text-decoration: none;
+`;
+
+const menuItemPadding = css`
+  padding-left: 20px;
 `;
 
 const logoutContainerHeight = css`
@@ -193,7 +194,6 @@ function SSOMenu({
   };
 
   const handleBackdropClick = (e: MouseEvent) => {
-    console.log(triggerRef.current)
     if (active && triggerRef.current && e.target !== triggerRef.current) {
       handleClose();
     }
@@ -212,11 +212,15 @@ function SSOMenu({
         [activeMenuButtonStyle]: active,
       })}
     >
-      <span style={{ marginRight: '2px', marginLeft: '2px'}}>{name}</span>
+      <span style={{ marginRight: '2px', marginLeft: '2px' }}>{name}</span>
       {active ? (
-        <Icon glyph="CaretUp" fill={uiColors.white} className={iconStyle}/>
+        <Icon glyph="CaretUp" fill={uiColors.white} className={iconStyle} />
       ) : (
-        <Icon glyph="CaretDown" fill={uiColors.gray.dark1} className={iconStyle}/>
+        <Icon
+          glyph="CaretDown"
+          fill={uiColors.gray.dark1}
+          className={iconStyle}
+        />
       )}
 
       <Menu
@@ -237,7 +241,7 @@ function SSOMenu({
             className={accountButtonStyle}
           >
             MongoDB Account
-        </Button>
+          </Button>
         </MenuGroup>
         <MenuGroup>
           {menuItems.map(el => (
@@ -245,6 +249,7 @@ function SSOMenu({
               onClick={onProductChange}
               key={el.displayName}
               active={el.slug === activeProduct}
+              className={menuItemPadding}
             >
               <p className={menuItemTextStyle}>{el.displayName}</p>
               <a href={el.href} className={descriptionStyle}>
@@ -256,10 +261,14 @@ function SSOMenu({
         <MenuItem
           active={false}
           onClick={onLogout}
-          className={cx(logoutContainerHeight, menuItemTextStyle)}
+          className={cx(
+            logoutContainerHeight,
+            menuItemTextStyle,
+            menuItemPadding,
+          )}
         >
           Logout
-      </MenuItem>
+        </MenuItem>
       </Menu>
     </button>
   );
