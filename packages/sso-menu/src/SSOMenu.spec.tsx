@@ -20,6 +20,30 @@ describe('packages/SSOMenu', () => {
     />,
   );
 
+  test('Atlas menu item links to cloud.mongodb.com', () => {
+    const atlasItem = (getByText('Atlas').parentElement as HTMLElement)
+      .parentElement;
+    expect((atlasItem as HTMLAnchorElement).href).toBe(
+      'https://cloud.mongodb.com/',
+    );
+  });
+
+  test('University menu item links to university.mongodb.com', () => {
+    const universityItem = (getByText('University')
+      .parentElement as HTMLElement).parentElement;
+    expect((universityItem as HTMLAnchorElement).href).toBe(
+      'https://university.mongodb.com/',
+    );
+  });
+
+  test('Support menu item links to support.mongodb.com', () => {
+    const supportItem = (getByText('Cloud Support')
+      .parentElement as HTMLElement).parentElement;
+    expect((supportItem as HTMLAnchorElement).href).toBe(
+      'https://support.mongodb.com/',
+    );
+  });
+
   test('onAccountClick fires when button is pressed', () => {
     const button = getByText('MongoDB Account');
 

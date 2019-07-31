@@ -14,7 +14,6 @@ const containerStyle = css`
   text-decoration: none;
   cursor: pointer;
   color: ${colors.gray[1]};
-  text-decoration: none;
 
   &:hover {
     background-color: ${colors.gray[8]};
@@ -32,6 +31,11 @@ const containerStyle = css`
   ${menuGroup.selector} ${menuGroup.selector} & {
     padding-left: ${indentation * 2}px;
   }
+`;
+
+const linkStyle = css`
+  text-decoration: none;
+  color: inherit;
 `;
 
 const titleTextStyle = css`
@@ -147,7 +151,11 @@ function MenuItem({
       )}
       role="menuitem"
     >
-      <Root onClick={disabled ? undefined : onClick} href={href}>
+      <Root
+        onClick={disabled ? undefined : onClick}
+        href={href}
+        className={linkStyle}
+      >
         <h4 className={titleTextStyle}>{children}</h4>
         {description && <h6 className={descriptionTextStyle}>{description}</h6>}
       </Root>

@@ -250,11 +250,10 @@ function SSOMenu({
               key={el.displayName}
               active={el.slug === activeProduct}
               className={menuItemPadding}
+              href={el.href}
             >
               <p className={menuItemTextStyle}>{el.displayName}</p>
-              <a href={el.href} className={descriptionStyle}>
-                {el.description}
-              </a>
+              <p className={descriptionStyle}>{el.description}</p>
             </MenuItem>
           ))}
         </MenuGroup>
