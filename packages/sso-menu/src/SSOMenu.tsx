@@ -27,10 +27,11 @@ const menuButtonStyle = css`
     background-color: ${uiColors.gray.light1};
     color: ${uiColors.gray.dark2};
   }
+`;
 
-  &:focus {
-    outline: none;
-  }
+const menuNameStyle = css`
+  margin-right: 2px;
+  margin-left: 2px;
 `;
 
 const activeMenuButtonStyle = css`
@@ -149,7 +150,7 @@ interface SSOMenuProps {
   onProductChange?: React.MouseEventHandler;
 
   /**
-   * Callback invoked when user views their MDB account.
+   * Callback invoked when user views their MongoDB account.
    */
   onAccountClick?: React.MouseEventHandler;
 }
@@ -169,7 +170,7 @@ interface SSOMenuProps {
  * @param props.userInfo Object that contains information about the active user. {name: 'string', email: 'string'}
  * @param props.activeProduct  MongoDB product that is currently active: ['atlas', 'university', 'support'].
  * @param props.onLogout Callback invoked when user logs out.
- * @param props.onAccountClick Callback invoked when user views their MDB account.
+ * @param props.onAccountClick Callback invoked when user views their MongoDB account.
  * @param props.onProductChange Callback invoked when user switches products.
  *
  */
@@ -180,8 +181,8 @@ function SSOMenu({
   onProductChange,
   onAccountClick,
 }: SSOMenuProps) {
-  const [active, setActive] = useState(false);
-  const triggerRef = useRef(null);
+  const [active, setActive] = useState<boolean>(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   const handleClose = () => {
     setActive(false);
@@ -212,7 +213,7 @@ function SSOMenu({
         [activeMenuButtonStyle]: active,
       })}
     >
-      <span style={{ marginRight: '2px', marginLeft: '2px' }}>{name}</span>
+      <span className={menuNameStyle}>{name}</span>
       {active ? (
         <Icon glyph="CaretUp" fill={uiColors.white} className={iconStyle} />
       ) : (
@@ -223,15 +224,7 @@ function SSOMenu({
         />
       )}
 
-      <Menu
-        active={active}
-        align="bottom"
-        justify="end"
-        refEl={triggerRef}
-        usePortal={true}
-        trigger={undefined}
-        adjustOnMutation={false}
-      >
+      <Menu active={active} align="bottom" justify="end" refEl={triggerRef}>
         <MenuGroup className={accountMenuGroupStyle}>
           <h3 className={cx(nameStyle, truncate)}>{name}</h3>
           <p className={descriptionStyle}>{email}</p>

@@ -4,11 +4,11 @@
 
 ## Example
 
-<!-- will update once we have componenet finalized  -->
+<!-- will update once we have component finalized  -->
 
 ## Output HTML
 
-<!-- will update once we have componenet finalized  -->
+<!-- will update once we have component finalized  -->
 
 ## Properties
 
@@ -26,7 +26,7 @@ Object that contains information about the active user. {name: 'string', email: 
 
 **Default:** `''`
 
-MongoDB product that is currently active
+MongoDB product that is currently active.
 
 ### onAccountClick
 
@@ -34,7 +34,7 @@ MongoDB product that is currently active
 
 **Default:** `() => {}`
 
-Callback invoked when user views their MDB account.
+Callback invoked when user views their MongoDB account.
 
 ### onProductChange
 
