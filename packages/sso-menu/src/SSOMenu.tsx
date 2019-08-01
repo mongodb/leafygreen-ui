@@ -46,6 +46,7 @@ const activeMenuButtonStyle = css`
 const nameStyle = css`
   font-size: 16px;
   color: ${uiColors.gray.dark1};
+  font-weight: bolder;
   margin-top: 4px;
   margin-bottom: 2px;
   margin-right: 0px;
@@ -64,11 +65,11 @@ const iconStyle = css`
 `;
 
 const accountMenuGroupStyle = css`
-  padding: 20px;
+  padding: 20px 20px 14px;
 `;
 
 const accountButtonStyle = css`
-  margin-top: 10px;
+  margin-top: 12px;
   width: 100%;
   display: inline-flex;
   justify-content: center;
