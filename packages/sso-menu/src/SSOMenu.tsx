@@ -9,8 +9,7 @@ import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
 
 const menuButtonStyle = css`
   height: 29px;
-  padding-left: 14px;
-  padding-right: 14px;
+  padding: 2px 14px;
   border: 1px solid ${uiColors.gray.base};
   border-radius: 14.5px;
   cursor: pointer;
@@ -62,7 +61,6 @@ const truncate = css`
 
 const iconStyle = css`
   position: relative;
-  top: 1px;
 `;
 
 const accountMenuGroupStyle = css`

@@ -36,6 +36,11 @@ const containerStyle = css`
 const linkStyle = css`
   text-decoration: none;
   color: inherit;
+
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+  }
 `;
 
 const titleTextStyle = css`
