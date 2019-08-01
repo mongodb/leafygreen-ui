@@ -229,6 +229,7 @@ function Tabs({
       selected === child.props.value ||
       (activeTab ? child.props.value === activeTab : child.props.default);
 
+
     return React.cloneElement(child, {
       key: child.props.value,
       ariaControl: `tab-${index}`,
@@ -262,6 +263,8 @@ function Tabs({
                 active={tab.props.active}
                 setFocusedState={setFocusedState}
                 as={as}
+                href={tab.props.href}
+                to={tab.props.href}
               >
                 {tab.props.title}
               </TabTitle>

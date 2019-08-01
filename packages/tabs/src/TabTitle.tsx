@@ -39,6 +39,8 @@ interface TabTitleProps extends HTMLElementProps<'button'> {
   ariaControls?: string;
   setFocusedState: React.Dispatch<SetStateAction<Array<string>>>;
   as: React.ElementType<any>;
+  href?: string;
+  to?: string;
 }
 
 function TabTitle({
