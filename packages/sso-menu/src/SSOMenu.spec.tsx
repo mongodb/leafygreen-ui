@@ -20,6 +20,12 @@ describe('packages/SSOMenu', () => {
     />,
   );
 
+  test('renders correct product as activeProduct', () => {
+    const atlas = ((getByText('Atlas').parentElement as HTMLElement)
+      .parentElement as HTMLElement).parentElement;
+    expect(atlas).toHaveAttribute('aria-checked');
+  });
+
   test('Atlas menu item links to cloud.mongodb.com', () => {
     const atlasItem = (getByText('Atlas').parentElement as HTMLElement)
       .parentElement;

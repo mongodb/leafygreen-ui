@@ -150,6 +150,8 @@ function MenuItem({
         className,
       )}
       role="menuitem"
+      aria-checked={active}
+      aria-disabled={disabled}
     >
       <Root
         onClick={disabled ? undefined : onClick}
