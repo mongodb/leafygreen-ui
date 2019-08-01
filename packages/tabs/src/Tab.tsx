@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-export interface TabProps extends HTMLElementProps<'div'> {
+export interface TabProps extends HTMLElementProps<'a'> {
   /**
    * Value supplied to the data-tab-id attribute. Used to determine what Tab is active.
    */
@@ -38,9 +38,6 @@ export interface TabProps extends HTMLElementProps<'div'> {
   index?: number;
 
   ariaControl?: string;
-
-  href?: string;
-  to?: string;
 }
 
 /**

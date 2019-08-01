@@ -111,28 +111,31 @@ function Tabs({
   const [focusedState, setFocusedState] = useState([] as Array<string>);
   const tabListRef = useRef<HTMLDivElement>(null);
 
+  const childrenArray = React.Children.toArray(children) as Array<
+    React.ReactElement
+  >;
+
   useEffect(() => {
-    const currentIndex = React.Children.map(
-      children,
-      (child: React.ReactElement, index) => {
-        if (child === null || child === undefined) {
-          return;
+    const currentIndex = childrenArray.reduce(
+      (acc, child, index) => {
+        if (!child) {
+          return acc;
         }
 
         if (selected || activeTab) {
-          return child.props.value === activeTab ||
-            child.props.value === selected
-            ? index
-            : null;
+          return [activeTab, selected].includes(child.props.value)
+            ? [...acc, index]
+            : acc;
         }
 
         if (child.props.default) {
-          return index;
+          return [...acc, index];
         }
 
-        return null;
+        return acc;
       },
-    ).filter(index => index !== null);
+      [] as Array<number>,
+    );
 
     setCurrentIndex(currentIndex[0]);
   });
@@ -152,7 +155,7 @@ function Tabs({
       return;
     }
 
-    const enabledIndexes = React.Children.toArray(children).reduce(
+    const enabledIndexes = childrenArray.reduce(
       (acc, child, index) => {
         if (child.props.disabled) {
           return acc;
@@ -209,33 +212,38 @@ function Tabs({
     `;
   }
 
-  const valuesArray: Array<string> = [];
+  // using an object here in order to alert consumer if duplicate values are used
+  const tabObject = childrenArray.reduce(
+    (acc, child, index) => {
+      if (!isTab(child)) {
+        return { ...acc, [index]: child };
+      }
 
-  const tabs = React.Children.map(children, (child: React.ReactNode, index) => {
-    if (!isTab(child)) {
-      return child;
-    }
+      const childValue = child.props.value;
 
-    if (valuesArray.length && valuesArray.includes(child.props.value)) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        'You are using the same value for one or more tabs. Please make sure all values are unique',
-      );
-    }
+      if (Object.keys(acc).includes(childValue)) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          'You are using the same value for one or more tabs. Please make sure all values are unique',
+        );
 
-    valuesArray.push(child.props.value);
+        return acc;
+      }
 
-    const active =
-      selected === child.props.value ||
-      (activeTab ? child.props.value === activeTab : child.props.default);
+      const active =
+        selected === childValue ||
+        (activeTab ? childValue === activeTab : child.props.default);
 
+      const updatedChild = React.cloneElement(child, {
+        key: childValue,
+        ariaControl: `tab-${childValue}`,
+        active,
+      });
 
-    return React.cloneElement(child, {
-      key: child.props.value,
-      ariaControl: `tab-${index}`,
-      active,
-    });
-  }) as Array<React.ReactElement>;
+      return { ...acc, [childValue]: updatedChild };
+    },
+    {} as { string: React.ReactElement },
+  );
 
   return (
     <div {...rest} className={className}>
@@ -245,40 +253,45 @@ function Tabs({
         onKeyDown={handleKeyDown}
         ref={tabListRef}
       >
-        {tabs.map(
-          (tab, i) =>
-            tab && (
-              <TabTitle
-                key={i}
-                className={cx({
-                  [activeStyle]: tab.props.active,
-                  [disabledStyle]: tab.props.disabled,
-                })}
-                id={tab.props.id}
-                dataTabId={tab.props.value}
-                onClick={!tab.props.disabled ? handleChange : undefined}
-                onKeyDown={handleKeyDown}
-                ariaControls={`tab-${i}`}
-                disabled={tab.props.disabled}
-                active={tab.props.active}
-                setFocusedState={setFocusedState}
-                as={as}
-                href={tab.props.href}
-                to={tab.props.href}
-              >
-                {tab.props.title}
-              </TabTitle>
-            ),
-        )}
+        {Object.values(tabObject).map(tab => {
+          const tabValue = tab.props.value;
+          const tabActive = tab.props.active;
+          const tabDisabled = tab.props.disabled;
+
+          return (
+            <TabTitle
+              key={tabValue}
+              className={cx({
+                [activeStyle]: tabActive,
+                [disabledStyle]: tabDisabled,
+              })}
+              id={tab.props.id}
+              dataTabId={tabValue}
+              onClick={!tabDisabled ? handleChange : undefined}
+              onKeyDown={handleKeyDown}
+              ariaControls={`tab-${tabValue}`}
+              disabled={tabDisabled}
+              active={tabActive}
+              setFocusedState={setFocusedState}
+              as={as}
+              href={tab.props.href}
+              to={tab.props.href}
+            >
+              {tab.props.title}
+            </TabTitle>
+          );
+        })}
       </div>
+
       <div className={grayBorder}>
         <div
           className={cx(greenBorder, calcStyle(), {
             [focusedStyle]: !!focusedState.length,
           })}
-        ></div>
+        />
       </div>
-      {tabs}
+
+      {Object.values(tabObject)}
     </div>
   );
 }

@@ -28,7 +28,7 @@ const listTitle = css`
   }
 `;
 
-interface TabTitleProps extends HTMLElementProps<'button'> {
+interface TabTitleProps extends HTMLElementProps<any> {
   active: boolean;
   id?: string;
   children: Array<React.ReactElement>;
@@ -41,6 +41,7 @@ interface TabTitleProps extends HTMLElementProps<'button'> {
   as: React.ElementType<any>;
   href?: string;
   to?: string;
+  className?: string;
 }
 
 function TabTitle({
@@ -59,7 +60,7 @@ function TabTitle({
   const titleRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (titleRef && titleRef.current && active && !disabled) {
+    if (titleRef.current && active && !disabled) {
       titleRef.current.focus();
     }
   }, [active]);
