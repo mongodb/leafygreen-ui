@@ -80,6 +80,14 @@ Callback to set open state of Modal component. `setOpen` accepts a boolean value
 
 Determines `Modal` size. Options: `['small', 'default', 'large']`
 
+### modalShouldClose
+
+**Type:** `function`
+
+**Default:** `() => {}`
+
+Callback to determine whether or not Modal should close when user tries to close it.
+
 ### children
 
 **Type:** `node`

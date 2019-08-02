@@ -1394,6 +1394,24 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
+"@leafygreen-ui/emotion@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/emotion/-/emotion-1.0.4.tgz#02ba18b83b411fd76fd5636125e5d380755151e7"
+  integrity sha512-bFGNq0Jg2FZA7VGSSJQDzKacv0yzB1NdpvL/+ZvnxbmHwW0UsYPgkGUkNeSVVa/x6cR9rPAacFhdvmg2HCHN8w==
+  dependencies:
+    create-emotion "^10.0.7"
+    emotion "^10.0.7"
+
+"@leafygreen-ui/hooks@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/hooks/-/hooks-1.0.4.tgz#69f9fbe9cbd88a53a118b42d167fa66261f47816"
+  integrity sha512-I71pCTXW1TFp3zsImx4wpXOSqgIABoRx65QJ50pH4pMzVSxsP871STAsCUizfxx1YGVrRSdkpfsxmfJKG+D0SQ==
+
+"@leafygreen-ui/icon@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/icon/-/icon-1.2.3.tgz#4e661a5bb178f58a3e82b1b868a6b050397ead79"
+  integrity sha512-ir9xseAvXLOvyfjeO56hcJgc8YcO2ZEE9Lp6heroQTngi+nNE43KlP04y1ag9PkcNsoJ0RX11UVQD8X4k7aGwQ==
+
 "@leafygreen-ui/lib@^2.1.7":
   version "2.1.7"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-2.1.7.tgz#1b8e062fe763a67005da220f945c1208d35999d9"
@@ -1402,6 +1420,26 @@
     create-emotion "^10.0.7"
     emotion "^10.0.7"
     polished "^2.3.0"
+
+"@leafygreen-ui/lib@^3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-3.0.4.tgz#57302544d2be12d7ca62456bb60a5ac88f8d7c02"
+  integrity sha512-cm+s8EKpXmt+ASjzJxkG2cbrN+Hb3BueLCpUSYWoRcEpaGrOdh2lh1leURJyfSYznrxvE1WsOFb5xNJwi5oN+g==
+  dependencies:
+    "@leafygreen-ui/emotion" "^1.0.4"
+    polished "^2.3.0"
+
+"@leafygreen-ui/palette@^1.1.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/palette/-/palette-1.0.4.tgz#0c2c13d991b53712ec27b367d8ed57d16c3adf68"
+  integrity sha512-xWapDv+excqMTTMwBh1ukwjf5pdIS9QfrLlbaicFcQZ2+esI/5L2Y3VqUlKL353+H5Xf89MpUtVtWBlj3du0SA==
+
+"@leafygreen-ui/portal@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/portal/-/portal-1.1.4.tgz#c9445ec4e61d1f69c2b8ef3ff9c71306897455b5"
+  integrity sha512-G/BpglM6U3G8KMCWERvVCbPTtrDzmTpEwDFo5p0l3IeHc3M/FvTuFuLI5V7mNWSvvD4CCiDGlykMGBJ3BfZHqg==
+  dependencies:
+    "@leafygreen-ui/lib" "^3.0.4"
 
 "@lerna/add@^3.4.1":
   version "3.15.0"
