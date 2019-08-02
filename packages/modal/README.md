@@ -80,11 +80,11 @@ Callback to set open state of Modal component. `setOpen` accepts a boolean value
 
 Determines `Modal` size. Options: `['small', 'default', 'large']`
 
-### modalShouldClose
+### shouldClose
 
 **Type:** `function`
 
-**Default:** `() => {}`
+**Default:** `() => true`
 
 Callback to determine whether or not Modal should close when user tries to close it.
 
@@ -95,14 +95,6 @@ Callback to determine whether or not Modal should close when user tries to close
 **Default:** `null`
 
 Children that will be rendered inside `Modal` component.
-
-### modalShouldClose
-
-**Type:** `function`
-
-**Default:** `() => bool`
-
-Callback invoked when user tries to close modal. If function returns false, the modal will not close.
 
 ### className
 
