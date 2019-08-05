@@ -24,7 +24,7 @@ jobs:
             JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
       - run:
           name: types
-          command: yarn ts
+          command: yarn ts --verbose
       - save_cache:
           key: node-cache-v2-{{ checksum "yarn.lock" }}
           paths:
