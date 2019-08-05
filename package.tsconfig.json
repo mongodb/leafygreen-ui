@@ -20,5 +20,5 @@
     "emitDeclarationOnly": true,
     "composite": true
   },
-  "exclude": ["*.story.*", "*.spec.*"]
+  "exclude": ["*.story.*", "*.spec.*", "dist"]
 }
