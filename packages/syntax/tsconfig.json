@@ -4,9 +4,11 @@
     "declarationDir": "dist"
   },
   "include": ["src/**/*", "../../typings"],
-  "references": [{
+  "references": [
+    {
       "path": "../../packages/emotion"
-    }, {
+    },
+    {
       "path": "../../packages/lib"
     },
     {
