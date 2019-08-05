@@ -33,12 +33,9 @@ interface SharedTabTitleProps {
   id?: string;
   disabled?: boolean;
   dataTabId: string;
-  // onClick?: React.MouseEventHandler;
-  // onKeyDown?: React.KeyboardEventHandler;
   ariaControls?: string;
   setFocusedState: React.Dispatch<SetStateAction<Array<string>>>;
   className?: string;
-  rest: any;
 }
 
 interface LinkTabTitleProps extends HTMLElementProps<'a'>, SharedTabTitleProps {
@@ -73,22 +70,6 @@ function usesLinkElement(
   return props.href != null;
 }
 
-// interface TabTitleProps extends HTMLElementProps<any> {
-//   active: boolean;
-//   id?: string;
-//   children: Array<React.ReactElement>;
-//   disabled?: boolean;
-//   dataTabId: string;
-//   onClick?: React.MouseEventHandler;
-//   onKeyDown?: React.KeyboardEventHandler;
-//   ariaControls?: string;
-//   setFocusedState: React.Dispatch<SetStateAction<Array<string>>>;
-//   as: React.ElementType<any>;
-//   href?: string;
-//   to?: string;
-//   className?: string;
-// }
-
 function TabTitle(props: TabTitleProps) {
   const {
     active,
@@ -100,12 +81,12 @@ function TabTitle(props: TabTitleProps) {
     onKeyDown,
     ariaControls,
     setFocusedState,
-    rest,
+    ...rest
   } = props;
 
-  delete rest.tabTitle, delete rest.ariaControl;
-  delete rest.default;
-  delete rest.children;
+  // delete rest.tabTitle, delete rest.ariaControl;
+  // delete rest.default;
+  // delete rest.children;
 
   const titleRef = useRef<HTMLElement>(null);
 

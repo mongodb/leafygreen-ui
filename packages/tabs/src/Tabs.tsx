@@ -254,13 +254,11 @@ function Tabs({
         ref={tabListRef}
       >
         {Object.values(tabObject).map(tab => {
-          // const value = tab.props.value;
-          // const tabActive = tab.props.active;
-          // const tabDisabled = tab.props.disabled;
           const { value, active, disabled, id, ...rest } = tab.props;
 
           return (
             <TabTitle
+              {...rest}
               key={value}
               className={cx({
                 [activeStyle]: active,
@@ -275,7 +273,6 @@ function Tabs({
               active={active}
               setFocusedState={setFocusedState}
               as={as}
-              rest={rest}
             >
               {tab.props.tabTitle}
             </TabTitle>
