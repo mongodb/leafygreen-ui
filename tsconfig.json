@@ -1,15 +1,20 @@
 {
   "files": [],
   "include": [],
-  "references": [
-    {
+  "references": [{
       "path": "./packages/badge"
     },
     {
       "path": "./packages/button"
     },
     {
+      "path": "./packages/card"
+    },
+    {
       "path": "./packages/checkbox"
+    },
+    {
+      "path": "./packages/code"
     },
     {
       "path": "./packages/emotion"
@@ -27,6 +32,9 @@
       "path": "./packages/menu"
     },
     {
+      "path": "./packages/modal"
+    },
+    {
       "path": "./packages/palette"
     },
     {
@@ -40,6 +48,9 @@
     },
     {
       "path": "./packages/radio-group"
+    },
+    {
+      "path": "./packages/syntax"
     },
     {
       "path": "./packages/theme"

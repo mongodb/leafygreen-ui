@@ -4,15 +4,14 @@
     "declarationDir": "dist"
   },
   "include": ["src/**/*"],
-  "references": [
-    {
+  "references": [{
       "path": "../../packages/emotion"
     },
     {
       "path": "../../packages/lib"
     },
     {
-      "path": "../../packages/theme"
+      "path": "../../packages/palette"
     }
   ]
 }
