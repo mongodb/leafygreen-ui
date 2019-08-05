@@ -254,30 +254,30 @@ function Tabs({
         ref={tabListRef}
       >
         {Object.values(tabObject).map(tab => {
-          const tabValue = tab.props.value;
-          const tabActive = tab.props.active;
-          const tabDisabled = tab.props.disabled;
+          // const value = tab.props.value;
+          // const tabActive = tab.props.active;
+          // const tabDisabled = tab.props.disabled;
+          const { value, active, disabled, id, ...rest } = tab.props;
 
           return (
             <TabTitle
-              key={tabValue}
+              key={value}
               className={cx({
-                [activeStyle]: tabActive,
-                [disabledStyle]: tabDisabled,
+                [activeStyle]: active,
+                [disabledStyle]: disabled,
               })}
-              id={tab.props.id}
-              dataTabId={tabValue}
-              onClick={!tabDisabled ? handleChange : undefined}
+              id={id}
+              dataTabId={value}
+              onClick={!disabled ? handleChange : undefined}
               onKeyDown={handleKeyDown}
-              ariaControls={`tab-${tabValue}`}
-              disabled={tabDisabled}
-              active={tabActive}
+              ariaControls={`tab-${value}`}
+              disabled={disabled}
+              active={active}
               setFocusedState={setFocusedState}
               as={as}
-              href={tab.props.href}
-              to={tab.props.href}
+              rest={rest}
             >
-              {tab.props.title}
+              {tab.props.tabTitle}
             </TabTitle>
           );
         })}

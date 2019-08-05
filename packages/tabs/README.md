@@ -8,13 +8,13 @@
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
 
 <Tabs>
-  <Tab default value="test1" title="Title 1">
+  <Tab default value="test1" tabTitle="Title 1">
     Hello 1
   </Tab>
-  <Tab value="test2" title="Title 2">
+  <Tab value="test2" tabTitle="Title 2">
     Hello 2
   </Tab>
-  <Tab value="test3" title="Title 3">
+  <Tab value="test3" tabTitle="Title 3">
     Hello 3
   </Tab>
 </Tabs>;
@@ -126,7 +126,7 @@ Determines the root element. For example, `Link` or `a` tags can be supplied to 
 
 Every `Tab` needs a value prop.
 
-### title
+### tabTitle
 
 **Type:** required, `string`
 

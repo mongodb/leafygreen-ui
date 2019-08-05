@@ -13,13 +13,13 @@ function ControlledTabs() {
   return (
     <div>
       <Tabs onChange={changeHandler} selected={activeTab}>
-        <Tab value="test1" title={text('title', 'Harry Spencer Wolff')}>
+        <Tab value="test1" tabTitle={text('tabTitle', 'Harry Spencer Wolff')}>
           {text('Tab Content', 'Hello 1')}
         </Tab>
-        <Tab value="test2" title="Jeremy Steven Tice">
+        <Tab value="test2" tabTitle="Jeremy Steven Tice">
           Hello 2
         </Tab>
-        <Tab value="test3" title="Mark Frederick Truman">
+        <Tab value="test3" tabTitle="Mark Frederick Truman">
           Hello 3
         </Tab>
       </Tabs>
@@ -29,22 +29,23 @@ function ControlledTabs() {
 
 storiesOf('Tabs', module)
   .add('Uncontrolled', () => (
-    <Tabs>
+    <Tabs as="a">
       <Tab
         default={boolean('default', true)}
         value="test1"
-        title={text('title', 'Brooke Scarlett Yalof')}
+        tabTitle={text('tabTitle', 'Brooke Scarlett Yalof')}
+        href="https://google.com"
       >
         {text('Tab Content', 'Hello 1')}
       </Tab>
       <Tab
         disabled={boolean('disabled', true)}
         value="test2"
-        title="Robert Audroue"
+        tabTitle="Robert Audroue"
       >
         Hello 2
       </Tab>
-      <Tab value="test3" title="David Scott McCarthy">
+      <Tab value="test3" tabTitle="David Scott McCarthy">
         Hello 3
       </Tab>
     </Tabs>

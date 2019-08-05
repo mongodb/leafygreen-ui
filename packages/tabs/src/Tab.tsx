@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-export interface TabProps extends HTMLElementProps<'a'> {
+export interface TabProps {
   /**
    * Value supplied to the data-tab-id attribute. Used to determine what Tab is active.
    */
@@ -11,7 +10,7 @@ export interface TabProps extends HTMLElementProps<'a'> {
   /**
    * Content that will appear as the title in the Tab list.
    */
-  title: string;
+  tabTitle: string;
 
   /**
    * Content that will appear inside of Tab panel.
@@ -33,11 +32,24 @@ export interface TabProps extends HTMLElementProps<'a'> {
    */
   className?: string;
 
+  /**
+   * Destination when TabTitle is rendered as `a` tag.
+   */
+  href?: string;
+
+  /**
+   * Destination when TabTitle is rendered as `Link` tag.
+   */
+  to?: string;
+
   active?: boolean;
 
   index?: number;
 
   ariaControl?: string;
+
+  // Done in order to support any Router system, such that TabTitle component can accept any URL destination prop.
+  [key: string]: any;
 }
 
 /**
@@ -52,26 +64,31 @@ export interface TabProps extends HTMLElementProps<'a'> {
  * @param props.active Set internally. Used to determine if the Tab is active.
  * @param props.children Content that will appear inside of Tab panel.
  * @param props.disabled Boolean that determines if the Tab is disabled.
- * @param props.title Title that will appear in Tab List.
+ * @param props.tabTitle Title that will appear in Tab List.
  * @param props.ariaControl Value supplied to aria-control attribute.
  * @param props.default If Tabs component is uncontrolled, this determines what Tab will be active on first render.
+ * @param props.href Destination when TabTitle is rendered as `a` tag.
+ * @param props.to Destination when TabTitle is rendered as `Link` tag.
+ *
  */
-function Tab({
-  value,
-  active,
-  children,
-  disabled = false,
-  ariaControl,
-  ...rest
-}: TabProps) {
+function Tab(props: TabProps) {
+  const {
+    value,
+    active,
+    children,
+    disabled = false,
+    ariaControl,
+    ...rest
+  } = props;
+
   if (!active) {
     return null;
   }
 
   // default and title are not an HTML properties
-  delete rest.default, rest.title;
+  delete rest.default, delete rest.tabTitle;
 
-  return (
+  const renderTab = () => (
     <div
       {...rest}
       aria-disabled={disabled}
@@ -83,6 +100,8 @@ function Tab({
       {children}
     </div>
   );
+
+  return renderTab();
 }
 
 Tab.displayName = 'Tab';

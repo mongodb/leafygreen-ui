@@ -28,35 +28,85 @@ const listTitle = css`
   }
 `;
 
-interface TabTitleProps extends HTMLElementProps<any> {
+interface SharedTabTitleProps {
   active: boolean;
   id?: string;
-  children: Array<React.ReactElement>;
   disabled?: boolean;
   dataTabId: string;
-  onClick?: React.MouseEventHandler;
-  onKeyDown?: React.KeyboardEventHandler;
+  // onClick?: React.MouseEventHandler;
+  // onKeyDown?: React.KeyboardEventHandler;
   ariaControls?: string;
   setFocusedState: React.Dispatch<SetStateAction<Array<string>>>;
-  as: React.ElementType<any>;
-  href?: string;
-  to?: string;
   className?: string;
+  rest: any;
 }
 
-function TabTitle({
-  active,
-  children,
-  className,
-  disabled,
-  dataTabId,
-  onClick,
-  onKeyDown,
-  ariaControls,
-  setFocusedState,
-  as,
-  ...rest
-}: TabTitleProps) {
+interface LinkTabTitleProps extends HTMLElementProps<'a'>, SharedTabTitleProps {
+  href: string;
+}
+
+interface ButtonTabTitleProps
+  extends HTMLElementProps<'button'>,
+    SharedTabTitleProps {
+  href?: null;
+}
+
+type CustomElementButtonProps = SharedTabTitleProps & {
+  as: React.ElementType<any>;
+  [key: string]: any;
+};
+
+export type TabTitleProps =
+  | LinkTabTitleProps
+  | ButtonTabTitleProps
+  | CustomElementButtonProps;
+
+function usesCustomElement(
+  props: TabTitleProps,
+): props is CustomElementButtonProps {
+  return (props as any).as != null;
+}
+
+function usesLinkElement(
+  props: LinkTabTitleProps | ButtonTabTitleProps,
+): props is LinkTabTitleProps {
+  return props.href != null;
+}
+
+// interface TabTitleProps extends HTMLElementProps<any> {
+//   active: boolean;
+//   id?: string;
+//   children: Array<React.ReactElement>;
+//   disabled?: boolean;
+//   dataTabId: string;
+//   onClick?: React.MouseEventHandler;
+//   onKeyDown?: React.KeyboardEventHandler;
+//   ariaControls?: string;
+//   setFocusedState: React.Dispatch<SetStateAction<Array<string>>>;
+//   as: React.ElementType<any>;
+//   href?: string;
+//   to?: string;
+//   className?: string;
+// }
+
+function TabTitle(props: TabTitleProps) {
+  const {
+    active,
+    children,
+    className,
+    disabled,
+    dataTabId,
+    onClick,
+    onKeyDown,
+    ariaControls,
+    setFocusedState,
+    rest,
+  } = props;
+
+  delete rest.tabTitle, delete rest.ariaControl;
+  delete rest.default;
+  delete rest.children;
+
   const titleRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -75,9 +125,7 @@ function TabTitle({
     setFocusedState((curr: Array<string>) => [...curr, dataTabId]);
   }, [setFocusedState]);
 
-  const Root = as;
-
-  return (
+  const renderTabTitle = (Root: React.ElementType<any> = 'button') => (
     <Root
       {...rest}
       ref={titleRef}
@@ -96,6 +144,16 @@ function TabTitle({
       {children}
     </Root>
   );
+
+  if (usesCustomElement(props)) {
+    return renderTabTitle(props.as);
+  }
+
+  if (usesLinkElement(props)) {
+    return renderTabTitle('a');
+  }
+
+  return renderTabTitle();
 }
 
 TabTitle.displayName = 'TabTitle';
