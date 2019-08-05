@@ -58,7 +58,7 @@ export interface TabProps {
  * Tab panel component
  *
  * ```
-  <Tab value='tab-1' title='First Tab'>Tab 1</Tab>
+  <Tab value='tab-1' tabTitle='First Tab'>Tab 1</Tab>
 ```
  * @param props.value Value supplied to the data-tab-id attribute. Used to determine what Tab is active.
  * @param props.active Set internally. Used to determine if the Tab is active.

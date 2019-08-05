@@ -88,8 +88,8 @@ interface TabsProps {
  *
  * ```
 <Tabs onChange={() => execute callback onChange}>
-  <Tab value='tab-1' title='First Tab'>Tab 1</Tab>
-  <Tab value='tab-2' title='Second Tab'>Tab 2</Tab>
+  <Tab value='tab-1' tabTitle='First Tab'>Tab 1</Tab>
+  <Tab value='tab-2' tabTitle='Second Tab'>Tab 2</Tab>
 </Tabs>
 ```
  * @param props.children Content to appear inside of Tabs component.
