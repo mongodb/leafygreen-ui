@@ -15,7 +15,6 @@
     "@leafygreen-ui/palette": "^1.0.4",
     "@leafygreen-ui/menu": "^1.0.4",
     "@leafygreen-ui/icon": "^1.2.3",
-    "@leafygreen-ui/hooks": "^1.0.4",
     "@leafygreen-ui/button": "^2.3.4"
   }
 }

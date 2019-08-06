@@ -101,22 +101,27 @@ function Menu({
   });
 
   useEventListener('keydown', handleEscape, {
-    options: { once: true },
     dependencies: [isActive, trigger],
     enabled,
   });
 
   if (trigger) {
+    const triggerClassName = cx((trigger as any).props.className, {
+      'lg-active': isActive,
+    });
+
     if (typeof trigger === 'function') {
       return trigger({
         onClick: syntheticToggleEventHandler,
         children: popoverContent,
+        className: triggerClassName,
       });
     }
 
     return React.cloneElement(trigger, {
       onClick: syntheticToggleEventHandler,
       children: [...trigger.props.children, popoverContent],
+      className: triggerClassName,
     });
   }
 

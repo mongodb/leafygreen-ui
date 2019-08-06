@@ -1,10 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from 'emotion';
 import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
-import { useEventListener } from '@leafygreen-ui/hooks';
 import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
 
 const menuButtonStyle = css`
@@ -26,21 +25,26 @@ const menuButtonStyle = css`
     background-color: ${uiColors.gray.light1};
     color: ${uiColors.gray.dark2};
   }
+
+  &.lg-active {
+    background-color: ${uiColors.gray.base};
+    color: ${uiColors.white};
+
+    &:hover {
+      background-color: ${uiColors.gray.base};
+      color: ${uiColors.white};
+    }
+
+    & > svg {
+      transform: rotate(180deg);
+      fill: white !important;
+    }
+  }
 `;
 
 const menuNameStyle = css`
   margin-right: 2px;
   margin-left: 2px;
-`;
-
-const activeMenuButtonStyle = css`
-  background-color: ${uiColors.gray.base};
-  color: ${uiColors.white};
-
-  &:hover {
-    background-color: ${uiColors.gray.base};
-    color: ${uiColors.white};
-  }
 `;
 
 const nameStyle = css`
@@ -128,8 +132,6 @@ export const ActiveProduct = {
 
 type ActiveProduct = typeof ActiveProduct[keyof typeof ActiveProduct];
 
-const escapeKey = 27;
-
 interface SSOMenuProps {
   /**
    * Object that contains information about the active user. {name: 'string', email: 'string'}
@@ -183,89 +185,59 @@ function SSOMenu({
   onProductChange,
   onAccountClick,
 }: SSOMenuProps) {
-  const [active, setActive] = useState<boolean>(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  const handleClose = () => {
-    setActive(false);
-  };
-
-  const handleEscape = (e: KeyboardEvent) => {
-    if (e.keyCode === escapeKey) {
-      handleClose();
-    }
-  };
-
-  const handleBackdropClick = (e: MouseEvent) => {
-    if (active && triggerRef.current && e.target !== triggerRef.current) {
-      handleClose();
-    }
-  };
-
-  useEventListener('click', handleBackdropClick);
-
-  useEventListener('keydown', handleEscape);
-
   return (
-    <button
-      ref={triggerRef}
-      type="button"
-      onClick={() => setActive(curr => !curr)}
-      className={cx(menuButtonStyle, {
-        [activeMenuButtonStyle]: active,
-      })}
+    <Menu
+      trigger={
+        <button ref={triggerRef} type="button" className={menuButtonStyle}>
+          <span className={menuNameStyle}>{name}</span>
+          <Icon
+            glyph="CaretDown"
+            className={iconStyle}
+            fill={uiColors.gray.dark1}
+          />
+        </button>
+      }
     >
-      <span className={menuNameStyle}>{name}</span>
-      {active ? (
-        <Icon glyph="CaretUp" fill={uiColors.white} className={iconStyle} />
-      ) : (
-        <Icon
-          glyph="CaretDown"
-          fill={uiColors.gray.dark1}
-          className={iconStyle}
-        />
-      )}
-
-      <Menu active={active} align="bottom" justify="end" refEl={triggerRef}>
-        <MenuGroup className={accountMenuGroupStyle}>
-          <h3 className={cx(nameStyle, truncate)}>{name}</h3>
-          <p className={descriptionStyle}>{email}</p>
-          <Button
-            size="small"
-            onClick={onAccountClick}
-            className={accountButtonStyle}
-            as="a"
-          >
-            MongoDB Account
-          </Button>
-        </MenuGroup>
-        <MenuGroup>
-          {menuItems.map(el => (
-            <MenuItem
-              onClick={onProductChange}
-              key={el.displayName}
-              active={el.slug === activeProduct}
-              className={menuItemPadding}
-              href={el.href}
-            >
-              <p className={menuItemTextStyle}>{el.displayName}</p>
-              <p className={descriptionStyle}>{el.description}</p>
-            </MenuItem>
-          ))}
-        </MenuGroup>
-        <MenuItem
-          active={false}
-          onClick={onLogout}
-          className={cx(
-            logoutContainerHeight,
-            menuItemTextStyle,
-            menuItemPadding,
-          )}
+      <MenuGroup className={accountMenuGroupStyle}>
+        <h3 className={cx(nameStyle, truncate)}>{name}</h3>
+        <p className={descriptionStyle}>{email}</p>
+        <Button
+          size="small"
+          onClick={onAccountClick}
+          className={accountButtonStyle}
+          as="a"
         >
-          Logout
-        </MenuItem>
-      </Menu>
-    </button>
+          MongoDB Account
+        </Button>
+      </MenuGroup>
+      <MenuGroup>
+        {menuItems.map(el => (
+          <MenuItem
+            onClick={onProductChange}
+            key={el.displayName}
+            active={el.slug === activeProduct}
+            className={menuItemPadding}
+            href={el.href}
+          >
+            <p className={menuItemTextStyle}>{el.displayName}</p>
+            <p className={descriptionStyle}>{el.description}</p>
+          </MenuItem>
+        ))}
+      </MenuGroup>
+      <MenuItem
+        active={false}
+        onClick={onLogout}
+        className={cx(
+          logoutContainerHeight,
+          menuItemTextStyle,
+          menuItemPadding,
+        )}
+      >
+        Logout
+      </MenuItem>
+    </Menu>
   );
 }
 
