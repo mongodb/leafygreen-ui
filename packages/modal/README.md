@@ -8,13 +8,13 @@
 import Modal from '@leafygreen-ui/modal';
 
 function ExampleComponent() {
-  const { open, setOpen } = useModalState();
+  const [open, setOpen] = useState(false);
 
   return (
     <>
-      <button onClick={() => setOpen(open => !open)}>Open Modal</button>
+      <button onClick={() => setOpen(curr => !curr)}>Open Modal</button>
       <Modal open={open} setOpen={setOpen}>
-        Modal Content goes here
+        Modal Content goes here.
       </Modal>
     </>
   );
