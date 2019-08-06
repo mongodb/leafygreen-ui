@@ -54,25 +54,19 @@ describe('packages/Tabs', () => {
   });
 
   test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
-    const { container } = render(
-      <Tabs as="div">
+    const { getByText } = render(
+      <Tabs as="a">
         <Tab default value="hello1" tabTitle="Tab 1">
-          Tab 1
+          Hello 1
         </Tab>
-        <Tab value="hello2" tabTitle="Hello 2">
+        <Tab value="hello2" tabTitle="Tab 2">
           Hello 2
         </Tab>
       </Tabs>,
     );
+    const tabListItem = getByText('Tab 1');
 
-    const tab =
-      container.firstChild && (container.firstChild.firstChild as HTMLElement);
-
-    if (!tab) {
-      throw new Error('No element was rendered');
-    }
-
-    expect(tab.tagName.toLowerCase()).toBe('div');
+    expect(tabListItem.tagName.toLowerCase()).toBe('a');
   });
 
   describe('when the component is controlled', () => {

@@ -29,12 +29,11 @@ function ControlledTabs() {
 
 storiesOf('Tabs', module)
   .add('Uncontrolled', () => (
-    <Tabs as="a">
+    <Tabs>
       <Tab
         default={boolean('default', true)}
         value="test1"
         tabTitle={text('tabTitle', 'Brooke Scarlett Yalof')}
-        href="https://google.com"
       >
         {text('Tab Content', 'Hello 1')}
       </Tab>

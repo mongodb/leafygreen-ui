@@ -44,8 +44,6 @@ export interface TabProps {
 
   active?: boolean;
 
-  index?: number;
-
   ariaControl?: string;
 
   // Done in order to support any Router system, such that TabTitle component can accept any URL destination prop.
@@ -71,16 +69,14 @@ export interface TabProps {
  * @param props.to Destination when TabTitle is rendered as `Link` tag.
  *
  */
-function Tab(props: TabProps) {
-  const {
-    value,
-    active,
-    children,
-    disabled = false,
-    ariaControl,
-    ...rest
-  } = props;
-
+function Tab({
+  value,
+  active,
+  children,
+  disabled = false,
+  ariaControl,
+  ...rest
+}: TabProps) {
   if (!active) {
     return null;
   }

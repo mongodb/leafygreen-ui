@@ -17,6 +17,7 @@ const listTitle = css`
   transition: 150ms color ease-in-out;
   border: none;
   background: none;
+  text-decoration: none;
 
   &:focus {
     color: ${uiColors.blue.base};
@@ -36,6 +37,7 @@ interface SharedTabTitleProps {
   ariaControls?: string;
   setFocusedState: React.Dispatch<SetStateAction<Array<string>>>;
   className?: string;
+  as?: React.ElementType<any>;
 }
 
 interface LinkTabTitleProps extends HTMLElementProps<'a'>, SharedTabTitleProps {
@@ -81,12 +83,9 @@ function TabTitle(props: TabTitleProps) {
     onKeyDown,
     ariaControls,
     setFocusedState,
+    as,
     ...rest
   } = props;
-
-  // delete rest.tabTitle, delete rest.ariaControl;
-  // delete rest.default;
-  // delete rest.children;
 
   const titleRef = useRef<HTMLElement>(null);
 
@@ -127,7 +126,7 @@ function TabTitle(props: TabTitleProps) {
   );
 
   if (usesCustomElement(props)) {
-    return renderTabTitle(props.as);
+    return renderTabTitle(as);
   }
 
   if (usesLinkElement(props)) {

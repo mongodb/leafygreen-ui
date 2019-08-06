@@ -4,6 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Tab, { TabProps } from './Tab';
 import TabTitle from './TabTitle';
+import omit from 'lodash/omit';
 
 const borderHeight = 3;
 
@@ -245,6 +246,8 @@ function Tabs({
     {} as { string: React.ReactElement },
   );
 
+  const tabs = Object.values(tabObject);
+
   return (
     <div {...rest} className={className}>
       <div
@@ -253,12 +256,19 @@ function Tabs({
         onKeyDown={handleKeyDown}
         ref={tabListRef}
       >
-        {Object.values(tabObject).map(tab => {
+        {tabs.map(tab => {
           const { value, active, disabled, id, ...rest } = tab.props;
+
+          const filteredRest = omit(rest, [
+            'ariaControl',
+            'children',
+            'tabTitle',
+            'default',
+          ]);
 
           return (
             <TabTitle
-              {...rest}
+              {...filteredRest}
               key={value}
               className={cx({
                 [activeStyle]: active,
@@ -288,7 +298,7 @@ function Tabs({
         />
       </div>
 
-      {Object.values(tabObject)}
+      {tabs}
     </div>
   );
 }

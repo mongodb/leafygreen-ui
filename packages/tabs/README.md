@@ -4,71 +4,11 @@
 
 ## Example
 
-```js
-import { Tabs, Tab } from '@leafygreen-ui/tabs';
-
-<Tabs>
-  <Tab default value="test1" tabTitle="Title 1">
-    Hello 1
-  </Tab>
-  <Tab value="test2" tabTitle="Title 2">
-    Hello 2
-  </Tab>
-  <Tab value="test3" tabTitle="Title 3">
-    Hello 3
-  </Tab>
-</Tabs>;
-```
+<!-- Will update once the component is finalized -->
 
 ## Output HTML
 
-```html
-<div>
-  <div class="leafygreen-ui-ohrh5k" role="tablist">
-    <button
-      class="leafygreen-ui-oy1280"
-      role="tab"
-      data-tab-id="test1"
-      aria-controls="tab-0"
-      aria-selected="true"
-      tabindex="0"
-    >
-      Title 1
-    </button>
-    <button
-      class="leafygreen-ui-1i13m9b"
-      role="tab"
-      data-tab-id="test2"
-      aria-controls="tab-1"
-      aria-disabled="true"
-      tabindex="-1"
-    >
-      Title 2
-    </button>
-    <button
-      class="leafygreen-ui-1xd1z7d"
-      role="tab"
-      data-tab-id="test3"
-      aria-controls="tab-2"
-      tabindex="-1"
-    >
-      Title 3
-    </button>
-  </div>
-  <div class="leafygreen-ui-1k5h8zu">
-    <div class="leafygreen-ui-p15qvm"></div>
-  </div>
-  <div
-    aria-disabled="false"
-    aria-selected="true"
-    aria-controls="tab-0"
-    data-tab-id="test1"
-    role="tabpanel"
-  >
-    Hello 1
-  </div>
-</div>
-```
+<!-- Will update once the comcponetn is finalized -->
 
 # Tabs
 
@@ -104,7 +44,7 @@ The event handler function for the 'onChange' event. Receives the associated eve
 
 **Default:** ``
 
-If property is used, will ensure that component behaves as a controlled component. The value passed here should match the value property of the `Tab` component that should appear active.
+If property is used, component will behave as a controlled component. The value passed here should match the value property of the `Tab` component that should appear active.
 
 ### as
 
@@ -112,7 +52,7 @@ If property is used, will ensure that component behaves as a controlled componen
 
 **Default:** `button`
 
-Determines the root element. For example, `Link` or `a` tags can be supplied to replace `button` from being the element that wraps the component.
+Determines the root element. For example, `Link` or `a` tags can be supplied to replace `button` from being the element that wraps the components in the Tab List.
 
 ### Any other properties supplied will be spread on the root element.
 
@@ -163,6 +103,7 @@ Should be supplied when using the Uncontrolled `Tabs` component. This determines
 **Type:** `node`
 
 **Default:** `null`
+
 Content that appears inside the `Tab` component
 
 ### Any other properties supplied will be spread on the root element.
