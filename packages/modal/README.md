@@ -5,7 +5,7 @@
 ## Example
 
 ```js
-import Modal, { ModalSize, useModalState } from '@leafygreen-ui/Menu';
+import Modal from '@leafygreen-ui/modal';
 
 function ExampleComponent() {
   const { open, setOpen } = useModalState();
