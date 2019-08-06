@@ -1,8 +1,7 @@
 {
   "files": [],
   "include": [],
-  "references": [
-    {
+  "references": [{
       "path": "./packages/badge"
     },
     {

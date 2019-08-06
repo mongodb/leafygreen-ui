@@ -5,21 +5,20 @@
     "rootDir": "src"
   },
   "include": ["src/**/*"],
-  "references": [
-    {
-      "path": "../../packages/emotion"
+  "references": [{
+      "path": "../emotion"
     },
     {
-      "path": "../../packages/hooks"
+      "path": "../hooks"
     },
     {
-      "path": "../../packages/lib"
+      "path": "../lib"
     },
     {
-      "path": "../../packages/portal"
+      "path": "../portal"
     },
     {
-      "path": "../../packages/theme"
+      "path": "../theme"
     }
   ]
 }

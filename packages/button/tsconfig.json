@@ -5,15 +5,14 @@
     "rootDir": "src"
   },
   "include": ["src/**/*"],
-  "references": [
-    {
-      "path": "../../packages/emotion"
+  "references": [{
+      "path": "../emotion"
     },
     {
-      "path": "../../packages/lib"
+      "path": "../lib"
     },
     {
-      "path": "../../packages/palette"
+      "path": "../palette"
     }
   ]
 }

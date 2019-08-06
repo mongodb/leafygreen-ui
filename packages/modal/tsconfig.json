@@ -5,24 +5,23 @@
     "rootDir": "src"
   },
   "include": ["src/**/*", "../../typings"],
-  "references": [
-    {
-      "path": "../../packages/emotion"
+  "references": [{
+      "path": "../emotion"
     },
     {
-      "path": "../../packages/hooks"
+      "path": "../hooks"
     },
     {
-      "path": "../../packages/icon"
+      "path": "../icon"
     },
     {
-      "path": "../../packages/lib"
+      "path": "../lib"
     },
     {
-      "path": "../../packages/palette"
+      "path": "../palette"
     },
     {
-      "path": "../../packages/portal"
+      "path": "../portal"
     }
   ]
 }
