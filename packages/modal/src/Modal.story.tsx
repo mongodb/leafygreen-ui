@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select } from '@storybook/addon-knobs';
-import Modal, { ModalSize } from './Modal';
+import Modal, { ModalSize } from '.';
 
 function Example() {
   const [open, setOpen] = useState(false);
