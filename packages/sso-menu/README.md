@@ -12,7 +12,7 @@
 
 ## Properties
 
-### userInfo: { name, email }
+### user: { name, email }
 
 **Type:** `object`
 

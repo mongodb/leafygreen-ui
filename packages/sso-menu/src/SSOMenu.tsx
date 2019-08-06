@@ -99,12 +99,7 @@ const logoutContainerHeight = css`
   height: 46px;
 `;
 
-const menuItems: Array<{
-  displayName: string;
-  description: string;
-  href: string;
-  slug: string;
-}> = [
+const menuItems = [
   {
     displayName: 'Atlas',
     description: 'cloud.mongodb.com',
@@ -123,7 +118,15 @@ const menuItems: Array<{
     href: 'https://support.mongodb.com',
     slug: 'support',
   },
-];
+] as const;
+
+export const ActiveProduct = {
+  Atlas: 'atlas',
+  University: 'university',
+  Support: 'support',
+} as const;
+
+type ActiveProduct = typeof ActiveProduct[keyof typeof ActiveProduct];
 
 const escapeKey = 27;
 
@@ -131,12 +134,12 @@ interface SSOMenuProps {
   /**
    * Object that contains information about the active user. {name: 'string', email: 'string'}
    */
-  userInfo: { name: string; email: string };
+  user: { name: string; email: string };
 
   /**
    * MongoDB product that is currently active: ['atlas', 'university', 'support'].
    */
-  activeProduct: string;
+  activeProduct: ActiveProduct;
 
   /**
    * Callback invoked when user logs out.
@@ -159,14 +162,14 @@ interface SSOMenuProps {
  *
  * ```
 <SSOMenu
-    userInfo={{ name: 'Alex Smith', email: 'alex.smith@youwork.com' }}
+    user={{ name: 'Alex Smith', email: 'alex.smith@youwork.com' }}
     activeProduct="atlas"
     onAccountClick={() => console.log('Viewing account information')}
     onLogout={() => console.log('On logout')}
     onProductChange={() => console.log('Switching products')}
   />
  * ```
- * @param props.userInfo Object that contains information about the active user. {name: 'string', email: 'string'}
+ * @param props.user Object that contains information about the active user. {name: 'string', email: 'string'}
  * @param props.activeProduct  MongoDB product that is currently active: ['atlas', 'university', 'support'].
  * @param props.onLogout Callback invoked when user logs out.
  * @param props.onAccountClick Callback invoked when user views their MongoDB account.
@@ -174,7 +177,7 @@ interface SSOMenuProps {
  *
  */
 function SSOMenu({
-  userInfo: { name, email },
+  user: { name, email },
   activeProduct,
   onLogout,
   onProductChange,
@@ -207,7 +210,7 @@ function SSOMenu({
     <button
       ref={triggerRef}
       type="button"
-      onClick={() => setActive(!active)}
+      onClick={() => setActive(curr => !curr)}
       className={cx(menuButtonStyle, {
         [activeMenuButtonStyle]: active,
       })}
@@ -231,6 +234,7 @@ function SSOMenu({
             size="small"
             onClick={onAccountClick}
             className={accountButtonStyle}
+            as="a"
           >
             MongoDB Account
           </Button>
@@ -268,7 +272,7 @@ function SSOMenu({
 SSOMenu.displayName = 'SSOMenu';
 
 SSOMenu.propTypes = {
-  userInfo: PropTypes.object,
+  user: PropTypes.object,
   activeProduct: PropTypes.oneOf(['atlas', 'support', 'university']),
   onLogout: PropTypes.func,
   onProductChange: PropTypes.func,
