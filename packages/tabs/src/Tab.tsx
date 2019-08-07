@@ -59,11 +59,10 @@ export interface TabProps {
   <Tab value='tab-1' tabTitle='First Tab'>Tab 1</Tab>
 ```
  * @param props.value Value supplied to the data-tab-id attribute. Used to determine what Tab is active.
- * @param props.active Set internally. Used to determine if the Tab is active.
  * @param props.children Content that will appear inside of Tab panel.
  * @param props.disabled Boolean that determines if the Tab is disabled.
  * @param props.tabTitle Title that will appear in Tab List.
- * @param props.ariaControl Value supplied to aria-control attribute.
+ * @param props.className Value supplied to aria-control attribute.
  * @param props.default If Tabs component is uncontrolled, this determines what Tab will be active on first render.
  * @param props.href Destination when TabTitle is rendered as `a` tag.
  * @param props.to Destination when TabTitle is rendered as `Link` tag.

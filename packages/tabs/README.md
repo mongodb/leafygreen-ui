@@ -106,4 +106,20 @@ Should be supplied when using the Uncontrolled `Tabs` component. This determines
 
 Content that appears inside the `Tab` component
 
+### href
+
+**Type:** `string`
+
+**Default:** ``
+
+Destination when TabTitle is rendered as `a` tag.
+
+### to
+
+**Type:** `string`
+
+**Default:** ``
+
+Destination when TabTitle is rendered as `Link` tag.
+
 ### Any other properties supplied will be spread on the root element.
