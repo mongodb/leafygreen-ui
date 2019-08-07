@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/menu",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "LeafyGreen UI Kit Menu",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -13,10 +13,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/hooks": "^1.0.5",
-    "@leafygreen-ui/lib": "^3.0.5",
-    "@leafygreen-ui/popover": "^1.1.5",
-    "@leafygreen-ui/theme": "^1.2.5"
+    "@leafygreen-ui/hooks": "^1.0.6",
+    "@leafygreen-ui/lib": "^3.0.6",
+    "@leafygreen-ui/popover": "^1.1.6",
+    "@leafygreen-ui/theme": "^1.2.6"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0"
 }
