@@ -12,8 +12,3 @@ declare module '*.gif' {
   const value: string;
   export = value;
 }
-
-declare module '*.svg' {
-  const value: SVGR.Component;
-  export = value;
-}
