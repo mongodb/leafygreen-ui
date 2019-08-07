@@ -39,6 +39,10 @@ const menuButtonStyle = css`
       transform: rotate(180deg);
       fill: white !important;
     }
+
+    & > path {
+      fill: white !important;
+    }
   }
 `;
 

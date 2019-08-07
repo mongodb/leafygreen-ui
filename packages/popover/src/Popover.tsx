@@ -46,7 +46,7 @@ export interface PopoverProps {
    *
    * default: `false`
    */
-  active: boolean;
+  active?: boolean;
 
   /**
    * Class name applied to popover content container.
