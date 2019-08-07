@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/lib",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "leafyGreen UI Kit Internal Library",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -18,7 +18,7 @@
     "react": "^16.0.0"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^1.0.5",
+    "@leafygreen-ui/emotion": "^1.0.6",
     "facepaint": "^1.2.1",
     "polished": "^2.3.0"
   },
