@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from 'emotion';
 import Button from '@leafygreen-ui/button';
-import Icon from '@leafygreen-ui/icon';
 import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
 
 const menuButtonStyle = css`
@@ -70,6 +69,7 @@ const truncate = css`
 
 const iconStyle = css`
   position: relative;
+  fill: ${uiColors.gray.dark1} !important;
 `;
 
 const accountMenuGroupStyle = css`
@@ -196,11 +196,25 @@ function SSOMenu({
       trigger={
         <button ref={triggerRef} type="button" className={menuButtonStyle}>
           <span className={menuNameStyle}>{name}</span>
-          <Icon
-            glyph="CaretDown"
+          <svg
             className={iconStyle}
-            fill={uiColors.gray.dark1}
-          />
+            width="16px"
+            height="16px"
+            viewBox="0 0 16 16"
+            version="1.1"
+          >
+            <g
+              id="CaretDown-Copy"
+              stroke="none"
+              strokeWidth="1"
+              fillRule="evenodd"
+            >
+              <path
+                d="M4.67285687,6 L11.3271431,6 C11.9254697,6 12.224633,6.775217 11.8024493,7.22717749 L8.47530616,10.7889853 C8.21248981,11.0703382 7.78751019,11.0703382 7.52748976,10.7889853 L4.19755071,7.22717749 C3.77536701,6.775217 4.07453029,6 4.67285687,6 Z"
+                id="Path"
+              ></path>
+            </g>
+          </svg>
         </button>
       }
     >
