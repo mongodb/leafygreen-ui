@@ -102,20 +102,31 @@ yarn ts
 
 2. Create a new branch, and make sure to push it. This is where package version updates, and git tags will be pushed from.
 
-3. Publish all packages to NPM using Lerna. In the future, this will also include automatic changelog creation.
+3. Update each package's changelog:
+
+a) Provide information about what packages to release and what what version each package should be bumped to. We follow semver conventions for versioning, so each change will either be major, minor or patch.
+
+```
+yarn changeset
+```
+
+b) Once the `changes.json` file inside of the .changeset directory contains the appropriate version bumps for each package, generate a changeset for each package.
+
+```
+yarn bump
+```
+
+4. Publish all packages to NPM using Changesets.
 
 ```
 yarn release
 ```
 
-4. Push the branch you created, and make a pull request. It will contain all `package.json` changes for your publish.
+5. Push the branch you created, and make a pull request. It will contain all `package.json` changes for your publish.
 
-## Deploy gh-pages
-
-You can deploy a static build of our Storybook site to gh-pages.
-
-1. First be sure you've built a static version of Storybook: `yarn build:storybook`
-2. Then deploy to gh-pages: `yarn release:site`
+```
+git push --follow-tags
+```
 
 ## License
 
