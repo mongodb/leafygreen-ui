@@ -26,9 +26,7 @@ const menuButtonStyle = css`
   }
 
   &.lg-active {
-    background-color: ${uiColors.gray.base};
-    color: ${uiColors.white};
-
+    &,
     &:hover {
       background-color: ${uiColors.gray.base};
       color: ${uiColors.white};
@@ -36,10 +34,6 @@ const menuButtonStyle = css`
 
     & > svg {
       transform: rotate(180deg);
-      fill: white !important;
-    }
-
-    & > path {
       fill: white !important;
     }
   }
