@@ -124,6 +124,8 @@ const menuItems = [
   },
 ] as const;
 
+const slugs = menuItems.map(mi => mi.slug);
+
 export const ActiveProduct = {
   Atlas: 'atlas',
   University: 'university',
@@ -152,11 +154,6 @@ interface SSOMenuProps {
    * Callback invoked when user switches products.
    */
   onProductChange?: React.MouseEventHandler;
-
-  /**
-   * Callback invoked when user views their MongoDB account.
-   */
-  onAccountClick?: React.MouseEventHandler;
 }
 
 /**
@@ -166,7 +163,6 @@ interface SSOMenuProps {
 <SSOMenu
     user={{ name: 'Alex Smith', email: 'alex.smith@youwork.com' }}
     activeProduct="atlas"
-    onAccountClick={() => console.log('Viewing account information')}
     onLogout={() => console.log('On logout')}
     onProductChange={() => console.log('Switching products')}
   />
@@ -174,16 +170,14 @@ interface SSOMenuProps {
  * @param props.user Object that contains information about the active user. {name: 'string', email: 'string'}
  * @param props.activeProduct  MongoDB product that is currently active: ['atlas', 'university', 'support'].
  * @param props.onLogout Callback invoked when user logs out.
- * @param props.onAccountClick Callback invoked when user views their MongoDB account.
  * @param props.onProductChange Callback invoked when user switches products.
  *
  */
 function SSOMenu({
   user: { name, email },
   activeProduct,
-  onLogout,
-  onProductChange,
-  onAccountClick,
+  onLogout = () => {},
+  onProductChange = () => {},
 }: SSOMenuProps) {
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -201,7 +195,7 @@ function SSOMenu({
         <p className={descriptionStyle}>{email}</p>
         <Button
           size="small"
-          onClick={onAccountClick}
+          href="https://account.mongodb.com"
           className={accountButtonStyle}
           as="a"
         >
@@ -241,7 +235,7 @@ SSOMenu.displayName = 'SSOMenu';
 
 SSOMenu.propTypes = {
   user: PropTypes.object,
-  activeProduct: PropTypes.oneOf(['atlas', 'support', 'university']),
+  activeProduct: PropTypes.oneOf(slugs),
   onLogout: PropTypes.func,
   onProductChange: PropTypes.func,
   onAccountClick: PropTypes.func,
