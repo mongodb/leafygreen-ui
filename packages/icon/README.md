@@ -19,9 +19,9 @@ const SomeComponent = () => <Icon glyph="plus" fill="#FF0000" />;
 **Output HTML**
 
 ```HTML
-<svg width="16" height="16" role="img" viewBox="0 0 16 16" fill="#000000" size="16">
+<svg width="16" height="16" role="img" viewBox="0 0 16 16" class="leafygreen-ui-yqbynm">
 	<title>Plus Icon</title>
-	<path d="M9 7h4v2H9v4H7V9H3V7h4V3h2v4z" fill="#FF0000" fill-rule="evenodd"></path>
+	<path d="M9 7h4v2H9v4H7V9H3V7h4V3h2v4z" fill="currentColor" fill-rule="evenodd"></path>
 </svg>
 ```
 
@@ -49,9 +49,7 @@ The height and width of the glyph's viewBox. This can be any `number` or one of 
 
 **Type:** `String`
 
-**Default:** `#000000`
-
-The fill color that is passed to the glyph.
+The fill color that is passed to the glyph. By default, the glyph will inherit its fill from the CSS color property of its nearest ancestor.
 
 ## Advanced Usage (Registering custom icon sets)
 
