@@ -9,13 +9,13 @@ jobs:
           keys:
             - node-cache-v2-{{ checksum "yarn.lock" }}
       - run: yarn install
-      - run: yarn build
       - run:
           name: prettier
           command: yarn prettier:check
       - run:
           name: lint
           command: yarn eslint --format junit -o reports/junit/js-lint-results.xml
+      - run: yarn build
       - run:
           name: tests
           command: yarn test --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
@@ -24,7 +24,7 @@ jobs:
             JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
       - run:
           name: types
-          command: yarn ts:check
+          command: yarn ts --verbose
       - save_cache:
           key: node-cache-v2-{{ checksum "yarn.lock" }}
           paths:
