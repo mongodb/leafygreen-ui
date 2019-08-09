@@ -1,8 +1,23 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "jsx": "preserve",
+    "allowJs": false,
+    "pretty": true,
     "declaration": true,
-    "emitDeclarationOnly": true
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "typeRoots": ["./typings", "./node_modules/@types"],
+    "baseUrl": ".",
+    "paths": {
+      "@leafygreen-ui/*": ["packages/*/src"]
+    },
+    "emitDeclarationOnly": true,
+    "composite": true
   },
-  "exclude": ["*.story.*"]
+  "exclude": ["*.story.*", "*.spec.*", "dist"]
 }

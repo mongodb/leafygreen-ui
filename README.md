@@ -94,7 +94,10 @@ We follow conventional commits with our commit messages.
 1.  Build the compiled version of every UI package. This creates the dist/ folder with the transpiled code ready for distribution.
 
 ```
+# To transpile and concatenate all files
 yarn build
+# To build TypeScript type definition files
+yarn ts
 ```
 
 2. Create a new branch, and make sure to push it. This is where package version updates, and git tags will be pushed from.
