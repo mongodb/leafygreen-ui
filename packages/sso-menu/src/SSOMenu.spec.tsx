@@ -7,7 +7,6 @@ afterAll(cleanup);
 
 describe('packages/SSOMenu', () => {
   const onLogout = jest.fn();
-  const onAccountClick = jest.fn();
   const onProductChange = jest.fn();
 
   const { getByText } = render(
@@ -16,7 +15,6 @@ describe('packages/SSOMenu', () => {
       activeProduct={ActiveProduct.Atlas}
       onLogout={onLogout}
       onProductChange={onProductChange}
-      onAccountClick={onAccountClick}
     />,
   );
 
@@ -48,14 +46,6 @@ describe('packages/SSOMenu', () => {
     expect((supportItem as HTMLAnchorElement).href).toBe(
       'https://support.mongodb.com/',
     );
-  });
-
-  test('onAccountClick fires when button is pressed', () => {
-    const button = getByText('MongoDB Account');
-
-    fireEvent.click(button);
-
-    expect(onAccountClick).toHaveBeenCalledTimes(1);
   });
 
   test('onLogout fires when logout is pressed', () => {

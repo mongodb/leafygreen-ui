@@ -1,7 +1,40 @@
 {
   "extends": "../../package.tsconfig.json",
   "compilerOptions": {
-    "declarationDir": "dist"
+    "declarationDir": "dist",
+    "rootDir": "src"
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "../../typings"],
+  "references": [
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../menu"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../button"
+    },
+    {
+      "path": "../hooks"
+    },
+    {
+      "path": "../popover"
+    },
+    {
+      "path": "../portal"
+    },
+    {
+      "path": "../theme"
+    }
+  ]
 }
