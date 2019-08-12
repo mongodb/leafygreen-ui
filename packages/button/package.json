@@ -5,8 +5,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js",
-    "ts:emit": "tsc --project ./tsconfig.json"
+    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
   },
   "license": "Apache-2.0",
   "publishConfig": {
