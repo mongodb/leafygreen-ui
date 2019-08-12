@@ -1,15 +1,3 @@
-/*
-Hey, welcome to the changeset config! This file has been generated
-for you with the default configs we use, and some comments around
-what options mean, so that it's easy to customise your workflow.
-
-You should update this as you need to craft your workflow.
-
-Config provided by a CI command takes precedence over the contents of this file.
-
-If a config option isn't present here, we will fall back to the defaults.
-*/
-
 const changesetOptions = {
   // If true, we will automatically commit the changeset when the command is run
   commit: false,
