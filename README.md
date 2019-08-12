@@ -104,7 +104,7 @@ yarn ts
 
 3. Update each package's changelog:
 
-a) Provide information about what packages to release and what what version each package should be bumped to. We follow semver conventions for versioning, so each change will either be major, minor or patch.
+a) Provide information about what packages to release and what version each package should be bumped to. We follow semver conventions for versioning, so each change will either be major, minor, or patch.
 
 ```
 yarn changeset
@@ -127,6 +127,13 @@ yarn release
 ```
 git push --follow-tags
 ```
+
+## Deploy gh-pages
+
+You can deploy a static build of our Storybook site to gh-pages.
+
+1. First be sure you've built a static version of Storybook: `yarn build:storybook`
+2. Then deploy to gh-pages: `yarn release:site`
 
 ## License
 
