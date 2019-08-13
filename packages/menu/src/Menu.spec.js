@@ -11,7 +11,7 @@ describe('packages/Menu', () => {
   const className = 'test-className';
 
   const { getByTestId, getByText, getByRole } = render(
-    <Menu active data-testid="test-menu">
+    <Menu open data-testid="test-menu">
       <MenuGroup>
         <MenuItem className={className} onClick={onClick}>
           Item A
@@ -23,9 +23,9 @@ describe('packages/Menu', () => {
 
   const menu = getByTestId('test-menu');
 
-  test('Appears on DOM when active prop is set', () => {
+  test('Appears on DOM when open prop is set', () => {
     const menu = getByTestId('test-menu');
-    expect(menu).toBeVisible();
+    expect(menu).toBeInTheDocument();
   });
 
   test('Renders children to the DOM', () => {
