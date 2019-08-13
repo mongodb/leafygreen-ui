@@ -77,17 +77,13 @@ yarn test
 
 ## Commiting
 
-We follow conventional commits with our commit messages.
+When making a PR that contains changes that should be included in a package's changelog, be sure to do so by running:
 
 ```
-<type>[optional scope]: <description>
+yarn changeset
 ```
 
-### Options:
-
-**Types:** `fix:` (patch), `feat:` (minor change), `breaking change:` (major change), `chore:`, `docs:`, `style:`, `perf:`, `test:`. For more information visit [Conventional Commits.](https://www.conventionalcommits.org/en/v1.0.0-beta.4/)
-
-**Scopes:** can be any of the components within the `packages` directory. If your commit does not directly relate to one of the packages, or includes multiple, omit the optional scope.
+This will generate a `changes.json` file, keeping track of version upgrades and update descriptions. We follow semver conventions for versioning, so each change will either be major, minor, or patch.
 
 ## Publishing
 
@@ -102,18 +98,10 @@ yarn ts
 
 2. Create a new branch, and make sure to push it. This is where package version updates, and git tags will be pushed from.
 
-3. Update each package's changelog:
-
-a) Provide information about what packages to release and what version each package should be bumped to. We follow semver conventions for versioning, so each change will either be major, minor, or patch.
+3. Generate a changeset for each package.
 
 ```
-yarn changeset
-```
-
-b) Once the `changes.json` file inside of the .changeset directory contains the appropriate version bumps for each package, generate a changeset for each package.
-
-```
-yarn bump
+yarn changeset bump
 ```
 
 4. Publish all packages to NPM using Changesets.

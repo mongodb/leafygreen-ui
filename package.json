@@ -22,7 +22,6 @@
     "start": "start-storybook -p 9001 -c storybook -s ./storybook/static",
     "build": "lerna run --parallel build -- --env production",
     "build:storybook": "build-storybook -c storybook -o ./storybook/public -s ./storybook/static",
-    "bump": "yarn changeset bump",
     "format": "yarn prettier && yarn eslint:format",
     "init": "yarn && yarn build && yarn ts --verbose --force",
     "link-all-packages": "lerna exec --ignore @leafygreen-ui/lib --ignore @leafygreen-ui/theme -- yarn link",
