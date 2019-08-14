@@ -183,6 +183,10 @@ const buttonSizes: { readonly [K in Size]: string } = {
 
 const baseStyle = css`
   position: relative;
+  // Establishes the root element as a new stacking context
+  // so that the z-index of the span within the button doesn't
+  // appear above other elements on the page that it shouldn't.
+  z-index: 0;
   border-radius: 3px;
   box-sizing: border-box;
   cursor: pointer;
