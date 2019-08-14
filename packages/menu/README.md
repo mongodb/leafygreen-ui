@@ -90,7 +90,7 @@ Determines whether or not the `Menu` will appear as open or closed
 
 **Type:** `function`
 
-Function that controls whether or not the `Menu` should be open. If passed, component will be treated as controlled; however, we will handle closing the Menu on backdrop clicks and when the user presses the escape key.
+When controlling the component, use `setOpen` to keep track of the `Menu` component's state so that clicks on the document's backdrop as well as a user pressing the Escape Key will close the Menu and update the consuming application's local state accordingly.
 
 ### shouldClose
 
