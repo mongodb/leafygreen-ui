@@ -320,7 +320,11 @@ export default function Button(props: ButtonProps) {
     >
       <span
         className={css`
-          position: relative;
+          // Usually for this to take effect, you would need the element to be
+          // "positioned". Due to an obscure part of CSS spec, flex children
+          // respect z-index without the position property being set.
+          //
+          // https://www.w3.org/TR/css-flexbox-1/#painting
           z-index: 1;
         `}
       >
