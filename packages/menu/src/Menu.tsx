@@ -1,4 +1,4 @@
-import React, { useState, useRef, SetStateAction } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { useEventListener } from '@leafygreen-ui/hooks';
@@ -30,7 +30,9 @@ interface MenuProps extends Omit<PopoverProps, 'spacing, active'> {
    * Callback to change the open state of the Menu.
    *
    */
-  setOpen: (open: boolean) => void | React.Dispatch<SetStateAction<boolean>>;
+  setOpen: (
+    open: boolean,
+  ) => void | React.Dispatch<React.SetStateAction<boolean>>;
 
   /**
    * Callback to determine whether or not Menu should close when user tries to close it.
@@ -84,12 +86,12 @@ function Menu({
   const popoverRef: React.RefObject<HTMLDivElement> = useRef(null);
 
   const handleClose = () => {
-    if (setOpen && shouldClose()) {
-      setOpen(false);
-    }
-
-    if (!setOpen && shouldClose()) {
-      setUncontrolledOpen(false);
+    if (shouldClose()) {
+      if (setOpen) {
+        setOpen(false);
+      } else {
+        setUncontrolledOpen(false);
+      }
     }
   };
 
@@ -125,7 +127,7 @@ function Menu({
   const popoverContent = (
     <Popover
       key="popover"
-      active={setOpen ? open : uncontrolledOpen}
+      active={open || uncontrolledOpen}
       align={align}
       justify={justify}
       refEl={refEl}
@@ -147,16 +149,17 @@ function Menu({
   if (trigger) {
     if (typeof trigger === 'function') {
       return trigger({
-        onClick: () => setUncontrolledOpen(open => !open),
+        onClick: () =>
+          setUncontrolledOpen(uncontrolledOpen => !uncontrolledOpen),
         children: popoverContent,
       });
     }
 
     return React.cloneElement(trigger, {
       onClick: (e: React.MouseEvent) => {
-        setUncontrolledOpen(open => !open);
+        setUncontrolledOpen(uncontrolledOpen => !uncontrolledOpen);
 
-        if (trigger.props && trigger.props.onClick) {
+        if (trigger.props.onClick) {
           trigger.props.onClick(e);
         }
       },
