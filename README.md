@@ -85,6 +85,8 @@ yarn changeset
 
 This will generate a `changes.json` file, keeping track of version upgrades and update descriptions. We follow semver conventions for versioning, so each change will either be major, minor, or patch.
 
+Make sure that the PR includes the changes made by running this command.
+
 ## Publishing
 
 1.  Build the compiled version of every UI package. This creates the dist/ folder with the transpiled code ready for distribution.
@@ -103,6 +105,8 @@ yarn ts
 ```
 yarn changeset bump
 ```
+
+Make sure changes made from this commmand are merged back into master before releasing.
 
 4. Publish all packages to NPM using Changesets.
 
