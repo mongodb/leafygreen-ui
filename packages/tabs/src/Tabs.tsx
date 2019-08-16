@@ -114,26 +114,17 @@ function Tabs({
     React.ReactElement
   >;
 
-  const currentIndex = childrenArray.reduce(
-    (acc, child, index) => {
-      if (!child) {
-        return acc;
-      }
+  const currentIndex = childrenArray.findIndex(child => {
+    if (!child) {
+      return false;
+    }
 
-      if (selected || activeTab) {
-        return [activeTab, selected].includes(child.props.value)
-          ? [...acc, index]
-          : acc;
-      }
+    if (activeTab || selected) {
+      return [activeTab, selected].includes(child.props.value);
+    }
 
-      if (child.props.default) {
-        return [...acc, index];
-      }
-
-      return acc;
-    },
-    [] as Array<number>,
-  )[0];
+    return child.props.default;
+  });
 
   function handleChange(e: React.SyntheticEvent<Element, MouseEvent>) {
     if (!selected) {
