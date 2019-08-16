@@ -11,7 +11,6 @@ const borderHeight = 3;
 const listStyle = css`
   list-style: none;
   padding: 0px;
-  margin-top: 20px;
 `;
 
 const activeStyle = css`
@@ -89,8 +88,8 @@ interface TabsProps {
  *
  * ```
 <Tabs onChange={() => execute callback onChange}>
-  <Tab value='tab-1' tabTitle='First Tab'>Tab 1</Tab>
-  <Tab value='tab-2' tabTitle='Second Tab'>Tab 2</Tab>
+  <Tab value='tab-1' title='First Tab'>Tab 1</Tab>
+  <Tab value='tab-2' title='Second Tab'>Tab 2</Tab>
 </Tabs>
 ```
  * @param props.children Content to appear inside of Tabs component.
@@ -109,7 +108,7 @@ function Tabs({
 }: TabsProps) {
   const [activeTab, setActiveTab] = useState();
   const [currentIndex, setCurrentIndex] = useState();
-  const [focusedState, setFocusedState] = useState([] as Array<string>);
+  const [focusedState, setFocusedState] = useState([]);
   const tabListRef = useRef<HTMLDivElement>(null);
 
   const childrenArray = React.Children.toArray(children) as Array<
@@ -117,7 +116,7 @@ function Tabs({
   >;
 
   useEffect(() => {
-    const currentIndex = childrenArray.reduce(
+    const currIdx = childrenArray.reduce(
       (acc, child, index) => {
         if (!child) {
           return acc;
@@ -138,7 +137,7 @@ function Tabs({
       [] as Array<number>,
     );
 
-    setCurrentIndex(currentIndex[0]);
+    setCurrentIndex(currIdx[0]);
   });
 
   function handleChange(e: React.SyntheticEvent<Element, MouseEvent>) {
@@ -173,13 +172,11 @@ function Tabs({
 
     switch (e.key) {
       case 'ArrowRight':
-      case 'ArrowDown':
         index = (enabledCurrentIndex + 1) % enabledIndexes.length;
         setActiveTab(children[enabledIndexes[index]].props.value);
         break;
 
       case 'ArrowLeft':
-      case 'ArrowUp':
         index =
           (enabledCurrentIndex - 1 + enabledIndexes.length) %
           enabledIndexes.length;
@@ -194,7 +191,7 @@ function Tabs({
       !tabListRef.current ||
       typeof currentIndex !== 'number'
     ) {
-      return css``;
+      return null;
     }
 
     const tabListChildren: Array<Element> = Array.from(
@@ -203,7 +200,7 @@ function Tabs({
 
     let computedX = 0;
 
-    for (let i = 0; i < currentIndex || 0; i++) {
+    for (let i = 0; i < currentIndex; i++) {
       computedX += tabListChildren[i].scrollWidth;
     }
 
@@ -222,7 +219,7 @@ function Tabs({
 
       const childValue = child.props.value;
 
-      if (Object.keys(acc).includes(childValue)) {
+      if (acc[childValue] != null) {
         // eslint-disable-next-line no-console
         console.warn(
           'You are using the same value for one or more tabs. Please make sure all values are unique',
@@ -243,7 +240,7 @@ function Tabs({
 
       return { ...acc, [childValue]: updatedChild };
     },
-    {} as { string: React.ReactElement },
+    {} as { [key: string]: React.ReactElement },
   );
 
   const tabs = Object.values(tabObject);
@@ -262,7 +259,7 @@ function Tabs({
           const filteredRest = omit(rest, [
             'ariaControl',
             'children',
-            'tabTitle',
+            'title',
             'default',
           ]);
 
@@ -278,13 +275,13 @@ function Tabs({
               dataTabId={value}
               onClick={!disabled ? handleChange : undefined}
               onKeyDown={handleKeyDown}
-              ariaControls={`tab-${value}`}
+              ariaControl={`tab-${value}`}
               disabled={disabled}
               active={active}
               setFocusedState={setFocusedState}
               as={as}
             >
-              {tab.props.tabTitle}
+              {tab.props.title}
             </TabTitle>
           );
         })}

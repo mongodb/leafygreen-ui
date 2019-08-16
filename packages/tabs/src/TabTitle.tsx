@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { TabProps } from '.';
 
 const listTitle = css`
   display: inline-block;
@@ -29,14 +30,10 @@ const listTitle = css`
   }
 `;
 
-interface SharedTabTitleProps {
-  active: boolean;
-  id?: string;
-  disabled?: boolean;
+interface SharedTabTitleProps
+  extends Omit<TabProps, 'default, title, href, to, value'> {
   dataTabId: string;
-  ariaControls?: string;
   setFocusedState: React.Dispatch<SetStateAction<Array<string>>>;
-  className?: string;
   as?: React.ElementType<any>;
 }
 
@@ -81,7 +78,7 @@ function TabTitle(props: TabTitleProps) {
     dataTabId,
     onClick,
     onKeyDown,
-    ariaControls,
+    ariaControl,
     setFocusedState,
     as,
     ...rest
@@ -90,7 +87,7 @@ function TabTitle(props: TabTitleProps) {
   const titleRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (titleRef.current && active && !disabled) {
+    if (!disabled && active && titleRef.current) {
       titleRef.current.focus();
     }
   }, [active]);
@@ -114,7 +111,7 @@ function TabTitle(props: TabTitleProps) {
       data-tab-id={dataTabId}
       onClick={onClick}
       onKeyDown={onKeyDown}
-      aria-controls={ariaControls}
+      aria-controls={ariaControl}
       aria-selected={active}
       aria-disabled={disabled}
       tabIndex={active ? 0 : -1}
@@ -147,7 +144,7 @@ TabTitle.propTypes = {
   dataTabId: PropTypes.string,
   onClick: PropTypes.func,
   onKeyDown: PropTypes.func,
-  ariaControls: PropTypes.string,
+  ariaControl: PropTypes.string,
   as: PropTypes.string,
 };
 
