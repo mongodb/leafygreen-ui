@@ -77,17 +77,15 @@ yarn test
 
 ## Commiting
 
-We follow conventional commits with our commit messages.
+When making a PR that contains changes that should be included in a package's changelog, be sure to do so by running:
 
 ```
-<type>[optional scope]: <description>
+yarn changeset
 ```
 
-### Options:
+This will generate a `changes.json` file, keeping track of version upgrades and update descriptions. We follow semver conventions for versioning, so each change will either be major, minor, or patch.
 
-**Types:** `fix:` (patch), `feat:` (minor change), `breaking change:` (major change), `chore:`, `docs:`, `style:`, `perf:`, `test:`. For more information visit [Conventional Commits.](https://www.conventionalcommits.org/en/v1.0.0-beta.4/)
-
-**Scopes:** can be any of the components within the `packages` directory. If your commit does not directly relate to one of the packages, or includes multiple, omit the optional scope.
+Make sure that the PR includes the changes made by running this command.
 
 ## Publishing
 
@@ -102,13 +100,25 @@ yarn ts
 
 2. Create a new branch, and make sure to push it. This is where package version updates, and git tags will be pushed from.
 
-3. Publish all packages to NPM using Lerna. In the future, this will also include automatic changelog creation.
+3. Generate a changeset for each package.
+
+```
+yarn changeset bump
+```
+
+Make sure changes made from this commmand are merged back into master before releasing.
+
+4. Publish all packages to NPM using Changesets.
 
 ```
 yarn release
 ```
 
-4. Push the branch you created, and make a pull request. It will contain all `package.json` changes for your publish.
+5. Push the branch you created, and make a pull request. It will contain all `package.json` changes for your publish.
+
+```
+git push --follow-tags
+```
 
 ## Deploy gh-pages
 
