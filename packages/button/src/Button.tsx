@@ -183,6 +183,10 @@ const buttonSizes: { readonly [K in Size]: string } = {
 
 const baseStyle = css`
   position: relative;
+  // Establishes the root element as a new stacking context
+  // so that the z-index of the span within the button doesn't
+  // appear above other elements on the page that it shouldn't.
+  z-index: 0;
   border-radius: 3px;
   box-sizing: border-box;
   cursor: pointer;
@@ -316,7 +320,11 @@ export default function Button(props: ButtonProps) {
     >
       <span
         className={css`
-          position: relative;
+          // Usually for this to take effect, you would need the element to be
+          // "positioned". Due to an obscure part of CSS spec, flex children
+          // respect z-index without the position property being set.
+          //
+          // https://www.w3.org/TR/css-flexbox-1/#painting
           z-index: 1;
         `}
       >
