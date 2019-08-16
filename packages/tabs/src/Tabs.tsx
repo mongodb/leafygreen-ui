@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -107,7 +107,6 @@ function Tabs({
   ...rest
 }: TabsProps) {
   const [activeTab, setActiveTab] = useState();
-  const [currentIndex, setCurrentIndex] = useState();
   const [focusedState, setFocusedState] = useState([]);
   const tabListRef = useRef<HTMLDivElement>(null);
 
@@ -115,30 +114,26 @@ function Tabs({
     React.ReactElement
   >;
 
-  useEffect(() => {
-    const currIdx = childrenArray.reduce(
-      (acc, child, index) => {
-        if (!child) {
-          return acc;
-        }
-
-        if (selected || activeTab) {
-          return [activeTab, selected].includes(child.props.value)
-            ? [...acc, index]
-            : acc;
-        }
-
-        if (child.props.default) {
-          return [...acc, index];
-        }
-
+  const currentIndex = childrenArray.reduce(
+    (acc, child, index) => {
+      if (!child) {
         return acc;
-      },
-      [] as Array<number>,
-    );
+      }
 
-    setCurrentIndex(currIdx[0]);
-  });
+      if (selected || activeTab) {
+        return [activeTab, selected].includes(child.props.value)
+          ? [...acc, index]
+          : acc;
+      }
+
+      if (child.props.default) {
+        return [...acc, index];
+      }
+
+      return acc;
+    },
+    [] as Array<number>,
+  )[0];
 
   function handleChange(e: React.SyntheticEvent<Element, MouseEvent>) {
     if (!selected) {
