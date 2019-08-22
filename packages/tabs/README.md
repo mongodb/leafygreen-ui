@@ -28,7 +28,7 @@ Adds a className to the root element.
 
 **Default:** `() => {}`
 
-The event handler function for the 'onChange' event. Receives the associated event object as the first argument.
+The event handler function for the 'onChange' event. Receives the associated event object as the first argument and index of activated Tab as the second.
 
 ### children
 
@@ -44,7 +44,7 @@ The event handler function for the 'onChange' event. Receives the associated eve
 
 **Default:** ``
 
-If property is used, component will behave as a controlled component. The value passed here should match the value property of the `Tab` component that should appear active.
+If property is used, component will behave as a controlled component. The value passed here should match the index of the `Tab` component that should appear active.
 
 ### as
 
@@ -59,12 +59,6 @@ Determines the root element. For example, `Link` or `a` tags can be supplied to 
 # Tab
 
 ## Properties
-
-### value
-
-**Type:** required, can be a `string` or an `number`
-
-Every `Tab` needs a value prop.
 
 ### tabTitle
 

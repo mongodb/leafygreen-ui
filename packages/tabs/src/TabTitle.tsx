@@ -75,12 +75,12 @@ function TabTitle(props: TabTitleProps) {
     children,
     className,
     disabled,
-    dataTabId,
     onClick,
     onKeyDown,
     ariaControl,
     setFocusedState,
     as,
+    index,
     ...rest
   } = props;
 
@@ -93,13 +93,11 @@ function TabTitle(props: TabTitleProps) {
   }, [active]);
 
   const onBlur = useCallback(() => {
-    setFocusedState((curr: Array<string>) =>
-      curr.filter(el => dataTabId !== el),
-    );
+    setFocusedState((curr: Array<string>) => curr.filter(el => index !== el));
   }, [setFocusedState]);
 
   const onFocus = useCallback(() => {
-    setFocusedState((curr: Array<string>) => [...curr, dataTabId]);
+    setFocusedState((curr: Array<string>) => [...curr, index]);
   }, [setFocusedState]);
 
   const renderTabTitle = (Root: React.ElementType<any> = 'button') => (
@@ -108,7 +106,6 @@ function TabTitle(props: TabTitleProps) {
       ref={titleRef}
       className={cx(listTitle, className)}
       role="tab"
-      data-tab-id={dataTabId}
       onClick={onClick}
       onKeyDown={onKeyDown}
       aria-controls={ariaControl}

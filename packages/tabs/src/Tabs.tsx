@@ -63,12 +63,15 @@ interface TabsProps {
   /**
    * Callback to be executed when a tab is selected.
    */
-  onChange?: React.ReactEventHandler;
+  onChange?: (
+    e: React.MouseEvent<any>,
+    index: number,
+  ) => void | React.EventHandler<any>;
 
   /**
-   * Tab that should appear active. If value passed to selected prop, component will be controlled by consumer.
+   * Index of the Tab that should appear active. If value passed to selected prop, component will be controlled by consumer.
    */
-  selected?: string | null;
+  selected?: number | null;
 
   /**
    * className supplied to Tabs container.
@@ -94,7 +97,7 @@ interface TabsProps {
 ```
  * @param props.children Content to appear inside of Tabs component.
  * @param props.onChange Callback to be executed when a Tab is selected.
- * @param props.selected Tab that should appear active. If value passed, component will be controlled by consumer.
+ * @param props.selected Index of the Tab that should appear active. If value passed, component will be controlled by consumer.
  * @param props.className Classname applied to Tabs container.
  * @param props.as HTML Element that wraps title in Tab List.
  */
@@ -106,33 +109,36 @@ function Tabs({
   as = 'button',
   ...rest
 }: TabsProps) {
-  const [activeTab, setActiveTab] = useState();
-  const [focusedState, setFocusedState] = useState([]);
+  const [activeIndex, setActiveIndex] = useState();
   const tabListRef = useRef<HTMLDivElement>(null);
+  const [focusedState, setFocusedState] = useState([]);
 
   const childrenArray = React.Children.toArray(children) as Array<
     React.ReactElement
   >;
 
-  const currentIndex = childrenArray.findIndex(child => {
+  const currentIndex = childrenArray.findIndex((child, index) => {
     if (!child) {
       return false;
     }
 
-    if (activeTab || selected) {
-      return [activeTab, selected].includes(child.props.value);
+    if (activeIndex || typeof selected === 'number') {
+      return [activeIndex, selected].includes(index);
     }
 
     return child.props.default;
   });
 
-  function handleChange(e: React.SyntheticEvent<Element, MouseEvent>) {
-    if (!selected) {
-      setActiveTab((e.target as HTMLLIElement).getAttribute('data-tab-id'));
+  function handleChange(
+    e: React.SyntheticEvent<Element, MouseEvent>,
+    idx: number,
+  ) {
+    if (typeof selected !== 'number' && !selected) {
+      setActiveIndex(idx);
     }
 
     if (onChange) {
-      onChange(e);
+      onChange(e, idx);
     }
   }
 
@@ -152,21 +158,21 @@ function Tabs({
       [] as Array<number>,
     );
 
-    const enabledCurrentIndex = enabledIndexes.indexOf(currentIndex);
+    const enabledCurrentIndex = enabledIndexes.indexOf(activeIndex);
 
     let index: number;
 
     switch (e.key) {
       case 'ArrowRight':
         index = (enabledCurrentIndex + 1) % enabledIndexes.length;
-        setActiveTab(children[enabledIndexes[index]].props.value);
+        setActiveIndex(enabledIndexes[index]);
         break;
 
       case 'ArrowLeft':
         index =
           (enabledCurrentIndex - 1 + enabledIndexes.length) %
           enabledIndexes.length;
-        setActiveTab(children[enabledIndexes[index]].props.value);
+        setActiveIndex(enabledIndexes[index]);
         break;
     }
   }
@@ -196,40 +202,21 @@ function Tabs({
     `;
   }
 
-  // using an object here in order to alert consumer if duplicate values are used
-  const tabObject = childrenArray.reduce(
-    (acc, child, index) => {
-      if (!isTab(child)) {
-        return { ...acc, [index]: child };
-      }
+  const tabs = React.Children.map(children, (child, index) => {
+    if (!isTab(child)) {
+      return child;
+    }
 
-      const childValue = child.props.value;
+    const active =
+      selected === index ||
+      (activeIndex ? index === activeIndex : child.props.default);
 
-      if (acc[childValue] != null) {
-        // eslint-disable-next-line no-console
-        console.warn(
-          'You are using the same value for one or more tabs. Please make sure all values are unique',
-        );
-
-        return acc;
-      }
-
-      const active =
-        selected === childValue ||
-        (activeTab ? childValue === activeTab : child.props.default);
-
-      const updatedChild = React.cloneElement(child, {
-        key: childValue,
-        ariaControl: `tab-${childValue}`,
-        active,
-      });
-
-      return { ...acc, [childValue]: updatedChild };
-    },
-    {} as { [key: string]: React.ReactElement },
-  );
-
-  const tabs = Object.values(tabObject);
+    return React.cloneElement(child, {
+      key: index,
+      ariaControl: `tab-{index}`,
+      active,
+    });
+  });
 
   return (
     <div {...rest} className={className}>
@@ -239,7 +226,7 @@ function Tabs({
         onKeyDown={handleKeyDown}
         ref={tabListRef}
       >
-        {tabs.map(tab => {
+        {tabs.map((tab, index) => {
           const { value, active, disabled, id, ...rest } = tab.props;
 
           const filteredRest = omit(rest, [
@@ -258,12 +245,16 @@ function Tabs({
                 [disabledStyle]: disabled,
               })}
               id={id}
-              dataTabId={value}
-              onClick={!disabled ? handleChange : undefined}
+              onClick={
+                !disabled
+                  ? (event: React.MouseEvent) => handleChange(event, index)
+                  : undefined
+              }
               onKeyDown={handleKeyDown}
               ariaControl={`tab-${value}`}
               disabled={disabled}
               active={active}
+              index={index}
               setFocusedState={setFocusedState}
               as={as}
             >

@@ -4,10 +4,10 @@ import { boolean, text } from '@storybook/addon-knobs';
 import { Tab, Tabs } from './index';
 
 function ControlledTabs() {
-  const [activeTab, setActiveTab] = useState<any>('test1');
+  const [activeTab, setActiveTab] = useState<number>(0);
 
-  const changeHandler = (e: React.SyntheticEvent<Element, MouseEvent>) => {
-    setActiveTab((e.target as HTMLLIElement).getAttribute('data-tab-id'));
+  const changeHandler = (e: React.MouseEvent, index: number) => {
+    setActiveTab(index);
   };
 
   return (

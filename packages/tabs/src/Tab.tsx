@@ -3,11 +3,6 @@ import PropTypes from 'prop-types';
 
 export interface TabProps {
   /**
-   * Value supplied to the data-tab-id attribute. Used to determine what Tab is active.
-   */
-  value: string;
-
-  /**
    * Content that will appear as the title in the Tab list.
    */
   title: string;
@@ -58,7 +53,6 @@ export interface TabProps {
  * ```
   <Tab value='tab-1' title='First Tab'>Tab 1</Tab>
 ```
- * @param props.value Value supplied to the data-tab-id attribute. Used to determine what Tab is active.
  * @param props.children Content that will appear inside of Tab panel.
  * @param props.disabled Boolean that determines if the Tab is disabled.
  * @param props.title Title that will appear in Tab List.
