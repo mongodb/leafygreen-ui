@@ -12,7 +12,7 @@ const rootMenuStyle = css`
   background-color: ${colors.mongodb.white};
 `;
 
-interface MenuProps extends Omit<PopoverProps, 'spacing, active'> {
+interface MenuProps extends Omit<PopoverProps, 'spacing | active'> {
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
    * Menu to control opening and closing itself internally.
@@ -72,8 +72,8 @@ function Menu({
   justify = Justify.End,
   usePortal = true,
   adjustOnMutation = false,
-  open = false,
   shouldClose = () => true,
+  open,
   setOpen,
   children,
   className,
