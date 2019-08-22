@@ -13,17 +13,15 @@ describe('packages/Tabs', () => {
   const { getByText, getByTestId } = render(
     <Tabs
       className={tabsClassName}
-      selected="b"
+      selected={1}
       onChange={onChange}
       data-testid="tabs-component"
     >
-      <Tab value="a" title="Title A">
-        Test Content 1
-      </Tab>
-      <Tab className={tabClassName} value="b" title="Title B">
+      <Tab title="Title A">Test Content 1</Tab>
+      <Tab className={tabClassName} title="Title B">
         Test Content 2
       </Tab>
-      <Tab value="c" title="Title C" disabled>
+      <Tab title="Title C" disabled>
         Test Content 3
       </Tab>
     </Tabs>,
@@ -56,12 +54,10 @@ describe('packages/Tabs', () => {
   test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
     const { getByText } = render(
       <Tabs as="a">
-        <Tab default value="hello1" title="Tab 1">
+        <Tab default title="Tab 1">
           Hello 1
         </Tab>
-        <Tab value="hello2" title="Tab 2">
-          Hello 2
-        </Tab>
+        <Tab title="Tab 2">Hello 2</Tab>
       </Tabs>,
     );
     const tabListItem = getByText('Tab 1');
@@ -96,13 +92,13 @@ describe('packages/Tabs', () => {
   describe('when the component is uncontrolled', () => {
     const { getByText } = render(
       <Tabs className={tabsClassName} onChange={onChange}>
-        <Tab className={tabClassName} value="first" title="Title First">
+        <Tab className={tabClassName} title="Title First">
           First Content
         </Tab>
-        <Tab default value="second" title="Title Second">
+        <Tab default title="Title Second">
           Second Content
         </Tab>
-        <Tab value="third" title="Title Third" disabled>
+        <Tab title="Title Third" disabled>
           Third Content
         </Tab>
       </Tabs>,
