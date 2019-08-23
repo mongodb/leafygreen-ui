@@ -60,7 +60,7 @@ Determines the root element. For example, `Link` or `a` tags can be supplied to 
 
 ## Properties
 
-### tabTitle
+### title
 
 **Type:** required, `string`
 

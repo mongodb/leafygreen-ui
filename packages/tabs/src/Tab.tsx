@@ -23,7 +23,7 @@ export interface TabProps {
   default?: boolean;
 
   /**
-   * Value supplied to aria-control attribute.
+   * Adds a className to the root element.
    */
   className?: string;
 
@@ -56,7 +56,7 @@ export interface TabProps {
  * @param props.children Content that will appear inside of Tab panel.
  * @param props.disabled Boolean that determines if the Tab is disabled.
  * @param props.title Title that will appear in Tab List.
- * @param props.className Value supplied to aria-control attribute.
+ * @param props.className Adds a className to the root element.
  * @param props.default If Tabs component is uncontrolled, this determines what Tab will be active on first render.
  * @param props.href Destination when title is rendered as `a` tag.
  * @param props.to Destination when title is rendered as `Link` tag.

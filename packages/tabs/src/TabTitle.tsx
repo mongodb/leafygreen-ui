@@ -31,7 +31,7 @@ const listTitle = css`
 `;
 
 interface SharedTabTitleProps
-  extends Omit<TabProps, 'default, title, href, to, value'> {
+  extends Omit<TabProps, 'default | title | href | to | value'> {
   dataTabId: string;
   setFocusedState: React.Dispatch<SetStateAction<Array<string>>>;
   as?: React.ElementType<any>;
