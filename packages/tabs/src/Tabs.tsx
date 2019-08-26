@@ -131,19 +131,19 @@ function Tabs({
 
   function handleChange(
     e: React.SyntheticEvent<Element, MouseEvent>,
-    idx: number,
+    index: number,
   ) {
     if (typeof selected !== 'number' && !selected) {
-      setActiveIndex(idx);
+      setActiveIndex(index);
     }
 
     if (onChange) {
-      onChange(e, idx);
+      onChange(e, index);
     }
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {
-    if (selected) {
+    if (typeof selected === 'number') {
       return;
     }
 
@@ -227,7 +227,7 @@ function Tabs({
         ref={tabListRef}
       >
         {tabs.map((tab, index) => {
-          const { value, active, disabled, id, ...rest } = tab.props;
+          const { value, active, disabled, ...rest } = tab.props;
 
           const filteredRest = omit(rest, [
             'ariaControl',
@@ -244,7 +244,6 @@ function Tabs({
                 [activeStyle]: active,
                 [disabledStyle]: disabled,
               })}
-              id={id}
               onClick={
                 !disabled
                   ? (event: React.MouseEvent) => handleChange(event, index)

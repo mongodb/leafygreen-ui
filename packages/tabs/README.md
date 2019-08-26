@@ -8,7 +8,7 @@
 
 ## Output HTML
 
-<!-- Will update once the comcponetn is finalized -->
+<!-- Will update once the component is finalized -->
 
 # Tabs
 
@@ -90,7 +90,7 @@ Indicates whether or not the `Tab` can be clicked by a user.
 
 **Default:** `false`
 
-Should be supplied when using the Uncontrolled `Tabs` component. This determines which tab will be active by default.
+Should be supplied when using the uncontrolled `Tabs` component. This determines which tab will be active by default.
 
 ### children
 
@@ -104,15 +104,11 @@ Content that appears inside the `Tab` component
 
 **Type:** `string`
 
-**Default:** ``
-
 Destination when TabTitle is rendered as `a` tag.
 
 ### to
 
 **Type:** `string`
-
-**Default:** ``
 
 Destination when TabTitle is rendered as `Link` tag.
 
