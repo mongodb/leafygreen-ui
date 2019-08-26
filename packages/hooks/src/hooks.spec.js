@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { act, renderHook } from 'react-hooks-testing-library';
+import { act, renderHook } from '@testing-library/react-hooks';
 import { render, cleanup } from '@testing-library/react';
 import { useEventListener, useElementNode, useViewportSize } from './index';
 
@@ -23,9 +23,7 @@ describe('packages/hooks', () => {
       const eventCallback = jest.fn();
 
       renderHook(() =>
-        useEventListener({
-          type: 'click',
-          eventCallback,
+        useEventListener('click', eventCallback, {
           enabled: false,
         }),
       );
@@ -36,6 +34,24 @@ describe('packages/hooks', () => {
 
       expect(eventCallback).toHaveBeenCalledTimes(0);
     });
+  });
+
+  test('event callback should not fire when enabled is toggled false after being set to true', () => {
+    const eventCallback = jest.fn();
+    let initialValue = { enabled: true };
+
+    const { rerender } = renderHook(() =>
+      useEventListener('click', eventCallback, initialValue),
+    );
+
+    initialValue = { enabled: false };
+    rerender();
+
+    act(() => {
+      document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
+
+    expect(eventCallback).toHaveBeenCalledTimes(0);
   });
 
   // Difficult to test a hook that measures changes to the DOM without having access to the DOM
