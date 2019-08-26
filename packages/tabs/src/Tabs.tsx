@@ -98,7 +98,7 @@ interface TabsProps {
  * @param props.children Content to appear inside of Tabs component.
  * @param props.onChange Callback to be executed when a Tab is selected.
  * @param props.selected Index of the Tab that should appear active. If value passed, component will be controlled by consumer.
- * @param props.className Classname applied to Tabs container.
+ * @param props.className className applied to Tabs container.
  * @param props.as HTML Element that wraps title in Tab List.
  */
 function Tabs({
