@@ -65,7 +65,7 @@ interface MenuProps extends Omit<PopoverProps, 'spacing | active'> {
  * @param props.trigger Trigger element can be ReactNode or function, and, if present, internally manages active state of Menu.
  */
 
-const escapeKey = 27;
+const escapeKeyCode = 27;
 
 function Menu({
   align = Align.Bottom,
@@ -115,7 +115,7 @@ function Menu({
   const handleEscape = (e: KeyboardEvent) => {
     e.stopImmediatePropagation();
 
-    if (e.keyCode === escapeKey) {
+    if (e.keyCode === escapeKeyCode) {
       handleClose();
     }
   };
