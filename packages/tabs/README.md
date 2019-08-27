@@ -30,7 +30,7 @@ A callback that receives the index of the tab a user is switching to when clicki
 
 **Type:** `number`
 
-If selected is set, component will behave as a controlled component. The value passed here should match the index of the `Tab` component to appear active.
+Sets the currently-selected tab. If selected is undefined, the <Tabs> component will behave as an uncontrolled component.
 
 ### children
 
@@ -44,7 +44,7 @@ If selected is set, component will behave as a controlled component. The value p
 
 **Default:** `button`
 
-Determines the root element for components that comprise the Tab List. For example, `Link` or `a` tags can be supplied to replace `button` from being the element that wraps these components.
+Sets the root element of all `Tab` components in `Tabs`. For example, setting as to `Link` will render each tab as a <Link> component rather than as a button.
 
 ### Any other properties supplied will be spread on the root element.
 
