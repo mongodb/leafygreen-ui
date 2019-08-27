@@ -6,6 +6,7 @@ interface GlyphMap {
 }
 
 export const Size = {
+  Small: 'small',
   Default: 'default',
   Large: 'large',
   XLarge: 'xlarge',
@@ -20,6 +21,7 @@ export interface IconProps<G extends GlyphMap>
 }
 
 const sizeMap: { [S in Size]: number } = {
+  small: 14,
   default: 16,
   large: 24,
   xlarge: 32,
