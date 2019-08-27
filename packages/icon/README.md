@@ -13,7 +13,7 @@ npm install @leafygreen-ui/icon
 ```js
 import Icon from '@leafygreen-ui/icon';
 
-const SomeComponent = () => <Icon glyph="plus" fill="#FF0000" />;
+const SomeComponent = () => <Icon glyph="Plus" fill="#FF0000" />;
 ```
 
 **Output HTML**
@@ -43,7 +43,7 @@ Specifies the glyph to use. This can be one of the following:
 
 The height and width of the glyph's viewBox. This can be any `number` or one of the following:
 
-`default`, `large`, `xLarge`
+`small`, `default`, `large`, `xLarge`
 
 ### fill
 

@@ -17,7 +17,7 @@ npm install @leafygreen-ui/palette
 ```
 
 ```js
-import { uiColors } from `@leafygreen-ui/palette`;
+import { uiColors } from '@leafygreen-ui/palette';
 
 /**
  * uiColors = {
