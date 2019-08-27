@@ -12,6 +12,8 @@ const rootMenuStyle = css`
   background-color: ${colors.mongodb.white};
 `;
 
+const escapeKeyCode = 27;
+
 interface MenuProps extends Omit<PopoverProps, 'spacing | active'> {
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
@@ -64,9 +66,6 @@ interface MenuProps extends Omit<PopoverProps, 'spacing | active'> {
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
  * @param props.trigger Trigger element can be ReactNode or function, and, if present, internally manages active state of Menu.
  */
-
-const escapeKeyCode = 27;
-
 function Menu({
   align = Align.Bottom,
   justify = Justify.End,
@@ -87,7 +86,7 @@ function Menu({
 
   const handleClose = () => {
     if (shouldClose()) {
-      if (setOpen) {
+      if (setOpen && open) {
         setOpen(false);
       } else {
         setUncontrolledOpen(false);

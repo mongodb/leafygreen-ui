@@ -8,10 +8,11 @@ afterAll(cleanup);
 
 describe('packages/Menu', () => {
   const onClick = jest.fn();
+  const setOpen = jest.fn();
   const className = 'test-className';
 
-  const { getByTestId, getByText, getByRole } = render(
-    <Menu open data-testid="test-menu">
+  const { getByTestId, getByText, getAllByRole } = render(
+    <Menu open setOpen={setOpen} data-testid="test-menu">
       <MenuGroup>
         <MenuItem className={className} onClick={onClick}>
           Item A
@@ -33,9 +34,34 @@ describe('packages/Menu', () => {
     expect(menuItem).toBeInTheDocument();
   });
 
+  describe('When Menu is uncontrolled', () => {
+    const setOpen = jest.fn();
+    const onClick = jest.fn();
+
+    const { getByText } = render(
+      <Menu
+        setOpen={setOpen}
+        onClick={onClick}
+        trigger={<button>trigger</button>}
+      >
+        <MenuItem>Item C</MenuItem>
+        <MenuItem>Item D</MenuItem>
+      </Menu>,
+    );
+
+    test('when setOpen is set but no open prop is provided', () => {
+      const button = getByText('trigger');
+      const menuItem = getByText('Item A');
+
+      fireEvent.click(button);
+
+      expect(menuItem).toBeInTheDocument();
+    });
+  });
+
   describe('packages/MenuGroup', () => {
     test('Creates a dropdown group div with role menu', () => {
-      const menuGroup = getByRole('menu');
+      const menuGroup = getAllByRole('menu')[1];
       const menuItem = getByText('Item A');
       expect(menuGroup).toContainElement(menuItem);
     });
