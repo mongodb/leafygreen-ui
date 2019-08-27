@@ -43,7 +43,7 @@ Specifies the glyph to use. This can be one of the following:
 
 The height and width of the glyph's viewBox. This can be any `number` or one of the following:
 
-`small`, `default`, `large`, `xLarge`
+`small`, `default`, `large`, `xlarge`
 
 ### fill
 
