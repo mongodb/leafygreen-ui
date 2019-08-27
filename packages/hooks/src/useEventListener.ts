@@ -25,7 +25,7 @@ export default function useEventListener<
   {
     options,
     enabled = true,
-    dependencies = [],
+    dependencies = [enabled, type],
     element = document,
   }: UseEventOptions = {},
 ) {
@@ -38,27 +38,18 @@ export default function useEventListener<
   }, [eventCallback]);
 
   useEffect(() => {
-    if (enabled) {
-      // NOTE(JeT): I'm pretty sure there should be a way to avoid this type assertion, but I couldn't figure it out.
-      element.addEventListener(
-        type,
-        memoizedEventCallback.current as EventListener,
-        options,
-      );
-    } else {
-      element.removeEventListener(
-        type,
-        memoizedEventCallback.current as EventListener,
-        options,
-      );
+    if (!enabled) {
+      return;
     }
 
+    const callback = (e: GlobalEventHandlersEventMap[Type]) =>
+      memoizedEventCallback.current(e);
+
+    // NOTE(JeT): I'm pretty sure there should be a way to avoid this type assertion, but I couldn't figure it out.
+    element.addEventListener(type, callback as EventListener, options);
+
     return () => {
-      element.removeEventListener(
-        type,
-        memoizedEventCallback.current as EventListener,
-        options,
-      );
+      element.removeEventListener(type, callback as EventListener, options);
     };
-  }, [enabled, ...dependencies]);
+  }, dependencies);
 }
