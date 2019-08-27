@@ -7,7 +7,7 @@ afterAll(cleanup);
 
 describe('packages/hooks', () => {
   describe('useEventListener', () => {
-    test('event callback should fire when enabled is true', () => {
+    test('event callback should only fire when enabled is true', () => {
       const eventCallback = jest.fn();
 
       renderHook(() => useEventListener('click', eventCallback));
@@ -58,6 +58,30 @@ describe('packages/hooks', () => {
       });
 
       expect(eventCallback).toHaveBeenCalledTimes(0);
+    });
+
+    test('changing a dependency does not create an additional event listener', () => {
+      const eventCallback = jest.fn();
+      let initialValue = { enabled: true, dependencies: ['a'] };
+
+      const { rerender } = renderHook(() =>
+        useEventListener('click', eventCallback, initialValue),
+      );
+
+      act(() => {
+        document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+
+      expect(eventCallback).toHaveBeenCalledTimes(1);
+
+      initialValue = { enabled: true, dependencies: ['b'] };
+      rerender();
+
+      act(() => {
+        document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+
+      expect(eventCallback).toHaveBeenCalledTimes(2);
     });
   });
 
