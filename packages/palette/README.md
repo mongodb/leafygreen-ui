@@ -64,8 +64,6 @@ import { uiColors } from '@leafygreen-ui/palette';
  */
 
 const example = () => (
-	<span style={{ color: uiColors.gray.dark1 }}>
-		Hello World
-	</span>
-)
+  <span style={{ color: uiColors.gray.dark1 }}>Hello World</span>
+);
 ```
