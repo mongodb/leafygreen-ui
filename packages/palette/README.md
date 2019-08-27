@@ -17,7 +17,7 @@ npm install @leafygreen-ui/palette
 ```
 
 ```js
-import { uiColors } from `@leafygreen-ui/palette`;
+import { uiColors } from '@leafygreen-ui/palette';
 
 /**
  * uiColors = {
@@ -64,8 +64,6 @@ import { uiColors } from `@leafygreen-ui/palette`;
  */
 
 const example = () => (
-	<span style={{ color: uiColors.gray.dark1 }}>
-		Hello World
-	</span>
-)
+  <span style={{ color: uiColors.gray.dark1 }}>Hello World</span>
+);
 ```
