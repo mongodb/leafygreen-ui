@@ -24,7 +24,7 @@ Adds a className to the root element.
 
 **Type:** `function`
 
-Function that receives information about newly activated Tab Index as its first argument.
+A callback that receives the index of the tab a user is switching to when clicking, or via keyboard navigation. Usually this is used to set the selected prop to the correct index. The function is only invoked if the selected prop is set.
 
 ### selected
 

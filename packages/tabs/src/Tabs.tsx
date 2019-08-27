@@ -12,6 +12,7 @@ const listStyle = css`
   list-style: none;
   padding: 0px;
   display: flex;
+  width: 100%;
 `;
 
 const activeStyle = css`
@@ -107,20 +108,20 @@ function Tabs({
   as = 'button',
   ...rest
 }: TabsProps) {
-  const [activeIndex, setActiveIndex] = useState();
+  const isControlled = typeof selected === 'number';
+  const childrenArray = React.Children.toArray(children);
+  const [activeIndex, setActiveIndex] = useState(
+    childrenArray.findIndex(child => child.props.default) || 0,
+  );
   const tabListRef = useRef<HTMLDivElement>(null);
   const [focusedState, setFocusedState] = useState([0]);
-
-  const childrenArray = React.Children.toArray(children) as Array<
-    React.ReactElement
-  >;
 
   const currentIndex = childrenArray.findIndex((child, index) => {
     if (!child) {
       return false;
     }
 
-    if (typeof activeIndex === 'number' || typeof selected === 'number') {
+    if (typeof activeIndex === 'number' || isControlled) {
       return [activeIndex, selected].includes(index);
     }
 
@@ -131,7 +132,7 @@ function Tabs({
     e: React.SyntheticEvent<Element, MouseEvent>,
     index: number,
   ) {
-    if (typeof selected !== 'number' && !selected) {
+    if (!isControlled && !selected) {
       setActiveIndex(index);
     }
 
@@ -141,9 +142,7 @@ function Tabs({
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {
-    if (typeof selected === 'number') {
-      return;
-    }
+    e.stopPropagation();
 
     const enabledIndexes = childrenArray.reduce(
       (acc, child, index) => {
@@ -156,21 +155,26 @@ function Tabs({
       [] as Array<number>,
     );
 
-    const enabledCurrentIndex = enabledIndexes.indexOf(activeIndex);
+    const enabledCurrentIndex = enabledIndexes.indexOf(
+      isControlled ? (selected as number) : activeIndex,
+    );
 
-    let index: number;
+    const updateIndex = isControlled ? setSelected : setActiveIndex;
 
     switch (e.key) {
       case 'ArrowRight':
-        index = (enabledCurrentIndex + 1) % enabledIndexes.length;
-        setActiveIndex(enabledIndexes[index]);
+        updateIndex(
+          enabledIndexes[(enabledCurrentIndex + 1) % enabledIndexes.length],
+        );
         break;
 
       case 'ArrowLeft':
-        index =
-          (enabledCurrentIndex - 1 + enabledIndexes.length) %
-          enabledIndexes.length;
-        setActiveIndex(enabledIndexes[index]);
+        updateIndex(
+          enabledIndexes[
+            (enabledCurrentIndex - 1 + enabledIndexes.length) %
+              enabledIndexes.length
+          ],
+        );
         break;
     }
   }
@@ -179,8 +183,7 @@ function Tabs({
     if (
       !tabListRef ||
       !tabListRef.current ||
-      typeof currentIndex !== 'number' ||
-      currentIndex === -1
+      typeof currentIndex !== 'number'
     ) {
       return null;
     }
@@ -250,7 +253,11 @@ function Tabs({
                   ? (event: React.MouseEvent) => handleChange(event, index)
                   : undefined
               }
-              onKeyDown={handleKeyDown}
+              onKeyDown={
+                !disabled
+                  ? (event: React.KeyboardEvent) => handleKeyDown(event)
+                  : undefined
+              }
               ariaControl={`tab-${index}`}
               disabled={disabled}
               active={active}
