@@ -49,13 +49,17 @@ describe('packages/Menu', () => {
       </Menu>,
     );
 
-    test('when setOpen is set but no open prop is provided', () => {
+    test('when setOpen is set but no open prop is provided, Menu behaves as uncontrolled', () => {
       const button = getByText('trigger');
-      const menuItem = getByText('Item A');
+      const menuItem = getByText('Item C');
 
       fireEvent.click(button);
 
-      expect(menuItem).toBeInTheDocument();
+      expect(menuItem).toBeVisible();
+
+      fireEvent.click(button);
+
+      expect(menuItem).not.toBeVisible();
     });
   });
 
