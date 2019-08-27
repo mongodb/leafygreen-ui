@@ -34,24 +34,31 @@ describe('packages/hooks', () => {
 
       expect(eventCallback).toHaveBeenCalledTimes(0);
     });
-  });
 
-  test('event callback should not fire when enabled is toggled false after being set to true', () => {
-    const eventCallback = jest.fn();
-    let initialValue = { enabled: true };
+    test('event callback should not fire when enabled is toggled false after being set to true', () => {
+      const eventCallback = jest.fn();
+      let initialValue = { enabled: true };
 
-    const { rerender } = renderHook(() =>
-      useEventListener('click', eventCallback, initialValue),
-    );
+      const { rerender } = renderHook(() =>
+        useEventListener('click', eventCallback, initialValue),
+      );
 
-    initialValue = { enabled: false };
-    rerender();
+      act(() => {
+        document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
 
-    act(() => {
-      document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      expect(eventCallback).toHaveBeenCalledTimes(1);
+
+      initialValue = { enabled: false };
+      eventCallback.mockReset();
+      rerender();
+
+      act(() => {
+        document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+
+      expect(eventCallback).toHaveBeenCalledTimes(0);
     });
-
-    expect(eventCallback).toHaveBeenCalledTimes(0);
   });
 
   // Difficult to test a hook that measures changes to the DOM without having access to the DOM

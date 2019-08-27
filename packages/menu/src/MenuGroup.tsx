@@ -30,7 +30,7 @@ interface MenuGroupProps {
  */
 function MenuGroup({ children, className, ...rest }: MenuGroupProps) {
   return (
-    <section {...rest} {...menuGroup.prop} className={className}>
+    <section {...rest} {...menuGroup.prop} className={className} role="menu">
       {children}
     </section>
   );
