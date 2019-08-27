@@ -11,6 +11,7 @@ const borderHeight = 3;
 const listStyle = css`
   list-style: none;
   padding: 0px;
+  display: flex;
 `;
 
 const activeStyle = css`
@@ -61,17 +62,14 @@ interface TabsProps {
   children: Array<React.ReactElement>;
 
   /**
-   * Callback to be executed when a tab is selected.
+   * When Tabs are controlled, callback to be executed when Tab is selected.
    */
-  onChange?: (
-    e: React.MouseEvent<any>,
-    index: number,
-  ) => void | React.EventHandler<any>;
+  setSelected?: any;
 
   /**
    * Index of the Tab that should appear active. If value passed to selected prop, component will be controlled by consumer.
    */
-  selected?: number | null;
+  selected?: number;
 
   /**
    * className supplied to Tabs container.
@@ -90,20 +88,20 @@ interface TabsProps {
  * Tabs component
  *
  * ```
-<Tabs onChange={() => execute callback onChange}>
-  <Tab value='tab-1' title='First Tab'>Tab 1</Tab>
-  <Tab value='tab-2' title='Second Tab'>Tab 2</Tab>
+<Tabs selected={0} setSelected={() => execute callback when new Tab is selected}>
+  <Tab name='First Tab'>Tab 1</Tab>
+  <Tab name='Second Tab'>Tab 2</Tab>
 </Tabs>
 ```
  * @param props.children Content to appear inside of Tabs component.
- * @param props.onChange Callback to be executed when a Tab is selected.
+ * @param props.setSelected Callback to be executed when a Tab is selected.
  * @param props.selected Index of the Tab that should appear active. If value passed, component will be controlled by consumer.
  * @param props.className className applied to Tabs container.
- * @param props.as HTML Element that wraps title in Tab List.
+ * @param props.as HTML Element that wraps name in Tab List.
  */
 function Tabs({
   children,
-  onChange,
+  setSelected,
   selected,
   className,
   as = 'button',
@@ -111,7 +109,7 @@ function Tabs({
 }: TabsProps) {
   const [activeIndex, setActiveIndex] = useState();
   const tabListRef = useRef<HTMLDivElement>(null);
-  const [focusedState, setFocusedState] = useState([]);
+  const [focusedState, setFocusedState] = useState(['']);
 
   const childrenArray = React.Children.toArray(children) as Array<
     React.ReactElement
@@ -122,7 +120,7 @@ function Tabs({
       return false;
     }
 
-    if (activeIndex || typeof selected === 'number') {
+    if (typeof activeIndex === 'number' || typeof selected === 'number') {
       return [activeIndex, selected].includes(index);
     }
 
@@ -137,8 +135,8 @@ function Tabs({
       setActiveIndex(index);
     }
 
-    if (onChange) {
-      onChange(e, index);
+    if (setSelected) {
+      setSelected(index);
     }
   }
 
@@ -181,7 +179,8 @@ function Tabs({
     if (
       !tabListRef ||
       !tabListRef.current ||
-      typeof currentIndex !== 'number'
+      typeof currentIndex !== 'number' ||
+      currentIndex === -1
     ) {
       return null;
     }
@@ -209,7 +208,9 @@ function Tabs({
 
     const active =
       selected === index ||
-      (activeIndex ? index === activeIndex : child.props.default);
+      (typeof activeIndex === 'number'
+        ? index === activeIndex
+        : child.props.default);
 
     return React.cloneElement(child, {
       key: index,
@@ -227,19 +228,19 @@ function Tabs({
         ref={tabListRef}
       >
         {tabs.map((tab, index) => {
-          const { value, active, disabled, ...rest } = tab.props;
+          const { active, disabled, ...rest } = tab.props;
 
           const filteredRest = omit(rest, [
             'ariaControl',
             'children',
-            'title',
+            'name',
             'default',
           ]);
 
           return (
             <TabTitle
               {...filteredRest}
-              key={value}
+              key={index}
               className={cx({
                 [activeStyle]: active,
                 [disabledStyle]: disabled,
@@ -250,14 +251,14 @@ function Tabs({
                   : undefined
               }
               onKeyDown={handleKeyDown}
-              ariaControl={`tab-${value}`}
+              ariaControl={`tab-${index}`}
               disabled={disabled}
               active={active}
               index={index}
               setFocusedState={setFocusedState}
               as={as}
             >
-              {tab.props.title}
+              {tab.props.name}
             </TabTitle>
           );
         })}
@@ -266,7 +267,7 @@ function Tabs({
       <div className={grayBorder}>
         <div
           className={cx(greenBorder, calcStyle(), {
-            [focusedStyle]: !!focusedState.length,
+            [focusedStyle]: focusedState.length > 0,
           })}
         />
       </div>
@@ -280,8 +281,8 @@ Tabs.displayName = 'Tabs';
 
 Tabs.propTypes = {
   children: PropTypes.node,
-  onChange: PropTypes.func,
-  selected: PropTypes.string,
+  setSelected: PropTypes.func,
+  selected: PropTypes.number,
   className: PropTypes.string,
   as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 };

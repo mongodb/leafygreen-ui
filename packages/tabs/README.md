@@ -22,13 +22,17 @@
 
 Adds a className to the root element.
 
-### onChange
+### setSelected
 
 **Type:** `function`
 
-**Default:** `() => {}`
+When controlling component, use setSelected prop to receive information about newly activated Tab index.
 
-The event handler function for the 'onChange' event. Receives the associated event object as the first argument and index of activated Tab as the second.
+### selected
+
+**Type:** `number`
+
+If property is used, component will behave as a controlled component. The value passed here should match the index of the `Tab` component that should appear active.
 
 ### children
 
@@ -37,14 +41,6 @@ The event handler function for the 'onChange' event. Receives the associated eve
 **Default:** `null`
 
 `Tab` components that will be supplied to `Tabs` component.
-
-### selected
-
-**Type:** `string`
-
-**Default:** ``
-
-If property is used, component will behave as a controlled component. The value passed here should match the index of the `Tab` component that should appear active.
 
 ### as
 
@@ -60,11 +56,9 @@ Determines the root element. For example, `Link` or `a` tags can be supplied to 
 
 ## Properties
 
-### title
+### name
 
-**Type:** required, `string`
-
-**Default:** ``
+**Type:** required, `string` | `ReactNode`
 
 String that will appear in the list of `Tabs`.
 

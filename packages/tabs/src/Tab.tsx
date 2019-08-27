@@ -5,7 +5,7 @@ export interface TabProps {
   /**
    * Content that will appear as the title in the Tab list.
    */
-  title: string;
+  name: string | React.ReactNode;
 
   /**
    * Content that will appear inside of Tab panel.
@@ -28,12 +28,12 @@ export interface TabProps {
   className?: string;
 
   /**
-   * Destination when title is rendered as `a` tag.
+   * Destination when name is rendered as `a` tag.
    */
   href?: string;
 
   /**
-   * Destination when title is rendered as `Link` tag.
+   * Destination when name is rendered as `Link` tag.
    */
   to?: string;
 
@@ -41,7 +41,7 @@ export interface TabProps {
 
   ariaControl?: string;
 
-  // Done in order to support any Router system, such that title component can accept any URL destination prop.
+  // Done in order to support any Router system, such that TabTitle component can accept any URL destination prop.
   [key: string]: any;
 }
 
@@ -51,19 +51,18 @@ export interface TabProps {
  * Tab panel component
  *
  * ```
-  <Tab value='tab-1' title='First Tab'>Tab 1</Tab>
+  <Tab name='First Tab'>Tab 1</Tab>
 ```
  * @param props.children Content that will appear inside of Tab panel.
  * @param props.disabled Boolean that determines if the Tab is disabled.
- * @param props.title Title that will appear in Tab List.
+ * @param props.name Name that will appear in Tab List.
  * @param props.className Adds a className to the root element.
  * @param props.default If Tabs component is uncontrolled, this determines what Tab will be active on first render.
- * @param props.href Destination when title is rendered as `a` tag.
- * @param props.to Destination when title is rendered as `Link` tag.
+ * @param props.href Destination when name is rendered as `a` tag.
+ * @param props.to Destination when name is rendered as `Link` tag.
  *
  */
 function Tab({
-  value,
   active,
   children,
   disabled = false,
@@ -74,8 +73,8 @@ function Tab({
     return null;
   }
 
-  // default and title are not an HTML properties
-  delete rest.default, delete rest.title;
+  // default and name are not an HTML properties
+  delete rest.default, delete rest.name;
 
   return (
     <div
@@ -83,7 +82,6 @@ function Tab({
       aria-disabled={disabled}
       aria-selected={active}
       aria-controls={ariaControl}
-      data-tab-id={value}
       role="tabpanel"
     >
       {children}
@@ -94,10 +92,9 @@ function Tab({
 Tab.displayName = 'Tab';
 
 Tab.propTypes = {
-  value: PropTypes.string,
   active: PropTypes.bool,
   children: PropTypes.node,
-  title: PropTypes.string,
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   content: PropTypes.node,
   disabled: PropTypes.bool,
   ariaControl: PropTypes.string,

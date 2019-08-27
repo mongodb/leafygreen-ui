@@ -19,6 +19,8 @@ const listTitle = css`
   border: none;
   background: none;
   text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &:focus {
     color: ${uiColors.blue.base};
@@ -31,8 +33,7 @@ const listTitle = css`
 `;
 
 interface SharedTabTitleProps
-  extends Omit<TabProps, 'default | title | href | to | value'> {
-  dataTabId: string;
+  extends Omit<TabProps, 'default | name | href | to | value'> {
   setFocusedState: React.Dispatch<SetStateAction<Array<string>>>;
   as?: React.ElementType<any>;
 }
@@ -138,7 +139,6 @@ TabTitle.propTypes = {
   id: PropTypes.string,
   children: PropTypes.node,
   disabled: PropTypes.bool,
-  dataTabId: PropTypes.string,
   onClick: PropTypes.func,
   onKeyDown: PropTypes.func,
   ariaControl: PropTypes.string,

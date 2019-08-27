@@ -8,36 +8,37 @@ afterAll(cleanup);
 describe('packages/Tabs', () => {
   const tabsClassName = 'tabs-classname';
   const tabClassName = 'tab-classname';
-  const onChange = jest.fn();
+  const setSelected = jest.fn();
 
   const { getByText, getByTestId } = render(
     <Tabs
       className={tabsClassName}
       selected={1}
-      onChange={onChange}
+      setSelected={setSelected}
       data-testid="tabs-component"
     >
-      <Tab title="Title A">Test Content 1</Tab>
-      <Tab className={tabClassName} title="Title B">
+      <Tab name="Name A">Test Content 1</Tab>
+      <Tab className={tabClassName} name="Name B">
         Test Content 2
       </Tab>
-      <Tab title="Title C" disabled>
+      <Tab name="Name C" disabled>
         Test Content 3
       </Tab>
     </Tabs>,
   );
 
-  test('clicking a tab fires onChange callback', () => {
-    const tabListItem = getByText('Title A');
+  // is this still desired behavior?
+  test('clicking a tab fires setSelected callback', () => {
+    const tabListItem = getByText('Name A');
     fireEvent.click(tabListItem);
 
     setTimeout(() => {
-      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(setSelected).toHaveBeenCalledTimes(1);
     }, 500);
   });
 
   test('tab renders as disabled when the prop is set', () => {
-    const tabListItem = getByText('Title C');
+    const tabListItem = getByText('Name C');
     expect(tabListItem).toHaveAttribute('aria-disabled');
   });
 
@@ -54,10 +55,10 @@ describe('packages/Tabs', () => {
   test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
     const { getByText } = render(
       <Tabs as="a">
-        <Tab default title="Tab 1">
+        <Tab default name="Tab 1">
           Hello 1
         </Tab>
-        <Tab title="Tab 2">Hello 2</Tab>
+        <Tab name="Tab 2">Hello 2</Tab>
       </Tabs>,
     );
     const tabListItem = getByText('Tab 1');
@@ -72,7 +73,7 @@ describe('packages/Tabs', () => {
     });
 
     test('clicking a tab does not change the active tab', () => {
-      const tab = getByText('Title A');
+      const tab = getByText('Name A');
       fireEvent.click(tab);
 
       setTimeout(() => {
@@ -82,7 +83,7 @@ describe('packages/Tabs', () => {
     });
 
     test('keyboard nav is not supported', () => {
-      const activeTabListItem = getByText('Title B');
+      const activeTabListItem = getByText('Name B');
       const activeTab = getByText('Test Content 2');
       fireEvent.keyDown(activeTabListItem, { key: 'ArrowLeft', code: 37 });
       expect(activeTab).toBeVisible();
@@ -91,14 +92,14 @@ describe('packages/Tabs', () => {
 
   describe('when the component is uncontrolled', () => {
     const { getByText } = render(
-      <Tabs className={tabsClassName} onChange={onChange}>
-        <Tab className={tabClassName} title="Title First">
+      <Tabs className={tabsClassName} setSelected={setSelected}>
+        <Tab className={tabClassName} name="Name First">
           First Content
         </Tab>
-        <Tab default title="Title Second">
+        <Tab default name="Name Second">
           Second Content
         </Tab>
-        <Tab title="Title Third" disabled>
+        <Tab name="Name Third" disabled>
           Third Content
         </Tab>
       </Tabs>,
@@ -110,7 +111,7 @@ describe('packages/Tabs', () => {
     });
 
     test('clicking a tab changes the active tab', () => {
-      const tab = getByText('Title A');
+      const tab = getByText('Name A');
       fireEvent.click(tab);
 
       setTimeout(() => {
@@ -120,7 +121,7 @@ describe('packages/Tabs', () => {
     });
 
     test('keyboard nav is supported', () => {
-      const activeTabListItem = getByText('Title B');
+      const activeTabListItem = getByText('Name B');
       fireEvent.keyDown(activeTabListItem, { key: 'ArrowLeft', code: 37 });
 
       setTimeout(() => {
@@ -130,7 +131,7 @@ describe('packages/Tabs', () => {
     });
 
     test('keyboard nav skips tab if tab is disabled', () => {
-      const activeTabListItem = getByText('Title Second');
+      const activeTabListItem = getByText('Name Second');
       fireEvent.keyDown(activeTabListItem, { key: 'ArrowRight', code: 39 });
 
       setTimeout(() => {
