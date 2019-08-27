@@ -109,7 +109,7 @@ function Tabs({
 }: TabsProps) {
   const [activeIndex, setActiveIndex] = useState();
   const tabListRef = useRef<HTMLDivElement>(null);
-  const [focusedState, setFocusedState] = useState(['']);
+  const [focusedState, setFocusedState] = useState<[number]>([0]);
 
   const childrenArray = React.Children.toArray(children) as Array<
     React.ReactElement
