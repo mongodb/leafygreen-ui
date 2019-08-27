@@ -18,27 +18,23 @@
 
 **Type:** `string`
 
-**Default:** ''
-
 Adds a className to the root element.
 
 ### setSelected
 
 **Type:** `function`
 
-When controlling component, use setSelected prop to receive information about newly activated Tab index.
+Function that receives information about newly activated Tab Index as its first argument.
 
 ### selected
 
 **Type:** `number`
 
-If property is used, component will behave as a controlled component. The value passed here should match the index of the `Tab` component that should appear active.
+If selected is set, component will behave as a controlled component. The value passed here should match the index of the `Tab` component to appear active.
 
 ### children
 
 **Type:** `node`
-
-**Default:** `null`
 
 `Tab` components that will be supplied to `Tabs` component.
 
@@ -48,7 +44,7 @@ If property is used, component will behave as a controlled component. The value 
 
 **Default:** `button`
 
-Determines the root element. For example, `Link` or `a` tags can be supplied to replace `button` from being the element that wraps the components in the Tab List.
+Determines the root element for components that comprise the Tab List. For example, `Link` or `a` tags can be supplied to replace `button` from being the element that wraps these components.
 
 ### Any other properties supplied will be spread on the root element.
 
@@ -66,8 +62,6 @@ String that will appear in the list of `Tabs`.
 
 **Type:** string
 
-**Default:** ``
-
 Adds a className to the root element.
 
 ### disabled
@@ -82,15 +76,11 @@ Indicates whether or not the `Tab` can be clicked by a user.
 
 **Type:** `boolean`
 
-**Default:** `false`
-
 Should be supplied when using the uncontrolled `Tabs` component. This determines which tab will be active by default.
 
 ### children
 
 **Type:** `node`
-
-**Default:** `null`
 
 Content that appears inside the `Tab` component
 

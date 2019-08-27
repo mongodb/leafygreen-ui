@@ -12,9 +12,7 @@ function ControlledTabs() {
         <Tab name={text('name', 'Harry Spencer Wolff')}>
           {text('Tab Content', 'Hello 1')}
         </Tab>
-        <Tab name="Jeremy Steven Tice Jeremy Steven TiceJeremy Steven TiceJeremy Steven TiceJeremy Steven TiceJeremy Steven TiceJeremy Steven TiceJeremy Steven TiceJeremy Steven TiceJeremy Steven TiceJeremy Steven Tice">
-          Hello 2
-        </Tab>
+        <Tab name="Jeremy Steven Tice">Hello 2</Tab>
         <Tab name="Mark Frederick Truman">Hello 3</Tab>
       </Tabs>
     </div>

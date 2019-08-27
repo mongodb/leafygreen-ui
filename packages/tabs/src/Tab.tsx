@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 export interface TabProps {
   /**
-   * Content that will appear as the title in the Tab list.
+   * Content that will appear as the title in the Tab List.
    */
   name: string | React.ReactNode;
 
   /**
-   * Content that will appear inside of Tab panel.
+   * Content that will appear inside of Tab Panel.
    */
   children?: React.ReactNode;
 

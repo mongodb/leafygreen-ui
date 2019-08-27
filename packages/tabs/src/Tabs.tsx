@@ -62,7 +62,7 @@ interface TabsProps {
   children: Array<React.ReactElement>;
 
   /**
-   * When Tabs are controlled, callback to be executed when Tab is selected.
+   * Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
    */
   setSelected?: any;
 
@@ -94,7 +94,7 @@ interface TabsProps {
 </Tabs>
 ```
  * @param props.children Content to appear inside of Tabs component.
- * @param props.setSelected Callback to be executed when a Tab is selected.
+ * @param props.setSelected Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
  * @param props.selected Index of the Tab that should appear active. If value passed, component will be controlled by consumer.
  * @param props.className className applied to Tabs container.
  * @param props.as HTML Element that wraps name in Tab List.
@@ -109,7 +109,7 @@ function Tabs({
 }: TabsProps) {
   const [activeIndex, setActiveIndex] = useState();
   const tabListRef = useRef<HTMLDivElement>(null);
-  const [focusedState, setFocusedState] = useState<[number]>([0]);
+  const [focusedState, setFocusedState] = useState([0]);
 
   const childrenArray = React.Children.toArray(children) as Array<
     React.ReactElement
