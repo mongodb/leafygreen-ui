@@ -78,13 +78,27 @@ import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
 
 ## Properties
 
-### active
+### open
 
 **Type:** `boolean`
 
 **Default:** `false`
 
 Determines whether or not the `Menu` will appear as open or closed
+
+### setOpen
+
+**Type:** `function`
+
+When controlling the component, use `setOpen` to keep track of the `Menu` component's state so that clicks on the document's backdrop as well as a user pressing the Escape Key will close the Menu and update the consuming application's local state accordingly.
+
+### shouldClose
+
+**Type:** `function`
+
+**Default:** `() => true`
+
+Determines if the `Menu` should close when the backdrop or Escape keys are clicked. Defaults to true.
 
 ### align
 
@@ -114,7 +128,7 @@ Pass a reference to an element that the `Menu` component should be positioned ag
 
 **Type:** `HTMLElement` or `ReactNode`
 
-An `HTMLElement` or `ReactNode` against which the Menu will be positioned. If this prop is present, the Menu's state will be managed internally.
+An `HTMLElement` or `ReactNode` against which the Menu will be positioned.
 
 ### usePortal
 

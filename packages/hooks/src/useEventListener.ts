@@ -49,11 +49,7 @@ export default function useEventListener<
     element.addEventListener(type, callback as EventListener, options);
 
     return () => {
-      element.removeEventListener(
-        type,
-        eventCallback as EventListener,
-        options,
-      );
+      element.removeEventListener(type, callback as EventListener, options);
     };
   }, dependencies);
 }
