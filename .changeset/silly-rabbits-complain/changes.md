@@ -1,0 +1,1 @@
+Updated Menu API, such that the controlled version now accepts open and setOpen props. Using setOpen allows leafygreen to handle backdrop clicks and escape key-presses for consuming applications. Patched a bug in useEventListener hook

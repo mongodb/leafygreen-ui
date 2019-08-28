@@ -1,0 +1,7 @@
+{
+  "releases": [
+    { "name": "@leafygreen-ui/menu", "type": "major" },
+    { "name": "@leafygreen-ui/hooks", "type": "patch" }
+  ],
+  "dependents": []
+}
