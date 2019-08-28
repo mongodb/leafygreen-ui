@@ -148,8 +148,10 @@ function MenuItem({
       role="menuitem"
     >
       <Root onClick={disabled ? undefined : onClick} href={href}>
-        <h4 className={titleTextStyle}>{children}</h4>
-        {description && <h6 className={descriptionTextStyle}>{description}</h6>}
+        <div className={titleTextStyle}>{children}</div>
+        {description && (
+          <div className={descriptionTextStyle}>{description}</div>
+        )}
       </Root>
     </div>
   );

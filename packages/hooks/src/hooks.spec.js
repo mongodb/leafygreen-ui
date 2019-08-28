@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { act, renderHook } from 'react-hooks-testing-library';
+import { act, renderHook } from '@testing-library/react-hooks';
 import { render, cleanup } from '@testing-library/react';
 import { useEventListener, useElementNode, useViewportSize } from './index';
 
@@ -7,7 +7,7 @@ afterAll(cleanup);
 
 describe('packages/hooks', () => {
   describe('useEventListener', () => {
-    test('event callback should fire when enabled is true', () => {
+    test('event callback should only fire when enabled is true', () => {
       const eventCallback = jest.fn();
 
       renderHook(() => useEventListener('click', eventCallback));
@@ -23,9 +23,7 @@ describe('packages/hooks', () => {
       const eventCallback = jest.fn();
 
       renderHook(() =>
-        useEventListener({
-          type: 'click',
-          eventCallback,
+        useEventListener('click', eventCallback, {
           enabled: false,
         }),
       );
@@ -35,6 +33,55 @@ describe('packages/hooks', () => {
       });
 
       expect(eventCallback).toHaveBeenCalledTimes(0);
+    });
+
+    test('event callback should not fire when enabled is toggled false after being set to true', () => {
+      const eventCallback = jest.fn();
+      let initialValue = { enabled: true };
+
+      const { rerender } = renderHook(() =>
+        useEventListener('click', eventCallback, initialValue),
+      );
+
+      act(() => {
+        document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+
+      expect(eventCallback).toHaveBeenCalledTimes(1);
+
+      initialValue = { enabled: false };
+      eventCallback.mockReset();
+      rerender();
+
+      act(() => {
+        document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+
+      expect(eventCallback).toHaveBeenCalledTimes(0);
+    });
+
+    test('changing a dependency does not create an additional event listener', () => {
+      const eventCallback = jest.fn();
+      let initialValue = { enabled: true, dependencies: ['a'] };
+
+      const { rerender } = renderHook(() =>
+        useEventListener('click', eventCallback, initialValue),
+      );
+
+      act(() => {
+        document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+
+      expect(eventCallback).toHaveBeenCalledTimes(1);
+
+      initialValue = { enabled: true, dependencies: ['b'] };
+      rerender();
+
+      act(() => {
+        document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+
+      expect(eventCallback).toHaveBeenCalledTimes(2);
     });
   });
 

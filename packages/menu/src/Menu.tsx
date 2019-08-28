@@ -1,4 +1,4 @@
-import React, { useState, useCallback, EventHandler } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { useEventListener } from '@leafygreen-ui/hooks';
@@ -12,14 +12,35 @@ const rootMenuStyle = css`
   background-color: ${colors.mongodb.white};
 `;
 
-const EscapeKey = 27;
+const escapeKeyCode = 27;
 
-interface MenuProps extends Omit<PopoverProps, 'spacing'> {
+interface MenuProps extends Omit<PopoverProps, 'spacing | active'> {
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
    * Menu to control opening and closing itself internally.
    */
   trigger?: React.ReactElement | Function;
+
+  /**
+   * Determines the open state of the menu
+   *
+   * default: `false`
+   */
+  open?: boolean;
+
+  /**
+   * Callback to change the open state of the Menu.
+   *
+   */
+  setOpen: (
+    open: boolean,
+  ) => void | React.Dispatch<React.SetStateAction<boolean>>;
+
+  /**
+   * Callback to determine whether or not Menu should close when user tries to close it.
+   *
+   */
+  shouldClose?: () => boolean;
 }
 
 /**
@@ -35,7 +56,9 @@ interface MenuProps extends Omit<PopoverProps, 'spacing'> {
 </button>
 ```
  * @param props.children Content to appear inside of Menu.
- * @param props.active Boolean to describe whether or not Menu is active.
+ * @param props.open Boolean to describe whether or not Menu is open.
+ * @param props.setOpen Callback to change the open state of the Menu.
+ * @param props.shouldClose Callback to determine whether or not Menu should close when user tries to close it.
  * @param props.className Classname applied to Menu.
  * @param props.align Alignment of Menu relative to another element: `top`, `bottom`, `left`, `right`.
  * @param props.justify Justification of Menu relative to another element: `start`, `middle`, `end`.
@@ -48,19 +71,62 @@ function Menu({
   justify = Justify.End,
   usePortal = true,
   adjustOnMutation = false,
-  active,
+  shouldClose = () => true,
+  open,
+  setOpen,
   children,
   className,
   refEl,
   trigger,
   ...rest
 }: MenuProps) {
-  const [isActive, setActiveState] = useState(false);
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+
+  const popoverRef: React.RefObject<HTMLDivElement> = useRef(null);
+
+  const handleClose = () => {
+    if (shouldClose()) {
+      if (setOpen && open) {
+        setOpen(false);
+      } else {
+        setUncontrolledOpen(false);
+      }
+    }
+  };
+
+  const handleBackdropClick = (e: MouseEvent) => {
+    const popoverReference = popoverRef && popoverRef.current;
+
+    if (
+      popoverReference &&
+      !popoverReference.contains(e.target as HTMLElement)
+    ) {
+      handleClose();
+    }
+  };
+
+  const enabled = open || uncontrolledOpen;
+
+  useEventListener('click', handleBackdropClick, {
+    enabled,
+  });
+
+  const handleEscape = (e: KeyboardEvent) => {
+    e.stopImmediatePropagation();
+
+    if (e.keyCode === escapeKeyCode) {
+      handleClose();
+    }
+  };
+
+  useEventListener('keydown', handleEscape, {
+    enabled,
+  });
 
   const popoverContent = (
     <Popover
       key="popover"
-      active={trigger ? isActive : active}
+      active={open || uncontrolledOpen}
       align={align}
       justify={justify}
       refEl={refEl}
@@ -68,54 +134,34 @@ function Menu({
       spacing={15}
       adjustOnMutation={adjustOnMutation}
     >
-      <div {...rest} className={cx(rootMenuStyle, className)} role="menu">
+      <div
+        {...rest}
+        className={cx(rootMenuStyle, className)}
+        role="menu"
+        ref={popoverRef}
+      >
         {children}
       </div>
     </Popover>
   );
 
-  const syntheticToggleEventHandler: EventHandler<
-    React.SyntheticEvent
-  > = useCallback(e => {
-    e.nativeEvent.stopImmediatePropagation();
-    setActiveState(current => !current);
-  }, []);
-
-  const closeMenuNativeHandler: EventListener = useCallback((e: Event) => {
-    e.stopImmediatePropagation();
-    setActiveState(false);
-  }, []);
-
-  const handleEscape = useCallback((e: KeyboardEvent) => {
-    if (e.keyCode === EscapeKey) {
-      closeMenuNativeHandler(e);
-    }
-  }, []);
-
-  const enabled = trigger && isActive;
-
-  useEventListener('click', closeMenuNativeHandler, {
-    options: { once: true },
-    dependencies: [isActive, trigger],
-    enabled,
-  });
-
-  useEventListener('keydown', handleEscape, {
-    options: { once: true },
-    dependencies: [isActive, trigger],
-    enabled,
-  });
-
   if (trigger) {
     if (typeof trigger === 'function') {
       return trigger({
-        onClick: syntheticToggleEventHandler,
+        onClick: () =>
+          setUncontrolledOpen(uncontrolledOpen => !uncontrolledOpen),
         children: popoverContent,
       });
     }
 
     return React.cloneElement(trigger, {
-      onClick: syntheticToggleEventHandler,
+      onClick: (e: React.MouseEvent) => {
+        setUncontrolledOpen(uncontrolledOpen => !uncontrolledOpen);
+
+        if (trigger.props.onClick) {
+          trigger.props.onClick(e);
+        }
+      },
       children: [...trigger.props.children, popoverContent],
     });
   }
