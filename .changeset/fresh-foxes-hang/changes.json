@@ -1,0 +1,10 @@
+{
+  "releases": [{ "name": "@leafygreen-ui/icon", "type": "major" }],
+  "dependents": [
+    {
+      "name": "@leafygreen-ui/modal",
+      "type": "patch",
+      "dependencies": ["@leafygreen-ui/icon"]
+    }
+  ]
+}
