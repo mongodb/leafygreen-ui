@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/button",
-  "version": "2.3.6",
+  "version": "2.3.7",
   "description": "leafyGreen UI Kit Button",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
