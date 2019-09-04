@@ -24,17 +24,7 @@ Object that contains information about the active user. {name: 'string', email: 
 
 **Type:** `['atlas', 'university', 'support']`
 
-**Default:** `''`
-
 MongoDB product that is currently active.
-
-### onAccountClick
-
-**Type:** `function`
-
-**Default:** `() => {}`
-
-Callback invoked when user views their MongoDB account.
 
 ### onProductChange
 

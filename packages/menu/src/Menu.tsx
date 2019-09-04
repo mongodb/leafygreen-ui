@@ -14,7 +14,7 @@ const rootMenuStyle = css`
 
 const escapeKeyCode = 27;
 
-interface MenuProps extends Omit<PopoverProps, 'spacing | active'> {
+interface MenuProps extends Omit<PopoverProps, 'active' | 'spacing'> {
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
    * Menu to control opening and closing itself internally.
@@ -50,7 +50,7 @@ interface MenuProps extends Omit<PopoverProps, 'spacing | active'> {
  *
  * ```
 <button>
-  <Menu active={true}>
+  <Menu open={true}>
     <MenuItem>Hello World!</MenuItem>
   </Menu>
 </button>
