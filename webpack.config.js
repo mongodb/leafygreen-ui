@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const fs = require('fs');
 
 // A list of languages we support syntax highlighting for.
@@ -96,11 +95,6 @@ module.exports = function(env = 'production') {
     },
 
     plugins: (function() {
-      // Removes the dist directory when building
-      const CleanWebpackPluginInstance = new CleanWebpackPlugin([
-        path.resolve(process.cwd(), 'dist'),
-      ]);
-
       // Defines global variables
       const DefinePluginInstance = new webpack.DefinePlugin({
         __DEV__: JSON.stringify((!isProduction).toString()),
@@ -118,11 +112,7 @@ module.exports = function(env = 'production') {
         new RegExp(`^./(${hljsSupportedLanguages.join('|')})$`),
       );
 
-      return [
-        CleanWebpackPluginInstance,
-        DefinePluginInstance,
-        ContextReplacementPluginInstance,
-      ];
+      return [DefinePluginInstance, ContextReplacementPluginInstance];
     })(),
   };
 };
