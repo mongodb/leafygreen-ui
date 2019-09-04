@@ -22,7 +22,7 @@
     "start": "start-storybook -p 9001 -c storybook -s ./storybook/static",
     "build": "lerna run --parallel build -- --env production",
     "build:storybook": "build-storybook -c storybook -o ./storybook/public -s ./storybook/static",
-    "clean": "lerna run clean --parallel && lerna clean --yes && rimraf node_modules",
+    "clean": "rimraf packages/*/{dist,node_modules} node_modules",
     "format": "yarn prettier && yarn eslint:format",
     "init": "yarn && yarn build && yarn ts --verbose --force",
     "link-all-packages": "lerna exec --ignore @leafygreen-ui/lib --ignore @leafygreen-ui/theme -- yarn link",
@@ -105,6 +105,7 @@
     "react-dom": "^16.4.2",
     "react-router-dom": "4.3.1",
     "react-test-renderer": "^16.8.6",
+    "rimraf": "^3.0.0",
     "source-map-loader": "^0.2.4",
     "typescript": "^3.5.0",
     "url-loader": "1.1.2",
@@ -120,8 +121,5 @@
     "packages": [
       "packages/*"
     ]
-  },
-  "dependencies": {
-    "rimraf": "^3.0.0"
   }
 }
