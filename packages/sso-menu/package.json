@@ -1,0 +1,24 @@
+{
+  "name": "@leafygreen-ui/sso-menu",
+  "version": "0.9.0",
+  "description": "LeafyGreen UI Kit SSO Menu",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/hooks": "^1.0.7",
+    "@leafygreen-ui/lib": "^3.0.6",
+    "@leafygreen-ui/popover": "^1.1.6",
+    "@leafygreen-ui/theme": "^1.2.6", 
+    "@leafygreen-ui/menu": "2.0.0", 
+    "@leafygreen-ui/icon": "2.0.0", 
+    "@leafygreen-ui/emotion": "1.0.6"
+    
+  }
+}

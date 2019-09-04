@@ -42,6 +42,14 @@ const titleTextStyle = css`
   font-weight: normal;
 `;
 
+const linkStyle = css`
+  &,
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+`;
+
 const descriptionTextStyle = css`
   font-size: 12px;
   margin-top: 2px;
@@ -146,8 +154,14 @@ function MenuItem({
         className,
       )}
       role="menuitem"
+      aria-checked={active}
+      aria-disabled={disabled}
     >
-      <Root onClick={disabled ? undefined : onClick} href={href}>
+      <Root
+        onClick={disabled ? undefined : onClick}
+        href={href}
+        className={linkStyle}
+      >
         <div className={titleTextStyle}>{children}</div>
         {description && (
           <div className={descriptionTextStyle}>{description}</div>

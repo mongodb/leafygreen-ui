@@ -173,13 +173,14 @@ Menu.displayName = 'Menu';
 
 Menu.propTypes = {
   children: PropTypes.node,
-  active: PropTypes.bool,
   className: PropTypes.string,
   align: PropTypes.oneOf(Object.values(Align)),
   justify: PropTypes.oneOf(Object.values(Justify)),
   refEl: PropTypes.object,
   usePortal: PropTypes.bool,
   trigger: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  open: PropTypes.bool,
+  setOpen: PropTypes.func,
 };
 
 export default Menu;
