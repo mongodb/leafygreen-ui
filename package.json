@@ -82,7 +82,6 @@
     "babel-jest": "23.6.0",
     "babel-loader": "8.0.4",
     "babel-plugin-emotion": "9.2.11",
-    "clean-webpack-plugin": "1.0.0",
     "create-emotion": "^10.0.7",
     "cz-conventional-changelog": "^2.1.0",
     "emotion": "^10.0.7",
