@@ -132,7 +132,7 @@ function Tabs({
     e: React.SyntheticEvent<Element, MouseEvent>,
     index: number,
   ) {
-    if (!isControlled && !selected) {
+    if (!isControlled) {
       setActiveIndex(index);
     }
 
@@ -156,7 +156,7 @@ function Tabs({
     );
 
     const enabledCurrentIndex = enabledIndexes.indexOf(
-      isControlled ? (selected as number) : activeIndex,
+      isControlled ? selected! : activeIndex,
     );
 
     const updateIndex = isControlled ? setSelected : setActiveIndex;

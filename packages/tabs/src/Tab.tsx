@@ -5,7 +5,7 @@ export interface TabProps {
   /**
    * Content that will appear as the title in the Tab list.
    */
-  name: string | React.ReactNode;
+  name: React.ReactNode;
 
   /**
    * Content that will appear inside of Tab panel.
