@@ -218,6 +218,7 @@ function Tabs({
     return React.cloneElement(child, {
       key: index,
       ariaControl: `tab-{index}`,
+      selected: active,
       active,
     });
   });
@@ -231,7 +232,7 @@ function Tabs({
         ref={tabListRef}
       >
         {tabs.map((tab, index) => {
-          const { active, disabled, ...rest } = tab.props;
+          const { selected, disabled, ...rest } = tab.props;
 
           const filteredRest = omit(rest, [
             'ariaControl',
@@ -245,7 +246,7 @@ function Tabs({
               {...filteredRest}
               key={index}
               className={cx({
-                [activeStyle]: active,
+                [activeStyle]: selected,
                 [disabledStyle]: disabled,
               })}
               onClick={
@@ -260,7 +261,7 @@ function Tabs({
               }
               ariaControl={`tab-${index}`}
               disabled={disabled}
-              active={active}
+              selected={selected}
               index={index}
               setFocusedState={setFocusedState}
               as={as}

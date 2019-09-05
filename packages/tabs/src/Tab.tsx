@@ -18,7 +18,7 @@ export interface TabProps {
   disabled?: boolean;
 
   /**
-   * If Tabs component is uncontrolled, this determines what Tab will be active on first render.
+   * If Tabs component is uncontrolled, this determines what Tab will be selected on first render.
    */
   default?: boolean;
 
@@ -37,7 +37,7 @@ export interface TabProps {
    */
   to?: string;
 
-  active?: boolean;
+  selected?: boolean;
 
   ariaControl?: string;
 
@@ -57,19 +57,19 @@ export interface TabProps {
  * @param props.disabled Boolean that determines if the Tab is disabled.
  * @param props.name Name that will appear in Tab List.
  * @param props.className Adds a className to the root element.
- * @param props.default If Tabs component is uncontrolled, this determines what Tab will be active on first render.
+ * @param props.default If Tabs component is uncontrolled, this determines what Tab will be selected on first render.
  * @param props.href Destination when name is rendered as `a` tag.
  * @param props.to Destination when name is rendered as `Link` tag.
  *
  */
 function Tab({
-  active,
+  selected,
   children,
   disabled = false,
   ariaControl,
   ...rest
 }: TabProps) {
-  if (!active) {
+  if (!selected) {
     return null;
   }
 
@@ -80,7 +80,7 @@ function Tab({
     <div
       {...rest}
       aria-disabled={disabled}
-      aria-selected={active}
+      aria-selected={selected}
       aria-controls={ariaControl}
       role="tabpanel"
     >
@@ -92,7 +92,7 @@ function Tab({
 Tab.displayName = 'Tab';
 
 Tab.propTypes = {
-  active: PropTypes.bool,
+  selected: PropTypes.bool,
   children: PropTypes.node,
   name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   content: PropTypes.node,

@@ -33,7 +33,7 @@ const listTitle = css`
 `;
 
 interface SharedTabTitleProps
-  extends Omit<TabProps, 'default | name | href | to | value'> {
+  extends Omit<TabProps, 'default' | 'name' | 'href' | 'to' | 'value'> {
   setFocusedState: React.Dispatch<SetStateAction<Array<number>>>;
   as?: React.ElementType<any>;
 }
@@ -72,7 +72,7 @@ function usesLinkElement(
 
 function TabTitle(props: TabTitleProps) {
   const {
-    active,
+    selected,
     children,
     className,
     disabled,
@@ -88,10 +88,10 @@ function TabTitle(props: TabTitleProps) {
   const titleRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (!disabled && active && titleRef.current) {
+    if (!disabled && selected && titleRef.current) {
       titleRef.current.focus();
     }
-  }, [active]);
+  }, [selected]);
 
   const onBlur = useCallback(() => {
     setFocusedState((curr: Array<number>) => curr.filter(el => index !== el));
@@ -110,9 +110,9 @@ function TabTitle(props: TabTitleProps) {
       onClick={onClick}
       onKeyDown={onKeyDown}
       aria-controls={ariaControl}
-      aria-selected={active}
+      aria-selected={selected}
       aria-disabled={disabled}
-      tabIndex={active ? 0 : -1}
+      tabIndex={selected ? 0 : -1}
       onBlur={onBlur}
       onFocus={onFocus}
     >
@@ -134,7 +134,7 @@ function TabTitle(props: TabTitleProps) {
 TabTitle.displayName = 'TabTitle';
 
 TabTitle.propTypes = {
-  active: PropTypes.bool,
+  selected: PropTypes.bool,
   className: PropTypes.string,
   id: PropTypes.string,
   children: PropTypes.node,
