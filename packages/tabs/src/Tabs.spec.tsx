@@ -10,12 +10,13 @@ describe('packages/Tabs', () => {
   const tabClassName = 'tab-classname';
   const setSelected = jest.fn();
 
-  const { getByText, getByTestId } = render(
+  const { container, getByText, getByTestId } = render(
     <Tabs
       className={tabsClassName}
       selected={1}
       setSelected={setSelected}
       data-testid="tabs-component"
+      as="a"
     >
       <Tab name="Name A">Test Content 1</Tab>
       <Tab className={tabClassName} name="Name B">
@@ -27,14 +28,11 @@ describe('packages/Tabs', () => {
     </Tabs>,
   );
 
-  // is this still desired behavior?
   test('clicking a tab fires setSelected callback', () => {
     const tabListItem = getByText('Name A');
     fireEvent.click(tabListItem);
 
-    setTimeout(() => {
-      expect(setSelected).toHaveBeenCalledTimes(1);
-    }, 500);
+    expect(setSelected).toHaveBeenCalledTimes(1);
   });
 
   test('tab renders as disabled when the prop is set', () => {
@@ -53,17 +51,16 @@ describe('packages/Tabs', () => {
   });
 
   test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
-    const { getByText } = render(
-      <Tabs as="a">
-        <Tab default name="Tab 1">
-          Hello 1
-        </Tab>
-        <Tab name="Tab 2">Hello 2</Tab>
-      </Tabs>,
-    );
-    const tabListItem = getByText('Tab 1');
-
+    const tabListItem = getByText('Name A');
     expect(tabListItem.tagName.toLowerCase()).toBe('a');
+  });
+
+  test('renders correct number of elements in the tablist', () => {
+    expect(container.querySelectorAll('[role="tab"]').length).toBe(3);
+  });
+
+  test('renders only one tab panel', () => {
+    expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
   });
 
   describe('when the component is controlled', () => {
@@ -76,10 +73,8 @@ describe('packages/Tabs', () => {
       const tab = getByText('Name A');
       fireEvent.click(tab);
 
-      setTimeout(() => {
-        const secondContent = getByText('Second Content');
-        expect(secondContent).toBeInTheDOM();
-      }, 500);
+      const secondContent = getByText('Second Content');
+      expect(secondContent).toBeInTheDocument();
     });
 
     test('keyboard nav is not supported', () => {
