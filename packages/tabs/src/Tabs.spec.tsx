@@ -110,35 +110,29 @@ describe('packages/Tabs', () => {
     });
 
     test('clicking a tab changes the active tab', () => {
-      const tab = getByText('Name A');
+      const tab = getByText('Name First');
       fireEvent.click(tab);
 
-      setTimeout(() => {
-        const firstContent = getByText('First Content');
-        expect(firstContent).toBeInTheDOM();
-        expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
-      }, 500);
+      const firstContent = getByText('First Content');
+      expect(firstContent).toBeInTheDocument();
+      expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
     });
 
     test('keyboard nav is supported', () => {
-      const activeTabListItem = getByText('Name B');
+      const activeTabListItem = getByText('Name First');
       fireEvent.keyDown(activeTabListItem, { key: 'ArrowLeft', code: 37 });
 
-      setTimeout(() => {
-        const nextActiveTab = getByText('First Content');
-        expect(nextActiveTab).toBeVisible();
-        expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
-      }, 500);
+      const nextActiveTab = getByText('Second Content');
+      expect(nextActiveTab).toBeVisible();
+      expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
     });
 
     test('keyboard nav skips tab if tab is disabled', () => {
       const activeTabListItem = getByText('Name Second');
       fireEvent.keyDown(activeTabListItem, { key: 'ArrowRight', code: 39 });
 
-      setTimeout(() => {
-        const activeTab = getByText('First Content');
-        expect(activeTab).toBeVisible();
-      }, 500);
+      const activeTab = getByText('First Content');
+      expect(activeTab).toBeVisible();
     });
   });
 });
