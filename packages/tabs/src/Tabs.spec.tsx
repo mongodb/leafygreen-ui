@@ -59,7 +59,7 @@ describe('packages/Tabs', () => {
     expect(container.querySelectorAll('[role="tab"]').length).toBe(3);
   });
 
-  test('renders only one tab panel', () => {
+  test('renders only one tabpanel at a time', () => {
     expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
   });
 
@@ -86,7 +86,7 @@ describe('packages/Tabs', () => {
   });
 
   describe('when the component is uncontrolled', () => {
-    const { getByText } = render(
+    const { container, getByText } = render(
       <Tabs className={tabsClassName} setSelected={setSelected}>
         <Tab className={tabClassName} name="Name First">
           First Content
@@ -100,6 +100,10 @@ describe('packages/Tabs', () => {
       </Tabs>,
     );
 
+    test('renders only one tabpanel at a time', () => {
+      expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
+    });
+
     test('default tab is active on first render', () => {
       const defaultTab = getByText('Second Content');
       expect(defaultTab).toBeInTheDocument();
@@ -112,6 +116,7 @@ describe('packages/Tabs', () => {
       setTimeout(() => {
         const firstContent = getByText('First Content');
         expect(firstContent).toBeInTheDOM();
+        expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
       }, 500);
     });
 
@@ -122,6 +127,7 @@ describe('packages/Tabs', () => {
       setTimeout(() => {
         const nextActiveTab = getByText('First Content');
         expect(nextActiveTab).toBeVisible();
+        expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
       }, 500);
     });
 

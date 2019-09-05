@@ -112,7 +112,7 @@ function Tabs({
 
   const isControlled = typeof controlledSelected === 'number';
   const [uncontrolledSelected, setUncontrolledSelected] = useState(
-    childrenArray.findIndex(child => child.props.default) || 0,
+    childrenArray.findIndex(child => child.props.default || 0),
   );
   const selected = isControlled ? controlledSelected : uncontrolledSelected;
   const setSelected = isControlled
