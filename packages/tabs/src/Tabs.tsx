@@ -208,7 +208,7 @@ function Tabs({
 
     return React.cloneElement(child, {
       key: index,
-      ariaControl: `tab-{index}`,
+      ariaControl: `tab-${index}`,
       selected: selected === index,
     });
   });

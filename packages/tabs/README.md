@@ -4,11 +4,60 @@
 
 ## Example
 
-<!-- Will update once the component is finalized -->
+```js
+<Tabs setSelected={setSelected} selected={selected}>
+  <Tab name="Tab One">Tab Content One</Tab>
+  <Tab name="Tab Two">Tab Content Two</Tab>
+  <Tab name="Tab Three">Tab Content Three</Tab>
+</Tabs>
+```
 
 ## Output HTML
 
-<!-- Will update once the component is finalized -->
+```html
+<div>
+  <div class="leafygreen-ui-4furr2" role="tablist">
+    <button
+      class="leafygreen-ui-17lvitv"
+      role="tab"
+      aria-controls="tab-0"
+      aria-selected="true"
+      tabindex="0"
+    >
+      Tab One
+    </button>
+    <button
+      class="leafygreen-ui-6uqhxy"
+      role="tab"
+      aria-controls="tab-1"
+      aria-selected="false"
+      tabindex="-1"
+    >
+      Tab Two
+    </button>
+    <button
+      class="leafygreen-ui-6uqhxy"
+      role="tab"
+      aria-controls="tab-2"
+      aria-selected="false"
+      tabindex="-1"
+    >
+      Tab Three
+    </button>
+  </div>
+  <div class="leafygreen-ui-xh3r7y">
+    <div class="leafygreen-ui-11283ir"></div>
+  </div>
+  <div
+    aria-disabled="false"
+    aria-selected="true"
+    aria-controls="tab-0"
+    role="tabpanel"
+  >
+    Tab Content One
+  </div>
+</div>
+```
 
 # Tabs
 
