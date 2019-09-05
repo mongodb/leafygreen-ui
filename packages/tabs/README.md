@@ -5,6 +5,10 @@
 ## Example
 
 ```js
+import { Tabs, Tab } from '@leafygreen-ui/tabs';
+
+const [selected, setSelected] = useState(0)
+
 <Tabs setSelected={setSelected} selected={selected}>
   <Tab name="Tab One">Tab Content One</Tab>
   <Tab name="Tab Two">Tab Content Two</Tab>
@@ -79,7 +83,7 @@ A callback that receives the index of the tab a user is switching to when clicki
 
 **Type:** `number`
 
-Sets the currently-selected tab. If selected is undefined, the <Tabs> component will behave as an uncontrolled component.
+Sets the selected tab. If selected is undefined, the <Tabs> component will behave as an uncontrolled component.
 
 ### children
 
