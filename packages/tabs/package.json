@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tabs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "leafyGreen UI Kit Tabs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/lib": "^3.0.0",
-    "@leafygreen-ui/theme": "^1.2.0",
+    "@leafygreen-ui/palette": "^1.0.6",
     "lodash": "^4.17.11"
   }
 }
