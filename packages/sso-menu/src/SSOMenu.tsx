@@ -25,6 +25,11 @@ const menuButtonStyle = css`
     background-color: ${uiColors.gray.light2};
     color: ${uiColors.gray.dark2};
   }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 2px 5px ${uiColors.gray.dark1};
+  }
 `;
 
 const menuNameStyle = css`
@@ -59,6 +64,7 @@ const openIconStyle = css`
   transform: rotate(180deg);
   transition: color 200ms ease-in-out;
 `;
+
 const accountMenuGroupStyle = css`
   padding: 20px 20px 14px;
 `;
