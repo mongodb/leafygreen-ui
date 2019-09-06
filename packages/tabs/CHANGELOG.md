@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 1.0.1
+
+### Patch Changes
+
+- : Fixed component dependency on theme to palette
+
 ## 1.0.0
 
 ### Major Changes
