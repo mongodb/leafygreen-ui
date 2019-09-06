@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- : Fixed component dependency on theme to palette
+- 37d690f: Fixed component dependency on theme to palette
 
 ## 1.0.0
 
