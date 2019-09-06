@@ -8,11 +8,12 @@ import { css, cx } from '@leafygreen-ui/emotion';
 
 const menuButtonStyle = css`
   height: 29px;
-  padding: 2px 14px;
+  padding-left: 14px;
+  padding-right: 14px;
   border: 1px solid ${uiColors.gray.base};
   border-radius: 14.5px;
   cursor: pointer;
-  transition: background 200ms ease-in-out;
+  transition: background 150ms ease-in-out;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,7 +22,7 @@ const menuButtonStyle = css`
   line-height: 15px;
   position: relative;
   &:hover {
-    background-color: ${uiColors.gray.light1};
+    background-color: ${uiColors.gray.light2};
     color: ${uiColors.gray.dark2};
   }
 `;
@@ -32,7 +33,7 @@ const menuNameStyle = css`
 `;
 
 const activeMenuButtonStyle = css`
-  background-color: ${uiColors.gray.base};
+  background-color: ${uiColors.gray.dark1};
   color: ${uiColors.white};
   &:hover {
     background-color: ${uiColors.gray.base};
@@ -43,11 +44,8 @@ const activeMenuButtonStyle = css`
 const nameStyle = css`
   font-size: 16px;
   color: ${uiColors.gray.dark1};
-  font-weight: bolder;
-  margin-top: 4px;
-  margin-bottom: 2px;
-  margin-right: 0px;
-  margin-left: 0px;
+  font-weight: bold;
+  margin: 4px 0px 2px;
 `;
 
 const truncate = css`
@@ -57,12 +55,10 @@ const truncate = css`
   text-overflow: ellipsis;
 `;
 
-const iconStyle = css`
-  position: relative;
-  fill: ${uiColors.gray.dark1} !important;
+const openIconStyle = css`
+  transform: rotate(180deg);
   transition: color 200ms ease-in-out;
 `;
-
 const accountMenuGroupStyle = css`
   padding: 20px 20px 14px;
 `;
@@ -74,17 +70,8 @@ const accountButtonStyle = css`
   justify-content: center;
 `;
 
-const menuItemTextStyle = css`
-  font-size: 14px;
-  line-height: 16px;
-  cursor: pointer;
-  margin: 0px;
-`;
-
 const descriptionStyle = css`
   margin: 0px;
-  display: block;
-  font-weight: normal;
   font-size: 12px;
   color: ${uiColors.gray.dark2};
   text-decoration: none;
@@ -121,13 +108,13 @@ const menuItems = [
 
 const slugs = menuItems.map(mi => mi.slug);
 
-export const ActiveProduct = {
+export const ActiveProductOptions = {
   Atlas: 'atlas',
   University: 'university',
   Support: 'support',
 } as const;
 
-type ActiveProduct = typeof ActiveProduct[keyof typeof ActiveProduct];
+type ActiveProductOptions = typeof ActiveProductOptions[keyof typeof ActiveProductOptions];
 
 interface SSOMenuProps {
   /**
@@ -138,15 +125,15 @@ interface SSOMenuProps {
   /**
    * MongoDB product that is currently active: ['atlas', 'university', 'support'].
    */
-  activeProduct: ActiveProduct;
+  activeProduct: ActiveProductOptions;
 
   /**
-   * Callback invoked when user logs out.
+   * Callback invoked after the user clicks log out.
    */
   onLogout?: React.MouseEventHandler;
 
   /**
-   * Callback invoked when user switches products.
+   * Callback invoked after the user clicks a product.
    */
   onProductChange?: React.MouseEventHandler;
 }
@@ -164,8 +151,8 @@ interface SSOMenuProps {
  * ```
  * @param props.user Object that contains information about the active user. {name: 'string', email: 'string'}
  * @param props.activeProduct  MongoDB product that is currently active: ['atlas', 'university', 'support'].
- * @param props.onLogout Callback invoked when user logs out.
- * @param props.onProductChange Callback invoked when user switches products.
+ * @param props.onLogout Callback invoked after the user clicks log out.
+ * @param props.onProductChange Callback invoked after the user clicks a product.
  *
  */
 function SSOMenu({
@@ -183,15 +170,14 @@ function SSOMenu({
       })}
     >
       <span className={menuNameStyle}>{name}</span>
-      {open ? (
-        <Icon glyph="CaretUp" fill={uiColors.white} className={iconStyle} />
-      ) : (
-        <Icon
-          glyph="CaretDown"
-          fill={uiColors.gray.dark1}
-          className={iconStyle}
-        />
-      )}
+
+      <Icon
+        glyph="CaretUp"
+        className={cx({
+          [openIconStyle]: open,
+        })}
+      />
+
       <Menu open={open} setOpen={setOpen}>
         <MenuGroup className={accountMenuGroupStyle}>
           <h3 className={cx(nameStyle, truncate)}>{name}</h3>
@@ -213,20 +199,15 @@ function SSOMenu({
               active={el.slug === activeProduct}
               className={menuItemPadding}
               href={el.href}
+              description={el.description}
             >
-              <p className={menuItemTextStyle}>{el.displayName}</p>
-              <p className={descriptionStyle}>{el.description}</p>
+              {el.displayName}
             </MenuItem>
           ))}
         </MenuGroup>
         <MenuItem
-          active={false}
           onClick={onLogout}
-          className={cx(
-            logoutContainerHeight,
-            menuItemTextStyle,
-            menuItemPadding,
-          )}
+          className={cx(logoutContainerHeight, menuItemPadding)}
         >
           Logout
         </MenuItem>

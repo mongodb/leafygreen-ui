@@ -34,20 +34,19 @@ const containerStyle = css`
   }
 `;
 
-const titleTextStyle = css`
-  font-size: 14px;
-  line-height: 16px;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  font-weight: normal;
-`;
-
 const linkStyle = css`
   &,
   &:hover {
     text-decoration: none;
     color: inherit;
   }
+`;
+
+const titleTextStyle = css`
+  font-size: 14px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  font-weight: normal;
 `;
 
 const descriptionTextStyle = css`
@@ -112,7 +111,7 @@ interface MenuItemProps {
   /**
    * Determines whether or not the MenuItem is active.
    */
-  active: boolean;
+  active?: boolean;
 }
 
 /**
@@ -154,7 +153,6 @@ function MenuItem({
         className,
       )}
       role="menuitem"
-      aria-checked={active}
       aria-disabled={disabled}
     >
       <Root

@@ -22,7 +22,7 @@ Object that contains information about the active user. {name: 'string', email: 
 
 ### activeProduct
 
-**Type:** `['atlas', 'university', 'support']`
+**Type:** `'atlas', 'university', 'support'`
 
 MongoDB product that is currently active.
 
@@ -32,7 +32,7 @@ MongoDB product that is currently active.
 
 **Default:** `() => {}`
 
-Callback invoked when user switches products.
+Callback invoked after the user clicks a product.
 
 ### onLogout
 
@@ -40,4 +40,4 @@ Callback invoked when user switches products.
 
 **Default:** `() => {}`
 
-Callback invoked when user logs out.
+Callback invoked after the user clicks logout.
