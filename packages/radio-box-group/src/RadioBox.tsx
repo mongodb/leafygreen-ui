@@ -35,7 +35,7 @@ interface StateForStyles {
 
 const getRadioDisplayStyles = ({ checked, disabled }: StateForStyles) => {
   const baseStyles = css`
-    transition: box-shadow 150ms ease-in-out;
+    transition: box-shadow 150ms ease-in-out, border 150ms ease-in-out;
     box-sizing: content-box;
     padding: 15px;
     font-weight: normal;
