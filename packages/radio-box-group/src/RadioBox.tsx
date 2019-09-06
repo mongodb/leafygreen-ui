@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { colors } from '@leafygreen-ui/theme';
+import { uiColors } from '@leafygreen-ui/palette';
 import Size from './Size';
 
 const radioBoxInput = createDataProp('radio-box-input');
@@ -35,7 +35,7 @@ interface StateForStyles {
 
 const getRadioDisplayStyles = ({ checked, disabled }: StateForStyles) => {
   const baseStyles = css`
-    transition: box-shadow 150ms ease-in-out;
+    transition: box-shadow 150ms ease-in-out, border 150ms ease-in-out;
     box-sizing: content-box;
     padding: 15px;
     font-weight: normal;
@@ -47,8 +47,8 @@ const getRadioDisplayStyles = ({ checked, disabled }: StateForStyles) => {
     vertical-align: top;
     overflow-wrap: break-word;
     background-color: white;
-    border: 1px solid ${colors.gray[5]};
-    color: ${colors.gray[1]};
+    border: 1px solid ${uiColors.gray.light1};
+    color: ${uiColors.gray.dark2};
     border-radius: 2px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
     z-index: 2;
@@ -58,15 +58,15 @@ const getRadioDisplayStyles = ({ checked, disabled }: StateForStyles) => {
     return cx(
       baseStyles,
       css`
-        background: ${colors.gray[8]};
-        border-color: ${colors.gray[7]};
+        background: ${uiColors.gray.light3};
+        border-color: ${uiColors.gray.light2};
         box-shadow: none;
-        color: ${colors.gray[5]};
+        color: ${uiColors.gray.light1};
         cursor: not-allowed;
 
         &:hover {
-          background: ${colors.gray[8]};
-          border-color: ${colors.gray[7]};
+          background: ${uiColors.gray.light3};
+          border-color: ${uiColors.gray.light2};
         }
       `,
     );
@@ -76,12 +76,12 @@ const getRadioDisplayStyles = ({ checked, disabled }: StateForStyles) => {
     return cx(
       baseStyles,
       css`
-        border-color: ${colors.green[2]};
+        border-color: ${uiColors.green.base};
         transition: box-shadow 150ms ease-in-out, border-color 0ms;
         box-shadow: none;
 
         &:hover {
-          border-color: ${colors.green[3]};
+          border-color: ${uiColors.green.base};
         }
       `,
     );
@@ -96,7 +96,7 @@ const getRadioDisplayStyles = ({ checked, disabled }: StateForStyles) => {
       }
 
       &:hover {
-        border-color: ${colors.gray[3]};
+        border-color: ${uiColors.gray.base};
       }
     `,
   );
@@ -123,7 +123,7 @@ const getCheckedStateStyle = ({ checked }: StateForStyles) => {
       baseStyles,
       css`
         border-radius: 3px;
-        background-color: ${colors.green[2]};
+        background-color: ${uiColors.green.base};
         transform: scale(1);
         opacity: 1;
         z-index: 1;
