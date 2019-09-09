@@ -1,4 +1,4 @@
-import SSOMenu, { ActiveProductOptions } from './SSOMenu';
+import SSOMenu, { Products } from './SSOMenu';
 
-export { ActiveProductOptions };
+export { Products };
 export default SSOMenu;

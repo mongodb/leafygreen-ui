@@ -52,7 +52,6 @@ const menuButtonStyle = css`
   align-items: center;
   color: ${uiColors.gray.dark1};
   font-size: 12px;
-  line-height: 15px;
   position: relative;
 
   &:hover {
@@ -121,10 +120,6 @@ const descriptionStyle = css`
   text-decoration: none;
 `;
 
-const menuItemPadding = css`
-  padding-left: 20px;
-`;
-
 const logoutContainerHeight = css`
   height: 46px;
 `;
@@ -152,13 +147,13 @@ const menuItems = [
 
 const slugs = menuItems.map(mi => mi.slug);
 
-export const ActiveProductOptions = {
+export const Products = {
   Atlas: 'atlas',
   University: 'university',
   Support: 'support',
 } as const;
 
-type ActiveProductOptions = typeof ActiveProductOptions[keyof typeof ActiveProductOptions];
+type Products = typeof Products[keyof typeof Products];
 
 interface SSOMenuProps {
   /**
@@ -169,7 +164,7 @@ interface SSOMenuProps {
   /**
    * MongoDB product that is currently active: ['atlas', 'university', 'support'].
    */
-  activeProduct: ActiveProductOptions;
+  activeProduct: Products;
 
   /**
    * Callback invoked after the user clicks log out.
@@ -243,7 +238,6 @@ function SSOMenu({
               onClick={onProductChange}
               key={el.displayName}
               active={el.slug === activeProduct}
-              className={menuItemPadding}
               href={el.href}
               description={el.description}
             >
@@ -251,10 +245,7 @@ function SSOMenu({
             </MenuItem>
           ))}
         </MenuGroup>
-        <MenuItem
-          onClick={onLogout}
-          className={cx(logoutContainerHeight, menuItemPadding)}
-        >
+        <MenuItem onClick={onLogout} className={cx(logoutContainerHeight)}>
           Logout
         </MenuItem>
       </Menu>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, select } from '@storybook/addon-knobs';
-import SSOMenu, { ActiveProductOptions } from '.';
+import SSOMenu, { Products } from '.';
 
 storiesOf('SSOMenu', module).add('Default', () => (
   <SSOMenu
@@ -11,8 +11,8 @@ storiesOf('SSOMenu', module).add('Default', () => (
     }}
     activeProduct={select(
       'activeProduct',
-      Object.values(ActiveProductOptions) as Array<Size>,
-      ActiveProductOptions.Atlas,
+      Object.values(Products) as Array<Size>,
+      Products.Atlas,
     )}
   />
 ));

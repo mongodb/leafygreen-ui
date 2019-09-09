@@ -1,7 +1,7 @@
 import React from 'react';
 import 'jest-dom/extend-expect';
 import { render, fireEvent, cleanup } from '@testing-library/react';
-import SSOMenu, { ActiveProductOptions } from '.';
+import SSOMenu, { Products } from '.';
 
 afterAll(cleanup);
 
@@ -12,7 +12,7 @@ describe('packages/SSOMenu', () => {
   const { getByText } = render(
     <SSOMenu
       user={{ name: 'Leafy', email: 'leafy@mongodb.com' }}
-      activeProduct={ActiveProductOptions.Atlas}
+      activeProduct={Products.Atlas}
       onLogout={onLogout}
       onProductChange={onProductChange}
     />,

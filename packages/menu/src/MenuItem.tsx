@@ -4,7 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { colors } from '@leafygreen-ui/theme';
 import { menuGroup } from './MenuGroup';
 
-const indentation = 16;
+const indentation = 20;
 
 const containerStyle = css`
   min-height: 42px;
@@ -35,11 +35,8 @@ const containerStyle = css`
 `;
 
 const linkStyle = css`
-  &,
-  &:hover {
-    text-decoration: none;
-    color: inherit;
-  }
+  text-decoration: none;
+  color: inherit;
 `;
 
 const titleTextStyle = css`
