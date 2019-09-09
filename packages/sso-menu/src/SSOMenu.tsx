@@ -6,11 +6,44 @@ import { Menu, MenuItem, MenuGroup } from '@leafygreen-ui/menu';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
+const buttonReset = css`
+  appearance: none;
+  background: none;
+  border: 0px;
+  position: relative;
+  padding: 0px;
+
+  &:focus {
+    outline: none;
+
+    &:before {
+      transform: scale(1);
+    }
+  }
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    left: -2px;
+    right: -2px;
+    border-radius: 50px;
+    background-color: #63b0d0;
+    transform: scale(0.9, 0.8);
+    transition: transform 150ms ease-in-out;
+  }
+`;
 const menuButtonStyle = css`
   height: 29px;
   padding-left: 14px;
   padding-right: 14px;
   border: 1px solid ${uiColors.gray.base};
+  background-color: ${uiColors.white};
   border-radius: 14.5px;
   cursor: pointer;
   transition: background 150ms ease-in-out;
@@ -21,6 +54,7 @@ const menuButtonStyle = css`
   font-size: 12px;
   line-height: 15px;
   position: relative;
+
   &:hover {
     background-color: ${uiColors.gray.light2};
     color: ${uiColors.gray.dark2};
@@ -28,9 +62,25 @@ const menuButtonStyle = css`
 
   &:focus {
     outline: none;
-    box-shadow: 0 2px 5px ${uiColors.gray.dark1};
+    border: 2px solid ${uiColors.blue.light2};
   }
 `;
+
+// const focusStyle = css`
+//   position: absolute;
+//   top: -2px;
+//   bottom: -2px;
+//   left: -2px;
+//   right: -2px;
+//   border-radius: 50px;
+//   background-color: #63b0d0;
+//   transform: scale(0.9, 0.8);
+//   transition: transform 150ms ease-in-out;
+
+//   ${buttonShell.selector}:focus & {
+//     transform: scale(1);
+//   }
+// `;
 
 const menuNameStyle = css`
   margin-right: 2px;
@@ -63,6 +113,10 @@ const truncate = css`
 const openIconStyle = css`
   transform: rotate(180deg);
   transition: color 200ms ease-in-out;
+`;
+
+const closedIconStyle = css`
+  margin-top: 2px;
 `;
 
 const accountMenuGroupStyle = css`
@@ -169,20 +223,22 @@ function SSOMenu({
 }: SSOMenuProps) {
   const [open, setOpen] = useState(false);
   return (
-    <button
-      onClick={() => setOpen(curr => !curr)}
-      className={cx(menuButtonStyle, {
-        [activeMenuButtonStyle]: open,
-      })}
-    >
-      <span className={menuNameStyle}>{name}</span>
-
-      <Icon
-        glyph="CaretUp"
-        className={cx({
-          [openIconStyle]: open,
+    <button className={buttonReset} onClick={() => setOpen(curr => !curr)}>
+      <div
+        className={cx(menuButtonStyle, {
+          [activeMenuButtonStyle]: open,
         })}
-      />
+      >
+        <span className={menuNameStyle}>{name}</span>
+
+        <Icon
+          glyph="CaretUp"
+          className={cx({
+            [openIconStyle]: open,
+            [closedIconStyle]: !open,
+          })}
+        />
+      </div>
 
       <Menu open={open} setOpen={setOpen}>
         <MenuGroup className={accountMenuGroupStyle}>
