@@ -66,22 +66,6 @@ const menuButtonStyle = css`
   }
 `;
 
-// const focusStyle = css`
-//   position: absolute;
-//   top: -2px;
-//   bottom: -2px;
-//   left: -2px;
-//   right: -2px;
-//   border-radius: 50px;
-//   background-color: #63b0d0;
-//   transform: scale(0.9, 0.8);
-//   transition: transform 150ms ease-in-out;
-
-//   ${buttonShell.selector}:focus & {
-//     transform: scale(1);
-//   }
-// `;
-
 const menuNameStyle = css`
   margin-right: 2px;
   margin-left: 2px;
