@@ -13,25 +13,24 @@ const buttonReset = css`
   position: relative;
   padding: 0px;
 
+  &:hover:before {
+    transform: scale(1);
+  }
+
+  &:active {
+    color: ${uiColors.gray.dark2};
+
+    &:before {
+      transform: scale(1);
+    }
+  }
+
   &:focus {
     outline: none;
 
     &:before {
       background-color: #63b0d0;
       transform: scale(1);
-    }
-  }
-
-  &:hover {
-    &:before {
-      background-color: ${uiColors.gray.light1};
-      transform: scale(1);
-    }
-  }
-
-  &:active {
-    &:before {
-      background-color: ${uiColors.gray.light3};
     }
   }
 
@@ -49,6 +48,7 @@ const buttonReset = css`
     border-radius: 50px;
     transform: scale(0.9, 0.8);
     transition: transform 150ms ease-in-out;
+    background-color: ${uiColors.gray.light2};
   }
 `;
 
@@ -68,17 +68,8 @@ const menuButtonStyle = css`
   font-size: 12px;
   position: relative;
 
-  &:hover {
-    border: 2px solid ${uiColors.gray.light1};
-  }
-
-  &:active {
-    border: 2px solid ${uiColors.gray.light3};
-  }
-
   &:focus {
     outline: none;
-    border: 2px solid ${uiColors.blue.light2};
   }
 `;
 
@@ -89,9 +80,6 @@ const menuNameStyle = css`
 
 const activeMenuButtonStyle = css`
   background-color: ${uiColors.gray.light2};
-  &:hover {
-    border: 2px solid ${uiColors.gray.light1};
-  }
 `;
 
 const nameStyle = css`
@@ -108,13 +96,15 @@ const truncate = css`
   text-overflow: ellipsis;
 `;
 
-const openIconStyle = css`
+const closedIconStyle = css`
   transform: rotate(180deg);
   transition: color 200ms ease-in-out;
+  color: ${uiColors.gray.base};
 `;
 
-const closedIconStyle = css`
+const openIconStyle = css`
   margin-top: 2px;
+  color: ${uiColors.gray.base};
 `;
 
 const accountMenuGroupStyle = css`
