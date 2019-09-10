@@ -9,15 +9,49 @@ const indentation = 20;
 const containerStyle = css`
   min-height: 42px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   padding-left: ${indentation}px;
   text-decoration: none;
   cursor: pointer;
   color: ${uiColors.gray.dark2};
   text-decoration: none;
+  position: relative;
+  transition: background-color 200ms ease-in-out;
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 3px;
+    top: 0;
+    bottom: 0;
+    left: -1px;
+  }
 
   &:hover {
-    transition: background-color 200ms ease-in-out;
+    background-color: ${uiColors.gray.light3};
+
+    &:before {
+      background-color: ${uiColors.gray.light2};
+    }
+  }
+
+  &:active {
+    background-color: ${uiColors.gray.light2};
+
+    &:before {
+      background-color: ${uiColors.gray.light1};
+    }
+  }
+
+  &:focus {
+    outline: none;
+    background-color: ${uiColors.blue.light2};
+    color: ${uiColors.blue.dark3};
+
+    &:before {
+      background-color: #63b0d0;
+    }
   }
 
   &:first-of-type ~ ${menuGroup.selector} {
@@ -54,22 +88,26 @@ const descriptionTextStyle = css`
 
 const activeStyle = css`
   background-color: ${uiColors.green.light3};
-  position: relative;
   color: ${uiColors.green.dark3};
 
   &:before {
-    content: '';
-    position: absolute;
-    width: 3px;
-    top: 0;
-    bottom: 0;
-    left: -1px;
     background-color: ${uiColors.green.base};
+  }
+
+  &:hover {
+    background-color: ${uiColors.green.light3};
+    color: ${uiColors.green.dark3};
+
+    &:before {
+      background-color: ${uiColors.green.base};
+    }
   }
 `;
 
 const disabledStyle = css`
   cursor: not-allowed;
+  background-color: ${uiColors.gray.light3};
+  color: ${uiColors.gray.light1};
 `;
 
 interface MenuItemProps {
@@ -137,10 +175,11 @@ function MenuItem({
   const Root = href ? 'a' : 'span';
 
   return (
-    <div
+    <Root
       {...rest}
       className={cx(
         containerStyle,
+        linkStyle,
         {
           [activeStyle]: active,
           [disabledStyle]: disabled,
@@ -149,24 +188,18 @@ function MenuItem({
       )}
       role="menuitem"
       aria-disabled={disabled}
+      onClick={disabled ? undefined : onClick}
+      href={href}
     >
-      <Root
-        onClick={disabled ? undefined : onClick}
-        href={href}
-        className={linkStyle}
+      <div
+        className={cx(titleTextStyle, {
+          [activetitleTextStyle]: active,
+        })}
       >
-        <div
-          className={cx(titleTextStyle, {
-            [activetitleTextStyle]: active,
-          })}
-        >
-          {children}
-        </div>
-        {description && (
-          <div className={descriptionTextStyle}>{description}</div>
-        )}
-      </Root>
-    </div>
+        {children}
+      </div>
+      {description && <div className={descriptionTextStyle}>{description}</div>}
+    </Root>
   );
 }
 

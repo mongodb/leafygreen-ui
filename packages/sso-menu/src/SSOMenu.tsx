@@ -17,7 +17,21 @@ const buttonReset = css`
     outline: none;
 
     &:before {
+      background-color: #63b0d0;
       transform: scale(1);
+    }
+  }
+
+  &:hover {
+    &:before {
+      background-color: ${uiColors.gray.light1};
+      transform: scale(1);
+    }
+  }
+
+  &:active {
+    &:before {
+      background-color: ${uiColors.gray.light3};
     }
   }
 
@@ -33,7 +47,6 @@ const buttonReset = css`
     left: -2px;
     right: -2px;
     border-radius: 50px;
-    background-color: #63b0d0;
     transform: scale(0.9, 0.8);
     transition: transform 150ms ease-in-out;
   }
@@ -43,7 +56,7 @@ const menuButtonStyle = css`
   height: 29px;
   padding-left: 14px;
   padding-right: 14px;
-  border: 1px solid ${uiColors.gray.base};
+  border: 1px solid ${uiColors.gray.light1};
   background-color: ${uiColors.white};
   border-radius: 14.5px;
   cursor: pointer;
@@ -51,13 +64,16 @@ const menuButtonStyle = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${uiColors.gray.dark1};
+  color: ${uiColors.gray.dark2};
   font-size: 12px;
   position: relative;
 
   &:hover {
-    background-color: ${uiColors.gray.light2};
-    color: ${uiColors.gray.dark2};
+    border: 2px solid ${uiColors.gray.light1};
+  }
+
+  &:active {
+    border: 2px solid ${uiColors.gray.light3};
   }
 
   &:focus {
@@ -72,11 +88,9 @@ const menuNameStyle = css`
 `;
 
 const activeMenuButtonStyle = css`
-  background-color: ${uiColors.gray.dark1};
-  color: ${uiColors.white};
+  background-color: ${uiColors.gray.light2};
   &:hover {
-    background-color: ${uiColors.gray.base};
-    color: ${uiColors.white};
+    border: 2px solid ${uiColors.gray.light1};
   }
 `;
 
