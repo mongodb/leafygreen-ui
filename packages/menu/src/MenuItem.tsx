@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { colors } from '@leafygreen-ui/theme';
+import { uiColors } from '@leafygreen-ui/palette';
 import { menuGroup } from './MenuGroup';
 
 const indentation = 20;
@@ -13,20 +13,19 @@ const containerStyle = css`
   padding-left: ${indentation}px;
   text-decoration: none;
   cursor: pointer;
-  color: ${colors.gray[1]};
+  color: ${uiColors.gray.dark2};
   text-decoration: none;
 
   &:hover {
-    background-color: ${colors.gray[8]};
     transition: background-color 200ms ease-in-out;
   }
 
   &:first-of-type ~ ${menuGroup.selector} {
-    border-top: 1px solid ${colors.gray[7]};
+    border-top: 1px solid ${uiColors.gray.light1};
   }
 
   ${menuGroup.selector} + & {
-    border-top: 1px solid ${colors.gray[7]};
+    border-top: 1px solid ${uiColors.gray.light1};
   }
 
   ${menuGroup.selector} ${menuGroup.selector} & {
@@ -41,21 +40,22 @@ const linkStyle = css`
 
 const titleTextStyle = css`
   font-size: 14px;
-  margin-top: 4px;
-  margin-bottom: 4px;
   font-weight: normal;
+`;
+
+const activetitleTextStyle = css`
+  font-weight: bold;
 `;
 
 const descriptionTextStyle = css`
   font-size: 12px;
-  margin-top: 2px;
-  margin-bottom: 2px;
   font-weight: normal;
 `;
 
 const activeStyle = css`
-  background-color: ${colors.gray[8]};
+  background-color: ${uiColors.green.light3};
   position: relative;
+  color: ${uiColors.green.dark3};
 
   &:before {
     content: '';
@@ -64,13 +64,11 @@ const activeStyle = css`
     top: 0;
     bottom: 0;
     left: -1px;
-    background-color: ${colors.green[3]};
+    background-color: ${uiColors.green.base};
   }
 `;
 
 const disabledStyle = css`
-  background: ${colors.gray[8]};
-  color: ${colors.gray[4]};
   cursor: not-allowed;
 `;
 
@@ -157,7 +155,13 @@ function MenuItem({
         href={href}
         className={linkStyle}
       >
-        <div className={titleTextStyle}>{children}</div>
+        <div
+          className={cx(titleTextStyle, {
+            [activetitleTextStyle]: active,
+          })}
+        >
+          {children}
+        </div>
         {description && (
           <div className={descriptionTextStyle}>{description}</div>
         )}

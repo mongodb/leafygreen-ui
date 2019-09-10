@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { colors } from '@leafygreen-ui/theme';
+import { uiColors } from '@leafygreen-ui/palette';
 
 const rootMenuStyle = css`
   width: 200px;
   border-radius: 3px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  background-color: ${colors.mongodb.white};
+  background-color: ${uiColors.white};
 `;
 
 const escapeKeyCode = 27;

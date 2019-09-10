@@ -38,6 +38,7 @@ const buttonReset = css`
     transition: transform 150ms ease-in-out;
   }
 `;
+
 const menuButtonStyle = css`
   height: 29px;
   padding-left: 14px;
