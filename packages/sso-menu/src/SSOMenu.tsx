@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
 import { Menu, MenuItem, MenuGroup } from '@leafygreen-ui/menu';
+import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
+
+const iconRef = createDataProp('icon-ref');
 
 const buttonReset = css`
   appearance: none;
@@ -22,6 +25,10 @@ const buttonReset = css`
 
     &:before {
       transform: scale(1);
+    }
+
+    & ${iconRef.selector} {
+      color: ${uiColors.gray.dark1};
     }
   }
 
@@ -216,6 +223,7 @@ function SSOMenu({
         <span className={menuNameStyle}>{name}</span>
 
         <Icon
+          {...iconRef.prop}
           glyph="CaretUp"
           className={cx({
             [openIconStyle]: open,
