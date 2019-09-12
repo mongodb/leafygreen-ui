@@ -91,7 +91,7 @@ const activeMenuButtonStyle = css`
 
 const nameStyle = css`
   font-size: 16px;
-  color: ${uiColors.gray.dark1};
+  color: ${uiColors.gray.dark2};
   font-weight: bold;
   margin: 4px 0px 2px;
 `;
@@ -128,7 +128,7 @@ const accountButtonStyle = css`
 const descriptionStyle = css`
   margin: 0px;
   font-size: 12px;
-  color: ${uiColors.gray.dark2};
+  color: ${uiColors.gray.dark1};
   text-decoration: none;
 `;
 

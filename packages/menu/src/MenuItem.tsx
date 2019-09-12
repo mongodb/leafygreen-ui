@@ -14,7 +14,6 @@ const containerStyle = css`
   padding-left: ${indentation}px;
   text-decoration: none;
   cursor: pointer;
-  color: ${uiColors.gray.dark2};
   text-decoration: none;
   position: relative;
   transition: background-color 200ms ease-in-out;
@@ -75,20 +74,26 @@ const linkStyle = css`
 const titleTextStyle = css`
   font-size: 14px;
   font-weight: normal;
+  color: ${uiColors.gray.dark2};
 `;
 
 const activetitleTextStyle = css`
   font-weight: bold;
+  color: ${uiColors.green.dark3};
+`;
+
+const activeDescriptionTextStyle = css`
+  color: ${uiColors.green.dark2};
 `;
 
 const descriptionTextStyle = css`
   font-size: 12px;
   font-weight: normal;
+  color: ${uiColors.gray.dark1};
 `;
 
 const activeStyle = css`
   background-color: ${uiColors.green.light3};
-  color: ${uiColors.green.dark3};
 
   &:before {
     background-color: ${uiColors.green.base};
@@ -198,7 +203,15 @@ function MenuItem({
       >
         {children}
       </div>
-      {description && <div className={descriptionTextStyle}>{description}</div>}
+      {description && (
+        <div
+          className={cx(descriptionTextStyle, {
+            [activeDescriptionTextStyle]: active,
+          })}
+        >
+          {description}
+        </div>
+      )}
     </Root>
   );
 }
