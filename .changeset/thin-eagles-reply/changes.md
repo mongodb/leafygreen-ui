@@ -1,0 +1,1 @@
+Updated label text adjacent to a disabled Checkbox, so that it the cursor changes to 'not-allowed'
