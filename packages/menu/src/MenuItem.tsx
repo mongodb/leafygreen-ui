@@ -2,7 +2,10 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { createDataProp } from '@leafygreen-ui/lib';
 import { menuGroup } from './MenuGroup';
+
+const menuItemContainer = createDataProp('menu-item-container');
 
 const indentation = 20;
 
@@ -45,7 +48,7 @@ const containerStyle = css`
 
   &:focus {
     outline: none;
-    background-color: ${uiColors.blue.light2};
+    background-color: ${uiColors.blue.light3};
     color: ${uiColors.blue.dark3};
 
     &:before {
@@ -75,6 +78,10 @@ const titleTextStyle = css`
   font-size: 14px;
   font-weight: normal;
   color: ${uiColors.gray.dark2};
+
+  ${menuItemContainer.selector}:focus & {
+    color: ${uiColors.blue.dark3};
+  }
 `;
 
 const activetitleTextStyle = css`
@@ -90,6 +97,10 @@ const descriptionTextStyle = css`
   font-size: 12px;
   font-weight: normal;
   color: ${uiColors.gray.dark1};
+
+  ${menuItemContainer.selector}:focus & {
+    color: ${uiColors.blue.dark2};
+  }
 `;
 
 const activeStyle = css`
@@ -182,6 +193,7 @@ function MenuItem({
   return (
     <Root
       {...rest}
+      {...menuItemContainer.prop}
       className={cx(
         containerStyle,
         linkStyle,
