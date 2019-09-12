@@ -4,11 +4,12 @@ import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { transparentize } from 'polished';
 
 const rootMenuStyle = css`
   width: 200px;
   border-radius: 3px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 6px ${transparentize(0.8, uiColors.black)};
   background-color: ${uiColors.white};
 `;
 

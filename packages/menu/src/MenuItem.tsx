@@ -19,7 +19,7 @@ const containerStyle = css`
   cursor: pointer;
   text-decoration: none;
   position: relative;
-  transition: background-color 200ms ease-in-out;
+  transition: background-color 150ms ease-in-out;
 
   &:before {
     content: '';
@@ -28,6 +28,8 @@ const containerStyle = css`
     top: 0;
     bottom: 0;
     left: -1px;
+    background-color: transparent;
+    transition: background-color 150ms ease-in-out;
   }
 
   &:hover {
