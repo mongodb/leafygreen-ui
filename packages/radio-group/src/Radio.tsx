@@ -22,10 +22,12 @@ const inputStyle = css`
 const disabledButtonVariant = {
   default: css`
     color: ${colors.gray[5]};
+    cursor: not-allowed;
   `,
 
   light: css`
     color: ${colors.gray[4]};
+    cursor: not-allowed;
   `,
 };
 
