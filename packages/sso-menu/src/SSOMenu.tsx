@@ -157,8 +157,6 @@ const menuItems = [
   },
 ] as const;
 
-const slugs = menuItems.map(mi => mi.slug);
-
 export const Products = {
   Atlas: 'atlas',
   University: 'university',
@@ -267,6 +265,8 @@ function SSOMenu({
 }
 
 SSOMenu.displayName = 'SSOMenu';
+
+const slugs = menuItems.map(mi => mi.slug);
 
 SSOMenu.propTypes = {
   user: PropTypes.object,
