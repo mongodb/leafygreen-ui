@@ -27,12 +27,12 @@ const disabledButtonVariant = {
 
   light: css`
     color: ${colors.gray[4]};
+    cursor: not-allowed;
   `,
 };
 
 const textStyle = css`
   line-height: 0.9em;
-  cursor: not-allowed;
 `;
 
 export interface RadioProps {
