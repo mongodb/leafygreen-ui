@@ -1,5 +1,6 @@
 import { configure, addDecorator, addParameters } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
+import { withA11y } from '@storybook/addon-a11y';
 import ComponentPreview from './decorators/ComponentPreview';
 import theme from './theme';
 
@@ -13,6 +14,7 @@ addParameters({
 // Add decorators globally to wrap our stories with
 addDecorator(ComponentPreview);
 addDecorator(withKnobs);
+addDecorator(withA11y);
 
 // Dynamically load all stories found in the packages sub-directories (excluding node_modules) that
 // match the ".stories.js" extension
