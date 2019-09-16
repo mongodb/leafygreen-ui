@@ -80,8 +80,8 @@ function Tab({
     <div
       {...rest}
       aria-disabled={disabled}
-      aria-selected={selected}
       aria-controls={ariaControl}
+      id={ariaControl}
       role="tabpanel"
     >
       {children}
