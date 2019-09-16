@@ -2,3 +2,4 @@
 // The first panel will be opened by default as you run Storybook
 
 import '@storybook/addon-knobs/register';
+import '@storybook/addon-a11y/register';
