@@ -22,7 +22,10 @@
       "path": "../portal"
     },
     {
-      "path": "../palette"
+      "path": "../menu"
+    },
+    {
+      "path": "../icon"
     }
   ]
 }
