@@ -1,57 +1,25 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { colors } from '@leafygreen-ui/theme';
+import { uiColors } from '@leafygreen-ui/palette';
+import { createDataProp } from '@leafygreen-ui/lib';
 import { menuGroup } from './MenuGroup';
 
-const indentation = 16;
+const menuItemContainer = createDataProp('menu-item-container');
+
+const indentation = 20;
 
 const containerStyle = css`
   min-height: 42px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   padding-left: ${indentation}px;
   text-decoration: none;
   cursor: pointer;
-  color: ${colors.gray[1]};
   text-decoration: none;
-
-  &:hover {
-    background-color: ${colors.gray[8]};
-    transition: background-color 200ms ease-in-out;
-  }
-
-  &:first-of-type ~ ${menuGroup.selector} {
-    border-top: 1px solid ${colors.gray[7]};
-  }
-
-  ${menuGroup.selector} + & {
-    border-top: 1px solid ${colors.gray[7]};
-  }
-
-  ${menuGroup.selector} ${menuGroup.selector} & {
-    padding-left: ${indentation * 2}px;
-  }
-`;
-
-const titleTextStyle = css`
-  font-size: 14px;
-  line-height: 16px;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  font-weight: normal;
-`;
-
-const descriptionTextStyle = css`
-  font-size: 12px;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  font-weight: normal;
-`;
-
-const activeStyle = css`
-  background-color: ${colors.gray[8]};
   position: relative;
+  transition: background-color 150ms ease-in-out;
 
   &:before {
     content: '';
@@ -60,14 +28,104 @@ const activeStyle = css`
     top: 0;
     bottom: 0;
     left: -1px;
-    background-color: ${colors.green[3]};
+    background-color: transparent;
+    transition: background-color 150ms ease-in-out;
+  }
+
+  &:hover {
+    background-color: ${uiColors.gray.light3};
+
+    &:before {
+      background-color: ${uiColors.gray.light2};
+    }
+  }
+
+  &:active {
+    background-color: ${uiColors.gray.light2};
+
+    &:before {
+      background-color: ${uiColors.gray.light1};
+    }
+  }
+
+  &:focus {
+    outline: none;
+    background-color: ${uiColors.blue.light3};
+    color: ${uiColors.blue.dark3};
+
+    &:before {
+      background-color: #63b0d0;
+    }
+  }
+
+  &:first-of-type ~ ${menuGroup.selector} {
+    border-top: 1px solid ${uiColors.gray.light1};
+  }
+
+  ${menuGroup.selector} + & {
+    border-top: 1px solid ${uiColors.gray.light1};
+  }
+
+  ${menuGroup.selector} ${menuGroup.selector} & {
+    padding-left: ${indentation * 2}px;
+  }
+`;
+
+const linkStyle = css`
+  text-decoration: none;
+  color: inherit;
+`;
+
+const titleTextStyle = css`
+  font-size: 14px;
+  font-weight: normal;
+  color: ${uiColors.gray.dark2};
+
+  ${menuItemContainer.selector}:focus & {
+    color: ${uiColors.blue.dark3};
+  }
+`;
+
+const activetitleTextStyle = css`
+  font-weight: bold;
+  color: ${uiColors.green.dark3};
+`;
+
+const activeDescriptionTextStyle = css`
+  color: ${uiColors.green.dark2};
+`;
+
+const descriptionTextStyle = css`
+  font-size: 12px;
+  font-weight: normal;
+  color: ${uiColors.gray.dark1};
+
+  ${menuItemContainer.selector}:focus & {
+    color: ${uiColors.blue.dark2};
+  }
+`;
+
+const activeStyle = css`
+  background-color: ${uiColors.green.light3};
+
+  &:before {
+    background-color: ${uiColors.green.base};
+  }
+
+  &:hover {
+    background-color: ${uiColors.green.light3};
+    color: ${uiColors.green.dark3};
+
+    &:before {
+      background-color: ${uiColors.green.base};
+    }
   }
 `;
 
 const disabledStyle = css`
-  background: ${colors.gray[8]};
-  color: ${colors.gray[4]};
   cursor: not-allowed;
+  background-color: ${uiColors.gray.light3};
+  color: ${uiColors.gray.light1};
 `;
 
 interface MenuItemProps {
@@ -104,7 +162,7 @@ interface MenuItemProps {
   /**
    * Determines whether or not the MenuItem is active.
    */
-  active: boolean;
+  active?: boolean;
 }
 
 /**
@@ -135,10 +193,12 @@ function MenuItem({
   const Root = href ? 'a' : 'span';
 
   return (
-    <div
+    <Root
       {...rest}
+      {...menuItemContainer.prop}
       className={cx(
         containerStyle,
+        linkStyle,
         {
           [activeStyle]: active,
           [disabledStyle]: disabled,
@@ -146,14 +206,27 @@ function MenuItem({
         className,
       )}
       role="menuitem"
+      aria-disabled={disabled}
+      onClick={disabled ? undefined : onClick}
+      href={href}
     >
-      <Root onClick={disabled ? undefined : onClick} href={href}>
-        <div className={titleTextStyle}>{children}</div>
-        {description && (
-          <div className={descriptionTextStyle}>{description}</div>
-        )}
-      </Root>
-    </div>
+      <div
+        className={cx(titleTextStyle, {
+          [activetitleTextStyle]: active,
+        })}
+      >
+        {children}
+      </div>
+      {description && (
+        <div
+          className={cx(descriptionTextStyle, {
+            [activeDescriptionTextStyle]: active,
+          })}
+        >
+          {description}
+        </div>
+      )}
+    </Root>
   );
 }
 

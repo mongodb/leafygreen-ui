@@ -91,7 +91,7 @@ describe('packages/Menu', () => {
   });
 
   test('Renders inside of an `a` instead of a `span` tag, when `href` prop is supplied', () => {
-    const itemB = menu.firstChild.children[1].firstChild;
+    const itemB = menu.firstChild.children[1];
     expect(itemB.tagName.toLowerCase()).toBe('a');
   });
 });

@@ -3,18 +3,19 @@ import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { colors } from '@leafygreen-ui/theme';
+import { uiColors } from '@leafygreen-ui/palette';
+import { transparentize } from 'polished';
 
 const rootMenuStyle = css`
   width: 200px;
   border-radius: 3px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  background-color: ${colors.mongodb.white};
+  box-shadow: 0 2px 6px ${transparentize(0.8, uiColors.black)};
+  background-color: ${uiColors.white};
 `;
 
 const escapeKeyCode = 27;
 
-interface MenuProps extends Omit<PopoverProps, 'spacing | active'> {
+interface MenuProps extends Omit<PopoverProps, 'active' | 'spacing'> {
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
    * Menu to control opening and closing itself internally.
@@ -50,7 +51,7 @@ interface MenuProps extends Omit<PopoverProps, 'spacing | active'> {
  *
  * ```
 <button>
-  <Menu active={true}>
+  <Menu open={true}>
     <MenuItem>Hello World!</MenuItem>
   </Menu>
 </button>
@@ -173,13 +174,14 @@ Menu.displayName = 'Menu';
 
 Menu.propTypes = {
   children: PropTypes.node,
-  active: PropTypes.bool,
   className: PropTypes.string,
   align: PropTypes.oneOf(Object.values(Align)),
   justify: PropTypes.oneOf(Object.values(Justify)),
   refEl: PropTypes.object,
   usePortal: PropTypes.bool,
   trigger: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  open: PropTypes.bool,
+  setOpen: PropTypes.func,
 };
 
 export default Menu;
