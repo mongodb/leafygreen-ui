@@ -1,0 +1,4 @@
+{
+  "releases": [{ "name": "@leafygreen-ui/mongo-menu", "type": "major" }],
+  "dependents": []
+}
