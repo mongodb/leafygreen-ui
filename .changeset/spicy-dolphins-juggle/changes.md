@@ -1,1 +1,1 @@
-psition input inside the boundary of parent label
+Position input inside the boundary of parent label
