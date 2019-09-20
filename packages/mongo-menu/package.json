@@ -1,7 +1,7 @@
 {
-  "name": "@leafygreen-ui/sso-menu",
+  "name": "@leafygreen-ui/mongo-menu",
   "version": "0.9.0",
-  "description": "LeafyGreen UI Kit SSO Menu",
+  "description": "LeafyGreen UI Kit Mongo Menu",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {

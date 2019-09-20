@@ -157,15 +157,15 @@ const menuItems = [
   },
 ] as const;
 
-export const Products = {
+export const Product = {
   Atlas: 'atlas',
   University: 'university',
   Support: 'support',
 } as const;
 
-type Products = typeof Products[keyof typeof Products];
+type Product = typeof Product[keyof typeof Product];
 
-interface SSOMenuProps {
+interface MongoMenuProps {
   /**
    * Object that contains information about the active user. {name: 'string', email: 'string'}
    */
@@ -174,7 +174,7 @@ interface SSOMenuProps {
   /**
    * MongoDB product that is currently active: ['atlas', 'university', 'support'].
    */
-  activeProduct: Products;
+  activeProduct: Product;
 
   /**
    * Callback invoked after the user clicks log out.
@@ -188,10 +188,10 @@ interface SSOMenuProps {
 }
 
 /**
- * # SSOMenu
+ * # MongoMenu
  *
  * ```
-<SSOMenu
+<MongoMenu
     user={{ name: 'Alex Smith', email: 'alex.smith@youwork.com' }}
     activeProduct="atlas"
     onLogout={() => console.log('On logout')}
@@ -204,12 +204,12 @@ interface SSOMenuProps {
  * @param props.onProductChange Callback invoked after the user clicks a product.
  *
  */
-function SSOMenu({
+function MongoMenu({
   user: { name, email },
   activeProduct,
   onLogout = () => {},
   onProductChange = () => {},
-}: SSOMenuProps) {
+}: MongoMenuProps) {
   const [open, setOpen] = useState(false);
   return (
     <button className={buttonReset} onClick={() => setOpen(curr => !curr)}>
@@ -264,11 +264,11 @@ function SSOMenu({
   );
 }
 
-SSOMenu.displayName = 'SSOMenu';
+MongoMenu.displayName = 'MongoMenu';
 
 const slugs = menuItems.map(mi => mi.slug);
 
-SSOMenu.propTypes = {
+MongoMenu.propTypes = {
   user: PropTypes.object,
   activeProduct: PropTypes.oneOf(slugs),
   onLogout: PropTypes.func,
@@ -276,4 +276,4 @@ SSOMenu.propTypes = {
   onAccountClick: PropTypes.func,
 };
 
-export default SSOMenu;
+export default MongoMenu;

@@ -1,20 +1,16 @@
-# SSOMenu
+# MongoMenu
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/sso-menu.svg)
 
 ## Example
 
 ```js
-<SSOMenu
+<MongoMenu
   user={{
     name: text('name', 'Alex Smith'),
     email: text('email', 'alex.smith@mongodb.com'),
   }}
-  activeProduct={select(
-    'activeProduct',
-    Object.values(Products) as Array<Size>,
-    Products.Atlas,
-  )}
+  activeProduct="Atlas"
 />
 ```
 

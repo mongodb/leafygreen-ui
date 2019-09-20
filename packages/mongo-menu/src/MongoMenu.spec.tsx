@@ -1,18 +1,18 @@
 import React from 'react';
 import 'jest-dom/extend-expect';
 import { render, fireEvent, cleanup } from '@testing-library/react';
-import SSOMenu, { Products } from '.';
+import MongoMenu, { Product } from '.';
 
 afterAll(cleanup);
 
-describe('packages/SSOMenu', () => {
+describe('packages/MongoMenu', () => {
   const onLogout = jest.fn();
   const onProductChange = jest.fn();
 
   const { getByText } = render(
-    <SSOMenu
+    <MongoMenu
       user={{ name: 'Leafy', email: 'leafy@mongodb.com' }}
-      activeProduct={Products.Atlas}
+      activeProduct={Product.Atlas}
       onLogout={onLogout}
       onProductChange={onProductChange}
     />,
