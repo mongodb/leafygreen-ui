@@ -1,0 +1,4 @@
+{
+  "releases": [{ "name": "@leafygreen-ui/checkbox", "type": "patch" }],
+  "dependents": []
+}
