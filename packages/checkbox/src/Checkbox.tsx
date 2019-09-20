@@ -45,8 +45,10 @@ const checkboxStyle = css`
 const inputStyle = css`
   margin: 0;
   position: absolute;
-  left: 100%;
-  top: 100%;
+  height: 0;
+  width: 0;
+  left: 0;
+  top: 0;
   pointer-events: none;
   opacity: 0;
 
