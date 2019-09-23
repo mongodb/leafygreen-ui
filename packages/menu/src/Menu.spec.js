@@ -11,7 +11,7 @@ describe('packages/Menu', () => {
   const setOpen = jest.fn();
   const className = 'test-className';
 
-  const { getByTestId, getByText, getAllByRole } = render(
+  const { getByTestId, getByText } = render(
     <Menu open setOpen={setOpen} data-testid="test-menu">
       <MenuGroup>
         <MenuItem className={className} onClick={onClick}>
@@ -60,14 +60,6 @@ describe('packages/Menu', () => {
       fireEvent.click(button);
 
       expect(menuItem).not.toBeVisible();
-    });
-  });
-
-  describe('packages/MenuGroup', () => {
-    test('Creates a dropdown group div with role menu', () => {
-      const menuGroup = getAllByRole('menu')[1];
-      const menuItem = getByText('Item A');
-      expect(menuGroup).toContainElement(menuItem);
     });
   });
 
