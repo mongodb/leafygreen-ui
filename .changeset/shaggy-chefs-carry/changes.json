@@ -1,0 +1,4 @@
+{
+  "releases": [{ "name": "@leafygreen-ui/modal", "type": "minor" }],
+  "dependents": []
+}
