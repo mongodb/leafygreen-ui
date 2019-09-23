@@ -209,6 +209,7 @@ function Modal({
           >
             <div className={scrollContainer} ref={scrollContainerRef}>
               <div
+                tabIndex={0}
                 className={cx(
                   modalContentStyle,
                   modalSizes[size],
