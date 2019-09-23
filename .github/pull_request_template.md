@@ -11,7 +11,7 @@ the merge of your pull request!
 
 <!-- Describe the big picture of your changes here and communicate why we should accept this pull request. If it fixes a bug or resolves a feature request, be sure to link to that issue. -->
 
-🎟 _Jira ticket:_ [Name of ticket](https://my.jira/ticket)
+🎟 _Jira ticket:_ [Name of ticket](https://jira.mongodb.org/browse/[name-of-ticket])
 
 ## 🛠 Types of changes
 
