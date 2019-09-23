@@ -2,7 +2,7 @@
 
 ## Code Style
 
-We use an automatic code formatter called [Prettier](https://prettier.io/). Run `npm run prettier` after making any changes to the code.
+We use an automatic code formatter called [Prettier](https://prettier.io/). Run `yarn prettier` after making any changes to the code.
 
 ## Branch Organization
 
