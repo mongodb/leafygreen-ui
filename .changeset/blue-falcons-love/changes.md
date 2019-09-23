@@ -1,1 +1,1 @@
-Added group role to RadioBoxGroup container div and supplied aria-label to ensure component is accessible
+Added `group` role to RadioBoxGroup container div and supplied a value `aria-label` attribute, in order to ensure component is accessible.
