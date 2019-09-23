@@ -1,0 +1,1 @@
+Modal content can receive focus
