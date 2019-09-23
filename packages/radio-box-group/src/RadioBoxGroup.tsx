@@ -143,7 +143,12 @@ export default class RadioBoxGroup extends PureComponent<
     });
 
     return (
-      <div {...rest} className={cx(baseGroupStyle, className)}>
+      <div
+        {...rest}
+        className={cx(baseGroupStyle, className)}
+        role="group"
+        aria-label={this.defaultName}
+      >
         {renderedChildren}
       </div>
     );
