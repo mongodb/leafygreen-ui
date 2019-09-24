@@ -125,6 +125,15 @@ const activeStyle = css`
 const disabledStyle = css`
   cursor: not-allowed;
   background-color: ${uiColors.gray.light3};
+
+  &:hover {
+    &:before {
+      background-color: unset;
+    }
+  }
+`;
+
+const disbaledTextStyle = css`
   color: ${uiColors.gray.light1};
 `;
 
@@ -213,6 +222,7 @@ function MenuItem({
       <div
         className={cx(titleTextStyle, {
           [activetitleTextStyle]: active,
+          [disbaledTextStyle]: disabled,
         })}
       >
         {children}
@@ -221,6 +231,7 @@ function MenuItem({
         <div
           className={cx(descriptionTextStyle, {
             [activeDescriptionTextStyle]: active,
+            [disbaledTextStyle]: disabled,
           })}
         >
           {description}
