@@ -27,24 +27,23 @@ const sizeMap: { [S in Size]: number } = {
   xlarge: 32,
 };
 
+// Converts a camel-case name to a human-readable name
+//
+// GlyphName => Glyph Name Icon
+function humanReadableTitle(glyph: string) {
+  return `${glyph.replace(/([A-Z][a-z])/g, ' $1')} Icon`;
+}
+
 export default function createIconComponent<G extends GlyphMap>(
   glyphs: G,
 ): React.ComponentType<IconProps<G>> {
   const Icon = ({ glyph, size = Size.Default, ...rest }: IconProps<G>) => {
     const SVGComponent: SVGR.Component = glyphs[glyph];
 
-    // Converts a camel-case name to a human-readable name
-    //
-    // GlyphName => Glyph Name Icon
-    const humanReadableTitle = `${(glyph as string).replace(
-      /([A-Z][a-z])/g,
-      ' $1',
-    )} Icon`;
-
     return (
       <SVGComponent
         {...rest}
-        title={humanReadableTitle}
+        title={rest.title || humanReadableTitle(glyph as string)}
         size={
           typeof size === 'number' ? size : sizeMap[size] || sizeMap.default
         }
