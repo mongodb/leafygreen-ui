@@ -1,1 +1,0 @@
-Position input inside the boundary of parent label
