@@ -1,6 +1,6 @@
 # MongoMenu
 
-![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/sso-menu.svg)
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/mongo-menu.svg)
 
 ## Example
 

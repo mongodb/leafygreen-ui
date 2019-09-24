@@ -1,0 +1,2 @@
+- Fixes storybook, such that it reflects a generic Menu rather than MongoMenu
+- Fixes bug with `disabled` MenuItem styles

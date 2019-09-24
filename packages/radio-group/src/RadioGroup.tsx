@@ -163,6 +163,8 @@ export default class RadioGroup extends PureComponent<
           `,
           className,
         )}
+        role="group"
+        aria-label={name}
       >
         {renderChildren}
       </div>

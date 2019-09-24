@@ -1,1 +1,0 @@
-Removed `role='menu'` from MenuGroup in order to make component accessible

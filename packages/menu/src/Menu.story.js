@@ -12,22 +12,17 @@ function Uncontrolled() {
       justify={select('Justify', Object.values(Justify), Justify.Start)}
       trigger={<button>trigger</button>}
     >
-      <MenuGroup>
-        <MenuItem
-          description="cloud.mongodb.com"
-          disabled={boolean('disabled', false)}
-        >
-          Atlas
-        </MenuItem>
-        <MenuItem description="university.mongodb.com">University</MenuItem>
-        <MenuItem
-          description="support.mongodb.com"
-          active={boolean('active', true)}
-        >
-          Cloud Support
-        </MenuItem>
-      </MenuGroup>
-      <MenuItem>Logout</MenuItem>
+      <MenuItem active>Active Menu Item</MenuItem>
+      <MenuItem
+        disabled={boolean('Disabled', true)}
+        description="I am a description"
+      >
+        Disabled Menu Item
+      </MenuItem>
+      <MenuItem description="I am also a description">
+        Menu Item With Description
+      </MenuItem>
+      <MenuItem href="http://mongodb.design">I am a link!</MenuItem>
     </Menu>
   );
 }
@@ -44,21 +39,16 @@ function Controlled() {
         setOpen={setOpen}
       >
         <MenuGroup>
-          <MenuItem
-            description="cloud.mongodb.com"
-            disabled={boolean('disabled', false)}
-          >
-            Atlas
+          <MenuItem active>Active Menu Item</MenuItem>
+          <MenuItem disabled={boolean('Disabled', true)}>
+            Disabled Menu Item
           </MenuItem>
-          <MenuItem description="university.mongodb.com">University</MenuItem>
-          <MenuItem
-            description="support.mongodb.com"
-            active={boolean('active', true)}
-          >
-            Cloud Support
+          <MenuItem description="I am a description">
+            Menu Item With Description
           </MenuItem>
+          <MenuItem href="http://mongodb.design">I am a link!</MenuItem>
         </MenuGroup>
-        <MenuItem>Logout</MenuItem>
+        <MenuItem>Left out of the MenuGroup</MenuItem>
       </Menu>
     </button>
   );

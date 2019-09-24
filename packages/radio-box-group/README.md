@@ -16,7 +16,11 @@ import { RadioBox, RadioBoxGroup } from '@leafygreen-ui/radio-box-group';
 ## Output HTML
 
 ```html
-<div class="leafygreen-ui-k008qs radio-box-group-style">
+<div
+  class="leafygreen-ui-k008qs radio-box-group-style"
+  role="group"
+  aria-label="radio-box-group-850132"
+>
   <label for="radio-box-group-850132-button-0" class="leafygreen-ui-i6e9um">
     <input
       type="radio"
