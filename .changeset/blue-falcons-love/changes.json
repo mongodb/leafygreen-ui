@@ -1,4 +1,4 @@
 {
-  "releases": [{ "name": "@leafygreen-ui/radio-box-group", "type": "major" }],
+  "releases": [{ "name": "@leafygreen-ui/radio-box-group", "type": "patch" }],
   "dependents": []
 }
