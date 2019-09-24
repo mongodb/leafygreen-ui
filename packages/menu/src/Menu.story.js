@@ -13,10 +13,13 @@ function Uncontrolled() {
       trigger={<button>trigger</button>}
     >
       <MenuItem active>Active Menu Item</MenuItem>
-      <MenuItem disabled={boolean('Disabled', true)}>
+      <MenuItem
+        disabled={boolean('Disabled', true)}
+        description="I am a description"
+      >
         Disabled Menu Item
       </MenuItem>
-      <MenuItem description="I am a description">
+      <MenuItem description="I am also a description">
         Menu Item With Description
       </MenuItem>
       <MenuItem href="http://mongodb.design">I am a link!</MenuItem>
