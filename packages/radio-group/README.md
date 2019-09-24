@@ -23,7 +23,11 @@ import { Radio, RadioGroup } from '@leafygreen-ui/radio-group';
 ## Output HTML
 
 ```html
-<div class="leafygreen-ui-16glayc my-radio-group">
+<div
+  class="leafygreen-ui-16glayc my-radio-group"
+  role="group"
+  aria-label="radio-group-660118"
+>
   <label
     for="radio-group-660118-button-0"
     class="leafygreen-ui-11wfvmq my-radio"
