@@ -126,10 +126,8 @@ const disabledStyle = css`
   cursor: not-allowed;
   background-color: ${uiColors.gray.light3};
 
-  &:hover {
-    &:before {
-      background-color: unset;
-    }
+  &:hover:before {
+    background-color: unset;
   }
 `;
 
