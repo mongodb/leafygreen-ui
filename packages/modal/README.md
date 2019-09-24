@@ -28,7 +28,7 @@ function ExampleComponent() {
 <div>
   <div class="leafygreen-ui-13zb3fo">
     <div class="leafygreen-ui-11dtmbs">
-      <div class="leafygreen-ui-1uro5pf">
+      <div class="leafygreen-ui-1uro5pf" tabindex="0">
         <svg
           width="24"
           height="24"
