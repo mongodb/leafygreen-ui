@@ -43,7 +43,7 @@ export default function createIconComponent<G extends GlyphMap>(
     return (
       <SVGComponent
         {...rest}
-        title={rest.title ? rest.title : humanReadableTitle(glyph as string)}
+        title={rest.title || humanReadableTitle(glyph as string)}
         size={
           typeof size === 'number' ? size : sizeMap[size] || sizeMap.default
         }
