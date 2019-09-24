@@ -40,11 +40,7 @@ import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
 </button>
 <div class="leafygreen-ui-1l5xdq6">
   <div class="leafygreen-ui-e4n0rk" role="menu">
-    <section
-      data-leafygreen-ui="menu-group-section"
-      role="menu"
-      class="leafygreen-ui-0"
-    >
+    <section data-leafygreen-ui="menu-group-section" class="leafygreen-ui-0">
       <div class="leafygreen-ui-ukwa9q leafygreen-ui-1jdnb2e" role="menuitem">
         <span>
           <h4 class="leafygreen-ui-cd8qtr">Atlas</h4>

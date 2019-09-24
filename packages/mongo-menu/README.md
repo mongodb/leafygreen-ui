@@ -44,7 +44,6 @@
       <section
         data-leafygreen-ui="menu-group-section"
         class="leafygreen-ui-a2kf98"
-        role="menu"
       >
         <h3 class="leafygreen-ui-i2e27j">Alex Smith</h3>
         <p class="leafygreen-ui-1jozpc5">alex.smith@mongodb.com</p>
@@ -56,7 +55,7 @@
           <span class="leafygreen-ui-r6z5ec">MongoDB Account</span>
         </a>
       </section>
-      <section data-leafygreen-ui="menu-group-section" role="menu">
+      <section data-leafygreen-ui="menu-group-section">
         <a
           data-leafygreen-ui="menu-item-container"
           class="leafygreen-ui-ucjlf9"
