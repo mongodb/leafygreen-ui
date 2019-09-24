@@ -1,5 +1,15 @@
 # @leafygreen-ui/menu
 
+## 3.0.0
+
+### Major Changes
+
+- 23c7d20: Changed the semantic HTML for MenuItem component, as well as updated the styles of the entire Menu, which involved removing @leafygreen-ui/theme as a dependency and adding @leafygreen-ui/palette.
+
+### Patch Changes
+
+- ec4d8da: Removed `role='menu'` from MenuGroup in order to make component accessible
+
 ## 2.0.0
 
 ### Major Changes

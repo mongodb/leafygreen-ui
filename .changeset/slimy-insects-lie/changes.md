@@ -1,1 +1,0 @@
-Fixed aria tags in Tab component to be accessible against a11y standards
