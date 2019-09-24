@@ -114,7 +114,7 @@ Make sure changes made from this commmand are merged back into master before rel
 yarn release
 ```
 
-5. Push the branch you created, and make a pull request. It will contain all `package.json` changes for your publish.
+5. Push the tags from the release up to Github.
 
 ```
 git push --follow-tags
