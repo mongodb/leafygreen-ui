@@ -7,7 +7,9 @@ import {
   spritesheetLight,
   spritesheetDark,
   disabledLight,
+  disabledLightChecked,
   disabledDark,
+  disabledDarkChecked,
   indeterminateLight,
   indeterminateDark,
 } from './img';
@@ -227,6 +229,12 @@ export default class Checkbox extends PureComponent<
       switch (variant) {
         case 'light': {
           if (disabled) {
+            if (checked) {
+              return css`
+                background-image: url(${disabledLightChecked});
+              `;
+            }
+
             return css`
               background-image: url(${disabledLight});
             `;
@@ -245,6 +253,12 @@ export default class Checkbox extends PureComponent<
 
         default: {
           if (disabled) {
+            if (checked) {
+              return css`
+                background-image: url(${disabledDarkChecked});
+              `;
+            }
+
             return css`
               background-image: url(${disabledDark});
             `;
