@@ -1,0 +1,10 @@
+{
+  "releases": [{ "name": "@leafygreen-ui/icon", "type": "minor" }],
+  "dependents": [
+    {
+      "name": "@leafygreen-ui/mongo-menu",
+      "type": "patch",
+      "dependencies": ["@leafygreen-ui/icon"]
+    }
+  ]
+}
