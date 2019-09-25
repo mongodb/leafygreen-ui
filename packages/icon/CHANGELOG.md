@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 2.1.0
+
+### Minor Changes
+
+- cdcf687: Add support for `title`
+
 ## 2.0.0
 
 ### Major Changes

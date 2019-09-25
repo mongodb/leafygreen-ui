@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/mongo-menu",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "LeafyGreen UI Kit Mongo Menu",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@leafygreen-ui/palette": "^1.0.6",
-    "@leafygreen-ui/menu": "3.0.0",
-    "@leafygreen-ui/icon": "2.0.0",
+    "@leafygreen-ui/menu": "3.0.1",
+    "@leafygreen-ui/icon": "2.1.0",
     "@leafygreen-ui/emotion": "1.0.6",
     "@leafygreen-ui/button": "2.3.7"
   }
