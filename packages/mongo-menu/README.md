@@ -5,13 +5,15 @@
 ## Example
 
 ```js
+import MongoMenu from '@leafygreen-ui/mongo-menu';
+
 <MongoMenu
   user={{
-    name: text('name', 'Alex Smith'),
-    email: text('email', 'alex.smith@mongodb.com'),
+    name: 'Alex Smith',
+    email: 'alex.smith@mongodb.com',
   }}
-  activeProduct="Atlas"
-/>
+  activeProduct="atlas"
+/>;
 ```
 
 ## Output HTML
