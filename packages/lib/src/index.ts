@@ -1,4 +1,5 @@
 import * as typeIs from './typeIs';
+import WAIAriaRole from './waiAriaRole';
 
 /**
  * Utility for making it easier to couple a React Component to a css selector.
@@ -33,4 +34,4 @@ export type HTMLElementProps<
   ? Props
   : never;
 
-export { typeIs };
+export { typeIs, WAIAriaRole };
