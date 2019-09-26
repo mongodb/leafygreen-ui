@@ -1,0 +1,1 @@
+Added WAIAriaRole enum for role props
