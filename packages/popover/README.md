@@ -87,6 +87,18 @@ Will position Popover's children relative to its parent without using a Portal, 
 
 Specifies the amount of spacing (in pixels) between the trigger element and the content element.
 
+### id
+
+**Type:** `string`
+
+Adds an `id` to root div element
+
+### role
+
+**Type:** valid WAI-Aria role, as listed here: https://www.w3.org/WAI/PF/aria/roles
+
+Supplies a value to `role` attribute on root div element
+
 ### className
 
 **Type:** `string`

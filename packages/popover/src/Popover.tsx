@@ -16,6 +16,7 @@ import {
 import Align from './Align';
 import Justify from './Justify';
 import { calculatePosition, getElementPosition } from './positionUtils';
+import { WAIAriaRole } from '@leafygreen-ui/lib';
 
 const rootPopoverStyle = css`
   transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
@@ -99,7 +100,6 @@ export interface PopoverProps {
    */
   role?: WAIAriaRole;
 
-
   /**
    * ID supplied to container `div`
    */
@@ -137,7 +137,7 @@ function Popover({
   children,
   className,
   refEl,
-  role, 
+  role,
   id,
   ...rest
 }: PopoverProps): ReactElement {
