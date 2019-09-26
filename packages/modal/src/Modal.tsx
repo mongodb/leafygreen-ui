@@ -200,6 +200,7 @@ function Modal({
     <Transition in={open} timeout={500} mountOnEnter unmountOnExit>
       {(state: string) => (
         <Portal>
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,  jsx-a11y/no-static-element-interactions */}
           <div
             {...rest}
             onClick={handleBackdropClick}
@@ -209,6 +210,7 @@ function Modal({
           >
             <div className={scrollContainer} ref={scrollContainerRef}>
               <div
+                // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
                 tabIndex={0}
                 className={cx(
                   modalContentStyle,

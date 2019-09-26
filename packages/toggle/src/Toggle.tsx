@@ -470,6 +470,7 @@ export default class Toggle extends PureComponent<
         className={cx(statefulStyles.container, className)}
         htmlFor={checkboxId}
       >
+        {/* eslint-disable-next-line jsx-a11y/no-redundant-roles */}
         <input
           {...toggleInput.prop}
           {...rest}

@@ -285,6 +285,7 @@ export default class Checkbox extends PureComponent<
         style={style}
         htmlFor={checkboxId}
       >
+        {/* eslint-disable-next-line jsx-a11y/no-redundant-roles */}
         <input
           {...rest}
           id={checkboxId}

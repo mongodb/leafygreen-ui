@@ -215,6 +215,7 @@ function Tabs({
 
   return (
     <div {...rest} className={className}>
+      {/* eslint-disable-next-line  jsx-a11y/interactive-supports-focus */}
       <div
         className={listStyle}
         role="tablist"
