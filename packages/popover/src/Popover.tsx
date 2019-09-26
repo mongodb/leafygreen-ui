@@ -93,6 +93,17 @@ export interface PopoverProps {
    * default: false
    */
   adjustOnMutation?: boolean;
+
+  /**
+   * Valid WAI-aria role to be supplied to container `div`
+   */
+  role?: WAIAriaRole;
+
+
+  /**
+   * ID supplied to container `div`
+   */
+  id?: string;
 }
 
 /**
@@ -113,6 +124,8 @@ export interface PopoverProps {
  * @param props.refEl Reference element that Popover component should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
  * @param props.adjustOnMutation Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
+ * @param props.role Valid WAI-aria role to be supplied to container `div`
+ * @param props.id ID supplied to container `div`
  */
 function Popover({
   active = false,
@@ -124,6 +137,8 @@ function Popover({
   children,
   className,
   refEl,
+  role, 
+  id,
   ...rest
 }: PopoverProps): ReactElement {
   const [placeholderNode, setPlaceholderNode] = useElementNode();
@@ -192,6 +207,8 @@ function Popover({
   return (
     <>
       <div
+        role={role}
+        id={id}
         ref={setPlaceholderNode}
         className={css`
           display: none;
