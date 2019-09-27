@@ -73,6 +73,11 @@ interface TooltipProps extends Omit<PopoverProps, 'active' | 'spacing'> {
    * Whether the Tooltip will be `light` or `dark`.
    */
   variant?: Variant;
+
+  /**
+   * id given to Tooltip content.
+   */
+  id?: string;
 }
 
 /**
@@ -86,6 +91,7 @@ interface TooltipProps extends Omit<PopoverProps, 'active' | 'spacing'> {
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
  * @param props.trigger Trigger element can be ReactNode or function, and, if present, internally manages active state of Tooltip.
  * @param props.triggerEvent Whether the Tooltip should be triggered by a `click` or `hover`.
+ * @param props.id id given to Tooltip content
  */
 export default function Tooltip({
   open: controlledOpen,
@@ -98,6 +104,7 @@ export default function Tooltip({
   usePortal = true,
   align = 'top',
   justify = 'start',
+  id,
   ...rest
 }: TooltipProps) {
   const isControlled = !!controlledSetOpen;
@@ -107,7 +114,7 @@ export default function Tooltip({
 
   const triggerRef = useRef<HTMLElement>(null);
 
-  const id = `tooltip-${Math.floor(Math.random() * Math.floor(10))}`;
+  const tooltipId = id || `tooltip-${Math.floor(Math.random() * Math.floor(10))}`;
 
   const triggerEventMap = {
     click: {
@@ -158,7 +165,7 @@ export default function Tooltip({
       <div
         {...rest}
         role="tooltip"
-        id={id}
+        id={tooltipId}
         className={cx(className, baseStyles, tooltipVariants[variant])}
       >
         {children}
@@ -172,7 +179,7 @@ export default function Tooltip({
         ...triggerEvents,
         ref: triggerRef,
         children: tooltip,
-        'aria-describedby': id,
+        'aria-describedby': tooltipId,
       });
     }
 
@@ -180,7 +187,7 @@ export default function Tooltip({
       ...triggerEvents,
       children: [...trigger.props.children, tooltip],
       ref: triggerRef,
-      'aria-describedby': id,
+      'aria-describedby': tooltipId,
     });
   }
 
