@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import Popover, { PopoverProps } from '@leafygreen-ui/popover';
+import PropTypes from 'prop-types';
+import Popover, { PopoverProps, Align, Justify } from '@leafygreen-ui/popover';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -42,7 +43,8 @@ const tooltipVariants: { readonly [K in Variant]: string } = {
 
 const escapeKeyCode = 27;
 
-interface TooltipProps extends Omit<PopoverProps, 'active' | 'spacing'> {
+interface TooltipProps
+  extends Omit<PopoverProps, 'active' | 'spacing' | 'refEl' | 'usePortal'> {
   /**
    * A slot for the element used to trigger the Tooltip. Passing a trigger allows
    * Tooltip to control opening and closing itself internally.
@@ -88,12 +90,11 @@ interface TooltipProps extends Omit<PopoverProps, 'active' | 'spacing'> {
  * @param props.className Classname applied to Tooltip.
  * @param props.align Alignment of Tooltip relative to another element: `top`, `bottom`, `left`, `right`.
  * @param props.justify Justification of Tooltip relative to another element: `start`, `middle`, `end`.
- * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
  * @param props.trigger Trigger element can be ReactNode or function, and, if present, internally manages active state of Tooltip.
  * @param props.triggerEvent Whether the Tooltip should be triggered by a `click` or `hover`.
  * @param props.id id given to Tooltip content
  */
-export default function Tooltip({
+function Tooltip({
   open: controlledOpen,
   setOpen: controlledSetOpen,
   className,
@@ -101,7 +102,6 @@ export default function Tooltip({
   trigger,
   variant = Variant.Light,
   triggerEvent = TriggerEvent.Hover,
-  usePortal = true,
   align = 'top',
   justify = 'start',
   id,
@@ -114,7 +114,8 @@ export default function Tooltip({
 
   const triggerRef = useRef<HTMLElement>(null);
 
-  const tooltipId = id || `tooltip-${Math.floor(Math.random() * Math.floor(10))}`;
+  const tooltipId =
+    id || `tooltip-${Math.floor(Math.random() * Math.floor(10))}`;
 
   const triggerEventMap = {
     click: {
@@ -158,7 +159,7 @@ export default function Tooltip({
       active={open}
       align={align}
       justify={justify}
-      usePortal={usePortal}
+      usePortal={true}
       adjustOnMutation={true}
       spacing={15}
     >
@@ -193,3 +194,20 @@ export default function Tooltip({
 
   return tooltip;
 }
+
+Tooltip.displayName = 'Tooltip';
+
+Tooltip.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+  align: PropTypes.oneOf(Object.values(Align)),
+  justify: PropTypes.oneOf(Object.values(Justify)),
+  trigger: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  triggerEvent: PropTypes.oneOf(Object.values(TriggerEvent)),
+  variant: PropTypes.oneOf(Object.values(Variant)),
+  open: PropTypes.bool,
+  setOpen: PropTypes.func,
+  id: PropTypes.string,
+};
+
+export default Tooltip;
