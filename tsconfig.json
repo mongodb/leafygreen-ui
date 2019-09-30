@@ -67,6 +67,9 @@
     },
     {
       "path": "./packages/tooltip"
+    },
+    {
+      "path": "./packages/leafygreen-context"
     }
   ]
 }

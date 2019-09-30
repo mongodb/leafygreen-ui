@@ -1,0 +1,19 @@
+{
+  "name": "@leafygreen-ui/leafygreen-context",
+  "version": "0.9.0",
+  "description": "leafyGreen UI Kit Context Provider",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/lib": "^3.0.6",
+    "@leafygreen-ui/hooks": "^1.0.7"
+  },
+  "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0"
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
@@ -9,6 +9,7 @@ import {
   FocusableMenuItem,
 } from '@leafygreen-ui/menu';
 import { createDataProp } from '@leafygreen-ui/lib';
+import { UsingKeyboardContext } from '@leafygreen-ui/leafygreen-context';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
@@ -38,15 +39,6 @@ const buttonReset = css`
     }
   }
 
-  &:focus {
-    outline: none;
-
-    &:before {
-      background-color: #63b0d0;
-      transform: scale(1);
-    }
-  }
-
   &::-moz-focus-inner {
     border: 0;
   }
@@ -62,6 +54,21 @@ const buttonReset = css`
     transform: scale(0.9, 0.8);
     transition: transform 150ms ease-in-out;
     background-color: ${uiColors.gray.light2};
+  }
+
+  &:focus {
+    outline: none;
+
+    &:before {
+      background-color: #63b0d0;
+      transform: scale(1);
+    }
+  }
+`;
+
+const usingMouseStyle = css`
+  &:focus:before {
+    background-color: transparent;
   }
 `;
 
@@ -234,8 +241,15 @@ function MongoMenu({
   onProductChange = () => {},
 }: MongoMenuProps) {
   const [open, setOpen] = useState(false);
+  const usingKeyboard = useContext(UsingKeyboardContext);
+
   return (
-    <button className={buttonReset} onClick={() => setOpen(curr => !curr)}>
+    <button
+      className={cx(buttonReset, {
+        [usingMouseStyle]: usingKeyboard === false,
+      })}
+      onClick={() => setOpen(curr => !curr)}
+    >
       <div
         className={cx(menuButtonStyle, {
           [activeMenuButtonStyle]: open,
