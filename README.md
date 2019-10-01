@@ -106,7 +106,7 @@ yarn ts
 yarn changeset bump
 ```
 
-Make sure changes made from this commmand are merged back into master before releasing.
+Make sure changes made from this command are merged back into master before releasing.
 
 4. Publish all packages to NPM using Changesets, this can be done from master.
 
