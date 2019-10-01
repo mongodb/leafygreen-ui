@@ -81,6 +81,12 @@ interface TooltipProps
    * id given to Tooltip content.
    */
   id?: string;
+
+  /**
+   * Callback to determine whether or not Menu should close when user tries to close it.
+   *
+   */
+  shouldClose?: () => boolean;
 }
 
 /**
@@ -106,6 +112,7 @@ function Tooltip({
   align = 'top',
   justify = 'start',
   id,
+  shouldClose,
   ...rest
 }: TooltipProps) {
   const isControlled = !!controlledSetOpen;
@@ -114,6 +121,7 @@ function Tooltip({
   const setOpen = isControlled ? controlledSetOpen : uncontrolledSetOpen;
 
   const triggerRef = useRef<HTMLElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
   const tooltipId =
     id || `tooltip-${Math.floor(Math.random() * Math.floor(10))}`;
@@ -132,7 +140,7 @@ function Tooltip({
         }
       }, 250),
       onMouseLeave: debounce(() => {
-        setOpen && setOpen(false);
+        handleClose();
 
         if (triggerRef.current) {
           // BY: no particular reason for this but felt like it looked better to leave the focus for a bit longer
@@ -142,15 +150,37 @@ function Tooltip({
     },
   };
 
-  const handleEscape = (e: KeyboardEvent) => {
-    e.stopImmediatePropagation();
-
-    if (e.keyCode === escapeKeyCode) {
+  const handleClose = () => {
+    if (!shouldClose || shouldClose()) {
       setOpen && setOpen(false);
     }
   };
 
+  const handleEscape = (e: KeyboardEvent) => {
+    e.stopImmediatePropagation();
+
+    if (e.keyCode === escapeKeyCode) {
+      handleClose();
+    }
+  };
+
   useEventListener('keydown', handleEscape);
+
+  const handleBackdropClick = (e: MouseEvent) => {
+    const tooltipReference = tooltipRef && tooltipRef.current;
+
+    if (
+      triggerEvent === 'click' &&
+      tooltipReference &&
+      !tooltipReference.contains(e.target as HTMLElement)
+    ) {
+      handleClose();
+    }
+  };
+
+  const enabled = open;
+
+  useEventListener('click', handleBackdropClick, { enabled });
 
   const triggerEvents = triggerEventMap[triggerEvent];
 
@@ -169,6 +199,7 @@ function Tooltip({
         role="tooltip"
         id={tooltipId}
         className={cx(className, baseStyles, tooltipVariants[variant])}
+        ref={tooltipRef}
       >
         {children}
       </div>
