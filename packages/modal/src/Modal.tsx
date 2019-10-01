@@ -200,9 +200,9 @@ function Modal({
     <Transition in={open} timeout={500} mountOnEnter unmountOnExit>
       {(state: string) => (
         <Portal>
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,  jsx-a11y/no-static-element-interactions */}
           <div
             {...rest}
+            role="none"
             onClick={handleBackdropClick}
             className={cx(backdrop, {
               [visibleBackdrop]: state === 'entered',
@@ -210,8 +210,9 @@ function Modal({
           >
             <div className={scrollContainer} ref={scrollContainerRef}>
               <div
-                // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-                tabIndex={0}
+                aria-modal="true"
+                role="dialog"
+                tabIndex={-1}
                 className={cx(
                   modalContentStyle,
                   modalSizes[size],
@@ -228,7 +229,7 @@ function Modal({
                   onClick={handleClose}
                   className={closeButton}
                   data-dismiss="modal"
-                  aria-hidden="true"
+                  tabIndex={0}
                 />
 
                 {children}
