@@ -28,6 +28,7 @@ const baseStyles = css`
   border-radius: 3px;
   box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
 `;
+
 const tooltipVariants: { readonly [K in Variant]: string } = {
   [Variant.Dark]: css`
     background-color: ${uiColors.gray.dark3};
