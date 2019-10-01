@@ -1,5 +1,13 @@
 # @leafygreen-ui/menu
 
+## 3.0.1
+
+### Patch Changes
+
+- aaa895e:
+  - Fixes storybook, such that it reflects a generic Menu rather than MongoMenu
+  - Fixes bug with `disabled` MenuItem styles
+
 ## 3.0.0
 
 ### Major Changes
