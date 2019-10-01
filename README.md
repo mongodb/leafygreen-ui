@@ -98,7 +98,7 @@ yarn build
 yarn ts
 ```
 
-2. Create a new branch, and make sure to push it. This is where package version updates will be pushed from.
+2. Create a new branch. This is where package version updates will be pushed fromm.
 
 3. Generate a changeset for each package.
 
@@ -106,15 +106,15 @@ yarn ts
 yarn changeset bump
 ```
 
-Make sure changes made from this command are merged back into master before releasing.
+4. Make sure changes made from this command are merged back into master before releasing.
 
-4. Publish all packages to NPM using Changesets, this can be done from master.
+5. Publish all packages to NPM using changesets. This can be done from master.
 
 ```
 yarn release
 ```
 
-5. Push the tags from the release up to Github.
+6. Push the tags from the release up to Github.
 
 ```
 git push --follow-tags
