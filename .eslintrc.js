@@ -6,6 +6,7 @@ module.exports = {
     'plugin:jest/recommended',
     'prettier',
     'prettier/react',
+    'plugin:jsx-a11y/recommended',
   ],
   parserOptions: {
     sourceType: 'module',

@@ -291,7 +291,6 @@ export default class Checkbox extends PureComponent<
           ref={this.inputRef}
           className={inputStyle}
           type="checkbox"
-          role="checkbox"
           name={name}
           disabled={disabled}
           checked={checked}

@@ -220,6 +220,7 @@ function Tabs({
         role="tablist"
         onKeyDown={handleKeyDown}
         ref={tabListRef}
+        tabIndex={0}
       >
         {tabs.map((tab, index) => {
           const { selected, disabled, ...rest } = tab.props;
