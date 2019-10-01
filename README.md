@@ -98,7 +98,7 @@ yarn build
 yarn ts
 ```
 
-2. Create a new branch, and make sure to push it. This is where package version updates.
+2. Create a new branch, and make sure to push it. This is where package version updates will be pushed from.
 
 3. Generate a changeset for each package.
 
