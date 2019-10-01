@@ -202,7 +202,7 @@ function Modal({
         <Portal>
           <div
             {...rest}
-            // Setting role to 'none', because elements with a clickEvent should have a specific role
+            // Setting role to 'none', because elements with a click event should have a specific role
             // Here we are just using a div to handle backdrop clicks, so this is the most appropriate value
             role="none"
             onClick={handleBackdropClick}
