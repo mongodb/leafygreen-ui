@@ -98,7 +98,7 @@ yarn build
 yarn ts
 ```
 
-2. Create a new branch, and make sure to push it. This is where package version updates, and git tags will be pushed from.
+2. Create a new branch, and make sure to push it. This is where package version updates.
 
 3. Generate a changeset for each package.
 
@@ -108,7 +108,7 @@ yarn changeset bump
 
 Make sure changes made from this commmand are merged back into master before releasing.
 
-4. Publish all packages to NPM using Changesets.
+4. Publish all packages to NPM using Changesets, this can be done from master.
 
 ```
 yarn release
@@ -122,7 +122,7 @@ git push --follow-tags
 
 ## Deploy gh-pages
 
-You can deploy a static build of our Storybook site to gh-pages.
+You can deploy a static build of our Storybook site to gh-pages from the master branch.
 
 1. First be sure you've built a static version of Storybook: `yarn build:storybook`
 2. Then deploy to gh-pages: `yarn release:site`
