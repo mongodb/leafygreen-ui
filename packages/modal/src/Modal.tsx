@@ -202,6 +202,9 @@ function Modal({
         <Portal>
           <div
             {...rest}
+            // Setting role to 'none', because elements with a click event should have a specific role
+            // Here we are just using a div to handle backdrop clicks, so this is the most appropriate value
+            role="none"
             onClick={handleBackdropClick}
             className={cx(backdrop, {
               [visibleBackdrop]: state === 'entered',
@@ -209,7 +212,9 @@ function Modal({
           >
             <div className={scrollContainer} ref={scrollContainerRef}>
               <div
-                tabIndex={0}
+                aria-modal="true"
+                role="dialog"
+                tabIndex={-1}
                 className={cx(
                   modalContentStyle,
                   modalSizes[size],
@@ -226,7 +231,7 @@ function Modal({
                   onClick={handleClose}
                   className={closeButton}
                   data-dismiss="modal"
-                  aria-hidden="true"
+                  tabIndex={0}
                 />
 
                 {children}

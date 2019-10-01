@@ -476,7 +476,6 @@ export default class Toggle extends PureComponent<
           id={checkboxId}
           className={inputStyle}
           type="checkbox"
-          role="checkbox"
           name={name}
           disabled={disabled}
           checked={checked}
