@@ -1,11 +1,10 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { PopoverProps, Align, Justify } from '@leafygreen-ui/popover';
-import Portal from '@leafygreen-ui/portal';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { transparentize, triangle } from 'polished';
+import { transparentize } from 'polished';
 import debounce from 'lodash/debounce';
 import { trianglePosition } from './tooltipUtils';
 
@@ -191,16 +190,11 @@ function Tooltip({
     triggerRef.current &&
     triggerRef.current.getBoundingClientRect();
 
-  const triangleStyle = trianglePosition(align, triggerRect, 'pink');
+  const triangleStyle = trianglePosition(align, triggerRect, variant);
 
   const tooltip = (
     <>
-      {open && (
-        <Portal>
-          <div className={triangleStyle} />
-        </Portal>
-      )}
-
+      {open && <div className={triangleStyle} />}
       <Popover
         key="popover"
         active={open}
