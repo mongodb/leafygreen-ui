@@ -1,11 +1,13 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { PopoverProps, Align, Justify } from '@leafygreen-ui/popover';
+import Portal from '@leafygreen-ui/portal';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { transparentize } from 'polished';
+import { transparentize, triangle } from 'polished';
 import debounce from 'lodash/debounce';
+import { trianglePosition } from './tooltipUtils';
 
 export const TriggerEvent = {
   Hover: 'hover',
@@ -184,26 +186,41 @@ function Tooltip({
 
   const triggerEvents = triggerEventMap[triggerEvent];
 
+  const triggerRect =
+    triggerRef &&
+    triggerRef.current &&
+    triggerRef.current.getBoundingClientRect();
+
+  const triangleStyle = trianglePosition(align, triggerRect, 'pink');
+
   const tooltip = (
-    <Popover
-      key="popover"
-      active={open}
-      align={align}
-      justify={justify}
-      usePortal={true}
-      adjustOnMutation={true}
-      spacing={15}
-    >
-      <div
-        {...rest}
-        role="tooltip"
-        id={tooltipId}
-        className={cx(className, baseStyles, tooltipVariants[variant])}
-        ref={tooltipRef}
+    <>
+      {open && (
+        <Portal>
+          <div className={triangleStyle} />
+        </Portal>
+      )}
+
+      <Popover
+        key="popover"
+        active={open}
+        align={align}
+        justify={justify}
+        usePortal={true}
+        adjustOnMutation={true}
+        spacing={15}
       >
-        {children}
-      </div>
-    </Popover>
+        <div
+          {...rest}
+          role="tooltip"
+          id={tooltipId}
+          className={cx(className, baseStyles, tooltipVariants[variant])}
+          ref={tooltipRef}
+        >
+          {children}
+        </div>
+      </Popover>
+    </>
   );
 
   if (trigger) {
@@ -240,6 +257,7 @@ Tooltip.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
   id: PropTypes.string,
+  shouldClose: PropTypes.func,
 };
 
 export default Tooltip;
