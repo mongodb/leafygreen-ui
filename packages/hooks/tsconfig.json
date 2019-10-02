@@ -4,10 +4,5 @@
     "declarationDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
-  "references": [
-    {
-      "path": "../interaction-context"
-    }
-  ]
+  "include": ["src/**/*"]
 }

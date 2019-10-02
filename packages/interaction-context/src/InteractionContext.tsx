@@ -37,10 +37,7 @@ const InteractionContext = ({
 
   return (
     <UsingKeyboardContext.Provider value={usingKeyboard}>
-      <div>
-        Hello World
-        {children}
-      </div>
+      {children}
     </UsingKeyboardContext.Provider>
   );
 };

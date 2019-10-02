@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
@@ -9,38 +9,25 @@ import {
   FocusableMenuItem,
 } from '@leafygreen-ui/menu';
 import { createDataProp } from '@leafygreen-ui/lib';
-import { useInteractionContext } from '@leafygreen-ui/hooks';
+import { useInteractionContext } from '@leafygreen-ui/interaction-context';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
 const iconRef = createDataProp('icon-ref');
 
-const buttonReset = css`
+const wrapperStyle = css`
   appearance: none;
   background: none;
   border: 0px;
   position: relative;
   padding: 0px;
 
-  &:hover:before {
-    transform: scale(1);
-  }
-
-  &:active {
-    outline: none;
-    color: ${uiColors.gray.dark2};
-
-    &:before {
-      transform: scale(1);
-    }
-
-    & ${iconRef.selector} {
-      color: ${uiColors.gray.dark1};
-    }
-  }
-
   &::-moz-focus-inner {
     border: 0;
+  }
+
+  &:hover:before {
+    transform: scale(1);
   }
 
   &:before {
@@ -52,8 +39,20 @@ const buttonReset = css`
     right: -2px;
     border-radius: 50px;
     transform: scale(0.9, 0.8);
-    transition: transform 150ms ease-in-out;
+    transition: transform 150ms ease-in-out, background-color 150ms ease-in-out;
     background-color: ${uiColors.gray.light2};
+  }
+
+  &:active {
+    color: ${uiColors.gray.dark2};
+
+    &:before {
+      transform: scale(1);
+    }
+
+    & ${iconRef.selector} {
+      color: ${uiColors.gray.dark1};
+    }
   }
 
   &:focus {
@@ -67,8 +66,15 @@ const buttonReset = css`
 `;
 
 const usingMouseStyle = css`
-  &:focus:before {
-    background-color: transparent;
+  &:focus {
+    &:before {
+      background-color: ${uiColors.gray.light2};
+      transform: scale(0.9, 0.8);
+    }
+
+    &:hover:before {
+      transform: scale(1)
+    }
   }
 `;
 
@@ -241,11 +247,11 @@ function MongoMenu({
   onProductChange = () => {},
 }: MongoMenuProps) {
   const [open, setOpen] = useState(false);
-  const { usingKeyboard } = { usingKeyboard: undefined }; //useInteractionContext;
+  const { usingKeyboard } = useInteractionContext();
 
   return (
     <button
-      className={cx(buttonReset, {
+      className={cx(wrapperStyle, {
         [usingMouseStyle]: usingKeyboard === false,
       })}
       onClick={() => setOpen(curr => !curr)}
