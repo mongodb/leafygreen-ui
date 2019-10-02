@@ -6,17 +6,17 @@ export const UsingKeyboardContext = createContext(undefined as
   | boolean
   | undefined);
 
-interface LeafyGreenContextProps {
+interface InteractionContextProps {
   children: React.ReactNode;
   initialStates: {
     usingKeyboard: boolean;
   };
 }
 
-const LeafyGreenContext = ({
+const InteractionContext = ({
   children,
   initialStates,
-}: LeafyGreenContextProps) => {
+}: InteractionContextProps) => {
   const [usingKeyboard, setUsingKeyboard] = useState(
     (initialStates && initialStates.usingKeyboard) || false,
   );
@@ -45,11 +45,11 @@ const LeafyGreenContext = ({
   );
 };
 
-LeafyGreenContext.propTypes = {
+InteractionContext.propTypes = {
   children: PropTypes.node,
   initialStates: PropTypes.shape({
     usingKeyboard: PropTypes.bool,
   }),
 };
 
-export default LeafyGreenContext;
+export default InteractionContext;

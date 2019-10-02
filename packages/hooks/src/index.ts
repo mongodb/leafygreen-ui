@@ -3,6 +3,7 @@ import useElementNode from './useElementNode';
 import useMutationObserver from './useMutationObserver';
 import useViewportSize from './useViewportSize';
 import useEscapeKey from './useEscapeKey';
+import useInteractionContext from './useInteractionContext';
 
 export {
   useEventListener,
@@ -10,4 +11,5 @@ export {
   useMutationObserver,
   useViewportSize,
   useEscapeKey,
+  useInteractionContext,
 };
