@@ -1,5 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { transparentize } from 'polished';
 
 export function trianglePosition(
   align: string,
