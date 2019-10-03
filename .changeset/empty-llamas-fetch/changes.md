@@ -1,0 +1,1 @@
+Add `title` prop to Icon component, to make purpose more clear to screenreaders
