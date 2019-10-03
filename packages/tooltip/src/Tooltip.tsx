@@ -127,28 +127,32 @@ function Tooltip({
   const tooltipId =
     id || `tooltip-${Math.floor(Math.random() * Math.floor(10))}`;
 
-  const triggerEventMap = {
-    click: {
-      onClick: () => setOpen && setOpen(!open),
-    },
-
-    hover: {
-      onMouseEnter: debounce(() => {
-        setOpen && setOpen(!open);
-
-        if (triggerRef.current) {
-          triggerRef.current.focus();
-        }
-      }, 250),
-      onMouseLeave: debounce(() => {
-        handleClose();
-
-        if (triggerRef.current) {
-          // BY: no particular reason for this but felt like it looked better to leave the focus for a bit longer
-          setTimeout(() => (triggerRef.current as HTMLElement).blur(), 150);
-        }
-      }, 250),
-    },
+  const triggerEventMap = (triggerType: TriggerEvent, triggerProps?: any) => {
+    if (triggerType === 'hover') {
+      return {
+        onMouseEnter: debounce(() => {
+          setOpen && setOpen(!open);
+        }, 250),
+        onMouseLeave: debounce(() => {
+          handleClose();
+        }, 250),
+        onFocus: () => setOpen && setOpen(true),
+        onBlur: handleClose,
+      };
+    } else {
+      if (triggerProps.onClick) {
+        return {
+          onClick: () => {
+            triggerProps.onClick();
+            setOpen && setOpen(!open);
+          },
+        };
+      } else {
+        return {
+          onClick: () => setOpen && setOpen(!open),
+        };
+      }
+    }
   };
 
   const handleClose = () => {
@@ -183,8 +187,6 @@ function Tooltip({
 
   useEventListener('click', handleBackdropClick, { enabled });
 
-  const triggerEvents = triggerEventMap[triggerEvent];
-
   const triggerRect =
     triggerRef &&
     triggerRef.current &&
@@ -217,21 +219,24 @@ function Tooltip({
     </>
   );
 
+  const sharedTooltipProps = {
+    ref: triggerRef,
+    'aria-describedby': tooltipId,
+  };
+
   if (trigger) {
     if (typeof trigger === 'function') {
       return trigger({
-        ...triggerEvents,
-        ref: triggerRef,
+        ...triggerEventMap(triggerEvent),
+        ...sharedTooltipProps,
         children: tooltip,
-        'aria-describedby': tooltipId,
       });
     }
 
     return React.cloneElement(trigger, {
-      ...triggerEvents,
+      ...triggerEventMap(triggerEvent, trigger.props),
+      ...sharedTooltipProps,
       children: [...trigger.props.children, tooltip],
-      ref: triggerRef,
-      'aria-describedby': tooltipId,
     });
   }
 
