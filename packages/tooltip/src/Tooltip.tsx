@@ -91,6 +91,21 @@ interface TooltipProps
 }
 
 /**
+ * # Tooltip
+ *
+ * Tooltip component
+ *
+ * ```
+<Tooltip
+  align='top'
+  justify='start'
+  trigger={<button>trigger</button>}
+  triggerEvent='hover'
+  variant='light'
+>
+  I am an uncontrolled Tooltip!
+</Tooltip>
+```
  * @param props.children Content to appear inside of Tooltip.
  * @param props.open Boolean to describe whether or not Tooltip is open.
  * @param props.setOpen Callback to change the open state of the Tooltip.
@@ -219,7 +234,7 @@ function Tooltip({
     </>
   );
 
-  const sharedTooltipProps = {
+  const sharedTriggerProps = {
     ref: triggerRef,
     'aria-describedby': tooltipId,
   };
@@ -228,14 +243,14 @@ function Tooltip({
     if (typeof trigger === 'function') {
       return trigger({
         ...triggerEventMap(triggerEvent),
-        ...sharedTooltipProps,
+        ...sharedTriggerProps,
         children: tooltip,
       });
     }
 
     return React.cloneElement(trigger, {
       ...triggerEventMap(triggerEvent, trigger.props),
-      ...sharedTooltipProps,
+      ...sharedTriggerProps,
       children: [...trigger.props.children, tooltip],
     });
   }
