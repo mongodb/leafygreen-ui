@@ -1,18 +1,8 @@
-import React, {
-  useMemo,
-  Fragment,
-  ReactNode,
-  RefObject,
-  ReactElement,
-} from 'react';
+import React, { Fragment, ReactNode, RefObject, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
 import { css, cx } from '@leafygreen-ui/emotion';
-import {
-  useViewportSize,
-  useMutationObserver,
-  useElementNode,
-} from '@leafygreen-ui/hooks';
+import { useElementNode } from '@leafygreen-ui/hooks';
 import Align from './Align';
 import Justify from './Justify';
 import { calculatePosition, getElementPosition } from './positionUtils';
@@ -24,16 +14,16 @@ const rootPopoverStyle = css`
   opacity: 0;
 `;
 
-const mutationOptions = {
-  // If attributes changes, such as className which affects layout
-  attributes: true,
-  // Watch if text changes in the node
-  characterData: true,
-  // Watch for any immediate children are modified
-  childList: true,
-  // Extend watching to entire sub tree to make sure we catch any modifications
-  subtree: true,
-};
+// const mutationOptions = {
+//   // If attributes changes, such as className which affects layout
+//   attributes: true,
+//   // Watch if text changes in the node
+//   characterData: true,
+//   // Watch for any immediate children are modified
+//   childList: true,
+//   // Extend watching to entire sub tree to make sure we catch any modifications
+//   subtree: true,
+// };
 
 export interface PopoverProps {
   /**
@@ -93,6 +83,14 @@ export interface PopoverProps {
    * default: false
    */
   adjustOnMutation?: boolean;
+
+  setAlignment?: (
+    alignment: string,
+  ) => void | React.Dispatch<React.SetStateAction<string>>;
+
+  setJustification?: (
+    justification: string,
+  ) => void | React.Dispatch<React.SetStateAction<string>>;
 }
 
 /**
@@ -120,6 +118,8 @@ function Popover({
   spacing = 10,
   align = Align.Bottom,
   justify = Justify.Start,
+  setAlignment = () => {},
+  setJustification = () => {},
   adjustOnMutation = false,
   children,
   className,
@@ -141,44 +141,36 @@ function Popover({
     }
   }
 
-  const viewportSize = useViewportSize();
+  // const viewportSize = useViewportSize();
 
-  const lastTimeRefElMutated = useMutationObserver(
-    referenceElement,
-    mutationOptions,
-    () => Date.now(),
-    adjustOnMutation,
-  );
+  // const lastTimeRefElMutated = useMutationObserver(
+  //   referenceElement,
+  //   mutationOptions,
+  //   () => Date.now(),
+  //   adjustOnMutation,
+  // );
 
-  const lastTimeContentElMutated = useMutationObserver(
-    contentNode,
-    mutationOptions,
-    () => Date.now(),
-    adjustOnMutation,
-  );
+  // const lastTimeContentElMutated = useMutationObserver(
+  //   contentNode,
+  //   mutationOptions,
+  //   () => Date.now(),
+  //   adjustOnMutation,
+  // );
 
-  const referenceElPos = useMemo(() => getElementPosition(referenceElement), [
-    referenceElement,
-    viewportSize,
-    lastTimeRefElMutated,
-  ]);
+  const referenceElPos = getElementPosition(referenceElement);
+  const contentElPos = getElementPosition(contentNode);
 
-  const contentElPos = useMemo(() => getElementPosition(contentNode), [
-    contentNode,
-    viewportSize,
-    lastTimeContentElMutated,
-  ]);
+  const { alignment, justification, positionCSS } = calculatePosition({
+    useRelativePositioning: !usePortal,
+    spacing,
+    align,
+    justify,
+    referenceElPos,
+    contentElPos,
+  });
 
-  const position = css(
-    calculatePosition({
-      useRelativePositioning: !usePortal,
-      spacing,
-      align,
-      justify,
-      referenceElPos,
-      contentElPos,
-    }),
-  );
+  setAlignment(alignment);
+  setJustification(justification);
 
   const activeStyle = css`
     transform: translate3d(0, 0, 0) scale(1);
@@ -203,7 +195,7 @@ function Popover({
           ref={setContentNode}
           className={cx(
             rootPopoverStyle,
-            position,
+            css(positionCSS),
             { [activeStyle]: active },
             className,
           )}

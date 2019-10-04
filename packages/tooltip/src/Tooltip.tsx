@@ -43,8 +43,19 @@ const tooltipVariants: { readonly [K in Variant]: string } = {
   `,
 };
 
-const escapeKeyCode = 27;
+const notchVariants = {
+  [Variant.Dark]: css`
+    background-color: ${uiColors.gray.dark3};
+    box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
+  `,
+  [Variant.Light]: css`
+    background-color: ${uiColors.gray.light3};
+    border: 1px solid ${uiColors.gray.light2};
+    box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
+  `,
+};
 
+const escapeKeyCode = 27;
 interface TooltipProps
   extends Omit<PopoverProps, 'active' | 'spacing' | 'refEl' | 'usePortal'> {
   /**
@@ -207,31 +218,42 @@ function Tooltip({
     triggerRef.current &&
     triggerRef.current.getBoundingClientRect();
 
-  const triangleStyle = trianglePosition(align, triggerRect, variant);
+  const [alignment, setAlignment] = useState(align);
+  const [justification, setJustification] = useState(justify);
+
+  const triangleStyle = trianglePosition(
+    alignment,
+    justification,
+    triggerRect,
+  ) as any;
 
   const tooltip = (
-    <>
-      {open && <div className={triangleStyle} />}
-      <Popover
-        key="popover"
-        active={open}
-        align={align}
-        justify={justify}
-        usePortal={true}
-        adjustOnMutation={true}
-        spacing={15}
+    <Popover
+      key="popover"
+      active={open}
+      align={align}
+      justify={justify}
+      usePortal={true}
+      adjustOnMutation={true}
+      spacing={12}
+      setAlignment={setAlignment}
+      setJustification={setJustification}
+    >
+      <div
+        {...rest}
+        role="tooltip"
+        id={tooltipId}
+        className={cx(className, baseStyles, tooltipVariants[variant])}
+        ref={tooltipRef}
       >
-        <div
-          {...rest}
-          role="tooltip"
-          id={tooltipId}
-          className={cx(className, baseStyles, tooltipVariants[variant])}
-          ref={tooltipRef}
-        >
-          {children}
+        <div className={triangleStyle.containerStyle}>
+          <div
+            className={cx(triangleStyle.notchStyle, notchVariants[variant])}
+          />
         </div>
-      </Popover>
-    </>
+        {children}
+      </div>
+    </Popover>
   );
 
   const sharedTriggerProps = {

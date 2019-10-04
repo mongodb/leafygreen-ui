@@ -1,71 +1,103 @@
 import { css } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import { transparentize } from 'polished';
 
 export function trianglePosition(
-  align: string,
-  rect: DOMRect | ClientRect | null,
-  variant: string,
+  alignment: string,
+  justification: string,
+  triggerRect: DOMRect | ClientRect | null,
 ) {
-  const borderColor =
-    variant === 'light' ? uiColors.gray.light3 : uiColors.gray.dark3;
-
-  let left = '',
-    borderTop = '',
-    top = '',
-    borderBottom = '',
-    borderLeft = '',
-    borderRight = '';
-
-  if (!align || !rect) {
+  if (!alignment || !justification || !triggerRect) {
     return '';
   }
 
-  switch (align) {
-    case 'top':
-      left = `${rect.left - 10 + rect.width / 2}px`;
-      top = `${rect.top - 15 + window.scrollY}px`;
-      borderLeft = '8px solid transparent';
-      borderRight = '8px solid transparent';
-      borderTop = `8px solid ${borderColor}`;
-      break;
+  const borderOffset = 'calc(100% - 1px)';
 
+  const containerSize = 15;
+  const notchSize = 8;
+  const containerOffsetX = (triggerRect.width - containerSize) / 2;
+  const containerOffsetY = (triggerRect.height - containerSize) / 2;
+  const notchOverlap = -notchSize / 2;
+  const containerStyleObj: any = {};
+  const notchStyleObj: any = {};
+
+  switch (alignment) {
+    case 'top':
     case 'bottom':
-      left = `${rect.left - 10 + rect.width / 2}px`;
-      top = `${rect.bottom + 8 + window.scrollY}px`;
-      borderLeft = '8px solid transparent';
-      borderRight = '8px solid transparent';
-      borderBottom = `8px solid ${borderColor}`;
+      notchStyleObj.left = 0;
+      notchStyleObj.right = 0;
+
+      if (alignment === 'top') {
+        containerStyleObj.top = `${borderOffset}`;
+        notchStyleObj.top = `${notchOverlap}px`;
+      } else {
+        containerStyleObj.bottom = `${borderOffset}`;
+        notchStyleObj.bottom = `${notchOverlap}px`;
+      }
+
+      switch (justification) {
+        case 'left':
+          containerStyleObj.left = `${containerOffsetX}px`;
+          break;
+
+        case 'center-horizontal':
+          containerStyleObj.left = '0px';
+          containerStyleObj.right = '0px';
+          containerStyleObj.margin = 'auto';
+          break;
+
+        case 'right':
+          containerStyleObj.right = `${containerOffsetX}px`;
+          break;
+      }
+
       break;
 
     case 'left':
-      left = `${rect.left - 15.5}px`;
-      top = `${rect.top - 8 + rect.height / 2}px`;
-      borderTop = '8px solid transparent';
-      borderBottom = '8px solid transparent';
-      borderLeft = `8px solid ${borderColor}`;
-      break;
-
     case 'right':
-      left = `${rect.right + 8}px`;
-      top = `${rect.top - 8 + rect.height / 2}px`;
-      borderTop = '8px solid transparent';
-      borderBottom = '8px solid transparent';
-      borderRight = `8px solid ${borderColor}`;
+      notchStyleObj.top = 0;
+      notchStyleObj.bottom = 0;
+
+      if (alignment === 'left') {
+        notchStyleObj.left = `${notchOverlap}px`;
+        containerStyleObj.left = `calc(100% - 1.8px)`;
+      } else {
+        notchStyleObj.right = `${notchOverlap}px`;
+        containerStyleObj.right = `${borderOffset}`;
+      }
+
+      switch (justification) {
+        case 'top':
+          containerStyleObj.top = `${containerOffsetY}px`;
+          break;
+
+        case 'center-vertical':
+          containerStyleObj.top = '0px';
+          containerStyleObj.bottom = '0px';
+          containerStyleObj.margin = 'auto';
+          break;
+
+        case 'bottom':
+          containerStyleObj.bottom = `${containerOffsetY}px`;
+          break;
+      }
+
       break;
   }
 
-  return css`
-    position: absolute;
-    width: 0;
-    height: 0;
-    left: ${left};
-    border-top: ${borderTop};
-    border-bottom: ${borderBottom};
-    border-left: ${borderLeft};
-    border-right: ${borderRight};
-    top: ${top};
-    transform: translate3d(15, 0, 0) scale(1);
-    transition: 'border 150ms ease-in-out, transform 150ms ease-in-out';
-  `;
+  return {
+    containerStyle: css`
+      position: absolute;
+      width: ${containerSize}px;
+      height: ${containerSize}px;
+      overflow: hidden;
+      ${css(containerStyleObj)};
+    `,
+    notchStyle: css`
+      ${css(notchStyleObj)};
+      position: absolute;
+      transform: rotate(45deg);
+      width: 8px;
+      height: 8px;
+      margin: auto;
+    `,
+  };
 }
