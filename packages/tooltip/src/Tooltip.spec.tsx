@@ -27,7 +27,7 @@ describe('packages/Tooltip', () => {
     const tooltip = getByTestId('uncontrolled-tooltip');
     const backdrop = getByText('backdrop content');
 
-    test(`Renders a button to the DOM with ${buttonText}`, () => {
+    test(`renders a button to the DOM with ${buttonText}`, () => {
       expect(button).toBeInTheDocument();
       expect(button.tagName.toLowerCase()).toBe('button');
     });
@@ -40,7 +40,7 @@ describe('packages/Tooltip', () => {
       expect(tooltip).not.toBeVisible();
     });
 
-    test('Backdrop clicks close the tooltip', () => {
+    test('backdrop clicks close the tooltip', () => {
       fireEvent.click(button);
       expect(tooltip).toBeVisible();
 
@@ -48,7 +48,7 @@ describe('packages/Tooltip', () => {
       expect(tooltip).not.toBeVisible();
     });
 
-    test('Escape click closes tooltip', () => {
+    test('escape click closes tooltip', () => {
       fireEvent.click(button);
       expect(tooltip).toBeVisible();
 
@@ -73,7 +73,7 @@ describe('packages/Tooltip', () => {
 
     const tooltip = getByTestId('controlled-tooltip');
 
-    test('Renders initial state based on open prop', () => {
+    test('renders initial state based on open prop', () => {
       expect(tooltip).toBeVisible();
     });
   });
