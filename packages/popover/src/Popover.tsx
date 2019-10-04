@@ -1,8 +1,18 @@
-import React, { Fragment, ReactNode, RefObject, ReactElement } from 'react';
+import React, {
+  useMemo,
+  Fragment,
+  ReactNode,
+  RefObject,
+  ReactElement,
+} from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { useElementNode } from '@leafygreen-ui/hooks';
+import {
+  useViewportSize,
+  useMutationObserver,
+  useElementNode,
+} from '@leafygreen-ui/hooks';
 import Align from './Align';
 import Justify from './Justify';
 import { calculatePosition, getElementPosition } from './positionUtils';
@@ -14,16 +24,16 @@ const rootPopoverStyle = css`
   opacity: 0;
 `;
 
-// const mutationOptions = {
-//   // If attributes changes, such as className which affects layout
-//   attributes: true,
-//   // Watch if text changes in the node
-//   characterData: true,
-//   // Watch for any immediate children are modified
-//   childList: true,
-//   // Extend watching to entire sub tree to make sure we catch any modifications
-//   subtree: true,
-// };
+const mutationOptions = {
+  // If attributes changes, such as className which affects layout
+  attributes: true,
+  // Watch if text changes in the node
+  characterData: true,
+  // Watch for any immediate children are modified
+  childList: true,
+  // Extend watching to entire sub tree to make sure we catch any modifications
+  subtree: true,
+};
 
 export interface PopoverProps {
   /**
@@ -141,24 +151,39 @@ function Popover({
     }
   }
 
-  // const viewportSize = useViewportSize();
+  const viewportSize = useViewportSize();
 
-  // const lastTimeRefElMutated = useMutationObserver(
-  //   referenceElement,
-  //   mutationOptions,
-  //   () => Date.now(),
-  //   adjustOnMutation,
-  // );
+  const lastTimeRefElMutated = useMutationObserver(
+    referenceElement,
+    mutationOptions,
+    () => Date.now(),
+    adjustOnMutation,
+  );
 
-  // const lastTimeContentElMutated = useMutationObserver(
-  //   contentNode,
-  //   mutationOptions,
-  //   () => Date.now(),
-  //   adjustOnMutation,
-  // );
+  const lastTimeContentElMutated = useMutationObserver(
+    contentNode,
+    mutationOptions,
+    () => Date.now(),
+    adjustOnMutation,
+  );
 
-  const referenceElPos = getElementPosition(referenceElement);
-  const contentElPos = getElementPosition(contentNode);
+  const referenceElPos = useMemo(() => getElementPosition(referenceElement), [
+    referenceElement,
+    viewportSize,
+    lastTimeRefElMutated,
+    active,
+    align,
+    justify,
+  ]);
+
+  const contentElPos = useMemo(() => getElementPosition(contentNode), [
+    contentNode,
+    viewportSize,
+    lastTimeContentElMutated,
+    active,
+    align,
+    justify,
+  ]);
 
   const { alignment, justification, positionCSS } = calculatePosition({
     useRelativePositioning: !usePortal,
