@@ -56,46 +56,45 @@ const notchVariants = {
 };
 
 const escapeKeyCode = 27;
+
 interface TooltipProps
   extends Omit<PopoverProps, 'active' | 'spacing' | 'refEl' | 'usePortal'> {
   /**
-   * A slot for the element used to trigger the Tooltip. Passing a trigger allows
-   * Tooltip to control opening and closing itself internally.
+   * A slot for the element used to trigger the `Tooltip`.
    */
   trigger: React.ReactElement | Function;
 
   /**
-   * Determines if a `hover` or `click` event will trigger the opening of a Tooltip.
+   * Determines if a `hover` or `click` event will trigger the opening of a `Tooltip`.
    */
   triggerEvent?: TriggerEvent;
 
   /**
-   * Determines the open state of the Tooltip
+   * Controls component and determines the open state of the `Tooltip`
    *
    * default: `false`
    */
   open?: boolean;
 
   /**
-   * Callback to change the open state of the Tooltip.
-   *
+   * Callback to change the open state of the `Tooltip`.
    */
   setOpen?: (
     open: boolean,
   ) => void | React.Dispatch<React.SetStateAction<boolean>>;
 
   /**
-   * Whether the Tooltip will be `light` or `dark`.
+   * Whether the `Tooltip` will be `light` or `dark`.
    */
   variant?: Variant;
 
   /**
-   * id given to Tooltip content.
+   * id given to `Tooltip` content.
    */
   id?: string;
 
   /**
-   * Callback to determine whether or not Menu should close when user tries to close it.
+   * Callback to determine whether or not `Tooltip` should close when user tries to close it.
    *
    */
   shouldClose?: () => boolean;
@@ -122,11 +121,11 @@ interface TooltipProps
  * @param props.setOpen Callback to change the open state of the Tooltip.
  * @param props.variant Whether the Tooltip should be `dark` or `light`.
  * @param props.className Classname applied to Tooltip.
- * @param props.align Alignment of Tooltip relative to another element: `top`, `bottom`, `left`, `right`.
- * @param props.justify Justification of Tooltip relative to another element: `start`, `middle`, `end`.
- * @param props.trigger Trigger element can be ReactNode or function, and, if present, internally manages active state of Tooltip.
+ * @param props.align Alignment of Tooltip relative to trigger: `top`, `bottom`, `left`, `right`.
+ * @param props.justify Justification of Tooltip relative to trigger: `start`, `middle`, `end`.
+ * @param props.trigger Trigger element can be ReactNode or function.
  * @param props.triggerEvent Whether the Tooltip should be triggered by a `click` or `hover`.
- * @param props.id id given to Tooltip content
+ * @param props.id id given to Tooltip content.
  */
 function Tooltip({
   open: controlledOpen,
@@ -157,6 +156,8 @@ function Tooltip({
     if (triggerType === 'hover') {
       return {
         onMouseEnter: debounce(() => {
+          // Because setOpen is defined in the interface as optional, Typescript thinks it might be null
+          // is it safe to use setOpen! ?
           setOpen && setOpen(!open);
         }, 250),
         onMouseLeave: debounce(() => {
@@ -218,6 +219,9 @@ function Tooltip({
     triggerRef.current &&
     triggerRef.current.getBoundingClientRect();
 
+  // We are doing this to get the final alignment and justification from Popover
+  // And to make sure we're responding to not just the desired alignment, but the alignment
+  // As a result of our calcPosition() function
   const [alignment, setAlignment] = useState(align);
   const [justification, setJustification] = useState(justify);
 

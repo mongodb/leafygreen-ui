@@ -14,13 +14,13 @@
 
 **Default:** `false`
 
-Determines whether or not the `Tooltip` will appear as open or closed, if controlled.
+Controls the component, and determines whether or not the `Tooltip` will appear open or closed.
 
 ### setOpen
 
 **Type:** `function`
 
-When controlling the component, use `setOpen` to keep track of the `Tooltip` component's state so that clicks on the document's backdrop as well as a user pressing the Escape Key will close the `Tooltip` and update the consuming application's local state accordingly.
+If controlling the component, pass state handling function to setOpen prop. This will keep the consuming application's state in-sync with LeafyGreen's state, while the `Tooltip` component responds to events such as backdrop clicks and a user pressing the Escape key.
 
 ### shouldClose
 
@@ -28,7 +28,7 @@ When controlling the component, use `setOpen` to keep track of the `Tooltip` com
 
 **Default:** `() => true`
 
-Determines if the `Tooltip` should close when the backdrop or Escape keys are clicked. Defaults to true.
+Callback to determine whether or not `Tooltip` should close when user tries to close it.
 
 ### align
 
@@ -36,7 +36,7 @@ Determines if the `Tooltip` should close when the backdrop or Escape keys are cl
 
 **Default:** `top`
 
-Determines the alignment of the `Tooltip` component relative to a reference element, or the element's nearest parent
+Determines the alignment of the `Tooltip` component relative to the element passed to the `trigger` prop.
 
 ### justify
 
@@ -44,13 +44,13 @@ Determines the alignment of the `Tooltip` component relative to a reference elem
 
 **Default:** `start`
 
-Determines the justification of the `Tooltip` component (based on the alignment) relative to a reference element or the element's nearest parent
+Determines the justification of the `Tooltip` component (based on the alignment) relative tto the element passed to the `trigger` prop.
 
 ### trigger
 
 **Type:** `HTMLElement` or `ReactNode`
 
-An `HTMLElement` or `ReactNode` against which the `Tooltip` will be positioned.
+An `HTMLElement` or `ReactNode` against which the `Tooltip` will be positioned, and what will be used to trigger the opening and closing of the `Tooltip` component.
 
 ### triggerEvent
 
