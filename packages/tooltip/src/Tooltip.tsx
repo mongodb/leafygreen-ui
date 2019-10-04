@@ -156,8 +156,6 @@ function Tooltip({
     if (triggerType === 'hover') {
       return {
         onMouseEnter: debounce(() => {
-          // Because setOpen is defined in the interface as optional, Typescript thinks it might be null
-          // is it safe to use setOpen! ?
           setOpen && setOpen(!open);
         }, 250),
         onMouseLeave: debounce(() => {
