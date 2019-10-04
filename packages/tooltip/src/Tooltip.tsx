@@ -152,15 +152,15 @@ function Tooltip({
   const tooltipId =
     id || `tooltip-${Math.floor(Math.random() * Math.floor(10))}`;
 
-  const triggerEventMap = (triggerType: TriggerEvent, triggerProps?: any) => {
+  const mapToTriggerEvent = (triggerType: TriggerEvent, triggerProps?: any) => {
     if (triggerType === 'hover') {
       return {
         onMouseEnter: debounce(() => {
           setOpen && setOpen(!open);
-        }, 250),
+        }, 35),
         onMouseLeave: debounce(() => {
           handleClose();
-        }, 250),
+        }, 35),
         onFocus: () => setOpen && setOpen(true),
         onBlur: handleClose,
       };
@@ -208,9 +208,7 @@ function Tooltip({
     }
   };
 
-  const enabled = open;
-
-  useEventListener('click', handleBackdropClick, { enabled });
+  useEventListener('click', handleBackdropClick, { enabled: open });
 
   const triggerRect =
     triggerRef &&
@@ -266,14 +264,14 @@ function Tooltip({
   if (trigger) {
     if (typeof trigger === 'function') {
       return trigger({
-        ...triggerEventMap(triggerEvent),
+        ...mapToTriggerEvent(triggerEvent),
         ...sharedTriggerProps,
         children: tooltip,
       });
     }
 
     return React.cloneElement(trigger, {
-      ...triggerEventMap(triggerEvent, trigger.props),
+      ...mapToTriggerEvent(triggerEvent, trigger.props),
       ...sharedTriggerProps,
       children: [...trigger.props.children, tooltip],
     });
