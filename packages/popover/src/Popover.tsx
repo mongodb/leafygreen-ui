@@ -95,7 +95,7 @@ export interface PopoverProps {
   adjustOnMutation?: boolean;
 
   setAlignment?: (
-    alignment: string,
+    alignment: Align,
   ) => void | React.Dispatch<React.SetStateAction<string>>;
 
   setJustification?: (

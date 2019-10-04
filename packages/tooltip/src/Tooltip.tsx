@@ -237,7 +237,7 @@ function Tooltip({
       adjustOnMutation={true}
       spacing={12}
       setAlignment={setAlignment}
-      setJustification={setJustification}
+      setJustification={setJustification as any}
     >
       <div
         {...rest}
