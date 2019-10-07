@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
-import { useEventListener } from '@leafygreen-ui/hooks';
+import { useEventListener, useHandleEscape } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
@@ -12,8 +12,6 @@ const rootMenuStyle = css`
   box-shadow: 0 2px 6px ${transparentize(0.8, uiColors.black)};
   background-color: ${uiColors.white};
 `;
-
-const escapeKeyCode = 27;
 
 interface MenuProps extends Omit<PopoverProps, 'active' | 'spacing'> {
   /**
@@ -112,17 +110,7 @@ function Menu({
     enabled,
   });
 
-  const handleEscape = (e: KeyboardEvent) => {
-    e.stopImmediatePropagation();
-
-    if (e.keyCode === escapeKeyCode) {
-      handleClose();
-    }
-  };
-
-  useEventListener('keydown', handleEscape, {
-    enabled,
-  });
+  useHandleEscape(handleClose, { enabled });
 
   const popoverContent = (
     <Popover

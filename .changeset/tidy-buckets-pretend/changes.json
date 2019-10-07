@@ -1,0 +1,4 @@
+{
+  "releases": [{ "name": "@leafygreen-ui/hooks", "type": "minor" }],
+  "dependents": []
+}
