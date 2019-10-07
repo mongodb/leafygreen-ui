@@ -3,9 +3,8 @@ import useEventListener, { UseEventOptions } from './useEventListener';
 const escapeKeyCode = 27;
 
 const handleEscape = (e: KeyboardEvent, callback: () => void) => {
-  e.stopImmediatePropagation();
-
   if (e.keyCode === escapeKeyCode) {
+    e.stopImmediatePropagation();
     callback();
   }
 };
