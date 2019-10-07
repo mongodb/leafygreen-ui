@@ -16,8 +16,19 @@ export function trianglePosition(
   const containerOffsetX = (triggerRect.width - containerSize) / 2;
   const containerOffsetY = (triggerRect.height - containerSize) / 2;
   const notchOverlap = -notchSize / 2;
-  const containerStyleObj: any = {};
-  const notchStyleObj: any = {};
+  const containerStyleObj: {
+    left?: string;
+    right?: string;
+    top?: string;
+    bottom?: string;
+    margin?: string;
+  } = {};
+  const notchStyleObj: {
+    left?: string | number;
+    right?: string | number;
+    top?: string | number;
+    bottom?: string | number;
+  } = {};
 
   switch (alignment) {
     case 'top':

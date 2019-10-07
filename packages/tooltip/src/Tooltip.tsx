@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { PopoverProps, Align, Justify } from '@leafygreen-ui/popover';
 import { useEventListener } from '@leafygreen-ui/hooks';
@@ -149,8 +149,10 @@ function Tooltip({
   const triggerRef = useRef<HTMLElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
-  const tooltipId =
-    id || `tooltip-${Math.floor(Math.random() * Math.floor(10))}`;
+  const tooltipId = useMemo(
+    () => id || `tooltip-${Math.floor(Math.random() * Math.floor(10))}`,
+    [id],
+  );
 
   const mapToTriggerEvent = (triggerType: TriggerEvent, triggerProps?: any) => {
     if (triggerType === 'hover') {
