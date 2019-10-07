@@ -1,7 +1,7 @@
 import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { PopoverProps, Align, Justify } from '@leafygreen-ui/popover';
-import { useEventListener } from '@leafygreen-ui/hooks';
+import { useEventListener, useHandleEscape } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
@@ -54,8 +54,6 @@ const notchVariants = {
     box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
   `,
 };
-
-const escapeKeyCode = 27;
 
 interface TooltipProps
   extends Omit<PopoverProps, 'active' | 'spacing' | 'refEl' | 'usePortal'> {
@@ -189,15 +187,7 @@ function Tooltip({
     }
   };
 
-  const handleEscape = (e: KeyboardEvent) => {
-    e.stopImmediatePropagation();
-
-    if (e.keyCode === escapeKeyCode) {
-      handleClose();
-    }
-  };
-
-  useEventListener('keydown', handleEscape);
+  useHandleEscape(handleClose);
 
   const handleBackdropClick = (e: MouseEvent) => {
     const tooltipReference = tooltipRef && tooltipRef.current;
