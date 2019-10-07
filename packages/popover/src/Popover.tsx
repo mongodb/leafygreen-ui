@@ -96,7 +96,7 @@ export interface PopoverProps {
 
   setAlignment?: (
     alignment: Align,
-  ) => void | React.Dispatch<React.SetStateAction<string>>;
+  ) => void | React.Dispatch<React.SetStateAction<Align>>;
 
   setJustification?: (
     justification: string,

@@ -16,25 +16,16 @@ export function trianglePosition(
   const containerOffsetX = (triggerRect.width - containerSize) / 2;
   const containerOffsetY = (triggerRect.height - containerSize) / 2;
   const notchOverlap = -notchSize / 2;
-  const containerStyleObj: {
-    left?: string;
-    right?: string;
-    top?: string;
-    bottom?: string;
-    margin?: string;
-  } = {};
-  const notchStyleObj: {
-    left?: string | number;
-    right?: string | number;
-    top?: string | number;
-    bottom?: string | number;
-  } = {};
+
+  type Styles = 'left' | 'right' | 'top' | 'bottom' | 'margin';
+  const notchStyleObj: { [K in Styles]?: string } = {};
+  const containerStyleObj: { [K in Styles]?: string } = {};
 
   switch (alignment) {
     case 'top':
     case 'bottom':
-      notchStyleObj.left = 0;
-      notchStyleObj.right = 0;
+      notchStyleObj.left = '0px';
+      notchStyleObj.right = '0px';
 
       if (alignment === 'top') {
         containerStyleObj.top = `${borderOffset}`;
@@ -52,7 +43,6 @@ export function trianglePosition(
         case 'center-horizontal':
           containerStyleObj.left = '0px';
           containerStyleObj.right = '0px';
-          containerStyleObj.margin = 'auto';
           break;
 
         case 'right':
@@ -64,8 +54,8 @@ export function trianglePosition(
 
     case 'left':
     case 'right':
-      notchStyleObj.top = 0;
-      notchStyleObj.bottom = 0;
+      notchStyleObj.top = '0px';
+      notchStyleObj.bottom = '0px';
 
       if (alignment === 'left') {
         notchStyleObj.left = `${notchOverlap}px`;
@@ -85,7 +75,6 @@ export function trianglePosition(
         case 'center-vertical':
           containerStyleObj.top = '0px';
           containerStyleObj.bottom = '0px';
-          containerStyleObj.margin = 'auto';
           break;
 
         case 'bottom':
@@ -102,6 +91,7 @@ export function trianglePosition(
       width: ${containerSize}px;
       height: ${containerSize}px;
       overflow: hidden;
+      containerStyleObj.margin = 'auto';
       ${css(containerStyleObj)};
     `,
     notchStyle: css`

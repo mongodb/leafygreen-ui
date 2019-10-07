@@ -25,7 +25,7 @@ type Variant = typeof Variant[keyof typeof Variant];
 const baseStyles = css`
   font-size: 14px;
   line-height: 20px;
-  padding: 14px 16px 15px 16px;
+  padding: 14px 16px;
   border-radius: 3px;
   box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
 `;
@@ -144,7 +144,10 @@ function Tooltip({
   const isControlled = !!controlledSetOpen;
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
   const open = isControlled ? controlledOpen : uncontrolledOpen;
-  const setOpen = isControlled ? controlledSetOpen : uncontrolledSetOpen;
+  // typescript is not recognizing isControlled checks that controlledSetOpen exists
+  const setOpen = isControlled
+    ? (controlledSetOpen as Function)
+    : uncontrolledSetOpen;
 
   const triggerRef = useRef<HTMLElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
@@ -155,36 +158,34 @@ function Tooltip({
   );
 
   const mapToTriggerEvent = (triggerType: TriggerEvent, triggerProps?: any) => {
-    if (triggerType === 'hover') {
+    if (triggerType === TriggerEvent.Hover) {
       return {
         onMouseEnter: debounce(() => {
-          setOpen && setOpen(!open);
+          setOpen(!open);
         }, 35),
-        onMouseLeave: debounce(() => {
-          handleClose();
-        }, 35),
-        onFocus: () => setOpen && setOpen(true),
+        onMouseLeave: debounce(handleClose, 35),
+        onFocus: () => setOpen(true),
         onBlur: handleClose,
       };
-    } else {
-      if (triggerProps.onClick) {
-        return {
-          onClick: () => {
-            triggerProps.onClick();
-            setOpen && setOpen(!open);
-          },
-        };
-      } else {
-        return {
-          onClick: () => setOpen && setOpen(!open),
-        };
-      }
     }
+
+    if (triggerProps.onClick) {
+      return {
+        onClick: () => {
+          triggerProps.onClick();
+          setOpen(!open);
+        },
+      };
+    }
+
+    return {
+      onClick: () => setOpen(!open),
+    };
   };
 
   const handleClose = () => {
     if (!shouldClose || shouldClose()) {
-      setOpen && setOpen(false);
+      setOpen(false);
     }
   };
 
@@ -227,11 +228,10 @@ function Tooltip({
     alignment,
     justification,
     triggerRect,
-  ) as any;
+  ) as { containerStyle: string; notchStyle: string };
 
   const tooltip = (
     <Popover
-      key="popover"
       active={open}
       align={align}
       justify={justify}

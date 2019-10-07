@@ -73,8 +73,9 @@ describe('packages/Tooltip', () => {
 
     const tooltip = getByTestId('controlled-tooltip');
 
-    test('renders initial state based on open prop', () => {
-      expect(tooltip).toBeVisible();
-    });
+    test(
+      'renders initial state based on open prop',
+      expect(tooltip).toBeVisible,
+    );
   });
 });

@@ -28,7 +28,7 @@ If controlling the component, pass state handling function to setOpen prop. This
 
 **Default:** `() => true`
 
-Callback to determine whether or not `Tooltip` should close when user tries to close it.
+Callback that should return a boolean that determines whether or not the `Tooltip` should close when a user tries to close it.
 
 ### align
 
@@ -36,7 +36,7 @@ Callback to determine whether or not `Tooltip` should close when user tries to c
 
 **Default:** `top`
 
-Determines the alignment of the `Tooltip` component relative to the element passed to the `trigger` prop.
+Determines the alignment of the `Tooltip` component relative to the element passed to the `trigger` prop. If no `trigger` is passed, the Tooltip will be positioned against its nearest parent element.
 
 ### justify
 
@@ -44,13 +44,13 @@ Determines the alignment of the `Tooltip` component relative to the element pass
 
 **Default:** `start`
 
-Determines the justification of the `Tooltip` component (based on the alignment) relative tto the element passed to the `trigger` prop.
+Determines the justification of the `Tooltip` component (based on the alignment) relative to the element passed to the `trigger` prop. If no `trigger` is passed, the Tooltip will be positioned against its nearest parent element.
 
 ### trigger
 
 **Type:** `HTMLElement` or `ReactNode`
 
-An `HTMLElement` or `ReactNode` against which the `Tooltip` will be positioned, and what will be used to trigger the opening and closing of the `Tooltip` component.
+An `HTMLElement` or `ReactNode` against which the `Tooltip` will be positioned, and what will be used to trigger the opening and closing of the `Tooltip` component, when the `Tooltip` is uncontrolled. If no `trigger` is passed, the `Tooltip` will be positioned against its nearest parent element.
 
 ### triggerEvent
 
@@ -58,7 +58,7 @@ An `HTMLElement` or `ReactNode` against which the `Tooltip` will be positioned, 
 
 **Default:** `hover`
 
-Event that triggers opening/closing of `Tooltip` component
+DOM event that triggers opening/closing of `Tooltip` component
 
 ### variant
 
@@ -66,12 +66,12 @@ Event that triggers opening/closing of `Tooltip` component
 
 **Default:** `light`
 
-Determines color of `Tooltip` component
+Determines the color variant of the `Tooltip` component.
 
 ### id
 
 **Type:** `string`
 
-id applied to `Tooltip` component
+`id` applied to `Tooltip` component
 
 #### Any other properties will be spread on the Menu `div` container
