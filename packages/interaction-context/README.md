@@ -1,20 +1,15 @@
-# Button
+# Interaction Context
 
-![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/button.svg)
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/interaction-context.svg)
 
 ## Example
 
 ```Javascript
-import Button from '@leafygreen-ui/button';
+import InteractionContext from '@leafygreen-ui/interaction-context';
 
-<Button
-  variant='primary'
-  className='create-item-button'
-  title='Create an item'
-  onClick={(event) => {/* Something to handle the click event */}}
->
-  Submit
-</Button>
+<InteractionContext>
+  <div>My Children</div>
+</InteractionContext>
 ```
 
 **Output HTML**

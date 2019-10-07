@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { useShowFocus } from '@leafygreen-ui/interaction-context';
 import Size from './Size';
 
+const radioBoxWrapper = createDataProp('radio-box-wrapper');
 const radioBoxInput = createDataProp('radio-box-input');
 
 export const radioBoxSizes: { [K in Size]: string } = {
@@ -31,9 +33,14 @@ const inputStyles = css`
 interface StateForStyles {
   checked: boolean;
   disabled: boolean;
+  showFocus: boolean;
 }
 
-const getRadioDisplayStyles = ({ checked, disabled }: StateForStyles) => {
+const getRadioDisplayStyles = ({
+  checked,
+  disabled,
+  showFocus,
+}: StateForStyles) => {
   const baseStyles = css`
     transition: box-shadow 150ms ease-in-out, border 150ms ease-in-out;
     box-sizing: content-box;
@@ -50,8 +57,13 @@ const getRadioDisplayStyles = ({ checked, disabled }: StateForStyles) => {
     border: 1px solid ${uiColors.gray.light1};
     color: ${uiColors.gray.dark2};
     border-radius: 2px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+    // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
     z-index: 2;
+
+    ${radioBoxWrapper.selector}:hover & {
+      box-shadow: none;
+      border-color: ${uiColors.gray.base};
+    }
   `;
 
   if (disabled) {
@@ -73,16 +85,22 @@ const getRadioDisplayStyles = ({ checked, disabled }: StateForStyles) => {
   }
 
   if (checked) {
+    const focusState = showFocus
+      ? css`
+          ${radioBoxInput.selector}:focus ~ & {
+            border-color: #63b0d0;
+          }
+        `
+      : '';
+
     return cx(
       baseStyles,
       css`
         border-color: ${uiColors.green.base};
         transition: box-shadow 150ms ease-in-out, border-color 0ms;
         box-shadow: none;
-
-        &:hover {
-          border-color: ${uiColors.green.base};
-        }
+        border-radius: 3px;
+        ${focusState}
       `,
     );
   }
@@ -90,14 +108,7 @@ const getRadioDisplayStyles = ({ checked, disabled }: StateForStyles) => {
   return cx(
     baseStyles,
     css`
-      ${radioBoxInput.selector}:focus ~ & {
-        border-color: rgba(67, 177, 229, 0.25);
-        border-radius: 3px;
-      }
-
-      &:hover {
-        border-color: ${uiColors.gray.base};
-      }
+      border-radius: 3px;
     `,
   );
 };
@@ -105,7 +116,7 @@ const getRadioDisplayStyles = ({ checked, disabled }: StateForStyles) => {
 // We use a div for the checked state rather than a pseudo-element
 // because said pseudo-element would need to be on the label element
 // which can't use the contained input's checked pseudo-class.
-const getCheckedStateStyle = ({ checked }: StateForStyles) => {
+const getInteractionIndicatorStyle = ({ checked }: StateForStyles) => {
   const baseStyles = css`
     position: absolute;
     transition: all 150ms ease-in-out;
@@ -114,26 +125,41 @@ const getCheckedStateStyle = ({ checked }: StateForStyles) => {
     right: -2px;
     left: -2px;
     transform: scale(0.9, 0.8);
-    opacity: 0;
     z-index: -1;
+    border-radius: 4px;
+
+    ${radioBoxWrapper.selector}:hover & {
+      background-color: ${uiColors.gray.light2};
+      transform: scale(1);
+      z-index: 1;
+    }
   `;
 
   if (checked) {
     return cx(
       baseStyles,
       css`
-        border-radius: 3px;
         background-color: ${uiColors.green.base};
         transform: scale(1);
-        opacity: 1;
         z-index: 1;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+
+        ${radioBoxWrapper.selector}:hover & {
+          background-color: ${uiColors.green.base};
+        }
       `,
     );
   }
 
   return baseStyles;
 };
+
+const focusStateStyle = css`
+  ${radioBoxInput.selector}:focus ~ & {
+    transform: scale(1);
+    background-color: #63b0d0;
+    z-index: 1;
+  }
+`;
 
 export const radioWrapper = css`
   display: flex;
@@ -146,7 +172,7 @@ export const radioWrapper = css`
 
 const getStatefulStyles = (state: StateForStyles) => ({
   radioDisplay: getRadioDisplayStyles(state),
-  checkedState: getCheckedStateStyle(state),
+  interactionIndicator: getInteractionIndicatorStyle(state),
 });
 
 export interface RadioBoxProps {
@@ -213,10 +239,12 @@ export default function RadioBox({
   name,
   ...rest
 }: RadioBoxProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>) {
-  const styles = getStatefulStyles({ checked, disabled });
+  const showFocus = useShowFocus();
+  const styles = getStatefulStyles({ checked, disabled, showFocus });
 
   return (
     <label
+      {...radioBoxWrapper.prop}
       htmlFor={id}
       className={cx(
         radioWrapper,
@@ -228,6 +256,7 @@ export default function RadioBox({
     >
       <input
         {...rest}
+        {...radioBoxInput.prop}
         type="radio"
         id={id}
         name={name}
@@ -240,7 +269,11 @@ export default function RadioBox({
         className={inputStyles}
       />
 
-      <div className={styles.checkedState} />
+      <div
+        className={cx(styles.interactionIndicator, {
+          [focusStateStyle]: showFocus,
+        })}
+      />
 
       <div className={cx(styles.radioDisplay, radioBoxSizes[size])}>
         {children}

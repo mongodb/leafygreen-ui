@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { useShowFocus } from '@leafygreen-ui/leafygreen-context';
 
 const menuItemContainer = createDataProp('menu-item-container');
 
@@ -58,6 +59,11 @@ const containerStyle = css`
   &:focus {
     outline: none;
     text-decoration: none;
+  }
+`;
+
+const focusedStyle = css`
+  &:focus {
     background-color: ${uiColors.blue.light3};
     color: ${uiColors.blue.dark3};
 
@@ -193,6 +199,7 @@ const MenuItem = React.forwardRef(
       href,
       ...rest
     } = props;
+    const showFocus = useShowFocus();
 
     const anchorProps = href && {
       target: '_self',
@@ -212,6 +219,7 @@ const MenuItem = React.forwardRef(
             {
               [activeStyle]: active,
               [disabledStyle]: disabled,
+              [focusedStyle]: showFocus,
             },
             className,
           )}

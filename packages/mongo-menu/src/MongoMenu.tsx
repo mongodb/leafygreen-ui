@@ -9,7 +9,7 @@ import {
   FocusableMenuItem,
 } from '@leafygreen-ui/menu';
 import { createDataProp } from '@leafygreen-ui/lib';
-import { useInteractionContext } from '@leafygreen-ui/interaction-context';
+import { useShowFocus } from '@leafygreen-ui/interaction-context';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
@@ -57,24 +57,13 @@ const wrapperStyle = css`
 
   &:focus {
     outline: none;
-
-    &:before {
-      background-color: #63b0d0;
-      transform: scale(1);
-    }
   }
 `;
 
-const usingMouseStyle = css`
-  &:focus {
-    &:before {
-      background-color: ${uiColors.gray.light2};
-      transform: scale(0.9, 0.8);
-    }
-
-    &:hover:before {
-      transform: scale(1)
-    }
+const focusStyle = css`
+  &:focus:before {
+    background-color: #63b0d0;
+    transform: scale(1);
   }
 `;
 
@@ -247,13 +236,11 @@ function MongoMenu({
   onProductChange = () => {},
 }: MongoMenuProps) {
   const [open, setOpen] = useState(false);
-  const { usingKeyboard } = useInteractionContext();
+  const showFocus = useShowFocus();
 
   return (
     <button
-      className={cx(wrapperStyle, {
-        [usingMouseStyle]: usingKeyboard === false,
-      })}
+      className={cx(wrapperStyle, { [focusStyle]: showFocus })}
       onClick={() => setOpen(curr => !curr)}
     >
       <div

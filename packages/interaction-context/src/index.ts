@@ -1,5 +1,5 @@
 import InteractionContext, { UsingKeyboardContext } from './InteractionContext';
-import useInteractionContext from './useInteractionContext';
+import useShowFocus from './useShowFocus';
 
-export { UsingKeyboardContext, useInteractionContext };
+export { UsingKeyboardContext, useShowFocus };
 export default InteractionContext;

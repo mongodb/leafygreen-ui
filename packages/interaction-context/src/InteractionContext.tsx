@@ -8,8 +8,8 @@ export const UsingKeyboardContext = createContext(undefined as
 
 interface InteractionContextProps {
   children: React.ReactNode;
-  initialStates: {
-    usingKeyboard: boolean;
+  initialStates?: {
+    usingKeyboard?: boolean;
   };
 }
 
@@ -28,7 +28,9 @@ const InteractionContext = ({
   useEventListener(
     'keydown',
     ({ keyCode }) => {
-      if (keyCode === 9) {
+      // Tab, and arrow keys
+      // All are used to manage focus in a keyboard navigation context.
+      if ([9, 37, 38, 39, 40].includes(keyCode)) {
         setUsingKeyboard(true);
       }
     },
