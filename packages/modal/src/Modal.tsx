@@ -5,7 +5,7 @@ import { transparentize } from 'polished';
 import facepaint from 'facepaint';
 import Portal from '@leafygreen-ui/portal';
 import Icon, { Size } from '@leafygreen-ui/icon';
-import { useEventListener } from '@leafygreen-ui/hooks';
+import { useHandleEscape } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
@@ -98,8 +98,6 @@ const closeButton = css`
   top: 12px;
 `;
 
-const escapeKey = 27;
-
 interface ModalProps {
   /**
    * Content that will appear inside of the Modal component.
@@ -185,16 +183,7 @@ function Modal({
     }
   };
 
-  const handleEscape = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.keyCode === escapeKey) {
-        handleClose();
-      }
-    },
-    [handleClose],
-  );
-
-  useEventListener('keydown', handleEscape);
+  useHandleEscape(handleClose);
 
   return (
     <Transition in={open} timeout={500} mountOnEnter unmountOnExit>
