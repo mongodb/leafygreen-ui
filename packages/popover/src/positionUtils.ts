@@ -1,5 +1,6 @@
 import Align from './Align';
 import Justify from './Justify';
+import Justification from './Justification';
 
 interface ElementPosition {
   top: number;
@@ -42,7 +43,7 @@ export function calculatePosition({
   windowWidth = window.innerWidth,
 }: CalculatePosition): {
   alignment: Align;
-  justification: string;
+  justification: Justification | Justify;
   positionCSS: any;
 } {
   const windowSafeCommonArgs = {
@@ -131,19 +132,6 @@ export function getElementPosition(
 
   return { top, bottom, left, right, height, width };
 }
-
-// We transform 'middle' into 'center-vertical' or 'center-horizontal' for internal use,
-// So both Justify and Justification are needed, where the same is not true for Alignment.
-const Justification = {
-  Top: 'top',
-  Bottom: 'bottom',
-  Left: 'left',
-  Right: 'right',
-  CenterVertical: 'center-vertical',
-  CenterHorizontal: 'center-horizontal',
-} as const;
-
-type Justification = typeof Justification[keyof typeof Justification];
 
 interface TransformOriginArgs {
   alignment: Align;

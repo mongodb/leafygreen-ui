@@ -15,6 +15,7 @@ import {
 } from '@leafygreen-ui/hooks';
 import Align from './Align';
 import Justify from './Justify';
+import Justification from './Justification';
 import { calculatePosition, getElementPosition } from './positionUtils';
 
 const rootPopoverStyle = css`
@@ -99,8 +100,8 @@ export interface PopoverProps {
   ) => void | React.Dispatch<React.SetStateAction<Align>>;
 
   setJustification?: (
-    justification: string,
-  ) => void | React.Dispatch<React.SetStateAction<string>>;
+    justification: Justify | Justification,
+  ) => void | React.Dispatch<React.SetStateAction<Justify | Justification>>;
 }
 
 /**
