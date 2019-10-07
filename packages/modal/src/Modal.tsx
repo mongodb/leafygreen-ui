@@ -232,6 +232,7 @@ function Modal({
                   className={closeButton}
                   data-dismiss="modal"
                   tabIndex={0}
+                  title="close modal"
                 />
 
                 {children}
