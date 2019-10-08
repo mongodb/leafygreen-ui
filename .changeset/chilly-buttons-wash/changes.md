@@ -1,1 +1,1 @@
-Add uiColors.less file
+Add ui-colors.less file
