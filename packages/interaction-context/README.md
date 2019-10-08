@@ -1,8 +1,12 @@
 # Interaction Context
 
+## InteractionContext
+
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/interaction-context.svg)
 
-## Example
+### Example
+
+#### Input
 
 ```Javascript
 import InteractionContext from '@leafygreen-ui/interaction-context';
@@ -12,88 +16,47 @@ import InteractionContext from '@leafygreen-ui/interaction-context';
 </InteractionContext>
 ```
 
-**Output HTML**
+#### Output
 
 ```HTML
-  <button class="css-1rgbgdt create-item-button" title="Create an item" disabled="false">
-    Submit
-  </button>
+  <div>My Children</div>
 ```
 
-## Properties
+### Properties
 
-### variant
+#### initialStates
 
-**Type:** `string`
+**Type:** `{ usingKeyboard?: boolean }`
 
-**Default:** `'default'`
+You can provide initial states to initialize `InteractionContext` with.
 
-Sets the style variant of the button. Valid variants for buttons are `'default'`, `'primary'`, `'info'`, `'danger'`, and `'dark'`.
-
-### size
-
-**Type:** `string`
-
-**Default:** `'normal'`
-
-Sets the size variant of the button. Valid variants for buttons are `'xsmall'`, `'small'`, `'normal'`, and `'large'`.
-
-### onClick
-
-**Type:** `function`
-
-**Default:** `() => {}`
-
-The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument.
-
-### className
-
-**Type:** `string`
-
-**Default:** `''`
-
-Adds a className to the class attribute.
-
-### children
+#### children
 
 **Type:** `node`
 
-**Default:** `null`
+Children passed to `InteractionContext` will be unmodified, aside from having access to its state.
 
-The children of the rendered `<button>` element.
+---
 
-### value
+## useShowFocus
 
-**Type:** `string`
+This hook provides a simple way in functional components to determine whether a focus state should be shown.
 
-**Default:** `null`
+It uses the state from `InteractionContext` to determine if focus states should be shown, and provides a simple path to graceful degredation – if the context provider isn't an ancestor, `showFocus` will always be true.
 
-Sets the HTML `value` attribute.
+### Example
 
-### disabled
+```js
+import { useShowFocus } from '@leafygreen-ui/interaction-context';
 
-**Type:** `boolean`
+const showFocus = useShowFocus();
+const focusStyle = showFocus
+  ? css`
+      &:focus {
+        outline: blue auto 5px; // Your focus state
+      }
+    `
+  : '';
 
-**Default:** `false`
-
-Disables the button.
-
-### as
-
-**Type:** `HTML Tag` or `React Element`
-
-**Default:** `button`
-
-Determines the root element. For example, `Link` or `a` tags can be supplied to replace `button` from being the DOM element that wraps the component.
-
-### href
-
-**Type:** `string`
-
-**Default:** `null`
-
-If a href is supplied it willl change the `as` value, such that the component renders inside of an `a` tag instead of inside of a `button` tag.
-
-#### Any other properties will be spread on the input element.
-
-Note: In order to make this Component act as a submit button, the recommended approach is to pass `submit` as the `type` prop. Note it is also valid to pass `input` to the `as` prop, and the button's content's to the `value` prop -- in this case, do not supply children to the component.
+<button className={focusStyle}></button>;
+```

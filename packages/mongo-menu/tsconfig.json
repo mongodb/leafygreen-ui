@@ -28,9 +28,6 @@
       "path": "../icon"
     },
     {
-      "path": "../mongo-menu"
-    },
-    {
       "path": "../interaction-context"
     }
   ]
