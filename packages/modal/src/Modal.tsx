@@ -5,7 +5,7 @@ import { transparentize } from 'polished';
 import facepaint from 'facepaint';
 import Portal from '@leafygreen-ui/portal';
 import Icon, { Size } from '@leafygreen-ui/icon';
-import { useHandleEscape } from '@leafygreen-ui/hooks';
+import { useEscapeKey } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
@@ -183,7 +183,7 @@ function Modal({
     }
   };
 
-  useHandleEscape(handleClose);
+  useEscapeKey(handleClose);
 
   return (
     <Transition in={open} timeout={500} mountOnEnter unmountOnExit>

@@ -1,1 +1,1 @@
-Replaced existing Escape handling with new useEscapeHandler hook
+Replaced existing Escape handling with new useEscapeKey hook
