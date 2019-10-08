@@ -122,5 +122,8 @@
     "packages": [
       "packages/*"
     ]
+  },
+  "dependencies": {
+    "file-loader": "^4.2.0"
   }
 }
