@@ -26,10 +26,6 @@ const wrapperStyle = css`
     border: 0;
   }
 
-  &:hover:before {
-    transform: scale(1);
-  }
-
   &:before {
     content: '';
     position: absolute;
@@ -43,15 +39,19 @@ const wrapperStyle = css`
     background-color: ${uiColors.gray.light2};
   }
 
+  &:hover:before {
+    transform: scale(1);
+  }
+
   &:active {
     color: ${uiColors.gray.dark2};
 
-    &:before {
-      transform: scale(1);
+    ${iconRef.selector} {
+      color: ${uiColors.gray.dark1};
     }
 
-    & ${iconRef.selector} {
-      color: ${uiColors.gray.dark1};
+    &:before {
+      transform: scale(1);
     }
   }
 

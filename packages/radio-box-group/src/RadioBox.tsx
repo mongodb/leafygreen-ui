@@ -42,12 +42,10 @@ const getRadioDisplayStyles = ({
   showFocus,
 }: StateForStyles) => {
   const baseStyles = css`
-    transition: box-shadow 150ms ease-in-out, border 150ms ease-in-out;
+    transition: border 150ms ease-in-out;
     box-sizing: content-box;
     padding: 15px;
-    font-weight: normal;
     cursor: pointer;
-    text-align: center;
     font-size: 14px;
     font-weight: bold;
     text-align: center;
@@ -56,12 +54,10 @@ const getRadioDisplayStyles = ({
     background-color: white;
     border: 1px solid ${uiColors.gray.light1};
     color: ${uiColors.gray.dark2};
-    border-radius: 2px;
-    // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
     z-index: 2;
 
     ${radioBoxWrapper.selector}:hover & {
-      box-shadow: none;
       border-color: ${uiColors.gray.base};
     }
   `;
@@ -70,13 +66,11 @@ const getRadioDisplayStyles = ({
     return cx(
       baseStyles,
       css`
-        background: ${uiColors.gray.light3};
-        border-color: ${uiColors.gray.light2};
-        box-shadow: none;
         color: ${uiColors.gray.light1};
         cursor: not-allowed;
 
-        &:hover {
+        &,
+        ${radioBoxWrapper.selector}:hover & {
           background: ${uiColors.gray.light3};
           border-color: ${uiColors.gray.light2};
         }
@@ -85,38 +79,40 @@ const getRadioDisplayStyles = ({
   }
 
   if (checked) {
-    const focusState = showFocus
-      ? css`
-          ${radioBoxInput.selector}:focus ~ & {
-            border-color: #63b0d0;
-          }
-        `
-      : '';
+    const focusState = css`
+      ${radioBoxInput.selector}:focus ~ & {
+        border-color: #63b0d0;
+      }
+    `;
 
     return cx(
       baseStyles,
       css`
         border-color: ${uiColors.green.base};
-        transition: box-shadow 150ms ease-in-out, border-color 0ms;
-        box-shadow: none;
-        border-radius: 3px;
-        ${focusState}
+
+        ${radioBoxWrapper.selector}:hover & {
+          border-color: ${uiColors.green.base};
+        }
       `,
+      { [focusState]: showFocus },
     );
   }
 
-  return cx(
-    baseStyles,
-    css`
-      border-radius: 3px;
-    `,
-  );
+  return baseStyles;
 };
 
 // We use a div for the checked state rather than a pseudo-element
 // because said pseudo-element would need to be on the label element
 // which can't use the contained input's checked pseudo-class.
-const getInteractionIndicatorStyle = ({ checked }: StateForStyles) => {
+const getInteractionIndicatorStyle = ({
+  checked,
+  disabled,
+  showFocus,
+}: StateForStyles) => {
+  if (disabled) {
+    return '';
+  }
+
   const baseStyles = css`
     position: absolute;
     transition: all 150ms ease-in-out;
@@ -135,6 +131,14 @@ const getInteractionIndicatorStyle = ({ checked }: StateForStyles) => {
     }
   `;
 
+  const focusStyle = css`
+    ${radioBoxInput.selector}:focus ~ & {
+      transform: scale(1);
+      background-color: #63b0d0;
+      z-index: 1;
+    }
+  `;
+
   if (checked) {
     return cx(
       baseStyles,
@@ -147,23 +151,21 @@ const getInteractionIndicatorStyle = ({ checked }: StateForStyles) => {
           background-color: ${uiColors.green.base};
         }
       `,
+      { [focusStyle]: showFocus },
     );
   }
 
-  return baseStyles;
+  return cx(baseStyles, { [focusStyle]: showFocus });
 };
-
-const focusStateStyle = css`
-  ${radioBoxInput.selector}:focus ~ & {
-    transform: scale(1);
-    background-color: #63b0d0;
-    z-index: 1;
-  }
-`;
 
 export const radioWrapper = css`
   display: flex;
   position: relative;
+
+  // Establishes the root element as a new stacking context
+  // so that the z-index of the span within the button doesn't
+  // appear above other elements on the page that it shouldn't.
+  z-index: 0;
 
   &:not(:last-of-type) {
     margin-right: 12px;
@@ -269,11 +271,7 @@ export default function RadioBox({
         className={inputStyles}
       />
 
-      <div
-        className={cx(styles.interactionIndicator, {
-          [focusStateStyle]: showFocus,
-        })}
-      />
+      <div className={styles.interactionIndicator} />
 
       <div className={cx(styles.radioDisplay, radioBoxSizes[size])}>
         {children}
