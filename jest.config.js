@@ -22,11 +22,12 @@ module.exports = {
     'woff2',
     'ttf',
     'eot',
+    'less',
   ],
 
   // A map from regular expressions to module names that allow to stub out resources with a single module
   moduleNameMapper: {
-    '.(png|jpg|jpeg|gif|woff|woff2|ttf|eot)$':
+    '.(png|jpg|jpeg|gif|woff|woff2|ttf|less|eot)$':
       '<rootDir>/__mocks__/fileMock.js',
   },
 
