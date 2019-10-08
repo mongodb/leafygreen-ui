@@ -16,10 +16,6 @@ This package contains the colors for the following palettes:
 npm install @leafygreen-ui/palette
 ```
 
-```less
-@import '<path to node_modules>/@leafygreen-ui/palette/dist/palette.less';
-```
-
 ```js
 import { uiColors } from '@leafygreen-ui/palette';
 
@@ -70,4 +66,8 @@ import { uiColors } from '@leafygreen-ui/palette';
 const example = () => (
   <span style={{ color: uiColors.gray.dark1 }}>Hello World</span>
 );
+```
+
+```less
+@import '<path to node_modules>/@leafygreen-ui/palette/dist/ui-colors.less';
 ```
