@@ -67,3 +67,7 @@ const example = () => (
   <span style={{ color: uiColors.gray.dark1 }}>Hello World</span>
 );
 ```
+
+```less
+@import '<path to node_modules>/@leafygreen-ui/palette/dist/ui-colors.less';
+```

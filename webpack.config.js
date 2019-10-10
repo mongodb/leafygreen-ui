@@ -91,6 +91,13 @@ module.exports = function(env = 'production') {
             limit: 50000,
           },
         },
+        {
+          test: /\.less(\?v=\d+\.\d+\.\d+)?$/,
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+          },
+        },
       ],
     },
 
