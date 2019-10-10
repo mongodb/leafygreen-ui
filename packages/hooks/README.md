@@ -10,7 +10,7 @@ Hook to subscribe to changes in a ref element
 
 ```js
 const Example = () => {
-  [refNode, setRefNode] = useElementNode;
+  [refNode, setRefNode] = useElementNode();
 
   return <div ref={setRefNode}>I am a ref</div>;
 };
@@ -18,7 +18,7 @@ const Example = () => {
 
 ## useEventListener
 
-Hook to subscribe to an EventListener
+Hook to subscribe to an eventListener
 
 ### Example
 
@@ -42,7 +42,7 @@ Callback executed when event is triggered.
 
 #### optional
 
-**Type:** {}
+**Type:** `{}`
 
 Optional third argument passed to function with implementation specifications.
 
@@ -96,7 +96,7 @@ Callback executed when `EscapeKey` is pressed.
 
 #### optional
 
-**Type:** {}
+**Type:** `{}`
 
 Optional argument passed to function with implementation specifications. See supported parameters for useEventHandler.
 
