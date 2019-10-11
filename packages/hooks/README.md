@@ -4,7 +4,7 @@
 
 ## useElementNode
 
-Hook to subscribe to changes in a ref element
+Hook to subscribe to changes in a ref
 
 ### Example
 
@@ -18,7 +18,7 @@ const Example = () => {
 
 ## useEventListener
 
-Hook to subscribe to an eventListener
+Hook to create and remove eventListeners
 
 ### Example
 
@@ -30,7 +30,7 @@ useEventListener('click', handleClick, { enabled });
 
 #### type
 
-**Type:** `Global Event Handler`
+**Type:** `Global Event Handler` | `string`
 
 Type of event to listen for.
 
@@ -58,7 +58,7 @@ Parameter to specify options passed to the eventListener
 
 **Default:** `true`
 
-Determines whether or not the useEffect hook should run.
+Determines whether the event handler is attached or not.
 
 #### optional.dependencies
 
@@ -74,7 +74,7 @@ Array to be passed to useEffect hook, such that the hook will only run if the ar
 
 **Default:** `document`
 
-Value to be passed as target of event handler, will default to document.
+The DOM node to attach the event handler to. Defaults to `document`.
 
 ## useEscapeKey
 
@@ -106,7 +106,7 @@ Optional argument passed to function with implementation specifications. See sup
 
 ```js
 const lastTimeContentElMutated = useMutationObserver(
-  contentNode,
+  target,
   mutationOptions,
   () => Date.now(),
   adjustOnMutation,
@@ -119,13 +119,13 @@ const lastTimeContentElMutated = useMutationObserver(
 
 **Type:** `HTMLElement | null`
 
-HTML element that is subscribed to DOM changes.
+`HTMLElement` to subscribe to changes to.
 
 #### options
 
 **Type:** `MutationObserverInit`
 
-Object with information about what DOM changes to subscribe to.
+Object with information about what DOM changes to subscribe to. [Docs here](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserverInit)
 
 #### callback
 
@@ -139,7 +139,7 @@ Callback function to execute inside of MutationObserver instance.
 
 **Default:** `true`
 
-Determines whether or not the hook should run, defaults to true.
+Determines whether the event handler is attached or not.
 
 ## useViewportSize
 
