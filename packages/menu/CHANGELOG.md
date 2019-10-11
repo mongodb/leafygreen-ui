@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 3.0.2
+
+### Patch Changes
+
+- 3a24668: Replaced existing Escape handling with new useEscapeKey hook
+
 ## 3.0.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 1.0.3
+
+### Patch Changes
+
+- 4de039a: Further accessibility updates to make components compliant with a11y standards
+
 ## 1.0.2
 
 ### Patch Changes

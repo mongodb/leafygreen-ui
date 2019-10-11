@@ -1,1 +1,0 @@
-Further accessibility updates to make components compliant with a11y standards
