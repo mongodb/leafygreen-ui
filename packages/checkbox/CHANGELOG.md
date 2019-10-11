@@ -1,5 +1,11 @@
 # @leafygreen-ui/checkbox
 
+## 3.2.1
+
+### Patch Changes
+
+- 4de039a: Further accessibility updates to make components compliant with a11y standards
+
 ## 3.2.0
 
 ### Minor Changes

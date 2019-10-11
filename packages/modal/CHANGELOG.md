@@ -1,5 +1,13 @@
 # @leafygreen-ui/modal
 
+## 1.2.1
+
+### Patch Changes
+
+- 725e0f3: Add `title` prop to Icon component, to make purpose more clear to screenreaders
+- 4de039a: Further accessibility updates to make components compliant with a11y standards
+- 3a24668: Replaced existing Escape handling with new useEscapeKey hook
+
 ## 1.2.0
 
 ### Minor Changes
