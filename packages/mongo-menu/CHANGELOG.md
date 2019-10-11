@@ -1,5 +1,10 @@
 # @leafygreen-ui/mongo-menu
 
+## 1.0.2
+
+- Updated dependencies [3a24668]:
+  - @leafygreen-ui/menu@3.0.2
+
 ## 1.0.1
 
 - Updated dependencies [aaa895e]:
