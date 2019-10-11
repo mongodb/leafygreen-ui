@@ -76,14 +76,14 @@ Array to be passed to useEffect hook, such that the hook will only run if the ar
 
 Value to be passed as target of event handler, will default to document.
 
-## useHandleEscape
+## useEscapeKey
 
 Hook that listens for `EscapeKey` press.
 
 ### Example
 
 ```js
-useHandleEscape(handleEscapeCallback);
+useEscapeKey(handleEscapeCallback);
 ```
 
 ### Properties
