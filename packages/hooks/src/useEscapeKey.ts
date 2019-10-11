@@ -18,8 +18,8 @@ const handleEscape = (e: KeyboardEvent, callback: () => void) => {
  * @param options.dependencies Array to be passed to useEffect hook, such that the hook will only run if the array's values have changed.
  * @param options.element Value to be passed as target of event handler, will default to document.
  */
-const useHandleEscape = (callback: () => void, options?: UseEventOptions) => {
+const useEscapeKey = (callback: () => void, options?: UseEventOptions) => {
   return useEventListener('keydown', e => handleEscape(e, callback), options);
 };
 
-export default useHandleEscape;
+export default useEscapeKey;

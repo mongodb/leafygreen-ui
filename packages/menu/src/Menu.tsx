@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
-import { useEventListener, useHandleEscape } from '@leafygreen-ui/hooks';
+import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
@@ -110,7 +110,7 @@ function Menu({
     enabled,
   });
 
-  useHandleEscape(handleClose, { enabled });
+  useEscapeKey(handleClose, { enabled });
 
   const popoverContent = (
     <Popover
