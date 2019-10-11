@@ -4,7 +4,7 @@ const escapeKeyCode = 27;
 
 const handleEscape = (e: KeyboardEvent, callback: () => void) => {
   if (e.keyCode === escapeKeyCode) {
-    e.stopPropagation();
+    e.stopImmediatePropagation();
     callback();
   }
 };
