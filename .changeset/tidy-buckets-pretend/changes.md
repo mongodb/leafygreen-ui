@@ -1,1 +1,1 @@
-Add useEscapeHandler hook
+Add useEscapeKey hook
