@@ -211,7 +211,7 @@ interface MongoMenuProps {
  */
 function MongoMenu({
   user: { name, email },
-  accountURL = 'https://cloud.mongodb.com/account/profile',
+  accountURL = 'https://cloud.mongodb.com/v2#/account',
   activeProduct,
   onLogout = () => {},
   onProductChange = () => {},
