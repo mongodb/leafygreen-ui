@@ -185,6 +185,11 @@ interface MongoMenuProps {
    * Callback invoked after the user clicks a product.
    */
   onProductChange?: React.MouseEventHandler;
+
+  /**
+   * URL passed to MongoDB Account button.
+   */
+  accountURL?: string;
 }
 
 /**
@@ -206,6 +211,7 @@ interface MongoMenuProps {
  */
 function MongoMenu({
   user: { name, email },
+  accountURL = 'https://cloud.mongodb.com/account/profile',
   activeProduct,
   onLogout = () => {},
   onProductChange = () => {},
@@ -236,7 +242,7 @@ function MongoMenu({
           <p className={descriptionStyle}>{email}</p>
           <Button
             size="small"
-            href="https://account.mongodb.com"
+            href={accountURL}
             className={accountButtonStyle}
             as="a"
           >
