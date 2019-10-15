@@ -50,7 +50,7 @@ import MongoMenu from '@leafygreen-ui/mongo-menu';
         <h3 class="leafygreen-ui-i2e27j">Alex Smith</h3>
         <p class="leafygreen-ui-1jozpc5">alex.smith@mongodb.com</p>
         <a
-          href="https://account.mongodb.com"
+          href="https://cloud.mongodb.com/v2#/account"
           class="leafygreen-ui-1q7ajb0"
           aria-disabled="false"
         >
@@ -111,6 +111,14 @@ import MongoMenu from '@leafygreen-ui/mongo-menu';
 **Default:** {}
 
 Object that contains information about the active user. {name: 'string', email: 'string'}
+
+### accountURL
+
+**Type:** `string`
+
+**Default:** `https://cloud.mongodb.com/v2#/account`
+
+URL passed to MongoDB Account button.
 
 ### activeProduct
 

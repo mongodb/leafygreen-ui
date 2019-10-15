@@ -1,0 +1,1 @@
+Add accountURL prop, so consuming application can determine where MongoDB Account button should send a user.
