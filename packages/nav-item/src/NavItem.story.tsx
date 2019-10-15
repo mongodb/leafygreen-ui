@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { boolean } from '@storybook/addon-knobs';
 import NavItem from '.';
 
-storiesOf('Nav Item', module).add('default', () => (
+storiesOf('NavItem', module).add('default', () => (
   <div>
     <NavItem active>Active Nav Item</NavItem>
     <NavItem
