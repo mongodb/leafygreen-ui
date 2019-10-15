@@ -5,7 +5,7 @@ import { useState, useCallback } from 'react';
  * Example:
  ```
  const Example = () => {
-   [ refNode, setRefNode ] = useElementNode
+   [ refNode, setRefNode ] = useElementNode()
    return (
      <div ref={setRefNode}>I am a ref</div>
    )
