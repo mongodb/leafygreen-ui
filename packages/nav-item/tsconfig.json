@@ -10,22 +10,10 @@
       "path": "../emotion"
     },
     {
-      "path": "../hooks"
-    },
-    {
       "path": "../lib"
     },
     {
-      "path": "../popover"
-    },
-    {
-      "path": "../portal"
-    },
-    {
       "path": "../palette"
-    }, 
-    {
-      "path": "../nav-item"
     }
   ]
 }
