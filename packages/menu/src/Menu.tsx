@@ -11,6 +11,10 @@ const rootMenuStyle = css`
   border-radius: 3px;
   box-shadow: 0 2px 6px ${transparentize(0.8, uiColors.black)};
   background-color: ${uiColors.white};
+  list-style: none;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  padding-inline-start: 0px;
 `;
 
 interface MenuProps extends Omit<PopoverProps, 'active' | 'spacing'> {
@@ -71,25 +75,48 @@ function Menu({
   usePortal = true,
   adjustOnMutation = false,
   shouldClose = () => true,
-  open,
-  setOpen,
+  open: controlledOpen,
+  setOpen: controlledSetOpen,
   children,
   className,
   refEl,
   trigger,
   ...rest
 }: MenuProps) {
-  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+  const childrenArray = React.Children.toArray(children);
 
-  const popoverRef: React.RefObject<HTMLDivElement> = useRef(null);
+  const getMenuitems = childArray => {
+    return childArray.reduce((acc, child) => {
+      if (child.type.displayName === 'MenuItem') {
+        return [...acc, child];
+      }
+
+      if (typeof child.props.children === 'object') {
+        return [...acc, ...getMenuitems(child.props.children)];
+      }
+
+      return acc;
+    }, []);
+  };
+
+  const menuitems = getMenuitems(childrenArray);
+
+  const getActiveMenuItems = () => {
+    return menuitems.findIndex(child => child.props.active);
+  };
+
+  const isControlled = typeof controlledSetOpen === 'function';
+  const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
+  const open = isControlled ? controlledOpen : uncontrolledOpen;
+  const setOpen = isControlled ? controlledSetOpen : uncontrolledSetOpen;
+
+  const [selected, setSelected] = useState(getActiveMenuItems());
+
+  const popoverRef: React.RefObject<HTMLUListElement> = useRef(null);
 
   const handleClose = () => {
     if (shouldClose()) {
-      if (setOpen && open) {
-        setOpen(false);
-      } else {
-        setUncontrolledOpen(false);
-      }
+      setOpen(false);
     }
   };
 
@@ -104,13 +131,51 @@ function Menu({
     }
   };
 
-  const enabled = open || uncontrolledOpen;
+  const enabled = open;
 
   useEventListener('click', handleBackdropClick, {
     enabled,
   });
 
   useEscapeKey(handleClose, { enabled });
+
+  function handleKeyDown(e: React.KeyboardEvent) {
+    const enabledIndexes = menuitems.reduce(
+      (acc, child, index) => {
+        if (child.props.disabled) {
+          return acc;
+        }
+
+        return [...acc, index];
+      },
+      [] as Array<number>,
+    );
+
+    const enabledCurrentIndex = enabledIndexes.indexOf(selected!);
+
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+        setSelected(
+          enabledIndexes[(enabledCurrentIndex + 1) % enabledIndexes.length],
+        );
+        break;
+
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        setSelected(
+          enabledIndexes[
+            (enabledCurrentIndex - 1 + enabledIndexes.length) %
+              enabledIndexes.length
+          ],
+        );
+        break;
+    }
+  }
+
+  useEventListener('keydown', handleKeyDown, {
+    enabled,
+  });
 
   const popoverContent = (
     <Popover
@@ -123,14 +188,14 @@ function Menu({
       spacing={15}
       adjustOnMutation={adjustOnMutation}
     >
-      <div
+      <ul
         {...rest}
         className={cx(rootMenuStyle, className)}
         role="menu"
         ref={popoverRef}
       >
         {children}
-      </div>
+      </ul>
     </Popover>
   );
 
@@ -138,14 +203,14 @@ function Menu({
     if (typeof trigger === 'function') {
       return trigger({
         onClick: () =>
-          setUncontrolledOpen(uncontrolledOpen => !uncontrolledOpen),
+          uncontrolledSetOpen(uncontrolledOpen => !uncontrolledOpen),
         children: popoverContent,
       });
     }
 
     return React.cloneElement(trigger, {
       onClick: (e: React.MouseEvent) => {
-        setUncontrolledOpen(uncontrolledOpen => !uncontrolledOpen);
+        uncontrolledSetOpen(uncontrolledOpen => !uncontrolledOpen);
 
         if (trigger.props.onClick) {
           trigger.props.onClick(e);

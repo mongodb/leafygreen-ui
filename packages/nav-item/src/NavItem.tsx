@@ -157,6 +157,8 @@ export interface NavItemProps {
    * Determines whether or not the MenuItem is active.
    */
   active?: boolean;
+
+  ref?: any;
 }
 
 /**
@@ -182,47 +184,51 @@ function NavItem({
   className,
   children,
   description,
+  ref,
   ...rest
 }: NavItemProps) {
   const Root = href ? 'a' : 'span';
 
   return (
-    <Root
-      {...rest}
-      {...navItemContainer.prop}
-      className={cx(
-        containerStyle,
-        linkStyle,
-        {
-          [activeStyle]: active,
-          [disabledStyle]: disabled,
-        },
-        className,
-      )}
-      role="menuitem"
-      aria-disabled={disabled}
-      onClick={disabled ? undefined : onClick}
-      href={href}
-    >
-      <div
-        className={cx(titleTextStyle, {
-          [activetitleTextStyle]: active,
-          [disbaledTextStyle]: disabled,
-        })}
+    <li role="none">
+      <Root
+        {...rest}
+        {...navItemContainer.prop}
+        className={cx(
+          containerStyle,
+          linkStyle,
+          {
+            [activeStyle]: active,
+            [disabledStyle]: disabled,
+          },
+          className,
+        )}
+        role="menuitem"
+        aria-disabled={disabled}
+        onClick={disabled ? undefined : onClick}
+        href={href}
+        ref={ref}
       >
-        {children}
-      </div>
-      {description && (
         <div
-          className={cx(descriptionTextStyle, {
-            [activeDescriptionTextStyle]: active,
+          className={cx(titleTextStyle, {
+            [activetitleTextStyle]: active,
             [disbaledTextStyle]: disabled,
           })}
         >
-          {description}
+          {children}
         </div>
-      )}
-    </Root>
+        {description && (
+          <div
+            className={cx(descriptionTextStyle, {
+              [activeDescriptionTextStyle]: active,
+              [disbaledTextStyle]: disabled,
+            })}
+          >
+            {description}
+          </div>
+        )}
+      </Root>
+    </li>
   );
 }
 
