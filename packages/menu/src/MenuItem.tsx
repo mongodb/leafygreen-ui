@@ -35,9 +35,17 @@ const containerStyle = css`
  * @param props.active Determines whether the MenuItem will appear as active.
  *
  */
-function MenuItem({ className, ...rest }: NavItemProps) {
-  return <NavItem {...rest} className={cx(containerStyle, className)} />;
-}
+const MenuItem = React.forwardRef(
+  ({ className, ...rest }: NavItemProps, forwardRef) => {
+    return (
+      <NavItem
+        {...rest}
+        ref={forwardRef}
+        className={cx(containerStyle, className)}
+      />
+    );
+  },
+);
 
 MenuItem.displayName = 'MenuItem';
 
