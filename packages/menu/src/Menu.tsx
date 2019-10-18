@@ -5,6 +5,8 @@ import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
+import MenuItem from './MenuItem';
+import { NavItemProps } from '@leafygreen-ui/nav-item';
 
 const rootMenuStyle = css`
   width: 200px;
@@ -17,7 +19,19 @@ const rootMenuStyle = css`
   padding-inline-start: 0px;
 `;
 
-interface MenuProps extends Omit<PopoverProps, 'active' | 'spacing'> {
+function isMenuItemElement(
+  element: React.ReactNode,
+): element is React.ReactElement<NavItemProps, typeof MenuItem> {
+  return (
+    element != null &&
+    typeof element === 'object' &&
+    'type' in element &&
+    (element.type as any).displayName === 'MenuItem'
+  );
+}
+
+interface MenuProps
+  extends Omit<PopoverProps, 'active' | 'spacing' | 'children'> {
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
    * Menu to control opening and closing itself internally.
@@ -44,6 +58,8 @@ interface MenuProps extends Omit<PopoverProps, 'active' | 'spacing'> {
    *
    */
   shouldClose?: () => boolean;
+
+  children: React.ReactElement;
 }
 
 /**
@@ -83,34 +99,38 @@ function Menu({
   trigger,
   ...rest
 }: MenuProps) {
-  const childrenArray = React.Children.toArray(children);
+  const [focused, setFocused] = useState(0);
 
-  const getMenuitems = childArray => {
-    return childArray.reduce((acc, child) => {
-      if (child.type.displayName === 'MenuItem') {
-        return [...acc, child];
+  const refs: Array<HTMLElement> = [];
+  const menuitems: Array<React.ReactElement> = [];
+
+  const updateChildren = (
+    childset: React.ReactElement,
+  ): Array<React.ReactElement> => {
+    return React.Children.map(childset, child => {
+      if (isMenuItemElement(child)) {
+        menuitems.push(child);
+        return React.cloneElement(child, {
+          ref: (ref: HTMLElement) => refs.push(ref),
+        });
       }
 
       if (typeof child.props.children === 'object') {
-        return [...acc, ...getMenuitems(child.props.children)];
+        return React.cloneElement(child, {
+          children: updateChildren(child.props.children),
+        });
       }
 
-      return acc;
-    }, []);
+      return child;
+    });
   };
 
-  const menuitems = getMenuitems(childrenArray);
-
-  const getActiveMenuItems = () => {
-    return menuitems.findIndex(child => child.props.active);
-  };
+  const updatedChildren = updateChildren(children);
 
   const isControlled = typeof controlledSetOpen === 'function';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   const setOpen = isControlled ? controlledSetOpen : uncontrolledSetOpen;
-
-  const [selected, setSelected] = useState(getActiveMenuItems());
 
   const popoverRef: React.RefObject<HTMLUListElement> = useRef(null);
 
@@ -139,7 +159,7 @@ function Menu({
 
   useEscapeKey(handleClose, { enabled });
 
-  function handleKeyDown(e: React.KeyboardEvent) {
+  function handleKeyDown(e: KeyboardEvent) {
     const enabledIndexes = menuitems.reduce(
       (acc, child, index) => {
         if (child.props.disabled) {
@@ -151,24 +171,27 @@ function Menu({
       [] as Array<number>,
     );
 
-    const enabledCurrentIndex = enabledIndexes.indexOf(selected!);
+    const enabledCurrentIndex = enabledIndexes.indexOf(focused!);
+    let focusedIndex: number;
 
     switch (e.key) {
       case 'ArrowRight':
       case 'ArrowDown':
-        setSelected(
-          enabledIndexes[(enabledCurrentIndex + 1) % enabledIndexes.length],
-        );
+        focusedIndex =
+          enabledIndexes[(enabledCurrentIndex + 1) % enabledIndexes.length];
+        setFocused(focusedIndex);
+        refs[focusedIndex].focus();
         break;
 
       case 'ArrowLeft':
       case 'ArrowUp':
-        setSelected(
+        focusedIndex =
           enabledIndexes[
             (enabledCurrentIndex - 1 + enabledIndexes.length) %
               enabledIndexes.length
-          ],
-        );
+          ];
+        setFocused(focusedIndex);
+        refs[focusedIndex].focus();
         break;
     }
   }
@@ -194,7 +217,7 @@ function Menu({
         role="menu"
         ref={popoverRef}
       >
-        {children}
+        {updatedChildren}
       </ul>
     </Popover>
   );

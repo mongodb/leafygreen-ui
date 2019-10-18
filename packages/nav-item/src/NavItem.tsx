@@ -19,6 +19,10 @@ const containerStyle = css`
   text-decoration: none;
   position: relative;
   transition: background-color 150ms ease-in-out;
+  border: none;
+  margin: unset;
+  width: 100%;
+  font-family: 'Akzidenz';
 
   &:before {
     content: '';
@@ -39,14 +43,6 @@ const containerStyle = css`
     }
   }
 
-  &:active {
-    background-color: ${uiColors.gray.light2};
-
-    &:before {
-      background-color: ${uiColors.gray.light1};
-    }
-  }
-
   &:focus {
     outline: none;
     background-color: ${uiColors.blue.light3};
@@ -54,6 +50,14 @@ const containerStyle = css`
 
     &:before {
       background-color: #63b0d0;
+    }
+  }
+
+  &:active {
+    background-color: ${uiColors.gray.light2};
+
+    &:before {
+      background-color: ${uiColors.gray.light1};
     }
   }
 `;
@@ -176,61 +180,65 @@ export interface NavItemProps {
  * @param props.active Determines whether the MenuItem will appear as active
  *
  */
-function NavItem({
-  disabled = false,
-  active = false,
-  href,
-  onClick,
-  className,
-  children,
-  description,
-  ref,
-  ...rest
-}: NavItemProps) {
-  const Root = href ? 'a' : 'span';
+const NavItem = React.forwardRef(
+  (
+    {
+      disabled = false,
+      active = false,
+      href,
+      onClick,
+      className,
+      children,
+      description,
+      ...rest
+    }: NavItemProps,
+    forwardedref,
+  ) => {
+    const Root = href ? 'a' : 'button';
 
-  return (
-    <li role="none">
-      <Root
-        {...rest}
-        {...navItemContainer.prop}
-        className={cx(
-          containerStyle,
-          linkStyle,
-          {
-            [activeStyle]: active,
-            [disabledStyle]: disabled,
-          },
-          className,
-        )}
-        role="menuitem"
-        aria-disabled={disabled}
-        onClick={disabled ? undefined : onClick}
-        href={href}
-        ref={ref}
-      >
-        <div
-          className={cx(titleTextStyle, {
-            [activetitleTextStyle]: active,
-            [disbaledTextStyle]: disabled,
-          })}
+    return (
+      <li role="none">
+        <Root
+          {...rest}
+          {...navItemContainer.prop}
+          className={cx(
+            containerStyle,
+            linkStyle,
+            {
+              [activeStyle]: active,
+              [disabledStyle]: disabled,
+            },
+            className,
+          )}
+          role="menuitem"
+          aria-disabled={disabled}
+          onClick={disabled ? undefined : onClick}
+          href={href}
+          ref={forwardedref}
         >
-          {children}
-        </div>
-        {description && (
           <div
-            className={cx(descriptionTextStyle, {
-              [activeDescriptionTextStyle]: active,
+            className={cx(titleTextStyle, {
+              [activetitleTextStyle]: active,
               [disbaledTextStyle]: disabled,
             })}
           >
-            {description}
+            {children}
           </div>
-        )}
-      </Root>
-    </li>
-  );
-}
+          {description && (
+            <div
+              className={cx(descriptionTextStyle, {
+                [activeDescriptionTextStyle]: active,
+                [disbaledTextStyle]: disabled,
+              })}
+            >
+              {description}
+            </div>
+          )}
+        </Root>
+      </li>
+    );
+  },
+);
 
 NavItem.displayName = 'NavItem';
 
