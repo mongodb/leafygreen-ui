@@ -1,6 +1,11 @@
 import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import Popover, { PopoverProps, Align, Justify } from '@leafygreen-ui/popover';
+import Popover, {
+  PopoverProps,
+  Align,
+  Justify,
+  Justification,
+} from '@leafygreen-ui/popover';
 import { useEventListener, useHandleEscape } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -69,7 +74,6 @@ interface TooltipProps
 
   /**
    * Controls component and determines the open state of the `Tooltip`
-   *
    * default: `false`
    */
   open?: boolean;
@@ -139,7 +143,7 @@ function Tooltip({
   shouldClose,
   ...rest
 }: TooltipProps) {
-  const isControlled = !!controlledSetOpen;
+  const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   // typescript is not recognizing isControlled checks that controlledSetOpen exists
@@ -155,11 +159,14 @@ function Tooltip({
     [id],
   );
 
-  const mapToTriggerEvent = (triggerType: TriggerEvent, triggerProps?: any) => {
+  const createTriggerProps = (
+    triggerType: TriggerEvent,
+    triggerProps?: any,
+  ) => {
     if (triggerType === TriggerEvent.Hover) {
       return {
         onMouseEnter: debounce(() => {
-          setOpen(!open);
+          setOpen((curr: boolean) => !curr);
         }, 35),
         onMouseLeave: debounce(handleClose, 35),
         onFocus: () => setOpen(true),
@@ -170,8 +177,8 @@ function Tooltip({
     if (triggerProps.onClick) {
       return {
         onClick: () => {
+          setOpen((curr: boolean) => !curr);
           triggerProps.onClick();
-          setOpen(!open);
         },
       };
     }
@@ -182,7 +189,7 @@ function Tooltip({
   };
 
   const handleClose = () => {
-    if (!shouldClose || shouldClose()) {
+    if (typeof shouldClose !== 'function' || shouldClose()) {
       setOpen(false);
     }
   };
@@ -203,23 +210,6 @@ function Tooltip({
 
   useEventListener('click', handleBackdropClick, { enabled: open });
 
-  const triggerRect =
-    triggerRef &&
-    triggerRef.current &&
-    triggerRef.current.getBoundingClientRect();
-
-  // We are doing this to get the final alignment and justification from Popover
-  // And to make sure we're responding to not just the desired alignment, but the alignment
-  // As a result of our calcPosition() function
-  const [alignment, setAlignment] = useState(align);
-  const [justification, setJustification] = useState(justify);
-
-  const triangleStyle = trianglePosition(
-    alignment,
-    justification,
-    triggerRect,
-  ) as { containerStyle: string; notchStyle: string };
-
   const tooltip = (
     <Popover
       active={open}
@@ -228,23 +218,42 @@ function Tooltip({
       usePortal={true}
       adjustOnMutation={true}
       spacing={12}
-      setAlignment={setAlignment}
-      setJustification={setJustification as any}
     >
-      <div
-        {...rest}
-        role="tooltip"
-        id={tooltipId}
-        className={cx(className, baseStyles, tooltipVariants[variant])}
-        ref={tooltipRef}
-      >
-        <div className={triangleStyle.containerStyle}>
+      {({
+        alignment,
+        justification,
+      }: {
+        alignment: Align;
+        justification: Justification;
+      }) => {
+        const triggerRect =
+          triggerRef &&
+          triggerRef.current &&
+          triggerRef.current.getBoundingClientRect();
+
+        const triangleStyle = trianglePosition(
+          alignment,
+          justification,
+          triggerRect,
+        ) as { containerStyle: string; notchStyle: string };
+
+        return (
           <div
-            className={cx(triangleStyle.notchStyle, notchVariants[variant])}
-          />
-        </div>
-        {children}
-      </div>
+            {...rest}
+            role="tooltip"
+            id={tooltipId}
+            className={cx(className, baseStyles, tooltipVariants[variant])}
+            ref={tooltipRef}
+          >
+            <div className={triangleStyle.containerStyle}>
+              <div
+                className={cx(triangleStyle.notchStyle, notchVariants[variant])}
+              />
+            </div>
+            {children}
+          </div>
+        );
+      }}
     </Popover>
   );
 
@@ -256,14 +265,14 @@ function Tooltip({
   if (trigger) {
     if (typeof trigger === 'function') {
       return trigger({
-        ...mapToTriggerEvent(triggerEvent),
+        ...createTriggerProps(triggerEvent),
         ...sharedTriggerProps,
         children: tooltip,
       });
     }
 
     return React.cloneElement(trigger, {
-      ...mapToTriggerEvent(triggerEvent, trigger.props),
+      ...createTriggerProps(triggerEvent, trigger.props),
       ...sharedTriggerProps,
       children: [...trigger.props.children, tooltip],
     });

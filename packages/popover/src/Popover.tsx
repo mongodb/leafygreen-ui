@@ -2,8 +2,7 @@ import React, {
   useMemo,
   Fragment,
   ReactNode,
-  RefObject,
-  ReactElement,
+  RefObject
 } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
@@ -36,11 +35,16 @@ const mutationOptions = {
   subtree: true,
 };
 
+interface FunctionParameters {
+  alignment: Align;
+  justification: Justification;
+}
+
 export interface PopoverProps {
   /**
    * Content that will appear inside of the popover component.
    */
-  children: ReactNode;
+  children: ReactNode | ((Object: FunctionParameters) => ReactNode);
 
   /**
    * Determines the active state of the popover component
@@ -94,14 +98,6 @@ export interface PopoverProps {
    * default: false
    */
   adjustOnMutation?: boolean;
-
-  setAlignment?: (
-    alignment: Align,
-  ) => void | React.Dispatch<React.SetStateAction<Align>>;
-
-  setJustification?: (
-    justification: Justify | Justification,
-  ) => void | React.Dispatch<React.SetStateAction<Justify | Justification>>;
 }
 
 /**
@@ -129,14 +125,12 @@ function Popover({
   spacing = 10,
   align = Align.Bottom,
   justify = Justify.Start,
-  setAlignment = () => {},
-  setJustification = () => {},
   adjustOnMutation = false,
   children,
   className,
   refEl,
   ...rest
-}: PopoverProps): ReactElement {
+}: PopoverProps) {
   const [placeholderNode, setPlaceholderNode] = useElementNode();
   const [contentNode, setContentNode] = useElementNode();
 
@@ -195,9 +189,6 @@ function Popover({
     contentElPos,
   });
 
-  setAlignment(alignment);
-  setJustification(justification);
-
   const activeStyle = css`
     transform: translate3d(0, 0, 0) scale(1);
     opacity: 1;
@@ -206,6 +197,18 @@ function Popover({
   `;
 
   const Root = usePortal ? Portal : Fragment;
+
+  const renderedChildren = (() => {
+    if (!children) {
+      return null;
+    }
+
+    if (children instanceof Function) {
+      return children({ alignment, justification });
+    }
+
+    return children;
+  })();
 
   return (
     <>
@@ -226,7 +229,7 @@ function Popover({
             className,
           )}
         >
-          {children}
+          {renderedChildren}
         </div>
       </Root>
     </>
