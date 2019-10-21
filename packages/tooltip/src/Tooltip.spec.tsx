@@ -61,14 +61,6 @@ describe('packages/Tooltip', () => {
       fireEvent.keyDown(button, { key: 'Escape', keyCode: 27 });
       expect(tooltip).not.toBeVisible();
     });
-
-    // test('clicking content inside of tooltip does not force tooltip to close', () => {
-    //   fireEvent.click(button);
-    //   expect(tooltip).toBeVisible();
-
-    //   fireEvent.click(tooltip);
-    //   expect(tooltip).toBeVisible();
-    // });
   });
 
   describe('when controlled', () => {
@@ -105,6 +97,14 @@ describe('packages/Tooltip', () => {
     test('Button components onClick fires when trigger is clicked', () => {
       fireEvent.click(button);
       expect(onClick).toHaveBeenCalledTimes(1);
+    });
+
+    test('clicking content inside of tooltip does not force tooltip to close', () => {
+      fireEvent.click(button);
+      expect(tooltip).toBeVisible();
+
+      fireEvent.click(tooltip);
+      expect(tooltip).toBeVisible();
     });
   });
 
