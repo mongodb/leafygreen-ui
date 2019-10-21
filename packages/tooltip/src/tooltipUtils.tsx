@@ -91,7 +91,7 @@ export function trianglePosition(
       width: ${containerSize}px;
       height: ${containerSize}px;
       overflow: hidden;
-      margin = 'auto';
+      margin: auto;
       ${css(containerStyleObj)};
     `,
     notchStyle: css`
