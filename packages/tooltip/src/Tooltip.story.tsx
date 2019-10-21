@@ -24,7 +24,7 @@ function ControlledTooltip() {
       triggerEvent={select(
         'triggerEvent',
         Object.values(TriggerEvent),
-        'click',
+        TriggerEvent.Click,
       )}
       variant={select('Variant', Object.values(Variant), 'light')}
     >
@@ -42,7 +42,7 @@ storiesOf('Tooltip', module)
       triggerEvent={select(
         'triggerEvent',
         Object.values(TriggerEvent),
-        'click',
+        TriggerEvent.Hover,
       )}
       variant={select('Variant', Object.values(Variant), 'dark')}
     >
