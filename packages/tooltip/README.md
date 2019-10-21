@@ -50,6 +50,8 @@ Determines the justification of the `Tooltip` component (based on the alignment)
 
 **Type:** `HTMLElement` or `ReactNode`
 
+**Signature:** ({children, ...rest}) => (<button {...rest}>trigger {children}</button>)
+
 An `HTMLElement` or `ReactNode` against which the `Tooltip` will be positioned, and what will be used to trigger the opening and closing of the `Tooltip` component, when the `Tooltip` is uncontrolled. If no `trigger` is passed, the `Tooltip` will be positioned against its nearest parent element.
 
 ### triggerEvent

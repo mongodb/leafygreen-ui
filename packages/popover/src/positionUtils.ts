@@ -2,7 +2,7 @@ import Align from './Align';
 import Justify from './Justify';
 import Justification from './Justification';
 
-interface ElementPosition {
+export interface ElementPosition {
   top: number;
   bottom: number;
   left: number;

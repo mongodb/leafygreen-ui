@@ -1,9 +1,4 @@
-import React, {
-  useMemo,
-  Fragment,
-  ReactNode,
-  RefObject
-} from 'react';
+import React, { useMemo, Fragment, ReactNode, RefObject } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -15,7 +10,11 @@ import {
 import Align from './Align';
 import Justify from './Justify';
 import Justification from './Justification';
-import { calculatePosition, getElementPosition } from './positionUtils';
+import {
+  calculatePosition,
+  getElementPosition,
+  ElementPosition,
+} from './positionUtils';
 
 const rootPopoverStyle = css`
   transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
@@ -37,7 +36,8 @@ const mutationOptions = {
 
 interface FunctionParameters {
   alignment: Align;
-  justification: Justification;
+  justification: Justify | Justification;
+  referenceElPos: ElementPosition;
 }
 
 export interface PopoverProps {
@@ -204,7 +204,7 @@ function Popover({
     }
 
     if (children instanceof Function) {
-      return children({ alignment, justification });
+      return children({ alignment, justification, referenceElPos });
     }
 
     return children;
@@ -239,7 +239,7 @@ function Popover({
 Popover.displayName = 'Popover';
 
 Popover.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   active: PropTypes.bool,
   className: PropTypes.string,
   align: PropTypes.oneOf(Object.values(Align)),

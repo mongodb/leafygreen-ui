@@ -4,8 +4,15 @@ import { select } from '@storybook/addon-knobs';
 import { Align, Justify } from '@leafygreen-ui/popover';
 import Tooltip, { TriggerEvent, Variant } from '.';
 
+class Button extends React.Component {
+  render() {
+    const { children } = this.props;
+    return <button {...this.props}>trigger {children}</button>;
+  }
+}
+
 function ControlledTooltip() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <Tooltip
@@ -13,11 +20,11 @@ function ControlledTooltip() {
       setOpen={setOpen}
       align={select('Align', Object.values(Align), 'top')}
       justify={select('Justify', Object.values(Justify), 'start')}
-      trigger={<button>trigger</button>}
+      trigger={<Button />}
       triggerEvent={select(
         'triggerEvent',
         Object.values(TriggerEvent),
-        'hover',
+        'click',
       )}
       variant={select('Variant', Object.values(Variant), 'light')}
     >

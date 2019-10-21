@@ -5,6 +5,7 @@ import Popover, {
   Align,
   Justify,
   Justification,
+  ElementPosition,
 } from '@leafygreen-ui/popover';
 import { useEventListener, useHandleEscape } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -151,7 +152,6 @@ function Tooltip({
     ? (controlledSetOpen as Function)
     : uncontrolledSetOpen;
 
-  const triggerRef = useRef<HTMLElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const tooltipId = useMemo(
@@ -174,17 +174,23 @@ function Tooltip({
       };
     }
 
-    if (triggerProps.onClick) {
+    if (triggerProps && triggerProps.onClick) {
       return {
-        onClick: () => {
-          setOpen((curr: boolean) => !curr);
-          triggerProps.onClick();
+        onClick: (e: MouseEvent) => {
+          if (e.target !== tooltipRef.current) {
+            setOpen((curr: boolean) => !curr);
+            triggerProps.onClick();
+          }
         },
       };
     }
 
     return {
-      onClick: () => setOpen(!open),
+      onClick: (e: MouseEvent) => {
+        if (e.target !== tooltipRef.current) {
+          setOpen((curr: boolean) => !curr);
+        }
+      },
     };
   };
 
@@ -222,19 +228,16 @@ function Tooltip({
       {({
         alignment,
         justification,
+        referenceElPos,
       }: {
         alignment: Align;
-        justification: Justification;
+        justification: Justification | Justify;
+        referenceElPos: ElementPosition;
       }) => {
-        const triggerRect =
-          triggerRef &&
-          triggerRef.current &&
-          triggerRef.current.getBoundingClientRect();
-
         const triangleStyle = trianglePosition(
           alignment,
           justification,
-          triggerRect,
+          referenceElPos,
         ) as { containerStyle: string; notchStyle: string };
 
         return (
@@ -257,24 +260,21 @@ function Tooltip({
     </Popover>
   );
 
-  const sharedTriggerProps = {
-    ref: triggerRef,
-    'aria-describedby': tooltipId,
-  };
-
   if (trigger) {
     if (typeof trigger === 'function') {
       return trigger({
         ...createTriggerProps(triggerEvent),
-        ...sharedTriggerProps,
+        'aria-describedby': tooltipId,
         children: tooltip,
       });
     }
 
     return React.cloneElement(trigger, {
       ...createTriggerProps(triggerEvent, trigger.props),
-      ...sharedTriggerProps,
-      children: [...trigger.props.children, tooltip],
+      'aria-describedby': tooltipId,
+      children: trigger.props.children
+        ? [...trigger.props.children, tooltip]
+        : tooltip,
     });
   }
 
