@@ -196,11 +196,17 @@ const NavItem = React.forwardRef(
   ) => {
     const Root = href ? 'a' : 'button';
 
+    const anchorProps = href && {
+      target: '_blank',
+      rel: 'noopener noreferrer',
+    };
+
     return (
       <li role="none">
         <Root
           {...rest}
           {...navItemContainer.prop}
+          {...anchorProps}
           className={cx(
             containerStyle,
             linkStyle,

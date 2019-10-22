@@ -193,6 +193,11 @@ function Menu({
         setFocused(focusedIndex);
         refs[focusedIndex].focus();
         break;
+
+      case 'Tab':
+        e.preventDefault();
+        setOpen(false);
+        break;
     }
   }
 
