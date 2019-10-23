@@ -51,7 +51,7 @@ interface MenuProps
    */
   setOpen?: (
     open: boolean,
-  ) => void | React.Dispatch<React.SetStateAction<boolean>>;
+  ) => boolean | React.Dispatch<React.SetStateAction<boolean>>;
 
   /**
    * Callback to determine whether or not Menu should close when user tries to close it.
@@ -230,15 +230,14 @@ function Menu({
   if (trigger) {
     if (typeof trigger === 'function') {
       return trigger({
-        onClick: () =>
-          uncontrolledSetOpen(uncontrolledOpen => !uncontrolledOpen),
+        onClick: () => setOpen(curr => !curr),
         children: popoverContent,
       });
     }
 
     return React.cloneElement(trigger, {
       onClick: (e: React.MouseEvent) => {
-        uncontrolledSetOpen(uncontrolledOpen => !uncontrolledOpen);
+        setOpen(curr => !curr);
 
         if (trigger.props.onClick) {
           trigger.props.onClick(e);
