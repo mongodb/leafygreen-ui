@@ -30,27 +30,25 @@ function Uncontrolled() {
 function Controlled() {
   const [open, setOpen] = useState(false);
   return (
-    <button onClick={() => setOpen(!open)}>
-      trigger
-      <Menu
-        align={select('Align', Object.values(Align), Align.Bottom)}
-        justify={select('Justify', Object.values(Justify), Justify.Start)}
-        open={open}
-        setOpen={setOpen}
-      >
-        <MenuGroup>
-          <MenuItem active>Active Menu Item</MenuItem>
-          <MenuItem disabled={boolean('Disabled', true)}>
-            Disabled Menu Item
-          </MenuItem>
-          <MenuItem description="I am a description">
-            Menu Item With Description
-          </MenuItem>
-          <MenuItem href="http://mongodb.design">I am a link!</MenuItem>
-        </MenuGroup>
-        <MenuItem>Left out of the MenuGroup</MenuItem>
-      </Menu>
-    </button>
+    <Menu
+      align={select('Align', Object.values(Align), Align.Bottom)}
+      justify={select('Justify', Object.values(Justify), Justify.Start)}
+      open={open}
+      setOpen={setOpen}
+      trigger={<button>trigger</button>}
+    >
+      <MenuGroup>
+        <MenuItem active>Active Menu Item</MenuItem>
+        <MenuItem disabled={boolean('Disabled', true)}>
+          Disabled Menu Item
+        </MenuItem>
+        <MenuItem description="I am a description">
+          Menu Item With Description
+        </MenuItem>
+        <MenuItem href="http://mongodb.design">I am a link!</MenuItem>
+      </MenuGroup>
+      <MenuItem>Left out of the MenuGroup</MenuItem>
+    </Menu>
   );
 }
 

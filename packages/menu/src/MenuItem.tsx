@@ -55,6 +55,14 @@ const containerStyle = css`
     }
   }
 
+  &:active {
+    background-color: ${uiColors.gray.light2};
+
+    &:before {
+      background-color: ${uiColors.gray.light1};
+    }
+  }
+
   &:focus {
     outline: none;
     background-color: ${uiColors.blue.light3};
@@ -62,14 +70,6 @@ const containerStyle = css`
 
     &:before {
       background-color: #63b0d0;
-    }
-  }
-
-  &:active {
-    background-color: ${uiColors.gray.light2};
-
-    &:before {
-      background-color: ${uiColors.gray.light1};
     }
   }
 `;
@@ -121,6 +121,16 @@ const activeStyle = css`
 
     &:before {
       background-color: ${uiColors.green.base};
+    }
+  }
+
+  &:focus {
+    outline: none;
+    background-color: ${uiColors.blue.light3};
+    color: ${uiColors.blue.dark3};
+
+    &:before {
+      background-color: #63b0d0;
     }
   }
 `;

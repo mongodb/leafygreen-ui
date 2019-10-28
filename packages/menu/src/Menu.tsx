@@ -124,6 +124,18 @@ function Menu({
 
   const updatedChildren = updateChildren(children);
 
+  const enabledIndexes = menuitems.reduce(
+    (acc, child, index) => {
+      if (child.props.disabled) {
+        return acc;
+      }
+
+      return [...acc, index];
+    },
+    [] as Array<number>,
+  );
+  const enabledCurrentIndex = enabledIndexes.indexOf(focused!);
+
   const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
   const open = isControlled ? controlledOpen : uncontrolledOpen;
@@ -157,18 +169,6 @@ function Menu({
   useEscapeKey(handleClose, { enabled });
 
   function handleKeyDown(e: KeyboardEvent) {
-    const enabledIndexes = menuitems.reduce(
-      (acc, child, index) => {
-        if (child.props.disabled) {
-          return acc;
-        }
-
-        return [...acc, index];
-      },
-      [] as Array<number>,
-    );
-
-    const enabledCurrentIndex = enabledIndexes.indexOf(focused!);
     let focusedIndex: number;
 
     switch (e.key) {
@@ -191,6 +191,14 @@ function Menu({
         refs[focusedIndex].focus();
         break;
 
+      case ' ':
+      case 'Space Bar':
+      case 'Enter':
+        focusedIndex = enabledIndexes[0];
+        setFocused(focusedIndex);
+        refs[focusedIndex].focus();
+        break;
+
       case 'Tab':
         e.preventDefault();
         setOpen(false);
@@ -201,6 +209,14 @@ function Menu({
   useEventListener('keydown', handleKeyDown, {
     enabled,
   });
+
+  const handleClick = () => {
+    setOpen((curr: boolean) => !curr);
+
+    const focusedIndex = enabledIndexes[0];
+    setFocused(focusedIndex);
+    refs[focusedIndex].focus();
+  };
 
   const popoverContent = (
     <Popover
@@ -227,14 +243,14 @@ function Menu({
   if (trigger) {
     if (typeof trigger === 'function') {
       return trigger({
-        onClick: () => setOpen((curr: boolean) => !curr),
+        onClick: handleClick,
         children: popoverContent,
       });
     }
 
     return React.cloneElement(trigger, {
       onClick: (e: React.MouseEvent) => {
-        setOpen((curr: boolean) => !curr);
+        handleClick();
 
         if (trigger.props.onClick) {
           trigger.props.onClick(e);
