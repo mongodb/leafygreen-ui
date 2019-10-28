@@ -230,14 +230,14 @@ function Menu({
   if (trigger) {
     if (typeof trigger === 'function') {
       return trigger({
-        onClick: () => setOpen(curr => !curr),
+        onClick: () => setOpen((curr: boolean) => !curr),
         children: popoverContent,
       });
     }
 
     return React.cloneElement(trigger, {
       onClick: (e: React.MouseEvent) => {
-        setOpen(curr => !curr);
+        setOpen((curr: boolean) => !curr);
 
         if (trigger.props.onClick) {
           trigger.props.onClick(e);
