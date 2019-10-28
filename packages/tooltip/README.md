@@ -20,6 +20,8 @@ Controls the component, and determines whether or not the `Tooltip` will appear 
 
 **Type:** `function`
 
+**Signature:** `(boolean) => boolean`
+
 If controlling the component, pass state handling function to setOpen prop. This will keep the consuming application's state in-sync with LeafyGreen's state, while the `Tooltip` component responds to events such as backdrop clicks and a user pressing the Escape key.
 
 ### shouldClose
@@ -36,7 +38,7 @@ Callback that should return a boolean that determines whether or not the `Toolti
 
 **Default:** `top`
 
-Determines the alignment of the `Tooltip` component relative to the element passed to the `trigger` prop. If no `trigger` is passed, the Tooltip will be positioned against its nearest parent element.
+Determines the preferred alignment of the `Tooltip` component relative to the element passed to the `trigger` prop. If no `trigger` is passed, the Tooltip will be positioned against its nearest parent element.
 
 ### justify
 
@@ -44,15 +46,17 @@ Determines the alignment of the `Tooltip` component relative to the element pass
 
 **Default:** `start`
 
-Determines the justification of the `Tooltip` component (based on the alignment) relative to the element passed to the `trigger` prop. If no `trigger` is passed, the Tooltip will be positioned against its nearest parent element.
+Determines the preferred justification of the `Tooltip` component (based on the alignment) relative to the element passed to the `trigger` prop. If no `trigger` is passed, the Tooltip will be positioned against its nearest parent element.
 
 ### trigger
 
 **Type:** `HTMLElement` or `ReactNode`
 
-**Signature:** ({children, ...rest}) => (<button {...rest}>trigger {children}</button>)
-
 An `HTMLElement` or `ReactNode` against which the `Tooltip` will be positioned, and what will be used to trigger the opening and closing of the `Tooltip` component, when the `Tooltip` is uncontrolled. If no `trigger` is passed, the `Tooltip` will be positioned against its nearest parent element.
+
+If using a `ReactNode` or inline function, trigger signature is:
+
+**Signature:** ({children, ...rest}) => (<button {...rest}>trigger {children}</button>)
 
 ### triggerEvent
 

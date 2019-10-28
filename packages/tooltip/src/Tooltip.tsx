@@ -65,6 +65,7 @@ interface TooltipProps
   extends Omit<PopoverProps, 'active' | 'spacing' | 'refEl' | 'usePortal'> {
   /**
    * A slot for the element used to trigger the `Tooltip`.
+   * default: hover
    */
   trigger: React.ReactElement | Function;
 
@@ -88,6 +89,7 @@ interface TooltipProps
 
   /**
    * Whether the `Tooltip` will be `light` or `dark`.
+   * default: light
    */
   variant?: Variant;
 
@@ -160,10 +162,10 @@ function Tooltip({
   );
 
   const createTriggerProps = (
-    triggerType: TriggerEvent,
+    triggerEvent: TriggerEvent,
     triggerProps?: any,
   ) => {
-    if (triggerType === TriggerEvent.Hover) {
+    if (triggerEvent === TriggerEvent.Hover) {
       return {
         onMouseEnter: debounce(() => {
           setOpen((curr: boolean) => !curr);
@@ -177,6 +179,7 @@ function Tooltip({
     if (triggerProps && triggerProps.onClick) {
       return {
         onClick: (e: MouseEvent) => {
+          // ensure that we don't close the tooltip when content inside tooltip is clicked
           if (e.target !== tooltipRef.current) {
             setOpen((curr: boolean) => !curr);
             triggerProps.onClick();
@@ -187,6 +190,7 @@ function Tooltip({
 
     return {
       onClick: (e: MouseEvent) => {
+        // ensure that we don't close the tooltip when content inside tooltip is clicked
         if (e.target !== tooltipRef.current) {
           setOpen((curr: boolean) => !curr);
         }

@@ -13,7 +13,6 @@ describe('packages/Tooltip', () => {
   const buttonText = 'trigger button';
 
   describe('when uncontrolled', () => {
-    const triggerEvent = 'click';
     const onClick = jest.fn();
 
     const { getByText, getByTestId } = render(
@@ -21,7 +20,7 @@ describe('packages/Tooltip', () => {
         <div>backdrop content</div>
         <Tooltip
           trigger={<button onClick={onClick}>{buttonText}</button>}
-          triggerEvent={triggerEvent}
+          triggerEvent='click'
         >
           <div data-testid="uncontrolled-tooltip">Uncontrolled tooltip!</div>
         </Tooltip>
@@ -37,7 +36,7 @@ describe('packages/Tooltip', () => {
       expect(button.tagName.toLowerCase()).toBe('button');
     });
 
-    test(`${triggerEvent} triggers opening and closing of tooltip`, () => {
+    test('click triggers opening and closing of tooltip', () => {
       fireEvent.click(button);
       expect(tooltip).toBeVisible();
       expect(onClick).toHaveBeenCalledTimes(1);
@@ -149,10 +148,10 @@ describe('packages/Tooltip', () => {
     const buttonText = 'tooltrip trigger';
     const triggerEvent = 'click';
 
-    const { getByText, getByTestId } = render(
+    const { getByTestId } = render(
       <Tooltip
         trigger={({ children, ...rest }: ButtonTestProps) => (
-          <button {...rest}>
+          <button {...rest} data-testid="inline-trigger">
             {buttonText}
             {children}
           </button>
@@ -163,7 +162,7 @@ describe('packages/Tooltip', () => {
       </Tooltip>,
     );
 
-    const button = getByText(buttonText);
+    const button = getByTestId('inline-trigger');
 
     test(`renders a button to the DOM with ${buttonText}`, () => {
       expect(button).toBeInTheDocument();

@@ -34,7 +34,7 @@ const mutationOptions = {
   subtree: true,
 };
 
-interface FunctionParameters {
+interface ChildrenFunctionParameters {
   alignment: Align;
   justification: Justify | Justification;
   referenceElPos: ElementPosition;
@@ -44,7 +44,7 @@ export interface PopoverProps {
   /**
    * Content that will appear inside of the popover component.
    */
-  children: ReactNode | ((Object: FunctionParameters) => ReactNode);
+  children: ReactNode | ((Object: ChildrenFunctionParameters) => ReactNode);
 
   /**
    * Determines the active state of the popover component
