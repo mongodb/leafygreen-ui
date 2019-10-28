@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { useShowFocus } from '@leafygreen-ui/leafygreen-context';
+import { useShowFocus } from '@leafygreen-ui/leafygreen-provider';
 
 const menuItemContainer = createDataProp('menu-item-container');
 

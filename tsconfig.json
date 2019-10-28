@@ -69,7 +69,7 @@
       "path": "./packages/tooltip"
     },
     {
-      "path": "./packages/leafygreen-context"
+      "path": "./packages/leafygreen-provider"
     }
   ]
 }

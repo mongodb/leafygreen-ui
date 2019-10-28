@@ -1,11 +1,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, select } from '@storybook/addon-knobs';
-import InteractionContext from '@leafygreen-ui/interaction-context';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import MongoMenu, { Product } from '.';
 
 storiesOf('MongoMenu', module).add('Default', () => (
-  <InteractionContext initialStates={{ usingKeyboard: false }}>
+  <LeafyGreenProvider initialStates={{ usingKeyboard: false }}>
     <MongoMenu
       user={{
         name: text('name', 'Alex Smith'),
@@ -13,9 +13,9 @@ storiesOf('MongoMenu', module).add('Default', () => (
       }}
       activeProduct={select(
         'activeProduct',
-        Object.values(Product) as Array<typeof Product[keyof typeof Product]>,
+        Object.values<typeof Product[keyof typeof Product]>(Product),
         Product.Atlas,
       )}
     />
-  </InteractionContext>
+  </LeafyGreenProvider>
 ));

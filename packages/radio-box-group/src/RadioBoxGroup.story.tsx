@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, boolean, select } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
-import InteractionContext from '@leafygreen-ui/interaction-context';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import RadioBoxGroup from './RadioBoxGroup';
 import RadioBox from './RadioBox';
 import Size from './Size';
@@ -15,7 +15,7 @@ function ControlledRadioBoxGroup() {
   };
 
   return (
-    <InteractionContext>
+    <LeafyGreenProvider>
       <div
         className={css`
           width: 100%;
@@ -38,13 +38,13 @@ function ControlledRadioBoxGroup() {
           <RadioBox value="test3">Option 3</RadioBox>
         </RadioBoxGroup>
       </div>
-    </InteractionContext>
+    </LeafyGreenProvider>
   );
 }
 
 storiesOf('RadioBoxGroup', module)
   .add('Uncontrolled', () => (
-    <InteractionContext>
+    <LeafyGreenProvider>
       <div
         className={css`
           width: 100%;
@@ -69,6 +69,6 @@ storiesOf('RadioBoxGroup', module)
           </RadioBox>
         </RadioBoxGroup>
       </div>
-    </InteractionContext>
+    </LeafyGreenProvider>
   ))
   .add('Controlled', () => <ControlledRadioBoxGroup />);

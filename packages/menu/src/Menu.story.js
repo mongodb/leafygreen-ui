@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
-import InteractionContext from '@leafygreen-ui/interaction-context';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Menu, MenuGroup, MenuItem } from './index';
 import { Align, Justify } from '@leafygreen-ui/popover';
 
 function Uncontrolled() {
   return (
-    <InteractionContext>
+    <LeafyGreenProvider>
       <Menu
         align={select('Align', Object.values(Align), Align.Bottom)}
         justify={select('Justify', Object.values(Justify), Justify.Start)}
@@ -25,14 +25,14 @@ function Uncontrolled() {
         </MenuItem>
         <MenuItem href="http://mongodb.design">I am a link!</MenuItem>
       </Menu>
-    </InteractionContext>
+    </LeafyGreenProvider>
   );
 }
 
 function Controlled() {
   const [open, setOpen] = useState(false);
   return (
-    <InteractionContext>
+    <LeafyGreenProvider>
       <button onClick={() => setOpen(!open)}>
         trigger
         <Menu
@@ -53,7 +53,7 @@ function Controlled() {
           <MenuItem>Left out of the MenuGroup</MenuItem>
         </Menu>
       </button>
-    </InteractionContext>
+    </LeafyGreenProvider>
   );
 }
 

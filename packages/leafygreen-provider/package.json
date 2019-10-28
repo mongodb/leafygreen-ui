@@ -1,7 +1,7 @@
 {
-  "name": "@leafygreen-ui/interaction-context",
+  "name": "@leafygreen-ui/leafygreen-provider",
   "version": "0.9.0",
-  "description": "leafyGreen UI Kit Context Provider",
+  "description": "LeafyGreen UI Context Provider",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {

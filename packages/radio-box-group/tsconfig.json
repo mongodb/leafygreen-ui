@@ -16,7 +16,7 @@
       "path": "../palette"
     },
     {
-      "path": "../interaction-context"
+      "path": "../leafygreen-provider"
     }
   ]
 }
