@@ -64,4 +64,40 @@ describe('packages/Menu', () => {
       expect(menuItem).not.toBeVisible();
     });
   });
+
+  describe('packages/menu-item', () => {
+    const onClick = jest.fn();
+    const className = 'test-className';
+
+    const { getByTestId } = render(
+      <div>
+        <MenuItem
+          className={className}
+          onClick={onClick}
+          data-testid="first-item"
+        >
+          Item 1
+        </MenuItem>
+        <MenuItem href="http://mongodb.design" data-testid="second-item">
+          Item 2
+        </MenuItem>
+      </div>,
+    );
+
+    const firstItem = getByTestId('first-item');
+    const secondItem = getByTestId('second-item');
+
+    test('fires onClick callback, when clicked', () => {
+      fireEvent.click(firstItem);
+      expect(onClick).toHaveBeenCalledTimes(1);
+    });
+
+    test(`renders "${className}" in the MenuItem container's classList`, () => {
+      expect(firstItem.classList.contains(className)).toBe(true);
+    });
+
+    test('renders inside of an `a` instead of a `span` tag, when `href` prop is supplied', () => {
+      expect(secondItem.tagName.toLowerCase()).toBe('a');
+    });
+  });
 });

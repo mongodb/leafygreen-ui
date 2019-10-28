@@ -5,8 +5,7 @@ import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
-import MenuItem from './MenuItem';
-import { NavItemProps } from '@leafygreen-ui/nav-item';
+import MenuItem, { MenuItemProps } from './MenuItem';
 
 const rootMenuStyle = css`
   width: 200px;
@@ -21,7 +20,7 @@ const rootMenuStyle = css`
 
 function isMenuItemElement(
   element: React.ReactNode,
-): element is React.ReactElement<NavItemProps, typeof MenuItem> {
+): element is React.ReactElement<MenuItemProps, typeof MenuItem> {
   return (
     element != null &&
     typeof element === 'object' &&
@@ -49,9 +48,7 @@ interface MenuProps
    * Callback to change the open state of the Menu.
    *
    */
-  setOpen?: (
-    open: boolean,
-  ) => boolean | React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
   /**
    * Callback to determine whether or not Menu should close when user tries to close it.
@@ -127,7 +124,7 @@ function Menu({
 
   const updatedChildren = updateChildren(children);
 
-  const isControlled = typeof controlledSetOpen === 'function';
+  const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   const setOpen = isControlled ? controlledSetOpen : uncontrolledSetOpen;
