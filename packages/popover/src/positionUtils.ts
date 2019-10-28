@@ -1,15 +1,4 @@
-import Align from './Align';
-import Justify from './Justify';
-import Justification from './Justification';
-
-export interface ElementPosition {
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-  height: number;
-  width: number;
-}
+import { Align, Justification, Justify, ElementPosition } from './types';
 
 type ReferencePosition = ElementPosition;
 type ContentPosition = ElementPosition;

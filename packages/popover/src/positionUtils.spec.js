@@ -1,5 +1,4 @@
-import Align from './Align';
-import Justify from './Justify';
+import { Align, Justify } from './types';
 import { calculatePosition, getElementPosition } from './positionUtils';
 
 // These values were explicitly created to test Popover positioning against a clearly defined window size.
@@ -65,10 +64,27 @@ const contentElPos = {
 
 describe('positionUtils', () => {
   describe('calculatePosition', () => {
+    describe('returns an object with three key-value pairs', () => {
+      const checker = calculatePosition({
+        spacing: SPACING,
+        windowHeight: WINDOW_HEIGHT,
+        windowWidth: WINDOW_WIDTH,
+        useRelativePositioning: false,
+        align: Align.Top,
+        justify: Justify.Start,
+        referenceElPos: refElPos.top,
+        contentElPos: contentElPos,
+      });
+
+      expect(checker.alignment).toBeTruthy();
+      expect(checker.justification).toBeTruthy();
+      expect(checker.positionCSS).toBeTruthy();
+    });
+
     describe('when the reference element is on the top', () => {
       describe('Align.Top', () => {
         test('Align.Top respositions to Align.Bottom based on available space', () => {
-          const { positionCSS } = calculatePosition({
+          const { alignment, justification, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -79,6 +95,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
+          expect(alignment).toBe('bottom');
+          expect(justification).toBe('left');
           expect(positionCSS.top).toBe(15);
           expect(positionCSS.left).toBe(45);
           expect(positionCSS.transformOrigin).toBe('left top');
@@ -90,7 +108,7 @@ describe('positionUtils', () => {
 
       describe('Align.Right', () => {
         test('Justify.Start works', () => {
-          const { positionCSS } = calculatePosition({
+          const { alignment, justification, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -101,6 +119,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
+          expect(alignment).toBe('right');
+          expect(justification).toBe('top');
           expect(positionCSS.top).toBe(0);
           expect(positionCSS.left).toBe(60);
           expect(positionCSS.transformOrigin).toBe('left top');
@@ -109,7 +129,7 @@ describe('positionUtils', () => {
           );
         });
 
-        test('Justify.Middle respoistions to Justify.Start based on available space', () => {
+        test('Justify.Middle repositions to Justify.Start based on available space', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,

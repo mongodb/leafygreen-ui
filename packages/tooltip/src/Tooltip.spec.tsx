@@ -20,7 +20,7 @@ describe('packages/Tooltip', () => {
         <div>backdrop content</div>
         <Tooltip
           trigger={<button onClick={onClick}>{buttonText}</button>}
-          triggerEvent='click'
+          triggerEvent="click"
         >
           <div data-testid="uncontrolled-tooltip">Uncontrolled tooltip!</div>
         </Tooltip>

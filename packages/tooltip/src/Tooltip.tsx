@@ -7,7 +7,7 @@ import Popover, {
   Justification,
   ElementPosition,
 } from '@leafygreen-ui/popover';
-import { useEventListener, useHandleEscape } from '@leafygreen-ui/hooks';
+import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
@@ -61,6 +61,12 @@ const notchVariants = {
   `,
 };
 
+interface PopoverFunctionParameters {
+  alignment: Align;
+  justification: Justification | Justify;
+  referenceElPos: ElementPosition;
+}
+
 interface TooltipProps
   extends Omit<PopoverProps, 'active' | 'spacing' | 'refEl' | 'usePortal'> {
   /**
@@ -83,9 +89,7 @@ interface TooltipProps
   /**
    * Callback to change the open state of the `Tooltip`.
    */
-  setOpen?: (
-    open: boolean,
-  ) => void | React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 
   /**
    * Whether the `Tooltip` will be `light` or `dark`.
@@ -204,13 +208,12 @@ function Tooltip({
     }
   };
 
-  useHandleEscape(handleClose);
+  useEscapeKey(handleClose);
 
   const handleBackdropClick = (e: MouseEvent) => {
     const tooltipReference = tooltipRef && tooltipRef.current;
 
     if (
-      triggerEvent === 'click' &&
       tooltipReference &&
       !tooltipReference.contains(e.target as HTMLElement)
     ) {
@@ -218,7 +221,9 @@ function Tooltip({
     }
   };
 
-  useEventListener('click', handleBackdropClick, { enabled: open });
+  useEventListener('click', handleBackdropClick, {
+    enabled: open && triggerEvent === 'click',
+  });
 
   const tooltip = (
     <Popover
@@ -228,16 +233,13 @@ function Tooltip({
       usePortal={true}
       adjustOnMutation={true}
       spacing={12}
+      key="tooltip"
     >
       {({
         alignment,
         justification,
         referenceElPos,
-      }: {
-        alignment: Align;
-        justification: Justification | Justify;
-        referenceElPos: ElementPosition;
-      }) => {
+      }: PopoverFunctionParameters) => {
         const triangleStyle = trianglePosition(
           alignment,
           justification,

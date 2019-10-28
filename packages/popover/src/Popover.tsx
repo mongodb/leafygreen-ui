@@ -1,4 +1,4 @@
-import React, { useMemo, Fragment, ReactNode, RefObject } from 'react';
+import React, { useMemo, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -7,14 +7,8 @@ import {
   useMutationObserver,
   useElementNode,
 } from '@leafygreen-ui/hooks';
-import Align from './Align';
-import Justify from './Justify';
-import Justification from './Justification';
-import {
-  calculatePosition,
-  getElementPosition,
-  ElementPosition,
-} from './positionUtils';
+import { Align, Justify, PopoverProps } from './types';
+import { calculatePosition, getElementPosition } from './positionUtils';
 
 const rootPopoverStyle = css`
   transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
@@ -33,72 +27,6 @@ const mutationOptions = {
   // Extend watching to entire sub tree to make sure we catch any modifications
   subtree: true,
 };
-
-interface ChildrenFunctionParameters {
-  alignment: Align;
-  justification: Justify | Justification;
-  referenceElPos: ElementPosition;
-}
-
-export interface PopoverProps {
-  /**
-   * Content that will appear inside of the popover component.
-   */
-  children: ReactNode | ((Object: ChildrenFunctionParameters) => ReactNode);
-
-  /**
-   * Determines the active state of the popover component
-   *
-   * default: `false`
-   */
-  active: boolean;
-
-  /**
-   * Class name applied to popover content container.
-   */
-  className?: string;
-
-  /**
-   * Determines the alignment of the popover content relative to the trigger element
-   *
-   * default: `bottom`
-   */
-  align?: Align;
-
-  /**
-   * Determines the justification of the popover content relative to the trigger element
-   *
-   * default: `start`
-   */
-  justify?: Justify;
-
-  /**
-   * A reference to the element against which the popover component will be positioned.
-   */
-  refEl?: RefObject<HTMLElement>;
-
-  /**
-   * Specifies that the popover content will appear portaled to the end of the DOM,
-   * rather than in the DOM tree.
-   *
-   * default: `true`
-   */
-  usePortal?: boolean;
-
-  /**
-   * Specifies the amount of spacing (in pixels) between the trigger element and the Popover content.
-   *
-   * default: `10`
-   */
-  spacing?: number;
-
-  /**
-   * Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
-   *
-   * default: false
-   */
-  adjustOnMutation?: boolean;
-}
 
 /**
  * # Popover
@@ -203,7 +131,7 @@ function Popover({
       return null;
     }
 
-    if (children instanceof Function) {
+    if (typeof children === 'function') {
       return children({ alignment, justification, referenceElPos });
     }
 
