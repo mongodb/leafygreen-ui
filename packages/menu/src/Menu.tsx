@@ -96,7 +96,7 @@ function Menu({
   trigger,
   ...rest
 }: MenuProps) {
-  const [focused, setFocused] = useState(0);
+  const [focused, setFocused] = useState<HTMLElement>();
   const refs: Array<HTMLElement> = [];
 
   const updatedChildren = React.Children.map(children, child => {
@@ -143,17 +143,15 @@ function Menu({
     let refToFocus: HTMLElement;
 
     switch (e.key) {
-      case 'ArrowRight':
       case 'ArrowDown':
-        refToFocus = refs[(refs.indexOf(focused) + 1) % refs.length];
+        refToFocus = refs[(refs.indexOf(focused!) + 1) % refs.length];
         setFocused(refToFocus);
         refToFocus.focus();
         break;
 
-      case 'ArrowLeft':
       case 'ArrowUp':
         refToFocus =
-          refs[(refs.indexOf(focused) - 1 + refs.length) % refs.length];
+          refs[(refs.indexOf(focused!) - 1 + refs.length) % refs.length];
         setFocused(refToFocus);
         refToFocus.focus();
         break;
@@ -182,7 +180,7 @@ function Menu({
   const popoverContent = (
     <Popover
       key="popover"
-      active={open || uncontrolledOpen}
+      active={open}
       align={align}
       justify={justify}
       refEl={refEl}
