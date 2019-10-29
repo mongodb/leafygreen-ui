@@ -56,7 +56,7 @@ interface MenuProps
    */
   shouldClose?: () => boolean;
 
-  children: React.ReactElement;
+  children: React.ReactNode;
 }
 
 /**
@@ -97,44 +97,17 @@ function Menu({
   ...rest
 }: MenuProps) {
   const [focused, setFocused] = useState(0);
-
   const refs: Array<HTMLElement> = [];
-  const menuitems: Array<React.ReactElement> = [];
 
-  const updateChildren = (
-    childset: React.ReactElement,
-  ): Array<React.ReactElement> => {
-    return React.Children.map(childset, child => {
-      if (isMenuItemElement(child)) {
-        menuitems.push(child);
-        return React.cloneElement(child, {
-          ref: (ref: HTMLElement) => refs.push(ref),
-        });
-      }
+  const updatedChildren = React.Children.map(children, child => {
+    if (isMenuItemElement(child) && !child.props.disabled) {
+      return React.cloneElement(child, {
+        ref: (ref: HTMLElement) => refs.push(ref),
+      });
+    }
 
-      if (typeof child.props.children === 'object') {
-        return React.cloneElement(child, {
-          children: updateChildren(child.props.children),
-        });
-      }
-
-      return child;
-    });
-  };
-
-  const updatedChildren = updateChildren(children);
-
-  const enabledIndexes = menuitems.reduce(
-    (acc, child, index) => {
-      if (child.props.disabled) {
-        return acc;
-      }
-
-      return [...acc, index];
-    },
-    [] as Array<number>,
-  );
-  const enabledCurrentIndex = enabledIndexes.indexOf(focused!);
+    return child;
+  });
 
   const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
@@ -160,62 +133,50 @@ function Menu({
     }
   };
 
-  const enabled = open;
-
   useEventListener('click', handleBackdropClick, {
-    enabled,
+    enabled: open,
   });
 
-  useEscapeKey(handleClose, { enabled });
+  useEscapeKey(handleClose, { enabled: open });
 
   function handleKeyDown(e: KeyboardEvent) {
-    let focusedIndex: number;
+    let refToFocus: HTMLElement;
 
     switch (e.key) {
       case 'ArrowRight':
       case 'ArrowDown':
-        focusedIndex =
-          enabledIndexes[(enabledCurrentIndex + 1) % enabledIndexes.length];
-        setFocused(focusedIndex);
-        refs[focusedIndex].focus();
+        refToFocus = refs[(refs.indexOf(focused) + 1) % refs.length];
+        setFocused(refToFocus);
+        refToFocus.focus();
         break;
 
       case 'ArrowLeft':
       case 'ArrowUp':
-        focusedIndex =
-          enabledIndexes[
-            (enabledCurrentIndex - 1 + enabledIndexes.length) %
-              enabledIndexes.length
-          ];
-        setFocused(focusedIndex);
-        refs[focusedIndex].focus();
+        refToFocus =
+          refs[(refs.indexOf(focused) - 1 + refs.length) % refs.length];
+        setFocused(refToFocus);
+        refToFocus.focus();
         break;
 
       case ' ':
       case 'Space Bar':
       case 'Enter':
-        focusedIndex = enabledIndexes[0];
-        setFocused(focusedIndex);
-        refs[focusedIndex].focus();
-        break;
-
-      case 'Tab':
-        e.preventDefault();
-        setOpen(false);
+        if (!open) {
+          setFocused(refs[0]);
+          refs[0].focus();
+        }
         break;
     }
   }
 
   useEventListener('keydown', handleKeyDown, {
-    enabled,
+    enabled: open,
   });
 
   const handleClick = () => {
     setOpen((curr: boolean) => !curr);
-
-    const focusedIndex = enabledIndexes[0];
-    setFocused(focusedIndex);
-    refs[focusedIndex].focus();
+    setFocused(refs[0]);
+    refs[0].focus();
   };
 
   const popoverContent = (

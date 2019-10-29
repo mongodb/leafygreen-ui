@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
-import { Menu, MenuItem, MenuGroup } from '@leafygreen-ui/menu';
+import { Menu, MenuItem, MenuSeparator } from '@leafygreen-ui/menu';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -237,7 +237,7 @@ function MongoMenu({
       </div>
 
       <Menu open={open} setOpen={setOpen}>
-        <MenuGroup className={accountMenuGroupStyle}>
+        <section className={accountMenuGroupStyle}>
           <h3 className={cx(nameStyle, truncate)}>{name}</h3>
           <p className={descriptionStyle}>{email}</p>
           <Button
@@ -248,20 +248,20 @@ function MongoMenu({
           >
             MongoDB Account
           </Button>
-        </MenuGroup>
-        <MenuGroup>
-          {menuItems.map(el => (
-            <MenuItem
-              onClick={onProductChange}
-              key={el.displayName}
-              active={el.slug === activeProduct}
-              href={el.href}
-              description={el.description}
-            >
-              {el.displayName}
-            </MenuItem>
-          ))}
-        </MenuGroup>
+        </section>
+        <MenuSeparator />
+        {menuItems.map(el => (
+          <MenuItem
+            onClick={onProductChange}
+            key={el.displayName}
+            active={el.slug === activeProduct}
+            href={el.href}
+            description={el.description}
+          >
+            {el.displayName}
+          </MenuItem>
+        ))}
+        <MenuSeparator />
         <MenuItem onClick={onLogout} className={cx(logoutContainerHeight)}>
           Logout
         </MenuItem>

@@ -2,7 +2,6 @@ import React, { RefObject } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
-import { menuGroupDataProp } from './MenuGroup';
 
 const menuItemContainer = createDataProp('menu-item-container');
 
@@ -23,18 +22,6 @@ const containerStyle = css`
   margin: unset;
   width: 100%;
   font-family: 'Akzidenz';
-
-  &:first-of-type ~ ${menuGroupDataProp.selector} {
-    border-top: 1px solid ${uiColors.gray.light1};
-  }
-
-  ${menuGroupDataProp.selector} + & {
-    border-top: 1px solid ${uiColors.gray.light1};
-  }
-
-  ${menuGroupDataProp.selector} ${menuGroupDataProp.selector} & {
-    padding-left: ${indentation * 2}px;
-  }
 
   &:before {
     content: '';
