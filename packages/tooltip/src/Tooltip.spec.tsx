@@ -60,6 +60,67 @@ describe('packages/Tooltip', () => {
       fireEvent.keyDown(button, { key: 'Escape', keyCode: 27 });
       expect(tooltip).not.toBeVisible();
     });
+
+    describe('when shouldClose() prop is passed', () => {
+      test('when shouldClose() returns true', () => {
+        const shouldClose = () => true;
+        const { getByTestId } = render(
+          <>
+            <div data-testid="shouldClose-test-backdrop">backdrop content</div>
+            <Tooltip
+              trigger={
+                <button data-testid="shouldClose-test-trigger">trigger</button>
+              }
+              triggerEvent="click"
+              shouldClose={shouldClose}
+            >
+              <div data-testid="shouldClose-test-tooltip">
+                Uncontrolled tooltip!
+              </div>
+            </Tooltip>
+          </>,
+        );
+
+        const backdrop = getByTestId('shouldClose-test-backdrop');
+        const trigger = getByTestId('shouldClose-test-trigger');
+        const tooltip = getByTestId('shouldClose-test-tooltip');
+
+        fireEvent.click(trigger);
+        expect(tooltip).toBeVisible();
+
+        fireEvent.click(backdrop);
+        expect(tooltip).not.toBeVisible();
+      });
+
+      test('when shoudlClose() returns false', () => {
+        const shouldClose = () => false;
+
+        const { getByTestId } = render(
+          <>
+            <div data-testid="shouldClose-backdrop">backdrop content</div>
+            <Tooltip
+              trigger={
+                <button data-testid="shouldClose-trigger">trigger</button>
+              }
+              triggerEvent="click"
+              shouldClose={shouldClose}
+            >
+              <div data-testid="shouldClose-tooltip">Uncontrolled tooltip!</div>
+            </Tooltip>
+          </>,
+        );
+
+        const backdrop = getByTestId('shouldClose-backdrop');
+        const trigger = getByTestId('shouldClose-trigger');
+        const tooltip = getByTestId('shouldClose-tooltip');
+
+        fireEvent.click(trigger);
+        expect(tooltip).toBeVisible();
+
+        fireEvent.click(backdrop);
+        expect(tooltip).toBeVisible();
+      });
+    });
   });
 
   describe('when controlled', () => {

@@ -185,8 +185,8 @@ function Tooltip({
         onClick: (e: MouseEvent) => {
           // ensure that we don't close the tooltip when content inside tooltip is clicked
           if (e.target !== tooltipRef.current) {
-            setOpen((curr: boolean) => !curr);
             triggerProps.onClick();
+            setOpen((curr: boolean) => !curr);
           }
         },
       };
