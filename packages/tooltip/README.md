@@ -4,7 +4,38 @@
 
 ## Example
 
-<!-- will update once component is finalized -->
+```js
+import Tooltip from '@leafygreen-ui/tooltip';
+
+<Tooltip
+  align="top"
+  justify="start"
+  trigger={<button>trigger</button>}
+  triggerEvent="hover"
+  variant="dark"
+>
+  I am an uncontrolled Tooltip!
+</Tooltip>;
+```
+
+**Output HTML**
+
+```html
+<button aria-describedby="tooltip-6">
+  trigger
+  <div class="leafygreen-ui-1hyfx7x"></div>
+</button>
+<div>
+  <div class="leafygreen-ui-63ea86">
+    <div role="tooltip" id="tooltip-6" class="leafygreen-ui-a17v6a">
+      <div class="leafygreen-ui-11wlmto">
+        <div class="leafygreen-ui-ry7wu4"></div>
+      </div>
+      I am an uncontrolled Tooltip!
+    </div>
+  </div>
+</div>
+```
 
 ## Properties
 
