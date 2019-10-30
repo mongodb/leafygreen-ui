@@ -17,6 +17,8 @@ const Align = {
 
 type Align = typeof Align[keyof typeof Align];
 
+export { Align };
+
 const Justification = {
   Top: 'top',
   Bottom: 'bottom',
@@ -41,9 +43,11 @@ const Justify = {
   End: 'end',
 } as const;
 
+export { Justification };
+
 type Justify = typeof Justify[keyof typeof Justify];
 
-export { Align, Justification, Justify };
+export { Justify };
 
 export interface ElementPosition {
   top: number;

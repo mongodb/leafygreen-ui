@@ -154,9 +154,8 @@ function Tooltip({
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   // typescript is not recognizing isControlled checks that controlledSetOpen exists
-  const setOpen = isControlled
-    ? (controlledSetOpen as Function)
-    : uncontrolledSetOpen;
+  const setOpen =
+    isControlled && controlledSetOpen ? controlledSetOpen : uncontrolledSetOpen;
 
   const tooltipRef = useRef<HTMLDivElement>(null);
 
