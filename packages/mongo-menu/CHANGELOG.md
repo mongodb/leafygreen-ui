@@ -1,5 +1,14 @@
 # @leafygreen-ui/mongo-menu
 
+## 1.1.0
+
+### Minor Changes
+
+- 2b36d49: Add accountURL prop, so consuming application can determine where MongoDB Account button should send a user.
+
+- Updated dependencies [12fb220]:
+  - @leafygreen-ui/menu@3.0.3
+
 ## 1.0.2
 
 - Updated dependencies [3a24668]:
