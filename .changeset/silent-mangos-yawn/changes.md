@@ -1,0 +1,1 @@
+Dramatically reduces the package's bundle size by excluding react-dom from the bundle.
