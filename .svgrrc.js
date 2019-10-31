@@ -15,9 +15,26 @@ module.exports = {
     { imports, componentName, props, jsx, exports },
   ) {
     componentName = componentName.name.replace('Svg', '');
+    const defaultTitle = `${(componentName + '').replace(
+      /([A-Z][a-z])/g,
+      ' $1',
+    )} Icon`;
+    const sizeMap = {
+      small: 14,
+      default: 16,
+      large: 24,
+      xlarge: 32,
+    };
+
+    const arrayToString = arr => {
+      const reducer = (acc, val, i) => `${acc}${i === 0 ? '' : ','}"${val}"`;
+
+      return `[${arr.reduce(reducer, '')}]`;
+    };
 
     // NOTE:
-    // If any props on the generated component get changed, make sure to also update SVGR.ComponentProps in typings/images.d.ts
+    // If any props on the generated component get changed, make sure
+    // to also update SVGR.ComponentProps in typings/images.d.ts
     return template.ast`
 			${imports}
       import PropTypes from 'prop-types';
@@ -26,8 +43,12 @@ module.exports = {
 			const ${componentName} = (${props}) => {
         // Setting className to manually enable fill prop to overwrite the color when the prop is set
         props.className = cx(props.className, {[css\`color: \${ props.fill }\`]: props.fill});
-        props.height = props.size;
-        props.width = props.size;
+        
+        const sizeMap = ${JSON.stringify(sizeMap)};
+
+        const size = typeof props.size === 'number' ? props.size : sizeMap[props.size] || sizeMap.default;
+        props.height = size;
+        props.width = size;
         
         // Delete props.fill and props.size so that it does not set them as SVG attributes in the DOM
         delete props.fill;
@@ -41,10 +62,16 @@ module.exports = {
 			
 			${componentName}.propTypes = {
 				fill: PropTypes.string,
-				size: PropTypes.number,
+				size: PropTypes.oneOfType([
+          PropTypes.oneOf(${arrayToString(Object.keys(sizeMap))}),
+          PropTypes.number,
+        ]),
 			};
 
-			${componentName}.defaultProps = { size: 16 };
+			${componentName}.defaultProps = {
+        size: ${sizeMap.default + ''},
+        title: '${defaultTitle}',
+      };
 
 			export default ${componentName};
 		`;

@@ -16,8 +16,8 @@ export type Size = typeof Size[keyof typeof Size];
 
 export interface IconProps<G extends GlyphMap>
   extends Omit<SVGR.ComponentProps, 'size'> {
+  size?: Size | number;
   glyph: keyof G;
-  size?: number | Size;
 }
 
 const sizeMap: { [S in Size]: number } = {
@@ -27,28 +27,13 @@ const sizeMap: { [S in Size]: number } = {
   xlarge: 32,
 };
 
-// Converts a camel-case name to a human-readable name
-//
-// GlyphName => Glyph Name Icon
-function humanReadableTitle(glyph: string) {
-  return `${glyph.replace(/([A-Z][a-z])/g, ' $1')} Icon`;
-}
-
 export default function createIconComponent<G extends GlyphMap>(
   glyphs: G,
 ): React.ComponentType<IconProps<G>> {
-  const Icon = ({ glyph, size = Size.Default, ...rest }: IconProps<G>) => {
+  const Icon = ({ glyph, ...rest }: IconProps<G>) => {
     const SVGComponent: SVGR.Component = glyphs[glyph];
 
-    return (
-      <SVGComponent
-        {...rest}
-        title={rest.title || humanReadableTitle(glyph as string)}
-        size={
-          typeof size === 'number' ? size : sizeMap[size] || sizeMap.default
-        }
-      />
-    );
+    return <SVGComponent {...rest} />;
   };
 
   Icon.displayName = 'Icon';
