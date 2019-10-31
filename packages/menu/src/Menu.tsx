@@ -31,7 +31,7 @@ interface MenuProps extends Omit<PopoverProps, 'active' | 'spacing'> {
    * Callback to change the open state of the Menu.
    *
    */
-  setOpen: (
+  setOpen?: (
     open: boolean,
   ) => void | React.Dispatch<React.SetStateAction<boolean>>;
 

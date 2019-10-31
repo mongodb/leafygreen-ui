@@ -1,14 +1,4 @@
-import Align from './Align';
-import Justify from './Justify';
-
-interface ElementPosition {
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-  height: number;
-  width: number;
-}
+import { Align, Justification, Justify, ElementPosition } from './types';
 
 type ReferencePosition = ElementPosition;
 type ContentPosition = ElementPosition;
@@ -40,7 +30,11 @@ export function calculatePosition({
   contentElPos = defaultElementPosition,
   windowHeight = window.innerHeight,
   windowWidth = window.innerWidth,
-}: CalculatePosition) {
+}: CalculatePosition): {
+  alignment: Align;
+  justification: Justification | Justify;
+  positionCSS: any;
+} {
   const windowSafeCommonArgs = {
     windowWidth,
     windowHeight,
@@ -65,35 +59,43 @@ export function calculatePosition({
 
   if (useRelativePositioning) {
     return {
-      ...calcRelativePosition({
-        alignment,
-        justification,
-        referenceElPos,
-        contentElPos,
-        spacing,
-      }),
-      transformOrigin,
-      transform,
+      alignment,
+      justification,
+      positionCSS: {
+        ...calcRelativePosition({
+          alignment,
+          justification,
+          referenceElPos,
+          contentElPos,
+          spacing,
+        }),
+        transformOrigin,
+        transform,
+      },
     };
   }
 
   return {
-    top: calcTop({
-      alignment,
-      justification,
-      contentElPos,
-      referenceElPos,
-      spacing,
-    }),
-    left: calcLeft({
-      alignment,
-      justification,
-      contentElPos,
-      referenceElPos,
-      spacing,
-    }),
-    transformOrigin,
-    transform,
+    alignment,
+    justification,
+    positionCSS: {
+      top: calcTop({
+        alignment,
+        justification,
+        contentElPos,
+        referenceElPos,
+        spacing,
+      }),
+      left: calcLeft({
+        alignment,
+        justification,
+        contentElPos,
+        referenceElPos,
+        spacing,
+      }),
+      transformOrigin,
+      transform,
+    },
   };
 }
 
@@ -119,19 +121,6 @@ export function getElementPosition(
 
   return { top, bottom, left, right, height, width };
 }
-
-// We transform 'middle' into 'center-vertical' or 'center-horizontal' for internal use,
-// So both Justify and Justification are needed, where the same is not true for Alignment.
-const Justification = {
-  Top: 'top',
-  Bottom: 'bottom',
-  Left: 'left',
-  Right: 'right',
-  CenterVertical: 'center-vertical',
-  CenterHorizontal: 'center-horizontal',
-} as const;
-
-type Justification = typeof Justification[keyof typeof Justification];
 
 interface TransformOriginArgs {
   alignment: Align;
@@ -305,7 +294,7 @@ function calcTop({
 
     case Justification.CenterVertical:
       return (
-        referenceElPos.top + referenceElPos.height / 2 - contentElPos.height / 2
+        referenceElPos.top - (contentElPos.height - referenceElPos.height) / 2
       );
   }
 
@@ -341,7 +330,7 @@ function calcLeft({
 
     case Justification.CenterHorizontal:
       return (
-        referenceElPos.left + referenceElPos.width / 2 - contentElPos.width / 2
+        referenceElPos.left - (contentElPos.width - referenceElPos.width) / 2
       );
 
     case Justification.Left:

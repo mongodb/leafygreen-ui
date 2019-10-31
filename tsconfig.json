@@ -58,6 +58,9 @@
     },
     {
       "path": "./packages/toggle"
+    },
+    {
+      "path": "./packages/tooltip"
     }
   ]
 }
