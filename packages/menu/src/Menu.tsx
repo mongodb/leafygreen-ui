@@ -165,7 +165,7 @@ Menu.propTypes = {
   className: PropTypes.string,
   align: PropTypes.oneOf(Object.values(Align)),
   justify: PropTypes.oneOf(Object.values(Justify)),
-  refEl: PropTypes.object,
+  refEl: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   usePortal: PropTypes.bool,
   trigger: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   open: PropTypes.bool,

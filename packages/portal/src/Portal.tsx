@@ -17,13 +17,6 @@ interface PortalState {
 }
 
 export default class Portal extends Component<PortalProps, PortalState> {
-  static displayName = 'Portal';
-
-  static propTypes = {
-    children: PropTypes.node,
-    container: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
-  };
-
   static createPortalContainer(
     nodeType: keyof HTMLElementTagNameMap = 'div',
   ): PortalContainer {
@@ -35,6 +28,13 @@ export default class Portal extends Component<PortalProps, PortalState> {
       remove: () => document.body.removeChild(el),
     };
   }
+
+  static displayName = 'Portal';
+
+  static propTypes = {
+    children: PropTypes.node,
+    container: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
+  };
 
   state: PortalState = { defaultContainer: null };
 

@@ -275,7 +275,7 @@ MongoMenu.displayName = 'MongoMenu';
 const slugs = menuItems.map(mi => mi.slug);
 
 MongoMenu.propTypes = {
-  user: PropTypes.object,
+  user: PropTypes.objectOf(PropTypes.string),
   activeProduct: PropTypes.oneOf(slugs),
   onLogout: PropTypes.func,
   onProductChange: PropTypes.func,
