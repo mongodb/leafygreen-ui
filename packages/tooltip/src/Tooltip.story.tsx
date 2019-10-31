@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { storiesOf } from '@storybook/react';
 import { select } from '@storybook/addon-knobs';
 import { Align, Justify } from '@leafygreen-ui/popover';
 import Tooltip, { TriggerEvent, Variant } from '.';
 
 class Button extends React.Component {
+  static propTypes = {
+    children: PropTypes.node,
+  };
+
   render() {
     const { children } = this.props;
     return <button {...this.props}>trigger {children}</button>;
