@@ -51,10 +51,9 @@ describe('packages/Menu', () => {
 
     test('when setOpen is set but no open prop is provided, Menu behaves as uncontrolled', () => {
       const button = getByText('trigger');
-      const menuItem = getByText('Item C');
-
       fireEvent.click(button);
-
+      
+      const menuItem = getByText('Item C');
       expect(menuItem).toBeVisible();
 
       fireEvent.click(button);

@@ -28,7 +28,6 @@ describe('packages/Tooltip', () => {
     );
 
     const button = getByText(buttonText);
-    const tooltip = getByTestId('uncontrolled-tooltip');
     const backdrop = getByText('backdrop content');
 
     test(`renders a button to the DOM with ${buttonText}`, () => {
@@ -38,15 +37,17 @@ describe('packages/Tooltip', () => {
 
     test('click triggers opening and closing of tooltip', () => {
       fireEvent.click(button);
-      expect(tooltip).toBeVisible();
+      const tooltip = getByTestId('uncontrolled-tooltip');
+      expect(tooltip).toBeInTheDocument();
       expect(onClick).toHaveBeenCalledTimes(1);
 
       fireEvent.click(button);
-      expect(tooltip).not.toBeVisible();
+      expect(tooltip).not.toBeInTheDocument();
     });
 
     test('backdrop clicks close the tooltip', () => {
       fireEvent.click(button);
+      const tooltip = getByTestId('uncontrolled-tooltip');
       expect(tooltip).toBeVisible();
 
       fireEvent.click(backdrop);
@@ -55,10 +56,11 @@ describe('packages/Tooltip', () => {
 
     test('escape click closes tooltip', () => {
       fireEvent.click(button);
-      expect(tooltip).toBeVisible();
+      const tooltip = getByTestId('uncontrolled-tooltip');
+      expect(tooltip).toBeInTheDocument();
 
       fireEvent.keyDown(button, { key: 'Escape', keyCode: 27 });
-      expect(tooltip).not.toBeVisible();
+      expect(tooltip).not.toBeInTheDocument();
     });
 
     describe('when shouldClose() prop is passed', () => {
@@ -83,13 +85,13 @@ describe('packages/Tooltip', () => {
 
         const backdrop = getByTestId('shouldClose-test-backdrop');
         const trigger = getByTestId('shouldClose-test-trigger');
-        const tooltip = getByTestId('shouldClose-test-tooltip');
-
+        
         fireEvent.click(trigger);
-        expect(tooltip).toBeVisible();
+        const tooltip = getByTestId('shouldClose-test-tooltip');
+        expect(tooltip).toBeInTheDocument();
 
         fireEvent.click(backdrop);
-        expect(tooltip).not.toBeVisible();
+        expect(tooltip).not.toBeInTheDocument();
       });
 
       test('when shoudlClose() returns false', () => {
@@ -112,13 +114,13 @@ describe('packages/Tooltip', () => {
 
         const backdrop = getByTestId('shouldClose-backdrop');
         const trigger = getByTestId('shouldClose-trigger');
-        const tooltip = getByTestId('shouldClose-tooltip');
-
+        
         fireEvent.click(trigger);
-        expect(tooltip).toBeVisible();
+        const tooltip = getByTestId('shouldClose-tooltip');
+        expect(tooltip).toBeInTheDocument();
 
         fireEvent.click(backdrop);
-        expect(tooltip).toBeVisible();
+        expect(tooltip).toBeInTheDocument();
       });
     });
   });
