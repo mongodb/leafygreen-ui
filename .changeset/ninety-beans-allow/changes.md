@@ -1,1 +1,0 @@
-Ensure that content does not appear in DOM unless Popover is active
