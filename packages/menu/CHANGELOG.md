@@ -1,5 +1,10 @@
 # @leafygreen-ui/menu
 
+## 3.0.3
+
+- Updated dependencies [12fb220]:
+  - @leafygreen-ui/popover@1.2.0
+
 ## 3.0.2
 
 ### Patch Changes
