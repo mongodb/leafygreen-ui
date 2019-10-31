@@ -1,5 +1,10 @@
 # @leafygreen-ui/modal
 
+## 1.2.2
+
+- Updated dependencies [563dc2e]:
+  - @leafygreen-ui/portal@1.1.7
+
 ## 1.2.1
 
 ### Patch Changes

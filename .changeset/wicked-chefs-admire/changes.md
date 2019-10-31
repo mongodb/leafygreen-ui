@@ -1,1 +1,0 @@
-Initial implementation of Tooltip component
