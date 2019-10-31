@@ -29,6 +29,22 @@ function isMenuItemElement(
   );
 }
 
+//  const tags = ['input', 'a', 'textarea', 'iframe', 'button']
+const focusableTags = ['input', 'a', 'textarea', 'iframe', 'button'];
+
+function isFocusable(element: React.ReactNode) {
+  if (!element) {
+    return false;
+  }
+
+  console.log(element.type, element.props, element.tagName)
+  if (focusableTags.includes(element.type) || element.props.tabIndex > 0) {
+    return true;
+  }
+
+  return false;
+}
+
 interface MenuProps
   extends Omit<PopoverProps, 'active' | 'spacing' | 'children'> {
   /**
@@ -96,18 +112,24 @@ function Menu({
   trigger,
   ...rest
 }: MenuProps) {
-  const [focused, setFocused] = useState<HTMLElement>();
   const refs: Array<HTMLElement> = [];
 
   const updatedChildren = React.Children.map(children, child => {
+    if (typeof child === 'object') {
+      console.log(child, child.type)
+    }
+
     if (isMenuItemElement(child) && !child.props.disabled) {
       return React.cloneElement(child, {
         ref: (ref: HTMLElement) => refs.push(ref),
-      });
+      })
     }
 
     return child;
   });
+
+  const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
+  console.log('refs are:', refs)
 
   const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);

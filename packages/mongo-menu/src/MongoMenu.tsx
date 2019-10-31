@@ -114,15 +114,26 @@ const openIconStyle = css`
   color: ${uiColors.gray.base};
 `;
 
-const accountMenuGroupStyle = css`
-  padding: 20px 20px 14px;
-`;
+const horizontalPadding = css`
+  padding-left: 20px;
+  padding-right: 20px;
+`
+
+const topPadding = css`
+  padding-top: 20px;
+`
+
+const bottomPadding = css`
+  padding-bottom: 14px;
+`
 
 const accountButtonStyle = css`
   margin-top: 12px;
-  width: 100%;
+  margin-left: 20px;
+  width: calc(100% - 40px);
   display: inline-flex;
   justify-content: center;
+  align-items: center;
 `;
 
 const descriptionStyle = css`
@@ -237,18 +248,18 @@ function MongoMenu({
       </div>
 
       <Menu open={open} setOpen={setOpen}>
-        <section className={accountMenuGroupStyle}>
-          <h3 className={cx(nameStyle, truncate)}>{name}</h3>
-          <p className={descriptionStyle}>{email}</p>
+          <div className={topPadding}></div>
+          <h3 className={cx(nameStyle, truncate, horizontalPadding)}>{name}</h3>
+          <p className={cx(horizontalPadding, descriptionStyle)}>{email}</p>
           <Button
             size="small"
             href={accountURL}
-            className={accountButtonStyle}
+            className={cx(accountButtonStyle)}
             as="a"
           >
             MongoDB Account
           </Button>
-        </section>
+          <div className={bottomPadding}></div>
         <MenuSeparator />
         {menuItems.map(el => (
           <MenuItem
