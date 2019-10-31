@@ -1,0 +1,4 @@
+{
+  "releases": [{ "name": "@leafygreen-ui/tooltip", "type": "major" }],
+  "dependents": []
+}

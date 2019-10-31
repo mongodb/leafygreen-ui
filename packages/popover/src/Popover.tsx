@@ -1,10 +1,4 @@
-import React, {
-  useMemo,
-  Fragment,
-  ReactNode,
-  RefObject,
-  ReactElement,
-} from 'react';
+import React, { useMemo, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '@leafygreen-ui/portal';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -13,8 +7,7 @@ import {
   useMutationObserver,
   useElementNode,
 } from '@leafygreen-ui/hooks';
-import Align from './Align';
-import Justify from './Justify';
+import { Align, Justify, PopoverProps } from './types';
 import { calculatePosition, getElementPosition } from './positionUtils';
 
 const rootPopoverStyle = css`
@@ -34,66 +27,6 @@ const mutationOptions = {
   // Extend watching to entire sub tree to make sure we catch any modifications
   subtree: true,
 };
-
-export interface PopoverProps {
-  /**
-   * Content that will appear inside of the popover component.
-   */
-  children: ReactNode;
-
-  /**
-   * Determines the active state of the popover component
-   *
-   * default: `false`
-   */
-  active: boolean;
-
-  /**
-   * Class name applied to popover content container.
-   */
-  className?: string;
-
-  /**
-   * Determines the alignment of the popover content relative to the trigger element
-   *
-   * default: `bottom`
-   */
-  align?: Align;
-
-  /**
-   * Determines the justification of the popover content relative to the trigger element
-   *
-   * default: `start`
-   */
-  justify?: Justify;
-
-  /**
-   * A reference to the element against which the popover component will be positioned.
-   */
-  refEl?: RefObject<HTMLElement>;
-
-  /**
-   * Specifies that the popover content will appear portaled to the end of the DOM,
-   * rather than in the DOM tree.
-   *
-   * default: `true`
-   */
-  usePortal?: boolean;
-
-  /**
-   * Specifies the amount of spacing (in pixels) between the trigger element and the Popover content.
-   *
-   * default: `10`
-   */
-  spacing?: number;
-
-  /**
-   * Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
-   *
-   * default: false
-   */
-  adjustOnMutation?: boolean;
-}
 
 /**
  * # Popover
@@ -125,7 +58,7 @@ function Popover({
   className,
   refEl,
   ...rest
-}: PopoverProps): ReactElement {
+}: PopoverProps) {
   const [placeholderNode, setPlaceholderNode] = useElementNode();
   const [contentNode, setContentNode] = useElementNode();
 
@@ -161,24 +94,28 @@ function Popover({
     referenceElement,
     viewportSize,
     lastTimeRefElMutated,
+    active,
+    align,
+    justify,
   ]);
 
   const contentElPos = useMemo(() => getElementPosition(contentNode), [
     contentNode,
     viewportSize,
     lastTimeContentElMutated,
+    active,
+    align,
+    justify,
   ]);
 
-  const position = css(
-    calculatePosition({
-      useRelativePositioning: !usePortal,
-      spacing,
-      align,
-      justify,
-      referenceElPos,
-      contentElPos,
-    }),
-  );
+  const { alignment, justification, positionCSS } = calculatePosition({
+    useRelativePositioning: !usePortal,
+    spacing,
+    align,
+    justify,
+    referenceElPos,
+    contentElPos,
+  });
 
   const activeStyle = css`
     transform: translate3d(0, 0, 0) scale(1);
@@ -188,6 +125,18 @@ function Popover({
   `;
 
   const Root = usePortal ? Portal : Fragment;
+
+  const renderedChildren = (() => {
+    if (!children) {
+      return null;
+    }
+
+    if (typeof children === 'function') {
+      return children({ alignment, justification, referenceElPos });
+    }
+
+    return children;
+  })();
 
   return (
     <>
@@ -203,12 +152,12 @@ function Popover({
           ref={setContentNode}
           className={cx(
             rootPopoverStyle,
-            position,
+            css(positionCSS),
             { [activeStyle]: active },
             className,
           )}
         >
-          {children}
+          {renderedChildren}
         </div>
       </Root>
     </>
@@ -218,7 +167,7 @@ function Popover({
 Popover.displayName = 'Popover';
 
 Popover.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   active: PropTypes.bool,
   className: PropTypes.string,
   align: PropTypes.oneOf(Object.values(Align)),

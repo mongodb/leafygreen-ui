@@ -2,8 +2,7 @@ import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
 import Popover from './Popover';
-import Align from './Align';
-import Justify from './Justify';
+import { Align, Justify } from './types';
 
 afterAll(cleanup);
 
