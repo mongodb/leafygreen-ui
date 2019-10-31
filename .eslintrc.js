@@ -31,7 +31,7 @@ module.exports = {
         extensions: ['.js', '.tsx'],
       },
     ],
-    'react/forbid-prop-types': 'any',
+    'react/forbid-prop-types': 1,
     'react/sort-comp': 'error',
     'import/no-extraneous-dependencies': 0,
     'padding-line-between-statements': [
