@@ -11,6 +11,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "peerDependencies": {
+    "react-dom": "^16.0.0"
+  },
   "dependencies": {
     "@leafygreen-ui/lib": "^3.0.6"
   },

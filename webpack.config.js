@@ -50,6 +50,7 @@ module.exports = function(env = 'production') {
     externals: isProduction
       ? [
           'react',
+          'react-dom',
           'emotion',
           'react-emotion',
           'create-emotion',
