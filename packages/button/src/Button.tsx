@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -281,7 +280,7 @@ function usesLinkElement(
   return props.href != null;
 }
 
-export default function Button(props: ButtonProps) {
+const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
   const {
     className = '',
     children = null,
@@ -314,6 +313,7 @@ export default function Button(props: ButtonProps) {
 
   const renderButton = (Root: React.ElementType<any> = 'button') => (
     <Root
+      ref={forwardRef}
       type={Root === 'button' ? 'button' : undefined}
       {...(rest as HTMLElementProps<any>)}
       {...commonProps}
@@ -342,16 +342,8 @@ export default function Button(props: ButtonProps) {
   }
 
   return renderButton();
-}
-
-Button.propTypes = {
-  variant: PropTypes.oneOf(Object.values(Variant)),
-  size: PropTypes.oneOf(Object.values(Size)),
-  className: PropTypes.string,
-  children: PropTypes.node,
-  disabled: PropTypes.bool,
-  as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  href: PropTypes.string,
-};
+});
 
 Button.displayName = 'Button';
+
+export default Button;

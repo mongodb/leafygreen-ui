@@ -6,6 +6,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
 import MenuItem, { MenuItemProps } from './MenuItem';
+import FocusableMenuItem, { FocusableMenuItemProps } from './FocusableMenuItem';
 
 const rootMenuStyle = css`
   width: 200px;
@@ -29,20 +30,18 @@ function isMenuItemElement(
   );
 }
 
-//  const tags = ['input', 'a', 'textarea', 'iframe', 'button']
-const focusableTags = ['input', 'a', 'textarea', 'iframe', 'button'];
-
-function isFocusable(element: React.ReactNode) {
-  if (!element) {
-    return false;
-  }
-
-  console.log(element.type, element.props, element.tagName)
-  if (focusableTags.includes(element.type) || element.props.tabIndex > 0) {
-    return true;
-  }
-
-  return false;
+function isFocusableMenuItem(
+  element: React.ReactNode,
+): element is React.ReactElement<
+  FocusableMenuItemProps,
+  typeof FocusableMenuItem
+> {
+  return (
+    element != null &&
+    typeof element === 'object' &&
+    'type' in element &&
+    (element.type as any).displayName === 'FocusableMenuItem'
+  );
 }
 
 interface MenuProps
@@ -115,21 +114,19 @@ function Menu({
   const refs: Array<HTMLElement> = [];
 
   const updatedChildren = React.Children.map(children, child => {
-    if (typeof child === 'object') {
-      console.log(child, child.type)
-    }
-
-    if (isMenuItemElement(child) && !child.props.disabled) {
+    if (
+      (isMenuItemElement(child) && !child.props.disabled) ||
+      isFocusableMenuItem(child)
+    ) {
       return React.cloneElement(child, {
         ref: (ref: HTMLElement) => refs.push(ref),
-      })
+      });
     }
 
     return child;
   });
 
   const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
-  console.log('refs are:', refs)
 
   const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
@@ -161,7 +158,26 @@ function Menu({
 
   useEscapeKey(handleClose, { enabled: open });
 
+  function trapLastMenuItem(refs: Array<HTMLElement>) {
+    if (document.activeElement === refs[refs.length - 1]) {
+      return true;
+    }
+
+    return false;
+  }
+
+  function trapFirstMenuItem() {
+    const filteredRefs = refs.filter(ref => ref !== null);
+
+    if (document.activeElement === filteredRefs[0]) {
+      return true;
+    }
+
+    return false;
+  }
+
   function handleKeyDown(e: KeyboardEvent) {
+    const filteredRefs = refs.filter(ref => ref !== null);
     let refToFocus: HTMLElement;
 
     switch (e.key) {
@@ -176,6 +192,21 @@ function Menu({
           refs[(refs.indexOf(focused!) - 1 + refs.length) % refs.length];
         setFocused(refToFocus);
         refToFocus.focus();
+        break;
+
+      case 'Tab':
+        if (!e.shiftKey && trapLastMenuItem(filteredRefs)) {
+          e.preventDefault();
+          setFocused(refs[0]);
+          refs[0].focus();
+        }
+
+        if (e.shiftKey && trapFirstMenuItem()) {
+          e.preventDefault();
+          filteredRefs[filteredRefs.length - 1].focus();
+          setFocused(filteredRefs[filteredRefs.length - 1]);
+        }
+
         break;
 
       case ' ':

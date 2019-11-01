@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
-import { Menu, MenuItem, MenuSeparator } from '@leafygreen-ui/menu';
+import {
+  Menu,
+  MenuItem,
+  MenuSeparator,
+  FocusableMenuItem,
+} from '@leafygreen-ui/menu';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -117,15 +122,15 @@ const openIconStyle = css`
 const horizontalPadding = css`
   padding-left: 20px;
   padding-right: 20px;
-`
+`;
 
 const topPadding = css`
   padding-top: 20px;
-`
+`;
 
 const bottomPadding = css`
   padding-bottom: 14px;
-`
+`;
 
 const accountButtonStyle = css`
   margin-top: 12px;
@@ -248,9 +253,10 @@ function MongoMenu({
       </div>
 
       <Menu open={open} setOpen={setOpen}>
-          <div className={topPadding}></div>
-          <h3 className={cx(nameStyle, truncate, horizontalPadding)}>{name}</h3>
-          <p className={cx(horizontalPadding, descriptionStyle)}>{email}</p>
+        <div className={topPadding}></div>
+        <h3 className={cx(nameStyle, truncate, horizontalPadding)}>{name}</h3>
+        <p className={cx(horizontalPadding, descriptionStyle)}>{email}</p>
+        <FocusableMenuItem>
           <Button
             size="small"
             href={accountURL}
@@ -259,7 +265,8 @@ function MongoMenu({
           >
             MongoDB Account
           </Button>
-          <div className={bottomPadding}></div>
+        </FocusableMenuItem>
+        <div className={bottomPadding}></div>
         <MenuSeparator />
         {menuItems.map(el => (
           <MenuItem
