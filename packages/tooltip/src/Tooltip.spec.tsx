@@ -35,20 +35,22 @@ describe('packages/Tooltip', () => {
       expect(button.tagName.toLowerCase()).toBe('button');
     });
 
-    test('click triggers opening and closing of tooltip', () => {
+    test('click triggers opening and closing of tooltip', async () => {
       fireEvent.click(button);
       const tooltip = getByTestId('uncontrolled-tooltip');
-      expect(tooltip).toBeInTheDocument();
       expect(onClick).toHaveBeenCalledTimes(1);
+      // checking that in the Document, because in the document before opacity hits 1
+      expect(tooltip).toBeInTheDocument();
 
+      // checking for visibility, because opacity changes before tooltip transitions out of the DOM
       fireEvent.click(button);
-      expect(tooltip).not.toBeInTheDocument();
+      expect(tooltip).not.toBeVisible();
     });
 
     test('backdrop clicks close the tooltip', () => {
       fireEvent.click(button);
       const tooltip = getByTestId('uncontrolled-tooltip');
-      expect(tooltip).toBeVisible();
+      expect(tooltip).toBeInTheDocument();
 
       fireEvent.click(backdrop);
       expect(tooltip).not.toBeVisible();
@@ -60,7 +62,7 @@ describe('packages/Tooltip', () => {
       expect(tooltip).toBeInTheDocument();
 
       fireEvent.keyDown(button, { key: 'Escape', keyCode: 27 });
-      expect(tooltip).not.toBeInTheDocument();
+      expect(tooltip).not.toBeVisible();
     });
 
     describe('when shouldClose() prop is passed', () => {
@@ -85,13 +87,13 @@ describe('packages/Tooltip', () => {
 
         const backdrop = getByTestId('shouldClose-test-backdrop');
         const trigger = getByTestId('shouldClose-test-trigger');
-        
+
         fireEvent.click(trigger);
         const tooltip = getByTestId('shouldClose-test-tooltip');
         expect(tooltip).toBeInTheDocument();
 
         fireEvent.click(backdrop);
-        expect(tooltip).not.toBeInTheDocument();
+        expect(tooltip).not.toBeVisible();
       });
 
       test('when shoudlClose() returns false', () => {
@@ -114,7 +116,7 @@ describe('packages/Tooltip', () => {
 
         const backdrop = getByTestId('shouldClose-backdrop');
         const trigger = getByTestId('shouldClose-trigger');
-        
+
         fireEvent.click(trigger);
         const tooltip = getByTestId('shouldClose-tooltip');
         expect(tooltip).toBeInTheDocument();
@@ -200,7 +202,7 @@ describe('packages/Tooltip', () => {
       expect(onClick).toHaveBeenCalledTimes(1);
 
       const tooltip = getByTestId('class-triggered-tooltip');
-      expect(tooltip).toBeVisible();
+      expect(tooltip).toBeInTheDocument();
 
       fireEvent.click(button);
       expect(tooltip).not.toBeVisible();
@@ -235,7 +237,7 @@ describe('packages/Tooltip', () => {
     test(`${triggerEvent} triggers opening and closing of tooltip`, () => {
       fireEvent.click(button);
       const tooltip = getByTestId('functional-trigger');
-      expect(tooltip).toBeVisible();
+      expect(tooltip).toBeInTheDocument();
 
       fireEvent.click(button);
       expect(tooltip).not.toBeVisible();
