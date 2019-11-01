@@ -230,6 +230,7 @@ const MenuItem = React.forwardRef(
           onClick={disabled ? undefined : onClick}
           href={href}
           ref={forwardedref as RefObject<any>}
+          tabIndex={disabled ? -1 : undefined}
         >
           <div
             className={cx(titleTextStyle, {

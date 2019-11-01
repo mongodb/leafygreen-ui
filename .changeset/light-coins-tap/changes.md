@@ -1,1 +1,0 @@
-Implement accessible keyboard navigation for Menu component
