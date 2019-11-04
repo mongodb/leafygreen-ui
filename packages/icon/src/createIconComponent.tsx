@@ -14,9 +14,7 @@ export const Size = {
 
 export type Size = typeof Size[keyof typeof Size];
 
-export interface IconProps<G extends GlyphMap>
-  extends Omit<SVGR.ComponentProps, 'size'> {
-  size?: Size | number;
+export interface IconProps<G extends GlyphMap> extends SVGR.ComponentProps {
   glyph: keyof G;
 }
 

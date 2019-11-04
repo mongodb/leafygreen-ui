@@ -24,24 +24,16 @@ const textStyle = css`
   margin-top: 0.5rem;
 `;
 
-storiesOf('Icons', module).add('Icon', () => {
-  const glyphList = Object.keys(glyphs) as Array<keyof typeof glyphs>;
-  const fill = color('Fill', '#000000');
-  const size = select('size', Object.values(Size) as Array<Size>, Size.Default);
+const glyphList = Object.keys(glyphs) as Array<keyof typeof glyphs>;
 
-  const glyphMap = glyphList.map(glyph => (
-    <div key={glyph} className={containerStyle}>
-      <Icon glyph={glyph} fill={fill} size={size} />
-      <div className={textStyle}>{glyph}</div>
-    </div>
-  ));
+const glyphMap = glyphList.map(glyph => (
+  <div key={glyph} className={containerStyle}>
+    <Icon
+      glyph={glyph}
+      fill={color('Fill', '#000000')}
+      size={select('size', Object.values(Size) as Array<Size>, Size.Default)} />
+    <div className={textStyle}>{glyph}</div>
+  </div>
+));
 
-  const { Copy } = glyphs;
-
-  return (
-    <>
-      <Copy fill={fill} size={size} />
-      {glyphMap}
-    </>
-  );
-});
+storiesOf('Icons', module).add('Icon', () => (<>{glyphMap}</>));
