@@ -1,5 +1,6 @@
 import React, { useMemo, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Transition } from 'react-transition-group';
 import Portal from '@leafygreen-ui/portal';
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
@@ -13,7 +14,6 @@ import { calculatePosition, getElementPosition } from './positionUtils';
 const rootPopoverStyle = css`
   transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
   position: absolute;
-  pointer-events: none;
   opacity: 0;
 `;
 
@@ -139,28 +139,32 @@ function Popover({
   })();
 
   return (
-    <>
-      <div
-        ref={setPlaceholderNode}
-        className={css`
-          display: none;
-        `}
-      />
-      <Root>
-        <div
-          {...rest}
-          ref={setContentNode}
-          className={cx(
-            rootPopoverStyle,
-            css(positionCSS),
-            { [activeStyle]: active },
-            className,
-          )}
-        >
-          {renderedChildren}
-        </div>
-      </Root>
-    </>
+    <Transition in={active} timeout={{ exit: 150 }} mountOnEnter unmountOnExit>
+      {(state: string) => (
+        <>
+          <div
+            ref={setPlaceholderNode}
+            className={css`
+              display: none;
+            `}
+          />
+          <Root>
+            <div
+              {...rest}
+              ref={setContentNode}
+              className={cx(
+                rootPopoverStyle,
+                css(positionCSS),
+                { [activeStyle]: state === 'entered' },
+                className,
+              )}
+            >
+              {renderedChildren}
+            </div>
+          </Root>
+        </>
+      )}
+    </Transition>
   );
 }
 
