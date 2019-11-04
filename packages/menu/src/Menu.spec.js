@@ -24,17 +24,17 @@ describe('packages/Menu', () => {
 
   const menu = getByTestId('test-menu');
 
-  test('Appears on DOM when open prop is set', () => {
+  test('appears on DOM when open prop is set', () => {
     const menu = getByTestId('test-menu');
     expect(menu).toBeInTheDocument();
   });
 
-  test('Renders children to the DOM', () => {
+  test('renders children to the DOM', () => {
     const menuItem = getByText('Item A');
     expect(menuItem).toBeInTheDocument();
   });
 
-  describe('When Menu is uncontrolled', () => {
+  describe('when Menu is uncontrolled', () => {
     const setOpen = jest.fn();
     const onClick = jest.fn();
 
@@ -51,11 +51,10 @@ describe('packages/Menu', () => {
 
     test('when setOpen is set but no open prop is provided, Menu behaves as uncontrolled', () => {
       const button = getByText('trigger');
-      const menuItem = getByText('Item C');
-
       fireEvent.click(button);
 
-      expect(menuItem).toBeVisible();
+      const menuItem = getByText('Item C');
+      expect(menuItem).toBeInTheDocument();
 
       fireEvent.click(button);
 

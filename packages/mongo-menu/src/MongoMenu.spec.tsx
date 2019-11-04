@@ -18,6 +18,9 @@ describe('packages/MongoMenu', () => {
     />,
   );
 
+  const trigger = getByText('Leafy');
+  fireEvent.click(trigger);
+
   test('Atlas menu item links to cloud.mongodb.com', () => {
     const atlasItem = getByText('Atlas').parentElement;
     expect((atlasItem as HTMLAnchorElement).href).toBe(
