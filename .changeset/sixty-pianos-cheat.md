@@ -2,4 +2,4 @@
 '@leafygreen-ui/button': major
 ---
 
-Component now composed of React.forwardRef()
+Wrapping component with React.forwardRef to provide direct access to the underlying element.

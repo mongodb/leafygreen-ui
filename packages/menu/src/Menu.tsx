@@ -2,11 +2,10 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
+import { isComponentType } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
-import MenuItem, { MenuItemProps } from './MenuItem';
-import FocusableMenuItem, { FocusableMenuItemProps } from './FocusableMenuItem';
 
 const rootMenuStyle = css`
   width: 200px;
@@ -18,31 +17,6 @@ const rootMenuStyle = css`
   margin-block-end: 0px;
   padding-inline-start: 0px;
 `;
-
-function isMenuItemElement(
-  element: React.ReactNode,
-): element is React.ReactElement<MenuItemProps, typeof MenuItem> {
-  return (
-    element != null &&
-    typeof element === 'object' &&
-    'type' in element &&
-    (element.type as any).displayName === 'MenuItem'
-  );
-}
-
-function isFocusableMenuItem(
-  element: React.ReactNode,
-): element is React.ReactElement<
-  FocusableMenuItemProps,
-  typeof FocusableMenuItem
-> {
-  return (
-    element != null &&
-    typeof element === 'object' &&
-    'type' in element &&
-    (element.type as any).displayName === 'FocusableMenuItem'
-  );
-}
 
 interface MenuProps
   extends Omit<PopoverProps, 'active' | 'spacing' | 'children'> {
@@ -115,8 +89,8 @@ function Menu({
 
   const updatedChildren = React.Children.map(children, child => {
     if (
-      (isMenuItemElement(child) && !child.props.disabled) ||
-      isFocusableMenuItem(child)
+      (isComponentType(child, 'MenuItem') && !child.props.disabled) ||
+      isComponentType(child, 'FocusableMenuItem')
     ) {
       return React.cloneElement(child, {
         ref: (ref: HTMLElement) => refs.push(ref),
