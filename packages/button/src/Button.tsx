@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -345,5 +346,16 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
 });
 
 Button.displayName = 'Button';
+
+// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
+Button.propTypes = {
+  variant: PropTypes.oneOf(Object.values(Variant)),
+  size: PropTypes.oneOf(Object.values(Size)),
+  className: PropTypes.string,
+  children: PropTypes.node,
+  disabled: PropTypes.bool,
+  as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  href: PropTypes.string,
+};
 
 export default Button;

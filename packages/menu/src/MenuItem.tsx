@@ -1,4 +1,5 @@
 import React, { RefObject } from 'react';
+import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
@@ -257,5 +258,18 @@ const MenuItem = React.forwardRef(
 );
 
 MenuItem.displayName = 'MenuItem';
+
+// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
+MenuItem.propTypes = {
+  href: PropTypes.string,
+  onClick: PropTypes.func,
+  className: PropTypes.string,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  disabled: PropTypes.bool,
+  active: PropTypes.bool,
+  children: PropTypes.node,
+  ref: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+};
 
 export default MenuItem;
