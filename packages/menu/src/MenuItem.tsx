@@ -22,7 +22,7 @@ const containerStyle = css`
   border: none;
   margin: unset;
   width: 100%;
-  font-family: 'Akzidenz';
+  font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
 
   &:before {
     content: '';

@@ -7,6 +7,12 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
 
+const keyMap = {
+  ArrowUp: 38,
+  ArrowDown: 40,
+  Tab: 9,
+};
+
 const rootMenuStyle = css`
   width: 200px;
   border-radius: 3px;
@@ -161,21 +167,21 @@ function Menu({
     const filteredRefs = refs.filter(ref => ref !== null);
     let refToFocus: HTMLElement;
 
-    switch (e.key) {
-      case 'ArrowDown':
+    switch (e.keyCode) {
+      case keyMap['ArrowDown']:
         refToFocus = refs[(refs.indexOf(focused!) + 1) % refs.length];
         setFocused(refToFocus);
         refToFocus.focus();
         break;
 
-      case 'ArrowUp':
+      case keyMap['ArrowUp']:
         refToFocus =
           refs[(refs.indexOf(focused!) - 1 + refs.length) % refs.length];
         setFocused(refToFocus);
         refToFocus.focus();
         break;
 
-      case 'Tab':
+      case keyMap['Tab']:
         if (!e.shiftKey && trapLastMenuItem(filteredRefs)) {
           e.preventDefault();
           setFocused(refs[0]);

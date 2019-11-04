@@ -7,7 +7,7 @@ const borderStyle = css`
 `;
 
 function MenuSeparator() {
-  return <li role="separator" className={borderStyle}></li>;
+  return <li role="separator" className={borderStyle} />;
 }
 
 MenuSeparator.displayName = 'MenuSeparator';
