@@ -40,7 +40,24 @@ describe('packages/Popover', () => {
     ).toBe(false);
   });
 
-  test('does not render children when active is false', () => {
+  test('does not render children by default when usePortal is true', () => {
+    render(
+      <>
+        <button>Trigger Element</button>
+        <Popover justify={Justify.Start} align={Align.Top}>
+          This content should not appear by default
+        </Popover>
+      </>,
+    );
+
+    expect(
+      document.body.innerHTML.includes(
+        'This content should not appear by default',
+      ),
+    ).toBe(false);
+  });
+
+  test('does not render children by default when usePortal is false', () => {
     const wrapper = render(
       <>
         <button>Trigger Element</button>
