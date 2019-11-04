@@ -44,7 +44,7 @@ describe('packages/Popover', () => {
     const wrapper = render(
       <>
         <button>Trigger Element</button>
-        <Popover justify={Justify.Start} align={Align.Top}>
+        <Popover justify={Justify.Start} align={Align.Top} usePortal={false}>
           Content to appear inside of Popover component
         </Popover>
       </>,
