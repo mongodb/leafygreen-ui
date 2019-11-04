@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
-
 import { Menu, MenuSeparator, MenuItem } from './index';
 import { Align, Justify } from '@leafygreen-ui/popover';
 

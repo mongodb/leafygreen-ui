@@ -107,6 +107,13 @@ function Menu({
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   const setOpen = isControlled ? controlledSetOpen : uncontrolledSetOpen;
 
+  React.useEffect(() => {
+    if (open && refs.length > 1) {
+      setFocused(refs[0]);
+      refs[0].focus();
+    }
+  }, [open]);
+
   const popoverRef: React.RefObject<HTMLUListElement> = useRef(null);
 
   const handleClose = () => {
@@ -198,12 +205,6 @@ function Menu({
     enabled: open,
   });
 
-  const handleClick = () => {
-    setOpen((curr: boolean) => !curr);
-    setFocused(refs[0]);
-    refs[0].focus();
-  };
-
   const popoverContent = (
     <Popover
       key="popover"
@@ -229,14 +230,14 @@ function Menu({
   if (trigger) {
     if (typeof trigger === 'function') {
       return trigger({
-        onClick: handleClick,
+        onClick: () => setOpen((curr: boolean) => !curr),
         children: popoverContent,
       });
     }
 
     return React.cloneElement(trigger, {
       onClick: (e: React.MouseEvent) => {
-        handleClick();
+        setOpen((curr: boolean) => !curr);
 
         if (trigger.props.onClick) {
           trigger.props.onClick(e);
