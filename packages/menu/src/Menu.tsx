@@ -114,6 +114,7 @@ function Menu({
             hasSetInitialFocus.current = true;
           }
         },
+        onFocus: (e: Event) => setFocused(e.target as HTMLElement),
       });
     }
 
