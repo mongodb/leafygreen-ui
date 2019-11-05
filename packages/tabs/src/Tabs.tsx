@@ -47,16 +47,6 @@ const focusedStyle = css`
   background-color: ${uiColors.blue.base};
 `;
 
-// function isTab(
-//   element: React.ReactNode,
-// ): element is React.ReactElement<TabProps, typeof Tab> {
-//   if (!(element != null && typeof element === 'object' && 'type' in element)) {
-//     return false;
-//   }
-
-//   return (element.type as any).displayName === 'Tab';
-// }
-
 const keyMap = {
   ArrowLeft: 37,
   ArrowRight: 39,
