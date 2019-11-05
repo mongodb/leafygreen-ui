@@ -20,13 +20,7 @@ describe('packages/Menu', () => {
     </Menu>,
   );
 
-<<<<<<< HEAD
-  const menu = getByTestId('test-menu');
-
   test('appears on DOM when open prop is set', () => {
-=======
-  test('Appears on DOM when open prop is set', () => {
->>>>>>> nav item component created
     const menu = getByTestId('test-menu');
     expect(menu).toBeInTheDocument();
   });

@@ -11,6 +11,8 @@ const keyMap = {
   ArrowUp: 38,
   ArrowDown: 40,
   Tab: 9,
+  SpaceBar: 32,
+  Enter: 13,
 };
 
 const rootMenuStyle = css`
@@ -113,12 +115,22 @@ function Menu({
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   const setOpen = isControlled ? controlledSetOpen : uncontrolledSetOpen;
 
+  const [forceUpdate, setForceUpdate] = useState(false);
+
   React.useEffect(() => {
-    if (open && refs.length > 1) {
+    if (open && forceUpdate === false) {
+      setForceUpdate(true);
+    }
+
+    if (!open) {
+      setForceUpdate(false);
+    }
+
+    if (refs.length > 1) {
       setFocused(refs[0]);
       refs[0].focus();
     }
-  }, [open]);
+  }, [open, forceUpdate]);
 
   const popoverRef: React.RefObject<HTMLUListElement> = useRef(null);
 
@@ -196,9 +208,8 @@ function Menu({
 
         break;
 
-      case ' ':
-      case 'Space Bar':
-      case 'Enter':
+      case keyMap['SpaceBar']:
+      case keyMap['Enter']:
         if (!open) {
           setFocused(refs[0]);
           refs[0].focus();
