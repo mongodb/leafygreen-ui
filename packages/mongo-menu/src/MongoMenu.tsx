@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
-import { Menu, MenuItem, MenuGroup } from '@leafygreen-ui/menu';
+import {
+  Menu,
+  MenuItem,
+  MenuSeparator,
+  FocusableMenuItem,
+} from '@leafygreen-ui/menu';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -114,15 +119,20 @@ const openIconStyle = css`
   color: ${uiColors.gray.base};
 `;
 
-const accountMenuGroupStyle = css`
-  padding: 20px 20px 14px;
+const headerPadding = css`
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 
 const accountButtonStyle = css`
   margin-top: 12px;
-  width: 100%;
+  margin-left: 20px;
+  width: calc(100% - 40px);
   display: inline-flex;
   justify-content: center;
+  align-items: center;
+  margin-bottom: 14px;
 `;
 
 const descriptionStyle = css`
@@ -237,9 +247,11 @@ function MongoMenu({
       </div>
 
       <Menu open={open} setOpen={setOpen}>
-        <MenuGroup className={accountMenuGroupStyle}>
+        <div className={headerPadding}>
           <h3 className={cx(nameStyle, truncate)}>{name}</h3>
           <p className={descriptionStyle}>{email}</p>
+        </div>
+        <FocusableMenuItem>
           <Button
             size="small"
             href={accountURL}
@@ -248,20 +260,20 @@ function MongoMenu({
           >
             MongoDB Account
           </Button>
-        </MenuGroup>
-        <MenuGroup>
-          {menuItems.map(el => (
-            <MenuItem
-              onClick={onProductChange}
-              key={el.displayName}
-              active={el.slug === activeProduct}
-              href={el.href}
-              description={el.description}
-            >
-              {el.displayName}
-            </MenuItem>
-          ))}
-        </MenuGroup>
+        </FocusableMenuItem>
+        <MenuSeparator />
+        {menuItems.map(el => (
+          <MenuItem
+            onClick={onProductChange}
+            key={el.displayName}
+            active={el.slug === activeProduct}
+            href={el.href}
+            description={el.description}
+          >
+            {el.displayName}
+          </MenuItem>
+        ))}
+        <MenuSeparator />
         <MenuItem onClick={onLogout} className={cx(logoutContainerHeight)}>
           Logout
         </MenuItem>

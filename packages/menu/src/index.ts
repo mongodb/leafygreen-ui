@@ -1,5 +1,6 @@
 import Menu from './Menu';
-import MenuGroup from './MenuGroup';
+import MenuSeparator from './MenuSeparator';
 import MenuItem from './MenuItem';
+import FocusableMenuItem from './FocusableMenuItem';
 
-export { Menu, MenuGroup, MenuItem };
+export { Menu, MenuSeparator, MenuItem, FocusableMenuItem };

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
-
-import { Menu, MenuGroup, MenuItem } from './index';
+import { Menu, MenuSeparator, MenuItem } from './index';
 import { Align, Justify } from '@leafygreen-ui/popover';
 
 function Uncontrolled() {
@@ -38,16 +37,15 @@ function Controlled() {
         open={open}
         setOpen={setOpen}
       >
-        <MenuGroup>
-          <MenuItem active>Active Menu Item</MenuItem>
-          <MenuItem disabled={boolean('Disabled', true)}>
-            Disabled Menu Item
-          </MenuItem>
-          <MenuItem description="I am a description">
-            Menu Item With Description
-          </MenuItem>
-          <MenuItem href="http://mongodb.design">I am a link!</MenuItem>
-        </MenuGroup>
+        <MenuItem active>Active Menu Item</MenuItem>
+        <MenuItem disabled={boolean('Disabled', true)}>
+          Disabled Menu Item
+        </MenuItem>
+        <MenuItem description="I am a description">
+          Menu Item With Description
+        </MenuItem>
+        <MenuItem href="http://mongodb.design">I am a link!</MenuItem>
+        <MenuSeparator />
         <MenuItem>Left out of the MenuGroup</MenuItem>
       </Menu>
     </button>

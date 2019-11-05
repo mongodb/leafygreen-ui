@@ -1,9 +1,8 @@
-import * as React from 'react';
+import React, { RefObject } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
-import { menuGroup } from './MenuGroup';
 
 const menuItemContainer = createDataProp('menu-item-container');
 
@@ -20,6 +19,10 @@ const containerStyle = css`
   text-decoration: none;
   position: relative;
   transition: background-color 150ms ease-in-out;
+  border: none;
+  margin: unset;
+  width: 100%;
+  font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
 
   &:before {
     content: '';
@@ -56,18 +59,6 @@ const containerStyle = css`
     &:before {
       background-color: #63b0d0;
     }
-  }
-
-  &:first-of-type ~ ${menuGroup.selector} {
-    border-top: 1px solid ${uiColors.gray.light1};
-  }
-
-  ${menuGroup.selector} + & {
-    border-top: 1px solid ${uiColors.gray.light1};
-  }
-
-  ${menuGroup.selector} ${menuGroup.selector} & {
-    padding-left: ${indentation * 2}px;
   }
 `;
 
@@ -120,6 +111,16 @@ const activeStyle = css`
       background-color: ${uiColors.green.base};
     }
   }
+
+  &:focus {
+    outline: none;
+    background-color: ${uiColors.blue.light3};
+    color: ${uiColors.blue.dark3};
+
+    &:before {
+      background-color: #63b0d0;
+    }
+  }
 `;
 
 const disabledStyle = css`
@@ -135,7 +136,7 @@ const disbaledTextStyle = css`
   color: ${uiColors.gray.light1};
 `;
 
-interface MenuItemProps {
+export interface MenuItemProps {
   /**
    * If supplied, MenuItem will be rendered inside of `a` tags.
    */
@@ -170,6 +171,8 @@ interface MenuItemProps {
    * Determines whether or not the MenuItem is active.
    */
   active?: boolean;
+
+  ref?: any;
 }
 
 /**
@@ -187,60 +190,76 @@ interface MenuItemProps {
  * @param props.active Determines whether the MenuItem will appear as active
  *
  */
-function MenuItem({
-  disabled = false,
-  active = false,
-  href,
-  onClick,
-  className,
-  children,
-  description,
-  ...rest
-}: MenuItemProps) {
-  const Root = href ? 'a' : 'span';
+const MenuItem = React.forwardRef(
+  (
+    {
+      disabled = false,
+      active = false,
+      href,
+      onClick,
+      className,
+      children,
+      description,
+      ...rest
+    }: MenuItemProps,
+    forwardedref,
+  ) => {
+    const Root = href ? 'a' : 'button';
 
-  return (
-    <Root
-      {...rest}
-      {...menuItemContainer.prop}
-      className={cx(
-        containerStyle,
-        linkStyle,
-        {
-          [activeStyle]: active,
-          [disabledStyle]: disabled,
-        },
-        className,
-      )}
-      role="menuitem"
-      aria-disabled={disabled}
-      onClick={disabled ? undefined : onClick}
-      href={href}
-    >
-      <div
-        className={cx(titleTextStyle, {
-          [activetitleTextStyle]: active,
-          [disbaledTextStyle]: disabled,
-        })}
-      >
-        {children}
-      </div>
-      {description && (
-        <div
-          className={cx(descriptionTextStyle, {
-            [activeDescriptionTextStyle]: active,
-            [disbaledTextStyle]: disabled,
-          })}
+    const anchorProps = href && {
+      target: '_blank',
+      rel: 'noopener noreferrer',
+    };
+
+    return (
+      <li role="none">
+        <Root
+          {...rest}
+          {...menuItemContainer.prop}
+          {...anchorProps}
+          className={cx(
+            containerStyle,
+            linkStyle,
+            {
+              [activeStyle]: active,
+              [disabledStyle]: disabled,
+            },
+            className,
+          )}
+          role="menuitem"
+          aria-disabled={disabled}
+          onClick={disabled ? undefined : onClick}
+          href={href}
+          ref={forwardedref as RefObject<any>}
+          tabIndex={disabled ? -1 : undefined}
         >
-          {description}
-        </div>
-      )}
-    </Root>
-  );
-}
+          <div
+            className={cx(titleTextStyle, {
+              [activetitleTextStyle]: active,
+              [disbaledTextStyle]: disabled,
+            })}
+          >
+            {children}
+          </div>
+          {description && (
+            <div
+              className={cx(descriptionTextStyle, {
+                [activeDescriptionTextStyle]: active,
+                [disbaledTextStyle]: disabled,
+              })}
+            >
+              {description}
+            </div>
+          )}
+        </Root>
+      </li>
+    );
+  },
+);
 
 MenuItem.displayName = 'MenuItem';
 
+// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 MenuItem.propTypes = {
   href: PropTypes.string,
   onClick: PropTypes.func,
@@ -250,6 +269,7 @@ MenuItem.propTypes = {
   disabled: PropTypes.bool,
   active: PropTypes.bool,
   children: PropTypes.node,
+  ref: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
 };
 
 export default MenuItem;

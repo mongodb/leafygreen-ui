@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp } from '@leafygreen-ui/lib';
 
-export const menuGroup = createDataProp('menu-group-section');
+export const menuGroupDataProp = createDataProp('menu-group-section');
 
 interface MenuGroupProps {
   /**
@@ -30,7 +30,7 @@ interface MenuGroupProps {
  */
 function MenuGroup({ children, className, ...rest }: MenuGroupProps) {
   return (
-    <section {...rest} {...menuGroup.prop} className={className}>
+    <section {...rest} {...menuGroupDataProp.prop} className={className}>
       {children}
     </section>
   );
