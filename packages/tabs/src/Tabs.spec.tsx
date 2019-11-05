@@ -80,7 +80,7 @@ describe('packages/Tabs', () => {
     test('keyboard nav is not supported', () => {
       const activeTabListItem = getByText('Name B');
       const activeTab = getByText('Test Content 2');
-      fireEvent.keyDown(activeTabListItem, { key: 'ArrowLeft', code: 37 });
+      fireEvent.keyDown(activeTabListItem, { key: 'ArrowLeft', keyCode: 37 });
       expect(activeTab).toBeVisible();
     });
   });
@@ -120,7 +120,10 @@ describe('packages/Tabs', () => {
 
     test('keyboard nav is supported', () => {
       const activeTabListItem = getByText('Name First');
-      fireEvent.keyDown(activeTabListItem, { key: 'ArrowLeft', code: 37 });
+      fireEvent.keyDown(activeTabListItem, {
+        key: 'ArrowLeft',
+        keyCode: 37,
+      });
 
       const nextActiveTab = getByText('Second Content');
       expect(nextActiveTab).toBeVisible();
@@ -129,7 +132,10 @@ describe('packages/Tabs', () => {
 
     test('keyboard nav skips tab if tab is disabled', () => {
       const activeTabListItem = getByText('Name Second');
-      fireEvent.keyDown(activeTabListItem, { key: 'ArrowRight', code: 39 });
+      fireEvent.keyDown(activeTabListItem, {
+        key: 'ArrowRight',
+        keyCode: 39,
+      });
 
       const activeTab = getByText('First Content');
       expect(activeTab).toBeVisible();
