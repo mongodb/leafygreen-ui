@@ -281,7 +281,7 @@ function usesLinkElement(
   return props.href != null;
 }
 
-export default function Button(props: ButtonProps) {
+const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
   const {
     className = '',
     children = null,
@@ -314,6 +314,7 @@ export default function Button(props: ButtonProps) {
 
   const renderButton = (Root: React.ElementType<any> = 'button') => (
     <Root
+      ref={forwardRef}
       type={Root === 'button' ? 'button' : undefined}
       {...(rest as HTMLElementProps<any>)}
       {...commonProps}
@@ -342,8 +343,11 @@ export default function Button(props: ButtonProps) {
   }
 
   return renderButton();
-}
+});
 
+Button.displayName = 'Button';
+
+// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 Button.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)),
   size: PropTypes.oneOf(Object.values(Size)),
@@ -354,4 +358,4 @@ Button.propTypes = {
   href: PropTypes.string,
 };
 
-Button.displayName = 'Button';
+export default Button;
