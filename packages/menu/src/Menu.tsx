@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
@@ -94,6 +94,7 @@ function Menu({
   ...rest
 }: MenuProps) {
   const refs: Array<HTMLElement> = [];
+  const hasSetInitialFocus = useRef(false);
 
   const updatedChildren = React.Children.map(children, child => {
     if (
@@ -101,7 +102,18 @@ function Menu({
       isComponentType(child, 'FocusableMenuItem')
     ) {
       return React.cloneElement(child, {
-        ref: (ref: HTMLElement) => refs.push(ref),
+        ref: (ref: HTMLElement) => {
+          refs.push(ref);
+          if (
+            open &&
+            refs.length === 1 &&
+            hasSetInitialFocus.current === false
+          ) {
+            refs[0].focus();
+            setFocused(refs[0]);
+            hasSetInitialFocus.current = true;
+          }
+        },
       });
     }
 
@@ -109,30 +121,18 @@ function Menu({
   });
 
   const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
-
   const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   const setOpen = isControlled ? controlledSetOpen : uncontrolledSetOpen;
 
-  const [forceUpdate, setForceUpdate] = useState(false);
-
-  React.useEffect(() => {
-    if (open && forceUpdate === false) {
-      setForceUpdate(true);
-    }
-
-    if (!open) {
-      setForceUpdate(false);
-    }
-
-    if (refs.length > 1) {
-      setFocused(refs[0]);
-      refs[0].focus();
-    }
-  }, [open, forceUpdate]);
-
   const popoverRef: React.RefObject<HTMLUListElement> = useRef(null);
+
+  useMemo(() => {
+    if (open === false) {
+      hasSetInitialFocus.current = false;
+    }
+  }, [open]);
 
   const handleClose = () => {
     if (shouldClose()) {
@@ -182,8 +182,8 @@ function Menu({
     switch (e.keyCode) {
       case keyMap['ArrowDown']:
         refToFocus = refs[(refs.indexOf(focused!) + 1) % refs.length];
-        setFocused(refToFocus);
         refToFocus.focus();
+        setFocused(refToFocus);
         break;
 
       case keyMap['ArrowUp']:
