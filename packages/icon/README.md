@@ -88,3 +88,34 @@ const myGlyphs = {
 
 const MyIconComponent = createIconComponent(myGlyphs);
 ```
+
+# Using individual Icons
+
+We export each icon individually to enable using them directly. This is particularly useful if you don't intend to use more than a few icons, and should allow bundlers to omit unused Icons more effectively, reducing bundle size.
+
+> **NOTE**
+>
+> This API is only useful if you don't use the default `Icon` component elsewhere in your bundled code. If you intend to use a large portion of the default set of icons, we recommend continuing to use the default `Icon` component for the best developer experience.
+
+## Example
+
+```js
+import { glyphs } from '@leafygreen-ui/icon';
+
+const { Plus: PlusIcon } = glyphs;
+
+const SomeComponent = () => <PlusIcon fill="#FF0000" />;
+```
+
+**Output HTML**
+
+```HTML
+<svg width="16" height="16" role="img" viewBox="0 0 16 16" class="leafygreen-ui-yqbynm">
+	<title>Plus Icon</title>
+	<path d="M9 7h4v2H9v4H7V9H3V7h4V3h2v4z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+```
+
+## Properties
+
+The individual icon components support an identical API to the default `Icon` component, with the exception of omitting the `glyph` property.

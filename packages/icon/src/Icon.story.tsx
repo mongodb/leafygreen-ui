@@ -31,9 +31,10 @@ const glyphMap = glyphList.map(glyph => (
     <Icon
       glyph={glyph}
       fill={color('Fill', '#000000')}
-      size={select('size', Object.values(Size) as Array<Size>, Size.Default)} />
+      size={select('size', Object.values(Size) as Array<Size>, Size.Default)}
+    />
     <div className={textStyle}>{glyph}</div>
   </div>
 ));
 
-storiesOf('Icons', module).add('Icon', () => (<>{glyphMap}</>));
+storiesOf('Icons', module).add('Icon', () => <>{glyphMap}</>);
