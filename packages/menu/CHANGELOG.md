@@ -5,7 +5,7 @@
 ### Major Changes
 
 - 9c45cb4: Traps focus within the Menu when Menu is open and keyboard navigation is now accessible
-- f6b6b7a: Content that appears in Popover is no longer present on DOM by default
+- f6b6b7a: Children of Popover are no longer rendered to the DOM when the Popover is closed
 
 ### Patch Changes
 
