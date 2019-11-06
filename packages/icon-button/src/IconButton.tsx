@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -10,16 +11,36 @@ const Variant = {
 
 type Variant = typeof Variant[keyof typeof Variant];
 
+export { Variant };
+
 interface SharedIconButtonProps {
+  /**
+   * Determines color of `IconButton`. Can be `light` or `dark`.
+   */
   variant?: Variant;
+
+  /**
+   * Classname applied to `IconButton`.
+   */
   className?: string;
+
+  /**
+   * Content to appear inside of `IconButton`.
+   */
   children?: React.ReactNode;
+
+  /**
+   * Determines whether or not `IconButton` is disabled.
+   */
   disabled?: boolean;
 }
 
 interface LinkIconButtonProps
   extends HTMLElementProps<'a'>,
     SharedIconButtonProps {
+  /**
+   * Destination URL, if supplied `IconButton` will render in `a` tags, rather than `button` tags.
+   */
   href: string;
 }
 
@@ -44,10 +65,11 @@ const baseIconButtonStyle = css`
   border-radius: 100px;
   color: ${uiColors.gray.base};
   position: relative;
+  cursor: pointer;
 
   &:before {
     content: '';
-    transition: 0.1s all ease-in-out;
+    transition: 150ms all ease-in-out;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -110,7 +132,25 @@ const iconStyle = css`
   width: 16px;
 `;
 
-export default function IconButton({
+/**
+ * # IconButton
+ *
+ * IconButton Component
+ *
+ * ```
+<IconButton variant='dark'>
+  <Icon glyph={copy} />
+</IconButton>
+```
+ * @param props.children Content to appear inside of `IconButton`.
+ * @param props.className Classname applied to `IconButton`.
+ * @param props.disabled Determines whether or not `IconButton` is disabled.
+ * @param props.variant Determines color of `IconButton`. Can be `light` or `dark`.
+ * @param props.href Destination URL, if supplied `IconButton` will render in `a` tags, rather than `button` tags.
+ * @param props.onClick Callback fired when `IconButton` is clicked.
+ */
+
+function IconButton({
   variant = 'light',
   disabled = false,
   className,
@@ -126,6 +166,7 @@ export default function IconButton({
       {...rest}
       onClick={disabled ? undefined : onClick}
       href={href ? href : undefined}
+      aria-disabled={disabled ? true : false}
       className={cx(
         { [removeButtonStyle]: !href },
         baseIconButtonStyle,
@@ -137,3 +178,15 @@ export default function IconButton({
     </Root>
   );
 }
+
+IconButton.displayName = 'IconButton';
+
+IconButton.propTypes = {
+  variant: PropTypes.oneOf(Object.values(Variant)),
+  className: PropTypes.string,
+  children: PropTypes.node,
+  disabled: PropTypes.bool,
+  href: PropTypes.string,
+};
+
+export default IconButton;
