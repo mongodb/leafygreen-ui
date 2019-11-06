@@ -1,5 +1,21 @@
 # @leafygreen-ui/mongo-menu
 
+## 2.0.0
+
+### Major Changes
+
+- f6b6b7a: Content that appears in Popover is no longer present on DOM by default
+
+### Patch Changes
+
+- 319fb82: Update PropTypes based on eslint updates
+- Updated dependencies [9c45cb4]
+- Updated dependencies [319fb82]
+- Updated dependencies [9c45cb4]
+- Updated dependencies [f6b6b7a]
+  - @leafygreen-ui/menu@4.0.0
+  - @leafygreen-ui/button@3.0.0
+
 ## 1.1.0
 
 ### Minor Changes

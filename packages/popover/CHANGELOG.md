@@ -1,5 +1,18 @@
 # @leafygreen-ui/popover
 
+## 2.0.0
+
+### Major Changes
+
+- f6b6b7a: Content that appears in Popover is no longer present on DOM by default
+
+### Patch Changes
+
+- Updated dependencies [9c45cb4]
+- Updated dependencies [319fb82]
+  - @leafygreen-ui/lib@3.1.0
+  - @leafygreen-ui/portal@1.1.8
+
 ## 1.2.0
 
 ### Minor Changes

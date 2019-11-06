@@ -1,5 +1,13 @@
 # @leafygreen-ui/tabs
 
+## 1.0.4
+
+### Patch Changes
+
+- d85bd2c: Keyboard navigation responds to keyCode rather than key for more browser compatibility
+- Updated dependencies [9c45cb4]
+  - @leafygreen-ui/lib@3.1.0
+
 ## 1.0.3
 
 ### Patch Changes
