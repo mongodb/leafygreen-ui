@@ -154,13 +154,13 @@ function Tabs({
     const enabledCurrentIndex = enabledIndexes.indexOf(selected!);
 
     switch (e.keyCode) {
-      case keyMap['ArrowRight']:
+      case keyMap.ArrowRight:
         setSelected(
           enabledIndexes[(enabledCurrentIndex + 1) % enabledIndexes.length],
         );
         break;
 
-      case keyMap['ArrowLeft']:
+      case keyMap.ArrowLeft:
         setSelected(
           enabledIndexes[
             (enabledCurrentIndex - 1 + enabledIndexes.length) %
