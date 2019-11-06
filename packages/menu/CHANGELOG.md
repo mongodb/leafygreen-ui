@@ -1,5 +1,20 @@
 # @leafygreen-ui/menu
 
+## 4.0.0
+
+### Major Changes
+
+- 9c45cb4: Traps focus within the Menu when Menu is open and keyboard navigation is now accessible
+- f6b6b7a: Children of Popover are no longer rendered to the DOM when the Popover is closed
+
+### Patch Changes
+
+- 319fb82: Update PropTypes based on eslint updates
+- Updated dependencies [9c45cb4]
+- Updated dependencies [f6b6b7a]
+  - @leafygreen-ui/lib@3.1.0
+  - @leafygreen-ui/popover@2.0.0
+
 ## 3.0.3
 
 - Updated dependencies [12fb220]:
