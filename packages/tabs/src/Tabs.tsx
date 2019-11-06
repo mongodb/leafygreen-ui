@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import Tab, { TabProps } from './Tab';
+import { isComponentType } from '@leafygreen-ui/lib';
 import TabTitle from './TabTitle';
 import omit from 'lodash/omit';
 
@@ -46,15 +46,10 @@ const focusedStyle = css`
   background-color: ${uiColors.blue.base};
 `;
 
-function isTab(
-  element: React.ReactNode,
-): element is React.ReactElement<TabProps, typeof Tab> {
-  if (!(element != null && typeof element === 'object' && 'type' in element)) {
-    return false;
-  }
-
-  return (element.type as any).displayName === 'Tab';
-}
+const keyMap = {
+  ArrowLeft: 37,
+  ArrowRight: 39,
+};
 
 interface TabsProps {
   /**
@@ -158,14 +153,14 @@ function Tabs({
 
     const enabledCurrentIndex = enabledIndexes.indexOf(selected!);
 
-    switch (e.key) {
-      case 'ArrowRight':
+    switch (e.keyCode) {
+      case keyMap.ArrowRight:
         setSelected(
           enabledIndexes[(enabledCurrentIndex + 1) % enabledIndexes.length],
         );
         break;
 
-      case 'ArrowLeft':
+      case keyMap.ArrowLeft:
         setSelected(
           enabledIndexes[
             (enabledCurrentIndex - 1 + enabledIndexes.length) %
@@ -202,7 +197,7 @@ function Tabs({
   }
 
   const tabs = React.Children.map(children, (child, index) => {
-    if (!isTab(child)) {
+    if (!isComponentType(child, 'Tab')) {
       return child;
     }
 
