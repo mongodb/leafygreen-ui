@@ -23,6 +23,7 @@ const containerStyle = css`
   margin: unset;
   width: 100%;
   font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
 
   &:before {
     content: '';
