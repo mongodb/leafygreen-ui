@@ -103,7 +103,7 @@ yarn ts
 3. Generate a changeset for each package.
 
 ```
-yarn changeset bump
+yarn changeset version
 ```
 
 4. Make sure changes made from this command are merged back into master before releasing.
