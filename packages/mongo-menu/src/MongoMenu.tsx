@@ -140,6 +140,11 @@ const descriptionStyle = css`
   font-size: 12px;
   color: ${uiColors.gray.dark1};
   text-decoration: none;
+  // width of the MongoMenu minus 20px padding-left and 20px padding-right
+  width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const logoutContainerHeight = css`
