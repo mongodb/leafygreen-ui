@@ -77,7 +77,7 @@ const baseIconButtonStyle = css`
     right: 0;
     border-radius: 100%;
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.8);
   }
 
   &:hover:before,
@@ -178,12 +178,12 @@ function IconButton({
       href={href ? href : undefined}
       aria-disabled={disabled ? true : false}
       className={cx(
+        baseIconButtonStyle,
+        iconButtonVariants[variant],
         {
           [removeButtonStyle]: !href,
           [disabledStyle[variant]]: disabled,
         },
-        baseIconButtonStyle,
-        iconButtonVariants[variant],
         className,
       )}
     >
