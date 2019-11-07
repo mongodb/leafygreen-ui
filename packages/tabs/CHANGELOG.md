@@ -1,5 +1,13 @@
 # @leafygreen-ui/tabs
 
+## 1.0.5
+
+### Patch Changes
+
+- 2f9a300: Use exported keyMap from lib
+- Updated dependencies [2f9a300]
+  - @leafygreen-ui/lib@3.2.0
+
 ## 1.0.4
 
 ### Patch Changes

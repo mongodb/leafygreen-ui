@@ -1,5 +1,14 @@
 # @leafygreen-ui/menu
 
+## 4.0.1
+
+### Patch Changes
+
+- 2f9a300: Use exported keyMap from lib
+- 759523f: Add border-box property to MenuItems and update documentation
+- Updated dependencies [2f9a300]
+  - @leafygreen-ui/lib@3.2.0
+
 ## 4.0.0
 
 ### Major Changes
