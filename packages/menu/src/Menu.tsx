@@ -2,18 +2,10 @@ import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
-
-const keyMap = {
-  ArrowUp: 38,
-  ArrowDown: 40,
-  Tab: 9,
-  SpaceBar: 32,
-  Enter: 13,
-};
 
 const rootMenuStyle = css`
   width: 200px;
@@ -181,20 +173,20 @@ function Menu({
     let refToFocus: HTMLElement;
 
     switch (e.keyCode) {
-      case keyMap['ArrowDown']:
+      case keyMap.ArrowDown:
         refToFocus = refs[(refs.indexOf(focused!) + 1) % refs.length];
         refToFocus.focus();
         setFocused(refToFocus);
         break;
 
-      case keyMap['ArrowUp']:
+      case keyMap.ArrowUp:
         refToFocus =
           refs[(refs.indexOf(focused!) - 1 + refs.length) % refs.length];
         setFocused(refToFocus);
         refToFocus.focus();
         break;
 
-      case keyMap['Tab']:
+      case keyMap.Tab:
         if (!e.shiftKey && trapLastMenuItem(filteredRefs)) {
           e.preventDefault();
           setFocused(refs[0]);
@@ -209,8 +201,8 @@ function Menu({
 
         break;
 
-      case keyMap['SpaceBar']:
-      case keyMap['Enter']:
+      case keyMap.Space:
+      case keyMap.Enter:
         if (!open) {
           setFocused(refs[0]);
           refs[0].focus();
