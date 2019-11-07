@@ -121,6 +121,16 @@ const iconButtonVariants: { readonly [K in Variant]: string } = {
   `,
 };
 
+const disabledStyle: { readonly [K in Variant]: string } = {
+  [Variant.Light]: css`
+    color: ${uiColors.gray.light2};
+  `,
+
+  [Variant.Dark]: css`
+    color: ${uiColors.gray.dark2};
+  `,
+};
+
 const iconStyle = css`
   position: absolute;
   top: 0;
@@ -168,7 +178,10 @@ function IconButton({
       href={href ? href : undefined}
       aria-disabled={disabled ? true : false}
       className={cx(
-        { [removeButtonStyle]: !href },
+        {
+          [removeButtonStyle]: !href,
+          [disabledStyle[variant]]: disabled,
+        },
         baseIconButtonStyle,
         iconButtonVariants[variant],
         className,
