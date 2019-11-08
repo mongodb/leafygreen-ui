@@ -154,6 +154,11 @@ interface SharedMenuItemProps {
   active?: boolean;
 
   /**
+   * Title prop for the root element
+   */
+  title?: string;
+
+  /**
    * Description text displayed below title in MenuItem.
    */
   description?: string;
