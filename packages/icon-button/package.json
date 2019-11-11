@@ -12,7 +12,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^3.0.6",
+    "@leafygreen-ui/lib": "^3.2.0",
     "@leafygreen-ui/emotion": "1.0.6",
     "@leafygreen-ui/palette": "1.1.0"
   }
