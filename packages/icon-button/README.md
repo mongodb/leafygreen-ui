@@ -85,4 +85,4 @@ Disables the button.
 
 If a href is supplied, the component renders inside of an `a` tag instead of inside of a `button` tag.
 
-#### Any other properties will be spread on the input element.
+#### Any other properties will be spread on the container element.
