@@ -23,8 +23,8 @@ import Badge from '@leafygreen-ui/badge';
 | Prop        | Type                                                                  | Description                                                       | Default       |
 | ----------- | --------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------- |
 | `variant`   | `'lightgray'`, `'darkgray'`, `'red'`, `'blue'`, `'green'`, `'yellow'` | Sets the style variant of the badge.                              | `'lightgray'` |
-| `className` | `string`                                                              | Adds a className to the class attribute                           | `''`          |
-| `children`  | `node`                                                                | The content that will appear inside of the `<Badge />` component. | `null`        |
+| `className` | `string`                                                              | Adds a className to the class attribute                           |               |
+| `children`  | `node`                                                                | The content that will appear inside of the `<Badge />` component. |               |
 
 _Any other properties will be spread on the root element._
 

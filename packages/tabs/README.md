@@ -73,7 +73,7 @@ const [selected, setSelected] = useState(0)
 | `setSelected` | `function`                    | A callback that receives the index of the tab a user is switching to when clicking, or via keyboard navigation. Usually this is used to set the selected prop to the correct index. The function is only invoked if the selected prop is set. |          |
 | `as`          | `HTML Tag` or `React Element` | Sets the root element of all `<Tab />` components in `<Tabs />`. For example, setting as to `Link` will render each tab as a `<Link />` component rather than as a button.                                                                    | `button` |
 | `className`   | `string`                      | Adds a className to the root element.                                                                                                                                                                                                         |          |
-| `children`    | `node`                        | `<Tab />` components that will be supplied to `<Tabs />` component.                                                                                                                                                                           | `null`   |
+| `children`    | `node`                        | `<Tab />` components that will be supplied to `<Tabs />` component.                                                                                                                                                                           |          |
 
 _Any other properties supplied will be spread on the root element._
 
@@ -85,7 +85,7 @@ _Any other properties supplied will be spread on the root element._
 | ----------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `name`      | **Required:** `string` or `ReactNode` | String that will appear in the list of tabs.                                                                              |         |
 | `disabled`  | `boolean`                             | Indicates whether or not the `<Tab />` can be clicked by a user.                                                          | `false` |
-| `default`   | `boolean`                             | Should be supplied when using the uncontrolled `<Tabs />` component. This determines which tab will be active by default. | `false` |
+| `default`   | `boolean`                             | Should be supplied when using the uncontrolled `<Tabs />` component. This determines which tab will be active by default. |         |
 | `className` | `string`                              | Adds a className to the root element.                                                                                     |         |
 | `href`      | `string`                              | Destination when Tab's `name` in the list should be rendered as an `a` tag.                                               |         |
 | `to`        | `string`                              | Destination when Tab's `name` in the list should be rendered as a `Link` tag.                                             |         |

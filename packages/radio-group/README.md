@@ -51,11 +51,11 @@ import { Radio, RadioGroup } from '@leafygreen-ui/radio-group';
 | Prop        | Type                   | Description                                                                                                                                                                          | Default     |
 | ----------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
 | `variant`   | `'default'`, `'light'` | Sets the style variant of the `<RadioGroup />`.                                                                                                                                      | `'default'` |
-| `name`      | `string`               | Sets the name of the input group                                                                                                                                                     | `''`        |
-| `value`     | `string` or `number`   | Sets the radio that will appear checked on page load, also makes the component a controlled component                                                                                | `''`        |
+| `name`      | `string`               | Sets the name of the input group                                                                                                                                                     |             |
+| `value`     | `string` or `number`   | Sets the radio that will appear checked on page load, also makes the component a controlled component                                                                                |             |
 | `className` | `string`               | Adds a className to the root element.                                                                                                                                                | `''`        |
 | `onChange`  | `function`             | The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument.                                                                   | `() => {}`  |
-| `children`  | `node`                 | Can be any node; however, any `<Radio />` components, will be treated as belonging to the `<RadioGroup />` compound component, and will receive internal state from `<RadioGroup />` | `null`      |
+| `children`  | `node`                 | Can be any node; however, any `<Radio />` components, will be treated as belonging to the `<RadioGroup />` compound component, and will receive internal state from `<RadioGroup />` |             |
 
 _Any other properties will be spread on the root element._
 
@@ -92,7 +92,8 @@ _Any other properties will be spread on the root element._
 | `value`     | **Required:** `string` or `number` | Every `<Radio />` needs a value prop.                                                                     |         |
 | `className` | `string`                           | Adds a className to the label                                                                             | `''`    |
 | `disabled`  | `boolean`                          | Indicates whether or not the radio can be clicked by a user                                               | `false` |
-| `children`  | `node`                             | Text that appears adjacent to the radio input; label text.                                                | `null`  |
-| `default`   | `boolean`                          | If `<RadioGroup />` is uncontrolled, the default property makes this Radio checked on the initial render. | `false` |
+| `children`  | `node`                             | Text that appears adjacent to the radio input; label text.                                                |         |
+| `default`   | `boolean`                          | If `<RadioGroup />` is uncontrolled, the default property makes this Radio checked on the initial render. |         |
+| `checked`   | `boolean`                          | Determines if `<Radio />` will appear checked                                                             | `false` |
 
 _Any other properties will be spread on the `input` element._

@@ -26,7 +26,7 @@ import Card from '@leafygreen-ui/card';
 | Prop        | Type                          | Description                                                                                                                                        | Default   |
 | ----------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
 | `as`        | `HTML Tag` or `React Element` | Determines the root element. For example, `Link` or `a` tags can be supplied to replace `div` from being the DOM element that wraps the component. | `section` |
-| `className` | `string`                      | Adds a className to the class attribute                                                                                                            | `''`      |
-| `children`  | `node`                        | The children of the rendered inside of the `<Card/>` component.                                                                                    | `null`    |
+| `className` | `string`                      | Adds a className to the class attribute                                                                                                            |           |
+| `children`  | `node`                        | The children of the rendered inside of the `<Card/>` component.                                                                                    |           |
 
 _Any other properties will be spread on the input element._

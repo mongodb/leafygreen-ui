@@ -32,12 +32,12 @@ import Button from '@leafygreen-ui/button';
 | `variant`   | `'default'`, `'primary'`, `'info'`, `'danger'`, `'dark'` | Sets the style variant of the button.                                                                                                                 | `'default'` |
 | `size`      | `'xsmall'`, `'small'`, `'normal'`, `'large'`             | Sets the size variant of the button.                                                                                                                  | `'normal'`  |
 | `children`  | `node`                                                   | The content that will appear inside of the `<Button />` component.                                                                                    | `null`      |
-| `onClick`   | `function`                                               | The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument.                                     | `() => {}`  |
+| `onClick`   | `function`                                               | The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument.                                     |             |
 | `className` | `string`                                                 | Adds a className to the class attribute.                                                                                                              | `''`        |
-| `value`     | `string`                                                 | Sets the HTML `value` attribute.                                                                                                                      | `null`      |
+| `value`     | `string`                                                 | Sets the HTML `value` attribute.                                                                                                                      |             |
 | `disabled`  | `boolean`                                                | Disabled the button                                                                                                                                   | `false`     |
 | `as`        | `HTML Tag` or `React Element`                            | Determines the root element. For example, `Link` or `a` tags can be supplied to replace `button` from being the DOM element that wraps the component. | `button`    |
-| `href`      | `string`                                                 | If a href is supplied it willl change the `as` value, such that the component renders inside of an `a` tag instead of inside of a `button` tag.       | `null`      |
+| `href`      | `string`                                                 | If a href is supplied it willl change the `as` value, such that the component renders inside of an `a` tag instead of inside of a `button` tag.       |             |
 
 _Any other properties will be spread on the input element._
 

@@ -45,7 +45,7 @@ import Toggle from '@leafygreen-ui/toggle'
 | ----------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------- |
 | `variant`   | `'default'`, `'dark'`              | Sets the style variant of the toggle.                                                                              | `'default'`               |
 | `size`      | `'default'`, `'small'`, `'xsmall'` | Sets the size of the toggle.                                                                                       | `'default'`               |
-| `checked`   | `boolean`                          | Checks the `<Toggle />`.                                                                                           | `false`                   |
+| `checked`   | `boolean`                          | Checks the `<Toggle />`.                                                                                           |                           |
 | `disabled`  | `boolean`                          | Disables the `<Toggle />`.                                                                                         | `false`                   |
 | `onChange`  | `function`                         | The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument. | `() => {}`                |
 | `id`        | `string` or `number`               | Adds an ID only to the input, and it's used elsewhere for accessibility props.                                     | Randomly generated string |
