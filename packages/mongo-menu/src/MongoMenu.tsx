@@ -88,6 +88,7 @@ const menuButtonStyle = css`
 const menuNameStyle = css`
   margin-right: 2px;
   margin-left: 2px;
+  max-width: 162px;
 `;
 
 const activeMenuButtonStyle = css`
@@ -102,7 +103,6 @@ const nameStyle = css`
 `;
 
 const truncate = css`
-  width: 162px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -234,7 +234,7 @@ function MongoMenu({
           [activeMenuButtonStyle]: open,
         })}
       >
-        <span className={menuNameStyle}>{name}</span>
+        <span className={cx(menuNameStyle, truncate)}>{name}</span>
 
         <Icon
           {...iconRef.prop}
@@ -249,7 +249,7 @@ function MongoMenu({
       <Menu open={open} setOpen={setOpen}>
         <div className={headerPadding}>
           <h3 className={cx(nameStyle, truncate)}>{name}</h3>
-          <p className={descriptionStyle}>{email}</p>
+          <p className={cx(descriptionStyle, truncate)}>{email}</p>
         </div>
         <FocusableMenuItem>
           <Button
