@@ -137,7 +137,7 @@ import { Menu, MenuSeparator, MenuItem } from '@leafygreen-ui/menu';
   <MenuItem>Menu Item 1</MenuItem>
   <MenuItem>Menu Item 2</MenuItem>
   <MenuItem>Menu Item 3</MenuItem>
-</MenuItem>;
+</Menu>;
 ```
 
 ## Output HTML
