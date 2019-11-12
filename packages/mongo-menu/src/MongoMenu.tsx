@@ -88,7 +88,7 @@ const menuButtonStyle = css`
 const menuNameStyle = css`
   margin-right: 2px;
   margin-left: 2px;
-  width: 162px;
+  max-width: 162px;
 `;
 
 const activeMenuButtonStyle = css`
