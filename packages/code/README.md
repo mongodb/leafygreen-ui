@@ -53,66 +53,13 @@ const SomeComponent = () => <Code>{codeSnippet}</Code>;
 
 ## Properties
 
-### children **Required**
-
-**Type:** `string`
-
-This is the code snippet that will be rendered in the code block.
-
-### multiline
-
-**Type:** `boolean`
-
-**Default:** `true`
-
-This prop determines whether or not the code snippet will visually retain line breaks when rendered.
-
-### lang
-
-**Type:** `'javascript'` | `'typescript'` | `'csp'` | `'cpp'` | `'go'` | `'java'` | `'perl'` | `'php'` | `'python'` | `'ruby'` | `'scala'` | `'bash'` | `'shell'` | `'sql'` | `'yaml'` | `'json'` | `'auto'` | `'none'`
-
-**Default:** `'auto'`
-
-The language to render the code block as. When set to `'none'`, no syntax highlighting will be applied. When set to `'auto'`, the component will attempt to do its best to guess what language the code snippet is.
-
-**We recommend explicitly setting the language if you know what language will be rendered.**
-
-### variant
-
-**Type:** `'dark'` | `'light'`
-
-**Default:** `'light'`
-
-Determines whether to use a light or dark highlighting palette.
-
-### className
-
-**Type:** `string`
-
-Applies a className to the root element's classList.
-
-### showLineNumbers
-
-**Type:** `boolean`
-
-**Default:** `false`
-
-Shows line numbers next to each line of code in the passed code snippet.
-
-**NOTE:** While you can set this to `true` regardless of the code component being multiline, the line numbers will not be displayed if the `multiline` prop is `true`.
-
-### showWindowChrome
-
-**Type:** `boolean`
-
-**Default:** `false`
-
-Shows a stylized window chrome frame around the code snippet. This is purely stylistic.
-
-### chromeTitle
-
-**Type:** `string`
-
-Shows a filename-like title in the window chrome frame.
-
-**NOTE:** While you can set this prop if `showWindowChrome` is `false`, it will not be displayed unless the `showWindowChrome` prop is `true`.
+| Prop               | Type                                                                                                                                                                                         | Description                                                                                                                                                                                                                                     | Default   |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| `children`         | `string`                                                                                                                                                                                     | **Required** This is the code snippet that will be rendered in the code block.                                                                                                                                                                  |           |
+| `multiline`        | `boolean`                                                                                                                                                                                    | This prop determines whether or not the code snippet will visually retain line breaks when rendered.                                                                                                                                            | `true`    |
+| `lang`             | `'javascript'`, `'typescript'`, `'csp'`, `'cpp'`, `'go'`, `'java'`, `'perl'`, `'php'`, `'python'`, `'ruby'`, `'scala'`, `'bash'`, `'shell'`, `'sql'`, `'yaml'`, `'json'`, `'auto'`, `'none'` | The language to render the code block as. When set to `'none'`, no syntax highlighting will be applied. When set to `'auto'`, the component will attempt to do its best to guess what language the code snippet is.                             | `'auto'`  |
+| `variant`          | `'dark'`, `'light'`                                                                                                                                                                          | Determines whether to use a light or dark highlighting palette.                                                                                                                                                                                 | `'light'` |
+| `className`        | `string`                                                                                                                                                                                     | Applies a className to the root element's classList.                                                                                                                                                                                            |           |
+| `showLineNumbers`  | `boolean`                                                                                                                                                                                    | Shows line numbers next to each line of code in the passed code snippet. **NOTE:** While you can set this to `true` regardless of the code component being multiline, the line numbers will not be displayed if the `multiline` prop is `true`. | `false`   |
+| `showWindowChrome` | `boolean`                                                                                                                                                                                    | Shows a stylized window chrome frame around the code snippet. This is purely stylistic.                                                                                                                                                         | `false`   |
+| `chromeTitle`      | `string`                                                                                                                                                                                     | Shows a filename-like title in the window chrome frame.**NOTE:** While you can set this prop if `showWindowChrome` is `false`, it will not be displayed unless the `showWindowChrome` prop is `true`.                                           |           |

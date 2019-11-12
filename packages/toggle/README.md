@@ -41,60 +41,14 @@ import Toggle from '@leafygreen-ui/toggle'
 
 ## Properties
 
-### variant
+| Prop        | Type                               | Description                                                                                                        | Default                   |
+| ----------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------- |
+| `variant`   | `'default'`, `'dark'`              | Sets the style variant of the toggle.                                                                              | `'default'`               |
+| `size`      | `'default'`, `'small'`, `'xsmall'` | Sets the size of the toggle.                                                                                       | `'default'`               |
+| `checked`   | `boolean`                          | Checks the `<Toggle />`.                                                                                           | `false`                   |
+| `disabled`  | `boolean`                          | Disables the `<Toggle />`.                                                                                         | `false`                   |
+| `onChange`  | `function`                         | The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument. | `() => {}`                |
+| `id`        | `string` or `number`               | Adds an ID only to the input, and it's used elsewhere for accessibility props.                                     | Randomly generated string |
+| `className` | `string`                           | Adds a className to the outermost element.                                                                         | `''`                      |
 
-**Type:** `string`
-
-**Default:** `'default'`
-
-Sets the style variant of the toggle. Valid variants for toggles are `'default'` and `'dark'`.
-
-### size
-
-**Type:** `string`
-
-**Default:** `'default'`
-
-Sets the size of the toggle. Valid sizes for toggles are `'default'`, `'small'`, and `'xsmall'`.
-
-### checked
-
-**Type:** `boolean`
-
-**Default:** `false`
-
-Checks the toggle.
-
-### disabled
-
-**Type:** `boolean`
-
-**Default:** `false`
-
-Disables the toggle.
-
-### className
-
-**Type:** `string`
-
-**Default:** `''`
-
-Adds a className to the outermost element.
-
-### id
-
-**Type:** `string` || `number`
-
-**Default:** randomly generated string
-
-Adds an ID only to the input, and it's used elsewhere for accessibility props.
-
-### onChange
-
-**Type:** `function`
-
-**Default:** `() => {}`
-
-The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument.
-
-#### Any other properties will be spread on the `input` element.
+_Any other properties will be spread on the `input` element._

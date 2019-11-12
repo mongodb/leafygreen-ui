@@ -27,78 +27,18 @@ import Button from '@leafygreen-ui/button';
 
 ## Properties
 
-### variant
+| Prop        | Type                                                     | Description                                                                                                                                           | Default     |
+| ----------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `variant`   | `'default'`, `'primary'`, `'info'`, `'danger'`, `'dark'` | Sets the style variant of the button.                                                                                                                 | `'default'` |
+| `size`      | `'xsmall'`, `'small'`, `'normal'`, `'large'`             | Sets the size variant of the button.                                                                                                                  | `'normal'`  |
+| `children`  | `node`                                                   | The content that will appear inside of the `<Badge />` component.                                                                                     | `null`      |
+| `onClick`   | `function`                                               | The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument.                                     | `() => {}`  |
+| `className` | `string`                                                 | Adds a className to the class attribute.                                                                                                              | `''`        |
+| `value`     | `string`                                                 | Sets the HTML `value` attribute.                                                                                                                      | `null`      |
+| `disabled`  | `boolean`                                                | Disabled the button                                                                                                                                   | `false`     |
+| `as`        | `HTML Tag` or `React Element`                            | Determines the root element. For example, `Link` or `a` tags can be supplied to replace `button` from being the DOM element that wraps the component. | `button`    |
+| `href`      | `string`                                                 | If a href is supplied it willl change the `as` value, such that the component renders inside of an `a` tag instead of inside of a `button` tag.       | `null`      |
 
-**Type:** `string`
-
-**Default:** `'default'`
-
-Sets the style variant of the button. Valid variants for buttons are `'default'`, `'primary'`, `'info'`, `'danger'`, and `'dark'`.
-
-### size
-
-**Type:** `string`
-
-**Default:** `'normal'`
-
-Sets the size variant of the button. Valid variants for buttons are `'xsmall'`, `'small'`, `'normal'`, and `'large'`.
-
-### onClick
-
-**Type:** `function`
-
-**Default:** `() => {}`
-
-The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument.
-
-### className
-
-**Type:** `string`
-
-**Default:** `''`
-
-Adds a className to the class attribute.
-
-### children
-
-**Type:** `node`
-
-**Default:** `null`
-
-The children of the rendered `<button>` element.
-
-### value
-
-**Type:** `string`
-
-**Default:** `null`
-
-Sets the HTML `value` attribute.
-
-### disabled
-
-**Type:** `boolean`
-
-**Default:** `false`
-
-Disables the button.
-
-### as
-
-**Type:** `HTML Tag` or `React Element`
-
-**Default:** `button`
-
-Determines the root element. For example, `Link` or `a` tags can be supplied to replace `button` from being the DOM element that wraps the component.
-
-### href
-
-**Type:** `string`
-
-**Default:** `null`
-
-If a href is supplied it willl change the `as` value, such that the component renders inside of an `a` tag instead of inside of a `button` tag.
-
-#### Any other properties will be spread on the input element.
+_Any other properties will be spread on the input element._
 
 Note: In order to make this Component act as a submit button, the recommended approach is to pass `submit` as the `type` prop. Note it is also valid to pass `input` to the `as` prop, and the button's content's to the `value` prop -- in this case, do not supply children to the component.

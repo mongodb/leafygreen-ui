@@ -27,18 +27,7 @@ import Portal from '@leafygreen-ui/portal';
 
 ## Properties
 
-### container
-
-**Type:** `DOM Node`
-
-**Default:** `document.createElement('div')`
-
-Sets the container node, which will contain all of the portaled content. If no container is supplied, a div will be created and appened to the end of the `document.body`.
-
-### children
-
-**Type:** `Node`
-
-**Default:** `null`
-
-The children will be rendered inside of the portaled container.
+| Prop        | Type       | Description                                                                                                                                                               | Default                         |
+| ----------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| `container` | `DOM Node` | Sets the container node, which will contain all of the portaled content. If no container is supplied, a div will be created and apened to the end of the `document.body`. | `document.createElement('div')` |
+| `children`  | `node`     | The children will be rendered inside of the portaled container.                                                                                                           | `null`                          |

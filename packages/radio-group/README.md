@@ -48,53 +48,16 @@ import { Radio, RadioGroup } from '@leafygreen-ui/radio-group';
 
 ## Properties
 
-### variant
+| Prop        | Type                   | Description                                                                                                                                                                          | Default     |
+| ----------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
+| `variant`   | `'default'`, `'light'` | Sets the style variant of the `<RadioGroup />`.                                                                                                                                      | `'default'` |
+| `name`      | `string`               | Sets the name of the input group                                                                                                                                                     | `''`        |
+| `value`     | `string` or `number`   | Sets the radio that will appear checked on page load, also makes the component a controlled component                                                                                | `''`        |
+| `className` | `string`               | Adds a className to the root element.                                                                                                                                                | `''`        |
+| `onChange`  | `function`             | The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument.                                                                   | `() => {}`  |
+| `children`  | `node`                 | Can be any node; however, any `<Radio />` components, will be treated as belonging to the `<RadioGroup />` compound component, and will receive internal state from `<RadioGroup />` | `null`      |
 
-**Type:** `string`
-
-**Default:** `'default'`
-
-Sets the style variant of the toggle. Valid variants for toggles are `'default'` and `'light'`.
-
-### name
-
-**Type:** `string`
-
-**Default:** ''
-
-Sets the name of the input group
-
-### value
-
-**Type:** `string` or `integer`
-
-**Default:** ``
-
-Sets the radio that will apear checked on page load, also makes the component a controlled component
-
-### className
-
-**Type:** `string`
-
-**Default:** `''`
-
-Adds a className to the root element.
-
-### onChange
-
-**Type:** `function`
-
-**Default:** `() => {}`
-
-The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument.
-
-### children
-
-**Type:** `node`
-**Default:** `null`
-Can be any node; however, any `<Radio />` components, will be treated as belonging to the `<RadioGroup />` compound component, and will recieve internal state from `<RadioGroup />`
-
-#### Any other properties will be spread on the root element.
+_Any other properties will be spread on the root element._
 
 # Radio
 
@@ -124,40 +87,12 @@ Can be any node; however, any `<Radio />` components, will be treated as belongi
 
 ## Properties
 
-### value
+| Prop        | Type                               | Description                                                                                               | Default |
+| ----------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------- | ------- |
+| `value`     | **Required:** `string` or `number` | Every `<Radio />` needs a value prop.                                                                     |         |
+| `className` | `string`                           | Adds a className to the label                                                                             | `''`    |
+| `disabled`  | `boolean`                          | Indicates whether or not the radio can be clicked by a user                                               | `false` |
+| `children`  | `node`                             | Text that appears adjacent to the radio input; label text.                                                | `null`  |
+| `default`   | `boolean`                          | If `<RadioGroup />` is uncontrolled, the default property makes this Radio checked on the initial render. | `false` |
 
-**Type:** `required`, can be a `string` or an `integer`
-
-Every radio needs a value prop
-
-### className
-
-**Type:** `string`
-
-**Default:** ``
-
-Adds a className to the label
-
-### disabled
-
-**Type:** `boolean`
-
-**Default:** `false`
-
-Indicates whether or not the radio can be clicked by a user
-
-### children
-
-**Type:** `node`
-
-**Default:** `null`
-
-Text that appears adjacent to the radio input; label text.
-
-### default
-
-**Type:** `boolean`
-
-If RadioGroup is uncontrolled, the default property makes this Radio checked on the initial render.
-
-#### Any other properties will be spread on the `input` element.
+_Any other properties will be spread on the `input` element._

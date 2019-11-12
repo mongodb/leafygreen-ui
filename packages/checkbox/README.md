@@ -44,76 +44,16 @@ import Checkbox from '@leafygreen-ui/checkbox';
 
 ## Properties
 
-### variant
+| Prop            | Type                   | Description                                                                                                                                                                                                                  | Default                   |
+| --------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
+| `variant`       | `'default'`, `'light'` | Sets the style variant of the checkbox.                                                                                                                                                                                      | `default`                 |
+| `checked`       | `boolean`              | Checks the checkbox                                                                                                                                                                                                          | `false`                   |
+| `label`         | `node`                 | The label for the checkbox.                                                                                                                                                                                                  | `null`                    |
+| `disabled`      | `boolean`              | Disables the checkbox.                                                                                                                                                                                                       | `false`                   |
+| `indeterminate` | `boolean`              | Sets the checkbox as indeterminate. **NOTE:** the checkbox will become out of sync with the indeterminate prop when it's clicked. Make sure to unset the `indeterminate` prop on change where you're controlling your input. | `false`                   |
+| `className`     | `string`               | Adds a className to the outermost element.                                                                                                                                                                                   | `''`                      |
+| `bold`          | `boolean`              | Determines whether the text will be bold or not.                                                                                                                                                                             | `false`                   |
+| `id`            | `string` or `number`   | Adds an ID only to the input, and it's used elsewhere for accessibility props.                                                                                                                                               | randomly generated string |
+| `onChange`      | `function`             | The event handler function for the `onChange` event. Receives the associated `event` object as the first argument.                                                                                                           | `() => {}`                |
 
-**Type:** `string`
-
-**Default:** `'default'`
-
-Sets the style variant of the checkbox. Valid variants for checkboxes are `'default'` and `'light'`.
-
-### checked
-
-**Type:** `boolean`
-
-**Default:** `false`
-
-Checks the checkbox.
-
-### label
-
-**Type:** `node`
-
-**Default:** `null`
-
-The label for the checkbox.
-
-### disabled
-
-**Type:** `boolean`
-
-**Default:** `false`
-
-Disables the checkbox.
-
-### indeterminate
-
-**Type:** `boolean`
-
-**Default:** `false`
-
-Sets the checkbox as indeterminate. **NOTE:** the checkbox will become out of sync with the indeterminate prop when it's clicked. Make sure to unset the `indeterminate` prop on change where you're controlling your input.
-
-### className
-
-**Type:** `string`
-
-**Default:** `''`
-
-Adds a className to the outermost element.
-
-### bold
-
-**Type:** `boolean`
-
-**Default:** `false`
-
-Determines whether the text will be bold or not.
-
-### id
-
-**Type:** `string` || `number`
-
-**Default:** randomly generated string
-
-Adds an ID only to the input, and it's used elsewhere for accessibility props.
-
-### onChange
-
-**Type:** `function`
-
-**Default:** `() => {}`
-
-The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument.
-
-#### Any other properties will be spread on the `input` element.
+_Any other properties will be spread on the `input` element._

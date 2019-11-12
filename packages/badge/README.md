@@ -20,30 +20,12 @@ import Badge from '@leafygreen-ui/badge';
 
 ## Properties
 
-### variant
+| Prop        | Type                                                                  | Description                                                       | Default       |
+| ----------- | --------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------- |
+| `variant`   | `'lightgray'`, `'darkgray'`, `'red'`, `'blue'`, `'green'`, `'yellow'` | Sets the style variant of the badge.                              | `'lightgray'` |
+| `className` | `string`                                                              | Adds a className to the class attribute                           | `''`          |
+| `children`  | `node`                                                                | The content that will appear inside of the `<Badge />` component. | `null`        |
 
-**Type:** `string`
-
-**Default:** `'lightgray'`
-
-Sets the style variant of the badge. Valid variants for badges are `'lightgray'`, `'darkgray'`, `'red'`, `'blue'`, `'green'`, and `'yellow'`
-
-### className
-
-**Type:** `string`
-
-**Default:** `''`
-
-Adds a className to the class attribute.
-
-### children
-
-**Type:** `node`
-
-**Default:** `null`
-
-The content that will appear inside of the `<Badge />` component.
-
-#### Any other properties will be spread on the root element.
+_Any other properties will be spread on the root element._
 
 Note: Specifying the `onClick` attribute will change the cursor style to pointer.

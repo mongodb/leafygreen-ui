@@ -27,29 +27,11 @@ const SomeComponent = () => <Icon glyph="Plus" fill="#FF0000" />;
 
 ## Properties
 
-### glyph
-
-**Type:** `String` (Required)
-
-Specifies the glyph to use. This can be one of the following:
-
-`Copy`, `Bell`, `Building`, `CaretUp`, `CaretDown`, `CaretRight`, `CaretLeft`, `Checkmark`, `CheckmarkWithCircle`, `ChevronUp`, `ChevronDown`, `ChevronRight`, `ChevronLeft`, `Charts`, `Cloud`, `CreditCard`, `Edit`, `Ellipsis`, `InfoWithCircle`, `Laptop`, `Lock`, `MagnifyingGlass`, `Menu`, `NotAllowed`, `Person`, `PersonWithLock`, `Plus`, `PlusWithCircle`, `QuestionMarkWithCircle`, `Refresh`, `Save`, `Settings`, `Stitch`, `Support`, `Trash`, `Warning`, `X`, `XWithCircle`
-
-### size
-
-**Type:** `String` or `Number`
-
-**Default:** `default`
-
-The height and width of the glyph's viewBox. This can be any `number` or one of the following:
-
-`small`, `default`, `large`, `xlarge`
-
-### fill
-
-**Type:** `String`
-
-The fill color that is passed to the glyph. By default, the glyph will inherit its fill from the CSS color property of its nearest ancestor.
+| Prop    | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Description                                                                                                                                  | Default     |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `glyph` | **Required**: `'Copy'`, `'Bell'`, `'Building'`, `'CaretUp'`, `'CaretDown'`, `'CaretRight'`, `'CaretLeft'`, `'Checkmark'`, `'CheckmarkWithCircle'`, `'ChevronUp'`, `'ChevronDown'`, `'ChevronRight'`, `'ChevronLeft'`, `'Charts'`, `'Cloud'`, `'CreditCard'`, `'Edit'`, `'Ellipsis'`, `'InfoWithCircle'`, `'Laptop'`, `'Lock'`, `'MagnifyingGlass'`, `'Menu'`, `'NotAllowed'`, `'Person'`, `'PersonWithLock'`, `'Plus'`, `'PlusWithCircle'`, `'QuestionMarkWithCircle'`, `'Refresh'`, `'Save'`, `'Settings'`, `'Stitch'`, `'Support'`, `'Trash'`, `'Warning'`, `'X'`, `'XWithCircle'` | Specifies the glyph to use.                                                                                                                  |             |
+| `size`  | `string` or `number`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | The height and width of the glyph's viewBox. This can be any `number` or one of the following `'small'`, `'default'`, `'large'`, `'xlarge'`  | `'default'` |
+| `fill`  | `string`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | The fill color that is passed to the glyph. By default, the glyph will inherit its fill from the CSS color property of its nearest ancestor. |             |
 
 ## Advanced Usage (Registering custom icon sets)
 

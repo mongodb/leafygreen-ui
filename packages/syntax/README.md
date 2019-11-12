@@ -51,32 +51,9 @@ const SomeComponent = () => <Syntax>{codeSnippet}</Syntax>;
 
 ## Properties
 
-### children **Required**
-
-**Type:** `string`
-
-This is the code snippet that will be rendered in the code block.
-
-### lang
-
-**Type:** `'javascript'` | `'typescript'` | `'csp'` | `'cpp'` | `'go'` | `'java'` | `'perl'` | `'php'` | `'python'` | `'ruby'` | `'scala'` | `'bash'` | `'shell'` | `'sql'` | `'yaml'` | `'json'` | `'auto'` | `'none'`
-
-**Default:** `'auto'`
-
-The language to render the code block as. When set to `'none'`, no syntax highlighting will be applied. When set to `'auto'`, the component will attempt to do it's best to guess what language the code snippet is.
-
-**We recommend explicitly setting the language if you know what language will be rendered.**
-
-### variant
-
-**Type:** `'dark'` | `'light'`
-
-**Default:** `'light'`
-
-Determines whether to use a light or dark highlighting palette.
-
-### className
-
-**Type:** `string`
-
-Applies a className to the root element's classList.
+| Prop        | Type                                                                                                                                                                                         | Description                                                                                                                                                                                                                                                                                                         | Default   |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| `children`  | **Required:** `string`                                                                                                                                                                       | This is the code snippet that will be rendered in the code block.                                                                                                                                                                                                                                                   |           |
+| `lang`      | `'javascript'`, `'typescript'`, `'csp'`, `'cpp'`, `'go'`, `'java'`, `'perl'`, `'php'`, `'python'`, `'ruby'`, `'scala'`, `'bash'`, `'shell'`, `'sql'`, `'yaml'`, `'json'`, `'auto'`, `'none'` | The language to render the code block as. When set to `'none'`, no syntax highlighting will be applied. When set to `'auto'`, the component will attempt to do it's best to guess what language the code snippet is. NOTE: We recommend explicitly setting the language if you know what language will be rendered. | `'auto'`  |
+| `variant`   | `'dark'`, `'light'`                                                                                                                                                                          | Determines whether to use a light or dark highlighting palette.                                                                                                                                                                                                                                                     | `'light'` |
+| `className` | `string`                                                                                                                                                                                     | Applies a className to the root element's classList.                                                                                                                                                                                                                                                                |           |
