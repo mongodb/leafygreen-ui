@@ -22,12 +22,12 @@ interface StateForStyles {
 
 interface StageProps {
   /**
-   * Content that will appear inside of the Pipeline component.
+   * Content that will appear inside of the Stage component.
    **/
   children: ReactNode;
 
   /**
-   * Classname applied to Pipeline content container.
+   * Classname applied to Stage content container.
    **/
   className?: string;
 

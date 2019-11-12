@@ -19,7 +19,7 @@ interface StateForStyles {
 
 interface CounterProps {
   /**
-   * Content that will appear inside of the Pipeline component.
+   * Content that will appear inside of the Counter component.
    */
   children?: ReactNode;
 
