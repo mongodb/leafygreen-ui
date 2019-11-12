@@ -16,10 +16,9 @@ import IconButton from '@leafygreen-ui/icon-button';
 
 ```html
 <button aria-disabled="false" class="leafygreen-ui-194rp0y">
-  <span class="leafygreen-ui-1rvdyoi"
-    ><svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
+  <span class="leafygreen-ui-1rvdyoi">
+    <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
       <title>Ellipsis</title>
-      <desc>Created with Sketch.</desc>
       <g
         id="Ellipsis-Copy"
         stroke="none"
@@ -32,57 +31,21 @@ import IconButton from '@leafygreen-ui/icon-button';
           id=""
           fill="#89989B"
         ></path>
-      </g></svg
-  ></span>
+      </g>
+    </svg>
+  </span>
 </button>
 ```
 
 ## Properties
 
-### variant
+| Prop        | Type                  | Description                                                                                                       | Default   |
+| ----------- | --------------------- | ----------------------------------------------------------------------------------------------------------------- | --------- |
+| `variant`   | `'dark'` or `'light'` | Sets the style variant of the button.                                                                             | `'light'` |
+| `onClick`   | `function`            | The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument. |           |
+| `disabled`  | `boolean`             | Disables the `<IconButton />`                                                                                     | `false`   |
+| `href`      | `string`              | If a href is supplied, the component renders inside of an `a` tag instead of inside of a `button` tag.            |           |
+| `className` | `string`              | Adds a className to the class attribute on the container element.                                                 |           |
+| `children`  | `node`                | Content rendered inside of the `<IconButton />` component                                                         |           |
 
-**Type:** `string`
-
-**Default:** `'light'`
-
-Sets the style variant of the button. Valid variants for buttons are `'light'`, `'dark'`.
-
-### onClick
-
-**Type:** `function`
-
-The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument.
-
-### className
-
-**Type:** `string`
-
-**Default:** `''`
-
-Adds a className to the class attribute.
-
-### children
-
-**Type:** `node`
-
-**Default:** `null`
-
-The children of the rendered `IconButton` component.
-
-### disabled
-
-**Type:** `boolean`
-
-**Default:** `false`
-
-Disables the button.
-
-### href
-
-**Type:** `string`
-
-**Default:** `null`
-
-If a href is supplied, the component renders inside of an `a` tag instead of inside of a `button` tag.
-
-#### Any other properties will be spread on the container element.
+_Any other properties will be spread on the container element._

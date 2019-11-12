@@ -8,10 +8,14 @@ describe('packages/icon-button', () => {
   const onClick = jest.fn();
   const className = 'test-icon-button-class';
   const testId = 'test-icon-button-component';
-  const icon = `
-    <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
+  const icon = (
+    <svg
+      width="16px"
+      height="16px"
+      viewBox="0 0 16 16"
+      data-testid="icon-test-id"
+    >
       <title>Ellipsis</title>
-      <desc>Created with Sketch.</desc>
       <g
         id="Ellipsis-Copy"
         stroke="none"
@@ -26,9 +30,9 @@ describe('packages/icon-button', () => {
         ></path>
       </g>
     </svg>
-  `;
+  );
 
-  const { getByTestId } = render(
+  const { getByTestId, getAllByTestId } = render(
     <IconButton className={className} onClick={onClick} data-testid={testId}>
       {icon}
     </IconButton>,
@@ -40,8 +44,9 @@ describe('packages/icon-button', () => {
     expect(iconButton.classList.contains(className)).toBe(true);
   });
 
-  test(`renders ${icon} as content`, () => {
-    expect(iconButton.textContent).toBe(icon);
+  test(`renders icon as button content`, () => {
+    const renderedIcon = getAllByTestId('icon-test-id')[0];
+    expect(iconButton.contains(renderedIcon)).toBe(true);
   });
 
   test('fires the onClick handler once when clicked', () => {

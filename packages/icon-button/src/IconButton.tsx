@@ -176,12 +176,12 @@ function IconButton({
       {...rest}
       onClick={disabled ? undefined : onClick}
       href={href ? href : undefined}
-      aria-disabled={disabled ? true : false}
+      aria-disabled={disabled}
       className={cx(
+        removeButtonStyle,
         baseIconButtonStyle,
         iconButtonVariants[variant],
         {
-          [removeButtonStyle]: !href,
           [disabledStyle[variant]]: disabled,
         },
         className,
