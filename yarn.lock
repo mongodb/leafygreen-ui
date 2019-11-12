@@ -1325,27 +1325,6 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@leafygreen-ui/popover@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/popover/-/popover-1.2.0.tgz#7738987c616408ca52589beb1c90e6fe86a32000"
-  integrity sha512-nyvhy89Ve2zs3R70QnO/rP2bhC9YQbVbcQ2kgXd3UhXBhz3tsd00cF6qLKz23PDFQv06IGXR+HZCV828fcfBrA==
-  dependencies:
-    "@leafygreen-ui/hooks" "^1.0.6"
-    "@leafygreen-ui/lib" "^3.0.6"
-    "@leafygreen-ui/portal" "^1.1.7"
-    "@leafygreen-ui/theme" "^1.2.6"
-    lodash "^4.17.11"
-
-"@leafygreen-ui/tooltip@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/tooltip/-/tooltip-1.0.0.tgz#7b2ece4abdfd4c9348c7de32b643c6f97b7e68fe"
-  integrity sha512-2g412oER747dvYufCiz+Px3KIZv4maQ/08zRlqxkyE91lNLoPQaP+0ucqVe0rZjp87sLsa4Us76Mh79Imx35QA==
-  dependencies:
-    "@leafygreen-ui/hooks" "^1.0.7"
-    "@leafygreen-ui/lib" "^3.0.6"
-    "@leafygreen-ui/palette" "^1.0.6"
-    "@leafygreen-ui/popover" "^1.2.0"
-
 "@lerna/add@3.18.0":
   version "3.18.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.18.0.tgz#86e38f14d7a0a7c61315dccb402377feb1c9db83"
