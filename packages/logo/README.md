@@ -58,8 +58,8 @@ import { LogoMark } from '@leafygreen-ui/logo'
 </svg>
 ```
 
-| Prop       | Type                | Description                                                                                                                                                                        | Default |
-| ---------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `height`   | `number`            | Height of the `<Logo />` component                                                                                                                                                 | `40`    |
-| `knockout` | `boolean`           | Determines whether or not a `knockout` version of the Logo will be used. When false, a full-color `<LogoMark />` will be rendered, regardless of value supplied to `variant` prop. | `false` |
-| `variant`  | `'light'`, `'dark'` | Determines if `<Logo />` will be white or dark gray                                                                                                                                |         |
+| Prop       | Type                | Description                                                                                                                         | Default |
+| ---------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `height`   | `number`            | Height of the `<Logo />` component                                                                                                  | `40`    |
+| `knockout` | `boolean`           | Determines whether or not a `knockout` version of the Logo will be used.                                                            | `false` |
+| `variant`  | `'light'`, `'dark'` | Determines if `<Logo />` will be white or dark gray. Do not pass a value to this prop, if you wish to render a full-color logomark. |         |

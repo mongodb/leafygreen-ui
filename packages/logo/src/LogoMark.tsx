@@ -17,15 +17,7 @@ import RGBLogoMark from './logos/RGBLogoMark';
  * @param props.knockout Boolean to describe whether or not knockout version of MongoDB logomark will be used.
  * @param props.height Determines height of the <LogoMark /> component.
  */
-function LogoMark({
-  knockout = false,
-  height = 40,
-  variant,
-}: LogoProps): ReactElement {
-  if (!knockout) {
-    return <RGBLogoMark height={height} />;
-  }
-
+function LogoMark({ height = 40, variant }: LogoProps): ReactElement {
   if (variant === 'light') {
     return <MonochromeLogoMark fill={uiColors.white} height={height} />;
   }
