@@ -52,47 +52,16 @@ import { RadioBox, RadioBoxGroup } from '@leafygreen-ui/radio-box-group';
 
 ## Properties
 
-### size
+| Prop        | Type                               | Description                                                                                                      | Default     |
+| ----------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ----------- |
+| `size`      | `'compact'`, `'default'`, `'full'` | Sets the style of the `<RadioBoxGroup />`.                                                                       | `'default'` |
+| `name`      | `string`                           | Sets the name of the input group.                                                                                |             |
+| `value`     | `string` or `number`               | Sets the `<Radio />` that will appear checked on page load, also makes the component a controlled component      |             |
+| `className` | `string`                           | Adds a className to the root element                                                                             |             |
+| `children`  | `node`                             | Content of the component                                                                                         |             |
+| `onChange`  | `function`                         | The event handler function for the 'onChange' event. Receives the associated event object as the first argument. | `() => {}`  |
 
-**Type:** `string`
-**Default:** `default`
-Sets the style of the Radio Box Group. Valid sizes are `compact`, `full` and `default`
-
-- `compact` adds padding to text, so there is no fixed width amongst a collection of boxes
-- `default` has a fixed width and text will wrap accordingly
-- `full` radio boxes will scale depending on available space (will take up 100% of their parent container). All boxes will tbe the same size
-
-### name
-
-**Type:** `string`
-**Default:** ''
-Sets the name of the input group
-
-### value
-
-**Type:** `string` or `number`
-**Default:** ``
-Sets the radio that will apear checked on page load, also makes the component a controlled component
-
-### className
-
-**Type:** `string`
-**Default:** ''
-Adds a className to the root element
-
-### onChange
-
-**Type:** `function`
-**Default:** `() => {}`
-The event handler function for the 'onChange' event. Receives the associated event object as the first argument.
-
-### children
-
-**Type:** `node`
-**Default:** `null`
-Content of the component
-
-### Any other properties supplied will be spread on the root element.
+_Any other properties supplied will be spread on the root element._
 
 # Rich Radio Input
 
@@ -122,39 +91,13 @@ Content of the component
 
 ## Properties
 
-### value
+| Prop        | Type                               | Description                                                                                                     | Default |
+| ----------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------- |
+| `value`     | **Required**: `string` or `number` | Every `<RadioBox />` needs a value prop                                                                         |
+| `className` | `string`                           | Adds a className to the root element                                                                            | `''`    |
+| `checked`   | `boolean`                          | Indicates whether or not the box will be checked                                                                | `false` |
+| `disabled`  | `boolean`                          | Indicates whether or not the radio can be clicked by a user                                                     | `false` |
+| `children`  | `node`                             | Content that appears inside of the `<RadioBox />`                                                               |         |
+| `default`   | `boolean`                          | If `<RadioBoxGroup />` is uncontrolled, the default property makes this RadioBox checked on the initial render. |         |
 
-**Type:** required, can be a `string` or an `number`
-Every radio needs a value prop
-
-### className
-
-**Type:** string
-**Default:** ``
-Adds a className to the root element
-
-### checked
-
-**Type:** `boolean`
-**Default:** `false`
-Indicates whether or not the box will be checked
-
-### disabled
-
-**Type:** `boolean`
-**Default:** `false`
-Indicates whether or not the radio can be clicked by a user
-
-### children
-
-**Type:** `node`
-**Default:** `null`
-Content that appears inside the Radio Box component
-
-### default
-
-**Type:** `boolean`
-
-If RadioBoxGroup is uncontrolled, the default property makes this RadioBox checked on the initial render.
-
-### Any other properties supplied will be spread on the root element.
+_Any other properties supplied will be spread on the root element._

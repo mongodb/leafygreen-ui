@@ -104,40 +104,10 @@ import MongoMenu from '@leafygreen-ui/mongo-menu';
 
 ## Properties
 
-### user: { name, email }
-
-**Type:** `object`
-
-**Default:** {}
-
-Object that contains information about the active user. {name: 'string', email: 'string'}
-
-### accountURL
-
-**Type:** `string`
-
-**Default:** `https://cloud.mongodb.com/v2#/account`
-
-URL passed to MongoDB Account button.
-
-### activeProduct
-
-**Type:** `'atlas', 'university', 'support'`
-
-MongoDB product that is currently active.
-
-### onProductChange
-
-**Type:** `function`
-
-**Default:** `() => {}`
-
-Callback invoked after the user clicks a product.
-
-### onLogout
-
-**Type:** `function`
-
-**Default:** `() => {}`
-
-Callback invoked after the user clicks logout.
+| Prop              | Type                                    | Description                                             | Default                                 |
+| ----------------- | --------------------------------------- | ------------------------------------------------------- | --------------------------------------- |
+| `user`            | `` {name: `string`, email: `string`} `` | Object that contains information about the active user. | `{}`                                    |
+| `accountURL`      | `string`                                | URL passed to MongoDB Account button.                   | `https://cloud.mongodb.com/v2#/account` |
+| `activeProduct`   | `'atlas'`, `'university'`, `'support'`  | MongoDB product that is currently active.               |                                         |
+| `onProductChange` | `function`                              | Callback invoked after the user clicks a product.       | `() => {}`                              |
+| `onLogout`        | `function`                              | Callback invoked after the user clicks logout.          | `() => {}`                              |
