@@ -56,52 +56,13 @@ function ExampleComponent() {
 
 ## Properties
 
-### open
+| Prop          | Type                        | Description                                                                                                                                 | Default      |
+| ------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| `open`        | `boolean`                   | Determines open state of `Modal` component                                                                                                  | `false`      |
+| `setOpen`     | `function`                  | Callback to set open state of Modal component. `setOpen` accepts a boolean value, which will determine the open state of `Modal` component. | `() => {}`   |
+| `size`        | `small`, `default`, `large` | Determines `Modal` size.                                                                                                                    | `default`    |
+| `shouldClose` | `function`                  | Callback to determine whether or not Modal should close when user tries to close it.                                                        | `() => true` |
+| `children`    | `node`                      | Children that will be rendered inside `<Modal />` component.                                                                                |              |
+| `className`   | `string`                    | Style to be applied to the overlay container's root node.                                                                                   |              |
 
-**Type:** `boolean`
-
-**Default:** `false`
-
-Determines open state of `Modal` component
-
-### setOpen
-
-**Type:** `function`
-
-**Default:** `(bool) => {}`
-
-Callback to set open state of Modal component. `setOpen` accepts a boolean value, which will determine the open state of `Modal` component.
-
-### size
-
-**Type:** `string`
-
-**Default:** `default`
-
-Determines `Modal` size. Options: `['small', 'default', 'large']`
-
-### shouldClose
-
-**Type:** `function`
-
-**Default:** `() => true`
-
-Callback to determine whether or not Modal should close when user tries to close it.
-
-### children
-
-**Type:** `node`
-
-**Default:** `null`
-
-Children that will be rendered inside `Modal` component.
-
-### className
-
-**Type:** `string`
-
-**Default:** ``
-
-Style to be applied to the overlay container's root node.
-
-#### Any other properties will be spread on the overlay container's root node.
+_Any other properties will be spread on the overlay container's root node._
