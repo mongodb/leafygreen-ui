@@ -21,6 +21,7 @@ export default function RGBLogo({ fill, height }: SVGLogoProps) {
       viewBox="0 0 1112.61 300"
       height={height}
       width="100%"
+      data-testid={`${fill}-rgb-logo`}
     >
       <title>MongoDB Logo</title>
       <path

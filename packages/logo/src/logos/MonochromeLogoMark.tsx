@@ -8,6 +8,7 @@ export default function MonochromeLogoMark({ fill, height }: SVGLogoProps) {
       viewBox="0 0 216.56 448.5"
       height={height}
       width="auto"
+      data-testid={`${fill}-monochrome-logomark`}
     >
       <title>MongoDB LogoMark</title>
       <path

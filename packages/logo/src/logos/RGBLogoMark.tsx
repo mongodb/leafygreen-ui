@@ -24,6 +24,7 @@ export default function RGBLogoMark({ height }: RGBLogoMarkProps) {
       viewBox="0 0 216.56 448.5"
       height={height}
       width="auto"
+      data-testid="rgb-logomark"
     >
       <title>MongoDB LogoMark</title>
       <path
