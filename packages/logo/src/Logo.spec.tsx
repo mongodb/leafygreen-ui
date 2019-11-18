@@ -15,13 +15,17 @@ describe('packages/logo', () => {
     });
 
     test('renders dark knockout logomark, when variant is set to dark', () => {
-      const { getByTestId } = render(<LogoMark variant="dark" />);
+      const { getByTestId } = render(
+        <LogoMark variant="dark" knockout={true} />,
+      );
       const logomark = getByTestId('#21313C-monochrome-logomark');
 
       expect(logomark).toBeInTheDocument();
     });
     test('renders light knockout logomark, when variant is set to light', () => {
-      const { getByTestId } = render(<LogoMark variant="light" />);
+      const { getByTestId } = render(
+        <LogoMark variant="light" knockout={true} />,
+      );
       const logomark = getByTestId('#FFFFFF-monochrome-logomark');
 
       expect(logomark).toBeInTheDocument();
