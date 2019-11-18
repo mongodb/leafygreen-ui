@@ -16,12 +16,12 @@ If you're interested in contributing, and want to know what projects we have on 
 
 ## Getting Started
 
-### Typescript
+### TypeScript
 
-LeafyGreen uses Typescript, to help make consumption of this library as intuitive and error-free as possible. If you're new to Typescript, these resources may be able to help you get started:
+LeafyGreen uses TypeScript, to help make consumption of this library as intuitive and error-free as possible. If you're new to TypeScript, these resources may be able to help you get started:
 
-1. [Typescript Handbook](https://www.typescriptlang.org/docs/handbook/basic-types.html)
-2. [Typescript Cheatsheet](https://github.com/typescript-cheatsheets/react-typescript-cheatsheet)
+1. [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/basic-types.html)
+2. [TypeScript Cheatsheet](https://github.com/typescript-cheatsheets/react-typescript-cheatsheet)
 
 ### Emotion
 
@@ -29,7 +29,13 @@ For styling, we use the CSS-in-JS library, Emotion. To get started with Emotion 
 
 We've created a wrapper around the Emotion library, which can be brought into new components as such:
 
-`import {css, cx} from @leafygreen-ui/emotion`
+`import { css, cx } from @leafygreen-ui/emotion`
+
+When using the library, you must use our Emotion instance, because of constraits over how styles are injected into the page.
+
+### `yarn create-package [your-package-name]`
+
+We've created a scaffolding script to help you get started with new components quickly and easily. Run `yarn create-package [your-package-name]` and you'll have all of the necessary boilerplate code available out of the box.
 
 ### React Design Patterns
 
