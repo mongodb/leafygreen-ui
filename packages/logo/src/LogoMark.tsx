@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import { uiColors } from '@leafygreen-ui/palette';
+import { css } from '@leafygreen-ui/emotion';
 import { LogoProps, Variant } from './types';
 import MonochromeLogoMark from './logos/MonochromeLogoMark';
 import RGBLogoMark from './logos/RGBLogoMark';
@@ -18,15 +19,22 @@ import RGBLogoMark from './logos/RGBLogoMark';
  * @param props.height Determines height of the <LogoMark /> component.
  */
 function LogoMark({ height = 40, variant }: LogoProps): ReactElement {
+  const className = css`
+    height: ${height}px;
+    width: auto;
+  `;
+
   if (variant === 'light') {
-    return <MonochromeLogoMark fill={uiColors.white} height={height} />;
+    return <MonochromeLogoMark fill={uiColors.white} className={className} />;
   }
 
   if (variant === 'dark') {
-    return <MonochromeLogoMark fill={uiColors.gray.dark3} height={height} />;
+    return (
+      <MonochromeLogoMark fill={uiColors.gray.dark3} className={className} />
+    );
   }
 
-  return <RGBLogoMark height={height} />;
+  return <RGBLogoMark className={className} />;
 }
 
 LogoMark.displayName = 'LogoMark';

@@ -14,14 +14,13 @@ const class3 = css`
   fill: #12924f;
 `;
 
-export default function RGBLogo({ fill, height }: SVGLogoProps) {
+export default function RGBLogo({ fill, className }: SVGLogoProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1112.61 300"
-      height={height}
-      width="100%"
       data-testid={`${fill}-rgb-logo`}
+      className={className}
     >
       <title>MongoDB Logo</title>
       <path

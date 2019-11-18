@@ -1,14 +1,13 @@
 import React from 'react';
 import { SVGLogoProps } from '../types';
 
-export default function MonochromeLogoMark({ fill, height }: SVGLogoProps) {
+export default function MonochromeLogoMark({ fill, className }: SVGLogoProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 216.56 448.5"
-      height={height}
-      width="auto"
       data-testid={`${fill}-monochrome-logomark`}
+      className={className}
     >
       <title>MongoDB LogoMark</title>
       <path

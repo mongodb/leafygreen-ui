@@ -6,35 +6,54 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { Variant } from './types';
 import { Logo, LogoMark } from '.';
 
-const background = css`
-  padding: 10px;
-  background-color: ${uiColors.gray.base};
-`;
-
 storiesOf('Logo', module)
-  .add('LogoMark', () => (
-    <div className={background}>
-      <LogoMark
-        variant={select(
-          'Variant',
-          Object.values(Variant) as Array<Variant>,
-          Variant.Dark,
-        )}
-        knockout={boolean('Knockout', false)}
-        height={number('Height', 40)}
-      />
-    </div>
-  ))
-  .add('Logo', () => (
-    <div className={background}>
-      <Logo
-        variant={select(
-          'Variant',
-          Object.values(Variant) as Array<Variant>,
-          Variant.Dark,
-        )}
-        knockout={boolean('Knockout', false)}
-        height={number('Height', 40)}
-      />
-    </div>
-  ));
+  .add('LogoMark', () => {
+    const variant = select(
+      'Variant',
+      Object.values(Variant) as Array<Variant>,
+      Variant.Dark,
+    );
+
+    console.log(variant);
+
+    const background = css`
+      padding: 10px;
+      background-color: ${variant === Variant.Dark
+        ? uiColors.gray.light3
+        : uiColors.gray.dark3};
+    `;
+
+    return (
+      <div className={background}>
+        <LogoMark
+          variant={variant}
+          knockout={boolean('Knockout', false)}
+          height={number('Height', 40)}
+        />
+      </div>
+    );
+  })
+  .add('Logo', () => {
+    const variant = select(
+      'Variant',
+      Object.values(Variant) as Array<Variant>,
+      Variant.Dark,
+    );
+
+    const background = css`
+      padding: 10px;
+      background-color: ${variant === Variant.Dark
+        ? uiColors.gray.light3
+        : uiColors.gray.dark3};
+    `;
+
+    return (
+      <div className={background}>
+        <Logo
+          variant={variant}
+          knockout={boolean('Knockout', false)}
+          height={number('Height', 40)}
+        />
+      </div>
+    );
+  });

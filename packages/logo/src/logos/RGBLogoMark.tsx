@@ -14,17 +14,16 @@ const class3 = css`
 `;
 
 interface RGBLogoMarkProps {
-  height: number;
+  className: string;
 }
 
-export default function RGBLogoMark({ height }: RGBLogoMarkProps) {
+export default function RGBLogoMark({ className }: RGBLogoMarkProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 216.56 448.5"
-      height={height}
-      width="auto"
       data-testid="rgb-logomark"
+      className={className}
     >
       <title>MongoDB LogoMark</title>
       <path

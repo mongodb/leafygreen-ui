@@ -48,5 +48,5 @@ export { Fill };
 
 export interface SVGLogoProps {
   fill: Fill;
-  height: number;
+  className: string;
 }

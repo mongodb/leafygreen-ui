@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { uiColors } from '@leafygreen-ui/palette';
+import { css } from '@leafygreen-ui/emotion';
 import RGBLogo from './logos/RGBLogo';
 import MonochromeLogo from './logos/MonochromeLogo';
 import { LogoProps, Variant } from './types';
@@ -20,22 +21,27 @@ import { LogoProps, Variant } from './types';
 function Logo({ variant = 'dark', knockout = false, height = 40 }: LogoProps) {
   let fill = '';
 
+  const className = css`
+    width: auto;
+    height: ${height}px;
+  `;
+
   if (variant === 'light') {
     fill = uiColors.white;
     if (knockout) {
-      return <MonochromeLogo height={height} fill={fill} />;
+      return <MonochromeLogo className={className} fill={fill} />;
     }
 
-    return <RGBLogo height={height} fill={fill} />;
+    return <RGBLogo className={className} fill={fill} />;
   }
 
   fill = uiColors.gray.dark3;
 
   if (knockout) {
-    return <MonochromeLogo height={height} fill={fill} />;
+    return <MonochromeLogo className={className} fill={fill} />;
   }
 
-  return <RGBLogo height={height} fill={fill} />;
+  return <RGBLogo className={className} fill={fill} />;
 }
 
 Logo.displayName = 'Logo';
