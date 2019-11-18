@@ -11,6 +11,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "devDependencies": {
+    "@leafygreen-ui/icon": "2.1.0"
+  },
   "dependencies": {
     "@leafygreen-ui/lib": "^3.2.0",
     "@leafygreen-ui/emotion": "1.0.6",
