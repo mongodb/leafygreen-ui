@@ -1,6 +1,4 @@
 const fs = require('fs');
-const splitDir = __dirname.split('scripts')[0];
-const srcDir = `${splitDir}packages`;
 
 const PACKAGE = process.argv[process.argv.length - 1];
 const PACKAGE_LC = PACKAGE.toLowerCase();
@@ -11,44 +9,37 @@ const PACKAGE_HUMANREADABLE = PACKAGE.split('-')
   .map(el => el.replace(/^\w/, c => c.toUpperCase()))
   .join(' ');
 
+const splitDir = __dirname.split('scripts')[0];
+const srcDir = `${splitDir}packages`;
 const newDirectory = `${srcDir}/${PACKAGE_LC}`;
-fs.mkdir(newDirectory, { recursive: true }, err => {
+
+const handleErr = err => {
   if (err) throw err;
+};
 
-  fs.writeFile(`${newDirectory}/package.json`, packageJSON, err => {
-    if (err) throw err;
-  });
+fs.mkdir(newDirectory, { recursive: true }, err => {
+  handleErr(err);
 
-  fs.writeFile(`${newDirectory}/tsconfig.json`, tsConfig, err => {
-    if (err) throw err;
-  });
+  fs.writeFile(`${newDirectory}/package.json`, packageJSON, handleErr);
 
-  fs.writeFile(`${newDirectory}/README.md`, readMe, err => {
-    if (err) throw err;
-  });
+  fs.writeFile(`${newDirectory}/tsconfig.json`, tsConfig, handleErr);
+
+  fs.writeFile(`${newDirectory}/README.md`, readMe, handleErr);
 
   fs.mkdir(`${newDirectory}/src`, { recursive: true }, err => {
-    if (err) throw err;
+    handleErr(err);
 
-    fs.writeFile(`${newDirectory}/src/${PACKAGE_UC}.tsx`, rootFile, err => {
-      if (err) throw err;
-    });
+    fs.writeFile(`${newDirectory}/src/${PACKAGE_UC}.tsx`, rootFile, handleErr);
 
-    fs.writeFile(`${newDirectory}/src/index.ts`, index, err => {
-      if (err) throw err;
-    });
+    fs.writeFile(`${newDirectory}/src/index.ts`, index, handleErr);
 
     fs.writeFile(
       `${newDirectory}/src/${PACKAGE_UC}.story.tsx`,
       storybook,
-      err => {
-        if (err) throw err;
-      },
+      handleErr,
     );
 
-    fs.writeFile(`${newDirectory}/src/${PACKAGE_UC}.spec.tsx`, spec, err => {
-      if (err) throw err;
-    });
+    fs.writeFile(`${newDirectory}/src/${PACKAGE_UC}.spec.tsx`, spec, handleErr);
   });
 });
 
@@ -135,5 +126,9 @@ import ${PACKAGE_UC} from '.';
 
 afterAll(cleanup);
 
-describe('packages/${PACKAGE_LC}', () => {})
+describe('packages/${PACKAGE_LC}', () => {
+  test('condition', () => {
+
+  })
+})
 `;
