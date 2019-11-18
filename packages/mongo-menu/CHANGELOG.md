@@ -1,5 +1,11 @@
 # @leafygreen-ui/mongo-menu
 
+## 2.0.2
+
+### Patch Changes
+
+- db79b2d: Truncate long email addresses in MongoMenu
+
 ## 2.0.1
 
 ### Patch Changes

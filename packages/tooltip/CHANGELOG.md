@@ -1,5 +1,11 @@
 # @leafygreen-ui/tooltip
 
+## 2.0.1
+
+### Patch Changes
+
+- 50853ca: Upgrade dependencies
+
 ## 2.0.0
 
 ### Major Changes

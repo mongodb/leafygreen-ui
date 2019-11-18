@@ -1,5 +1,11 @@
 # @leafygreen-ui/modal
 
+## 1.2.3
+
+### Patch Changes
+
+- 50853ca: Upgrade dependencies
+
 ## 1.2.2
 
 - Updated dependencies [563dc2e]:
