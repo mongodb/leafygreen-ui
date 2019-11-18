@@ -49,10 +49,11 @@ After the script completes, you can make changes directly to the component in yo
 
 ## Creating New Component
 
-### package.json
+### Getting Started
 
-1. Each of the packages needs it's own `build`, and `ts:emit` (TypeScript packages only) scripts so that lerna can build the package correctly.
-2. For TypeScript packages, a `types` field needs to be specified that points at the built `.d.ts` definition file.
+To get started quickly and easily run `yarn create-package my-new-package`. When you run this command, we create a directory containing all of the boilerplate code that you'll need to start developing your new Component.
+
+Note: it's important to follow the kebab-casing convention described above.
 
 ## Linting
 
