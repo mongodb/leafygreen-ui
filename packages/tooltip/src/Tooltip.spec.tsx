@@ -243,4 +243,35 @@ describe('packages/Tooltip', () => {
       expect(tooltip).not.toBeVisible();
     });
   });
+
+  describe('when trigger contains nested children', () => {
+    interface ButtonProps {
+      children: React.ReactNode;
+    }
+
+    function Button({ children, ...props }: ButtonProps) {
+      return (
+        <button {...props} data-testid="nested-trigger">
+          trigger {children}
+        </button>
+      );
+    }
+
+    const { getByTestId } = render(
+      <Tooltip
+        trigger={
+          <Button>
+            <span>trigger</span>
+          </Button>
+        }
+      >
+        <div>Tooltip!</div>
+      </Tooltip>,
+    );
+
+    test('renders trigger in document', () => {
+      const trigger = getByTestId('nested-trigger');
+      expect(trigger).toBeInTheDocument();
+    });
+  });
 });
