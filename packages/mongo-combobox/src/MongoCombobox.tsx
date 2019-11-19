@@ -10,7 +10,8 @@ const containerStyle = css`
   background-color: ${uiColors.white};
   border: 1px solid #dee0e3;
   box-shadow: 0px 2px 6px 0px #dee0e3;
-  padding: 10px;
+  padding: 15px;
+  width: 282px;
 `;
 
 interface MongoComboboxProps {
