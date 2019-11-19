@@ -22,6 +22,7 @@ function LogoMark({
   height = 40,
   variant,
   knockout = false,
+  ...rest
 }: LogoProps): ReactElement {
   const className = css`
     height: ${height}px;
@@ -31,7 +32,7 @@ function LogoMark({
   const MarkComponent = knockout ? MonochromeLogoMark : RGBLogoMark;
   const fill = variant === 'light' ? uiColors.white : uiColors.gray.dark3;
 
-  return <MarkComponent fill={fill} className={className} />;
+  return <MarkComponent {...rest} fill={fill} className={className} />;
 }
 
 LogoMark.displayName = 'LogoMark';

@@ -1,14 +1,13 @@
 import React from 'react';
 import { SVGLogoProps } from '../types';
 
-export default function MonochromeLogo({ fill, className }: SVGLogoProps) {
+export default function MonochromeLogo({
+  fill,
+  className,
+  ...rest
+}: SVGLogoProps) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 1112.61 300"
-      data-testid={`${fill}-monochrome-logo`}
-      className={className}
-    >
+    <svg {...rest} viewBox="0 0 1112.61 300" className={className}>
       <title>MongoDB Logo</title>
       <path
         fill={fill}

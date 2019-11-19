@@ -1,38 +1,20 @@
 import React from 'react';
-import { css } from '@leafygreen-ui/emotion';
 import { SVGLogoProps } from '../types';
 
-const class1 = css`
-  fill: #10aa50;
-`;
-
-const class2 = css`
-  fill: #b8c4c2;
-`;
-
-const class3 = css`
-  fill: #12924f;
-`;
-
-export default function RGBLogo({ fill, className }: SVGLogoProps) {
+export default function RGBLogo({ fill, className, ...rest }: SVGLogoProps) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 1112.61 300"
-      data-testid={`${fill}-rgb-logo`}
-      className={className}
-    >
+    <svg {...rest} viewBox="0 0 1112.61 300" className={className}>
       <title>MongoDB Logo</title>
       <path
-        className={class1}
+        fill="#10aa50"
         d="M134.44,120.34C119.13,52.8,87.22,34.82,79.08,22.11a144.57,144.57,0,0,1-8.9-17.42c-.43,6-1.22,9.78-6.32,14.33C53.62,28.15,10.13,63.59,6.47,140.33c-3.41,71.55,52.6,115.67,60,120.23,5.69,2.8,12.62.06,16-2.51,27-18.53,63.89-67.93,52-137.71"
       />
       <path
-        className={class2}
+        fill="#b8c4c2"
         d="M72.5,222.46c-1.41,17.71-2.42,28-6,38.12,0,0,2.35,16.86,4,34.72h5.84a324.73,324.73,0,0,1,6.37-37.39C75.15,254.19,72.79,238,72.5,222.46Z"
       />
       <path
-        className={class3}
+        fill="#12924f"
         d="M82.7,257.92h0c-7.64-3.53-9.85-20.06-10.19-35.46a725.83,725.83,0,0,0,1.65-76.35c-.4-13.36.19-123.74-3.29-139.9A134.29,134.29,0,0,0,79.08,22.1c8.14,12.72,40.06,30.7,55.36,98.24C146.36,190,109.67,239.27,82.7,257.92Z"
       />
       <path

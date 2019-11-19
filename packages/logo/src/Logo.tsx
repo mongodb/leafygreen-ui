@@ -18,30 +18,21 @@ import { LogoProps, Variant } from './types';
  * @param props.knockout Boolean to describe whether or not knockout version of MongoDB logo will be used.
  * @param props.height Determines height of the <Logo /> component.
  */
-function Logo({ variant = 'dark', knockout = false, height = 40 }: LogoProps) {
-  let fill = '';
-
+function Logo({
+  variant = 'dark',
+  knockout = false,
+  height = 40,
+  ...rest
+}: LogoProps) {
   const className = css`
     width: auto;
     height: ${height}px;
   `;
 
-  if (variant === 'light') {
-    fill = uiColors.white;
-    if (knockout) {
-      return <MonochromeLogo className={className} fill={fill} />;
-    }
+  const MarkComponent = knockout ? MonochromeLogo : RGBLogo;
+  const fill = variant === 'light' ? uiColors.white : uiColors.gray.dark3;
 
-    return <RGBLogo className={className} fill={fill} />;
-  }
-
-  fill = uiColors.gray.dark3;
-
-  if (knockout) {
-    return <MonochromeLogo className={className} fill={fill} />;
-  }
-
-  return <RGBLogo className={className} fill={fill} />;
+  return <MarkComponent {...rest} fill={fill} className={className} />;
 }
 
 Logo.displayName = 'Logo';
