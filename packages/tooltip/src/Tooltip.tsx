@@ -274,11 +274,17 @@ function Tooltip({
       });
     }
 
+    const { children: triggerChildren } = trigger.props;
     return React.cloneElement(trigger, {
       ...createTriggerProps(triggerEvent, trigger.props),
       'aria-describedby': tooltipId,
-      children: trigger.props.children
-        ? [...trigger.props.children, tooltip]
+      children: triggerChildren
+        ? [
+            ...(triggerChildren instanceof Array
+              ? triggerChildren
+              : [triggerChildren]),
+            tooltip,
+          ]
         : tooltip,
     });
   }
