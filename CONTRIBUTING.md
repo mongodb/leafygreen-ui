@@ -1,6 +1,54 @@
 # Contributing
 
+## Can I Contribute?
+
+We appreciate contributions of all kinds -- whether that is a bug fix, or a new component.
+
+Before making a PR with a brand new component, hook or feature, it may be helpful to consider whether it solves the following:
+
+- Can the feature be used across multiple MongoDB Products?
+- Is it abstracting logic that many developers or components could utilize?
+- Have you considered how to make this as generalizable as possible?
+
+## Roadmap
+
+If you're interested in contributing, and want to know what projects we have on deck, check out our roadmap [here](https://wiki.corp.mongodb.com/display/DESIGN/Design+Systems).
+
+## Getting Started
+
+### TypeScript
+
+LeafyGreen uses TypeScript, to help make consumption of this library as intuitive and error-free as possible. If you're new to TypeScript, these resources may be able to help you get started:
+
+1. [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/basic-types.html)
+2. [TypeScript Cheatsheet](https://github.com/typescript-cheatsheets/react-typescript-cheatsheet)
+
+### Emotion
+
+For styling, we use the CSS-in-JS library, Emotion. To get started with Emotion check out their documentation [here](https://emotion.sh/docs/introduction).
+
+We've created a wrapper around the Emotion library, which can be brought into new components as such:
+
+`import { css, cx } from @leafygreen-ui/emotion`
+
+When using the library, you must use our Emotion instance, because of constraits over how styles are injected into the page.
+
+### `yarn create-package [your-package-name]`
+
+We've created a scaffolding script to help you get started with new components quickly and easily. Run `yarn create-package [your-package-name]` and you'll have all of the necessary boilerplate code available out of the box.
+
+### React Design Patterns
+
+As far as design patterns leveraged by our components we tend to favor:
+
+- Functional components over class-based components
+- Creating abstractable hooks where possible, that can be used across multiple components
+- Native Array methods to bringing in other libraries, such as Lodash
+- Using default exports over named exports
+
 ## Code Style
+
+### Prettier
 
 We use an automatic code formatter called [Prettier](https://prettier.io/). Run `yarn prettier` after making any changes to the code.
 
