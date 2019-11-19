@@ -278,7 +278,12 @@ function Tooltip({
       ...createTriggerProps(triggerEvent, trigger.props),
       'aria-describedby': tooltipId,
       children: trigger.props.children
-        ? [...trigger.props.children, tooltip]
+        ? [
+            ...(trigger.props.children instanceof Array
+              ? trigger.props.children
+              : [trigger.props.children]),
+            tooltip,
+          ]
         : tooltip,
     });
   }
