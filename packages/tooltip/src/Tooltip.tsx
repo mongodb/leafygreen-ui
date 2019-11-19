@@ -274,14 +274,15 @@ function Tooltip({
       });
     }
 
+    const triggerChildren = trigger.props.children;
     return React.cloneElement(trigger, {
       ...createTriggerProps(triggerEvent, trigger.props),
       'aria-describedby': tooltipId,
-      children: trigger.props.children
+      children: triggerChildren
         ? [
-            ...(trigger.props.children instanceof Array
-              ? trigger.props.children
-              : [trigger.props.children]),
+            ...(triggerChildren instanceof Array
+              ? triggerChildren
+              : [triggerChildren]),
             tooltip,
           ]
         : tooltip,
