@@ -43,6 +43,8 @@ As far as design patterns leveraged by our components we tend to favor:
 
 - Functional components over class-based components
 - Creating abstractable hooks where possible, that can be used across multiple components
+- Native Array methods to bringing in other libraries, such as Lodash
+- Using default exports over named exports
 
 ## Code Style
 
