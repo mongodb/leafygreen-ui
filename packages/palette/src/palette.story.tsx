@@ -19,12 +19,11 @@ const ColorBlock = styled<'div', ColorBlockProps>('div')`
   border-radius: 8px;
   margin: 10px;
   margin-bottom: 20px;
-  box-shadow: 0 8px 6px -8px ${props =>
-    transparentize(0.7, darken(0.2, props.color))},
+  box-shadow: 0 8px 6px -8px ${props => transparentize(0.7, darken(0.2, props.color))},
     0 2px 3px ${props => transparentize(0.8, darken(0.5, props.color))};
 
   &:before {
-    content: attr(data-color);
+    content: attr(color);
     position: absolute;
     bottom: 0.3rem;
     left: 0.3rem;
@@ -38,7 +37,7 @@ const ColorBlock = styled<'div', ColorBlockProps>('div')`
   }
 
   &:after {
-    content: "${props => props.name}";
+    content: attr(name);
     position: absolute;
     top: calc(100% + 8px);
     font-size: 12px;
