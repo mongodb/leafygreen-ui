@@ -1,5 +1,5 @@
-import LeafyGreenProvider, { UsingKeyboardContext } from './LeafyGreenProvider';
-import useShowFocus from './useShowFocus';
+import LeafyGreenProvider from './LeafyGreenProvider';
+import useShowFocus from './UsingKeyboardProvider';
 
-export { UsingKeyboardContext, useShowFocus };
+export { useShowFocus };
 export default LeafyGreenProvider;
