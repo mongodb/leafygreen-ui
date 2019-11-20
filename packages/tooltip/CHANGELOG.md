@@ -1,5 +1,13 @@
 # @leafygreen-ui/tooltip
 
+## 2.0.2
+
+### Patch Changes
+
+- 13e3eab: Enable trigger prop to accept nested components
+- Updated dependencies [319844d]
+  - @leafygreen-ui/palette@1.1.1
+
 ## 2.0.1
 
 ### Patch Changes

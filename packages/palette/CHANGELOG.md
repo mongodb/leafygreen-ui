@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 1.1.1
+
+### Patch Changes
+
+- 319844d: Fix bug in storybook such that HEX values are now displayed
+
 ## 1.1.0
 
 ### Minor Changes
