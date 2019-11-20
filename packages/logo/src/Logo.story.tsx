@@ -14,8 +14,6 @@ storiesOf('Logo', module)
       Variant.Dark,
     );
 
-    console.log(variant);
-
     const background = css`
       padding: 10px;
       background-color: ${variant === Variant.Dark

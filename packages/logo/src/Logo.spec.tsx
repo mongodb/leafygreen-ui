@@ -24,6 +24,7 @@ describe('packages/logo', () => {
 
       expect(logomark).toBeInTheDocument();
     });
+
     test('renders light knockout logomark, when variant is set to light', () => {
       const testId = '#FFFFFF-monochrome-logomark';
       const { getByTestId } = render(
