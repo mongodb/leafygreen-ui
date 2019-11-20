@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Menu, MenuGroup, MenuItem } from './index';
+import { Menu, MenuSeparator, MenuItem } from './index';
 import { Align, Justify } from '@leafygreen-ui/popover';
 
 function Uncontrolled() {
