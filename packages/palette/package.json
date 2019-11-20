@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/palette",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "LeafyGreen UI Palettes",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
