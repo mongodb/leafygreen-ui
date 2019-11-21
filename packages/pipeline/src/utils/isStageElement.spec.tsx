@@ -10,7 +10,7 @@ describe('packages/pipeline/utils/isStageElement', () => {
       variant: Variant.Default,
       children: '$legitimate',
     };
-    const element = React.createElement(Stage, props);
+    const element = <Stage {...props} />;
     const result = isStageElement(element);
 
     expect(result).toEqual(true);
@@ -18,7 +18,7 @@ describe('packages/pipeline/utils/isStageElement', () => {
 
   test('returns "false" if the element is NOT a "Stage" element', () => {
     const NotStage = () => null;
-    const element = React.createElement(NotStage);
+    const element = <NotStage />;
     const result = isStageElement(element);
 
     expect(result).toEqual(false);
