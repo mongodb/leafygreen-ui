@@ -208,7 +208,7 @@ IconButton.propTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
   href: PropTypes.string,
-  ariaLabel: PropTypes.string,
+  ariaLabel: PropTypes.string.isRequired,
 };
 
 export default IconButton;
