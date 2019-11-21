@@ -258,7 +258,7 @@ const MenuItem = React.forwardRef(
       </li>
     );
 
-    if (usesLinkElement({ ...rest })) {
+    if (usesLinkElement(rest)) {
       return renderMenuItem('a');
     }
 
