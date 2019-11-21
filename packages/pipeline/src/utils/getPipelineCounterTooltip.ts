@@ -1,6 +1,5 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { onlyText } from 'react-children-utilities';
-import { flow, compact, split, map } from 'lodash/fp';
 
 /**
  * A utility function which takes the React.children rendered by the Pipeline component
@@ -10,16 +9,12 @@ import { flow, compact, split, map } from 'lodash/fp';
  * @returns string - the tooltip text
  */
 export default function getPipelineCounterTooltip(children: ReactNode): string {
-  const stages = flow(
-    onlyText,
-    split('$'),
-    compact,
-    map(str => `$${str}`),
-  )(children);
+  const stages = React.Children.map(children, onlyText) || [];
 
-  const formattedStages = stages.flatMap((value, index, array) =>
-    array.length - 1 !== index ? [value, '>'] : value,
-  );
-
-  return formattedStages.join(' ');
+  return stages
+    .filter(Boolean)
+    .flatMap((value, index, array) =>
+      array.length - 1 !== index ? [value, '>'] : value,
+    )
+    .join(' ');
 }
