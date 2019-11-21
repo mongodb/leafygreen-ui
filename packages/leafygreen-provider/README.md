@@ -78,7 +78,7 @@ This hook allows you to directly read, and set the state of whether a user is in
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 const { usingKeyboard, setUsingKeyboard } = useUsingKeyboardContext();
-const inputRef = useRef(null)
+const inputRef = useRef(null);
 
 function autoFocus() {
   inputRef.current?.focus();
@@ -88,7 +88,5 @@ function autoFocus() {
   }
 }
 
-<input type={text} ref={inputRef} />
-
+<input type={text} ref={inputRef} />;
 ```
-

@@ -1,21 +1,32 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
-import UsingKeyboardProvider, { useUsingKeyboardContext } from './UsingKeyboardProvider';
+import UsingKeyboardProvider, {
+  useUsingKeyboardContext,
+} from './UsingKeyboardProvider';
 
 afterAll(cleanup);
 
 const genId = () => Math.round(Math.random() * 1000000).toString();
 
 describe('useShowFocus', () => {
-  function TestUseUsingKeyboardComponent({ id, buttonId }: { id: string, buttonId?: string }) {
-    const {usingKeyboard, setUsingKeyboard} = useUsingKeyboardContext();
+  function TestUseUsingKeyboardComponent({
+    id,
+    buttonId,
+  }: {
+    id: string;
+    buttonId?: string;
+  }) {
+    const { usingKeyboard, setUsingKeyboard } = useUsingKeyboardContext();
 
     return (
-			<>
-				<div data-testid={id}>{usingKeyboard + ''}</div>
-				<button data-testid={buttonId || ''} onClick={() => setUsingKeyboard(true)}/>
-			</>
-		)
+      <>
+        <div data-testid={id}>{usingKeyboard + ''}</div>
+        <button
+          data-testid={buttonId || ''}
+          onClick={() => setUsingKeyboard(true)}
+        />
+      </>
+    );
   }
 
   test('when child is not a descendent of UsingKeyboardProvider, usingKeyboard is undefined', () => {
@@ -30,8 +41,8 @@ describe('useShowFocus', () => {
   describe('when child is a descendent of UsingKeyboardProvider', () => {
     // We use this function in each test to avoid events we fire from causing side-effects in other tests
     function renderTestComponent() {
-			const childTestId = genId();
-			const buttonId = genId();
+      const childTestId = genId();
+      const buttonId = genId();
 
       const renderedComponent = render(
         <UsingKeyboardProvider>
@@ -40,9 +51,9 @@ describe('useShowFocus', () => {
       );
 
       return {
-				testChildElement: renderedComponent.getByTestId(childTestId),
-				buttonElement: renderedComponent.getByTestId(buttonId)
-			};
+        testChildElement: renderedComponent.getByTestId(childTestId),
+        buttonElement: renderedComponent.getByTestId(buttonId),
+      };
     }
 
     test('before interaction, usingKeyboard is false', () => {

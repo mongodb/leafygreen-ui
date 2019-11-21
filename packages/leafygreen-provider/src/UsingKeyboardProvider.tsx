@@ -4,7 +4,7 @@ import { useEventListener } from '@leafygreen-ui/hooks';
 
 interface UsingKeyboardState {
   usingKeyboard?: boolean;
-  setUsingKeyboard?: React.Dispatch<React.SetStateAction<boolean>>;
+  setUsingKeyboard: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const UsingKeyboardContext = createContext<UsingKeyboardState>({
@@ -24,7 +24,7 @@ export const NavigationKeyCodes: { readonly [k: string]: number } = {
 export function useShowFocus(): boolean {
   const { usingKeyboard } = useContext(UsingKeyboardContext);
 
-  if (usingKeyboard === null || usingKeyboard === undefined) {
+  if (usingKeyboard == null) {
     // If there's no context provider available, we show focus states as usual.
     return true;
   }
