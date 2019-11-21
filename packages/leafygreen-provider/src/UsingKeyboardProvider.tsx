@@ -21,7 +21,7 @@ export const NavigationKeyCodes: { readonly [k: string]: number } = {
   downArrow: 40,
 } as const;
 
-export function useShowFocus() {
+export function useShowFocus(): boolean {
   const { usingKeyboard } = useContext(UsingKeyboardContext);
 
   if (usingKeyboard === null || usingKeyboard === undefined) {
@@ -33,7 +33,7 @@ export function useShowFocus() {
 }
 
 interface UsingKeyboardProviderProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 function UsingKeyboardProvider({ children }: UsingKeyboardProviderProps) {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import UsingKeyboardProvider from './UsingKeyboardProvider';
 
 interface LeafyGreenProviderProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 function LeafyGreenProvider({ children }: LeafyGreenProviderProps) {
