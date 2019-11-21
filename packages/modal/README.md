@@ -64,6 +64,6 @@ function ExampleComponent() {
 | `shouldClose`      | `function`                  | Callback to determine whether or not Modal should close when user tries to close it.                                                        | `() => true` |
 | `children`         | `node`                      | Children that will be rendered inside `<Modal />` component.                                                                                |              |
 | `className`        | `string`                    | Style to be applied to the container's root node.                                                                                           |              |
-| `contentClassName` | `string`                    | Style to be applied to the overlay div node                                                                                                 |              |
+| `contentClassName` | `string`                    | Style to be applied to the content div.                                                                                                     |              |
 
 _Any other properties will be spread on the overlay container's root node._
