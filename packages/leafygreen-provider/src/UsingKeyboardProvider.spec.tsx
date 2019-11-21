@@ -9,20 +9,22 @@ afterAll(cleanup);
 
 describe('packages/leafygreen-provider/UsingKeyboardProvider', () => {
   const childTestID = 'using-keyboard-provider';
-  const buttonTestId = 'test-button'
+  const buttonTestId = 'test-button';
 
   function TestContextComponent() {
-    const {
-      usingKeyboard,
-      setUsingKeyboard = () => {},
-    } = useContext(UsingKeyboardContext);
+    const { usingKeyboard, setUsingKeyboard = () => {} } = useContext(
+      UsingKeyboardContext,
+    );
 
     return (
       <>
         <div data-testid={childTestID}>
           {usingKeyboard !== undefined ? usingKeyboard.toString() : ''}
         </div>
-        <button onClick={() => setUsingKeyboard(true)} data-testid={buttonTestId}/>
+        <button
+          onClick={() => setUsingKeyboard(true)}
+          data-testid={buttonTestId}
+        />
       </>
     );
   }
@@ -62,10 +64,10 @@ describe('packages/leafygreen-provider/UsingKeyboardProvider', () => {
     expect(testChild.textContent).toBe('false');
   });
 
-  test ('when passed true, setUsingKeyboard sets usingKeyboard to true', () => {
+  test('when passed true, setUsingKeyboard sets usingKeyboard to true', () => {
     // The button's click handler fires setUsingKeyboard(true)
     fireEvent.click(getByTestId(buttonTestId));
 
     expect(testChild.textContent).toBe('true');
-  })
+  });
 });

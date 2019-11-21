@@ -30,9 +30,9 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 ### Properties
 
-| Prop        | Type                                                                  | Description                                                       |
-| ----------- | --------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| `children`  | `node`                                                                | Children passed to `LeafyGreenProvider` will be unmodified, aside from having access to its state. |
+| Prop       | Type   | Description                                                                                        |
+| ---------- | ------ | -------------------------------------------------------------------------------------------------- |
+| `children` | `node` | Children passed to `LeafyGreenProvider` will be unmodified, aside from having access to its state. |
 
 ## useShowFocus
 
@@ -46,12 +46,13 @@ It uses state from `LeafyGreenProvider` to determine if focus states should be s
 import { useShowFocus } from '@leafygreen-ui/leafygreen-provider';
 
 const showFocus = useShowFocus();
-const focusStyle = showFocus ?
-  css`
-    &:focus {
-      outline: blue auto 5px; // Your focus state
-    }
-  ` : '';
+const focusStyle = showFocus
+  ? css`
+      &:focus {
+        outline: blue auto 5px; // Your focus state
+      }
+    `
+  : '';
 
 <button className={focusStyle}></button>;
 ```
