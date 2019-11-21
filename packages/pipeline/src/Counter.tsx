@@ -10,6 +10,8 @@ import {
   Variant,
   layout,
   colors,
+  counterAttr,
+  counterChevronAttr,
 } from './styles';
 
 interface StateForStyles {
@@ -116,8 +118,8 @@ const Counter = forwardRef(
     return (
       <div
         {...rest}
+        {...counterAttr.prop}
         data-testid="pipeline-counter"
-        data-leafygreen-ui="pipeline-counter"
         className={cx(baseStyle, className)}
         ref={ref}
       >
@@ -125,8 +127,8 @@ const Counter = forwardRef(
         {children}
 
         <div
+          {...counterChevronAttr.prop}
           data-testid="pipeline-counter-chevron"
-          data-leafygreen-ui="pipeline-counter-chevron"
           className={chevronStyle}
         />
       </div>

@@ -1,5 +1,6 @@
 import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
+import { createDataProp } from '@leafygreen-ui/lib';
 
 export const Size = {
   XSmall: 'xsmall',
@@ -174,3 +175,17 @@ export const getChevronStyle = ({ size }: StateForStyles): string => {
     }
   `;
 };
+
+/* LeafyGreen Data attributes */
+
+// Pipeline
+export const pipelineAttr = createDataProp('pipeline');
+export const pipelineStages = createDataProp('pipeline-stages');
+
+// Stage
+export const stageAttr = createDataProp('pipeline-stage');
+export const stageChevronAttr = createDataProp('pipeline-stage-chevron');
+
+// Counter
+export const counterAttr = createDataProp('pipeline-counter');
+export const counterChevronAttr = createDataProp('pipeline-counter-chevron');

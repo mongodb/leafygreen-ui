@@ -24,7 +24,16 @@ import {
   isElementOverflowed,
 } from './utils';
 
-import { getRootStyle, Size, Variant, layout, colors } from './styles';
+import {
+  getRootStyle,
+  Size,
+  Variant,
+  layout,
+  colors,
+  pipelineAttr,
+  pipelineStages,
+  stageChevronAttr,
+} from './styles';
 
 export interface StateForStyles {
   hasHiddenStages: boolean;
@@ -101,8 +110,7 @@ const getLastVisibleStageChevronStyles = ({
       { innerColor: 'transparent', outerColor: 'transparent' };
 
   return css`
-    .leafygreen-ui-pipeline-stage--last-visible
-      > [data-leafygreen-ui='pipeline-stage-chevron']::before {
+    .${lastVisibleClassName} > ${stageChevronAttr.selector}::before {
       background-color: ${primary.backgroundColor};
       box-shadow: 0 0 0 ${chevron.size}px ${boxShadow.innerColor},
         0 0 0 ${outerSize}px ${boxShadow.outerColor};
@@ -228,15 +236,15 @@ const Pipeline = forwardRef(
     return (
       <div
         {...rest}
+        {...pipelineAttr.prop}
         data-testid="pipeline"
-        data-leafygreen-ui="pipeline"
         ref={ref}
         className={cx(baseStyle, className)}
       >
         <ol
+          {...pipelineStages.prop}
           ref={setPipelineNode}
           data-testid="pipeline-stages"
-          data-leafygreen-ui="pipeline-stages"
           className={cx(pipelineStyle, lastVisibleStageChevronStyle)}
         >
           {_children}

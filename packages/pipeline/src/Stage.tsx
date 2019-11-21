@@ -13,6 +13,8 @@ import {
   Variant,
   layout,
   colors,
+  stageAttr,
+  stageChevronAttr,
 } from './styles';
 
 export interface StateForStyles {
@@ -164,17 +166,17 @@ const Stage = forwardRef(
     return (
       <li
         {...rest}
-        data-testid="pipeline-stage"
-        data-leafygreen-ui="pipeline-stage"
+        {...stageAttr.prop}
         ref={mergeRefs([setRef, ref])}
-        className={cx(baseStyle, className)}
+        data-testid="pipeline-stage"
         data-stage-visible={isVisible}
+        className={cx(baseStyle, className)}
       >
         {children}
 
         <div
           data-testid="pipeline-stage-chevron"
-          data-leafygreen-ui="pipeline-stage-chevron"
+          {...stageChevronAttr.prop}
           className={chevronStyle}
         />
       </li>
