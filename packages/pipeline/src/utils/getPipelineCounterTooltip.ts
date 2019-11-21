@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { onlyText } from 'react-children-utilities';
+import flatMap from 'lodash/flatMap';
 
 /**
  * A utility function which takes the React.children rendered by the Pipeline component
@@ -9,12 +10,9 @@ import { onlyText } from 'react-children-utilities';
  * @returns string - the tooltip text
  */
 export default function getPipelineCounterTooltip(children: ReactNode): string {
-  const stages = React.Children.map(children, onlyText) || [];
+  const stages = (React.Children.map(children, onlyText) || []).filter(Boolean);
 
-  return stages
-    .filter(Boolean)
-    .flatMap((value, index, array) =>
-      array.length - 1 !== index ? [value, '>'] : value,
-    )
-    .join(' ');
+  return flatMap(stages, (value, index, array) =>
+    array.length - 1 !== index ? [value, '>'] : value,
+  ).join(' ');
 }
