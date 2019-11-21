@@ -10,7 +10,7 @@ import { flow, compact, split, map } from 'lodash/fp';
  * @param children - the children rendered by the pipeline component
  * @returns string - the tooltip text
  */
-export function getPipelineCounterTooltip(children: ReactNode): string {
+export default function getPipelineCounterTooltip(children: ReactNode): string {
   const stages = flow(
     onlyText,
     split('$'),
@@ -24,5 +24,3 @@ export function getPipelineCounterTooltip(children: ReactNode): string {
 
   return formattedStages.join(' ');
 }
-
-export default getPipelineCounterTooltip;

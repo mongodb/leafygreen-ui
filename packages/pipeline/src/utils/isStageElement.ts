@@ -1,12 +1,12 @@
 import { ReactNode, ReactElement } from 'react';
-import { Stage, StageProps } from '../Stage';
+import Stage, { StageProps } from '../Stage';
 
 /**
  * Helper function to check whether an element is a type of Stage element.
  * @param element the element to check
  * @returns boolean true if the element is a Stage element, false if not.
  */
-export function isStageElement(
+export default function isStageElement(
   element: ReactNode,
 ): element is ReactElement<StageProps, typeof Stage> {
   return (
@@ -16,5 +16,3 @@ export function isStageElement(
     (element.type as any).displayName === 'Stage'
   );
 }
-
-export default isStageElement;
