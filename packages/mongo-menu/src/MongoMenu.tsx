@@ -26,6 +26,7 @@ const buttonReset = css`
   }
 
   &:active {
+    outline: none;
     color: ${uiColors.gray.dark2};
 
     &:before {
@@ -133,6 +134,12 @@ const accountButtonStyle = css`
   justify-content: center;
   align-items: center;
   margin-bottom: 14px;
+
+  &:focus,
+  &:hover {
+    text-decoration: none;
+    color: ${uiColors.gray.dark2};
+  }
 `;
 
 const descriptionStyle = css`
