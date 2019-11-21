@@ -69,7 +69,9 @@ const getPipelineStyle = ({ size, variant }: StateForStyles): string => {
   return cx(
     getRootStyle({ size, variant }),
     css`
-      flex: 1 1 100%;
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 100%;
       flex-wrap: wrap;
       overflow: hidden;
       list-style: none;
