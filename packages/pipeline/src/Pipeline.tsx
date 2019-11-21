@@ -194,9 +194,10 @@ const Pipeline = forwardRef(
      * @param records The records for the ovserved mutation
      */
     const observeChanges = (records: Array<MutationRecord>) => {
+      const types = records.map(r => r.type);
       const attrs = records.map(r => r.attributeName);
 
-      if (attrs.includes('data-stage-visible')) {
+      if (attrs.includes('data-stage-visible') || types.includes('childList')) {
         handleCounterDisplay();
         setLastVisibleStage();
       }
@@ -206,7 +207,7 @@ const Pipeline = forwardRef(
     useMutationObserver(
       pipelineNode,
       {
-        childList: false,
+        childList: true,
         subtree: true,
         attributes: true,
       },
