@@ -75,7 +75,7 @@ describe('packages/Menu', () => {
           href="http://mongodb.design"
           data-testid="second-item"
           target="_self"
-          rel=""
+          rel="help"
         >
           Item 2
         </MenuItem>
@@ -100,7 +100,7 @@ describe('packages/Menu', () => {
 
     test('renders with correct target and rel values when set', () => {
       expect(secondItem.target).toBe('_self');
-      expect(secondItem.rel).toBe('');
+      expect(secondItem.rel).toBe('help');
     });
   });
 });
