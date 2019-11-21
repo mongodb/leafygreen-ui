@@ -30,25 +30,15 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 ### Properties
 
-#### initialStates
-
-**Type:** `{ usingKeyboard?: boolean }`
-
-You can provide initial states to initialize `LeafyGreenProvider` with.
-
-#### children
-
-**Type:** `node`
-
-Children passed to `LeafyGreenProvider` will be unmodified, aside from having access to its state.
-
----
+| Prop        | Type                                                                  | Description                                                       |
+| ----------- | --------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `children`  | `node`                                                                | Children passed to `LeafyGreenProvider` will be unmodified, aside from having access to its state. |
 
 ## useShowFocus
 
 This hook provides a simple way in functional components to determine whether a focus state should be shown.
 
-It uses state from `LeafyGreenProvider` to determine if focus states should be shown, and provides a simple path to graceful degredation – if the context provider isn't an ancestor, `showFocus` will always be true.
+It uses state from `LeafyGreenProvider` to determine if focus states should be shown. It also provides a simple path to graceful degredation: If `LeafyGreenProvider` isn't an ancestor, `showFocus` will always be true.
 
 ### Example
 
@@ -56,13 +46,12 @@ It uses state from `LeafyGreenProvider` to determine if focus states should be s
 import { useShowFocus } from '@leafygreen-ui/leafygreen-provider';
 
 const showFocus = useShowFocus();
-const focusStyle = showFocus
-  ? css`
-      &:focus {
-        outline: blue auto 5px; // Your focus state
-      }
-    `
-  : '';
+const focusStyle = showFocus ?
+  css`
+    &:focus {
+      outline: blue auto 5px; // Your focus state
+    }
+  ` : '';
 
 <button className={focusStyle}></button>;
 ```
