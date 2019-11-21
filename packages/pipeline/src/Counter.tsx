@@ -15,8 +15,8 @@ import {
 } from './styles';
 
 interface StateForStyles {
-  size: Size;
-  variant: Variant;
+  size: Size | undefined;
+  variant: Variant | undefined;
 }
 
 export interface CounterProps {
@@ -41,7 +41,10 @@ export interface CounterProps {
   variant: Variant;
 }
 
-const getBaseStyle = ({ size, variant }: StateForStyles): string => {
+const getBaseStyle = ({
+  size = Size.XSmall,
+  variant = Variant.Default,
+}: StateForStyles): string => {
   const { chevron, fontSize, fontWeight, gutter, height, lineHeight } = layout[
     size
   ];
@@ -73,7 +76,10 @@ const getBaseStyle = ({ size, variant }: StateForStyles): string => {
   );
 };
 
-const getCounterChevronStyle = ({ size, variant }: StateForStyles): string => {
+const getCounterChevronStyle = ({
+  size = Size.XSmall,
+  variant = Variant.Default,
+}: StateForStyles): string => {
   const { chevron, height } = layout[size];
   const { secondary } = colors[variant];
   const outerSize = height / 2;

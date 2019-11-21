@@ -18,8 +18,8 @@ import {
 } from './styles';
 
 export interface StateForStyles {
-  size: Size;
-  variant: Variant;
+  size: Size | undefined;
+  variant: Variant | undefined;
 }
 
 export interface StageProps {
@@ -55,7 +55,10 @@ export interface StageProps {
   variant?: Variant;
 }
 
-const getBaseStyle = ({ size, variant }: StateForStyles): string => {
+const getBaseStyle = ({
+  size = Size.XSmall,
+  variant = Variant.Default,
+}: StateForStyles): string => {
   const {
     borderRadius,
     chevron,
@@ -97,7 +100,10 @@ const getBaseStyle = ({ size, variant }: StateForStyles): string => {
   );
 };
 
-const getStageChevronStyle = ({ size, variant }: StateForStyles): string => {
+const getStageChevronStyle = ({
+  size = Size.XSmall,
+  variant = Variant.Default,
+}: StateForStyles): string => {
   const { chevron, height } = layout[size];
   const { primary } = colors[variant];
   const outerSize = height / 2;
@@ -159,8 +165,8 @@ const Stage = forwardRef(
     });
 
     const { base: baseStyle, chevron: chevronStyle } = getStatefulStyles({
-      size: size || Size.XSmall,
-      variant: variant || Variant.Default,
+      size,
+      variant,
     });
 
     return (
