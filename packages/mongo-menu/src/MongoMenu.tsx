@@ -269,6 +269,8 @@ function MongoMenu({
             active={el.slug === activeProduct}
             href={el.href}
             description={el.description}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             {el.displayName}
           </MenuItem>
