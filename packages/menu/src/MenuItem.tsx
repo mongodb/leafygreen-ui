@@ -122,16 +122,6 @@ const activeStyle = css`
       background-color: ${uiColors.green.base};
     }
   }
-
-  &:focus {
-    outline: none;
-    background-color: ${uiColors.blue.light3};
-    color: ${uiColors.blue.dark3};
-
-    &:before {
-      background-color: #63b0d0;
-    }
-  }
 `;
 
 const disabledStyle = css`

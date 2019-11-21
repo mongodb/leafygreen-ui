@@ -4,7 +4,7 @@
 
 LeafyGreen Provider is a package made to provide, and make it easy to consume page-wide, interaction-related state within components, such as whether a user is navigating with a keyboard or mouse. This lets us make improvements to the user experience that would be cumbersome, or impossible to make without access to a global state.
 
-By design, components should always gracefully degrade when the provider is not an ancestor. The hooks provided by this package reflect that philosophy in their implementation.
+Components should always gracefully degrade when the provider is not an ancestor. Please implement these APIs with that in mind.
 
 ## LeafyGreenProvider
 
@@ -36,6 +36,8 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 ## useShowFocus
 
+**Returns:** `boolean`
+
 This hook provides a simple way in functional components to determine whether a focus state should be shown.
 
 It uses state from `LeafyGreenProvider` to determine if focus states should be shown. It also provides a simple path to graceful degredation: If `LeafyGreenProvider` isn't an ancestor, `showFocus` will always be true.
@@ -56,3 +58,37 @@ const focusStyle = showFocus
 
 <button className={focusStyle}></button>;
 ```
+
+## useUsingKeyboardContext
+
+**Returns:**
+
+```js
+{
+  usingKeyboard: boolean | undefined,
+  setUsingKeyboard: boolean => void,
+}
+```
+
+This hook allows you to directly read, and set the state of whether a user is interacting with the keyboard. The primary use-case for this is to set `usingKeyboard` to `true` when manually setting focus on an element.
+
+### Example
+
+```js
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+
+const { usingKeyboard, setUsingKeyboard } = useUsingKeyboardContext();
+const inputRef = useRef(null)
+
+function autoFocus() {
+  inputRef.current?.focus();
+
+  if (!usingKeyboard) {
+    setUsingKeyboard(true);
+  }
+}
+
+<input type={text} ref={inputRef} />
+
+```
+

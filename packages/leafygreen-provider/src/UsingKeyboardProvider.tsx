@@ -9,7 +9,7 @@ interface UsingKeyboardState {
 
 export const UsingKeyboardContext = createContext<UsingKeyboardState>({
   usingKeyboard: undefined,
-  setUsingKeyboard: undefined,
+  setUsingKeyboard: () => {},
 });
 
 // All keys here are used to manage focus through keyboard interaction.
@@ -30,6 +30,10 @@ export function useShowFocus(): boolean {
   }
 
   return usingKeyboard;
+}
+
+export function useUsingKeyboardContext(): UsingKeyboardState {
+  return useContext(UsingKeyboardContext);
 }
 
 interface UsingKeyboardProviderProps {

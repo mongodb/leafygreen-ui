@@ -6,6 +6,7 @@ import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider'
 
 const rootMenuStyle = css`
   width: 200px;
@@ -88,6 +89,7 @@ function Menu({
 }: MenuProps) {
   const refs: Array<HTMLElement> = [];
   const hasSetInitialFocus = useRef(false);
+  const { setUsingKeyboard } = useUsingKeyboardContext();
 
   const updatedChildren = React.Children.map(children, child => {
     if (
@@ -103,6 +105,7 @@ function Menu({
             hasSetInitialFocus.current === false
           ) {
             refs[0].focus();
+            setUsingKeyboard(true)
             setFocused(refs[0]);
             hasSetInitialFocus.current = true;
           }
