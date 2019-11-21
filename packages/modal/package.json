@@ -15,7 +15,7 @@
     "@leafygreen-ui/hooks": "^1.1.0",
     "@leafygreen-ui/icon": "^2.1.0",
     "@leafygreen-ui/lib": "^3.2.0",
-    "@leafygreen-ui/palette": "^1.1.0",
+    "@leafygreen-ui/palette": "^1.1.1",
     "@leafygreen-ui/portal": "^1.1.8",
     "react-transition-group": "^4.2.1"
   }
