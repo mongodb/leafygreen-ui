@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import { onlyText } from 'react-children-utilities';
-import { flatMap } from 'lodash';
 import { flow, compact, split, map } from 'lodash/fp';
 
 /**
@@ -18,7 +17,7 @@ export default function getPipelineCounterTooltip(children: ReactNode): string {
     map(str => `$${str}`),
   )(children);
 
-  const formattedStages = flatMap(stages, (value, index, array) =>
+  const formattedStages = stages.flatMap((value, index, array) =>
     array.length - 1 !== index ? [value, '>'] : value,
   );
 
