@@ -17,7 +17,7 @@ interface StateForStyles {
   variant: Variant;
 }
 
-interface CounterProps {
+export interface CounterProps {
   /**
    * Content that will appear inside of the Counter component.
    */
@@ -108,14 +108,17 @@ const Counter = forwardRef(
     { className, children, size, variant, ...rest }: CounterProps,
     ref: Ref<HTMLDivElement>,
   ): ReactElement => {
-    const styles = getStatefulStyles({ size, variant });
+    const { base: baseStyle, chevron: chevronStyle } = getStatefulStyles({
+      size,
+      variant,
+    });
 
     return (
       <div
         {...rest}
         data-testid="pipeline-counter"
         data-leafygreen-ui="pipeline-counter"
-        className={cx(styles.base, className)}
+        className={cx(baseStyle, className)}
         ref={ref}
       >
         {/* Children will be the tooltip provided by the Pipeline component */}
@@ -124,7 +127,7 @@ const Counter = forwardRef(
         <div
           data-testid="pipeline-counter-chevron"
           data-leafygreen-ui="pipeline-counter-chevron"
-          className={styles.chevron}
+          className={chevronStyle}
         />
       </div>
     );
@@ -145,7 +148,3 @@ Counter.defaultProps = {
 };
 
 export default Counter;
-export {
-  Counter,
-  CounterProps, // eslint-disable-line no-undef
-};

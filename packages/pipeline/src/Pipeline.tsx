@@ -26,13 +26,13 @@ import {
 
 import { getRootStyle, Size, Variant, layout, colors } from './styles';
 
-interface StateForStyles {
+export interface StateForStyles {
   hasHiddenStages: boolean;
   size: Size;
   variant: Variant;
 }
 
-interface PipelineProps {
+export interface PipelineProps {
   /**
    * Content that will appear inside of the Pipeline component.
    */
@@ -217,7 +217,11 @@ const Pipeline = forwardRef(
     });
 
     const tooltipText = getPipelineCounterTooltip(_children);
-    const styles = getStatefulStyles({ hasHiddenStages, size, variant });
+    const {
+      base: baseStyle,
+      pipeline: pipelineStyle,
+      lastVisibleStageChevron: lastVisibleStageChevronStyle,
+    } = getStatefulStyles({ hasHiddenStages, size, variant });
 
     return (
       <div
@@ -225,13 +229,13 @@ const Pipeline = forwardRef(
         data-testid="pipeline"
         data-leafygreen-ui="pipeline"
         ref={ref}
-        className={cx(styles.base, className)}
+        className={cx(baseStyle, className)}
       >
         <ol
           ref={setPipelineNode}
           data-testid="pipeline-stages"
           data-leafygreen-ui="pipeline-stages"
-          className={cx(styles.pipeline, styles.lastVisibleStageChevron)}
+          className={cx(pipelineStyle, lastVisibleStageChevronStyle)}
         >
           {_children}
         </ol>
@@ -269,7 +273,3 @@ Pipeline.defaultProps = {
 };
 
 export default Pipeline;
-export {
-  Pipeline,
-  PipelineProps, // eslint-disable-line no-undef
-};

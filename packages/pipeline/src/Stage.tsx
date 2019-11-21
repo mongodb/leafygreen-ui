@@ -15,12 +15,12 @@ import {
   colors,
 } from './styles';
 
-interface StateForStyles {
+export interface StateForStyles {
   size: Size;
   variant: Variant;
 }
 
-interface StageProps {
+export interface StageProps {
   /**
    * Content that will appear inside of the Stage component.
    **/
@@ -156,7 +156,7 @@ const Stage = forwardRef(
       root: intersectionNode,
     });
 
-    const styles = getStatefulStyles({
+    const { base: baseStyle, chevron: chevronStyle } = getStatefulStyles({
       size: size || Size.XSmall,
       variant: variant || Variant.Default,
     });
@@ -167,7 +167,7 @@ const Stage = forwardRef(
         data-testid="pipeline-stage"
         data-leafygreen-ui="pipeline-stage"
         ref={mergeRefs([setRef, ref])}
-        className={cx(styles.base, className)}
+        className={cx(baseStyle, className)}
         data-stage-visible={isVisible}
       >
         {children}
@@ -175,7 +175,7 @@ const Stage = forwardRef(
         <div
           data-testid="pipeline-stage-chevron"
           data-leafygreen-ui="pipeline-stage-chevron"
-          className={styles.chevron}
+          className={chevronStyle}
         />
       </li>
     );
@@ -202,7 +202,3 @@ Stage.defaultProps = {
 };
 
 export default Stage;
-export {
-  Stage,
-  StageProps, // eslint-disable-line no-undef
-};
