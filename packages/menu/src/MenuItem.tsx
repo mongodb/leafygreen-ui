@@ -1,4 +1,4 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -37,6 +37,7 @@ const containerStyle = css`
   }
 
   &:hover {
+    text-decoration: none;
     background-color: ${uiColors.gray.light3};
 
     &:before {
@@ -54,6 +55,7 @@ const containerStyle = css`
 
   &:focus {
     outline: none;
+    text-decoration: none;
     background-color: ${uiColors.blue.light3};
     color: ${uiColors.blue.dark3};
 
@@ -126,6 +128,7 @@ const activeStyle = css`
 
 const disabledStyle = css`
   cursor: not-allowed;
+  pointer-events: none;
   background-color: ${uiColors.gray.light3};
 
   &:hover:before {
@@ -144,11 +147,6 @@ interface SharedMenuItemProps {
   className?: string;
 
   /**
-   * Main content displayed in MenuItem.
-   */
-  children?: React.ReactNode;
-
-  /**
    * Determines whether or not the MenuItem is active.
    */
   active?: boolean;
@@ -161,7 +159,7 @@ interface SharedMenuItemProps {
    * Determines whether or not the MenuItem is disabled.
    */
   disabled?: boolean;
-  ref?: any;
+  ref?: React.Ref<any>;
 }
 
 interface LinkMenuItemProps extends HTMLElementProps<'a'>, SharedMenuItemProps {
@@ -182,37 +180,22 @@ function usesLinkElement(
   return props.href != null;
 }
 
-/**
- * # MenuItem
- *
- * ```
-<MenuItem>Hello World!</MenuItem>
- * ```
- * @param props.href If supplied, MenuItem will render inside of `a` tags.
- * @param props.onClick Function to be executed when MenuItem is clicked.
- * @param props.className Classname applied to MenuItem.
- * @param props.children Content to appear inside of the MenuItem.
- * @param props.description Subtext to appear inside of MenuItem
- * @param props.disabled Determines if the MenuItem is disabled
- * @param props.active Determines whether the MenuItem will appear as active
- *
- */
 const MenuItem = React.forwardRef(
-  (
-    {
+  (props: MenuItemProps, forwardRef: React.Ref<any>) => {
+    const {
       disabled = false,
       active = false,
-      onClick,
       className,
       children,
       description,
+      href,
       ...rest
-    }: MenuItemProps,
-    forwardedref,
-  ) => {
-    const anchorProps = rest.href && {
-      target: '_blank',
-      rel: 'noopener noreferrer',
+    } = props;
+
+    const anchorProps = href && {
+      target: '_self',
+      rel: '',
+      href,
     };
 
     const renderMenuItem = (Root: React.ElementType<any> = 'button') => (
@@ -232,8 +215,7 @@ const MenuItem = React.forwardRef(
           )}
           role="menuitem"
           aria-disabled={disabled}
-          onClick={disabled ? undefined : onClick}
-          ref={forwardedref as RefObject<any>}
+          ref={forwardRef}
           tabIndex={disabled ? -1 : undefined}
         >
           <div
@@ -258,7 +240,7 @@ const MenuItem = React.forwardRef(
       </li>
     );
 
-    if (usesLinkElement(rest)) {
+    if (usesLinkElement(props)) {
       return renderMenuItem('a');
     }
 
