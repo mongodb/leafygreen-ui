@@ -37,6 +37,7 @@ const containerStyle = css`
   }
 
   &:hover {
+    text-decoration: none;
     background-color: ${uiColors.gray.light3};
 
     &:before {
@@ -54,6 +55,7 @@ const containerStyle = css`
 
   &:focus {
     outline: none;
+    text-decoration: none;
     background-color: ${uiColors.blue.light3};
     color: ${uiColors.blue.dark3};
 

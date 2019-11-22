@@ -26,6 +26,7 @@ const buttonReset = css`
   }
 
   &:active {
+    outline: none;
     color: ${uiColors.gray.dark2};
 
     &:before {
