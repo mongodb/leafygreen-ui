@@ -200,8 +200,10 @@ const baseStyle = css`
   user-select: none;
   overflow: hidden;
 
+  &:focus,
   &:hover {
     text-decoration: none;
+    color: inherit;
   }
 
   // We're using CSS pseudo elements here in order to
