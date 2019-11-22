@@ -24,6 +24,7 @@ storiesOf('IconButton', module)
         Variant.Light,
       )}
       disabled={boolean('disabled', false)}
+      ariaLabel="Ellipsis"
     >
       <Icon glyph="Ellipsis" />
     </IconButton>
@@ -31,6 +32,7 @@ storiesOf('IconButton', module)
   .add('Link', () => (
     <div className={background}>
       <IconButton
+        ariaLabel="Ellipsis"
         href="https://mongodb.design"
         variant={select(
           'variant',
