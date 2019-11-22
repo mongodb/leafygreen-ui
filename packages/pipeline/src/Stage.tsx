@@ -149,10 +149,10 @@ const Stage = forwardRef(
   (
     {
       children,
-      className,
+      className = '',
       intersectionNode,
       size,
-      threshold,
+      threshold = 0.8,
       variant,
       ...rest
     }: StageProps,
@@ -202,11 +202,6 @@ Stage.propTypes = {
     PropTypes.arrayOf(PropTypes.number.isRequired),
   ]),
   variant: PropTypes.oneOf(Object.values(Variant)),
-};
-
-Stage.defaultProps = {
-  className: '',
-  threshold: 0.8,
 };
 
 export default Stage;

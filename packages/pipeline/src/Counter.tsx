@@ -113,7 +113,7 @@ const getStatefulStyles = (state: StateForStyles) => ({
  */
 const Counter = forwardRef(
   (
-    { className, children, size, variant, ...rest }: CounterProps,
+    { className = '', children, size, variant, ...rest }: CounterProps,
     ref: Ref<HTMLDivElement>,
   ): ReactElement => {
     const { base: baseStyle, chevron: chevronStyle } = getStatefulStyles({
@@ -149,10 +149,6 @@ Counter.propTypes = {
   className: PropTypes.string,
   size: PropTypes.oneOf(Object.values(Size)).isRequired,
   variant: PropTypes.oneOf(Object.values(Variant)).isRequired,
-};
-
-Counter.defaultProps = {
-  className: '',
 };
 
 export default Counter;

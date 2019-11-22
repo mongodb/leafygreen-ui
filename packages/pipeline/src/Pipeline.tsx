@@ -144,7 +144,13 @@ const getStatefulStyles = (state: StateForStyles) => ({
  */
 const Pipeline = forwardRef(
   (
-    { children, className, size, variant, ...rest }: PipelineProps,
+    {
+      children,
+      className = '',
+      size = Size.XSmall,
+      variant = Variant.Default,
+      ...rest
+    }: PipelineProps,
     ref: Ref<HTMLDivElement>,
   ): ReactElement => {
     // State
@@ -274,13 +280,6 @@ Pipeline.propTypes = {
   className: PropTypes.string,
   size: PropTypes.oneOf(Object.values(Size)).isRequired,
   variant: PropTypes.oneOf(Object.values(Variant)).isRequired,
-};
-
-Pipeline.defaultProps = {
-  children: undefined,
-  className: '',
-  size: Size.XSmall,
-  variant: Variant.Default,
 };
 
 export default Pipeline;
