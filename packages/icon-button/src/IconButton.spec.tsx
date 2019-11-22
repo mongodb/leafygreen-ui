@@ -33,7 +33,12 @@ describe('packages/icon-button', () => {
   );
 
   const { getByTestId, getAllByTestId } = render(
-    <IconButton className={className} onClick={onClick} data-testid={testId}>
+    <IconButton
+      className={className}
+      onClick={onClick}
+      data-testid={testId}
+      ariaLabel="Ellipsis"
+    >
       {icon}
     </IconButton>,
   );
@@ -62,7 +67,11 @@ describe('packages/icon-button', () => {
     const testId = 'test-icon-button-component-with-href';
 
     const { getByTestId } = render(
-      <IconButton data-testid={testId} href="mongodb.design">
+      <IconButton
+        data-testid={testId}
+        href="mongodb.design"
+        ariaLabel="Ellipsis"
+      >
         {icon}
       </IconButton>,
     );

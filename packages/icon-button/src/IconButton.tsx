@@ -33,6 +33,11 @@ interface SharedIconButtonProps {
    * Determines whether or not `IconButton` is disabled.
    */
   disabled?: boolean;
+
+  /**
+   * Required prop which will be passed to `aria-label` attribute
+   */
+  ariaLabel: string;
 }
 
 interface LinkIconButtonProps
@@ -158,6 +163,7 @@ const iconStyle = css`
  * @param props.variant Determines color of `IconButton`. Can be `light` or `dark`.
  * @param props.href Destination URL, if supplied `IconButton` will render in `a` tags, rather than `button` tags.
  * @param props.onClick Callback fired when `IconButton` is clicked.
+ * @param props.ariaLabel Required prop that will be passed to `aria-label` attribute
  */
 
 function IconButton({
@@ -167,6 +173,7 @@ function IconButton({
   onClick,
   href,
   children,
+  ariaLabel,
   ...rest
 }: IconButtonProps) {
   const Root = href ? 'a' : 'button';
@@ -177,6 +184,7 @@ function IconButton({
       onClick={disabled ? undefined : onClick}
       href={href ? href : undefined}
       aria-disabled={disabled}
+      aria-label={ariaLabel}
       className={cx(
         removeButtonStyle,
         baseIconButtonStyle,
@@ -200,6 +208,7 @@ IconButton.propTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
   href: PropTypes.string,
+  ariaLabel: PropTypes.string.isRequired,
 };
 
 export default IconButton;
