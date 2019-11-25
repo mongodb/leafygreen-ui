@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 2.0.0
+
+### Major Changes
+
+- 337cab4: Enforce use of `ariaLabel` prop, which is passed to `aria-label` attribute and ensures accessibility
+
 ## 1.0.0
 
 ### Major Changes
