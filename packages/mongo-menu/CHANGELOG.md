@@ -1,5 +1,17 @@
 # @leafygreen-ui/mongo-menu
 
+## 2.0.3
+
+### Patch Changes
+
+- ff55bb5: Update anchor styles to minimize overrides
+- Updated dependencies [ff55bb5]
+- Updated dependencies [ad74307]
+- Updated dependencies [ff55bb5]
+- Updated dependencies [baf45f6]
+  - @leafygreen-ui/button@3.0.1
+  - @leafygreen-ui/menu@4.0.2
+
 ## 2.0.2
 
 ### Patch Changes

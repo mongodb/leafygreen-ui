@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/menu",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "LeafyGreen UI Kit Menu",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

@@ -1,5 +1,13 @@
 # @leafygreen-ui/menu
 
+## 4.0.2
+
+### Patch Changes
+
+- ad74307: Change default behavior on MenuItems with anchor tags, such that the default is to target="\_self", and ensure ability of consumer to override the default
+- ff55bb5: Update anchor styles to minimize overrides
+- baf45f6: Allow target and rel props to be passed to MenuItem, when MenuItem is a link
+
 ## 4.0.1
 
 ### Patch Changes
