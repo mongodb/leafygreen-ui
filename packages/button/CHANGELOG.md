@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 3.0.1
+
+### Patch Changes
+
+- ff55bb5: Added fallback CSS for focus and hover states
+
 ## 3.0.0
 
 ### Major Changes

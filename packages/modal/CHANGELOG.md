@@ -1,5 +1,11 @@
 # @leafygreen-ui/modal
 
+## 2.0.0
+
+### Major Changes
+
+- b04a66f: Move className prop to apply to root `div` rather than content `div`, and add contentClassName to style overlay container. Where using `className` currently, should update to `contentClassName`.
+
 ## 1.2.3
 
 ### Patch Changes
