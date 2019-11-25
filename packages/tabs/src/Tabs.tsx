@@ -50,7 +50,7 @@ interface TabsProps {
   /**
    * Content that will appear inside of Tabs component. Should be comprised of at least two Tabs.
    */
-  children: Array<React.ReactElement>;
+  children: React.ReactElement[];
 
   /**
    * Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
@@ -135,16 +135,13 @@ function Tabs({
   function handleKeyDown(e: React.KeyboardEvent) {
     e.stopPropagation();
 
-    const enabledIndexes = childrenArray.reduce(
-      (acc, child, index) => {
-        if (child.props.disabled) {
-          return acc;
-        }
+    const enabledIndexes = childrenArray.reduce((acc, child, index) => {
+      if (child.props.disabled) {
+        return acc;
+      }
 
-        return [...acc, index];
-      },
-      [] as Array<number>,
-    );
+      return [...acc, index];
+    }, [] as number[]);
 
     const enabledCurrentIndex = enabledIndexes.indexOf(selected!);
 
@@ -175,9 +172,7 @@ function Tabs({
       return null;
     }
 
-    const tabListChildren: Array<Element> = Array.from(
-      tabListRef.current.children,
-    );
+    const tabListChildren: Element[] = Array.from(tabListRef.current.children);
 
     let computedX = 0;
 

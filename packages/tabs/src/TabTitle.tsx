@@ -34,7 +34,7 @@ const listTitle = css`
 
 interface SharedTabTitleProps
   extends Omit<TabProps, 'default' | 'name' | 'href' | 'to' | 'value'> {
-  setFocusedState: React.Dispatch<SetStateAction<Array<number>>>;
+  setFocusedState: React.Dispatch<SetStateAction<number[]>>;
   as?: React.ElementType<any>;
 }
 
@@ -94,11 +94,11 @@ function TabTitle(props: TabTitleProps) {
   }, [selected]);
 
   const onBlur = useCallback(() => {
-    setFocusedState((curr: Array<number>) => curr.filter(el => index !== el));
+    setFocusedState((curr: number[]) => curr.filter(el => index !== el));
   }, [setFocusedState]);
 
   const onFocus = useCallback(() => {
-    setFocusedState((curr: Array<number>) => [...curr, index]);
+    setFocusedState((curr: number[]) => [...curr, index]);
   }, [setFocusedState]);
 
   const renderTabTitle = (Root: React.ElementType<any> = 'button') => (

@@ -53,7 +53,7 @@ const ColorBlock = styled<'div', ColorBlockProps>('div')`
  */
 
 function renderColors() {
-  const ranges = Object.keys(uiColors) as Array<keyof typeof uiColors>;
+  const ranges = Object.keys(uiColors) as (keyof typeof uiColors)[];
 
   const renderedRanges = ranges.map(range => {
     const currentVal = uiColors[range];
@@ -64,15 +64,13 @@ function renderColors() {
 
     return (
       <div key={range}>
-        {(Object.keys(currentVal) as Array<keyof typeof currentVal>).map(
-          name => (
-            <ColorBlock
-              key={currentVal[name]}
-              color={currentVal[name]}
-              name={`${range} ${name}`}
-            />
-          ),
-        )}
+        {(Object.keys(currentVal) as (keyof typeof currentVal)[]).map(name => (
+          <ColorBlock
+            key={currentVal[name]}
+            color={currentVal[name]}
+            name={`${range} ${name}`}
+          />
+        ))}
       </div>
     );
   });

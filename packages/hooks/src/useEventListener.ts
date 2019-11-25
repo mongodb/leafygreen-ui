@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 export interface UseEventOptions {
   options?: AddEventListenerOptions;
-  dependencies?: Array<any>;
+  dependencies?: any[];
   enabled?: boolean;
   element?: Document | HTMLElement;
 }
@@ -29,9 +29,9 @@ export default function useEventListener<
     element = document,
   }: UseEventOptions = {},
 ) {
-  const memoizedEventCallback: React.MutableRefObject<
-    (e: GlobalEventHandlersEventMap[Type]) => void
-  > = useRef(() => {});
+  const memoizedEventCallback: React.MutableRefObject<(
+    e: GlobalEventHandlersEventMap[Type],
+  ) => void> = useRef(() => {});
 
   useEffect(() => {
     memoizedEventCallback.current = eventCallback;

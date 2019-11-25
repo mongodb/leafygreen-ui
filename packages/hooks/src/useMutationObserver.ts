@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 type MutationHandler<Value> = (
-  mutations: Array<MutationRecord>,
+  mutations: MutationRecord[],
   observer: MutationObserver,
 ) => Value;
 
@@ -16,7 +16,7 @@ export default function useMutationObserver<Value>(
   target: HTMLElement | null,
   options: MutationObserverInit,
   callback: MutationHandler<Value>,
-  enabled: boolean = true,
+  enabled = true,
 ): Value | undefined {
   const [value, setValue] = useState<Value>();
 

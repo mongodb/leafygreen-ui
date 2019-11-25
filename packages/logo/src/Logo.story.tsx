@@ -10,7 +10,7 @@ storiesOf('Logo', module)
   .add('LogoMark', () => {
     const variant = select(
       'Variant',
-      Object.values(Variant) as Array<Variant>,
+      Object.values(Variant) as Variant[],
       Variant.Dark,
     );
 
@@ -34,7 +34,7 @@ storiesOf('Logo', module)
   .add('Logo', () => {
     const variant = select(
       'Variant',
-      Object.values(Variant) as Array<Variant>,
+      Object.values(Variant) as Variant[],
       Variant.Dark,
     );
 

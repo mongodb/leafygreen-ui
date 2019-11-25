@@ -11,7 +11,7 @@ storiesOf('MongoMenu', module).add('Default', () => (
     }}
     activeProduct={select(
       'activeProduct',
-      Object.values(Product) as Array<Size>,
+      Object.values(Product) as Size[],
       Product.Atlas,
     )}
   />
