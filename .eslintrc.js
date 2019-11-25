@@ -61,7 +61,7 @@ module.exports = {
         'no-unused-vars': 0,
         '@typescript-eslint/no-unused-vars': 1,
         '@typescript-eslint/adjacent-overload-signatures': 2,
-        '@typescript-eslint/array-type': 1,
+        '@typescript-eslint/array-type': [2, { default: 'generic' }],
         '@typescript-eslint/class-name-casing': 2,
         '@typescript-eslint/consistent-type-assertions': [
           'error',

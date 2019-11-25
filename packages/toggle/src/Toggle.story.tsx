@@ -13,7 +13,7 @@ storiesOf('Toggle', module)
   .add('Default', () => (
     <div className={containerStyle}>
       <Toggle
-        size={select('Size', Object.values(Size) as Size[], Size.Default)}
+        size={select('Size', Object.values(Size) as Array<Size>, Size.Default)}
         disabled={boolean('Disabled', false)}
       />
     </div>
@@ -26,7 +26,7 @@ storiesOf('Toggle', module)
       `}
     >
       <Toggle
-        size={select('Size', Object.values(Size) as Size[], Size.Default)}
+        size={select('Size', Object.values(Size) as Array<Size>, Size.Default)}
         variant={Variant.Dark}
         disabled={boolean('Disabled', false)}
       />

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 type MutationHandler<Value> = (
-  mutations: MutationRecord[],
+  mutations: Array<MutationRecord>,
   observer: MutationObserver,
 ) => Value;
 

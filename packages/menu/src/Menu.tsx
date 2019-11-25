@@ -85,7 +85,7 @@ function Menu({
   trigger,
   ...rest
 }: MenuProps) {
-  const refs: HTMLElement[] = [];
+  const refs: Array<HTMLElement> = [];
   const hasSetInitialFocus = useRef(false);
 
   const updatedChildren = React.Children.map(children, child => {
@@ -150,7 +150,7 @@ function Menu({
 
   useEscapeKey(handleClose, { enabled: open });
 
-  function trapLastMenuItem(refs: HTMLElement[]) {
+  function trapLastMenuItem(refs: Array<HTMLElement>) {
     if (document.activeElement === refs[refs.length - 1]) {
       return true;
     }

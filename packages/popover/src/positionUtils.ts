@@ -387,10 +387,10 @@ function getWindowSafeAlignment(
   } = windowSafeCommon;
 
   const alignments: {
-    top: readonly Align[];
-    bottom: readonly Align[];
-    left: readonly Align[];
-    right: readonly Align[];
+    top: ReadonlyArray<Align>;
+    bottom: ReadonlyArray<Align>;
+    left: ReadonlyArray<Align>;
+    right: ReadonlyArray<Align>;
   } = {
     top: [Align.Top, Align.Bottom],
     bottom: [Align.Bottom, Align.Top],
@@ -402,7 +402,7 @@ function getWindowSafeAlignment(
     alignments[align].find(alignment => {
       // Check that an alignment will not cause the popover to collide with the window.
 
-      if (([Align.Top, Align.Bottom] as Align[]).includes(alignment)) {
+      if (([Align.Top, Align.Bottom] as Array<Align>).includes(alignment)) {
         const top = calcTop({
           alignment,
           contentElPos,
@@ -416,7 +416,7 @@ function getWindowSafeAlignment(
         });
       }
 
-      if (([Align.Left, Align.Right] as Align[]).includes(alignment)) {
+      if (([Align.Left, Align.Right] as Array<Align>).includes(alignment)) {
         const left = calcLeft({
           alignment,
           contentElPos,
@@ -452,9 +452,9 @@ function getWindowSafeJustification(
   } = windowSafeCommon;
 
   let justifications: {
-    [Justify.Start]: readonly Justification[];
-    [Justify.Middle]: readonly Justification[];
-    [Justify.End]: readonly Justification[];
+    [Justify.Start]: ReadonlyArray<Justification>;
+    [Justify.Middle]: ReadonlyArray<Justification>;
+    [Justify.End]: ReadonlyArray<Justification>;
   };
 
   switch (alignment) {
@@ -512,7 +512,7 @@ function getWindowSafeJustification(
           Justification.Top,
           Justification.Bottom,
           Justification.CenterVertical,
-        ] as Justification[]).includes(justification)
+        ] as Array<Justification>).includes(justification)
       ) {
         const top = calcTop({
           justification,
@@ -533,7 +533,7 @@ function getWindowSafeJustification(
           Justification.Left,
           Justification.Right,
           Justification.CenterHorizontal,
-        ] as Justification[]).includes(justification)
+        ] as Array<Justification>).includes(justification)
       ) {
         const left = calcLeft({
           justification,

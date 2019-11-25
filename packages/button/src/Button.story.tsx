@@ -13,7 +13,7 @@ const buttonClass = css`
 storiesOf('Buttons', module)
   .add('Default', () => (
     <Button
-      size={select('Size', Object.values(Size) as Size[], Size.Normal)}
+      size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
       variant={Variant.Default}
       title={text('Title', 'The button title')}
       disabled={boolean('Disabled', false)}
@@ -37,7 +37,7 @@ storiesOf('Buttons', module)
   ))
   .add('Primary', () => (
     <Button
-      size={select('Size', Object.values(Size) as Size[], Size.Normal)}
+      size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
       variant={Variant.Primary}
       title={text('Title', 'The button title')}
       disabled={boolean('Disabled', false)}
@@ -55,7 +55,7 @@ storiesOf('Buttons', module)
   ))
   .add('Info', () => (
     <Button
-      size={select('Size', Object.values(Size) as Size[], Size.Normal)}
+      size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
       variant={Variant.Info}
       title={text('Title', 'The button title')}
       disabled={boolean('Disabled', false)}
@@ -73,7 +73,7 @@ storiesOf('Buttons', module)
   ))
   .add('Danger', () => (
     <Button
-      size={select('Size', Object.values(Size) as Size[], Size.Normal)}
+      size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
       variant={Variant.Danger}
       title={text('Title', 'The button title')}
       disabled={boolean('Disabled', false)}
@@ -91,7 +91,7 @@ storiesOf('Buttons', module)
   ))
   .add('Dark', () => (
     <Button
-      size={select('Size', Object.values(Size) as Size[], Size.Normal)}
+      size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
       variant={Variant.Dark}
       title={text('Title', 'The button title')}
       disabled={boolean('Disabled', false)}
@@ -121,10 +121,10 @@ storiesOf('Buttons', module)
     return (
       <Button
         as={CustomElement}
-        size={select('Size', Object.values(Size) as Size[], Size.Normal)}
+        size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
         variant={select(
           'Variant',
-          Object.values(Variant) as Variant[],
+          Object.values(Variant) as Array<Variant>,
           Variant.Default,
         )}
         disabled={boolean('Disabled', false)}

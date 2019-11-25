@@ -13,7 +13,7 @@ interface HueRange {
 const requiredKeys = new Set(['dark3', 'base', 'light3']);
 const optionalKeys = new Set(['dark2', 'dark1', 'light1', 'light2']);
 
-const allColors: (string | HueRange)[] = Object.values(uiColors);
+const allColors: Array<string | HueRange> = Object.values(uiColors);
 describe('packages/palette', function() {
   test('all colors have only expected hues', () => {
     allColors.forEach(color => {

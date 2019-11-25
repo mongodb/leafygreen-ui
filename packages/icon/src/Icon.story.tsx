@@ -24,14 +24,14 @@ const textStyle = css`
   margin-top: 0.5rem;
 `;
 
-const glyphList = Object.keys(glyphs) as (keyof typeof glyphs)[];
+const glyphList = Object.keys(glyphs) as Array<keyof typeof glyphs>;
 
 const glyphMap = glyphList.map(glyph => (
   <div key={glyph} className={containerStyle}>
     <Icon
       glyph={glyph}
       fill={color('Fill', '#000000')}
-      size={select('size', Object.values(Size) as Size[], Size.Default)}
+      size={select('size', Object.values(Size) as Array<Size>, Size.Default)}
     />
     <div className={textStyle}>{glyph}</div>
   </div>

@@ -50,7 +50,7 @@ interface TabsProps {
   /**
    * Content that will appear inside of Tabs component. Should be comprised of at least two Tabs.
    */
-  children: React.ReactElement[];
+  children: Array<React.ReactElement>;
 
   /**
    * Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
@@ -141,7 +141,7 @@ function Tabs({
       }
 
       return [...acc, index];
-    }, [] as number[]);
+    }, [] as Array<number>);
 
     const enabledCurrentIndex = enabledIndexes.indexOf(selected!);
 
@@ -172,7 +172,9 @@ function Tabs({
       return null;
     }
 
-    const tabListChildren: Element[] = Array.from(tabListRef.current.children);
+    const tabListChildren: Array<Element> = Array.from(
+      tabListRef.current.children,
+    );
 
     let computedX = 0;
 

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 export interface UseEventOptions {
   options?: AddEventListenerOptions;
-  dependencies?: any[];
+  dependencies?: Array<any>;
   enabled?: boolean;
   element?: Document | HTMLElement;
 }

@@ -24,7 +24,7 @@ function ControlledRadioBoxGroup() {
       <RadioBoxGroup
         onChange={changeHandler}
         value={activeRadioBox}
-        size={select('Size', Object.values(Size) as Size[], Size.Default)}
+        size={select('Size', Object.values(Size) as Array<Size>, Size.Default)}
       >
         <RadioBox value="test1">
           {text('RadioBox Content', 'Option 1')}
@@ -45,7 +45,7 @@ storiesOf('RadioBoxGroup', module)
       `}
     >
       <RadioBoxGroup
-        size={select('Size', Object.values(Size) as Size[], Size.Default)}
+        size={select('Size', Object.values(Size) as Array<Size>, Size.Default)}
         name="radio-box-group-default"
       >
         <RadioBox value="1">Option One</RadioBox>

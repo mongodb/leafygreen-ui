@@ -20,7 +20,7 @@ storiesOf('IconButton', module)
     <IconButton
       variant={select(
         'variant',
-        Object.values(Variant) as Variant[],
+        Object.values(Variant) as Array<Variant>,
         Variant.Light,
       )}
       disabled={boolean('disabled', false)}
@@ -36,7 +36,7 @@ storiesOf('IconButton', module)
         href="https://mongodb.design"
         variant={select(
           'variant',
-          Object.values(Variant) as Variant[],
+          Object.values(Variant) as Array<Variant>,
           Variant.Dark,
         )}
         disabled={boolean('disabled', false)}
