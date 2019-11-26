@@ -57,6 +57,12 @@ interface ButtonIconButtonProps
 
 type IconButtonProps = LinkIconButtonProps | ButtonIconButtonProps;
 
+function usesLinkElement(
+  props: LinkIconButtonProps | ButtonIconButtonProps,
+): props is LinkIconButtonProps {
+  return props.href != null;
+}
+
 const removeButtonStyle = css`
   border: none;
   -webkit-appearance: unset;
@@ -129,10 +135,12 @@ const iconButtonVariants: { readonly [K in Variant]: string } = {
 const disabledStyle: { readonly [K in Variant]: string } = {
   [Variant.Light]: css`
     color: ${uiColors.gray.light2};
+    pointer-events: none;
   `,
 
   [Variant.Dark]: css`
     color: ${uiColors.gray.dark2};
+    pointer-events: none;
   `,
 };
 
@@ -166,22 +174,20 @@ const iconStyle = css`
  * @param props.ariaLabel Required prop that will be passed to `aria-label` attribute
  */
 
-function IconButton({
-  variant = 'light',
-  disabled = false,
-  className,
-  onClick,
-  href,
-  children,
-  ariaLabel,
-  ...rest
-}: IconButtonProps) {
-  const Root = href ? 'a' : 'button';
+function IconButton(props: IconButtonProps) {
+  const {
+    variant = 'light',
+    disabled = false,
+    className,
+    href,
+    children,
+    ariaLabel,
+    ...rest
+  } = props;
 
-  return (
+  const renderIconButton = (Root: React.ElementType<any> = 'button') => (
     <Root
       {...rest}
-      onClick={disabled ? undefined : onClick}
       href={href ? href : undefined}
       aria-disabled={disabled}
       aria-label={ariaLabel}
@@ -198,6 +204,12 @@ function IconButton({
       <span className={iconStyle}>{children}</span>
     </Root>
   );
+
+  if (usesLinkElement(props)) {
+    return renderIconButton('a');
+  }
+
+  return renderIconButton();
 }
 
 IconButton.displayName = 'IconButton';

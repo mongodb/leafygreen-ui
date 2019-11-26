@@ -20,11 +20,14 @@ describe('packages/Icon/glyphs/', () => {
   test('exported glyphs match files in glyphs directory', () => {
     // Test that any export in the glyphs directory has a corresponding file,
     // and return an array of SVG files not exported.
-    const extraGlyphs = Object.keys(glyphs).reduce((glyphsInDir, glyph) => {
-      expect(glyphsInDir.find(el => el === glyph)).toBe(glyph);
+    const extraGlyphs = Object.keys(glyphs).reduce(
+      (glyphsInDir, glyph) => {
+        expect(glyphsInDir.find(el => el === glyph)).toBe(glyph);
 
-      return glyphsInDir.filter(el => el !== glyph);
-    }, glyphPaths.map(path => path.replace('.svg', '')));
+        return glyphsInDir.filter(el => el !== glyph);
+      },
+      glyphPaths.map(path => path.replace('.svg', '')),
+    );
 
     expect(extraGlyphs.length).toBe(0);
   });
