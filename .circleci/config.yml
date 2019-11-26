@@ -1,13 +1,13 @@
-version: 4
+version: 2
 jobs:
   build:
     docker:
       - image: circleci/node:10.15
     steps:
       - checkout
-      # - restore_cache:
-      #     keys:
-      #       - node-cache-v3-{{ checksum "yarn.lock" }}
+      - restore_cache:
+          keys:
+            - node-cache-v2-{{ checksum "yarn.lock" }}
       - run: yarn install
       - run:
           name: prettier
@@ -25,10 +25,10 @@ jobs:
       - run:
           name: types
           command: yarn ts --verbose
-      # - save_cache:
-      #     key: node-cache-v3-{{ checksum "yarn.lock" }}
-      #     paths:
-      #       - node_modules
+      - save_cache:
+          key: node-cache-v2-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
       - store_test_results:
           path: reports/junit
       - store_artifacts:
