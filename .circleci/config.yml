@@ -7,7 +7,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - node-cache-v2-{{ checksum "yarn.lock" }}
+            - node-cache-v3-{{ checksum "yarn.lock" }}
       - run: yarn install
       - run:
           name: prettier
@@ -26,7 +26,7 @@ jobs:
           name: types
           command: yarn ts --verbose
       - save_cache:
-          key: node-cache-v2-{{ checksum "yarn.lock" }}
+          key: node-cache-v3-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
       - store_test_results:
