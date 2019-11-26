@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.15
-      - resource_class: medium+
+    resource_class: medium+
     steps:
       - checkout
       - restore_cache:
