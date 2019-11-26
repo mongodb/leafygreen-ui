@@ -135,16 +135,13 @@ function Tabs({
   function handleKeyDown(e: React.KeyboardEvent) {
     e.stopPropagation();
 
-    const enabledIndexes = childrenArray.reduce(
-      (acc, child, index) => {
-        if (child.props.disabled) {
-          return acc;
-        }
+    const enabledIndexes = childrenArray.reduce((acc, child, index) => {
+      if (child.props.disabled) {
+        return acc;
+      }
 
-        return [...acc, index];
-      },
-      [] as Array<number>,
-    );
+      return [...acc, index];
+    }, [] as Array<number>);
 
     const enabledCurrentIndex = enabledIndexes.indexOf(selected!);
 
