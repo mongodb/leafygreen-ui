@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import { transparentize } from 'polished';
 import facepaint from 'facepaint';
+import FocusLock from 'react-focus-lock';
 import Portal from '@leafygreen-ui/portal';
-import Icon, { Size } from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
+import Icon from '@leafygreen-ui/icon';
 import { useEscapeKey } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -197,45 +199,45 @@ function Modal({
     <Transition in={open} timeout={500} mountOnEnter unmountOnExit>
       {(state: string) => (
         <Portal>
-          <div
-            {...rest}
-            // Setting role to 'none', because elements with a click event should have a specific role
-            // Here we are just using a div to handle backdrop clicks, so this is the most appropriate value
-            role="none"
-            onClick={handleBackdropClick}
-            className={cx(className, backdrop, {
-              [visibleBackdrop]: state === 'entered',
-            })}
-          >
-            <div className={scrollContainer} ref={scrollContainerRef}>
-              <div
-                aria-modal="true"
-                role="dialog"
-                tabIndex={-1}
-                className={cx(
-                  modalContentStyle,
-                  modalSizes[size],
-                  {
-                    [visibleModalContentStyle]: state === 'entered',
-                  },
-                  contentClassName,
-                )}
-              >
-                <Icon
-                  glyph="X"
-                  fill={uiColors.gray.dark1}
-                  size={Size.Large}
-                  onClick={handleClose}
-                  className={closeButton}
-                  data-dismiss="modal"
-                  tabIndex={0}
-                  title="close modal"
-                />
+          <FocusLock returnFocus>
+            <div
+              {...rest}
+              // Setting role to 'none', because elements with a click event should have a specific role
+              // Here we are just using a div to handle backdrop clicks, so this is the most appropriate value
+              role="none"
+              onClick={handleBackdropClick}
+              className={cx(className, backdrop, {
+                [visibleBackdrop]: state === 'entered',
+              })}
+            >
+              <div className={scrollContainer} ref={scrollContainerRef}>
+                <div
+                  aria-modal="true"
+                  role="dialog"
+                  tabIndex={-1}
+                  className={cx(
+                    modalContentStyle,
+                    modalSizes[size],
+                    {
+                      [visibleModalContentStyle]: state === 'entered',
+                    },
+                    contentClassName,
+                  )}
+                >
+                  <IconButton ariaLabel="close" className={closeButton}>
+                    <Icon
+                      glyph="X"
+                      onClick={handleClose}
+                      data-dismiss="modal"
+                      title="close modal"
+                    />
+                  </IconButton>
 
-                {children}
+                  {children}
+                </div>
               </div>
             </div>
-          </div>
+          </FocusLock>
         </Portal>
       )}
     </Transition>

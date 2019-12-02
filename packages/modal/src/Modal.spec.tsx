@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import 'jest-dom/extend-expect';
 import Modal from './Modal';
 
@@ -10,7 +10,7 @@ describe('packages/Modal', () => {
   const modalContent = 'Modal Content';
 
   describe('when rendered with content and set as open', () => {
-    const { container, getByText, getByTestId } = render(
+    const { container, getByText, getByTestId, getByLabelText } = render(
       <Modal open data-testid={modalId}>
         <h4>{modalContent}</h4>
       </Modal>,
@@ -22,9 +22,24 @@ describe('packages/Modal', () => {
       expect(modal).toBeVisible();
     });
 
-    test(`it renders the modal content as expected`, () => {
+    test('it renders the modal content as expected', () => {
       const content = getByText(modalContent);
       expect(content).toBeVisible();
+    });
+
+    test('close button has focus by default', () => {
+      const xButton = getByLabelText('close');
+      expect(document.activeElement).toEqual(xButton);
+    });
+
+    test('when modal is open, focus is trapped', () => {
+      const xButton = getByLabelText('close');
+      expect(document.activeElement).toEqual(xButton);
+      fireEvent.keyPress(document.body, {
+        key: 'Tab',
+        keyCode: 9,
+      });
+      expect(document.activeElement).toEqual(xButton);
     });
 
     test('when a user clicks the escape key', () => {
