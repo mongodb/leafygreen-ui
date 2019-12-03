@@ -220,7 +220,7 @@ const Pipeline = forwardRef(
       observeChanges,
     );
 
-    const _children = React.Children.map(children, child => {
+    const childrenAsPipelineStages = React.Children.map(children, child => {
       const props = {
         size,
         variant,
@@ -233,7 +233,7 @@ const Pipeline = forwardRef(
         : React.createElement(Stage, { ...props, children: child }); // eslint-disable-line react/no-children-prop
     });
 
-    const tooltipText = getPipelineCounterTooltip(_children);
+    const tooltipText = getPipelineCounterTooltip(childrenAsPipelineStages);
     const {
       base: baseStyle,
       pipeline: pipelineStyle,
@@ -254,10 +254,10 @@ const Pipeline = forwardRef(
           data-testid="pipeline-stages"
           className={cx(pipelineStyle, lastVisibleStageChevronStyle)}
         >
-          {_children}
+          {childrenAsPipelineStages}
         </ol>
 
-        {hasHiddenStages && React.Children.count(_children) > 0 && (
+        {hasHiddenStages && React.Children.count(childrenAsPipelineStages) > 0 && (
           <Tooltip
             align="top"
             justify="middle"
