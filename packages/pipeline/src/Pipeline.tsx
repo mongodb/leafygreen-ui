@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 
 import PropTypes from 'prop-types';
-import { findLast } from 'lodash';
+import findLast from 'lodash/findLast';
 
 import { uiColors } from '@leafygreen-ui/palette';
 import Tooltip from '@leafygreen-ui/tooltip';
