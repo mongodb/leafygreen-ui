@@ -4,7 +4,7 @@ import { array, select } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 
-import Pipeline, { Stage, Size, Variant } from '.';
+import { Pipeline, Stage, Size, Variant } from '.';
 
 const containerStyle = css`
   display: flex;
