@@ -18,8 +18,8 @@ import {
 } from './styles';
 
 export interface StateForStyles {
-  size: Size | undefined;
-  variant: Variant | undefined;
+  size?: Size;
+  variant?: Variant;
 }
 
 export interface StageProps {
