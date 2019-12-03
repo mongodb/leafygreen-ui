@@ -58,7 +58,7 @@ export interface PipelineProps {
   size: Size;
 
   /**
-   * Alter the visual apperance of the component
+   * Alter the visual appearance of the component
    */
   variant: Variant;
 }
@@ -140,7 +140,7 @@ const getStatefulStyles = (state: StateForStyles) => ({
  * @param props.children Content that will appear inside of the Pipeline component.
  * @param props.className Classname applied to Pipeline content container.
  * @param props.size Alters the rendered size of the component.
- * @param props.variant Alters the visual apperance of the component.
+ * @param props.variant Alters the visual appearance of the component.
  */
 const Pipeline = forwardRef(
   (
@@ -197,7 +197,7 @@ const Pipeline = forwardRef(
 
     /**
      * Callback for the Mutation Observer.
-     * @param records The records for the ovserved mutation
+     * @param records The records for the observed mutation
      */
     const observeChanges = (records: Array<MutationRecord>) => {
       const types = records.map(r => r.type);

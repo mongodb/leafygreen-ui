@@ -39,7 +39,7 @@ export interface StageProps {
   intersectionNode?: Element;
 
   /**
-   * Alter the rendered size of the component. Inheritted from the parent Pipeline component.
+   * Alter the rendered size of the component. Inherited from the parent Pipeline component.
    */
   size?: Size;
 
@@ -50,7 +50,7 @@ export interface StageProps {
   threshold?: number | Array<number>;
 
   /**
-   * Alter the visual apperance of the component. Inheritted from the parent Pipeline component.
+   * Alter the visual appearance of the component. Inherited from the parent Pipeline component.
    */
   variant?: Variant;
 }
@@ -143,7 +143,7 @@ const getStatefulStyles = (state: StateForStyles) => ({
  * @param props.intersectionNode The DOM node to use as the root node for the intersectionObserver. Defaults to window when null or undefined.
  * @param props.size Alters the rendered size of the component.
  * @param props.threshold Either a single number or an array of numbers which indicate at what percentage of the target's visibility the observer's callback should be executed.
- * @param props.variant Alters the visual apperance of the component.
+ * @param props.variant Alters the visual appearance of the component.
  */
 const Stage = forwardRef(
   (

@@ -31,12 +31,12 @@ export interface CounterProps {
   className?: string;
 
   /**
-   * Alter the rendered size of the component. Inheritted from the parent Pipeline component.
+   * Alter the rendered size of the component. Inherited from the parent Pipeline component.
    */
   size: Size;
 
   /**
-   * Alter the visual apperance of the component. Inheritted from the parent Pipeline component.
+   * Alter the visual appearance of the component. Inherited from the parent Pipeline component.
    */
   variant: Variant;
 }
