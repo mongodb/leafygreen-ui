@@ -41,7 +41,7 @@ interface StateForStyles {
   variant: Variant;
 }
 
-export interface PipelineProps {
+interface PipelineProps {
   /**
    * Content that will appear inside of the Pipeline component.
    */

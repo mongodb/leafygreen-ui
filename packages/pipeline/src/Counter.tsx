@@ -19,7 +19,7 @@ interface StateForStyles {
   variant?: Variant;
 }
 
-export interface CounterProps {
+interface CounterProps {
   /**
    * Content that will appear inside of the Counter component.
    */
