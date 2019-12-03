@@ -17,7 +17,7 @@ import {
   stageChevronAttr,
 } from './styles';
 
-export interface StateForStyles {
+interface StateForStyles {
   size?: Size;
   variant?: Variant;
 }

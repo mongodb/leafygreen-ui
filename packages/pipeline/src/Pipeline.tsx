@@ -35,7 +35,7 @@ import {
   stageChevronAttr,
 } from './styles';
 
-export interface StateForStyles {
+interface StateForStyles {
   hasHiddenStages: boolean;
   size: Size;
   variant: Variant;
