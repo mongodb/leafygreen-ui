@@ -75,7 +75,7 @@ function intersectionMockInstance(element: Element): IntersectionObserver {
 }
 
 /**
- * Provide our mock implementation of the IntersectionObserver API to the window object
+ * Provide our Jest mock implementation of the IntersectionObserver API to the window object
  **/
 window.IntersectionObserver = jest
   .fn()

@@ -6,7 +6,7 @@ global.MutationObserver = class {
 
 global.IntersectionObserver = class {
   constructor() {}
+  disconnect() {}
   observe() {}
   unobserve() {}
-  disconnect() {}
 };

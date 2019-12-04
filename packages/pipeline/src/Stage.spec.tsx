@@ -1,4 +1,5 @@
-import { mockIsIntersecting } from './mocks/IntersectionObserver';
+// Import mock implementation prior to importing our component to test so that window.IntersectionObserver is mocked out
+import { mockIsIntersecting } from '../../../__mocks__/IntersectionObserver';
 
 import React from 'react';
 import { typeIs } from '@leafygreen-ui/lib';
