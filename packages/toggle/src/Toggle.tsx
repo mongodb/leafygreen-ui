@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-// import { colors } from '@leafygreen-ui/theme';
 import { uiColors } from '@leafygreen-ui/palette';
 
 export const Size = {
