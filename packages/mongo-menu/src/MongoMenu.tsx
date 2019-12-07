@@ -279,7 +279,6 @@ function MongoMenu({
             description={el.description}
             target="_blank"
             rel="noopener noreferrer"
-            lother="lol"
           >
             {el.displayName}
           </MenuItem>
