@@ -18,15 +18,14 @@ const truncate = css`
 `;
 
 const nameStyle = css`
-  color: ${uiColors.blue.base};
+  color: ${uiColors.gray.dark3};
   font-size: 14px;
-  line-height: 21px;
 `;
 
 const productStyle = css`
-  color: ${uiColors.gray.base};
-  font-size: 11px;
-  line-height: 21px;
+  color: ${uiColors.gray.dark2};
+  font-size: 12px;
+  font-weight: bolder;
 `;
 
 interface MongoComboboxOptionProps {

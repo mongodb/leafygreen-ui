@@ -226,11 +226,13 @@ function Menu({
       spacing={15}
       adjustOnMutation={adjustOnMutation}
     >
+      {/* eslint-disable-next-line */}
       <ul
         {...rest}
         className={cx(rootMenuStyle, className)}
         role="menu"
         ref={popoverRef}
+        onClick={e => e.stopPropagation()}
       >
         {updatedChildren}
       </ul>
@@ -245,6 +247,7 @@ function Menu({
       });
     }
 
+    const { children: triggerChildren } = trigger.props;
     return React.cloneElement(trigger, {
       onClick: (e: React.MouseEvent) => {
         setOpen((curr: boolean) => !curr);
@@ -253,7 +256,14 @@ function Menu({
           trigger.props.onClick(e);
         }
       },
-      children: [...trigger.props.children, popoverContent],
+      children: triggerChildren
+        ? [
+            ...(triggerChildren instanceof Array
+              ? triggerChildren
+              : [triggerChildren]),
+            popoverContent,
+          ]
+        : popoverContent,
     });
   }
 

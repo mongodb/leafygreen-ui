@@ -11,6 +11,7 @@ export default function MongoComboboxListbox({ data, selected, onSelect }) {
       id="mongo-combobox-listbox"
       className={css`
         padding-left: 0px;
+        margin-bottom: 0px;
       `}
     >
       {data.map(datum => (

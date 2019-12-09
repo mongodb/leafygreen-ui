@@ -9,7 +9,7 @@ const menuItemContainer = createDataProp('menu-item-container');
 const indentation = 20;
 
 const containerStyle = css`
-  min-height: 42px;
+  min-height: 36px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -71,6 +71,7 @@ const linkStyle = css`
 `;
 
 const titleTextStyle = css`
+  width: 100%;
   font-size: 14px;
   font-weight: normal;
   color: ${uiColors.gray.dark2};

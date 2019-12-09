@@ -1,25 +1,32 @@
 import React from 'react';
+import Icon from '@leafygreen-ui/icon';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 
 const containerStyle = css`
   text-align: initial;
-`;
-
-const labelStyle = css`
-  font-size: 16px;
-  line-height: 19px;
-  font-weight: bolder;
-  font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+  position: relative;
 `;
 
 const inputStyle = css`
-  margin-top: 14px;
-  margin-bottom: 12px;
   width: 100%;
   padding: 8px;
-  border: 1px solid ${uiColors.blue.base};
   font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  border: 1px solid ${uiColors.gray.light2};
+  border-radius: 5px;
+
+  &::placeholder {
+    color: ${uiColors.gray.light1};
+    font-family: 'Akzidenz', Helvetica, Arial, sans-serif;
+  }
+`;
+
+const iconStyle = css`
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  color: ${uiColors.blue.base};
 `;
 
 interface MongoComboboxTextboxProps {
@@ -29,7 +36,6 @@ interface MongoComboboxTextboxProps {
 }
 
 export default function MongoComboboxTextbox({
-  title,
   placeholder,
   onChange,
 }: MongoComboboxTextboxProps) {
@@ -43,23 +49,18 @@ export default function MongoComboboxTextbox({
       id="mongo-combobox"
       className={containerStyle}
     >
-      <label
-        htmlFor="mongo-combobox-input"
-        id="mongo-combobox-label"
-        className={labelStyle}
-      >
-        {title}
-      </label>
       <input
         type="text"
         aria-autocomplete="list"
         aria-controls="mongo-combobox-listbox"
+        aria-label="mongo-combobox-texbox"
         id="mongo-combobox-input"
         aria-activedescendant=""
         placeholder={placeholder}
         onChange={onChange}
         className={inputStyle}
       />
+      <Icon glyph="MagnifyingGlass" className={iconStyle} />
     </div>
   );
 }
