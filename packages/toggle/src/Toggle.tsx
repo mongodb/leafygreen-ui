@@ -43,7 +43,7 @@ const focusStateStyle = css`
   bottom: -2px;
   left: -2px;
   right: -2px;
-  border: 2px solid #63b0d0;
+  border: 3px solid #63b0d0;
   border-radius: 50px;
   opacity: 0;
   transform: scale(0.8);
