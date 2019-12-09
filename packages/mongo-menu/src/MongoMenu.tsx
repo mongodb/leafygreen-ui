@@ -174,7 +174,7 @@ const Product = {
   Support: 'support',
 } as const;
 
-type Product = typeof Product[keyof typeof Product];
+type Product = typeof Product[keyof typeof Product] | '';
 
 export { Product };
 
@@ -187,7 +187,7 @@ interface MongoMenuProps {
   /**
    * MongoDB product that is currently active: ['atlas', 'university', 'support'].
    */
-  activeProduct: Product;
+  activeProduct?: Product;
 
   /**
    * Callback invoked after the user clicks log out.
@@ -229,7 +229,7 @@ interface MongoMenuProps {
 function MongoMenu({
   user: { name, email },
   accountURL = 'https://cloud.mongodb.com/v2#/account',
-  activeProduct,
+  activeProduct = '',
   onLogout = () => {},
   onProductChange = () => {},
 }: MongoMenuProps) {
