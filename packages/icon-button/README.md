@@ -7,7 +7,7 @@
 ```js
 import IconButton from '@leafygreen-ui/icon-button';
 
-<IconButton variant="light">
+<IconButton variant="light" ariaLabel="Ellipsis">
   <Icon glyph="Ellipsis" />
 </IconButton>;
 ```
@@ -15,7 +15,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 **Output HTML**
 
 ```html
-<button aria-disabled="false" class="leafygreen-ui-194rp0y">
+<button aria-disabled="false" class="leafygreen-ui-194rp0y" aria-label="Ellipsis>
   <span class="leafygreen-ui-1rvdyoi">
     <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
       <title>Ellipsis</title>
@@ -43,5 +43,6 @@ import IconButton from '@leafygreen-ui/icon-button';
 | `href`      | `string`              | If a href is supplied, the component renders inside of an `a` tag instead of inside of a `button` tag.            |           |
 | `className` | `string`              | Adds a className to the class attribute on the container element.                                                 |           |
 | `children`  | `node`                | Content rendered inside of the `<IconButton />` component                                                         |           |
+| `ariaLabel` | **Required** `string` | Value passed to `aria-label` attribute to ensure component's accessibility                                        |           |
 
 _Any other properties will be spread on the container element._

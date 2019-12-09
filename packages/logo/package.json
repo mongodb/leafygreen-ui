@@ -1,7 +1,7 @@
 {
-  "name": "@leafygreen-ui/menu",
-  "version": "4.0.2",
-  "description": "LeafyGreen UI Kit Menu",
+  "name": "@leafygreen-ui/logo",
+  "version": "1.0.0",
+  "description": "LeafyGreen UI Kit Logos",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
@@ -11,11 +11,9 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
-    "@leafygreen-ui/hooks": "^1.1.0",
+  "devDependencies": {
     "@leafygreen-ui/lib": "^3.2.0",
-    "@leafygreen-ui/popover": "^2.0.0",
+    "@leafygreen-ui/emotion": "^1.0.6",
     "@leafygreen-ui/palette": "^1.1.1"
-  },
-  "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0"
+  }
 }
