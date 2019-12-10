@@ -9,26 +9,16 @@ const containerStyle = css`
   text-align: center;
 `;
 
-storiesOf('Toggle', module)
-  .add('Default', () => (
-    <div className={containerStyle}>
-      <Toggle
-        size={select('Size', Object.values(Size) as Array<Size>, Size.Default)}
-        disabled={boolean('Disabled', false)}
-      />
-    </div>
-  ))
-  .add('Dark', () => (
-    <div
-      className={css`
-        ${containerStyle};
-        background-color: #464c4f;
-      `}
-    >
-      <Toggle
-        size={select('Size', Object.values(Size) as Array<Size>, Size.Default)}
-        variant={Variant.Dark}
-        disabled={boolean('Disabled', false)}
-      />
-    </div>
-  ));
+storiesOf('Toggle', module).add('Default', () => (
+  <div className={containerStyle}>
+    <Toggle
+      variant={select(
+        'Variant',
+        Object.values(Variant) as Array<Variant>,
+        Variant.Default,
+      )}
+      size={select('Size', Object.values(Size) as Array<Size>, Size.Default)}
+      disabled={boolean('Disabled', false)}
+    />
+  </div>
+));
