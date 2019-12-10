@@ -23,6 +23,7 @@ const toggleInput = createDataProp('toggle-input');
 const toggleGroove = createDataProp('toggle-groove');
 
 const transitionInMS = 150;
+const focusRing = 3;
 
 const inputStyle = css`
   margin: 0;
@@ -39,11 +40,11 @@ const inputStyle = css`
 const focusStateStyle = css`
   transition: all ${transitionInMS}ms ease-in-out;
   position: absolute;
-  top: -2px;
-  bottom: -2px;
-  left: -2px;
-  right: -2px;
-  border: 3px solid #63b0d0;
+  top: -${focusRing}px;
+  bottom: -${focusRing}px;
+  left: -${focusRing}px;
+  right: -${focusRing}px;
+  border: ${focusRing}px solid #63b0d0;
   border-radius: 50px;
   opacity: 0;
   transform: scale(0.8);
