@@ -88,30 +88,43 @@ function Menu({
   const refs: Array<HTMLElement> = [];
   const hasSetInitialFocus = useRef(false);
 
-  const updatedChildren = React.Children.map(children, child => {
-    if (
-      (isComponentType(child, 'MenuItem') && !child.props.disabled) ||
-      isComponentType(child, 'FocusableMenuItem')
-    ) {
-      return React.cloneElement(child, {
-        ref: (ref: HTMLElement) => {
-          refs.push(ref);
-          if (
-            open &&
-            refs.length === 1 &&
-            hasSetInitialFocus.current === false
-          ) {
-            refs[0].focus();
-            setFocused(refs[0]);
-            hasSetInitialFocus.current = true;
-          }
-        },
-        onFocus: (e: Event) => setFocused(e.target as HTMLElement),
-      });
-    }
+  function updateChildren(children: any): Array<React.ReactElement> {
+    return React.Children.map(children, child => {
+      if (
+        (isComponentType(child, 'MenuItem') && !child.props.disabled) ||
+        isComponentType(child, 'FocusableMenuItem')
+      ) {
+        return React.cloneElement(child, {
+          ref: (ref: HTMLElement) => {
+            refs.push(ref);
+            if (
+              open &&
+              refs.length === 1 &&
+              hasSetInitialFocus.current === false
+            ) {
+              refs[0].focus();
+              setFocused(refs[0]);
+              hasSetInitialFocus.current = true;
+            }
+          },
+          onFocus: (e: Event) => {
+            setFocused(e.target as HTMLElement);
+            child.props?.onFocus(e);
+          },
+        });
+      }
 
-    return child;
-  });
+      if (child.props?.children && !child.props.disabled) {
+        return React.cloneElement(child, {
+          children: updateChildren(child.props.children),
+        });
+      }
+
+      return child;
+    });
+  }
+
+  const updatedChildren = updateChildren(children);
 
   const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
   const isControlled = typeof controlledOpen === 'boolean';
@@ -226,7 +239,8 @@ function Menu({
       spacing={15}
       adjustOnMutation={adjustOnMutation}
     >
-      {/* eslint-disable-next-line */}
+      {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
       <ul
         {...rest}
         className={cx(rootMenuStyle, className)}
