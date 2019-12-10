@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { storiesOf } from '@storybook/react';
-import { text, boolean } from '@storybook/addon-knobs';
+import { text, boolean, select } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { colors } from '@leafygreen-ui/theme';
 import Checkbox, { Variant } from '.';
@@ -64,21 +64,16 @@ class Control extends PureComponent<ControlProps> {
   }
 }
 
-storiesOf('Checkbox', module)
-  .add('Default', () => (
-    <Control
-      disabled={boolean('Disabled', false)}
-      indeterminate={boolean('Indeterminate', false)}
-      label={text('Label', 'I agree to this thing.')}
-      bold={boolean('Bold', false)}
-    />
-  ))
-  .add('Light', () => (
-    <Control
-      disabled={boolean('Disabled', false)}
-      indeterminate={boolean('Indeterminate', false)}
-      label={text('Label', 'I agree to this thing.')}
-      variant={Variant.Light}
-      bold={boolean('Bold', false)}
-    />
-  ));
+storiesOf('Checkbox', module).add('Default', () => (
+  <Control
+    variant={select(
+      'Variant',
+      Object.values(Variant) as Array<Variant>,
+      Variant.Default,
+    )}
+    disabled={boolean('Disabled', false)}
+    indeterminate={boolean('Indeterminate', false)}
+    label={text('Label', 'I agree to this thing.')}
+    bold={boolean('Bold', false)}
+  />
+));
