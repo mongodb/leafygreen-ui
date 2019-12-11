@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 2.0.1
+
+### Patch Changes
+
+- e19a757: Fix Typescript bugs with onClick handling
+
 ## 2.0.0
 
 ### Major Changes
