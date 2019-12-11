@@ -174,11 +174,11 @@ interface ButtonMenuItemProps
   href?: null;
 }
 
-type MenuItemProps = (LinkMenuItemProps | ButtonMenuItemProps) & {
-  [key: string]: any;
-};
+type MenuItemProps = LinkMenuItemProps | ButtonMenuItemProps;
 
-function usesLinkElement(props: MenuItemProps): props is LinkMenuItemProps {
+function usesLinkElement(
+  props: LinkMenuItemProps | ButtonMenuItemProps,
+): props is LinkMenuItemProps {
   return props.href != null;
 }
 
@@ -204,7 +204,7 @@ const MenuItem = React.forwardRef(
       <li role="none">
         <Root
           {...anchorProps}
-          {...(rest as HTMLElementProps<any>)}
+          {...rest}
           {...menuItemContainer.prop}
           className={cx(
             containerStyle,
