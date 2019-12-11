@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import throttle from 'lodash/throttle';
 import {
   Menu,
   FocusableMenuItem,
@@ -66,12 +67,15 @@ export default function OrgSelect({ selected, data, onClick }: OrgSelect) {
   const [open, setOpen] = useState(false);
   const [filteredData, setFilteredData] = useState(data);
 
-  const onChange = (e: React.ChangeEvent) => {
+  const onChange: React.ChangeEventHandler = e => {
+    const throttledTerm = throttle(
+      () => (e.target as HTMLInputElement).value.toLowerCase(),
+      100,
+    );
+
     setFilteredData(
       data.filter(datum => {
-        return datum.name
-          .toLowerCase()
-          .includes((e.target as HTMLInputElement).value.toLowerCase());
+        return datum.name.toLowerCase().includes(throttledTerm());
       }),
     );
   };
