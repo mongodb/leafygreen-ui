@@ -65,6 +65,10 @@ const containerStyle = css`
       background-color: #63b0d0;
     }
   }
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
 `;
 
 const linkStyle = css`

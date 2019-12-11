@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import throttle from 'lodash/throttle';
 import {
   Menu,
@@ -58,12 +59,38 @@ const viewAllStyle = css`
 `;
 
 interface OrgSelect {
+  /**
+   * Selected organization, which will appear in the Top Nav by default.
+   *
+   */
   selected: string;
+
+  /**
+   * Array of Organization objects, [{name: `string`, product: `string`}].
+   *
+   */
   data: Array<{ name: string; product: string }>;
+
+  /**
+   * Callback function executed when an organization is clicked.
+   *
+   */
   onClick?: React.MouseEventHandler;
 }
 
-export default function OrgSelect({ selected, data, onClick }: OrgSelect) {
+/**
+ * # OrgSelect
+ *
+ * OrgSelect component
+ *
+ * ```
+<OrgSelect onClick={onClick} selected={'YouWork'} data={[{name: 'YouWork', product: 'Atlas'}]/>
+```
+ * @param props.selected Selected organization, which will appear in the Top Nav by default.
+ * @param props.data Array of Organization objects, [{name: `string`, product: `string`}].
+ * @param props.onClick Callback function executed when an organization is clicked.
+ */
+function OrgSelect({ selected, data, onClick }: OrgSelect) {
   const [open, setOpen] = useState(false);
   const [filteredData, setFilteredData] = useState(data);
 
@@ -124,3 +151,15 @@ export default function OrgSelect({ selected, data, onClick }: OrgSelect) {
     </Menu>
   );
 }
+
+OrgSelect.displayName = 'OrgSelect';
+
+OrgSelect.propTypes = {
+  selected: PropTypes.string,
+  onClick: PropTypes.func,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({ name: PropTypes.string, product: PropTypes.string }),
+  ),
+};
+
+export default OrgSelect;

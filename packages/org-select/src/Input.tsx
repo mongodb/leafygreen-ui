@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
@@ -67,15 +68,14 @@ interface InputProps {
   onKeyDown: React.KeyboardEventHandler;
 }
 
-const Input = React.forwardRef(({ onChange, ...rest }: InputProps, ref) => {
+const Input = React.forwardRef((props: InputProps, ref) => {
   return (
     <li className={containerStyle} role="none">
       <input
-        {...rest}
+        {...props}
         {...focusRing.prop}
         placeholder="Search for an organization..."
         className={inputStyle}
-        onChange={onChange}
         ref={ref as React.RefObject<HTMLInputElement>}
         aria-label="Search for an organization"
       />
@@ -86,5 +86,11 @@ const Input = React.forwardRef(({ onChange, ...rest }: InputProps, ref) => {
 });
 
 Input.displayName = 'Input';
+
+// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
+Input.propTypes = {
+  onChange: PropTypes.func,
+  onKeyDown: PropTypes.func,
+};
 
 export default Input;

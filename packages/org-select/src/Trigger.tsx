@@ -1,4 +1,5 @@
 import React, { MouseEventHandler } from 'react';
+import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Icon from '@leafygreen-ui/icon';
@@ -12,6 +13,11 @@ interface TriggerProps {
 const resetButtonStyle = css`
   padding: unset;
   border: none;
+  background-color: white;
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
 `;
 
 const triggerContainer = css`
@@ -40,7 +46,7 @@ const anchorStyle = css`
   border-left: 1px solid ${uiColors.gray.light2};
 `;
 
-export default function Trigger({ children, selected, ...rest }: TriggerProps) {
+function Trigger({ children, selected, ...rest }: TriggerProps) {
   return (
     <div
       className={css`
@@ -72,3 +78,12 @@ export default function Trigger({ children, selected, ...rest }: TriggerProps) {
     </div>
   );
 }
+
+Trigger.displayName = 'Trigger';
+
+Trigger.propTypes = {
+  selected: PropTypes.string,
+  children: PropTypes.node,
+};
+
+export default Trigger;
