@@ -263,6 +263,7 @@ function Menu({
     }
 
     const { children: triggerChildren } = trigger.props;
+
     return React.cloneElement(trigger, {
       onClick: (e: React.MouseEvent) => {
         setOpen((curr: boolean) => !curr);
