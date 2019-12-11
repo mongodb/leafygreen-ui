@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 4.0.3
+
+### Patch Changes
+
+- 8c2e838: Update styles to fix bugs on Safari and Firefox
+
 ## 4.0.2
 
 ### Patch Changes
