@@ -6,12 +6,13 @@ import {
   MenuItem,
   MenuSeparator,
 } from '@leafygreen-ui/menu';
-import Button from '@leafygreen-ui/button';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { keyMap } from '@leafygreen-ui/lib';
 import Input from './Input';
 import Trigger from './Trigger';
+import Option from './Option';
+import Footer from './Footer';
 
 const menuContainerStyle = css`
   width: 280px;
@@ -34,46 +35,8 @@ const menuItemContainerStyle = css`
   text-align: left;
 `;
 
-const optionStyle = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: calc(100% - 15px);
-`;
-
 const projectBorderStyle = css`
   border-bottom: 1px solid ${uiColors.gray.light2};
-`;
-
-const nameStyle = css`
-  font-size: 14px;
-  color: ${uiColors.gray.dark3};
-`;
-
-const productStyle = css`
-  font-size: 12px;
-  color: ${uiColors.gray.dark2};
-  font-weight: bolder;
-  white-space: nowrap;
-`;
-
-const projectDetailsStyle = css`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 50%;
-`;
-
-const viewAllStyle = css`
-  color: ${uiColors.blue.base};
-  font-weight: bolder;
-`;
-
-const projectButtonStyle = css`
-  display: flex;
-  justify-content: space-around;
-  padding-top: 16px;
-  padding-bottom: 16px;
 `;
 
 const Variant = {
@@ -84,6 +47,22 @@ const Variant = {
 type Variant = typeof Variant[keyof typeof Variant];
 
 export { Variant };
+
+export interface OrganizationData {
+  name: string;
+  product: string;
+}
+
+export interface Details {
+  apps?: number;
+  dashboards?: number;
+  clusters?: number;
+}
+
+export interface ProjectData {
+  name: string;
+  details: Details;
+}
 
 interface MongoSelect {
   /**
@@ -96,12 +75,7 @@ interface MongoSelect {
    * Organization: [{name: `string`, product: `string`}].
    * Project: [{name: `string`, details: {apps: `number`, dashboards: `number`, clusters: `number`}}]
    */
-  data:
-    | Array<{ name: string; product: string }>
-    | Array<{
-        name: string;
-        details: { apps?: number; dashboards?: number; clusters?: number };
-      }>;
+  data: Array<OrganizationData | ProjectData>;
 
   /**
    * Callback function executed when an organization is clicked.
@@ -128,8 +102,6 @@ interface MongoSelect {
  * @param props.variant Determines if MongoSelect will have `organization` or `project` data
  */
 function MongoSelect({ selected, data, onClick, variant }: MongoSelect) {
-  console.log(data);
-
   const [open, setOpen] = useState(false);
   const [filteredData, setFilteredData] = useState(data);
 
@@ -147,10 +119,6 @@ function MongoSelect({ selected, data, onClick, variant }: MongoSelect) {
     if (e.keyCode === keyMap.ArrowDown || e.keyCode === keyMap.ArrowUp) {
       e.preventDefault();
     }
-  };
-
-  const checkPlural = (number: number) => {
-    return number > 1 ? 's' : '';
   };
 
   return (
@@ -179,58 +147,20 @@ function MongoSelect({ selected, data, onClick, variant }: MongoSelect) {
               })}
               onClick={onClick}
             >
-              {variant === Variant.Organization ? (
-                <div className={optionStyle}>
-                  <span className={nameStyle}>{datum.name}</span>
-                  <span className={productStyle}>{datum.product}</span>
-                </div>
-              ) : (
-                <div className={optionStyle}>
-                  <span className={nameStyle}>
-                    {datum.name} {datum.name === selected ? '(current)' : ''}
-                  </span>
-                  <div className={projectDetailsStyle}>
-                    {datum.details.clusters && (
-                      <span>
-                        {'Cluster' + checkPlural(datum.details.clusters)}:{' '}
-                        {datum.details.clusters}
-                      </span>
-                    )}
-                    {datum.details.apps && (
-                      <span>
-                        {'App' + checkPlural(datum.details.apps)}:{' '}
-                        {datum.details.apps}
-                      </span>
-                    )}
-                    {datum.details.dashboards && (
-                      <span>
-                        {'Dashboard' + checkPlural(datum.details.dashboards)}:{' '}
-                        {datum.details.dashboards}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              )}
+              <Option
+                key={datum.name}
+                selected={selected}
+                datum={datum}
+                variant={variant}
+              />
             </MenuItem>
           ))}
         </ul>
       </li>
       <MenuSeparator />
-      {variant === Variant.Organization ? (
-        <MenuItem onKeyDown={onKeyDown}>
-          <span className={viewAllStyle}>View All Organizations</span>
-        </MenuItem>
-      ) : (
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-        <li onKeyDown={onKeyDown} className={projectButtonStyle}>
-          <FocusableMenuItem>
-            <Button>View All Projects</Button>
-          </FocusableMenuItem>
-          <FocusableMenuItem>
-            <Button>+ New Project</Button>
-          </FocusableMenuItem>
-        </li>
-      )}
+      <FocusableMenuItem>
+        <Footer onKeyDown={onKeyDown} variant={variant} />
+      </FocusableMenuItem>
     </Menu>
   );
 }

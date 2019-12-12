@@ -60,7 +60,7 @@ const magnifyingGlassStyle = css`
   position: absolute;
   top: 8px;
   right: 8px;
-  color: ${uiColors.gray.base};
+  color: ${uiColors.gray.dark2};
   z-index: 1;
 `;
 
@@ -72,7 +72,7 @@ interface InputProps {
 
 const Input = React.forwardRef(({ variant, ...rest }: InputProps, ref) => {
   const placeholderVariant =
-    variant === Variant.Organization ? 'an organization' : 'a project';
+    variant === Variant.Organization ? 'an Organization' : 'a Project';
   const placeholder = `Search for ${placeholderVariant}...`;
 
   return (

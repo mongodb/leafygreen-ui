@@ -21,6 +21,7 @@ const projectData = [
   { name: 'Madrid', details: { clusters: 30, apps: 1 } },
   { name: 'Toronto', details: { dashboards: 10 } },
   { name: 'Vancouver', details: { clusters: 3, apps: 2 } },
+  { name: 'VancouverFJKDSFLKSAJFKLSJFA', details: { clusters: 3, apps: 2 } },
 ];
 
 storiesOf('MongoSelect', module)
