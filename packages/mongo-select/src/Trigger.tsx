@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Icon from '@leafygreen-ui/icon';
+import { Variant } from '.';
 
 interface TriggerProps {
   children?: React.ReactNode;
   selected: string;
   onClick?: MouseEventHandler;
+  variant: Variant;
 }
 
 const resetButtonStyle = css`
@@ -46,7 +48,7 @@ const anchorStyle = css`
   border-left: 1px solid ${uiColors.gray.light2};
 `;
 
-function Trigger({ children, selected, ...rest }: TriggerProps) {
+function Trigger({ children, selected, variant, ...rest }: TriggerProps) {
   return (
     <div
       className={css`
@@ -61,7 +63,11 @@ function Trigger({ children, selected, ...rest }: TriggerProps) {
       <button {...rest} className={cx(resetButtonStyle, triggerContainer)}>
         <span className={orgGroupStyle}>
           <span>
-            <Icon size="small" glyph="Building" />
+            {variant === Variant.Organization ? (
+              <Icon size="small" glyph="Building" />
+            ) : (
+              <Icon size="small" glyph="Bell" />
+            )}
           </span>
           <span className={selectedOrgStyle}>{selected}</span>
         </span>
@@ -72,7 +78,17 @@ function Trigger({ children, selected, ...rest }: TriggerProps) {
         className={anchorStyle}
         aria-label="settings"
       >
-        <Icon size="small" glyph="Settings" />
+        {variant === Variant.Organization ? (
+          <Icon size="small" glyph="Settings" />
+        ) : (
+          <Icon
+            size="small"
+            glyph="Ellipsis"
+            className={css`
+              transform: rotate(90deg);
+            `}
+          />
+        )}
       </a>
       {children}
     </div>

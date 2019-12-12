@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from '@testing-library/react';
 import 'jest-dom/extend-expect';
-import OrgSelect from '.';
+import MongoSelect, { Variant } from './MongoSelect';
 
 afterAll(cleanup);
 
@@ -18,7 +18,12 @@ describe('packages/org-select', () => {
   const onClick = jest.fn();
 
   const { getByText, getByPlaceholderText, getByTitle } = render(
-    <OrgSelect selected={selected} data={data} onClick={onClick} />,
+    <MongoSelect
+      selected={selected}
+      data={data}
+      onClick={onClick}
+      variant={Variant.Organization}
+    />,
   );
 
   test('by default, selected organization is rendered', () => {

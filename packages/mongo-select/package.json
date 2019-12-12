@@ -1,8 +1,8 @@
 
   {
-    "name": "@leafygreen-ui/org-select",
+    "name": "@leafygreen-ui/mongo-select",
     "version": "0.9.0",
-    "description": "leafyGreen UI Kit Org Select",
+    "description": "leafyGreen UI Kit Mongo Select",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "scripts": {
@@ -18,6 +18,7 @@
       "@leafygreen-ui/emotion": "^1.0.6", 
       "@leafygreen-ui/palette": "^1.1.0", 
       "@leafygreen-ui/icon": "^2.1.0", 
-      "@leafygreen-ui/menu": "4.0.3"
+      "@leafygreen-ui/menu": "^4.0.3", 
+      "@leafygreen-ui/button": "^3.0.2"
     }
   }

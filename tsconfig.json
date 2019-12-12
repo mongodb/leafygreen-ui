@@ -42,6 +42,9 @@
       "path": "./packages/modal"
     },
     {
+      "path": "./packages/mongo-select"
+    },
+    {
       "path": "./packages/palette"
     },
     {

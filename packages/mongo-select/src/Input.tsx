@@ -4,6 +4,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
 import Icon from '@leafygreen-ui/icon';
+import { Variant } from './MongoSelect';
 
 const focusRing = createDataProp('focus-ring');
 
@@ -11,7 +12,7 @@ const containerStyle = css`
   position: relative;
   z-index: 0;
   height: 30px;
-  margin: 0px 20px 12px 20px;
+  margin: 0px 15px 12px 15px;
 `;
 
 const inputStyle = css`
@@ -66,18 +67,23 @@ const magnifyingGlassStyle = css`
 interface InputProps {
   onChange: React.ChangeEventHandler;
   onKeyDown: React.KeyboardEventHandler;
+  variant: Variant;
 }
 
-const Input = React.forwardRef((props: InputProps, ref) => {
+const Input = React.forwardRef(({ variant, ...rest }: InputProps, ref) => {
+  const placeholderVariant =
+    variant === Variant.Organization ? 'an organization' : 'a project';
+  const placeholder = `Search for ${placeholderVariant}...`;
+
   return (
     <li className={containerStyle} role="none">
       <input
-        {...props}
+        {...rest}
         {...focusRing.prop}
-        placeholder="Search for an organization..."
+        placeholder={placeholder}
         className={inputStyle}
         ref={ref as React.RefObject<HTMLInputElement>}
-        aria-label="Search for an organization"
+        aria-label={placeholder}
       />
       <div className={interactionRing} />
       <Icon glyph="MagnifyingGlass" className={magnifyingGlassStyle} />

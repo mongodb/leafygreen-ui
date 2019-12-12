@@ -6,7 +6,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 
 const menuItemContainer = createDataProp('menu-item-container');
 
-const indentation = 20;
+const indentation = 15;
 
 const containerStyle = css`
   min-height: 36px;
