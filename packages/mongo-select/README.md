@@ -12,9 +12,6 @@
 
 ## Properties
 
-| Prop       | Type                                             | Description                                                                       | Default                                          |
-| ---------- | ------------------------------------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `onClick`  | `React.MouseEventHandler`                        | Callback executed when an Organization is selected                                |                                                  |
-| `selected` | _Required_ `string`                              | Organization that is currently selected; will appear in Top Navigation by default |                                                  |
-| `data`     | _Required_ [{name: `string`, product: `string`}] | Array of organizations that belong to a user                                      |                                                  |
-| `variant`  | _Required_ `organization`                        | `project`                                                                         | Determines what select dropdown will be rendered |  |
+| Prop | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+

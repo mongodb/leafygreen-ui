@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Fuse from 'fuse.js';
 import {
   Menu,
   FocusableMenuItem,
@@ -7,11 +8,10 @@ import {
   MenuSeparator,
 } from '@leafygreen-ui/menu';
 import { uiColors } from '@leafygreen-ui/palette';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import { keyMap } from '@leafygreen-ui/lib';
 import Input from './Input';
 import Trigger from './Trigger';
-import Option from './Option';
 import Footer from './Footer';
 
 const menuContainerStyle = css`
@@ -35,8 +35,23 @@ const menuItemContainerStyle = css`
   text-align: left;
 `;
 
-const projectBorderStyle = css`
-  border-bottom: 1px solid ${uiColors.gray.light2};
+const optionStyle = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: calc(100% - 15px);
+`;
+
+const nameStyle = css`
+  font-size: 14px;
+  color: ${uiColors.gray.dark3};
+`;
+
+const productStyle = css`
+  font-size: 12px;
+  color: ${uiColors.gray.dark2};
+  font-weight: bolder;
+  white-space: nowrap;
 `;
 
 const Variant = {
@@ -48,34 +63,51 @@ type Variant = typeof Variant[keyof typeof Variant];
 
 export { Variant };
 
-export interface OrganizationData {
-  name: string;
-  product: string;
+const PlanType = {
+  Cloud: 'cloud',
+  Atlas: 'Atlas',
+  OM: 'OM',
+} as const;
+
+type PlanType = typeof PlanType[keyof typeof PlanType];
+
+export { PlanType };
+
+export interface ProjectInterface {
+  projectId: string;
+  projectName: string;
+  planType: PlanType;
+  orgId: string;
 }
 
-export interface Details {
-  apps?: number;
-  dashboards?: number;
-  clusters?: number;
+export interface OrganizationInterface {
+  orgId: string;
+  orgName: string;
+  planType: PlanType;
 }
 
-export interface ProjectData {
-  name: string;
-  details: Details;
+function isProject(
+  val: ProjectInterface | OrganizationInterface,
+): val is ProjectInterface {
+  return 'projectId' in val;
 }
 
-interface MongoSelect {
+type VariantData = ProjectInterface | OrganizationInterface;
+
+interface MongoSelectProps {
   /**
-   * Selected organization, which will appear in the Top Nav by default.
+   * Object with information about current organization or project.
+   * Organization: {orgId: `string`; orgName: `string`, planType: `'Cloud' | 'OM' | 'Atlas'`}
+   * Project: {orgId: `string`; projectId: `string`, projectName: `string`, planType: `'Cloud' | 'OM' | 'Atlas'`}
    */
-  selected: string;
+  selected: VariantData;
 
   /**
    * Array of data objects
-   * Organization: [{name: `string`, product: `string`}].
-   * Project: [{name: `string`, details: {apps: `number`, dashboards: `number`, clusters: `number`}}]
+   * Organization: [{orgId: `string`; orgName: `string`, planType: `'Cloud' | 'OM' | 'Atlas'`}]
+   * Project: [{orgId: `string`; projectId: `string`, projectName: `string`, planType: `'Cloud' | 'OM' | 'Atlas'`}]
    */
-  data: Array<OrganizationData | ProjectData>;
+  data: Array<VariantData>;
 
   /**
    * Callback function executed when an organization is clicked.
@@ -101,18 +133,21 @@ interface MongoSelect {
  * @param props.onClick Callback function executed when an organization is clicked.
  * @param props.variant Determines if MongoSelect will have `organization` or `project` data
  */
-function MongoSelect({ selected, data, onClick, variant }: MongoSelect) {
+function MongoSelect({ selected, data, onClick, variant }: MongoSelectProps) {
+  const name = isProject(selected) ? selected.projectName : selected.orgName;
+
   const [open, setOpen] = useState(false);
   const [filteredData, setFilteredData] = useState(data);
 
-  const onChange: React.ChangeEventHandler = e => {
-    const term = (e.target as HTMLInputElement).value.toLowerCase();
+  const options: Fuse.FuseOptions<VariantData> = {
+    keys: ['orgName', 'projectName'],
+  };
 
-    setFilteredData(
-      data.filter(datum => {
-        return datum.name.toLowerCase().includes(term);
-      }),
-    );
+  const onChange: React.ChangeEventHandler = e => {
+    const term = (e.target as HTMLInputElement).value;
+    const fuse = new Fuse(data, options);
+    const results = fuse.search(term);
+    setFilteredData(results as Array<VariantData>);
   };
 
   const onKeyDown: React.KeyboardEventHandler = e => {
@@ -121,11 +156,24 @@ function MongoSelect({ selected, data, onClick, variant }: MongoSelect) {
     }
   };
 
+  const formatPlanType = (planType: PlanType) => {
+    switch (planType) {
+      case PlanType.Atlas:
+        return 'Atlas';
+      case PlanType.Cloud:
+        return 'Cloud Manager';
+      case PlanType.OM:
+        return 'Ops Manager';
+    }
+  };
+
   return (
     <Menu
       open={open}
       setOpen={setOpen}
-      trigger={<Trigger selected={selected} variant={variant} />}
+      trigger={
+        <Trigger selected={name} variant={variant} orgId={selected.orgId} />
+      }
       className={menuContainerStyle}
       justify="start"
     >
@@ -140,26 +188,33 @@ function MongoSelect({ selected, data, onClick, variant }: MongoSelect) {
         <ul className={ulContainerStyle}>
           {filteredData.map(datum => (
             <MenuItem
-              key={datum.name}
-              className={cx(menuItemContainerStyle, {
-                [projectBorderStyle]:
-                  variant === Variant.Project ? true : false,
-              })}
+              key={isProject(datum) ? datum.projectId : datum.orgId}
+              className={menuItemContainerStyle}
               onClick={onClick}
             >
-              <Option
-                key={datum.name}
-                selected={selected}
-                datum={datum}
-                variant={variant}
-              />
+              <div className={optionStyle}>
+                {isProject(datum) ? (
+                  <span className={nameStyle}>{datum.projectName}</span>
+                ) : (
+                  <>
+                    <span className={nameStyle}>{datum.orgName}</span>
+                    <span className={productStyle}>
+                      {formatPlanType(datum.planType)}
+                    </span>
+                  </>
+                )}
+              </div>
             </MenuItem>
           ))}
         </ul>
       </li>
       <MenuSeparator />
       <FocusableMenuItem>
-        <Footer onKeyDown={onKeyDown} variant={variant} />
+        <Footer
+          onKeyDown={onKeyDown}
+          variant={variant}
+          orgId={selected.orgId}
+        />
       </FocusableMenuItem>
     </Menu>
   );
@@ -168,12 +223,10 @@ function MongoSelect({ selected, data, onClick, variant }: MongoSelect) {
 MongoSelect.displayName = 'MongoSelect';
 
 MongoSelect.propTypes = {
-  selected: PropTypes.string,
+  data: PropTypes.arrayOf(PropTypes.object),
+  selected: PropTypes.objectOf(PropTypes.string).isRequired,
   onClick: PropTypes.func,
-  data: PropTypes.arrayOf(
-    PropTypes.shape({ name: PropTypes.string, product: PropTypes.string }),
-  ),
-  variant: PropTypes.oneOf(['organization', 'project']),
+  variant: PropTypes.oneOf(['organization', 'project']).isRequired,
 };
 
 export default MongoSelect;

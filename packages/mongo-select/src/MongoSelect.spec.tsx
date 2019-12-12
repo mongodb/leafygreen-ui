@@ -1,38 +1,52 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from '@testing-library/react';
 import 'jest-dom/extend-expect';
-import MongoSelect, { Variant } from './MongoSelect';
+import MongoSelect, { Variant, PlanType } from './MongoSelect';
+
+const generateId = () =>
+  Math.random()
+    .toString(36)
+    .substring(7);
 
 afterAll(cleanup);
+
 describe('packages/mongo-select', () => {
   describe('when variant is set to organization', () => {
-    const data = [
-      { name: 'GlobalWork', product: 'Atlas' },
-      { name: 'LocalWork', product: 'Atlas' },
-      { name: 'Pizza on Demand', product: 'Atlas' },
-      { name: 'YouWork', product: 'Atlas' },
-      { name: 'YouWork Enterprise', product: 'Cloud Manager' },
+    const organizationData = [
+      { orgId: generateId(), orgName: 'GlobalWork', planType: PlanType.Atlas },
+      { orgId: generateId(), orgName: 'LocalWork', planType: PlanType.Atlas },
+      {
+        orgId: generateId(),
+        orgName: 'Pizza on Demand',
+        planType: PlanType.Atlas,
+      },
+      { orgId: generateId(), orgName: 'YouWork', planType: PlanType.Atlas },
+      {
+        orgId: generateId(),
+        orgName: 'YouWork Enterprise',
+        planType: PlanType.Cloud,
+      },
     ];
 
-    const selected = 'YouWork';
+    const selected = organizationData[3];
     const onClick = jest.fn();
 
     const { getByText, getByPlaceholderText, getAllByTitle } = render(
       <MongoSelect
         selected={selected}
-        data={data}
+        data={organizationData}
         onClick={onClick}
         variant={Variant.Organization}
       />,
     );
 
     test('by default, selected organization is rendered', () => {
-      const selectedOrg = getByText(selected);
+      const selectedOrg = getByText(selected.orgName);
       expect(selectedOrg).toBeInTheDocument();
     });
 
     test('clicking selected organization opens and closes the menu', () => {
-      const selectedOrg = getByText(selected);
+      const selectedOrg = getByText(selected.orgName);
       fireEvent.click(selectedOrg);
       const input = getByPlaceholderText('Search for an Organization...');
       expect(input).toBeInTheDocument();
@@ -77,12 +91,28 @@ describe('packages/mongo-select', () => {
 
   describe('when variant is set to project', () => {
     const onClick = jest.fn();
-    const selectedProject = 'Core';
     const projectData = [
-      { name: 'Core', details: { clusters: 2, apps: 1, dashboards: 4 } },
-      { name: 'London', details: { dashboards: 20 } },
-      { name: 'Madrid', details: { clusters: 30, apps: 1 } },
+      {
+        projectId: generateId(),
+        projectName: 'Core',
+        orgId: generateId(),
+        planType: PlanType.Atlas,
+      },
+      {
+        projectId: generateId(),
+        projectName: 'London',
+        orgId: generateId(),
+        planType: PlanType.Atlas,
+      },
+      {
+        projectId: generateId(),
+        projectName: 'Madrid',
+        orgId: generateId(),
+        planType: PlanType.Atlas,
+      },
     ];
+
+    const selectedProject = projectData[0];
 
     const { getByText, getByPlaceholderText, getAllByTitle } = render(
       <MongoSelect
@@ -94,12 +124,12 @@ describe('packages/mongo-select', () => {
     );
 
     test('by default, selected organization is rendered', () => {
-      const selected = getByText(selectedProject);
+      const selected = getByText(selectedProject.projectName);
       expect(selected).toBeInTheDocument();
     });
 
     test('clicking selected project opens and closes the menu', () => {
-      const selected = getByText(selectedProject);
+      const selected = getByText(selectedProject.projectName);
       fireEvent.click(selected);
       const input = getByPlaceholderText('Search for a Project...');
       expect(input).toBeInTheDocument();
