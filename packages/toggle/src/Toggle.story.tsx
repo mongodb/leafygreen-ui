@@ -21,7 +21,6 @@ storiesOf('Toggle', module).add('Default', () => {
         padding: 20px;
       `}
     >
-      `
       <Toggle
         variant={variant}
         size={select('Size', Object.values(Size) as Array<Size>, Size.Default)}
