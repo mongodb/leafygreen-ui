@@ -110,7 +110,7 @@ function Menu({
           },
           onFocus: (e: Event) => {
             setFocused(e.target as HTMLElement);
-            child.props?.onFocus(e);
+            child.props.onFocus?.(e);
           },
         });
       }

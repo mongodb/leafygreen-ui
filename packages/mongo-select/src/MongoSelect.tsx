@@ -73,9 +73,9 @@ function isProject(
   return 'projectId' in val;
 }
 
-const onKeyDown: React.KeyboardEventHandler = ({ keyCode, preventDefault }) => {
-  if ([keyMap.ArrowUp, keyMap.ArrowDown].includes(keyCode)) {
-    preventDefault();
+const onKeyDown: React.KeyboardEventHandler = e => {
+  if ([keyMap.ArrowUp, keyMap.ArrowDown].includes(e.keyCode)) {
+    e.preventDefault();
   }
 };
 
