@@ -16,6 +16,7 @@ const rootMenuStyle = css`
   margin-block-start: 0px;
   margin-block-end: 0px;
   padding-inline-start: 0px;
+  padding: 0px;
 `;
 
 interface MenuProps

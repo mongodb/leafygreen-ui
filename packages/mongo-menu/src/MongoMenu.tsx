@@ -168,13 +168,15 @@ const menuItems = [
   },
 ] as const;
 
-export const Product = {
+const Product = {
   Atlas: 'atlas',
   University: 'university',
   Support: 'support',
 } as const;
 
-type Product = typeof Product[keyof typeof Product];
+type Product = typeof Product[keyof typeof Product] | '';
+
+export { Product };
 
 interface MongoMenuProps {
   /**
@@ -185,7 +187,7 @@ interface MongoMenuProps {
   /**
    * MongoDB product that is currently active: ['atlas', 'university', 'support'].
    */
-  activeProduct: Product;
+  activeProduct?: Product;
 
   /**
    * Callback invoked after the user clicks log out.
@@ -198,7 +200,9 @@ interface MongoMenuProps {
   onProductChange?: React.MouseEventHandler;
 
   /**
-   * URL passed to MongoDB Account button.
+   * URL passed to MongoDB Account button. If explicitly set to the
+   * empty string, the button will be disabled and not render as a
+   * link (e.g. for users already in the account app).
    */
   accountURL?: string;
 }
@@ -212,18 +216,20 @@ interface MongoMenuProps {
     activeProduct="atlas"
     onLogout={() => console.log('On logout')}
     onProductChange={() => console.log('Switching products')}
+    accountUrl="https://cloud.mongodb.com/account/profile"
   />
  * ```
  * @param props.user Object that contains information about the active user. {name: 'string', email: 'string'}
  * @param props.activeProduct  MongoDB product that is currently active: ['atlas', 'university', 'support'].
  * @param props.onLogout Callback invoked after the user clicks log out.
  * @param props.onProductChange Callback invoked after the user clicks a product.
+ * @param props.accountUrl Url (relative or absolute) linked to by the MongoDB Account button
  *
  */
 function MongoMenu({
   user: { name, email },
   accountURL = 'https://cloud.mongodb.com/v2#/account',
-  activeProduct,
+  activeProduct = '',
   onLogout = () => {},
   onProductChange = () => {},
 }: MongoMenuProps) {
@@ -255,9 +261,10 @@ function MongoMenu({
         <FocusableMenuItem>
           <Button
             size="small"
-            href={accountURL}
+            href={accountURL || undefined}
             className={accountButtonStyle}
-            as="a"
+            as={accountURL ? 'a' : 'button'}
+            disabled={!accountURL}
           >
             MongoDB Account
           </Button>

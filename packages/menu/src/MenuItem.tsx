@@ -24,6 +24,8 @@ const containerStyle = css`
   width: 100%;
   font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
   box-sizing: border-box;
+  background: ${uiColors.white};
+  text-align: left;
 
   &:before {
     content: '';

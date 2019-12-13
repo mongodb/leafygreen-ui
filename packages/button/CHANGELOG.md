@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 3.0.2
+
+### Patch Changes
+
+- f42801b: Fix bug such that on hover, color is explicitly set rather than inherited
+
 ## 3.0.1
 
 ### Patch Changes
