@@ -7,11 +7,12 @@ import {
   MenuItem,
   MenuSeparator,
 } from '@leafygreen-ui/menu';
+import Button from '@leafygreen-ui/button';
+import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
 import { keyMap } from '@leafygreen-ui/lib';
 import Input from './Input';
 import { OrganizationTrigger, ProjectTrigger } from './Trigger';
-import { OrganizationFooter, ProjectFooter } from './Footer';
 import { OrganizationOption, ProjectOption } from './Option';
 
 const menuContainerStyle = css`
@@ -33,6 +34,17 @@ const menuItemContainerStyle = css`
   justify-content: space-between;
   align-items: center;
   text-align: left;
+`;
+
+const viewAllStyle = css`
+  color: ${uiColors.blue.base};
+`;
+
+const projectButtonStyle = css`
+  display: flex;
+  justify-content: space-around;
+  padding-top: 16px;
+  padding-bottom: 16px;
 `;
 
 const Variant = {
@@ -132,14 +144,26 @@ function MongoSelect({ selected, data, onClick, variant }: MongoSelectProps) {
   };
 
   let trigger, footer;
+  const orgURI = `/v2#/org/${selected.orgId}`;
 
   if (isProject(selected)) {
     trigger = <ProjectTrigger selected={selected.projectName} />;
-    footer = <ProjectFooter onKeyDown={onKeyDown} orgId={selected.orgId} />;
+    footer = (
+      <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
+        <FocusableMenuItem>
+          <Button href={`${orgURI}/projects`}>View All Projects</Button>
+        </FocusableMenuItem>
+        <FocusableMenuItem>
+          <Button href={`${orgURI}/projects/create`}>+ New Project</Button>
+        </FocusableMenuItem>
+      </li>
+    );
   } else {
     trigger = <OrganizationTrigger selected={selected.orgName} />;
     footer = (
-      <OrganizationFooter onKeyDown={onKeyDown} orgId={selected.orgId} />
+      <MenuItem onKeyDown={onKeyDown} href={`${orgURI}/settings/general`}>
+        <strong className={viewAllStyle}>View All Organizations</strong>
+      </MenuItem>
     );
   }
 
@@ -175,17 +199,19 @@ function MongoSelect({ selected, data, onClick, variant }: MongoSelectProps) {
         <Input onChange={onChange} onKeyDown={onKeyDown} variant={variant} />
       </FocusableMenuItem>
 
-      <li
-        role="none"
-        onKeyDown={e => e.preventDefault()}
-        className={listContainerStyle}
-      >
-        <ul className={ulContainerStyle}>{filteredData.map(renderOption)}</ul>
+      <li role="none" className={listContainerStyle}>
+        <ul
+          onKeyDown={e => e.preventDefault()}
+          className={ulContainerStyle}
+          role="menu"
+        >
+          {filteredData.map(renderOption)}
+        </ul>
       </li>
 
       <MenuSeparator />
 
-      <FocusableMenuItem>{footer}</FocusableMenuItem>
+      {footer}
     </Menu>
   );
 }

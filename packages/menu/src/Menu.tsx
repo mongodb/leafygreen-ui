@@ -88,6 +88,7 @@ function Menu({
 }: MenuProps) {
   const refs: Array<HTMLElement> = [];
   const hasSetInitialFocus = useRef(false);
+  console.log('hi');
 
   function updateChildren(children: any): Array<React.ReactElement> {
     return React.Children.map(children, child => {
