@@ -1,5 +1,11 @@
 # @leafygreen-ui/toggle
 
+## 2.1.8
+
+### Patch Changes
+
+- 0868af7: Update Toggle to new utilize new palette
+
 ## 2.1.7
 
 ### Patch Changes
