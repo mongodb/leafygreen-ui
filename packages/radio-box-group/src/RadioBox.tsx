@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { useShowFocus } from '@leafygreen-ui/leafygreen-provider';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Size from './Size';
 
 const radioBoxWrapper = createDataProp('radio-box-wrapper');
@@ -241,7 +241,7 @@ export default function RadioBox({
   name,
   ...rest
 }: RadioBoxProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>) {
-  const showFocus = useShowFocus();
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const styles = getStatefulStyles({ checked, disabled, showFocus });
 
   return (

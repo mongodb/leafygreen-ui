@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { useEventListener } from '@leafygreen-ui/hooks';
 
 interface UsingKeyboardState {
-  usingKeyboard?: boolean;
+  usingKeyboard: boolean;
   setUsingKeyboard: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const UsingKeyboardContext = createContext<UsingKeyboardState>({
-  usingKeyboard: undefined,
+  usingKeyboard: true,
   setUsingKeyboard: () => {},
 });
 
@@ -20,17 +20,6 @@ export const NavigationKeyCodes: { readonly [k: string]: number } = {
   rightArrow: 39,
   downArrow: 40,
 } as const;
-
-export function useShowFocus(): boolean {
-  const { usingKeyboard } = useContext(UsingKeyboardContext);
-
-  if (usingKeyboard == null) {
-    // If there's no context provider available, we show focus states as usual.
-    return true;
-  }
-
-  return usingKeyboard;
-}
 
 export function useUsingKeyboardContext(): UsingKeyboardState {
   return useContext(UsingKeyboardContext);

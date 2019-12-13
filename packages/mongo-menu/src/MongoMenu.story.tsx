@@ -5,7 +5,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import MongoMenu, { Product } from '.';
 
 storiesOf('MongoMenu', module).add('Default', () => (
-  <LeafyGreenProvider initialStates={{ usingKeyboard: false }}>
+  <LeafyGreenProvider>
     <MongoMenu
       user={{
         name: text('name', 'Alex Smith'),

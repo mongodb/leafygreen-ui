@@ -9,7 +9,7 @@ import {
   FocusableMenuItem,
 } from '@leafygreen-ui/menu';
 import { createDataProp } from '@leafygreen-ui/lib';
-import { useShowFocus } from '@leafygreen-ui/leafygreen-provider';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
@@ -236,7 +236,7 @@ function MongoMenu({
   onProductChange = () => {},
 }: MongoMenuProps) {
   const [open, setOpen] = useState(false);
-  const showFocus = useShowFocus();
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
   return (
     <button

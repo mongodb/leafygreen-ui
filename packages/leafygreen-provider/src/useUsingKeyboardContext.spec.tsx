@@ -8,7 +8,7 @@ afterAll(cleanup);
 
 const genId = () => Math.round(Math.random() * 1000000).toString();
 
-describe('useShowFocus', () => {
+describe('useUsingKeyboardContext', () => {
   function TestUseUsingKeyboardComponent({
     id,
     buttonId,
@@ -29,13 +29,13 @@ describe('useShowFocus', () => {
     );
   }
 
-  test('when child is not a descendent of UsingKeyboardProvider, usingKeyboard is undefined', () => {
+  test('when child is not a descendent of UsingKeyboardProvider, usingKeyboard is true', () => {
     const childTestId = genId();
     const { getByTestId } = render(
       <TestUseUsingKeyboardComponent id={childTestId} />,
     );
 
-    expect(getByTestId(childTestId).textContent).toBe('undefined');
+    expect(getByTestId(childTestId).textContent).toBe('true');
   });
 
   describe('when child is a descendent of UsingKeyboardProvider', () => {
