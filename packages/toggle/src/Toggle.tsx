@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { colors } from '@leafygreen-ui/theme';
+import { uiColors } from '@leafygreen-ui/palette';
 
 export const Size = {
   Default: 'default',
@@ -23,6 +23,7 @@ const toggleInput = createDataProp('toggle-input');
 const toggleGroove = createDataProp('toggle-groove');
 
 const transitionInMS = 150;
+const focusRing = 3;
 
 const inputStyle = css`
   margin: 0;
@@ -39,11 +40,11 @@ const inputStyle = css`
 const focusStateStyle = css`
   transition: all ${transitionInMS}ms ease-in-out;
   position: absolute;
-  top: -2px;
-  bottom: -2px;
-  left: -2px;
-  right: -2px;
-  border: 2px solid rgba(67, 177, 229, 0.25);
+  top: -${focusRing}px;
+  bottom: -${focusRing}px;
+  left: -${focusRing}px;
+  right: -${focusRing}px;
+  border: ${focusRing}px solid #63b0d0;
   border-radius: 50px;
   opacity: 0;
   transform: scale(0.8);
@@ -94,13 +95,13 @@ const getGrooveStyles = ({ variant, checked, disabled }: StateForStyle) => {
     [Variant.Default]: (() => {
       if (disabled) {
         return css`
-          background-color: rgba(29, 36, 36, 0.1);
-          border-color: rgba(18, 22, 22, 0.05);
+          background-color: rgba(6, 22, 33, 0.09);
+          border-color: rgba(6, 22, 33, 0.04);
         `;
       }
 
       const variantStyle = css`
-        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+        box-shadow: inset 0 0 5px rgba(6, 22, 33, 0.1);
       `;
 
       if (checked) {
@@ -110,8 +111,8 @@ const getGrooveStyles = ({ variant, checked, disabled }: StateForStyle) => {
       return cx(
         variantStyle,
         css`
-          background-color: rgba(29, 36, 36, 0.08);
-          border-color: rgba(0, 0, 0, 0.03);
+          background-color: rgba(61, 79, 88, 0.1);
+          border-color: rgba(18, 22, 22, 0.03);
         `,
       );
     })(),
@@ -125,7 +126,7 @@ const getGrooveStyles = ({ variant, checked, disabled }: StateForStyle) => {
       }
 
       const variantStyle = css`
-        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.15);
+        box-shadow: inset 0 0 10px rgba(6, 22, 33, 0.15);
       `;
 
       if (checked) {
@@ -135,8 +136,8 @@ const getGrooveStyles = ({ variant, checked, disabled }: StateForStyle) => {
       return cx(
         variantStyle,
         css`
-          background-color: rgba(29, 36, 36, 0.6);
-          border-color: rgba(18, 22, 22, 0.1);
+          background-color: rgba(6, 22, 33, 0.4);
+          border-color: rgba(6, 22, 33, 0.1);
         `,
       );
     })(),
@@ -168,7 +169,7 @@ const getGrooveStyles = ({ variant, checked, disabled }: StateForStyle) => {
       left: 0;
       right: 0;
       border-radius: 50px;
-      background-color: ${colors.mongodb.blue};
+      background-color: #43b1e5;
       box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
       opacity: 0;
       transform: scale(0.85);
@@ -193,7 +194,7 @@ const getGrooveStyles = ({ variant, checked, disabled }: StateForStyle) => {
       css`
         // We set background-color here to avoid a small issue with overflow clipping
         // that makes this look less seamless than it should.
-        background-color: ${colors.mongodb.blue};
+        background-color: #43b1e5;
         border-color: #2e9ed3;
         transition-delay: ${transitionInMS}ms;
 
@@ -219,10 +220,7 @@ const getSliderStyles = ({
     [Variant.Default]: (() => {
       const variantStyle = css`
         &:before {
-          background-image: linear-gradient(
-            rgba(220, 220, 220, 0),
-            rgba(220, 220, 220, 0.5)
-          );
+          background-image: linear-gradient(${uiColors.white}, #f6f6f6);
         }
       `;
 
@@ -230,7 +228,7 @@ const getSliderStyles = ({
         return cx(
           variantStyle,
           css`
-            background-color: rgba(0, 0, 0, 0.08);
+            background-color: rgba(6, 22, 33, 0.09);
           `,
         );
       }
@@ -240,8 +238,8 @@ const getSliderStyles = ({
         css`
           ${variantStyle}
           background-color: white;
-          box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.25),
-            inset 0 -1px 0 #f1f1f1;
+          box-shadow: 0 0 2px rgba(28, 192, 97, 0.08),
+            0 1px 2px rgba(0, 0, 0, 0.25), inset 0 -1px 0 #f1f1f1;
         `,
       );
     })(),
@@ -258,7 +256,7 @@ const getSliderStyles = ({
         return css`
           background-color: white;
           box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.25),
-            inset 0 -1px 0 #f1f1f1;
+            inset 0 -1px 0 #cdcdcd;
 
           &:before {
             opacity: 0;
@@ -273,7 +271,7 @@ const getSliderStyles = ({
       return css`
         background-color: #6f767b;
         box-shadow: 0 0 2px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.25),
-          inset 0 -1px 0 #454d53;
+          inset 0 -1px 0 ${uiColors.gray.dark2};
       `;
     })(),
   };
@@ -369,7 +367,6 @@ const onLabelStyle = cx(
   baseLabelStyle,
   css`
     left: 9px;
-    color: #bbebff;
 
     ${toggleInput.selector}:hover ~ ${toggleGroove.selector} > &,
     ${toggleInput.selector}:focus ~ ${toggleGroove.selector} > & {
@@ -382,7 +379,7 @@ const offLabelStyle = cx(
   baseLabelStyle,
   css`
     right: 6px;
-    color: #9fa1a2;
+    color: ${uiColors.gray.base};
   `,
 );
 
