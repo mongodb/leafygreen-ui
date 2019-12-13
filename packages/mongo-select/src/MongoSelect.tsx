@@ -7,12 +7,12 @@ import {
   MenuItem,
   MenuSeparator,
 } from '@leafygreen-ui/menu';
-import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
 import { keyMap } from '@leafygreen-ui/lib';
 import Input from './Input';
-import Trigger from './Trigger';
-import Footer from './Footer';
+import { OrganizationTrigger, ProjectTrigger } from './Trigger';
+import { OrganizationFooter, ProjectFooter } from './Footer';
+import { OrganizationOption, ProjectOption } from './Option';
 
 const menuContainerStyle = css`
   width: 280px;
@@ -33,25 +33,6 @@ const menuItemContainerStyle = css`
   justify-content: space-between;
   align-items: center;
   text-align: left;
-`;
-
-const optionStyle = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: calc(100% - 15px);
-`;
-
-const nameStyle = css`
-  font-size: 14px;
-  color: ${uiColors.gray.dark3};
-`;
-
-const productStyle = css`
-  font-size: 12px;
-  color: ${uiColors.gray.dark2};
-  font-weight: bolder;
-  white-space: nowrap;
 `;
 
 const Variant = {
@@ -91,6 +72,12 @@ function isProject(
 ): val is ProjectInterface {
   return 'projectId' in val;
 }
+
+const onKeyDown: React.KeyboardEventHandler = ({ keyCode, preventDefault }) => {
+  if ([keyMap.ArrowUp, keyMap.ArrowDown].includes(keyCode)) {
+    preventDefault();
+  }
+};
 
 type VariantData = ProjectInterface | OrganizationInterface;
 
@@ -134,88 +121,71 @@ interface MongoSelectProps {
  * @param props.variant Determines if MongoSelect will have `organization` or `project` data
  */
 function MongoSelect({ selected, data, onClick, variant }: MongoSelectProps) {
-  const name = isProject(selected) ? selected.projectName : selected.orgName;
-
   const [open, setOpen] = useState(false);
   const [filteredData, setFilteredData] = useState(data);
 
-  const options: Fuse.FuseOptions<VariantData> = {
-    keys: ['orgName', 'projectName'],
+  const onChange: React.ChangeEventHandler = ({ target }) => {
+    const fuse = new Fuse(data, { keys: ['orgName', 'projectName'] });
+    const results = fuse.search((target as HTMLInputElement).value);
+
+    setFilteredData(results);
   };
 
-  const onChange: React.ChangeEventHandler = e => {
-    const term = (e.target as HTMLInputElement).value;
-    const fuse = new Fuse(data, options);
-    const results = fuse.search(term);
-    setFilteredData(results as Array<VariantData>);
-  };
+  let trigger, footer;
 
-  const onKeyDown: React.KeyboardEventHandler = e => {
-    if (e.keyCode === keyMap.ArrowDown || e.keyCode === keyMap.ArrowUp) {
-      e.preventDefault();
+  if (isProject(selected)) {
+    trigger = <ProjectTrigger selected={selected.projectName} />;
+    footer = <ProjectFooter onKeyDown={onKeyDown} orgId={selected.orgId} />;
+  } else {
+    trigger = <OrganizationTrigger selected={selected.orgName} />;
+    footer = (
+      <OrganizationFooter onKeyDown={onKeyDown} orgId={selected.orgId} />
+    );
+  }
+
+  const renderOption = (datum: VariantData) => {
+    let id, content;
+
+    if (isProject(datum)) {
+      id = datum.projectId;
+      content = <ProjectOption projectName={datum.projectName} />;
+    } else {
+      id = datum.orgId;
+      content = (
+        <OrganizationOption orgName={datum.orgName} planType={datum.planType} />
+      );
     }
-  };
 
-  const formatPlanType = (planType: PlanType) => {
-    switch (planType) {
-      case PlanType.Atlas:
-        return 'Atlas';
-      case PlanType.Cloud:
-        return 'Cloud Manager';
-      case PlanType.OM:
-        return 'Ops Manager';
-    }
+    return (
+      <MenuItem key={id} className={menuItemContainerStyle} onClick={onClick}>
+        {content}
+      </MenuItem>
+    );
   };
 
   return (
     <Menu
       open={open}
       setOpen={setOpen}
-      trigger={
-        <Trigger selected={name} variant={variant} orgId={selected.orgId} />
-      }
+      trigger={trigger}
       className={menuContainerStyle}
       justify="start"
     >
       <FocusableMenuItem>
         <Input onChange={onChange} onKeyDown={onKeyDown} variant={variant} />
       </FocusableMenuItem>
+
       <li
         role="none"
         onKeyDown={e => e.preventDefault()}
         className={listContainerStyle}
       >
-        <ul className={ulContainerStyle}>
-          {filteredData.map(datum => (
-            <MenuItem
-              key={isProject(datum) ? datum.projectId : datum.orgId}
-              className={menuItemContainerStyle}
-              onClick={onClick}
-            >
-              <div className={optionStyle}>
-                {isProject(datum) ? (
-                  <span className={nameStyle}>{datum.projectName}</span>
-                ) : (
-                  <>
-                    <span className={nameStyle}>{datum.orgName}</span>
-                    <span className={productStyle}>
-                      {formatPlanType(datum.planType)}
-                    </span>
-                  </>
-                )}
-              </div>
-            </MenuItem>
-          ))}
-        </ul>
+        <ul className={ulContainerStyle}>{filteredData.map(renderOption)}</ul>
       </li>
+
       <MenuSeparator />
-      <FocusableMenuItem>
-        <Footer
-          onKeyDown={onKeyDown}
-          variant={variant}
-          orgId={selected.orgId}
-        />
-      </FocusableMenuItem>
+
+      <FocusableMenuItem>{footer}</FocusableMenuItem>
     </Menu>
   );
 }

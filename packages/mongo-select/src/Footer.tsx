@@ -1,15 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { uiColors } from '@leafygreen-ui/palette';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { MenuItem, FocusableMenuItem } from '@leafygreen-ui/menu';
-import { Variant } from './MongoSelect';
 
 const viewAllStyle = css`
   color: ${uiColors.blue.base};
   font-weight: bolder;
-  text-decoration: none;
 `;
 
 const projectButtonStyle = css`
@@ -20,23 +17,12 @@ const projectButtonStyle = css`
 `;
 
 interface FooterProps {
-  variant: Variant;
   onKeyDown: React.KeyboardEventHandler;
   orgId: string;
 }
 
-const Footer = React.forwardRef(
-  ({ variant, onKeyDown, orgId }: FooterProps, ref) => {
-    if (variant === Variant.Organization) {
-      return (
-        <MenuItem onKeyDown={onKeyDown} ref={ref}>
-          <a href={`org/${orgId}/settings/general`} className={viewAllStyle}>
-            View All Organizations
-          </a>
-        </MenuItem>
-      );
-    }
-
+const ProjectFooter = React.forwardRef(
+  ({ onKeyDown, orgId }: FooterProps, ref) => {
     return (
       <li onKeyDown={onKeyDown} className={projectButtonStyle} role="none">
         <FocusableMenuItem ref={ref}>
@@ -52,13 +38,24 @@ const Footer = React.forwardRef(
   },
 );
 
-Footer.displayName = 'Footer';
+ProjectFooter.displayName = 'ProjectFooter';
 
-// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
-Footer.propTypes = {
-  variant: PropTypes.oneOf(['organization', 'project']).isRequired,
-  onKeyDown: PropTypes.func.isRequired,
-  orgId: PropTypes.string.isRequired,
-};
+export { ProjectFooter };
 
-export default Footer;
+const OrganizationFooter = React.forwardRef(
+  ({ onKeyDown, orgId }: FooterProps, ref) => {
+    return (
+      <MenuItem
+        onKeyDown={onKeyDown}
+        ref={ref}
+        href={`org/${orgId}/settings/general`}
+      >
+        <strong className={viewAllStyle}>View All Organizations</strong>
+      </MenuItem>
+    );
+  },
+);
+
+OrganizationFooter.displayName = 'OrganizationFooter';
+
+export { OrganizationFooter };

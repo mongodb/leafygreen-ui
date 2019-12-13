@@ -1,9 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Icon from '@leafygreen-ui/icon';
-import { Variant } from '.';
 
 const baseTriggerContainer = css`
   display: flex;
@@ -41,14 +39,10 @@ const buttonContainer = css`
   cursor: pointer;
 `;
 
-const leftStyle = css`
-  display: flex;
-  align-items: center;
-`;
-
 const selectedStyle = css`
   margin-left: 4px;
   font-weight: bolder;
+  flex-grow: 1;
 `;
 
 const fontSize = css`
@@ -65,72 +59,58 @@ const border = css`
   border-left: 1px solid ${uiColors.gray.light2};
 `;
 
-const projectMenuStyle = css`
-  transform: rotate(90deg);
-`;
-
 interface TriggerProps {
   children?: React.ReactNode;
   selected: string;
-  variant: Variant;
-  orgId: string;
+  className?: string;
 }
 
-function Trigger({
+export function OrganizationTrigger({
   children,
   selected,
-  variant,
-  orgId,
+  className,
   ...rest
 }: TriggerProps) {
-  const isOrganization = variant === Variant.Organization;
-
   return (
-    <div
-      className={cx(baseTriggerContainer, {
-        [orgTriggerContainer]: isOrganization,
-        [projectTriggerContainer]: !isOrganization,
-      })}
-    >
+    <div className={cx(baseTriggerContainer, orgTriggerContainer, className)}>
       <button {...rest} className={cx(resetButtonStyle, buttonContainer)}>
-        <span className={leftStyle}>
-          <span>
-            <Icon size="small" glyph={isOrganization ? 'Building' : 'Bell'} />
-          </span>
-          <span className={cx(selectedStyle, { [fontSize]: !isOrganization })}>
-            {selected}
-          </span>
-        </span>
+        <Icon size="small" glyph="Building" />
+        <span className={selectedStyle}>{selected}</span>
         <Icon size="small" glyph="CaretDown" />
       </button>
       <a
-        href={
-          isOrganization
-            ? 'v2#/preferences/personalization'
-            : `/v2#/org/${orgId}/projects`
-        }
-        className={cx(anchorStyle, { [border]: isOrganization })}
+        href="v2#/preferences/personalization"
+        className={cx(anchorStyle, border)}
         aria-label="settings"
       >
-        <Icon
-          glyph={isOrganization ? 'Settings' : 'Ellipsis'}
-          className={cx({
-            [projectMenuStyle]: !isOrganization,
-          })}
-        />
+        <Icon glyph={'Settings'} />
       </a>
       {children}
     </div>
   );
 }
 
-Trigger.displayName = 'Trigger';
-
-Trigger.propTypes = {
-  selected: PropTypes.string,
-  children: PropTypes.node,
-  variant: PropTypes.oneOf(['organization', 'project']),
-  orgId: PropTypes.string,
-};
-
-export default Trigger;
+export function ProjectTrigger({
+  children,
+  selected,
+  className,
+  ...rest
+}: TriggerProps) {
+  return (
+    <button
+      {...rest}
+      className={cx(
+        baseTriggerContainer,
+        projectTriggerContainer,
+        resetButtonStyle,
+        buttonContainer,
+        className,
+      )}
+    >
+      <Icon size="small" glyph="Bell" />
+      <span className={cx(selectedStyle, fontSize)}>{selected}</span>
+      <Icon size="small" glyph="CaretDown" />
+      {children}
+    </button>
+  );
+}
