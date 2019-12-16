@@ -4,7 +4,7 @@ import React from 'react';
 import { typeIs } from '@leafygreen-ui/lib';
 import { render, cleanup } from '@testing-library/react';
 import Stage from './Stage';
-import { Size, Variant } from './styles';
+import { Size } from './styles';
 
 const className = 'test-stage-class';
 const parentElement = document.createElement('div');
@@ -12,12 +12,7 @@ const child = '$match';
 
 function renderStage(props = {}) {
   const utils = render(
-    <Stage
-      {...props}
-      intersectionNode={parentElement}
-      size={Size.XSmall}
-      variant={Variant.Default}
-    >
+    <Stage {...props} intersectionNode={parentElement} size={Size.XSmall}>
       {child}
     </Stage>,
     {

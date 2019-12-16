@@ -2,14 +2,12 @@ import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
 import Counter from './Counter';
-import { Size, Variant } from './styles';
+import { Size } from './styles';
 
 const className = 'test-counter-class';
 
 function renderCounter(props = {}) {
-  const utils = render(
-    <Counter {...props} size={Size.XSmall} variant={Variant.Default} />,
-  );
+  const utils = render(<Counter {...props} size={Size.XSmall} />);
 
   if (!typeIs.element(utils.container.firstChild)) {
     throw new Error('Counter element not found');

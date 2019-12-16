@@ -93,12 +93,6 @@ export const layout: { readonly [K in Size]: Layout } = {
   },
 } as const;
 
-export const Variant = {
-  Default: 'default',
-} as const;
-
-export type Variant = typeof Variant[keyof typeof Variant];
-
 interface Color {
   color: string;
   primary: {
@@ -109,21 +103,18 @@ interface Color {
   };
 }
 
-export const colors: { readonly [K in Variant]: Color } = {
-  [Variant.Default]: {
-    color: uiColors.blue.base,
-    primary: {
-      backgroundColor: uiColors.blue.light2,
-    },
-    secondary: {
-      backgroundColor: uiColors.blue.light3,
-    },
+export const colors: Color = {
+  color: uiColors.blue.base,
+  primary: {
+    backgroundColor: uiColors.blue.light2,
+  },
+  secondary: {
+    backgroundColor: uiColors.blue.light3,
   },
 };
 
 interface StateForStyles {
   size: Size;
-  variant: Variant;
 }
 
 export const getRootStyle = ({ size }: StateForStyles): string => {

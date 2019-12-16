@@ -7,7 +7,6 @@ import {
   getChildStyle,
   getChevronStyle,
   Size,
-  Variant,
   layout,
   colors,
   counterAttr,
@@ -16,7 +15,6 @@ import {
 
 interface StateForStyles {
   size?: Size;
-  variant?: Variant;
 }
 
 interface CounterProps {
@@ -34,28 +32,20 @@ interface CounterProps {
    * Alter the rendered size of the component. Inherited from the parent Pipeline component.
    */
   size: Size;
-
-  /**
-   * Alter the visual appearance of the component. Inherited from the parent Pipeline component.
-   */
-  variant: Variant;
 }
 
-const getBaseStyle = ({
-  size = Size.XSmall,
-  variant = Variant.Default,
-}: StateForStyles): string => {
+const getBaseStyle = ({ size = Size.XSmall }: StateForStyles): string => {
   const { chevron, fontSize, fontWeight, gutter, height, lineHeight } = layout[
     size
   ];
 
-  const { color, secondary } = colors[variant];
+  const { color, secondary } = colors;
   const outerSize = height / 2;
   const offset = outerSize + chevron.size * 2;
 
   return cx(
-    getRootStyle({ size, variant }),
-    getChildStyle({ size, variant }),
+    getRootStyle({ size }),
+    getChildStyle({ size }),
     css`
       background-color: ${secondary.backgroundColor};
       color: ${color};
@@ -78,14 +68,13 @@ const getBaseStyle = ({
 
 const getCounterChevronStyle = ({
   size = Size.XSmall,
-  variant = Variant.Default,
 }: StateForStyles): string => {
   const { chevron, height } = layout[size];
-  const { secondary } = colors[variant];
+  const { secondary } = colors;
   const outerSize = height / 2;
 
   return cx(
-    getChevronStyle({ size, variant }),
+    getChevronStyle({ size }),
     css`
       &::before {
         background-color: ${secondary.backgroundColor};
@@ -113,12 +102,11 @@ const getStatefulStyles = (state: StateForStyles) => ({
  */
 const Counter = forwardRef(
   (
-    { className = '', children, size, variant, ...rest }: CounterProps,
+    { className = '', children, size, ...rest }: CounterProps,
     ref: Ref<HTMLDivElement>,
   ): ReactElement => {
     const { base: baseStyle, chevron: chevronStyle } = getStatefulStyles({
       size,
-      variant,
     });
 
     return (
@@ -148,7 +136,6 @@ Counter.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   size: PropTypes.oneOf(Object.values(Size)).isRequired,
-  variant: PropTypes.oneOf(Object.values(Variant)).isRequired,
 };
 
 export default Counter;

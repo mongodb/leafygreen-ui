@@ -4,7 +4,7 @@ import { typeIs } from '@leafygreen-ui/lib';
 
 import Pipeline from './Pipeline';
 import Stage from './Stage';
-import { Size, Variant } from './styles';
+import { Size } from './styles';
 
 const className = 'test-pipeline-class';
 const stages = ['$group', '$match', '$limit'];
@@ -12,7 +12,7 @@ const parentElement = document.createElement('div');
 
 function renderPipeline(props = {}) {
   const utils = render(
-    <Pipeline {...props} size={Size.XSmall} variant={Variant.Default}>
+    <Pipeline {...props} size={Size.XSmall}>
       {stages.map((stage, index) => (
         <Stage key={`${index}-${stage}`}>{stage}</Stage>
       ))}

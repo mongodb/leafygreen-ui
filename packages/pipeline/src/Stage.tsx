@@ -10,7 +10,6 @@ import {
   getChildStyle,
   getChevronStyle,
   Size,
-  Variant,
   layout,
   colors,
   stageAttr,
@@ -19,7 +18,6 @@ import {
 
 interface StateForStyles {
   size?: Size;
-  variant?: Variant;
 }
 
 export interface StageProps {
@@ -48,17 +46,9 @@ export interface StageProps {
    * the observer's callback should be executed.
    */
   threshold?: number | Array<number>;
-
-  /**
-   * Alter the visual appearance of the component. Inherited from the parent Pipeline component.
-   */
-  variant?: Variant;
 }
 
-const getBaseStyle = ({
-  size = Size.XSmall,
-  variant = Variant.Default,
-}: StateForStyles): string => {
+const getBaseStyle = ({ size = Size.XSmall }: StateForStyles): string => {
   const {
     borderRadius,
     chevron,
@@ -69,13 +59,13 @@ const getBaseStyle = ({
     lineHeight,
   } = layout[size];
 
-  const { color, primary } = colors[variant];
+  const { color, primary } = colors;
   const outerSize = height / 2;
   const offset = outerSize + chevron.size * 2;
 
   return cx(
-    getRootStyle({ size, variant }),
-    getChildStyle({ size, variant }),
+    getRootStyle({ size }),
+    getChildStyle({ size }),
     css`
       background-color: ${primary.backgroundColor};
       color: ${color};
@@ -102,14 +92,13 @@ const getBaseStyle = ({
 
 const getStageChevronStyle = ({
   size = Size.XSmall,
-  variant = Variant.Default,
 }: StateForStyles): string => {
   const { chevron, height } = layout[size];
-  const { primary } = colors[variant];
+  const { primary } = colors;
   const outerSize = height / 2;
 
   return cx(
-    getChevronStyle({ size, variant }),
+    getChevronStyle({ size }),
     css`
       &::before {
         background-color: ${primary.backgroundColor};
@@ -153,7 +142,6 @@ const Stage = forwardRef(
       intersectionNode,
       size,
       threshold = 0.8,
-      variant,
       ...rest
     }: StageProps,
     ref: Ref<HTMLLIElement>,
@@ -166,7 +154,6 @@ const Stage = forwardRef(
 
     const { base: baseStyle, chevron: chevronStyle } = getStatefulStyles({
       size,
-      variant,
     });
 
     return (
@@ -201,7 +188,6 @@ Stage.propTypes = {
     PropTypes.number,
     PropTypes.arrayOf(PropTypes.number.isRequired),
   ]),
-  variant: PropTypes.oneOf(Object.values(Variant)),
 };
 
 export default Stage;

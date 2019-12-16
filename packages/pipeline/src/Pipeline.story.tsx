@@ -4,7 +4,7 @@ import { array, select } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 
-import { Pipeline, Stage, Size, Variant } from '.';
+import { Pipeline, Stage, Size } from '.';
 
 const containerStyle = css`
   display: flex;
@@ -31,15 +31,10 @@ function DefaultExample() {
 
   const stages = array('Pipeline Stages', defaultStages).filter(Boolean);
   const size = select('Size', Object.values(Size) as Array<Size>, Size.XSmall);
-  const variant = select(
-    'Variant',
-    Object.values(Variant) as Array<Variant>,
-    Variant.Default,
-  );
 
   return (
     <div className={containerStyle}>
-      <Pipeline size={size} variant={variant}>
+      <Pipeline size={size}>
         {stages.map((stage, index) => (
           <Stage key={`${stage}-${index}`}>{stage}</Stage>
         ))}

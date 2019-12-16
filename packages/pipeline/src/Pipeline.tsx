@@ -27,7 +27,6 @@ import {
 import {
   getRootStyle,
   Size,
-  Variant,
   layout,
   colors,
   pipelineAttr,
@@ -38,7 +37,6 @@ import {
 interface StateForStyles {
   hasHiddenStages: boolean;
   size: Size;
-  variant: Variant;
 }
 
 interface PipelineProps {
@@ -56,27 +54,22 @@ interface PipelineProps {
    * Alter the rendered size of the component
    */
   size: Size;
-
-  /**
-   * Alter the visual appearance of the component
-   */
-  variant: Variant;
 }
 
-const getBaseStyle = ({ size, variant }: StateForStyles): string =>
+const getBaseStyle = ({ size }: StateForStyles): string =>
   cx(
-    getRootStyle({ size, variant }),
+    getRootStyle({ size }),
     css`
       counter-reset: hiddenCount;
       flex-direction: row;
     `,
   );
 
-const getPipelineStyle = ({ size, variant }: StateForStyles): string => {
+const getPipelineStyle = ({ size }: StateForStyles): string => {
   const { minWidth } = layout[size];
 
   return cx(
-    getRootStyle({ size, variant }),
+    getRootStyle({ size }),
     css`
       flex-grow: 1;
       flex-shrink: 1;
@@ -97,10 +90,9 @@ export const lastVisibleClassName =
 const getLastVisibleStageChevronStyles = ({
   hasHiddenStages,
   size,
-  variant,
 }: StateForStyles): string => {
   const { height, chevron } = layout[size];
-  const { primary, secondary } = colors[variant];
+  const { primary, secondary } = colors;
   const outerSize = height / 2;
 
   const boxShadow = hasHiddenStages
@@ -144,13 +136,7 @@ const getStatefulStyles = (state: StateForStyles) => ({
  */
 const Pipeline = forwardRef(
   (
-    {
-      children,
-      className = '',
-      size = Size.XSmall,
-      variant = Variant.Default,
-      ...rest
-    }: PipelineProps,
+    { children, className = '', size = Size.XSmall, ...rest }: PipelineProps,
     ref: Ref<HTMLDivElement>,
   ): ReactElement => {
     // State
@@ -223,7 +209,6 @@ const Pipeline = forwardRef(
     const childrenAsPipelineStages = React.Children.map(children, child => {
       const props = {
         size,
-        variant,
         intersectionNode: pipelineNode,
         ref: createRef<HTMLLIElement>(),
       };
@@ -238,7 +223,7 @@ const Pipeline = forwardRef(
       base: baseStyle,
       pipeline: pipelineStyle,
       lastVisibleStageChevron: lastVisibleStageChevronStyle,
-    } = getStatefulStyles({ hasHiddenStages, size, variant });
+    } = getStatefulStyles({ hasHiddenStages, size });
 
     return (
       <div
@@ -261,7 +246,7 @@ const Pipeline = forwardRef(
           <Tooltip
             align="top"
             justify="middle"
-            trigger={<Counter size={size} variant={variant} />}
+            trigger={<Counter size={size} />}
             triggerEvent="hover"
             variant="dark"
           >
@@ -279,7 +264,6 @@ Pipeline.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   size: PropTypes.oneOf(Object.values(Size)).isRequired,
-  variant: PropTypes.oneOf(Object.values(Variant)).isRequired,
 };
 
 export default Pipeline;

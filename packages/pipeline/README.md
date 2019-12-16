@@ -11,7 +11,7 @@ npm install @leafygreen-ui/pipeline
 ### Example
 
 ```js
-<Pipeline size="xsmall" variant="default" className="my-pipeline">
+<Pipeline size="xsmall" className="my-pipeline">
   <Stage>$match</Stage>
   <Stage>$addFields</Stage>
   <Stage>$limit</Stage>
@@ -75,7 +75,6 @@ npm install @leafygreen-ui/pipeline
 | `className` | `String` | Adds a className to the class attribute.                                                                                                                                                                   | `''`        |
 | `children`  | `Node`   | The content that will render inside of the component. If any nodes other than `Stage` components are passed in as children, the `Pipeline` component will automatically wrap them with `Stage` components. | `undefined` |
 | `size`      | `String` | Sets the size variant of the Pipeline. Valid sizes are: `'xsmall'`, `'small'`, `'normal'`, and `'large'`                                                                                                   | `'xsmall'`  |
-| `variant`   | `String` | Sets the style variant of the Pipeline. Valid variants are: `'default'`                                                                                                                                    | `'default'` |
 
 _All other props will be spread onto the root element._
 
@@ -87,5 +86,6 @@ _All other props will be spread onto the root element._
 | `children`         | `Node`    | The content that will render inside of the component.                                                                                                             | `undefined` |
 | `intersectionNode` | `Element` | The DOM element to observe intersections with. When used with the `Pipeline` component, this prop is automatically set to the element rendered by the `Pipeline`. | `window`    |
 | `threshold`        | `Number`  | Either a single number or an array of numbers which indicate at what percentage of the target's visibility, the observer's callback should be executed.           | `0.8`       |
+| `size`             | `String`  | Sets the size variant of the Pipeline. Valid sizes are: `'xsmall'`, `'small'`, `'normal'`, and `'large'`                                                          | `'xsmall'`  |
 
-_All other props will be spread onto the root element. The Pipeline component will also decorate the child Stage components with the `size` and `variant` props that it is supplied with._
+_All other props will be spread onto the root element. The Pipeline component will also decorate the child Stage components with the `size` prop that it is supplied with._
