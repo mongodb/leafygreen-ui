@@ -33,6 +33,17 @@ export function ProjectOption({ projectName }: ProjectOptionProps) {
   );
 }
 
+const formatPlanType = (planType: PlanType) => {
+  switch (planType) {
+    case PlanType.Atlas:
+      return 'Atlas';
+    case PlanType.Cloud:
+      return 'Cloud Manager';
+    case PlanType.OM:
+      return 'Ops Manager';
+  }
+};
+
 interface OrganizationOptionProps {
   orgName: string;
   planType: PlanType;
@@ -41,17 +52,6 @@ export function OrganizationOption({
   orgName,
   planType,
 }: OrganizationOptionProps) {
-  const formatPlanType = (planType: PlanType) => {
-    switch (planType) {
-      case PlanType.Atlas:
-        return 'Atlas';
-      case PlanType.Cloud:
-        return 'Cloud Manager';
-      case PlanType.OM:
-        return 'Ops Manager';
-    }
-  };
-
   return (
     <div className={optionStyle}>
       <span className={nameStyle}>{orgName}</span>

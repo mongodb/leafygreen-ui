@@ -15,13 +15,15 @@ import Input from './Input';
 import { OrganizationTrigger, ProjectTrigger } from './Trigger';
 import { OrganizationOption, ProjectOption } from './Option';
 
+const menuItemHeight = 36;
+
 const menuContainerStyle = css`
   width: 280px;
   padding-top: 20px;
 `;
 
 const listContainerStyle = css`
-  max-height: ${36 * 5}px;
+  max-height: ${menuItemHeight * 5}px;
   overflow-y: auto;
 `;
 
