@@ -18,6 +18,3 @@ reports
 # Yarn Error Log
 yarn-error.log
 tsconfig.tsbuildinfo
-
-# VSCode config
-.vscode/
