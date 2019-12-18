@@ -46,5 +46,9 @@ module.exports = {
     '.svg': '<rootDir>/__mocks__/svgTransformer.js',
   },
 
+  // Ignore transforming node_modules except for:
+  // 1. `react-children-utilities`
+  transformIgnorePatterns: ['/node_modules/(?!(react-children-utilities)/)'],
+
   setupFiles: ['<rootDir>/scripts/jestSetup.js'],
 };
