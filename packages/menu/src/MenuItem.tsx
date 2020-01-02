@@ -255,7 +255,6 @@ MenuItem.propTypes = {
   href: PropTypes.string,
   onClick: PropTypes.func,
   className: PropTypes.string,
-  title: PropTypes.string,
   description: PropTypes.string,
   disabled: PropTypes.bool,
   active: PropTypes.bool,

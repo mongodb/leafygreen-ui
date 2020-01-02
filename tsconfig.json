@@ -45,6 +45,9 @@
       "path": "./packages/palette"
     },
     {
+      "path": "./packages/pipeline"
+    },
+    {
       "path": "./packages/popover"
     },
     {

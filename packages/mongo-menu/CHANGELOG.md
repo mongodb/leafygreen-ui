@@ -1,5 +1,11 @@
 # @leafygreen-ui/mongo-menu
 
+## 2.1.0
+
+### Minor Changes
+
+- 461f530: Updated MongoMenu to allow for a disabled account button state.
+
 ## 2.0.4
 
 ### Patch Changes
