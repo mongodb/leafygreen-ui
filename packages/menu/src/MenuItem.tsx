@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 const menuItemContainer = createDataProp('menu-item-container');
 
@@ -58,6 +59,11 @@ const containerStyle = css`
   &:focus {
     outline: none;
     text-decoration: none;
+  }
+`;
+
+const focusedStyle = css`
+  &:focus {
     background-color: ${uiColors.blue.light3};
     color: ${uiColors.blue.dark3};
 
@@ -114,16 +120,6 @@ const activeStyle = css`
 
     &:before {
       background-color: ${uiColors.green.base};
-    }
-  }
-
-  &:focus {
-    outline: none;
-    background-color: ${uiColors.blue.light3};
-    color: ${uiColors.blue.dark3};
-
-    &:before {
-      background-color: #63b0d0;
     }
   }
 `;
@@ -193,6 +189,7 @@ const MenuItem = React.forwardRef(
       href,
       ...rest
     } = props;
+    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
     const anchorProps = href && {
       target: '_self',
@@ -212,6 +209,7 @@ const MenuItem = React.forwardRef(
             {
               [activeStyle]: active,
               [disabledStyle]: disabled,
+              [focusedStyle]: showFocus,
             },
             className,
           )}
