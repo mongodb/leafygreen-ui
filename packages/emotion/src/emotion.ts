@@ -1,16 +1,10 @@
 import createEmotion from 'create-emotion';
 
-// We're doing this here because doing it globally was proving problematic.
-// We should solve for this if we need to use __TARGET__ elsewhere in the future.
-declare const __TARGET__:
-  | 'web'
-  | 'node'
-  | 'async-node'
-  | 'electron-main'
-  | 'electron-renderer'
-  | 'electron-preload'
-  | 'node-webkit'
-  | 'webworker';
+// __TARGET__ is a global variable that indicates the webpack build target.
+//
+// We're typing this here because doing it globally was proving problematic.
+// We should solve for this if we need to use __TARGET__ elsewhere.
+declare const __TARGET__: 'web' | 'node';
 
 interface CreateEmotionConfig {
   key: string;
