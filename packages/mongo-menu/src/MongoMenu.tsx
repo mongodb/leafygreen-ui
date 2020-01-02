@@ -9,43 +9,18 @@ import {
   FocusableMenuItem,
 } from '@leafygreen-ui/menu';
 import { createDataProp } from '@leafygreen-ui/lib';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
 const iconRef = createDataProp('icon-ref');
 
-const buttonReset = css`
+const wrapperStyle = css`
   appearance: none;
   background: none;
   border: 0px;
   position: relative;
   padding: 0px;
-
-  &:hover:before {
-    transform: scale(1);
-  }
-
-  &:active {
-    outline: none;
-    color: ${uiColors.gray.dark2};
-
-    &:before {
-      transform: scale(1);
-    }
-
-    & ${iconRef.selector} {
-      color: ${uiColors.gray.dark1};
-    }
-  }
-
-  &:focus {
-    outline: none;
-
-    &:before {
-      background-color: #63b0d0;
-      transform: scale(1);
-    }
-  }
 
   &::-moz-focus-inner {
     border: 0;
@@ -60,8 +35,35 @@ const buttonReset = css`
     right: -2px;
     border-radius: 50px;
     transform: scale(0.9, 0.8);
-    transition: transform 150ms ease-in-out;
+    transition: transform 150ms ease-in-out, background-color 150ms ease-in-out;
     background-color: ${uiColors.gray.light2};
+  }
+
+  &:hover:before {
+    transform: scale(1);
+  }
+
+  &:active {
+    color: ${uiColors.gray.dark2};
+
+    ${iconRef.selector} {
+      color: ${uiColors.gray.dark1};
+    }
+
+    &:before {
+      transform: scale(1);
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const focusStyle = css`
+  &:focus:before {
+    background-color: #63b0d0;
+    transform: scale(1);
   }
 `;
 
@@ -234,8 +236,13 @@ function MongoMenu({
   onProductChange = () => {},
 }: MongoMenuProps) {
   const [open, setOpen] = useState(false);
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+
   return (
-    <button className={buttonReset} onClick={() => setOpen(curr => !curr)}>
+    <button
+      className={cx(wrapperStyle, { [focusStyle]: showFocus })}
+      onClick={() => setOpen(curr => !curr)}
+    >
       <div
         className={cx(menuButtonStyle, {
           [activeMenuButtonStyle]: open,
