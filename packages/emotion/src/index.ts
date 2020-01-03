@@ -1,4 +1,5 @@
 import emotion from './emotion';
+import createEmotionServer from 'create-emotion-server';
 
 export const {
   flush,
@@ -12,4 +13,11 @@ export const {
   sheet,
   cache,
 } = emotion;
+
+export const {
+  extractCritical,
+  renderStylesToString,
+  renderStylesToNodeStream,
+} = createEmotionServer(cache);
+
 export default emotion;
