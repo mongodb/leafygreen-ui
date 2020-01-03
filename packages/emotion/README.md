@@ -1,4 +1,6 @@
-# Server-side Rendering
+# Emotion
+
+## Server-side Rendering
 
 Because we use a custom instance of Emotion to allow for styles defined in LeafyGreen to be easily overwritten, there's an additional step that must be taken to use our components when performing server-side rendering.
 
@@ -6,7 +8,7 @@ We expose three methods as named exports that are also exposed by the base `emot
 
 > **NOTE:** If you are already server-side rendering an application using Emotion, you will use the methods exposed in `@leafygreenui/emotion` instead of, NOT in addition to the methods exposed by `emotion-server`.
 
-## Example
+### Example
 
 ```js
 import { renderToString } from 'react-dom/server';
