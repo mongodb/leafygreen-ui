@@ -1,5 +1,28 @@
 # @leafygreen-ui/mongo-menu
 
+## 3.0.0
+
+### Major Changes
+
+- 464c09d: Introduces SSR compatibility though a change to our build process and files
+
+### Minor Changes
+
+- 5c9202d: Introduces support for LeafyGreenProvider for improved focus state management
+
+### Patch Changes
+
+- Updated dependencies [31f6bfd]
+- Updated dependencies [5c9202d]
+- Updated dependencies [464c09d]
+  - @leafygreen-ui/menu@5.0.0
+  - @leafygreen-ui/leafygreen-provider@1.0.0
+  - @leafygreen-ui/button@4.0.0
+  - @leafygreen-ui/emotion@2.0.0
+  - @leafygreen-ui/hooks@2.0.0
+  - @leafygreen-ui/icon@3.0.0
+  - @leafygreen-ui/palette@2.0.0
+
 ## 2.1.0
 
 ### Minor Changes

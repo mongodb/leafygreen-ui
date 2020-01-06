@@ -1,19 +1,14 @@
-# @leafygreen-ui/card
+# @leafygreen-ui/leafygreen-provider
 
-## 2.0.0
+## 1.0.0
 
 ### Major Changes
 
+- 5c9202d: Introduces support for LeafyGreenProvider for improved focus state management
 - 464c09d: Introduces SSR compatibility though a change to our build process and files
 
 ### Patch Changes
 
 - Updated dependencies [464c09d]
+  - @leafygreen-ui/hooks@2.0.0
   - @leafygreen-ui/lib@4.0.0
-  - @leafygreen-ui/palette@2.0.0
-
-## 1.0.5
-
-### Patch Changes
-
-- eb49b56: Fixes a TypeScript issue with the typing of rest parameters in Card
