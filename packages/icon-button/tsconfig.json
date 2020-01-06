@@ -17,6 +17,9 @@
     },
     {
       "path": "../icon"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }

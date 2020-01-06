@@ -28,6 +28,9 @@
       "path": "../icon"
     },
     {
+      "path": "../logo"
+    },
+    {
       "path": "../leafygreen-provider"
     }
   ]
