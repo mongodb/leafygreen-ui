@@ -1,8 +1,9 @@
 {
   "name": "@leafygreen-ui/tabs",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "leafyGreen UI Kit Tabs",
-  "main": "./dist/index.js",
+  "browser": "./dist/index.web.js",
+  "main": "./dist/index.node.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
@@ -12,8 +13,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^3.1.0",
-    "@leafygreen-ui/palette": "^1.1.0",
+    "@leafygreen-ui/lib": "^4.0.0",
+    "@leafygreen-ui/palette": "^2.0.0",
     "lodash": "^4.17.11"
   }
 }

@@ -1,5 +1,29 @@
 # @leafygreen-ui/button
 
+## 4.0.0
+
+### Major Changes
+
+- 464c09d: Introduces SSR compatibility though a change to our build process and files
+
+### Patch Changes
+
+- Updated dependencies [464c09d]
+  - @leafygreen-ui/lib@4.0.0
+  - @leafygreen-ui/palette@2.0.0
+
+## 3.0.2
+
+### Patch Changes
+
+- f42801b: Fix bug such that on hover, color is explicitly set rather than inherited
+
+## 3.0.1
+
+### Patch Changes
+
+- ff55bb5: Added fallback CSS for focus and hover states
+
 ## 3.0.0
 
 ### Major Changes

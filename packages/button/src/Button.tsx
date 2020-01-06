@@ -50,6 +50,11 @@ const buttonVariants: { readonly [K in Variant]: string } = {
       background-image: linear-gradient(#dde4e2, ${uiColors.gray.light3});
       box-shadow: inset 0 2px 2px ${transparentize(0.9, uiColors.black)};
     }
+
+    &:focus,
+    &:hover {
+      color: ${uiColors.gray.dark2};
+    }
   `,
 
   [Variant.Primary]: css`
@@ -70,6 +75,11 @@ const buttonVariants: { readonly [K in Variant]: string } = {
       background-color: ${uiColors.green.base};
       background-image: linear-gradient(#148040, #129f4c);
       box-shadow: inset 0 2px 2px ${uiColors.green.dark2};
+    }
+
+    &:focus,
+    &:hover {
+      color: ${uiColors.white};
     }
   `,
 
@@ -122,6 +132,11 @@ const buttonVariants: { readonly [K in Variant]: string } = {
       background-image: linear-gradient(#ad231b, #e45b26);
       box-shadow: inset 0 2px 2px ${uiColors.red.dark2};
     }
+
+    &:focus,
+    &:hover {
+      color: ${uiColors.white};
+    }
   `,
 
   [Variant.Dark]: css`
@@ -149,6 +164,11 @@ const buttonVariants: { readonly [K in Variant]: string } = {
         ${uiColors.gray.base}
       );
       box-shadow: inset 0 2px 2px ${uiColors.gray.dark2};
+    }
+
+    &:focus,
+    &:hover {
+      color: ${uiColors.white};
     }
   `,
 };
@@ -200,6 +220,7 @@ const baseStyle = css`
   user-select: none;
   overflow: hidden;
 
+  &:focus,
   &:hover {
     text-decoration: none;
   }

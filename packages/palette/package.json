@@ -1,8 +1,9 @@
 {
   "name": "@leafygreen-ui/palette",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "LeafyGreen UI Palettes",
-  "main": "./dist/index.js",
+  "browser": "./dist/index.web.js",
+  "main": "./dist/index.node.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"

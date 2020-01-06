@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import TabTitle from './TabTitle';
 import omit from 'lodash/omit';
 
@@ -45,11 +45,6 @@ const greenBorder = css`
 const focusedStyle = css`
   background-color: ${uiColors.blue.base};
 `;
-
-const keyMap = {
-  ArrowLeft: 37,
-  ArrowRight: 39,
-};
 
 interface TabsProps {
   /**
@@ -140,16 +135,13 @@ function Tabs({
   function handleKeyDown(e: React.KeyboardEvent) {
     e.stopPropagation();
 
-    const enabledIndexes = childrenArray.reduce(
-      (acc, child, index) => {
-        if (child.props.disabled) {
-          return acc;
-        }
+    const enabledIndexes = childrenArray.reduce((acc, child, index) => {
+      if (child.props.disabled) {
+        return acc;
+      }
 
-        return [...acc, index];
-      },
-      [] as Array<number>,
-    );
+      return [...acc, index];
+    }, [] as Array<number>);
 
     const enabledCurrentIndex = enabledIndexes.indexOf(selected!);
 

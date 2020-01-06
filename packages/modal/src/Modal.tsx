@@ -131,10 +131,15 @@ interface ModalProps {
   shouldClose?: () => boolean;
 
   /**
-   * className applied to root overlay div.
-   *
+   * className applied to root div.
    */
   className?: string;
+
+  /**
+   * className applied to overlay div.
+   * Disclaimer: This prop may be deprecated in future versions of Modal
+   */
+  contentClassName?: string;
 }
 
 /**
@@ -157,7 +162,9 @@ interface ModalProps {
  * @param props.setOpen Callback to change the open state of Modal.
  * @param props.children Content to appear inside of Modal container.
  * @param props.shouldClose Callback to determine whether or not Modal should close when user tries to close it.
- * @param props.className className applied to overlay div.
+ * @param props.className className applied to container div.
+ * @param props.contentClassName className applied to overlay div.
+ *
  *
  */
 function Modal({
@@ -167,6 +174,7 @@ function Modal({
   shouldClose = () => true,
   children,
   className,
+  contentClassName,
   ...rest
 }: ModalProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -195,7 +203,7 @@ function Modal({
             // Here we are just using a div to handle backdrop clicks, so this is the most appropriate value
             role="none"
             onClick={handleBackdropClick}
-            className={cx(backdrop, {
+            className={cx(className, backdrop, {
               [visibleBackdrop]: state === 'entered',
             })}
           >
@@ -210,7 +218,7 @@ function Modal({
                   {
                     [visibleModalContentStyle]: state === 'entered',
                   },
-                  className,
+                  contentClassName,
                 )}
               >
                 <Icon

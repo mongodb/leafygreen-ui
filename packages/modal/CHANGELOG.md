@@ -1,5 +1,32 @@
 # @leafygreen-ui/modal
 
+## 3.0.0
+
+### Major Changes
+
+- 464c09d: Introduces SSR compatibility though a change to our build process and files
+
+### Patch Changes
+
+- Updated dependencies [464c09d]
+  - @leafygreen-ui/hooks@2.0.0
+  - @leafygreen-ui/icon@3.0.0
+  - @leafygreen-ui/lib@4.0.0
+  - @leafygreen-ui/palette@2.0.0
+  - @leafygreen-ui/portal@2.0.0
+
+## 2.0.0
+
+### Major Changes
+
+- b04a66f: Move className prop to apply to root `div` rather than content `div`, and add contentClassName to style overlay container. Where using `className` currently, should update to `contentClassName`.
+
+## 1.2.3
+
+### Patch Changes
+
+- 50853ca: Upgrade dependencies
+
 ## 1.2.2
 
 - Updated dependencies [563dc2e]:

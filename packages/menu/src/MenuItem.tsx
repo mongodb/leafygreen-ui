@@ -1,8 +1,9 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 const menuItemContainer = createDataProp('menu-item-container');
 
@@ -23,6 +24,9 @@ const containerStyle = css`
   margin: unset;
   width: 100%;
   font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+  background: ${uiColors.white};
+  text-align: left;
 
   &:before {
     content: '';
@@ -36,6 +40,7 @@ const containerStyle = css`
   }
 
   &:hover {
+    text-decoration: none;
     background-color: ${uiColors.gray.light3};
 
     &:before {
@@ -53,6 +58,12 @@ const containerStyle = css`
 
   &:focus {
     outline: none;
+    text-decoration: none;
+  }
+`;
+
+const focusedStyle = css`
+  &:focus {
     background-color: ${uiColors.blue.light3};
     color: ${uiColors.blue.dark3};
 
@@ -111,20 +122,11 @@ const activeStyle = css`
       background-color: ${uiColors.green.base};
     }
   }
-
-  &:focus {
-    outline: none;
-    background-color: ${uiColors.blue.light3};
-    color: ${uiColors.blue.dark3};
-
-    &:before {
-      background-color: #63b0d0;
-    }
-  }
 `;
 
 const disabledStyle = css`
   cursor: not-allowed;
+  pointer-events: none;
   background-color: ${uiColors.gray.light3};
 
   &:hover:before {
@@ -136,101 +138,84 @@ const disbaledTextStyle = css`
   color: ${uiColors.gray.light1};
 `;
 
-export interface MenuItemProps {
-  /**
-   * If supplied, MenuItem will be rendered inside of `a` tags.
-   */
-  href?: string;
-
+interface SharedMenuItemProps {
   /**
    * Class name that will be applied to root MenuItem element.
    */
   className?: string;
 
   /**
-   * Callback function to be executed when MenuItem is clicked.
+   * Determines whether or not the MenuItem is active.
    */
-  onClick?: React.MouseEventHandler;
-
-  /**
-   * Main content displayed in MenuItem.
-   */
-  children?: React.ReactNode;
+  active?: boolean;
 
   /**
    * Description text displayed below title in MenuItem.
    */
   description?: string;
-
   /**
    * Determines whether or not the MenuItem is disabled.
    */
   disabled?: boolean;
-
-  /**
-   * Determines whether or not the MenuItem is active.
-   */
-  active?: boolean;
-
-  ref?: any;
+  ref?: React.Ref<any>;
 }
 
-/**
- * # MenuItem
- *
- * ```
-<MenuItem>Hello World!</MenuItem>
- * ```
- * @param props.href If supplied, MenuItem will render inside of `a` tags.
- * @param props.onClick Function to be executed when MenuItem is clicked.
- * @param props.className Classname applied to MenuItem.
- * @param props.children Content to appear inside of the MenuItem.
- * @param props.description Subtext to appear inside of MenuItem
- * @param props.disabled Determines if the MenuItem is disabled
- * @param props.active Determines whether the MenuItem will appear as active
- *
- */
+interface LinkMenuItemProps extends HTMLElementProps<'a'>, SharedMenuItemProps {
+  href: string;
+}
+
+interface ButtonMenuItemProps
+  extends HTMLElementProps<'button'>,
+    SharedMenuItemProps {
+  href?: null;
+}
+
+type MenuItemProps = LinkMenuItemProps | ButtonMenuItemProps;
+
+function usesLinkElement(
+  props: LinkMenuItemProps | ButtonMenuItemProps,
+): props is LinkMenuItemProps {
+  return props.href != null;
+}
+
 const MenuItem = React.forwardRef(
-  (
-    {
+  (props: MenuItemProps, forwardRef: React.Ref<any>) => {
+    const {
       disabled = false,
       active = false,
-      href,
-      onClick,
       className,
       children,
       description,
+      href,
       ...rest
-    }: MenuItemProps,
-    forwardedref,
-  ) => {
-    const Root = href ? 'a' : 'button';
+    } = props;
+    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
     const anchorProps = href && {
-      target: '_blank',
-      rel: 'noopener noreferrer',
+      target: '_self',
+      rel: '',
+      href,
     };
 
-    return (
+    const renderMenuItem = (Root: React.ElementType<any> = 'button') => (
       <li role="none">
         <Root
+          {...anchorProps}
           {...rest}
           {...menuItemContainer.prop}
-          {...anchorProps}
           className={cx(
             containerStyle,
             linkStyle,
             {
               [activeStyle]: active,
               [disabledStyle]: disabled,
+              [focusedStyle]: showFocus,
             },
             className,
           )}
           role="menuitem"
           aria-disabled={disabled}
-          onClick={disabled ? undefined : onClick}
-          href={href}
-          ref={forwardedref as RefObject<any>}
+          ref={forwardRef}
           tabIndex={disabled ? -1 : undefined}
         >
           <div
@@ -254,6 +239,12 @@ const MenuItem = React.forwardRef(
         </Root>
       </li>
     );
+
+    if (usesLinkElement(props)) {
+      return renderMenuItem('a');
+    }
+
+    return renderMenuItem();
   },
 );
 
@@ -264,7 +255,6 @@ MenuItem.propTypes = {
   href: PropTypes.string,
   onClick: PropTypes.func,
   className: PropTypes.string,
-  title: PropTypes.string,
   description: PropTypes.string,
   disabled: PropTypes.bool,
   active: PropTypes.bool,

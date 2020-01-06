@@ -5,29 +5,20 @@
 ## Example
 
 ```js
-import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
+import { Menu, MenuSeparator, MenuItem } from '@leafygreen-ui/menu';
 
-<Menu
-  align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
-  justify={select('justify', ['start', 'middle', 'end'], 'start')}
-  trigger={<button>trigger</button>}
->
-  <MenuGroup>
-    <MenuItem
-      description="cloud.mongodb.com"
-      disabled={boolean('disabled', false)}
-    >
-      Atlas
-    </MenuItem>
-    <MenuItem description="university.mongodb.com">University</MenuItem>
-    <MenuItem
-      description="support.mongodb.com"
-      active={boolean('active', true)}
-    >
-      Cloud Support
-    </MenuItem>
-  </MenuGroup>
-  <MenuItem title="Logout" />
+<Menu align="bottom" justify="start" trigger={<button>trigger</button>}>
+  <MenuItem active>Active Menu Item</MenuItem>
+  <MenuItem
+    disabled={boolean('Disabled', true)}
+    description="I am a description"
+  >
+    Disabled Menu Item
+  </MenuItem>
+  <MenuItem description="I am also a description">
+    Menu Item With Description
+  </MenuItem>
+  <MenuItem href="http://mongodb.design">I am a link!</MenuItem>
 </Menu>;
 ```
 
@@ -38,194 +29,101 @@ import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
   trigger
   <div class="leafygreen-ui-1hyfx7x"></div>
 </button>
-<div class="leafygreen-ui-1l5xdq6">
-  <div class="leafygreen-ui-e4n0rk" role="menu">
-    <section data-leafygreen-ui="menu-group-section" class="leafygreen-ui-0">
-      <div class="leafygreen-ui-ukwa9q leafygreen-ui-1jdnb2e" role="menuitem">
-        <span>
-          <h4 class="leafygreen-ui-cd8qtr">Atlas</h4>
-          <h6 class="leafygreen-ui-1al7n0m">cloud.mongodb.com</h6>
-        </span>
-      </div>
-      <div class="leafygreen-ui-ukwa9q leafygreen-ui-1jdnb2e" role="menuitem">
-        <span>
-          <h4 class="leafygreen-ui-cd8qtr">University</h4>
-          <h6 class="leafygreen-ui-1al7n0m">university.mongodb.com</h6>
-        </span>
-      </div>
-      <div
-        class="leafygreen-ui-ukwa9q leafygreen-ui-1jdnb2e leafygreen-ui-16ht5zo"
+<div class="leafygreen-ui-19z0mfw">
+  <ul class="leafygreen-ui-1guv7w9" role="menu">
+    <li role="none">
+      <button
+        data-leafygreen-ui="menu-item-container"
+        class="leafygreen-ui-19xfwtd"
         role="menuitem"
+        aria-disabled="false"
       >
-        <span>
-          <h4 class="leafygreen-ui-cd8qtr">Cloud Support</h4>
-          <h6 class="leafygreen-ui-1al7n0m">support.mongodb.com</h6>
-        </span>
-      </div>
-    </section>
-    <div class="leafygreen-ui-ukwa9q leafygreen-ui-1jdnb2e" role="menuitem">
-      <span>
-        <h4 class="leafygreen-ui-cd8qtr">Logout</h4>
-      </span>
-    </div>
-  </div>
+        <div class="leafygreen-ui-14a8fex">Active Menu Item</div>
+      </button>
+    </li>
+    <li role="none">
+      <button
+        data-leafygreen-ui="menu-item-container"
+        class="leafygreen-ui-7pgwa0"
+        role="menuitem"
+        aria-disabled="true"
+        tabindex="-1"
+      >
+        <div class="leafygreen-ui-10xqyru">Disabled Menu Item</div>
+        <div class="leafygreen-ui-17sf9go">I am a description</div>
+      </button>
+    </li>
+    <li role="none">
+      <button
+        data-leafygreen-ui="menu-item-container"
+        class="leafygreen-ui-1sk3xcx"
+        role="menuitem"
+        aria-disabled="false"
+      >
+        <div class="leafygreen-ui-r0sqyc">Menu Item With Description</div>
+        <div class="leafygreen-ui-1dm36mc">I am also a description</div>
+      </button>
+    </li>
+    <li role="none">
+      <a
+        data-leafygreen-ui="menu-item-container"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="leafygreen-ui-1sk3xcx"
+        role="menuitem"
+        aria-disabled="false"
+        href="http://mongodb.design"
+        ><div class="leafygreen-ui-r0sqyc">I am a link!</div></a
+      >
+    </li>
+  </ul>
 </div>
 ```
 
 ## Properties
 
-### open
+| Prop               | Type                                     | Description                                                                                                                                                                                                                                                             | Default      |
+| ------------------ | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| `open`             | `boolean`                                | Determines whether or not the `<Menu />` will appear as open or closed                                                                                                                                                                                                  | `false`      |
+| `setOpen`          | `function`                               | When controlling the component, use `setOpen` to keep track of the `<Menu />` component's state so that clicks on the document's backdrop as well as a user pressing the Escape Key will close the Menu and update the consuming application's local state accordingly. |
+| `shouldClose`      | `function`                               | Determines if the `Menu` should close when the backdrop or Escape keys are clicked. Defaults to true.                                                                                                                                                                   | `() => true` |
+| `align`            | `'top'`, `'bottom'`, `'left'`, `'right'` | Determines the alignment of the `<Menu />` component relative to a reference element, or the element's nearest parent                                                                                                                                                   | `'bottom'`   |
+| `justify`          | `'start'`, `'middle'`, `'end'`           | Determines the justification of the `Menu` component (based on the alignment) relative to a reference element or the element's nearest parent                                                                                                                           | `'end'`      |
+| `refEl`            | `node`                                   | Pass a reference to an element that the `Menu` component should be positioned against                                                                                                                                                                                   |              |
+| `trigger`          | `HTMLElement` or `ReactNode`             | An `HTMLElement` or `ReactNode` against which the Menu will be positioned.                                                                                                                                                                                              |              |
+| `usePortal`        | `boolean`                                | Will position Menu's children relative to its parent without using a Portal if `usePortal` is set to false. NOTE: The parent element should be CSS position relative, fixed, or absolute if using this option.                                                          | `true`       |
+| `adjustOnMutation` | `boolean`                                | Determines whether or not the `<Menu/>` should reposition itself based on changes to `trigger` or `referenceElement` position.                                                                                                                                          | `false`      |
 
-**Type:** `boolean`
+_Any other properties will be spread on the Menu `div` container_
 
-**Default:** `false`
-
-Determines whether or not the `Menu` will appear as open or closed
-
-### setOpen
-
-**Type:** `function`
-
-When controlling the component, use `setOpen` to keep track of the `Menu` component's state so that clicks on the document's backdrop as well as a user pressing the Escape Key will close the Menu and update the consuming application's local state accordingly.
-
-### shouldClose
-
-**Type:** `function`
-
-**Default:** `() => true`
-
-Determines if the `Menu` should close when the backdrop or Escape keys are clicked. Defaults to true.
-
-### align
-
-**Type:** `top`, `bottom`, `left`, `right`
-
-**Default:** `bottom`
-
-Determines the alignment of the `Menu` component relative to a reference element, or the element's nearest parent
-
-### justify
-
-**Type:** `start`, `middle`, `end`
-
-**Default:** `start`
-
-Determines the justification of the `Menu` component (based on the alignment) relative to a reference element or the element's nearest parent
-
-### refEl
-
-**Type:** `node`
-
-**Default:** `null`
-
-Pass a reference to an element that the `Menu` component should be positioned against
-
-### trigger
-
-**Type:** `HTMLElement` or `ReactNode`
-
-An `HTMLElement` or `ReactNode` against which the Menu will be positioned.
-
-### usePortal
-
-**Type:** `boolean`
-
-**Default:** `true`
-
-Will position Menu's children relative to its parent without using a Portal if `usePortal` is set to false. NOTE: The parent element should be CSS position relative, fixed, or absolute if using this option.
-
-#### Any other properties will be spread on the Menu `div` container
-
-# MenuGroup
+# MenuSeparator
 
 ## Properties
 
-### children
-
-**Type:** `node`
-
-**Default:** `null`
-
-Children that will be rendered inside this group of `MenuItem` components
-
-### className
-
-**Type:** `string`
-
-**Default:** ``
-
-Style to be applied to the `MenuGroup` component
-
-#### Any other properties will be spread on the MenuGroup `section` container
+Self-closing component that provides a way to group `MenuItems` in a `Menu` component.
 
 # MenuItem
 
 ## Properties
 
-### href
+| Prop          | Type       | Description                                                                                    | Default |
+| ------------- | ---------- | ---------------------------------------------------------------------------------------------- | ------- |
+| `href`        | `string`   | If supplied, will render the `<MenuItem />` inside of an `<a>` tag, rather than a `<span>` tag |         |
+| `children`    | `node`     | Content to appear inside of `<MenuItem />` component                                           |         |
+| `className`   | `string`   | Classname applied to `li` element                                                              |         |
+| `onClick`     | `function` | Function that will be called when a `<MenuItem />` is clicked                                  |         |
+| `active`      | `boolean`  | Determines if the `<MenuItem />` is `active`                                                   | `false` |
+| `disabled`    | `boolean`  | Determines if the `<MenuItem />` is `disabled`                                                 | `false` |
+| `description` | `string`   | Description text that will appear below the main content of `<MenuItem />`                     |         |
 
-**Type:** `string`
-
-**Default:** ``
-
-If supplied, will render the `MenuItem` inside of an `<a>` tag, rather than a `<span>` tag
-
-### children
-
-**Type:** `node`
-
-**Default:** `null`
-
-Main content to appear inside of `MenuItem` component
-
-### className
-
-**Type:** `string`
-
-**Default:** ``
-
-Classname applied to `li` element
-
-### onClick
-
-**Type:** `function`
-
-**Default:** `() => {}`
-
-Function that will be called when a `MenuItem` is clicked
-
-### active
-
-**Type:** `boolean`
-
-**Default:** `false`
-
-Determines if the MenuItem is `active`
-
-### disabled
-
-**Type:** `boolean`
-
-**Default:** `false`
-
-Determines if the MenuItem is `disabled`
-
-### description
-
-**Type:** `string`
-
-**Default:** ``
-
-Description text that will appear below the main content of `MenuItem`
-
-#### Any other properties will be spread on the MenuItem `div` container
+_Any other properties will be spread on the MenuItem `div` container_
 
 ## Advanced Use Case
 
 ## Example
 
 ```js
-import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
+import { Menu, MenuSeparator, MenuItem } from '@leafygreen-ui/menu';
 
 <Menu
   align="bottom"
@@ -237,10 +135,8 @@ import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
     </button>
   )}
 >
-  <MenuGroup>
-    <MenuItem>Menu Item 1</MenuItem>
-    <MenuItem>Menu Item 2</MenuItem>
-  </MenuGroup>
+  <MenuItem>Menu Item 1</MenuItem>
+  <MenuItem>Menu Item 2</MenuItem>
   <MenuItem>Menu Item 3</MenuItem>
 </Menu>;
 ```
@@ -252,31 +148,42 @@ import { Menu, MenuGroup, MenuItem } from '@leafygreen-ui/menu';
   Example Trigger
   <div class="leafygreen-ui-1hyfx7x"></div>
 </button>
-<div class="leafygreen-ui-1xkqkbo">
-  <div class="leafygreen-ui-3aunlx" role="menu">
-    <section data-leafygreen-ui="menu-group-section">
-      <div class="leafygreen-ui-1hjnbck" role="menuitem">
-        <span>
-          <h4 class="leafygreen-ui-18xtbxy">Menu Item 1</h4>
-        </span>
-      </div>
-      <div class="leafygreen-ui-1hjnbck" role="menuitem">
-        <span>
-          <h4 class="leafygreen-ui-18xtbxy">Menu Item 2</h4>
-        </span>
-      </div>
-    </section>
-    <div class="leafygreen-ui-1hjnbck" role="menuitem">
-      <span>
-        <h4 class="leafygreen-ui-18xtbxy">Menu Item 3</h4>
-      </span>
-    </div>
-  </div>
+<div class="leafygreen-ui-1td4qre">
+  <ul class="leafygreen-ui-1guv7w9" role="menu">
+    <li role="none">
+      <button
+        data-leafygreen-ui="menu-item-container"
+        class="leafygreen-ui-1sk3xcx"
+        role="menuitem"
+        aria-disabled="false"
+      >
+        <div class="leafygreen-ui-r0sqyc">Menu Item 1</div>
+      </button>
+    </li>
+    <li role="none">
+      <button
+        data-leafygreen-ui="menu-item-container"
+        class="leafygreen-ui-1sk3xcx"
+        role="menuitem"
+        aria-disabled="false"
+      >
+        <div class="leafygreen-ui-r0sqyc">Menu Item 2</div>
+      </button>
+    </li>
+    <li role="none">
+      <button
+        data-leafygreen-ui="menu-item-container"
+        class="leafygreen-ui-1sk3xcx"
+        role="menuitem"
+        aria-disabled="false"
+      >
+        <div class="leafygreen-ui-r0sqyc">Menu Item 3</div>
+      </button>
+    </li>
+  </ul>
 </div>
 ```
 
-### trigger
-
-**Type:** `function` or `ReactNode`
-
-The trigger prop can also support being passed a function. To work as expected, the function must accept an argument of `children`, which should be rendered inside of the function passed to trigger.
+| Prop      | Type                      | Description                                                                                                                                                                                            | Default |
+| --------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `trigger` | `function` or `ReactNode` | The trigger prop can also support being passed a function. To work as expected, the function must accept an argument of `children`, which should be rendered inside of the function passed to trigger. |         |

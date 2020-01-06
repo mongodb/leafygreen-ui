@@ -27,7 +27,13 @@
       "path": "./packages/icon"
     },
     {
+      "path": "./packages/icon-button"
+    },
+    {
       "path": "./packages/lib"
+    },
+    {
+      "path": "./packages/logo"
     },
     {
       "path": "./packages/menu"
@@ -37,6 +43,9 @@
     },
     {
       "path": "./packages/palette"
+    },
+    {
+      "path": "./packages/pipeline"
     },
     {
       "path": "./packages/popover"
@@ -61,6 +70,9 @@
     },
     {
       "path": "./packages/tooltip"
+    },
+    {
+      "path": "./packages/leafygreen-provider"
     }
   ]
 }

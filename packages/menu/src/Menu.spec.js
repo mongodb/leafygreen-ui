@@ -1,5 +1,5 @@
 import React from 'react';
-import 'jest-dom/extend-expect';
+import '@testing-library/jest-dom/extend-expect';
 import { render, fireEvent, cleanup } from '@testing-library/react';
 import { Menu, MenuSeparator, MenuItem } from './index';
 
@@ -71,7 +71,12 @@ describe('packages/Menu', () => {
         >
           Item 1
         </MenuItem>
-        <MenuItem href="http://mongodb.design" data-testid="second-item">
+        <MenuItem
+          href="http://mongodb.design"
+          data-testid="second-item"
+          target="_blank"
+          rel="help"
+        >
           Item 2
         </MenuItem>
       </div>,
@@ -91,6 +96,11 @@ describe('packages/Menu', () => {
 
     test('renders inside of an `a` instead of a `button` tag, when `href` prop is supplied', () => {
       expect(secondItem.tagName.toLowerCase()).toBe('a');
+    });
+
+    test('renders with correct target and rel values when set', () => {
+      expect(secondItem.target).toBe('_blank');
+      expect(secondItem.rel).toBe('help');
     });
   });
 });

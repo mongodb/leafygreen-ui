@@ -1,5 +1,69 @@
 # @leafygreen-ui/mongo-menu
 
+## 3.0.0
+
+### Major Changes
+
+- 464c09d: Introduces SSR compatibility though a change to our build process and files
+
+### Minor Changes
+
+- 5c9202d: Introduces support for LeafyGreenProvider for improved focus state management
+
+### Patch Changes
+
+- Updated dependencies [31f6bfd]
+- Updated dependencies [5c9202d]
+- Updated dependencies [464c09d]
+  - @leafygreen-ui/menu@5.0.0
+  - @leafygreen-ui/leafygreen-provider@1.0.0
+  - @leafygreen-ui/button@4.0.0
+  - @leafygreen-ui/emotion@2.0.0
+  - @leafygreen-ui/hooks@2.0.0
+  - @leafygreen-ui/icon@3.0.0
+  - @leafygreen-ui/palette@2.0.0
+
+## 2.1.0
+
+### Minor Changes
+
+- 461f530: Updated MongoMenu to allow for a disabled account button state.
+
+## 2.0.4
+
+### Patch Changes
+
+- Updated dependencies [f42801b]
+- Updated dependencies [8c2e838]
+  - @leafygreen-ui/button@3.0.2
+  - @leafygreen-ui/menu@4.0.3
+
+## 2.0.3
+
+### Patch Changes
+
+- ff55bb5: Update anchor styles to minimize overrides
+- Updated dependencies [ff55bb5]
+- Updated dependencies [ad74307]
+- Updated dependencies [ff55bb5]
+- Updated dependencies [baf45f6]
+  - @leafygreen-ui/button@3.0.1
+  - @leafygreen-ui/menu@4.0.2
+
+## 2.0.2
+
+### Patch Changes
+
+- db79b2d: Truncate long email addresses in MongoMenu
+
+## 2.0.1
+
+### Patch Changes
+
+- Updated dependencies [2f9a300]
+- Updated dependencies [759523f]
+  - @leafygreen-ui/menu@4.0.1
+
 ## 2.0.0
 
 ### Major Changes
