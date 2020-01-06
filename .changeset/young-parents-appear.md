@@ -8,6 +8,7 @@
 '@leafygreen-ui/hooks': major
 '@leafygreen-ui/icon-button': major
 '@leafygreen-ui/icon': major
+'@leafygreen-ui/leafygreen-provider': major
 '@leafygreen-ui/lib': major
 '@leafygreen-ui/logo': major
 '@leafygreen-ui/menu': major
