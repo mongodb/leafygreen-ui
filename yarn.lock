@@ -1563,10 +1563,22 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@leafygreen-ui/hooks@1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/hooks/-/hooks-1.0.7.tgz#1016db52957495ec534f417a3070108d522213de"
-  integrity sha512-yRLjLI4CcnpV9pMqedrlMnio4O9q/JNJJLN78SO+qcmSeHz12ygzbHSkQjp6IcMf0/sntqei/5Iqs5A2bDBzmw==
+"@leafygreen-ui/emotion@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/emotion/-/emotion-1.0.6.tgz#72a51d12560bf5f70b29dfdf96d32528a4aec1c2"
+  integrity sha512-PM3ieFrr1z6CgkiSEeJk/czXbaI4NGUwccC5qUW+AtawTnBCFcSUWvdjh9zzbOfWrFrHs/1/cJTqhRjqiWqkig==
+  dependencies:
+    create-emotion "^10.0.7"
+    emotion "^10.0.7"
+
+"@leafygreen-ui/lib@^3.0.6":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-3.2.0.tgz#8dbc6c77eeb1767e98a3a6499de5d37a8106eaa0"
+  integrity sha512-fSQlaTiM4fPfqJb5VxXfSMajdikHYWL+P/FnEWwurYZo8iyL5qvfRmQ5EfdoZatcVzZPnb7hgj617+bKqXy71A==
+  dependencies:
+    "@leafygreen-ui/emotion" "^1.0.6"
+    facepaint "^1.2.1"
+    polished "^2.3.0"
 
 "@lerna/add@3.18.0":
   version "3.18.0"
