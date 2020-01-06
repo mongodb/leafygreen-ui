@@ -1,4 +1,4 @@
-# @leafygreen-ui/card
+# @leafygreen-ui/syntax
 
 ## 2.0.0
 
@@ -11,9 +11,3 @@
 - Updated dependencies [464c09d]
   - @leafygreen-ui/lib@4.0.0
   - @leafygreen-ui/palette@2.0.0
-
-## 1.0.5
-
-### Patch Changes
-
-- eb49b56: Fixes a TypeScript issue with the typing of rest parameters in Card
