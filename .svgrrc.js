@@ -39,14 +39,22 @@ module.exports = {
 			${imports}
       import PropTypes from 'prop-types';
       import { css, cx } from '@leafygreen-ui/emotion';
+
+      const sizeMap = {
+        small: 14,
+        default: 16,
+        large: 24,
+        xlarge: 32,
+      };
 			
 			const ${componentName} = (${props}) => {
         // Setting className to manually enable fill prop to overwrite the color when the prop is set
         props.className = cx(props.className, {[css\`color: \${ props.fill }\`]: props.fill});
-        
+
         const sizeMap = ${JSON.stringify(sizeMap)};
 
         const size = typeof props.size === 'number' ? props.size : sizeMap[props.size] || sizeMap.default;
+
         props.height = size;
         props.width = size;
         
@@ -62,10 +70,7 @@ module.exports = {
 			
 			${componentName}.propTypes = {
 				fill: PropTypes.string,
-				size: PropTypes.oneOfType([
-          PropTypes.oneOf(${arrayToString(Object.keys(sizeMap))}),
-          PropTypes.number,
-        ]),
+				size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 			};
 
 			${componentName}.defaultProps = {

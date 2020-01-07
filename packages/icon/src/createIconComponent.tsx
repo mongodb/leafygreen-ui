@@ -18,21 +18,47 @@ export interface IconProps<G extends GlyphMap> extends SVGR.ComponentProps {
   glyph: keyof G;
 }
 
-const sizeMap: { [S in Size]: number } = {
+const sizeMap: Record<Size, number> = {
   small: 14,
   default: 16,
   large: 24,
   xlarge: 32,
 };
 
-export default function createIconComponent<G extends GlyphMap>(
+// Converts a camel-case name to a human-readable name
+//
+// GlyphName => Glyph Name Icon
+function humanReadableTitle(glyph: string) {
+  return `${glyph.replace(/([A-Z][a-z])/g, ' $1')} Icon`;
+}
+
+type IconType<G extends GlyphMap> = React.ComponentType<IconProps<G>> & G
+
+export default function createIconComponent<G extends Omit<GlyphMap, 'displayName' | 'propTypes'>>(
   glyphs: G,
-): React.ComponentType<IconProps<G>> {
-  const Icon = ({ glyph, ...rest }: IconProps<G>) => {
+): IconType<G> {
+  const Icon = ({ glyph, size = Size.Default, ...rest }: IconProps<G>) => {
     const SVGComponent: SVGR.Component = glyphs[glyph];
 
-    return <SVGComponent {...rest} />;
+    return (
+      <SVGComponent
+        {...rest}
+        size={size}
+        title={rest.title || humanReadableTitle(glyph as string)}
+      />
+    );
   };
+
+  for (const glyph in glyphs) {
+    if (glyph in Icon) {
+      // TODO: Add better error message
+      throw new Error('This key already exists on Icon')
+    }
+
+    // @ts-ignore
+    // TODO: Add better comment
+    Icon[glyph] = glyphs[glyph]
+  }
 
   Icon.displayName = 'Icon';
 
@@ -42,7 +68,7 @@ export default function createIconComponent<G extends GlyphMap>(
       PropTypes.oneOf(Object.keys(sizeMap)),
       PropTypes.number,
     ]),
-  } as any;
+  } as Record<string, any>;
 
-  return Icon;
+  return Icon as IconType<G>;
 }
