@@ -1,5 +1,11 @@
 # @leafygreen-ui/syntax
 
+## 2.1.0
+
+### Minor Changes
+
+- db8a89a: Enable Swift in the Code component
+
 ## 2.0.0
 
 ### Major Changes
