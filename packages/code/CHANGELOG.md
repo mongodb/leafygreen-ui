@@ -1,5 +1,11 @@
 # @leafygreen-ui/code
 
+## 3.1.0
+
+### Minor Changes
+
+- a0d0d7b: Enable Swift language support
+
 ## 3.0.0
 
 ### Major Changes
