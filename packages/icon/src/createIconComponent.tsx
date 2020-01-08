@@ -23,7 +23,7 @@ const sizeMap: Record<Size, number> = {
   default: 16,
   large: 24,
   xlarge: 32,
-};
+} as const;
 
 // Converts a camel-case name to a human-readable name
 //
@@ -37,7 +37,7 @@ type IconType<G extends GlyphMap> = React.ComponentType<IconProps<G>> & G
 export default function createIconComponent<G extends Omit<GlyphMap, 'displayName' | 'propTypes'>>(
   glyphs: G,
 ): IconType<G> {
-  const Icon = ({ glyph, size = Size.Default, ...rest }: IconProps<G>) => {
+  function Icon({ glyph, size = Size.Default, ...rest }: IconProps<G>) {
     const SVGComponent: SVGR.Component = glyphs[glyph];
 
     return (
@@ -51,12 +51,13 @@ export default function createIconComponent<G extends Omit<GlyphMap, 'displayNam
 
   for (const glyph in glyphs) {
     if (glyph in Icon) {
-      // TODO: Add better error message
-      throw new Error('This key already exists on Icon')
+      throw new Error(`The key: '${glyph}' already exists on Icon`)
     }
 
     // @ts-ignore
-    // TODO: Add better comment
+    // We ignore typescripts errors on this line because "IconType"
+    // is not correctly understanding the addition of these properties
+    // despite them existing on the object we're returning.
     Icon[glyph] = glyphs[glyph]
   }
 
