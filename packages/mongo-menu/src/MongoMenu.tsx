@@ -108,6 +108,22 @@ const logoutContainer = css`
   background-color: ${uiColors.gray.light3};
 `;
 
+const SubMenuItemNames = {
+  userPreferences: 'User Preferences',
+  invitations: 'Invitations',
+  organizations: 'Organizations',
+  videoPreferences: 'Video Preferences',
+  tfa: 'Two-Factor Authorization',
+};
+
+type SubMenuItemNames = typeof SubMenuItemNames[keyof typeof SubMenuItemNames];
+
+interface SubMenuItemInterface {
+  title: string;
+  relative: string;
+  absolute: string;
+}
+
 interface SubMenuInterface {
   displayName: 'Atlas' | 'University' | 'Cloud Support';
   href:
@@ -116,7 +132,7 @@ interface SubMenuInterface {
     | 'https://support.mongodb.com';
   description: string;
   slug: Product;
-  subMenu: Array<string>;
+  subMenuItems: { [key: string]: SubMenuItemInterface };
   glyph: Glyph;
 }
 
@@ -125,13 +141,29 @@ const subMenus: Array<SubMenuInterface> = [
     displayName: 'Atlas',
     description: 'cloud.mongodb.com',
     href: 'https://cloud.mongodb.com',
-    slug: 'atlas',
-    subMenu: [
-      'User Preferences',
-      'Invitations',
-      'Organizations',
-      'Two-Factor Authorization',
-    ],
+    slug: 'cloud',
+    subMenuItems: {
+      userPreferences: {
+        title: 'User Preferences',
+        relative: '/preferences/personalization',
+        absolute: 'https://cloud.mongodb.com/v2#/preferences/personalization',
+      },
+      invitations: {
+        title: 'Invitations',
+        relative: '/preferences/invitations',
+        absolute: 'https://cloud.mongodb.com/v2#/preferences/invitations',
+      },
+      organizations: {
+        title: 'Organizations',
+        relative: '/preferences/organizations',
+        absolute: 'https://cloud.mongodb.com/v2#/preferences/organizations',
+      },
+      tfa: {
+        title: 'Two-Factor Authorization',
+        relative: '/preferences/2fa',
+        absolute: 'https://cloud.mongodb.com/v2#/preferences/2fa',
+      },
+    },
     glyph: 'Cloud',
   },
   {
@@ -139,7 +171,13 @@ const subMenus: Array<SubMenuInterface> = [
     description: 'university.mongodb.com',
     href: 'https://university.mongodb.com',
     slug: 'university',
-    subMenu: ['Video Preferences'],
+    subMenuItems: {
+      videoPreferences: {
+        title: 'Video Preferences',
+        absolute: 'xx',
+        relative: 'yy',
+      },
+    },
     glyph: 'Laptop',
   },
   {
@@ -147,13 +185,19 @@ const subMenus: Array<SubMenuInterface> = [
     description: 'support.mongodb.com',
     href: 'https://support.mongodb.com',
     slug: 'support',
-    subMenu: ['User Preferences'],
+    subMenuItems: {
+      userPreferences: {
+        title: 'User Preferences',
+        absolute: 'xx',
+        relative: 'yy',
+      },
+    },
     glyph: 'Support',
   },
 ];
 
 const Product = {
-  Atlas: 'atlas',
+  Atlas: 'cloud',
   University: 'university',
   Support: 'support',
 } as const;
@@ -166,12 +210,12 @@ type Glyph = keyof typeof glyphs;
 
 interface MongoMenuProps {
   /**
-   * Object that contains information about the active user. {name: 'string', email: 'string'}
+   * Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
    */
-  user: { name: string; email: string };
+  user: { firstName: string; lastName: string; email: string };
 
   /**
-   * MongoDB product that is currently active: ['atlas', 'university', 'support'].
+   * MongoDB product that is currently active: ['cloud', 'university', 'support'].
    */
   activeProduct?: Product;
 
@@ -191,6 +235,23 @@ interface MongoMenuProps {
    * link (e.g. for users already in the account app).
    */
   accountURL?: string;
+
+  overrides?: {
+    urls: {
+      mongomenu?: {
+        cloud?: { [key: string]: string };
+        university?: { [key: string]: string };
+        support?: { [key: string]: string };
+      };
+    };
+    hosts?: {
+      cloud?: string;
+      university?: string;
+      support?: string;
+      realm?: string;
+      charts?: string;
+    };
+  };
 }
 
 /**
@@ -198,37 +259,66 @@ interface MongoMenuProps {
  *
  * ```
 <MongoMenu
-    user={{ name: 'Alex Smith', email: 'alex.smith@youwork.com' }}
-    activeProduct="atlas"
+    user={{ firstName: 'Alex', lastName: 'Smith', email: 'alex.smith@youwork.com' }}
+    activeProduct="cloud"
     onLogout={() => console.log('On logout')}
     onProductChange={() => console.log('Switching products')}
     accountURL="https://cloud.mongodb.com/account/profile"
   />
  * ```
- * @param props.user Object that contains information about the active user. {name: 'string', email: 'string'}
- * @param props.activeProduct  MongoDB product that is currently active: ['atlas', 'university', 'support'].
+ * @param props.user Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
+ * @param props.activeProduct  MongoDB product that is currently active: ['cloud', 'university', 'support'].
  * @param props.onLogout Callback invoked after the user clicks log out.
  * @param props.onProductChange Callback invoked after the user clicks a product.
  * @param props.accountURL URL (relative or absolute) linked to by the MongoDB Account button
  */
 function MongoMenu({
-  user: { name, email },
+  user: { firstName, lastName, email },
   accountURL = 'https://cloud.mongodb.com/v2#/account',
   activeProduct = '',
   onLogout = () => {},
   onProductChange = () => {},
+  overrides = { hosts: {}, urls: {} },
 }: MongoMenuProps) {
   const [open, setOpen] = useState(false);
+  const { hosts, urls } = overrides;
+  const name = `${firstName} ${lastName}`;
 
   const renderSubMenu = ({
     slug,
     href,
     displayName,
     glyph,
-    subMenu,
+    subMenuItems,
     description,
   }: SubMenuInterface) => {
     const isActive = slug === activeProduct;
+
+    const renderSubMenuItems = (subMenuItem: SubMenuItemNames) => {
+      let menuItemHref;
+
+      if (
+        urls?.mongomenu?.[slug as 'cloud' | 'university' | 'support']?.[
+          subMenuItem
+        ]
+      ) {
+        menuItemHref =
+          urls?.mongomenu?.[slug as 'cloud' | 'university' | 'support']?.[
+            subMenuItem
+          ];
+      } else if (hosts?.[slug as 'cloud' | 'university' | 'support']) {
+        menuItemHref = `${hosts?.[slug as 'cloud' | 'university' | 'support'] +
+          subMenuItems[subMenuItem]?.relative}`;
+      } else {
+        menuItemHref = subMenuItems[subMenuItem]?.absolute;
+      }
+
+      return (
+        <MenuItem key={subMenuItems[subMenuItem]?.title} href={menuItemHref}>
+          {subMenuItems[subMenuItem]?.title}
+        </MenuItem>
+      );
+    };
 
     const subMenuDescription = (
       <div
@@ -264,16 +354,14 @@ function MongoMenu({
           [subMenuActiveContainerStyle]: isActive,
         })}
       >
-        {subMenu.map(sub => (
-          <MenuItem key={sub}>{sub}</MenuItem>
-        ))}
+        {Object.keys(subMenuItems).map(renderSubMenuItems)}
       </SubMenu>
     );
   };
 
   return (
     <div className={triggerWrapper}>
-      <MongoMenuTrigger open={open} name={name} setOpen={setOpen} />
+      <MongoMenuTrigger open={open} name={firstName} setOpen={setOpen} />
 
       <Menu open={open} setOpen={setOpen} className={menuStyle}>
         <div className={headerStyle}>

@@ -114,9 +114,7 @@ export default function MongoMenuTrigger({
         className={cx(baseButtonStyles, { [openBaseButtonStyle]: open })}
         onClick={() => setOpen(curr => !curr)}
       >
-        <span className={cx(menuNameStyle, truncate)}>
-          {name.split(' ')[0]}
-        </span>
+        <span className={cx(menuNameStyle, truncate)}>{name}</span>
 
         <Icon
           {...iconDataProp.prop}

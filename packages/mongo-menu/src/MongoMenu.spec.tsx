@@ -11,16 +11,30 @@ import MongoMenu from '.';
 afterAll(cleanup);
 
 describe('packages/MongoMenu', () => {
-  const user = { name: 'Leafy', email: 'leafy@mongodb.com' };
+  const user = {
+    firstName: 'Leafy',
+    lastName: 'Green',
+    email: 'leafy@mongodb.com',
+  };
   const onLogout = jest.fn();
   const onProductChange = jest.fn();
 
   const renderedComponent = render(
     <MongoMenu
       user={user}
-      activeProduct={'atlas'}
+      activeProduct={'cloud'}
       onLogout={onLogout}
       onProductChange={onProductChange}
+      overrides={{
+        hosts: { cloud: 'https://cloud-dev.com' },
+        urls: {
+          mongomenu: {
+            university: {
+              videoPreferences: 'https://university.mongodb.com/override-test',
+            },
+          },
+        },
+      }}
     />,
   );
 
@@ -98,6 +112,34 @@ describe('packages/MongoMenu', () => {
     fireEvent.click(logout);
 
     expect(onLogout).toHaveBeenCalledTimes(1);
+  });
+
+  describe('renders appropriate links to SubMenu Items based on overrides prop', () => {
+    test('renders particular url override, when the urls prop is set', () => {
+      const universityItem = document.querySelectorAll(
+        '[data-leafygreen-ui="sub-menu-container"]',
+      )[1];
+
+      fireEvent.click(universityItem);
+
+      const universitySubMenuItem = getByText('Video Preferences');
+      expect(
+        (universitySubMenuItem?.parentNode as HTMLAnchorElement).href,
+      ).toBe('https://university.mongodb.com/override-test');
+    });
+
+    test('renders particular url override, when the hosts prop is set', () => {
+      const atlasItem = document.querySelectorAll(
+        '[data-leafygreen-ui="sub-menu-container"]',
+      )[0];
+
+      fireEvent.click(atlasItem);
+
+      const atlasSubMenuitem = getByText('Invitations');
+      expect((atlasSubMenuitem?.parentNode as HTMLAnchorElement).href).toBe(
+        'https://cloud-dev.com/preferences/invitations',
+      );
+    });
   });
 
   test('renders the account link as a disabled button when set to the empty string', () => {
