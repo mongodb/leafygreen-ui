@@ -84,9 +84,23 @@ describe('packages/Icon/createIconComponent', () => {
   });
 
   const renderedIcon = render(<IconComponent glyph="MyGlyph" />);
-  const glyph = renderedIcon.container.firstChild;
 
   test('The function returned by createIconComponent renders the glyph specified', () => {
+    const glyph = renderedIcon.container.firstChild;
+
+    if (!typeIs.element(glyph)) {
+      throw new Error('Glyph was not rendered');
+    }
+
+    expect(glyph.nodeName.toLowerCase()).toBe('div');
+    expect(glyph.textContent).toBe(text);
+  });
+
+  const individuallyRenderedIcon = render(<IconComponent.MyGlyph />);
+
+  test('The glyph passed to createIconComponent is individually consumable', () => {
+    const glyph = individuallyRenderedIcon.container.firstChild;
+
     if (!typeIs.element(glyph)) {
       throw new Error('Glyph was not rendered');
     }
