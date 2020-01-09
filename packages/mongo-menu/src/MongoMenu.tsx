@@ -188,8 +188,8 @@ const subMenus: Array<SubMenuInterface> = [
     subMenuItems: {
       userPreferences: {
         title: 'User Preferences',
-        absolute: 'xx',
-        relative: 'yy',
+        absolute: 'https://support.mongodb.com/profile',
+        relative: '/profile',
       },
     },
     glyph: 'Support',
