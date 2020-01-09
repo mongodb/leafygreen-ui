@@ -6,7 +6,8 @@ import Tooltip from '@leafygreen-ui/tooltip';
 import {
   AccountInterface,
   OrganizationInterface,
-  ActiveProduct,
+  Product,
+  OverridesInterface,
 } from '../types';
 
 import MongoSelect from '../mongo-select/index';
@@ -57,31 +58,11 @@ const supportContainer = css`
 
 interface OrgNav {
   account: AccountInterface;
-  activeProduct: ActiveProduct;
+  activeProduct: Product;
   current: OrganizationInterface;
   data: Array<OrganizationInterface>;
   constructOrganizationURL: (orgID: string) => string;
-  overrides?: {
-    urls?: {
-      mongomenu?: {
-        cloud?: { [key: string]: string };
-        university?: { [key: string]: string };
-        support?: { [key: string]: string };
-      };
-      mongoSelect?: {
-        viewAllProjects?: string;
-        viewAllOrganizations?: string;
-        newProject?: string;
-      };
-    };
-    hosts?: {
-      cloud?: string;
-      university?: string;
-      support?: string;
-      realm?: string;
-      charts?: string;
-    };
-  };
+  overrides?: OverridesInterface;
 }
 
 export default function OrgNav({
@@ -95,7 +76,8 @@ export default function OrgNav({
     urls: {},
   },
 }: OrgNav) {
-  const baseURL = 'https://google.com';
+  const { urls, hosts } = overrides;
+  const baseURL = hosts?.cloud ?? `https://cloud.mongodb.com`;
 
   return (
     <nav className={navContainer}>
@@ -107,6 +89,7 @@ export default function OrgNav({
           current={current}
           constructOrganizationURL={constructOrganizationURL}
           variant="organization"
+          overrides={overrides}
         />
         <ul className={ulContainer}>
           <li role="none">
@@ -115,7 +98,13 @@ export default function OrgNav({
               justify="middle"
               variant="dark"
               trigger={
-                <a href={`${baseURL}#access`} className={linkText}>
+                <a
+                  href={
+                    urls?.orgNav?.accessManager ??
+                    `${baseURL}/${current.orgId}#access`
+                  }
+                  className={linkText}
+                >
                   Access Manager
                 </a>
               }
@@ -129,7 +118,13 @@ export default function OrgNav({
               justify="middle"
               variant="dark"
               trigger={
-                <a href={`${baseURL}#info/support`} className={linkText}>
+                <a
+                  href={
+                    urls?.orgNav?.support ??
+                    `${baseURL}/${current.orgId}#info/support`
+                  }
+                  className={linkText}
+                >
                   Support
                 </a>
               }
@@ -143,7 +138,10 @@ export default function OrgNav({
               justify="middle"
               variant="dark"
               trigger={
-                <a href={`${baseURL}/billing/overview`} className={linkText}>
+                <a
+                  href={urls?.orgNav?.billing ?? `${baseURL}/billing/overview`}
+                  className={linkText}
+                >
                   Billing
                 </a>
               }
@@ -153,7 +151,11 @@ export default function OrgNav({
           </li>
         </ul>
       </div>
-      <MongoMenu account={account} activeProduct={activeProduct} />
+      <MongoMenu
+        account={account}
+        activeProduct={activeProduct}
+        overrides={overrides}
+      />
     </nav>
   );
 }

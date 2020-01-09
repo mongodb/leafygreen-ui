@@ -1,20 +1,20 @@
-const ActiveProduct = {
+const Product = {
   Account: 'account',
   Cloud: 'cloud',
   Support: 'support',
   University: 'university',
 } as const;
 
-type ActiveProduct = typeof ActiveProduct[keyof typeof ActiveProduct];
+type Product = typeof Product[keyof typeof Product];
 
-export { ActiveProduct };
+export { Product };
 
 export interface AccountInterface {
   email: string;
   firstName: string;
   lastName: string;
-  openInvitations: number;
-  username: string;
+  openInvitations?: number;
+  username?: string;
 }
 
 const Variant = {
@@ -56,4 +56,36 @@ export interface DataInterface {
   currentProject: ProjectInterface;
   organizations: Array<OrganizationInterface>;
   projects: Array<ProjectInterface>;
+}
+
+enum SubMenuItems {
+  userPreferences = 'User Preferences',
+  invitations = 'Invitations',
+  organizations = 'Organizations',
+  videoPreferences = 'Video Preferences',
+  tfa = 'Two-Factor Authorization',
+  accountURL = 'accountURL',
+}
+
+export interface OverridesInterface {
+  urls?: {
+    mongoMenu?: { [k in Product]?: { [k in SubMenuItems]?: string } };
+    mongoSelect?: {
+      viewAllProjects?: string;
+      viewAllOrganizations?: string;
+      newProject?: string;
+    };
+    orgNav?: {
+      accessManager?: string;
+      support?: string;
+      billing?: string;
+    };
+  };
+  hosts?: {
+    cloud?: string;
+    university?: string;
+    support?: string;
+    realm?: string;
+    charts?: string;
+  };
 }

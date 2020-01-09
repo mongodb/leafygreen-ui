@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { LogoMark } from '@leafygreen-ui/logo';
@@ -14,7 +15,7 @@ import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import MongoMenuTrigger from './MongoMenuTrigger';
-import { AccountInterface } from '../types';
+import { AccountInterface, OverridesInterface, Product } from '../types';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 
@@ -102,6 +103,11 @@ const descriptionStyle = css`
   margin-top: 0px;
   margin-bottom: 16px;
   max-width: 100%;
+`;
+
+const subMenuItemStyle = css`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const logoutContainer = css`
@@ -197,16 +203,6 @@ const subMenus: Array<SubMenuInterface> = [
   },
 ];
 
-const Product = {
-  Atlas: 'cloud',
-  University: 'university',
-  Support: 'support',
-} as const;
-
-type Product = typeof Product[keyof typeof Product] | '';
-
-export { Product };
-
 type Glyph = keyof typeof glyphs;
 
 interface MongoMenuProps {
@@ -230,42 +226,26 @@ interface MongoMenuProps {
    */
   onProductChange?: React.MouseEventHandler;
 
-  /**
-   * URL passed to MongoDB Account button. If explicitly set to the
-   * empty string, the button will be disabled and not render as a
-   * link (e.g. for users already in the account app).
-   */
-  accountURL?: string;
-
-  overrides?: {
-    urls: {
-      mongomenu?: {
-        cloud?: { [key: string]: string };
-        university?: { [key: string]: string };
-        support?: { [key: string]: string };
-      };
-    };
-    hosts?: {
-      cloud?: string;
-      university?: string;
-      support?: string;
-      realm?: string;
-      charts?: string;
-    };
-  };
+  overrides?: OverridesInterface;
 }
 
 function MongoMenu({
-  account: { firstName, lastName, email },
-  accountURL = 'https://cloud.mongodb.com/v2#/account',
-  activeProduct = '',
+  account: { firstName, lastName, email, openInvitations },
+  activeProduct,
   onLogout = () => {},
   onProductChange = () => {},
   overrides = { hosts: {}, urls: {} },
 }: MongoMenuProps) {
   const [open, setOpen] = useState(false);
   const { hosts, urls } = overrides;
+
   const name = `${firstName} ${lastName}`;
+
+  const isAccount = activeProduct === 'account';
+  const accountURL =
+    urls?.mongoMenu?.account?.accountURL ?? hosts?.cloud
+      ? `${hosts?.cloud}/v2#/account`
+      : 'https://cloud.mongodb.com/v2#/account';
 
   const renderSubMenu = ({
     slug,
@@ -280,25 +260,28 @@ function MongoMenu({
     const renderSubMenuItems = (subMenuItem: SubMenuItemNames) => {
       let menuItemHref;
 
-      if (
-        urls?.mongomenu?.[slug as 'cloud' | 'university' | 'support']?.[
-          subMenuItem
-        ]
-      ) {
-        menuItemHref =
-          urls?.mongomenu?.[slug as 'cloud' | 'university' | 'support']?.[
-            subMenuItem
-          ];
-      } else if (hosts?.[slug as 'cloud' | 'university' | 'support']) {
-        menuItemHref = `${hosts?.[slug as 'cloud' | 'university' | 'support'] +
-          subMenuItems[subMenuItem]?.relative}`;
+      const subMenuItemContent =
+        subMenuItems[subMenuItem]?.title === 'Invitations' &&
+        openInvitations ? (
+          <span className={subMenuItemStyle}>
+            {subMenuItems[subMenuItem]?.title}{' '}
+            <Badge variant="blue">{openInvitations}</Badge>
+          </span>
+        ) : (
+          subMenuItems[subMenuItem]?.title
+        );
+
+      if (urls?.mongoMenu?.[slug]?.[subMenuItem]) {
+        menuItemHref = urls?.mongoMenu?.[slug]?.[subMenuItem];
+      } else if (hosts?.[slug]) {
+        menuItemHref = `${hosts?.[slug] + subMenuItems[subMenuItem]?.relative}`;
       } else {
         menuItemHref = subMenuItems[subMenuItem]?.absolute;
       }
 
       return (
         <MenuItem key={subMenuItems[subMenuItem]?.title} href={menuItemHref}>
-          {subMenuItems[subMenuItem]?.title}
+          {subMenuItemContent}
         </MenuItem>
       );
     };
@@ -358,9 +341,9 @@ function MongoMenu({
 
           <FocusableMenuItem>
             <Button
-              href={accountURL || undefined}
-              disabled={!accountURL}
-              as={accountURL ? 'a' : 'button'}
+              href={isAccount ? undefined : accountURL}
+              disabled={isAccount}
+              as={isAccount ? 'button' : 'a'}
             >
               Manage your MongoDB Account
             </Button>

@@ -14,7 +14,12 @@ import { keyMap } from '@leafygreen-ui/lib';
 import Input from './Input';
 import { OrganizationTrigger, ProjectTrigger } from './Trigger';
 import { OrganizationOption, ProjectOption } from './Option';
-import { ProjectInterface, OrganizationInterface, Variant } from '../types';
+import {
+  ProjectInterface,
+  OrganizationInterface,
+  Variant,
+  OverridesInterface,
+} from '../types';
 
 const menuItemHeight = 36;
 
@@ -105,27 +110,7 @@ interface MongoSelectProps {
    */
   constructOrganizationURL?: (orgID: string) => string;
 
-  overrides?: {
-    urls?: {
-      mongomenu?: {
-        cloud?: { [key: string]: string };
-        university?: { [key: string]: string };
-        support?: { [key: string]: string };
-      };
-      mongoSelect?: {
-        viewAllProjects?: string;
-        viewAllOrganizations?: string;
-        newProject?: string;
-      };
-    };
-    hosts?: {
-      cloud?: string;
-      university?: string;
-      support?: string;
-      realm?: string;
-      charts?: string;
-    };
-  };
+  overrides?: OverridesInterface;
 }
 
 function MongoSelect({
@@ -138,7 +123,6 @@ function MongoSelect({
   className,
   overrides = { hosts: {}, urls: {} },
 }: MongoSelectProps) {
-  console.log(current);
   const [open, setOpen] = useState(false);
   const [filteredData, setFilteredData] = useState(data);
   const { hosts, urls } = overrides;
