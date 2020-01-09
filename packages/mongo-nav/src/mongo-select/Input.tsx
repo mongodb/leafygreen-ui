@@ -4,7 +4,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
 import Icon from '@leafygreen-ui/icon';
-import { Variant } from './MongoSelect';
+import { Variant } from '../types';
 
 const focusRing = createDataProp('focus-ring');
 

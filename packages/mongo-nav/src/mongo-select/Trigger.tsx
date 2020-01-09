@@ -56,13 +56,13 @@ const border = css`
 
 interface TriggerProps {
   children?: React.ReactNode;
-  selected: string;
+  current: string;
   className?: string;
 }
 
 export function OrganizationTrigger({
   children,
-  selected,
+  current,
   className,
   ...rest
 }: TriggerProps) {
@@ -70,7 +70,7 @@ export function OrganizationTrigger({
     <div className={cx(orgTriggerContainer, className)}>
       <button {...rest} className={buttonContainer}>
         <Icon size="small" glyph="Building" />
-        <span className={selectedStyle}>{selected}</span>
+        <span className={selectedStyle}>{current}</span>
         <Icon size="small" glyph="CaretDown" />
       </button>
       <a
@@ -87,7 +87,7 @@ export function OrganizationTrigger({
 
 export function ProjectTrigger({
   children,
-  selected,
+  current,
   className,
   ...rest
 }: TriggerProps) {
@@ -97,7 +97,7 @@ export function ProjectTrigger({
       className={cx(buttonContainer, projectTriggerContainer, className)}
     >
       <Icon size="small" glyph="Bell" />
-      <span className={cx(selectedStyle, fontSize)}>{selected}</span>
+      <span className={cx(selectedStyle, fontSize)}>{current}</span>
       <Icon size="small" glyph="CaretDown" />
       {children}
     </button>

@@ -14,6 +14,7 @@ import { keyMap } from '@leafygreen-ui/lib';
 import Input from './Input';
 import { OrganizationTrigger, ProjectTrigger } from './Trigger';
 import { OrganizationOption, ProjectOption } from './Option';
+import { ProjectInterface, OrganizationInterface, Variant } from '../types';
 
 const menuItemHeight = 36;
 
@@ -49,38 +50,6 @@ const projectButtonStyle = css`
   padding-bottom: 16px;
 `;
 
-const Variant = {
-  Organization: 'organization',
-  Project: 'project',
-} as const;
-
-type Variant = typeof Variant[keyof typeof Variant];
-
-export { Variant };
-
-const PlanType = {
-  Cloud: 'cloud',
-  Atlas: 'Atlas',
-  OM: 'OM',
-} as const;
-
-type PlanType = typeof PlanType[keyof typeof PlanType];
-
-export { PlanType };
-
-export interface ProjectInterface {
-  projectId: string;
-  projectName: string;
-  planType: PlanType;
-  orgId: string;
-}
-
-export interface OrganizationInterface {
-  orgId: string;
-  orgName: string;
-  planType: PlanType;
-}
-
 function isProject(
   val: ProjectInterface | OrganizationInterface,
 ): val is ProjectInterface {
@@ -101,7 +70,7 @@ interface MongoSelectProps {
    * Organization: {orgId: `string`; orgName: `string`, planType: `'Cloud' | 'OM' | 'Atlas'`}
    * Project: {orgId: `string`; projectId: `string`, projectName: `string`, planType: `'Cloud' | 'OM' | 'Atlas'`}
    */
-  selected: VariantData;
+  current: VariantData;
 
   /**
    * Array of data objects
@@ -119,6 +88,8 @@ interface MongoSelectProps {
    * Determines variant 'organization' | 'project'
    */
   variant: Variant;
+
+  className: string;
 
   /**
    * Receives (orgID, projectID) as parameters
@@ -157,28 +128,17 @@ interface MongoSelectProps {
   };
 }
 
-/**
- * # MongoSelect
- *
- * MongoSelect component
- *
- * ```
-<MongoSelect onClick={onClick} selected={'YouWork'} data={[{name: 'YouWork', product: 'Atlas'}]/>
-```
- * @param props.selected Selected organization, which will appear in the Top Nav by default.
- * @param props.data Array of Organization objects, [{name: `string`, product: `string`}].
- * @param props.onClick Callback function executed when an organization is clicked.
- * @param props.variant Determines if MongoSelect will have `organization` or `project` data
- */
 function MongoSelect({
-  selected,
+  current,
   data,
   onClick,
   variant,
   constructProjectURL,
   constructOrganizationURL,
+  className,
   overrides = { hosts: {}, urls: {} },
 }: MongoSelectProps) {
+  console.log(current);
   const [open, setOpen] = useState(false);
   const [filteredData, setFilteredData] = useState(data);
   const { hosts, urls } = overrides;
@@ -192,11 +152,13 @@ function MongoSelect({
 
   let trigger, footer;
   const orgURI = hosts?.cloud
-    ? `${hosts.cloud}/v2#/org/${selected.orgId}`
-    : `https://cloud.mongodb.com/v2#/org/${selected.orgId}`;
+    ? `${hosts.cloud}/v2#/org/${current.orgId}`
+    : `https://cloud.mongodb.com/v2#/org/${current.orgId}`;
 
-  if (isProject(selected)) {
-    trigger = <ProjectTrigger selected={selected.projectName} />;
+  if (isProject(current)) {
+    trigger = (
+      <ProjectTrigger current={current.projectName} className={className} />
+    );
     footer = (
       <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
         <FocusableMenuItem>
@@ -216,7 +178,9 @@ function MongoSelect({
       </li>
     );
   } else {
-    trigger = <OrganizationTrigger selected={selected.orgName} />;
+    trigger = (
+      <OrganizationTrigger current={current.orgName} className={className} />
+    );
     footer = (
       <MenuItem
         onKeyDown={onKeyDown}
@@ -292,7 +256,7 @@ MongoSelect.displayName = 'MongoSelect';
 
 MongoSelect.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
-  selected: PropTypes.objectOf(PropTypes.string).isRequired,
+  current: PropTypes.objectOf(PropTypes.string).isRequired,
   onClick: PropTypes.func,
   variant: PropTypes.oneOf(['organization', 'project']).isRequired,
 };

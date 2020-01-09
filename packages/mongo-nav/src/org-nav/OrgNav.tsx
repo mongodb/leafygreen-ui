@@ -2,8 +2,15 @@ import React from 'react';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { LogoMark } from '@leafygreen-ui/logo';
-import MongoMenu from '@leafygreen-ui/mongo-menu';
 import Tooltip from '@leafygreen-ui/tooltip';
+import {
+  AccountInterface,
+  OrganizationInterface,
+  ActiveProduct,
+} from '../types';
+
+import MongoSelect from '../mongo-select/index';
+import MongoMenu from '../mongo-menu/index';
 
 const navContainer = css`
   height: 60px;
@@ -26,8 +33,6 @@ const leftSideContainer = css`
 const orgSelectContainer = css`
   margin-left: 20px;
   margin-right: 30px;
-  width: 180px;
-  border: 1px solid black;
 `;
 
 const ulContainer = css`
@@ -51,8 +56,11 @@ const supportContainer = css`
 `;
 
 interface OrgNav {
-  user: { firstName: string; lastName: string; email: string; userID: string };
-  activeProduct: 'cloud' | 'university' | 'support';
+  account: AccountInterface;
+  activeProduct: ActiveProduct;
+  current: OrganizationInterface;
+  data: Array<OrganizationInterface>;
+  constructOrganizationURL: (orgID: string) => string;
   overrides?: {
     urls?: {
       mongomenu?: {
@@ -77,23 +85,29 @@ interface OrgNav {
 }
 
 export default function OrgNav({
-  user,
+  account,
   activeProduct,
+  current,
+  data,
+  constructOrganizationURL,
   overrides = {
     hosts: {},
     urls: {},
   },
 }: OrgNav) {
-  const { hosts, urls } = overrides;
-  const baseURL = `${window.location.href.split('/')[0]}/v2#/org/${
-    user.userID
-  }`;
+  const baseURL = 'https://google.com';
 
   return (
     <nav className={navContainer}>
       <div className={leftSideContainer}>
         <LogoMark height={30} />
-        <span className={orgSelectContainer}>org select</span>
+        <MongoSelect
+          className={orgSelectContainer}
+          data={data}
+          current={current}
+          constructOrganizationURL={constructOrganizationURL}
+          variant="organization"
+        />
         <ul className={ulContainer}>
           <li role="none">
             <Tooltip
@@ -139,10 +153,7 @@ export default function OrgNav({
           </li>
         </ul>
       </div>
-      <MongoMenu
-        user={{ name: 'Brooke', email: 'brooke@brooke.com' }}
-        activeProduct={'support'}
-      />
+      <MongoMenu account={account} activeProduct={activeProduct} />
     </nav>
   );
 }

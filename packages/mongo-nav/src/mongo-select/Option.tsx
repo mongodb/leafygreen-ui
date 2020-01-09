@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { PlanType } from './MongoSelect';
+import { PlanType } from '../types';
 
 const optionStyle = css`
   display: flex;

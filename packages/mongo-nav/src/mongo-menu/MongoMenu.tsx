@@ -14,6 +14,7 @@ import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import MongoMenuTrigger from './MongoMenuTrigger';
+import { AccountInterface } from '../types';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 
@@ -212,7 +213,7 @@ interface MongoMenuProps {
   /**
    * Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
    */
-  user: { firstName: string; lastName: string; email: string };
+  account: AccountInterface;
 
   /**
    * MongoDB product that is currently active: ['cloud', 'university', 'support'].
@@ -254,26 +255,8 @@ interface MongoMenuProps {
   };
 }
 
-/**
- * # MongoMenu
- *
- * ```
-<MongoMenu
-    user={{ firstName: 'Alex', lastName: 'Smith', email: 'alex.smith@youwork.com' }}
-    activeProduct="cloud"
-    onLogout={() => console.log('On logout')}
-    onProductChange={() => console.log('Switching products')}
-    accountURL="https://cloud.mongodb.com/account/profile"
-  />
- * ```
- * @param props.user Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
- * @param props.activeProduct  MongoDB product that is currently active: ['cloud', 'university', 'support'].
- * @param props.onLogout Callback invoked after the user clicks log out.
- * @param props.onProductChange Callback invoked after the user clicks a product.
- * @param props.accountURL URL (relative or absolute) linked to by the MongoDB Account button
- */
 function MongoMenu({
-  user: { firstName, lastName, email },
+  account: { firstName, lastName, email },
   accountURL = 'https://cloud.mongodb.com/v2#/account',
   activeProduct = '',
   onLogout = () => {},
