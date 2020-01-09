@@ -28,7 +28,7 @@ describe('packages/MongoMenu', () => {
       overrides={{
         hosts: { cloud: 'https://cloud-dev.com' },
         urls: {
-          mongomenu: {
+          mongoMenu: {
             university: {
               videoPreferences: 'https://university.mongodb.com/override-test',
             },

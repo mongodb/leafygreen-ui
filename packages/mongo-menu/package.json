@@ -20,6 +20,7 @@
     "@leafygreen-ui/button": "4.0.0",
     "@leafygreen-ui/logo": "2.0.0",
     "@leafygreen-ui/hooks": "2.0.0",
+    "@leafygreen-ui/badge": "3.0.0",
     "@leafygreen-ui/leafygreen-provider": "1.0.0"
   }
 }

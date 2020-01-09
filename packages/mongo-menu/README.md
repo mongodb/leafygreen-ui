@@ -9,10 +9,11 @@ import MongoMenu from '@leafygreen-ui/mongo-menu';
 
 <MongoMenu
   user={{
-    name: 'Alex Smith',
+    firstName: 'Alex',
+    lastName: 'Smith',
     email: 'alex.smith@mongodb.com',
   }}
-  activeProduct="atlas"
+  activeProduct="cloud"
 />;
 ```
 
@@ -104,10 +105,12 @@ import MongoMenu from '@leafygreen-ui/mongo-menu';
 
 ## Properties
 
-| Prop              | Type                                    | Description                                             | Default                                 |
-| ----------------- | --------------------------------------- | ------------------------------------------------------- | --------------------------------------- |
-| `user`            | `` {name: `string`, email: `string`} `` | Object that contains information about the active user. | `{}`                                    |
-| `accountURL`      | `string`                                | URL passed to MongoDB Account button.                   | `https://cloud.mongodb.com/v2#/account` |
-| `activeProduct`   | `'atlas'`, `'university'`, `'support'`  | MongoDB product that is currently active.               |                                         |
-| `onProductChange` | `function`                              | Callback invoked after the user clicks a product.       | `() => {}`                              |
-| `onLogout`        | `function`                              | Callback invoked after the user clicks logout.          | `() => {}`                              |
+| Prop              | Type                                    | Description                                                  | Default                                 |
+| ----------------- | --------------------------------------- | ------------------------------------------------------------ | --------------------------------------- |
+| `user`            | `` {name: `string`, email: `string`} `` | Object that contains information about the active user.      | `{}`                                    |
+| `accountURL`      | `string`                                | URL passed to MongoDB Account button.                        | `https://cloud.mongodb.com/v2#/account` |
+| `activeProduct`   | `'cloud'`, `'university'`, `'support'`  | MongoDB product that is currently active.                    |                                         |
+| `onProductChange` | `function`                              | Callback invoked after the user clicks a product.            | `() => {}`                              |
+| `onLogout`        | `function`                              | Callback invoked after the user clicks logout.               | `() => {}`                              |
+| `invitations`     | `number`                                | Number of invitations to be displayed in MongoMenu           |                                         |
+| `overrides`       | `{ hosts: {}, urls: {} }`               | Override absolute links by providing explicit hosts or urls. | `{ hosts: {}, urls: {} }`               |

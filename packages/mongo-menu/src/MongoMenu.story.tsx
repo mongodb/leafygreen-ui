@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, select } from '@storybook/addon-knobs';
+import { text, select, number } from '@storybook/addon-knobs';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import MongoMenu, { Product } from '.';
 
@@ -8,7 +8,8 @@ storiesOf('MongoMenu', module).add('Default', () => (
   <LeafyGreenProvider>
     <MongoMenu
       user={{
-        name: text('name', 'Alex Smith'),
+        firstName: text('firstName', 'Alex'),
+        lastName: text('lastName', 'Smith'),
         email: text('email', 'alex.smith@mongodb.com'),
       }}
       activeProduct={select(
@@ -21,6 +22,7 @@ storiesOf('MongoMenu', module).add('Default', () => (
         ['https://cloud.mongodb.com/v2#/account', ''],
         'https://cloud.mongodb.com/v2#/account',
       )}
+      invitations={number('number', 5)}
     />
   </LeafyGreenProvider>
 ));

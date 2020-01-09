@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@leafygreen-ui/button';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
+import Badge from '@leafygreen-ui/badge';
 import { LogoMark } from '@leafygreen-ui/logo';
 import {
   Menu,
@@ -101,6 +102,12 @@ const descriptionStyle = css`
   margin-top: 0px;
   margin-bottom: 16px;
   max-width: 100%;
+`;
+
+const invitationStyle = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const logoutContainer = css`
@@ -208,6 +215,7 @@ export { Product };
 
 type Glyph = keyof typeof glyphs;
 
+type MongoSlug = 'cloud' | 'university' | 'support';
 interface MongoMenuProps {
   /**
    * Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
@@ -236,9 +244,11 @@ interface MongoMenuProps {
    */
   accountURL?: string;
 
+  invitations?: number;
+
   overrides?: {
     urls: {
-      mongomenu?: {
+      mongoMenu?: {
         cloud?: { [key: string]: string };
         university?: { [key: string]: string };
         support?: { [key: string]: string };
@@ -279,6 +289,7 @@ function MongoMenu({
   onLogout = () => {},
   onProductChange = () => {},
   overrides = { hosts: {}, urls: {} },
+  invitations,
 }: MongoMenuProps) {
   const [open, setOpen] = useState(false);
   const { hosts, urls } = overrides;
@@ -295,19 +306,21 @@ function MongoMenu({
     const isActive = slug === activeProduct;
 
     const renderSubMenuItems = (subMenuItem: SubMenuItemNames) => {
+      const menuItemContent =
+        subMenuItems[subMenuItem]?.title === 'Invitations' && invitations ? (
+          <span className={invitationStyle}>
+            Invitations <Badge variant="blue">{invitations}</Badge>
+          </span>
+        ) : (
+          subMenuItems[subMenuItem]?.title
+        );
+
       let menuItemHref;
 
-      if (
-        urls?.mongomenu?.[slug as 'cloud' | 'university' | 'support']?.[
-          subMenuItem
-        ]
-      ) {
-        menuItemHref =
-          urls?.mongomenu?.[slug as 'cloud' | 'university' | 'support']?.[
-            subMenuItem
-          ];
-      } else if (hosts?.[slug as 'cloud' | 'university' | 'support']) {
-        menuItemHref = `${hosts?.[slug as 'cloud' | 'university' | 'support'] +
+      if (urls?.mongoMenu?.[slug as MongoSlug]?.[subMenuItem]) {
+        menuItemHref = urls?.mongoMenu?.[slug as MongoSlug]?.[subMenuItem];
+      } else if (hosts?.[slug as MongoSlug]) {
+        menuItemHref = `${hosts?.[slug as MongoSlug] +
           subMenuItems[subMenuItem]?.relative}`;
       } else {
         menuItemHref = subMenuItems[subMenuItem]?.absolute;
@@ -315,7 +328,7 @@ function MongoMenu({
 
       return (
         <MenuItem key={subMenuItems[subMenuItem]?.title} href={menuItemHref}>
-          {subMenuItems[subMenuItem]?.title}
+          {menuItemContent}
         </MenuItem>
       );
     };
@@ -407,6 +420,8 @@ MongoMenu.propTypes = {
   onLogout: PropTypes.func,
   onProductChange: PropTypes.func,
   onAccountClick: PropTypes.func,
+  overrides: PropTypes.object,
+  invitations: PropTypes.number,
 };
 
 export default MongoMenu;
