@@ -193,7 +193,7 @@ function MongoSelect({ selected, data, onClick, variant }: MongoSelectProps) {
     <Menu
       open={open}
       setOpen={setOpen}
-      trigger={trigger}
+      trigger={<button>hi</button>}
       className={menuContainerStyle}
       justify="start"
     >

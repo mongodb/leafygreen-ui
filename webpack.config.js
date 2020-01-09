@@ -34,93 +34,98 @@ function getAllPackages(dir) {
 }
 
 // Base Webpack configuration, used by all other configurations for common settings
-module.exports = function(env = 'production') {
-  const isProduction = env === 'production';
+function generateConfigFunc(target = 'web') {
+  return function(env = 'production') {
+    const isProduction = env === 'production';
 
-  return {
-    mode: env,
-    entry: './src/index',
-    target: 'web',
-    output: {
-      path: path.resolve(process.cwd(), 'dist'),
-      filename: 'index.js',
-      libraryTarget: isProduction ? 'umd' : undefined,
-    },
+    return {
+      mode: env,
+      entry: './src/index',
+      target: target,
+      output: {
+        path: path.resolve(process.cwd(), 'dist'),
+        filename: `index.${target}.js`,
+        libraryTarget: isProduction ? 'umd' : undefined,
+      },
 
-    externals: isProduction
-      ? [
-          'react',
-          'react-dom',
-          'emotion',
-          'react-emotion',
-          'create-emotion',
-          'polished',
-          'prop-types',
-          ...getAllPackages('../../packages'),
-        ]
-      : [],
+      externals: isProduction
+        ? [
+            'react',
+            'react-dom',
+            'emotion',
+            'react-emotion',
+            'create-emotion',
+            'polished',
+            'prop-types',
+            ...getAllPackages('../../packages'),
+          ]
+        : [],
 
-    resolve: {
-      extensions: ['.js', '.json', '.less', '.css', '.tsx', '.ts'],
-    },
+      resolve: {
+        extensions: ['.js', '.json', '.less', '.css', '.tsx', '.ts'],
+      },
 
-    devtool: isProduction ? 'source-map' : 'eval-source-map',
+      devtool: isProduction ? 'source-map' : 'eval-source-map',
 
-    module: {
-      rules: [
-        {
-          test: /\.(t|j)sx?$/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              // Makes Babel treat the directory containing babel.config.js as the project root
-              rootMode: 'upward',
+      module: {
+        rules: [
+          {
+            test: /\.(t|j)sx?$/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                // Makes Babel treat the directory containing babel.config.js as the project root
+                rootMode: 'upward',
+              },
+            },
+            exclude: /node_modules/,
+          },
+
+          {
+            test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+            loader: '@svgr/webpack',
+          },
+
+          {
+            test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+            loader: 'url-loader',
+            query: {
+              limit: 50000,
             },
           },
-          exclude: /node_modules/,
-        },
-
-        {
-          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-          loader: '@svgr/webpack',
-        },
-
-        {
-          test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'url-loader',
-          query: {
-            limit: 50000,
+          {
+            test: /\.less(\?v=\d+\.\d+\.\d+)?$/,
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+            },
           },
-        },
-        {
-          test: /\.less(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-          },
-        },
-      ],
-    },
+        ],
+      },
 
-    plugins: (function() {
-      // Defines global variables
-      const DefinePluginInstance = new webpack.DefinePlugin({
-        __DEV__: JSON.stringify((!isProduction).toString()),
-      });
+      plugins: (function() {
+        // Defines global variables
+        const DefinePluginInstance = new webpack.DefinePlugin({
+          __DEV__: JSON.stringify((!isProduction).toString()),
+          __TARGET__: JSON.stringify(target.toString()),
+        });
 
-      // Intercepts non-whitelisted modules from Highlight.js
-      //
-      // Previously, Highlight.js would import every language it supports,
-      // regardless of whether or not we were using it.
-      //
-      // This cuts the bundle size for the syntax component down to around
-      // 1/20th of the size that it would otherwise be.
-      const ContextReplacementPluginInstance = new webpack.ContextReplacementPlugin(
-        /highlight\.js\/lib\/languages$/,
-        new RegExp(`^./(${hljsSupportedLanguages.join('|')})$`),
-      );
+        // Intercepts non-whitelisted modules from Highlight.js
+        //
+        // Previously, Highlight.js would import every language it supports,
+        // regardless of whether or not we were using it.
+        //
+        // This cuts the bundle size for the syntax component down to around
+        // 1/20th of the size that it would otherwise be.
+        const ContextReplacementPluginInstance = new webpack.ContextReplacementPlugin(
+          /highlight\.js\/lib\/languages$/,
+          new RegExp(`^./(${hljsSupportedLanguages.join('|')})$`),
+        );
 
-      return [DefinePluginInstance, ContextReplacementPluginInstance];
-    })(),
+        return [DefinePluginInstance, ContextReplacementPluginInstance];
+      })(),
+    };
   };
-};
+}
+
+module.exports = [generateConfigFunc('web'), generateConfigFunc('node')];

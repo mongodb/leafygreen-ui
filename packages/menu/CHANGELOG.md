@@ -1,5 +1,26 @@
 # @leafygreen-ui/menu
 
+## 5.0.0
+
+### Major Changes
+
+- 464c09d: Introduces SSR compatibility though a change to our build process and files
+
+### Minor Changes
+
+- 5c9202d: Introduces support for LeafyGreenProvider for improved focus state management
+
+### Patch Changes
+
+- 31f6bfd: Initial release of @leafygreen-ui/pipeline component. Removed deprecated title prop from the @leafygreen-ui/menu component propTypes.
+- Updated dependencies [5c9202d]
+- Updated dependencies [464c09d]
+  - @leafygreen-ui/leafygreen-provider@1.0.0
+  - @leafygreen-ui/hooks@2.0.0
+  - @leafygreen-ui/lib@4.0.0
+  - @leafygreen-ui/palette@2.0.0
+  - @leafygreen-ui/popover@3.0.0
+
 ## 4.0.3
 
 ### Patch Changes

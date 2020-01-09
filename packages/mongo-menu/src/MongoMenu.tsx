@@ -9,43 +9,18 @@ import {
   FocusableMenuItem,
 } from '@leafygreen-ui/menu';
 import { createDataProp } from '@leafygreen-ui/lib';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
 const iconRef = createDataProp('icon-ref');
 
-const buttonReset = css`
+const wrapperStyle = css`
   appearance: none;
   background: none;
   border: 0px;
   position: relative;
   padding: 0px;
-
-  &:hover:before {
-    transform: scale(1);
-  }
-
-  &:active {
-    outline: none;
-    color: ${uiColors.gray.dark2};
-
-    &:before {
-      transform: scale(1);
-    }
-
-    & ${iconRef.selector} {
-      color: ${uiColors.gray.dark1};
-    }
-  }
-
-  &:focus {
-    outline: none;
-
-    &:before {
-      background-color: #63b0d0;
-      transform: scale(1);
-    }
-  }
 
   &::-moz-focus-inner {
     border: 0;
@@ -60,8 +35,35 @@ const buttonReset = css`
     right: -2px;
     border-radius: 50px;
     transform: scale(0.9, 0.8);
-    transition: transform 150ms ease-in-out;
+    transition: transform 150ms ease-in-out, background-color 150ms ease-in-out;
     background-color: ${uiColors.gray.light2};
+  }
+
+  &:hover:before {
+    transform: scale(1);
+  }
+
+  &:active {
+    color: ${uiColors.gray.dark2};
+
+    ${iconRef.selector} {
+      color: ${uiColors.gray.dark1};
+    }
+
+    &:before {
+      transform: scale(1);
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const focusStyle = css`
+  &:focus:before {
+    background-color: #63b0d0;
+    transform: scale(1);
   }
 `;
 
@@ -168,13 +170,15 @@ const menuItems = [
   },
 ] as const;
 
-export const Product = {
+const Product = {
   Atlas: 'atlas',
   University: 'university',
   Support: 'support',
 } as const;
 
-type Product = typeof Product[keyof typeof Product];
+type Product = typeof Product[keyof typeof Product] | '';
+
+export { Product };
 
 interface MongoMenuProps {
   /**
@@ -185,7 +189,7 @@ interface MongoMenuProps {
   /**
    * MongoDB product that is currently active: ['atlas', 'university', 'support'].
    */
-  activeProduct: Product;
+  activeProduct?: Product;
 
   /**
    * Callback invoked after the user clicks log out.
@@ -198,7 +202,9 @@ interface MongoMenuProps {
   onProductChange?: React.MouseEventHandler;
 
   /**
-   * URL passed to MongoDB Account button.
+   * URL passed to MongoDB Account button. If explicitly set to the
+   * empty string, the button will be disabled and not render as a
+   * link (e.g. for users already in the account app).
    */
   accountURL?: string;
 }
@@ -212,24 +218,31 @@ interface MongoMenuProps {
     activeProduct="atlas"
     onLogout={() => console.log('On logout')}
     onProductChange={() => console.log('Switching products')}
+    accountUrl="https://cloud.mongodb.com/account/profile"
   />
  * ```
  * @param props.user Object that contains information about the active user. {name: 'string', email: 'string'}
  * @param props.activeProduct  MongoDB product that is currently active: ['atlas', 'university', 'support'].
  * @param props.onLogout Callback invoked after the user clicks log out.
  * @param props.onProductChange Callback invoked after the user clicks a product.
+ * @param props.accountUrl Url (relative or absolute) linked to by the MongoDB Account button
  *
  */
 function MongoMenu({
   user: { name, email },
   accountURL = 'https://cloud.mongodb.com/v2#/account',
-  activeProduct,
+  activeProduct = '',
   onLogout = () => {},
   onProductChange = () => {},
 }: MongoMenuProps) {
   const [open, setOpen] = useState(false);
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+
   return (
-    <button className={buttonReset} onClick={() => setOpen(curr => !curr)}>
+    <button
+      className={cx(wrapperStyle, { [focusStyle]: showFocus })}
+      onClick={() => setOpen(curr => !curr)}
+    >
       <div
         className={cx(menuButtonStyle, {
           [activeMenuButtonStyle]: open,
@@ -255,9 +268,10 @@ function MongoMenu({
         <FocusableMenuItem>
           <Button
             size="small"
-            href={accountURL}
+            href={accountURL || undefined}
             className={accountButtonStyle}
-            as="a"
+            as={accountURL ? 'a' : 'button'}
+            disabled={!accountURL}
           >
             MongoDB Account
           </Button>

@@ -3,3 +3,10 @@ global.MutationObserver = class {
   disconnect() {}
   observe() {}
 };
+
+global.IntersectionObserver = class {
+  constructor() {}
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};

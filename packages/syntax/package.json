@@ -1,8 +1,9 @@
 {
   "name": "@leafygreen-ui/syntax",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "leafyGreen UI Kit Syntax-highlighting Component",
-  "main": "./dist/index.js",
+  "browser": "./dist/index.web.js",
+  "main": "./dist/index.node.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
@@ -13,8 +14,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^3.0.6",
-    "@leafygreen-ui/palette": "^1.0.6",
+    "@leafygreen-ui/lib": "^4.0.0",
+    "@leafygreen-ui/palette": "^2.0.0",
     "highlight.js": "^9.15.6"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0"

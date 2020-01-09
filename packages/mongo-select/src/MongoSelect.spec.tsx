@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from '@testing-library/react';
-import 'jest-dom/extend-expect';
+import '@testing-library/jest-dom/extend-expect';
 import MongoSelect, { Variant, PlanType } from './MongoSelect';
 
 const generateId = () =>

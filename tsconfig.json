@@ -48,6 +48,9 @@
       "path": "./packages/palette"
     },
     {
+      "path": "./packages/pipeline"
+    },
+    {
       "path": "./packages/popover"
     },
     {
@@ -70,6 +73,9 @@
     },
     {
       "path": "./packages/tooltip"
+    },
+    {
+      "path": "./packages/leafygreen-provider"
     }
   ]
 }
