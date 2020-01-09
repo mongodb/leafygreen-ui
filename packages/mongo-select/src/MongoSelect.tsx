@@ -119,6 +119,42 @@ interface MongoSelectProps {
    * Determines variant 'organization' | 'project'
    */
   variant: Variant;
+
+  /**
+   * Receives (orgID, projectID) as parameters
+   * Returns a string with a projectURL, where a user will be redirected when
+   * Project is selected from dropdown
+   */
+  constructProjectURL?: (orgID: string, projectID: string) => string;
+
+  /**
+   * Receives (orgID) as parameter
+   * Returns a string with an organizationURL, where a user will be redirected when
+   * Organization is selected from dropdown
+   */
+  constructOrganizationURL?: (orgID: string) => string;
+
+  overrides?: {
+    urls?: {
+      mongomenu?: {
+        cloud?: { [key: string]: string };
+        university?: { [key: string]: string };
+        support?: { [key: string]: string };
+      };
+      mongoSelect?: {
+        viewAllProjects?: string;
+        viewAllOrganizations?: string;
+        newProject?: string;
+      };
+    };
+    hosts?: {
+      cloud?: string;
+      university?: string;
+      support?: string;
+      realm?: string;
+      charts?: string;
+    };
+  };
 }
 
 /**
@@ -134,9 +170,18 @@ interface MongoSelectProps {
  * @param props.onClick Callback function executed when an organization is clicked.
  * @param props.variant Determines if MongoSelect will have `organization` or `project` data
  */
-function MongoSelect({ selected, data, onClick, variant }: MongoSelectProps) {
+function MongoSelect({
+  selected,
+  data,
+  onClick,
+  variant,
+  constructProjectURL,
+  constructOrganizationURL,
+  overrides = { hosts: {}, urls: {} },
+}: MongoSelectProps) {
   const [open, setOpen] = useState(false);
   const [filteredData, setFilteredData] = useState(data);
+  const { hosts, urls } = overrides;
 
   const onChange: React.ChangeEventHandler = ({ target }) => {
     const fuse = new Fuse(data, { keys: ['orgName', 'projectName'] });
@@ -146,24 +191,40 @@ function MongoSelect({ selected, data, onClick, variant }: MongoSelectProps) {
   };
 
   let trigger, footer;
-  const orgURI = `/v2#/org/${selected.orgId}`;
+  const orgURI = hosts?.cloud
+    ? `${hosts.cloud}/v2#/org/${selected.orgId}`
+    : `https://cloud.mongodb.com/v2#/org/${selected.orgId}`;
 
   if (isProject(selected)) {
     trigger = <ProjectTrigger selected={selected.projectName} />;
     footer = (
       <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
         <FocusableMenuItem>
-          <Button href={`${orgURI}/projects`}>View All Projects</Button>
+          <Button
+            href={urls?.mongoSelect?.viewAllProjects ?? `${orgURI}/projects`}
+          >
+            View All Projects
+          </Button>
         </FocusableMenuItem>
         <FocusableMenuItem>
-          <Button href={`${orgURI}/projects/create`}>+ New Project</Button>
+          <Button
+            href={urls?.mongoSelect?.newProject ?? `${orgURI}/projects/create`}
+          >
+            + New Project
+          </Button>
         </FocusableMenuItem>
       </li>
     );
   } else {
     trigger = <OrganizationTrigger selected={selected.orgName} />;
     footer = (
-      <MenuItem onKeyDown={onKeyDown} href={`${orgURI}/settings/general`}>
+      <MenuItem
+        onKeyDown={onKeyDown}
+        href={
+          urls?.mongoSelect?.viewAllOrganizations ??
+          `${orgURI}/settings/general`
+        }
+      >
         <strong className={viewAllStyle}>View All Organizations</strong>
       </MenuItem>
     );
@@ -174,11 +235,20 @@ function MongoSelect({ selected, data, onClick, variant }: MongoSelectProps) {
 
     if (isProject(datum)) {
       id = datum.projectId;
-      content = <ProjectOption projectName={datum.projectName} />;
+      content = (
+        <ProjectOption
+          projectName={datum.projectName}
+          href={constructProjectURL(datum.orgId, id)}
+        />
+      );
     } else {
       id = datum.orgId;
       content = (
-        <OrganizationOption orgName={datum.orgName} planType={datum.planType} />
+        <OrganizationOption
+          orgName={datum.orgName}
+          planType={datum.planType}
+          href={constructOrganizationURL(id)}
+        />
       );
     }
 

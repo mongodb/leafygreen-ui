@@ -37,6 +37,10 @@ describe('packages/mongo-select', () => {
         data={organizationData}
         onClick={onClick}
         variant={Variant.Organization}
+        constructOrganizationURL={orgID => orgID}
+        overrides={{
+          hosts: { cloud: `https://cloud-dev.mongodb.com` },
+        }}
       />,
     );
 
@@ -87,6 +91,14 @@ describe('packages/mongo-select', () => {
 
       expect(onClick).toHaveBeenCalled();
     });
+
+    test('view all organizations href is changed, when the host prop is set', () => {
+      const viewAllOrganizations = getByText('View All Organizations')
+        .parentNode?.parentNode;
+      expect((viewAllOrganizations as HTMLAnchorElement)?.href).toBe(
+        `https://cloud-dev.mongodb.com/v2#/org/${selected.orgId}/settings/general`,
+      );
+    });
   });
 
   describe('when variant is set to project', () => {
@@ -113,6 +125,7 @@ describe('packages/mongo-select', () => {
     ];
 
     const selectedProject = projectData[0];
+    const viewAllProjectsHref = 'https://cloud.mongodb.com/test-link';
 
     const { getByText, getByPlaceholderText, getAllByTitle } = render(
       <MongoSelect
@@ -120,6 +133,11 @@ describe('packages/mongo-select', () => {
         selected={selectedProject}
         onClick={onClick}
         data={projectData}
+        constructProjectURL={(orgID, projID) => `${orgID + projID}`}
+        overrides={{
+          hosts: { cloud: 'https://cloud-dev.mongodb.com' },
+          urls: { mongoSelect: { viewAllProjects: viewAllProjectsHref } },
+        }}
       />,
     );
 
@@ -168,6 +186,25 @@ describe('packages/mongo-select', () => {
       fireEvent.click(london);
 
       expect(onClick).toHaveBeenCalled();
+    });
+
+    test('view all projects link changes when the url overrides prop is set', () => {
+      const caretDown = getAllByTitle('Caret Down Icon')[1];
+      fireEvent.click(caretDown);
+
+      const viewAllProjectsLink = (getByText('View All Projects')
+        .parentNode as HTMLAnchorElement)?.href;
+
+      expect(viewAllProjectsLink).toBe(viewAllProjectsHref);
+    });
+
+    test('add a project link changes when the host override prop is set', () => {
+      const addProjectLink = (getByText('+ New Project')
+        .parentNode as HTMLAnchorElement)?.href;
+
+      expect(addProjectLink).toBe(
+        `https://cloud-dev.mongodb.com/v2#/org/${selectedProject.orgId}/projects/create`,
+      );
     });
   });
 });

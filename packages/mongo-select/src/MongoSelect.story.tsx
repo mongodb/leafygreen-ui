@@ -83,6 +83,9 @@ storiesOf('MongoSelect', module)
       variant={Variant.Organization}
       data={organizationData}
       selected={organizationData[4]}
+      constructOrganizationURL={orgID =>
+        `https://cloud.mongodb.com/organizations/${orgID}`
+      }
     />
   ))
   .add('Project', () => (
@@ -90,5 +93,8 @@ storiesOf('MongoSelect', module)
       variant={Variant.Project}
       data={projectData}
       selected={projectData[0]}
+      constructProjectURL={(orgID, projectID) =>
+        `https://cloud.mongodb.com/organizations/${orgID}/${projectID}`
+      }
     />
   ));

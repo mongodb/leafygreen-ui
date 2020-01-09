@@ -8,6 +8,7 @@ const optionStyle = css`
   justify-content: space-between;
   align-items: center;
   width: calc(100% - 15px);
+  text-decoration: none;
 `;
 
 const nameStyle = css`
@@ -24,12 +25,13 @@ const productStyle = css`
 
 interface ProjectOptionProps {
   projectName: string;
+  href: string;
 }
-export function ProjectOption({ projectName }: ProjectOptionProps) {
+export function ProjectOption({ projectName, href }: ProjectOptionProps) {
   return (
-    <div className={optionStyle}>
+    <a className={optionStyle} href={href}>
       <span className={nameStyle}>{projectName}</span>
-    </div>
+    </a>
   );
 }
 
@@ -47,15 +49,17 @@ const formatPlanType = (planType: PlanType) => {
 interface OrganizationOptionProps {
   orgName: string;
   planType: PlanType;
+  href: string;
 }
 export function OrganizationOption({
   orgName,
   planType,
+  href,
 }: OrganizationOptionProps) {
   return (
-    <div className={optionStyle}>
+    <a className={optionStyle} href={href}>
       <span className={nameStyle}>{orgName}</span>
       <span className={productStyle}>{formatPlanType(planType)}</span>
-    </div>
+    </a>
   );
 }

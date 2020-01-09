@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Menu, MenuSeparator, MenuItem } from './index';
+import { Menu, MenuSeparator, SubMenu, MenuItem } from '.';
 import { Align, Justify } from '@leafygreen-ui/popover';
 
 function Uncontrolled() {
@@ -57,6 +57,32 @@ function Controlled() {
   );
 }
 
+function SubMenuExample() {
+  return (
+    <LeafyGreenProvider>
+      <Menu trigger={<button>trigger</button>}>
+        <SubMenu
+          title="Menu Item 1"
+          description="https://google.com"
+          glyph="Cloud"
+          active={true}
+        >
+          <MenuItem>SubMenu Item 1</MenuItem>
+          <MenuItem>SubMenu Item 2</MenuItem>
+        </SubMenu>
+        <SubMenu
+          title="Menu Item 2"
+          description="https://google.com"
+          glyph="Laptop"
+        >
+          <MenuItem>Support 1</MenuItem>
+        </SubMenu>
+      </Menu>
+    </LeafyGreenProvider>
+  );
+}
+
 storiesOf('Menu', module)
   .add('Controlled', () => <Controlled />)
-  .add('Uncontrolled', () => <Uncontrolled />);
+  .add('Uncontrolled', () => <Uncontrolled />)
+  .add('With SubMenus', () => <SubMenuExample />);

@@ -102,21 +102,41 @@ _Any other properties will be spread on the Menu `div` container_
 
 Self-closing component that provides a way to group `MenuItems` in a `Menu` component.
 
+# SubMenu
+
+## Properties
+
+| Prop          | Type                                                             | Description                                                           | Default                                                                                         |
+| ------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `title`       | **Required, must be unique** `string`                            | Title of SubMenu                                                      |                                                                                                 |
+| `children`    | **Required** Menu Items that will appear inside of `<SubMenu />` |                                                                       |
+| `description` | `string`                                                         | `node`                                                                | Description text that will appear below title                                                   |  |
+| `href`        |                                                                  | `string`                                                              | If supplied, will render the `<SubMenu />` inside of an `<a>` tag, rather than a `<button>` tag |  |
+| `className`   | `string`                                                         | Classname applied to root element                                     |                                                                                                 |
+| `disabled`    | `boolean`                                                        | Determines if the `<SubMenu />` is `disabled`                         | `false`                                                                                         |
+| `active`      | `boolean`                                                        | Determines if the `<SubMenu />` is `active`                           | `false`                                                                                         |
+| `open`        | `boolean`                                                        | Determines if the `<SubMenu />` is `open`                             | `false`                                                                                         |
+| `setOpen`     | `function`                                                       | Function to handle opening and closing of `<SubMenu />`               |                                                                                                 |
+| `glyph`       | `string`                                                         | Determines what Icon will appear to the left of `<SubMenu />` content |                                                                                                 |
+| `onClick`     | `function`                                                       | Function that will be called when a `<SubMenu />` is clicked          |                                                                                                 |
+
+_Any other properties will be spread on the MenuItem container_
+
 # MenuItem
 
 ## Properties
 
-| Prop          | Type       | Description                                                                                    | Default |
-| ------------- | ---------- | ---------------------------------------------------------------------------------------------- | ------- |
-| `href`        | `string`   | If supplied, will render the `<MenuItem />` inside of an `<a>` tag, rather than a `<span>` tag |         |
-| `children`    | `node`     | Content to appear inside of `<MenuItem />` component                                           |         |
-| `className`   | `string`   | Classname applied to `li` element                                                              |         |
-| `onClick`     | `function` | Function that will be called when a `<MenuItem />` is clicked                                  |         |
-| `active`      | `boolean`  | Determines if the `<MenuItem />` is `active`                                                   | `false` |
-| `disabled`    | `boolean`  | Determines if the `<MenuItem />` is `disabled`                                                 | `false` |
-| `description` | `string`   | Description text that will appear below the main content of `<MenuItem />`                     |         |
+| Prop          | Type       | Description                                                                                      | Default |
+| ------------- | ---------- | ------------------------------------------------------------------------------------------------ | ------- |
+| `href`        | `string`   | If supplied, will render the `<MenuItem />` inside of an `<a>` tag, rather than a `<button>` tag |         |
+| `children`    | `node`     | Content to appear inside of `<MenuItem />` component                                             |         |
+| `className`   | `string`   | Classname applied to root element                                                                |         |
+| `onClick`     | `function` | Function that will be called when a `<MenuItem />` is clicked                                    |         |
+| `active`      | `boolean`  | Determines if the `<MenuItem />` is `active`                                                     | `false` |
+| `disabled`    | `boolean`  | Determines if the `<MenuItem />` is `disabled`                                                   | `false` |
+| `description` | `string`   | Description text that will appear below the main content of `<MenuItem />`                       |         |
 
-_Any other properties will be spread on the MenuItem `div` container_
+_Any other properties will be spread on the MenuItem container_
 
 ## Advanced Use Case
 

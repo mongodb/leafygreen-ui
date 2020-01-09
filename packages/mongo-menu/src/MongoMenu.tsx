@@ -1,108 +1,26 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@leafygreen-ui/button';
-import Icon from '@leafygreen-ui/icon';
+import Icon, { glyphs } from '@leafygreen-ui/icon';
+import { LogoMark } from '@leafygreen-ui/logo';
 import {
   Menu,
+  SubMenu,
   MenuItem,
   MenuSeparator,
   FocusableMenuItem,
 } from '@leafygreen-ui/menu';
 import { createDataProp } from '@leafygreen-ui/lib';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
+import MongoMenuTrigger from './MongoMenuTrigger';
 
-const iconRef = createDataProp('icon-ref');
+const subMenuContainer = createDataProp('sub-menu-container');
 
-const wrapperStyle = css`
-  appearance: none;
-  background: none;
-  border: 0px;
+const triggerWrapper = css`
+  display: inline-block;
   position: relative;
-  padding: 0px;
-
-  &::-moz-focus-inner {
-    border: 0;
-  }
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    bottom: -2px;
-    left: -2px;
-    right: -2px;
-    border-radius: 50px;
-    transform: scale(0.9, 0.8);
-    transition: transform 150ms ease-in-out, background-color 150ms ease-in-out;
-    background-color: ${uiColors.gray.light2};
-  }
-
-  &:hover:before {
-    transform: scale(1);
-  }
-
-  &:active {
-    color: ${uiColors.gray.dark2};
-
-    ${iconRef.selector} {
-      color: ${uiColors.gray.dark1};
-    }
-
-    &:before {
-      transform: scale(1);
-    }
-  }
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-const focusStyle = css`
-  &:focus:before {
-    background-color: #63b0d0;
-    transform: scale(1);
-  }
-`;
-
-const menuButtonStyle = css`
-  height: 29px;
-  padding-left: 14px;
-  padding-right: 14px;
-  border: 1px solid ${uiColors.gray.light1};
-  background-color: ${uiColors.white};
-  border-radius: 14.5px;
-  cursor: pointer;
-  transition: background 150ms ease-in-out;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: ${uiColors.gray.dark2};
-  font-size: 12px;
-  position: relative;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-const menuNameStyle = css`
-  margin-right: 2px;
-  margin-left: 2px;
-  max-width: 162px;
-`;
-
-const activeMenuButtonStyle = css`
-  background-color: ${uiColors.gray.light2};
-`;
-
-const nameStyle = css`
-  font-size: 16px;
-  color: ${uiColors.gray.dark2};
-  font-weight: bold;
-  margin: 4px 0px 2px;
+  z-index: 0;
 `;
 
 const truncate = css`
@@ -111,67 +29,175 @@ const truncate = css`
   text-overflow: ellipsis;
 `;
 
-const closedIconStyle = css`
-  transform: rotate(180deg);
-  transition: color 200ms ease-in-out;
-  color: ${uiColors.gray.base};
+const menuStyle = css`
+  width: 300px;
 `;
 
-const openIconStyle = css`
-  margin-top: 2px;
-  color: ${uiColors.gray.base};
-`;
-
-const headerPadding = css`
-  padding-top: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-`;
-
-const accountButtonStyle = css`
-  margin-top: 12px;
-  margin-left: 20px;
-  width: calc(100% - 40px);
-  display: inline-flex;
-  justify-content: center;
+const headerStyle = css`
+  padding: 24px 10px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 14px;
+  background-color: ${uiColors.gray.dark3};
+  color: ${uiColors.white};
+  max-width: 100%;
+`;
+
+const logoMarkBackground = css`
+  background-color: white;
+  width: 43px;
+  height: 43px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+`;
+
+const nameStyle = css`
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 22px;
+  margin: 0px;
+  max-width: 100%;
+`;
+
+const subMenuContainerStyle = css`
+  pointer-events: inherit;
+`;
+
+const subMenuActiveContainerStyle = css`
+  pointer-events: none;
+`;
+
+const productLinkStyle = css`
+  font-size: 12px;
+  color: ${uiColors.blue.base};
+  display: flex;
+  align-items: flex-end;
+  ${subMenuContainer.selector}:hover & {
+    color: ${uiColors.blue.dark2};
+  }
+`;
+
+const activeProductLinkStyle = css`
+  color: ${uiColors.gray.light1};
+`;
+
+const productLinkIconStyle = css`
+  opacity: 0;
+  transform: translate3d(-3px, 0, 0px);
+  transition: all 100ms ease-in;
+  ${subMenuContainer.selector}:hover & {
+    opacity: 1;
+    transform: translate3d(3px, 0, 0px);
+  }
 `;
 
 const descriptionStyle = css`
-  margin: 0px;
   font-size: 12px;
-  color: ${uiColors.gray.dark1};
+  line-height: 14px;
   text-decoration: none;
+  margin-top: 0px;
+  margin-bottom: 16px;
+  max-width: 100%;
 `;
 
-const logoutContainerHeight = css`
-  height: 46px;
+const logoutContainer = css`
+  height: 56px;
+  background-color: ${uiColors.gray.light3};
 `;
 
-const menuItems = [
+const SubMenuItemNames = {
+  userPreferences: 'User Preferences',
+  invitations: 'Invitations',
+  organizations: 'Organizations',
+  videoPreferences: 'Video Preferences',
+  tfa: 'Two-Factor Authorization',
+};
+
+type SubMenuItemNames = typeof SubMenuItemNames[keyof typeof SubMenuItemNames];
+
+interface SubMenuItemInterface {
+  title: string;
+  relative: string;
+  absolute: string;
+}
+
+interface SubMenuInterface {
+  displayName: 'Atlas' | 'University' | 'Cloud Support';
+  href:
+    | 'https://cloud.mongodb.com'
+    | 'https://university.mongodb.com'
+    | 'https://support.mongodb.com';
+  description: string;
+  slug: Product;
+  subMenuItems: { [key: string]: SubMenuItemInterface };
+  glyph: Glyph;
+}
+
+const subMenus: Array<SubMenuInterface> = [
   {
     displayName: 'Atlas',
     description: 'cloud.mongodb.com',
     href: 'https://cloud.mongodb.com',
-    slug: 'atlas',
+    slug: 'cloud',
+    subMenuItems: {
+      userPreferences: {
+        title: 'User Preferences',
+        relative: '/preferences/personalization',
+        absolute: 'https://cloud.mongodb.com/v2#/preferences/personalization',
+      },
+      invitations: {
+        title: 'Invitations',
+        relative: '/preferences/invitations',
+        absolute: 'https://cloud.mongodb.com/v2#/preferences/invitations',
+      },
+      organizations: {
+        title: 'Organizations',
+        relative: '/preferences/organizations',
+        absolute: 'https://cloud.mongodb.com/v2#/preferences/organizations',
+      },
+      tfa: {
+        title: 'Two-Factor Authorization',
+        relative: '/preferences/2fa',
+        absolute: 'https://cloud.mongodb.com/v2#/preferences/2fa',
+      },
+    },
+    glyph: 'Cloud',
   },
   {
     displayName: 'University',
     description: 'university.mongodb.com',
     href: 'https://university.mongodb.com',
     slug: 'university',
+    subMenuItems: {
+      videoPreferences: {
+        title: 'Video Preferences',
+        absolute: 'xx',
+        relative: 'yy',
+      },
+    },
+    glyph: 'Laptop',
   },
   {
     displayName: 'Cloud Support',
     description: 'support.mongodb.com',
     href: 'https://support.mongodb.com',
     slug: 'support',
+    subMenuItems: {
+      userPreferences: {
+        title: 'User Preferences',
+        absolute: 'https://support.mongodb.com/profile',
+        relative: '/profile',
+      },
+    },
+    glyph: 'Support',
   },
-] as const;
+];
 
 const Product = {
-  Atlas: 'atlas',
+  Atlas: 'cloud',
   University: 'university',
   Support: 'support',
 } as const;
@@ -180,14 +206,16 @@ type Product = typeof Product[keyof typeof Product] | '';
 
 export { Product };
 
+type Glyph = keyof typeof glyphs;
+
 interface MongoMenuProps {
   /**
-   * Object that contains information about the active user. {name: 'string', email: 'string'}
+   * Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
    */
-  user: { name: string; email: string };
+  user: { firstName: string; lastName: string; email: string };
 
   /**
-   * MongoDB product that is currently active: ['atlas', 'university', 'support'].
+   * MongoDB product that is currently active: ['cloud', 'university', 'support'].
    */
   activeProduct?: Product;
 
@@ -207,6 +235,23 @@ interface MongoMenuProps {
    * link (e.g. for users already in the account app).
    */
   accountURL?: string;
+
+  overrides?: {
+    urls: {
+      mongomenu?: {
+        cloud?: { [key: string]: string };
+        university?: { [key: string]: string };
+        support?: { [key: string]: string };
+      };
+    };
+    hosts?: {
+      cloud?: string;
+      university?: string;
+      support?: string;
+      realm?: string;
+      charts?: string;
+    };
+  };
 }
 
 /**
@@ -214,94 +259,147 @@ interface MongoMenuProps {
  *
  * ```
 <MongoMenu
-    user={{ name: 'Alex Smith', email: 'alex.smith@youwork.com' }}
-    activeProduct="atlas"
+    user={{ firstName: 'Alex', lastName: 'Smith', email: 'alex.smith@youwork.com' }}
+    activeProduct="cloud"
     onLogout={() => console.log('On logout')}
     onProductChange={() => console.log('Switching products')}
-    accountUrl="https://cloud.mongodb.com/account/profile"
+    accountURL="https://cloud.mongodb.com/account/profile"
   />
  * ```
- * @param props.user Object that contains information about the active user. {name: 'string', email: 'string'}
- * @param props.activeProduct  MongoDB product that is currently active: ['atlas', 'university', 'support'].
+ * @param props.user Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
+ * @param props.activeProduct  MongoDB product that is currently active: ['cloud', 'university', 'support'].
  * @param props.onLogout Callback invoked after the user clicks log out.
  * @param props.onProductChange Callback invoked after the user clicks a product.
- * @param props.accountUrl Url (relative or absolute) linked to by the MongoDB Account button
- *
+ * @param props.accountURL URL (relative or absolute) linked to by the MongoDB Account button
  */
 function MongoMenu({
-  user: { name, email },
+  user: { firstName, lastName, email },
   accountURL = 'https://cloud.mongodb.com/v2#/account',
   activeProduct = '',
   onLogout = () => {},
   onProductChange = () => {},
+  overrides = { hosts: {}, urls: {} },
 }: MongoMenuProps) {
   const [open, setOpen] = useState(false);
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+  const { hosts, urls } = overrides;
+  const name = `${firstName} ${lastName}`;
 
-  return (
-    <button
-      className={cx(wrapperStyle, { [focusStyle]: showFocus })}
-      onClick={() => setOpen(curr => !curr)}
-    >
+  const renderSubMenu = ({
+    slug,
+    href,
+    displayName,
+    glyph,
+    subMenuItems,
+    description,
+  }: SubMenuInterface) => {
+    const isActive = slug === activeProduct;
+
+    const renderSubMenuItems = (subMenuItem: SubMenuItemNames) => {
+      let menuItemHref;
+
+      if (
+        urls?.mongomenu?.[slug as 'cloud' | 'university' | 'support']?.[
+          subMenuItem
+        ]
+      ) {
+        menuItemHref =
+          urls?.mongomenu?.[slug as 'cloud' | 'university' | 'support']?.[
+            subMenuItem
+          ];
+      } else if (hosts?.[slug as 'cloud' | 'university' | 'support']) {
+        menuItemHref = `${hosts?.[slug as 'cloud' | 'university' | 'support'] +
+          subMenuItems[subMenuItem]?.relative}`;
+      } else {
+        menuItemHref = subMenuItems[subMenuItem]?.absolute;
+      }
+
+      return (
+        <MenuItem key={subMenuItems[subMenuItem]?.title} href={menuItemHref}>
+          {subMenuItems[subMenuItem]?.title}
+        </MenuItem>
+      );
+    };
+
+    const subMenuDescription = (
       <div
-        className={cx(menuButtonStyle, {
-          [activeMenuButtonStyle]: open,
+        className={cx(productLinkStyle, {
+          [activeProductLinkStyle]: isActive,
         })}
       >
-        <span className={cx(menuNameStyle, truncate)}>{name}</span>
-
+        {description}
         <Icon
-          {...iconRef.prop}
-          glyph="CaretUp"
-          className={cx({
-            [openIconStyle]: open,
-            [closedIconStyle]: !open,
-          })}
+          size="small"
+          glyph="CaretRight"
+          className={productLinkIconStyle}
         />
       </div>
+    );
 
-      <Menu open={open} setOpen={setOpen}>
-        <div className={headerPadding}>
+    return (
+      <SubMenu
+        {...subMenuContainer.prop}
+        key={displayName}
+        active={isActive}
+        href={href}
+        description={subMenuDescription}
+        target="_blank"
+        rel="noopener noreferrer"
+        title={displayName}
+        glyph={glyph}
+        onClick={e => {
+          onProductChange(e);
+          setOpen(false);
+        }}
+        className={cx(subMenuContainerStyle, {
+          [subMenuActiveContainerStyle]: isActive,
+        })}
+      >
+        {Object.keys(subMenuItems).map(renderSubMenuItems)}
+      </SubMenu>
+    );
+  };
+
+  return (
+    <div className={triggerWrapper}>
+      <MongoMenuTrigger open={open} name={firstName} setOpen={setOpen} />
+
+      <Menu open={open} setOpen={setOpen} className={menuStyle}>
+        <div className={headerStyle}>
+          <div className={logoMarkBackground}>
+            <LogoMark height={30} />
+          </div>
+
           <h3 className={cx(nameStyle, truncate)}>{name}</h3>
+
           <p className={cx(descriptionStyle, truncate)}>{email}</p>
+
+          <FocusableMenuItem>
+            <Button
+              href={accountURL || undefined}
+              disabled={!accountURL}
+              as={accountURL ? 'a' : 'button'}
+            >
+              Manage your MongoDB Account
+            </Button>
+          </FocusableMenuItem>
         </div>
-        <FocusableMenuItem>
-          <Button
-            size="small"
-            href={accountURL || undefined}
-            className={accountButtonStyle}
-            as={accountURL ? 'a' : 'button'}
-            disabled={!accountURL}
-          >
-            MongoDB Account
-          </Button>
-        </FocusableMenuItem>
         <MenuSeparator />
-        {menuItems.map(el => (
-          <MenuItem
-            onClick={onProductChange}
-            key={el.displayName}
-            active={el.slug === activeProduct}
-            href={el.href}
-            description={el.description}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {el.displayName}
-          </MenuItem>
-        ))}
+
+        {subMenus.map(renderSubMenu)}
+
         <MenuSeparator />
-        <MenuItem onClick={onLogout} className={cx(logoutContainerHeight)}>
+
+        <MenuItem onClick={onLogout} className={logoutContainer}>
           Logout
         </MenuItem>
       </Menu>
-    </button>
+    </div>
   );
 }
 
 MongoMenu.displayName = 'MongoMenu';
 
-const slugs = menuItems.map(mi => mi.slug);
+const slugs = subMenus.map(mi => mi.slug);
 
 MongoMenu.propTypes = {
   user: PropTypes.objectOf(PropTypes.string),
