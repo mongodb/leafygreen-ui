@@ -1571,7 +1571,7 @@
     create-emotion "^10.0.7"
     emotion "^10.0.7"
 
-"@leafygreen-ui/lib@^3.0.6":
+"@leafygreen-ui/lib@^3.0.6", "@leafygreen-ui/lib@^3.2.0":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-3.2.0.tgz#8dbc6c77eeb1767e98a3a6499de5d37a8106eaa0"
   integrity sha512-fSQlaTiM4fPfqJb5VxXfSMajdikHYWL+P/FnEWwurYZo8iyL5qvfRmQ5EfdoZatcVzZPnb7hgj617+bKqXy71A==
