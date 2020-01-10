@@ -191,7 +191,6 @@ function Modal({
     }
   };
 
-
   useEscapeKey(handleClose);
 
   return (

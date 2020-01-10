@@ -32,11 +32,11 @@ function humanReadableTitle(glyph: string) {
   return `${glyph.replace(/([A-Z][a-z])/g, ' $1')} Icon`;
 }
 
-type IconType<G extends GlyphMap> = React.ComponentType<IconProps<G>> & G
+type IconType<G extends GlyphMap> = React.ComponentType<IconProps<G>> & G;
 
-export default function createIconComponent<G extends Omit<GlyphMap, 'displayName' | 'propTypes'>>(
-  glyphs: G,
-): IconType<G> {
+export default function createIconComponent<
+  G extends Omit<GlyphMap, 'displayName' | 'propTypes'>
+>(glyphs: G): IconType<G> {
   function Icon({ glyph, size = Size.Default, ...rest }: IconProps<G>) {
     const SVGComponent: SVGR.Component = glyphs[glyph];
 
@@ -47,18 +47,18 @@ export default function createIconComponent<G extends Omit<GlyphMap, 'displayNam
         title={rest.title || humanReadableTitle(glyph as string)}
       />
     );
-  };
+  }
 
   for (const glyph in glyphs) {
     if (glyph in Icon) {
-      throw new Error(`The key: '${glyph}' already exists on Icon`)
+      throw new Error(`The key: '${glyph}' already exists on Icon`);
     }
 
     // @ts-ignore
     // We ignore typescripts errors on this line because "IconType"
     // is not correctly understanding the addition of these properties
     // despite them existing on the object we're returning.
-    Icon[glyph] = glyphs[glyph]
+    Icon[glyph] = glyphs[glyph];
   }
 
   Icon.displayName = 'Icon';

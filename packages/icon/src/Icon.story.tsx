@@ -27,21 +27,17 @@ const textStyle = css`
 const glyphList = Object.keys(glyphs) as Array<keyof typeof glyphs>;
 
 storiesOf('Icons', module).add('Icon', () => {
-  const fill = color('Fill', '#000000')
-  const size = select('size', Object.values(Size) as Array<Size>, Size.Default)
+  const fill = color('Fill', '#000000');
+  const size = select('size', Object.values(Size) as Array<Size>, Size.Default);
 
   return (
     <>
       {glyphList.map(glyph => (
         <div key={glyph} className={containerStyle}>
-          <Icon
-            glyph={glyph}
-            fill={fill}
-            size={size}
-          />
+          <Icon glyph={glyph} fill={fill} size={size} />
           <div className={textStyle}>{glyph}</div>
         </div>
       ))}
     </>
-  )
+  );
 });

@@ -33,6 +33,27 @@ const SomeComponent = () => <Icon glyph="Plus" fill="#FF0000" />;
 | `size`  | `string` or `number`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | The height and width of the glyph's viewBox. This can be any `number` or one of the following `'small'`, `'default'`, `'large'`, `'xlarge'`  | `'default'` |
 | `fill`  | `string`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | The fill color that is passed to the glyph. By default, the glyph will inherit its fill from the CSS color property of its nearest ancestor. |             |
 
+## Consuming individual icons
+
+The API for the Icon component supports consuming individual glyphs as well. This can be useful because this method allows webpack to eliminate unused glyphs. Each individual glyph supports the same properties as `Icon` does except the `glyph` property.
+
+## Example
+
+```js
+import Icon from '@leafygreen-ui/icon';
+
+const SomeComponent = () => <Icon.Plus fill="#FF0000" />;
+```
+
+**Output HTML**
+
+```HTML
+<svg width="16" height="16" role="img" viewBox="0 0 16 16" class="leafygreen-ui-yqbynm">
+	<title>Plus Icon</title>
+	<path d="M9 7h4v2H9v4H7V9H3V7h4V3h2v4z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+```
+
 ## Advanced Usage (Registering custom icon sets)
 
 This package exposes a method used to generate a custom version of the Icon component with any specified set of icons.
