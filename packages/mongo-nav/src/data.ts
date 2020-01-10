@@ -13,7 +13,12 @@ export default {
     orgName: 'yay',
     planType: 'atlas',
   },
-  currentProject: {},
+  currentProject: {
+    orgId: '5d729a93',
+    planType: 'cloud',
+    projectId: '020019e',
+    projectName: 'asdf',
+  },
   organizations: [
     {
       orgId: '5d729a93',

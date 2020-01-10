@@ -22,6 +22,8 @@
       "@leafygreen-ui/icon": "^3.0.0",
       "@leafygreen-ui/tooltip": "^3.0.0", 
       "@leafygreen-ui/badge": "^3.0.0",
-      "@leafygreen-ui/button": "^4.0.0"
+      "@leafygreen-ui/button": "^4.0.0", 
+      "@leafygreen-ui/icon-button": "^3.0.0", 
+      "@leafygreen-ui/tabs": "^2.0.0"
     }
   }

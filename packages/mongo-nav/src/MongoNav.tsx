@@ -1,5 +1,7 @@
 import React from 'react';
 import OrgNav from './org-nav/index';
+import ProjNav from './proj-nav/index';
+import { css } from '@leafygreen-ui/emotion';
 import { DataInterface, Product, OverridesInterface } from './types';
 interface MongoNavInterface {
   activeProduct: Product;
@@ -13,8 +15,10 @@ export default function MongoNav({
   activeProduct,
   data,
   overrides,
-  constructOrganizationURL = p => 'blah',
-  constructProjectURL = (p, q) => 'blah',
+  constructOrganizationURL = orgId =>
+    `https://cloud.mongodb.com/v2#/org/${orgId}/projects`,
+  constructProjectURL = (orgId, projectId) =>
+    `https://cloud.mongodb.com/v2#/org/${projectId}/projects`,
 }: MongoNavInterface) {
   return (
     <>
@@ -25,6 +29,13 @@ export default function MongoNav({
         data={data.organizations}
         constructOrganizationURL={constructOrganizationURL}
         overrides={overrides}
+      />
+      <ProjNav
+        current={data.currentProject}
+        data={data.projects}
+        constructProjectURL={constructProjectURL}
+        overrides={overrides}
+        alerts={data.alertsOpen}
       />
     </>
   );

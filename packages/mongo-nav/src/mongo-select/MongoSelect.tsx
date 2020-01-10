@@ -94,7 +94,7 @@ interface MongoSelectProps {
    */
   variant: Variant;
 
-  className: string;
+  className?: string;
 
   /**
    * Receives (orgID, projectID) as parameters

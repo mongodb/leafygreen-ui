@@ -24,6 +24,7 @@ const navContainer = css`
   font-size: 13px;
   line-height: 15px;
   color: ${uiColors.gray.dark3};
+  border-bottom: 1px solid ${uiColors.gray.light2};
 `;
 
 const leftSideContainer = css`
@@ -39,6 +40,7 @@ const orgSelectContainer = css`
 const ulContainer = css`
   list-style: none;
   display: flex;
+  padding-inline-start: 0px;
 `;
 
 const linkText = css`
