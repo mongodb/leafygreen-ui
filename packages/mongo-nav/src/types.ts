@@ -43,6 +43,11 @@ export interface ProjectInterface {
   orgId: string;
 }
 
+interface CurrentProjectInterface extends ProjectInterface {
+  alertsOpen: number;
+  chartsActivated: boolean;
+}
+
 export interface OrganizationInterface {
   orgId: string;
   orgName: string;
@@ -50,10 +55,8 @@ export interface OrganizationInterface {
 }
 export interface DataInterface {
   account: AccountInterface;
-  alertsOpen: number;
-  chartsActivated: boolean;
   currentOrganization: OrganizationInterface;
-  currentProject: ProjectInterface;
+  currentProject: CurrentProjectInterface;
   organizations: Array<OrganizationInterface>;
   projects: Array<ProjectInterface>;
 }

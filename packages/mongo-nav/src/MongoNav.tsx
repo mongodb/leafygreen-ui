@@ -35,7 +35,7 @@ export default function MongoNav({
         data={data.projects}
         constructProjectURL={constructProjectURL}
         overrides={overrides}
-        alerts={data.alertsOpen}
+        alerts={data.currentProject.alertsOpen}
       />
     </>
   );

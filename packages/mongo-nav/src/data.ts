@@ -6,14 +6,14 @@ export default {
     openInvitations: 0,
     username: 'harry.wolff@mongodb.com',
   },
-  alertsOpen: 1,
-  chartsActivated: false,
   currentOrganization: {
     orgId: '5d729a93',
     orgName: 'yay',
     planType: 'atlas',
   },
   currentProject: {
+    alertsOpen: 1,
+    chartsActivated: false,
     orgId: '5d729a93',
     planType: 'cloud',
     projectId: '020019e',
