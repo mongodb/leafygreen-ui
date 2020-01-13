@@ -83,6 +83,14 @@ export interface OverridesInterface {
       support?: string;
       billing?: string;
     };
+    projectNav?: {
+      settings?: string;
+      accessManager?: string;
+      support?: string;
+      integrations?: string;
+      alerts?: string;
+      activityFeed?: string;
+    };
   };
   hosts?: {
     cloud?: string;

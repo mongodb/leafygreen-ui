@@ -1,7 +1,6 @@
 import React from 'react';
 import OrgNav from './org-nav/index';
 import ProjNav from './proj-nav/index';
-import { css } from '@leafygreen-ui/emotion';
 import { DataInterface, Product, OverridesInterface } from './types';
 interface MongoNavInterface {
   activeProduct: Product;
