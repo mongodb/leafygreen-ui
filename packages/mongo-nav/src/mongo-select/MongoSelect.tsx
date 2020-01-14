@@ -142,7 +142,7 @@ function MongoSelect({
           <Button
             href={
               urls?.mongoSelect?.viewAllProjects ??
-              `${orgURI}/v2#/org/${current.orgId}/projects`
+              `${orgURI}/org/${current.orgId}/projects`
             }
           >
             View All Projects
@@ -152,7 +152,7 @@ function MongoSelect({
           <Button
             href={
               urls?.mongoSelect?.newProject ??
-              `${orgURI}/v2#/org/${current.orgId}/projects/create`
+              `${orgURI}/org/${current.orgId}/projects/create`
             }
           >
             + New Project

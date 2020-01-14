@@ -137,7 +137,7 @@ describe('packages/MongoMenu', () => {
 
       const atlasSubMenuitem = getByText('Invitations');
       expect((atlasSubMenuitem?.parentNode as HTMLAnchorElement).href).toBe(
-        'https://cloud-dev.com/preferences/invitations',
+        'https://cloud-dev.com/v2#/preferences/invitations',
       );
     });
   });

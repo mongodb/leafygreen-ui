@@ -80,7 +80,7 @@ describe('packages/mongo-select', () => {
       });
 
       expect(localWork).toBeInTheDocument();
-      expect(pizza).not.toBeInTheDocument();
+      expect(pizza).not.toBeVisible();
     });
 
     test('onClick is fired when organization is clicked', () => {
@@ -97,7 +97,7 @@ describe('packages/mongo-select', () => {
       const viewAllOrganizations = getByText('View All Organizations')
         .parentNode?.parentNode;
       expect((viewAllOrganizations as HTMLAnchorElement)?.href).toBe(
-        `https://cloud-dev.mongodb.com/v2#/org/${current.orgId}/settings/general`,
+        `https://cloud-dev.mongodb.com/v2#/preferences/organizations`,
       );
     });
   });
@@ -177,7 +177,7 @@ describe('packages/mongo-select', () => {
       });
 
       expect(london).toBeInTheDocument();
-      expect(madrid).not.toBeInTheDocument();
+      expect(madrid).not.toBeVisible();
     });
 
     test('onClick is fired when project is clicked', () => {
