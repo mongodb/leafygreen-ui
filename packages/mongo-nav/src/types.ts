@@ -3,11 +3,23 @@ const Product = {
   Cloud: 'cloud',
   Support: 'support',
   University: 'university',
+  Charts: 'charts',
+  Stitch: 'stitch',
 } as const;
 
 type Product = typeof Product[keyof typeof Product];
 
 export { Product };
+
+const NavItem = {
+  Billing: 'billing',
+  Support: 'support',
+  AccessManager: 'accessManager',
+};
+
+type NavItem = typeof NavItem[keyof typeof NavItem] | '';
+
+export { NavItem };
 
 export interface AccountInterface {
   email: string;
@@ -61,18 +73,22 @@ export interface DataInterface {
   projects: Array<ProjectInterface>;
 }
 
-enum SubMenuItems {
-  userPreferences = 'User Preferences',
-  invitations = 'Invitations',
-  organizations = 'Organizations',
-  videoPreferences = 'Video Preferences',
-  tfa = 'Two-Factor Authorization',
-  accountURL = 'accountURL',
-}
-
 export interface OverridesInterface {
   urls?: {
-    mongoMenu?: { [k in Product]?: { [k in SubMenuItems]?: string } };
+    mongoMenu?: {
+      cloud?: {
+        userPreferences: string;
+        organizations: string;
+        invitations: string;
+        tfa: string;
+      };
+      university?: {
+        videoPreferences: string;
+      };
+      support?: {
+        userPreferences: string;
+      };
+    };
     mongoSelect?: {
       viewAllProjects?: string;
       viewAllOrganizations?: string;

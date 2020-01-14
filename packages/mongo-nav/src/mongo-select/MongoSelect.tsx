@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Fuse from 'fuse.js';
 import {
   Menu,
   FocusableMenuItem,
@@ -112,6 +111,8 @@ interface MongoSelectProps {
   constructOrganizationURL?: (orgID: string) => string;
 
   overrides?: OverridesInterface;
+
+  onChange?: React.ChangeEventHandler;
 }
 
 function MongoSelect({
@@ -121,19 +122,12 @@ function MongoSelect({
   variant,
   constructProjectURL,
   constructOrganizationURL,
+  onChange,
   className,
   overrides = { hosts: {}, urls: {} },
 }: MongoSelectProps) {
   const [open, setOpen] = useState(false);
-  const [filteredData, setFilteredData] = useState(data);
   const { hosts, urls } = overrides;
-
-  const onChange: React.ChangeEventHandler = ({ target }) => {
-    const fuse = new Fuse(data, { keys: ['orgName', 'projectName'] });
-    const results = fuse.search((target as HTMLInputElement).value);
-
-    setFilteredData(results);
-  };
 
   let trigger, footer;
   const orgURI = hosts?.cloud
@@ -234,7 +228,7 @@ function MongoSelect({
           className={ulContainerStyle}
           role="menu"
         >
-          {filteredData.map(renderOption)}
+          {data.map(renderOption)}
         </ul>
       </li>
 

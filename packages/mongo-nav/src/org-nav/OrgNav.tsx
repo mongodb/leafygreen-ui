@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { LogoMark } from '@leafygreen-ui/logo';
 import Tooltip from '@leafygreen-ui/tooltip';
@@ -8,6 +8,7 @@ import {
   OrganizationInterface,
   Product,
   OverridesInterface,
+  NavItem,
 } from '../types';
 
 import MongoSelect from '../mongo-select/index';
@@ -65,14 +66,18 @@ interface OrgNav {
   data: Array<OrganizationInterface>;
   constructOrganizationURL: (orgID: string) => string;
   overrides?: OverridesInterface;
+  activeNav?: NavItem;
+  onOrganizationChange?: React.ChangeEventHandler;
 }
 
 export default function OrgNav({
   account,
+  activeNav,
   activeProduct,
   current,
   data,
   constructOrganizationURL,
+  onOrganizationChange,
   overrides = {
     hosts: {},
     urls: {},
@@ -92,6 +97,7 @@ export default function OrgNav({
           constructOrganizationURL={constructOrganizationURL}
           variant="organization"
           overrides={overrides}
+          onChange={onOrganizationChange}
         />
         <ul className={ulContainer}>
           <li role="none">
@@ -105,7 +111,9 @@ export default function OrgNav({
                     urls?.orgNav?.accessManager ??
                     `${baseURL}/v2#/org/${current.orgId}/access/users`
                   }
-                  className={linkText}
+                  className={cx(linkText, {
+                    [activeLink]: activeNav === 'accessManager',
+                  })}
                 >
                   Access Manager
                 </a>
@@ -125,7 +133,9 @@ export default function OrgNav({
                     urls?.orgNav?.support ??
                     `${baseURL}/v2#/org/${current.orgId}/support`
                   }
-                  className={linkText}
+                  className={cx(linkText, {
+                    [activeLink]: activeNav === 'support',
+                  })}
                 >
                   Support
                 </a>
@@ -145,7 +155,9 @@ export default function OrgNav({
                     urls?.orgNav?.billing ??
                     `${baseURL}/v2#/org/${current.orgId}/billing/overview`
                   }
-                  className={linkText}
+                  className={cx(linkText, {
+                    [activeLink]: activeNav === 'billing',
+                  })}
                 >
                   Billing
                 </a>

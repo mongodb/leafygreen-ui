@@ -1,10 +1,13 @@
 import React from 'react';
 import OrgNav from './org-nav/index';
 import ProjNav from './proj-nav/index';
-import { DataInterface, Product, OverridesInterface } from './types';
+import { DataInterface, Product, OverridesInterface, NavItem } from './types';
 interface MongoNavInterface {
   activeProduct: Product;
+  activeNav?: NavItem;
   data: DataInterface;
+  onOrganizationChange?: React.ChangeEventHandler;
+  onProjectChange?: React.ChangeEventHandler;
   constructOrganizationURL: (orgID: string) => string;
   constructProjectURL: (orgID: string, projID: string) => string;
   overrides?: OverridesInterface;
@@ -13,9 +16,12 @@ interface MongoNavInterface {
 
 export default function MongoNav({
   activeProduct,
+  activeNav,
   data,
   overrides,
   showProjNav = true,
+  onOrganizationChange,
+  onProjectChange,
   constructOrganizationURL = orgId =>
     `https://cloud.mongodb.com/v2#/org/${orgId}/projects`,
   constructProjectURL = (orgId, projectId) =>
@@ -30,6 +36,8 @@ export default function MongoNav({
         data={data.organizations}
         constructOrganizationURL={constructOrganizationURL}
         overrides={overrides}
+        activeNav={activeNav}
+        onOrganizationChange={onOrganizationChange}
       />
       {showProjNav && (
         <ProjNav
@@ -38,6 +46,7 @@ export default function MongoNav({
           constructProjectURL={constructProjectURL}
           overrides={overrides}
           alerts={data.currentProject.alertsOpen}
+          onProjectChange={onProjectChange}
         />
       )}
     </>

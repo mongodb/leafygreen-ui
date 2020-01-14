@@ -4,5 +4,5 @@ import MongoNav from '.';
 import data from './data';
 
 storiesOf('MongoNav', module).add('Default', () => (
-  <MongoNav data={data} activeProduct="cloud" />
+  <MongoNav data={data} activeProduct="cloud" activeNav="accessManager" />
 ));

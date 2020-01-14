@@ -68,11 +68,11 @@ const productStyle = css`
 
 const productMargin = css`
   margin-left: 4px;
-  margin-top: 1px;
+  margin-top: 2px;
 `;
 
 const activeProductColor = {
-  cloud: css`
+  atlas: css`
     color: ${uiColors.green.dark3};
     font-weight: bold;
   `,
@@ -130,6 +130,7 @@ interface ProjNavInterface {
   overrides?: OverridesInterface;
   alerts?: number;
   currentCloudProduct?: 'atlas' | 'stitch' | 'charts';
+  onProjectChange?: React.ChangeEventHandler;
 }
 
 export default function ProjNav({
@@ -139,6 +140,7 @@ export default function ProjNav({
   overrides = { hosts: {}, urls: {} },
   alerts,
   currentCloudProduct = 'stitch',
+  onProjectChange,
 }: ProjNavInterface) {
   const [open, setOpen] = useState(false);
 
@@ -179,6 +181,7 @@ export default function ProjNav({
           constructProjectURL={constructProjectURL}
           overrides={overrides}
           className={projectSelectMargin}
+          onChange={onProjectChange}
         />
         <Menu
           trigger={

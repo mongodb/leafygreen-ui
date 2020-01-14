@@ -93,7 +93,8 @@ function Menu({
 
   const hasSetInitialFocus = useRef(false);
   const hasSetInitialOpen = useRef(false);
-  const [closed, setClosed] = useState(false);
+  // @ts-ignore: using this setState to trigger a subMenu close after animation
+  const [closed, setClosed] = useState(false); // eslint-disable-line
   const [currentSubMenu, setCurrentSubMenu] = useState<React.ReactElement<
     HTMLLIElement
   > | null>(null);
