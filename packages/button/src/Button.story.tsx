@@ -21,6 +21,7 @@ storiesOf('Buttons', module)
       )}
       title={text('Title', 'The button title')}
       disabled={boolean('Disabled', false)}
+      target="_blank"
       href={
         /*
         NOTE(JeT):

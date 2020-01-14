@@ -152,22 +152,22 @@ const subMenus: Array<SubMenuInterface> = [
     subMenuItems: {
       userPreferences: {
         title: 'User Preferences',
-        relative: '/preferences/personalization',
+        relative: '/v2#/preferences/personalization',
         absolute: 'https://cloud.mongodb.com/v2#/preferences/personalization',
       },
       invitations: {
         title: 'Invitations',
-        relative: '/preferences/invitations',
+        relative: '/v2#/preferences/invitations',
         absolute: 'https://cloud.mongodb.com/v2#/preferences/invitations',
       },
       organizations: {
         title: 'Organizations',
-        relative: '/preferences/organizations',
+        relative: '/v2#/preferences/organizations',
         absolute: 'https://cloud.mongodb.com/v2#/preferences/organizations',
       },
       tfa: {
         title: 'Two-Factor Authorization',
-        relative: '/preferences/2fa',
+        relative: '/v2#/preferences/2fa',
         absolute: 'https://cloud.mongodb.com/v2#/preferences/2fa',
       },
     },
@@ -244,8 +244,8 @@ function MongoMenu({
   const isAccount = activeProduct === 'account';
   const accountURL =
     urls?.mongoMenu?.account?.accountURL ?? hosts?.cloud
-      ? `${hosts?.cloud}/v2#/account`
-      : 'https://cloud.mongodb.com/v2#/account';
+      ? `${hosts?.cloud}/account/profile/overview`
+      : 'https://cloud.mongodb.com/account/profile/overview';
 
   const renderSubMenu = ({
     slug,

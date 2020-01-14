@@ -102,13 +102,19 @@ const baseIconButtonStyle = css`
 const iconButtonVariants: { readonly [K in Variant]: string } = {
   [Variant.Light]: css`
     &:hover {
+      color: ${uiColors.gray.dark2};
+
       &:before {
         background-color: ${uiColors.gray.light2};
       }
-      color: ${uiColors.gray.dark2};
     }
-    &:focus:before {
-      background-color: ${uiColors.blue.light2};
+
+    &:focus {
+      color: ${uiColors.blue.base};
+
+      &:before {
+        background-color: ${uiColors.blue.light2};
+      }
     }
   `,
 

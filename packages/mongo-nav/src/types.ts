@@ -43,7 +43,7 @@ export interface ProjectInterface {
   orgId: string;
 }
 
-interface CurrentProjectInterface extends ProjectInterface {
+export interface CurrentProjectInterface extends ProjectInterface {
   alertsOpen: number;
   chartsActivated: boolean;
 }
@@ -77,6 +77,7 @@ export interface OverridesInterface {
       viewAllProjects?: string;
       viewAllOrganizations?: string;
       newProject?: string;
+      orgSettings?: string;
     };
     orgNav?: {
       accessManager?: string;

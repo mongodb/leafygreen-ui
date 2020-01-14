@@ -7,13 +7,15 @@ interface MongoNavInterface {
   data: DataInterface;
   constructOrganizationURL: (orgID: string) => string;
   constructProjectURL: (orgID: string, projID: string) => string;
-  overrides: OverridesInterface;
+  overrides?: OverridesInterface;
+  showProjNav?: boolean;
 }
 
 export default function MongoNav({
   activeProduct,
   data,
   overrides,
+  showProjNav = true,
   constructOrganizationURL = orgId =>
     `https://cloud.mongodb.com/v2#/org/${orgId}/projects`,
   constructProjectURL = (orgId, projectId) =>
@@ -29,13 +31,15 @@ export default function MongoNav({
         constructOrganizationURL={constructOrganizationURL}
         overrides={overrides}
       />
-      <ProjNav
-        current={data.currentProject}
-        data={data.projects}
-        constructProjectURL={constructProjectURL}
-        overrides={overrides}
-        alerts={data.currentProject.alertsOpen}
-      />
+      {showProjNav && (
+        <ProjNav
+          current={data.currentProject}
+          data={data.projects}
+          constructProjectURL={constructProjectURL}
+          overrides={overrides}
+          alerts={data.currentProject.alertsOpen}
+        />
+      )}
     </>
   );
 }

@@ -2,6 +2,11 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Icon from '@leafygreen-ui/icon';
+import {
+  OverridesInterface,
+  CurrentProjectInterface,
+  OrganizationInterface,
+} from '../types';
 
 const orgTriggerContainer = css`
   border-radius: 5px;
@@ -54,27 +59,38 @@ const border = css`
   border-left: 1px solid ${uiColors.gray.light2};
 `;
 
-interface TriggerProps {
+interface OrganizationTriggerProps {
   children?: React.ReactNode;
-  current: string;
+  current: OrganizationInterface;
   className?: string;
+  overrides?: OverridesInterface;
 }
 
 export function OrganizationTrigger({
   children,
   current,
   className,
+  overrides = { hosts: {}, urls: {} },
   ...rest
-}: TriggerProps) {
+}: OrganizationTriggerProps) {
+  const { hosts, urls } = overrides;
+
+  const orgURI = hosts?.cloud
+    ? `${hosts.cloud}/v2#`
+    : `https://cloud.mongodb.com/v2#`;
+
   return (
     <div className={cx(orgTriggerContainer, className)}>
       <button {...rest} className={buttonContainer}>
         <Icon size="small" glyph="Building" />
-        <span className={selectedStyle}>{current}</span>
+        <span className={selectedStyle}>{current.orgName}</span>
         <Icon size="small" glyph="CaretDown" />
       </button>
       <a
-        href="v2#/preferences/personalization"
+        href={
+          urls?.mongoSelect?.orgSettings ??
+          `${orgURI}/org/${current.orgId}/settings/general`
+        }
         className={cx(anchorStyle, border)}
         aria-label="settings"
       >
@@ -85,19 +101,25 @@ export function OrganizationTrigger({
   );
 }
 
+interface ProjectTriggerProps {
+  children?: React.ReactNode;
+  current: CurrentProjectInterface;
+  className?: string;
+}
+
 export function ProjectTrigger({
   children,
   current,
   className,
   ...rest
-}: TriggerProps) {
+}: ProjectTriggerProps) {
   return (
     <button
       {...rest}
       className={cx(buttonContainer, projectTriggerContainer, className)}
     >
       <Icon size="small" glyph="Bell" />
-      <span className={cx(selectedStyle, fontSize)}>{current}</span>
+      <span className={cx(selectedStyle, fontSize)}>{current.projectName}</span>
       <Icon size="small" glyph="CaretDown" />
       {children}
     </button>

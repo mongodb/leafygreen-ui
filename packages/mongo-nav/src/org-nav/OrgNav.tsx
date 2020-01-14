@@ -103,7 +103,7 @@ export default function OrgNav({
                 <a
                   href={
                     urls?.orgNav?.accessManager ??
-                    `${baseURL}/${current.orgId}#access`
+                    `${baseURL}/v2#/org/${current.orgId}/access/users`
                   }
                   className={linkText}
                 >
@@ -123,7 +123,7 @@ export default function OrgNav({
                 <a
                   href={
                     urls?.orgNav?.support ??
-                    `${baseURL}/${current.orgId}#info/support`
+                    `${baseURL}/v2#/org/${current.orgId}/support`
                   }
                   className={linkText}
                 >
@@ -141,7 +141,10 @@ export default function OrgNav({
               variant="dark"
               trigger={
                 <a
-                  href={urls?.orgNav?.billing ?? `${baseURL}/billing/overview`}
+                  href={
+                    urls?.orgNav?.billing ??
+                    `${baseURL}/v2#/org/${current.orgId}/billing/overview`
+                  }
                   className={linkText}
                 >
                   Billing

@@ -5,8 +5,20 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
+import {
+  RealmActive,
+  RealmInactive,
+  AtlasActive,
+  AtlasInactive,
+  ChartsActive,
+  ChartsInactive,
+} from '../SubBrandIcons';
 import MongoSelect from '../mongo-select/index';
-import { ProjectInterface, OverridesInterface } from '../types';
+import {
+  ProjectInterface,
+  OverridesInterface,
+  CurrentProjectInterface,
+} from '../types';
 
 const navContainerStyle = css`
   display: flex;
@@ -54,10 +66,34 @@ const productStyle = css`
   justify-content: center;
 `;
 
+const productMargin = css`
+  margin-left: 4px;
+  margin-top: 1px;
+`;
+
+const activeProductColor = {
+  cloud: css`
+    color: ${uiColors.green.dark3};
+    font-weight: bold;
+  `,
+  stitch: css`
+    color: #39477f;
+    font-weight: bold;
+  `,
+  charts: css`
+    color: #0e4d4c;
+    font-weight: bold;
+  `,
+};
+
 const productTextStyle = css`
   text-decoration: none;
   font-size: 14px;
+  line-height: 16px;
   color: ${uiColors.gray.dark2};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const highlightColor = css`
@@ -88,12 +124,12 @@ const alertBadgeStyle = css`
 `;
 
 interface ProjNavInterface {
-  current: ProjectInterface;
+  current: CurrentProjectInterface;
   data: Array<ProjectInterface>;
   constructProjectURL: (orgID: string, projID: string) => string;
   overrides?: OverridesInterface;
   alerts?: number;
-  currentCloudProduct?: 'atlas' | 'stitch' | 'charts'
+  currentCloudProduct?: 'atlas' | 'stitch' | 'charts';
 }
 
 export default function ProjNav({
@@ -107,9 +143,10 @@ export default function ProjNav({
   const [open, setOpen] = useState(false);
 
   const { hosts, urls } = overrides;
-  const baseURL = `${hosts?.cloud ?? 'https://cloud.mongodb.com/v2/'}/${
-    current.projectId
-  }`;
+
+  const baseURL = hosts?.cloud
+    ? `${hosts?.cloud}/v2/${current.projectId}`
+    : `https://cloud.mongodb.com/v2/${current.projectId}`;
 
   function calcStyle() {
     const products = {
@@ -164,8 +201,11 @@ export default function ProjNav({
           >
             Project Access Manager
           </MenuItem>
-          {/* TODO: GET URL */}
-          <MenuItem>Project Support</MenuItem>
+          <MenuItem
+            href={urls?.projectNav?.support ?? `${baseURL}#info/support`}
+          >
+            Project Support
+          </MenuItem>
           <MenuItem
             href={urls?.projectNav?.integrations ?? `${baseURL}#integrations`}
           >
@@ -174,18 +214,51 @@ export default function ProjNav({
         </Menu>
         <ol className={olStyle}>
           <li role="none" className={productStyle}>
-            <a href="https://cloud.mongodb.com" className={productTextStyle}>
-              Atlas
+            <a href={baseURL} className={productTextStyle}>
+              {currentCloudProduct === 'atlas' ? (
+                <AtlasActive />
+              ) : (
+                <AtlasInactive />
+              )}
+              <span
+                className={cx(productMargin, {
+                  [activeProductColor.atlas]: currentCloudProduct === 'atlas',
+                })}
+              >
+                Atlas
+              </span>
             </a>
           </li>
           <li role="none" className={productStyle}>
             <a href="https://stitch.mongodb.com" className={productTextStyle}>
-              Stitch
+              {currentCloudProduct === 'stitch' ? (
+                <RealmActive />
+              ) : (
+                <RealmInactive />
+              )}
+              <span
+                className={cx(productMargin, {
+                  [activeProductColor.stitch]: currentCloudProduct === 'stitch',
+                })}
+              >
+                Stitch
+              </span>
             </a>
           </li>
           <li role="none" className={productStyle}>
             <a href="https://charts.mongodb.com" className={productTextStyle}>
-              Charts
+              {currentCloudProduct === 'charts' ? (
+                <ChartsActive />
+              ) : (
+                <ChartsInactive />
+              )}
+              <span
+                className={cx(productMargin, {
+                  [activeProductColor.charts]: currentCloudProduct === 'charts',
+                })}
+              >
+                Charts
+              </span>
             </a>
           </li>
           <div className={cx(highlightColor, calcStyle())} />

@@ -19,6 +19,7 @@ import {
   OrganizationInterface,
   Variant,
   OverridesInterface,
+  CurrentProjectInterface,
 } from '../types';
 
 const menuItemHeight = 36;
@@ -75,7 +76,7 @@ interface MongoSelectProps {
    * Organization: {orgId: `string`; orgName: `string`, planType: `'Cloud' | 'OM' | 'Atlas'`}
    * Project: {orgId: `string`; projectId: `string`, projectName: `string`, planType: `'Cloud' | 'OM' | 'Atlas'`}
    */
-  current: VariantData;
+  current: CurrentProjectInterface | OrganizationInterface;
 
   /**
    * Array of data objects
@@ -136,25 +137,29 @@ function MongoSelect({
 
   let trigger, footer;
   const orgURI = hosts?.cloud
-    ? `${hosts.cloud}/v2#/org/${current.orgId}`
-    : `https://cloud.mongodb.com/v2#/org/${current.orgId}`;
+    ? `${hosts.cloud}/v2#`
+    : `https://cloud.mongodb.com/v2#`;
 
   if (isProject(current)) {
-    trigger = (
-      <ProjectTrigger current={current.projectName} className={className} />
-    );
+    trigger = <ProjectTrigger current={current} className={className} />;
     footer = (
       <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
         <FocusableMenuItem>
           <Button
-            href={urls?.mongoSelect?.viewAllProjects ?? `${orgURI}/projects`}
+            href={
+              urls?.mongoSelect?.viewAllProjects ??
+              `${orgURI}/v2#/org/${current.orgId}/projects`
+            }
           >
             View All Projects
           </Button>
         </FocusableMenuItem>
         <FocusableMenuItem>
           <Button
-            href={urls?.mongoSelect?.newProject ?? `${orgURI}/projects/create`}
+            href={
+              urls?.mongoSelect?.newProject ??
+              `${orgURI}/v2#/org/${current.orgId}/projects/create`
+            }
           >
             + New Project
           </Button>
@@ -163,14 +168,18 @@ function MongoSelect({
     );
   } else {
     trigger = (
-      <OrganizationTrigger current={current.orgName} className={className} />
+      <OrganizationTrigger
+        current={current}
+        className={className}
+        overrides={overrides}
+      />
     );
     footer = (
       <MenuItem
         onKeyDown={onKeyDown}
         href={
           urls?.mongoSelect?.viewAllOrganizations ??
-          `${orgURI}/settings/general`
+          `${orgURI}/preferences/organizations`
         }
       >
         <strong className={viewAllStyle}>View All Organizations</strong>
@@ -240,7 +249,15 @@ MongoSelect.displayName = 'MongoSelect';
 
 MongoSelect.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
-  current: PropTypes.objectOf(PropTypes.string).isRequired,
+  current: PropTypes.shape({
+    orgId: PropTypes.string,
+    projectId: PropTypes.string,
+    planType: PropTypes.string,
+    projectName: PropTypes.string,
+    orgName: PropTypes.string,
+    alertsOpen: PropTypes.number,
+    chartsActivated: PropTypes.bool,
+  }),
   onClick: PropTypes.func,
   variant: PropTypes.oneOf(['organization', 'project']).isRequired,
 };
