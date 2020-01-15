@@ -105,7 +105,7 @@ export default function OrgNav({
   }
 
   return (
-    <nav className={navContainer}>
+    <nav className={navContainer} aria-label="organization navigation">
       <div className={leftSideContainer}>
         <LogoMark height={30} />
         <MongoSelect

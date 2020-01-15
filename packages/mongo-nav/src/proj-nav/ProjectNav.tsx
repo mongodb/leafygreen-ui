@@ -10,7 +10,7 @@ import {
   AtlasInactive,
   ChartsActive,
   ChartsInactive,
-} from '../SubBrandIcons';
+} from './SubBrandIcons';
 import MongoSelect from '../mongo-select/index';
 import {
   ProjectInterface,
@@ -171,7 +171,7 @@ export default function ProjNav({
   }
 
   return (
-    <nav className={navContainerStyle}>
+    <nav className={navContainerStyle} aria-label="project navigation">
       <div className={leftSide}>
         <MongoSelect
           variant="project"
