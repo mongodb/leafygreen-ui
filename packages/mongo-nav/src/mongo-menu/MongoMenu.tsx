@@ -15,7 +15,7 @@ import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import MongoMenuTrigger from './MongoMenuTrigger';
-import { AccountInterface, OverridesInterface, Product } from '../types';
+import { AccountInterface, URLSInterface, Product } from '../types';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 
@@ -219,7 +219,7 @@ interface MongoMenuProps {
    */
   onProductChange?: React.MouseEventHandler;
 
-  overrides?: OverridesInterface;
+  urls: URLSInterface;
 }
 
 function MongoMenu({
@@ -227,25 +227,13 @@ function MongoMenu({
   activeProduct,
   onLogout = () => {},
   onProductChange = () => {},
-  overrides = {
-    hosts: {
-      account: 'https://acount.mongodb.com',
-      cloud: 'https://cloud.mongodb.com',
-      university: 'https://university.mongodb.com',
-      support: 'https://support.mongodb.com',
-    },
-    urls: {},
-  },
+  urls,
 }: MongoMenuProps) {
   const [open, setOpen] = useState(false);
-  const { hosts, urls } = overrides;
 
   const name = `${firstName} ${lastName}`;
 
   const isAccount = activeProduct === 'account';
-  const accountURL =
-    urls?.mongoMenu?.account?.accountURL ??
-    `${hosts?.account}/account/profile/overview`;
 
   const renderSubMenu = ({
     slug,
@@ -261,8 +249,6 @@ function MongoMenu({
       (slug === 'cloud' && activeProduct === 'charts');
 
     const renderSubMenuItems = (subMenuItem: SubMenuItemNames) => {
-      let menuItemHref;
-
       const subMenuItemContent =
         subMenuItems[subMenuItem]?.title === 'Invitations' &&
         openInvitations ? (
@@ -274,14 +260,11 @@ function MongoMenu({
           subMenuItems[subMenuItem]?.title
         );
 
-      if (urls?.mongoMenu?.[slug]?.[subMenuItem]) {
-        menuItemHref = urls?.mongoMenu?.[slug]?.[subMenuItem];
-      } else {
-        menuItemHref = `${hosts?.[slug] + subMenuItems[subMenuItem]?.relative}`;
-      }
-
       return (
-        <MenuItem key={subMenuItems[subMenuItem]?.title} href={menuItemHref}>
+        <MenuItem
+          key={subMenuItems[subMenuItem]?.title}
+          href={urls?.mongoMenu?.[slug]?.[subMenuItem]}
+        >
           {subMenuItemContent}
         </MenuItem>
       );
@@ -342,7 +325,9 @@ function MongoMenu({
 
           <FocusableMenuItem>
             <Button
-              href={isAccount ? undefined : accountURL}
+              href={
+                isAccount ? undefined : urls?.mongoMenu?.account?.accountURL
+              }
               disabled={isAccount}
               as={isAccount ? 'button' : 'a'}
             >

@@ -17,7 +17,7 @@ import {
   ProjectInterface,
   OrganizationInterface,
   Variant,
-  OverridesInterface,
+  URLSIntetface,
   CurrentProjectInterface,
   CurrentOrganizationInterface,
 } from '../types';
@@ -111,7 +111,7 @@ interface MongoSelectProps {
    */
   constructOrganizationURL?: (orgID: string) => string;
 
-  overrides?: OverridesInterface;
+  urls: URLSIntetface;
 
   onChange?: React.ChangeEventHandler;
 }
@@ -125,39 +125,22 @@ function MongoSelect({
   constructOrganizationURL,
   onChange,
   className,
-  overrides = { hosts: {}, urls: {} },
+  urls,
 }: MongoSelectProps) {
   const [open, setOpen] = useState(false);
-  const { hosts, urls } = overrides;
-
   let trigger, footer;
-  const orgURI = hosts?.cloud
-    ? `${hosts.cloud}/v2#`
-    : `https://cloud.mongodb.com/v2#`;
 
   if (isProject(current)) {
     trigger = <ProjectTrigger current={current} className={className} />;
     footer = (
       <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
         <FocusableMenuItem>
-          <Button
-            href={
-              urls?.mongoSelect?.viewAllProjects ??
-              `${orgURI}/org/${current.orgId}/projects`
-            }
-          >
+          <Button href={urls.mongoSelect?.viewAllProjects}>
             View All Projects
           </Button>
         </FocusableMenuItem>
         <FocusableMenuItem>
-          <Button
-            href={
-              urls?.mongoSelect?.newProject ??
-              `${orgURI}/org/${current.orgId}/projects/create`
-            }
-          >
-            + New Project
-          </Button>
+          <Button href={urls.mongoSelect?.newProject}>+ New Project</Button>
         </FocusableMenuItem>
       </li>
     );
@@ -166,16 +149,13 @@ function MongoSelect({
       <OrganizationTrigger
         current={current}
         className={className}
-        overrides={overrides}
+        urls={urls}
       />
     );
     footer = (
       <MenuItem
         onKeyDown={onKeyDown}
-        href={
-          urls?.mongoSelect?.viewAllOrganizations ??
-          `${orgURI}/preferences/organizations`
-        }
+        href={urls.mongoSelect?.viewAllOrganizations}
       >
         <strong className={viewAllStyle}>View All Organizations</strong>
       </MenuItem>

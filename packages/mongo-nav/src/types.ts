@@ -95,46 +95,50 @@ export interface DataInterface {
   projects: Array<ProjectInterface>;
 }
 
-export interface OverridesInterface {
-  urls?: {
-    mongoMenu?: {
-      cloud?: {
-        userPreferences: string;
-        organizations: string;
-        invitations: string;
-        tfa: string;
-      };
-      university?: {
-        videoPreferences: string;
-      };
-      support?: {
-        userPreferences: string;
-      };
-      account?: {
-        accountURL?: string;
-      };
+export interface URLSInterface {
+  mongoMenu?: {
+    cloud?: {
+      userPreferences: string;
+      organizations: string;
+      invitations: string;
+      tfa: string;
     };
-    mongoSelect?: {
-      viewAllProjects?: string;
-      viewAllOrganizations?: string;
-      newProject?: string;
-      orgSettings?: string;
+    university?: {
+      videoPreferences: string;
     };
-    orgNav?: {
-      accessManager?: string;
-      support?: string;
-      billing?: string;
+    support?: {
+      userPreferences: string;
     };
-    projectNav?: {
-      settings?: string;
-      accessManager?: string;
-      support?: string;
-      integrations?: string;
-      alerts?: string;
-      activityFeed?: string;
+    account?: {
+      accountURL?: string;
     };
   };
-  hosts?: {
-    [k in Product]?: string;
+  mongoSelect?: {
+    viewAllProjects?: string;
+    viewAllOrganizations?: string;
+    newProject?: string;
+    orgSettings?: string;
   };
+  orgNav?: {
+    settings?: string;
+    accessManager?: string;
+    support?: string;
+    billing?: string;
+  };
+  projectNav?: {
+    settings?: string;
+    accessManager?: string;
+    support?: string;
+    integrations?: string;
+    alerts?: string;
+    activityFeed?: string;
+  };
+}
+export interface HostsInterface {
+  account?: string;
+  charts?: string;
+  cloud?: string;
+  stitch?: string;
+  support?: string;
+  university?: string;
 }

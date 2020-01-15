@@ -14,7 +14,7 @@ import {
 import MongoSelect from '../mongo-select/index';
 import {
   ProjectInterface,
-  OverridesInterface,
+  URLSInterface,
   CurrentProjectInterface,
   Product,
 } from '../types';
@@ -126,7 +126,7 @@ interface ProjNavInterface {
   current: CurrentProjectInterface;
   data: Array<ProjectInterface>;
   constructProjectURL: (orgID: string, projID: string) => string;
-  overrides?: OverridesInterface;
+  urls: URLSInterface;
   alerts?: number;
   activeProduct: Product;
   onProjectChange?: React.ChangeEventHandler;
@@ -136,18 +136,12 @@ export default function ProjNav({
   current,
   data,
   constructProjectURL,
-  overrides = { hosts: {}, urls: {} },
+  urls,
   alerts,
   activeProduct,
   onProjectChange,
 }: ProjNavInterface) {
   const [open, setOpen] = useState(false);
-
-  const { hosts, urls } = overrides;
-
-  const baseURL = hosts?.cloud
-    ? `${hosts?.cloud}/v2/${current.projectId}`
-    : `https://cloud.mongodb.com/v2/${current.projectId}`;
 
   function calcStyle() {
     const products = {
@@ -178,7 +172,7 @@ export default function ProjNav({
           current={current}
           data={data}
           constructProjectURL={constructProjectURL}
-          overrides={overrides}
+          urls={urls}
           className={projectSelectMargin}
           onChange={onProjectChange}
         />
@@ -191,32 +185,20 @@ export default function ProjNav({
           open={open}
           setOpen={setOpen}
         >
-          <MenuItem
-            href={
-              urls?.projectNav?.settings ?? `${baseURL}#settings/groupSettings`
-            }
-          >
+          <MenuItem href={urls?.projectNav?.settings}>
             Project Settings
           </MenuItem>
-          <MenuItem
-            href={urls?.projectNav?.accessManager ?? `${baseURL}#access`}
-          >
+          <MenuItem href={urls?.projectNav?.accessManager}>
             Project Access Manager
           </MenuItem>
-          <MenuItem
-            href={urls?.projectNav?.support ?? `${baseURL}#info/support`}
-          >
-            Project Support
-          </MenuItem>
-          <MenuItem
-            href={urls?.projectNav?.integrations ?? `${baseURL}#integrations`}
-          >
+          <MenuItem href={urls?.projectNav?.support}>Project Support</MenuItem>
+          <MenuItem href={urls?.projectNav?.integrations}>
             Integrations
           </MenuItem>
         </Menu>
         <ol className={olStyle}>
           <li role="none" className={productStyle}>
-            <a href={baseURL} className={productTextStyle}>
+            <a href={'https://cloud.mongodb.com'} className={productTextStyle}>
               {activeProduct === 'cloud' ? <AtlasActive /> : <AtlasInactive />}
               <span
                 className={cx(productMargin, {
@@ -270,7 +252,7 @@ export default function ProjNav({
           trigger={
             <IconButton
               ariaLabel="Alerts"
-              href={urls?.projectNav?.alerts ?? `${baseURL}#alerts`}
+              href={urls.projectNav?.alerts}
               className={alertIconButtonStyle}
             >
               {alerts && <div className={alertBadgeStyle}>{alerts}</div>}
@@ -287,7 +269,7 @@ export default function ProjNav({
           trigger={
             <IconButton
               ariaLabel="Project Activity Feed"
-              href={urls?.projectNav?.activityFeed ?? `${baseURL}#activity`}
+              href={urls.projectNav?.activityFeed}
             >
               <Icon glyph="Save" />
             </IconButton>

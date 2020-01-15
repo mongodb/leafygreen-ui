@@ -8,7 +8,7 @@ import {
   AccountInterface,
   OrganizationInterface,
   Product,
-  OverridesInterface,
+  URLSInterface,
   NavItem,
   CurrentOrganizationInterface,
 } from '../types';
@@ -68,7 +68,7 @@ interface OrgNav {
   current: CurrentOrganizationInterface;
   data: Array<OrganizationInterface>;
   constructOrganizationURL: (orgID: string) => string;
-  overrides?: OverridesInterface;
+  urls: URLSInterface;
   activeNav?: NavItem;
   onOrganizationChange?: React.ChangeEventHandler;
 }
@@ -81,14 +81,8 @@ export default function OrgNav({
   data,
   constructOrganizationURL,
   onOrganizationChange,
-  overrides = {
-    hosts: {},
-    urls: {},
-  },
+  urls,
 }: OrgNav) {
-  const { urls, hosts } = overrides;
-  const baseURL = hosts?.cloud ?? `https://cloud.mongodb.com`;
-
   const paymentStatusMap = {
     lightgray: ['embargoed', 'embargo confirmed'],
     green: ['ok'],
@@ -114,7 +108,7 @@ export default function OrgNav({
           current={current}
           constructOrganizationURL={constructOrganizationURL}
           variant="organization"
-          overrides={overrides}
+          urls={urls}
           onChange={onOrganizationChange}
         />
         <ul className={ulContainer}>
@@ -137,10 +131,7 @@ export default function OrgNav({
               variant="dark"
               trigger={
                 <a
-                  href={
-                    urls?.orgNav?.accessManager ??
-                    `${baseURL}/v2#/org/${current.orgId}/access/users`
-                  }
+                  href={urls.orgNav?.accessManager}
                   className={cx(linkText, {
                     [activeLink]: activeNav === 'accessManager',
                   })}
@@ -159,10 +150,7 @@ export default function OrgNav({
               variant="dark"
               trigger={
                 <a
-                  href={
-                    urls?.orgNav?.support ??
-                    `${baseURL}/v2#/org/${current.orgId}/support`
-                  }
+                  href={urls.orgNav?.support}
                   className={cx(linkText, {
                     [activeLink]: activeNav === 'support',
                   })}
@@ -181,10 +169,7 @@ export default function OrgNav({
               variant="dark"
               trigger={
                 <a
-                  href={
-                    urls?.orgNav?.billing ??
-                    `${baseURL}/v2#/org/${current.orgId}/billing/overview`
-                  }
+                  href={urls.orgNav?.billing}
                   className={cx(linkText, {
                     [activeLink]: activeNav === 'billing',
                   })}
@@ -198,11 +183,7 @@ export default function OrgNav({
           </li>
         </ul>
       </div>
-      <MongoMenu
-        account={account}
-        activeProduct={activeProduct}
-        overrides={overrides}
-      />
+      <MongoMenu account={account} activeProduct={activeProduct} urls={urls} />
     </nav>
   );
 }

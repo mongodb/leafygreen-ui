@@ -39,8 +39,11 @@ describe('packages/mongo-select', () => {
         onClick={onClick}
         variant={Variant.Organization}
         constructOrganizationURL={orgID => orgID}
-        overrides={{
-          hosts: { cloud: `https://cloud-dev.mongodb.com` },
+        urls={{
+          mongoSelect: {
+            viewAllOrganizations: `https://cloud-dev.mongodb.com/v2#/preferences/organizations`,
+            orgSettings: `https://cloud-dev.mongodb.com/v2#/org/${current.orgId}/settings/general`,
+          },
         }}
       />,
     );
@@ -93,7 +96,7 @@ describe('packages/mongo-select', () => {
       expect(onClick).toHaveBeenCalled();
     });
 
-    test('view all organizations href is changed, when the host prop is set', () => {
+    test('view all organizations href is changed, when the urls prop is set', () => {
       const viewAllOrganizations = getByText('View All Organizations')
         .parentNode?.parentNode;
       expect((viewAllOrganizations as HTMLAnchorElement)?.href).toBe(
@@ -110,18 +113,24 @@ describe('packages/mongo-select', () => {
         projectName: 'Core',
         orgId: generateId(),
         planType: PlanType.Atlas,
+        alertsOpen: 2,
+        chartsActivated: true,
       },
       {
         projectId: generateId(),
         projectName: 'London',
         orgId: generateId(),
         planType: PlanType.Atlas,
+        alertsOpen: 2,
+        chartsActivated: true,
       },
       {
         projectId: generateId(),
         projectName: 'Madrid',
         orgId: generateId(),
         planType: PlanType.Atlas,
+        alertsOpen: 2,
+        chartsActivated: false,
       },
     ];
 
@@ -135,9 +144,11 @@ describe('packages/mongo-select', () => {
         onClick={onClick}
         data={projectData}
         constructProjectURL={(orgID, projID) => `${orgID + projID}`}
-        overrides={{
-          hosts: { cloud: 'https://cloud-dev.mongodb.com' },
-          urls: { mongoSelect: { viewAllProjects: viewAllProjectsHref } },
+        urls={{
+          mongoSelect: {
+            viewAllProjects: viewAllProjectsHref,
+            newProject: `https://cloud-dev.mongodb.com/v2#/org/${currentProject.orgId}/projects/create`,
+          },
         }}
       />,
     );

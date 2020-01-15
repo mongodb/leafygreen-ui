@@ -25,13 +25,10 @@ describe('packages/MongoMenu', () => {
       activeProduct={'cloud'}
       onLogout={onLogout}
       onProductChange={onProductChange}
-      overrides={{
-        hosts: { cloud: 'https://cloud-dev.com' },
-        urls: {
-          mongoMenu: {
-            university: {
-              videoPreferences: 'https://university.mongodb.com/override-test',
-            },
+      urls={{
+        mongoMenu: {
+          university: {
+            videoPreferences: 'https://university.mongodb.com/override-test',
           },
         },
       }}
@@ -127,24 +124,21 @@ describe('packages/MongoMenu', () => {
         (universitySubMenuItem?.parentNode as HTMLAnchorElement).href,
       ).toBe('https://university.mongodb.com/override-test');
     });
-
-    test('renders particular url override, when the hosts prop is set', () => {
-      const atlasItem = document.querySelectorAll(
-        '[data-leafygreen-ui="sub-menu-container"]',
-      )[0];
-
-      fireEvent.click(atlasItem);
-
-      const atlasSubMenuitem = getByText('Invitations');
-      expect((atlasSubMenuitem?.parentNode as HTMLAnchorElement).href).toBe(
-        'https://cloud-dev.com/v2#/preferences/invitations',
-      );
-    });
   });
 
   test('renders the account link as a disabled button when set to the empty string', () => {
     renderedComponent.rerender(
-      <MongoMenu account={account} activeProduct="account" />,
+      <MongoMenu
+        account={account}
+        activeProduct="account"
+        urls={{
+          mongoMenu: {
+            university: {
+              videoPreferences: 'https://university.mongodb.com/override-test',
+            },
+          },
+        }}
+      />,
     );
 
     const accountButton = getByText('Manage your MongoDB Account')

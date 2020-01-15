@@ -3,7 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Icon from '@leafygreen-ui/icon';
 import {
-  OverridesInterface,
+  URLSInterface,
   CurrentProjectInterface,
   CurrentOrganizationInterface,
 } from '../types';
@@ -63,22 +63,16 @@ interface OrganizationTriggerProps {
   children?: React.ReactNode;
   current: CurrentOrganizationInterface;
   className?: string;
-  overrides?: OverridesInterface;
+  urls?: URLSInterface;
 }
 
 export function OrganizationTrigger({
   children,
   current,
   className,
-  overrides = { hosts: {}, urls: {} },
+  urls,
   ...rest
 }: OrganizationTriggerProps) {
-  const { hosts, urls } = overrides;
-
-  const orgURI = hosts?.cloud
-    ? `${hosts.cloud}/v2#`
-    : `https://cloud.mongodb.com/v2#`;
-
   return (
     <div className={cx(orgTriggerContainer, className)}>
       <button {...rest} className={buttonContainer}>
@@ -87,10 +81,7 @@ export function OrganizationTrigger({
         <Icon size="small" glyph="CaretDown" />
       </button>
       <a
-        href={
-          urls?.mongoSelect?.orgSettings ??
-          `${orgURI}/org/${current.orgId}/settings/general`
-        }
+        href={urls.mongoSelect?.orgSettings}
         className={cx(anchorStyle, border)}
         aria-label="settings"
       >
