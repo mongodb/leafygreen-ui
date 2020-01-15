@@ -8,8 +8,8 @@ interface MongoNavInterface {
   data: DataInterface;
   onOrganizationChange?: React.ChangeEventHandler;
   onProjectChange?: React.ChangeEventHandler;
-  constructOrganizationURL: (orgID: string) => string;
-  constructProjectURL: (orgID: string, projID: string) => string;
+  constructOrganizationURL?: (orgID: string) => string;
+  constructProjectURL?: (orgID: string, projID: string) => string;
   overrides?: OverridesInterface;
   showProjNav?: boolean;
 }
@@ -25,7 +25,7 @@ export default function MongoNav({
   constructOrganizationURL = orgId =>
     `https://cloud.mongodb.com/v2#/org/${orgId}/projects`,
   constructProjectURL = (orgId, projectId) =>
-    `https://cloud.mongodb.com/v2#/org/${projectId}/projects`,
+    `https://cloud.mongodb.com/v2#/${projectId}`,
 }: MongoNavInterface) {
   return (
     <>
@@ -41,6 +41,7 @@ export default function MongoNav({
       />
       {showProjNav && (
         <ProjNav
+          activeProduct={activeProduct}
           current={data.currentProject}
           data={data.projects}
           constructProjectURL={constructProjectURL}

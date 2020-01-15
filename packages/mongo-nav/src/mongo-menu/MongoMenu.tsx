@@ -255,7 +255,10 @@ function MongoMenu({
     subMenuItems,
     description,
   }: SubMenuInterface) => {
-    const isActive = slug === activeProduct;
+    const isActive =
+      slug === activeProduct ||
+      (slug === 'cloud' && activeProduct === 'stitch') ||
+      (slug === 'cloud' && activeProduct === 'charts');
 
     const renderSubMenuItems = (subMenuItem: SubMenuItemNames) => {
       let menuItemHref;

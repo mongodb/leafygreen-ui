@@ -18,6 +18,7 @@ import {
   ProjectInterface,
   OverridesInterface,
   CurrentProjectInterface,
+  Product,
 } from '../types';
 
 const navContainerStyle = css`
@@ -72,7 +73,7 @@ const productMargin = css`
 `;
 
 const activeProductColor = {
-  atlas: css`
+  cloud: css`
     color: ${uiColors.green.dark3};
     font-weight: bold;
   `,
@@ -129,7 +130,7 @@ interface ProjNavInterface {
   constructProjectURL: (orgID: string, projID: string) => string;
   overrides?: OverridesInterface;
   alerts?: number;
-  currentCloudProduct?: 'atlas' | 'stitch' | 'charts';
+  activeProduct: Product;
   onProjectChange?: React.ChangeEventHandler;
 }
 
@@ -139,7 +140,7 @@ export default function ProjNav({
   constructProjectURL,
   overrides = { hosts: {}, urls: {} },
   alerts,
-  currentCloudProduct = 'stitch',
+  activeProduct,
   onProjectChange,
 }: ProjNavInterface) {
   const [open, setOpen] = useState(false);
@@ -157,7 +158,7 @@ export default function ProjNav({
       charts: '#00C6BF',
     };
 
-    const currentIndex = Object.keys(products).indexOf(currentCloudProduct);
+    const currentIndex = Object.keys(products).indexOf(activeProduct);
 
     let computedX = 25;
 
@@ -167,7 +168,7 @@ export default function ProjNav({
 
     return css`
       transform: translate3d(${computedX}px, 0, 0);
-      background-color: ${products[currentCloudProduct]};
+      background-color: ${products[activeProduct]};
     `;
   }
 
@@ -218,14 +219,10 @@ export default function ProjNav({
         <ol className={olStyle}>
           <li role="none" className={productStyle}>
             <a href={baseURL} className={productTextStyle}>
-              {currentCloudProduct === 'atlas' ? (
-                <AtlasActive />
-              ) : (
-                <AtlasInactive />
-              )}
+              {activeProduct === 'cloud' ? <AtlasActive /> : <AtlasInactive />}
               <span
                 className={cx(productMargin, {
-                  [activeProductColor.atlas]: currentCloudProduct === 'atlas',
+                  [activeProductColor.cloud]: activeProduct === 'cloud',
                 })}
               >
                 Atlas
@@ -234,14 +231,10 @@ export default function ProjNav({
           </li>
           <li role="none" className={productStyle}>
             <a href="https://stitch.mongodb.com" className={productTextStyle}>
-              {currentCloudProduct === 'stitch' ? (
-                <RealmActive />
-              ) : (
-                <RealmInactive />
-              )}
+              {activeProduct === 'stitch' ? <RealmActive /> : <RealmInactive />}
               <span
                 className={cx(productMargin, {
-                  [activeProductColor.stitch]: currentCloudProduct === 'stitch',
+                  [activeProductColor.stitch]: activeProduct === 'stitch',
                 })}
               >
                 Stitch
@@ -250,14 +243,14 @@ export default function ProjNav({
           </li>
           <li role="none" className={productStyle}>
             <a href="https://charts.mongodb.com" className={productTextStyle}>
-              {currentCloudProduct === 'charts' ? (
+              {activeProduct === 'charts' ? (
                 <ChartsActive />
               ) : (
                 <ChartsInactive />
               )}
               <span
                 className={cx(productMargin, {
-                  [activeProductColor.charts]: currentCloudProduct === 'charts',
+                  [activeProductColor.charts]: activeProduct === 'charts',
                 })}
               >
                 Charts

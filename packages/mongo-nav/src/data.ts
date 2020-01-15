@@ -1,3 +1,5 @@
+import { PlanType } from './types';
+
 export default {
   account: {
     email: 'harry.wolff@mongodb.com',
@@ -9,13 +11,13 @@ export default {
   currentOrganization: {
     orgId: '5d729a93',
     orgName: 'yay',
-    planType: 'atlas',
+    planType: PlanType.Atlas,
   },
   currentProject: {
     alertsOpen: 1,
     chartsActivated: false,
     orgId: '5d729a93',
-    planType: 'cloud',
+    planType: PlanType.Cloud,
     projectId: '020019e',
     projectName: 'asdf',
   },
@@ -23,24 +25,24 @@ export default {
     {
       orgId: '5d729a93',
       orgName: 'yay',
-      planType: 'atlas',
+      planType: PlanType.Atlas,
     },
     {
       orgId: '5e0fa79',
       orgName: 'cool',
-      planType: 'cloud',
+      planType: PlanType.Cloud,
     },
   ],
   projects: [
     {
       orgId: '5d729a93',
-      planType: 'cloud',
+      planType: PlanType.Cloud,
       projectId: '020019e',
       projectName: 'asdf',
     },
     {
       orgId: '5e0fa79',
-      planType: 'cloud',
+      planType: PlanType.Cloud,
       projectId: '00626a',
       projectName: "let's do this",
     },

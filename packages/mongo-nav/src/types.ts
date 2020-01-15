@@ -1,10 +1,10 @@
 const Product = {
   Account: 'account',
+  Charts: 'charts',
   Cloud: 'cloud',
+  Stitch: 'stitch',
   Support: 'support',
   University: 'university',
-  Charts: 'charts',
-  Stitch: 'stitch',
 } as const;
 
 type Product = typeof Product[keyof typeof Product];
@@ -88,6 +88,9 @@ export interface OverridesInterface {
       support?: {
         userPreferences: string;
       };
+      account?: {
+        accountURL?: string;
+      };
     };
     mongoSelect?: {
       viewAllProjects?: string;
@@ -110,10 +113,6 @@ export interface OverridesInterface {
     };
   };
   hosts?: {
-    cloud?: string;
-    university?: string;
-    support?: string;
-    realm?: string;
-    charts?: string;
+    [k in Product]?: string;
   };
 }
