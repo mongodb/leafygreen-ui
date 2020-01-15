@@ -1,6 +1,6 @@
 import React from 'react';
 import OrgNav from './org-nav/index';
-import ProjNav from './proj-nav/index';
+import ProjectNav from './project-nav/index';
 import {
   DataInterface,
   Product,
@@ -133,7 +133,7 @@ export default function MongoNav({
         onOrganizationChange={onOrganizationChange}
       />
       {showProjNav && (
-        <ProjNav
+        <ProjectNav
           activeProduct={activeProduct}
           current={data.currentProject}
           data={data.projects}

@@ -63,7 +63,7 @@ interface OrganizationTriggerProps {
   children?: React.ReactNode;
   current: CurrentOrganizationInterface;
   className?: string;
-  urls?: URLSInterface;
+  urls: URLSInterface;
 }
 
 export function OrganizationTrigger({

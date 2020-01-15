@@ -129,7 +129,7 @@ function Menu({
 
       if (isComponentType(child, 'SubMenu')) {
         if (titleArr.includes(child.props.title)) {
-          throw 'SubMenu titles must be unique';
+          throw new Error('SubMenu titles must be unique');
         }
 
         titleArr.push(child.props.title);

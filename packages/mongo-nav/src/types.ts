@@ -41,7 +41,7 @@ export { Variant };
 const PlanType = {
   Cloud: 'cloud',
   Atlas: 'atlas',
-  OM: 'OM',
+  OnPrem: 'onprem',
 } as const;
 
 type PlanType = typeof PlanType[keyof typeof PlanType];

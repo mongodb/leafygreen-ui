@@ -17,7 +17,7 @@ import {
   ProjectInterface,
   OrganizationInterface,
   Variant,
-  URLSIntetface,
+  URLSInterface,
   CurrentProjectInterface,
   CurrentOrganizationInterface,
 } from '../types';
@@ -73,15 +73,15 @@ type VariantData = ProjectInterface | OrganizationInterface;
 interface MongoSelectProps {
   /**
    * Object with information about current organization or project.
-   * Organization: {orgId: `string`; orgName: `string`, planType: `'Cloud' | 'OM' | 'Atlas'`}
-   * Project: {orgId: `string`; projectId: `string`, projectName: `string`, planType: `'Cloud' | 'OM' | 'Atlas'`}
+   * Organization: {orgId: `string`; orgName: `string`, planType: `'Cloud' | 'OnPrem' | 'Atlas'`}
+   * Project: {orgId: `string`; projectId: `string`, projectName: `string`, planType: `'Cloud' | 'OnPrem' | 'Atlas'`}
    */
   current: CurrentProjectInterface | CurrentOrganizationInterface;
 
   /**
    * Array of data objects
-   * Organization: [{orgId: `string`; orgName: `string`, planType: `'Cloud' | 'OM' | 'Atlas'`}]
-   * Project: [{orgId: `string`; projectId: `string`, projectName: `string`, planType: `'Cloud' | 'OM' | 'Atlas'`}]
+   * Organization: [{orgId: `string`; orgName: `string`, planType: `'Cloud' | 'OnPrem' | 'Atlas'`}]
+   * Project: [{orgId: `string`; projectId: `string`, projectName: `string`, planType: `'Cloud' | 'OnPrem' | 'Atlas'`}]
    */
   data: Array<VariantData>;
 
@@ -111,9 +111,9 @@ interface MongoSelectProps {
    */
   constructOrganizationURL?: (orgID: string) => string;
 
-  urls: URLSIntetface;
+  urls: URLSInterface;
 
-  onChange?: React.ChangeEventHandler;
+  onChange: React.ChangeEventHandler;
 }
 
 function MongoSelect({

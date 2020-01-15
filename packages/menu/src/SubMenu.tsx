@@ -137,7 +137,7 @@ interface SharedSubMenuProps {
   open?: boolean;
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
-  description: string | React.ReactElement;
+  description: React.ReactElement;
   disabled?: boolean;
   active?: boolean;
   glyph?: Glyph;
@@ -192,7 +192,7 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
       React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
-    if (iconButtonRef?.current?.contains(e.target as HTMLElement)) {
+    if (iconButtonRef.current?.contains(e.target as HTMLElement)) {
       e.preventDefault();
     } else if (onClick) {
       onClick(e);

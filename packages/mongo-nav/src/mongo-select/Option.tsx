@@ -41,7 +41,7 @@ const formatPlanType = (planType: PlanType) => {
       return 'Atlas';
     case PlanType.Cloud:
       return 'Cloud Manager';
-    case PlanType.OM:
+    case PlanType.OnPrem:
       return 'Ops Manager';
   }
 };

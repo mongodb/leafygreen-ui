@@ -122,7 +122,7 @@ const alertBadgeStyle = css`
   justify-content: center;
 `;
 
-interface ProjNavInterface {
+interface ProjectNavInterface {
   current: CurrentProjectInterface;
   data: Array<ProjectInterface>;
   constructProjectURL: (orgID: string, projID: string) => string;
@@ -132,7 +132,7 @@ interface ProjNavInterface {
   onProjectChange?: React.ChangeEventHandler;
 }
 
-export default function ProjNav({
+export default function ProjectNav({
   current,
   data,
   constructProjectURL,
@@ -140,7 +140,7 @@ export default function ProjNav({
   alerts,
   activeProduct,
   onProjectChange,
-}: ProjNavInterface) {
+}: ProjectNavInterface) {
   const [open, setOpen] = useState(false);
 
   function calcStyle() {
