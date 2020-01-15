@@ -6,8 +6,6 @@ import { uiColors } from '@leafygreen-ui/palette';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import {
-  RealmActive,
-  RealmInactive,
   AtlasActive,
   AtlasInactive,
   ChartsActive,
@@ -231,7 +229,11 @@ export default function ProjNav({
           </li>
           <li role="none" className={productStyle}>
             <a href="https://stitch.mongodb.com" className={productTextStyle}>
-              {activeProduct === 'stitch' ? <RealmActive /> : <RealmInactive />}
+              {activeProduct === 'stitch' ? (
+                <Icon glyph="Stitch" fill="#59569E" />
+              ) : (
+                <Icon glyph="Stitch" />
+              )}
               <span
                 className={cx(productMargin, {
                   [activeProductColor.stitch]: activeProduct === 'stitch',
