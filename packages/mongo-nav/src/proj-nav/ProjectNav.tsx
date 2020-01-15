@@ -153,7 +153,7 @@ export default function ProjNav({
 
   function calcStyle() {
     const products = {
-      atlas: uiColors.green.base,
+      cloud: uiColors.green.base,
       stitch: '#59569E',
       charts: '#00C6BF',
     };
