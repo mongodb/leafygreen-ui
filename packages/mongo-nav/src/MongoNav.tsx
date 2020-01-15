@@ -12,8 +12,8 @@ interface MongoNavInterface {
   activeProduct: Product;
   activeNav?: NavItem;
   data: DataInterface;
-  onOrganizationChange?: React.ChangeEventHandler;
-  onProjectChange?: React.ChangeEventHandler;
+  onOrganizationChange: React.ChangeEventHandler;
+  onProjectChange: React.ChangeEventHandler;
   constructOrganizationURL?: (orgID: string) => string;
   constructProjectURL?: (orgID: string, projID: string) => string;
   showProjNav?: boolean;

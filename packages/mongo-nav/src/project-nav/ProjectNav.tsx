@@ -129,7 +129,7 @@ interface ProjectNavInterface {
   urls: URLSInterface;
   alerts?: number;
   activeProduct: Product;
-  onProjectChange?: React.ChangeEventHandler;
+  onProjectChange: React.ChangeEventHandler;
 }
 
 export default function ProjectNav({

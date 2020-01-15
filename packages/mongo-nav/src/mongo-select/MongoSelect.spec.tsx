@@ -35,6 +35,7 @@ describe('packages/mongo-select', () => {
     const { getByText, getByPlaceholderText, getAllByTitle } = render(
       <MongoSelect
         current={current}
+        onChange={jest.fn()}
         data={organizationData}
         onClick={onClick}
         variant={Variant.Organization}
@@ -139,6 +140,7 @@ describe('packages/mongo-select', () => {
 
     const { getByText, getByPlaceholderText, getAllByTitle } = render(
       <MongoSelect
+        onChange={jest.fn()}
         variant={Variant.Project}
         current={currentProject}
         onClick={onClick}
