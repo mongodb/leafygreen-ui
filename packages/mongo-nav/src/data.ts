@@ -12,7 +12,7 @@ export default {
     orgId: '5d729a93',
     orgName: 'yay',
     planType: PlanType.Atlas,
-    paymentStatus: 'success',
+    paymentStatus: 'ok',
   },
   currentProject: {
     alertsOpen: 1,

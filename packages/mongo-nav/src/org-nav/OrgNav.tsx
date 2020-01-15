@@ -88,12 +88,21 @@ export default function OrgNav({
 }: OrgNav) {
   const { urls, hosts } = overrides;
   const baseURL = hosts?.cloud ?? `https://cloud.mongodb.com`;
+
   const paymentStatusMap = {
-    success: 'green',
-    warning: 'yellow',
-    danger: 'red',
-    default: 'default',
+    lightgray: ['embargoed', 'embargo confirmed'],
+    green: ['ok'],
+    yellow: ['warning', 'suspended', 'closing'],
+    red: ['dead', 'locked', 'closed'],
   };
+
+  let variant: string;
+
+  for (const key in paymentStatusMap) {
+    if (paymentStatusMap[key].includes(current.paymentStatus)) {
+      variant = key;
+    }
+  }
 
   return (
     <nav className={navContainer}>
@@ -115,9 +124,9 @@ export default function OrgNav({
                 className={css`
                   margin-right: 25px;
                 `}
-                variant={paymentStatusMap[current.paymentStatus]}
+                variant={variant}
               >
-                OK
+                {current.paymentStatus.toUpperCase()}
               </Badge>
             </li>
           )}

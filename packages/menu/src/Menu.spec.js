@@ -63,7 +63,7 @@ describe('packages/Menu', () => {
     });
   });
 
-  describe('packages/menu-item', () => {
+  describe('menu-item', () => {
     const onClick = jest.fn();
     const className = 'test-className';
 
@@ -109,7 +109,7 @@ describe('packages/Menu', () => {
     });
   });
 
-  describe('packages/sub-menu', () => {
+  describe('sub-menu', () => {
     const onClick = jest.fn();
 
     const { getByTestId } = render(

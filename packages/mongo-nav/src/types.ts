@@ -49,10 +49,16 @@ type PlanType = typeof PlanType[keyof typeof PlanType];
 export { PlanType };
 
 const OrgPaymentLabel = {
-  Default: 'default',
-  Success: 'success',
+  Embargoed: 'embargoed',
+  EmbargoConfirmed: 'embargo confirmed',
+  Ok: 'ok',
   Warning: 'warning',
-  Danger: 'danger',
+  Suspended: 'suspended',
+  Closing: 'closing',
+  AdminSuspended: 'admin suspended',
+  Dead: 'dead',
+  Locked: 'locked',
+  Closed: 'closed',
 };
 
 type OrgPaymentLabel = typeof OrgPaymentLabel[keyof typeof OrgPaymentLabel];
