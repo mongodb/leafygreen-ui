@@ -128,7 +128,6 @@ type SubMenuItemNames = typeof SubMenuItemNames[keyof typeof SubMenuItemNames];
 interface SubMenuItemInterface {
   title: string;
   relative: string;
-  absolute: string;
 }
 
 interface SubMenuInterface {
@@ -153,22 +152,18 @@ const subMenus: Array<SubMenuInterface> = [
       userPreferences: {
         title: 'User Preferences',
         relative: '/v2#/preferences/personalization',
-        absolute: 'https://cloud.mongodb.com/v2#/preferences/personalization',
       },
       invitations: {
         title: 'Invitations',
         relative: '/v2#/preferences/invitations',
-        absolute: 'https://cloud.mongodb.com/v2#/preferences/invitations',
       },
       organizations: {
         title: 'Organizations',
         relative: '/v2#/preferences/organizations',
-        absolute: 'https://cloud.mongodb.com/v2#/preferences/organizations',
       },
       tfa: {
         title: 'Two-Factor Authorization',
         relative: '/v2#/preferences/2fa',
-        absolute: 'https://cloud.mongodb.com/v2#/preferences/2fa',
       },
     },
     glyph: 'Cloud',
@@ -181,7 +176,6 @@ const subMenus: Array<SubMenuInterface> = [
     subMenuItems: {
       videoPreferences: {
         title: 'Video Preferences',
-        absolute: 'xx',
         relative: 'yy',
       },
     },
@@ -195,7 +189,6 @@ const subMenus: Array<SubMenuInterface> = [
     subMenuItems: {
       userPreferences: {
         title: 'User Preferences',
-        absolute: 'https://support.mongodb.com/profile',
         relative: '/profile',
       },
     },
@@ -234,7 +227,15 @@ function MongoMenu({
   activeProduct,
   onLogout = () => {},
   onProductChange = () => {},
-  overrides = { hosts: {}, urls: {} },
+  overrides = {
+    hosts: {
+      account: 'https://acount.mongodb.com',
+      cloud: 'https://cloud.mongodb.com',
+      university: 'https://university.mongodb.com',
+      support: 'https://support.mongodb.com',
+    },
+    urls: {},
+  },
 }: MongoMenuProps) {
   const [open, setOpen] = useState(false);
   const { hosts, urls } = overrides;
@@ -243,9 +244,8 @@ function MongoMenu({
 
   const isAccount = activeProduct === 'account';
   const accountURL =
-    urls?.mongoMenu?.account?.accountURL ?? hosts?.cloud
-      ? `${hosts?.cloud}/account/profile/overview`
-      : 'https://cloud.mongodb.com/account/profile/overview';
+    urls?.mongoMenu?.account?.accountURL ??
+    `${hosts?.account}/account/profile/overview`;
 
   const renderSubMenu = ({
     slug,
@@ -276,10 +276,8 @@ function MongoMenu({
 
       if (urls?.mongoMenu?.[slug]?.[subMenuItem]) {
         menuItemHref = urls?.mongoMenu?.[slug]?.[subMenuItem];
-      } else if (hosts?.[slug]) {
-        menuItemHref = `${hosts?.[slug] + subMenuItems[subMenuItem]?.relative}`;
       } else {
-        menuItemHref = subMenuItems[subMenuItem]?.absolute;
+        menuItemHref = `${hosts?.[slug] + subMenuItems[subMenuItem]?.relative}`;
       }
 
       return (
@@ -368,11 +366,9 @@ function MongoMenu({
 
 MongoMenu.displayName = 'MongoMenu';
 
-const slugs = subMenus.map(mi => mi.slug);
-
 MongoMenu.propTypes = {
   user: PropTypes.objectOf(PropTypes.string),
-  activeProduct: PropTypes.oneOf(slugs),
+  activeProduct: PropTypes.oneOf(['account', 'cloud', 'support', 'university']),
   onLogout: PropTypes.func,
   onProductChange: PropTypes.func,
   onAccountClick: PropTypes.func,

@@ -3,12 +3,14 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { LogoMark } from '@leafygreen-ui/logo';
 import Tooltip from '@leafygreen-ui/tooltip';
+import Badge from '@leafygreen-ui/badge';
 import {
   AccountInterface,
   OrganizationInterface,
   Product,
   OverridesInterface,
   NavItem,
+  CurrentOrganizationInterface,
 } from '../types';
 
 import MongoSelect from '../mongo-select/index';
@@ -41,6 +43,7 @@ const orgSelectContainer = css`
 const ulContainer = css`
   list-style: none;
   display: flex;
+  align-items: center;
   padding-inline-start: 0px;
 `;
 
@@ -62,7 +65,7 @@ const supportContainer = css`
 interface OrgNav {
   account: AccountInterface;
   activeProduct: Product;
-  current: OrganizationInterface;
+  current: CurrentOrganizationInterface;
   data: Array<OrganizationInterface>;
   constructOrganizationURL: (orgID: string) => string;
   overrides?: OverridesInterface;
@@ -85,6 +88,12 @@ export default function OrgNav({
 }: OrgNav) {
   const { urls, hosts } = overrides;
   const baseURL = hosts?.cloud ?? `https://cloud.mongodb.com`;
+  const paymentStatusMap = {
+    success: 'green',
+    warning: 'yellow',
+    danger: 'red',
+    default: 'default',
+  };
 
   return (
     <nav className={navContainer}>
@@ -100,6 +109,18 @@ export default function OrgNav({
           onChange={onOrganizationChange}
         />
         <ul className={ulContainer}>
+          {current.paymentStatus && (
+            <li>
+              <Badge
+                className={css`
+                  margin-right: 25px;
+                `}
+                variant={paymentStatusMap[current.paymentStatus]}
+              >
+                OK
+              </Badge>
+            </li>
+          )}
           <li role="none">
             <Tooltip
               align="bottom"

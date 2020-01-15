@@ -19,6 +19,7 @@ import {
   Variant,
   OverridesInterface,
   CurrentProjectInterface,
+  CurrentOrganizationInterface,
 } from '../types';
 
 const menuItemHeight = 36;
@@ -75,7 +76,7 @@ interface MongoSelectProps {
    * Organization: {orgId: `string`; orgName: `string`, planType: `'Cloud' | 'OM' | 'Atlas'`}
    * Project: {orgId: `string`; projectId: `string`, projectName: `string`, planType: `'Cloud' | 'OM' | 'Atlas'`}
    */
-  current: CurrentProjectInterface | OrganizationInterface;
+  current: CurrentProjectInterface | CurrentOrganizationInterface;
 
   /**
    * Array of data objects

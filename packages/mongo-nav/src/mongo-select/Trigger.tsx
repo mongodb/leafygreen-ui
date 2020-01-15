@@ -5,7 +5,7 @@ import Icon from '@leafygreen-ui/icon';
 import {
   OverridesInterface,
   CurrentProjectInterface,
-  OrganizationInterface,
+  CurrentOrganizationInterface,
 } from '../types';
 
 const orgTriggerContainer = css`
@@ -61,7 +61,7 @@ const border = css`
 
 interface OrganizationTriggerProps {
   children?: React.ReactNode;
-  current: OrganizationInterface;
+  current: CurrentOrganizationInterface;
   className?: string;
   overrides?: OverridesInterface;
 }

@@ -48,6 +48,17 @@ type PlanType = typeof PlanType[keyof typeof PlanType];
 
 export { PlanType };
 
+const OrgPaymentLabel = {
+  Default: 'default',
+  Success: 'success',
+  Warning: 'warning',
+  Danger: 'danger',
+};
+
+type OrgPaymentLabel = typeof OrgPaymentLabel[keyof typeof OrgPaymentLabel];
+
+export { OrgPaymentLabel };
+
 export interface ProjectInterface {
   projectId: string;
   projectName: string;
@@ -65,9 +76,14 @@ export interface OrganizationInterface {
   orgName: string;
   planType: PlanType;
 }
+
+export interface CurrentOrganizationInterface extends OrganizationInterface {
+  paymentStatus?: OrgPaymentLabel;
+}
+
 export interface DataInterface {
   account: AccountInterface;
-  currentOrganization: OrganizationInterface;
+  currentOrganization: CurrentOrganizationInterface;
   currentProject: CurrentProjectInterface;
   organizations: Array<OrganizationInterface>;
   projects: Array<ProjectInterface>;
