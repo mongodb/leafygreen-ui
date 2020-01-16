@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
-import Icon, { glyphs } from '@leafygreen-ui/icon';
+import Icon from '@leafygreen-ui/icon';
 import { LogoMark } from '@leafygreen-ui/logo';
 import {
   Menu,
@@ -96,6 +96,11 @@ const productLinkIconStyle = css`
   }
 `;
 
+const subMenuItemStyle = css`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const descriptionStyle = css`
   font-size: 12px;
   line-height: 14px;
@@ -105,98 +110,28 @@ const descriptionStyle = css`
   max-width: 100%;
 `;
 
-const subMenuItemStyle = css`
-  display: flex;
-  justify-content: space-between;
-`;
-
 const logoutContainer = css`
   height: 56px;
   background-color: ${uiColors.gray.light3};
 `;
 
-const SubMenuItemNames = {
-  userPreferences: 'User Preferences',
-  invitations: 'Invitations',
-  organizations: 'Organizations',
-  videoPreferences: 'Video Preferences',
-  tfa: 'Two-Factor Authorization',
-};
-
-type SubMenuItemNames = typeof SubMenuItemNames[keyof typeof SubMenuItemNames];
-
-interface SubMenuItemInterface {
-  title: string;
-  relative: string;
+interface DescriptionProps {
+  isActive: boolean;
+  product: 'charts' | 'university' | 'support';
 }
 
-interface SubMenuInterface {
-  displayName: 'Atlas' | 'University' | 'Cloud Support';
-  href:
-    | 'https://cloud.mongodb.com'
-    | 'https://university.mongodb.com'
-    | 'https://support.mongodb.com';
-  description: string;
-  slug: Product;
-  subMenuItems: { [key: string]: SubMenuItemInterface };
-  glyph: Glyph;
+function Description({ isActive, product }: DescriptionProps) {
+  return (
+    <div
+      className={cx(productLinkStyle, {
+        [activeProductLinkStyle]: isActive,
+      })}
+    >
+      {`${product}.mongodb.com`}
+      <Icon size="small" glyph="CaretRight" className={productLinkIconStyle} />
+    </div>
+  );
 }
-
-const subMenus: Array<SubMenuInterface> = [
-  {
-    displayName: 'Atlas',
-    description: 'cloud.mongodb.com',
-    href: 'https://cloud.mongodb.com',
-    slug: 'cloud',
-    subMenuItems: {
-      userPreferences: {
-        title: 'User Preferences',
-        relative: '/v2#/preferences/personalization',
-      },
-      invitations: {
-        title: 'Invitations',
-        relative: '/v2#/preferences/invitations',
-      },
-      organizations: {
-        title: 'Organizations',
-        relative: '/v2#/preferences/organizations',
-      },
-      tfa: {
-        title: 'Two-Factor Authorization',
-        relative: '/v2#/preferences/2fa',
-      },
-    },
-    glyph: 'Cloud',
-  },
-  {
-    displayName: 'University',
-    description: 'university.mongodb.com',
-    href: 'https://university.mongodb.com',
-    slug: 'university',
-    subMenuItems: {
-      videoPreferences: {
-        title: 'Video Preferences',
-        relative: 'yy',
-      },
-    },
-    glyph: 'Laptop',
-  },
-  {
-    displayName: 'Cloud Support',
-    description: 'support.mongodb.com',
-    href: 'https://support.mongodb.com',
-    slug: 'support',
-    subMenuItems: {
-      userPreferences: {
-        title: 'User Preferences',
-        relative: '/profile',
-      },
-    },
-    glyph: 'Support',
-  },
-];
-
-type Glyph = keyof typeof glyphs;
 
 interface MongoMenuProps {
   /**
@@ -207,7 +142,7 @@ interface MongoMenuProps {
   /**
    * MongoDB product that is currently active: ['cloud', 'university', 'support'].
    */
-  activeProduct?: Product;
+  activeProduct: Product;
 
   /**
    * Callback invoked after the user clicks log out.
@@ -234,79 +169,18 @@ function MongoMenu({
   const name = `${firstName} ${lastName}`;
 
   const isAccount = activeProduct === 'account';
+  const cloudProducts = ['cloud', 'stitch', 'charts'];
+  const isCloud = cloudProducts.includes(activeProduct);
+  const isSupport = activeProduct === 'support';
+  const isUniversity = activeProduct === 'university';
 
-  const renderSubMenu = ({
-    slug,
-    href,
-    displayName,
-    glyph,
-    subMenuItems,
-    description,
-  }: SubMenuInterface) => {
-    const isActive =
-      slug === activeProduct ||
-      (slug === 'cloud' && activeProduct === 'stitch') ||
-      (slug === 'cloud' && activeProduct === 'charts');
-
-    const renderSubMenuItems = (subMenuItem: SubMenuItemNames) => {
-      const subMenuItemContent =
-        subMenuItems[subMenuItem]?.title === 'Invitations' &&
-        openInvitations ? (
-          <span className={subMenuItemStyle}>
-            {subMenuItems[subMenuItem]?.title}{' '}
-            <Badge variant="blue">{openInvitations}</Badge>
-          </span>
-        ) : (
-          subMenuItems[subMenuItem]?.title
-        );
-
-      return (
-        <MenuItem
-          key={subMenuItems[subMenuItem]?.title}
-          href={urls?.mongoMenu?.[slug]?.[subMenuItem]}
-        >
-          {subMenuItemContent}
-        </MenuItem>
-      );
-    };
-
-    const subMenuDescription = (
-      <div
-        className={cx(productLinkStyle, {
-          [activeProductLinkStyle]: isActive,
-        })}
-      >
-        {description}
-        <Icon
-          size="small"
-          glyph="CaretRight"
-          className={productLinkIconStyle}
-        />
-      </div>
-    );
-
-    return (
-      <SubMenu
-        {...subMenuContainer.prop}
-        key={displayName}
-        active={isActive}
-        href={href}
-        description={subMenuDescription}
-        target="_blank"
-        rel="noopener noreferrer"
-        title={displayName}
-        glyph={glyph}
-        onClick={e => {
-          onProductChange(e);
-          setOpen(false);
-        }}
-        className={cx(subMenuContainerStyle, {
-          [subMenuActiveContainerStyle]: isActive,
-        })}
-      >
-        {Object.keys(subMenuItems).map(renderSubMenuItems)}
-      </SubMenu>
-    );
+  const sharedProps = {
+    target: '_blank',
+    rel: 'noopener noreferrer',
+    onClick: (e: React.MouseEvent) => {
+      onProductChange(e);
+      setOpen(false);
+    },
   };
 
   return (
@@ -337,7 +211,73 @@ function MongoMenu({
         </div>
         <MenuSeparator />
 
-        {subMenus.map(renderSubMenu)}
+        <SubMenu
+          {...subMenuContainer.prop}
+          {...sharedProps}
+          active={isCloud}
+          href="https://cloud.mongodb.com"
+          description={<Description isActive={isCloud} product="cloud" />}
+          title="Atlas"
+          glyph="Cloud"
+          className={cx(subMenuContainerStyle, {
+            [subMenuActiveContainerStyle]: isCloud,
+          })}
+        >
+          <MenuItem href={urls?.mongoMenu?.cloud?.userPreferences}>
+            User Preferences
+          </MenuItem>
+          <MenuItem href={urls?.mongoMenu?.cloud?.invitations}>
+            {openInvitations ? (
+              <span className={subMenuItemStyle}>
+                Invitations <Badge variant="blue">{openInvitations}</Badge>
+              </span>
+            ) : (
+              'Invitations'
+            )}
+          </MenuItem>
+          <MenuItem href={urls?.mongoMenu?.cloud?.organizations}>
+            Organizations
+          </MenuItem>
+          <MenuItem href={urls?.mongoMenu?.cloud?.tfa}>
+            Two-Factor Authorization
+          </MenuItem>
+        </SubMenu>
+
+        <SubMenu
+          {...subMenuContainer.prop}
+          {...sharedProps}
+          active={isUniversity}
+          href="https://university.mongodb.com"
+          description={
+            <Description isActive={isUniversity} product="university" />
+          }
+          title="University"
+          glyph="Laptop"
+          className={cx(subMenuContainerStyle, {
+            [subMenuActiveContainerStyle]: isUniversity,
+          })}
+        >
+          <MenuItem href={urls.mongoMenu?.university?.videoPreferences}>
+            Video Preferences
+          </MenuItem>
+        </SubMenu>
+
+        <SubMenu
+          {...subMenuContainer.prop}
+          {...sharedProps}
+          active={isSupport}
+          href="https://support.mongodb.com"
+          description={<Description isActive={isSupport} product="support" />}
+          title="Support"
+          glyph="Support"
+          className={cx(subMenuContainerStyle, {
+            [subMenuActiveContainerStyle]: isSupport,
+          })}
+        >
+          <MenuItem href={urls.mongoMenu?.support?.userPreferences}>
+            User Preferences
+          </MenuItem>
+        </SubMenu>
 
         <MenuSeparator />
 

@@ -58,4 +58,4 @@ export const keyMap = {
   Escape: 27,
   Space: 32,
   Tab: 9,
-};
+} as const;

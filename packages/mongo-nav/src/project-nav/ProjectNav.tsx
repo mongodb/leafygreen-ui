@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Tooltip from '@leafygreen-ui/tooltip';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -141,8 +141,6 @@ export default function ProjectNav({
   activeProduct,
   onProjectChange,
 }: ProjectNavInterface) {
-  const [open, setOpen] = useState(false);
-
   function calcStyle() {
     const products = {
       cloud: uiColors.green.base,
@@ -160,7 +158,9 @@ export default function ProjectNav({
 
     return css`
       transform: translate3d(${computedX}px, 0, 0);
-      background-color: ${products[activeProduct]};
+      background-color: ${products[
+        activeProduct as 'stitch' | 'cloud' | 'charts'
+      ]};
     `;
   }
 
@@ -182,8 +182,6 @@ export default function ProjectNav({
               <Icon glyph="Ellipsis" className={menuIconStyle} />
             </IconButton>
           }
-          open={open}
-          setOpen={setOpen}
         >
           <MenuItem href={urls?.projectNav?.settings}>
             Project Settings

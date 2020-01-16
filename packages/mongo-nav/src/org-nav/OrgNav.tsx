@@ -62,6 +62,22 @@ const supportContainer = css`
   margin-right: 30px;
 `;
 
+export const Colors = {
+  Lightgray: 'lightgray',
+  Green: 'green',
+  Yellow: 'yellow',
+  Red: 'red',
+} as const;
+
+export type Colors = typeof Colors[keyof typeof Colors];
+
+const paymentStatusMap: { readonly [K in Colors]: Array<string> } = {
+  [Colors.Lightgray]: ['embargoed', 'embargo confirmed'],
+  [Colors.Green]: ['ok'],
+  [Colors.Yellow]: ['warning', 'suspended', 'closing'],
+  [Colors.Red]: ['dead', 'locked', 'closed'],
+};
+
 interface OrgNav {
   account: AccountInterface;
   activeProduct: Product;
@@ -70,7 +86,7 @@ interface OrgNav {
   constructOrganizationURL: (orgID: string) => string;
   urls: URLSInterface;
   activeNav?: NavItem;
-  onOrganizationChange?: React.ChangeEventHandler;
+  onOrganizationChange: React.ChangeEventHandler;
 }
 
 export default function OrgNav({
@@ -83,17 +99,13 @@ export default function OrgNav({
   onOrganizationChange,
   urls,
 }: OrgNav) {
-  const paymentStatusMap = {
-    lightgray: ['embargoed', 'embargo confirmed'],
-    green: ['ok'],
-    yellow: ['warning', 'suspended', 'closing'],
-    red: ['dead', 'locked', 'closed'],
-  };
+  let variant: Colors | undefined;
+  let key: Colors;
 
-  let variant: string;
-
-  for (const key in paymentStatusMap) {
-    if (paymentStatusMap[key].includes(current.paymentStatus)) {
+  for (key in paymentStatusMap) {
+    if (!current.paymentStatus) {
+      variant = undefined;
+    } else if (paymentStatusMap[key].includes(current?.paymentStatus)) {
       variant = key;
     }
   }
@@ -112,7 +124,7 @@ export default function OrgNav({
           onChange={onOrganizationChange}
         />
         <ul className={ulContainer}>
-          {current.paymentStatus && (
+          {variant && current.paymentStatus && (
             <li>
               <Badge
                 className={css`

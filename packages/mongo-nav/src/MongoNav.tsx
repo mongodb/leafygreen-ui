@@ -8,6 +8,7 @@ import {
   HostsInterface,
   NavItem,
 } from './types';
+
 interface MongoNavInterface {
   activeProduct: Product;
   activeNav?: NavItem;

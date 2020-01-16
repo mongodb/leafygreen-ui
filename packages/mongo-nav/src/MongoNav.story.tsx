@@ -14,5 +14,7 @@ storiesOf('MongoNav', module).add('Default', () => (
       Product.Cloud,
     )}
     activeNav={select('activeNav', Object.values(NavItem), 'accessManager')}
+    onOrganizationChange={() => {}}
+    onProjectChange={() => {}}
   />
 ));

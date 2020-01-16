@@ -1,7 +1,7 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
-import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
+import { useEventListener } from '@leafygreen-ui/hooks';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -40,7 +40,7 @@ interface MenuProps
    * Callback to change the open state of the Menu.
    *
    */
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 
   /**
    * Callback to determine whether or not Menu should close when user tries to close it.
@@ -192,10 +192,12 @@ function Menu({
   }
 
   const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
-  const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
-  const open = isControlled ? controlledOpen : uncontrolledOpen;
-  const setOpen = isControlled ? controlledSetOpen : uncontrolledSetOpen;
+  const setOpen =
+    controlledSetOpen && controlledOpen
+      ? controlledSetOpen
+      : uncontrolledSetOpen;
+  const open = controlledOpen ?? uncontrolledOpen;
 
   // When a SubMenu becomes open, it's set to currentSubMenu, and we focus on the first child.
   useEffect(() => {
@@ -258,8 +260,6 @@ function Menu({
     enabled: open,
   });
 
-  useEscapeKey(handleClose, { enabled: open });
-
   function trapLastMenuItem(refs: Array<HTMLElement>) {
     if (document.activeElement === refs[refs.length - 1]) {
       return true;
@@ -307,6 +307,10 @@ function Menu({
 
         break;
 
+      case keyMap.Escape:
+        handleClose();
+        break;
+
       case keyMap.Space:
       case keyMap.Enter:
         if (!open) {
@@ -316,9 +320,7 @@ function Menu({
     }
   }
 
-  useEventListener('keydown', handleKeyDown, {
-    enabled: open,
-  });
+  useEventListener('keydown', handleKeyDown, { enabled: open });
 
   const popoverContent = (
     <Popover

@@ -1,3 +1,2 @@
-import MongoSelect, { PlanType, Variant } from './MongoSelect';
-export { PlanType, Variant };
+import MongoSelect from './MongoSelect';
 export default MongoSelect;

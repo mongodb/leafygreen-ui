@@ -135,12 +135,14 @@ function MongoSelect({
     footer = (
       <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
         <FocusableMenuItem>
-          <Button href={urls.mongoSelect?.viewAllProjects}>
+          <Button href={urls.mongoSelect?.viewAllProjects} as="a">
             View All Projects
           </Button>
         </FocusableMenuItem>
         <FocusableMenuItem>
-          <Button href={urls.mongoSelect?.newProject}>+ New Project</Button>
+          <Button href={urls.mongoSelect?.newProject} as="a">
+            + New Project
+          </Button>
         </FocusableMenuItem>
       </li>
     );
