@@ -5,7 +5,7 @@ export default {
     email: 'harry.wolff@mongodb.com',
     firstName: 'Harry',
     lastName: 'Wolff',
-    openInvitations: 0,
+    openInvitations: 1,
     username: 'harry.wolff@mongodb.com',
   },
   currentOrganization: {

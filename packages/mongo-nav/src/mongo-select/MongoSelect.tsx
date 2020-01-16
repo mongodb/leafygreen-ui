@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Menu,
@@ -127,7 +127,6 @@ function MongoSelect({
   className,
   urls,
 }: MongoSelectProps) {
-  const [open, setOpen] = useState(false);
   let trigger, footer;
 
   if (isProject(current)) {
@@ -194,13 +193,7 @@ function MongoSelect({
   };
 
   return (
-    <Menu
-      open={open}
-      setOpen={setOpen}
-      trigger={trigger}
-      className={menuContainerStyle}
-      justify="start"
-    >
+    <Menu trigger={trigger} className={menuContainerStyle} justify="start">
       <FocusableMenuItem>
         <Input onChange={onChange} onKeyDown={onKeyDown} variant={variant} />
       </FocusableMenuItem>

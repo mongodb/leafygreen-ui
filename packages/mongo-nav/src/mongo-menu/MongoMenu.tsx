@@ -117,7 +117,7 @@ const logoutContainer = css`
 
 interface DescriptionProps {
   isActive: boolean;
-  product: 'charts' | 'university' | 'support';
+  product: 'cloud' | 'university' | 'support';
 }
 
 function Description({ isActive, product }: DescriptionProps) {

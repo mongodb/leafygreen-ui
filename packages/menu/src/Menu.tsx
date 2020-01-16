@@ -194,7 +194,7 @@ function Menu({
   const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
   const setOpen =
-    controlledSetOpen && controlledOpen
+    typeof controlledOpen === 'boolean' && controlledSetOpen
       ? controlledSetOpen
       : uncontrolledSetOpen;
   const open = controlledOpen ?? uncontrolledOpen;
