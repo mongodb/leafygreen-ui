@@ -64,6 +64,7 @@ interface OrganizationTriggerProps {
   current: CurrentOrganizationInterface;
   className?: string;
   urls: URLSInterface;
+  isActive?: boolean;
 }
 
 export function OrganizationTrigger({
@@ -71,6 +72,7 @@ export function OrganizationTrigger({
   current,
   className,
   urls,
+  isActive,
   ...rest
 }: OrganizationTriggerProps) {
   return (
@@ -85,7 +87,10 @@ export function OrganizationTrigger({
         className={cx(anchorStyle, border)}
         aria-label="settings"
       >
-        <Icon glyph={'Settings'} />
+        <Icon
+          glyph={'Settings'}
+          fill={isActive ? uiColors.green.base : uiColors.gray.base}
+        />
       </a>
       {children}
     </div>

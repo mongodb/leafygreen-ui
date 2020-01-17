@@ -15,6 +15,9 @@ const NavItem = {
   Billing: 'billing',
   Support: 'support',
   AccessManager: 'accessManager',
+  AllClusters: 'allClusters',
+  Admin: 'admin',
+  OrgSettings: 'orgSettings',
 };
 
 type NavItem = typeof NavItem[keyof typeof NavItem] | '';
@@ -124,6 +127,8 @@ export interface URLSInterface {
     accessManager?: string;
     support?: string;
     billing?: string;
+    allClusters?: string;
+    admin?: string;
   };
   projectNav?: {
     settings?: string;
@@ -134,6 +139,7 @@ export interface URLSInterface {
     activityFeed?: string;
   };
 }
+
 export interface HostsInterface {
   account?: string;
   charts?: string;

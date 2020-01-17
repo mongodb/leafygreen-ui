@@ -12,6 +12,7 @@ import {
 interface MongoNavInterface {
   activeProduct: Product;
   activeNav?: NavItem;
+  admin?: boolean;
   data: DataInterface;
   onOrganizationChange: React.ChangeEventHandler;
   onProjectChange: React.ChangeEventHandler;
@@ -25,6 +26,7 @@ interface MongoNavInterface {
 export default function MongoNav({
   activeProduct,
   activeNav,
+  admin = false,
   data,
   showProjNav = true,
   onOrganizationChange,
@@ -98,6 +100,9 @@ export default function MongoNav({
       billing:
         urls?.orgNav?.billing ??
         `${cloudHost}/v2#/org/${data.currentOrganization.orgId}/billing/overview`,
+      allClusters: urls?.orgNav?.allClusters ?? `${cloudHost}/v2#/clusters`,
+      admin:
+        urls?.orgNav?.admin ?? `${cloudHost}/v2/admin#general/overview/servers`,
     },
     projectNav: {
       settings:
@@ -132,6 +137,7 @@ export default function MongoNav({
         urls={constructedUrls}
         activeNav={activeNav}
         onOrganizationChange={onOrganizationChange}
+        admin={admin}
       />
       {showProjNav && (
         <ProjectNav

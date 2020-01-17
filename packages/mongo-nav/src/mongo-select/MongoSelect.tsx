@@ -114,6 +114,8 @@ interface MongoSelectProps {
   urls: URLSInterface;
 
   onChange: React.ChangeEventHandler;
+
+  isActive?: boolean;
 }
 
 function MongoSelect({
@@ -126,6 +128,7 @@ function MongoSelect({
   onChange,
   className,
   urls,
+  isActive = false,
 }: MongoSelectProps) {
   let trigger, footer;
 
@@ -151,6 +154,7 @@ function MongoSelect({
         current={current}
         className={className}
         urls={urls}
+        isActive={isActive}
       />
     );
     footer = (

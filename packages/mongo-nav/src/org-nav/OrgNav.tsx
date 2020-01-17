@@ -37,7 +37,7 @@ const leftSideContainer = css`
 
 const orgSelectContainer = css`
   margin-left: 20px;
-  margin-right: 30px;
+  margin-right: 20px;
 `;
 
 const ulContainer = css`
@@ -59,6 +59,10 @@ const activeLink = css`
 
 const supportContainer = css`
   margin-left: 30px;
+  margin-right: 30px;
+`;
+
+const rightSideLinkStyle = css`
   margin-right: 30px;
 `;
 
@@ -87,6 +91,7 @@ interface OrgNav {
   urls: URLSInterface;
   activeNav?: NavItem;
   onOrganizationChange: React.ChangeEventHandler;
+  admin: boolean;
 }
 
 export default function OrgNav({
@@ -98,6 +103,7 @@ export default function OrgNav({
   constructOrganizationURL,
   onOrganizationChange,
   urls,
+  admin,
 }: OrgNav) {
   let variant: Colors | undefined;
   let key: Colors;
@@ -122,6 +128,7 @@ export default function OrgNav({
           variant="organization"
           urls={urls}
           onChange={onOrganizationChange}
+          isActive={activeNav === 'orgSettings'}
         />
         <ul className={ulContainer}>
           {variant && current.paymentStatus && (
@@ -195,7 +202,41 @@ export default function OrgNav({
           </li>
         </ul>
       </div>
-      <MongoMenu account={account} activeProduct={activeProduct} urls={urls} />
+      <div>
+        <Tooltip
+          align="bottom"
+          justify="middle"
+          variant="dark"
+          trigger={
+            <a
+              href={urls?.orgNav?.allClusters}
+              className={cx(rightSideLinkStyle, linkText, {
+                [activeLink]: activeNav === 'allClusters',
+              })}
+            >
+              All Clusters
+            </a>
+          }
+        >
+          View All Clusters
+        </Tooltip>
+
+        {admin && (
+          <a
+            href={urls?.orgNav?.admin}
+            className={cx(rightSideLinkStyle, linkText, {
+              [activeLink]: activeNav === 'admin',
+            })}
+          >
+            Admin
+          </a>
+        )}
+        <MongoMenu
+          account={account}
+          activeProduct={activeProduct}
+          urls={urls}
+        />
+      </div>
     </nav>
   );
 }

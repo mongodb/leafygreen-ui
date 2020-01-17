@@ -5,12 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
-import {
-  AtlasActive,
-  AtlasInactive,
-  ChartsActive,
-  ChartsInactive,
-} from './SubBrandIcons';
+import { AtlasActive, AtlasInactive } from './SubBrandIcons';
 import MongoSelect from '../mongo-select/index';
 import {
   ProjectInterface,
@@ -144,7 +139,7 @@ export default function ProjectNav({
   function calcStyle() {
     const products = {
       cloud: uiColors.green.base,
-      stitch: '#59569E',
+      stitch: '#59569D',
       charts: '#00C6BF',
     };
 
@@ -209,11 +204,12 @@ export default function ProjectNav({
           </li>
           <li role="none" className={productStyle}>
             <a href="https://stitch.mongodb.com" className={productTextStyle}>
-              {activeProduct === 'stitch' ? (
-                <Icon glyph="Stitch" fill="#59569E" />
-              ) : (
-                <Icon glyph="Stitch" />
-              )}
+              <Icon
+                glyph="Stitch"
+                fill={
+                  activeProduct === 'stitch' ? '#59569D' : uiColors.gray.base
+                }
+              />
               <span
                 className={cx(productMargin, {
                   [activeProductColor.stitch]: activeProduct === 'stitch',
@@ -225,11 +221,12 @@ export default function ProjectNav({
           </li>
           <li role="none" className={productStyle}>
             <a href="https://charts.mongodb.com" className={productTextStyle}>
-              {activeProduct === 'charts' ? (
-                <ChartsActive />
-              ) : (
-                <ChartsInactive />
-              )}
+              <Icon
+                glyph="Charts"
+                fill={
+                  activeProduct === 'charts' ? '#00C6BF' : uiColors.gray.base
+                }
+              />
               <span
                 className={cx(productMargin, {
                   [activeProductColor.charts]: activeProduct === 'charts',
