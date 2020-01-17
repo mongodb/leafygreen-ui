@@ -293,7 +293,14 @@ MongoMenu.displayName = 'MongoMenu';
 
 MongoMenu.propTypes = {
   user: PropTypes.objectOf(PropTypes.string),
-  activeProduct: PropTypes.oneOf(['account', 'cloud', 'support', 'university']),
+  activeProduct: PropTypes.oneOf([
+    'account',
+    'cloud',
+    'support',
+    'university',
+    'stitch',
+    'charts',
+  ]),
   onLogout: PropTypes.func,
   onProductChange: PropTypes.func,
   onAccountClick: PropTypes.func,

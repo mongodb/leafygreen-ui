@@ -26,13 +26,13 @@ interface MongoNavInterface {
 export default function MongoNav({
   activeProduct,
   activeNav,
-  admin = false,
   data,
-  showProjNav = true,
+  hosts,
   onOrganizationChange,
   onProjectChange,
-  hosts,
   urls,
+  showProjNav = true,
+  admin = false,
   constructOrganizationURL = orgId =>
     `https://cloud.mongodb.com/v2#/org/${orgId}/projects`,
   constructProjectURL = (orgId, projectId) =>

@@ -160,7 +160,11 @@ export default function ProjectNav({
   }
 
   return (
-    <nav className={navContainerStyle} aria-label="project navigation">
+    <nav
+      className={navContainerStyle}
+      aria-label="project navigation"
+      data-testid="project-nav"
+    >
       <div className={leftSide}>
         <MongoSelect
           variant="project"
@@ -247,7 +251,7 @@ export default function ProjectNav({
           trigger={
             <IconButton
               ariaLabel="Alerts"
-              href={urls.projectNav?.alerts}
+              href={urls.projectNav?.alerts as string}
               className={alertIconButtonStyle}
             >
               {alerts && <div className={alertBadgeStyle}>{alerts}</div>}
@@ -264,7 +268,7 @@ export default function ProjectNav({
           trigger={
             <IconButton
               ariaLabel="Project Activity Feed"
-              href={urls.projectNav?.activityFeed}
+              href={urls.projectNav?.activityFeed as string}
             >
               <Icon glyph="Save" />
             </IconButton>

@@ -16,7 +16,6 @@ import { OrganizationOption, ProjectOption } from './Option';
 import {
   ProjectInterface,
   OrganizationInterface,
-  Variant,
   URLSInterface,
   CurrentProjectInterface,
   CurrentOrganizationInterface,
@@ -57,9 +56,31 @@ const projectButtonStyle = css`
 `;
 
 function isProject(
-  val: ProjectInterface | OrganizationInterface,
-): val is ProjectInterface {
-  return 'projectId' in val;
+  props: ProjectMongoSelectProps | OrganizationMongoSelectProps,
+): props is ProjectMongoSelectProps {
+  return props.variant === 'project';
+}
+
+interface BaseMongoSelectProps {
+  onClick?: React.MouseEventHandler;
+  className?: string;
+  urls: URLSInterface;
+  onChange: React.ChangeEventHandler;
+  isActive?: boolean;
+}
+
+interface ProjectMongoSelectProps extends BaseMongoSelectProps {
+  variant: 'project';
+  data: Array<ProjectInterface>;
+  current: CurrentProjectInterface;
+  constructProjectURL: (orgID: string, projectID: string) => string;
+}
+
+interface OrganizationMongoSelectProps extends BaseMongoSelectProps {
+  variant: 'organization';
+  data: Array<OrganizationInterface>;
+  current: CurrentOrganizationInterface;
+  constructOrganizationURL: (orgID: string) => string;
 }
 
 const onKeyDown: React.KeyboardEventHandler = e => {
@@ -68,72 +89,22 @@ const onKeyDown: React.KeyboardEventHandler = e => {
   }
 };
 
-type VariantData = ProjectInterface | OrganizationInterface;
+function MongoSelect(
+  props: ProjectMongoSelectProps | OrganizationMongoSelectProps,
+) {
+  const {
+    onClick,
+    variant,
+    onChange,
+    className,
+    urls,
+    isActive = false,
+  } = props;
 
-interface MongoSelectProps {
-  /**
-   * Object with information about current organization or project.
-   * Organization: {orgId: `string`; orgName: `string`, planType: `'Cloud' | 'OnPrem' | 'Atlas'`}
-   * Project: {orgId: `string`; projectId: `string`, projectName: `string`, planType: `'Cloud' | 'OnPrem' | 'Atlas'`}
-   */
-  current: CurrentProjectInterface | CurrentOrganizationInterface;
-
-  /**
-   * Array of data objects
-   * Organization: [{orgId: `string`; orgName: `string`, planType: `'Cloud' | 'OnPrem' | 'Atlas'`}]
-   * Project: [{orgId: `string`; projectId: `string`, projectName: `string`, planType: `'Cloud' | 'OnPrem' | 'Atlas'`}]
-   */
-  data: Array<VariantData>;
-
-  /**
-   * Callback function executed when an organization is clicked.
-   */
-  onClick?: React.MouseEventHandler;
-
-  /**
-   * Determines variant 'organization' | 'project'
-   */
-  variant: Variant;
-
-  className?: string;
-
-  /**
-   * Receives (orgID, projectID) as parameters
-   * Returns a string with a projectURL, where a user will be redirected when
-   * Project is selected from dropdown
-   */
-  constructProjectURL?: (orgID: string, projectID: string) => string;
-
-  /**
-   * Receives (orgID) as parameter
-   * Returns a string with an organizationURL, where a user will be redirected when
-   * Organization is selected from dropdown
-   */
-  constructOrganizationURL?: (orgID: string) => string;
-
-  urls: URLSInterface;
-
-  onChange: React.ChangeEventHandler;
-
-  isActive?: boolean;
-}
-
-function MongoSelect({
-  current,
-  data,
-  onClick,
-  variant,
-  constructProjectURL,
-  constructOrganizationURL,
-  onChange,
-  className,
-  urls,
-  isActive = false,
-}: MongoSelectProps) {
   let trigger, footer;
 
-  if (isProject(current)) {
-    trigger = <ProjectTrigger current={current} className={className} />;
+  if (isProject(props)) {
+    trigger = <ProjectTrigger current={props.current} className={className} />;
     footer = (
       <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
         <FocusableMenuItem>
@@ -151,7 +122,7 @@ function MongoSelect({
   } else {
     trigger = (
       <OrganizationTrigger
-        current={current}
+        current={props.current}
         className={className}
         urls={urls}
         isActive={isActive}
@@ -167,27 +138,37 @@ function MongoSelect({
     );
   }
 
-  const renderOption = (datum: VariantData) => {
-    let id, content;
+  const renderProjectOption = (
+    props: ProjectMongoSelectProps,
+    datum: ProjectInterface,
+  ) => {
+    const id = datum.projectId;
+    const content = (
+      <ProjectOption
+        projectName={datum.projectName}
+        href={props.constructProjectURL(datum.orgId, id)}
+      />
+    );
 
-    if (isProject(datum)) {
-      id = datum.projectId;
-      content = (
-        <ProjectOption
-          projectName={datum.projectName}
-          href={constructProjectURL(datum.orgId, id)}
-        />
-      );
-    } else {
-      id = datum.orgId;
-      content = (
-        <OrganizationOption
-          orgName={datum.orgName}
-          planType={datum.planType}
-          href={constructOrganizationURL(id)}
-        />
-      );
-    }
+    return (
+      <MenuItem key={id} className={menuItemContainerStyle} onClick={onClick}>
+        {content}
+      </MenuItem>
+    );
+  };
+
+  const renderOrganizationOption = (
+    props: OrganizationMongoSelectProps,
+    datum: OrganizationInterface,
+  ) => {
+    const id = datum.orgId;
+    const content = (
+      <OrganizationOption
+        orgName={datum.orgName}
+        planType={datum.planType}
+        href={props.constructOrganizationURL(id)}
+      />
+    );
 
     return (
       <MenuItem key={id} className={menuItemContainerStyle} onClick={onClick}>
@@ -208,7 +189,9 @@ function MongoSelect({
           className={ulContainerStyle}
           role="menu"
         >
-          {data.map(renderOption)}
+          {isProject(props)
+            ? props.data.map(datum => renderProjectOption(props, datum))
+            : props.data.map(datum => renderOrganizationOption(props, datum))}
         </ul>
       </li>
 
@@ -234,6 +217,8 @@ MongoSelect.propTypes = {
   }),
   onClick: PropTypes.func,
   variant: PropTypes.oneOf(['organization', 'project']).isRequired,
+  constructOrganizationURL: PropTypes.func,
+  constructProjectURL: PropTypes.func,
 };
 
 export default MongoSelect;
