@@ -7,8 +7,3 @@ declare namespace SVGR {
   }
   type Component = React.ComponentType<ComponentProps>;
 }
-
-declare module '*.svg' {
-  const value: SVGR.Component;
-  export = value;
-}
