@@ -22,9 +22,11 @@ export const menuItemContainerStyle = css`
   box-sizing: border-box;
   background: ${uiColors.white};
   text-align: left;
+
   &:focus {
     outline: none;
   }
+
   &:before {
     content: '';
     position: absolute;
@@ -35,6 +37,7 @@ export const menuItemContainerStyle = css`
     background-color: transparent;
     transition: background-color 150ms ease-in-out;
   }
+
   &:hover {
     text-decoration: none;
     background-color: ${uiColors.gray.light2};
@@ -42,6 +45,7 @@ export const menuItemContainerStyle = css`
       background-color: ${uiColors.gray.light1};
     }
   }
+
   &:active {
     background-color: ${uiColors.gray.light2};
     &:before {
@@ -54,6 +58,7 @@ export const activeMenuItemContainerStyle = css`
   &:before {
     background-color: ${uiColors.green.base};
   }
+
   &:hover {
     background-color: ${uiColors.gray.light3};
     color: ${uiColors.green.dark3};
@@ -67,6 +72,7 @@ export const disabledMenuItemContainerStyle = css`
   cursor: not-allowed;
   pointer-events: none;
   background-color: ${uiColors.gray.light3};
+
   &:hover:before {
     background-color: unset;
   }
@@ -77,10 +83,12 @@ export const focusedMenuItemContainerStyle = css`
     text-decoration: none;
     background-color: ${uiColors.blue.light3};
     color: ${uiColors.blue.dark3};
+
     &:before {
       background-color: #63b0d0;
     }
   }
+
   &::-moz-focus-inner {
     border: 0;
   }

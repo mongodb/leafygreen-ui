@@ -69,7 +69,8 @@ const iconButtonStyle = css`
   position: absolute;
   z-index: 1;
   right: 8px;
-  top: ${52 / 2 - 22 / 2}px;
+  // 56 is the height of the SubMenuItem container and 28 is the height of the IconButton
+  top: ${56 / 2 - 28 / 2}px;
   margin: auto;
   background-color: ${uiColors.gray.light3};
   transition: background-color 150ms ease-in-out;
@@ -93,8 +94,7 @@ const openIconButtonStyle = css`
 
 const mainIconStyle = css`
   color: ${uiColors.gray.base};
-  // 15px of padding from MenuItem + 32px width of SVG + 13px = 60px
-  // which is the padding-left for children of SubMenus.
+  // 60px (padding-left for SubMenus) - 32px (width of SVG) - 15px (padding from MenuItem) = 13
   margin-right: 13px;
   flex-shrink: 0;
   ${subMenuContainer.selector}:hover > & {
@@ -184,9 +184,7 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
 
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
-  const iconButtonRef: React.MutableRefObject<HTMLElement | null> = useRef(
-    null,
-  );
+  const iconButtonRef: React.RefObject<HTMLElement | null> = useRef(null);
 
   const onRootClick = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
@@ -293,11 +291,13 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
               return React.cloneElement(child, {
                 children: (
                   <>
-                    <div className={menuItemBorder}></div>
+                    <div className={menuItemBorder} />
                     {child.props.children}
                   </>
                 ),
                 className: cx(
+                  // SubMenuItem indentation based on how indented the title of a SubMenuItem is
+                  // glyphs push title further in, therefore their children should have a thicker padding-left
                   css`
                     padding-left: ${glyph ? '60px' : '28px'};
                   `,

@@ -48,7 +48,7 @@ interface MenuProps
    */
   shouldClose?: () => boolean;
 
-  children: React.ReactNode;
+  children: Array<React.ReactElement>;
 }
 
 /**
@@ -100,8 +100,10 @@ function Menu({
   > | null>(null);
   const { setUsingKeyboard } = useUsingKeyboardContext();
 
-  function updateChildren(children: any): Array<React.ReactElement> {
-    return React.Children.map(children, child => {
+  function updateChildren(
+    children: Array<React.ReactElement>,
+  ): Array<React.ReactElement> {
+    return React.Children.map(children, (child: React.ReactElement) => {
       if (child.props?.disabled) {
         return child;
       }
@@ -118,6 +120,7 @@ function Menu({
 
         if (open && hasSetInitialFocus.current === false) {
           setFocus(refs[0]);
+          // This allows the focus state to be shown via the LeafyGreen Provider
           setUsingKeyboard(true);
           hasSetInitialFocus.current = true;
         }
@@ -127,7 +130,7 @@ function Menu({
         setFocused(target);
       };
 
-      if (isComponentType(child, 'SubMenu')) {
+      if (isComponentType<'SubMenu'>(child, 'SubMenu')) {
         if (titleArr.includes(child.props.title)) {
           throw new Error('SubMenu titles must be unique');
         }
@@ -153,10 +156,8 @@ function Menu({
             setCurrentSubMenu(state ? child : null);
           },
           onKeyDown: (e: KeyboardEvent) => {
-            if (e.keyCode === keyMap.ArrowLeft) {
-              if (isCurrentSubMenu) {
-                setCurrentSubMenu(null);
-              }
+            if (e.keyCode === keyMap.ArrowLeft && isCurrentSubMenu) {
+              setCurrentSubMenu(null);
             }
 
             if (e.keyCode === keyMap.ArrowRight) {
@@ -172,8 +173,8 @@ function Menu({
       }
 
       if (
-        isComponentType(child, 'MenuItem') ||
-        isComponentType(child, 'FocusableMenuItem')
+        isComponentType<'MenuItem'>(child, 'MenuItem') ||
+        isComponentType<'FocusableMenuItem'>(child, 'FocusableMenuItem')
       ) {
         return React.cloneElement(child, {
           ref: setRef,
@@ -206,14 +207,13 @@ function Menu({
 
       subMenu?.focus();
       setUsingKeyboard(true);
-      return;
+    } else {
+      const focusedRefIndex = refs.indexOf(focused);
+      const subMenuFirstChild = refs[focusedRefIndex + 1];
+
+      subMenuFirstChild?.focus();
+      setUsingKeyboard(true);
     }
-
-    const focusedRefIndex = refs.indexOf(focused);
-    const subMenuFirstChild = refs[focusedRefIndex + 1];
-
-    subMenuFirstChild?.focus();
-    setUsingKeyboard(true);
   }, [currentSubMenu]);
 
   const updatedChildren = React.useMemo(() => updateChildren(children), [
