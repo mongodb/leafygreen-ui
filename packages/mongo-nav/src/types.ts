@@ -91,11 +91,11 @@ export interface CurrentOrganizationInterface extends OrganizationInterface {
 }
 
 export interface DataInterface {
-  account: AccountInterface;
-  currentOrganization: CurrentOrganizationInterface;
-  currentProject: CurrentProjectInterface;
-  organizations: Array<OrganizationInterface>;
-  projects: Array<ProjectInterface>;
+  readonly account: AccountInterface;
+  readonly currentOrganization: CurrentOrganizationInterface;
+  readonly currentProject: CurrentProjectInterface;
+  readonly organizations: Array<OrganizationInterface>;
+  readonly projects: Array<ProjectInterface>;
 }
 
 export interface URLSInterface {
