@@ -121,7 +121,7 @@ interface ProjectNavInterface {
   current: CurrentProjectInterface;
   data: Array<ProjectInterface>;
   constructProjectURL: (orgID: string, projID: string) => string;
-  urls: URLSInterface;
+  urls: Required<URLSInterface>;
   alerts?: number;
   activeProduct: Product;
   onProjectChange: React.ChangeEventHandler;
@@ -136,6 +136,8 @@ export default function ProjectNav({
   activeProduct,
   onProjectChange,
 }: ProjectNavInterface) {
+  const { projectNav } = urls;
+
   function calcStyle() {
     const products = {
       cloud: uiColors.green.base,
@@ -182,16 +184,12 @@ export default function ProjectNav({
             </IconButton>
           }
         >
-          <MenuItem href={urls?.projectNav?.settings}>
-            Project Settings
-          </MenuItem>
-          <MenuItem href={urls?.projectNav?.accessManager}>
+          <MenuItem href={projectNav.settings}>Project Settings</MenuItem>
+          <MenuItem href={projectNav.accessManager}>
             Project Access Manager
           </MenuItem>
-          <MenuItem href={urls?.projectNav?.support}>Project Support</MenuItem>
-          <MenuItem href={urls?.projectNav?.integrations}>
-            Integrations
-          </MenuItem>
+          <MenuItem href={projectNav.support}>Project Support</MenuItem>
+          <MenuItem href={projectNav.integrations}>Integrations</MenuItem>
         </Menu>
         <ol className={olStyle}>
           <li role="none" className={productStyle}>
@@ -251,7 +249,7 @@ export default function ProjectNav({
           trigger={
             <IconButton
               ariaLabel="Alerts"
-              href={urls.projectNav?.alerts as string}
+              href={projectNav.alerts as string}
               className={alertIconButtonStyle}
             >
               {alerts && <div className={alertBadgeStyle}>{alerts}</div>}
@@ -268,7 +266,7 @@ export default function ProjectNav({
           trigger={
             <IconButton
               ariaLabel="Project Activity Feed"
-              href={urls.projectNav?.activityFeed as string}
+              href={projectNav.activityFeed as string}
             >
               <Icon glyph="Save" />
             </IconButton>

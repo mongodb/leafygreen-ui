@@ -41,9 +41,44 @@ describe('packages/mongo-select', () => {
         variant={Variant.Organization}
         constructOrganizationURL={orgID => orgID}
         urls={{
+          mongoMenu: {
+            cloud: {
+              userPreferences: `https://cloud.mongodb.com/v2#/preferences/personalization`,
+              organizations: `https://cloud.mongodb.com/v2#/preferences/organizations`,
+              invitations: `https://cloud.mongodb.com/v2#/preferences/invitations`,
+              tfa: `https://cloud.mongodb.com/v2#/preferences/2fa`,
+            },
+            university: {
+              videoPreferences: `https://university.mongodb.com`,
+            },
+            support: {
+              userPreferences: `https://support.mongodb.com/profile`,
+            },
+            account: {
+              accountURL: `https://account.mongodb.com/account/profile/overview`,
+            },
+          },
           mongoSelect: {
+            viewAllProjects: `https://cloud.mongodb.com/v2#/org/${current.orgId}/projects`,
+            newProject: `https://cloud.mongodb.com/v2#/org/${current.orgId}/projects/create`,
             viewAllOrganizations: `https://cloud-dev.mongodb.com/v2#/preferences/organizations`,
             orgSettings: `https://cloud-dev.mongodb.com/v2#/org/${current.orgId}/settings/general`,
+          },
+          orgNav: {
+            settings: `https://cloud.mongodb.com/v2#/org/${current.orgId}/settings/general`,
+            accessManager: `https://cloud.mongodb.com/v2#/org/${current.orgId}/access/users`,
+            support: `https://cloud.mongodb.com/v2#/org/${current.orgId}/support`,
+            billing: `https://cloud.mongodb.com/v2#/org/${current.orgId}/billing/overview`,
+            allClusters: `https://cloud.mongodb.com/v2#/clusters`,
+            admin: `https://cloud.mongodb.com/v2/admin#general/overview/servers`,
+          },
+          projectNav: {
+            settings: `https://cloud.mongodb.com/v2/currentProjectId098#settings/groupSettings`,
+            accessManager: `https://cloud.mongodb.com/v2/currentProjectId098#access`,
+            support: `https://cloud.mongodb.com/v2/currentProjectId098#info/support`,
+            integrations: `https://cloud.mongodb.com/v2/currentProjectId098#integrations`,
+            alerts: `https://cloud.mongodb.com/v2/currentProjectId098#alerts`,
+            activityFeed: `https://cloud.mongodb.com/v2/currentProjectId098#activity`,
           },
         }}
       />,
@@ -147,9 +182,44 @@ describe('packages/mongo-select', () => {
         data={projectData}
         constructProjectURL={(orgID, projID) => `${orgID + projID}`}
         urls={{
+          mongoMenu: {
+            cloud: {
+              userPreferences: `https://cloud.mongodb.com/v2#/preferences/personalization`,
+              organizations: `https://cloud.mongodb.com/v2#/preferences/organizations`,
+              invitations: `https://cloud.mongodb.com/v2#/preferences/invitations`,
+              tfa: `https://cloud.mongodb.com/v2#/preferences/2fa`,
+            },
+            university: {
+              videoPreferences: `https://university.mongodb.com`,
+            },
+            support: {
+              userPreferences: `https://support.mongodb.com/profile`,
+            },
+            account: {
+              accountURL: `https://account.mongodb.com/account/profile/overview`,
+            },
+          },
           mongoSelect: {
+            viewAllOrganizations: `https://cloud-dev.mongodb.com/v2#/preferences/organizations`,
+            orgSettings: `https://cloud-dev.mongodb.com/v2#/org/currentOrganizationId098/settings/general`,
             viewAllProjects: viewAllProjectsHref,
             newProject: `https://cloud-dev.mongodb.com/v2#/org/${currentProject.orgId}/projects/create`,
+          },
+          orgNav: {
+            settings: `https://cloud.mongodb.com/v2#/org/currentOrganizationId098#settings/settings/general`,
+            accessManager: `https://cloud.mongodb.com/v2#/org/currentOrganizationId098#settings/access/users`,
+            support: `https://cloud.mongodb.com/v2#/org/currentOrganizationId098#settings/support`,
+            billing: `https://cloud.mongodb.com/v2#/org/currentOrganizationId098#settings/billing/overview`,
+            allClusters: `https://cloud.mongodb.com/v2#/clusters`,
+            admin: `https://cloud.mongodb.com/v2/admin#general/overview/servers`,
+          },
+          projectNav: {
+            settings: `https://cloud.mongodb.com/v2/currentProjectId098#settings/groupSettings`,
+            accessManager: `https://cloud.mongodb.com/v2/currentProjectId098#access`,
+            support: `https://cloud.mongodb.com/v2/currentProjectId098#info/support`,
+            integrations: `https://cloud.mongodb.com/v2/currentProjectId098#integrations`,
+            alerts: `https://cloud.mongodb.com/v2/currentProjectId098#alerts`,
+            activityFeed: `https://cloud.mongodb.com/v2/currentProjectId098#activity`,
           },
         }}
       />,

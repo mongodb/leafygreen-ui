@@ -63,7 +63,7 @@ interface OrganizationTriggerProps {
   children?: React.ReactNode;
   current: CurrentOrganizationInterface;
   className?: string;
-  urls: URLSInterface;
+  urls: Required<URLSInterface>;
   isActive?: boolean;
 }
 
@@ -83,7 +83,7 @@ export function OrganizationTrigger({
         <Icon size="small" glyph="CaretDown" />
       </button>
       <a
-        href={urls.mongoSelect?.orgSettings}
+        href={urls.mongoSelect.orgSettings}
         className={cx(anchorStyle, border)}
         aria-label="settings"
       >

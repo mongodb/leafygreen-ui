@@ -64,7 +64,7 @@ function isProject(
 interface BaseMongoSelectProps {
   onClick?: React.MouseEventHandler;
   className?: string;
-  urls: URLSInterface;
+  urls: Required<URLSInterface>;
   onChange: React.ChangeEventHandler;
   isActive?: boolean;
 }
@@ -102,18 +102,19 @@ function MongoSelect(
   } = props;
 
   let trigger, footer;
+  const { mongoSelect } = urls;
 
   if (isProject(props)) {
     trigger = <ProjectTrigger current={props.current} className={className} />;
     footer = (
       <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
         <FocusableMenuItem>
-          <Button href={urls.mongoSelect?.viewAllProjects} as="a">
+          <Button href={mongoSelect.viewAllProjects} as="a">
             View All Projects
           </Button>
         </FocusableMenuItem>
         <FocusableMenuItem>
-          <Button href={urls.mongoSelect?.newProject} as="a">
+          <Button href={mongoSelect.newProject} as="a">
             + New Project
           </Button>
         </FocusableMenuItem>
@@ -129,10 +130,7 @@ function MongoSelect(
       />
     );
     footer = (
-      <MenuItem
-        onKeyDown={onKeyDown}
-        href={urls.mongoSelect?.viewAllOrganizations}
-      >
+      <MenuItem onKeyDown={onKeyDown} href={mongoSelect?.viewAllOrganizations}>
         <strong className={viewAllStyle}>View All Organizations</strong>
       </MenuItem>
     );

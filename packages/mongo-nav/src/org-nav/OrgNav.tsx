@@ -88,7 +88,7 @@ interface OrgNav {
   current: CurrentOrganizationInterface;
   data: Array<OrganizationInterface>;
   constructOrganizationURL: (orgID: string) => string;
-  urls: URLSInterface;
+  urls: Required<URLSInterface>;
   activeNav?: NavItem;
   onOrganizationChange: React.ChangeEventHandler;
   admin: boolean;
@@ -105,6 +105,8 @@ export default function OrgNav({
   urls,
   admin,
 }: OrgNav) {
+  const { orgNav } = urls;
+
   let variant: Colors | undefined;
   let key: Colors;
 
@@ -154,7 +156,7 @@ export default function OrgNav({
               variant="dark"
               trigger={
                 <a
-                  href={urls.orgNav?.accessManager}
+                  href={orgNav.accessManager}
                   className={cx(linkText, {
                     [activeLink]: activeNav === 'accessManager',
                   })}
@@ -173,7 +175,7 @@ export default function OrgNav({
               variant="dark"
               trigger={
                 <a
-                  href={urls.orgNav?.support}
+                  href={orgNav.support}
                   className={cx(linkText, {
                     [activeLink]: activeNav === 'support',
                   })}
@@ -192,7 +194,7 @@ export default function OrgNav({
               variant="dark"
               trigger={
                 <a
-                  href={urls.orgNav?.billing}
+                  href={orgNav.billing}
                   className={cx(linkText, {
                     [activeLink]: activeNav === 'billing',
                   })}
@@ -213,7 +215,7 @@ export default function OrgNav({
           variant="dark"
           trigger={
             <a
-              href={urls?.orgNav?.allClusters}
+              href={orgNav.allClusters}
               className={cx(rightSideLinkStyle, linkText, {
                 [activeLink]: activeNav === 'allClusters',
               })}
@@ -227,7 +229,7 @@ export default function OrgNav({
 
         {admin && (
           <a
-            href={urls?.orgNav?.admin}
+            href={orgNav.admin}
             className={cx(rightSideLinkStyle, linkText, {
               [activeLink]: activeNav === 'admin',
             })}

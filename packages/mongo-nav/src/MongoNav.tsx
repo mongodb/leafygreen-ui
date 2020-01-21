@@ -45,7 +45,7 @@ export default function MongoNav({
   const universityHost = hosts?.university ?? `https://university.mongodb.com`;
   const supportHost = hosts?.support ?? `https://support.mongodb.com`;
 
-  const constructedUrls = {
+  const constructedUrls: Required<URLSInterface> = {
     mongoMenu: {
       cloud: {
         userPreferences:
