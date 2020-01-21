@@ -88,7 +88,7 @@ const titleTextStyle = css`
   }
 `;
 
-const activetitleTextStyle = css`
+const activeTitleTextStyle = css`
   font-weight: bold;
   color: ${uiColors.green.dark3};
 `;
@@ -134,7 +134,7 @@ const disabledStyle = css`
   }
 `;
 
-const disbaledTextStyle = css`
+const disabledTextStyle = css`
   color: ${uiColors.gray.light1};
 `;
 
@@ -143,6 +143,11 @@ interface SharedMenuItemProps {
    * Class name that will be applied to root MenuItem element.
    */
   className?: string;
+
+  /**
+   * Class name that will be applied to the title text/children wrapper.
+   */
+  titleTextClassName?: string;
 
   /**
    * Determines whether or not the MenuItem is active.
@@ -170,7 +175,7 @@ interface ButtonMenuItemProps
   href?: null;
 }
 
-type MenuItemProps = LinkMenuItemProps | ButtonMenuItemProps;
+export type MenuItemProps = LinkMenuItemProps | ButtonMenuItemProps;
 
 function usesLinkElement(
   props: LinkMenuItemProps | ButtonMenuItemProps,
@@ -184,6 +189,7 @@ const MenuItem = React.forwardRef(
       disabled = false,
       active = false,
       className,
+      titleTextClassName,
       children,
       description,
       href,
@@ -220,9 +226,11 @@ const MenuItem = React.forwardRef(
         >
           <div
             className={cx(titleTextStyle, {
-              [activetitleTextStyle]: active,
-              [disbaledTextStyle]: disabled,
-            })}
+              [activeTitleTextStyle]: active,
+              [disabledTextStyle]: disabled,
+              },
+              titleTextClassName
+            )}
           >
             {children}
           </div>
@@ -230,7 +238,7 @@ const MenuItem = React.forwardRef(
             <div
               className={cx(descriptionTextStyle, {
                 [activeDescriptionTextStyle]: active,
-                [disbaledTextStyle]: disabled,
+                [disabledTextStyle]: disabled,
               })}
             >
               {description}
@@ -255,6 +263,7 @@ MenuItem.propTypes = {
   href: PropTypes.string,
   onClick: PropTypes.func,
   className: PropTypes.string,
+  titleTextClassName: PropTypes.string,
   description: PropTypes.string,
   disabled: PropTypes.bool,
   active: PropTypes.bool,
