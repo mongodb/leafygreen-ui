@@ -84,11 +84,15 @@ describe('packages/Menu', () => {
         >
           Item 2
         </MenuItem>
+        <MenuItem data-testid="third-item" as="div">
+          Item 3
+        </MenuItem>
       </div>,
     );
 
     const firstItem = getByTestId('first-item');
     const secondItem = getByTestId('second-item');
+    const thirdItem = getByTestId('third-item');
 
     test('fires onClick callback, when clicked', () => {
       fireEvent.click(firstItem);
@@ -106,6 +110,10 @@ describe('packages/Menu', () => {
     test('renders with correct target and rel values when set', () => {
       expect(secondItem.target).toBe('_blank');
       expect(secondItem.rel).toBe('help');
+    });
+
+    test('renders as `div` tag when the as prop is set', () => {
+      expect(thirdItem.tagName.toLowerCase()).toBe('div');
     });
   });
 

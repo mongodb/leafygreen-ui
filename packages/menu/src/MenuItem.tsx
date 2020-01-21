@@ -79,7 +79,19 @@ interface ButtonMenuItemProps
   href?: null;
 }
 
-type MenuItemProps = LinkMenuItemProps | ButtonMenuItemProps;
+type CustomMenuItemProps = SharedMenuItemProps & {
+  as: React.ElementType<any>;
+  [key: string]: any;
+};
+
+type MenuItemProps =
+  | LinkMenuItemProps
+  | ButtonMenuItemProps
+  | CustomMenuItemProps;
+
+function usesCustomElement(props: MenuItemProps): props is CustomMenuItemProps {
+  return (props as any).as != null;
+}
 
 function usesLinkElement(
   props: LinkMenuItemProps | ButtonMenuItemProps,
@@ -150,6 +162,10 @@ const MenuItem = React.forwardRef(
         </Root>
       </li>
     );
+
+    if (usesCustomElement(props)) {
+      return renderMenuItem(props.as);
+    }
 
     if (usesLinkElement(props)) {
       return renderMenuItem('a');
