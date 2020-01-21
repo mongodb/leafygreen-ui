@@ -106,15 +106,16 @@ Self-closing component that provides a way to group `MenuItems` in a `Menu` comp
 
 ## Properties
 
-| Prop          | Type       | Description                                                                                    | Default |
-| ------------- | ---------- | ---------------------------------------------------------------------------------------------- | ------- |
-| `href`        | `string`   | If supplied, will render the `<MenuItem />` inside of an `<a>` tag, rather than a `<span>` tag |         |
-| `children`    | `node`     | Content to appear inside of `<MenuItem />` component                                           |         |
-| `className`   | `string`   | Classname applied to `li` element                                                              |         |
-| `onClick`     | `function` | Function that will be called when a `<MenuItem />` is clicked                                  |         |
-| `active`      | `boolean`  | Determines if the `<MenuItem />` is `active`                                                   | `false` |
-| `disabled`    | `boolean`  | Determines if the `<MenuItem />` is `disabled`                                                 | `false` |
-| `description` | `string`   | Description text that will appear below the main content of `<MenuItem />`                     |         |
+| Prop          | Type                 | Description                                                                                    | Default                                                |
+| ------------- | -------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `href`        | `string`             | If supplied, will render the `<MenuItem />` inside of an `<a>` tag, rather than a `<span>` tag |                                                        |
+| `children`    | `node`               | Content to appear inside of `<MenuItem />` component                                           |                                                        |
+| `className`   | `string`             | Classname applied to `li` element                                                              |                                                        |
+| `onClick`     | `function`           | Function that will be called when a `<MenuItem />` is clicked                                  |                                                        |
+| `active`      | `boolean`            | Determines if the `<MenuItem />` is `active`                                                   | `false`                                                |
+| `disabled`    | `boolean`            | Determines if the `<MenuItem />` is `disabled`                                                 | `false`                                                |
+| `description` | `string`             | Description text that will appear below the main content of `<MenuItem />`                     |                                                        |
+| `as`          | `React.ReactElement` | `HTMLElement`                                                                                  | Determines what the `<MenuItem />` will be rendered as |  |
 
 _Any other properties will be spread on the MenuItem `div` container_
 

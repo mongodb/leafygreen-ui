@@ -53,6 +53,7 @@ const anchorStyle = css`
   color: ${uiColors.gray.base};
   padding-left: 5px;
   margin-left: 5px;
+  height: 16px;
 `;
 
 const border = css`
