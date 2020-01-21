@@ -1,5 +1,4 @@
-
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { ulStyleOverrides } from './styles';
@@ -14,11 +13,9 @@ interface SideNavProps {
 }
 
 function SideNav({ children, className }: SideNavProps) {
-  return(
+  return (
     <nav aria-label="side-nav" className={cx(sideNavStyles, className)}>
-      <ul className={ulStyleOverrides}>
-        {children}
-      </ul>
+      <ul className={ulStyleOverrides}>{children}</ul>
     </nav>
   );
 }

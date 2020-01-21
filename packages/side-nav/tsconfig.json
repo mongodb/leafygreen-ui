@@ -1,4 +1,3 @@
-
 {
   "extends": "../../package.tsconfig.json",
   "compilerOptions": {
@@ -18,6 +17,6 @@
     },
     {
       "path": "../menu"
-    },
+    }
   ]
 }

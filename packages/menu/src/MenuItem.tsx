@@ -225,11 +225,13 @@ const MenuItem = React.forwardRef(
           tabIndex={disabled ? -1 : undefined}
         >
           <div
-            className={cx(titleTextStyle, {
-              [activeTitleTextStyle]: active,
-              [disabledTextStyle]: disabled,
+            className={cx(
+              titleTextStyle,
+              {
+                [activeTitleTextStyle]: active,
+                [disabledTextStyle]: disabled,
               },
-              titleTextClassName
+              titleTextClassName,
             )}
           >
             {children}

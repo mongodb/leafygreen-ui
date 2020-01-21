@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -40,7 +40,6 @@ function SideNavItem({
   href,
   ...rest
 }: MenuItemProps) {
-
   if (active) {
     rest['aria-current'] = 'page';
   }
@@ -56,10 +55,7 @@ function SideNavItem({
         },
         className,
       )}
-      titleTextClassName={cx(
-        titleTextStyleOverrides,
-        titleTextClassName
-      )}
+      titleTextClassName={cx(titleTextStyleOverrides, titleTextClassName)}
       description={description}
       href={href}
       {...rest}

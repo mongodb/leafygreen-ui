@@ -1,5 +1,4 @@
-
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -17,24 +16,23 @@ const sideNavLabelStyle = css`
   padding: 5px ${LEFT_RIGHT_OFFSET}px 5px ${LEFT_RIGHT_OFFSET}px;
 `;
 
-
 interface SideNavGroupProps {
   /**
    * Content that will appear inside of SideNavGroup component.
    */
-  children: React.ReactNode,
+  children: React.ReactNode;
   /**
    * ClassName that will be applied to root SideNavGroup element.
    */
-  className?: string,
+  className?: string;
   /**
    * Header text displayed above the SideNavGroup contents.
    */
-  headerText?: string,
+  headerText?: string;
   /**
    * ClassName that will be applied to SideNavGroup's header element.
    */
-  headerClassName?: string,
+  headerClassName?: string;
 }
 
 /**
@@ -53,27 +51,21 @@ interface SideNavGroupProps {
  * @param props.headerClassName ClassName that will be applied to SideNavGroup's header element.
  *
  */
-function SideNavGroup({ children, className, headerText, headerClassName, ...rest }: SideNavGroupProps) {
+function SideNavGroup({
+  children,
+  className,
+  headerText,
+  headerClassName,
+  ...rest
+}: SideNavGroupProps) {
   return (
-    <li
-      className={className}
-      {...rest}
-      {...sideNavGroupDataProp.prop}
-    >
+    <li className={className} {...rest} {...sideNavGroupDataProp.prop}>
       {headerText && (
-        <div
-          className={cx(
-            sideNavLabelStyle,
-            headerClassName
-          )}
-          role="heading"
-        >
+        <div className={cx(sideNavLabelStyle, headerClassName)} role="heading">
           {headerText}
         </div>
       )}
-      <ul className={ulStyleOverrides}>
-        {children}
-      </ul>
+      <ul className={ulStyleOverrides}>{children}</ul>
     </li>
   );
 }
