@@ -12,9 +12,13 @@ interface SideNavProps {
   children: React.ReactNode;
 }
 
-function SideNav({ children, className }: SideNavProps) {
+function SideNav({ children, className, ...rest }: SideNavProps) {
   return (
-    <nav aria-label="side-nav" className={cx(sideNavStyles, className)}>
+    <nav
+      aria-label="side-nav"
+      className={cx(sideNavStyles, className)}
+      {...rest}
+    >
       <ul className={ulStyleOverrides}>{children}</ul>
     </nav>
   );

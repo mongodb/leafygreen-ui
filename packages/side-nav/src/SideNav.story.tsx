@@ -9,16 +9,16 @@ function MockAtlasSideNav() {
         <SideNavItem href="#clusters" active>
           Clusters (active)
         </SideNavItem>
-        <SideNavItem>Triggers (not a link)</SideNavItem>
+        {/* <SideNavItem>Triggers (not a link)</SideNavItem>
         <SideNavItem href="#dataLake" disabled>
           Data Lake (disabled)
-        </SideNavItem>
+        </SideNavItem> */}
       </SideNavGroup>
-      <SideNavGroup headerText="Security">
+      {/* <SideNavGroup headerText="Security">
         <SideNavItem href="#databaseAccess">Database Access</SideNavItem>
         <SideNavItem href="#networkAccess">Network Access</SideNavItem>
         <SideNavItem href="#advanced">Advanced</SideNavItem>
-      </SideNavGroup>
+      </SideNavGroup> */}
     </SideNav>
   );
 }
