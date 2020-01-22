@@ -13,7 +13,10 @@
     "publishConfig": {
       "access": "public"
     },
-    "devDependencies": {
-      "@leafygreen-ui/lib": "^3.2.0"
+    "dependencies": {
+      "@leafygreen-ui/lib": "^4.0.0",
+      "@leafygreen-ui/emotion": "2.0.0",
+      "@leafygreen-ui/palette": "2.0.0",
+      "@leafygreen-ui/menu": "5.0.0"
     }
   }

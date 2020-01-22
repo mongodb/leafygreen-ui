@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { createDataProp } from '@leafygreen-ui/lib';
 import { ulStyleOverrides, LEFT_RIGHT_OFFSET } from './styles';
-
-export const sideNavGroupDataProp = createDataProp('side-nav-group-section');
 
 const sideNavLabelStyle = css`
   display: block;
@@ -59,7 +56,7 @@ function SideNavGroup({
   ...rest
 }: SideNavGroupProps) {
   return (
-    <li className={className} {...rest} {...sideNavGroupDataProp.prop}>
+    <li className={className} {...rest}>
       {headerText && (
         <div className={cx(sideNavLabelStyle, headerClassName)} role="heading">
           {headerText}
@@ -73,7 +70,7 @@ function SideNavGroup({
 SideNavGroup.displayName = 'SideNavGroup';
 
 SideNavGroup.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
   className: PropTypes.string,
   headerText: PropTypes.string,
   headerClassName: PropTypes.string,

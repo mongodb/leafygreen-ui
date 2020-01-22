@@ -24,11 +24,11 @@ function SideNav({ children, className, ...rest }: SideNavProps) {
   );
 }
 
-SideNav.displayName = 'Side Nav';
+SideNav.displayName = 'SideNav';
 
 SideNav.propTypes = {
   className: PropTypes.string,
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
 };
 
 export default SideNav;

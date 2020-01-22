@@ -2,25 +2,33 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { SideNav, SideNavItem, SideNavGroup } from './index';
 
-function MockAtlasSideNav() {
+function MockSideNav() {
   return (
     <SideNav>
-      <SideNavGroup headerText="Data Storage">
+      <SideNavGroup headerText="Simple States">
         <SideNavItem href="#clusters" active>
-          Clusters (active)
+          Active State
         </SideNavItem>
-        {/* <SideNavItem>Triggers (not a link)</SideNavItem>
         <SideNavItem href="#dataLake" disabled>
-          Data Lake (disabled)
-        </SideNavItem> */}
+          Disabled State
+        </SideNavItem>
       </SideNavGroup>
-      {/* <SideNavGroup headerText="Security">
-        <SideNavItem href="#databaseAccess">Database Access</SideNavItem>
-        <SideNavItem href="#networkAccess">Network Access</SideNavItem>
-        <SideNavItem href="#advanced">Advanced</SideNavItem>
-      </SideNavGroup> */}
+      <SideNavGroup headerText="Other Usages">
+        <SideNavItem href="#databaseAccess">Content with a link</SideNavItem>
+        <SideNavItem>Content without a link renders as a button</SideNavItem>
+        <SideNavItem
+          href="#networkAccess"
+          description="This leverages MenuItem's description"
+        >
+          Content with a Description
+        </SideNavItem>
+        <SideNavItem>
+          <div>This can contain any content</div>
+          <input type="text" value="even inputs" disabled />
+        </SideNavItem>
+      </SideNavGroup>
     </SideNav>
   );
 }
 
-storiesOf('SideNav', module).add('SideNav', () => <MockAtlasSideNav />);
+storiesOf('SideNav', module).add('Default', () => <MockSideNav />);

@@ -4,17 +4,15 @@ import { render, cleanup } from '@testing-library/react';
 import { MenuItemProps } from '@leafygreen-ui/menu';
 import { SideNav, SideNavGroup, SideNavItem } from './index';
 
-type renderedElement = HTMLElement | null | undefined;
+type renderedElement = HTMLElement | null;
 
 interface RenderedElements {
   navEl?: renderedElement;
   groupEl?: renderedElement;
   headerEl?: renderedElement;
   itemEl?: renderedElement;
-  linkEl?: renderedElement;
+  childEl?: renderedElement;
 }
-
-afterAll(cleanup);
 
 describe('packages/side-nav', () => {
   const className = 'test-class-name';
@@ -32,19 +30,21 @@ describe('packages/side-nav', () => {
   afterEach(() => {
     document.body.innerHTML = '';
     renderedEls = {};
+    cleanup();
   });
 
   describe('Side Nav Item', () => {
     function renderSideNavItem(props: MenuItemProps = {}) {
-      const { sideNavItem } = testIds;
+      const { sideNavItem, sideNavLink } = testIds;
       const { children, ...rest } = props;
-      const { getByTestId } = render(
+      const { getByTestId, queryByTestId } = render(
         <SideNavItem data-testid={sideNavItem} {...rest}>
           {children}
         </SideNavItem>,
       );
 
       renderedEls.itemEl = getByTestId(sideNavItem);
+      renderedEls.childEl = queryByTestId(sideNavLink);
     }
 
     describe('when rendered with custom classes', () => {
@@ -109,6 +109,12 @@ describe('packages/side-nav', () => {
 
         renderSideNavItem({ children });
       });
+
+      test('it renders the children', () => {
+        expect(renderedEls.childEl).toBeInTheDocument();
+        expect(renderedEls.childEl?.tagName).toEqual('A');
+        expect(renderedEls.childEl).toHaveAttribute('href', '#clusters');
+      });
     });
   });
 
@@ -133,7 +139,7 @@ describe('packages/side-nav', () => {
 
         renderedEls.groupEl = getByTestId(sideNavGroup);
         renderedEls.headerEl = getByText(headerText);
-        renderedEls.linkEl = getByTestId(sideNavLink);
+        renderedEls.childEl = getByTestId(sideNavLink);
       });
 
       test('renders the side nav group with a header', () => {
@@ -146,7 +152,7 @@ describe('packages/side-nav', () => {
       });
 
       test('renders the children of the side nav group', () => {
-        expect(renderedEls.linkEl).toBeInTheDocument();
+        expect(renderedEls.childEl).toBeInTheDocument();
       });
 
       test("includes the side nav group's custom class name", () => {
@@ -199,7 +205,7 @@ describe('packages/side-nav', () => {
         renderedEls.navEl = getByTestId(sideNav);
         renderedEls.groupEl = getByTestId(sideNavGroup);
         renderedEls.itemEl = getByTestId(sideNavItem);
-        renderedEls.linkEl = getByTestId(sideNavLink);
+        renderedEls.childEl = getByTestId(sideNavLink);
       });
 
       test('renders the side nav to the dom', () => {
@@ -213,7 +219,7 @@ describe('packages/side-nav', () => {
       test('renders the children of the side nav', () => {
         expect(renderedEls.groupEl).toBeInTheDocument();
         expect(renderedEls.itemEl).toBeInTheDocument();
-        expect(renderedEls.linkEl).toBeInTheDocument();
+        expect(renderedEls.childEl).toBeInTheDocument();
       });
 
       test("includes the side nav's custom class name", () => {
