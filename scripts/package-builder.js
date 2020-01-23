@@ -85,6 +85,20 @@ const readMe = `
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/${PACKAGE_LC}.svg)
 
+## Installation
+
+### Yarn
+
+\`\`\`shell
+yarn add @leafygreen-ui/${PACKAGE_LC}
+\`\`\`
+
+### NPM
+
+\`\`\`shell
+npm install @leafygreen-ui/${PACKAGE_LC}
+\`\`\`
+
 ## Example
 
 **Output HTML**

@@ -34,6 +34,13 @@ Put an `x` in the boxes that apply. You can also fill these out after creating t
 - [ ] I have added necessary documentation (if appropriate)
 - [ ] I have run `yarn changeset` and documented my changes
 
+<!--
+The following only apply when building a new component
+-->
+
+- [ ] I have added my new package to the global tsconfig
+- [ ] I have added my new package to the Table of Contents on the global README
+
 ## 💬 Further comments
 
 <!--

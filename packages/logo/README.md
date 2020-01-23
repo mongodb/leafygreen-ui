@@ -2,6 +2,20 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/logo.svg)
 
+## Installation
+
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/logo
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/logo
+```
+
 ## Example
 
 ```Javascript

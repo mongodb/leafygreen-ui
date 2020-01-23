@@ -2,6 +2,20 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/radio-box-group.svg)
 
+## Installation
+
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/radio-box-group
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/radio-box-group
+```
+
 ## Example
 
 ```js

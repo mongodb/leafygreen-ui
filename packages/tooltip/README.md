@@ -2,6 +2,20 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/tooltip.svg)
 
+## Installation
+
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/tooltip
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/tooltip
+```
+
 ## Example
 
 ```js

@@ -1,5 +1,21 @@
 # Popover
 
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/popover.svg)
+
+## Installation
+
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/popover
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/popover
+```
+
 ## Example
 
 ```js
@@ -11,11 +27,11 @@ import Popover from '@leafygreen-ui/popover';
 >
   Popover
   <Popover
-    align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
-    justify={select('justify', ['start', 'middle', 'end'], 'start')}
+    align="bottom"
+    justify="start"
     active={this.state.active}
-    usePortal={boolean('usePortal', true)}
-    spacing={number('spacing', 10)}
+    usePortal={true}
+    spacing={10}
   >
     <div className={popoverStyle}>Popover content</div>
   </Popover>
