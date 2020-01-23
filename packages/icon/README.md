@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/icon`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/icon
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/icon
+```
 
 ## Example
 

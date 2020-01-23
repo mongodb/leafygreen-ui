@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/tabs`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/tabs
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/tabs
+```
 
 ## Example
 

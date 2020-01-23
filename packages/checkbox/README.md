@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/checkbox`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/checkbox
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/checkbox
+```
 
 ## Example
 

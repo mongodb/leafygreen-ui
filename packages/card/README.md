@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/card`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/card
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/card
+```
 
 ## Example
 

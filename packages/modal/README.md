@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/modal`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/modal
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/modal
+```
 
 ## Example
 

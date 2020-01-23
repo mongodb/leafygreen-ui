@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/emotion`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/emotion
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/emotion
+```
 
 ## Server-side Rendering
 

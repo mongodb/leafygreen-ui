@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/pipeline`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/pipeline
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/pipeline
+```
 
 ### Example
 

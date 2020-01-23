@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/mongo-menu`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/mongo-menu
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/mongo-menu
+```
 
 ## Example
 

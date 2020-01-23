@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/popover`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/popover
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/popover
+```
 
 ## Example
 

@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/icon-button`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/icon-button
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/icon-button
+```
 
 ## Example
 

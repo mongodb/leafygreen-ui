@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/tooltip`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/tooltip
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/tooltip
+```
 
 ## Example
 

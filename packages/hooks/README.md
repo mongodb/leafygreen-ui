@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/hooks`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/hooks
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/hooks
+```
 
 ## useElementNode
 

@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/portal`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/portal
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/portal
+```
 
 ## Example
 

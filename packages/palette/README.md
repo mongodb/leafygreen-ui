@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/palette`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/palette
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/palette
+```
 
 This package contains the colors for the following palettes:
 

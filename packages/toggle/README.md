@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/toggle`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/toggle
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/toggle
+```
 
 ## Example
 

@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/syntax`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/syntax
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/syntax
+```
 
 ## Example
 

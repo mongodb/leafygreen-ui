@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/radio-group`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/radio-group
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/radio-group
+```
 
 ## Example
 

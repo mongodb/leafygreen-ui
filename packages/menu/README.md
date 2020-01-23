@@ -4,7 +4,17 @@
 
 ## Installation
 
-`yarn install @leafygreen-ui/menu`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/menu
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/menu
+```
 
 ## Example
 

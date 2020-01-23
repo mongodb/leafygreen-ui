@@ -8,7 +8,17 @@ Components should always gracefully degrade when the provider is not an ancestor
 
 ## Installation
 
-`yarn install @leafygreen-ui/leafygreen-provider`
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/leafygreen-provider
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/leafygreen-provider
+```
 
 ## LeafyGreenProvider
 
