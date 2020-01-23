@@ -1,5 +1,7 @@
 # Emotion
 
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/emotion.svg)
+
 ## Installation
 
 `yarn install @leafygreen-ui/emotion`

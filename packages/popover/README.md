@@ -1,5 +1,7 @@
 # Popover
 
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/popover.svg)
+
 ## Installation
 
 `yarn install @leafygreen-ui/popover`
