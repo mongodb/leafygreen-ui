@@ -31,40 +31,32 @@ const disabledStyleOverrides = css`
   pointer-events: none;
 `;
 
-interface MenuItemProps {
-  /**
-   * Whether or not the SideNavItem will be displayed as active.
-   */
-  active?: boolean;
-  /**
-   * Whether or not the SideNavItem will be displayed as disabled.
-   */
-  disabled?: boolean;
-  /**
-   * When provided, the underlying MenuItem's root component will be rendered as an anchor with this href value.
-   */
-  href?: string;
-  /**
-   * Description text optionally displayed below the SideNavItem's title.
-   */
-  description?: string;
-  /**
-   * The value for aria-current if the SideNavItem is active
-   */
-  ariaCurrentValue?: AriaCurrentValue;
-  /**
-   * Class name that will be applied to the underlying MenuItem's root component.
-   */
-  className?: string;
-  /**
-   * Class name that will be applied to the underlying MenuItem's content wrapper.
-   */
-  titleTextClassName?: string;
-  /**
-   * Content that will appear inside of the underlying MenuItem's content wrapper.
-   */
-  children?: React.ReactNode;
-}
+// interface MenuItemProps {
+//   /**
+//    * Whether or not the SideNavItem will be displayed as active.
+//    */
+//   active?: boolean;
+//   /**
+//    * Whether or not the SideNavItem will be displayed as disabled.
+//    */
+//   disabled?: boolean;
+//   /**
+//    * When provided, the underlying MenuItem's root component will be rendered as an anchor with this href value.
+//    */
+//   href?: string;
+//   /**
+//    * The value for aria-current if the SideNavItem is active
+//    */
+//   ariaCurrentValue?: AriaCurrentValue;
+//   /**
+//    * Class name that will be applied to the underlying MenuItem's root component.
+//    */
+//   className?: string;
+//   /**
+//    * Content that will appear inside of the underlying MenuItem's content wrapper.
+//    */
+//   children?: React.ReactNode;
+// }
 
 /**
  * # SideNavItem
@@ -84,29 +76,7 @@ interface MenuItemProps {
  @param props.children Content that will appear inside of the underlying MenuItem's content wrapper.
  *
  */
-function SideNavItem({
-  disabled = false,
-  className,
-  titleTextClassName,
-  children,
-  ...rest
-}: MenuItemProps) {
-  return (
-    <MenuItem
-      className={cx(
-        containerStyleOverrides,
-        {
-          [disabledStyleOverrides]: disabled,
-        },
-        className,
-      )}
-      titleTextClassName={cx(titleTextStyleOverrides, titleTextClassName)}
-      {...rest}
-    >
-      {children}
-    </MenuItem>
-  );
-}
+function SideNavItem() {}
 
 SideNavItem.displayName = 'SideNavItem';
 
