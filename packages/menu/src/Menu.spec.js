@@ -37,14 +37,9 @@ describe('packages/Menu', () => {
 
   describe('when Menu is uncontrolled', () => {
     const setOpen = jest.fn();
-    const onClick = jest.fn();
 
     const { getByText } = render(
-      <Menu
-        setOpen={setOpen}
-        onClick={onClick}
-        trigger={<button>trigger</button>}
-      >
+      <Menu setOpen={setOpen} trigger={<button>trigger</button>}>
         <MenuItem>Item C</MenuItem>
         <MenuItem>Item D</MenuItem>
       </Menu>,
@@ -140,7 +135,7 @@ describe('packages/Menu', () => {
 
     const subMenuItemA = getByTestId('sub-menu-item-a');
     const subMenuB = getByTestId('sub-menu-b');
-    const subMenuBArrow = subMenuB.parentNode.querySelectorAll('button')[1];
+    const subMenuBArrow = subMenuB?.parentNode?.querySelectorAll('button')[1];
 
     test('renders a SubMenu open by default, when the SubMenu is Active', () => {
       expect(subMenuItemA).toBeInTheDocument();

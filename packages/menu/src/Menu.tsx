@@ -125,7 +125,7 @@ function Menu({
         }
       };
 
-      const title = child?.props?.title != null && child.props.title;
+      const title = child?.props?.title ?? false;
 
       const onFocus = ({ target }: { target: HTMLElement }) => {
         setFocused(target);

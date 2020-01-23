@@ -141,7 +141,7 @@ interface SharedSubMenuProps {
   open?: boolean;
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
-  description: React.ReactElement;
+  description?: React.ReactElement;
   disabled?: boolean;
   active?: boolean;
   glyph?: Glyph;
@@ -201,6 +201,8 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
     }
   };
 
+  const numberOfMenuItems = React.Children.toArray(children).length;
+
   const renderedSubMenuItem = (Root: React.ElementType<any> = 'button') => (
     <li role="none" className={liStyle}>
       <Root
@@ -252,12 +254,13 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
       </Root>
       <IconButton
         ref={iconButtonRef}
-        ariaLabel={open ? 'Caret Up' : 'Caret Down'}
+        ariaLabel={open ? 'Close Sub-menu' : 'Open Sub-menu'}
         className={cx(iconButtonStyle, {
           [openIconButtonStyle]: open,
           [iconButtonFocusedStyle]: showFocus,
         })}
         onClick={(e: React.MouseEvent) => {
+          // we stop the event from propagating and closing the entire menu
           e.nativeEvent.stopImmediatePropagation();
 
           if (setOpen) {
@@ -284,8 +287,7 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
           <ul
             className={cx(ulStyle, {
               [css`
-                height: ${subMenuItemHeight *
-                  React.Children.toArray(children).length}px;
+                height: ${subMenuItemHeight * numberOfMenuItems}px;
               `]: state === 'entered',
             })}
             role="menu"

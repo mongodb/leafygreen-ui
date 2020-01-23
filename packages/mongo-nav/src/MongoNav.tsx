@@ -106,6 +106,14 @@ export default function MongoNav({
   constructOrganizationURL: constructOrganizationURLProp,
   constructProjectURL: constructProjectURLProp,
 }: MongoNavInterface) {
+  const {
+    account,
+    currentOrganization,
+    currentProject,
+    organizations,
+    projects,
+  } = data;
+
   const accountHost = hosts?.account ?? `https://account.mongodb.com`;
   const cloudHost = hosts?.cloud ?? `https://cloud.mongodb.com`;
   const universityHost = hosts?.university ?? `https://university.mongodb.com`;
@@ -204,10 +212,10 @@ export default function MongoNav({
   return (
     <>
       <OrgNav
-        account={data.account}
+        account={account}
         activeProduct={activeProduct}
-        current={data.currentOrganization}
-        data={data.organizations}
+        current={currentOrganization}
+        data={organizations}
         constructOrganizationURL={constructOrganizationURL}
         urls={constructedUrls}
         activeNav={activeNav}
@@ -218,11 +226,11 @@ export default function MongoNav({
       {showProjNav && (
         <ProjectNav
           activeProduct={activeProduct}
-          current={data.currentProject}
-          data={data.projects}
+          current={currentProject}
+          data={projects}
           constructProjectURL={constructProjectURL}
           urls={constructedUrls}
-          alerts={data.currentProject.alertsOpen}
+          alerts={currentProject.alertsOpen}
           onProjectChange={onProjectChange}
           hosts={hosts}
         />
