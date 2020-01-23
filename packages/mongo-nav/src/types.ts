@@ -18,19 +18,11 @@ const NavItem = {
   AllClusters: 'allClusters',
   Admin: 'admin',
   OrgSettings: 'orgSettings',
-};
+} as const;
 
 type NavItem = typeof NavItem[keyof typeof NavItem] | '';
 
 export { NavItem };
-
-export interface AccountInterface {
-  email: string;
-  firstName: string;
-  lastName: string;
-  openInvitations?: number;
-  username?: string;
-}
 
 const Variant = {
   Organization: 'organization',
@@ -62,11 +54,19 @@ const OrgPaymentLabel = {
   Dead: 'dead',
   Locked: 'locked',
   Closed: 'closed',
-};
+} as const;
 
 type OrgPaymentLabel = typeof OrgPaymentLabel[keyof typeof OrgPaymentLabel];
 
 export { OrgPaymentLabel };
+
+export interface AccountInterface {
+  email: string;
+  firstName: string;
+  lastName: string;
+  openInvitations?: number;
+  username?: string;
+}
 
 export interface ProjectInterface {
   projectId: string;
@@ -92,8 +92,8 @@ export interface CurrentOrganizationInterface extends OrganizationInterface {
 
 export interface DataInterface {
   readonly account: AccountInterface;
-  readonly currentOrganization: CurrentOrganizationInterface;
-  readonly currentProject: CurrentProjectInterface;
+  currentOrganization: CurrentOrganizationInterface;
+  currentProject: CurrentProjectInterface;
   readonly organizations: Array<OrganizationInterface>;
   readonly projects: Array<ProjectInterface>;
 }
@@ -104,7 +104,7 @@ export interface URLSInterface {
       userPreferences: string;
       organizations: string;
       invitations: string;
-      tfa: string;
+      mfa: string;
     };
     university?: {
       videoPreferences: string;
@@ -113,7 +113,7 @@ export interface URLSInterface {
       userPreferences: string;
     };
     account?: {
-      accountURL?: string;
+      homepage?: string;
     };
   };
   mongoSelect?: {

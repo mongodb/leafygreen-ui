@@ -93,8 +93,7 @@ function Menu({
 
   const hasSetInitialFocus = useRef(false);
   const hasSetInitialOpen = useRef(false);
-  // @ts-ignore: using this setState to trigger a subMenu close after animation
-  const [closed, setClosed] = useState(false); // eslint-disable-line
+  const [, setClosed] = useState(false);
   const [currentSubMenu, setCurrentSubMenu] = useState<React.ReactElement<
     HTMLLIElement
   > | null>(null);
@@ -126,24 +125,25 @@ function Menu({
         }
       };
 
+      const title = child?.props?.title != null && child.props.title;
+
       const onFocus = ({ target }: { target: HTMLElement }) => {
         setFocused(target);
       };
 
-      if (isComponentType<'SubMenu'>(child, 'SubMenu')) {
-        if (titleArr.includes(child.props.title)) {
+      if (isComponentType<'SubMenu'>(child, 'SubMenu') && title) {
+        if (titleArr.includes(title)) {
           throw new Error('SubMenu titles must be unique');
         }
 
-        titleArr.push(child.props.title);
+        titleArr.push(title);
 
         if (child.props.active && !hasSetInitialOpen.current) {
           setCurrentSubMenu(child);
           hasSetInitialOpen.current = true;
         }
 
-        const isCurrentSubMenu =
-          currentSubMenu?.props.title === child?.props.title;
+        const isCurrentSubMenu = currentSubMenu?.props.title === title;
 
         return React.cloneElement(child, {
           ref: setRef,
@@ -201,18 +201,20 @@ function Menu({
 
   // When a SubMenu becomes open, it's set to currentSubMenu, and we focus on the first child.
   useEffect(() => {
+    const focusedRefIndex = refs.indexOf(focused);
+
     if (!currentSubMenu) {
-      const focusedRefIndex = refs.indexOf(focused);
-      const subMenu = refs[focusedRefIndex];
-
-      subMenu?.focus();
-      setUsingKeyboard(true);
+      if (focusedRefIndex !== -1) {
+        const subMenu = refs[focusedRefIndex];
+        subMenu.focus();
+        setUsingKeyboard(true);
+      }
     } else {
-      const focusedRefIndex = refs.indexOf(focused);
-      const subMenuFirstChild = refs[focusedRefIndex + 1];
-
-      subMenuFirstChild?.focus();
-      setUsingKeyboard(true);
+      if (focusedRefIndex !== -1) {
+        const subMenuFirstChild = refs[focusedRefIndex + 1];
+        subMenuFirstChild?.focus();
+        setUsingKeyboard(true);
+      }
     }
   }, [currentSubMenu]);
 
@@ -227,8 +229,12 @@ function Menu({
   const popoverRef: React.RefObject<HTMLUListElement> = useRef(null);
 
   const setFocus = (el: HTMLElement) => {
+    if (el == null) {
+      return;
+    }
+
     setFocused(el);
-    el?.focus();
+    el.focus();
   };
 
   useMemo(() => {

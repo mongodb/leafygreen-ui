@@ -11,6 +11,7 @@ import {
   URLSInterface,
   NavItem,
   CurrentOrganizationInterface,
+  HostsInterface,
 } from '../types';
 
 import MongoSelect from '../mongo-select/index';
@@ -92,6 +93,7 @@ interface OrgNav {
   activeNav?: NavItem;
   onOrganizationChange: React.ChangeEventHandler;
   admin: boolean;
+  hosts?: HostsInterface;
 }
 
 export default function OrgNav({
@@ -104,6 +106,7 @@ export default function OrgNav({
   onOrganizationChange,
   urls,
   admin,
+  hosts,
 }: OrgNav) {
   const { orgNav } = urls;
 
@@ -241,6 +244,7 @@ export default function OrgNav({
           account={account}
           activeProduct={activeProduct}
           urls={urls}
+          hosts={hosts}
         />
       </div>
     </nav>

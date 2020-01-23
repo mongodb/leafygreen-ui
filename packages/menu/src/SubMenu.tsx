@@ -19,6 +19,12 @@ import { ExitHandler } from 'react-transition-group/Transition';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 
+const subMenuContainerHeight = 56;
+const iconButtonContainerHeight = 28;
+const paddingLeft = 60;
+const svgWidth = 32;
+const menuItemPadding = 15;
+
 const liStyle = css`
   position: relative;
   overflow: hidden;
@@ -35,6 +41,7 @@ const subMenuStyle = css`
 
 const subMenuOpenStyle = css`
   background-color: ${uiColors.white};
+
   &:hover {
     background-color: ${uiColors.gray.light2};
   }
@@ -69,34 +76,31 @@ const iconButtonStyle = css`
   position: absolute;
   z-index: 1;
   right: 8px;
-  // 56 is the height of the SubMenuItem container and 28 is the height of the IconButton
-  top: ${56 / 2 - 28 / 2}px;
+  top: ${subMenuContainerHeight / 2 - iconButtonContainerHeight / 2}px;
   margin: auto;
   background-color: ${uiColors.gray.light3};
   transition: background-color 150ms ease-in-out;
+
   ${subMenuContainer.selector}:hover + & {
     background-color: ${uiColors.gray.light2};
-    transition: background-color 150ms ease-in-out;
   }
 `;
 
 const iconButtonFocusedStyle = css`
   ${subMenuContainer.selector}:focus + & {
     background-color: ${uiColors.blue.light3};
-    transition: background-color 150ms ease-in-out;
   }
 `;
 
 const openIconButtonStyle = css`
   background-color: ${uiColors.white};
-  transition: background-color 150ms ease-in-out;
 `;
 
 const mainIconStyle = css`
   color: ${uiColors.gray.base};
-  // 60px (padding-left for SubMenus) - 32px (width of SVG) - 15px (padding from MenuItem) = 13
-  margin-right: 13px;
+  margin-right: ${paddingLeft - svgWidth - menuItemPadding}px;
   flex-shrink: 0;
+
   ${subMenuContainer.selector}:hover > & {
     color: ${uiColors.gray.dark1};
   }
@@ -299,7 +303,7 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
                   // SubMenuItem indentation based on how indented the title of a SubMenuItem is
                   // glyphs push title further in, therefore their children should have a thicker padding-left
                   css`
-                    padding-left: ${glyph ? '60px' : '28px'};
+                    padding-left: ${glyph ? paddingLeft : 28}px;
                   `,
                   child.props.className,
                 ),

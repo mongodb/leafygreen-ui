@@ -46,7 +46,7 @@ describe('packages/mongo-select', () => {
               userPreferences: `https://cloud.mongodb.com/v2#/preferences/personalization`,
               organizations: `https://cloud.mongodb.com/v2#/preferences/organizations`,
               invitations: `https://cloud.mongodb.com/v2#/preferences/invitations`,
-              tfa: `https://cloud.mongodb.com/v2#/preferences/2fa`,
+              mfa: `https://cloud.mongodb.com/v2#/preferences/2fa`,
             },
             university: {
               videoPreferences: `https://university.mongodb.com`,
@@ -55,7 +55,7 @@ describe('packages/mongo-select', () => {
               userPreferences: `https://support.mongodb.com/profile`,
             },
             account: {
-              accountURL: `https://account.mongodb.com/account/profile/overview`,
+              homepage: `https://account.mongodb.com/account/profile/overview`,
             },
           },
           mongoSelect: {
@@ -187,7 +187,7 @@ describe('packages/mongo-select', () => {
               userPreferences: `https://cloud.mongodb.com/v2#/preferences/personalization`,
               organizations: `https://cloud.mongodb.com/v2#/preferences/organizations`,
               invitations: `https://cloud.mongodb.com/v2#/preferences/invitations`,
-              tfa: `https://cloud.mongodb.com/v2#/preferences/2fa`,
+              mfa: `https://cloud.mongodb.com/v2#/preferences/2fa`,
             },
             university: {
               videoPreferences: `https://university.mongodb.com`,
@@ -196,7 +196,7 @@ describe('packages/mongo-select', () => {
               userPreferences: `https://support.mongodb.com/profile`,
             },
             account: {
-              accountURL: `https://account.mongodb.com/account/profile/overview`,
+              homepage: `https://account.mongodb.com/account/profile/overview`,
             },
           },
           mongoSelect: {

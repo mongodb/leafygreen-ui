@@ -57,7 +57,7 @@ export default function MongoNav({
         invitations:
           urls?.mongoMenu?.cloud?.invitations ??
           `${cloudHost}/v2#/preferences/invitations`,
-        tfa: urls?.mongoMenu?.cloud?.tfa ?? `${cloudHost}/v2#/preferences/2fa`,
+        mfa: urls?.mongoMenu?.cloud?.mfa ?? `${cloudHost}/v2#/preferences/2fa`,
       },
       university: {
         videoPreferences:
@@ -68,8 +68,8 @@ export default function MongoNav({
           urls?.mongoMenu?.support?.userPreferences ?? `${supportHost}/profile`,
       },
       account: {
-        accountURL:
-          urls?.mongoMenu?.account?.accountURL ??
+        homepage:
+          urls?.mongoMenu?.account?.homepage ??
           `${accountHost}/account/profile/overview`,
       },
     },
@@ -138,6 +138,7 @@ export default function MongoNav({
         activeNav={activeNav}
         onOrganizationChange={onOrganizationChange}
         admin={admin}
+        hosts={hosts}
       />
       {showProjNav && (
         <ProjectNav
@@ -148,6 +149,7 @@ export default function MongoNav({
           urls={constructedUrls}
           alerts={data.currentProject.alertsOpen}
           onProjectChange={onProjectChange}
+          hosts={hosts}
         />
       )}
     </>

@@ -15,7 +15,12 @@ import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import MongoMenuTrigger from './MongoMenuTrigger';
-import { AccountInterface, URLSInterface, Product } from '../types';
+import {
+  AccountInterface,
+  URLSInterface,
+  Product,
+  HostsInterface,
+} from '../types';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 
@@ -154,7 +159,9 @@ interface MongoMenuProps {
    */
   onProductChange?: React.MouseEventHandler;
 
-  urls: URLSInterface;
+  urls: Required<URLSInterface>;
+
+  hosts?: HostsInterface;
 }
 
 function MongoMenu({
@@ -163,6 +170,7 @@ function MongoMenu({
   onLogout = () => {},
   onProductChange = () => {},
   urls,
+  hosts,
 }: MongoMenuProps) {
   const [open, setOpen] = useState(false);
 
@@ -183,6 +191,8 @@ function MongoMenu({
     },
   };
 
+  const { mongoMenu } = urls;
+
   return (
     <div className={triggerWrapper}>
       <MongoMenuTrigger open={open} name={firstName} setOpen={setOpen} />
@@ -199,9 +209,7 @@ function MongoMenu({
 
           <FocusableMenuItem>
             <Button
-              href={
-                isAccount ? undefined : urls?.mongoMenu?.account?.accountURL
-              }
+              href={isAccount ? undefined : mongoMenu?.account?.homepage}
               disabled={isAccount}
               as={isAccount ? 'button' : 'a'}
             >
@@ -215,7 +223,7 @@ function MongoMenu({
           {...subMenuContainer.prop}
           {...sharedProps}
           active={isCloud}
-          href="https://cloud.mongodb.com"
+          href={hosts?.cloud ?? 'https://cloud.mongodb.com'}
           description={<Description isActive={isCloud} product="cloud" />}
           title="Atlas"
           glyph="Cloud"
@@ -223,10 +231,10 @@ function MongoMenu({
             [subMenuActiveContainerStyle]: isCloud,
           })}
         >
-          <MenuItem href={urls?.mongoMenu?.cloud?.userPreferences}>
+          <MenuItem href={mongoMenu?.cloud?.userPreferences}>
             User Preferences
           </MenuItem>
-          <MenuItem href={urls?.mongoMenu?.cloud?.invitations}>
+          <MenuItem href={mongoMenu?.cloud?.invitations}>
             {openInvitations ? (
               <span className={subMenuItemStyle}>
                 Invitations <Badge variant="blue">{openInvitations}</Badge>
@@ -235,10 +243,10 @@ function MongoMenu({
               'Invitations'
             )}
           </MenuItem>
-          <MenuItem href={urls?.mongoMenu?.cloud?.organizations}>
+          <MenuItem href={mongoMenu?.cloud?.organizations}>
             Organizations
           </MenuItem>
-          <MenuItem href={urls?.mongoMenu?.cloud?.tfa}>
+          <MenuItem href={mongoMenu?.cloud?.mfa}>
             Two-Factor Authorization
           </MenuItem>
         </SubMenu>
@@ -247,7 +255,7 @@ function MongoMenu({
           {...subMenuContainer.prop}
           {...sharedProps}
           active={isUniversity}
-          href="https://university.mongodb.com"
+          href={hosts?.university ?? 'https://university.mongodb.com'}
           description={
             <Description isActive={isUniversity} product="university" />
           }
@@ -257,7 +265,7 @@ function MongoMenu({
             [subMenuActiveContainerStyle]: isUniversity,
           })}
         >
-          <MenuItem href={urls.mongoMenu?.university?.videoPreferences}>
+          <MenuItem href={mongoMenu?.university?.videoPreferences}>
             Video Preferences
           </MenuItem>
         </SubMenu>
@@ -266,7 +274,7 @@ function MongoMenu({
           {...subMenuContainer.prop}
           {...sharedProps}
           active={isSupport}
-          href="https://support.mongodb.com"
+          href={hosts?.support ?? 'https://support.mongodb.com'}
           description={<Description isActive={isSupport} product="support" />}
           title="Support"
           glyph="Support"
@@ -274,7 +282,7 @@ function MongoMenu({
             [subMenuActiveContainerStyle]: isSupport,
           })}
         >
-          <MenuItem href={urls.mongoMenu?.support?.userPreferences}>
+          <MenuItem href={mongoMenu?.support?.userPreferences}>
             User Preferences
           </MenuItem>
         </SubMenu>

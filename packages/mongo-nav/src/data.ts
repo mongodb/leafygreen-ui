@@ -1,4 +1,4 @@
-import { PlanType } from './types';
+import { DataInterface } from './types';
 
 export default {
   account: {
@@ -11,14 +11,14 @@ export default {
   currentOrganization: {
     orgId: '5d729a93',
     orgName: 'yay',
-    planType: PlanType.Atlas,
+    planType: 'atlas',
     paymentStatus: 'ok',
   },
   currentProject: {
     alertsOpen: 1,
     chartsActivated: false,
     orgId: '5d729a93',
-    planType: PlanType.Cloud,
+    planType: 'cloud',
     projectId: '020019e',
     projectName: 'asdf',
   },
@@ -26,26 +26,26 @@ export default {
     {
       orgId: '5d729a93',
       orgName: 'yay',
-      planType: PlanType.Atlas,
+      planType: 'atlas',
     },
     {
       orgId: '5e0fa79',
       orgName: 'cool',
-      planType: PlanType.Cloud,
+      planType: 'cloud',
     },
   ],
   projects: [
     {
       orgId: '5d729a93',
-      planType: PlanType.Cloud,
+      planType: 'cloud',
       projectId: '020019e',
       projectName: 'asdf',
     },
     {
       orgId: '5e0fa79',
-      planType: PlanType.Cloud,
+      planType: 'cloud',
       projectId: '00626a',
       projectName: "let's do this",
     },
   ],
-};
+} as DataInterface;

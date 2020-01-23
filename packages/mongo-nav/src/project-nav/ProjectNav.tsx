@@ -12,6 +12,7 @@ import {
   URLSInterface,
   CurrentProjectInterface,
   Product,
+  HostsInterface,
 } from '../types';
 
 const navContainerStyle = css`
@@ -117,11 +118,35 @@ const alertBadgeStyle = css`
   justify-content: center;
 `;
 
+function calcStyle(activeProduct: Product) {
+  const products = {
+    cloud: uiColors.green.base,
+    stitch: '#59569D',
+    charts: '#00C6BF',
+  };
+
+  const currentIndex = Object.keys(products).indexOf(activeProduct);
+
+  let computedX = 25;
+
+  for (let i = 0; i < currentIndex; i++) {
+    computedX += 150;
+  }
+
+  return css`
+    transform: translate3d(${computedX}px, 0, 0);
+    background-color: ${products[
+      activeProduct as 'stitch' | 'cloud' | 'charts'
+    ]};
+  `;
+}
+
 interface ProjectNavInterface {
   current: CurrentProjectInterface;
   data: Array<ProjectInterface>;
   constructProjectURL: (orgID: string, projID: string) => string;
   urls: Required<URLSInterface>;
+  hosts?: HostsInterface;
   alerts?: number;
   activeProduct: Product;
   onProjectChange: React.ChangeEventHandler;
@@ -135,31 +160,9 @@ export default function ProjectNav({
   alerts,
   activeProduct,
   onProjectChange,
+  hosts,
 }: ProjectNavInterface) {
   const { projectNav } = urls;
-
-  function calcStyle() {
-    const products = {
-      cloud: uiColors.green.base,
-      stitch: '#59569D',
-      charts: '#00C6BF',
-    };
-
-    const currentIndex = Object.keys(products).indexOf(activeProduct);
-
-    let computedX = 25;
-
-    for (let i = 0; i < currentIndex; i++) {
-      computedX += 150;
-    }
-
-    return css`
-      transform: translate3d(${computedX}px, 0, 0);
-      background-color: ${products[
-        activeProduct as 'stitch' | 'cloud' | 'charts'
-      ]};
-    `;
-  }
 
   return (
     <nav
@@ -193,7 +196,10 @@ export default function ProjectNav({
         </Menu>
         <ol className={olStyle}>
           <li role="none" className={productStyle}>
-            <a href={'https://cloud.mongodb.com'} className={productTextStyle}>
+            <a
+              href={hosts?.cloud ?? 'https://cloud.mongodb.com'}
+              className={productTextStyle}
+            >
               {activeProduct === 'cloud' ? <AtlasActive /> : <AtlasInactive />}
               <span
                 className={cx(productMargin, {
@@ -205,7 +211,10 @@ export default function ProjectNav({
             </a>
           </li>
           <li role="none" className={productStyle}>
-            <a href="https://stitch.mongodb.com" className={productTextStyle}>
+            <a
+              href={hosts?.stitch ?? 'https://stitch.mongodb.com'}
+              className={productTextStyle}
+            >
               <Icon
                 glyph="Stitch"
                 fill={
@@ -222,7 +231,10 @@ export default function ProjectNav({
             </a>
           </li>
           <li role="none" className={productStyle}>
-            <a href="https://charts.mongodb.com" className={productTextStyle}>
+            <a
+              href={hosts?.charts ?? 'https://charts.mongodb.com'}
+              className={productTextStyle}
+            >
               <Icon
                 glyph="Charts"
                 fill={
@@ -238,7 +250,7 @@ export default function ProjectNav({
               </span>
             </a>
           </li>
-          <div className={cx(highlightColor, calcStyle())} />
+          <div className={cx(highlightColor, calcStyle(activeProduct))} />
         </ol>
       </div>
       <div>

@@ -8,6 +8,48 @@ import {
 } from '@testing-library/react';
 import MongoMenu from '.';
 
+const urls = {
+  mongoMenu: {
+    cloud: {
+      userPreferences: `https://cloud.mongodb.com/v2#/preferences/personalization`,
+      organizations: `https://cloud.mongodb.com/v2#/preferences/organizations`,
+      invitations: `https://cloud.mongodb.com/v2#/preferences/invitations`,
+      mfa: `https://cloud.mongodb.com/v2#/preferences/2fa`,
+    },
+    university: {
+      videoPreferences: `https://university.mongodb.com/override-test`,
+    },
+    support: {
+      userPreferences: `https://support.mongodb.com/profile`,
+    },
+    account: {
+      homepage: `https://account.mongodb.com/account/profile/overview`,
+    },
+  },
+  mongoSelect: {
+    viewAllOrganizations: `https://cloud-dev.mongodb.com/v2#/preferences/organizations`,
+    orgSettings: `https://cloud-dev.mongodb.com/v2#/org/currentOrganizationId098/settings/general`,
+    viewAllProjects: `https://cloud-dev.mongodb.com/v2#/preferences/organizations`,
+    newProject: `https://cloud-dev.mongodb.com/v2#/org/currentOrganizationId/projects/create`,
+  },
+  orgNav: {
+    settings: `https://cloud.mongodb.com/v2#/org/currentOrganizationId098#settings/settings/general`,
+    accessManager: `https://cloud.mongodb.com/v2#/org/currentOrganizationId098#settings/access/users`,
+    support: `https://cloud.mongodb.com/v2#/org/currentOrganizationId098#settings/support`,
+    billing: `https://cloud.mongodb.com/v2#/org/currentOrganizationId098#settings/billing/overview`,
+    allClusters: `https://cloud.mongodb.com/v2#/clusters`,
+    admin: `https://cloud.mongodb.com/v2/admin#general/overview/servers`,
+  },
+  projectNav: {
+    settings: `https://cloud.mongodb.com/v2/currentProjectId098#settings/groupSettings`,
+    accessManager: `https://cloud.mongodb.com/v2/currentProjectId098#access`,
+    support: `https://cloud.mongodb.com/v2/currentProjectId098#info/support`,
+    integrations: `https://cloud.mongodb.com/v2/currentProjectId098#integrations`,
+    alerts: `https://cloud.mongodb.com/v2/currentProjectId098#alerts`,
+    activityFeed: `https://cloud.mongodb.com/v2/currentProjectId098#activity`,
+  },
+};
+
 afterAll(cleanup);
 
 describe('packages/MongoMenu', () => {
@@ -25,13 +67,7 @@ describe('packages/MongoMenu', () => {
       activeProduct={'cloud'}
       onLogout={onLogout}
       onProductChange={onProductChange}
-      urls={{
-        mongoMenu: {
-          university: {
-            videoPreferences: 'https://university.mongodb.com/override-test',
-          },
-        },
-      }}
+      urls={urls}
     />,
   );
 
@@ -50,12 +86,12 @@ describe('packages/MongoMenu', () => {
     const userPreferences = getByText('User Preferences');
     const invitations = getByText('Invitations');
     const organizations = getByText('Organizations');
-    const tfa = getByText('Two-Factor Authorization');
+    const mfa = getByText('Two-Factor Authorization');
 
     expect(userPreferences).toBeInTheDocument();
     expect(invitations).toBeInTheDocument();
     expect(organizations).toBeInTheDocument();
-    expect(tfa).toBeInTheDocument();
+    expect(mfa).toBeInTheDocument();
   });
 
   test('renders university MenuItems when university dropdown is clicked and closes other SubMenus', () => {
@@ -128,17 +164,7 @@ describe('packages/MongoMenu', () => {
 
   test('renders the account link as a disabled button when set to the empty string', () => {
     renderedComponent.rerender(
-      <MongoMenu
-        account={account}
-        activeProduct="account"
-        urls={{
-          mongoMenu: {
-            university: {
-              videoPreferences: 'https://university.mongodb.com/override-test',
-            },
-          },
-        }}
-      />,
+      <MongoMenu account={account} activeProduct="account" urls={urls} />,
     );
 
     const accountButton = getByText('Manage your MongoDB Account')
