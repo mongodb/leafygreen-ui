@@ -17,11 +17,11 @@ import Popover from '@leafygreen-ui/popover';
 >
   Popover
   <Popover
-    align={select('Align', ['top', 'bottom', 'left', 'right'], 'bottom')}
-    justify={select('justify', ['start', 'middle', 'end'], 'start')}
+    align="bottom"
+    justify="start"
     active={this.state.active}
-    usePortal={boolean('usePortal', true)}
-    spacing={number('spacing', 10)}
+    usePortal={true}
+    spacing={10}
   >
     <div className={popoverStyle}>Popover content</div>
   </Popover>
