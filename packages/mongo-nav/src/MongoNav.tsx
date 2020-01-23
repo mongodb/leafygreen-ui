@@ -33,17 +33,22 @@ export default function MongoNav({
   urls,
   showProjNav = true,
   admin = false,
-  constructOrganizationURL = orgId =>
-    `https://cloud.mongodb.com/v2#/org/${orgId}/projects`,
-  constructProjectURL = (orgId, projectId) =>
-    `https://cloud.mongodb.com/v2#/${projectId}`,
+  constructOrganizationURL: constructOrganizationURLProp,
+  constructProjectURL: constructProjectURLProp,
 }: MongoNavInterface) {
   const accountHost = hosts?.account ?? `https://account.mongodb.com`;
   const cloudHost = hosts?.cloud ?? `https://cloud.mongodb.com`;
-  // @ts-ignore
-  const chartsHost = hosts?.charts ?? `https://charts.mongodb.com`; //eslint-disable-line
   const universityHost = hosts?.university ?? `https://university.mongodb.com`;
   const supportHost = hosts?.support ?? `https://support.mongodb.com`;
+
+  const defaultOrgURL = (orgId: string) =>
+    `${cloudHost}/v2#/org/${orgId}/projects`;
+  const constructOrganizationURL =
+    constructOrganizationURLProp ?? defaultOrgURL;
+
+  const defaultProjectURL = (projectId: string) =>
+    `${cloudHost}/v2#/${projectId}`;
+  const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
   const constructedUrls: Required<URLSInterface> = {
     mongoMenu: {
