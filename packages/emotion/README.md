@@ -1,5 +1,9 @@
 # Emotion
 
+## Installation
+
+`yarn install @leafygreen-ui/emotion`
+
 ## Server-side Rendering
 
 Because we use a custom instance of Emotion to allow for styles defined in LeafyGreen to be easily overwritten, there's an additional step that must be taken to use our components when performing server-side rendering.

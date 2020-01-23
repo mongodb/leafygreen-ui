@@ -2,11 +2,9 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/syntax.svg)
 
-### Usage
+## Installation
 
-```shell
-npm install @leafygreen-ui/syntax
-```
+`yarn install @leafygreen-ui/syntax`
 
 ## Example
 

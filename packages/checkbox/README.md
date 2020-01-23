@@ -2,6 +2,10 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/checkbox.svg)
 
+## Installation
+
+`yarn install @leafygreen-ui/checkbox`
+
 ## Example
 
 ```Javascript

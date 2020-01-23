@@ -4,6 +4,34 @@
 
 A set of CSS styles and React components built with design in mind.
 
+## Package Table of Contents
+
+- [Badge](https://github.com/mongodb/leafygreen-ui/tree/master/packages/badge)
+- [Button](https://github.com/mongodb/leafygreen-ui/tree/master/packages/button)
+- [Card](https://github.com/mongodb/leafygreen-ui/tree/master/packages/card)
+- [Checkbox](https://github.com/mongodb/leafygreen-ui/tree/master/packages/checkbox)
+- [Code](https://github.com/mongodb/leafygreen-ui/tree/master/packages/code)
+- [Emotion](https://github.com/mongodb/leafygreen-ui/tree/master/packages/emotion)
+- [Hooks](https://github.com/mongodb/leafygreen-ui/tree/master/packages/hooks)
+- [Icon Button](https://github.com/mongodb/leafygreen-ui/tree/master/packages/icon-button)
+- [Icon](https://github.com/mongodb/leafygreen-ui/tree/master/packages/icon)
+- [LeafyGreen Provider](https://github.com/mongodb/leafygreen-ui/tree/master/packages/leafygreen-provider)
+- [Lib](https://github.com/mongodb/leafygreen-ui/tree/master/packages/lib)
+- [Logo](https://github.com/mongodb/leafygreen-ui/tree/master/packages/logo)
+- [Menu](https://github.com/mongodb/leafygreen-ui/tree/master/packages/menu)
+- [Modal](https://github.com/mongodb/leafygreen-ui/tree/master/packages/modal)
+- [MongoMenu](https://github.com/mongodb/leafygreen-ui/tree/master/packages/mongo-menu)
+- [Palette](https://github.com/mongodb/leafygreen-ui/tree/master/packages/palette)
+- [Pipeline](https://github.com/mongodb/leafygreen-ui/tree/master/packages/pipeline)
+- [Popover](https://github.com/mongodb/leafygreen-ui/tree/master/packages/popover)
+- [Portal](https://github.com/mongodb/leafygreen-ui/tree/master/packages/portal)
+- [Radio Box Group](https://github.com/mongodb/leafygreen-ui/tree/master/packages/radio-box-group)
+- [Radio Group](https://github.com/mongodb/leafygreen-ui/tree/master/packages/radio-group)
+- [Syntax](https://github.com/mongodb/leafygreen-ui/tree/master/packages/syntax)
+- [Tabs](https://github.com/mongodb/leafygreen-ui/tree/master/packages/tabs)
+- [Toggle](https://github.com/mongodb/leafygreen-ui/tree/master/packages/toggle)
+- [Tooltip](https://github.com/mongodb/leafygreen-ui/tree/master/packages/tooltip)
+
 ## Developer Setup
 
 1. Node >= 6.11.5 required.

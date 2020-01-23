@@ -6,6 +6,10 @@ LeafyGreen Provider is a package made to provide, and make it easy to consume pa
 
 Components should always gracefully degrade when the provider is not an ancestor. Please implement these APIs with that in mind.
 
+## Installation
+
+`yarn install @leafygreen-ui/leafygreen-provider`
+
 ## LeafyGreenProvider
 
 This is the context provider for LeafyGreen Provider, and should be added as high in the document tree as possible.

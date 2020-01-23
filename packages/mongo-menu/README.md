@@ -2,6 +2,10 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/mongo-menu.svg)
 
+## Installation
+
+`yarn install @leafygreen-ui/mongo-menu`
+
 ## Example
 
 ```js

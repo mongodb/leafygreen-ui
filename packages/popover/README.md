@@ -1,5 +1,9 @@
 # Popover
 
+## Installation
+
+`yarn install @leafygreen-ui/popover`
+
 ## Example
 
 ```js

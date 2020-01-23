@@ -2,11 +2,9 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/pipeline.svg)
 
-## Usage
+## Installation
 
-```shell
-npm install @leafygreen-ui/pipeline
-```
+`yarn install @leafygreen-ui/pipeline`
 
 ### Example
 
