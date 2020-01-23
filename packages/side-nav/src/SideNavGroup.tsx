@@ -57,9 +57,7 @@ function SideNavGroup({
   return (
     <li {...rest}>
       {headerText && (
-        <h4 className={cx(sideNavLabelStyle, headerClassName)}>
-          {headerText}
-        </h4>
+        <h4 className={cx(sideNavLabelStyle, headerClassName)}>{headerText}</h4>
       )}
       <ul className={ulStyleOverrides}>{children}</ul>
     </li>

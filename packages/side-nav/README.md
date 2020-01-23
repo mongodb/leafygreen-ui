@@ -132,8 +132,8 @@ import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/sideNav';
 
 ## Properties
 
-| Prop        | Type     | Description | Default    |
-| ----------- | -------- | ----------- | ---------- |
+| Prop        | Type     | Description                                                | Default     |
+| ----------- | -------- | ---------------------------------------------------------- | ----------- |
 | `className` | `string` | Content that will appear inside of SideNav root component. | `undefined` |
 | `children`  | `node`   | Class name that will be applied to SideNav root component. | `undefined` |
 
@@ -143,12 +143,12 @@ _Any other properties will be spread on the SideNav `nav` container._
 
 ## Properties
 
-| Prop | Type | Description | Default |
-| ---- | ---- | ----------- | ------- |
-| `className` | `string` | Class name that will be applied to SideNavGroup root component. | `undefined` |
-| `headerText` | `string` | Text that will be displayed in the SideNavGroup optional header. | `undefined` |
+| Prop              | Type     | Description                                                      | Default     |
+| ----------------- | -------- | ---------------------------------------------------------------- | ----------- |
+| `className`       | `string` | Class name that will be applied to SideNavGroup root component.  | `undefined` |
+| `headerText`      | `string` | Text that will be displayed in the SideNavGroup optional header. | `undefined` |
 | `headerClassName` | `string` | Class name that will be applied to SideNavGroup optional header. | `undefined` |
-| `children` | `node` | Content that will appear inside of SideNavGroup root component. | `undefined` |
+| `children`        | `node`   | Content that will appear inside of SideNavGroup root component.  | `undefined` |
 
 _Any other properties will be spread on the SideNavGroup `li` container._
 
@@ -156,15 +156,15 @@ _Any other properties will be spread on the SideNavGroup `li` container._
 
 ## Properties
 
-| Prop                | Type      | Description | Default    |
-| ------------------- | --------- | ----------- | ---------- |
-| `active`            | `boolean` | Whether or not the SideNavItem will be displayed as active. | `false`    |
-| `disabled`          | `boolean` | Whether or not the SideNavItem will be displayed as disabled. | `false`    |
-| `href`              | `string`  | When provided, the underlying MenuItem's root component will be rendered as an anchor with this href value. | `undefined`|
-| `description`       | `string`  | Description text optionally displayed below the SideNavItem's title. | `undefined`|
-| `className`         | `string`  | Class name that will be applied to the underlying MenuItem's root component. | `undefined`|
-| `titleTextClassName`| `string`  | Class name that will be applied to the underlying MenuItem's content wrapper. | `undefined`|
-| `children`          | `node`    | Content that will appear inside of the underlying MenuItem's content wrapper. | `undefined` |
+| Prop                 | Type      | Description                                                                                                 | Default     |
+| -------------------- | --------- | ----------------------------------------------------------------------------------------------------------- | ----------- |
+| `active`             | `boolean` | Whether or not the SideNavItem will be displayed as active.                                                 | `false`     |
+| `disabled`           | `boolean` | Whether or not the SideNavItem will be displayed as disabled.                                               | `false`     |
+| `href`               | `string`  | When provided, the underlying MenuItem's root component will be rendered as an anchor with this href value. | `undefined` |
+| `description`        | `string`  | Description text optionally displayed below the SideNavItem's title.                                        | `undefined` |
+| `className`          | `string`  | Class name that will be applied to the underlying MenuItem's root component.                                | `undefined` |
+| `titleTextClassName` | `string`  | Class name that will be applied to the underlying MenuItem's content wrapper.                               | `undefined` |
+| `children`           | `node`    | Content that will appear inside of the underlying MenuItem's content wrapper.                               | `undefined` |
 
 _Side Nav Item wraps @leafygreen-ui/menu's Menu Item._
 _All properties provided above will be set on the Menu Item itself._

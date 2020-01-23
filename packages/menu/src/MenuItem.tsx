@@ -245,7 +245,7 @@ const MenuItem = React.forwardRef(
             className,
           )}
           role="menuitem"
-          aria-current={active ? ariaCurrentValue : '' }
+          aria-current={active ? ariaCurrentValue : ''}
           aria-disabled={disabled}
           ref={forwardRef}
           tabIndex={disabled ? -1 : undefined}

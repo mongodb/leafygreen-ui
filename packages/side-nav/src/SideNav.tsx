@@ -31,11 +31,7 @@ interface SideNavProps {
  */
 function SideNav({ children, ...rest }: SideNavProps) {
   return (
-    <nav
-      style={{ width: '200px' }}
-      aria-label="side-nav"
-      {...rest}
-    >
+    <nav style={{ width: '200px' }} aria-label="side-nav" {...rest}>
       <ul className={ulStyleOverrides}>{children}</ul>
     </nav>
   );

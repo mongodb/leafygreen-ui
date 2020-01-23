@@ -63,10 +63,10 @@ export const keyMap = {
 /**
  * An enum of accepted values for the "aria-current" attribute, used for
  * indicating current/active state across several contexts.
- * 
+ *
  * The values "false", the empty string, and an ommission of this attribute
  * are all treated identically by user agents and screen readers.
- * 
+ *
  * W3C Recommendation: https://www.w3.org/TR/wai-aria-1.1/#aria-current
  */
 export const AriaCurrentValue = {
@@ -76,7 +76,7 @@ export const AriaCurrentValue = {
   Date: 'date', // current value in a calendar or date picker
   Time: 'time', // current value in a timetable or time picker
   True: 'true', // (fallback) current value in any set of options/elements
-  Unset: 'false' // equivalent to omitting the aria-current attribute
+  Unset: 'false', // equivalent to omitting the aria-current attribute
 } as const;
 
 export type AriaCurrentValue = typeof AriaCurrentValue[keyof typeof AriaCurrentValue];
