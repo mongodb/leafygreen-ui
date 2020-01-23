@@ -59,7 +59,7 @@ const packageJSON = `
       "access": "public"
     },
     "devDependencies": {
-      "@leafygreen-ui/lib": "^3.2.0"
+      "@leafygreen-ui/lib": "^4.0.0"
     }
   }
 `;
