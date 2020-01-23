@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { AriaCurrentValue } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 const menuItemContainer = createDataProp('menu-item-container');
@@ -140,28 +141,33 @@ const disabledTextStyle = css`
 
 interface SharedMenuItemProps {
   /**
-   * Class name that will be applied to root MenuItem element.
-   */
-  className?: string;
-
-  /**
-   * Class name that will be applied to the title text/children wrapper.
-   */
-  titleTextClassName?: string;
-
-  /**
    * Determines whether or not the MenuItem is active.
    */
   active?: boolean;
-
+  /**
+   * Determines whether or not the MenuItem is disabled.
+   */
+  disabled?: boolean;
   /**
    * Description text displayed below title in MenuItem.
    */
   description?: string;
   /**
-   * Determines whether or not the MenuItem is disabled.
+   * The value for aria-current if the SideNavItem is active
    */
-  disabled?: boolean;
+  ariaCurrentValue?: AriaCurrentValue;
+  /**
+   * Class name that will be applied to root MenuItem element.
+   */
+  className?: string;
+  /**
+   * Class name that will be applied to the title text/children wrapper.
+   */
+  titleTextClassName?: string;
+  /**
+   * Content that will appear inside of the underlying MenuItem's content wrapper.
+   */
+  children?: React.ReactNode;
   ref?: React.Ref<any>;
 }
 
@@ -183,16 +189,35 @@ function usesLinkElement(
   return props.href != null;
 }
 
+/**
+ * # MenuItem
+ *
+ * ```
+  <MenuItem href="#homeward" titleTextClassName="header-bold" active>
+    My Beautiful Menu Item
+  </MenuItem>
+ * ```
+ @param props.active Determines whether or not the MenuItem is active.
+ @param props.disabled Determines whether or not the MenuItem is disabled.
+ @param props.description Description text optionally displayed below the MenuItem's title.
+ @param props.ariaCurrentValue The value for aria-current if the MenuItem is active
+ @param props.className Class name that will be applied to root MenuItem element.
+ @param props.titleTextClassName Class name that will be applied to the title text/children wrapper.
+ @param props.href When provided, the underlying MenuItem's root component will be rendered as an anchor with this href value.
+ @param props.children Content that will appear inside of the underlying MenuItem's content wrapper.
+ *
+ */
 const MenuItem = React.forwardRef(
   (props: MenuItemProps, forwardRef: React.Ref<any>) => {
     const {
-      disabled = false,
       active = false,
+      disabled = false,
+      description,
+      ariaCurrentValue = 'page',
       className,
       titleTextClassName,
-      children,
-      description,
       href,
+      children,
       ...rest
     } = props;
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -220,6 +245,7 @@ const MenuItem = React.forwardRef(
             className,
           )}
           role="menuitem"
+          aria-current={active ? ariaCurrentValue : '' }
           aria-disabled={disabled}
           ref={forwardRef}
           tabIndex={disabled ? -1 : undefined}
@@ -262,13 +288,13 @@ MenuItem.displayName = 'MenuItem';
 
 // @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 MenuItem.propTypes = {
-  href: PropTypes.string,
-  onClick: PropTypes.func,
+  active: PropTypes.bool,
+  disabled: PropTypes.bool,
+  description: PropTypes.string,
+  ariaCurrentValue: PropTypes.oneOf(Object.values(AriaCurrentValue)),
   className: PropTypes.string,
   titleTextClassName: PropTypes.string,
-  description: PropTypes.string,
-  disabled: PropTypes.bool,
-  active: PropTypes.bool,
+  href: PropTypes.string,
   children: PropTypes.node,
   ref: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
 };

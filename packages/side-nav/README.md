@@ -42,7 +42,6 @@ import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/sideNav';
             target="_self"
             rel=""
             href="#clusters"
-            titletextclassname="leafygreen-ui-1ja8vjy"
             aria-current="page"
             data-leafygreen-ui="menu-item-container"
             class="leafygreen-ui-kxq8r5"
@@ -57,7 +56,6 @@ import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/sideNav';
             target="_self"
             rel=""
             href="#dataLake"
-            titletextclassname="leafygreen-ui-1ja8vjy"
             data-leafygreen-ui="menu-item-container"
             class="leafygreen-ui-ogq1tn"
             role="menuitem"
@@ -77,7 +75,6 @@ import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/sideNav';
             target="_self"
             rel=""
             href="#databaseAccess"
-            titletextclassname="leafygreen-ui-1ja8vjy"
             data-leafygreen-ui="menu-item-container"
             class="leafygreen-ui-n21tgd"
             role="menuitem"
@@ -88,7 +85,6 @@ import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/sideNav';
         </li>
         <li role="none">
           <button
-            titletextclassname="leafygreen-ui-1ja8vjy"
             data-leafygreen-ui="menu-item-container"
             class="leafygreen-ui-n21tgd"
             role="menuitem"
@@ -104,7 +100,6 @@ import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/sideNav';
             target="_self"
             rel=""
             href="#networkAccess"
-            titletextclassname="leafygreen-ui-1ja8vjy"
             data-leafygreen-ui="menu-item-container"
             class="leafygreen-ui-n21tgd"
             role="menuitem"
@@ -118,7 +113,6 @@ import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/sideNav';
         </li>
         <li role="none">
           <button
-            titletextclassname="leafygreen-ui-1ja8vjy"
             data-leafygreen-ui="menu-item-container"
             class="leafygreen-ui-n21tgd"
             role="menuitem"
@@ -140,10 +134,10 @@ import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/sideNav';
 
 | Prop        | Type     | Description | Default    |
 | ----------- | -------- | ----------- | ---------- |
-| `className` | `string` |             |            |
-| `children`  | `node`   |             | (required) |
+| `className` | `string` | Content that will appear inside of SideNav root component. | `undefined` |
+| `children`  | `node`   | Class name that will be applied to SideNav root component. | `undefined` |
 
-_Any other properties will be spread on the SideNav `nav` container_
+_Any other properties will be spread on the SideNav `nav` container._
 
 # Side Nav Group
 
@@ -151,29 +145,27 @@ _Any other properties will be spread on the SideNav `nav` container_
 
 | Prop | Type | Description | Default |
 | ---- | ---- | ----------- | ------- |
+| `className` | `string` | Class name that will be applied to SideNavGroup root component. | `undefined` |
+| `headerText` | `string` | Text that will be displayed in the SideNavGroup optional header. | `undefined` |
+| `headerClassName` | `string` | Class name that will be applied to SideNavGroup optional header. | `undefined` |
+| `children` | `node` | Content that will appear inside of SideNavGroup root component. | `undefined` |
 
-
-|
-| `className` | `string` | | |
-| `headerText` | `string` | | |
-| `headerClassName` | `string` | | |
-| `children` | `node` | | (required) |
-
-_Any other properties will be spread on the SideNavGroup `li` container_
+_Any other properties will be spread on the SideNavGroup `li` container._
 
 # Side Nav Item
 
 ## Properties
 
-| Prop          | Type      | Description | Default    |
-| ------------- | --------- | ----------- | ---------- |
-| `active`      | `boolean` |             | `false`    |
-| `disabled`    | `boolean` |             | `false`    |
-| `href`        | `string`  |             |            |
-| `description` | `string`  |             |            |
-| `className`   | `string`  |             |            |
-| `children`    | `node`    |             | (required) |
+| Prop                | Type      | Description | Default    |
+| ------------------- | --------- | ----------- | ---------- |
+| `active`            | `boolean` | Whether or not the SideNavItem will be displayed as active. | `false`    |
+| `disabled`          | `boolean` | Whether or not the SideNavItem will be displayed as disabled. | `false`    |
+| `href`              | `string`  | When provided, the underlying MenuItem's root component will be rendered as an anchor with this href value. | `undefined`|
+| `description`       | `string`  | Description text optionally displayed below the SideNavItem's title. | `undefined`|
+| `className`         | `string`  | Class name that will be applied to the underlying MenuItem's root component. | `undefined`|
+| `titleTextClassName`| `string`  | Class name that will be applied to the underlying MenuItem's content wrapper. | `undefined`|
+| `children`          | `node`    | Content that will appear inside of the underlying MenuItem's content wrapper. | `undefined` |
 
 _Side Nav Item wraps @leafygreen-ui/menu's Menu Item._
 _All properties provided above will be set on the Menu Item itself._
-_Any other properties will be spread on the Menu Item's `div` container_
+_Any other properties will be spread on the Menu Item's `div` container._

@@ -5,31 +5,31 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { ulStyleOverrides, LEFT_RIGHT_OFFSET } from './styles';
 
 const sideNavLabelStyle = css`
-  display: block;
   color: ${uiColors.green.base};
-  font-size: 12px;
-  font-weight: bold;
   text-transform: uppercase;
+  font-size: 12px;
+  margin-top: 0;
+  margin-bottom: 0;
   padding: 5px ${LEFT_RIGHT_OFFSET}px 5px ${LEFT_RIGHT_OFFSET}px;
 `;
 
 interface SideNavGroupProps {
   /**
-   * Content that will appear inside of SideNavGroup component.
-   */
-  children: React.ReactNode;
-  /**
-   * ClassName that will be applied to root SideNavGroup element.
+   * Class name that will be applied to SideNavGroup root component.
    */
   className?: string;
   /**
-   * Header text displayed above the SideNavGroup contents.
+   * Text that will be displayed in the SideNavGroup optional header.
    */
   headerText?: string;
   /**
-   * ClassName that will be applied to SideNavGroup's header element.
+   * Class name that will be applied to SideNavGroup optional header.
    */
   headerClassName?: string;
+  /**
+   * Content that will appear inside of SideNavGroup root component.
+   */
+  children?: React.ReactNode;
 }
 
 /**
@@ -42,25 +42,24 @@ interface SideNavGroupProps {
   </SideNavItem>
 </SideNavGroup>
  * ```
- * @param props.children Content that will appear inside of SideNavGroup component.
- * @param props.className ClassName that will be applied to root SideNavGroup element.
- * @param props.headerText Header text displayed above the SideNavGroup contents.
- * @param props.headerClassName ClassName that will be applied to SideNavGroup's header element.
+ * @param props.className Class name that will be applied to SideNavGroup root component.
+ * @param props.headerText Text that will be displayed in the SideNavGroup optional header.
+ * @param props.headerClassName Class name that will be applied to SideNavGroup optional header.
+ * @param props.children Content that will appear inside of SideNavGroup root component.
  *
  */
 function SideNavGroup({
-  children,
-  className,
   headerText,
   headerClassName,
+  children,
   ...rest
 }: SideNavGroupProps) {
   return (
-    <li className={className} {...rest}>
+    <li {...rest}>
       {headerText && (
-        <div className={cx(sideNavLabelStyle, headerClassName)} role="heading">
+        <h4 className={cx(sideNavLabelStyle, headerClassName)}>
           {headerText}
-        </div>
+        </h4>
       )}
       <ul className={ulStyleOverrides}>{children}</ul>
     </li>
@@ -70,10 +69,10 @@ function SideNavGroup({
 SideNavGroup.displayName = 'SideNavGroup';
 
 SideNavGroup.propTypes = {
-  children: PropTypes.node.isRequired,
   className: PropTypes.string,
   headerText: PropTypes.string,
   headerClassName: PropTypes.string,
+  children: PropTypes.node,
 };
 
 export default SideNavGroup;
