@@ -10,19 +10,89 @@ import {
 } from './types';
 
 interface MongoNavInterface {
+  /**
+   * Describes what product is currently active
+   */
   activeProduct: Product;
+
+  /**
+   * Determines what nav item is currently active
+   */
   activeNav?: NavItem;
+
+  /**
+   * Describes whether or not user is an `admin`
+   */
   admin?: boolean;
+
+  /**
+   * Data passed to create MongoNav
+   */
   data: DataInterface;
+
+  /**
+   * Callback invoked when user types into organization picker
+   */
   onOrganizationChange: React.ChangeEventHandler;
+
+  /**
+   * Callback invoked when user types into project picker
+   */
   onProjectChange: React.ChangeEventHandler;
+
+  /**
+   *  Function to determine destination URL when user selects a organization from the organization picker
+   */
   constructOrganizationURL?: (orgID: string) => string;
+
+  /**
+   *  Function to determine destination URL when user selects a project from the project picker
+   */
   constructProjectURL?: (orgID: string, projID: string) => string;
+
+  /**
+   * Determines whether the project navigation should be shown
+   */
   showProjNav?: boolean;
+
+  /**
+   * Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<MongoNav />` to work across all environments
+   */
   hosts?: HostsInterface;
+
+  /**
+   * Object to enable custom overrides for every `href` used in `<MongoNav />`.
+   */
   urls?: URLSInterface;
 }
 
+/**
+ * # MongoNav
+ *
+ * MongoNav component
+ *
+ * ```
+<MongoNav
+  data={data}
+  activeProduct="cloud"
+  activeNav="accessManager"
+  onOrganizationChange={onOrganizationChange}
+  onProjectChange={onProjectChange}
+  admin={true}
+/>
+```
+ * @param props.activeProduct Describes what product is currently active.
+ * @param props.activeNav Determines what nav item is currently active.
+ * @param props.data  Data passed to create MongoNav.
+ * @param props.hosts Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<MongoNav />` to work across all environments.
+ * @param props.onOrganizationChange Callback invoked when user types into organization picker.
+ * @param props.onProjectChange Callback invoked when user types into project picker.
+ * @param props.urls Object to enable custom overrides for every `href` used in `<MongoNav />`.
+ * @param props.showProjectNav Determines whether the project navigation should be shown.
+ * @param props.admin Describes whether or not user is an `admin`.
+ * @param props.constructOrganizationURL Function to determine destination URL when user selects a organization from the organization picker.
+ * @param props.constructProjectURL Function to determine destination URL when user selects a project from the project picker.
+ */
 export default function MongoNav({
   activeProduct,
   activeNav,
