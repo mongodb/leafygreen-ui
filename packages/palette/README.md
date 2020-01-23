@@ -2,6 +2,20 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/palette.svg)
 
+## Installation
+
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/palette
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/palette
+```
+
 This package contains the colors for the following palettes:
 
 - **UI**: MongoDB-branded, general-use UI palette.
