@@ -1,4 +1,4 @@
-# leafyGreen UI Kit
+# LeafyGreen UI Kit
 
 [![Build Status](https://img.shields.io/circleci/project/github/mongodb/leafygreen-ui/master.svg)](https://circleci.com/gh/mongodb/leafygreen-ui)
 
