@@ -2,6 +2,15 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/root.svg)
 
+## Overview
+
+`Root` is a polymorphic component that renders a given component depending on the provided props.
+For example, providing the `href` prop can indicate `Root` should be rendered as an anchor tag.
+Providing the `as` prop indicates that `Root` should be rendered as the component referenced by `as`.
+By default, `Root` will render as the HTML element `button`.
+
+This can be useful for simplifying components that are repetitively used, but need different behaviors.
+
 ## Installation
 
 ### Yarn
@@ -32,8 +41,10 @@ import Root from '@leafygreen-ui/Root';
 
 ## Properties
 
-| Prop       | Type                                  | Description                                                                                                                     | Default  |
-| ---------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `as`       | `HTMLElement` or `React.ReactElement` | Takes priority in determining what tag the `<Root />` element will render                                                       | `button` |
-| `href`     | `string`                              | Determines the location that an anchor tag will point to. If prop is set without the `as` prop, `<Root />` will render `a` tags |          |
-| `children` | `React.ReactElement`                  | Content to appear inside of `<Root />` component                                                                                |          |
+| Prop       | Type                                  | Description                                                                                                                          | Default  |
+| ---------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `as`       | `HTMLElement` or `React.ReactElement` | The component or HTML tag to be rendered by the `<Root />` component. **Note**: This will supersede the behavior of any other props. | `button` |
+| `href`     | `string`                              | When provided, `<Root />` will render an anchor tag with this `href` value.                                                          |          |
+| `children` | `React.ReactElement`                  | Content to be rendered in an HTML element, or provided as a prop to the rendered component                                           |          |
+
+_Any other properties will be spread on the rendered HTML element or component._

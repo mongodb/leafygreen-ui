@@ -4,10 +4,16 @@ import Root from '.';
 
 afterAll(cleanup);
 
-describe('packages/root', () => {
+describe('packages/root-hi', () => {
+  const props = { name: 'testName' };
+  const content = 'button content';
+
+  afterEach(() => {
+    document.body.innerHTML = '';
+    cleanup();
+  });
+
   describe('by default', () => {
-    const props = { name: 'testName' };
-    const content = 'button content';
     const { getByTestId } = render(
       <Root data-testid="button" {...props}>
         {content}
@@ -28,8 +34,6 @@ describe('packages/root', () => {
   });
 
   describe('when the href prop is set', () => {
-    const content = 'anchor content';
-
     const { getByTestId } = render(
       <Root
         href="https://cloud.mongodb.com"
@@ -58,7 +62,6 @@ describe('packages/root', () => {
   });
 
   describe('when the as prop is set', () => {
-    const content = 'custom content';
     const { getByTestId } = render(
       <Root as="div" data-testid="custom" href="https://cloud.mongodb.com">
         {content}
@@ -68,10 +71,6 @@ describe('packages/root', () => {
     const custom = getByTestId('custom');
 
     test('it renders as a custom element when the as prop is set', () => {
-      expect(custom.tagName.toLowerCase()).toBe('div');
-    });
-
-    test('it renders as a custom component even when the href prop is set', () => {
       expect(custom.tagName.toLowerCase()).toBe('div');
     });
   });

@@ -25,7 +25,7 @@ function usesCustomElement<T>(
   return (props as any).as != null;
 }
 
-function usesLinkElement<T>(props: RootProps<T>): props is Anchor<T> {
+function usesAnchorElement<T>(props: RootProps<T>): props is Anchor<T> {
   return props.href != null;
 }
 
@@ -37,9 +37,9 @@ function usesLinkElement<T>(props: RootProps<T>): props is Anchor<T> {
  * ```
 <Root href="https://mongodb.design">Anchors Away!</Root>
 ```
- * @param props.children Takes priority in determining what tag the `<Root />` element will render.
- * @param props.href Determines the location that an anchor tag will point to. If prop is set without the `as` prop, `<Root />` will render `a` tags.
- * @param props.as Callback to change the open state of the Menu.
+ * @param props.children Content to be rendered in an HTML element, or provided as a prop to the rendered component.
+ * @param props.href When provided, `<Root />` will render an anchor tag with this `href` value.
+ * @param props.as The component or HTML tag to be rendered by the `<Root />` component. **Note**: This will supersede the behavior of any other props.
  */
 function Root<T>(props: RootProps<T>) {
   const { children, ...rest } = props;
@@ -47,7 +47,7 @@ function Root<T>(props: RootProps<T>) {
 
   if (usesCustomElement<T>(props)) {
     Root = props.as;
-  } else if (usesLinkElement<T>(props)) {
+  } else if (usesAnchorElement<T>(props)) {
     Root = 'a';
   }
 

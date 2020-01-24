@@ -4,6 +4,7 @@ import { text, select } from '@storybook/addon-knobs';
 import Root from '.';
 
 storiesOf('Root', module)
+  .add('Default', () => <Root>By default I am a buttono</Root>)
   .add('Anchor', () => (
     <Root href="https://mongodb.design">
       {text('Children', 'I am an anchor tag')}
