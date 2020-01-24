@@ -56,8 +56,11 @@ describe('packages/side-nav', () => {
         expect(renderedEls.itemEl?.tagName).toEqual('DIV');
       });
 
-      test('it strips the list item of its role', () => {
-        expect(renderedEls.itemEl?.parentNode).toHaveAttribute('role', 'none');
+      test('it sets the correct role for the item', () => {
+        expect(renderedEls.itemEl?.parentNode).toHaveAttribute(
+          'role',
+          'menuitem',
+        );
       });
     });
 
@@ -192,6 +195,12 @@ describe('packages/side-nav', () => {
       test('renders the side nav group with a header', () => {
         expect(renderedEls.groupEl).toBeInTheDocument();
         expect(renderedEls.headerEl).toBeInTheDocument();
+      });
+
+      test('sets the role of the list as a menu', () => {
+        const listEl = renderedEls.groupEl?.querySelector('ul');
+        expect(listEl).toBeInTheDocument();
+        expect(listEl).toHaveAttribute('role', 'menu');
       });
 
       test('it displays the header text in a header', () => {

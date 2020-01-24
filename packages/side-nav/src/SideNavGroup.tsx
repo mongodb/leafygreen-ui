@@ -59,7 +59,9 @@ function SideNavGroup({
       {headerText && (
         <h4 className={cx(sideNavLabelStyle, headerClassName)}>{headerText}</h4>
       )}
-      <ul className={ulStyleOverrides}>{children}</ul>
+      <ul role="menu" className={ulStyleOverrides}>
+        {children}
+      </ul>
     </li>
   );
 }

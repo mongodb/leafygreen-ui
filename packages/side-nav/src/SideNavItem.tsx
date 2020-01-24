@@ -239,7 +239,7 @@ function SideNavItem(props: SideNavItemProps) {
   }
 
   return (
-    <li role="none">
+    <li role="menuitem">
       <Root
         {...rest}
         {...sideNavItemContainer.prop}
