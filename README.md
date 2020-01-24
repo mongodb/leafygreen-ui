@@ -27,6 +27,7 @@ A set of CSS styles and React components built with design in mind.
 - [Portal](https://github.com/mongodb/leafygreen-ui/tree/master/packages/portal)
 - [Radio Box Group](https://github.com/mongodb/leafygreen-ui/tree/master/packages/radio-box-group)
 - [Radio Group](https://github.com/mongodb/leafygreen-ui/tree/master/packages/radio-group)
+- [Root](https://github.com/mongodb/leafygreen-ui/tree/master/packages/root)
 - [Syntax](https://github.com/mongodb/leafygreen-ui/tree/master/packages/syntax)
 - [Tabs](https://github.com/mongodb/leafygreen-ui/tree/master/packages/tabs)
 - [Toggle](https://github.com/mongodb/leafygreen-ui/tree/master/packages/toggle)
