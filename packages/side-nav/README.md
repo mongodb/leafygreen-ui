@@ -8,121 +8,108 @@
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
 
 <SideNav>
-  <SideNavGroup headerText="Simple States">
-    <SideNavItem href="#clusters" active>
-      Active State
-    </SideNavItem>
-    <SideNavItem href="#dataLake" disabled>
-      Disabled State
+  <SideNavGroup headerText="States">
+    <SideNavItem active>Active State</SideNavItem>
+    <SideNavItem disabled>Disabled State</SideNavItem>
+  </SideNavGroup>
+  <SideNavGroup headerText="Polymorphism">
+    <SideNavItem>Default root element (button)</SideNavItem>
+    <SideNavItem href="/">Anchor root element</SideNavItem>
+    <SideNavItem as="label" htmlFor="docs-input">
+      Custom root element (label)
+      <input
+        id="docs-input"
+        type="text"
+        value=""
+        placeholder="placeholder text"
+        disabled
+      />
     </SideNavItem>
   </SideNavGroup>
-  <SideNavGroup headerText="Other Usages">
-    <SideNavItem href="#databaseAccess">Content with a link</SideNavItem>
-    <SideNavItem>Content without a link renders as a button</SideNavItem>
-    <SideNavItem href="#networkAccess"
-      description="This leverages MenuItem's description">Content with a Description</SideNavItem>
-    <SideNavItem>
-      <div>This can contain any content</div>
-      <input type="text" value="even inputs" disabled>
-    </SideNavItem>
-  </SideNavGroup>
-</SideNav>
+</SideNav>;
 ```
 
 **Output HTML**
 
 ```html
-<nav aria-label="side-nav" class="leafygreen-ui-1inivuc">
+<nav class="leafygreen-ui-1inivuc" aria-label="side-nav">
   <ul class="leafygreen-ui-bdnco">
     <li>
-      <div class="leafygreen-ui-4vsth9" role="heading">Simple States</div>
-      <ul class="leafygreen-ui-bdnco">
-        <li role="none">
-          <a
-            target="_self"
-            rel=""
-            href="#clusters"
-            aria-current="page"
-            data-leafygreen-ui="menu-item-container"
-            class="leafygreen-ui-kxq8r5"
+      <h4 class="leafygreen-ui-19w7vet">States</h4>
+      <ul role="menu" class="leafygreen-ui-bdnco">
+        <li role="menuitem">
+          <button
+            data-leafygreen-ui="side-nav-item-container"
+            class="leafygreen-ui-d18uaj"
             role="menuitem"
+            aria-current="page"
             aria-disabled="false"
           >
-            <div class="leafygreen-ui-14a8fex">Active State</div>
-          </a>
+            <div class="leafygreen-ui-1mikaeo">Active State</div>
+          </button>
         </li>
-        <li role="none">
-          <a
-            target="_self"
-            rel=""
-            href="#dataLake"
-            data-leafygreen-ui="menu-item-container"
-            class="leafygreen-ui-ogq1tn"
+        <li role="menuitem">
+          <button
+            data-leafygreen-ui="side-nav-item-container"
+            class="leafygreen-ui-g84goy"
             role="menuitem"
+            aria-current="false"
             aria-disabled="true"
             tabindex="-1"
           >
-            <div class="leafygreen-ui-10xqyru">Disabled State</div>
-          </a>
+            <div class="leafygreen-ui-18g544y">Disabled State</div>
+          </button>
         </li>
       </ul>
     </li>
     <li>
-      <div class="leafygreen-ui-4vsth9" role="heading">Other Usages</div>
-      <ul class="leafygreen-ui-bdnco">
-        <li role="none">
-          <a
-            target="_self"
-            rel=""
-            href="#databaseAccess"
-            data-leafygreen-ui="menu-item-container"
-            class="leafygreen-ui-n21tgd"
-            role="menuitem"
-            aria-disabled="false"
-          >
-            <div class="leafygreen-ui-r0sqyc">Content with a link</div>
-          </a>
-        </li>
-        <li role="none">
+      <h4 class="leafygreen-ui-19w7vet">Polymorphism</h4>
+      <ul role="menu" class="leafygreen-ui-bdnco">
+        <li role="menuitem">
           <button
-            data-leafygreen-ui="menu-item-container"
-            class="leafygreen-ui-n21tgd"
+            data-leafygreen-ui="side-nav-item-container"
+            class="leafygreen-ui-1b8asku"
             role="menuitem"
+            aria-current="false"
             aria-disabled="false"
           >
-            <div class="leafygreen-ui-r0sqyc">
-              Content without a link renders as a button
+            <div class="leafygreen-ui-f3d0a6">
+              Default root element (button)
             </div>
           </button>
         </li>
-        <li role="none">
+        <li role="menuitem">
           <a
-            target="_self"
-            rel=""
-            href="#networkAccess"
-            data-leafygreen-ui="menu-item-container"
-            class="leafygreen-ui-n21tgd"
+            href="/"
+            data-leafygreen-ui="side-nav-item-container"
+            class="leafygreen-ui-1b8asku"
             role="menuitem"
+            aria-current="false"
             aria-disabled="false"
           >
-            <div class="leafygreen-ui-r0sqyc">Content with a Description</div>
-            <div class="leafygreen-ui-1dm36mc">
-              This leverages MenuItem's description
-            </div>
+            <div class="leafygreen-ui-f3d0a6">Anchor root element</div>
           </a>
         </li>
-        <li role="none">
-          <button
-            data-leafygreen-ui="menu-item-container"
-            class="leafygreen-ui-n21tgd"
+        <li role="menuitem">
+          <label
+            for="docs-input"
+            data-leafygreen-ui="side-nav-item-container"
+            class="leafygreen-ui-1b8asku"
             role="menuitem"
+            aria-current="false"
             aria-disabled="false"
           >
-            <div class="leafygreen-ui-r0sqyc">
-              <div>This can contain any content</div>
-              <input type="text" disabled="" value="even inputs" />
+            <div class="leafygreen-ui-f3d0a6">
+              Custom root element (label)
+              <input
+                id="docs-input"
+                type="text"
+                placeholder="placeholder text"
+                disabled=""
+                value=""
+              />
             </div>
-          </button>
+          </label>
         </li>
       </ul>
     </li>
@@ -132,40 +119,42 @@ import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
 
 ## Properties
 
-| Prop        | Type     | Description                                                | Default     |
-| ----------- | -------- | ---------------------------------------------------------- | ----------- |
-| `className` | `string` | Content that will appear inside of SideNav root component. | `undefined` |
-| `children`  | `node`   | Class name that will be applied to SideNav root component. | `undefined` |
+| Prop        | Type     | Description                                                  | Default     |
+| ----------- | -------- | ------------------------------------------------------------ | ----------- |
+| `className` | `string` | Class name that will be applied to the root-level element.   | `undefined` |
+| `children`  | `node`   | Content that will be rendered inside the root-level element. | `undefined` |
 
-_Any other properties will be spread on the SideNav `nav` container._
+_Any other properties will be spread on the root-level element._
 
 # Side Nav Group
 
 ## Properties
 
-| Prop              | Type     | Description                                                      | Default     |
-| ----------------- | -------- | ---------------------------------------------------------------- | ----------- |
-| `className`       | `string` | Class name that will be applied to SideNavGroup root component.  | `undefined` |
-| `headerText`      | `string` | Text that will be displayed in the SideNavGroup optional header. | `undefined` |
-| `headerClassName` | `string` | Class name that will be applied to SideNavGroup optional header. | `undefined` |
-| `children`        | `node`   | Content that will appear inside of SideNavGroup root component.  | `undefined` |
+| Prop              | Type     | Description                                                  | Default     |
+| ----------------- | -------- | ------------------------------------------------------------ | ----------- |
+| `className`       | `string` | Class name that will be applied to the root-level element.   | `undefined` |
+| `headerText`      | `string` | Text that will be rendered as the component's header.        | `undefined` |
+| `headerClassName` | `string` | Class name that will be applied to the component's header.   | `undefined` |
+| `children`        | `node`   | Content that will be rendered inside the root-level element. | `undefined` |
 
-_Any other properties will be spread on the SideNavGroup `li` container._
+_Any other properties will be spread on the root-level element._
 
 # Side Nav Item
 
 ## Properties
 
-| Prop                 | Type      | Description                                                                                                 | Default     |
-| -------------------- | --------- | ----------------------------------------------------------------------------------------------------------- | ----------- |
-| `active`             | `boolean` | Whether or not the SideNavItem will be displayed as active.                                                 | `false`     |
-| `disabled`           | `boolean` | Whether or not the SideNavItem will be displayed as disabled.                                               | `false`     |
-| `href`               | `string`  | When provided, the underlying MenuItem's root component will be rendered as an anchor with this href value. | `undefined` |
-| `description`        | `string`  | Description text optionally displayed below the SideNavItem's title.                                        | `undefined` |
-| `className`          | `string`  | Class name that will be applied to the underlying MenuItem's root component.                                | `undefined` |
-| `titleTextClassName` | `string`  | Class name that will be applied to the underlying MenuItem's content wrapper.                               | `undefined` |
-| `children`           | `node`    | Content that will appear inside of the underlying MenuItem's content wrapper.                               | `undefined` |
+| Prop               | Type      | Description                                                                                                                                                                                             | Default     |
+| ------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `active`           | `boolean` | Whether or not the component should be rendered in an active state.                                                                                                                                     | `false`     |
+| `disabled`         | `boolean` | Whether or not the component should be rendered in a disabled state.                                                                                                                                    | `false`     |
+| `ariaCurrentValue` | `enum`    | The aria-current attribute value set when the component is active.<br/>See the [WAI-ARIA 1.1 spec](https://www.w3.org/TR/wai-aria-1.1/#aria-current 'WAI-ARIA 1.1 Spec') for a list of accepted values. | `'page'`    |
+| `className`        | `string`  | Class name that will be applied to the component's header.                                                                                                                                              | `undefined` |
+| `children`         | `node`    | Content that will be rendered inside the root-level element.                                                                                                                                            | `undefined` |
+| `href`             | `string`  | When provided, the component will be rendered as an anchor element.                                                                                                                                     | `undefined` |
+| `as`               | `string`  | When provided, the component will be rendered as the component or html tag indicated by this prop. <br/>Other additional props will be spread on the anchor element.                                    | `undefined` |
 
-_Side Nav Item wraps @leafygreen-ui/menu's Menu Item._
-_All properties provided above will be set on the Menu Item itself._
-_Any other properties will be spread on the Menu Item's `div` container._
+_When `href` is set, `href` and any additional props will be spread on the anchor element._
+
+_When `as` is set, any additional props will be spread on the provided component or html tag._
+
+_Otherwise, any other properties will be spread on the root-level element (`button`)._

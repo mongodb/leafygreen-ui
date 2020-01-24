@@ -13,8 +13,9 @@ import omit from 'lodash/omit';
 
 const sideNavItemContainer = createDataProp('side-nav-item-container');
 
-// style overrides for menu item
-const containerStyle = css`
+// container styles
+
+const defaultStyle = css`
   box-sizing: border-box;
   position: relative;
   width: 100%;
@@ -26,6 +27,7 @@ const containerStyle = css`
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  text-align: left;
   font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
   transition: background-color 150ms ease-in-out;
   appearance: none;
@@ -113,6 +115,8 @@ const focusedStyle = css`
   }
 `;
 
+// text content styles
+
 const textStyle = css`
   font-size: 14px;
   font-weight: normal;
@@ -133,6 +137,8 @@ const disabledTextStyle = css`
   color: ${uiColors.gray.light1};
 `;
 
+// browser-default overrides
+
 const linkStyle = css`
   text-decoration: none;
   color: inherit;
@@ -140,23 +146,23 @@ const linkStyle = css`
 
 interface SharedSideNavItemProps {
   /**
-   * Whether or not the SideNavItem will be displayed as active.
+   * Whether or not the component should be rendered in an active state.
    */
   active?: boolean;
   /**
-   * Whether or not the SideNavItem will be displayed as disabled.
+   * Whether or not the component should be rendered in a disabled state.
    */
   disabled?: boolean;
   /**
-   * The value for aria-current if the SideNavItem is active
+   * The aria-current attribute value set when the component is active.
    */
   ariaCurrentValue?: AriaCurrentValue;
   /**
-   * Class name that will be applied to the underlying MenuItem's root component.
+   * Class name that will be applied to the root-level element.
    */
   className?: string;
   /**
-   * Content that will appear inside of the underlying MenuItem's content wrapper.
+   * Content that will be rendered inside the root-level element.
    */
   children?: ReactNode;
 }
@@ -196,17 +202,23 @@ const RootComponentTypes = {
  * # SideNavItem
  *
  * ```
-  <SideNavItem href="#homeward" active>
-    Link Title
+  <SideNavItem href="/">
+    Back to Home
   </SideNavItem>
  * ```
- @param props.active Whether or not the SideNavItem will be displayed as active.
- @param props.disabled Whether or not the SideNavItem will be displayed as disabled.
- @param props.href When provided, the underlying MenuItem's root component will be rendered as an anchor with this href value.
- @param props.ariaCurrentValue The value for aria-current if the SideNavItem is active
- @param props.className Class name that will be applied to the underlying MenuItem's root component.
- @param props.children Content that will appear inside of the underlying MenuItem's content wrapper.
  *
+ ### Component Props
+ @param props.active Whether or not the component should be rendered in an active state.
+ @param props.disabled Whether or not the component should be rendered in a disabled state.
+ @param props.ariaCurrentValue The aria-current attribute value set when the component is active.
+ @param props.className Class name that will be applied to the root-level element.
+ @param props.children Content that will be rendered inside the root-level element.
+ *
+ ### Optional Polymorphic Props
+ @param props.href When provided, the component will be rendered as an anchor element. This and
+ other additional props will be spread on the anchor element.
+ @param props.as When provided, the component will be rendered as the component or html tag indicated
+ by this prop. Other additional props will be spread on the anchor element.
  */
 function SideNavItem(props: SideNavItemProps) {
   const {
@@ -244,7 +256,7 @@ function SideNavItem(props: SideNavItemProps) {
         {...rest}
         {...sideNavItemContainer.prop}
         className={cx(
-          containerStyle,
+          defaultStyle,
           linkStyle,
           {
             [activeStyle]: active,

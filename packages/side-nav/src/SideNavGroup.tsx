@@ -15,19 +15,19 @@ const sideNavLabelStyle = css`
 
 interface SideNavGroupProps {
   /**
-   * Class name that will be applied to SideNavGroup root component.
+   * Class name that will be applied to the root-level element.
    */
   className?: string;
   /**
-   * Text that will be displayed in the SideNavGroup optional header.
+   * Text that will be rendered as the component's header.
    */
   headerText?: string;
   /**
-   * Class name that will be applied to SideNavGroup optional header.
+   * Class name that will be applied to the component's header.
    */
   headerClassName?: string;
   /**
-   * Content that will appear inside of SideNavGroup root component.
+   * Content that will be rendered inside the root-level element.
    */
   children?: React.ReactNode;
 }
@@ -37,15 +37,15 @@ interface SideNavGroupProps {
  *
  * ```
 <SideNavGroup headerText="Section Header">
-  <SideNavItem>
-    Link Content
+  <SideNavItem href="/">
+    Back to Home
   </SideNavItem>
 </SideNavGroup>
  * ```
- * @param props.className Class name that will be applied to SideNavGroup root component.
- * @param props.headerText Text that will be displayed in the SideNavGroup optional header.
- * @param props.headerClassName Class name that will be applied to SideNavGroup optional header.
- * @param props.children Content that will appear inside of SideNavGroup root component.
+ * @param props.className Class name that will be applied to the root-level element.
+ * @param props.headerText Text that will be rendered as the component's header.
+ * @param props.headerClassName Class name that will be applied to the component's header.
+ * @param props.children Class name that will be applied to the component's header.
  *
  */
 function SideNavGroup({

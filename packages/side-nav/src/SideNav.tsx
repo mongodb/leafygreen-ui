@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { ulStyleOverrides } from './styles';
 
 const navStyles = css`
@@ -9,11 +9,11 @@ const navStyles = css`
 
 interface SideNavProps {
   /**
-   * Class name that will be applied to SideNav root component.
+   * Class name that will be applied to the root-level element.
    */
   className?: string;
   /**
-   * Content that will appear inside of SideNav root component.
+   * Content that will be rendered inside the root-level element.
    */
   children?: React.ReactNode;
 }
@@ -24,19 +24,19 @@ interface SideNavProps {
  * ```
 <SideNav>
   <SideNavGroup headerText="Section Header">
-    <SideNavItem>
-      Link Content
+    <SideNavItem href="/">
+      Back to Home
     </SideNavItem>
   </SideNavGroup>
 </SideNav>
  * ```
- * @param props.className Class name that will be applied to SideNav root component.
- * @param props.children Content that will appear inside of SideNav root component.
+ * @param props.className Class name that will be applied to the root-level element.
+ * @param props.children Content that will be rendered inside the root-level element.
  *
  */
-function SideNav({ children, ...rest }: SideNavProps) {
+function SideNav({ className, children, ...rest }: SideNavProps) {
   return (
-    <nav className={navStyles} aria-label="side-nav" {...rest}>
+    <nav className={cx(navStyles, className)} aria-label="side-nav" {...rest}>
       <ul className={ulStyleOverrides}>{children}</ul>
     </nav>
   );
