@@ -15,13 +15,7 @@ function MockSideNav() {
       </SideNavGroup>
       <SideNavGroup headerText="Other Usages">
         <SideNavItem href="#databaseAccess">Content with a link</SideNavItem>
-        <SideNavItem>Content without a link renders as a button</SideNavItem>
-        <SideNavItem
-          href="#networkAccess"
-          description="This leverages MenuItem's description"
-        >
-          Content with a Description
-        </SideNavItem>
+        <SideNavItem>Content without a link renders as a div</SideNavItem>
         <SideNavItem>
           <div>This can contain any content</div>
           <input type="text" value="even inputs" disabled />
