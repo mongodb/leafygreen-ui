@@ -187,7 +187,7 @@ function usesLinkElement(props: LinkProps | DivProps): props is LinkProps {
 }
 
 const RootComponentTypes = {
-  Div: 'div',
+  Button: 'button',
   Link: 'a',
   Custom: 'as',
 } as const;
@@ -235,7 +235,7 @@ function SideNavItem(props: SideNavItemProps) {
   } else if (usesCustomElement(props)) {
     Root = props[RootComponentTypes.Custom];
   } else {
-    Root = RootComponentTypes.Div;
+    Root = RootComponentTypes.Button;
   }
 
   return (

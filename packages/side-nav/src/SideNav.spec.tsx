@@ -51,9 +51,9 @@ describe('packages/side-nav', () => {
         renderSideNavItem();
       });
 
-      test('it renders an ordinary div', () => {
+      test('it renders the item as a button', () => {
         expect(renderedEls.itemEl).toBeInTheDocument();
-        expect(renderedEls.itemEl?.tagName).toEqual('DIV');
+        expect(renderedEls.itemEl?.tagName).toEqual('BUTTON');
       });
 
       test('it sets the correct role for the item', () => {

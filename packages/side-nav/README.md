@@ -5,7 +5,7 @@
 ## Example
 
 ```js
-import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/sideNav';
+import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
 
 <SideNav>
   <SideNavGroup headerText="Simple States">

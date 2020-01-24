@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { css } from '@leafygreen-ui/emotion';
 import { ulStyleOverrides } from './styles';
+
+const navStyles = css`
+  width: 200px;
+`;
 
 interface SideNavProps {
   /**
@@ -31,7 +36,7 @@ interface SideNavProps {
  */
 function SideNav({ children, ...rest }: SideNavProps) {
   return (
-    <nav style={{ width: '200px' }} aria-label="side-nav" {...rest}>
+    <nav className={navStyles} aria-label="side-nav" {...rest}>
       <ul className={ulStyleOverrides}>{children}</ul>
     </nav>
   );
