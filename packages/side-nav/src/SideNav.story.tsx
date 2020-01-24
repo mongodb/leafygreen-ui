@@ -39,30 +39,4 @@ function MockSideNav() {
   );
 }
 
-function Docs() {
-  return (
-    <SideNav>
-      <SideNavGroup headerText="States">
-        <SideNavItem active>Active State</SideNavItem>
-        <SideNavItem disabled>Disabled State</SideNavItem>
-      </SideNavGroup>
-      <SideNavGroup headerText="Polymorphism">
-        <SideNavItem>Default root element (button)</SideNavItem>
-        <SideNavItem href="/">Anchor root element</SideNavItem>
-        <SideNavItem as="label" htmlFor="docs-input">
-          Custom root element (label)
-          <input
-            id="docs-input"
-            type="text"
-            value=""
-            placeholder="placeholder text"
-            disabled
-          />
-        </SideNavItem>
-      </SideNavGroup>
-    </SideNav>
-  );
-}
-
 storiesOf('SideNav', module).add('Default', () => <MockSideNav />);
-storiesOf('SideNav', module).add('docs', () => <Docs />);
