@@ -57,36 +57,3 @@ function MockSideNav() {
 }
 
 storiesOf('SideNav', module).add('Default', () => <MockSideNav />);
-
-function ReadMe() {
-  const header = (
-    <div>
-      <strong>Polymorphism</strong>
-      <br />
-      <small>(content header)</small>
-    </div>
-  );
-  return (
-    <SideNav>
-      <SideNavGroup header="States">
-        <SideNavItem active>Active State</SideNavItem>
-        <SideNavItem disabled>Disabled State</SideNavItem>
-      </SideNavGroup>
-      <SideNavGroup header={header}>
-        <SideNavItem>Default root element (button)</SideNavItem>
-        <SideNavItem href="/">Anchor root element</SideNavItem>
-        <SideNavItem as="label" htmlFor="docs-input">
-          Custom root element (label)
-          <input
-            id="docs-input"
-            type="text"
-            value=""
-            placeholder="placeholder text"
-            disabled
-          />
-        </SideNavItem>
-      </SideNavGroup>
-    </SideNav>
-  );
-}
-storiesOf('SideNav', module).add('Read Me', () => <ReadMe />);
