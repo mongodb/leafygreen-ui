@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+import omit from 'lodash/omit';
 
 type ButtonProps<T> = HTMLElementProps<'button'> &
   T & {
@@ -17,7 +18,7 @@ type CustomElementProps<T> = T & {
   [key: string]: any;
 };
 
-type RootProps<T> = ButtonProps<T> | Anchor<T> | CustomElementProps<T>;
+export type RootProps<T> = ButtonProps<T> | Anchor<T> | CustomElementProps<T>;
 
 function usesCustomElement<T>(
   props: RootProps<T>,
@@ -42,7 +43,8 @@ function usesAnchorElement<T>(props: RootProps<T>): props is Anchor<T> {
  * @param props.as The component or HTML tag to be rendered by the `<Root />` component. **Note**: This will supersede the behavior of any other props.
  */
 function Root<T>(props: RootProps<T>) {
-  const { children, ...rest } = props;
+  const { children } = props;
+  const rest = omit(props as any, ['as', 'children']);
   let Root: React.ElementType<any> = 'button';
 
   if (usesCustomElement<T>(props)) {

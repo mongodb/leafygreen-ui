@@ -1,77 +1,133 @@
 import React from 'react';
+import '@testing-library/jest-dom/extend-expect';
 import { render, cleanup } from '@testing-library/react';
 import Root from '.';
+import { RootProps } from './Root';
 
-afterAll(cleanup);
+// types
+interface SharedProps {
+  name?: string;
+}
 
-describe('packages/root-hi', () => {
-  const props = { name: 'testName' };
-  const content = 'button content';
+interface RenderedEls {
+  root?: HTMLElement | null;
+  child?: HTMLElement | null;
+}
+
+interface LinkWrapperProps {
+  href: string;
+  target: string;
+  children: React.ReactNode;
+}
+
+type testProps = RootProps<SharedProps>;
+type unmountQueueType = Array<() => boolean>;
+
+describe('packages/root', () => {
+  const unmountQueue: unmountQueueType = [];
+  const renderedEls: RenderedEls = {};
+  const linkWrapperFn = jest.fn();
+
+  function LinkWrapper({ href, target, children, ...rest }: LinkWrapperProps) {
+    linkWrapperFn();
+    return (
+      <span {...rest}>
+        <a data-testid="link-component" href={href} target={target}>
+          {children}
+        </a>
+      </span>
+    );
+  }
+
+  const sharedProps = { name: 'testName' };
+  const anchorProps = {
+    href: 'https://cloud.mongodb.com',
+    target: '_blank',
+    ...sharedProps,
+  };
+  const linkProps = { as: LinkWrapper, ...anchorProps };
+
+  const renderRoot = (props: testProps = sharedProps) => {
+    const { queryByTestId, unmount } = render(
+      <Root data-testid="root" {...props}>
+        <div data-testid="child">Child Content</div>
+      </Root>,
+    );
+
+    renderedEls.child = queryByTestId('child');
+    renderedEls.root = queryByTestId('root');
+    unmountQueue.push(unmount);
+  };
 
   afterEach(() => {
-    document.body.innerHTML = '';
+    while (unmountQueue.length > 0) {
+      const unmount = unmountQueue.pop();
+      unmount && unmount();
+    }
+    jest.clearAllMocks();
     cleanup();
   });
 
-  describe('by default', () => {
-    const { getByTestId } = render(
-      <Root data-testid="button" {...props}>
-        {content}
-      </Root>,
-    );
-    const button = getByTestId('button');
-
-    test('it renders as a button when no props are set', () => {
-      expect(button.tagName.toLowerCase()).toBe('button');
-    });
-    test('it renders children inside of <Root /> tag', () => {
-      expect(button.textContent).toBe(content);
+  describe('when rendered with only shared props', () => {
+    beforeEach(() => {
+      renderRoot();
     });
 
-    test('it renders other props passed, when they are set', () => {
-      expect((button as HTMLButtonElement).name).toBe('testName');
-    });
-  });
-
-  describe('when the href prop is set', () => {
-    const { getByTestId } = render(
-      <Root
-        href="https://cloud.mongodb.com"
-        target="_blank"
-        data-testid="anchor"
-      >
-        {content}
-      </Root>,
-    );
-
-    const anchor = getByTestId('anchor');
-
-    test('it renders as an anchor element when the href prop is set', () => {
-      expect(anchor.tagName.toLowerCase()).toBe('a');
+    test('it renders the root component as a button', () => {
+      expect(renderedEls.root).toBeInTheDocument();
+      expect(renderedEls.root?.tagName.toLowerCase()).toBe('button');
     });
 
-    test('it renders the correct href based on the prop', () => {
-      expect((anchor as HTMLAnchorElement).href).toBe(
-        'https://cloud.mongodb.com/',
-      );
+    test('it renders the child content', () => {
+      expect(renderedEls.child).toBeInTheDocument();
     });
 
-    test('it accepts Anchor Element props, when the href prop is set', () => {
-      expect((anchor as HTMLAnchorElement).target).toBe('_blank');
+    test('it preserves the shared props', () => {
+      expect(renderedEls.root).toHaveAttribute('name', sharedProps.name);
     });
   });
 
-  describe('when the as prop is set', () => {
-    const { getByTestId } = render(
-      <Root as="div" data-testid="custom" href="https://cloud.mongodb.com">
-        {content}
-      </Root>,
-    );
+  describe('when rendered with the expected anchor props', () => {
+    beforeEach(() => {
+      renderRoot(anchorProps);
+    });
 
-    const custom = getByTestId('custom');
+    test('it renders the root component as an anchor', () => {
+      expect(renderedEls.root).toBeInTheDocument();
+      expect(renderedEls.root?.tagName.toLowerCase()).toBe('a');
+    });
 
-    test('it renders as a custom element when the as prop is set', () => {
-      expect(custom.tagName.toLowerCase()).toBe('div');
+    test('it renders the child content', () => {
+      expect(renderedEls.child).toBeInTheDocument();
+    });
+
+    test('it preserves the shared props', () => {
+      expect(renderedEls.root).toHaveAttribute('name', sharedProps.name);
+    });
+
+    test('it sets the anchor-specific attributes', () => {
+      expect(renderedEls.root).toHaveAttribute('href', anchorProps.href);
+      expect(renderedEls.root).toHaveAttribute('target', anchorProps.target);
+    });
+  });
+
+  describe('when rendered as a custom component', () => {
+    beforeEach(() => {
+      renderRoot(linkProps);
+    });
+
+    test('it renders the root component as the custom component', () => {
+      expect(renderedEls.root).toBeInTheDocument();
+      expect(linkWrapperFn).toHaveBeenCalledTimes(1);
+      expect(renderedEls.root?.tagName.toLowerCase()).toBe('span');
+    });
+
+    test('it renders the child content', () => {
+      expect(renderedEls.child).toBeInTheDocument();
+    });
+
+    test('it preserves the shared props', () => {
+      expect(renderedEls.root).toHaveAttribute('name', sharedProps.name);
     });
   });
 });
