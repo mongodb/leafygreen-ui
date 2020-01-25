@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { ulStyleOverrides, LEFT_RIGHT_OFFSET } from './styles';
 
@@ -48,17 +48,14 @@ interface SideNavGroupProps {
  * @param props.children Class name that will be applied to the component's header.
  */
 function SideNavGroup({ header, children, ...rest }: SideNavGroupProps) {
-  const renderHeader = () => {
-    if (typeof header === 'string') {
-      return <h4 className={cx(sideNavLabelStyle)}>{header}</h4>;
-    }
-
-    return header;
-  };
-
   return (
     <li {...rest}>
-      {renderHeader()}
+      {typeof header === 'string' ? (
+        <h4 className={sideNavLabelStyle}>{header}</h4>
+      ) : (
+        header
+      )}
+
       <ul role="menu" className={ulStyleOverrides}>
         {children}
       </ul>
