@@ -143,18 +143,22 @@ interface SharedMenuItemProps {
    * Class name that will be applied to root MenuItem element.
    */
   className?: string;
+
   /**
    * Determines whether or not the MenuItem is active.
    */
   active?: boolean;
+
   /**
    * Description text displayed below title in MenuItem.
    */
   description?: string;
+
   /**
    * Determines whether or not the MenuItem is disabled.
    */
   disabled?: boolean;
+
   /**
    * Content that will appear inside of the underlying MenuItem's content wrapper.
    */

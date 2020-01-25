@@ -1,30 +1,36 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, cleanup } from '@testing-library/react';
-import { SideNav, SideNavGroup, SideNavItem, SideNavItemProps } from './index';
+import { SideNav, SideNavGroup, SideNavItem } from './index';
+import { SideNavItemProps } from './SideNavItem';
 
 type renderedElement = HTMLElement | null;
+type header = React.ReactNode;
 
 interface RenderedElements {
   navEl?: renderedElement;
   groupEl?: renderedElement;
-  headerEl?: renderedElement;
+  headerContentEl?: renderedElement;
+  defaultHeaderEl?: renderedElement;
   itemEl?: renderedElement;
   childEl?: renderedElement;
 }
 
 describe('packages/side-nav', () => {
-  const className = 'test-class-name';
-  const headerText = 'test-header-text';
-  const headerClassName = 'test-header-class-name';
   const testIds = {
     sideNav: 'side-nav',
     sideNavGroup: 'side-nav-group',
+    sideNavHeader: 'side-nav-header',
     sideNavItem: 'side-nav-item',
     sideNavLink: 'side-nav-link',
   };
-
   let renderedEls: RenderedElements = {};
+
+  const className = 'test-class-name';
+  const headerText = 'test-header-text';
+  const headerContent = (
+    <h4 data-testid={testIds.sideNavHeader}>Header As Content</h4>
+  );
 
   afterEach(() => {
     document.body.innerHTML = '';
@@ -32,7 +38,7 @@ describe('packages/side-nav', () => {
     cleanup();
   });
 
-  describe('Side Nav Item', () => {
+  describe('SideNavItem', () => {
     function renderSideNavItem(props: SideNavItemProps = {}) {
       const { sideNavItem, sideNavLink } = testIds;
       const { children, ...rest } = props;
@@ -46,9 +52,9 @@ describe('packages/side-nav', () => {
       renderedEls.childEl = queryByTestId(sideNavLink);
     }
 
-    describe('when rendered with custom classes', () => {
+    describe('when rendered with a custom class name', () => {
       beforeEach(() => {
-        renderSideNavItem();
+        renderSideNavItem({ className });
       });
 
       test('it renders the item as a button', () => {
@@ -61,6 +67,10 @@ describe('packages/side-nav', () => {
           'role',
           'menuitem',
         );
+      });
+
+      test('it renders with the provided class name', () => {
+        expect(renderedEls.itemEl).toHaveClass(className);
       });
     });
 
@@ -168,33 +178,38 @@ describe('packages/side-nav', () => {
     });
   });
 
-  describe('Side Nav Group', () => {
-    describe('when the group includes a header', () => {
-      beforeEach(() => {
-        const { sideNavGroup, sideNavLink } = testIds;
-        const { getByTestId, getByText } = render(
-          <SideNavGroup
-            className={className}
-            headerText={headerText}
-            headerClassName={headerClassName}
-            data-testid={sideNavGroup}
-          >
-            <SideNavItem>
-              <a href="#clusters" data-testid={sideNavLink}>
-                Clusters
-              </a>
-            </SideNavItem>
-          </SideNavGroup>,
-        );
+  describe('SideNavGroup', () => {
+    const renderGroup = (header?: header) => {
+      const { sideNavGroup, sideNavHeader, sideNavLink } = testIds;
+      const { getByTestId, queryByText, queryByTestId } = render(
+        <SideNavGroup
+          className={className}
+          header={header}
+          data-testid={sideNavGroup}
+        >
+          <SideNavItem>
+            <a href="#clusters" data-testid={sideNavLink}>
+              Clusters
+            </a>
+          </SideNavItem>
+        </SideNavGroup>,
+      );
 
-        renderedEls.groupEl = getByTestId(sideNavGroup);
-        renderedEls.headerEl = getByText(headerText);
-        renderedEls.childEl = getByTestId(sideNavLink);
+      renderedEls.groupEl = getByTestId(sideNavGroup);
+      renderedEls.defaultHeaderEl = queryByText(headerText);
+      renderedEls.headerContentEl = queryByTestId(sideNavHeader);
+      renderedEls.childEl = getByTestId(sideNavLink);
+    };
+
+    describe('when the group includes a string header', () => {
+      beforeEach(() => {
+        renderGroup(headerText);
       });
 
-      test('renders the side nav group with a header', () => {
+      test('renders the side nav group with a default header', () => {
         expect(renderedEls.groupEl).toBeInTheDocument();
-        expect(renderedEls.headerEl).toBeInTheDocument();
+        expect(renderedEls.defaultHeaderEl).toBeInTheDocument();
+        expect(renderedEls.headerContentEl).toBeNull();
       });
 
       test('sets the role of the list as a menu', () => {
@@ -204,45 +219,44 @@ describe('packages/side-nav', () => {
       });
 
       test('it displays the header text in a header', () => {
-        expect(renderedEls.headerEl?.tagName).toEqual('H4');
+        expect(renderedEls.defaultHeaderEl?.tagName).toEqual('H4');
       });
 
       test('renders the children of the side nav group', () => {
         expect(renderedEls.childEl).toBeInTheDocument();
       });
 
-      test("includes the side nav group's custom class name", () => {
+      test('it renders with the provided class name', () => {
         expect(renderedEls.groupEl).toHaveClass(className);
       });
+    });
 
-      test("includes the header 's custom class name", () => {
-        expect(renderedEls.headerEl).toHaveClass(headerClassName);
+    describe('when the group includes header content', () => {
+      beforeEach(() => {
+        renderGroup(headerContent);
+      });
+
+      test('renders the side nav group with the header content', () => {
+        expect(renderedEls.groupEl).toBeInTheDocument();
+        expect(renderedEls.defaultHeaderEl).toBeNull();
+        expect(renderedEls.headerContentEl).toBeInTheDocument();
       });
     });
 
     describe('when the group does not include a header', () => {
       beforeEach(() => {
-        const { sideNavGroup } = testIds;
-        const { getByTestId, queryByText } = render(
-          <SideNavGroup className={className} data-testid={sideNavGroup}>
-            <SideNavItem>
-              <a href="#clusters">Clusters</a>
-            </SideNavItem>
-          </SideNavGroup>,
-        );
-
-        renderedEls.groupEl = getByTestId(sideNavGroup);
-        renderedEls.headerEl = queryByText(headerText);
+        renderGroup();
       });
 
       test('renders the side nav group without a header', () => {
         expect(renderedEls.groupEl).toBeInTheDocument();
-        expect(renderedEls.headerEl).toBeNull();
+        expect(renderedEls.defaultHeaderEl).toBeNull();
+        expect(renderedEls.headerContentEl).toBeNull();
       });
     });
   });
 
-  describe('Side Nav', () => {
+  describe('SideNav', () => {
     describe('when rendered to the dom', () => {
       beforeEach(() => {
         const { sideNav, sideNavGroup, sideNavItem, sideNavLink } = testIds;
@@ -278,7 +292,7 @@ describe('packages/side-nav', () => {
         expect(renderedEls.childEl).toBeInTheDocument();
       });
 
-      test("includes the side nav's custom class name", () => {
+      test('it renders with the provided class name', () => {
         expect(renderedEls.navEl).toHaveClass(className);
       });
     });

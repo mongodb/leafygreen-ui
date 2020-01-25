@@ -12,6 +12,7 @@ interface SideNavProps {
    * Class name that will be applied to the root-level element.
    */
   className?: string;
+
   /**
    * Content that will be rendered inside the root-level element.
    */
@@ -30,9 +31,9 @@ interface SideNavProps {
   </SideNavGroup>
 </SideNav>
  * ```
+ *
  * @param props.className Class name that will be applied to the root-level element.
  * @param props.children Content that will be rendered inside the root-level element.
- *
  */
 function SideNav({ className, children, ...rest }: SideNavProps) {
   return (

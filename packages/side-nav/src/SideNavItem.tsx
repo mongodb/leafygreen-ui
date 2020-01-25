@@ -149,18 +149,22 @@ interface SharedSideNavItemProps {
    * Whether or not the component should be rendered in an active state.
    */
   active?: boolean;
+
   /**
    * Whether or not the component should be rendered in a disabled state.
    */
   disabled?: boolean;
+
   /**
    * The aria-current attribute value set when the component is active.
    */
   ariaCurrentValue?: AriaCurrentValue;
+
   /**
    * Class name that will be applied to the root-level element.
    */
   className?: string;
+
   /**
    * Content that will be rendered inside the root-level element.
    */
@@ -216,9 +220,9 @@ const RootComponentTypes = {
  *
  ### Optional Polymorphic Props
  @param props.href When provided, the component will be rendered as an anchor element. This and
- other additional props will be spread on the anchor element.
+ *  other additional props will be spread on the anchor element.
  @param props.as When provided, the component will be rendered as the component or html tag indicated
- by this prop. Other additional props will be spread on the anchor element.
+ *  by this prop. Other additional props will be spread on the anchor element.
  */
 function SideNavItem(props: SideNavItemProps) {
   const {

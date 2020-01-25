@@ -18,14 +18,13 @@ interface SideNavGroupProps {
    * Class name that will be applied to the root-level element.
    */
   className?: string;
+
   /**
-   * Text that will be rendered as the component's header.
+   * Content that will be rendered as the component's header. If a string is provided,
+   * it will be rendered with default styling as a header tag.
    */
-  headerText?: string;
-  /**
-   * Class name that will be applied to the component's header.
-   */
-  headerClassName?: string;
+  header?: React.ReactNode;
+
   /**
    * Content that will be rendered inside the root-level element.
    */
@@ -42,23 +41,24 @@ interface SideNavGroupProps {
   </SideNavItem>
 </SideNavGroup>
  * ```
- * @param props.className Class name that will be applied to the root-level element.
- * @param props.headerText Text that will be rendered as the component's header.
- * @param props.headerClassName Class name that will be applied to the component's header.
- * @param props.children Class name that will be applied to the component's header.
  *
+ * @param props.className Class name that will be applied to the root-level element.
+ * @param props.header Content that will be rendered as the component's header
+ *   If a string is provided, it will be rendered with default styling as a header tag.
+ * @param props.children Class name that will be applied to the component's header.
  */
-function SideNavGroup({
-  headerText,
-  headerClassName,
-  children,
-  ...rest
-}: SideNavGroupProps) {
+function SideNavGroup({ header, children, ...rest }: SideNavGroupProps) {
+  const renderHeader = () => {
+    if (typeof header === 'string') {
+      return <h4 className={cx(sideNavLabelStyle)}>{header}</h4>;
+    }
+
+    return header;
+  };
+
   return (
     <li {...rest}>
-      {headerText && (
-        <h4 className={cx(sideNavLabelStyle, headerClassName)}>{headerText}</h4>
-      )}
+      {renderHeader()}
       <ul role="menu" className={ulStyleOverrides}>
         {children}
       </ul>
@@ -70,8 +70,11 @@ SideNavGroup.displayName = 'SideNavGroup';
 
 SideNavGroup.propTypes = {
   className: PropTypes.string,
-  headerText: PropTypes.string,
-  headerClassName: PropTypes.string,
+  header: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+    PropTypes.node,
+  ]),
   children: PropTypes.node,
 };
 

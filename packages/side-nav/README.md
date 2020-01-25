@@ -7,26 +7,36 @@
 ```js
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
 
-<SideNav>
-  <SideNavGroup headerText="States">
-    <SideNavItem active>Active State</SideNavItem>
-    <SideNavItem disabled>Disabled State</SideNavItem>
-  </SideNavGroup>
-  <SideNavGroup headerText="Polymorphism">
-    <SideNavItem>Default root element (button)</SideNavItem>
-    <SideNavItem href="/">Anchor root element</SideNavItem>
-    <SideNavItem as="label" htmlFor="docs-input">
-      Custom root element (label)
-      <input
-        id="docs-input"
-        type="text"
-        value=""
-        placeholder="placeholder text"
-        disabled
-      />
-    </SideNavItem>
-  </SideNavGroup>
-</SideNav>;
+const header = (
+  <div>
+    <strong>Polymorphism</strong>
+    <br />
+    <small>(content header)</small>
+  </div>
+);
+
+return (
+  <SideNav>
+    <SideNavGroup header="States">
+      <SideNavItem active>Active State</SideNavItem>
+      <SideNavItem disabled>Disabled State</SideNavItem>
+    </SideNavGroup>
+    <SideNavGroup header={header}>
+      <SideNavItem>Default root element (button)</SideNavItem>
+      <SideNavItem href="/">Anchor root element</SideNavItem>
+      <SideNavItem as="label" htmlFor="docs-input">
+        Custom root element (label)
+        <input
+          id="docs-input"
+          type="text"
+          value=""
+          placeholder="placeholder text"
+          disabled
+        />
+      </SideNavItem>
+    </SideNavGroup>
+  </SideNav>
+);
 ```
 
 **Output HTML**
@@ -63,7 +73,10 @@ import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
       </ul>
     </li>
     <li>
-      <h4 class="leafygreen-ui-19w7vet">Polymorphism</h4>
+      <div>
+        <strong>Polymorphism</strong><br />
+        <small>(content header)</small>
+      </div>
       <ul role="menu" class="leafygreen-ui-bdnco">
         <li role="menuitem">
           <button
@@ -130,12 +143,11 @@ _Any other properties will be spread on the root-level element._
 
 ## Properties
 
-| Prop              | Type     | Description                                                  | Default     |
-| ----------------- | -------- | ------------------------------------------------------------ | ----------- |
-| `className`       | `string` | Class name that will be applied to the root-level element.   | `undefined` |
-| `headerText`      | `string` | Text that will be rendered as the component's header.        | `undefined` |
-| `headerClassName` | `string` | Class name that will be applied to the component's header.   | `undefined` |
-| `children`        | `node`   | Content that will be rendered inside the root-level element. | `undefined` |
+| Prop        | Type                    | Description                                                                                                                                      | Default     |
+| ----------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
+| `className` | `string`                | Class name that will be applied to the root-level element.                                                                                       | `undefined` |
+| `header`    | `string`<br />or `node` | Content that will be rendered as the component's header.<br />If a string is provided, it will be rendered with default styling as a header tag. | `undefined` |
+| `children`  | `node`                  | Content that will be rendered inside the root-level element.                                                                                     | `undefined` |
 
 _Any other properties will be spread on the root-level element._
 
