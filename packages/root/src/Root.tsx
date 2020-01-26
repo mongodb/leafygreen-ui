@@ -8,7 +8,7 @@ type ButtonProps<T> = HTMLElementProps<'button'> &
     href?: undefined;
   };
 
-type Anchor<T> = HTMLElementProps<'a'> &
+type AnchorProps<T> = HTMLElementProps<'a'> &
   T & {
     href: string;
   };
@@ -18,7 +18,10 @@ type CustomElementProps<T> = T & {
   [key: string]: any;
 };
 
-export type RootProps<T> = ButtonProps<T> | Anchor<T> | CustomElementProps<T>;
+export type RootProps<T> =
+  | ButtonProps<T>
+  | AnchorProps<T>
+  | CustomElementProps<T>;
 
 function usesCustomElement<T>(
   props: RootProps<T>,
@@ -26,7 +29,7 @@ function usesCustomElement<T>(
   return (props as any).as != null;
 }
 
-function usesAnchorElement<T>(props: RootProps<T>): props is Anchor<T> {
+function usesAnchorElement<T>(props: RootProps<T>): props is AnchorProps<T> {
   return props.href != null;
 }
 
