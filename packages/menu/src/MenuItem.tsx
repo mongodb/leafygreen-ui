@@ -29,7 +29,7 @@ const titleTextStyle = css`
   }
 `;
 
-const activetitleTextStyle = css`
+const activeTitleTextStyle = css`
   font-weight: bold;
   color: ${uiColors.green.dark3};
 `;
@@ -143,7 +143,7 @@ const MenuItem = React.forwardRef(
         >
           <div
             className={cx(titleTextStyle, {
-              [activetitleTextStyle]: active,
+              [activeTitleTextStyle]: active,
               [disabledTextStyle]: disabled,
             })}
           >
