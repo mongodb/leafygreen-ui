@@ -88,7 +88,7 @@ const titleTextStyle = css`
   }
 `;
 
-const activeTitleTextStyle = css`
+const activetitleTextStyle = css`
   font-weight: bold;
   color: ${uiColors.green.dark3};
 `;
@@ -134,7 +134,7 @@ const disabledStyle = css`
   }
 `;
 
-const disabledTextStyle = css`
+const disbaledTextStyle = css`
   color: ${uiColors.gray.light1};
 `;
 
@@ -153,16 +153,10 @@ interface SharedMenuItemProps {
    * Description text displayed below title in MenuItem.
    */
   description?: string;
-
   /**
    * Determines whether or not the MenuItem is disabled.
    */
   disabled?: boolean;
-
-  /**
-   * Content that will appear inside of the underlying MenuItem's content wrapper.
-   */
-  children?: React.ReactNode;
   ref?: React.Ref<any>;
 }
 
@@ -184,22 +178,6 @@ function usesLinkElement(
   return props.href != null;
 }
 
-/**
- * # MenuItem
- *
- * ```
-  <MenuItem href="#homeward" active>
-    Content
-  </MenuItem>
- * ```
- @param props.active Determines whether or not the MenuItem is active.
- @param props.disabled Determines whether or not the MenuItem is disabled.
- @param props.description Description text optionally displayed below the MenuItem's title.
- @param props.className Class name that will be applied to root MenuItem element.
- @param props.href When provided, the underlying MenuItem's root component will be rendered as an anchor with this href value.
- @param props.children Content that will appear inside of the underlying MenuItem's content wrapper.
- *
- */
 const MenuItem = React.forwardRef(
   (props: MenuItemProps, forwardRef: React.Ref<any>) => {
     const {
@@ -242,8 +220,8 @@ const MenuItem = React.forwardRef(
         >
           <div
             className={cx(titleTextStyle, {
-              [activeTitleTextStyle]: active,
-              [disabledTextStyle]: disabled,
+              [activetitleTextStyle]: active,
+              [disbaledTextStyle]: disabled,
             })}
           >
             {children}
@@ -252,7 +230,7 @@ const MenuItem = React.forwardRef(
             <div
               className={cx(descriptionTextStyle, {
                 [activeDescriptionTextStyle]: active,
-                [disabledTextStyle]: disabled,
+                [disbaledTextStyle]: disabled,
               })}
             >
               {description}
@@ -275,6 +253,7 @@ MenuItem.displayName = 'MenuItem';
 // @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 MenuItem.propTypes = {
   href: PropTypes.string,
+  onClick: PropTypes.func,
   className: PropTypes.string,
   description: PropTypes.string,
   disabled: PropTypes.bool,

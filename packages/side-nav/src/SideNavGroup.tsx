@@ -50,12 +50,7 @@ interface SideNavGroupProps {
 function SideNavGroup({ header, children, ...rest }: SideNavGroupProps) {
   return (
     <li {...rest}>
-      {typeof header === 'string' ? (
-        <h4 className={sideNavLabelStyle}>{header}</h4>
-      ) : (
-        header
-      )}
-
+      <h4 className={sideNavLabelStyle}>{header}</h4>
       <ul role="menu" className={ulStyleOverrides}>
         {children}
       </ul>

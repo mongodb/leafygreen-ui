@@ -29,7 +29,7 @@ describe('packages/side-nav', () => {
   const className = 'test-class-name';
   const headerText = 'test-header-text';
   const headerContent = (
-    <h4 data-testid={testIds.sideNavHeader}>Header As Content</h4>
+    <div data-testid={testIds.sideNavHeader}>Header As Content</div>
   );
 
   afterEach(() => {
