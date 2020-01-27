@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import omit from 'lodash/omit';
 
-type DivProps<T> = HTMLElementProps<'div'> &
-  T & {
-    href?: undefined;
-  };
+type DivProps<T> = HTMLElementProps<'div'> & T;
 
 type AnchorProps<T> = HTMLElementProps<'a'> &
   T & {
@@ -23,11 +20,11 @@ export type BoxProps<T> = DivProps<T> | AnchorProps<T> | CustomElementProps<T>;
 function usesCustomElement<T>(
   props: BoxProps<T>,
 ): props is CustomElementProps<T> {
-  return (props as any).component != null;
+  return 'component' in props;
 }
 
 function usesAnchorElement<T>(props: BoxProps<T>): props is AnchorProps<T> {
-  return props.href != null;
+  return 'href' in props;
 }
 
 /**
