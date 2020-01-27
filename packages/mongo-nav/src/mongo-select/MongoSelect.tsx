@@ -140,16 +140,19 @@ function MongoSelect(
     props: ProjectMongoSelectProps,
     datum: ProjectInterface,
   ) => {
-    const id = datum.projectId;
     const content = (
       <ProjectOption
         projectName={datum.projectName}
-        href={props.constructProjectURL(datum.orgId, id)}
+        href={props.constructProjectURL(datum.orgId, datum.projectId)}
       />
     );
 
     return (
-      <MenuItem key={id} className={menuItemContainerStyle} onClick={onClick}>
+      <MenuItem
+        key={datum.projectId}
+        className={menuItemContainerStyle}
+        onClick={onClick}
+      >
         {content}
       </MenuItem>
     );
@@ -159,17 +162,20 @@ function MongoSelect(
     props: OrganizationMongoSelectProps,
     datum: OrganizationInterface,
   ) => {
-    const id = datum.orgId;
     const content = (
       <OrganizationOption
         orgName={datum.orgName}
         planType={datum.planType}
-        href={props.constructOrganizationURL(id)}
+        href={props.constructOrganizationURL(datum.orgId)}
       />
     );
 
     return (
-      <MenuItem key={id} className={menuItemContainerStyle} onClick={onClick}>
+      <MenuItem
+        key={datum.orgId}
+        className={menuItemContainerStyle}
+        onClick={onClick}
+      >
         {content}
       </MenuItem>
     );

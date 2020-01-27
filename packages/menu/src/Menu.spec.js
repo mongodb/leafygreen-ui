@@ -137,7 +137,7 @@ describe('packages/Menu', () => {
     const subMenuB = getByTestId('sub-menu-b');
     const subMenuBArrow = subMenuB?.parentNode?.querySelectorAll('button')[1];
 
-    test('renders a SubMenu open by default, when the SubMenu is Active', () => {
+    test('renders a SubMenu open by default, when the SubMenu is active', () => {
       expect(subMenuItemA).toBeInTheDocument();
     });
 

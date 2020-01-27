@@ -2,15 +2,15 @@ import { DataInterface } from './types';
 
 export default {
   account: {
-    email: 'harry.wolff@mongodb.com',
-    firstName: 'Harry',
-    lastName: 'Wolff',
+    email: 'dev+only+mode@example.com',
+    firstName: 'DevMode',
+    lastName: 'Developer',
     openInvitations: 1,
-    username: 'harry.wolff@mongodb.com',
+    username: 'dev+only+mode@example.com',
   },
   currentOrganization: {
     orgId: '5d729a93',
-    orgName: 'yay',
+    orgName: 'Demo Organization',
     planType: 'atlas',
     paymentStatus: 'ok',
   },
@@ -20,17 +20,17 @@ export default {
     orgId: '5d729a93',
     planType: 'cloud',
     projectId: '020019e',
-    projectName: 'asdf',
+    projectName: 'Test Project',
   },
   organizations: [
     {
       orgId: '5d729a93',
-      orgName: 'yay',
+      orgName: 'Demo Organization',
       planType: 'atlas',
     },
     {
       orgId: '5e0fa79',
-      orgName: 'cool',
+      orgName: 'Demo Organization 2',
       planType: 'cloud',
     },
   ],
@@ -39,13 +39,13 @@ export default {
       orgId: '5d729a93',
       planType: 'cloud',
       projectId: '020019e',
-      projectName: 'asdf',
+      projectName: 'Demo Project 1',
     },
     {
       orgId: '5e0fa79',
       planType: 'cloud',
       projectId: '00626a',
-      projectName: "let's do this",
+      projectName: 'Demo Project 2',
     },
   ],
 } as DataInterface;

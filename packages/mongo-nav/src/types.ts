@@ -20,7 +20,7 @@ const NavItem = {
   OrgSettings: 'orgSettings',
 } as const;
 
-type NavItem = typeof NavItem[keyof typeof NavItem] | '';
+type NavItem = typeof NavItem[keyof typeof NavItem];
 
 export { NavItem };
 
