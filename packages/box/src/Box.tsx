@@ -61,7 +61,7 @@ Box.displayName = 'Box';
 Box.propTypes = {
   children: PropTypes.node,
   href: PropTypes.string,
-  as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 };
 
 export default Box;
