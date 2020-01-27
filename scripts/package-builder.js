@@ -59,7 +59,7 @@ const packageJSON = `
       "access": "public"
     },
     "devDependencies": {
-      "@leafygreen-ui/lib": "^3.2.0"
+      "@leafygreen-ui/lib": "^4.0.0"
     }
   }
 `;
@@ -84,6 +84,20 @@ const readMe = `
 # ${PACKAGE_HUMANREADABLE}
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/${PACKAGE_LC}.svg)
+
+## Installation
+
+### Yarn
+
+\`\`\`shell
+yarn add @leafygreen-ui/${PACKAGE_LC}
+\`\`\`
+
+### NPM
+
+\`\`\`shell
+npm install @leafygreen-ui/${PACKAGE_LC}
+\`\`\`
 
 ## Example
 

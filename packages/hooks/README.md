@@ -2,6 +2,20 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/hooks.svg)
 
+## Installation
+
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/hooks
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/hooks
+```
+
 ## useElementNode
 
 Hook to subscribe to changes in a ref

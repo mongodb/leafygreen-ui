@@ -76,4 +76,4 @@ export default {
   Warning,
   X,
   XWithCircle,
-};
+} as { readonly [K: string]: SVGR.Component };

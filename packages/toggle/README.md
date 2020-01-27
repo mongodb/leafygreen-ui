@@ -2,6 +2,20 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/toggle.svg)
 
+## Installation
+
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/toggle
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/toggle
+```
+
 ## Example
 
 ```Javascript

@@ -56,8 +56,10 @@ function generateConfigFunc(target = 'web') {
             'emotion',
             'react-emotion',
             'create-emotion',
+            'create-emotion-server',
             'polished',
             'prop-types',
+            'react-transition-group',
             ...getAllPackages('../../packages'),
           ]
         : [],

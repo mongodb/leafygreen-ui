@@ -2,6 +2,20 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/portal.svg)
 
+## Installation
+
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/portal
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/portal
+```
+
 ## Example
 
 ```js
