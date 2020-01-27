@@ -24,6 +24,7 @@ const navContainerStyle = css`
   padding-right: 15px;
   height: 45px;
   box-shadow: 0 3px 7px 0 rgba(67, 117, 151, 0.08);
+  overflow: hidden;
 `;
 
 const leftSide = css`
@@ -37,6 +38,7 @@ const projectSelectMargin = css`
 
 const menuIconButtonStyle = css`
   margin: auto;
+  background-color: white;
 `;
 
 const menuIconStyle = css`
@@ -46,8 +48,9 @@ const menuIconStyle = css`
 const olStyle = css`
   list-style: none;
   display: flex;
-  padding: 0px;
   position: relative;
+  padding: 0;
+  margin: 0;
   margin-block-start: 0;
   margin-block-end: 0;
 `;
