@@ -93,7 +93,7 @@ interface OrgNav {
   activeNav?: NavItem;
   onOrganizationChange: React.ChangeEventHandler;
   admin: boolean;
-  hosts?: HostsInterface;
+  hosts: Required<HostsInterface>;
 }
 
 export default function OrgNav({

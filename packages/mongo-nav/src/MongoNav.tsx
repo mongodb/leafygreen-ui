@@ -119,6 +119,15 @@ export default function MongoNav({
   const universityHost = hosts?.university ?? `https://university.mongodb.com`;
   const supportHost = hosts?.support ?? `https://support.mongodb.com`;
 
+  const sanitizedHosts: Required<HostsInterface> = {
+    account: accountHost,
+    cloud: cloudHost,
+    university: universityHost,
+    support: supportHost,
+    charts: hosts?.charts ?? `https://charts.mongodb.com`,
+    stitch: hosts?.stitch ?? `https://stitch.mongodb.com`,
+  };
+
   const defaultOrgURL = (orgId: string) =>
     `${cloudHost}/v2#/org/${orgId}/projects`;
   const constructOrganizationURL =
@@ -221,7 +230,7 @@ export default function MongoNav({
         activeNav={activeNav}
         onOrganizationChange={onOrganizationChange}
         admin={admin}
-        hosts={hosts}
+        hosts={sanitizedHosts}
       />
       {showProjNav && (
         <ProjectNav
@@ -232,7 +241,7 @@ export default function MongoNav({
           urls={constructedUrls}
           alerts={currentProject.alertsOpen}
           onProjectChange={onProjectChange}
-          hosts={hosts}
+          hosts={sanitizedHosts}
         />
       )}
     </>

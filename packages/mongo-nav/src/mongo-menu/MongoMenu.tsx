@@ -161,7 +161,7 @@ interface MongoMenuProps {
 
   urls: Required<URLSInterface>;
 
-  hosts?: HostsInterface;
+  hosts: Required<HostsInterface>;
 }
 
 function MongoMenu({
@@ -223,7 +223,7 @@ function MongoMenu({
           {...subMenuContainer.prop}
           {...sharedProps}
           active={isCloud}
-          href={hosts?.cloud ?? 'https://cloud.mongodb.com'}
+          href={hosts.cloud}
           description={<Description isActive={isCloud} product="cloud" />}
           title="Atlas"
           glyph="Cloud"
@@ -255,7 +255,7 @@ function MongoMenu({
           {...subMenuContainer.prop}
           {...sharedProps}
           active={isUniversity}
-          href={hosts?.university ?? 'https://university.mongodb.com'}
+          href={hosts.university}
           description={
             <Description isActive={isUniversity} product="university" />
           }
@@ -274,7 +274,7 @@ function MongoMenu({
           {...subMenuContainer.prop}
           {...sharedProps}
           active={isSupport}
-          href={hosts?.support ?? 'https://support.mongodb.com'}
+          href={hosts.support}
           description={<Description isActive={isSupport} product="support" />}
           title="Support"
           glyph="Support"

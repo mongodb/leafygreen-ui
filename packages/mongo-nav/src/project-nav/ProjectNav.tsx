@@ -146,7 +146,7 @@ interface ProjectNavInterface {
   data: Array<ProjectInterface>;
   constructProjectURL: (orgID: string, projID: string) => string;
   urls: Required<URLSInterface>;
-  hosts?: HostsInterface;
+  hosts: Required<HostsInterface>;
   alerts?: number;
   activeProduct: Product;
   onProjectChange: React.ChangeEventHandler;
@@ -196,10 +196,7 @@ export default function ProjectNav({
         </Menu>
         <ol className={olStyle}>
           <li role="none" className={productStyle}>
-            <a
-              href={hosts?.cloud ?? 'https://cloud.mongodb.com'}
-              className={productTextStyle}
-            >
+            <a href={hosts.cloud} className={productTextStyle}>
               {activeProduct === 'cloud' ? <AtlasActive /> : <AtlasInactive />}
               <span
                 className={cx(productMargin, {
@@ -211,10 +208,7 @@ export default function ProjectNav({
             </a>
           </li>
           <li role="none" className={productStyle}>
-            <a
-              href={hosts?.stitch ?? 'https://stitch.mongodb.com'}
-              className={productTextStyle}
-            >
+            <a href={hosts.stitch} className={productTextStyle}>
               <Icon
                 glyph="Stitch"
                 fill={
@@ -231,10 +225,7 @@ export default function ProjectNav({
             </a>
           </li>
           <li role="none" className={productStyle}>
-            <a
-              href={hosts?.charts ?? 'https://charts.mongodb.com'}
-              className={productTextStyle}
-            >
+            <a href={hosts.charts} className={productTextStyle}>
               <Icon
                 glyph="Charts"
                 fill={

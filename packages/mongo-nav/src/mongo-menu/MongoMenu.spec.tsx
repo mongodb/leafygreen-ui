@@ -50,6 +50,15 @@ const urls = {
   },
 };
 
+const hosts = {
+  account: 'https://account.mongodb.com',
+  cloud: 'https://cloud.mongodb.com',
+  charts: 'https://charts.mongodb.com',
+  stitch: 'https://stitch.mongodb.com',
+  support: 'https://support.mongodb.com',
+  university: 'https://university.mongodb.com',
+};
+
 afterAll(cleanup);
 
 describe('packages/MongoMenu', () => {
@@ -68,6 +77,7 @@ describe('packages/MongoMenu', () => {
       onLogout={onLogout}
       onProductChange={onProductChange}
       urls={urls}
+      hosts={hosts}
     />,
   );
 
@@ -164,7 +174,12 @@ describe('packages/MongoMenu', () => {
 
   test('renders the account link as a disabled button when set to the empty string', () => {
     renderedComponent.rerender(
-      <MongoMenu account={account} activeProduct="account" urls={urls} />,
+      <MongoMenu
+        account={account}
+        activeProduct="account"
+        urls={urls}
+        hosts={hosts}
+      />,
     );
 
     const accountButton = getByText('Manage your MongoDB Account')
