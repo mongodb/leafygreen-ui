@@ -1,5 +1,7 @@
 import React, { ReactNode, ElementType } from 'react';
 import PropTypes from 'prop-types';
+import omit from 'lodash/omit';
+
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import {
@@ -8,8 +10,7 @@ import {
   createDataProp,
 } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { LEFT_RIGHT_OFFSET } from './styles';
-import omit from 'lodash/omit';
+import { SIDE_OFFSET } from './styles';
 
 const sideNavItemContainer = createDataProp('side-nav-item-container');
 
@@ -20,16 +21,17 @@ const defaultStyle = css`
   position: relative;
   width: 100%;
   margin: unset;
-  padding: 10px ${LEFT_RIGHT_OFFSET}px 10px ${LEFT_RIGHT_OFFSET}px;
+  padding: 10px ${SIDE_OFFSET}px 10px ${SIDE_OFFSET}px;
   min-height: 0;
   display: flex;
   flex-direction: column;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  color: inherit;
   text-align: left;
+  text-decoration: none;
   font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
-  transition: background-color 150ms ease-in-out;
   appearance: none;
   background: none;
 
@@ -40,77 +42,60 @@ const defaultStyle = css`
   &:before {
     content: '';
     position: absolute;
-    top: -2px;
-    bottom: -2px;
-    left: -2px;
-    right: -2px;
-    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
     border-radius: 5px;
-    transform: scale(0.9, 0.8);
-    transition: transform 150ms ease-in-out, background-color 150ms ease-in-out;
+    z-index: -1;
+    background-color: transparent;
+    transform: scale(0.9, 0.7);
+    transition: all 150ms ease-in-out;
+  }
+
+  &:hover,
+  &:focus {
+    &:before {
+      transform: scale(0.95, 0.85);
+      background-color: ${uiColors.gray.light3};
+    }
+  }
+
+  &:active:before {
+    transform: scale(0.95, 0.85);
+    background-color: ${uiColors.gray.light2};
   }
 
   &:hover {
     text-decoration: none;
-    background-color: ${uiColors.gray.light3};
-
-    &:before {
-      transform: scale(1);
-    }
-  }
-
-  &:active {
-    background-color: ${uiColors.gray.light2};
-
-    &:before {
-      transform: scale(1);
-    }
   }
 
   &:focus {
     outline: none;
-    text-decoration: none;
-
-    &:active {
-      background-color: ${uiColors.gray.light2};
-
-      &:before {
-        transform: scale(1);
-      }
-    }
   }
 `;
 
 const activeStyle = css`
+  cursor: default;
   background-color: ${uiColors.green.light3};
+
   &:hover {
     color: ${uiColors.green.dark3};
   }
 `;
 
 const disabledStyle = css`
-  cursor: not-allowed;
   pointer-events: none;
   background-color: transparent;
 `;
 
 const focusedStyle = css`
   &:focus {
-    background-color: ${uiColors.blue.light3};
     color: ${uiColors.blue.dark3};
 
     &:before {
       background-color: ${uiColors.blue.light3};
-      transform: scale(1);
-    }
-
-    &:active {
-      color: ${uiColors.green.dark3};
-      background-color: ${uiColors.green.light3};
-
-      &:before {
-        transform: scale(1);
-      }
     }
   }
 `;
@@ -135,13 +120,6 @@ const activeTextStyle = css`
 
 const disabledTextStyle = css`
   color: ${uiColors.gray.light1};
-`;
-
-// browser-default overrides
-
-const linkStyle = css`
-  text-decoration: none;
-  color: inherit;
 `;
 
 interface SharedSideNavItemProps {
@@ -201,7 +179,6 @@ const RootComponentTypes = {
   Link: 'a',
   Custom: 'as',
 } as const;
-
 /**
  * # SideNavItem
  *
@@ -224,6 +201,7 @@ const RootComponentTypes = {
  @param props.as When provided, the component will be rendered as the component or html tag indicated
  *  by this prop. Other additional props will be spread on the anchor element.
  */
+
 function SideNavItem(props: SideNavItemProps) {
   const {
     active = false,
@@ -261,7 +239,6 @@ function SideNavItem(props: SideNavItemProps) {
         {...sideNavItemContainer.prop}
         className={cx(
           defaultStyle,
-          linkStyle,
           {
             [activeStyle]: active,
             [disabledStyle]: disabled,

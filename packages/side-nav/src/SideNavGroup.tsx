@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { ulStyleOverrides, LEFT_RIGHT_OFFSET } from './styles';
+import { ulStyleOverrides, SIDE_OFFSET } from './styles';
 
 const sideNavLabelStyle = css`
   color: ${uiColors.green.base};
@@ -10,7 +10,7 @@ const sideNavLabelStyle = css`
   font-size: 12px;
   margin-top: 0;
   margin-bottom: 0;
-  padding: 5px ${LEFT_RIGHT_OFFSET}px 5px ${LEFT_RIGHT_OFFSET}px;
+  padding: 5px ${SIDE_OFFSET}px 5px ${SIDE_OFFSET}px;
 `;
 
 interface SideNavGroupProps {
