@@ -14,7 +14,6 @@ type Variant = typeof Variant[keyof typeof Variant];
 export { Variant };
 
 const Size = {
-  Small: 'small',
   Default: 'default',
   Large: 'large',
   XLarge: 'xlarge',
@@ -25,10 +24,9 @@ type Size = typeof Size[keyof typeof Size];
 export { Size };
 
 const sizeMap: { [S in Size]: number } = {
-  small: 14,
   default: 16,
-  large: 24,
-  xlarge: 32,
+  large: 20,
+  xlarge: 24,
 };
 
 interface SharedIconButtonProps {
@@ -124,21 +122,17 @@ const baseIconButtonStyle = css`
 `;
 
 const iconButtonSizes: { readonly [K in Size]: string } = {
-  [Size.Small]: css`
-    height: 24.5px;
-    width: 24.5px;
-  `,
   [Size.Default]: css`
     height: 28px;
     width: 28px;
   `,
   [Size.Large]: css`
-    height: 42px;
-    width: 42px;
+    height: 35px;
+    width: 35px;
   `,
   [Size.XLarge]: css`
-    height: 56px;
-    width: 56px;
+    height: 42px;
+    width: 42px;
   `,
 };
 
@@ -193,9 +187,6 @@ const getIconStyle = (size: Size) => css`
   margin: auto;
   height: ${sizeMap[size]}px;
   width: ${sizeMap[size]}px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 /**

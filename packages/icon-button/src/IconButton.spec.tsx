@@ -17,7 +17,7 @@ describe('packages/icon-button', () => {
       data-testid={testId}
       ariaLabel="Ellipsis"
     >
-      <Icon glyph="Ellipsis" />
+      <Icon glyph="Ellipsis" data-testid="icon-test-id" />
     </IconButton>,
   );
 
@@ -27,10 +27,10 @@ describe('packages/icon-button', () => {
     expect(iconButton.classList.contains(className)).toBe(true);
   });
 
-  // test(`renders icon as button content`, () => {
-  //   const renderedIcon = getAllByTestId('icon-test-id')[0];
-  //   expect(iconButton.contains(renderedIcon)).toBe(true);
-  // });
+  test(`renders icon as button content`, () => {
+    const renderedIcon = getAllByTestId('icon-test-id')[0];
+    expect(iconButton.contains(renderedIcon)).toBe(true);
+  });
 
   test('fires the onClick handler once when clicked', () => {
     fireEvent.click(iconButton);
