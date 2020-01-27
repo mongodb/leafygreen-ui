@@ -1,8 +1,8 @@
 
   {
-    "name": "@leafygreen-ui/root",
+    "name": "@leafygreen-ui/box",
     "version": "0.9.0",
-    "description": "leafyGreen UI Kit Root",
+    "description": "leafyGreen UI Kit Box",
     "browser": "./dist/index.web.js",
     "main": "./dist/index.node.js",
     "types": "./dist/index.d.ts",

@@ -12,13 +12,15 @@
   "publishConfig": {
     "access": "public"
   },
+  "peerDependencies": {
+    "react-transition-group": "^4.2.1"
+  },
   "dependencies": {
     "@leafygreen-ui/hooks": "^2.0.0",
     "@leafygreen-ui/lib": "^4.0.0",
     "@leafygreen-ui/portal": "^2.0.0",
     "@leafygreen-ui/theme": "^2.0.0",
-    "lodash": "^4.17.11",
-    "react-transition-group": "^4.2.1"
+    "lodash": "^4.17.11"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0"
 }

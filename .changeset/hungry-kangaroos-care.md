@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/root': major
+'@leafygreen-ui/box': major
 ---
 
-Initial Root component release
+Initial Box component release

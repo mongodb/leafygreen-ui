@@ -1,8 +1,8 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, cleanup } from '@testing-library/react';
-import Root from '.';
-import { RootProps } from './Root';
+import Box from '.';
+import { BoxProps } from './Box';
 
 // types
 interface SharedProps {
@@ -10,7 +10,7 @@ interface SharedProps {
 }
 
 interface RenderedEls {
-  root?: HTMLElement | null;
+  box?: HTMLElement | null;
   child?: HTMLElement | null;
 }
 
@@ -20,10 +20,10 @@ interface LinkWrapperProps {
   children: React.ReactNode;
 }
 
-type testProps = RootProps<SharedProps>;
+type testProps = BoxProps<SharedProps>;
 type unmountQueueType = Array<() => boolean>;
 
-describe('packages/root', () => {
+describe('packages/box', () => {
   const unmountQueue: unmountQueueType = [];
   const renderedEls: RenderedEls = {};
   const linkWrapperFn = jest.fn();
@@ -45,17 +45,17 @@ describe('packages/root', () => {
     target: '_blank',
     ...sharedProps,
   };
-  const linkProps = { as: LinkWrapper, ...anchorProps };
+  const linkProps = { component: LinkWrapper, ...anchorProps };
 
-  const renderRoot = (props: testProps = sharedProps) => {
+  const renderBox = (props: testProps = sharedProps) => {
     const { queryByTestId, unmount } = render(
-      <Root data-testid="root" {...props}>
+      <Box data-testid="box" {...props}>
         <div data-testid="child">Child Content</div>
-      </Root>,
+      </Box>,
     );
 
     renderedEls.child = queryByTestId('child');
-    renderedEls.root = queryByTestId('root');
+    renderedEls.box = queryByTestId('box');
     unmountQueue.push(unmount);
   };
 
@@ -70,12 +70,12 @@ describe('packages/root', () => {
 
   describe('when rendered with only shared props', () => {
     beforeEach(() => {
-      renderRoot();
+      renderBox();
     });
 
-    test('it renders the root component as a button', () => {
-      expect(renderedEls.root).toBeInTheDocument();
-      expect(renderedEls.root?.tagName.toLowerCase()).toBe('button');
+    test('it renders the box component as a div', () => {
+      expect(renderedEls.box).toBeInTheDocument();
+      expect(renderedEls.box?.tagName.toLowerCase()).toBe('div');
     });
 
     test('it renders the child content', () => {
@@ -83,18 +83,18 @@ describe('packages/root', () => {
     });
 
     test('it preserves the shared props', () => {
-      expect(renderedEls.root).toHaveAttribute('name', sharedProps.name);
+      expect(renderedEls.box).toHaveAttribute('name', sharedProps.name);
     });
   });
 
   describe('when rendered with the expected anchor props', () => {
     beforeEach(() => {
-      renderRoot(anchorProps);
+      renderBox(anchorProps);
     });
 
-    test('it renders the root component as an anchor', () => {
-      expect(renderedEls.root).toBeInTheDocument();
-      expect(renderedEls.root?.tagName.toLowerCase()).toBe('a');
+    test('it renders the box component as an anchor', () => {
+      expect(renderedEls.box).toBeInTheDocument();
+      expect(renderedEls.box?.tagName.toLowerCase()).toBe('a');
     });
 
     test('it renders the child content', () => {
@@ -102,24 +102,24 @@ describe('packages/root', () => {
     });
 
     test('it preserves the shared props', () => {
-      expect(renderedEls.root).toHaveAttribute('name', sharedProps.name);
+      expect(renderedEls.box).toHaveAttribute('name', sharedProps.name);
     });
 
     test('it sets the anchor-specific attributes', () => {
-      expect(renderedEls.root).toHaveAttribute('href', anchorProps.href);
-      expect(renderedEls.root).toHaveAttribute('target', anchorProps.target);
+      expect(renderedEls.box).toHaveAttribute('href', anchorProps.href);
+      expect(renderedEls.box).toHaveAttribute('target', anchorProps.target);
     });
   });
 
   describe('when rendered as a custom component', () => {
     beforeEach(() => {
-      renderRoot(linkProps);
+      renderBox(linkProps);
     });
 
-    test('it renders the root component as the custom component', () => {
-      expect(renderedEls.root).toBeInTheDocument();
+    test('it renders the box component as the custom component', () => {
+      expect(renderedEls.box).toBeInTheDocument();
       expect(linkWrapperFn).toHaveBeenCalledTimes(1);
-      expect(renderedEls.root?.tagName.toLowerCase()).toBe('span');
+      expect(renderedEls.box?.tagName.toLowerCase()).toBe('span');
     });
 
     test('it renders the child content', () => {
@@ -127,7 +127,7 @@ describe('packages/root', () => {
     });
 
     test('it preserves the shared props', () => {
-      expect(renderedEls.root).toHaveAttribute('name', sharedProps.name);
+      expect(renderedEls.box).toHaveAttribute('name', sharedProps.name);
     });
   });
 });

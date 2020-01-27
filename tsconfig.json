@@ -6,6 +6,9 @@
       "path": "./packages/badge"
     },
     {
+      "path": "./packages/box"
+    },
+    {
       "path": "./packages/button"
     },
     {
@@ -59,7 +62,6 @@
     {
       "path": "./packages/radio-group"
     },
-    { "path": "./packages/root" },
     {
       "path": "./packages/syntax"
     },
