@@ -3,4 +3,4 @@
 '@leafygreen-ui/popover': patch
 ---
 
-Make react-transition-group an external dependency of the build
+Make `react-transition-group` an external dependency of the build
