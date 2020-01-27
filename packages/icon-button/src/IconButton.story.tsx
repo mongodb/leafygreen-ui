@@ -4,7 +4,7 @@ import { select, boolean } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Icon from '@leafygreen-ui/icon';
-import IconButton, { Variant } from './IconButton';
+import IconButton, { Variant, Size } from './IconButton';
 
 const background = css`
   width: 60px;
@@ -16,32 +16,50 @@ const background = css`
 `;
 
 storiesOf('IconButton', module)
-  .add('Default', () => (
-    <IconButton
-      variant={select(
-        'variant',
-        Object.values(Variant) as Array<Variant>,
-        Variant.Light,
-      )}
-      disabled={boolean('disabled', false)}
-      ariaLabel="Ellipsis"
-    >
-      <Icon glyph="Ellipsis" />
-    </IconButton>
-  ))
-  .add('Link', () => (
-    <div className={background}>
+  .add('Default', () => {
+    const size = select(
+      'Size',
+      Object.values(Size) as Array<Size>,
+      Size.Default,
+    );
+
+    return (
       <IconButton
-        ariaLabel="Ellipsis"
-        href="https://mongodb.design"
+        size={size}
         variant={select(
           'variant',
           Object.values(Variant) as Array<Variant>,
-          Variant.Dark,
+          Variant.Light,
         )}
         disabled={boolean('disabled', false)}
+        ariaLabel="Ellipsis"
       >
-        <Icon glyph="Ellipsis" />
+        <Icon glyph="Ellipsis" size={size} />
       </IconButton>
-    </div>
-  ));
+    );
+  })
+  .add('Link', () => {
+    const size = select(
+      'Size',
+      Object.values(Size) as Array<Size>,
+      Size.Default,
+    );
+
+    return (
+      <div className={background}>
+        <IconButton
+          size={size}
+          ariaLabel="Ellipsis"
+          href="https://mongodb.design"
+          variant={select(
+            'variant',
+            Object.values(Variant) as Array<Variant>,
+            Variant.Dark,
+          )}
+          disabled={boolean('disabled', false)}
+        >
+          <Icon glyph="Ellipsis" size={size} />
+        </IconButton>
+      </div>
+    );
+  });

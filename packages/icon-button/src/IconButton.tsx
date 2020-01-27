@@ -13,6 +13,24 @@ type Variant = typeof Variant[keyof typeof Variant];
 
 export { Variant };
 
+const Size = {
+  Small: 'small',
+  Default: 'default',
+  Large: 'large',
+  XLarge: 'xlarge',
+} as const;
+
+type Size = typeof Size[keyof typeof Size];
+
+export { Size };
+
+const sizeMap: { [S in Size]: number } = {
+  small: 14,
+  default: 16,
+  large: 24,
+  xlarge: 32,
+};
+
 interface SharedIconButtonProps {
   /**
    * Determines color of `IconButton`. Can be `light` or `dark`.
@@ -38,6 +56,11 @@ interface SharedIconButtonProps {
    * Required prop which will be passed to `aria-label` attribute
    */
   ariaLabel: string;
+
+  /**
+   * Determines size of IconButton can be: small, default, large, xlarge
+   */
+  size?: Size;
 }
 
 interface LinkIconButtonProps
@@ -70,8 +93,6 @@ const removeButtonStyle = css`
 `;
 
 const baseIconButtonStyle = css`
-  height: 28px;
-  width: 28px;
   display: inline-block;
   border-radius: 100px;
   color: ${uiColors.gray.base};
@@ -101,6 +122,25 @@ const baseIconButtonStyle = css`
     outline: none;
   }
 `;
+
+const iconButtonSizes: { readonly [K in Size]: string } = {
+  [Size.Small]: css`
+    height: 24.5px;
+    width: 24.5px;
+  `,
+  [Size.Default]: css`
+    height: 28px;
+    width: 28px;
+  `,
+  [Size.Large]: css`
+    height: 42px;
+    width: 42px;
+  `,
+  [Size.XLarge]: css`
+    height: 56px;
+    width: 56px;
+  `,
+};
 
 const iconButtonVariants: { readonly [K in Variant]: string } = {
   [Variant.Light]: css`
@@ -144,15 +184,18 @@ const disabledStyle: { readonly [K in Variant]: string } = {
   `,
 };
 
-const iconStyle = css`
+const getIconStyle = (size: Size) => css`
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   margin: auto;
-  height: 16px;
-  width: 16px;
+  height: ${sizeMap[size]}px;
+  width: ${sizeMap[size]}px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 /**
@@ -178,6 +221,7 @@ function IconButton(props: IconButtonProps) {
   const {
     variant = 'light',
     disabled = false,
+    size = 'default',
     className,
     href,
     children,
@@ -194,6 +238,7 @@ function IconButton(props: IconButtonProps) {
       className={cx(
         removeButtonStyle,
         baseIconButtonStyle,
+        iconButtonSizes[size],
         iconButtonVariants[variant],
         {
           [disabledStyle[variant]]: disabled,
@@ -201,7 +246,7 @@ function IconButton(props: IconButtonProps) {
         className,
       )}
     >
-      <span className={iconStyle}>{children}</span>
+      <span className={getIconStyle(size)}>{children}</span>
     </Root>
   );
 
