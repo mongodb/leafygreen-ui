@@ -1,4 +1,4 @@
-import React, { RefObject, useRef } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -223,7 +223,7 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
         role="menuitem"
         href={href}
         aria-haspopup="true"
-        ref={ref as RefObject<any>}
+        ref={ref}
         onClick={onRootClick}
         className={cx(
           menuItemContainerStyle,
