@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/popover",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "LeafyGreen UI Kit Popover",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/hooks": "^2.0.0",
-    "@leafygreen-ui/lib": "^4.0.0",
+    "@leafygreen-ui/lib": "^4.1.0",
     "@leafygreen-ui/portal": "^2.0.0",
     "@leafygreen-ui/theme": "^2.0.0",
     "lodash": "^4.17.11"
