@@ -207,7 +207,7 @@ function Tooltip({
     }
   };
 
-  useEscapeKey(handleClose);
+  useEscapeKey(handleClose, { enabled: open });
 
   const handleBackdropClick = (e: MouseEvent) => {
     const tooltipReference = tooltipRef && tooltipRef.current;

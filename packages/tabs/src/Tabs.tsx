@@ -189,7 +189,7 @@ function Tabs({
   }
 
   const tabs = React.Children.map(children, (child, index) => {
-    if (!isComponentType(child, 'Tab')) {
+    if (!isComponentType<'Tab'>(child, 'Tab')) {
       return child;
     }
 
