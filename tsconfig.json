@@ -60,6 +60,9 @@
       "path": "./packages/radio-group"
     },
     {
+      "path": "./packages/side-nav"
+    },
+    {
       "path": "./packages/syntax"
     },
     {
