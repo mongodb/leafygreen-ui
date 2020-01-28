@@ -1,5 +1,14 @@
 # @leafygreen-ui/mongo-menu
 
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies [bd3bcd9]
+- Updated dependencies [8fd107a]
+  - @leafygreen-ui/emotion@2.0.1
+  - @leafygreen-ui/icon@3.0.1
+
 ## 3.0.0
 
 ### Major Changes
