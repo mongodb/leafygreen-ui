@@ -13,8 +13,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/popover": "^3.0.0",
-    "@leafygreen-ui/lib": "^4.0.0",
+    "@leafygreen-ui/popover": "^3.0.1",
+    "@leafygreen-ui/lib": "^4.1.0",
     "@leafygreen-ui/palette": "^2.0.0",
     "@leafygreen-ui/hooks": "^2.0.0"
   }

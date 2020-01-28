@@ -13,7 +13,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^4.0.0",
+    "@leafygreen-ui/lib": "^4.1.0",
     "@leafygreen-ui/palette": "^2.0.0",
     "@leafygreen-ui/leafygreen-provider": "^1.0.0"
   },
