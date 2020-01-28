@@ -1,7 +1,7 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
-import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
+import { useEventListener } from '@leafygreen-ui/hooks';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -10,7 +10,8 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 const rootMenuStyle = css`
   width: 200px;
-  border-radius: 3px;
+  border-radius: 4px;
+  overflow: hidden;
   box-shadow: 0 2px 6px ${transparentize(0.8, uiColors.black)};
   background-color: ${uiColors.white};
   list-style: none;
@@ -39,7 +40,7 @@ interface MenuProps
    * Callback to change the open state of the Menu.
    *
    */
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 
   /**
    * Callback to determine whether or not Menu should close when user tries to close it.
@@ -47,7 +48,7 @@ interface MenuProps
    */
   shouldClose?: () => boolean;
 
-  children: React.ReactNode;
+  children: Array<React.ReactElement>;
 }
 
 /**
@@ -88,46 +89,158 @@ function Menu({
   ...rest
 }: MenuProps) {
   const refs: Array<HTMLElement> = [];
+  const titleArr: Array<string> = [];
+
   const hasSetInitialFocus = useRef(false);
+  const hasSetInitialOpen = useRef(false);
+  const [, setClosed] = useState(false);
+  const [currentSubMenu, setCurrentSubMenu] = useState<React.ReactElement<
+    HTMLLIElement
+  > | null>(null);
   const { setUsingKeyboard } = useUsingKeyboardContext();
 
-  const updatedChildren = React.Children.map(children, child => {
-    if (
-      (isComponentType(child, 'MenuItem') && !child.props.disabled) ||
-      isComponentType(child, 'FocusableMenuItem')
-    ) {
-      return React.cloneElement(child, {
-        ref: (ref: HTMLElement) => {
-          refs.push(ref);
-          if (
-            open &&
-            refs.length === 1 &&
-            hasSetInitialFocus.current === false
-          ) {
-            refs[0].focus();
-            setUsingKeyboard(true);
-            setFocused(refs[0]);
-            hasSetInitialFocus.current = true;
-          }
-        },
-        onFocus: (e: Event) => setFocused(e.target as HTMLElement),
-      });
-    }
+  function updateChildren(
+    children: Array<React.ReactElement>,
+  ): Array<React.ReactElement> {
+    return React.Children.map(children, (child: React.ReactElement) => {
+      if (child.props?.disabled) {
+        return child;
+      }
 
-    return child;
-  });
+      let currentChildRef: HTMLElement | null = null;
+
+      const setRef = (ref: HTMLElement) => {
+        if (ref == null) {
+          return;
+        }
+
+        refs.push(ref);
+        currentChildRef = ref;
+
+        if (open && hasSetInitialFocus.current === false) {
+          setFocus(refs[0]);
+          // This allows the focus state to be shown via the LeafyGreen Provider
+          setUsingKeyboard(true);
+          hasSetInitialFocus.current = true;
+        }
+      };
+
+      const title = child?.props?.title ?? false;
+
+      const onFocus = ({ target }: { target: HTMLElement }) => {
+        setFocused(target);
+      };
+
+      if (isComponentType<'SubMenu'>(child, 'SubMenu') && title) {
+        if (titleArr.includes(title)) {
+          throw new Error('SubMenu titles must be unique');
+        }
+
+        titleArr.push(title);
+
+        if (child.props.active && !hasSetInitialOpen.current) {
+          setCurrentSubMenu(child);
+          hasSetInitialOpen.current = true;
+        }
+
+        const isCurrentSubMenu = currentSubMenu?.props.title === title;
+
+        return React.cloneElement(child, {
+          ref: setRef,
+          open: isCurrentSubMenu,
+          setOpen: (state: boolean) => {
+            if (currentChildRef) {
+              setFocused(currentChildRef);
+            }
+
+            setCurrentSubMenu(state ? child : null);
+          },
+          onKeyDown: (e: KeyboardEvent) => {
+            if (e.keyCode === keyMap.ArrowLeft && isCurrentSubMenu) {
+              setCurrentSubMenu(null);
+            }
+
+            if (e.keyCode === keyMap.ArrowRight) {
+              setCurrentSubMenu(child);
+            }
+          },
+          onFocus,
+          children: updateChildren(child.props.children),
+          onExited: () => {
+            setClosed(curr => !curr);
+          },
+        });
+      }
+
+      if (
+        isComponentType<'MenuItem'>(child, 'MenuItem') ||
+        isComponentType<'FocusableMenuItem'>(child, 'FocusableMenuItem')
+      ) {
+        return React.cloneElement(child, {
+          ref: setRef,
+          onFocus,
+        });
+      }
+
+      if (child.props?.children) {
+        return React.cloneElement(child, {
+          children: updateChildren(child.props.children),
+        });
+      }
+
+      return child;
+    });
+  }
 
   const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
-  const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
-  const open = isControlled ? controlledOpen : uncontrolledOpen;
-  const setOpen = isControlled ? controlledSetOpen : uncontrolledSetOpen;
+  const setOpen =
+    (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
+    uncontrolledSetOpen;
+  const open = controlledOpen ?? uncontrolledOpen;
+
+  // When a SubMenu becomes open, it's set to currentSubMenu, and we focus on the first child.
+  useEffect(() => {
+    const focusedRefIndex = refs.indexOf(focused);
+
+    if (!currentSubMenu) {
+      if (focusedRefIndex !== -1) {
+        const subMenu = refs[focusedRefIndex];
+        subMenu.focus();
+        setUsingKeyboard(true);
+      }
+    } else {
+      if (focusedRefIndex !== -1) {
+        const subMenuFirstChild = refs[focusedRefIndex + 1];
+        subMenuFirstChild?.focus();
+        setUsingKeyboard(true);
+      }
+    }
+  }, [currentSubMenu]);
+
+  const updatedChildren = React.useMemo(() => updateChildren(children), [
+    children,
+    focused,
+    currentSubMenu,
+    open,
+    refs,
+  ]);
 
   const popoverRef: React.RefObject<HTMLUListElement> = useRef(null);
+
+  const setFocus = (el: HTMLElement) => {
+    if (el == null) {
+      return;
+    }
+
+    setFocused(el);
+    el.focus();
+  };
 
   useMemo(() => {
     if (open === false) {
       hasSetInitialFocus.current = false;
+      hasSetInitialOpen.current = false;
     }
   }, [open]);
 
@@ -151,8 +264,6 @@ function Menu({
   useEventListener('click', handleBackdropClick, {
     enabled: open,
   });
-
-  useEscapeKey(handleClose, { enabled: open });
 
   function trapLastMenuItem(refs: Array<HTMLElement>) {
     if (document.activeElement === refs[refs.length - 1]) {
@@ -179,45 +290,42 @@ function Menu({
     switch (e.keyCode) {
       case keyMap.ArrowDown:
         refToFocus = refs[(refs.indexOf(focused!) + 1) % refs.length];
-        refToFocus.focus();
-        setFocused(refToFocus);
+        setFocus(refToFocus);
         break;
 
       case keyMap.ArrowUp:
         refToFocus =
           refs[(refs.indexOf(focused!) - 1 + refs.length) % refs.length];
-        setFocused(refToFocus);
-        refToFocus.focus();
+        setFocus(refToFocus);
         break;
 
       case keyMap.Tab:
         if (!e.shiftKey && trapLastMenuItem(filteredRefs)) {
           e.preventDefault();
-          setFocused(refs[0]);
-          refs[0].focus();
+          setFocus(refs[0]);
         }
 
         if (e.shiftKey && trapFirstMenuItem()) {
           e.preventDefault();
-          filteredRefs[filteredRefs.length - 1].focus();
-          setFocused(filteredRefs[filteredRefs.length - 1]);
+          setFocus(filteredRefs[filteredRefs.length - 1]);
         }
 
+        break;
+
+      case keyMap.Escape:
+        handleClose();
         break;
 
       case keyMap.Space:
       case keyMap.Enter:
         if (!open) {
-          setFocused(refs[0]);
-          refs[0].focus();
+          setFocus(refs[0]);
         }
         break;
     }
   }
 
-  useEventListener('keydown', handleKeyDown, {
-    enabled: open,
-  });
+  useEventListener('keydown', handleKeyDown, { enabled: open });
 
   const popoverContent = (
     <Popover
@@ -230,11 +338,14 @@ function Menu({
       spacing={15}
       adjustOnMutation={adjustOnMutation}
     >
+      {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
       <ul
         {...rest}
         className={cx(rootMenuStyle, className)}
         role="menu"
         ref={popoverRef}
+        onClick={e => e.stopPropagation()}
       >
         {updatedChildren}
       </ul>
@@ -249,6 +360,8 @@ function Menu({
       });
     }
 
+    const { children: triggerChildren } = trigger.props;
+
     return React.cloneElement(trigger, {
       onClick: (e: React.MouseEvent) => {
         setOpen((curr: boolean) => !curr);
@@ -257,7 +370,14 @@ function Menu({
           trigger.props.onClick(e);
         }
       },
-      children: [...trigger.props.children, popoverContent],
+      children: triggerChildren
+        ? [
+            ...(triggerChildren instanceof Array
+              ? triggerChildren
+              : [triggerChildren]),
+            popoverContent,
+          ]
+        : popoverContent,
     });
   }
 

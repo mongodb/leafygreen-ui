@@ -191,7 +191,7 @@ function Modal({
     }
   };
 
-  useEscapeKey(handleClose);
+  useEscapeKey(handleClose, { enabled: open });
 
   return (
     <Transition in={open} timeout={500} mountOnEnter unmountOnExit>

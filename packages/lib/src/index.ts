@@ -36,10 +36,10 @@ export type HTMLElementProps<
 export { typeIs };
 
 /** Helper type to check if element is a specific React Component  */
-export function isComponentType(
+export function isComponentType<T = React.ReactElement>(
   element: React.ReactNode,
   displayName: string,
-): element is React.ReactElement {
+): element is T {
   return (
     element != null &&
     typeof element === 'object' &&

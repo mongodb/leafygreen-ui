@@ -7,28 +7,34 @@
   "include": ["src/**/*"],
   "references": [
     {
-      "path": "../emotion"
-    },
-    {
-      "path": "../hooks"
-    },
-    {
       "path": "../lib"
-    },
-    {
-      "path": "../popover"
-    },
-    {
-      "path": "../portal"
     },
     {
       "path": "../palette"
     },
     {
-      "path": "../icon-button"
+      "path": "../emotion"
     },
     {
-      "path": "../leafygreen-provider"
+      "path": "../logo"
+    },
+    {
+      "path": "../menu"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../tooltip"
+    },
+    {
+      "path": "../badge"
+    },
+    {
+      "path": "../button"
+    },
+    {
+      "path": "../icon-button"
     }
   ]
 }
