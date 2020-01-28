@@ -1,4 +1,4 @@
-import React, { ReactNode, ElementType } from 'react';
+import React, { ReactNode, ElementType, AriaAttributes } from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 
@@ -223,17 +223,20 @@ function SideNavItem(props: SideNavItemProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
   let Root: ElementType<any>;
+  let role: string | null = null;
 
   if (usesLinkElement(props)) {
     Root = RootComponentTypes.Link;
+    role = props.role || 'menuitem'
   } else if (usesCustomElement(props)) {
     Root = props[RootComponentTypes.Custom];
   } else {
     Root = RootComponentTypes.Button;
+    role = props.role || 'menuitem'
   }
 
   return (
-    <li role="menuitem">
+    <li role="none">
       <Root
         {...rest}
         {...sideNavItemContainer.prop}
@@ -246,7 +249,7 @@ function SideNavItem(props: SideNavItemProps) {
           },
           className,
         )}
-        role="menuitem"
+        role={role}
         aria-current={active ? ariaCurrentValue : AriaCurrentValue.Unset}
         aria-disabled={disabled}
         tabIndex={disabled ? -1 : undefined}

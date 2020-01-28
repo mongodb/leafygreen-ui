@@ -5,9 +5,10 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { ulStyleOverrides, SIDE_OFFSET } from './styles';
 
 const sideNavLabelStyle = css`
-  color: ${uiColors.green.base};
+  font-size: 11px;
+  font-weight: bold;
   text-transform: uppercase;
-  font-size: 12px;
+  color: ${uiColors.green.dark2};
   margin-top: 0;
   margin-bottom: 0;
   padding: 5px ${SIDE_OFFSET}px 5px ${SIDE_OFFSET}px;
