@@ -7,7 +7,7 @@ const optionStyle = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: calc(100% - 15px);
+  width: 100%;
   text-decoration: none;
 `;
 
