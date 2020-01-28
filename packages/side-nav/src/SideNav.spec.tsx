@@ -63,10 +63,7 @@ describe('packages/side-nav', () => {
       });
 
       test('it sets the correct role for the item', () => {
-        expect(renderedEls.itemEl?.parentNode).toHaveAttribute(
-          'role',
-          'menuitem',
-        );
+        expect(renderedEls.itemEl).toHaveAttribute('role', 'menuitem');
       });
 
       test('it renders with the provided class name', () => {
