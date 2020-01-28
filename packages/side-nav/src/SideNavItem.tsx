@@ -1,4 +1,4 @@
-import React, { ReactNode, ElementType, AriaAttributes } from 'react';
+import React, { ReactNode, ElementType } from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 
@@ -227,12 +227,12 @@ function SideNavItem(props: SideNavItemProps) {
 
   if (usesLinkElement(props)) {
     Root = RootComponentTypes.Link;
-    role = props.role || 'menuitem'
+    role = props.role || 'menuitem';
   } else if (usesCustomElement(props)) {
     Root = props[RootComponentTypes.Custom];
   } else {
     Root = RootComponentTypes.Button;
-    role = props.role || 'menuitem'
+    role = props.role || 'menuitem';
   }
 
   return (
