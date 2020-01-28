@@ -17,13 +17,13 @@ type CustomElementProps<T> = T & {
 
 export type BoxProps<T> = DivProps<T> | AnchorProps<T> | CustomElementProps<T>;
 
-function usesCustomElement<T>(
+function isCustomElement<T>(
   props: BoxProps<T>,
 ): props is CustomElementProps<T> {
   return 'component' in props;
 }
 
-function usesAnchorElement<T>(props: BoxProps<T>): props is AnchorProps<T> {
+function isAnchorElement<T>(props: BoxProps<T>): props is AnchorProps<T> {
   return 'href' in props;
 }
 
@@ -44,9 +44,9 @@ function Box<T>(props: BoxProps<T>) {
   const rest = omit(props as any, ['component', 'children']);
   let Box: React.ElementType<any> = 'div';
 
-  if (usesCustomElement<T>(props)) {
+  if (isCustomElement<T>(props)) {
     Box = props.component;
-  } else if (usesAnchorElement<T>(props)) {
+  } else if (isAnchorElement<T>(props)) {
     Box = 'a';
   }
 
