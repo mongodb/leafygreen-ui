@@ -6,6 +6,7 @@ import { ulStyleOverrides, SIDE_OFFSET } from './styles';
 
 const sideNavLabelStyle = css`
   font-size: 11px;
+  letter-spacing: 0.3px;
   font-weight: bold;
   text-transform: uppercase;
   color: ${uiColors.green.dark2};
