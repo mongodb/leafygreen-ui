@@ -47,7 +47,7 @@ return (
     <li>
       <h4 class="leafygreen-ui-19w7vet">States</h4>
       <ul role="menu" class="leafygreen-ui-bdnco">
-        <li role="menuitem">
+        <li role="none">
           <button
             data-leafygreen-ui="side-nav-item-container"
             class="leafygreen-ui-d18uaj"
@@ -58,7 +58,7 @@ return (
             <div class="leafygreen-ui-1mikaeo">Active State</div>
           </button>
         </li>
-        <li role="menuitem">
+        <li role="none">
           <button
             data-leafygreen-ui="side-nav-item-container"
             class="leafygreen-ui-g84goy"
@@ -78,7 +78,7 @@ return (
         <small>(content header)</small>
       </div>
       <ul role="menu" class="leafygreen-ui-bdnco">
-        <li role="menuitem">
+        <li role="none">
           <button
             data-leafygreen-ui="side-nav-item-container"
             class="leafygreen-ui-1b8asku"
@@ -91,7 +91,7 @@ return (
             </div>
           </button>
         </li>
-        <li role="menuitem">
+        <li role="none">
           <a
             href="/"
             data-leafygreen-ui="side-nav-item-container"
@@ -103,7 +103,7 @@ return (
             <div class="leafygreen-ui-f3d0a6">Anchor root element</div>
           </a>
         </li>
-        <li role="menuitem">
+        <li role="none">
           <label
             for="docs-input"
             data-leafygreen-ui="side-nav-item-container"
