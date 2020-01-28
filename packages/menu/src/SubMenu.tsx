@@ -18,6 +18,7 @@ import {
 import { ExitHandler } from 'react-transition-group/Transition';
 
 const subMenuContainer = createDataProp('sub-menu-container');
+const iconButton = createDataProp('icon-button');
 
 const subMenuContainerHeight = 56;
 const iconButtonContainerHeight = 28;
@@ -40,10 +41,16 @@ const subMenuStyle = css`
 `;
 
 const subMenuOpenStyle = css`
-  background-color: ${uiColors.white};
+  background-color: transparent;
 
   &:hover {
     background-color: ${uiColors.gray.light2};
+  }
+`;
+
+const focusedIconStyle = css`
+  ${subMenuContainer.selector}:focus + ${iconButton.selector} & {
+    color: ${uiColors.blue.dark2};
   }
 `;
 
@@ -89,6 +96,10 @@ const iconButtonStyle = css`
 const iconButtonFocusedStyle = css`
   ${subMenuContainer.selector}:focus + & {
     background-color: ${uiColors.blue.light3};
+
+    &:hover:before {
+      background-color: ${uiColors.blue.light2};
+    }
   }
 `;
 
@@ -253,6 +264,7 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
         </div>
       </Root>
       <IconButton
+        {...iconButton.prop}
         ref={iconButtonRef}
         ariaLabel={open ? 'Close Sub-menu' : 'Open Sub-menu'}
         className={cx(iconButtonStyle, {
@@ -270,7 +282,9 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
       >
         <Icon
           glyph={open ? 'CaretUp' : 'CaretDown'}
-          className={open ? openIconStyle : closedIconStyle}
+          className={cx(open ? openIconStyle : closedIconStyle, {
+            [focusedIconStyle]: showFocus,
+          })}
         />
       </IconButton>
       <Transition
