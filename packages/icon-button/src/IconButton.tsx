@@ -56,7 +56,7 @@ interface SharedIconButtonProps {
   ariaLabel: string;
 
   /**
-   * Determines size of IconButton can be: small, default, large, xlarge
+   * Determines size of IconButton can be: default, large, xlarge
    */
   size?: Size;
 }

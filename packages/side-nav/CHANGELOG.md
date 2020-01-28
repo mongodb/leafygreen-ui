@@ -1,5 +1,11 @@
 # @leafygreen-ui/side-nav
 
+## 1.0.1
+
+### Patch Changes
+
+- 0eb010c: Improved handling of Aria roles in menu items, and increased label contrast for accessibility
+
 ## 1.0.0
 
 ### Major Changes

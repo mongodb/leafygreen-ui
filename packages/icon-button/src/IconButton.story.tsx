@@ -34,7 +34,7 @@ storiesOf('IconButton', module)
         disabled={boolean('disabled', false)}
         ariaLabel="Ellipsis"
       >
-        <Icon glyph="Ellipsis" size={size} />
+        <Icon glyph="Cloud" size={size} />
       </IconButton>
     );
   })
