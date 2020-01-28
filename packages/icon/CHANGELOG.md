@@ -1,5 +1,13 @@
 # @leafygreen-ui/icon
 
+## 3.0.1
+
+### Patch Changes
+
+- 8fd107a: Fixes an issue where leafygreen-ui's local module definition for SVG files was overriding the module definition in consuming applications
+- Updated dependencies [11b2217]
+  - @leafygreen-ui/lib@4.1.0
+
 ## 3.0.0
 
 ### Major Changes
