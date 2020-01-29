@@ -12,10 +12,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "peerDependencies": {
-    "react-transition-group": "^4.2.1"
-  },
   "dependencies": {
+    "react-transition-group": "^4.2.1",
     "@leafygreen-ui/hooks": "^2.0.0",
     "@leafygreen-ui/lib": "^4.1.0",
     "@leafygreen-ui/portal": "^2.0.0",
