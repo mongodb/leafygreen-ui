@@ -24,6 +24,15 @@ type NavItem = typeof NavItem[keyof typeof NavItem];
 
 export { NavItem };
 
+const Mode = {
+  Dev: 'dev',
+  Production: 'production',
+} as const;
+
+type Mode = typeof Mode[keyof typeof Mode];
+
+export { Mode };
+
 const Variant = {
   Organization: 'organization',
   Project: 'project',

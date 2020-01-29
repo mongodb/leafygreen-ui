@@ -42,8 +42,7 @@ function isAnchorElement<T>(props: BoxProps<T>): props is AnchorProps<T> {
 
 const Box = React.forwardRef(
   <T extends React.ReactNode>(props: BoxProps<T>, ref: React.Ref<any>) => {
-    const { children } = props;
-    const rest = omit(props as any, ['component', 'children']);
+    const rest = omit(props as any, ['component']);
     let Box: React.ElementType<any> = 'div';
 
     if (isCustomElement<T>(props)) {
@@ -52,11 +51,7 @@ const Box = React.forwardRef(
       Box = 'a';
     }
 
-    return (
-      <Box {...rest} ref={ref}>
-        {children}
-      </Box>
-    );
+    return <Box {...rest} ref={ref} />;
   },
 );
 

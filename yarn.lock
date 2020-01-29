@@ -1563,15 +1563,6 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@leafygreen-ui/emotion@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/emotion/-/emotion-2.0.0.tgz#2a08928d4989b706daef650e272918d5f9f7c965"
-  integrity sha512-fxXTocyvXncP3l7HTHzXOSOZTGnNKM2aDzEclVv9EOdwtcTlk6jyfnjZObALuiOkPN3aZT6+uK6sk93N195bHA==
-  dependencies:
-    create-emotion "^10.0.7"
-    create-emotion-server "10.0.27"
-    emotion "^10.0.7"
-
 "@leafygreen-ui/emotion@^1.0.6":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/emotion/-/emotion-1.0.6.tgz#72a51d12560bf5f70b29dfdf96d32528a4aec1c2"
@@ -1579,15 +1570,6 @@
   dependencies:
     create-emotion "^10.0.7"
     emotion "^10.0.7"
-
-"@leafygreen-ui/icon-button@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/icon-button/-/icon-button-3.0.0.tgz#d52cb1a822c848948366d3cf762457705181b6e9"
-  integrity sha512-1udxCEzwNZcQlaewWrBYp86LvUylpIMA851gfTzOjKnGpcJR5dtnBPHcVOjeR6ghqrBQ0MUvJjcPa2q+AS/N2g==
-  dependencies:
-    "@leafygreen-ui/emotion" "2.0.0"
-    "@leafygreen-ui/lib" "^4.0.0"
-    "@leafygreen-ui/palette" "2.0.0"
 
 "@leafygreen-ui/lib@^3.0.6":
   version "3.2.0"
