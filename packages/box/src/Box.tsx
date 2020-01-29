@@ -39,22 +39,30 @@ function isAnchorElement<T>(props: BoxProps<T>): props is AnchorProps<T> {
  * @param props.href When provided, `<Box />` will render an anchor tag with this `href` value.
  * @param props.component The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props.
  */
-function Box<T>(props: BoxProps<T>) {
-  const { children } = props;
-  const rest = omit(props as any, ['component', 'children']);
-  let Box: React.ElementType<any> = 'div';
 
-  if (isCustomElement<T>(props)) {
-    Box = props.component;
-  } else if (isAnchorElement<T>(props)) {
-    Box = 'a';
-  }
+const Box = React.forwardRef(
+  <T extends React.ReactNode>(props: BoxProps<T>, ref: React.Ref<any>) => {
+    const { children } = props;
+    const rest = omit(props as any, ['component', 'children']);
+    let Box: React.ElementType<any> = 'div';
 
-  return <Box {...rest}>{children}</Box>;
-}
+    if (isCustomElement<T>(props)) {
+      Box = props.component;
+    } else if (isAnchorElement<T>(props)) {
+      Box = 'a';
+    }
+
+    return (
+      <Box {...rest} ref={ref}>
+        {children}
+      </Box>
+    );
+  },
+);
 
 Box.displayName = 'Box';
 
+// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 Box.propTypes = {
   children: PropTypes.node,
   href: PropTypes.string,
