@@ -2,7 +2,6 @@ import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import MongoNav from './MongoNav';
-import data from './data';
 
 afterAll(cleanup);
 
@@ -14,7 +13,7 @@ describe('packages/MongoNav', () => {
   const { getByText, getByTestId } = render(
     <MongoNav
       activeProduct="stitch"
-      data={data}
+      mode="dev"
       onOrganizationChange={onOrganizationChange}
       onProjectChange={onProjectChange}
       urls={{
@@ -26,6 +25,18 @@ describe('packages/MongoNav', () => {
     />,
   );
 
+  describe('by default', () => {
+    test('it renders the ProjectNav', () => {
+      const projectNav = getByTestId('project-nav');
+      expect(projectNav).toBeInTheDocument();
+    });
+
+    test('it renders admin as false', () => {
+      const orgNav = getByTestId('organization-nav');
+      expect(orgNav.innerHTML.includes('Admin')).toBe(false);
+    });
+  });
+
   describe('it successfully constructs urls based on hosts and urls props', () => {
     test('specific url overrides take precedence over hosts, when the prop is set', () => {
       const accessManager = getByText('Access Manager');
@@ -33,7 +44,6 @@ describe('packages/MongoNav', () => {
         'https://cloud.mongodb.com/access-manager-test',
       );
     });
-
     test('host string changes default host, when the prop is set', () => {
       const support = getByText('Support');
       const billing = getByText('Billing');
@@ -41,19 +51,15 @@ describe('packages/MongoNav', () => {
       expect((support as HTMLAnchorElement).href).toBe(
         `${cloudHost}/v2#/org/5d729a93/support`,
       );
+
       expect((billing as HTMLAnchorElement).href).toBe(
         `${cloudHost}/v2#/org/5d729a93/billing/overview`,
       );
     });
   });
 
-  test('it renders the project nav by default', () => {
-    const projectNav = getByTestId('project-nav');
-    expect(projectNav).toBeInTheDocument();
-  });
-
-  test('it renders admin as false by default', () => {
-    const orgNav = getByTestId('organization-nav');
-    expect(orgNav.innerHTML.includes('Admin')).toBe(false);
+  test('when mode prop is set to `dev`, fixture data is rendered inside of MongoNav', () => {
+    const firstName = getByText('DevMode');
+    expect(firstName).toBeInTheDocument();
   });
 });
