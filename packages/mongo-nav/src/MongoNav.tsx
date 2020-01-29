@@ -1,13 +1,8 @@
 import React from 'react';
 import OrgNav from './org-nav/index';
 import ProjectNav from './project-nav/index';
-import {
-  DataInterface,
-  Product,
-  URLSInterface,
-  HostsInterface,
-  NavItem,
-} from './types';
+import { Product, URLSInterface, HostsInterface, NavItem, Mode } from './types';
+import devModeData from './data';
 
 interface MongoNavInterface {
   /**
@@ -24,11 +19,6 @@ interface MongoNavInterface {
    * Describes whether or not user is an `admin`
    */
   admin?: boolean;
-
-  /**
-   * Data passed to create MongoNav
-   */
-  data: DataInterface;
 
   /**
    * Callback invoked when user types into organization picker
@@ -64,6 +54,12 @@ interface MongoNavInterface {
    * Object to enable custom overrides for every `href` used in `<MongoNav />`.
    */
   urls?: URLSInterface;
+
+  /**
+   * Describes what environment the component is being used in
+   * By default the value is set to `production`
+   */
+  mode?: Mode;
 }
 
 /**
@@ -73,7 +69,7 @@ interface MongoNavInterface {
  *
  * ```
 <MongoNav
-  data={data}
+  mode='dev'
   activeProduct="cloud"
   activeNav="accessManager"
   onOrganizationChange={onOrganizationChange}
@@ -83,7 +79,6 @@ interface MongoNavInterface {
 ```
  * @param props.activeProduct Describes what product is currently active.
  * @param props.activeNav Determines what nav item is currently active.
- * @param props.data  Data passed to create MongoNav.
  * @param props.hosts Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<MongoNav />` to work across all environments.
  * @param props.onOrganizationChange Callback invoked when user types into organization picker.
  * @param props.onProjectChange Callback invoked when user types into project picker.
@@ -92,20 +87,32 @@ interface MongoNavInterface {
  * @param props.admin Describes whether or not user is an `admin`.
  * @param props.constructOrganizationURL Function to determine destination URL when user selects a organization from the organization picker.
  * @param props.constructProjectURL Function to determine destination URL when user selects a project from the project picker.
+ * @param props.mode Describes what environment the component is being used in, defaults to `production`
  */
 export default function MongoNav({
   activeProduct,
   activeNav,
-  data,
   hosts,
   onOrganizationChange,
   onProjectChange,
   urls,
+  mode = Mode.Production,
   showProjNav = true,
   admin = false,
   constructOrganizationURL: constructOrganizationURLProp,
   constructProjectURL: constructProjectURLProp,
 }: MongoNavInterface) {
+  let data;
+
+  if (mode === Mode.Dev) {
+    data = devModeData;
+  }
+
+  if (!data) {
+    // Eventually this logic will be more robust, but for an alpha version will return null without data
+    return null;
+  }
+
   const {
     account,
     currentOrganization,
