@@ -232,7 +232,7 @@ export default function OrgNav({
             </a>
           }
         >
-          View All Clusters
+          View all clusters across your organizations
         </Tooltip>
 
         {admin && (

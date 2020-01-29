@@ -139,6 +139,7 @@ export default function MongoNav({
           'currentOrganization',
           'currentProject',
           'organizations',
+          'projects',
         ];
 
         const rand = Math.round(Math.random() * 4);

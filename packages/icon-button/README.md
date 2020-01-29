@@ -49,14 +49,15 @@ import IconButton from '@leafygreen-ui/icon-button';
 
 ## Properties
 
-| Prop        | Type                  | Description                                                                                                       | Default   |
-| ----------- | --------------------- | ----------------------------------------------------------------------------------------------------------------- | --------- |
-| `variant`   | `'dark'` or `'light'` | Sets the style variant of the button.                                                                             | `'light'` |
-| `onClick`   | `function`            | The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument. |           |
-| `disabled`  | `boolean`             | Disables the `<IconButton />`                                                                                     | `false`   |
-| `href`      | `string`              | If a href is supplied, the component renders inside of an `a` tag instead of inside of a `button` tag.            |           |
-| `className` | `string`              | Adds a className to the class attribute on the container element.                                                 |           |
-| `children`  | `node`                | Content rendered inside of the `<IconButton />` component                                                         |           |
-| `ariaLabel` | **Required** `string` | Value passed to `aria-label` attribute to ensure component's accessibility                                        |           |
+| Prop        | Type                         | Description                                                                                                       | Default   |
+| ----------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------- | --------- |
+| `variant`   | `'dark'` or `'light'`        | Sets the style variant of the button.                                                                             | `'light'` |
+| `onClick`   | `function`                   | The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument. |           |
+| `disabled`  | `boolean`                    | Disables the `<IconButton />`                                                                                     | `false`   |
+| `href`      | `string`                     | If a href is supplied, the component renders inside of an `a` tag instead of inside of a `button` tag.            |           |
+| `className` | `string`                     | Adds a className to the class attribute on the container element.                                                 |           |
+| `children`  | `node`                       | Content rendered inside of the `<IconButton />` component                                                         |           |
+| `ariaLabel` | **Required** `string`        | Value passed to `aria-label` attribute to ensure component's accessibility                                        |           |
+| `size`      | `default`, `large`, `xlarge` | Determines the size of the IconButton                                                                             | `default` |
 
 _Any other properties will be spread on the container element._

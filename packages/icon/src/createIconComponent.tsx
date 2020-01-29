@@ -23,8 +23,8 @@ export interface IconProps<G extends GlyphMap>
 const sizeMap: { [S in Size]: number } = {
   small: 14,
   default: 16,
-  large: 24,
-  xlarge: 32,
+  large: 20,
+  xlarge: 24,
 };
 
 // Converts a camel-case name to a human-readable name
