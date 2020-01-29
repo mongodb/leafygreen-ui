@@ -13,6 +13,22 @@ type Variant = typeof Variant[keyof typeof Variant];
 
 export { Variant };
 
+const Size = {
+  Default: 'default',
+  Large: 'large',
+  XLarge: 'xlarge',
+} as const;
+
+type Size = typeof Size[keyof typeof Size];
+
+export { Size };
+
+const sizeMap: { [S in Size]: number } = {
+  default: 16,
+  large: 20,
+  xlarge: 24,
+};
+
 interface SharedIconButtonProps {
   /**
    * Determines color of `IconButton`. Can be `light` or `dark`.
@@ -38,6 +54,11 @@ interface SharedIconButtonProps {
    * Required prop which will be passed to `aria-label` attribute
    */
   ariaLabel: string;
+
+  /**
+   * Determines size of IconButton can be: default, large, xlarge
+   */
+  size?: Size;
 }
 
 interface LinkIconButtonProps
@@ -70,8 +91,6 @@ const removeButtonStyle = css`
 `;
 
 const baseIconButtonStyle = css`
-  height: 28px;
-  width: 28px;
   display: inline-block;
   border-radius: 100px;
   color: ${uiColors.gray.base};
@@ -98,6 +117,21 @@ const baseIconButtonStyle = css`
     outline: none;
   }
 `;
+
+const iconButtonSizes: { readonly [K in Size]: string } = {
+  [Size.Default]: css`
+    height: 28px;
+    width: 28px;
+  `,
+  [Size.Large]: css`
+    height: 35px;
+    width: 35px;
+  `,
+  [Size.XLarge]: css`
+    height: 42px;
+    width: 42px;
+  `,
+};
 
 const iconButtonVariants: { readonly [K in Variant]: string } = {
   [Variant.Light]: css`
@@ -143,15 +177,15 @@ const disabledStyle: { readonly [K in Variant]: string } = {
   `,
 };
 
-const iconStyle = css`
+const getIconStyle = (size: Size) => css`
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   margin: auto;
-  height: 16px;
-  width: 16px;
+  height: ${sizeMap[size]}px;
+  width: ${sizeMap[size]}px;
 `;
 
 /**
@@ -177,6 +211,7 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
   const {
     variant = 'light',
     disabled = false,
+    size = 'default',
     className,
     href,
     children,
@@ -194,6 +229,7 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
       className={cx(
         removeButtonStyle,
         baseIconButtonStyle,
+        iconButtonSizes[size],
         iconButtonVariants[variant],
         {
           [disabledStyle[variant]]: disabled,
@@ -201,7 +237,7 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
         className,
       )}
     >
-      <span className={iconStyle}>{children}</span>
+      <span className={getIconStyle(size)}>{children}</span>
     </Root>
   );
 
