@@ -45,6 +45,9 @@
       "path": "./packages/modal"
     },
     {
+      "path": "./packages/mongo-nav"
+    },
+    {
       "path": "./packages/palette"
     },
     {
@@ -61,6 +64,9 @@
     },
     {
       "path": "./packages/radio-group"
+    },
+    {
+      "path": "./packages/side-nav"
     },
     {
       "path": "./packages/syntax"

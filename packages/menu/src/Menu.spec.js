@@ -1,7 +1,12 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, cleanup } from '@testing-library/react';
-import { Menu, MenuSeparator, MenuItem } from './index';
+import {
+  render,
+  fireEvent,
+  cleanup,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
+import { Menu, MenuSeparator, MenuItem, SubMenu } from './index';
 
 afterAll(cleanup);
 
@@ -32,14 +37,9 @@ describe('packages/Menu', () => {
 
   describe('when Menu is uncontrolled', () => {
     const setOpen = jest.fn();
-    const onClick = jest.fn();
 
     const { getByText } = render(
-      <Menu
-        setOpen={setOpen}
-        onClick={onClick}
-        trigger={<button>trigger</button>}
-      >
+      <Menu setOpen={setOpen} trigger={<button>trigger</button>}>
         <MenuItem>Item C</MenuItem>
         <MenuItem>Item D</MenuItem>
       </Menu>,
@@ -58,7 +58,7 @@ describe('packages/Menu', () => {
     });
   });
 
-  describe('packages/menu-item', () => {
+  describe('menu-item', () => {
     const onClick = jest.fn();
     const className = 'test-className';
 
@@ -79,11 +79,15 @@ describe('packages/Menu', () => {
         >
           Item 2
         </MenuItem>
+        <MenuItem data-testid="third-item" as="div">
+          Item 3
+        </MenuItem>
       </div>,
     );
 
     const firstItem = getByTestId('first-item');
     const secondItem = getByTestId('second-item');
+    const thirdItem = getByTestId('third-item');
 
     test('fires onClick callback, when clicked', () => {
       fireEvent.click(firstItem);
@@ -101,6 +105,55 @@ describe('packages/Menu', () => {
     test('renders with correct target and rel values when set', () => {
       expect(secondItem.target).toBe('_blank');
       expect(secondItem.rel).toBe('help');
+    });
+
+    test('renders as `div` tag when the as prop is set', () => {
+      expect(thirdItem.tagName.toLowerCase()).toBe('div');
+    });
+  });
+
+  describe('sub-menu', () => {
+    const onClick = jest.fn();
+
+    const { getByTestId } = render(
+      <Menu open={true} setOpen={jest.fn()}>
+        <SubMenu active title="First SubMenu">
+          <MenuItem data-testid="sub-menu-item-a">SubMenu Item One</MenuItem>
+        </SubMenu>
+        <SubMenu data-testid="sub-menu-b" title="Second SubMenu">
+          <MenuItem data-testid="sub-menu-item-b">SubMenu Item 2</MenuItem>
+        </SubMenu>
+        <SubMenu
+          data-testid="sub-menu-c"
+          title="Third SubMenu"
+          onClick={onClick}
+        >
+          <MenuItem data-testid="sub-menu-item-c">SubMenu Item 3</MenuItem>
+        </SubMenu>
+      </Menu>,
+    );
+
+    const subMenuItemA = getByTestId('sub-menu-item-a');
+    const subMenuB = getByTestId('sub-menu-b');
+    const subMenuBArrow = subMenuB?.parentNode?.querySelectorAll('button')[1];
+
+    test('renders a SubMenu open by default, when the SubMenu is active', () => {
+      expect(subMenuItemA).toBeInTheDocument();
+    });
+
+    test('when a SubMenu is clicked, it opens and closes the previously opened SubMenu', () => {
+      fireEvent.click(subMenuBArrow);
+      const subMenuItemB = getByTestId('sub-menu-item-b');
+      expect(subMenuItemB).toBeVisible();
+      waitForElementToBeRemoved(() => subMenuItemA).then(() =>
+        expect(subMenuItemA).not.toBeVisible(),
+      );
+    });
+
+    test('onClick is fired when SubMenu is clicked', () => {
+      const subMenuItemC = getByTestId('sub-menu-c');
+      fireEvent.click(subMenuItemC);
+      expect(onClick).toHaveBeenCalled();
     });
   });
 });

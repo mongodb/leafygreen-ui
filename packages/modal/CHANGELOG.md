@@ -1,5 +1,15 @@
 # @leafygreen-ui/modal
 
+## 3.0.1
+
+### Patch Changes
+
+- 69792b8: Make react-transition-group an external dependency of the build
+- Updated dependencies [11b2217]
+- Updated dependencies [8fd107a]
+  - @leafygreen-ui/lib@4.1.0
+  - @leafygreen-ui/icon@3.0.1
+
 ## 3.0.0
 
 ### Major Changes

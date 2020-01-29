@@ -36,10 +36,10 @@ export type HTMLElementProps<
 export { typeIs };
 
 /** Helper type to check if element is a specific React Component  */
-export function isComponentType(
+export function isComponentType<T = React.ReactElement>(
   element: React.ReactNode,
   displayName: string,
-): element is React.ReactElement {
+): element is T {
   return (
     element != null &&
     typeof element === 'object' &&
@@ -59,3 +59,24 @@ export const keyMap = {
   Space: 32,
   Tab: 9,
 };
+
+/**
+ * An enum of accepted values for the "aria-current" attribute, used for
+ * indicating current/active state across several contexts.
+ *
+ * The values "false", the empty string, and an ommission of this attribute
+ * are all treated identically by user agents and screen readers.
+ *
+ * W3C Recommendation: https://www.w3.org/TR/wai-aria-1.1/#aria-current
+ */
+export const AriaCurrentValue = {
+  Page: 'page', // current value in a set of pagination links
+  Step: 'step', // current value in a step indicator
+  Location: 'location', // current value in a chart or other visual flow
+  Date: 'date', // current value in a calendar or date picker
+  Time: 'time', // current value in a timetable or time picker
+  True: 'true', // (fallback) current value in any set of options/elements
+  Unset: 'false', // equivalent to omitting the aria-current attribute
+} as const;
+
+export type AriaCurrentValue = typeof AriaCurrentValue[keyof typeof AriaCurrentValue];

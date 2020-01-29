@@ -15,6 +15,13 @@ storybook/public/
 # JUnit report files
 reports
 
+# OS generated files
+.DS_Store
+.DS_Store?
+.Trashes
+ehthumbs.db
+Thumbs.db
+
 # Yarn Error Log
 yarn-error.log
 tsconfig.tsbuildinfo

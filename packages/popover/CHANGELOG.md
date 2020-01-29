@@ -1,5 +1,13 @@
 # @leafygreen-ui/popover
 
+## 3.0.1
+
+### Patch Changes
+
+- 69792b8: Make react-transition-group an external dependency of the build
+- Updated dependencies [11b2217]
+  - @leafygreen-ui/lib@4.1.0
+
 ## 3.0.0
 
 ### Major Changes
