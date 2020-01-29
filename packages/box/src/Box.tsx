@@ -20,11 +20,11 @@ export type BoxProps<T> = DivProps<T> | AnchorProps<T> | CustomElementProps<T>;
 function isCustomElement<T>(
   props: BoxProps<T>,
 ): props is CustomElementProps<T> {
-  return 'component' in props;
+  return (props as any).component != null;
 }
 
 function isAnchorElement<T>(props: BoxProps<T>): props is AnchorProps<T> {
-  return 'href' in props;
+  return (props as any).href != null;
 }
 
 /**
