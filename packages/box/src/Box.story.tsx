@@ -4,7 +4,19 @@ import { text, select } from '@storybook/addon-knobs';
 import Box from '.';
 
 storiesOf('Box', module)
-  .add('Default', () => <Box>By default I am a div</Box>)
+  .add('Default', () => {
+    const CustomBox = select(
+      'button',
+      { default: 'div', button: 'button', span: 'span' },
+      'div',
+    );
+
+    return (
+      <Box href={text('href', '')} component={CustomBox}>
+        {text('Children', 'I am a box element')}
+      </Box>
+    );
+  })
   .add('Anchor', () => (
     <Box href="https://mongodb.design">
       {text('Children', 'I am an anchor tag')}
