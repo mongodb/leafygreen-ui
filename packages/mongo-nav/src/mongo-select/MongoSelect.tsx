@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Menu,
   FocusableMenuItem,
@@ -55,12 +54,6 @@ const projectButtonStyle = css`
   padding-bottom: 16px;
 `;
 
-function isProject(
-  props: ProjectMongoSelectProps | OrganizationMongoSelectProps,
-): props is ProjectMongoSelectProps {
-  return props.variant === 'project';
-}
-
 interface BaseMongoSelectProps {
   onClick?: React.MouseEventHandler;
   className?: string;
@@ -70,16 +63,14 @@ interface BaseMongoSelectProps {
 }
 
 interface ProjectMongoSelectProps extends BaseMongoSelectProps {
-  variant: 'project';
-  data: Array<ProjectInterface>;
+  data?: Array<ProjectInterface>;
   current: CurrentProjectInterface;
   constructProjectURL: (orgID: string, projectID: string) => string;
 }
 
 interface OrganizationMongoSelectProps extends BaseMongoSelectProps {
-  variant: 'organization';
-  data: Array<OrganizationInterface>;
-  current: CurrentOrganizationInterface;
+  data?: Array<OrganizationInterface>;
+  current?: CurrentOrganizationInterface;
   constructOrganizationURL: (orgID: string) => string;
 }
 
@@ -89,84 +80,22 @@ const onKeyDown: React.KeyboardEventHandler = e => {
   }
 };
 
-function MongoSelect(
-  props: ProjectMongoSelectProps | OrganizationMongoSelectProps,
-) {
-  const {
-    onClick,
-    variant,
-    onChange,
-    className,
-    urls,
-    isActive = false,
-  } = props;
-
-  let trigger, footer;
-  const { mongoSelect } = urls;
-
-  if (isProject(props)) {
-    trigger = <ProjectTrigger current={props.current} className={className} />;
-    footer = (
-      <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
-        <FocusableMenuItem>
-          <Button href={mongoSelect.viewAllProjects} as="a">
-            View All Projects
-          </Button>
-        </FocusableMenuItem>
-        <FocusableMenuItem>
-          <Button href={mongoSelect.newProject} as="a">
-            + New Project
-          </Button>
-        </FocusableMenuItem>
-      </li>
-    );
-  } else {
-    trigger = (
-      <OrganizationTrigger
-        current={props.current}
-        className={className}
-        urls={urls}
-        isActive={isActive}
-      />
-    );
-    footer = (
-      <MenuItem onKeyDown={onKeyDown} href={mongoSelect?.viewAllOrganizations}>
-        <strong className={viewAllStyle}>View All Organizations</strong>
-      </MenuItem>
-    );
-  }
-
-  const renderProjectOption = (
-    props: ProjectMongoSelectProps,
-    datum: ProjectInterface,
-  ) => {
-    const content = (
-      <ProjectOption
-        projectName={datum.projectName}
-        href={props.constructProjectURL(datum.orgId, datum.projectId)}
-      />
-    );
-
-    return (
-      <MenuItem
-        key={datum.projectId}
-        className={menuItemContainerStyle}
-        onClick={onClick}
-      >
-        {content}
-      </MenuItem>
-    );
-  };
-
-  const renderOrganizationOption = (
-    props: OrganizationMongoSelectProps,
-    datum: OrganizationInterface,
-  ) => {
+function OrgSelect({
+  current,
+  data,
+  className,
+  urls,
+  isActive,
+  onChange,
+  onClick,
+  constructOrganizationURL,
+}: OrganizationMongoSelectProps) {
+  const renderOrganizationOption = (datum: OrganizationInterface) => {
     const content = (
       <OrganizationOption
         orgName={datum.orgName}
         planType={datum.planType}
-        href={props.constructOrganizationURL(datum.orgId)}
+        href={constructOrganizationURL(datum.orgId)}
       />
     );
 
@@ -181,10 +110,28 @@ function MongoSelect(
     );
   };
 
+  const errorMessage =
+    'You do not belong to any organizations. Create an organization to start using MongoDB Cloud';
+
   return (
-    <Menu trigger={trigger} className={menuContainerStyle} justify="start">
+    <Menu
+      trigger={
+        <OrganizationTrigger
+          current={current?.orgName ?? 'All Organizations'}
+          className={className}
+          urls={urls}
+          isActive={isActive}
+        />
+      }
+      className={menuContainerStyle}
+      justify="start"
+    >
       <FocusableMenuItem>
-        <Input onChange={onChange} onKeyDown={onKeyDown} variant={variant} />
+        <Input
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          variant="organization"
+        />
       </FocusableMenuItem>
 
       <li role="none" className={listContainerStyle}>
@@ -193,36 +140,98 @@ function MongoSelect(
           className={ulContainerStyle}
           role="menu"
         >
-          {isProject(props)
-            ? props.data.map(datum => renderProjectOption(props, datum))
-            : props.data.map(datum => renderOrganizationOption(props, datum))}
+          {data ? (
+            data.map(datum => renderOrganizationOption(datum))
+          ) : (
+            <li>{errorMessage}</li>
+          )}
         </ul>
       </li>
 
       <MenuSeparator />
 
-      {footer}
+      <MenuItem
+        onKeyDown={onKeyDown}
+        href={urls.mongoSelect?.viewAllOrganizations}
+      >
+        <strong className={viewAllStyle}>View All Organizations</strong>
+      </MenuItem>
     </Menu>
   );
 }
 
-MongoSelect.displayName = 'MongoSelect';
+OrgSelect.displayName = 'OrgSelect';
 
-MongoSelect.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
-  current: PropTypes.shape({
-    orgId: PropTypes.string,
-    projectId: PropTypes.string,
-    planType: PropTypes.string,
-    projectName: PropTypes.string,
-    orgName: PropTypes.string,
-    alertsOpen: PropTypes.number,
-    chartsActivated: PropTypes.bool,
-  }),
-  onClick: PropTypes.func,
-  variant: PropTypes.oneOf(['organization', 'project']).isRequired,
-  constructOrganizationURL: PropTypes.func,
-  constructProjectURL: PropTypes.func,
-};
+export { OrgSelect };
 
-export default MongoSelect;
+function ProjectSelect({
+  current,
+  className,
+  onChange,
+  data,
+  onClick,
+  constructProjectURL,
+  urls,
+}: ProjectMongoSelectProps) {
+  const renderProjectOption = (datum: ProjectInterface) => {
+    const content = (
+      <ProjectOption
+        projectName={datum.projectName}
+        href={constructProjectURL(datum.orgId, datum.projectId)}
+      />
+    );
+
+    return (
+      <MenuItem
+        key={datum.projectId}
+        className={menuItemContainerStyle}
+        onClick={onClick}
+      >
+        {content}
+      </MenuItem>
+    );
+  };
+
+  return (
+    <Menu
+      trigger={
+        <ProjectTrigger current={current.projectName} className={className} />
+      }
+      className={menuContainerStyle}
+      justify="start"
+    >
+      <FocusableMenuItem>
+        <Input onChange={onChange} onKeyDown={onKeyDown} variant="project" />
+      </FocusableMenuItem>
+
+      <li role="none" className={listContainerStyle}>
+        <ul
+          onKeyDown={e => e.preventDefault()}
+          className={ulContainerStyle}
+          role="menu"
+        >
+          {data && data.map(datum => renderProjectOption(datum))}
+        </ul>
+      </li>
+
+      <MenuSeparator />
+
+      <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
+        <FocusableMenuItem>
+          <Button href={urls.mongoSelect.viewAllProjects} as="a">
+            View All Projects
+          </Button>
+        </FocusableMenuItem>
+        <FocusableMenuItem>
+          <Button href={urls.mongoSelect.newProject} as="a">
+            + New Project
+          </Button>
+        </FocusableMenuItem>
+      </li>
+    </Menu>
+  );
+}
+
+ProjectSelect.displayName = 'ProjectSelect';
+
+export { ProjectSelect };

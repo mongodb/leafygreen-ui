@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import MongoSelect from './MongoSelect';
-import { Variant, PlanType } from '../types';
+import { OrgSelect, ProjectSelect } from './MongoSelect';
+import { PlanType } from '../types';
 
 const generateId = () =>
   Math.random()
@@ -33,12 +33,11 @@ describe('packages/mongo-select', () => {
     const onClick = jest.fn();
 
     const { getByText, getByPlaceholderText, getAllByTitle } = render(
-      <MongoSelect
+      <OrgSelect
         current={current}
         onChange={jest.fn()}
         data={organizationData}
         onClick={onClick}
-        variant={Variant.Organization}
         constructOrganizationURL={orgID => orgID}
         urls={{
           mongoMenu: {
@@ -174,9 +173,8 @@ describe('packages/mongo-select', () => {
     const viewAllProjectsHref = 'https://cloud.mongodb.com/test-link';
 
     const { getByText, getByPlaceholderText, getAllByTitle } = render(
-      <MongoSelect
+      <ProjectSelect
         onChange={jest.fn()}
-        variant={Variant.Project}
         current={currentProject}
         onClick={onClick}
         data={projectData}

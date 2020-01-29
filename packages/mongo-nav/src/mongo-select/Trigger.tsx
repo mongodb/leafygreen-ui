@@ -2,11 +2,7 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Icon from '@leafygreen-ui/icon';
-import {
-  URLSInterface,
-  CurrentProjectInterface,
-  CurrentOrganizationInterface,
-} from '../types';
+import { URLSInterface } from '../types';
 
 const orgTriggerContainer = css`
   border-radius: 5px;
@@ -62,7 +58,7 @@ const border = css`
 
 interface OrganizationTriggerProps {
   children?: React.ReactNode;
-  current: CurrentOrganizationInterface;
+  current: string;
   className?: string;
   urls: Required<URLSInterface>;
   isActive?: boolean;
@@ -80,7 +76,7 @@ export function OrganizationTrigger({
     <div className={cx(orgTriggerContainer, className)}>
       <button {...rest} className={buttonContainer}>
         <Icon size="small" glyph="Building" />
-        <span className={selectedStyle}>{current.orgName}</span>
+        <span className={selectedStyle}>{current}</span>
         <Icon size="small" glyph="CaretDown" />
       </button>
       <a
@@ -100,7 +96,7 @@ export function OrganizationTrigger({
 
 interface ProjectTriggerProps {
   children?: React.ReactNode;
-  current: CurrentProjectInterface;
+  current: string;
   className?: string;
 }
 
@@ -116,7 +112,7 @@ export function ProjectTrigger({
       className={cx(buttonContainer, projectTriggerContainer, className)}
     >
       <Icon size="small" glyph="Bell" />
-      <span className={cx(selectedStyle, fontSize)}>{current.projectName}</span>
+      <span className={cx(selectedStyle, fontSize)}>{current}</span>
       <Icon size="small" glyph="CaretDown" />
       {children}
     </button>

@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import OrgNav from './org-nav/index';
 import ProjectNav from './project-nav/index';
-import { Product, URLSInterface, HostsInterface, NavItem, Mode } from './types';
-import devModeData from './data';
+import {
+  Product,
+  URLSInterface,
+  HostsInterface,
+  NavItem,
+  Mode,
+  DataInterface,
+} from './types';
+import fixtureData from './data';
 
 interface MongoNavInterface {
   /**
@@ -60,6 +67,16 @@ interface MongoNavInterface {
    * By default the value is set to `production`
    */
   mode?: Mode;
+
+  /**
+   * Function that is passed an error code, so that consuming application can handle fetch failures
+   */
+  onError?: (code: string) => void;
+
+  /**
+   * Callback that receives the response of the fetched data
+   */
+  onSuccess?: (response: DataInterface) => void;
 }
 
 /**
@@ -88,6 +105,8 @@ interface MongoNavInterface {
  * @param props.constructOrganizationURL Function to determine destination URL when user selects a organization from the organization picker.
  * @param props.constructProjectURL Function to determine destination URL when user selects a project from the project picker.
  * @param props.mode Describes what environment the component is being used in, defaults to `production`
+ * @param props.onSuccess Callback that receives the response of the fetched data
+ * @param props.onError Function that is passed an error code, so that consuming application can handle fetch failures
  */
 export default function MongoNav({
   activeProduct,
@@ -101,14 +120,51 @@ export default function MongoNav({
   admin = false,
   constructOrganizationURL: constructOrganizationURLProp,
   constructProjectURL: constructProjectURLProp,
+  onError,
+  onSuccess,
 }: MongoNavInterface) {
-  let data;
+  const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
-  if (mode === Mode.Dev) {
-    data = devModeData;
+  function getData() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (Math.random() > 0.8) {
+          reject(new Error('Random failure'));
+          if (onError) {
+            onError('Random failure');
+          }
+        }
+
+        const removeArr = [
+          'currentOrganization',
+          'currentProject',
+          'organizations',
+        ];
+
+        const rand = Math.round(Math.random() * 4);
+        fixtureData[removeArr[rand]] = undefined;
+
+        if (onSuccess) {
+          onSuccess(fixtureData);
+        }
+
+        resolve(fixtureData);
+      }, 1500);
+    });
   }
 
-  if (!data) {
+  useEffect(() => {
+    if (mode === Mode.Dev) {
+      setData(fixtureData);
+    }
+
+    getData().then(data => {
+      console.log(data);
+      setData(data);
+    });
+  }, []);
+
+  if (!data || !data.account) {
     // Eventually this logic will be more robust, but for an alpha version will return null without data
     return null;
   }
@@ -175,30 +231,30 @@ export default function MongoNav({
     mongoSelect: {
       viewAllProjects:
         urls?.mongoSelect?.viewAllProjects ??
-        `${cloudHost}/v2#/org/${data.currentProject.orgId}/projects`,
+        `${cloudHost}/v2#/org/${data.currentProject?.orgId}/projects`,
       viewAllOrganizations:
         urls?.mongoSelect?.viewAllOrganizations ??
         `${cloudHost}/v2#/preferences/organizations`,
       newProject:
         urls?.mongoSelect?.newProject ??
-        `${cloudHost}/v2#/org/${data.currentProject.orgId}/projects/create`,
+        `${cloudHost}/v2#/org/${data.currentProject?.orgId}/projects/create`,
       orgSettings:
         urls?.mongoSelect?.newProject ??
-        `${cloudHost}/v2#/org/${data.currentOrganization.orgId}/settings/general`,
+        `${cloudHost}/v2#/org/${data.currentOrganization?.orgId}/settings/general`,
     },
     orgNav: {
       settings:
         urls?.orgNav?.settings ??
-        `${cloudHost}/v2#/org/${data.currentOrganization.orgId}/settings/general`,
+        `${cloudHost}/v2#/org/${data.currentOrganization?.orgId}/settings/general`,
       accessManager:
         urls?.orgNav?.accessManager ??
-        `${cloudHost}/v2#/org/${data.currentOrganization.orgId}/access/users`,
+        `${cloudHost}/v2#/org/${data.currentOrganization?.orgId}/access/users`,
       support:
         urls?.orgNav?.support ??
-        `${cloudHost}/v2#/org/${data.currentOrganization.orgId}/support`,
+        `${cloudHost}/v2#/org/${data.currentOrganization?.orgId}/support`,
       billing:
         urls?.orgNav?.billing ??
-        `${cloudHost}/v2#/org/${data.currentOrganization.orgId}/billing/overview`,
+        `${cloudHost}/v2#/org/${data.currentOrganization?.orgId}/billing/overview`,
       allClusters: urls?.orgNav?.allClusters ?? `${cloudHost}/v2#/clusters`,
       admin:
         urls?.orgNav?.admin ?? `${cloudHost}/v2/admin#general/overview/servers`,
@@ -206,22 +262,22 @@ export default function MongoNav({
     projectNav: {
       settings:
         urls?.projectNav?.settings ??
-        `${cloudHost}/v2/${data.currentProject.projectId}#settings/groupSettings`,
+        `${cloudHost}/v2/${data.currentProject?.projectId}#settings/groupSettings`,
       accessManager:
         urls?.projectNav?.accessManager ??
-        `${cloudHost}/v2/${data.currentProject.projectId}#access`,
+        `${cloudHost}/v2/${data.currentProject?.projectId}#access`,
       support:
         urls?.projectNav?.support ??
-        `${cloudHost}/v2/${data.currentProject.projectId}#info/support`,
+        `${cloudHost}/v2/${data.currentProject?.projectId}#info/support`,
       integrations:
         urls?.projectNav?.integrations ??
-        `${cloudHost}/v2/${data.currentProject.projectId}#integrations`,
+        `${cloudHost}/v2/${data.currentProject?.projectId}#integrations`,
       alerts:
         urls?.projectNav?.alerts ??
-        `${cloudHost}/v2/${data.currentProject.projectId}#alerts`,
+        `${cloudHost}/v2/${data.currentProject?.projectId}#alerts`,
       activityFeed:
         urls?.projectNav?.activityFeed ??
-        `${cloudHost}/v2/${data.currentProject.projectId}#activity`,
+        `${cloudHost}/v2/${data.currentProject?.projectId}#activity`,
     },
   };
 
@@ -239,14 +295,14 @@ export default function MongoNav({
         admin={admin}
         hosts={sanitizedHosts}
       />
-      {showProjNav && (
+      {showProjNav && currentProject && (
         <ProjectNav
           activeProduct={activeProduct}
           current={currentProject}
           data={projects}
           constructProjectURL={constructProjectURL}
           urls={constructedUrls}
-          alerts={currentProject.alertsOpen}
+          alerts={currentProject?.alertsOpen}
           onProjectChange={onProjectChange}
           hosts={sanitizedHosts}
         />

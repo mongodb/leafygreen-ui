@@ -14,7 +14,7 @@ import {
   HostsInterface,
 } from '../types';
 
-import MongoSelect from '../mongo-select/index';
+import { OrgSelect } from '../mongo-select/index';
 import MongoMenu from '../mongo-menu/index';
 
 const navContainer = css`
@@ -86,8 +86,8 @@ const paymentStatusMap: { readonly [K in Colors]: Array<string> } = {
 interface OrgNav {
   account: AccountInterface;
   activeProduct: Product;
-  current: CurrentOrganizationInterface;
-  data: Array<OrganizationInterface>;
+  current?: CurrentOrganizationInterface;
+  data?: Array<OrganizationInterface>;
   constructOrganizationURL: (orgID: string) => string;
   urls: Required<URLSInterface>;
   activeNav?: NavItem;
@@ -114,7 +114,7 @@ export default function OrgNav({
   let key: Colors;
 
   for (key in paymentStatusMap) {
-    if (!current.paymentStatus) {
+    if (!current?.paymentStatus) {
       variant = undefined;
     } else if (paymentStatusMap[key].includes(current?.paymentStatus)) {
       variant = key;
@@ -129,18 +129,19 @@ export default function OrgNav({
     >
       <div className={leftSideContainer}>
         <LogoMark height={30} />
-        <MongoSelect
+
+        <OrgSelect
           className={orgSelectContainer}
           data={data}
           current={current}
           constructOrganizationURL={constructOrganizationURL}
-          variant="organization"
           urls={urls}
           onChange={onOrganizationChange}
           isActive={activeNav === 'orgSettings'}
         />
+
         <ul className={ulContainer}>
-          {variant && current.paymentStatus && (
+          {variant && current?.paymentStatus && (
             <li>
               <Badge
                 className={css`
@@ -152,63 +153,67 @@ export default function OrgNav({
               </Badge>
             </li>
           )}
-          <li role="none">
-            <Tooltip
-              align="bottom"
-              justify="middle"
-              variant="dark"
-              trigger={
-                <a
-                  href={orgNav.accessManager}
-                  className={cx(linkText, {
-                    [activeLink]: activeNav === 'accessManager',
-                  })}
+          {current && (
+            <>
+              <li role="none">
+                <Tooltip
+                  align="bottom"
+                  justify="middle"
+                  variant="dark"
+                  trigger={
+                    <a
+                      href={orgNav.accessManager}
+                      className={cx(linkText, {
+                        [activeLink]: activeNav === 'accessManager',
+                      })}
+                    >
+                      Access Manager
+                    </a>
+                  }
                 >
-                  Access Manager
-                </a>
-              }
-            >
-              Organization Access Manager
-            </Tooltip>
-          </li>
-          <li role="none" className={supportContainer}>
-            <Tooltip
-              align="bottom"
-              justify="middle"
-              variant="dark"
-              trigger={
-                <a
-                  href={orgNav.support}
-                  className={cx(linkText, {
-                    [activeLink]: activeNav === 'support',
-                  })}
+                  Organization Access Manager
+                </Tooltip>
+              </li>
+              <li role="none" className={supportContainer}>
+                <Tooltip
+                  align="bottom"
+                  justify="middle"
+                  variant="dark"
+                  trigger={
+                    <a
+                      href={orgNav.support}
+                      className={cx(linkText, {
+                        [activeLink]: activeNav === 'support',
+                      })}
+                    >
+                      Support
+                    </a>
+                  }
                 >
-                  Support
-                </a>
-              }
-            >
-              Organization Support
-            </Tooltip>
-          </li>
-          <li role="none">
-            <Tooltip
-              align="bottom"
-              justify="middle"
-              variant="dark"
-              trigger={
-                <a
-                  href={orgNav.billing}
-                  className={cx(linkText, {
-                    [activeLink]: activeNav === 'billing',
-                  })}
+                  Organization Support
+                </Tooltip>
+              </li>
+              <li role="none">
+                <Tooltip
+                  align="bottom"
+                  justify="middle"
+                  variant="dark"
+                  trigger={
+                    <a
+                      href={orgNav.billing}
+                      className={cx(linkText, {
+                        [activeLink]: activeNav === 'billing',
+                      })}
+                    >
+                      Billing
+                    </a>
+                  }
                 >
                   Billing
-                </a>
-              }
-            >
-              Billing
-            </Tooltip>
-          </li>
+                </Tooltip>
+              </li>
+            </>
+          )}
         </ul>
       </div>
       <div>
