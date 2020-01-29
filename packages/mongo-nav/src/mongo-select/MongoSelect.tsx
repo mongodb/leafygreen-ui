@@ -11,13 +11,13 @@ import { css } from '@leafygreen-ui/emotion';
 import { keyMap } from '@leafygreen-ui/lib';
 import Input from './Input';
 import { OrganizationTrigger, ProjectTrigger } from './Trigger';
-import { OrganizationOption, ProjectOption } from './Option';
 import {
   ProjectInterface,
   OrganizationInterface,
   URLSInterface,
   CurrentProjectInterface,
   CurrentOrganizationInterface,
+  PlanType,
 } from '../types';
 
 const menuItemHeight = 36;
@@ -30,10 +30,6 @@ const menuContainerStyle = css`
 const listContainerStyle = css`
   max-height: ${menuItemHeight * 5}px;
   overflow-y: auto;
-`;
-
-const ulContainerStyle = css`
-  padding-left: 1px;
 `;
 
 const menuItemContainerStyle = css`
@@ -53,6 +49,34 @@ const projectButtonStyle = css`
   padding-top: 16px;
   padding-bottom: 16px;
 `;
+
+const nameStyle = css`
+  font-size: 14px;
+  color: ${uiColors.gray.dark3};
+`;
+
+const productStyle = css`
+  font-size: 12px;
+  color: ${uiColors.gray.dark2};
+  font-weight: bolder;
+  white-space: nowrap;
+`;
+
+const orgOptionContainerStyle = css`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const formatPlanType = (planType: PlanType) => {
+  switch (planType) {
+    case PlanType.Atlas:
+      return 'Atlas';
+    case PlanType.Cloud:
+      return 'Cloud Manager';
+    case PlanType.OnPrem:
+      return 'Ops Manager';
+  }
+};
 
 interface BaseMongoSelectProps {
   onClick?: React.MouseEventHandler;
@@ -91,21 +115,19 @@ function OrgSelect({
   constructOrganizationURL,
 }: OrganizationMongoSelectProps) {
   const renderOrganizationOption = (datum: OrganizationInterface) => {
-    const content = (
-      <OrganizationOption
-        orgName={datum.orgName}
-        planType={datum.planType}
-        href={constructOrganizationURL(datum.orgId)}
-      />
-    );
+    const { orgId, orgName, planType } = datum;
 
     return (
       <MenuItem
-        key={datum.orgId}
+        key={orgId}
         className={menuItemContainerStyle}
         onClick={onClick}
+        href={constructOrganizationURL(orgId)}
       >
-        {content}
+        <div className={orgOptionContainerStyle}>
+          <span className={nameStyle}>{orgName}</span>
+          <span className={productStyle}>{formatPlanType(planType)}</span>
+        </div>
       </MenuItem>
     );
   };
@@ -134,22 +156,15 @@ function OrgSelect({
         />
       </FocusableMenuItem>
 
-      <li role="none" className={listContainerStyle}>
-        <ul
-          onKeyDown={e => e.preventDefault()}
-          className={ulContainerStyle}
-          role="menu"
-        >
-          {data ? (
-            data.map(datum => renderOrganizationOption(datum))
-          ) : (
-            <li>{errorMessage}</li>
-          )}
-        </ul>
-      </li>
+      <>
+        {data ? (
+          data.map(datum => renderOrganizationOption(datum))
+        ) : (
+          <li>{errorMessage}</li>
+        )}
+      </>
 
       <MenuSeparator />
-
       <MenuItem
         onKeyDown={onKeyDown}
         href={urls.mongoSelect?.viewAllOrganizations}
@@ -174,20 +189,16 @@ function ProjectSelect({
   urls,
 }: ProjectMongoSelectProps) {
   const renderProjectOption = (datum: ProjectInterface) => {
-    const content = (
-      <ProjectOption
-        projectName={datum.projectName}
-        href={constructProjectURL(datum.orgId, datum.projectId)}
-      />
-    );
+    const { projectId, projectName, orgId } = datum;
 
     return (
       <MenuItem
-        key={datum.projectId}
+        key={projectId}
         className={menuItemContainerStyle}
         onClick={onClick}
+        href={constructProjectURL(orgId, projectId)}
       >
-        {content}
+        <span className={nameStyle}>{projectName}</span>
       </MenuItem>
     );
   };
@@ -204,15 +215,7 @@ function ProjectSelect({
         <Input onChange={onChange} onKeyDown={onKeyDown} variant="project" />
       </FocusableMenuItem>
 
-      <li role="none" className={listContainerStyle}>
-        <ul
-          onKeyDown={e => e.preventDefault()}
-          className={ulContainerStyle}
-          role="menu"
-        >
-          {data && data.map(datum => renderProjectOption(datum))}
-        </ul>
-      </li>
+      <>{data && data.map(datum => renderProjectOption(datum))}</>
 
       <MenuSeparator />
 

@@ -200,7 +200,7 @@ export default function MongoNav({
     `${cloudHost}/v2#/${projectId}`;
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
-  const constructedUrls: Required<URLSInterface> = {
+  const sanitizedURLs: Required<URLSInterface> = {
     mongoMenu: {
       cloud: {
         userPreferences:
@@ -289,7 +289,7 @@ export default function MongoNav({
         current={currentOrganization}
         data={organizations}
         constructOrganizationURL={constructOrganizationURL}
-        urls={constructedUrls}
+        urls={sanitizedURLs}
         activeNav={activeNav}
         onOrganizationChange={onOrganizationChange}
         admin={admin}
@@ -301,7 +301,7 @@ export default function MongoNav({
           current={currentProject}
           data={projects}
           constructProjectURL={constructProjectURL}
-          urls={constructedUrls}
+          urls={sanitizedURLs}
           alerts={currentProject?.alertsOpen}
           onProjectChange={onProjectChange}
           hosts={sanitizedHosts}
