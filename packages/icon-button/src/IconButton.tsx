@@ -96,7 +96,6 @@ const baseIconButtonStyle = css`
   color: ${uiColors.gray.base};
   position: relative;
   cursor: pointer;
-
   &:before {
     content: '';
     transition: 150ms all ease-in-out;
@@ -109,13 +108,11 @@ const baseIconButtonStyle = css`
     opacity: 0;
     transform: scale(0.8);
   }
-
   &:hover:before,
   &:focus:before {
     opacity: 1;
     transform: scale(1);
   }
-
   &:focus {
     outline: none;
   }
@@ -139,15 +136,19 @@ const iconButtonSizes: { readonly [K in Size]: string } = {
 const iconButtonVariants: { readonly [K in Variant]: string } = {
   [Variant.Light]: css`
     &:hover {
+      color: ${uiColors.gray.dark2};
+
       &:before {
         background-color: ${uiColors.gray.light2};
       }
-
-      color: ${uiColors.gray.dark2};
     }
 
-    &:focus:before {
-      background-color: ${uiColors.blue.light2};
+    &:focus {
+      color: ${uiColors.blue.base};
+
+      &:before {
+        background-color: ${uiColors.blue.light2};
+      }
     }
   `,
 
@@ -156,10 +157,8 @@ const iconButtonVariants: { readonly [K in Variant]: string } = {
       &:before {
         background-color: ${uiColors.gray.dark2};
       }
-
       color: ${uiColors.white};
     }
-
     &:focus:before {
       background-color: ${uiColors.blue.dark2};
     }
@@ -208,7 +207,7 @@ const getIconStyle = (size: Size) => css`
  * @param props.ariaLabel Required prop that will be passed to `aria-label` attribute
  */
 
-function IconButton(props: IconButtonProps) {
+const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
   const {
     variant = 'light',
     disabled = false,
@@ -226,6 +225,7 @@ function IconButton(props: IconButtonProps) {
       href={href ? href : undefined}
       aria-disabled={disabled}
       aria-label={ariaLabel}
+      ref={ref}
       className={cx(
         removeButtonStyle,
         baseIconButtonStyle,
@@ -246,10 +246,11 @@ function IconButton(props: IconButtonProps) {
   }
 
   return renderIconButton();
-}
+});
 
 IconButton.displayName = 'IconButton';
 
+// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 IconButton.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)),
   className: PropTypes.string,
