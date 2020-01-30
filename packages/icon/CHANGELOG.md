@@ -1,5 +1,16 @@
 # @leafygreen-ui/icon
 
+## 4.0.0
+
+### Major Changes
+
+- 0a75bd6: Change values of `large` and `xlarge` icons to be `20` and `24` respectively. If using `<Icon size="large" />` previously, update to `<Icon size="xlarge" />`
+
+### Patch Changes
+
+- Updated dependencies [fabc1c9]
+  - @leafygreen-ui/lib@4.2.0
+
 ## 3.0.1
 
 ### Patch Changes
