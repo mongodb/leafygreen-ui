@@ -222,6 +222,9 @@ export default function MongoNav({
       activityFeed:
         urls?.projectNav?.activityFeed ??
         `${cloudHost}/v2/${data.currentProject.projectId}#activity`,
+      invite:
+        urls?.projectNav?.invite ??
+        `${cloudHost}/v2/${data.currentProject.projectId}#invite`,
     },
   };
 
@@ -238,6 +241,7 @@ export default function MongoNav({
         onOrganizationChange={onOrganizationChange}
         admin={admin}
         hosts={sanitizedHosts}
+        currentProjectName={currentProject && currentProject.projectName}
       />
       {showProjNav && (
         <ProjectNav

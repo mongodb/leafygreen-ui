@@ -53,6 +53,15 @@ const olStyle = css`
   margin: 0;
   margin-block-start: 0;
   margin-block-end: 0;
+
+  &:after {
+    content: '';
+    height: 3px;
+    width: 100px;
+    position: absolute;
+    bottom: 0;
+    transition: 150ms transform ease-in-out, 150ms width ease-in-out 10ms;
+  }
 `;
 
 const productStyle = css`
@@ -137,10 +146,12 @@ function calcStyle(activeProduct: Product) {
   }
 
   return css`
-    transform: translate3d(${computedX}px, 0, 0);
-    background-color: ${products[
-      activeProduct as 'stitch' | 'cloud' | 'charts'
-    ]};
+    &:after {
+      transform: translate3d(${computedX}px, 0, 0);
+      background-color: ${products[
+        activeProduct as 'stitch' | 'cloud' | 'charts'
+      ]};
+    }
   `;
 }
 
@@ -197,7 +208,7 @@ export default function ProjectNav({
           <MenuItem href={projectNav.support}>Project Support</MenuItem>
           <MenuItem href={projectNav.integrations}>Integrations</MenuItem>
         </Menu>
-        <ol className={olStyle}>
+        <ul className={cx(olStyle, calcStyle(activeProduct))}>
           <li role="none" className={productStyle}>
             <a href={hosts.cloud} className={productTextStyle}>
               {activeProduct === 'cloud' ? <AtlasActive /> : <AtlasInactive />}
@@ -244,10 +255,26 @@ export default function ProjectNav({
               </span>
             </a>
           </li>
-          <div className={cx(highlightColor, calcStyle(activeProduct))} />
-        </ol>
+        </ul>
       </div>
       <div>
+        <Tooltip
+          align="bottom"
+          justify="middle"
+          variant="dark"
+          trigger={
+            <IconButton
+              ariaLabel="Invite"
+              href={projectNav.alerts as string}
+              className={alertIconButtonStyle}
+              size="large"
+            >
+              <Icon glyph="Person" size="large" />
+            </IconButton>
+          }
+        >
+          Invite To Project
+        </Tooltip>
         <Tooltip
           align="bottom"
           justify="middle"
@@ -257,9 +284,10 @@ export default function ProjectNav({
               ariaLabel="Alerts"
               href={projectNav.alerts as string}
               className={alertIconButtonStyle}
+              size="large"
             >
               {alerts && <div className={alertBadgeStyle}>{alerts}</div>}
-              <Icon glyph="Bell" />
+              <Icon glyph="Bell" size="large" />
             </IconButton>
           }
         >
@@ -273,8 +301,9 @@ export default function ProjectNav({
             <IconButton
               ariaLabel="Project Activity Feed"
               href={projectNav.activityFeed as string}
+              size="large"
             >
-              <Icon glyph="Save" />
+              <Icon glyph="Save" size="large" />
             </IconButton>
           }
         >

@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { LogoMark } from '@leafygreen-ui/logo';
 import Tooltip from '@leafygreen-ui/tooltip';
 import Badge from '@leafygreen-ui/badge';
+import IconButton from '@leafygreen-ui/icon-button';
+import Icon from '@leafygreen-ui/icon';
+import { Menu } from '@leafygreen-ui/menu';
 import {
   AccountInterface,
   OrganizationInterface,
@@ -67,6 +70,19 @@ const rightSideLinkStyle = css`
   margin-right: 30px;
 `;
 
+const accessManagerMenuContainer = css`
+  padding: 16px;
+  width: 220px;
+`;
+
+const accessManagerMenuItem = css`
+  font-size: 14px;
+  color: ${uiColors.gray.dark1};
+  line-height: 19.6px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+`;
+
 export const Colors = {
   Lightgray: 'lightgray',
   Green: 'green',
@@ -94,6 +110,7 @@ interface OrgNav {
   onOrganizationChange: React.ChangeEventHandler;
   admin: boolean;
   hosts: Required<HostsInterface>;
+  currentProjectName?: string;
 }
 
 export default function OrgNav({
@@ -107,7 +124,9 @@ export default function OrgNav({
   urls,
   admin,
   hosts,
+  currentProjectName,
 }: OrgNav) {
+  const [open, setOpen] = useState(false);
   const { orgNav } = urls;
 
   let variant: Colors | undefined;
@@ -152,7 +171,14 @@ export default function OrgNav({
               </Badge>
             </li>
           )}
-          <li role="none">
+          <li
+            role="none"
+            className={css`
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            `}
+          >
             <Tooltip
               align="bottom"
               justify="middle"
@@ -170,6 +196,23 @@ export default function OrgNav({
             >
               Organization Access Manager
             </Tooltip>
+            <Menu
+              open={open}
+              setOpen={setOpen}
+              trigger={
+                <IconButton ariaLabel="Dropdown">
+                  <Icon glyph={open ? 'CaretUp' : 'CaretDown'} />
+                </IconButton>
+              }
+              className={accessManagerMenuContainer}
+            >
+              <p className={accessManagerMenuItem}>
+                <strong>Organization Access:</strong> {current.orgName}
+              </p>
+              <p className={accessManagerMenuItem}>
+                <strong>Project Access:</strong> {currentProjectName ?? 'None'}
+              </p>
+            </Menu>
           </li>
           <li role="none" className={supportContainer}>
             <Tooltip
