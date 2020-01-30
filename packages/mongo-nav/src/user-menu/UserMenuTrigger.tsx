@@ -94,17 +94,17 @@ const openIconStyle = css`
   color: ${uiColors.gray.dark2};
 `;
 
-interface MongoMenuTriggerProps {
+interface UserMenuTriggerProps {
   name: string;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function MongoMenuTrigger({
+export default function UserMenuTrigger({
   open,
   name,
   setOpen,
-}: MongoMenuTriggerProps) {
+}: UserMenuTriggerProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
   return (
