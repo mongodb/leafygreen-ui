@@ -1,5 +1,16 @@
 # @leafygreen-ui/modal
 
+## 3.0.2
+
+### Patch Changes
+
+- fabc1c9: Conditionally enable `useEscapeKey` hook, to ensure that escapeKey events are not unintentionally blocked from propagating
+- 232cf52: React-transition-group now dependency instead of peer dependency
+- Updated dependencies [0a75bd6]
+- Updated dependencies [fabc1c9]
+  - @leafygreen-ui/icon@4.0.0
+  - @leafygreen-ui/lib@4.2.0
+
 ## 3.0.1
 
 ### Patch Changes
