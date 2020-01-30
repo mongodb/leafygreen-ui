@@ -1,5 +1,15 @@
 # @leafygreen-ui/tooltip
 
+## 3.0.1
+
+### Patch Changes
+
+- fabc1c9: Conditionally enable `useEscapeKey` hook, to ensure that escapeKey events are not unintentionally blocked from propagating
+- Updated dependencies [fabc1c9]
+- Updated dependencies [232cf52]
+  - @leafygreen-ui/lib@4.2.0
+  - @leafygreen-ui/popover@3.0.2
+
 ## 3.0.0
 
 ### Major Changes
