@@ -108,7 +108,7 @@ export interface DataInterface {
 }
 
 export interface URLSInterface {
-  mongoMenu?: {
+  userMenu?: {
     cloud?: {
       userPreferences: string;
       organizations: string;
