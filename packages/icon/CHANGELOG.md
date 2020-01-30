@@ -4,7 +4,7 @@
 
 ### Major Changes
 
-- 0a75bd6: Change values of large and xlarge icons to be 20 and 24 respectively. If using <Icon size="large" /> previously, update to <Icon size="xlarge" />
+- 0a75bd6: Change values of `large` and `xlarge` icons to be `20` and `24` respectively. If using `<Icon size="large" />` previously, update to `<Icon size="xlarge" />`
 
 ### Patch Changes
 
