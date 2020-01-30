@@ -21,10 +21,8 @@ interface LinkWrapperProps {
 }
 
 type testProps = BoxProps<SharedProps>;
-type unmountQueueType = Array<() => boolean>;
 
 describe('packages/box', () => {
-  const unmountQueue: unmountQueueType = [];
   const renderedEls: RenderedEls = {};
   const linkWrapperFn = jest.fn();
 
@@ -48,7 +46,7 @@ describe('packages/box', () => {
   const linkProps = { component: LinkWrapper, ...anchorProps };
 
   const renderBox = (props: testProps = sharedProps) => {
-    const { queryByTestId, unmount } = render(
+    const { queryByTestId } = render(
       <Box data-testid="box" {...props}>
         <div data-testid="child">Child Content</div>
       </Box>,
@@ -56,14 +54,9 @@ describe('packages/box', () => {
 
     renderedEls.child = queryByTestId('child');
     renderedEls.box = queryByTestId('box');
-    unmountQueue.push(unmount);
   };
 
   afterEach(() => {
-    while (unmountQueue.length > 0) {
-      const unmount = unmountQueue.pop();
-      unmount && unmount();
-    }
     jest.clearAllMocks();
     cleanup();
   });
