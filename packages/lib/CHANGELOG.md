@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 4.2.0
+
+### Minor Changes
+
+- fabc1c9: `isComponentType` function now types returned element more specifically, rather than just as `React.ReactElement`
+
 ## 4.1.0
 
 ### Minor Changes

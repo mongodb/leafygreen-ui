@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/modal",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "LeafyGreen UI Kit Modal",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
@@ -15,8 +15,8 @@
   "dependencies": {
     "react-transition-group": "^4.2.1",
     "@leafygreen-ui/hooks": "^2.0.0",
-    "@leafygreen-ui/icon": "^3.0.1",
-    "@leafygreen-ui/lib": "^4.1.0",
+    "@leafygreen-ui/icon": "^4.0.0",
+    "@leafygreen-ui/lib": "^4.2.0",
     "@leafygreen-ui/palette": "^2.0.0",
     "@leafygreen-ui/portal": "^2.0.0"
   }

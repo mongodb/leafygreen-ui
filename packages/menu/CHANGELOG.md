@@ -1,5 +1,21 @@
 # @leafygreen-ui/menu
 
+## 5.1.0
+
+### Minor Changes
+
+- fabc1c9: MenuItems accept an `as` prop to determine what component to render as. Introduce `SubMenu` components with stronger accessibility logic
+
+### Patch Changes
+
+- Updated dependencies [0a75bd6]
+- Updated dependencies [fabc1c9]
+- Updated dependencies [fabc1c9]
+- Updated dependencies [232cf52]
+  - @leafygreen-ui/icon-button@4.0.0
+  - @leafygreen-ui/lib@4.2.0
+  - @leafygreen-ui/popover@3.0.2
+
 ## 5.0.0
 
 ### Major Changes
