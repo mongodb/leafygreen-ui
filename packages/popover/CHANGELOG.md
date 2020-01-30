@@ -1,5 +1,13 @@
 # @leafygreen-ui/popover
 
+## 3.0.2
+
+### Patch Changes
+
+- 232cf52: React-transition-group now dependency instead of peer dependency
+- Updated dependencies [fabc1c9]
+  - @leafygreen-ui/lib@4.2.0
+
 ## 3.0.1
 
 ### Patch Changes

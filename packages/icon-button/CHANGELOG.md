@@ -1,5 +1,22 @@
 # @leafygreen-ui/icon-button
 
+## 4.0.0
+
+### Major Changes
+
+- fabc1c9: Wrapping component with `React.forwardRef` to provide direct access to the underlying element
+
+### Minor Changes
+
+- 0a75bd6: Adds optional size prop to IconButton component to be compatible with default, large and xlarge size variants of Icon component
+
+### Patch Changes
+
+- Updated dependencies [0a75bd6]
+- Updated dependencies [fabc1c9]
+  - @leafygreen-ui/icon@4.0.0
+  - @leafygreen-ui/lib@4.2.0
+
 ## 3.0.1
 
 ### Patch Changes
