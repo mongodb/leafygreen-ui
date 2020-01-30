@@ -1,4 +1,4 @@
 import MongoNav from './MongoNav';
-import MongoMenu from './mongo-menu/index';
-export { MongoMenu };
+import UserMenu from './user-menu/index';
+export { UserMenu };
 export default MongoNav;

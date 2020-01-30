@@ -145,30 +145,30 @@ export default function MongoNav({
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
   const constructedUrls: Required<URLSInterface> = {
-    mongoMenu: {
+    userMenu: {
       cloud: {
         userPreferences:
-          urls?.mongoMenu?.cloud?.userPreferences ??
+          urls?.userMenu?.cloud?.userPreferences ??
           `${cloudHost}/v2#/preferences/personalization`,
         organizations:
-          urls?.mongoMenu?.cloud?.organizations ??
+          urls?.userMenu?.cloud?.organizations ??
           `${cloudHost}/v2#/preferences/organizations`,
         invitations:
-          urls?.mongoMenu?.cloud?.invitations ??
+          urls?.userMenu?.cloud?.invitations ??
           `${cloudHost}/v2#/preferences/invitations`,
-        mfa: urls?.mongoMenu?.cloud?.mfa ?? `${cloudHost}/v2#/preferences/2fa`,
+        mfa: urls?.userMenu?.cloud?.mfa ?? `${cloudHost}/v2#/preferences/2fa`,
       },
       university: {
         videoPreferences:
-          urls?.mongoMenu?.university?.videoPreferences ?? `${universityHost}`,
+          urls?.userMenu?.university?.videoPreferences ?? `${universityHost}`,
       },
       support: {
         userPreferences:
-          urls?.mongoMenu?.support?.userPreferences ?? `${supportHost}/profile`,
+          urls?.userMenu?.support?.userPreferences ?? `${supportHost}/profile`,
       },
       account: {
         homepage:
-          urls?.mongoMenu?.account?.homepage ??
+          urls?.userMenu?.account?.homepage ??
           `${accountHost}/account/profile/overview`,
       },
     },

@@ -45,7 +45,7 @@ interface DataInterface {
 ### URLInterface
 ```js
 export interface URLSInterface {
-  mongoMenu?: {
+  userMenu?: {
     cloud?: {
       userPreferences: string;
       organizations: string;
