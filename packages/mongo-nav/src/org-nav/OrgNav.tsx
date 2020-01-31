@@ -230,7 +230,7 @@ export default function OrgNav({
                 </a>
               }
             >
-              Organization Support
+              View the Organization Support
             </Tooltip>
           </li>
           <li role="none">
@@ -249,7 +249,7 @@ export default function OrgNav({
                 </a>
               }
             >
-              Billing
+              View the Organization Billing
             </Tooltip>
           </li>
         </ul>
@@ -270,7 +270,7 @@ export default function OrgNav({
             </a>
           }
         >
-          View All Clusters
+          View all clusters across your organizations
         </Tooltip>
 
         {admin && (

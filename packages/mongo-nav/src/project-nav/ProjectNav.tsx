@@ -78,20 +78,10 @@ const productMargin = css`
   margin-top: 2px;
 `;
 
-const activeProductColor = {
-  cloud: css`
-    color: ${uiColors.green.dark3};
-    font-weight: bold;
-  `,
-  stitch: css`
-    color: #39477f;
-    font-weight: bold;
-  `,
-  charts: css`
-    color: #0e4d4c;
-    font-weight: bold;
-  `,
-};
+const activeProductColor = css`
+  font-weight: bolder;
+  color: ${uiColors.green.dark3};
+`;
 
 const productTextStyle = css`
   text-decoration: none;
@@ -101,14 +91,6 @@ const productTextStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const highlightColor = css`
-  height: 3px;
-  width: 100px;
-  position: absolute;
-  bottom: 0;
-  transition: 150ms transform ease-in-out, 150ms width ease-in-out 10ms;
 `;
 
 const alertIconButtonStyle = css`
@@ -131,13 +113,9 @@ const alertBadgeStyle = css`
 `;
 
 function calcStyle(activeProduct: Product) {
-  const products = {
-    cloud: uiColors.green.base,
-    stitch: '#59569D',
-    charts: '#00C6BF',
-  };
+  const products = ['cloud', 'stitch', 'charts'];
 
-  const currentIndex = Object.keys(products).indexOf(activeProduct);
+  const currentIndex = products.indexOf(activeProduct);
 
   let computedX = 25;
 
@@ -148,9 +126,7 @@ function calcStyle(activeProduct: Product) {
   return css`
     &:after {
       transform: translate3d(${computedX}px, 0, 0);
-      background-color: ${products[
-        activeProduct as 'stitch' | 'cloud' | 'charts'
-      ]};
+      background-color: ${uiColors.green.base}};
     }
   `;
 }
@@ -214,7 +190,7 @@ export default function ProjectNav({
               {activeProduct === 'cloud' ? <AtlasActive /> : <AtlasInactive />}
               <span
                 className={cx(productMargin, {
-                  [activeProductColor.cloud]: activeProduct === 'cloud',
+                  [activeProductColor]: activeProduct === 'cloud',
                 })}
               >
                 Atlas
@@ -226,12 +202,14 @@ export default function ProjectNav({
               <Icon
                 glyph="Stitch"
                 fill={
-                  activeProduct === 'stitch' ? '#59569D' : uiColors.gray.base
+                  activeProduct === 'stitch'
+                    ? uiColors.green.base
+                    : uiColors.gray.base
                 }
               />
               <span
                 className={cx(productMargin, {
-                  [activeProductColor.stitch]: activeProduct === 'stitch',
+                  [activeProductColor]: activeProduct === 'stitch',
                 })}
               >
                 Stitch
@@ -243,12 +221,14 @@ export default function ProjectNav({
               <Icon
                 glyph="Charts"
                 fill={
-                  activeProduct === 'charts' ? '#00C6BF' : uiColors.gray.base
+                  activeProduct === 'charts'
+                    ? uiColors.green.base
+                    : uiColors.gray.base
                 }
               />
               <span
                 className={cx(productMargin, {
-                  [activeProductColor.charts]: activeProduct === 'charts',
+                  [activeProductColor]: activeProduct === 'charts',
                 })}
               >
                 Charts
@@ -291,12 +271,12 @@ export default function ProjectNav({
             </IconButton>
           }
         >
-          Project Alerts
+          View the Project Alerts
         </Tooltip>
         <Tooltip
           align="bottom"
           variant="dark"
-          justify="middle"
+          justify="end"
           trigger={
             <IconButton
               ariaLabel="Project Activity Feed"
@@ -307,7 +287,7 @@ export default function ProjectNav({
             </IconButton>
           }
         >
-          Project Activity Feed
+          View the Project Activity Feed
         </Tooltip>
       </div>
     </nav>
