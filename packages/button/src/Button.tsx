@@ -268,6 +268,7 @@ interface SharedButtonProps {
   className?: string;
   children?: React.ReactNode;
   disabled?: boolean;
+  glyph?: React.ReactNode; 
 }
 
 interface LinkButtonProps extends HTMLElementProps<'a'>, SharedButtonProps {
@@ -309,6 +310,7 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
     disabled = false,
     variant = Variant.Default,
     size = Size.Normal,
+    glyph = null,
   } = props;
 
   const commonProps = {
@@ -350,6 +352,7 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
           z-index: 1;
         `}
       >
+        {glyph}
         {children}
       </span>
     </Root>
@@ -377,6 +380,7 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   href: PropTypes.string,
+  glyph: PropTypes.node,
 };
 
 export default Button;
