@@ -138,6 +138,7 @@ export default function MongoNav({
     })
       .then(response => response.json())
       .then(data => {
+        console.log(data);
         setData(data);
 
         if (onSuccess) {
@@ -162,7 +163,7 @@ export default function MongoNav({
   }, []);
 
   if (!data || !data.account) {
-    // Eventually this logic will be more robust, but for an alpha version will return null without data
+    // Eventually this logic will be more robust, but for this version we will return the placeholder <Loading /> component
     return <Loading />;
   }
 
