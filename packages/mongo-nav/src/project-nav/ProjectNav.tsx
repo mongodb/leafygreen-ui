@@ -257,7 +257,9 @@ export default function ProjectNav({
               href={projectNav.alerts as string}
               className={alertIconButtonStyle}
             >
-              {alerts && <div className={alertBadgeStyle}>{alerts}</div>}
+              {typeof alerts === 'number' && (
+                <div className={alertBadgeStyle}>{alerts}</div>
+              )}
               <Icon glyph="Bell" />
             </IconButton>
           }

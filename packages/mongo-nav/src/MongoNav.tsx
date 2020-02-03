@@ -125,44 +125,39 @@ export default function MongoNav({
 }: MongoNavInterface) {
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
+  const accountHost = hosts?.account ?? `https://account.mongodb.com`;
+  const cloudHost = hosts?.cloud ?? `https://cloud.mongodb.com`;
+  const universityHost = hosts?.university ?? `https://university.mongodb.com`;
+  const supportHost = hosts?.support ?? `https://support.mongodb.com`;
+
   function getData() {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (Math.random() > 0.8) {
-          reject(new Error('Random failure'));
-          if (onError) {
-            onError('Random failure');
-          }
-        }
-
-        const removeArr = [
-          'currentOrganization',
-          'currentProject',
-          'organizations',
-          'projects',
-        ];
-
-        const rand = Math.round(Math.random() * 4);
-        fixtureData[removeArr[rand]] = undefined;
+    fetch(`${cloudHost}/user/shared`, {
+      credentials: 'include',
+      method: 'GET',
+    })
+      .then(response => response.json())
+      .then(data => {
+        setData(data);
 
         if (onSuccess) {
-          onSuccess(fixtureData);
+          onSuccess;
+        }
+      })
+      .catch(error => {
+        if (onError) {
+          onError(error);
         }
 
-        resolve(fixtureData);
-      }, 1500);
-    });
+        throw new Error(error);
+      });
   }
 
   useEffect(() => {
     if (mode === Mode.Dev) {
       setData(fixtureData);
+    } else {
+      getData();
     }
-
-    getData().then(data => {
-      console.log(data);
-      setData(data);
-    });
   }, []);
 
   if (!data || !data.account) {
@@ -177,11 +172,6 @@ export default function MongoNav({
     organizations,
     projects,
   } = data;
-
-  const accountHost = hosts?.account ?? `https://account.mongodb.com`;
-  const cloudHost = hosts?.cloud ?? `https://cloud.mongodb.com`;
-  const universityHost = hosts?.university ?? `https://university.mongodb.com`;
-  const supportHost = hosts?.support ?? `https://support.mongodb.com`;
 
   const sanitizedHosts: Required<HostsInterface> = {
     account: accountHost,

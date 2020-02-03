@@ -20,17 +20,17 @@ import {
   PlanType,
 } from '../types';
 
-const menuItemHeight = 36;
+// const menuItemHeight = 36;
 
 const menuContainerStyle = css`
   width: 280px;
   padding-top: 20px;
 `;
 
-const listContainerStyle = css`
-  max-height: ${menuItemHeight * 5}px;
-  overflow-y: auto;
-`;
+// const listContainerStyle = css`
+//   max-height: ${menuItemHeight * 5}px;
+//   overflow-y: auto;
+// `;
 
 const menuItemContainerStyle = css`
   flex-direction: row;

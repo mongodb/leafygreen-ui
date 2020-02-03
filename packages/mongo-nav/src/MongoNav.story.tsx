@@ -16,5 +16,6 @@ storiesOf('MongoNav', module).add('Default', () => (
     onOrganizationChange={() => {}}
     onProjectChange={() => {}}
     admin={boolean('admin', true)}
+    hosts={{ cloud: 'http://localhost:8080' }}
   />
 ));
