@@ -100,7 +100,7 @@ export interface CurrentOrganizationInterface extends OrganizationInterface {
 }
 
 export interface DataInterface {
-  readonly account: AccountInterface;
+  readonly account?: AccountInterface;
   currentOrganization?: CurrentOrganizationInterface;
   currentProject?: CurrentProjectInterface;
   readonly organizations?: Array<OrganizationInterface>;

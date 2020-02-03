@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import OrgNav from './org-nav/index';
 import ProjectNav from './project-nav/index';
+import Loading from './Loading';
 import {
   Product,
   URLSInterface,
@@ -120,8 +121,8 @@ export default function MongoNav({
   admin = false,
   constructOrganizationURL: constructOrganizationURLProp,
   constructProjectURL: constructProjectURLProp,
-  onError,
-  onSuccess,
+  onError = () => {},
+  onSuccess = () => {},
 }: MongoNavInterface) {
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
@@ -148,7 +149,7 @@ export default function MongoNav({
           onError(error);
         }
 
-        throw new Error(error);
+        console.warn(error);
       });
   }
 
@@ -162,7 +163,7 @@ export default function MongoNav({
 
   if (!data || !data.account) {
     // Eventually this logic will be more robust, but for an alpha version will return null without data
-    return null;
+    return <Loading />;
   }
 
   const {
