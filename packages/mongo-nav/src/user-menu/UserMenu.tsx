@@ -14,7 +14,7 @@ import {
 import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
-import MongoMenuTrigger from './MongoMenuTrigger';
+import UserMenuTrigger from './UserMenuTrigger';
 import {
   AccountInterface,
   URLSInterface,
@@ -138,7 +138,7 @@ function Description({ isActive, product }: DescriptionProps) {
   );
 }
 
-interface MongoMenuProps {
+interface UserMenuProps {
   /**
    * Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
    */
@@ -164,14 +164,14 @@ interface MongoMenuProps {
   hosts: Required<HostsInterface>;
 }
 
-function MongoMenu({
+function UserMenu({
   account: { firstName, lastName, email, openInvitations },
   activeProduct,
   onLogout = () => {},
   onProductChange = () => {},
   urls,
   hosts,
-}: MongoMenuProps) {
+}: UserMenuProps) {
   const [open, setOpen] = useState(false);
 
   const name = `${firstName} ${lastName}`;
@@ -191,11 +191,11 @@ function MongoMenu({
     },
   };
 
-  const { mongoMenu } = urls;
+  const { userMenu } = urls;
 
   return (
     <div className={triggerWrapper}>
-      <MongoMenuTrigger open={open} name={firstName} setOpen={setOpen} />
+      <UserMenuTrigger open={open} name={firstName} setOpen={setOpen} />
 
       <Menu open={open} setOpen={setOpen} className={menuStyle}>
         <div className={headerStyle}>
@@ -209,7 +209,7 @@ function MongoMenu({
 
           <FocusableMenuItem>
             <Button
-              href={isAccount ? undefined : mongoMenu?.account?.homepage}
+              href={isAccount ? undefined : userMenu?.account?.homepage}
               disabled={isAccount}
               as={isAccount ? 'button' : 'a'}
             >
@@ -231,10 +231,10 @@ function MongoMenu({
             [subMenuActiveContainerStyle]: isCloud,
           })}
         >
-          <MenuItem href={mongoMenu?.cloud?.userPreferences}>
+          <MenuItem href={userMenu?.cloud?.userPreferences}>
             User Preferences
           </MenuItem>
-          <MenuItem href={mongoMenu?.cloud?.invitations}>
+          <MenuItem href={userMenu?.cloud?.invitations}>
             {openInvitations ? (
               <span className={subMenuItemStyle}>
                 Invitations <Badge variant="blue">{openInvitations}</Badge>
@@ -243,10 +243,10 @@ function MongoMenu({
               'Invitations'
             )}
           </MenuItem>
-          <MenuItem href={mongoMenu?.cloud?.organizations}>
+          <MenuItem href={userMenu?.cloud?.organizations}>
             Organizations
           </MenuItem>
-          <MenuItem href={mongoMenu?.cloud?.mfa}>
+          <MenuItem href={userMenu?.cloud?.mfa}>
             Two-Factor Authorization
           </MenuItem>
         </SubMenu>
@@ -265,7 +265,7 @@ function MongoMenu({
             [subMenuActiveContainerStyle]: isUniversity,
           })}
         >
-          <MenuItem href={mongoMenu?.university?.videoPreferences}>
+          <MenuItem href={userMenu?.university?.videoPreferences}>
             Video Preferences
           </MenuItem>
         </SubMenu>
@@ -282,7 +282,7 @@ function MongoMenu({
             [subMenuActiveContainerStyle]: isSupport,
           })}
         >
-          <MenuItem href={mongoMenu?.support?.userPreferences}>
+          <MenuItem href={userMenu?.support?.userPreferences}>
             User Preferences
           </MenuItem>
         </SubMenu>
@@ -297,9 +297,9 @@ function MongoMenu({
   );
 }
 
-MongoMenu.displayName = 'MongoMenu';
+UserMenu.displayName = 'UserMenu';
 
-MongoMenu.propTypes = {
+UserMenu.propTypes = {
   user: PropTypes.objectOf(PropTypes.string),
   activeProduct: PropTypes.oneOf([
     'account',
@@ -314,4 +314,4 @@ MongoMenu.propTypes = {
   onAccountClick: PropTypes.func,
 };
 
-export default MongoMenu;
+export default UserMenu;

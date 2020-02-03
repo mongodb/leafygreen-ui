@@ -40,7 +40,7 @@ describe('packages/mongo-select', () => {
         onClick={onClick}
         constructOrganizationURL={orgID => orgID}
         urls={{
-          mongoMenu: {
+          userMenu: {
             cloud: {
               userPreferences: `https://cloud.mongodb.com/v2#/preferences/personalization`,
               organizations: `https://cloud.mongodb.com/v2#/preferences/organizations`,
@@ -180,7 +180,7 @@ describe('packages/mongo-select', () => {
         data={projectData}
         constructProjectURL={(orgID, projID) => `${orgID + projID}`}
         urls={{
-          mongoMenu: {
+          userMenu: {
             cloud: {
               userPreferences: `https://cloud.mongodb.com/v2#/preferences/personalization`,
               organizations: `https://cloud.mongodb.com/v2#/preferences/organizations`,

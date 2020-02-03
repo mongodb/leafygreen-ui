@@ -6,10 +6,10 @@ import {
   cleanup,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import MongoMenu from '.';
+import UserMenu from '.';
 
 const urls = {
-  mongoMenu: {
+  userMenu: {
     cloud: {
       userPreferences: `https://cloud.mongodb.com/v2#/preferences/personalization`,
       organizations: `https://cloud.mongodb.com/v2#/preferences/organizations`,
@@ -61,7 +61,7 @@ const hosts = {
 
 afterAll(cleanup);
 
-describe('packages/MongoMenu', () => {
+describe('packages/UserMenu', () => {
   const account = {
     firstName: 'Leafy',
     lastName: 'Green',
@@ -71,7 +71,7 @@ describe('packages/MongoMenu', () => {
   const onProductChange = jest.fn();
 
   const renderedComponent = render(
-    <MongoMenu
+    <UserMenu
       account={account}
       activeProduct={'cloud'}
       onLogout={onLogout}
@@ -82,7 +82,7 @@ describe('packages/MongoMenu', () => {
   );
 
   const { getByText } = renderedComponent;
-  test('renders closed MongoMenu with users name in button by default', () => {
+  test('renders closed UserMenu with users name in button by default', () => {
     const leafy = getByText('Leafy');
     expect(leafy).toBeInTheDocument();
   });
@@ -174,7 +174,7 @@ describe('packages/MongoMenu', () => {
 
   test('renders the account link as a disabled button when set to the empty string', () => {
     renderedComponent.rerender(
-      <MongoMenu
+      <UserMenu
         account={account}
         activeProduct="account"
         urls={urls}

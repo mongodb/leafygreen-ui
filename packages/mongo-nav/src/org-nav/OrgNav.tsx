@@ -15,7 +15,7 @@ import {
 } from '../types';
 
 import { OrgSelect } from '../mongo-select/index';
-import MongoMenu from '../mongo-menu/index';
+import UserMenu from '../user-menu/index';
 
 const navContainer = css`
   height: 60px;
@@ -245,7 +245,7 @@ export default function OrgNav({
             Admin
           </a>
         )}
-        <MongoMenu
+        <UserMenu
           account={account}
           activeProduct={activeProduct}
           urls={urls}

@@ -6,7 +6,7 @@
 
 ```js
 <MongoNav
-  data={data}
+  mode="dev"
   activeProduct="cloud"
   activeNav="accessManager"
   onOrganizationChange={onOrganizationChange}
@@ -33,58 +33,48 @@
 | `onError`                  | `(response) => {}`                                                                   | Function that is passed an error code, so that consuming application can handle fetch failures                                                            | `() => {}`                                                         |
 | `onSuccess`                | `(response) => {}`                                                                   | Callback that receives the response of the fetched data                                                                                                   | `() => {}`                                                         |
 
-### DataInterface
-
-````js
-interface DataInterface {
-  account: {email: string, firstName: string, lastName: string, openInvitations: number, username: string};
-  currentOrganization: {orgId: string, orgName: string, planType: 'cloud' | 'atlas' | 'onprem', paymentStatus: 'embargoed' | 'embargo confirmed' | 'ok' | 'warning'  'suspended' | 'closing' | 'admin suspended' |'dead' |'locked' |'closed' };
-  currentProject: {projectId: string, projectName: string, planType: 'cloud' | 'atlas' | 'onprem', orgId: string, alertsOpen: number, chartsActivated: boolean};
-  organizations: Array<{orgId: string, orgName: string, planType: 'cloud' | 'atlas' | 'onprem' }>;
-  projects: Array<{projectId: string, projectName: string, planType: 'cloud' | 'atlas' | 'onprem', orgId: string}>
-}```
-
 ### URLInterface
+
 ```js
 export interface URLSInterface {
-  mongoMenu?: {
+  userMenu?: {
     cloud?: {
-      userPreferences: string;
-      organizations: string;
-      invitations: string;
-      mfa: string;
-    };
+      userPreferences: string,
+      organizations: string,
+      invitations: string,
+      mfa: string,
+    },
     university?: {
-      videoPreferences: string;
-    };
+      videoPreferences: string,
+    },
     support?: {
-      userPreferences: string;
-    };
+      userPreferences: string,
+    },
     account?: {
-      homepage?: string;
-    };
+      homepage?: string,
+    },
   };
   mongoSelect?: {
-    viewAllProjects?: string;
-    viewAllOrganizations?: string;
-    newProject?: string;
-    orgSettings?: string;
+    viewAllProjects?: string,
+    viewAllOrganizations?: string,
+    newProject?: string,
+    orgSettings?: string,
   };
   orgNav?: {
-    settings?: string;
-    accessManager?: string;
-    support?: string;
-    billing?: string;
-    allClusters?: string;
-    admin?: string;
+    settings?: string,
+    accessManager?: string,
+    support?: string,
+    billing?: string,
+    allClusters?: string,
+    admin?: string,
   };
   projectNav?: {
-    settings?: string;
-    accessManager?: string;
-    support?: string;
-    integrations?: string;
-    alerts?: string;
-    activityFeed?: string;
+    settings?: string,
+    accessManager?: string,
+    support?: string,
+    integrations?: string,
+    alerts?: string,
+    activityFeed?: string,
   };
 }
-````
+```
