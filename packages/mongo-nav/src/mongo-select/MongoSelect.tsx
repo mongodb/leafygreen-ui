@@ -92,20 +92,15 @@ const onKeyDown: React.KeyboardEventHandler = e => {
 function MongoSelect(
   props: ProjectMongoSelectProps | OrganizationMongoSelectProps,
 ) {
-  const {
-    onClick,
-    variant,
-    onChange,
-    className,
-    urls,
-    isActive = false,
-  } = props;
+  const { onClick, variant, onChange, urls, isActive = false } = props;
+
+  const [open, setOpen] = React.useState(false);
 
   let trigger, footer;
   const { mongoSelect } = urls;
 
   if (isProject(props)) {
-    trigger = <ProjectTrigger current={props.current} className={className} />;
+    trigger = <ProjectTrigger current={props.current} open={open} />;
     footer = (
       <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
         <FocusableMenuItem>
@@ -124,9 +119,9 @@ function MongoSelect(
     trigger = (
       <OrganizationTrigger
         current={props.current}
-        className={className}
         urls={urls}
         isActive={isActive}
+        open={open}
       />
     );
     footer = (
@@ -182,7 +177,13 @@ function MongoSelect(
   };
 
   return (
-    <Menu trigger={trigger} className={menuContainerStyle} justify="start">
+    <Menu
+      trigger={trigger}
+      className={menuContainerStyle}
+      justify="start"
+      open={open}
+      setOpen={setOpen}
+    >
       <FocusableMenuItem>
         <Input onChange={onChange} onKeyDown={onKeyDown} variant={variant} />
       </FocusableMenuItem>

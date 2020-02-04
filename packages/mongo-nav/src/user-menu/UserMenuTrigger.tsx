@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Icon from '@leafygreen-ui/icon';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp } from '@leafygreen-ui/lib';
@@ -106,15 +106,32 @@ export default function UserMenuTrigger({
   setOpen,
 }: UserMenuTriggerProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const activeWidth = css`
+    width: ${buttonRef?.current?.getBoundingClientRect().width}px;
+  `;
 
   return (
     <>
       <button
         {...buttonDataProp.prop}
-        className={cx(baseButtonStyles, { [openBaseButtonStyle]: open })}
+        ref={buttonRef}
+        className={cx(baseButtonStyles, {
+          [openBaseButtonStyle]: open,
+          [activeWidth]: open,
+        })}
         onClick={() => setOpen(curr => !curr)}
       >
-        <span className={cx(menuNameStyle, truncate)}>{name}</span>
+        <span
+          className={cx(menuNameStyle, truncate, {
+            [css`
+              margin-right: unset;
+            `]: open,
+          })}
+        >
+          {name}
+        </span>
 
         <Icon
           {...iconDataProp.prop}

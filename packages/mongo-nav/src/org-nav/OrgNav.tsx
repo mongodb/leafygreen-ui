@@ -7,6 +7,7 @@ import Badge from '@leafygreen-ui/badge';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import { Menu } from '@leafygreen-ui/menu';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   AccountInterface,
   OrganizationInterface,
@@ -37,11 +38,6 @@ const navContainer = css`
 const leftSideContainer = css`
   display: flex;
   align-items: center;
-`;
-
-const orgSelectContainer = css`
-  margin-left: 20px;
-  margin-right: 20px;
 `;
 
 const ulContainer = css`
@@ -81,6 +77,34 @@ const accessManagerMenuItem = css`
   line-height: 19.6px;
   margin-top: 0px;
   margin-bottom: 0px;
+`;
+
+const navItemFocusStyle = css`
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 4px;
+    right: 4px;
+    background-color: #63b0d0;
+    opacity: 0;
+    transform: scale(0.8, 1);
+    transition: 150ms ease-in-out;
+    height: 3px;
+    border-radius: 50px;
+  }
+
+  &:focus {
+    outline: none;
+    color: ${uiColors.blue.base};
+
+    &:after {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 `;
 
 export const Colors = {
@@ -126,6 +150,7 @@ export default function OrgNav({
   hosts,
   currentProjectName,
 }: OrgNav) {
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const [open, setOpen] = useState(false);
   const { orgNav } = urls;
 
@@ -149,7 +174,6 @@ export default function OrgNav({
       <div className={leftSideContainer}>
         <LogoMark height={30} />
         <MongoSelect
-          className={orgSelectContainer}
           data={data}
           current={current}
           constructOrganizationURL={constructOrganizationURL}
@@ -188,6 +212,7 @@ export default function OrgNav({
                   href={orgNav.accessManager}
                   className={cx(linkText, {
                     [activeLink]: activeNav === 'accessManager',
+                    [navItemFocusStyle]: showFocus,
                   })}
                 >
                   Access Manager
@@ -224,6 +249,7 @@ export default function OrgNav({
                   href={orgNav.support}
                   className={cx(linkText, {
                     [activeLink]: activeNav === 'support',
+                    [navItemFocusStyle]: showFocus,
                   })}
                 >
                   Support
@@ -243,6 +269,7 @@ export default function OrgNav({
                   href={orgNav.billing}
                   className={cx(linkText, {
                     [activeLink]: activeNav === 'billing',
+                    [navItemFocusStyle]: showFocus,
                   })}
                 >
                   Billing
@@ -264,6 +291,7 @@ export default function OrgNav({
               href={orgNav.allClusters}
               className={cx(rightSideLinkStyle, linkText, {
                 [activeLink]: activeNav === 'allClusters',
+                [navItemFocusStyle]: showFocus,
               })}
             >
               All Clusters
@@ -278,6 +306,7 @@ export default function OrgNav({
             href={orgNav.admin}
             className={cx(rightSideLinkStyle, linkText, {
               [activeLink]: activeNav === 'admin',
+              [navItemFocusStyle]: showFocus,
             })}
           >
             Admin

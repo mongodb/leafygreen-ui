@@ -32,10 +32,6 @@ const leftSide = css`
   position: relative;
 `;
 
-const projectSelectMargin = css`
-  margin-right: 6px;
-`;
-
 const menuIconButtonStyle = css`
   margin: auto;
   background-color: white;
@@ -167,7 +163,6 @@ export default function ProjectNav({
           data={data}
           constructProjectURL={constructProjectURL}
           urls={urls}
-          className={projectSelectMargin}
           onChange={onProjectChange}
         />
         <Menu
