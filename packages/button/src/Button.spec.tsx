@@ -141,12 +141,14 @@ describe('packages/Button', () => {
   });
 
   test(`renders a button with an arbitrary element passed in glyph prop`, () => {
-    const glyph = render(
-      <Button glyph={<Icon glyph="Trash" />}>My Trash Button</Button>,
+    const buttonComponent = render(
+      <Button glyph={<svg />}>My Trash Button</Button>,
     ).container.firstChild;
 
-    if (!typeIs.element(glyph)) {
+    if (!typeIs.element(buttonComponent)) {
       throw new Error('No element was rendered');
     }
+
+    expect(buttonComponent.getAttribute('glyph')).not.toBe(null);
   });
 });
