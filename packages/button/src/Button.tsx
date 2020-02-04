@@ -352,7 +352,7 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
     'children',
   ]);
 
-  const myGlyph =
+  const modifiedGlyph =
     glyph && children
       ? React.cloneElement(glyph, {
           className: cx({ [glyphMargins[size]]: glyph !== null }),
@@ -378,7 +378,7 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
           align-items: center;
         `}
       >
-        {myGlyph}
+        {modifiedGlyph}
         {children}
       </span>
     </Root>
