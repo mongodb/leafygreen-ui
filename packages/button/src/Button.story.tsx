@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, select, boolean } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
+import Icon from '@leafygreen-ui/icon';
 import Button, { Size, Variant } from '.';
 
 const buttonClass = css`
@@ -61,6 +62,7 @@ storiesOf('Buttons', module)
         )}
         disabled={boolean('Disabled', false)}
         className={buttonClass}
+        glyph={<Icon glyph='Edit'/>}
       >
         {text('Children', 'Button')}
       </Button>

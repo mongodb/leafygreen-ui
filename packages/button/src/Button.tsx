@@ -201,6 +201,24 @@ const buttonSizes: { readonly [K in Size]: string } = {
   `,
 };
 
+const glyphSizes: { readonly [K in Size]: string } = {
+  [Size.XSmall]: css`
+    margin-right: 2px;
+  `,
+
+  [Size.Small]: css`
+    margin-right: 4px;
+  `,
+
+  [Size.Normal]: css`
+    margin-right: 5px;
+  `,
+
+  [Size.Large]: css`
+    margin-right: 8px;
+  `,
+};
+
 const baseStyle = css`
   position: relative;
   // Establishes the root element as a new stacking context
@@ -268,7 +286,7 @@ interface SharedButtonProps {
   className?: string;
   children?: React.ReactNode;
   disabled?: boolean;
-  glyph?: React.ReactNode; 
+  glyph?: React.ReactNode;
 }
 
 interface LinkButtonProps extends HTMLElementProps<'a'>, SharedButtonProps {
@@ -277,7 +295,7 @@ interface LinkButtonProps extends HTMLElementProps<'a'>, SharedButtonProps {
 
 interface ButtonButtonProps
   extends HTMLElementProps<'button'>,
-    SharedButtonProps {
+  SharedButtonProps {
   href?: null;
 }
 
@@ -350,9 +368,14 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
           //
           // https://www.w3.org/TR/css-flexbox-1/#painting
           z-index: 1;
+          display: flex;
+          align-self: center;
         `}
       >
-        {glyph}
+        <div className={cx(
+          { [glyphSizes[size]]: glyph !== null })}>
+          {glyph}
+        </div>
         {children}
       </span>
     </Root>
