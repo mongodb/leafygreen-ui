@@ -173,7 +173,7 @@ const buttonVariants: { readonly [K in Variant]: string } = {
   `,
 };
 
-const buttonSizes: { readonly [K in Size]: string } = {
+const buttonSizes: Record<Size, string> = {
   [Size.XSmall]: css`
     height: 22px;
     padding: 0 8px;
@@ -199,9 +199,9 @@ const buttonSizes: { readonly [K in Size]: string } = {
     font-size: 16px;
     padding: 0 20px;
   `,
-};
+} as const;
 
-const glyphSizes: { readonly [K in Size]: string } = {
+const glyphSizes: Record<Size, string> = {
   [Size.XSmall]: css`
     margin-right: 2px;
   `,
@@ -217,7 +217,7 @@ const glyphSizes: { readonly [K in Size]: string } = {
   [Size.Large]: css`
     margin-right: 8px;
   `,
-};
+} as const;
 
 const baseStyle = css`
   position: relative;
@@ -286,7 +286,7 @@ interface SharedButtonProps {
   className?: string;
   children?: React.ReactNode;
   disabled?: boolean;
-  glyph?: React.ReactNode;
+  glyph?: React.ReactElement;
 }
 
 interface LinkButtonProps extends HTMLElementProps<'a'>, SharedButtonProps {
@@ -295,7 +295,7 @@ interface LinkButtonProps extends HTMLElementProps<'a'>, SharedButtonProps {
 
 interface ButtonButtonProps
   extends HTMLElementProps<'button'>,
-  SharedButtonProps {
+    SharedButtonProps {
   href?: null;
 }
 
@@ -328,7 +328,7 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
     disabled = false,
     variant = Variant.Default,
     size = Size.Normal,
-    glyph = null,
+    glyph,
   } = props;
 
   const commonProps = {
@@ -353,6 +353,12 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
     'children',
   ]);
 
+  const myGlyph = glyph
+    ? React.cloneElement(glyph, {
+        className: cx({ [glyphSizes[size]]: glyph !== null }),
+      })
+    : null;
+
   const renderButton = (Root: React.ElementType<any> = 'button') => (
     <Root
       ref={forwardRef}
@@ -369,13 +375,10 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
           // https://www.w3.org/TR/css-flexbox-1/#painting
           z-index: 1;
           display: flex;
-          align-self: center;
+          align-items: center;
         `}
       >
-        <div className={cx(
-          { [glyphSizes[size]]: glyph !== null })}>
-          {glyph}
-        </div>
+        {myGlyph}
         {children}
       </span>
     </Root>

@@ -62,7 +62,7 @@ storiesOf('Buttons', module)
         )}
         disabled={boolean('Disabled', false)}
         className={buttonClass}
-        glyph={<Icon glyph='Edit'/>}
+        glyph={<Icon glyph="Edit" />}
       >
         {text('Children', 'Button')}
       </Button>
