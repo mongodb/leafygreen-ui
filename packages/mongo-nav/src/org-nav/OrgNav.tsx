@@ -50,6 +50,7 @@ const ulContainer = css`
 const linkText = css`
   text-decoration: none;
   color: ${uiColors.gray.dark3};
+  padding: 4px;
 `;
 
 const activeLink = css`
@@ -80,27 +81,29 @@ const accessManagerMenuItem = css`
 `;
 
 const navItemFocusStyle = css`
-  position: relative;
+  span {
+    position: relative;
 
-  &:after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 4px;
-    right: 4px;
-    background-color: #63b0d0;
-    opacity: 0;
-    transform: scale(0.8, 1);
-    transition: 150ms ease-in-out;
-    height: 3px;
-    border-radius: 50px;
+    &:after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 4px;
+      right: 4px;
+      background-color: #63b0d0;
+      opacity: 0;
+      transform: scale(0.8, 1);
+      transition: 150ms ease-in-out;
+      height: 3px;
+      border-radius: 50px;
+    }
   }
 
   &:focus {
     outline: none;
     color: ${uiColors.blue.base};
 
-    &:after {
+    span:after {
       opacity: 1;
       transform: scale(1);
     }
@@ -123,6 +126,56 @@ const paymentStatusMap: { readonly [K in Colors]: Array<string> } = {
   [Colors.Red]: ['dead', 'locked', 'closed'],
 };
 
+interface LinkElementProps {
+  isActive?: boolean;
+  href?: string;
+  tooltipText?: string;
+  children?: React.ReactNode;
+  className?: string;
+}
+
+function LinkElement({
+  isActive = false,
+  href,
+  tooltipText,
+  children,
+  className,
+}: LinkElementProps) {
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+
+  return (
+    <Tooltip
+      align="bottom"
+      justify="middle"
+      variant="dark"
+      trigger={
+        <a
+          href={href}
+          className={cx(
+            linkText,
+            {
+              [activeLink]: isActive,
+              [navItemFocusStyle]: showFocus,
+            },
+            className,
+          )}
+        >
+          <span
+            className={cx(
+              css`
+                position: relative;
+              `,
+            )}
+          >
+            {children}
+          </span>
+        </a>
+      }
+    >
+      {tooltipText}
+    </Tooltip>
+  );
+}
 interface OrgNav {
   account: AccountInterface;
   activeProduct: Product;
@@ -203,24 +256,13 @@ export default function OrgNav({
               justify-content: center;
             `}
           >
-            <Tooltip
-              align="bottom"
-              justify="middle"
-              variant="dark"
-              trigger={
-                <a
-                  href={orgNav.accessManager}
-                  className={cx(linkText, {
-                    [activeLink]: activeNav === 'accessManager',
-                    [navItemFocusStyle]: showFocus,
-                  })}
-                >
-                  Access Manager
-                </a>
-              }
+            <LinkElement
+              href={orgNav.accessManager}
+              isActive={activeNav === 'accessManager'}
+              tooltipText="Organization Access Manager"
             >
-              Organization Access Manager
-            </Tooltip>
+              Access Manager
+            </LinkElement>
             <Menu
               open={open}
               setOpen={setOpen}
@@ -240,67 +282,36 @@ export default function OrgNav({
             </Menu>
           </li>
           <li role="none" className={supportContainer}>
-            <Tooltip
-              align="bottom"
-              justify="middle"
-              variant="dark"
-              trigger={
-                <a
-                  href={orgNav.support}
-                  className={cx(linkText, {
-                    [activeLink]: activeNav === 'support',
-                    [navItemFocusStyle]: showFocus,
-                  })}
-                >
-                  Support
-                </a>
-              }
+            <LinkElement
+              href={orgNav.support}
+              isActive={activeNav === 'support'}
+              tooltipText="View the Organization Support"
             >
-              View the Organization Support
-            </Tooltip>
+              Support
+            </LinkElement>
           </li>
           <li role="none">
-            <Tooltip
-              align="bottom"
-              justify="middle"
-              variant="dark"
-              trigger={
-                <a
-                  href={orgNav.billing}
-                  className={cx(linkText, {
-                    [activeLink]: activeNav === 'billing',
-                    [navItemFocusStyle]: showFocus,
-                  })}
-                >
-                  Billing
-                </a>
-              }
+            <LinkElement
+              href={orgNav.billing}
+              isActive={activeNav === 'billing'}
+              tooltipText="View the Organization Billing"
             >
-              View the Organization Billing
-            </Tooltip>
+              Billing
+            </LinkElement>
           </li>
         </ul>
       </div>
       <div>
-        <Tooltip
-          align="bottom"
-          justify="middle"
-          variant="dark"
-          trigger={
-            <a
-              href={orgNav.allClusters}
-              className={cx(rightSideLinkStyle, linkText, {
-                [activeLink]: activeNav === 'allClusters',
-                [navItemFocusStyle]: showFocus,
-              })}
-            >
-              All Clusters
-            </a>
-          }
+        <LinkElement
+          href={orgNav.allClusters}
+          isActive={activeNav === 'allClusters'}
+          tooltipText="View all clusters across your organizations"
+          className={css`
+            margin-right: 25px;
+          `}
         >
-          View all clusters across your organizations
-        </Tooltip>
-
+          All Clusters
+        </LinkElement>
         {admin && (
           <a
             href={orgNav.admin}
@@ -309,7 +320,7 @@ export default function OrgNav({
               [navItemFocusStyle]: showFocus,
             })}
           >
-            Admin
+            <span>Admin</span>
           </a>
         )}
         <UserMenu

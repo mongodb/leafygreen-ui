@@ -90,9 +90,10 @@ const projectTriggerStyle = css`
   width: 174px;
   height: 28px;
   display: flex;
-  align-items: space-around;
+  align-items: center;
+  justify-content: space-around;
   padding: unset;
-  border: none;
+  border-color: transparent;
   background-color: white;
   position: relative;
   color: ${uiColors.gray.dark2};
@@ -149,7 +150,7 @@ const InteractionRingWrapper = ({
   const interactionRingHoverStyle = css`
     ${selector}:hover + & {
       transform: scale(1);
-      z-index: 1;
+      // z-index: 1;
     }
   `;
 
@@ -172,7 +173,7 @@ const InteractionRingWrapper = ({
       className={cx(
         css`
           position: relative;
-          z-index: -1;
+          z-index: unset;
         `,
         {
           [css`
@@ -268,11 +269,20 @@ export function ProjectTrigger({
       className={css`
         margin-left: 9px;
       `}
+      ringClassName={css`
+        border-radius: 5px;
+      `}
     >
       <button
         {...rest}
         {...projectTriggerDataProp.prop}
-        className={cx(projectTriggerStyle)}
+        className={cx(
+          projectTriggerStyle,
+          css`
+            padding: 2px;
+            border-radius: 5px;
+          `,
+        )}
       >
         <Icon size="small" glyph="Bell" />
         <span className={cx(selectedStyle, fontSize)}>
