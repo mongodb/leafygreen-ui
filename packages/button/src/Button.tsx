@@ -187,7 +187,6 @@ const buttonSizes: Record<Size, string> = {
     padding: 0 10px;
     font-size: 14px;
   `,
- 
   [Size.Normal]: css`
     height: 32px;
     padding: 0 12px;
@@ -353,11 +352,12 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
     'children',
   ]);
 
-  const myGlyph = glyph && children
-    ? React.cloneElement(glyph, {
-        className: cx({ [glyphMargins[size]]: glyph !== null }),
-      })
-    : glyph;
+  const myGlyph =
+    glyph && children
+      ? React.cloneElement(glyph, {
+          className: cx({ [glyphMargins[size]]: glyph !== null }),
+        })
+      : glyph;
 
   const renderButton = (Root: React.ElementType<any> = 'button') => (
     <Root
