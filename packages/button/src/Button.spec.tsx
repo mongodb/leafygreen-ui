@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
-import Icon from '@leafygreen-ui/icon';
 import Button from './Button';
 
 afterAll(cleanup);
