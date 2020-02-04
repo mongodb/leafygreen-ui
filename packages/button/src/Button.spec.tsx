@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
+import Icon from '@leafygreen-ui/icon';
 import Button from './Button';
 
 afterAll(cleanup);
@@ -137,5 +138,15 @@ describe('packages/Button', () => {
     }
 
     expect(buttonComponent.tagName.toLowerCase()).toBe('div');
+  });
+
+  test(`renders a button with an arbitrary element passed in glyph prop`, () => {
+    const glyph = render(
+      <Button glyph={<Icon glyph="Trash" />}>My Trash Button</Button>,
+    ).container.firstChild;
+
+    if (!typeIs.element(glyph)) {
+      throw new Error('No element was rendered');
+    }
   });
 });
