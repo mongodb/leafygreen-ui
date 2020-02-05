@@ -7,7 +7,7 @@ import {
 } from '@leafygreen-ui/menu';
 import Button from '@leafygreen-ui/button';
 import { uiColors } from '@leafygreen-ui/palette';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { keyMap } from '@leafygreen-ui/lib';
 import Input from './Input';
 import { OrganizationTrigger, ProjectTrigger } from './Trigger';
@@ -155,13 +155,7 @@ function OrgSelect({
         />
       </FocusableMenuItem>
 
-      <>
-        {data ? (
-          data.map(datum => renderOrganizationOption(datum))
-        ) : (
-          <li>{errorMessage}</li>
-        )}
-      </>
+      <>{data?.map(renderOrganizationOption) ?? <li>{errorMessage}</li>}</>
 
       <MenuSeparator />
       <MenuItem
@@ -193,11 +187,11 @@ function ProjectSelect({
     return (
       <MenuItem
         key={projectId}
-        className={menuItemContainerStyle}
+        className={cx(menuItemContainerStyle, nameStyle)}
         onClick={onClick}
         href={constructProjectURL(orgId, projectId)}
       >
-        <span className={nameStyle}>{projectName}</span>
+        {projectName}
       </MenuItem>
     );
   };
@@ -214,7 +208,7 @@ function ProjectSelect({
         <Input onChange={onChange} onKeyDown={onKeyDown} variant="project" />
       </FocusableMenuItem>
 
-      <>{data && data.map(datum => renderProjectOption(datum))}</>
+      <>{data?.map(datum => renderProjectOption(datum))}</>
 
       <MenuSeparator />
 
