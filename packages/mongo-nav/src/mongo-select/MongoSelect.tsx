@@ -20,17 +20,10 @@ import {
   PlanType,
 } from '../types';
 
-// const menuItemHeight = 36;
-
 const menuContainerStyle = css`
   width: 280px;
   padding-top: 20px;
 `;
-
-// const listContainerStyle = css`
-//   max-height: ${menuItemHeight * 5}px;
-//   overflow-y: auto;
-// `;
 
 const menuItemContainerStyle = css`
   flex-direction: row;
@@ -67,14 +60,20 @@ const orgOptionContainerStyle = css`
   justify-content: space-between;
 `;
 
+const formattedPlanTypes: Record<PlanType, string> = {
+  [PlanType.Atlas]: 'Atlas',
+  [PlanType.Cloud]: 'Cloud Manager',
+  [PlanType.OnPrem]: 'Ops Manager',
+} as const;
+
 const formatPlanType = (planType: PlanType) => {
   switch (planType) {
     case PlanType.Atlas:
-      return 'Atlas';
+      return formattedPlanTypes[PlanType.Atlas];
     case PlanType.Cloud:
-      return 'Cloud Manager';
+      return formattedPlanTypes[PlanType.Cloud];
     case PlanType.OnPrem:
-      return 'Ops Manager';
+      return [PlanType.OnPrem];
   }
 };
 

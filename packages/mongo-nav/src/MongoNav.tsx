@@ -131,32 +131,16 @@ export default function MongoNav({
   const universityHost = hosts?.university ?? `https://university.mongodb.com`;
   const supportHost = hosts?.support ?? `https://support.mongodb.com`;
 
-  function getProductionData() {
-    fetch(`${cloudHost}/user/shared`, {
+  const endpointUri = `${cloudHost}/user/shared`;
+  const getProductionData = () =>
+    fetch(endpointUri, {
       credentials: 'include',
       method: 'GET',
-    })
-      .then(response => response.json())
-      .then(data => {
-        setData(data);
-        onSuccess?.(data);
-      })
-      .catch(error => {
-        onError?.(error);
-        console.warn(error);
-      });
-  }
+    });
 
   function getFixtureData() {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       setTimeout(() => {
-        if (Math.random() > 0.8) {
-          reject(new Error('Random failure'));
-          if (onError) {
-            onError('Random failure');
-          }
-        }
-
         onSuccess?.(fixtureData);
 
         resolve(fixtureData);
@@ -168,7 +152,16 @@ export default function MongoNav({
     if (mode === Mode.Dev) {
       getFixtureData().then(data => setData(data as DataInterface));
     } else {
-      getProductionData();
+      getProductionData()
+        .then(response => response.json())
+        .then(data => {
+          setData(data);
+          onSuccess?.(data);
+        })
+        .catch(error => {
+          onError?.(error);
+          console.error(error);
+        });
     }
   }, []);
 
@@ -203,7 +196,7 @@ export default function MongoNav({
     `${cloudHost}/v2#/${projectId}`;
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
-  const sanitizedURLs: Required<URLSInterface> = {
+  const constructedURLs: Required<URLSInterface> = {
     userMenu: {
       cloud: {
         userPreferences:
@@ -292,7 +285,7 @@ export default function MongoNav({
         current={currentOrganization}
         data={organizations}
         constructOrganizationURL={constructOrganizationURL}
-        urls={sanitizedURLs}
+        urls={constructedURLs}
         activeNav={activeNav}
         onOrganizationChange={onOrganizationChange}
         admin={admin}
@@ -304,7 +297,7 @@ export default function MongoNav({
           current={currentProject}
           data={projects}
           constructProjectURL={constructProjectURL}
-          urls={sanitizedURLs}
+          urls={constructedURLs}
           alerts={currentProject?.alertsOpen}
           onProjectChange={onProjectChange}
           hosts={sanitizedHosts}
