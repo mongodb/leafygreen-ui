@@ -350,6 +350,7 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
     'size',
     'variant',
     'children',
+    'glyph',
   ]);
 
   const modifiedGlyph =

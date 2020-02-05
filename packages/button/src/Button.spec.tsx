@@ -148,6 +148,6 @@ describe('packages/Button', () => {
       throw new Error('No element was rendered');
     }
 
-    expect(buttonComponent.getAttribute('glyph')).not.toBe(null);
+    expect(buttonComponent.innerHTML).toContain('svg');
   });
 });
