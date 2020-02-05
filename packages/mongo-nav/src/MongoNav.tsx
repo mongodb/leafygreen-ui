@@ -131,7 +131,7 @@ export default function MongoNav({
   const universityHost = hosts?.university ?? `https://university.mongodb.com`;
   const supportHost = hosts?.support ?? `https://support.mongodb.com`;
 
-  function getData() {
+  function getProductionData() {
     fetch(`${cloudHost}/user/shared`, {
       credentials: 'include',
       method: 'GET',
@@ -139,25 +139,36 @@ export default function MongoNav({
       .then(response => response.json())
       .then(data => {
         setData(data);
-
-        if (onSuccess) {
-          onSuccess;
-        }
+        onSuccess?.(data);
       })
       .catch(error => {
-        if (onError) {
-          onError(error);
-        }
-
+        onError?.(error);
         console.warn(error);
       });
   }
 
+  function getFixtureData() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (Math.random() > 0.8) {
+          reject(new Error('Random failure'));
+          if (onError) {
+            onError('Random failure');
+          }
+        }
+
+        onSuccess?.(fixtureData);
+
+        resolve(fixtureData);
+      }, 1500);
+    });
+  }
+
   useEffect(() => {
     if (mode === Mode.Dev) {
-      setData(fixtureData);
+      getFixtureData().then(data => setData(data as DataInterface));
     } else {
-      getData();
+      getProductionData();
     }
   }, []);
 
