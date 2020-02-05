@@ -144,7 +144,7 @@ export default function MongoNav({
         onSuccess?.(fixtureData);
 
         resolve(fixtureData);
-      }, 1500);
+      }, 1000);
     });
   }
 
