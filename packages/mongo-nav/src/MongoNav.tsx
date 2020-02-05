@@ -138,7 +138,6 @@ export default function MongoNav({
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         setData(data);
 
         if (onSuccess) {
