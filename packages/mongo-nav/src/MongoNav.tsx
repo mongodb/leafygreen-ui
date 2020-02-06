@@ -157,13 +157,11 @@ export default function MongoNav({
   }
 
   async function handleResponse(response: Response) {
-    const res = await response;
-
-    if (!res.ok) {
-      onError?.(ErrorCodeMap[res.status as 401]); //typecasting for now until we have more types to handle
-      console.error(ErrorCodeMap[res.status as 401]);
+    if (!response.ok) {
+      onError?.(ErrorCodeMap[response.status as 401]); //typecasting for now until we have more types to handle
+      console.error(ErrorCodeMap[response.status as 401]);
     } else {
-      const data = await res.json();
+      const data = await response.json();
       setData(data);
       onSuccess?.(data);
     }
