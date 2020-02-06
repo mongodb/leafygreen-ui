@@ -6,7 +6,7 @@ import { Product, NavItem } from './types';
 
 storiesOf('MongoNav', module).add('Default', () => (
   <MongoNav
-    mode="dev"
+    // mode="dev"
     activeProduct={select(
       'activeProduct',
       Object.values(Product),
@@ -16,6 +16,5 @@ storiesOf('MongoNav', module).add('Default', () => (
     onOrganizationChange={() => {}}
     onProjectChange={() => {}}
     admin={boolean('admin', true)}
-    hosts={{ cloud: 'http://localhost:8080' }}
   />
 ));

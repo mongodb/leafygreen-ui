@@ -131,9 +131,9 @@ export default function MongoNav({
   const universityHost = hosts?.university ?? `https://university.mongodb.com`;
   const supportHost = hosts?.support ?? `https://support.mongodb.com`;
 
-  const endpointUri = `${cloudHost}/user/shared`;
+  const endpointURI = `${cloudHost}/user/shared`;
   const getProductionData = () =>
-    fetch(endpointUri, {
+    fetch(endpointURI, {
       credentials: 'include',
       method: 'GET',
     });
@@ -144,7 +144,7 @@ export default function MongoNav({
         onSuccess?.(fixtureData);
 
         resolve(fixtureData);
-      }, 1000);
+      }, 10);
     });
   }
 
@@ -163,9 +163,9 @@ export default function MongoNav({
           console.error(error);
         });
     }
-  }, []);
+  }, [mode, endpointURI]);
 
-  if (!data || !data.account) {
+  if (data?.account == null) {
     // Eventually this logic will be more robust, but for this version we will return the placeholder <Loading /> component
     return <Loading />;
   }

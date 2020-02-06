@@ -160,10 +160,10 @@ export default function ProjectNav({
   data,
   constructProjectURL,
   urls,
-  alerts,
   activeProduct,
   onProjectChange,
   hosts,
+  alerts = 0,
 }: ProjectNavInterface) {
   const { projectNav } = urls;
 
@@ -257,9 +257,7 @@ export default function ProjectNav({
               href={projectNav.alerts as string}
               className={alertIconButtonStyle}
             >
-              {typeof alerts === 'number' && (
-                <div className={alertBadgeStyle}>{alerts}</div>
-              )}
+              {alerts > 0 && <div className={alertBadgeStyle}>{alerts}</div>}
               <Icon glyph="Bell" />
             </IconButton>
           }

@@ -110,14 +110,14 @@ export default function OrgNav({
 }: OrgNav) {
   const { orgNav } = urls;
 
-  let variant: Colors | undefined;
+  let paymentVariant: Colors | undefined;
   let key: Colors;
 
   for (key in paymentStatusMap) {
     if (!current?.paymentStatus) {
-      variant = undefined;
+      paymentVariant = undefined;
     } else if (paymentStatusMap[key].includes(current?.paymentStatus)) {
-      variant = key;
+      paymentVariant = key;
     }
   }
 
@@ -141,13 +141,13 @@ export default function OrgNav({
         />
 
         <ul className={ulContainer}>
-          {variant && current?.paymentStatus && (
+          {paymentVariant && current?.paymentStatus && (
             <li>
               <Badge
                 className={css`
                   margin-right: 25px;
                 `}
-                variant={variant}
+                variant={paymentVariant}
               >
                 {current.paymentStatus.toUpperCase()}
               </Badge>

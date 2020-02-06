@@ -66,17 +66,6 @@ const formattedPlanTypes: Record<PlanType, string> = {
   [PlanType.OnPrem]: 'Ops Manager',
 } as const;
 
-const formatPlanType = (planType: PlanType) => {
-  switch (planType) {
-    case PlanType.Atlas:
-      return formattedPlanTypes[PlanType.Atlas];
-    case PlanType.Cloud:
-      return formattedPlanTypes[PlanType.Cloud];
-    case PlanType.OnPrem:
-      return [PlanType.OnPrem];
-  }
-};
-
 interface BaseMongoSelectProps {
   onClick?: React.MouseEventHandler;
   className?: string;
@@ -125,20 +114,17 @@ function OrgSelect({
       >
         <div className={orgOptionContainerStyle}>
           <span className={nameStyle}>{orgName}</span>
-          <span className={productStyle}>{formatPlanType(planType)}</span>
+          <span className={productStyle}>{formattedPlanTypes[planType]}</span>
         </div>
       </MenuItem>
     );
   };
 
-  const errorMessage =
-    'You do not belong to any organizations. Create an organization to start using MongoDB Cloud';
-
   return (
     <Menu
       trigger={
         <OrganizationTrigger
-          current={current?.orgName ?? 'All Organizations'}
+          placeholder={current?.orgName ?? 'All Organizations'}
           className={className}
           urls={urls}
           isActive={isActive}
@@ -155,7 +141,14 @@ function OrgSelect({
         />
       </FocusableMenuItem>
 
-      <>{data?.map(renderOrganizationOption) ?? <li>{errorMessage}</li>}</>
+      <>
+        {data?.map(renderOrganizationOption) ?? (
+          <li>
+            You do not belong to any organizations. Create an organization to
+            start using MongoDB Cloud
+          </li>
+        )}
+      </>
 
       <MenuSeparator />
       <MenuItem
@@ -199,7 +192,10 @@ function ProjectSelect({
   return (
     <Menu
       trigger={
-        <ProjectTrigger current={current.projectName} className={className} />
+        <ProjectTrigger
+          placeholder={current.projectName}
+          className={className}
+        />
       }
       className={menuContainerStyle}
       justify="start"
@@ -214,12 +210,12 @@ function ProjectSelect({
 
       <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
         <FocusableMenuItem>
-          <Button href={urls.mongoSelect.viewAllProjects} as="a">
+          <Button href={urls.mongoSelect.viewAllProjects as string}>
             View All Projects
           </Button>
         </FocusableMenuItem>
         <FocusableMenuItem>
-          <Button href={urls.mongoSelect.newProject} as="a">
+          <Button href={urls.mongoSelect.newProject as string}>
             + New Project
           </Button>
         </FocusableMenuItem>

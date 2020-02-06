@@ -3,6 +3,8 @@ import { render, cleanup, wait } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import MongoNav from './MongoNav';
 
+const timeout = 200;
+
 afterAll(cleanup);
 
 describe('packages/MongoNav', () => {
@@ -28,7 +30,7 @@ describe('packages/MongoNav', () => {
   describe('by default', () => {
     test('it renders the ProjectNav', async () => {
       await wait(() => getByTestId('project-nav'), {
-        timeout: 1500,
+        timeout,
       });
       const projectNav = getByTestId('project-nav');
       expect(projectNav).toBeInTheDocument();
@@ -36,7 +38,7 @@ describe('packages/MongoNav', () => {
 
     test('it renders admin as false', async () => {
       await wait(() => getByTestId('project-nav'), {
-        timeout: 1500,
+        timeout,
       });
       const orgNav = getByTestId('organization-nav');
       expect(orgNav.innerHTML.includes('Admin')).toBe(false);
@@ -46,7 +48,7 @@ describe('packages/MongoNav', () => {
   describe('it successfully constructs urls based on hosts and urls props', () => {
     test('specific url overrides take precedence over hosts, when the prop is set', async () => {
       await wait(() => getByTestId('project-nav'), {
-        timeout: 1500,
+        timeout,
       });
       const accessManager = getByText('Access Manager');
       expect((accessManager as HTMLAnchorElement).href).toBe(
@@ -55,7 +57,7 @@ describe('packages/MongoNav', () => {
     });
     test('host string changes default host, when the prop is set', async () => {
       await wait(() => getByTestId('project-nav'), {
-        timeout: 1500,
+        timeout,
       });
       const support = getByText('Support');
       const billing = getByText('Billing');
@@ -71,7 +73,7 @@ describe('packages/MongoNav', () => {
   });
   test('when mode prop is set to `dev`, fixture data is rendered inside of MongoNav', async () => {
     await wait(() => getByTestId('project-nav'), {
-      timeout: 1500,
+      timeout,
     });
     const firstName = getByText('DevMode');
     expect(firstName).toBeInTheDocument();
