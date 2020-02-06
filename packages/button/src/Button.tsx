@@ -353,10 +353,21 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
     'glyph',
   ]);
 
+  const spanStyle = css`
+    // Usually for this to take effect, you would need the element to be
+    // "positioned". Due to an obscure part of CSS spec, flex children
+    // respect z-index without the position property being set.
+    //
+    // https://www.w3.org/TR/css-flexbox-1/#painting
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+  `;
+
   const modifiedGlyph =
     glyph && children
       ? React.cloneElement(glyph, {
-          className: cx({ [glyphMargins[size]]: glyph !== null }),
+          className: cx({ [glyphMargins[size]]: glyph != null }),
         })
       : glyph;
 
@@ -367,18 +378,7 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
       {...(rest as HTMLElementProps<any>)}
       {...commonProps}
     >
-      <span
-        className={css`
-          // Usually for this to take effect, you would need the element to be
-          // "positioned". Due to an obscure part of CSS spec, flex children
-          // respect z-index without the position property being set.
-          //
-          // https://www.w3.org/TR/css-flexbox-1/#painting
-          z-index: 1;
-          display: flex;
-          align-items: center;
-        `}
-      >
+      <span className={spanStyle}>
         {modifiedGlyph}
         {children}
       </span>
