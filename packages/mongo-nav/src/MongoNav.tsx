@@ -156,18 +156,17 @@ export default function MongoNav({
     });
   }
 
-  function handleError(response: Response) {
-    if (!response.ok) {
-      onError?.(ErrorCodeMap[response.status as 401]); //typecasting for now until we have more types to handle
-      console.error(ErrorCodeMap[response.status as 401]);
+  async function handleResponse(response: Response) {
+    const res = await response;
+
+    if (!res.ok) {
+      onError?.(ErrorCodeMap[res.status as 401]); //typecasting for now until we have more types to handle
+      console.error(ErrorCodeMap[res.status as 401]);
+    } else {
+      const data = await res.json();
+      setData(data);
+      onSuccess?.(data);
     }
-
-    return response;
-  }
-
-  function handleSuccess(data: DataInterface) {
-    setData(data);
-    onSuccess?.(data);
   }
 
   useEffect(() => {
@@ -175,10 +174,8 @@ export default function MongoNav({
       getFixtureData().then(data => setData(data as DataInterface));
     } else {
       getProductionData()
-        .then(response => handleError(response))
-        .then(response => response.json())
-        .then(data => handleSuccess(data))
-        .catch(error => console.error(error));
+        .then(handleResponse)
+        .catch(console.error);
     }
   }, [mode, endpointURI]);
 

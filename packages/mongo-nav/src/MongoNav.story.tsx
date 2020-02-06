@@ -6,7 +6,7 @@ import { Product, NavItem } from './types';
 
 storiesOf('MongoNav', module).add('Default', () => (
   <MongoNav
-    // mode="dev"
+    mode="dev"
     activeProduct={select(
       'activeProduct',
       Object.values(Product),
