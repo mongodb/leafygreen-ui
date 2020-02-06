@@ -1,42 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-import omit from 'lodash/omit';
 
 interface TextInputProps {
   label?: string;
   description?: string;
-  inputField?: React.ReactNode;
-  errorMessage?: string;
+  optional?: boolean;
+  disabled?: boolean;
+  placeholder?: string;
 }
 
 const TextInput = React.forwardRef((props: TextInputProps, forwardRef) => {
   const {
     label = '',
     description = '',
-    inputField = null,
-    errorMessage = '',
+    optional = false,
+    disabled = false,
+    placeholder = '',
   } = props;
 
-  const commonProps = {};
-
-  const rest = omit(props, []);
-
-  const renderTextInput = (Root: React.ElementType<any> = 'input') => (
-    <Root
-      ref={forwardRef}
-      type={Root === 'input' ? 'input' : undefined}
-      {...(rest as HTMLElementProps<any>)}
-      {...commonProps}
-    >
-        {label}
-        {description}
-        {inputField}
-        {errorMessage}
-    </Root>
+  return (
+    <div>
+      <label>{label}</label>
+      <p>{description}</p>
+      <input type="text" name="text-input" required={!optional} disabled={disabled} placeholder={placeholder}/>
+    </div>
   );
-
-  return renderTextInput();
 });
 
 TextInput.displayName = 'TextInput';
@@ -45,8 +33,9 @@ TextInput.displayName = 'TextInput';
 TextInput.propTypes = {
   label: PropTypes.string,
   description: PropTypes.string,
-  inputField: PropTypes.node,
-  errorMessage: PropTypes.string,
+  optional: PropTypes.bool,
+  disabled: PropTypes.bool,
+  placeholder: PropTypes.string,
 };
 
 export default TextInput;
