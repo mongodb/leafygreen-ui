@@ -6,7 +6,7 @@ import { typeIs } from '@leafygreen-ui/lib';
 afterAll(cleanup);
 
 describe('packages/text-input', () => {
-  const className = 'test-checkbox-class';
+  const className = 'test-text-input-class';
   const { container } = render(<TextInput className={className} />);
   const controlledContainer = container.firstChild;
 
@@ -14,30 +14,28 @@ describe('packages/text-input', () => {
     throw new Error('Could not find controlled container component');
   }
 
-  const controlledCheckbox = controlledContainer.children[0];
+  const controlledTextInput = controlledContainer.children[0];
 
-  if (!typeIs.input(controlledCheckbox)) {
-    throw new Error('Could not find checkbox input element');
+  if (!typeIs.input(controlledTextInput)) {
+    throw new Error('Could not find text input element');
   }
 
-  test(`renders "${className}" in the Checkbox label's classList`, () => {
+  test(`renders "${className}" in the TextInput's classList`, () => {
     expect(controlledContainer.classList.contains(className)).toBe(true);
   });
 
   test('Input is optional when prop is set', () => {
-    expect(controlledCheckbox.checked).toBe(false);
-    expect(controlledCheckbox.getAttribute('aria-checked')).toBe('false');
+    expect(controlledTextInput.required).toBe(true);
 
     render(<TextInput optional={true} />, { container });
 
-    expect(controlledCheckbox.checked).toBe(true);
-    expect(controlledCheckbox.getAttribute('aria-checked')).toBe('true');
+    expect(controlledTextInput.required).toBe(false);
   });
 
   test('Input is disabled when disabled prop is set', () => {
     render(<TextInput disabled={true} />, { container });
 
-    expect(controlledCheckbox.disabled).toBe(true);
-    expect(controlledCheckbox.getAttribute('aria-disabled')).toBe('true');
+    expect(controlledTextInput.disabled).toBe(true);
+    expect(controlledTextInput.getAttribute('aria-disabled')).toBe('true');
   });
 });
