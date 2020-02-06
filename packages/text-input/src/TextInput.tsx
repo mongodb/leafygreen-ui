@@ -7,7 +7,6 @@ interface TextInputProps {
   label?: string;
   description?: string;
   inputField?: React.ReactNode;
-  input?: string;
   errorMessage?: string;
 }
 
@@ -16,7 +15,6 @@ const TextInput = React.forwardRef((props: TextInputProps, forwardRef) => {
     label = '',
     description = '',
     inputField = null,
-    input = '',
     errorMessage = '',
   } = props;
 
@@ -31,13 +29,10 @@ const TextInput = React.forwardRef((props: TextInputProps, forwardRef) => {
       {...(rest as HTMLElementProps<any>)}
       {...commonProps}
     >
-      <span>
         {label}
         {description}
         {inputField}
-        {input}
         {errorMessage}
-      </span>
     </Root>
   );
 
@@ -51,7 +46,6 @@ TextInput.propTypes = {
   label: PropTypes.string,
   description: PropTypes.string,
   inputField: PropTypes.node,
-  input: PropTypes.string,
   errorMessage: PropTypes.string,
 };
 
