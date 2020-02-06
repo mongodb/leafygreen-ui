@@ -9,8 +9,13 @@ import {
   NavItem,
   Mode,
   DataInterface,
+  ErrorCode,
 } from './types';
 import fixtureData from './data';
+
+const ErrorCodeMap = {
+  401: ErrorCode.NO_AUTHORIZATION,
+};
 
 interface MongoNavInterface {
   /**
@@ -72,7 +77,7 @@ interface MongoNavInterface {
   /**
    * Function that is passed an error code, so that consuming application can handle fetch failures
    */
-  onError?: (code: string) => void;
+  onError?: (error: ErrorCode) => void;
 
   /**
    * Callback that receives the response of the fetched data
@@ -132,11 +137,14 @@ export default function MongoNav({
   const supportHost = hosts?.support ?? `https://support.mongodb.com`;
 
   const endpointURI = `${cloudHost}/user/shared`;
-  const getProductionData = () =>
-    fetch(endpointURI, {
+
+  function getProductionData() {
+    return fetch(endpointURI, {
       credentials: 'include',
       method: 'GET',
+      mode: 'cors',
     });
+  }
 
   function getFixtureData() {
     return new Promise(resolve => {
@@ -148,20 +156,29 @@ export default function MongoNav({
     });
   }
 
+  function handleError(response: Response) {
+    if (!response.ok) {
+      onError?.(ErrorCodeMap[response.status as 401]); //typecasting for now until we have more types to handle
+      console.error(ErrorCodeMap[response.status as 401]);
+    }
+
+    return response;
+  }
+
+  function handleSuccess(data: DataInterface) {
+    setData(data);
+    onSuccess?.(data);
+  }
+
   useEffect(() => {
     if (mode === Mode.Dev) {
       getFixtureData().then(data => setData(data as DataInterface));
     } else {
       getProductionData()
+        .then(response => handleError(response))
         .then(response => response.json())
-        .then(data => {
-          setData(data);
-          onSuccess?.(data);
-        })
-        .catch(error => {
-          onError?.(error);
-          console.error(error);
-        });
+        .then(data => handleSuccess(data))
+        .catch(error => console.error(error));
     }
   }, [mode, endpointURI]);
 
