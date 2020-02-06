@@ -173,7 +173,7 @@ const buttonVariants: { readonly [K in Variant]: string } = {
   `,
 };
 
-const buttonSizes: { readonly [K in Size]: string } = {
+const buttonSizes: Record<Size, string> = {
   [Size.XSmall]: css`
     height: 22px;
     padding: 0 8px;
@@ -187,7 +187,6 @@ const buttonSizes: { readonly [K in Size]: string } = {
     padding: 0 10px;
     font-size: 14px;
   `,
-
   [Size.Normal]: css`
     height: 32px;
     padding: 0 12px;
@@ -199,7 +198,25 @@ const buttonSizes: { readonly [K in Size]: string } = {
     font-size: 16px;
     padding: 0 20px;
   `,
-};
+} as const;
+
+const glyphMargins: Record<Size, string> = {
+  [Size.XSmall]: css`
+    margin-right: 2px;
+  `,
+
+  [Size.Small]: css`
+    margin-right: 4px;
+  `,
+
+  [Size.Normal]: css`
+    margin-right: 5px;
+  `,
+
+  [Size.Large]: css`
+    margin-right: 8px;
+  `,
+} as const;
 
 const baseStyle = css`
   position: relative;
@@ -268,6 +285,7 @@ interface SharedButtonProps {
   className?: string;
   children?: React.ReactNode;
   disabled?: boolean;
+  glyph?: React.ReactElement;
 }
 
 interface LinkButtonProps extends HTMLElementProps<'a'>, SharedButtonProps {
@@ -309,6 +327,7 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
     disabled = false,
     variant = Variant.Default,
     size = Size.Normal,
+    glyph,
   } = props;
 
   const commonProps = {
@@ -331,7 +350,26 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
     'size',
     'variant',
     'children',
+    'glyph',
   ]);
+
+  const spanStyle = css`
+    // Usually for this to take effect, you would need the element to be
+    // "positioned". Due to an obscure part of CSS spec, flex children
+    // respect z-index without the position property being set.
+    //
+    // https://www.w3.org/TR/css-flexbox-1/#painting
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+  `;
+
+  const modifiedGlyph =
+    glyph && children
+      ? React.cloneElement(glyph, {
+          className: cx({ [glyphMargins[size]]: glyph != null }),
+        })
+      : glyph;
 
   const renderButton = (Root: React.ElementType<any> = 'button') => (
     <Root
@@ -340,16 +378,8 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
       {...(rest as HTMLElementProps<any>)}
       {...commonProps}
     >
-      <span
-        className={css`
-          // Usually for this to take effect, you would need the element to be
-          // "positioned". Due to an obscure part of CSS spec, flex children
-          // respect z-index without the position property being set.
-          //
-          // https://www.w3.org/TR/css-flexbox-1/#painting
-          z-index: 1;
-        `}
-      >
+      <span className={spanStyle}>
+        {modifiedGlyph}
         {children}
       </span>
     </Root>
@@ -377,6 +407,7 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   href: PropTypes.string,
+  glyph: PropTypes.node,
 };
 
 export default Button;
