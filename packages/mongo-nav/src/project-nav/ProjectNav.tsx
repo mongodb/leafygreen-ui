@@ -1,11 +1,12 @@
 import React from 'react';
 import Tooltip from '@leafygreen-ui/tooltip';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
+import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
-import { AtlasActive, AtlasInactive } from './SubBrandIcons';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import MongoSelect from '../mongo-select/index';
 import {
   ProjectInterface,
@@ -15,9 +16,10 @@ import {
   HostsInterface,
 } from '../types';
 
+const productIconProp = createDataProp('charts-data-prop');
+
 const navContainerStyle = css`
   display: flex;
-  align-items: center;
   justify-content: space-between;
   width: 100%;
   padding-left: 15px;
@@ -27,9 +29,9 @@ const navContainerStyle = css`
   overflow: hidden;
 `;
 
-const leftSide = css`
+const mongoSelectWrapper = css`
   display: flex;
-  position: relative;
+  align-items: center;
 `;
 
 const menuIconButtonStyle = css`
@@ -41,7 +43,7 @@ const menuIconStyle = css`
   transform: rotate(90deg);
 `;
 
-const olStyle = css`
+const productListStyle = css`
   list-style: none;
   display: flex;
   position: relative;
@@ -49,34 +51,62 @@ const olStyle = css`
   margin: 0;
   margin-block-start: 0;
   margin-block-end: 0;
-
-  &:after {
-    content: '';
-    height: 3px;
-    width: 100px;
-    position: absolute;
-    bottom: 0;
-    transition: 150ms transform ease-in-out, 150ms width ease-in-out 10ms;
-  }
 `;
 
 const productStyle = css`
-  width: 100px;
   margin-left: 25px;
   margin-right: 25px;
   display: inline-flex;
-  align-items: center;
   justify-content: center;
+  position: relative;
 `;
 
-const productMargin = css`
-  margin-left: 4px;
-  margin-top: 2px;
+const makeBorderVisible = css`
+  &:after {
+    opacity: 1;
+    transform: scale(1);
+  }
 `;
 
 const activeProductColor = css`
   font-weight: bolder;
   color: ${uiColors.green.dark3};
+
+  > ${productIconProp.selector} {
+    color: ${uiColors.green.base};
+  }
+
+  ${makeBorderVisible};
+
+  &:after {
+    background-color: ${uiColors.green.base}};
+  }
+
+  &:hover {
+    color: ${uiColors.green.dark3};
+
+    > ${productIconProp.selector} {
+      color: ${uiColors.green.base};
+    }
+  }
+`;
+
+const focusProductColor = css`
+  outline: none;
+
+  &:focus {
+    color: ${uiColors.blue.base};
+
+    > ${productIconProp.selector} {
+      color: ${uiColors.blue.base};
+    }
+
+    ${makeBorderVisible};
+
+    &:after {
+      background-color: ${uiColors.blue.base};
+    }
+  }
 `;
 
 const productTextStyle = css`
@@ -87,9 +117,33 @@ const productTextStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100px;
+  transition: 150ms color ease-in-out;
+
+  &:after {
+    content: '';
+    height: 3px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transform: scale(0.8, 1);
+    background-color: ${uiColors.gray.light2};
+    transition: 150ms all ease-in-out;
+  }
+
+  &:hover {
+    ${makeBorderVisible};
+    color: ${uiColors.gray.dark3};
+
+    > ${productIconProp.selector} {
+      color: ${uiColors.gray.dark2};
+    }
+  }
 `;
 
-const alertIconButtonStyle = css`
+const iconButtonMargin = css`
   margin-right: 20px;
 `;
 
@@ -108,25 +162,10 @@ const alertBadgeStyle = css`
   justify-content: center;
 `;
 
-function calcStyle(activeProduct: Product) {
-  const products = ['cloud', 'stitch', 'charts'];
-
-  const currentIndex = products.indexOf(activeProduct);
-
-  let computedX = 25;
-
-  for (let i = 0; i < currentIndex; i++) {
-    computedX += 150;
-  }
-
-  return css`
-    &:after {
-      transform: translate3d(${computedX}px, 0, 0);
-      background-color: ${uiColors.green.base}};
-    }
-  `;
-}
-
+const productIconStyle = css`
+  margin-right: 4px;
+  color: ${uiColors.gray.base};
+`;
 interface ProjectNavInterface {
   current: CurrentProjectInterface;
   data: Array<ProjectInterface>;
@@ -148,7 +187,14 @@ export default function ProjectNav({
   onProjectChange,
   hosts,
 }: ProjectNavInterface) {
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { projectNav } = urls;
+
+  const getProductClassName = (product: Product) =>
+    cx(productTextStyle, {
+      [activeProductColor]: activeProduct === product,
+      [focusProductColor]: showFocus,
+    });
 
   return (
     <nav
@@ -156,15 +202,21 @@ export default function ProjectNav({
       aria-label="project navigation"
       data-testid="project-nav"
     >
-      <div className={leftSide}>
-        <MongoSelect
-          variant="project"
-          current={current}
-          data={data}
-          constructProjectURL={constructProjectURL}
-          urls={urls}
-          onChange={onProjectChange}
-        />
+      <div
+        className={css`
+          display: flex;
+        `}
+      >
+        <div className={mongoSelectWrapper}>
+          <MongoSelect
+            variant="project"
+            current={current}
+            data={data}
+            constructProjectURL={constructProjectURL}
+            urls={urls}
+            onChange={onProjectChange}
+          />
+        </div>
         <Menu
           trigger={
             <IconButton ariaLabel="More" className={menuIconButtonStyle}>
@@ -179,60 +231,47 @@ export default function ProjectNav({
           <MenuItem href={projectNav.support}>Project Support</MenuItem>
           <MenuItem href={projectNav.integrations}>Integrations</MenuItem>
         </Menu>
-        <ul className={cx(olStyle, calcStyle(activeProduct))}>
+        <ul className={productListStyle}>
           <li role="none" className={productStyle}>
-            <a href={hosts.cloud} className={productTextStyle}>
-              {activeProduct === 'cloud' ? <AtlasActive /> : <AtlasInactive />}
-              <span
-                className={cx(productMargin, {
-                  [activeProductColor]: activeProduct === 'cloud',
-                })}
-              >
-                Atlas
-              </span>
+            <a href={hosts.cloud} className={getProductClassName('cloud')}>
+              <Icon
+                {...productIconProp.prop}
+                className={productIconStyle}
+                glyph="Cloud"
+              />
+              Atlas
             </a>
           </li>
+
           <li role="none" className={productStyle}>
-            <a href={hosts.stitch} className={productTextStyle}>
+            <a href={hosts.stitch} className={getProductClassName('stitch')}>
               <Icon
+                {...productIconProp.prop}
+                className={productIconStyle}
                 glyph="Stitch"
-                fill={
-                  activeProduct === 'stitch'
-                    ? uiColors.green.base
-                    : uiColors.gray.base
-                }
               />
-              <span
-                className={cx(productMargin, {
-                  [activeProductColor]: activeProduct === 'stitch',
-                })}
-              >
-                Stitch
-              </span>
+              Stitch
             </a>
           </li>
+
           <li role="none" className={productStyle}>
-            <a href={hosts.charts} className={productTextStyle}>
+            <a href={hosts.charts} className={getProductClassName('charts')}>
               <Icon
+                {...productIconProp.prop}
+                className={productIconStyle}
                 glyph="Charts"
-                fill={
-                  activeProduct === 'charts'
-                    ? uiColors.green.base
-                    : uiColors.gray.base
-                }
               />
-              <span
-                className={cx(productMargin, {
-                  [activeProductColor]: activeProduct === 'charts',
-                })}
-              >
-                Charts
-              </span>
+              Charts
             </a>
           </li>
         </ul>
       </div>
-      <div>
+      <div
+        className={css`
+          display: flex;
+          align-items: center;
+        `}
+      >
         <Tooltip
           align="bottom"
           justify="middle"
@@ -241,7 +280,7 @@ export default function ProjectNav({
             <IconButton
               ariaLabel="Invite"
               href={projectNav.alerts as string}
-              className={alertIconButtonStyle}
+              className={iconButtonMargin}
               size="large"
             >
               <Icon glyph="Person" size="large" />
@@ -258,7 +297,7 @@ export default function ProjectNav({
             <IconButton
               ariaLabel="Alerts"
               href={projectNav.alerts as string}
-              className={alertIconButtonStyle}
+              className={iconButtonMargin}
               size="large"
             >
               {alerts && <div className={alertBadgeStyle}>{alerts}</div>}

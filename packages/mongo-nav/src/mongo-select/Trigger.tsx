@@ -23,11 +23,6 @@ const orgTriggerContainer = css`
   margin-left: 20px;
 `;
 
-const projectTriggerContainer = css`
-  height: 45px;
-  padding: 3px 5px;
-`;
-
 const buttonStyles = css`
   padding: unset;
   border: none;
@@ -64,10 +59,6 @@ const fontSize = css`
   font-size: 14px;
 `;
 
-const anchorWrapperStyle = css`
-  margin-right: 20px;
-`;
-
 const anchorStyle = css`
   color: ${uiColors.gray.base};
   padding-left: 6px;
@@ -80,10 +71,8 @@ const anchorStyle = css`
   border: 1px solid ${uiColors.gray.light2};
   border-left: 0;
   background-color: white;
-
-  &:focus {
-    outline: none;
-  }
+  margin-right: 20px;
+  outline: none;
 `;
 
 const projectTriggerStyle = css`
@@ -97,6 +86,8 @@ const projectTriggerStyle = css`
   background-color: white;
   position: relative;
   color: ${uiColors.gray.dark2};
+  padding: 2px;
+  border-radius: 5px;
 
   &:focus {
     outline: none;
@@ -112,6 +103,7 @@ const interactionRing = css`
   bottom: -2px;
   left: -2px;
   right: -2px;
+  pointer-events: none;
   background-color: ${uiColors.gray.light2};
 `;
 
@@ -119,8 +111,21 @@ const orgTriggerBorderRadius = css`
   border-radius: 7px 0 0 7px;
 `;
 
-const settingsTriggerBorderRadius = css`
-  border-radius: 0 7px 7px 0;
+const projectTriggerWrapper = css`
+  margin-left: 9px;
+  margin-right: 4px;
+`;
+
+const activeColor = css`
+  color: ${uiColors.green.base};
+`;
+
+const focusStyle = css`
+  &:focus {
+    background-color: ${uiColors.blue.light2};
+    color: ${uiColors.blue.dark2};
+    border-color: ${uiColors.blue.light2};
+  }
 `;
 
 interface InteractionRingWrapperProps {
@@ -150,8 +155,12 @@ const InteractionRingWrapper = ({
   const interactionRingHoverStyle = css`
     ${selector}:hover + & {
       transform: scale(1);
-      // z-index: 1;
     }
+  `;
+
+  const defaultPosition = css`
+    position: relative;
+    z-index: 0;
   `;
 
   const modifiedChildren = React.Children.map(children, child =>
@@ -171,13 +180,10 @@ const InteractionRingWrapper = ({
   return (
     <div
       className={cx(
-        css`
-          position: relative;
-          z-index: unset;
-        `,
+        defaultPosition,
         {
           [css`
-            z-index: 1;
+            z-index: 2;
           `]: hasFocus,
         },
         className,
@@ -210,10 +216,12 @@ export function OrganizationTrigger({
   children,
   current,
   urls,
-  isActive,
+  isActive = false,
   open = false,
   ...rest
 }: OrganizationTriggerProps) {
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+
   return (
     <>
       <InteractionRingWrapper
@@ -228,24 +236,19 @@ export function OrganizationTrigger({
         </button>
       </InteractionRingWrapper>
 
-      <InteractionRingWrapper
-        className={anchorWrapperStyle}
-        ringClassName={settingsTriggerBorderRadius}
-        selector={anchorDataProp.selector}
+      <a
+        {...anchorDataProp.prop}
+        className={cx(anchorStyle, { [focusStyle]: showFocus })}
+        href={urls.mongoSelect.orgSettings}
+        aria-label="settings"
       >
-        <a
-          {...anchorDataProp.prop}
-          className={anchorStyle}
-          href={urls.mongoSelect.orgSettings}
-          aria-label="settings"
-        >
-          <Icon
-            glyph={'Settings'}
-            fill={isActive ? uiColors.green.base : uiColors.gray.base}
-          />
-        </a>
-      </InteractionRingWrapper>
-
+        <Icon
+          glyph="Settings"
+          className={cx({
+            [activeColor]: isActive,
+          })}
+        />
+      </a>
       {children}
     </>
   );
@@ -266,23 +269,15 @@ export function ProjectTrigger({
   return (
     <InteractionRingWrapper
       selector={projectTriggerDataProp.selector}
-      className={css`
-        margin-left: 9px;
-      `}
+      className={projectTriggerWrapper}
       ringClassName={css`
-        border-radius: 5px;
+        border-radius: 7px;
       `}
     >
       <button
         {...rest}
         {...projectTriggerDataProp.prop}
-        className={cx(
-          projectTriggerStyle,
-          css`
-            padding: 2px;
-            border-radius: 5px;
-          `,
-        )}
+        className={projectTriggerStyle}
       >
         <Icon size="small" glyph="Bell" />
         <span className={cx(selectedStyle, fontSize)}>
