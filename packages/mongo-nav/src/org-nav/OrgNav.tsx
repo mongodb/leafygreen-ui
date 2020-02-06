@@ -87,10 +87,10 @@ const navItemFocusStyle = css`
     &:after {
       content: '';
       position: absolute;
-      top: 100%;
-      left: 4px;
-      right: 4px;
-      background-color: #63b0d0;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background-color: #9dd0e7;
       opacity: 0;
       transform: scale(0.8, 1);
       transition: 150ms ease-in-out;

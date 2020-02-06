@@ -104,7 +104,7 @@ const focusProductColor = css`
     ${makeBorderVisible};
 
     &:after {
-      background-color: ${uiColors.blue.base};
+      background-color: #9dd0e7;
     }
   }
 `;

@@ -10,10 +10,10 @@ const iconDataProp = createDataProp('icon-data-prop');
 
 const interactionRing = css`
   position: absolute;
-  top: -2px;
-  bottom: -2px;
-  left: -2px;
-  right: -2px;
+  top: -3px;
+  bottom: -3px;
+  left: -3px;
+  right: -3px;
   border-radius: 50px;
   transform: scale(0.9, 0.8);
   transition: transform 150ms ease-in-out;
@@ -28,7 +28,7 @@ const interactionRing = css`
 
 const interactionRingFocusState = css`
   ${buttonDataProp.selector}:focus ~ & {
-    background-color: #63b0d0;
+    background-color: #9dd0e7;
     transform: scale(1);
   }
 `;
