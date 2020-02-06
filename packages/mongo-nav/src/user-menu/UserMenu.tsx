@@ -22,6 +22,10 @@ import {
   HostsInterface,
 } from '../types';
 
+const paddingLeft = 60;
+const svgWidth = 32;
+const menuItemPadding = 15;
+
 const subMenuContainer = createDataProp('sub-menu-container');
 
 const triggerWrapper = css`
@@ -115,9 +119,29 @@ const descriptionStyle = css`
   max-width: 100%;
 `;
 
-const logoutContainer = css`
+const feedbackStyle = css`
+  min-height: 56px;
+  background-color: ${uiColors.gray.light3};
+`;
+
+const feedbackIconStyle = css`
+  color: ${uiColors.gray.base};
+  margin-right: ${paddingLeft - svgWidth - menuItemPadding}px;
+  flex-shrink: 0;
+
+  ${subMenuContainer.selector}:hover > & {
+    color: ${uiColors.gray.dark1};
+  }
+`;
+
+const menuItemHeight = css`
   height: 56px;
   background-color: ${uiColors.gray.light3};
+`;
+
+const feedbackFlexContainer = css`
+  display: flex;
+  align-items: center;
 `;
 
 interface DescriptionProps {
@@ -192,6 +216,12 @@ function UserMenu({
   };
 
   const { userMenu } = urls;
+
+  const feedbackAnchorProps = {
+    href: 'https://feedback.mongodb.com/',
+    target: '_blank',
+    rel: 'noopener noreferrer',
+  };
 
   return (
     <div className={triggerWrapper}>
@@ -289,7 +319,19 @@ function UserMenu({
 
         <MenuSeparator />
 
-        <MenuItem onClick={onLogout} className={logoutContainer}>
+        <MenuItem
+          {...feedbackAnchorProps}
+          className={cx(menuItemHeight, feedbackStyle)}
+        >
+          <div className={feedbackFlexContainer}>
+            <Icon glyph="Bell" size="xlarge" className={feedbackIconStyle} />
+            Give us feedback
+          </div>
+        </MenuItem>
+
+        <MenuSeparator />
+
+        <MenuItem onClick={onLogout} className={menuItemHeight}>
           Logout
         </MenuItem>
       </Menu>
