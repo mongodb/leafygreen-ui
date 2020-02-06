@@ -1,4 +1,7 @@
 import * as typeIs from './typeIs';
+import Deferred from './Deferred';
+
+export { typeIs, Deferred };
 
 /**
  * Utility for making it easier to couple a React Component to a css selector.
@@ -32,8 +35,6 @@ export type HTMLElementProps<
 >
   ? Props
   : never;
-
-export { typeIs };
 
 /** Helper type to check if element is a specific React Component  */
 export function isComponentType<T = React.ReactElement>(

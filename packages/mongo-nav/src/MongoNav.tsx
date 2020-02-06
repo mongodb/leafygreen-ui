@@ -17,7 +17,7 @@ const ErrorCodeMap = {
   401: ErrorCode.NO_AUTHORIZATION,
 };
 
-interface MongoNavInterface {
+export interface MongoNavInterface {
   /**
    * Describes what product is currently active
    */
@@ -157,15 +157,15 @@ export default function MongoNav({
   }
 
   async function handleResponse(response: Response) {
-    const res = await response;
+    const { ok, status } = response;
 
-    if (!res.ok) {
-      onError?.(ErrorCodeMap[res.status as 401]); //typecasting for now until we have more types to handle
-      console.error(ErrorCodeMap[res.status as 401]);
-    } else {
-      const data = await res.json();
+    if (ok) {
+      const data = await response.json();
       setData(data);
       onSuccess?.(data);
+    } else {
+      onError?.(ErrorCodeMap[status as 401]); //typecasting for now until we have more types to handle
+      console.error(ErrorCodeMap[status as 401]);
     }
   }
 

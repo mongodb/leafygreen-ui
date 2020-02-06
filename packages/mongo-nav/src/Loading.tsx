@@ -32,7 +32,7 @@ const projNavContainer = css`
 export default function Loading() {
   return (
     <>
-      <nav className={orgNavContainer}>
+      <nav className={orgNavContainer} data-testid="mongo-nav-loader">
         <LogoMark height={30} />
       </nav>
       <nav className={projNavContainer} />
