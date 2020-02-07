@@ -1,22 +1,24 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@leafygreen-ui/emotion';
-// import Icon from '@leafygreen-ui/icon';
+import Icon from '@leafygreen-ui/icon';
 
 interface TextInputProps {
   label?: string;
   description?: string;
   optional?: boolean;
   disabled?: boolean;
-  placeholderText?: string;
-  validateInput?: React.ChangeEventHandler<HTMLInputElement>;
-  errorMessage?: string;
+  validationOccurred?: boolean;
   isValid?: boolean;
+  placeholderText?: string;
+  errorMessage?: string;
+  onFocus?: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 export default class TextInput extends PureComponent<
   TextInputProps & React.InputHTMLAttributes<HTMLInputElement>
-> {
+  > {
   static displayName = 'TextInput';
 
   static propTypes = {
@@ -25,8 +27,10 @@ export default class TextInput extends PureComponent<
     optional: PropTypes.bool,
     disabled: PropTypes.bool,
     placeholderText: PropTypes.string,
-    validateInput: PropTypes.func,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
     errorMessage: PropTypes.string,
+    validationOccurred: PropTypes.bool,
     isValid: PropTypes.bool,
   };
 
@@ -36,10 +40,20 @@ export default class TextInput extends PureComponent<
     optional: false,
     disabled: false,
     placeholderText: '',
-    validateInput: null,
+    onFocus: null,
+    onBlur: null,
     errorMessage: '',
+    validationOccurred: false,
     isValid: true,
   };
+
+  getColorFromValidationState() {
+    if(!this.props.validationOccurred) {
+      return '#CCC';
+    } else {
+      return this.props.isValid ? '#13AA52' : '#CF4A22';
+    }
+  }
 
   render() {
     const {
@@ -48,7 +62,10 @@ export default class TextInput extends PureComponent<
       optional,
       disabled,
       placeholderText,
+      onFocus,
+      onBlur,
       errorMessage,
+      validationOccurred,
       isValid,
     } = this.props;
 
@@ -70,40 +87,64 @@ export default class TextInput extends PureComponent<
       height: ${description === '' ? '0' : '20'}px;
     `;
 
+    const inputContainerStyle = css`
+      position: relative;
+      display: flex;
+      align-items: center;
+    `;
+
     const inputStyle = css`
       width: 400px;
       height: 36px;
       border-radius: 4px;
-      border: 1px solid #ccc;
+      border: 1px solid ${this.getColorFromValidationState()};
       padding-left: 12px;
       background: ${disabled ? '#E7EEEC' : '#FFFFFF'};
     `;
 
-    const errorStyle = css`
-      color: #cf4a22;
-      font-size: 14px;
-      height: 20px;
-      align-items: center;
-      padding-top: 4px;
+    const iconStyle = css`
+      position: absolute;
+      right: 10px;
+      color: ${isValid ? '#13AA52' : '#CF4A22'};
     `;
 
-    //   const validStyle = css`
-    //   color: #13AA52;
-    // `;
+    const optionalStyle = css`
+      position: absolute;
+      right: 12px;
+      color: #5D6C74;
+      font-size: 12px;
+      font-style: italic;
+    `;
+
+    const errorStyle = css`
+      color: #CF4A22;
+      font-size: 14px;
+      height: 20px;
+      padding-top: 4px;
+    `;
 
     return (
       <div className={textInputStyle}>
         <label className={labelStyle}>{label}</label>
         <label className={descriptionStyle}>{description}</label>
-        <input
-          className={inputStyle}
-          type="text"
-          required={!optional}
-          disabled={disabled}
-          placeholder={placeholderText}
-        />
-        <div hidden={isValid} className={errorStyle}>
-          {/* <Icon glyph='Warning' /> */}
+        <div className={inputContainerStyle}>
+          <input
+            className={inputStyle}
+            type='text'
+            required={!optional}
+            disabled={disabled}
+            placeholder={placeholderText}
+            onFocus={onFocus}
+            onBlur={onBlur}
+          />
+          <div hidden={!validationOccurred} className={iconStyle}>
+            <Icon glyph={isValid ? 'Checkmark' : 'Warning'} />
+          </div>
+          <div hidden={!optional || validationOccurred} className={optionalStyle}>
+            <label>Optional</label>
+          </div>    
+        </div>
+        <div hidden={!validationOccurred || isValid} className={errorStyle}>
           <label>{errorMessage}</label>
         </div>
       </div>
