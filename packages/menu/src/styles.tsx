@@ -3,11 +3,14 @@ import { uiColors } from '@leafygreen-ui/palette';
 
 const indentation = 15;
 const leftBar = 5;
+export const svgWidth = 32;
+export const menuItemPadding = 15;
+export const paddingLeft = 60;
 
 export const menuItemContainerStyle = css`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  align-items: center;
   padding-left: ${indentation}px;
   padding-right: ${indentation}px;
   text-decoration: none;

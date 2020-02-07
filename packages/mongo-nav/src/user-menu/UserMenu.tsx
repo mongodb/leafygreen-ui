@@ -115,11 +115,6 @@ const descriptionStyle = css`
   max-width: 100%;
 `;
 
-const logoutContainer = css`
-  height: 56px;
-  background-color: ${uiColors.gray.light3};
-`;
-
 interface DescriptionProps {
   isActive: boolean;
   product: 'cloud' | 'university' | 'support';
@@ -193,6 +188,12 @@ function UserMenu({
 
   const { userMenu } = urls;
 
+  const feedbackAnchorProps = {
+    href: 'https://feedback.mongodb.com/',
+    target: '_blank',
+    rel: 'noopener noreferrer',
+  };
+
   return (
     <div className={triggerWrapper}>
       <UserMenuTrigger open={open} name={firstName} setOpen={setOpen} />
@@ -226,7 +227,7 @@ function UserMenu({
           href={hosts.cloud}
           description={<Description isActive={isCloud} product="cloud" />}
           title="Atlas"
-          glyph="Cloud"
+          glyph={<Icon glyph="Cloud" size="xlarge" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isCloud,
           })}
@@ -260,7 +261,7 @@ function UserMenu({
             <Description isActive={isUniversity} product="university" />
           }
           title="University"
-          glyph="Laptop"
+          glyph={<Icon glyph="Laptop" size="xlarge" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isUniversity,
           })}
@@ -277,7 +278,7 @@ function UserMenu({
           href={hosts.support}
           description={<Description isActive={isSupport} product="support" />}
           title="Support"
-          glyph="Support"
+          glyph={<Icon glyph="Support" size="xlarge" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isSupport,
           })}
@@ -289,7 +290,17 @@ function UserMenu({
 
         <MenuSeparator />
 
-        <MenuItem onClick={onLogout} className={logoutContainer}>
+        <MenuItem
+          {...feedbackAnchorProps}
+          size="large"
+          glyph={<Icon glyph="Bell" size="xlarge" />}
+        >
+          Give us feedback
+        </MenuItem>
+
+        <MenuSeparator />
+
+        <MenuItem onClick={onLogout} size="large">
           Logout
         </MenuItem>
       </Menu>
