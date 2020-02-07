@@ -6,7 +6,7 @@ import TextInput from '.';
 storiesOf('TextInput', module).add('Default', () => (
   <TextInput
     label={text('Label', 'Input Label')}
-    description={text('Description', '')}
+    description={text('Description', 'This is a description for the input')}
     optional={boolean('Optional', false)}
     disabled={boolean('Disabled', false)}
     isValid={boolean('Valid Input', true)}

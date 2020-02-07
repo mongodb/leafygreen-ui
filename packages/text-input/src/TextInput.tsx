@@ -16,7 +16,7 @@ interface TextInputProps {
 
 export default class TextInput extends PureComponent<
   TextInputProps & React.InputHTMLAttributes<HTMLInputElement>
-  > {
+> {
   static displayName = 'TextInput';
 
   static propTypes = {
@@ -39,10 +39,6 @@ export default class TextInput extends PureComponent<
     validateInput: null,
     errorMessage: '',
     isValid: true,
-  };
-
-  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // I think validation needs to go in here
   };
 
   render() {
@@ -80,6 +76,7 @@ export default class TextInput extends PureComponent<
       border-radius: 4px;
       border: 1px solid #ccc;
       padding-left: 12px;
+      background: ${disabled ? '#E7EEEC' : '#FFFFFF'};
     `;
 
     const errorStyle = css`
@@ -104,7 +101,6 @@ export default class TextInput extends PureComponent<
           required={!optional}
           disabled={disabled}
           placeholder={placeholderText}
-          onChange={this.onChange}
         />
         <div hidden={isValid} className={errorStyle}>
           {/* <Icon glyph='Warning' /> */}
