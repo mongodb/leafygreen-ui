@@ -5,14 +5,15 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { ulStyleOverrides, SIDE_OFFSET } from './styles';
 
 const sideNavLabelStyle = css`
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.3px;
   font-weight: bold;
   text-transform: uppercase;
   color: ${uiColors.green.dark2};
-  margin-top: 0;
+  margin-top: 12px;
   margin-bottom: 0;
-  padding: 5px ${SIDE_OFFSET}px 5px ${SIDE_OFFSET}px;
+  padding: 4px ${SIDE_OFFSET}px 4px ${SIDE_OFFSET}px;
+  line-height: 1.3em;
 `;
 
 interface SideNavGroupProps {

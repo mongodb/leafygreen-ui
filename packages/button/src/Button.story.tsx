@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, select, boolean } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
+import Icon, { glyphs } from '@leafygreen-ui/icon';
 import Button, { Size, Variant } from '.';
 
 const buttonClass = css`
@@ -34,6 +35,7 @@ storiesOf('Buttons', module)
           null,
         ) as any
       }
+      glyph={<Icon glyph={select('Glyph', Object.keys(glyphs), 'Edit')} />}
       className={buttonClass}
     >
       {text('Children', 'Button')}
@@ -44,6 +46,11 @@ storiesOf('Buttons', module)
       'div',
       { div: 'div', span: 'span', button: 'button' },
       'div',
+    );
+    const selectedGlyph = select(
+      'Glyph',
+      Object.keys(glyphs) as Array<any>,
+      'Edit',
     );
 
     function CustomElement(props: object): React.ReactElement {
@@ -61,6 +68,7 @@ storiesOf('Buttons', module)
         )}
         disabled={boolean('Disabled', false)}
         className={buttonClass}
+        glyph={<Icon glyph={selectedGlyph} />}
       >
         {text('Children', 'Button')}
       </Button>
