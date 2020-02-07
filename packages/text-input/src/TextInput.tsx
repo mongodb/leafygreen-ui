@@ -18,7 +18,7 @@ interface TextInputProps {
 
 export default class TextInput extends PureComponent<
   TextInputProps & React.InputHTMLAttributes<HTMLInputElement>
-  > {
+> {
   static displayName = 'TextInput';
 
   static propTypes = {
@@ -48,7 +48,7 @@ export default class TextInput extends PureComponent<
   };
 
   getColorFromValidationState() {
-    if(!this.props.validationOccurred) {
+    if (!this.props.validationOccurred) {
       return '#CCC';
     } else {
       return this.props.isValid ? '#13AA52' : '#CF4A22';
@@ -111,13 +111,13 @@ export default class TextInput extends PureComponent<
     const optionalStyle = css`
       position: absolute;
       right: 12px;
-      color: #5D6C74;
+      color: #5d6c74;
       font-size: 12px;
       font-style: italic;
     `;
 
     const errorStyle = css`
-      color: #CF4A22;
+      color: #cf4a22;
       font-size: 14px;
       height: 20px;
       padding-top: 4px;
@@ -130,7 +130,7 @@ export default class TextInput extends PureComponent<
         <div className={inputContainerStyle}>
           <input
             className={inputStyle}
-            type='text'
+            type="text"
             required={!optional}
             disabled={disabled}
             placeholder={placeholderText}
@@ -140,9 +140,12 @@ export default class TextInput extends PureComponent<
           <div hidden={!validationOccurred} className={iconStyle}>
             <Icon glyph={isValid ? 'Checkmark' : 'Warning'} />
           </div>
-          <div hidden={!optional || validationOccurred} className={optionalStyle}>
-            <label>Optional</label>
-          </div>    
+          <div
+            hidden={!optional || validationOccurred}
+            className={optionalStyle}
+          >
+            <p>Optional</p>
+          </div>
         </div>
         <div hidden={!validationOccurred || isValid} className={errorStyle}>
           <label>{errorMessage}</label>
