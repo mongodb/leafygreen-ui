@@ -17,6 +17,7 @@ function Uncontrolled() {
         <MenuItem
           disabled={boolean('Disabled', true)}
           description="I am a description"
+          size={select('Size', ['default', 'large'], 'default')}
         >
           Disabled Menu Item
         </MenuItem>

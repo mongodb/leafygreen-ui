@@ -15,10 +15,6 @@ import {
 
 const menuItemContainer = createDataProp('menu-item-container');
 
-const menuItemHeight = css`
-  min-height: 36px;
-`;
-
 const titleTextStyle = css`
   width: 100%;
   font-size: 14px;
@@ -47,6 +43,23 @@ const descriptionTextStyle = css`
   }
 `;
 
+const Size = {
+  Default: 'default',
+  Large: 'large',
+} as const;
+
+type Size = typeof Size[keyof typeof Size];
+
+const menuItemHeight: Record<Size, string> = {
+  [Size.Default]: css`
+    min-height: 36px;
+  `,
+
+  [Size.Large]: css`
+    min-height: 56px;
+  `,
+};
+
 interface SharedMenuItemProps {
   /**
    * Class name that will be applied to root MenuItem element.
@@ -66,6 +79,9 @@ interface SharedMenuItemProps {
    * Determines whether or not the MenuItem is disabled.
    */
   disabled?: boolean;
+
+  size: Size;
+
   ref?: React.Ref<any>;
 }
 
@@ -104,6 +120,7 @@ const MenuItem = React.forwardRef(
     const {
       disabled = false,
       active = false,
+      size = 'default',
       className,
       children,
       description,
@@ -127,7 +144,7 @@ const MenuItem = React.forwardRef(
           {...menuItemContainer.prop}
           className={cx(
             menuItemContainerStyle,
-            menuItemHeight,
+            menuItemHeight[size],
             linkStyle,
             {
               [activeMenuItemContainerStyle]: active,
