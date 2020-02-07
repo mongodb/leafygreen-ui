@@ -134,7 +134,7 @@ describe('packages/mongo-select', () => {
 
     test('view all organizations href is changed, when the urls prop is set', () => {
       const viewAllOrganizations = getByText('View All Organizations')
-        .parentNode?.parentNode;
+        .parentNode?.parentNode?.parentNode;
       expect((viewAllOrganizations as HTMLAnchorElement)?.href).toBe(
         `https://cloud-dev.mongodb.com/v2#/preferences/organizations`,
       );

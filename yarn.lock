@@ -1685,6 +1685,17 @@
     facepaint "^1.2.1"
     polished "^2.3.0"
 
+"@leafygreen-ui/menu@5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/menu/-/menu-5.0.0.tgz#9429d053b72eada1466976403a3d82d5d6193bfe"
+  integrity sha512-J7TKkMPT1ElHT5hGUL70eR9n2BcMZHkfq0Af4oz1hz4izPmNfsFi6o77XAxkChvT65nWz/MTkijrYg0HeG8rpA==
+  dependencies:
+    "@leafygreen-ui/hooks" "^2.0.0"
+    "@leafygreen-ui/leafygreen-provider" "^1.0.0"
+    "@leafygreen-ui/lib" "^4.0.0"
+    "@leafygreen-ui/palette" "^2.0.0"
+    "@leafygreen-ui/popover" "^3.0.0"
+
 "@lerna/add@3.18.0":
   version "3.18.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.18.0.tgz#86e38f14d7a0a7c61315dccb402377feb1c9db83"
