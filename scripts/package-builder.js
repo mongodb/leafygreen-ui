@@ -52,7 +52,7 @@ const packageJSON = `
     "main": "./dist/index.node.js",
     "types": "./dist/index.d.ts",
     "scripts": {
-      "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
+      "build": "../../node_modules/.bin/webpack --config ../../rollup.config.js"
     },
     "license": "Apache-2.0",
     "publishConfig": {
