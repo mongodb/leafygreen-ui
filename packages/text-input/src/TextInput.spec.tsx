@@ -7,35 +7,18 @@ afterAll(cleanup);
 
 describe('packages/text-input', () => {
   const className = 'test-text-input-class';
-  const { container } = render(<TextInput className={className} />);
-  const controlledContainer = container.firstChild;
+  const label = 'Test Input Label';
 
-  if (!typeIs.element(controlledContainer)) {
-    throw new Error('Could not find controlled container component');
+  const renderedComponent = render(
+    <TextInput className={className} label={label} />,
+  );
+  const renderedTextInput = renderedComponent.container.firstChild;
+
+  if (!typeIs.element(renderedTextInput)) {
+    throw new Error('TextInput component failed to render');
   }
 
-  const controlledTextInput = controlledContainer.children[0];
-
-  if (!typeIs.input(controlledTextInput)) {
-    throw new Error('Could not find text input element');
-  }
-
-  test(`renders "${className}" in the TextInput's classList`, () => {
-    expect(controlledContainer.classList.contains(className)).toBe(true);
-  });
-
-  test('Input is optional when prop is set', () => {
-    expect(controlledTextInput.required).toBe(true);
-
-    render(<TextInput optional={true} />, { container });
-
-    expect(controlledTextInput.required).toBe(false);
-  });
-
-  test('Input is disabled when disabled prop is set', () => {
-    render(<TextInput disabled={true} />, { container });
-
-    expect(controlledTextInput.disabled).toBe(true);
-    expect(controlledTextInput.getAttribute('aria-disabled')).toBe('true');
+  test(`renders "${label}" as the input's label`, () => {
+    expect(renderedTextInput.classList.contains(className)).toBe(true);
   });
 });

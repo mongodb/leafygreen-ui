@@ -71,7 +71,7 @@ export default class TextInput extends PureComponent<
     `;
 
     const inputStyle = css`
-      width: 300px;
+      width: 400px;
       height: 36px;
       border-radius: 4px;
       border: 1px solid #ccc;
