@@ -2,4 +2,4 @@
 '@leafygreen-ui/mongo-nav': minor
 ---
 
-Adds feedback link to UserMenu
+Adds User Feedback link to `UserMenu`
