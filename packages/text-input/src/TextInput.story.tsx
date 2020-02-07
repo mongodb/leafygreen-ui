@@ -9,7 +9,8 @@ storiesOf('TextInput', module).add('Default', () => (
     description={text('Description', '')}
     optional={boolean('Optional', false)}
     disabled={boolean('Disabled', false)}
-    placeholder={text('Placeholder Text', '')}
-    errorMessage={text('Error Message', '')}
+    isValid={boolean('Valid Input', true)}
+    placeholderText={text('Placeholder Text', '')}
+    errorMessage={text('Error Message', 'This is an error message')}
   />
 ));

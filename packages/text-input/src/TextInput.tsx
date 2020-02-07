@@ -8,13 +8,15 @@ interface TextInputProps {
   description?: string;
   optional?: boolean;
   disabled?: boolean;
-  placeholder?: string;
+  placeholderText?: string;
+  validateInput?: React.ChangeEventHandler<HTMLInputElement>;
   errorMessage?: string;
+  isValid?: boolean;
 }
 
 export default class TextInput extends PureComponent<
   TextInputProps & React.InputHTMLAttributes<HTMLInputElement>
-> {
+  > {
   static displayName = 'TextInput';
 
   static propTypes = {
@@ -22,8 +24,10 @@ export default class TextInput extends PureComponent<
     description: PropTypes.string,
     optional: PropTypes.bool,
     disabled: PropTypes.bool,
-    placeholder: PropTypes.string,
+    placeholderText: PropTypes.string,
+    validateInput: PropTypes.func,
     errorMessage: PropTypes.string,
+    isValid: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -31,8 +35,14 @@ export default class TextInput extends PureComponent<
     description: '',
     optional: false,
     disabled: false,
-    placeholder: '',
+    placeholderText: '',
+    validateInput: null,
     errorMessage: '',
+    isValid: true,
+  };
+
+  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // I think validation needs to go in here
   };
 
   render() {
@@ -41,12 +51,14 @@ export default class TextInput extends PureComponent<
       description,
       optional,
       disabled,
-      placeholder,
+      placeholderText,
       errorMessage,
+      isValid,
     } = this.props;
 
     const textInputStyle = css`
-      display: grid;
+      display: flex;
+      flex-direction: column;
     `;
 
     const labelStyle = css`
@@ -73,9 +85,14 @@ export default class TextInput extends PureComponent<
     const errorStyle = css`
       color: #cf4a22;
       font-size: 14px;
-      height: ${errorMessage === '' ? '0' : '20'}px;
-      padding-top: 6px;
+      height: 20px;
+      align-items: center;
+      padding-top: 4px;
     `;
+
+    //   const validStyle = css`
+    //   color: #13AA52;
+    // `;
 
     return (
       <div className={textInputStyle}>
@@ -86,10 +103,13 @@ export default class TextInput extends PureComponent<
           type="text"
           required={!optional}
           disabled={disabled}
-          placeholder={placeholder}
+          placeholder={placeholderText}
+          onChange={this.onChange}
         />
-        {/* <Icon glyph='Error'/> */}
-        <label className={errorStyle}>{errorMessage}</label>
+        <div hidden={isValid} className={errorStyle}>
+          {/* <Icon glyph='Warning' /> */}
+          <label>{errorMessage}</label>
+        </div>
       </div>
     );
   }
