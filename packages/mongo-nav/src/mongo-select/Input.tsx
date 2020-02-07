@@ -56,7 +56,7 @@ const magnifyingGlassStyle = css`
   position: absolute;
   top: 8px;
   right: 8px;
-  color: ${uiColors.gray.dark2};
+  color: ${uiColors.gray.base};
   z-index: 1;
 `;
 
