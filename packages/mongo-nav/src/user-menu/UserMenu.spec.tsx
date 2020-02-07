@@ -167,7 +167,8 @@ describe('packages/UserMenu', () => {
 
       const universitySubMenuItem = getByText('Video Preferences');
       expect(
-        (universitySubMenuItem?.parentNode as HTMLAnchorElement).href,
+        (universitySubMenuItem?.parentNode?.parentNode as HTMLAnchorElement)
+          .href,
       ).toBe('https://university.mongodb.com/override-test');
     });
   });

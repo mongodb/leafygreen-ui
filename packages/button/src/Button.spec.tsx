@@ -138,4 +138,16 @@ describe('packages/Button', () => {
 
     expect(buttonComponent.tagName.toLowerCase()).toBe('div');
   });
+
+  test(`renders a button with an arbitrary element passed in glyph prop`, () => {
+    const buttonComponent = render(
+      <Button glyph={<svg />}>My Trash Button</Button>,
+    ).container.firstChild;
+
+    if (!typeIs.element(buttonComponent)) {
+      throw new Error('No element was rendered');
+    }
+
+    expect(buttonComponent.innerHTML).toContain('svg');
+  });
 });
