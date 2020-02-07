@@ -7,6 +7,7 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import { Menu, MenuSeparator, MenuItem, SubMenu } from './index';
+import Icon from '@leafygreen-ui/icon';
 
 afterAll(cleanup);
 
@@ -82,6 +83,9 @@ describe('packages/Menu', () => {
         <MenuItem data-testid="third-item" as="div">
           Item 3
         </MenuItem>
+        <MenuItem data-testid="fourth-item" glyph={<Icon glyph="Cloud" />}>
+          Item 4
+        </MenuItem>
       </div>,
     );
 
@@ -110,6 +114,10 @@ describe('packages/Menu', () => {
     test('renders as `div` tag when the as prop is set', () => {
       expect(thirdItem.tagName.toLowerCase()).toBe('div');
     });
+
+    // test('glyph is rendered when the prop is set', () => {
+    //   expect(fourthItem.innerHTML).toContain('svg');
+    // });
   });
 
   describe('sub-menu', () => {

@@ -4,6 +4,7 @@ import { select, boolean } from '@storybook/addon-knobs';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Menu, MenuSeparator, SubMenu, MenuItem } from '.';
 import { Align, Justify } from '@leafygreen-ui/popover';
+import Icon from '@leafygreen-ui/icon';
 
 function Uncontrolled() {
   return (
@@ -13,17 +14,23 @@ function Uncontrolled() {
         justify={select('Justify', Object.values(Justify), Justify.Start)}
         trigger={<button>trigger</button>}
       >
-        <MenuItem active>Active Menu Item</MenuItem>
         <MenuItem
-          disabled={boolean('Disabled', true)}
-          description="I am a description"
+          active
           size={select('Size', ['default', 'large'], 'default')}
+          glyph={<Icon glyph="Cloud" />}
         >
-          Disabled Menu Item
+          Active Menu Item
         </MenuItem>
         <MenuItem description="I am also a description">
           Menu Item With Description
         </MenuItem>
+        <MenuItem
+          disabled={boolean('Disabled', true)}
+          description="I am a description"
+        >
+          Disabled Menu Item
+        </MenuItem>
+
         <MenuItem href="http://mongodb.design">I am a link!</MenuItem>
       </Menu>
     </LeafyGreenProvider>
@@ -42,16 +49,24 @@ function Controlled() {
           open={open}
           setOpen={setOpen}
         >
-          <MenuItem active>Active Menu Item</MenuItem>
-          <MenuItem disabled={boolean('Disabled', true)}>
+          <MenuItem
+            active
+            size={select('Size', ['default', 'large'], 'large')}
+            glyph={<Icon glyph="Laptop" size="xlarge" />}
+          >
+            Active Menu Item
+          </MenuItem>
+          <MenuItem disabled={boolean('Disabled', true)} size="large">
             Disabled Menu Item
           </MenuItem>
-          <MenuItem description="I am a description">
+          <MenuItem description="I am a description" size="large">
             Menu Item With Description
           </MenuItem>
-          <MenuItem href="http://mongodb.design">I am a link!</MenuItem>
+          <MenuItem href="http://mongodb.design" size="large">
+            I am a link!
+          </MenuItem>
           <MenuSeparator />
-          <MenuItem>Left out of the MenuGroup</MenuItem>
+          <MenuItem size="large">Left out of the MenuGroup</MenuItem>
         </Menu>
       </button>
     </LeafyGreenProvider>
@@ -65,7 +80,7 @@ function SubMenuExample() {
         <SubMenu
           title="Menu Item 1"
           description="https://google.com"
-          glyph="Cloud"
+          glyph={<Icon glyph="Cloud" size="xlarge" />}
           active={true}
         >
           <MenuItem>SubMenu Item 1</MenuItem>
@@ -74,7 +89,7 @@ function SubMenuExample() {
         <SubMenu
           title="Menu Item 2"
           description="https://google.com"
-          glyph="Laptop"
+          glyph={<Icon glyph="Laptop" size="xlarge" />}
         >
           <MenuItem>Support 1</MenuItem>
         </SubMenu>

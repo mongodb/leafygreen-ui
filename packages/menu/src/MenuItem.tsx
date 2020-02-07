@@ -11,6 +11,9 @@ import {
   focusedMenuItemContainerStyle,
   linkStyle,
   disabledTextStyle,
+  svgWidth,
+  paddingLeft,
+  menuItemPadding,
 } from './styles';
 
 const menuItemContainer = createDataProp('menu-item-container');
@@ -40,6 +43,29 @@ const descriptionTextStyle = css`
   color: ${uiColors.gray.dark1};
   ${menuItemContainer.selector}:focus & {
     color: ${uiColors.blue.dark2};
+  }
+`;
+
+const mainIconStyle = css`
+  color: ${uiColors.gray.base};
+  margin-right: ${paddingLeft - svgWidth - menuItemPadding}px;
+  flex-shrink: 0;
+
+  ${menuItemContainer.selector}:hover > & {
+    color: ${uiColors.gray.dark1};
+  }
+`;
+
+const mainIconFocusedStyle = css`
+  ${menuItemContainer.selector}:focus > & {
+    color: ${uiColors.blue.base};
+  }
+`;
+
+const activeIconStyle = css`
+  color: ${uiColors.green.base};
+  ${menuItemContainer.selector}:hover > & {
+    color: ${uiColors.green.base};
   }
 `;
 
@@ -80,7 +106,15 @@ interface SharedMenuItemProps {
    */
   disabled?: boolean;
 
-  size: Size;
+  /**
+   * Slot to pass in an Icon rendered to the left of `MenuItem` text.
+   */
+  glyph?: React.ReactElement;
+
+  /**
+   * Size of the MenuItem component, can be `default` or `large`
+   */
+  size?: Size;
 
   ref?: React.Ref<any>;
 }
@@ -117,6 +151,8 @@ function usesLinkElement(
 
 const MenuItem = React.forwardRef(
   (props: MenuItemProps, forwardRef: React.Ref<any>) => {
+    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+
     const {
       disabled = false,
       active = false,
@@ -125,10 +161,22 @@ const MenuItem = React.forwardRef(
       children,
       description,
       href,
+      glyph,
       ...rest
     } = props;
 
-    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+    const updatedGlyph =
+      glyph &&
+      React.cloneElement(glyph, {
+        className: cx(
+          mainIconStyle,
+          {
+            [activeIconStyle]: active,
+            [mainIconFocusedStyle]: showFocus,
+          },
+          glyph.props?.className,
+        ),
+      });
 
     const anchorProps = href && {
       target: '_self',
@@ -158,24 +206,31 @@ const MenuItem = React.forwardRef(
           ref={forwardRef}
           tabIndex={disabled ? -1 : undefined}
         >
+          {updatedGlyph}
           <div
-            className={cx(titleTextStyle, {
-              [activeTitleTextStyle]: active,
-              [disabledTextStyle]: disabled,
-            })}
+            className={css`
+              width: 100%;
+            `}
           >
-            {children}
-          </div>
-          {description && (
             <div
-              className={cx(descriptionTextStyle, {
-                [activeDescriptionTextStyle]: active,
+              className={cx(titleTextStyle, {
+                [activeTitleTextStyle]: active,
                 [disabledTextStyle]: disabled,
               })}
             >
-              {description}
+              {children}
             </div>
-          )}
+            {description && (
+              <div
+                className={cx(descriptionTextStyle, {
+                  [activeDescriptionTextStyle]: active,
+                  [disabledTextStyle]: disabled,
+                })}
+              >
+                {description}
+              </div>
+            )}
+          </div>
         </Root>
       </li>
     );

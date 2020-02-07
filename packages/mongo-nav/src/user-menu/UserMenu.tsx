@@ -22,10 +22,6 @@ import {
   HostsInterface,
 } from '../types';
 
-const paddingLeft = 60;
-const svgWidth = 32;
-const menuItemPadding = 15;
-
 const subMenuContainer = createDataProp('sub-menu-container');
 
 const triggerWrapper = css`
@@ -117,31 +113,6 @@ const descriptionStyle = css`
   margin-top: 0px;
   margin-bottom: 16px;
   max-width: 100%;
-`;
-
-const feedbackStyle = css`
-  min-height: 56px;
-  background-color: ${uiColors.gray.light3};
-`;
-
-const feedbackIconStyle = css`
-  color: ${uiColors.gray.base};
-  margin-right: ${paddingLeft - svgWidth - menuItemPadding}px;
-  flex-shrink: 0;
-
-  ${subMenuContainer.selector}:hover > & {
-    color: ${uiColors.gray.dark1};
-  }
-`;
-
-const menuItemHeight = css`
-  height: 56px;
-  background-color: ${uiColors.gray.light3};
-`;
-
-const feedbackFlexContainer = css`
-  display: flex;
-  align-items: center;
 `;
 
 interface DescriptionProps {
@@ -256,7 +227,7 @@ function UserMenu({
           href={hosts.cloud}
           description={<Description isActive={isCloud} product="cloud" />}
           title="Atlas"
-          glyph="Cloud"
+          glyph={<Icon glyph="Cloud" size="xlarge" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isCloud,
           })}
@@ -290,7 +261,7 @@ function UserMenu({
             <Description isActive={isUniversity} product="university" />
           }
           title="University"
-          glyph="Laptop"
+          glyph={<Icon glyph="Laptop" size="xlarge" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isUniversity,
           })}
@@ -307,7 +278,7 @@ function UserMenu({
           href={hosts.support}
           description={<Description isActive={isSupport} product="support" />}
           title="Support"
-          glyph="Support"
+          glyph={<Icon glyph="Support" size="xlarge" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isSupport,
           })}
@@ -321,17 +292,15 @@ function UserMenu({
 
         <MenuItem
           {...feedbackAnchorProps}
-          className={cx(menuItemHeight, feedbackStyle)}
+          size="large"
+          glyph={<Icon glyph="Bell" size="xlarge" />}
         >
-          <div className={feedbackFlexContainer}>
-            <Icon glyph="Bell" size="xlarge" className={feedbackIconStyle} />
-            Give us feedback
-          </div>
+          Give us feedback
         </MenuItem>
 
         <MenuSeparator />
 
-        <MenuItem onClick={onLogout} className={menuItemHeight}>
+        <MenuItem onClick={onLogout} size="large">
           Logout
         </MenuItem>
       </Menu>
