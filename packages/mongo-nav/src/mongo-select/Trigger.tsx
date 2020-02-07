@@ -39,10 +39,7 @@ const selectedStyle = css`
   font-weight: bolder;
   flex-grow: 1;
   text-align: left;
-`;
-
-const fontSize = css`
-  font-size: 14px;
+  font-size: 13px;
 `;
 
 const anchorStyle = css`
@@ -112,7 +109,7 @@ export function ProjectTrigger({
       className={cx(buttonContainer, projectTriggerContainer, className)}
     >
       <Icon size="small" glyph="Bell" />
-      <span className={cx(selectedStyle, fontSize)}>{placeholder}</span>
+      <span className={selectedStyle}>{placeholder}</span>
       <Icon size="small" glyph="CaretDown" />
       {children}
     </button>
