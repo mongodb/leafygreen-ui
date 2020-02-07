@@ -289,24 +289,7 @@ export default function ProjectNav({
         >
           Invite To Project
         </Tooltip>
-        <Tooltip
-          align="bottom"
-          justify="middle"
-          variant="dark"
-          trigger={
-            <IconButton
-              ariaLabel="Alerts"
-              href={projectNav.alerts as string}
-              className={iconButtonMargin}
-              size="large"
-            >
-              {alerts && <div className={alertBadgeStyle}>{alerts}</div>}
-              <Icon glyph="Bell" size="large" />
-            </IconButton>
-          }
-        >
-          View the Project Alerts
-        </Tooltip>
+
         <Tooltip
           align="bottom"
           variant="dark"
@@ -316,12 +299,31 @@ export default function ProjectNav({
               ariaLabel="Project Activity Feed"
               href={projectNav.activityFeed as string}
               size="large"
+              className={iconButtonMargin}
             >
               <Icon glyph="Save" size="large" />
             </IconButton>
           }
         >
           View the Project Activity Feed
+        </Tooltip>
+
+        <Tooltip
+          align="bottom"
+          justify="middle"
+          variant="dark"
+          trigger={
+            <IconButton
+              ariaLabel="Alerts"
+              href={projectNav.alerts as string}
+              size="large"
+            >
+              {alerts && <div className={alertBadgeStyle}>{alerts}</div>}
+              <Icon glyph="Bell" size="large" />
+            </IconButton>
+          }
+        >
+          View the Project Alerts
         </Tooltip>
       </div>
     </nav>

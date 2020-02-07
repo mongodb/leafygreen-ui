@@ -73,6 +73,12 @@ const anchorStyle = css`
   background-color: white;
   margin-right: 20px;
   outline: none;
+
+  &:hover {
+    background-color: ${uiColors.gray.light2};
+    border-color: ${uiColors.gray.light2};
+    color: ${uiColors.gray.dark2};
+  }
 `;
 
 const projectTriggerStyle = css`

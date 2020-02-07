@@ -74,7 +74,7 @@ const accessManagerMenuContainer = css`
 
 const accessManagerMenuItem = css`
   font-size: 14px;
-  color: ${uiColors.gray.dark1};
+  color: ${uiColors.gray.dark2};
   line-height: 19.6px;
   margin-top: 0px;
   margin-bottom: 0px;
@@ -225,7 +225,19 @@ export default function OrgNav({
       data-testid="organization-nav"
     >
       <div className={leftSideContainer}>
-        <LogoMark height={30} />
+        <Tooltip
+          align="bottom"
+          justify="start"
+          variant="dark"
+          trigger={
+            <span>
+              <LogoMark height={30} />
+            </span>
+          }
+        >
+          View the Organization Home
+        </Tooltip>
+
         <MongoSelect
           data={data}
           current={current}
