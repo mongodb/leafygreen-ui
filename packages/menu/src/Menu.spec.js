@@ -114,10 +114,6 @@ describe('packages/Menu', () => {
     test('renders as `div` tag when the as prop is set', () => {
       expect(thirdItem.tagName.toLowerCase()).toBe('div');
     });
-
-    // test('glyph is rendered when the prop is set', () => {
-    //   expect(fourthItem.innerHTML).toContain('svg');
-    // });
   });
 
   describe('sub-menu', () => {
