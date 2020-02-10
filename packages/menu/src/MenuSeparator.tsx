@@ -3,7 +3,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 
 const borderStyle = css`
-  border-top: 1px solid ${uiColors.gray.light1};
+  border-top: 1px solid ${uiColors.gray.light2};
 `;
 
 function MenuSeparator() {

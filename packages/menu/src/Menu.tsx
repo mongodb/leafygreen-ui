@@ -43,6 +43,12 @@ interface MenuProps
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 
   /**
+   * Distance between the content rendered inside of the Menu and the trigger
+   *
+   */
+  spacing?: number;
+
+  /**
    * Callback to determine whether or not Menu should close when user tries to close it.
    *
    */
@@ -80,6 +86,7 @@ function Menu({
   usePortal = true,
   adjustOnMutation = false,
   shouldClose = () => true,
+  spacing,
   open: controlledOpen,
   setOpen: controlledSetOpen,
   children,
@@ -335,7 +342,7 @@ function Menu({
       justify={justify}
       refEl={refEl}
       usePortal={usePortal}
-      spacing={15}
+      spacing={spacing}
       adjustOnMutation={adjustOnMutation}
     >
       {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
