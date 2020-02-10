@@ -142,6 +142,49 @@ export default function MongoNav({
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
   const hosts = defaultsDeep(hostsProp, defaultHosts);
+  const endpointURI = `${hosts.cloud}/user/shared`;
+
+  function getProductionData() {
+    return fetch(endpointURI, {
+      credentials: 'include',
+      method: 'GET',
+    });
+  }
+
+  function getFixtureData() {
+    return new Promise(resolve => {
+      onSuccess?.(fixtureData);
+
+      resolve(fixtureData);
+    });
+  }
+
+  async function handleResponse(response: Response) {
+    if (!response.ok) {
+      const status = response.status as 401; //typecasting for now until we have more types to handle
+      onError?.(ErrorCodeMap[status]);
+      console.error(ErrorCodeMap[status]);
+    } else {
+      const data = await response.json();
+      setData(data);
+      onSuccess?.(data);
+    }
+  }
+
+  useEffect(() => {
+    if (mode === Mode.Dev) {
+      getFixtureData().then(data => setData(data as DataInterface));
+    } else {
+      getProductionData()
+        .then(handleResponse)
+        .catch(console.error);
+    }
+  }, [mode, endpointURI]);
+
+  if (data?.account == null) {
+    // Eventually this logic will be more robust, but for this version we will return the placeholder <Loading /> component
+    return <Loading />;
+  }
 
   const defaultURLS: Required<URLSInterface> = {
     userMenu: {
@@ -195,50 +238,6 @@ export default function MongoNav({
   const defaultProjectURL = (projectId: string) =>
     `${hosts.cloud}/v2#/${projectId}`;
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
-
-  const endpointURI = `${hosts.cloud}/user/shared`;
-
-  function getProductionData() {
-    return fetch(endpointURI, {
-      credentials: 'include',
-      method: 'GET',
-    });
-  }
-
-  function getFixtureData() {
-    return new Promise(resolve => {
-      onSuccess?.(fixtureData);
-
-      resolve(fixtureData);
-    });
-  }
-
-  async function handleResponse(response: Response) {
-    if (!response.ok) {
-      const status = response.status as 401; //typecasting for now until we have more types to handle
-      onError?.(ErrorCodeMap[status]);
-      console.error(ErrorCodeMap[status]);
-    } else {
-      const data = await response.json();
-      setData(data);
-      onSuccess?.(data);
-    }
-  }
-
-  useEffect(() => {
-    if (mode === Mode.Dev) {
-      getFixtureData().then(data => setData(data as DataInterface));
-    } else {
-      getProductionData()
-        .then(handleResponse)
-        .catch(console.error);
-    }
-  }, [mode, endpointURI]);
-
-  if (data?.account == null) {
-    // Eventually this logic will be more robust, but for this version we will return the placeholder <Loading /> component
-    return <Loading />;
-  }
 
   const {
     account,
