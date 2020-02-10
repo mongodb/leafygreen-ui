@@ -6,6 +6,7 @@ import Icon from '@leafygreen-ui/icon';
 interface TextInputProps {
   label?: string;
   description?: string;
+  value?: string;
   optional?: boolean;
   disabled?: boolean;
   validationOccurred?: boolean;
@@ -47,6 +48,8 @@ export default class TextInput extends PureComponent<
     isValid: true,
   };
 
+  state = { value: '' };
+
   getColorFromValidationState() {
     if (!this.props.validationOccurred) {
       return '#CCC';
@@ -55,10 +58,17 @@ export default class TextInput extends PureComponent<
     }
   }
 
+  updateInputValue(e: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      value: e.target.value,
+    });
+  }
+
   render() {
     const {
       label,
       description,
+      value = this.state.value,
       optional,
       disabled,
       placeholderText,
@@ -100,6 +110,7 @@ export default class TextInput extends PureComponent<
       border: 1px solid ${this.getColorFromValidationState()};
       padding-left: 12px;
       background: ${disabled ? '#E7EEEC' : '#FFFFFF'};
+      font-size: 14px;
     `;
 
     const iconStyle = css`
@@ -131,9 +142,11 @@ export default class TextInput extends PureComponent<
           <input
             className={inputStyle}
             type="text"
+            value={value}
             required={!optional}
             disabled={disabled}
             placeholder={placeholderText}
+            onChange={e => this.updateInputValue(e)}
             onFocus={onFocus}
             onBlur={onBlur}
           />
