@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { select, boolean } from '@storybook/addon-knobs';
+import { select, boolean, number } from '@storybook/addon-knobs';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Menu, MenuSeparator, SubMenu, MenuItem } from '.';
 import { Align, Justify } from '@leafygreen-ui/popover';
@@ -13,6 +13,7 @@ function Uncontrolled() {
         align={select('Align', Object.values(Align), Align.Bottom)}
         justify={select('Justify', Object.values(Justify), Justify.Start)}
         trigger={<button>trigger</button>}
+        spacing={number('spacing', 15)}
       >
         <MenuItem
           active
