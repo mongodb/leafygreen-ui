@@ -131,59 +131,59 @@ export default function MongoNav({
     stitch: 'https://stitch.mongodb.com',
   };
 
-  const sanitizedHosts = defaultsDeep(hosts, defaultHosts);
+  const constructedHosts = defaultsDeep(hosts, defaultHosts);
 
   const defaultURLS: Required<URLSInterface> = {
     userMenu: {
       cloud: {
-        userPreferences: `${sanitizedHosts.cloud}/v2#/preferences/personalization`,
-        organizations: `${sanitizedHosts.cloud}/v2#/preferences/organizations`,
-        invitations: `${sanitizedHosts.cloud}/v2#/preferences/invitations`,
-        mfa: `${sanitizedHosts.cloud}/v2#/preferences/2fa`,
+        userPreferences: `${constructedHosts.cloud}/v2#/preferences/personalization`,
+        organizations: `${constructedHosts.cloud}/v2#/preferences/organizations`,
+        invitations: `${constructedHosts.cloud}/v2#/preferences/invitations`,
+        mfa: `${constructedHosts.cloud}/v2#/preferences/2fa`,
       },
       university: {
-        videoPreferences: `${sanitizedHosts.university}`,
+        videoPreferences: `${constructedHosts.university}`,
       },
       support: {
-        userPreferences: `${sanitizedHosts.support}/profile`,
+        userPreferences: `${constructedHosts.support}/profile`,
       },
       account: {
-        homepage: `${sanitizedHosts.account}/account/profile/overview`,
+        homepage: `${constructedHosts.account}/account/profile/overview`,
       },
     },
     mongoSelect: {
-      viewAllProjects: `${sanitizedHosts.cloud}/v2#/org/${data.currentProject.orgId}/projects`,
-      viewAllOrganizations: `${sanitizedHosts.cloud}/v2#/preferences/organizations`,
-      newProject: `${sanitizedHosts.cloud}/v2#/org/${data.currentProject.orgId}/projects/create`,
-      orgSettings: `${sanitizedHosts.cloud}/v2#/org/${data.currentOrganization.orgId}/settings/general`,
+      viewAllProjects: `${constructedHosts.cloud}/v2#/org/${data.currentProject.orgId}/projects`,
+      viewAllOrganizations: `${constructedHosts.cloud}/v2#/preferences/organizations`,
+      newProject: `${constructedHosts.cloud}/v2#/org/${data.currentProject.orgId}/projects/create`,
+      orgSettings: `${constructedHosts.cloud}/v2#/org/${data.currentOrganization.orgId}/settings/general`,
     },
     orgNav: {
-      settings: `${sanitizedHosts.cloud}/v2#/org/${data.currentOrganization.orgId}/settings/general`,
-      accessManager: `${sanitizedHosts.cloud}/v2#/org/${data.currentOrganization.orgId}/access/users`,
-      support: `${sanitizedHosts.cloud}/v2#/org/${data.currentOrganization.orgId}/support`,
-      billing: `${sanitizedHosts.cloud}/v2#/org/${data.currentOrganization.orgId}/billing/overview`,
-      allClusters: `${sanitizedHosts.cloud}/v2#/clusters`,
-      admin: `${sanitizedHosts.cloud}/v2/admin#general/overview/servers`,
+      settings: `${constructedHosts.cloud}/v2#/org/${data.currentOrganization.orgId}/settings/general`,
+      accessManager: `${constructedHosts.cloud}/v2#/org/${data.currentOrganization.orgId}/access/users`,
+      support: `${constructedHosts.cloud}/v2#/org/${data.currentOrganization.orgId}/support`,
+      billing: `${constructedHosts.cloud}/v2#/org/${data.currentOrganization.orgId}/billing/overview`,
+      allClusters: `${constructedHosts.cloud}/v2#/clusters`,
+      admin: `${constructedHosts.cloud}/v2/admin#general/overview/servers`,
     },
     projectNav: {
-      settings: `${sanitizedHosts.cloud}/v2/${data.currentProject.projectId}#settings/groupSettings`,
-      accessManager: `${sanitizedHosts.cloud}/v2/${data.currentProject.projectId}#access`,
-      support: `${sanitizedHosts.cloud}/v2/${data.currentProject.projectId}#info/support`,
-      integrations: `${sanitizedHosts.cloud}/v2/${data.currentProject.projectId}#integrations`,
-      alerts: `${sanitizedHosts.cloud}/v2/${data.currentProject.projectId}#alerts`,
-      activityFeed: `${sanitizedHosts.cloud}/v2/${data.currentProject.projectId}#activity`,
+      settings: `${constructedHosts.cloud}/v2/${data.currentProject.projectId}#settings/groupSettings`,
+      accessManager: `${constructedHosts.cloud}/v2/${data.currentProject.projectId}#access`,
+      support: `${constructedHosts.cloud}/v2/${data.currentProject.projectId}#info/support`,
+      integrations: `${constructedHosts.cloud}/v2/${data.currentProject.projectId}#integrations`,
+      alerts: `${constructedHosts.cloud}/v2/${data.currentProject.projectId}#alerts`,
+      activityFeed: `${constructedHosts.cloud}/v2/${data.currentProject.projectId}#activity`,
     },
   };
 
   const constructedURLS = defaultsDeep(urls, defaultURLS);
 
   const defaultOrgURL = (orgId: string) =>
-    `${sanitizedHosts.cloud}/v2#/org/${orgId}/projects`;
+    `${constructedHosts.cloud}/v2#/org/${orgId}/projects`;
   const constructOrganizationURL =
     constructOrganizationURLProp ?? defaultOrgURL;
 
   const defaultProjectURL = (projectId: string) =>
-    `${sanitizedHosts.cloud}/v2#/${projectId}`;
+    `${constructedHosts.cloud}/v2#/${projectId}`;
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
   return (
@@ -198,7 +198,7 @@ export default function MongoNav({
         activeNav={activeNav}
         onOrganizationChange={onOrganizationChange}
         admin={admin}
-        hosts={sanitizedHosts}
+        hosts={constructedHosts}
       />
       {showProjNav && (
         <ProjectNav
@@ -209,7 +209,7 @@ export default function MongoNav({
           urls={constructedURLS}
           alerts={currentProject.alertsOpen}
           onProjectChange={onProjectChange}
-          hosts={sanitizedHosts}
+          hosts={constructedHosts}
         />
       )}
     </>
