@@ -1,5 +1,20 @@
 # @leafygreen-ui/mongo-nav
 
+## 0.6.0
+
+### Minor Changes
+
+- 786ccf1: Adds User Feedback link to `UserMenu`
+- c8d50f2: Rename internal MongoMenu component to UserMenu
+
+### Patch Changes
+
+- Updated dependencies [786ccf1]
+- Updated dependencies [b342448]
+- Updated dependencies [690888a]
+  - @leafygreen-ui/menu@6.0.0
+  - @leafygreen-ui/button@4.1.0
+
 ## 0.5.0
 
 ### Minor Changes

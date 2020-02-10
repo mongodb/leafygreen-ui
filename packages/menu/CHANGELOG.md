@@ -1,5 +1,16 @@
 # @leafygreen-ui/menu
 
+## 6.0.0
+
+### Major Changes
+
+- 786ccf1: - Changes `glyph` prop from `string` to `React.ReactElement` in `<SubMenu />`
+  - Adds `glyph` and `size` props to `<MenuItem />`
+
+### Minor Changes
+
+- 690888a: Add `spacing` prop to `<Menu />` component
+
 ## 5.1.0
 
 ### Minor Changes

@@ -1,5 +1,15 @@
 # @leafygreen-ui/mongo-menu
 
+## 3.0.3
+
+### Patch Changes
+
+- Updated dependencies [786ccf1]
+- Updated dependencies [b342448]
+- Updated dependencies [690888a]
+  - @leafygreen-ui/menu@6.0.0
+  - @leafygreen-ui/button@4.1.0
+
 ## 3.0.2
 
 ### Patch Changes
