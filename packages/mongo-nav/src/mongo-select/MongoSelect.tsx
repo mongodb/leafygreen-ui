@@ -132,6 +132,7 @@ function OrgSelect({
       }
       className={menuContainerStyle}
       justify="start"
+      spacing={0}
     >
       <FocusableMenuItem>
         <Input
@@ -199,6 +200,7 @@ function ProjectSelect({
       }
       className={menuContainerStyle}
       justify="start"
+      spacing={0}
     >
       <FocusableMenuItem>
         <Input onChange={onChange} onKeyDown={onKeyDown} variant="project" />
