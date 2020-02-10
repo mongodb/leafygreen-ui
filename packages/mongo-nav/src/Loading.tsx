@@ -5,7 +5,6 @@ import { uiColors } from '@leafygreen-ui/palette';
 
 const orgNavContainer = css`
   height: 60px;
-  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,7 +20,6 @@ const projNavContainer = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
   padding-left: 15px;
   padding-right: 15px;
   height: 45px;
