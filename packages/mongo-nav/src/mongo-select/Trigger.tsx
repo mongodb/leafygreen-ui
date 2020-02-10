@@ -184,17 +184,7 @@ const InteractionRingWrapper = ({
   );
 
   return (
-    <div
-      className={cx(
-        defaultPosition,
-        {
-          [css`
-            z-index: 2;
-          `]: hasFocus,
-        },
-        className,
-      )}
-    >
+    <div className={cx(defaultPosition, className)}>
       {modifiedChildren}
       <div
         className={cx(
