@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
-import Icon, { glyphs } from '@leafygreen-ui/icon';
+import Icon from '@leafygreen-ui/icon';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
@@ -14,6 +14,9 @@ import {
   focusedMenuItemContainerStyle,
   linkStyle,
   disabledTextStyle,
+  paddingLeft,
+  menuItemPadding,
+  svgWidth,
 } from './styles';
 import { ExitHandler } from 'react-transition-group/Transition';
 
@@ -22,9 +25,6 @@ const iconButton = createDataProp('icon-button');
 
 const subMenuContainerHeight = 56;
 const iconButtonContainerHeight = 28;
-const paddingLeft = 60;
-const svgWidth = 32;
-const menuItemPadding = 15;
 
 const liStyle = css`
   position: relative;
@@ -32,7 +32,6 @@ const liStyle = css`
 `;
 
 const subMenuStyle = css`
-  flex-direction: row;
   min-height: 56px;
   border-top: 1px solid ${uiColors.gray.light2};
   background-color: ${uiColors.gray.light3};
@@ -146,16 +145,41 @@ const menuItemBorder = css`
   top: 0;
 `;
 
-type Glyph = keyof typeof glyphs;
-
 interface SharedSubMenuProps {
+  /**
+   * Determines if `<SubMenu />` item appears open
+   */
   open?: boolean;
+
+  /**
+   * Function to set the value of `open` in `<SubMenu />`
+   */
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+
+  /**
+   * className applied to `SubMenu` root element
+   */
   className?: string;
+
+  /**
+   * Content to appear below main text of SubMenu
+   */
   description?: React.ReactElement;
+
+  /**
+   * Determines if `<SubMenu />` item appears disabled
+   */
   disabled?: boolean;
+
+  /**
+   * Determines if `<SubMenu />` item appears active
+   */
   active?: boolean;
-  glyph?: Glyph;
+  /**
+   * Slot to pass in an Icon rendered to the left of `SubMenu` text.
+   */
+  glyph?: React.ReactElement;
+
   onExited?: ExitHandler;
 }
 
@@ -214,6 +238,19 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
 
   const numberOfMenuItems = React.Children.toArray(children).length;
 
+  const updatedGlyph =
+    glyph &&
+    React.cloneElement(glyph, {
+      className: cx(
+        mainIconStyle,
+        {
+          [activeIconStyle]: active,
+          [mainIconFocusedStyle]: showFocus,
+        },
+        glyph.props?.className,
+      ),
+    });
+
   const renderedSubMenuItem = (Root: React.ElementType<any> = 'button') => (
     <li role="none" className={liStyle}>
       <Root
@@ -238,17 +275,7 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
           className,
         )}
       >
-        {glyph && (
-          <Icon
-            glyph={glyph}
-            size="xlarge"
-            className={cx(mainIconStyle, {
-              [activeIconStyle]: active,
-              [mainIconFocusedStyle]: showFocus,
-            })}
-          />
-        )}
-
+        {updatedGlyph}
         <div>
           <div
             className={cx(mainTextStyle, {
@@ -359,7 +386,7 @@ SubMenu.propTypes = {
   onKeyDown: PropTypes.func,
   className: PropTypes.string,
   onClick: PropTypes.func,
-  glyph: PropTypes.string,
+  glyph: PropTypes.element,
   onExited: PropTypes.func,
   open: PropTypes.bool,
   active: PropTypes.bool,
