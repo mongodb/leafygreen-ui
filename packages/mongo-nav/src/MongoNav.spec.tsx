@@ -39,14 +39,14 @@ describe('packages/MongoNav', () => {
 
   describe('it successfully constructs urls based on hosts and urls props', () => {
     test('specific url overrides take precedence over hosts, when the prop is set', () => {
-      const accessManager = getByText('Access Manager');
+      const accessManager = getByText('Access Manager').parentNode;
       expect((accessManager as HTMLAnchorElement).href).toBe(
         'https://cloud.mongodb.com/access-manager-test',
       );
     });
     test('host string changes default host, when the prop is set', () => {
-      const support = getByText('Support');
-      const billing = getByText('Billing');
+      const support = getByText('Support').parentNode;
+      const billing = getByText('Billing').parentNode;
 
       expect((support as HTMLAnchorElement).href).toBe(
         `${cloudHost}/v2#/org/5d729a93/support`,
