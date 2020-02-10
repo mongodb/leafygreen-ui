@@ -49,6 +49,7 @@ type Justify = typeof Justify[keyof typeof Justify];
 
 export { Justify };
 
+export const ElementPosition = {};
 export interface ElementPosition {
   top: number;
   bottom: number;
@@ -64,6 +65,7 @@ interface ChildrenFunctionParameters {
   referenceElPos: ElementPosition;
 }
 
+export const PopoverProps = {};
 export interface PopoverProps {
   /**
    * Content that will appear inside of the popover component.

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+export const TabProps = {};
 export interface TabProps {
   /**
    * Content that will appear as the title in the Tab list.

@@ -14,6 +14,7 @@ type Variant = typeof Variant[keyof typeof Variant];
 
 export { Variant };
 
+export const LogoProps = {};
 export interface LogoProps {
   /**
    * Determines the color variant of the Logo or LogoMark. Can be 'dark' or 'light'.
@@ -46,6 +47,7 @@ type Fill = typeof Fill[keyof typeof Fill];
 
 export { Fill };
 
+export const SVGLogoProps = {};
 export interface SVGLogoProps {
   fill: Fill;
   className: string;

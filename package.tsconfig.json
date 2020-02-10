@@ -15,7 +15,6 @@
     "paths": {
       "@leafygreen-ui/*": ["packages/*/src"]
     },
-    "emitDeclarationOnly": true,
     "composite": true
   },
   "exclude": ["*.story.*", "*.spec.*", "dist"]

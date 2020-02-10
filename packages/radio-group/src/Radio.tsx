@@ -35,6 +35,7 @@ const textStyle = css`
   line-height: 0.9em;
 `;
 
+export const RadioProps = {};
 export interface RadioProps {
   checked: boolean;
   onChange: React.ChangeEventHandler<HTMLInputElement>;

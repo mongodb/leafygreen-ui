@@ -6,7 +6,7 @@
   "main": "./dist/index.node.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "../../node_modules/.bin/rollup -c ../../rollup.config.js -i ./src/index.ts"
+    "build": "../../node_modules/.bin/rollup -c ../../rollup.config.js -i ./src/index.ts -o ./dist/index.web.js"
   },
   "keywords": [],
   "license": "Apache-2.0",

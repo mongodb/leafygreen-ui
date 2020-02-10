@@ -1,5 +1,6 @@
 import React from 'react';
 
+export const FocusableMenuItemProps = {};
 export interface FocusableMenuItemProps {
   children: React.ReactElement;
 }

@@ -177,6 +177,7 @@ const getStatefulStyles = (state: StateForStyles) => ({
   interactionIndicator: getInteractionIndicatorStyle(state),
 });
 
+export const RadioBoxProps = {};
 export interface RadioBoxProps {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   checked?: boolean;

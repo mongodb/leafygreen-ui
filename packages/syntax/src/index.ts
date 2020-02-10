@@ -1,6 +1,7 @@
-import Syntax from './Syntax';
+import Syntax, { SyntaxProps } from './Syntax';
 
 export { Variant, Language } from './types';
-export { SyntaxProps } from './Syntax';
 export { variantColors } from './globalStyles';
+
+export { SyntaxProps };
 export default Syntax;

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 
+export const UseEventOptions = {};
 export interface UseEventOptions {
   options?: AddEventListenerOptions;
   dependencies?: Array<any>;

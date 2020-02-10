@@ -28,6 +28,7 @@ function initializeSyntaxHighlighting() {
   });
 }
 
+export const SyntaxProps = {};
 export interface SyntaxProps {
   /**
    * The children to render inside Code. This is usually going to be a formatted code block or line.

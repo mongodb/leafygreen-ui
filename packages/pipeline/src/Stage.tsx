@@ -20,6 +20,7 @@ interface StateForStyles {
   size?: Size;
 }
 
+export const StageProps = {};
 export interface StageProps {
   /**
    * Content that will appear inside of the Stage component.

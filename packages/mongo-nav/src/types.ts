@@ -69,6 +69,7 @@ type OrgPaymentLabel = typeof OrgPaymentLabel[keyof typeof OrgPaymentLabel];
 
 export { OrgPaymentLabel };
 
+export const AccountInterface = {};
 export interface AccountInterface {
   email: string;
   firstName: string;
@@ -77,6 +78,7 @@ export interface AccountInterface {
   username?: string;
 }
 
+export const ProjectInterface = {};
 export interface ProjectInterface {
   projectId: string;
   projectName: string;
@@ -84,21 +86,25 @@ export interface ProjectInterface {
   orgId: string;
 }
 
+export const CurrentProjectInterface = {};
 export interface CurrentProjectInterface extends ProjectInterface {
   alertsOpen: number;
   chartsActivated: boolean;
 }
 
+export const OrganizationInterface = {};
 export interface OrganizationInterface {
   orgId: string;
   orgName: string;
   planType: PlanType;
 }
 
+export const CurrentOrganizationInterface = {};
 export interface CurrentOrganizationInterface extends OrganizationInterface {
   paymentStatus?: OrgPaymentLabel;
 }
 
+export const DataInterface = {};
 export interface DataInterface {
   readonly account: AccountInterface;
   currentOrganization: CurrentOrganizationInterface;
@@ -107,6 +113,7 @@ export interface DataInterface {
   readonly projects: Array<ProjectInterface>;
 }
 
+export const URLSInterface = {};
 export interface URLSInterface {
   userMenu?: {
     cloud?: {
@@ -149,6 +156,7 @@ export interface URLSInterface {
   };
 }
 
+export const HostsInterface = {};
 export interface HostsInterface {
   account?: string;
   charts?: string;
