@@ -86,7 +86,7 @@ function Menu({
   usePortal = true,
   adjustOnMutation = false,
   shouldClose = () => true,
-  spacing = 15,
+  spacing,
   open: controlledOpen,
   setOpen: controlledSetOpen,
   children,
