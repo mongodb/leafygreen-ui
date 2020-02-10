@@ -63,7 +63,7 @@ const supportContainer = css`
   margin-right: 30px;
 `;
 
-const rightSideLinkStyle = css`
+const rightLinkMargin = css`
   margin-right: 30px;
 `;
 
@@ -318,21 +318,19 @@ export default function OrgNav({
           href={orgNav.allClusters}
           isActive={activeNav === 'allClusters'}
           tooltipText="View all clusters across your organizations"
-          className={css`
-            margin-right: 25px;
-          `}
+          className={rightLinkMargin}
         >
           All Clusters
         </LinkElement>
         {admin && (
           <a
             href={orgNav.admin}
-            className={cx(rightSideLinkStyle, linkText, {
+            className={cx(rightLinkMargin, linkText, {
               [activeLink]: activeNav === 'admin',
               [navItemFocusStyle]: showFocus,
             })}
           >
-            <span>Admin</span>
+            Admin
           </a>
         )}
         <UserMenu

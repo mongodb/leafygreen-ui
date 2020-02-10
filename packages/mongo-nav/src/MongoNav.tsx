@@ -241,7 +241,7 @@ export default function MongoNav({
         onOrganizationChange={onOrganizationChange}
         admin={admin}
         hosts={sanitizedHosts}
-        currentProjectName={currentProject && currentProject.projectName}
+        currentProjectName={currentProject?.projectName}
       />
       {showProjNav && (
         <ProjectNav
