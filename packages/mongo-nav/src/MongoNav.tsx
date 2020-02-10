@@ -122,7 +122,7 @@ export default function MongoNav({
     projects,
   } = data;
 
-  const defaultHosts = {
+  const defaultHosts: Required<HostsInterface> = {
     account: 'https://account.mongodb.com',
     cloud: 'https://cloud.mongodb.com',
     university: 'https://university.mongodb.com',
@@ -131,10 +131,7 @@ export default function MongoNav({
     stitch: 'https://stitch.mongodb.com',
   };
 
-  const sanitizedHosts: Required<HostsInterface> = defaultsDeep(
-    hosts,
-    defaultHosts,
-  );
+  const sanitizedHosts = defaultsDeep(hosts, defaultHosts);
 
   const defaultURLS: Required<URLSInterface> = {
     userMenu: {
