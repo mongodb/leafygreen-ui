@@ -28,6 +28,7 @@ describe('packages/text-input', () => {
   }
 
   const renderedInputElement = renderedChildren.children[2].children[0];
+
   if (!typeIs.input(renderedInputElement)) {
     throw new Error('Could not find input element');
   }
