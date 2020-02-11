@@ -70,7 +70,7 @@ const tsConfig = `
   "include": ["src/**/*", "../../typings/**/*"],
   "compilerOptions": {
     "baseUrl": "src",
-    "declarationDir": "dist",
+    "declarationDir": "dist"
   },
   "references": [
     {

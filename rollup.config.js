@@ -28,12 +28,14 @@ const external = [
 	...getAllPackages('../../packages'),
 ];
 
-const resolvePlugin = resolve({extensions: ['.js', '.jsx', '.ts', 'tsx']})
+const resolvePlugin = resolve({
+	extensions: ['.js', '.jsx', '.ts', 'tsx'],
+})
 
 const commonjsPlugin = commonjs({
 	include: /node_modules/,
 	namedExports: {
-		react: ['useRef', 'useEffect', 'useState', 'useCallback'],
+		react: ['useRef', 'useEffect', 'useState', 'useCallback', 'useMemo'],
 	},
 })
 
@@ -54,7 +56,7 @@ const typescriptPlugin = typescript({
 
 	// This property allows us to use the latest TS version, rather than the supported 2.x
 	typescript: require('typescript'),
-	verbosity: 2,
+	verbosity: 3,
 })
 
 const urlLoaderPlugin = urlPlugin({

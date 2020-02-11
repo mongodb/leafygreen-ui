@@ -3,7 +3,7 @@
   "include": ["src/**/*", "../../typings/**/*", "./typings/**/*"],
   "compilerOptions": {
     "baseUrl": "src",
-    "declarationDir": "dist",
+    "declarationDir": "dist"
   },
   "references": [
     {
