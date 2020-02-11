@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import OrgNav from './org-nav/index';
 import ProjectNav from './project-nav/index';
-import { Product, URLSInterface, HostsInterface, NavItem, Mode } from './types';
-import devModeData from './data';
+import Loading from './Loading';
+import {
+  Product,
+  URLSInterface,
+  HostsInterface,
+  NavItem,
+  Mode,
+  DataInterface,
+  ErrorCode,
+} from './types';
+import fixtureData from './data';
 import defaultsDeep from 'lodash/defaultsDeep';
 
 const defaultHosts: Required<HostsInterface> = {
@@ -12,6 +21,10 @@ const defaultHosts: Required<HostsInterface> = {
   support: 'https://support.mongodb.com',
   charts: 'https://charts.mongodb.com',
   stitch: 'https://stitch.mongodb.com',
+};
+
+const ErrorCodeMap = {
+  401: ErrorCode.NO_AUTHORIZATION,
 };
 
 interface MongoNavInterface {
@@ -70,6 +83,16 @@ interface MongoNavInterface {
    * By default the value is set to `production`
    */
   mode?: Mode;
+
+  /**
+   * Function that is passed an error code, so that consuming application can handle fetch failures
+   */
+  onError?: (error: ErrorCode) => void;
+
+  /**
+   * Callback that receives the response of the fetched data
+   */
+  onSuccess?: (response: DataInterface) => void;
 }
 
 /**
@@ -98,6 +121,8 @@ interface MongoNavInterface {
  * @param props.constructOrganizationURL Function to determine destination URL when user selects a organization from the organization picker.
  * @param props.constructProjectURL Function to determine destination URL when user selects a project from the project picker.
  * @param props.mode Describes what environment the component is being used in, defaults to `production`
+ * @param props.onSuccess Callback that receives the response of the fetched data
+ * @param props.onError Function that is passed an error code, so that consuming application can handle fetch failures
  */
 export default function MongoNav({
   activeProduct,
@@ -111,27 +136,54 @@ export default function MongoNav({
   urls: urlsProp,
   constructOrganizationURL: constructOrganizationURLProp,
   constructProjectURL: constructProjectURLProp,
+  onError = () => {},
+  onSuccess = () => {},
 }: MongoNavInterface) {
-  let data;
-
-  if (mode === Mode.Dev) {
-    data = devModeData;
-  }
-
-  if (!data) {
-    // Eventually this logic will be more robust, but for an alpha version will return null without data
-    return null;
-  }
-
-  const {
-    account,
-    currentOrganization,
-    currentProject,
-    organizations,
-    projects,
-  } = data;
+  const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
   const hosts = defaultsDeep(hostsProp, defaultHosts);
+  const endpointURI = `${hosts.cloud}/user/shared`;
+
+  function getProductionData() {
+    return fetch(endpointURI, {
+      credentials: 'include',
+      method: 'GET',
+    });
+  }
+
+  function getFixtureData() {
+    return new Promise(resolve => {
+      resolve(fixtureData);
+      onSuccess?.(fixtureData);
+    });
+  }
+
+  async function handleResponse(response: Response) {
+    if (!response.ok) {
+      const status = response.status as 401; //typecasting for now until we have more types to handle
+      onError?.(ErrorCodeMap[status]);
+      console.error(ErrorCodeMap[status]);
+    } else {
+      const data = await response.json();
+      setData(data);
+      onSuccess?.(data);
+    }
+  }
+
+  useEffect(() => {
+    if (mode === Mode.Dev) {
+      getFixtureData().then(data => setData(data as DataInterface));
+    } else {
+      getProductionData()
+        .then(handleResponse)
+        .catch(console.error);
+    }
+  }, [mode, endpointURI]);
+
+  if (data?.account == null) {
+    // Eventually this logic will be more robust, but for this version we will return the placeholder <Loading /> component
+    return <Loading />;
+  }
 
   const defaultURLS: Required<URLSInterface> = {
     userMenu: {
@@ -152,30 +204,30 @@ export default function MongoNav({
       },
     },
     mongoSelect: {
-      viewAllProjects: `${hosts.cloud}/v2#/org/${data.currentProject.orgId}/projects`,
+      viewAllProjects: `${hosts.cloud}/v2#/org/${data?.currentProject?.orgId}/projects`,
       viewAllOrganizations: `${hosts.cloud}/v2#/preferences/organizations`,
-      newProject: `${hosts.cloud}/v2#/org/${data.currentProject.orgId}/projects/create`,
-      orgSettings: `${hosts.cloud}/v2#/org/${data.currentOrganization.orgId}/settings/general`,
+      newProject: `${hosts.cloud}/v2#/org/${data?.currentProject?.orgId}/projects/create`,
+      orgSettings: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/settings/general`,
     },
     orgNav: {
-      settings: `${hosts.cloud}/v2#/org/${data.currentOrganization.orgId}/settings/general`,
-      accessManager: `${hosts.cloud}/v2#/org/${data.currentOrganization.orgId}/access/users`,
-      support: `${hosts.cloud}/v2#/org/${data.currentOrganization.orgId}/support`,
-      billing: `${hosts.cloud}/v2#/org/${data.currentOrganization.orgId}/billing/overview`,
+      settings: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/settings/general`,
+      accessManager: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/access/users`,
+      support: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/support`,
+      billing: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/billing/overview`,
       allClusters: `${hosts.cloud}/v2#/clusters`,
       admin: `${hosts.cloud}/v2/admin#general/overview/servers`,
     },
     projectNav: {
-      settings: `${hosts.cloud}/v2/${data.currentProject.projectId}#settings/groupSettings`,
-      accessManager: `${hosts.cloud}/v2/${data.currentProject.projectId}#access`,
-      support: `${hosts.cloud}/v2/${data.currentProject.projectId}#info/support`,
-      integrations: `${hosts.cloud}/v2/${data.currentProject.projectId}#integrations`,
-      alerts: `${hosts.cloud}/v2/${data.currentProject.projectId}#alerts`,
-      activityFeed: `${hosts.cloud}/v2/${data.currentProject.projectId}#activity`,
+      settings: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#settings/groupSettings`,
+      accessManager: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#access`,
+      support: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#info/support`,
+      integrations: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#integrations`,
+      alerts: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#alerts`,
+      activityFeed: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#activity`,
     },
   };
 
-  const constructedURLS = defaultsDeep(urlsProp, defaultURLS);
+  const urls = defaultsDeep(urlsProp, defaultURLS);
 
   const defaultOrgURL = (orgId: string) =>
     `${hosts.cloud}/v2#/org/${orgId}/projects`;
@@ -186,6 +238,14 @@ export default function MongoNav({
     `${hosts.cloud}/v2#/${projectId}`;
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
+  const {
+    account,
+    currentOrganization,
+    currentProject,
+    organizations,
+    projects,
+  } = data;
+
   return (
     <>
       <OrgNav
@@ -194,19 +254,19 @@ export default function MongoNav({
         current={currentOrganization}
         data={organizations}
         constructOrganizationURL={constructOrganizationURL}
-        urls={constructedURLS}
+        urls={urls}
         activeNav={activeNav}
         onOrganizationChange={onOrganizationChange}
         admin={admin}
         hosts={hosts}
       />
-      {showProjNav && (
+      {showProjNav && currentProject && (
         <ProjectNav
           activeProduct={activeProduct}
           current={currentProject}
           data={projects}
           constructProjectURL={constructProjectURL}
-          urls={constructedURLS}
+          urls={urls}
           alerts={currentProject.alertsOpen}
           onProjectChange={onProjectChange}
           hosts={hosts}
