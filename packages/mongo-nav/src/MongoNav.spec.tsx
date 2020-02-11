@@ -1,7 +1,9 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, wait } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import MongoNav from './MongoNav';
+
+const timeout = 200;
 
 afterAll(cleanup);
 
@@ -26,25 +28,37 @@ describe('packages/MongoNav', () => {
   );
 
   describe('by default', () => {
-    test('it renders the ProjectNav', () => {
+    test('it renders the ProjectNav', async () => {
+      await wait(() => getByTestId('project-nav'), {
+        timeout,
+      });
       const projectNav = getByTestId('project-nav');
       expect(projectNav).toBeInTheDocument();
     });
 
-    test('it renders admin as false', () => {
+    test('it renders admin as false', async () => {
+      await wait(() => getByTestId('project-nav'), {
+        timeout,
+      });
       const orgNav = getByTestId('organization-nav');
       expect(orgNav.innerHTML.includes('Admin')).toBe(false);
     });
   });
 
   describe('it successfully constructs urls based on hosts and urls props', () => {
-    test('specific url overrides take precedence over hosts, when the prop is set', () => {
+    test('specific url overrides take precedence over hosts, when the prop is set', async () => {
+      await wait(() => getByTestId('project-nav'), {
+        timeout,
+      });
       const accessManager = getByText('Access Manager');
       expect((accessManager as HTMLAnchorElement).href).toBe(
         'https://cloud.mongodb.com/access-manager-test',
       );
     });
-    test('host string changes default host, when the prop is set', () => {
+    test('host string changes default host, when the prop is set', async () => {
+      await wait(() => getByTestId('project-nav'), {
+        timeout,
+      });
       const support = getByText('Support');
       const billing = getByText('Billing');
 
@@ -57,8 +71,10 @@ describe('packages/MongoNav', () => {
       );
     });
   });
-
-  test('when mode prop is set to `dev`, fixture data is rendered inside of MongoNav', () => {
+  test('when mode prop is set to `dev`, fixture data is rendered inside of MongoNav', async () => {
+    await wait(() => getByTestId('project-nav'), {
+      timeout,
+    });
     const firstName = getByText('DevMode');
     expect(firstName).toBeInTheDocument();
   });
