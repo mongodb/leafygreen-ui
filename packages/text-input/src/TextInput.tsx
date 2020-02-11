@@ -122,7 +122,7 @@ function TextInput({
         <div hidden={state != 'error'} className={iconStyle}>
           <Icon glyph="Warning" />
         </div>
-        <div hidden={!optional && state == 'none'} className={optionalStyle}>
+        <div hidden={!optional || state != 'none'} className={optionalStyle}>
           <p>Optional</p>
         </div>
       </div>
