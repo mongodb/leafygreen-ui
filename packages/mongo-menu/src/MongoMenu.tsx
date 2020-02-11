@@ -288,8 +288,8 @@ function MongoMenu({
         <MenuItem
           onClick={onProductChange}
           active={'atlas' === activeProduct}
-          href='https://cloud.mongodb.com'
-          description='cloud.mongodb.com'
+          href="https://cloud.mongodb.com"
+          description="cloud.mongodb.com"
           // @ts-ignore
           target="_blank"
           rel="noopener noreferrer"
@@ -300,8 +300,8 @@ function MongoMenu({
         <MenuItem
           onClick={onProductChange}
           active={'university' === activeProduct}
-          href='https://university.mongodb.com'
-          description='university.mongodb.com'
+          href="https://university.mongodb.com"
+          description="university.mongodb.com"
           // @ts-ignore
           target="_blank"
           rel="noopener noreferrer"
@@ -312,8 +312,8 @@ function MongoMenu({
         <MenuItem
           onClick={onProductChange}
           active={'support' === activeProduct}
-          href='https://support.mongodb.com'
-          description='support.mongodb.com'
+          href="https://support.mongodb.com"
+          description="support.mongodb.com"
           // @ts-ignore
           target="_blank"
           rel="noopener noreferrer"

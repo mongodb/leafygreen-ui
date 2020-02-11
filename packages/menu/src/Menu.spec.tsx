@@ -83,7 +83,8 @@ describe('packages/Menu', () => {
         <MenuItem
           data-testid="third-item"
           // @ts-ignore
-          as="div">
+          as="div"
+        >
           Item 3
         </MenuItem>
       </div>,
@@ -147,7 +148,7 @@ describe('packages/Menu', () => {
 
     test('when a SubMenu is clicked, it opens and closes the previously opened SubMenu', () => {
       if (!subMenuBArrow) {
-        throw new ReferenceError('subMenuBArrow is null or undefined')
+        throw new ReferenceError('subMenuBArrow is null or undefined');
       }
 
       fireEvent.click(subMenuBArrow);

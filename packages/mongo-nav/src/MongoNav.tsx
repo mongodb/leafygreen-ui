@@ -180,11 +180,16 @@ export default function MongoNav({
   const defaultOrgURL = (orgId: string) =>
     `${hosts.cloud}/v2#/org/${orgId}/projects`;
   const constructOrganizationURL =
-    constructOrganizationURLProp != null ? constructOrganizationURLProp : defaultOrgURL;
+    constructOrganizationURLProp != null
+      ? constructOrganizationURLProp
+      : defaultOrgURL;
 
   const defaultProjectURL = (projectId: string) =>
     `${hosts.cloud}/v2#/${projectId}`;
-  const constructProjectURL = constructProjectURLProp != null ? constructProjectURLProp : defaultProjectURL;
+  const constructProjectURL =
+    constructProjectURLProp != null
+      ? constructProjectURLProp
+      : defaultProjectURL;
 
   return (
     <>

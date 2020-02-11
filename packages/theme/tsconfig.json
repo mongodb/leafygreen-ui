@@ -3,6 +3,6 @@
   "include": ["src/**/*"],
   "compilerOptions": {
     "baseUrl": "src",
-    "declarationDir": "dist",
+    "declarationDir": "dist"
   }
 }

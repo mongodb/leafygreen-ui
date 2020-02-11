@@ -229,7 +229,10 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
       React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
-    if (iconButtonRef.current && iconButtonRef.current.contains(e.target as HTMLElement)) {
+    if (
+      iconButtonRef.current &&
+      iconButtonRef.current.contains(e.target as HTMLElement)
+    ) {
       e.preventDefault();
     } else if (onClick) {
       onClick(e);

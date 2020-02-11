@@ -40,13 +40,9 @@ function UsingKeyboardProvider({ children }: UsingKeyboardProviderProps) {
     if (Object.values(NavigationKeyCodes).includes(e.keyCode)) {
       setUsingKeyboard(true);
     }
-  }
+  };
 
-  useEventListener(
-    'keydown',
-    keyDownListener,
-    { enabled: !usingKeyboard },
-  );
+  useEventListener('keydown', keyDownListener, { enabled: !usingKeyboard });
 
   const providerValue = useMemo(
     () => ({

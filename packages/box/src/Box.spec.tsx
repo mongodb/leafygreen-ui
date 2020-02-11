@@ -66,10 +66,11 @@ describe('packages/box', () => {
       renderBox();
     });
 
-    
     test('it renders the box component as a div', () => {
       expect(renderedEls.box).toBeInTheDocument();
-      expect(renderedEls.box && renderedEls.box.tagName.toLowerCase()).toBe('div');
+      expect(renderedEls.box && renderedEls.box.tagName.toLowerCase()).toBe(
+        'div',
+      );
     });
 
     test('it renders the child content', () => {
@@ -88,7 +89,9 @@ describe('packages/box', () => {
 
     test('it renders the box component as an anchor', () => {
       expect(renderedEls.box).toBeInTheDocument();
-      expect(renderedEls.box && renderedEls.box.tagName.toLowerCase()).toBe('a');
+      expect(renderedEls.box && renderedEls.box.tagName.toLowerCase()).toBe(
+        'a',
+      );
     });
 
     test('it renders the child content', () => {
@@ -113,7 +116,9 @@ describe('packages/box', () => {
     test('it renders the box component as the custom component', () => {
       expect(renderedEls.box).toBeInTheDocument();
       expect(linkWrapperFn).toHaveBeenCalledTimes(1);
-      expect(renderedEls.box && renderedEls.box.tagName.toLowerCase()).toBe('span');
+      expect(renderedEls.box && renderedEls.box.tagName.toLowerCase()).toBe(
+        'span',
+      );
     });
 
     test('it renders the child content', () => {
