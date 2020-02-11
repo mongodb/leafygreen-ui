@@ -50,7 +50,7 @@ const packageJSON = `
     "description": "leafyGreen UI Kit ${PACKAGE_HUMANREADABLE}",
     "browser": "./dist/index.web.js",
     "main": "./dist/index.node.js",
-    "types": "./dist/index.d.ts",
+    "types": "./dist/src/index.d.ts",
     "scripts": {
       "build": "../../node_modules/.bin/webpack --config ../../rollup.config.js"
     },
@@ -67,11 +67,11 @@ const packageJSON = `
 const tsConfig = `
 {
   "extends": "../../package.tsconfig.json",
+  "include": ["src/**/*", "../../typings/**/*"],
   "compilerOptions": {
+    "baseUrl": "src",
     "declarationDir": "dist",
-    "rootDir": "src"
   },
-  "include": ["src/**/*"],
   "references": [
     {
       "path": "../lib"

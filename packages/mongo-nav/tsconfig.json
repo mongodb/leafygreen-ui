@@ -1,10 +1,10 @@
 {
   "extends": "../../package.tsconfig.json",
+  "include": ["src/**/*", "../../typings/**/*"],
   "compilerOptions": {
+    "baseUrl": "src",
     "declarationDir": "dist",
-    "rootDir": "src"
   },
-  "include": ["src/**/*"],
   "references": [
     {
       "path": "../lib"
@@ -17,6 +17,9 @@
     },
     {
       "path": "../logo"
+    },
+    {
+      "path": "../hooks"
     },
     {
       "path": "../menu"

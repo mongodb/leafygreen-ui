@@ -21,8 +21,7 @@ const rootMenuStyle = css`
   padding: 0px;
 `;
 
-interface MenuProps
-  extends Omit<PopoverProps, 'active' | 'spacing' | 'children'> {
+interface MenuProps extends Omit<PopoverProps, 'active' | 'spacing' | 'children'> {
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
    * Menu to control opening and closing itself internally.

@@ -36,13 +36,15 @@ function UsingKeyboardProvider({ children }: UsingKeyboardProviderProps) {
     enabled: usingKeyboard,
   });
 
+  const keyDownListener = (e: KeyboardEvent) => {
+    if (Object.values(NavigationKeyCodes).includes(e.keyCode)) {
+      setUsingKeyboard(true);
+    }
+  }
+
   useEventListener(
     'keydown',
-    ({ keyCode }) => {
-      if (Object.values(NavigationKeyCodes).includes(keyCode)) {
-        setUsingKeyboard(true);
-      }
-    },
+    keyDownListener,
     { enabled: !usingKeyboard },
   );
 

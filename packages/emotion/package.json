@@ -3,10 +3,11 @@
   "version": "2.0.1",
   "description": "leafyGreen UI Kit's Custom Instance of Emotion",
   "browser": "./dist/index.web.js",
+  "module": "./dist/index.esm.js",
   "main": "./dist/index.node.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/src/index.d.ts",
   "scripts": {
-    "build": "../../node_modules/.bin/rollup -c ../../rollup.config.js -i ./src/index.ts -o ./dist/index.web.js"
+    "build": "../../node_modules/.bin/rollup -c ../../rollup.config.js -i ./src/index.ts -o ./dist/index.esm.js"
   },
   "keywords": [],
   "license": "Apache-2.0",
@@ -15,7 +16,7 @@
   },
   "dependencies": {
     "create-emotion": "^10.0.7",
-    "create-emotion-server": "10.0.27",
+    "create-emotion-server": "^10.0.27",
     "emotion": "^10.0.7"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0"
