@@ -7,7 +7,8 @@ import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Product, NavItem } from './types';
 
 const setStorybookWidth = css`
-  width: 100%:
+  width: 100%;
+  margin: 0;
 `;
 
 storiesOf('MongoNav', module).add('Default', () => (

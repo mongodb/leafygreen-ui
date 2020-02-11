@@ -202,15 +202,20 @@ export default function ProjectNav({
       aria-label="project navigation"
       data-testid="project-nav"
     >
-      <div className={leftSide}>
-        <ProjectSelect
-          current={current}
-          data={data}
-          constructProjectURL={constructProjectURL}
-          urls={urls}
-          className={projectSelectMargin}
-          onChange={onProjectChange}
-        />
+      <div
+        className={css`
+          display: flex;
+        `}
+      >
+        <div className={mongoSelectWrapper}>
+          <ProjectSelect
+            current={current}
+            data={data}
+            constructProjectURL={constructProjectURL}
+            urls={urls}
+            onChange={onProjectChange}
+          />
+        </div>
         <Menu
           trigger={
             <IconButton ariaLabel="More" className={menuIconButtonStyle}>
@@ -260,6 +265,7 @@ export default function ProjectNav({
           </li>
         </ul>
       </div>
+
       <div
         className={css`
           display: flex;

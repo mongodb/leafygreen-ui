@@ -95,7 +95,6 @@ const onKeyDown: React.KeyboardEventHandler = e => {
 function OrgSelect({
   current,
   data,
-  className,
   urls,
   isActive,
   onChange,
@@ -125,7 +124,6 @@ function OrgSelect({
       trigger={
         <OrganizationTrigger
           placeholder={current?.orgName ?? 'All Organizations'}
-          className={className}
           urls={urls}
           isActive={isActive}
         />
@@ -168,7 +166,6 @@ export { OrgSelect };
 
 function ProjectSelect({
   current,
-  className,
   onChange,
   data,
   onClick,
@@ -192,12 +189,7 @@ function ProjectSelect({
 
   return (
     <Menu
-      trigger={
-        <ProjectTrigger
-          placeholder={current.projectName}
-          className={className}
-        />
-      }
+      trigger={<ProjectTrigger placeholder={current.projectName} />}
       className={menuContainerStyle}
       justify="start"
       spacing={0}

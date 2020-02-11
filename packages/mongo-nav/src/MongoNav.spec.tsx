@@ -50,7 +50,7 @@ describe('packages/MongoNav', () => {
       await wait(() => getByTestId('project-nav'), {
         timeout,
       });
-      const accessManager = getByText('Access Manager');
+      const accessManager = getByText('Access Manager').parentNode;
       expect((accessManager as HTMLAnchorElement).href).toBe(
         'https://cloud.mongodb.com/access-manager-test',
       );
@@ -59,8 +59,8 @@ describe('packages/MongoNav', () => {
       await wait(() => getByTestId('project-nav'), {
         timeout,
       });
-      const support = getByText('Support');
-      const billing = getByText('Billing');
+      const support = getByText('Support').parentNode;
+      const billing = getByText('Billing').parentNode;
 
       expect((support as HTMLAnchorElement).href).toBe(
         `${cloudHost}/v2#/org/5d729a93/support`,
