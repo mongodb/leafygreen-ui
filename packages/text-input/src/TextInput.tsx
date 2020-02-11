@@ -1,45 +1,47 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 
 interface TextInputProps {
+  value?: string;
   label?: string;
   description?: string;
   optional?: boolean;
   disabled?: boolean;
-  validateInput?: Function;
-  placeholderText?: string;
+  onChange?: Function;
+  placeholder?: string;
   errorMessage?: string;
+  state?: 'none' | 'valid' | 'error';
   className?: string;
 }
 
+// TODO: controlled/uncontrolled component logic
 function TextInput({
+  value,
   label,
   description,
   optional,
   disabled,
-  validateInput,
-  placeholderText,
+  onChange,
+  placeholder,
   errorMessage,
+  state,
   className,
 }: TextInputProps) {
-  const [value, setValue] = useState('');
-  const [valid, setValid] = useState(true);
-
   function getColorFromValidationState() {
-    if (validateInput == undefined) {
+    if (onChange == undefined) {
       return '#CCC';
     } else {
-      return valid ? '#13AA52' : '#CF4A22';
+      return state == 'valid' ? '#13AA52' : '#CF4A22';
     }
   }
 
   function onValueChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (validateInput != undefined) {
-      setValid(validateInput(e.target.value));
+    if (onChange != undefined) {
+      onChange(e.target.value);
     }
-    setValue(e.target.value);
+    value = e.target.value;
   }
 
   const textInputStyle = css`
@@ -82,7 +84,7 @@ function TextInput({
   const iconStyle = css`
     position: absolute;
     right: 10px;
-    color: ${valid ? '#13AA52' : '#CF4A22'};
+    color: ${state == 'valid' ? '#13AA52' : '#CF4A22'};
   `;
 
   const optionalStyle = css`
@@ -111,17 +113,20 @@ function TextInput({
           value={value}
           required={!optional}
           disabled={disabled}
-          placeholder={placeholderText}
+          placeholder={placeholder}
           onChange={e => onValueChange(e)}
         />
-        <div hidden={validateInput == undefined} className={iconStyle}>
-          <Icon glyph={valid ? 'Checkmark' : 'Warning'} />
+        <div hidden={state != 'valid'} className={iconStyle}>
+          <Icon glyph="Checkmark" />
         </div>
-        <div hidden={!optional} className={optionalStyle}>
+        <div hidden={state != 'error'} className={iconStyle}>
+          <Icon glyph="Warning" />
+        </div>
+        <div hidden={!optional && state == 'none'} className={optionalStyle}>
           <p>Optional</p>
         </div>
       </div>
-      <div hidden={validateInput == undefined || valid} className={errorStyle}>
+      <div hidden={state != 'error'} className={errorStyle}>
         <label>{errorMessage}</label>
       </div>
     </div>
@@ -135,9 +140,11 @@ TextInput.propTypes = {
   description: PropTypes.string,
   optional: PropTypes.bool,
   disabled: PropTypes.bool,
-  validateInput: PropTypes.func,
-  placeholderText: PropTypes.string,
+  onChange: PropTypes.func,
+  placeholder: PropTypes.string,
   errorMessage: PropTypes.string,
+  state: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default TextInput;
