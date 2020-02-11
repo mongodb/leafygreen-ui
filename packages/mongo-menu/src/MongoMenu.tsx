@@ -149,7 +149,14 @@ const logoutContainerHeight = css`
   height: 46px;
 `;
 
-const menuItems = [
+interface ProductMetadata {
+  displayName: string;
+  description: string;
+  href: string;
+  slug: string;
+}
+
+const menuItems: Readonly<Array<ProductMetadata>> = [
   {
     displayName: 'Atlas',
     description: 'cloud.mongodb.com',
@@ -277,19 +284,43 @@ function MongoMenu({
           </Button>
         </FocusableMenuItem>
         <MenuSeparator />
-        {menuItems.map(el => (
-          <MenuItem
-            onClick={onProductChange}
-            key={el.displayName}
-            active={el.slug === activeProduct}
-            href={el.href}
-            description={el.description}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {el.displayName}
-          </MenuItem>
-        ))}
+
+        <MenuItem
+          onClick={onProductChange}
+          active={'atlas' === activeProduct}
+          href='https://cloud.mongodb.com'
+          description='cloud.mongodb.com'
+          // @ts-ignore
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Atlas
+        </MenuItem>
+
+        <MenuItem
+          onClick={onProductChange}
+          active={'university' === activeProduct}
+          href='https://university.mongodb.com'
+          description='university.mongodb.com'
+          // @ts-ignore
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          University
+        </MenuItem>
+
+        <MenuItem
+          onClick={onProductChange}
+          active={'support' === activeProduct}
+          href='https://support.mongodb.com'
+          description='support.mongodb.com'
+          // @ts-ignore
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Cloud Support
+        </MenuItem>
+
         <MenuSeparator />
         <MenuItem onClick={onLogout} className={cx(logoutContainerHeight)}>
           Logout
