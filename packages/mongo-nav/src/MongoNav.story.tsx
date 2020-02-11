@@ -6,7 +6,8 @@ import MongoNav from '.';
 import { Product, NavItem } from './types';
 
 const setStorybookWidth = css`
-  width: 100%:
+  width: 100%;
+  margin: 0px;
 `;
 
 storiesOf('MongoNav', module).add('Default', () => (
