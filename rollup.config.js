@@ -56,7 +56,7 @@ const typescriptPlugin = typescript({
 
 	// This property allows us to use the latest TS version, rather than the supported 2.x
 	typescript: require('typescript'),
-	verbosity: 3,
+	verbosity: 2,
 })
 
 const urlLoaderPlugin = urlPlugin({

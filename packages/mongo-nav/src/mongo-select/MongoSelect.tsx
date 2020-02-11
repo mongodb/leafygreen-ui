@@ -130,7 +130,7 @@ function MongoSelect(
       />
     );
     footer = (
-      <MenuItem onKeyDown={onKeyDown} href={mongoSelect?.viewAllOrganizations}>
+      <MenuItem onKeyDown={onKeyDown} href={mongoSelect.viewAllOrganizations}>
         <strong className={viewAllStyle}>View All Organizations</strong>
       </MenuItem>
     );

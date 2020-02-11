@@ -210,7 +210,7 @@ function UserMenu({
 
           <FocusableMenuItem>
             <Button
-              href={isAccount ? undefined : userMenu?.account?.homepage}
+              href={isAccount ? undefined : userMenu && userMenu.account && userMenu.account.homepage}
               disabled={isAccount}
               as={isAccount ? 'button' : 'a'}
             >
@@ -232,10 +232,10 @@ function UserMenu({
             [subMenuActiveContainerStyle]: isCloud,
           })}
         >
-          <MenuItem href={userMenu?.cloud?.userPreferences}>
+          <MenuItem href={userMenu && userMenu.cloud && userMenu.cloud.userPreferences}>
             User Preferences
           </MenuItem>
-          <MenuItem href={userMenu?.cloud?.invitations}>
+          <MenuItem href={userMenu && userMenu.cloud && userMenu.cloud.invitations}>
             {openInvitations ? (
               <span className={subMenuItemStyle}>
                 Invitations <Badge variant="blue">{openInvitations}</Badge>
@@ -244,10 +244,10 @@ function UserMenu({
               'Invitations'
             )}
           </MenuItem>
-          <MenuItem href={userMenu?.cloud?.organizations}>
+          <MenuItem href={userMenu && userMenu.cloud && userMenu.cloud.organizations}>
             Organizations
           </MenuItem>
-          <MenuItem href={userMenu?.cloud?.mfa}>
+          <MenuItem href={userMenu && userMenu.cloud && userMenu.cloud.mfa}>
             Two-Factor Authorization
           </MenuItem>
         </SubMenu>
@@ -266,7 +266,7 @@ function UserMenu({
             [subMenuActiveContainerStyle]: isUniversity,
           })}
         >
-          <MenuItem href={userMenu?.university?.videoPreferences}>
+          <MenuItem href={userMenu && userMenu.university && userMenu.university.videoPreferences}>
             Video Preferences
           </MenuItem>
         </SubMenu>
@@ -283,7 +283,7 @@ function UserMenu({
             [subMenuActiveContainerStyle]: isSupport,
           })}
         >
-          <MenuItem href={userMenu?.support?.userPreferences}>
+          <MenuItem href={userMenu && userMenu.support && userMenu.support.userPreferences}>
             User Preferences
           </MenuItem>
         </SubMenu>

@@ -247,7 +247,7 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
           [activeIconStyle]: active,
           [mainIconFocusedStyle]: showFocus,
         },
-        glyph.props?.className,
+        glyph.props.className,
       ),
     });
 

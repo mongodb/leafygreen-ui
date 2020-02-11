@@ -174,7 +174,7 @@ const MenuItem = React.forwardRef(
             [activeIconStyle]: active,
             [mainIconFocusedStyle]: showFocus,
           },
-          glyph.props?.className,
+          glyph.props.className,
         ),
       });
 

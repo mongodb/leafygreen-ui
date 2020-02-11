@@ -116,7 +116,7 @@ export default function OrgNav({
   for (key in paymentStatusMap) {
     if (!current.paymentStatus) {
       variant = undefined;
-    } else if (paymentStatusMap[key].includes(current?.paymentStatus)) {
+    } else if (paymentStatusMap[key].includes(current.paymentStatus)) {
       variant = key;
     }
   }
