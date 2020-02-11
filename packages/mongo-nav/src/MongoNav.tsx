@@ -153,9 +153,8 @@ export default function MongoNav({
 
   function getFixtureData() {
     return new Promise(resolve => {
-      onSuccess?.(fixtureData);
-
       resolve(fixtureData);
+      onSuccess?.(fixtureData);
     });
   }
 
