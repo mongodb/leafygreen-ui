@@ -1,2 +1,2 @@
-import MongoSelect from './MongoSelect';
-export default MongoSelect;
+import { OrgSelect, ProjectSelect } from './MongoSelect';
+export { OrgSelect, ProjectSelect };

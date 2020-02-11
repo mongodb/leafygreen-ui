@@ -52,6 +52,14 @@ type PlanType = typeof PlanType[keyof typeof PlanType];
 
 export { PlanType };
 
+const ErrorCode = {
+  NO_AUTHORIZATION: 'NO_AUTHORIZATION',
+};
+
+type ErrorCode = typeof ErrorCode[keyof typeof ErrorCode];
+
+export { ErrorCode };
+
 const OrgPaymentLabel = {
   Embargoed: 'embargoed',
   EmbargoConfirmed: 'embargo confirmed',
@@ -101,8 +109,8 @@ export interface CurrentOrganizationInterface extends OrganizationInterface {
 
 export interface DataInterface {
   readonly account: AccountInterface;
-  currentOrganization: CurrentOrganizationInterface;
-  currentProject: CurrentProjectInterface;
+  currentOrganization?: CurrentOrganizationInterface;
+  currentProject?: CurrentProjectInterface;
   readonly organizations: Array<OrganizationInterface>;
   readonly projects: Array<ProjectInterface>;
 }

@@ -7,7 +7,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import MongoSelect from '../mongo-select/index';
+import { ProjectSelect } from '../mongo-select/index';
 import {
   ProjectInterface,
   URLSInterface,
@@ -168,7 +168,7 @@ const productIconStyle = css`
 `;
 interface ProjectNavInterface {
   current: CurrentProjectInterface;
-  data: Array<ProjectInterface>;
+  data?: Array<ProjectInterface>;
   constructProjectURL: (orgID: string, projID: string) => string;
   urls: Required<URLSInterface>;
   hosts: Required<HostsInterface>;
@@ -182,10 +182,10 @@ export default function ProjectNav({
   data,
   constructProjectURL,
   urls,
-  alerts,
   activeProduct,
   onProjectChange,
   hosts,
+  alerts = 0,
 }: ProjectNavInterface) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { projectNav } = urls;
@@ -202,21 +202,15 @@ export default function ProjectNav({
       aria-label="project navigation"
       data-testid="project-nav"
     >
-      <div
-        className={css`
-          display: flex;
-        `}
-      >
-        <div className={mongoSelectWrapper}>
-          <MongoSelect
-            variant="project"
-            current={current}
-            data={data}
-            constructProjectURL={constructProjectURL}
-            urls={urls}
-            onChange={onProjectChange}
-          />
-        </div>
+      <div className={leftSide}>
+        <ProjectSelect
+          current={current}
+          data={data}
+          constructProjectURL={constructProjectURL}
+          urls={urls}
+          className={projectSelectMargin}
+          onChange={onProjectChange}
+        />
         <Menu
           trigger={
             <IconButton ariaLabel="More" className={menuIconButtonStyle}>
@@ -279,7 +273,7 @@ export default function ProjectNav({
           trigger={
             <IconButton
               ariaLabel="Invite"
-              href={projectNav.alerts as string}
+              href={projectNav.invite as string}
               className={iconButtonMargin}
               size="large"
             >

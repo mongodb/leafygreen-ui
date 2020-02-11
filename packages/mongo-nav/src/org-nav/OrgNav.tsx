@@ -18,7 +18,7 @@ import {
   HostsInterface,
 } from '../types';
 
-import MongoSelect from '../mongo-select/index';
+import { OrgSelect } from '../mongo-select/index';
 import UserMenu from '../user-menu/index';
 
 const navContainer = css`
@@ -179,8 +179,8 @@ function LinkElement({
 interface OrgNav {
   account: AccountInterface;
   activeProduct: Product;
-  current: CurrentOrganizationInterface;
-  data: Array<OrganizationInterface>;
+  current?: CurrentOrganizationInterface;
+  data?: Array<OrganizationInterface>;
   constructOrganizationURL: (orgID: string) => string;
   urls: Required<URLSInterface>;
   activeNav?: NavItem;
@@ -207,14 +207,14 @@ export default function OrgNav({
   const [open, setOpen] = useState(false);
   const { orgNav } = urls;
 
-  let variant: Colors | undefined;
+  let paymentVariant: Colors | undefined;
   let key: Colors;
 
   for (key in paymentStatusMap) {
-    if (!current.paymentStatus) {
-      variant = undefined;
+    if (!current?.paymentStatus) {
+      paymentVariant = undefined;
     } else if (paymentStatusMap[key].includes(current?.paymentStatus)) {
-      variant = key;
+      paymentVariant = key;
     }
   }
 
@@ -238,79 +238,84 @@ export default function OrgNav({
           View the Organization Home
         </Tooltip>
 
-        <MongoSelect
+        <OrgSelect
           data={data}
           current={current}
           constructOrganizationURL={constructOrganizationURL}
-          variant="organization"
           urls={urls}
           onChange={onOrganizationChange}
           isActive={activeNav === 'orgSettings'}
         />
+
         <ul className={ulContainer}>
-          {variant && current.paymentStatus && (
+          {paymentVariant && current?.paymentStatus && (
             <li>
               <Badge
                 className={css`
                   margin-right: 25px;
                 `}
-                variant={variant}
+                variant={paymentVariant}
               >
                 {current.paymentStatus.toUpperCase()}
               </Badge>
             </li>
           )}
-          <li
-            role="none"
-            className={css`
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            `}
-          >
-            <LinkElement
-              href={orgNav.accessManager}
-              isActive={activeNav === 'accessManager'}
-              tooltipText="Organization Access Manager"
-            >
-              Access Manager
-            </LinkElement>
-            <Menu
-              open={open}
-              setOpen={setOpen}
-              trigger={
-                <IconButton ariaLabel="Dropdown">
-                  <Icon glyph={open ? 'CaretUp' : 'CaretDown'} />
-                </IconButton>
-              }
-              className={accessManagerMenuContainer}
-            >
-              <p className={accessManagerMenuItem}>
-                <strong>Organization Access:</strong> {current.orgName}
-              </p>
-              <p className={accessManagerMenuItem}>
-                <strong>Project Access:</strong> {currentProjectName ?? 'None'}
-              </p>
-            </Menu>
-          </li>
-          <li role="none" className={supportContainer}>
-            <LinkElement
-              href={orgNav.support}
-              isActive={activeNav === 'support'}
-              tooltipText="View the Organization Support"
-            >
-              Support
-            </LinkElement>
-          </li>
-          <li role="none">
-            <LinkElement
-              href={orgNav.billing}
-              isActive={activeNav === 'billing'}
-              tooltipText="View the Organization Billing"
-            >
-              Billing
-            </LinkElement>
-          </li>
+          {current && (
+            <>
+              <li
+                role="none"
+                className={css`
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                `}
+              >
+                <LinkElement
+                  href={orgNav.accessManager}
+                  isActive={activeNav === 'accessManager'}
+                  tooltipText="Organization Access Manager"
+                >
+                  Access Manager
+                </LinkElement>
+                <Menu
+                  open={open}
+                  setOpen={setOpen}
+                  trigger={
+                    <IconButton ariaLabel="Dropdown">
+                      <Icon glyph={open ? 'CaretUp' : 'CaretDown'} />
+                    </IconButton>
+                  }
+                  className={accessManagerMenuContainer}
+                >
+                  <p className={accessManagerMenuItem}>
+                    <strong>Organization Access:</strong> {current.orgName}
+                  </p>
+                  <p className={accessManagerMenuItem}>
+                    <strong>Project Access:</strong>{' '}
+                    {currentProjectName ?? 'None'}
+                  </p>
+                </Menu>
+              </li>
+              <li role="none" className={supportContainer}>
+                <LinkElement
+                  href={orgNav.support}
+                  isActive={activeNav === 'support'}
+                  tooltipText="View the Organization Support"
+                >
+                  Support
+                </LinkElement>
+              </li>
+              <li role="none">
+                <LinkElement
+                  href={orgNav.billing}
+                  isActive={activeNav === 'billing'}
+                  tooltipText="View the Organization Billing"
+                >
+                  Billing
+                </LinkElement>
+              </li>
+            </>
+          )}
         </ul>
       </div>
       <div>

@@ -4,11 +4,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import Icon from '@leafygreen-ui/icon';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp } from '@leafygreen-ui/lib';
-import {
-  URLSInterface,
-  CurrentProjectInterface,
-  CurrentOrganizationInterface,
-} from '../types';
+import { URLSInterface } from '../types';
 
 const triggerDataProp = createDataProp('org-trigger');
 const anchorDataProp = createDataProp('anchor-data-prop');
@@ -53,10 +49,7 @@ const selectedStyle = css`
   font-weight: bolder;
   flex-grow: 1;
   text-align: left;
-`;
-
-const fontSize = css`
-  font-size: 14px;
+  font-size: 13px;
 `;
 
 const anchorStyle = css`
@@ -202,7 +195,7 @@ const InteractionRingWrapper = ({
 
 interface OrganizationTriggerProps {
   children?: React.ReactNode;
-  current: CurrentOrganizationInterface;
+  placeholder: string;
   urls: Required<URLSInterface>;
   isActive?: boolean;
   open?: boolean;
@@ -210,7 +203,7 @@ interface OrganizationTriggerProps {
 
 export function OrganizationTrigger({
   children,
-  current,
+  placeholder,
   urls,
   isActive = false,
   open = false,
@@ -227,7 +220,7 @@ export function OrganizationTrigger({
       >
         <button {...rest} {...triggerDataProp.prop} className={buttonStyles}>
           <Icon size="small" glyph="Building" />
-          <span className={selectedStyle}>{current.orgName}</span>
+          <span className={selectedStyle}>{placeholder}</span>
           <Icon size="small" glyph={open ? 'CaretUp' : 'CaretDown'} />
         </button>
       </InteractionRingWrapper>
@@ -252,14 +245,12 @@ export function OrganizationTrigger({
 
 interface ProjectTriggerProps {
   children?: React.ReactNode;
-  current: CurrentProjectInterface;
-  open?: boolean;
+  placeholder: string;
 }
 
 export function ProjectTrigger({
   children,
-  current,
-  open = false,
+  placeholder,
   ...rest
 }: ProjectTriggerProps) {
   return (
@@ -276,9 +267,7 @@ export function ProjectTrigger({
         className={projectTriggerStyle}
       >
         <Icon size="small" glyph="Bell" />
-        <span className={cx(selectedStyle, fontSize)}>
-          {current.projectName}
-        </span>
+        <span className={selectedStyle}>{placeholder}</span>
         <Icon size="small" glyph={open ? 'CaretUp' : 'CaretDown'} />
         {children}
       </button>
