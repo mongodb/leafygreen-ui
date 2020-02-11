@@ -9,17 +9,9 @@ describe('packages/text-input', () => {
   const className = 'test-text-input-class';
   const label = 'Test Input Label';
   const description = 'This is the description';
-  const onFocus = jest.fn();
-  const onBlur = jest.fn();
 
   const renderedTextInput = render(
-    <TextInput
-      className={className}
-      label={label}
-      description={description}
-      onFocus={onFocus}
-      onBlur={onBlur}
-    />,
+    <TextInput className={className} label={label} description={description} />,
   );
   const renderedChildren = renderedTextInput.container.firstChild;
 
@@ -53,5 +45,8 @@ describe('packages/text-input', () => {
       target: { value: 'a' },
     });
     expect(renderedInputElement.value).toBe('a');
+    renderedInputElement.setAttribute('disabled', 'false');
   });
+
+  test('onFocus and onBlur functions are called when element acquires and loses focus', () => {});
 });
