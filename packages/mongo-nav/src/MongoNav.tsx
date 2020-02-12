@@ -20,7 +20,7 @@ const defaultHosts: Required<HostsInterface> = {
   university: 'https://university.mongodb.com',
   support: 'https://support.mongodb.com',
   charts: 'https://charts.mongodb.com',
-  stitch: 'https://stitch.mongodb.com',
+  realm: 'https://stitch.mongodb.com',
 };
 
 const ErrorCodeMap = {
