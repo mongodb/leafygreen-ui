@@ -2,7 +2,7 @@ const Product = {
   Account: 'account',
   Charts: 'charts',
   Cloud: 'cloud',
-  Stitch: 'stitch',
+  Realm: 'realm',
   Support: 'support',
   University: 'university',
 } as const;
@@ -162,7 +162,7 @@ export interface HostsInterface {
   account?: string;
   charts?: string;
   cloud?: string;
-  stitch?: string;
+  realm?: string;
   support?: string;
   university?: string;
 }

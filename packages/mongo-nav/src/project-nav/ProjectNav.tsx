@@ -167,6 +167,7 @@ const productIconStyle = css`
   margin-right: 4px;
   color: ${uiColors.gray.base};
 `;
+
 interface ProjectNavInterface {
   current: CurrentProjectInterface;
   data?: Array<ProjectInterface>;
@@ -244,13 +245,14 @@ export default function ProjectNav({
           </li>
 
           <li role="none" className={productStyle}>
-            <a href={hosts.stitch} className={getProductClassName('stitch')}>
+            {/* <a href={hosts.realm} className={productTextStyle}> </a> */}
+            <a href={hosts.realm} className={getProductClassName('realm')}>
               <Icon
                 {...productIconProp.prop}
                 className={productIconStyle}
                 glyph="Stitch"
               />
-              Stitch
+              Realm
             </a>
           </li>
 
@@ -319,7 +321,7 @@ export default function ProjectNav({
               href={projectNav.alerts as string}
               size="large"
             >
-              {alerts && <div className={alertBadgeStyle}>{alerts}</div>}
+              {alerts > 0 && <div className={alertBadgeStyle}>{alerts}</div>}
               <Icon glyph="Bell" size="large" />
             </IconButton>
           }
