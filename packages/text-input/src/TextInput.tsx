@@ -117,6 +117,8 @@ const TextInput = React.forwardRef(
       color: #5d6c74;
       font-size: 12px;
       font-style: italic;
+      font-weight: normal;
+      display: ${!optional || state != State.none ? 'none' : ''};
     `;
 
     const errorMessageStyle = css`
@@ -125,6 +127,7 @@ const TextInput = React.forwardRef(
       height: 20px;
       padding-top: 4px;
       font-weight: normal;
+      display: ${state == State.error ? '' : 'none'};
     `;
 
     return (
@@ -145,14 +148,11 @@ const TextInput = React.forwardRef(
             />
             <Icon glyph="Checkmark" className={validIconStyle} />
             <Icon glyph="Warning" className={errorIconStyle} />
-            <div
-              hidden={!optional || state != State.none}
-              className={optionalStyle}
-            >
+            <div className={optionalStyle}>
               <p>Optional</p>
             </div>
           </div>
-          <div hidden={state != State.error} className={errorMessageStyle}>
+          <div className={errorMessageStyle}>
             <label>{errorMessage}</label>
           </div>
         </label>
