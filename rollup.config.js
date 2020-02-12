@@ -28,54 +28,62 @@ const external = [
   ...getAllPackages('../../packages'),
 ];
 
-const resolvePlugin = resolve({
-  extensions: ['.js', '.jsx', '.ts', 'tsx'],
-});
+function generateConfig(target) {
+  const resolvePlugin = resolve({
+    extensions: ['.js', '.jsx', '.ts', 'tsx'],
+  });
 
-const commonjsPlugin = commonjs({
-  include: /node_modules/,
-  namedExports: {
-    react: ['useRef', 'useEffect', 'useState', 'useCallback', 'useMemo'],
-  },
-});
+  const commonjsPlugin = commonjs({
+    include: /node_modules/,
+    namedExports: {
+      react: ['useRef', 'useEffect', 'useState', 'useCallback', 'useMemo'],
+    },
+  });
 
-const typescriptPlugin = typescript({
-  tsconfig: 'tsconfig.json',
+  const typescriptPlugin = typescript({
+    tsconfig: 'tsconfig.json',
 
-  // This property is supported as a way around an error we frequently received:
-  // Error: Unknown object type "asyncfunction"
-  //
-  // This property is documented in the main README as a workaround:
-  // https://github.com/ezolenko/rollup-plugin-typescript2
-  objectHashIgnoreUnknownHack: true,
+    tsconfigOverride: {
+      module: target === 'esm' ? 'esnext' : 'commonjs',
+    },
 
-  // We need to clean frequently because of the "hack" property above.
-  // We can probably do this less than "always" in the future.
-  clean: true,
+    // This property is supported as a way around an error we frequently received:
+    // Error: Unknown object type "asyncfunction"
+    //
+    // This property is documented in the main README as a workaround:
+    // https://github.com/ezolenko/rollup-plugin-typescript2
+    objectHashIgnoreUnknownHack: true,
 
-  // This property allows us to use the latest TS version, rather than the supported 2.x
-  typescript: require('typescript'),
-  verbosity: 2,
-});
+    // We need to clean frequently because of the "hack" property above.
+    // We can probably do this less than "always" in the future.
+    clean: true,
 
-const urlLoaderPlugin = urlPlugin({
-  limit: 50000,
-  include: ['**/*.png'],
-});
+    // This property allows us to use the latest TS version, rather than the supported 2.x
+    typescript: require('typescript'),
+    verbosity: 2,
+  });
 
-const input = 'src/index.ts';
+  const urlLoaderPlugin = urlPlugin({
+    limit: 50000,
+    include: ['**/*.png'],
+  });
 
-const output = {
-  file: 'dist/index.esm.js',
-  format: 'esm',
-};
+  const input = 'src/index.ts';
 
-const plugins = [
-  resolvePlugin,
-  commonjsPlugin,
-  typescriptPlugin,
-  urlLoaderPlugin,
-  svgr(),
-];
+  const output = {
+    file: `dist/index.${target}.js`,
+    format: target === 'esm' ? 'esm' : 'cjs',
+  };
 
-export default { input, output, external, plugins };
+  const plugins = [
+    resolvePlugin,
+    commonjsPlugin,
+    typescriptPlugin,
+    urlLoaderPlugin,
+    svgr(),
+  ];
+
+  return { input, output, external, plugins };
+}
+
+export default [generateConfig('esm'), generateConfig('web')];
