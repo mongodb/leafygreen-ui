@@ -42,6 +42,10 @@ const selectedStyle = css`
   font-size: 13px;
 `;
 
+const disabledStyle = css`
+  color: ${uiColors.gray.light1};
+`;
+
 const anchorStyle = css`
   color: ${uiColors.gray.base};
   padding-left: 5px;
@@ -59,6 +63,7 @@ interface OrganizationTriggerProps {
   className?: string;
   urls: Required<URLSInterface>;
   isActive?: boolean;
+  disabled?: boolean;
 }
 
 export function OrganizationTrigger({
@@ -67,16 +72,20 @@ export function OrganizationTrigger({
   className,
   urls,
   isActive,
+  disabled = false,
   ...rest
 }: OrganizationTriggerProps) {
   return (
     <div className={cx(orgTriggerContainer, className)}>
       <button {...rest} className={buttonContainer}>
-        <Icon size="small" glyph="Building" />
-        <span className={selectedStyle}>{placeholder}</span>
-        <Icon size="small" glyph="CaretDown" />
+        <Icon className={cx({ [disabledStyle]: disabled })} size="small" glyph="Building" />
+        <span className={cx(selectedStyle, { [disabledStyle]: disabled })}>
+          {disabled ? 'All Organizations' : placeholder}
+        </span>
+        <Icon className={cx({ [disabledStyle]: disabled })} size="small" glyph="CaretDown" />
       </button>
-      <a
+      {!disabled && (
+        <a
         href={urls.mongoSelect.orgSettings}
         className={cx(anchorStyle, border)}
         aria-label="settings"
@@ -86,6 +95,7 @@ export function OrganizationTrigger({
           fill={isActive ? uiColors.green.base : uiColors.gray.base}
         />
       </a>
+      )}
       {children}
     </div>
   );

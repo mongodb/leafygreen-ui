@@ -72,6 +72,7 @@ interface BaseMongoSelectProps {
   urls: Required<URLSInterface>;
   onChange: React.ChangeEventHandler;
   isActive?: boolean;
+  disabled?: boolean;
 }
 
 interface ProjectMongoSelectProps extends BaseMongoSelectProps {
@@ -98,6 +99,7 @@ function OrgSelect({
   className,
   urls,
   isActive,
+  disabled,
   onChange,
   onClick,
   constructOrganizationURL,
@@ -128,6 +130,7 @@ function OrgSelect({
           className={className}
           urls={urls}
           isActive={isActive}
+          disabled={disabled}
         />
       }
       className={menuContainerStyle}
