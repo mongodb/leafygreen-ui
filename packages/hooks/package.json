@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/hooks",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "LeafyGreen UI Kit Custom Hooks",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
