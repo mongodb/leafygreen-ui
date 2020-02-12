@@ -1,5 +1,14 @@
 # @leafygreen-ui/side-nav
 
+## 1.0.3
+
+### Patch Changes
+
+- d766d73: Adjust spacing in SideNav
+- Updated dependencies [786ccf1]
+- Updated dependencies [690888a]
+  - @leafygreen-ui/menu@6.0.0
+
 ## 1.0.2
 
 ### Patch Changes
