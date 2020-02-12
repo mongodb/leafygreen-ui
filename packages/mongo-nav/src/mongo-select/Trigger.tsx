@@ -246,11 +246,13 @@ export function OrganizationTrigger({
 interface ProjectTriggerProps {
   children?: React.ReactNode;
   placeholder: string;
+  open?: boolean;
 }
 
 export function ProjectTrigger({
   children,
   placeholder,
+  open,
   ...rest
 }: ProjectTriggerProps) {
   return (

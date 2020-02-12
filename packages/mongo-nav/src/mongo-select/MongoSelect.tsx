@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Menu,
   FocusableMenuItem,
@@ -101,6 +101,8 @@ function OrgSelect({
   onClick,
   constructOrganizationURL,
 }: OrganizationMongoSelectProps) {
+  const [open, setOpen] = useState(false);
+
   const renderOrganizationOption = (datum: OrganizationInterface) => {
     const { orgId, orgName, planType } = datum;
 
@@ -126,11 +128,14 @@ function OrgSelect({
           placeholder={current?.orgName ?? 'All Organizations'}
           urls={urls}
           isActive={isActive}
+          open={open}
         />
       }
       className={menuContainerStyle}
       justify="start"
       spacing={0}
+      setOpen={setOpen}
+      open={open}
     >
       <FocusableMenuItem>
         <Input
@@ -172,6 +177,8 @@ function ProjectSelect({
   constructProjectURL,
   urls,
 }: ProjectMongoSelectProps) {
+  const [open, setOpen] = useState(false);
+
   const renderProjectOption = (datum: ProjectInterface) => {
     const { projectId, projectName, orgId } = datum;
 
@@ -189,10 +196,12 @@ function ProjectSelect({
 
   return (
     <Menu
-      trigger={<ProjectTrigger placeholder={current.projectName} />}
+      trigger={<ProjectTrigger placeholder={current.projectName} open={open} />}
       className={menuContainerStyle}
       justify="start"
       spacing={0}
+      open={open}
+      setOpen={setOpen}
     >
       <FocusableMenuItem>
         <Input onChange={onChange} onKeyDown={onKeyDown} variant="project" />
