@@ -1,5 +1,11 @@
 # @leafygreen-ui/side-nav
 
+## 1.0.4
+
+### Patch Changes
+
+- 3a7bd19: Modified styles to avoid conflicts with pre-existing focus states of anchors
+
 ## 1.0.3
 
 ### Patch Changes
