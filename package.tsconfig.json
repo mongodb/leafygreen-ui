@@ -12,7 +12,8 @@
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "traceResolution": true,
-    "composite": true
+    "composite": true,
+    "baseUrl": "src"
   },
   "exclude": ["*.story.*", "*.spec.*", "dist"]
 }

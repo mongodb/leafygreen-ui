@@ -41,7 +41,6 @@ const commonjsPlugin = commonjs({
 
 const typescriptPlugin = typescript({
   tsconfig: 'tsconfig.json',
-  useTsconfigDeclarationDir: true,
 
   // This property is supported as a way around an error we frequently received:
   // Error: Unknown object type "asyncfunction"
@@ -64,6 +63,13 @@ const urlLoaderPlugin = urlPlugin({
   include: ['**/*.png'],
 });
 
+const input = 'src/index.ts';
+
+const output = {
+  file: 'dist/index.esm.js',
+  format: 'esm',
+};
+
 const plugins = [
   resolvePlugin,
   commonjsPlugin,
@@ -72,4 +78,4 @@ const plugins = [
   svgr(),
 ];
 
-export default { external, plugins };
+export default { input, output, external, plugins };

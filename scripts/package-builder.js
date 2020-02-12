@@ -68,10 +68,6 @@ const tsConfig = `
 {
   "extends": "../../package.tsconfig.json",
   "include": ["src/**/*", "../../typings/**/*"],
-  "compilerOptions": {
-    "baseUrl": "src",
-    "declarationDir": "dist"
-  },
   "references": [
     {
       "path": "../lib"
