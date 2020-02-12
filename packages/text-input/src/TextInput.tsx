@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
@@ -12,7 +12,6 @@ export const State = {
 export type State = typeof State[keyof typeof State];
 
 interface TextInputProps {
-  value?: string;
   label?: string;
   description?: string;
   optional?: boolean;
@@ -21,14 +20,14 @@ interface TextInputProps {
   placeholder?: string;
   errorMessage?: string;
   state?: State;
+  value?: string;
+  setValue?: Function;
   className?: string;
 }
 
-// TODO: controlled/uncontrolled component logic
 const TextInput = React.forwardRef(
   (
     {
-      value,
       label,
       description,
       optional = false,
@@ -36,11 +35,18 @@ const TextInput = React.forwardRef(
       onChange,
       placeholder,
       errorMessage,
-      state = State.none,
+      state,
+      value: controlledValue,
+      setValue: setControlledValue,
       className,
     }: TextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
   ) => {
+    const isControlled = typeof controlledValue === 'string';
+    const [uncontrolledValue, setUncontrolledValue] = useState('');
+    const value = isControlled ? controlledValue : uncontrolledValue;
+    const setValue = isControlled ? setControlledValue : setUncontrolledValue;
+
     function getColorFromValidationState() {
       if (state == State.none) {
         return '#CCC';
@@ -53,7 +59,10 @@ const TextInput = React.forwardRef(
       if (onChange != undefined) {
         state = onChange(e.target.value);
       }
-      value = e.target.value;
+
+      if (setValue != undefined) {
+        setValue(e.target.value);
+      }
     }
 
     const textInputStyle = css`
@@ -172,6 +181,8 @@ TextInput.propTypes = {
   placeholder: PropTypes.string,
   errorMessage: PropTypes.string,
   state: PropTypes.oneOf(Object.values(State)),
+  value: PropTypes.string,
+  setValue: PropTypes.func,
   className: PropTypes.string,
 };
 
