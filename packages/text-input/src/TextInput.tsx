@@ -17,6 +17,7 @@ interface TextInputProps {
 }
 
 // TODO: controlled/uncontrolled component logic
+// TODO: forwardRef logic
 function TextInput({
   value,
   label,
@@ -39,7 +40,7 @@ function TextInput({
 
   function onValueChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (onChange != undefined) {
-      onChange(e.target.value);
+      state = onChange(e.target.value);
     }
     value = e.target.value;
   }
