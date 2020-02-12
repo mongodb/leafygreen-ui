@@ -72,12 +72,14 @@ const defaultStyle = css`
   }
 
   &:focus {
+    text-decoration: none;
     outline: none;
   }
 `;
 
 const activeStyle = css`
   cursor: default;
+  text-decoration: none;
   background-color: ${uiColors.green.light3};
 
   &:hover {
@@ -92,6 +94,7 @@ const disabledStyle = css`
 
 const focusedStyle = css`
   &:focus {
+    text-decoration: none;
     color: ${uiColors.blue.dark3};
 
     &:before {
