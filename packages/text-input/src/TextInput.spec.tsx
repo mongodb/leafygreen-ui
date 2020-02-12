@@ -17,9 +17,15 @@ describe('packages/text-input', () => {
   onChange.mockReturnValue('none');
 
   const renderedTextInputEnabled = render(
-    <TextInput className={className} label={label} description={description} onChange={onChange} state={state}/>,
+    <TextInput
+      className={className}
+      label={label}
+      description={description}
+      onChange={onChange}
+      state={state}
+    />,
   );
-  
+
   const renderedChildren = renderedTextInputEnabled.container.firstChild;
 
   if (!typeIs.element(renderedChildren)) {

@@ -82,10 +82,18 @@ function TextInput({
     }
   `;
 
-  const iconStyle = css`
+  const errorIconStyle = css`
     position: absolute;
     right: 10px;
-    color: ${state == 'valid' ? '#13AA52' : '#CF4A22'};
+    color: #cf4a22;
+    display: ${state == 'error' ? '' : 'none'};
+  `;
+
+  const validIconStyle = css`
+    position: absolute;
+    right: 10px;
+    color: #13aa52;
+    display: ${state == 'valid' ? '' : 'none'};
   `;
 
   const optionalStyle = css`
@@ -96,7 +104,7 @@ function TextInput({
     font-style: italic;
   `;
 
-  const errorStyle = css`
+  const errorMessageStyle = css`
     color: #cf4a22;
     font-size: 14px;
     height: 20px;
@@ -117,17 +125,13 @@ function TextInput({
           placeholder={placeholder}
           onChange={e => onValueChange(e)}
         />
-        <div hidden={state != 'valid'} className={iconStyle}>
-          <Icon glyph="Checkmark" />
-        </div>
-        <div hidden={state != 'error'} className={iconStyle}>
-          <Icon glyph="Warning" />
-        </div>
+        <Icon glyph="Checkmark" className={validIconStyle} />
+        <Icon glyph="Warning" className={errorIconStyle} />
         <div hidden={!optional || state != 'none'} className={optionalStyle}>
           <p>Optional</p>
         </div>
       </div>
-      <div hidden={state != 'error'} className={errorStyle}>
+      <div hidden={state != 'error'} className={errorMessageStyle}>
         <label>{errorMessage}</label>
       </div>
     </div>
