@@ -14,7 +14,7 @@ describe('packages/MongoNav', () => {
 
   const { getByText, getByTestId } = render(
     <MongoNav
-      activeProduct="stitch"
+      activeProduct="realm"
       mode="dev"
       onOrganizationChange={onOrganizationChange}
       onProjectChange={onProjectChange}

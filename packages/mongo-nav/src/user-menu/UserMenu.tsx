@@ -317,7 +317,7 @@ UserMenu.propTypes = {
     'cloud',
     'support',
     'university',
-    'stitch',
+    'realm',
     'charts',
   ]),
   onLogout: PropTypes.func,
