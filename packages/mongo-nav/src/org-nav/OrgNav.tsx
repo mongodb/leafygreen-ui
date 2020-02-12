@@ -126,54 +126,43 @@ const paymentStatusMap: { readonly [K in Colors]: Array<string> } = {
   [Colors.Red]: ['dead', 'locked', 'closed'],
 };
 
-interface LinkElementProps {
+interface NavLinkElementProps {
   isActive?: boolean;
   href?: string;
-  tooltipText?: string;
   children?: React.ReactNode;
   className?: string;
 }
 
-function LinkElement({
+function NavLinkElement({
   isActive = false,
   href,
-  tooltipText,
   children,
   className,
-}: LinkElementProps) {
+}: NavLinkElementProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
   return (
-    <Tooltip
-      align="bottom"
-      justify="middle"
-      variant="dark"
-      trigger={
-        <a
-          href={href}
-          className={cx(
-            linkText,
-            {
-              [activeLink]: isActive,
-              [navItemFocusStyle]: showFocus,
-            },
-            className,
-          )}
-        >
-          <span
-            className={cx(
-              css`
-                position: relative;
-              `,
-            )}
-          >
-            {children}
-          </span>
-        </a>
-      }
+    <a
+      href={href}
+      className={cx(
+        linkText,
+        {
+          [activeLink]: isActive,
+          [navItemFocusStyle]: showFocus,
+        },
+        className,
+      )}
     >
-      {tooltipText}
-    </Tooltip>
+      <span
+        className={cx(
+          css`
+            position: relative;
+          `,
+        )}
+      >
+        {children}
+      </span>
+    </a>
   );
 }
 interface OrgNav {
@@ -270,13 +259,12 @@ export default function OrgNav({
                   justify-content: center;
                 `}
               >
-                <LinkElement
+                <NavLinkElement
                   href={orgNav.accessManager}
                   isActive={activeNav === 'accessManager'}
-                  tooltipText="Organization Access Manager"
                 >
                   Access Manager
-                </LinkElement>
+                </NavLinkElement>
                 <Menu
                   open={open}
                   setOpen={setOpen}
@@ -297,36 +285,33 @@ export default function OrgNav({
                 </Menu>
               </li>
               <li role="none" className={supportContainer}>
-                <LinkElement
+                <NavLinkElement
                   href={orgNav.support}
                   isActive={activeNav === 'support'}
-                  tooltipText="View the Organization Support"
                 >
                   Support
-                </LinkElement>
+                </NavLinkElement>
               </li>
               <li role="none">
-                <LinkElement
+                <NavLinkElement
                   href={orgNav.billing}
                   isActive={activeNav === 'billing'}
-                  tooltipText="View the Organization Billing"
                 >
                   Billing
-                </LinkElement>
+                </NavLinkElement>
               </li>
             </>
           )}
         </ul>
       </div>
       <div>
-        <LinkElement
+        <NavLinkElement
           href={orgNav.allClusters}
           isActive={activeNav === 'allClusters'}
-          tooltipText="View all clusters across your organizations"
           className={rightLinkMargin}
         >
           All Clusters
-        </LinkElement>
+        </NavLinkElement>
         {admin && (
           <a
             href={orgNav.admin}
