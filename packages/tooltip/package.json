@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tooltip",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "LeafyGreen UI Kit Tooltip",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
@@ -16,7 +16,7 @@
     "@leafygreen-ui/popover": "^3.0.2",
     "@leafygreen-ui/lib": "^4.2.0",
     "@leafygreen-ui/palette": "^2.0.0",
-    "@leafygreen-ui/hooks": "^2.0.0", 
+    "@leafygreen-ui/hooks": "^2.0.1",
     "lodash": "^4.17.15"
   }
 }

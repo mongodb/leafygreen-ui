@@ -6,7 +6,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import { AtlasActive, AtlasInactive } from './SubBrandIcons';
-import MongoSelect from '../mongo-select/index';
+import { ProjectSelect } from '../mongo-select/index';
 import {
   ProjectInterface,
   URLSInterface,
@@ -146,7 +146,7 @@ function calcStyle(activeProduct: Product) {
 
 interface ProjectNavInterface {
   current: CurrentProjectInterface;
-  data: Array<ProjectInterface>;
+  data?: Array<ProjectInterface>;
   constructProjectURL: (orgID: string, projID: string) => string;
   urls: Required<URLSInterface>;
   hosts: Required<HostsInterface>;
@@ -160,10 +160,10 @@ export default function ProjectNav({
   data,
   constructProjectURL,
   urls,
-  alerts,
   activeProduct,
   onProjectChange,
   hosts,
+  alerts = 0,
 }: ProjectNavInterface) {
   const { projectNav } = urls;
 
@@ -174,8 +174,7 @@ export default function ProjectNav({
       data-testid="project-nav"
     >
       <div className={leftSide}>
-        <MongoSelect
-          variant="project"
+        <ProjectSelect
           current={current}
           data={data}
           constructProjectURL={constructProjectURL}
@@ -258,7 +257,7 @@ export default function ProjectNav({
               href={projectNav.alerts as string}
               className={alertIconButtonStyle}
             >
-              {alerts && <div className={alertBadgeStyle}>{alerts}</div>}
+              {alerts > 0 && <div className={alertBadgeStyle}>{alerts}</div>}
               <Icon glyph="Bell" />
             </IconButton>
           }
