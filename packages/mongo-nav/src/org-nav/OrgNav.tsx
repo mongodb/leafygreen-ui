@@ -51,11 +51,55 @@ const linkText = css`
   text-decoration: none;
   color: ${uiColors.gray.dark3};
   padding: 4px;
+
+  span {
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      opacity: 0;
+      transform: scale(0.8, 1);
+      transition: 150ms ease-in-out;
+      height: 3px;
+      border-radius: 50px;
+    }
+  }
+
+  &:hover {
+    span:after {
+      opacity: 1;
+      transform: scale(1);
+      background-color: ${uiColors.gray.light2};
+    }
+  }
 `;
 
 const activeLink = css`
   font-weight: bold;
   color: ${uiColors.green.base};
+
+  &:hover {
+    span:after {
+      background-color: ${uiColors.green.light2};
+    }
+  }
+`;
+
+const navItemFocusStyle = css`
+  &:focus {
+    outline: none;
+    color: ${uiColors.blue.base};
+
+    span:after {
+      background-color: #9dd0e7;
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 `;
 
 const supportContainer = css`
@@ -78,36 +122,6 @@ const accessManagerMenuItem = css`
   line-height: 19.6px;
   margin-top: 0px;
   margin-bottom: 0px;
-`;
-
-const navItemFocusStyle = css`
-  span {
-    position: relative;
-
-    &:after {
-      content: '';
-      position: absolute;
-      top: calc(100% + 4px);
-      left: 0;
-      right: 0;
-      background-color: #9dd0e7;
-      opacity: 0;
-      transform: scale(0.8, 1);
-      transition: 150ms ease-in-out;
-      height: 3px;
-      border-radius: 50px;
-    }
-  }
-
-  &:focus {
-    outline: none;
-    color: ${uiColors.blue.base};
-
-    span:after {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
 `;
 
 export const Colors = {
@@ -192,7 +206,6 @@ export default function OrgNav({
   hosts,
   currentProjectName,
 }: OrgNav) {
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const [open, setOpen] = useState(false);
   const { orgNav } = urls;
 
@@ -313,15 +326,13 @@ export default function OrgNav({
           All Clusters
         </NavLinkElement>
         {admin && (
-          <a
+          <NavLinkElement
             href={orgNav.admin}
-            className={cx(rightLinkMargin, linkText, {
-              [activeLink]: activeNav === 'admin',
-              [navItemFocusStyle]: showFocus,
-            })}
+            isActive={activeNav === 'admin'}
+            className={rightLinkMargin}
           >
             Admin
-          </a>
+          </NavLinkElement>
         )}
         <UserMenu
           account={account}
