@@ -25,7 +25,6 @@ interface TextInputProps {
 }
 
 // TODO: controlled/uncontrolled component logic
-// TODO: forwardRef logic
 const TextInput = React.forwardRef(
   (
     {
@@ -67,12 +66,15 @@ const TextInput = React.forwardRef(
       font-size: 14px;
       font-weight: bold;
       height: 20px;
+      padding-bottom: 8px;
     `;
 
     const descriptionStyle = css`
       color: #5d6c74;
       font-size: 14px;
       height: ${description === '' ? '0' : '20'}px;
+      font-weight: normal;
+      padding-bottom: 8px;
     `;
 
     const inputContainerStyle = css`
@@ -89,6 +91,7 @@ const TextInput = React.forwardRef(
       padding-left: 12px;
       background: ${disabled ? '#E7EEEC' : '#FFFFFF'};
       font-size: 14px;
+      font-weight: normal;
       &: placeholder {
         color: #89989b;
       }
@@ -121,32 +124,38 @@ const TextInput = React.forwardRef(
       font-size: 14px;
       height: 20px;
       padding-top: 4px;
+      font-weight: normal;
     `;
 
     return (
-      <div className={textInputStyle + ' ' + className}>
-        <label className={labelStyle}>{label}</label>
-        <label className={descriptionStyle}>{description}</label>
-        <div className={inputContainerStyle}>
-          <input
-            className={inputStyle}
-            type="text"
-            value={value}
-            required={!optional}
-            disabled={disabled}
-            placeholder={placeholder}
-            onChange={e => onValueChange(e)}
-            ref={forwardRef}
-          />
-          <Icon glyph="Checkmark" className={validIconStyle} />
-          <Icon glyph="Warning" className={errorIconStyle} />
-          <div hidden={!optional || state != 'none'} className={optionalStyle}>
-            <p>Optional</p>
+      <div className={className}>
+        <label className={textInputStyle + ' ' + labelStyle}>
+          {label}
+          <label className={descriptionStyle}>{description}</label>
+          <div className={inputContainerStyle}>
+            <input
+              className={inputStyle}
+              type="text"
+              value={value}
+              required={!optional}
+              disabled={disabled}
+              placeholder={placeholder}
+              onChange={e => onValueChange(e)}
+              ref={forwardRef}
+            />
+            <Icon glyph="Checkmark" className={validIconStyle} />
+            <Icon glyph="Warning" className={errorIconStyle} />
+            <div
+              hidden={!optional || state != State.none}
+              className={optionalStyle}
+            >
+              <p>Optional</p>
+            </div>
           </div>
-        </div>
-        <div hidden={state != 'error'} className={errorMessageStyle}>
-          <label>{errorMessage}</label>
-        </div>
+          <div hidden={state != State.error} className={errorMessageStyle}>
+            <label>{errorMessage}</label>
+          </div>
+        </label>
       </div>
     );
   },
