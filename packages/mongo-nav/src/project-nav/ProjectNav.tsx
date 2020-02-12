@@ -27,6 +27,7 @@ const navContainerStyle = css`
   height: 45px;
   box-shadow: 0 3px 7px 0 rgba(67, 117, 151, 0.08);
   overflow: hidden;
+  box-sizing: border-box;
 `;
 
 const mongoSelectWrapper = css`

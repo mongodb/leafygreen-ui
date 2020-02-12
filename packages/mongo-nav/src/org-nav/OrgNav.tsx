@@ -33,6 +33,7 @@ const navContainer = css`
   line-height: 15px;
   color: ${uiColors.gray.dark3};
   border-bottom: 1px solid ${uiColors.gray.light2};
+  box-sizing: border-box;
 `;
 
 const leftSideContainer = css`
