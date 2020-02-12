@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 2.0.1
+
+### Patch Changes
+
+- ac5c473: Add lodash as dependency
+
 ## 2.0.0
 
 ### Major Changes

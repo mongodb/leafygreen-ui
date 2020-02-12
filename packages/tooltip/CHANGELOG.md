@@ -1,5 +1,13 @@
 # @leafygreen-ui/tooltip
 
+## 3.0.2
+
+### Patch Changes
+
+- ac5c473: Add lodash as dependency
+- Updated dependencies [ac5c473]
+  - @leafygreen-ui/hooks@2.0.1
+
 ## 3.0.1
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @leafygreen-ui/button
 
+## 4.1.0
+
+### Minor Changes
+
+- b342448: Add glyph prop to Button component
+
+### Patch Changes
+
+- ac5c473: Add lodash as dependency
+
 ## 4.0.0
 
 ### Major Changes
