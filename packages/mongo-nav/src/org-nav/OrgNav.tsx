@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { LogoMark } from '@leafygreen-ui/logo';
 import Tooltip from '@leafygreen-ui/tooltip';
@@ -7,7 +7,7 @@ import Badge from '@leafygreen-ui/badge';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import { Menu } from '@leafygreen-ui/menu';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { OrgNavLink } from '../helpers/index';
 import {
   AccountInterface,
   OrganizationInterface,
@@ -48,61 +48,6 @@ const ulContainer = css`
   padding-inline-start: 0px;
 `;
 
-const linkText = css`
-  text-decoration: none;
-  color: ${uiColors.gray.dark3};
-  padding: 4px;
-
-  span {
-    position: relative;
-
-    &:after {
-      content: '';
-      position: absolute;
-      top: calc(100% + 4px);
-      left: 0;
-      right: 0;
-      opacity: 0;
-      transform: scale(0.8, 1);
-      transition: 150ms ease-in-out;
-      height: 3px;
-      border-radius: 50px;
-    }
-  }
-
-  &:hover {
-    span:after {
-      opacity: 1;
-      transform: scale(1);
-      background-color: ${uiColors.gray.light2};
-    }
-  }
-`;
-
-const activeLink = css`
-  font-weight: bold;
-  color: ${uiColors.green.base};
-
-  &:hover {
-    span:after {
-      background-color: ${uiColors.green.light2};
-    }
-  }
-`;
-
-const navItemFocusStyle = css`
-  &:focus {
-    outline: none;
-    color: ${uiColors.blue.base};
-
-    span:after {
-      background-color: #9dd0e7;
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-`;
-
 const supportContainer = css`
   margin-left: 30px;
   margin-right: 30px;
@@ -141,45 +86,6 @@ const paymentStatusMap: { readonly [K in Colors]: Array<string> } = {
   [Colors.Red]: ['dead', 'locked', 'closed'],
 };
 
-interface NavLinkElementProps {
-  isActive?: boolean;
-  href?: string;
-  children?: React.ReactNode;
-  className?: string;
-}
-
-function NavLinkElement({
-  isActive = false,
-  href,
-  children,
-  className,
-}: NavLinkElementProps) {
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-
-  return (
-    <a
-      href={href}
-      className={cx(
-        linkText,
-        {
-          [activeLink]: isActive,
-          [navItemFocusStyle]: showFocus,
-        },
-        className,
-      )}
-    >
-      <span
-        className={cx(
-          css`
-            position: relative;
-          `,
-        )}
-      >
-        {children}
-      </span>
-    </a>
-  );
-}
 interface OrgNav {
   account: AccountInterface;
   activeProduct: Product;
@@ -273,12 +179,12 @@ export default function OrgNav({
                   justify-content: center;
                 `}
               >
-                <NavLinkElement
+                <OrgNavLink
                   href={orgNav.accessManager}
                   isActive={activeNav === 'accessManager'}
                 >
                   Access Manager
-                </NavLinkElement>
+                </OrgNavLink>
                 <Menu
                   open={open}
                   setOpen={setOpen}
@@ -299,41 +205,41 @@ export default function OrgNav({
                 </Menu>
               </li>
               <li role="none" className={supportContainer}>
-                <NavLinkElement
+                <OrgNavLink
                   href={orgNav.support}
                   isActive={activeNav === 'support'}
                 >
                   Support
-                </NavLinkElement>
+                </OrgNavLink>
               </li>
               <li role="none">
-                <NavLinkElement
+                <OrgNavLink
                   href={orgNav.billing}
                   isActive={activeNav === 'billing'}
                 >
                   Billing
-                </NavLinkElement>
+                </OrgNavLink>
               </li>
             </>
           )}
         </ul>
       </div>
       <div>
-        <NavLinkElement
+        <OrgNavLink
           href={orgNav.allClusters}
           isActive={activeNav === 'allClusters'}
           className={rightLinkMargin}
         >
           All Clusters
-        </NavLinkElement>
+        </OrgNavLink>
         {admin && (
-          <NavLinkElement
+          <OrgNavLink
             href={orgNav.admin}
             isActive={activeNav === 'admin'}
             className={rightLinkMargin}
           >
             Admin
-          </NavLinkElement>
+          </OrgNavLink>
         )}
         <UserMenu
           account={account}

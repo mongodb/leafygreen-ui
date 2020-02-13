@@ -245,7 +245,6 @@ export default function ProjectNav({
           </li>
 
           <li role="none" className={productStyle}>
-            {/* <a href={hosts.realm} className={productTextStyle}> </a> */}
             <a href={hosts.realm} className={getProductClassName('realm')}>
               <Icon
                 {...productIconProp.prop}
