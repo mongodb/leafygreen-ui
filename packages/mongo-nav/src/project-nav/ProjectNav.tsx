@@ -74,7 +74,7 @@ const activeProductColor = {
     color: ${uiColors.green.dark3};
     font-weight: bold;
   `,
-  stitch: css`
+  realm: css`
     color: #39477f;
     font-weight: bold;
   `,
@@ -124,7 +124,7 @@ const alertBadgeStyle = css`
 function calcStyle(activeProduct: Product) {
   const products = {
     cloud: uiColors.green.base,
-    stitch: '#59569D',
+    realm: '#59569D',
     charts: '#00C6BF',
   };
 
@@ -139,7 +139,7 @@ function calcStyle(activeProduct: Product) {
   return css`
     transform: translate3d(${computedX}px, 0, 0);
     background-color: ${products[
-      activeProduct as 'stitch' | 'cloud' | 'charts'
+      activeProduct as 'realm' | 'cloud' | 'charts'
     ]};
   `;
 }
@@ -210,19 +210,19 @@ export default function ProjectNav({
             </a>
           </li>
           <li role="none" className={productStyle}>
-            <a href={hosts.stitch} className={productTextStyle}>
+            <a href={hosts.realm} className={productTextStyle}>
               <Icon
                 glyph="Stitch"
                 fill={
-                  activeProduct === 'stitch' ? '#59569D' : uiColors.gray.base
+                  activeProduct === 'realm' ? '#59569D' : uiColors.gray.base
                 }
               />
               <span
                 className={cx(productMargin, {
-                  [activeProductColor.stitch]: activeProduct === 'stitch',
+                  [activeProductColor.realm]: activeProduct === 'realm',
                 })}
               >
-                Stitch
+                Realm
               </span>
             </a>
           </li>

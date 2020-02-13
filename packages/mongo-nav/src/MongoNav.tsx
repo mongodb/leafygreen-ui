@@ -20,7 +20,7 @@ const defaultHosts: Required<HostsInterface> = {
   university: 'https://university.mongodb.com',
   support: 'https://support.mongodb.com',
   charts: 'https://charts.mongodb.com',
-  stitch: 'https://stitch.mongodb.com',
+  realm: 'https://stitch.mongodb.com',
 };
 
 const ErrorCodeMap = {
@@ -29,47 +29,47 @@ const ErrorCodeMap = {
 
 interface MongoNavInterface {
   /**
-   * Describes what product is currently active
+   * Describes what product is currently active.
    */
   activeProduct: Product;
 
   /**
-   * Determines what nav item is currently active
+   * Determines what nav item is currently active.
    */
   activeNav?: NavItem;
 
   /**
-   * Describes whether or not user is an `admin`
+   * Describes whether or not user is an `admin`.
    */
   admin?: boolean;
 
   /**
-   * Callback invoked when user types into organization picker
+   * Callback invoked when user types into organization picker.
    */
   onOrganizationChange: React.ChangeEventHandler;
 
   /**
-   * Callback invoked when user types into project picker
+   * Callback invoked when user types into project picker.
    */
   onProjectChange: React.ChangeEventHandler;
 
   /**
-   *  Function to determine destination URL when user selects a organization from the organization picker
+   *  Function to determine destination URL when user selects a organization from the organization picker, see also `hosts`.
    */
   constructOrganizationURL?: (orgID: string) => string;
 
   /**
-   *  Function to determine destination URL when user selects a project from the project picker
+   *  Function to determine destination URL when user selects a project from the project picker, see also `hosts`.
    */
   constructProjectURL?: (orgID: string, projID: string) => string;
 
   /**
-   * Determines whether the project navigation should be shown
+   * Determines whether the project navigation should be shown.
    */
   showProjNav?: boolean;
 
   /**
-   * Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<MongoNav />` to work across all environments
+   * Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<MongoNav />` to work across all environments.
    */
   hosts?: HostsInterface;
 
@@ -79,18 +79,18 @@ interface MongoNavInterface {
   urls?: URLSInterface;
 
   /**
-   * Describes what environment the component is being used in
-   * By default the value is set to `production`
+   * Describes what environment the component is being used in.
+   * By default the value is set to `production`.
    */
   mode?: Mode;
 
   /**
-   * Function that is passed an error code, so that consuming application can handle fetch failures
+   * Function that is passed an error code as a string, so that consuming application can handle fetch failures.
    */
   onError?: (error: ErrorCode) => void;
 
   /**
-   * Callback that receives the response of the fetched data
+   * Callback that receives the response of the fetched data, having been converted from JSON into an object.
    */
   onSuccess?: (response: DataInterface) => void;
 }
@@ -118,11 +118,11 @@ interface MongoNavInterface {
  * @param props.urls Object to enable custom overrides for every `href` used in `<MongoNav />`.
  * @param props.showProjectNav Determines whether the project navigation should be shown.
  * @param props.admin Describes whether or not user is an `admin`.
- * @param props.constructOrganizationURL Function to determine destination URL when user selects a organization from the organization picker.
- * @param props.constructProjectURL Function to determine destination URL when user selects a project from the project picker.
- * @param props.mode Describes what environment the component is being used in, defaults to `production`
- * @param props.onSuccess Callback that receives the response of the fetched data
- * @param props.onError Function that is passed an error code, so that consuming application can handle fetch failures
+ * @param props.constructOrganizationURL Function to determine destination URL when user selects a organization from the organization picker, see also `hosts`.
+ * @param props.constructProjectURL Function to determine destination URL when user selects a project from the project picker, see also `hosts`.
+ * @param props.mode Describes what environment the component is being used in, defaults to `production`.
+ * @param props.onSuccess Callback that receives the response of the fetched data, having been converted from JSON into an object.
+ * @param props.onError Function that is passed an error code as a string, so that consuming application can handle fetch failures.
  */
 export default function MongoNav({
   activeProduct,
