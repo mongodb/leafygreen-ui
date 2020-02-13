@@ -2,10 +2,10 @@
   "name": "@leafygreen-ui/tooltip",
   "version": "3.0.1",
   "description": "LeafyGreen UI Kit Tooltip",
-  "browser": "./dist/index.web.js",
-  "module": "./dist/index.esm.js",
+  "browser": "./dist/index.esm.js",
   "main": "./dist/index.node.js",
   "types": "./dist/src/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "build": "../../node_modules/.bin/rollup -c ../../rollup.config.js"
   },

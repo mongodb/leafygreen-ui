@@ -2,10 +2,10 @@
   "name": "@leafygreen-ui/badge",
   "version": "3.0.0",
   "description": "leafyGreen UI Kit Badge",
-  "browser": "./dist/index.web.js",
-  "module": "./dist/index.esm.js",
+  "browser": "./dist/index.esm.js",
   "main": "./dist/index.node.js",
   "types": "./dist/src/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "build": "../../node_modules/.bin/rollup -c ../../rollup.config.js"
   },

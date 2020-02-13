@@ -48,7 +48,7 @@ const packageJSON = `
     "name": "@leafygreen-ui/${PACKAGE_LC}",
     "version": "0.9.0",
     "description": "leafyGreen UI Kit ${PACKAGE_HUMANREADABLE}",
-    "browser": "./dist/index.web.js",
+    "browser": "./dist/index.esm.js",
     "main": "./dist/index.node.js",
     "types": "./dist/src/index.d.ts",
     "scripts": {
