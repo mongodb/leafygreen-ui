@@ -20,6 +20,8 @@ import {
   PlanType,
 } from '../types';
 
+const menuItemHeight = 36;
+
 const menuContainerStyle = css`
   width: 280px;
   padding-top: 20px;
@@ -30,6 +32,13 @@ const menuItemContainerStyle = css`
   justify-content: space-between;
   align-items: center;
   text-align: left;
+`;
+
+const ulStyle = css`
+  max-height: ${5 * menuItemHeight}px;
+  overflow: scroll;
+  list-style: none;
+  padding: unset;
 `;
 
 const viewAllStyle = css`
@@ -145,14 +154,14 @@ function OrgSelect({
         />
       </FocusableMenuItem>
 
-      <>
+      <ul className={ulStyle}>
         {data?.map(renderOrganizationOption) ?? (
           <li>
             You do not belong to any organizations. Create an organization to
             start using MongoDB Cloud
           </li>
         )}
-      </>
+      </ul>
 
       <MenuSeparator />
       <MenuItem
@@ -207,7 +216,9 @@ function ProjectSelect({
         <Input onChange={onChange} onKeyDown={onKeyDown} variant="project" />
       </FocusableMenuItem>
 
-      <>{data?.map(datum => renderProjectOption(datum))}</>
+      <ul className={ulStyle}>
+        {data?.map(datum => renderProjectOption(datum))}
+      </ul>
 
       <MenuSeparator />
 
