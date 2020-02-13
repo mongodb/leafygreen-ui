@@ -6,58 +6,8 @@ import {
   cleanup,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
+import { urlFixtures, hostFixtures } from '../data';
 import UserMenu from '.';
-
-const urls = {
-  userMenu: {
-    cloud: {
-      userPreferences: `https://cloud.mongodb.com/v2#/preferences/personalization`,
-      organizations: `https://cloud.mongodb.com/v2#/preferences/organizations`,
-      invitations: `https://cloud.mongodb.com/v2#/preferences/invitations`,
-      mfa: `https://cloud.mongodb.com/v2#/preferences/2fa`,
-    },
-    university: {
-      videoPreferences: `https://university.mongodb.com/override-test`,
-    },
-    support: {
-      userPreferences: `https://support.mongodb.com/profile`,
-    },
-    account: {
-      homepage: `https://account.mongodb.com/account/profile/overview`,
-    },
-  },
-  mongoSelect: {
-    viewAllOrganizations: `https://cloud-dev.mongodb.com/v2#/preferences/organizations`,
-    orgSettings: `https://cloud-dev.mongodb.com/v2#/org/currentOrganizationId098/settings/general`,
-    viewAllProjects: `https://cloud-dev.mongodb.com/v2#/preferences/organizations`,
-    newProject: `https://cloud-dev.mongodb.com/v2#/org/currentOrganizationId/projects/create`,
-  },
-  orgNav: {
-    settings: `https://cloud.mongodb.com/v2#/org/currentOrganizationId098#settings/settings/general`,
-    accessManager: `https://cloud.mongodb.com/v2#/org/currentOrganizationId098#settings/access/users`,
-    support: `https://cloud.mongodb.com/v2#/org/currentOrganizationId098#settings/support`,
-    billing: `https://cloud.mongodb.com/v2#/org/currentOrganizationId098#settings/billing/overview`,
-    allClusters: `https://cloud.mongodb.com/v2#/clusters`,
-    admin: `https://cloud.mongodb.com/v2/admin#general/overview/servers`,
-  },
-  projectNav: {
-    settings: `https://cloud.mongodb.com/v2/currentProjectId098#settings/groupSettings`,
-    accessManager: `https://cloud.mongodb.com/v2/currentProjectId098#access`,
-    support: `https://cloud.mongodb.com/v2/currentProjectId098#info/support`,
-    integrations: `https://cloud.mongodb.com/v2/currentProjectId098#integrations`,
-    alerts: `https://cloud.mongodb.com/v2/currentProjectId098#alerts`,
-    activityFeed: `https://cloud.mongodb.com/v2/currentProjectId098#activity`,
-  },
-};
-
-const hosts = {
-  account: 'https://account.mongodb.com',
-  cloud: 'https://cloud.mongodb.com',
-  charts: 'https://charts.mongodb.com',
-  realm: 'https://stitch.mongodb.com',
-  support: 'https://support.mongodb.com',
-  university: 'https://university.mongodb.com',
-};
 
 afterAll(cleanup);
 
@@ -76,8 +26,8 @@ describe('packages/UserMenu', () => {
       activeProduct={'cloud'}
       onLogout={onLogout}
       onProductChange={onProductChange}
-      urls={urls}
-      hosts={hosts}
+      urls={urlFixtures}
+      hosts={hostFixtures}
     />,
   );
 
@@ -178,8 +128,8 @@ describe('packages/UserMenu', () => {
       <UserMenu
         account={account}
         activeProduct="account"
-        urls={urls}
-        hosts={hosts}
+        urls={urlFixtures}
+        hosts={hostFixtures}
       />,
     );
 

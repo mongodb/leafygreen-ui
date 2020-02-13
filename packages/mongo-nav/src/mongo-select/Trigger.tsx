@@ -77,24 +77,38 @@ export function OrganizationTrigger({
 }: OrganizationTriggerProps) {
   return (
     <div className={cx(orgTriggerContainer, className)}>
-      <button {...rest} className={buttonContainer}>
-        <Icon className={cx({ [disabledStyle]: disabled })} size="small" glyph="Building" />
+      <button
+        {...rest}
+        className={buttonContainer}
+        data-testid="org-trigger"
+        disabled={disabled}
+      >
+        <Icon
+          className={cx({ [disabledStyle]: disabled })}
+          size="small"
+          glyph="Building"
+        />
         <span className={cx(selectedStyle, { [disabledStyle]: disabled })}>
           {disabled ? 'All Organizations' : placeholder}
         </span>
-        <Icon className={cx({ [disabledStyle]: disabled })} size="small" glyph="CaretDown" />
+        <Icon
+          className={cx({ [disabledStyle]: disabled })}
+          size="small"
+          glyph="CaretDown"
+        />
       </button>
       {!disabled && (
         <a
-        href={urls.mongoSelect.orgSettings}
-        className={cx(anchorStyle, border)}
-        aria-label="settings"
-      >
-        <Icon
-          glyph={'Settings'}
-          fill={isActive ? uiColors.green.base : uiColors.gray.base}
-        />
-      </a>
+          href={urls.mongoSelect.orgSettings}
+          className={cx(anchorStyle, border)}
+          aria-label="settings"
+          data-testid="org-trigger-settings-icon"
+        >
+          <Icon
+            glyph={'Settings'}
+            fill={isActive ? uiColors.green.base : uiColors.gray.base}
+          />
+        </a>
       )}
       {children}
     </div>
@@ -116,6 +130,7 @@ export function ProjectTrigger({
   return (
     <button
       {...rest}
+      data-testid="project-trigger"
       className={cx(buttonContainer, projectTriggerContainer, className)}
     >
       <Icon size="small" glyph="Bell" />

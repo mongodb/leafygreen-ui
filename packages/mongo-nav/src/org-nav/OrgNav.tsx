@@ -60,7 +60,8 @@ const linkText = css`
   text-decoration: none;
   color: ${uiColors.gray.dark3};
 
-  &:focus, &:hover {
+  &:focus,
+  &:hover {
     text-decoration: none;
     color: ${uiColors.gray.dark3};
   }
@@ -145,7 +146,7 @@ export default function OrgNav({
         <LogoMark height={30} />
 
         <OrgSelect
-          className={cx(orgSelectContainer, {[disabledOrgSelect]: disabled})}
+          className={cx(orgSelectContainer, { [disabledOrgSelect]: disabled })}
           data={data}
           current={current}
           constructOrganizationURL={constructOrganizationURL}
@@ -155,7 +156,7 @@ export default function OrgNav({
           disabled={disabled}
         />
 
-        { !disabled && (
+        {!disabled && (
           <ul className={ulContainer}>
             {paymentVariant && current?.paymentStatus && (
               <li>

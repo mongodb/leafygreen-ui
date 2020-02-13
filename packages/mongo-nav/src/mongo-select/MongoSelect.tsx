@@ -109,6 +109,7 @@ function OrgSelect({
 
     return (
       <MenuItem
+        data-testid="org-result"
         key={orgId}
         className={menuItemContainerStyle}
         onClick={onClick}
@@ -139,6 +140,7 @@ function OrgSelect({
     >
       <FocusableMenuItem>
         <Input
+          data-testid="org-select-input"
           onChange={onChange}
           onKeyDown={onKeyDown}
           variant="organization"
@@ -183,6 +185,7 @@ function ProjectSelect({
 
     return (
       <MenuItem
+        data-testid="project-result"
         key={projectId}
         className={cx(menuItemContainerStyle, nameStyle)}
         onClick={onClick}
@@ -206,7 +209,12 @@ function ProjectSelect({
       spacing={0}
     >
       <FocusableMenuItem>
-        <Input onChange={onChange} onKeyDown={onKeyDown} variant="project" />
+        <Input
+          data-testid="project-select-input"
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          variant="project"
+        />
       </FocusableMenuItem>
 
       <>{data?.map(datum => renderProjectOption(datum))}</>
