@@ -12,19 +12,72 @@ export const State = {
 export type State = typeof State[keyof typeof State];
 
 interface TextInputProps {
+  /**
+   * Text shown in bold above the input element.
+   */
   label?: string;
+  /**
+   * Text that gives more detail about the requirements for the input.
+   */
   description?: string;
+  /**
+   * Whether or not the field is optional. This is false by default.
+   */
   optional?: boolean;
+  /**
+   * Whether or not the field is currently disabled. This is false by default.
+   */
   disabled?: boolean;
+  /**
+   * Callback to be executed when the value of the input field changes.
+   */
   onChange?: Function;
+  /**
+   * The placeholder text shown in the input field before the user begins typing.
+   */
   placeholder?: string;
+  /**
+   * The message shown below the input field if the value is invalid.
+   */
   errorMessage?: string;
+  /**
+   * The current state of the TextInput. This can be none, valid, or error.
+   */
   state?: State;
+  /**
+   * The current value of the input field. If a value is passed to this prop, component will be controlled by consumer.
+   */
   value?: string;
+  /**
+   * Callback used to set the value of the input field.
+   */
   setValue?: Function;
+  /**
+   * className supplied to the TextInput container.
+   */
   className?: string;
 }
 
+/**
+ * # TextInput
+ *
+ * TextInput component
+ *
+ * ```
+<TextInput label={'Input Label'} onChange={() => execute when value of input field changes}/>
+```
+ * @param props.label Text shown in bold above the input element.
+ * @param props.description Text that gives more detail about the requirements for the input.
+ * @param props.optional Whether or not the field is optional.
+ * @param props.disabled Whether or not the field is currently disabled.
+ * @param props.onChange Callback to be executed when the value of the input field changes.
+ * @param props.placeholder The placeholder text shown in the input field before the user begins typing.
+ * @param props.errorMessage The message shown below the input field if the value is invalid.
+ * @param props.state The current state of the TextInput. This can be none, valid, or error.
+ * @param props.value The current value of the input field. If a value is passed to this prop, component will be controlled by consumer.
+ * @param props.setValue Callback used to set the value of the input field.
+ * @param props.className className supplied to the TextInput container.
+ */
 const TextInput = React.forwardRef(
   (
     {
