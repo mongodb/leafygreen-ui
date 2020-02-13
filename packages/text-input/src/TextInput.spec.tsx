@@ -1,5 +1,11 @@
 import React from 'react';
-import { render, cleanup, fireEvent, getByTitle } from '@testing-library/react';
+import {
+  render,
+  cleanup,
+  fireEvent,
+  getByTitle,
+  getByText,
+} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import TextInput from './TextInput';
 import { typeIs } from '@leafygreen-ui/lib';
@@ -18,7 +24,6 @@ describe('packages/text-input', () => {
   onChange.mockReturnValueOnce('valid');
   onChange.mockReturnValueOnce('none');
   onChange.mockReturnValueOnce('error');
-  onChange.mockReturnValue('none');
 
   const renderedTextInputEnabled = render(
     <TextInput
@@ -28,6 +33,7 @@ describe('packages/text-input', () => {
       onChange={onChange}
       state={state}
       errorMessage={error}
+      optional={true}
     />,
   );
 
@@ -48,6 +54,7 @@ describe('packages/text-input', () => {
     .parentElement;
   const warningIcon = getByTitle(renderedChildren, 'Warning Icon')
     .parentElement;
+  const optionalText = getByText(renderedChildren, 'Optional').parentElement;
 
   if (!typeIs.element(checkmarkIcon) || !typeIs.element(warningIcon)) {
     throw new Error('Could not find icon elements');
@@ -58,9 +65,10 @@ describe('packages/text-input', () => {
     expect(renderedChildren.innerHTML).toContain(description);
   });
 
-  test(`valid and error icons are not visible initially`, () => {
+  test(`valid and error icons are not visible initially, while "optional" text is`, () => {
     expect(checkmarkIcon).not.toBeVisible();
     expect(warningIcon).not.toBeVisible();
+    expect(optionalText).toBeVisible();
   });
 
   test('key presses are reflected in component state and onChange function is called when value changes', () => {
@@ -70,34 +78,43 @@ describe('packages/text-input', () => {
     });
     expect(renderedInputElement.value).toBe('a');
     expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveReturnedWith('none');
   });
 
   test('checkmark icon shows when input is valid', () => {
     fireEvent.change(renderedInputElement, {
       target: { value: '' },
     });
+    expect(onChange).toHaveReturnedWith('none');
+    expect(optionalText).toBeVisible();
     expect(checkmarkIcon).not.toBeVisible();
     expect(warningIcon).not.toBeVisible();
     fireEvent.change(renderedInputElement, {
       target: { value: 'test.email@mongodb.com' },
     });
     expect(onChange).toHaveBeenCalledTimes(3);
+    expect(onChange).toHaveReturnedWith('valid');
     expect(checkmarkIcon).toBeVisible();
     expect(warningIcon).not.toBeVisible();
+    expect(optionalText).not.toBeVisible();
   });
 
   test('warning icon and error message show when input is invalid', () => {
     fireEvent.change(renderedInputElement, {
       target: { value: '' },
     });
+    expect(onChange).toHaveReturnedWith('none');
     expect(checkmarkIcon).not.toBeVisible();
     expect(warningIcon).not.toBeVisible();
+    expect(optionalText).toBeVisible();
     fireEvent.change(renderedInputElement, {
       target: { value: 'invalid.email' },
     });
     expect(onChange).toHaveBeenCalledTimes(5);
+    expect(onChange).toHaveReturnedWith('error');
     expect(checkmarkIcon).not.toBeVisible();
     expect(warningIcon).toBeVisible();
+    expect(optionalText).not.toBeVisible();
     expect(renderedInputElement).toContain(error);
   });
 });
