@@ -1,11 +1,5 @@
 import createEmotion from 'create-emotion';
 
-// __TARGET__ is a global variable that indicates the webpack build target.
-//
-// We're typing this here because doing it globally was proving problematic.
-// We should solve for this if we need to use __TARGET__ elsewhere.
-declare const __TARGET__: 'web' | 'node';
-
 interface CreateEmotionConfig {
   key: string;
   container?: HTMLElement;
@@ -21,7 +15,11 @@ function createEmotionInstance() {
     key: 'leafygreen-ui',
   };
 
-  if (__TARGET__ === 'web') {
+  // TypeScript will always throw an error here in non-web builds
+  // since we replace __TARGET__ with the actual value.
+  //
+  // @ts-ignore
+  if (['web', 'esm'].includes(__TARGET__)) {
     config.container = document.createElement('div');
 
     const head = document.head;

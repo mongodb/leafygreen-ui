@@ -110,7 +110,9 @@ function Menu({
     children: Array<React.ReactElement>,
   ): Array<React.ReactElement> {
     return React.Children.map(children, (child: React.ReactElement) => {
-      if (child.props.disabled) {
+      const { props = {} } = child;
+
+      if (props.disabled) {
         return child;
       }
 
@@ -132,7 +134,7 @@ function Menu({
         }
       };
 
-      const title = child.props.title != null ? child.props.title : false;
+      const title = props.title != null ? props.title : false;
 
       const onFocus = ({ target }: { target: HTMLElement }) => {
         setFocused(target);
@@ -145,7 +147,7 @@ function Menu({
 
         titleArr.push(title);
 
-        if (child.props.active && !hasSetInitialOpen.current) {
+        if (props.active && !hasSetInitialOpen.current) {
           setCurrentSubMenu(child);
           hasSetInitialOpen.current = true;
         }
@@ -173,7 +175,7 @@ function Menu({
             }
           },
           onFocus,
-          children: updateChildren(child.props.children),
+          children: updateChildren(props.children),
           onExited: () => {
             setClosed(curr => !curr);
           },
@@ -190,9 +192,9 @@ function Menu({
         });
       }
 
-      if (child.props.children) {
+      if (props.children) {
         return React.cloneElement(child, {
-          children: updateChildren(child.props.children),
+          children: updateChildren(props.children),
         });
       }
 

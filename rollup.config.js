@@ -1,6 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
+import replace from '@rollup/plugin-replace';
 import svgr from '@svgr/rollup';
 import urlPlugin from 'rollup-plugin-url';
 import fs from 'fs';
@@ -29,6 +30,8 @@ const external = [
 ];
 
 function generateConfig(target) {
+  const replacePlugin = replace({ __TARGET__: `'${target}'` });
+
   const resolvePlugin = resolve({
     extensions: ['.js', '.jsx', '.ts', 'tsx'],
   });
@@ -56,7 +59,7 @@ function generateConfig(target) {
 
     // We need to clean frequently because of the "hack" property above.
     // We can probably do this less than "always" in the future.
-    clean: true,
+    // clean: true,
 
     // This property allows us to use the latest TS version, rather than the supported 2.x
     typescript: require('typescript'),
@@ -68,22 +71,26 @@ function generateConfig(target) {
     include: ['**/*.png'],
   });
 
-  const input = 'src/index.ts';
-
-  const output = {
-    file: `dist/index.${target}.js`,
-    format: target === 'esm' ? 'esm' : 'cjs',
+  return {
+    input: 'src/index.ts',
+    output: {
+      file: `dist/index.${target}.js`,
+      format: target === 'esm' ? 'esm' : 'cjs',
+    },
+    external,
+    plugins: [
+      replacePlugin,
+      resolvePlugin,
+      commonjsPlugin,
+      typescriptPlugin,
+      urlLoaderPlugin,
+      svgr(),
+    ],
   };
-
-  const plugins = [
-    resolvePlugin,
-    commonjsPlugin,
-    typescriptPlugin,
-    urlLoaderPlugin,
-    svgr(),
-  ];
-
-  return { input, output, external, plugins };
 }
 
-export default [generateConfig('esm'), generateConfig('web')];
+export default [
+  generateConfig('esm'),
+  generateConfig('web'),
+  generateConfig('node'),
+];

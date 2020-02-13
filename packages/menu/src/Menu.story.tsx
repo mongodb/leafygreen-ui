@@ -4,6 +4,7 @@ import { select, boolean } from '@storybook/addon-knobs';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Menu, MenuSeparator, SubMenu, MenuItem } from '.';
 import { Align, Justify } from '@leafygreen-ui/popover';
+import Icon from '@leafygreen-ui/icon';
 
 function Uncontrolled() {
   return (
@@ -64,7 +65,7 @@ function SubMenuExample() {
         <SubMenu
           title="Menu Item 1"
           description="https://google.com"
-          glyph="Cloud"
+          glyph={<Icon glyph="Cloud" />}
           active={true}
         >
           <MenuItem>SubMenu Item 1</MenuItem>
@@ -73,7 +74,7 @@ function SubMenuExample() {
         <SubMenu
           title="Menu Item 2"
           description="https://google.com"
-          glyph="Laptop"
+          glyph={<Icon glyph="Laptop" />}
         >
           <MenuItem>Support 1</MenuItem>
         </SubMenu>

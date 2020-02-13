@@ -164,7 +164,7 @@ interface SharedSubMenuProps {
   /**
    * Content to appear below main text of SubMenu
    */
-  description?: React.ReactElement;
+  description?: React.ReactNode;
 
   /**
    * Determines if `<SubMenu />` item appears disabled
@@ -205,7 +205,7 @@ const subMenuItemHeight = 36;
 
 const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
   const {
-    title,
+    title = '',
     description,
     href,
     children,
@@ -250,7 +250,7 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
           [activeIconStyle]: active,
           [mainIconFocusedStyle]: showFocus,
         },
-        glyph.props.className,
+        glyph.props && glyph.props.className,
       ),
     });
 
