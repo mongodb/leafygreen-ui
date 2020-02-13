@@ -10,11 +10,13 @@ describe('packages/text-input', () => {
   const className = 'test-text-input-class';
   const label = 'Test Input Label';
   const description = 'This is the description';
-  const error = 'This is the error message'
+  const error = 'This is the error message';
   const state = 'none';
   const onChange = jest.fn();
   onChange.mockReturnValueOnce('none');
+  onChange.mockReturnValueOnce('none');
   onChange.mockReturnValueOnce('valid');
+  onChange.mockReturnValueOnce('none');
   onChange.mockReturnValueOnce('error');
   onChange.mockReturnValue('none');
 
@@ -42,8 +44,14 @@ describe('packages/text-input', () => {
     throw new Error('Could not find input element');
   }
 
-  const checkmarkIcon = getByTitle(renderedChildren, 'Checkmark Icon');
-  const warningIcon = getByTitle(renderedChildren, 'Warning Icon');
+  const checkmarkIcon = getByTitle(renderedChildren, 'Checkmark Icon')
+    .parentElement;
+  const warningIcon = getByTitle(renderedChildren, 'Warning Icon')
+    .parentElement;
+
+  if (!typeIs.element(checkmarkIcon) || !typeIs.element(warningIcon)) {
+    throw new Error('Could not find icon elements');
+  }
 
   test(`renders "${label}" as the input's label and "${description}" as the description`, () => {
     expect(renderedChildren.innerHTML).toContain(label);
@@ -64,32 +72,32 @@ describe('packages/text-input', () => {
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
-  fireEvent.change(renderedInputElement, {
-    target: { value: '' },
-  });
-
   test('checkmark icon shows when input is valid', () => {
+    fireEvent.change(renderedInputElement, {
+      target: { value: '' },
+    });
     expect(checkmarkIcon).not.toBeVisible();
     expect(warningIcon).not.toBeVisible();
     fireEvent.change(renderedInputElement, {
       target: { value: 'test.email@mongodb.com' },
     });
+    expect(onChange).toHaveBeenCalledTimes(3);
     expect(checkmarkIcon).toBeVisible();
     expect(warningIcon).not.toBeVisible();
   });
 
-  fireEvent.change(renderedInputElement, {
-    target: { value: '' },
-  });
-
   test('warning icon and error message show when input is invalid', () => {
+    fireEvent.change(renderedInputElement, {
+      target: { value: '' },
+    });
     expect(checkmarkIcon).not.toBeVisible();
     expect(warningIcon).not.toBeVisible();
     fireEvent.change(renderedInputElement, {
       target: { value: 'invalid.email' },
     });
+    expect(onChange).toHaveBeenCalledTimes(5);
     expect(checkmarkIcon).not.toBeVisible();
     expect(warningIcon).toBeVisible();
-    expect(renderedChildren).toContain(error);
+    expect(renderedInputElement).toContain(error);
   });
 });
