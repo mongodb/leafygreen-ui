@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, cleanup, fireEvent, getByTitle } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import TextInput from './TextInput';
 import { typeIs } from '@leafygreen-ui/lib';
 
@@ -32,7 +33,8 @@ describe('packages/text-input', () => {
     throw new Error('TextInput component failed to render');
   }
 
-  const renderedInputElement = renderedChildren.children[2].children[0];
+  const renderedInputElement =
+    renderedChildren.children[0].children[1].children[0];
 
   if (!typeIs.input(renderedInputElement)) {
     throw new Error('Could not find input element');
@@ -53,13 +55,19 @@ describe('packages/text-input', () => {
   });
 
   test('state updates when onChange is called', () => {
+    const checkmarkIcon = getByTitle(renderedChildren, 'Checkmark Icon');
+    const warningIcon = getByTitle(renderedChildren, 'Warning Icon');
+    expect(checkmarkIcon).not.toBeVisible();
+    expect(warningIcon).not.toBeVisible();
     fireEvent.change(renderedInputElement, {
       target: { value: 'test.email@mongodb.com' },
     });
-    expect(renderedChildren.innerHTML).toContain('Checkmark');
+    expect(checkmarkIcon).toBeVisible();
+    expect(warningIcon).not.toBeVisible();
     fireEvent.change(renderedInputElement, {
       target: { value: 'invalid.email' },
     });
-    expect(renderedChildren.innerHTML).toContain('Warning');
+    expect(checkmarkIcon).not.toBeVisible();
+    expect(warningIcon).toBeVisible();
   });
 });
