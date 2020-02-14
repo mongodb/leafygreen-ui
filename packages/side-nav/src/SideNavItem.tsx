@@ -21,7 +21,7 @@ const defaultStyle = css`
   position: relative;
   width: 100%;
   margin: unset;
-  padding: 8px ${SIDE_OFFSET}px 8px ${SIDE_OFFSET}px;
+  padding: 6px ${SIDE_OFFSET}px 6px ${SIDE_OFFSET}px;
   min-height: 0;
   display: flex;
   flex-direction: column;
