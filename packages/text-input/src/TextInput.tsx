@@ -186,7 +186,6 @@ const TextInput = React.forwardRef(
       height: 20px;
       padding-top: 4px;
       font-weight: normal;
-      display: ${state == State.error ? '' : 'none'};
     `;
 
     return (
@@ -205,29 +204,23 @@ const TextInput = React.forwardRef(
               onChange={e => onValueChange(e)}
               ref={forwardRef}
             />
-            <Icon
-              glyph="Checkmark"
-              className={cx(validIconStyle, {
-                [css('display: none')]: state != State.valid,
-              })}
-            />
-            <Icon
-              glyph="Warning"
-              className={cx(errorIconStyle, {
-                [css('display: none')]: state != State.error,
-              })}
-            />
-            <div
-              className={cx(optionalStyle, {
-                [css('display: none')]: state != State.none || !optional,
-              })}
-            >
-              <p>Optional</p>
+            {state === State.valid && (
+              <Icon glyph="Checkmark" className={validIconStyle} />
+            )}
+            {state === State.error && (
+              <Icon glyph="Warning" className={cx(errorIconStyle)} />
+            )}
+            {state === State.none && optional && (
+              <div className={cx(optionalStyle)}>
+                <p>Optional</p>
+              </div>
+            )}
+          </div>
+          {state === State.error && (
+            <div className={errorMessageStyle}>
+              <label>{errorMessage}</label>
             </div>
-          </div>
-          <div className={errorMessageStyle}>
-            <label>{errorMessage}</label>
-          </div>
+          )}
         </label>
       </div>
     );
