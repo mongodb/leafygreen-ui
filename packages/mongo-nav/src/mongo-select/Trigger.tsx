@@ -102,7 +102,7 @@ export function OrganizationTrigger({
           href={urls.mongoSelect.orgSettings}
           className={cx(anchorStyle, border)}
           aria-label="settings"
-          data-testid="org-trigger-settings-icon"
+          data-testid="org-trigger-settings"
         >
           <Icon
             glyph={'Settings'}

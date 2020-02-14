@@ -100,3 +100,9 @@ export const hostFixtures: Required<HostsInterface> = {
   support: 'https://support.mongodb.com',
   university: 'https://university.mongodb.com',
 };
+
+export const constructOrganizationURL = (orgId: string) =>
+  `https://cloud-dev.mongodb.com/v2#/org/${orgId}/projects`;
+
+export const constructProjectURL = (projectId: string) =>
+  `https://cloud-dev.mongodb.com/v2#/${projectId}`;

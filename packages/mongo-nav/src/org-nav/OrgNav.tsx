@@ -163,10 +163,12 @@ export default function OrgNav({
                 <Badge
                   className={css`
                     margin-right: 25px;
+                    text-transform: uppercase;
                   `}
                   variant={paymentVariant}
+                  data-testid="org-payment-status"
                 >
-                  {current.paymentStatus.toUpperCase()}
+                  {current.paymentStatus}
                 </Badge>
               </li>
             )}
@@ -183,6 +185,7 @@ export default function OrgNav({
                         className={cx(linkText, {
                           [activeLink]: activeNav === 'accessManager',
                         })}
+                        data-testid="org-access-manager"
                       >
                         Access Manager
                       </a>
@@ -202,6 +205,7 @@ export default function OrgNav({
                         className={cx(linkText, {
                           [activeLink]: activeNav === 'support',
                         })}
+                        data-testid="org-support"
                       >
                         Support
                       </a>
@@ -221,6 +225,7 @@ export default function OrgNav({
                         className={cx(linkText, {
                           [activeLink]: activeNav === 'billing',
                         })}
+                        data-testid="org-billing"
                       >
                         Billing
                       </a>
@@ -245,6 +250,7 @@ export default function OrgNav({
               className={cx(rightSideLinkStyle, linkText, {
                 [activeLink]: activeNav === 'allClusters',
               })}
+              data-testid="all-clusters-link"
             >
               All Clusters
             </a>
@@ -259,6 +265,7 @@ export default function OrgNav({
             className={cx(rightSideLinkStyle, linkText, {
               [activeLink]: activeNav === 'admin',
             })}
+            data-testid="admin-link"
           >
             Admin
           </a>

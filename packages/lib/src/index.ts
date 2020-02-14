@@ -1,4 +1,5 @@
 import * as typeIs from './typeIs';
+import * as testHelpers from './testHelpers';
 
 /**
  * Utility for making it easier to couple a React Component to a css selector.
@@ -33,7 +34,7 @@ export type HTMLElementProps<
   ? Props
   : never;
 
-export { typeIs };
+export { typeIs, testHelpers };
 
 /** Helper type to check if element is a specific React Component  */
 export function isComponentType<T = React.ReactElement>(
