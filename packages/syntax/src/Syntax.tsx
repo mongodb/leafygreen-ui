@@ -4,6 +4,7 @@ import { cx, css } from '@leafygreen-ui/emotion';
 import hljs from 'highlight.js/lib/highlight';
 import { Variant, SupportedLanguages, Language } from './types';
 import { injectGlobalStyles } from './globalStyles';
+import * as languages from './languages';
 
 let syntaxHighlightingInitialized = false;
 
@@ -15,10 +16,7 @@ function initializeSyntaxHighlighting() {
   const SupportedLanguagesList = Object.values(SupportedLanguages);
 
   SupportedLanguagesList.forEach(language => {
-    hljs.registerLanguage(
-      language,
-      require(`highlight.js/lib/languages/${language}`),
-    );
+    hljs.registerLanguage(language, languages[language]);
   });
 
   hljs.configure({
