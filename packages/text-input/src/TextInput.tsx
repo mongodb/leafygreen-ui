@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 
 export const State = {
@@ -163,14 +163,12 @@ const TextInput = React.forwardRef(
       position: absolute;
       right: 10px;
       color: #cf4a22;
-      display: ${state == State.error ? '' : 'none'};
     `;
 
     const validIconStyle = css`
       position: absolute;
       right: 10px;
       color: #13aa52;
-      display: ${state == State.valid ? '' : 'none'};
     `;
 
     const optionalStyle = css`
@@ -180,7 +178,6 @@ const TextInput = React.forwardRef(
       font-size: 12px;
       font-style: italic;
       font-weight: normal;
-      display: ${!optional || state != State.none ? 'none' : ''};
     `;
 
     const errorMessageStyle = css`
@@ -208,9 +205,23 @@ const TextInput = React.forwardRef(
               onChange={e => onValueChange(e)}
               ref={forwardRef}
             />
-            <Icon glyph="Checkmark" className={validIconStyle} />
-            <Icon glyph="Warning" className={errorIconStyle} />
-            <div className={optionalStyle}>
+            <Icon
+              glyph="Checkmark"
+              className={cx(validIconStyle, {
+                [css('display: none')]: state != State.valid,
+              })}
+            />
+            <Icon
+              glyph="Warning"
+              className={cx(errorIconStyle, {
+                [css('display: none')]: state != State.error,
+              })}
+            />
+            <div
+              className={cx(optionalStyle, {
+                [css('display: none')]: state != State.none || !optional,
+              })}
+            >
               <p>Optional</p>
             </div>
           </div>
