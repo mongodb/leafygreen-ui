@@ -109,7 +109,7 @@ function OrgSelect({
 
     return (
       <MenuItem
-        data-testid="org-result"
+        data-testid="org-option"
         key={orgId}
         className={menuItemContainerStyle}
         onClick={onClick}
@@ -140,7 +140,7 @@ function OrgSelect({
     >
       <FocusableMenuItem>
         <Input
-          data-testid="org-select-input"
+          data-testid="org-filter-input"
           onChange={onChange}
           onKeyDown={onKeyDown}
           variant="organization"
@@ -185,7 +185,7 @@ function ProjectSelect({
 
     return (
       <MenuItem
-        data-testid="project-result"
+        data-testid="project-option"
         key={projectId}
         className={cx(menuItemContainerStyle, nameStyle)}
         onClick={onClick}
@@ -210,7 +210,7 @@ function ProjectSelect({
     >
       <FocusableMenuItem>
         <Input
-          data-testid="project-select-input"
+          data-testid="project-filter-input"
           onChange={onChange}
           onKeyDown={onKeyDown}
           variant="project"

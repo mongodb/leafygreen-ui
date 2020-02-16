@@ -151,7 +151,7 @@ export default function MongoNav({
     });
   }
 
-  function getdataFixtures() {
+  function getDataFixtures() {
     return new Promise(resolve => {
       resolve(dataFixtures);
       onSuccess?.(dataFixtures);
@@ -172,7 +172,7 @@ export default function MongoNav({
 
   useEffect(() => {
     if (mode === Mode.Dev) {
-      getdataFixtures().then(data => setData(data as DataInterface));
+      getDataFixtures().then(data => setData(data as DataInterface));
     } else {
       getProductionData()
         .then(handleResponse)

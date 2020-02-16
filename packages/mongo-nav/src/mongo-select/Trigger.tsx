@@ -75,6 +75,7 @@ export function OrganizationTrigger({
   disabled = false,
   ...rest
 }: OrganizationTriggerProps) {
+  const orgTriggerPlaceholder = disabled ? 'All Organizations' : placeholder;
   return (
     <div className={cx(orgTriggerContainer, className)}>
       <button
@@ -89,7 +90,7 @@ export function OrganizationTrigger({
           glyph="Building"
         />
         <span className={cx(selectedStyle, { [disabledStyle]: disabled })}>
-          {disabled ? 'All Organizations' : placeholder}
+          {orgTriggerPlaceholder}
         </span>
         <Icon
           className={cx({ [disabledStyle]: disabled })}
@@ -105,7 +106,7 @@ export function OrganizationTrigger({
           data-testid="org-trigger-settings"
         >
           <Icon
-            glyph={'Settings'}
+            glyph="Settings"
             fill={isActive ? uiColors.green.base : uiColors.gray.base}
           />
         </a>
@@ -130,7 +131,7 @@ export function ProjectTrigger({
   return (
     <button
       {...rest}
-      data-testid="project-trigger"
+      data-testid="project-select-trigger"
       className={cx(buttonContainer, projectTriggerContainer, className)}
     >
       <Icon size="small" glyph="Bell" />

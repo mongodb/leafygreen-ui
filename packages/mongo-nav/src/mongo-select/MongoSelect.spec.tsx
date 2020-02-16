@@ -53,12 +53,12 @@ describe('packages/mongo-select', () => {
     } = queries;
 
     expectedElements.orgTrigger = queryByTestId('org-trigger');
-    expectedElements.orgInput = queryByTestId('org-select-input');
+    expectedElements.orgInput = queryByTestId('org-filter-input');
     expectedElements.orgSettingsIcon = queryByTestId('org-trigger-settings');
-    expectedElements.orgResults = queryAllByTestId('org-result');
-    expectedElements.projectTrigger = queryByTestId('project-trigger');
-    expectedElements.projectInput = queryByTestId('project-select-input');
-    expectedElements.projectResults = queryAllByTestId('project-result');
+    expectedElements.orgResults = queryAllByTestId('org-option');
+    expectedElements.projectTrigger = queryByTestId('project-select-trigger');
+    expectedElements.projectInput = queryByTestId('project-filter-input');
+    expectedElements.projectResults = queryAllByTestId('project-option');
   };
 
   let onClick: jest.Mock;
