@@ -5,8 +5,6 @@ import { ulStyleOverrides } from './styles';
 
 const navStyles = css`
   width: 200px;
-  overflow-y: scroll;
-  padding-bottom: 24px;
 `;
 
 interface SideNavProps {
