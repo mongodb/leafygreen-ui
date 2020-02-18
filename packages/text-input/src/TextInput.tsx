@@ -189,6 +189,7 @@ const TextInput = React.forwardRef(
       if (state === State.None) {
         return '#CCC';
       }
+
       return state === State.Valid ? uiColors.green.base : uiColors.red.base;
     }
 
@@ -196,6 +197,7 @@ const TextInput = React.forwardRef(
       if (state === State.Valid || state === State.Error) {
         return '30px';
       }
+
       return optional ? '60px' : '12px';
     }
 
@@ -257,7 +259,7 @@ const TextInput = React.forwardRef(
             onBlur={() => setHasFocus(false)}
           />
 
-          {state === State.Valid && 
+          {state === State.Valid && (
             <Icon
               glyph="Checkmark"
               className={cx(
@@ -267,9 +269,9 @@ const TextInput = React.forwardRef(
                 `,
               )}
             />
-          }
+          )}
 
-          {state === State.Error && 
+          {state === State.Error && (
             <Icon
               glyph="Warning"
               className={cx(
@@ -279,9 +281,9 @@ const TextInput = React.forwardRef(
                 `,
               )}
             />
-          }
+          )}
 
-          {state === State.None && optional && 
+          {state === State.None && optional && (
             <div
               className={cx(
                 optionalStyle,
@@ -292,7 +294,7 @@ const TextInput = React.forwardRef(
             >
               <p>Optional</p>
             </div>
-          }
+          )}
 
           <div
             className={cx(interactionRing, interactionRingHoverStyle, {
@@ -300,11 +302,11 @@ const TextInput = React.forwardRef(
             })}
           />
         </div>
-        {state === State.Error && 
+        {state === State.Error && (
           <div className={errorMessageStyle}>
             <label>{errorMessage}</label>
           </div>
-        }
+        )}
       </label>
     );
   },
