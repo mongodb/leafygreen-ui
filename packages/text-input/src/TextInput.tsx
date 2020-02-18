@@ -106,11 +106,19 @@ const TextInput = React.forwardRef(
     const [hasFocus, setHasFocus] = useState(false);
     const inputSelectorProp = createDataProp('input-selector');
 
-    function getColorFromValidationState() {
-      if (state == State.none) {
+    function getInputColorFromState() {
+      if (state === State.none) {
         return '#CCC';
       } else {
-        return state == State.valid ? '#13AA52' : '#CF4A22';
+        return state === State.valid ? '#13AA52' : '#CF4A22';
+      }
+    }
+
+    function getInputPaddingFromState() {
+      if (state === State.valid || state === State.error) {
+        return '30px';
+      } else {
+        return optional ? '60px' : '12px';
       }
     }
 
@@ -183,9 +191,7 @@ const TextInput = React.forwardRef(
       width: 400px;
       height: 36px;
       border-radius: 4px;
-      border: 1px solid ${getColorFromValidationState()};
       padding-left: 12px;
-      background: ${disabled ? '#E7EEEC' : '#FFFFFF'};
       font-size: 14px;
       font-weight: normal;
       &:placeholder {
@@ -237,6 +243,9 @@ const TextInput = React.forwardRef(
                 inputStyle,
                 css`
                   z-index: ${hasFocus ? 2 : 1};
+                  background: ${disabled ? '#E7EEEC' : '#FFFFFF'};
+                  padding-right: ${getInputPaddingFromState()};
+                  border: 1px solid ${getInputColorFromState()};
                 `,
               )}
               type="text"
