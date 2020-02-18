@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
+import { uiColors } from '@leafygreen-ui/palette';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { createDataProp } from '@leafygreen-ui/lib';
 
 export const State = {
   none: 'none',
@@ -99,6 +102,9 @@ const TextInput = React.forwardRef(
     const [uncontrolledValue, setUncontrolledValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
     const setValue = isControlled ? setControlledValue : setUncontrolledValue;
+    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+    const [hasFocus, setHasFocus] = useState(false);
+    const inputSelectorProp = createDataProp('input-selector');
 
     function getColorFromValidationState() {
       if (state == State.none) {
@@ -117,6 +123,38 @@ const TextInput = React.forwardRef(
         setValue(e.target.value);
       }
     }
+
+    const interactionRing = css`
+      transition: all 150ms ease-in-out;
+      transform: scale(0.9, 0.8);
+      border-radius: 7px;
+      position: absolute;
+      top: -3px;
+      bottom: -3px;
+      left: -3px;
+      right: -3px;
+      pointer-events: none;
+      background-color: ${uiColors.gray.light2};
+    `;
+
+    const interactionRingFocusStyle = css`
+      ${inputSelectorProp.selector}:focus ~ & {
+        background-color: #9dd0e7;
+        transform: scale(1);
+        z-index: 1;
+      }
+    `;
+
+    const interactionRingHoverStyle = css`
+      ${inputSelectorProp.selector}:hover ~ & {
+        transform: scale(1);
+      }
+    `;
+
+    const defaultPosition = css`
+      position: relative;
+      z-index: 0;
+    `;
 
     const textInputStyle = css`
       display: flex;
@@ -154,8 +192,11 @@ const TextInput = React.forwardRef(
       background: ${disabled ? '#E7EEEC' : '#FFFFFF'};
       font-size: 14px;
       font-weight: normal;
-      &: placeholder {
+      &:placeholder {
         color: #89989b;
+      }
+      &:focus {
+        outline: none;
       }
     `;
 
@@ -193,9 +234,16 @@ const TextInput = React.forwardRef(
         <label className={textInputStyle + ' ' + labelStyle}>
           {label}
           <label className={descriptionStyle}>{description}</label>
-          <div className={inputContainerStyle}>
+          <div className={cx(inputContainerStyle, defaultPosition)}>
             <input
-              className={inputStyle}
+              {...inputSelectorProp.prop}
+              className={cx(
+                inputStyle,
+                css`
+                  position: relative;
+                  z-index: ${hasFocus ? 2 : 1};
+                `,
+              )}
               type="text"
               value={value}
               required={!optional}
@@ -203,18 +251,48 @@ const TextInput = React.forwardRef(
               placeholder={placeholder}
               onChange={e => onValueChange(e)}
               ref={forwardRef}
+              onFocus={() => setHasFocus(true)}
+              onBlur={() => setHasFocus(false)}
             />
             {state === State.valid && (
-              <Icon glyph="Checkmark" className={validIconStyle} />
+              <Icon
+                glyph="Checkmark"
+                className={cx(
+                  validIconStyle,
+                  css`
+                    z-index: ${hasFocus ? 2 : 1};
+                  `,
+                )}
+              />
             )}
             {state === State.error && (
-              <Icon glyph="Warning" className={cx(errorIconStyle)} />
+              <Icon
+                glyph="Warning"
+                className={cx(
+                  errorIconStyle,
+                  css`
+                    z-index: ${hasFocus ? 2 : 1};
+                  `,
+                )}
+              />
             )}
             {state === State.none && optional && (
-              <div className={cx(optionalStyle)}>
+              <div
+                className={cx(
+                  optionalStyle,
+                  css`
+                    z-index: ${hasFocus ? 2 : 1};
+                  `,
+                )}
+              >
                 <p>Optional</p>
               </div>
             )}
+            <div
+              className={cx(interactionRing, interactionRingHoverStyle, {
+                [interactionRingFocusStyle]: showFocus,
+              })}
+            />
           </div>
           {state === State.error && (
             <div className={errorMessageStyle}>

@@ -17,6 +17,12 @@
     },
     {
       "path": "../icon"
+    },
+    {
+      "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../palette"
     }
   ]
 }
