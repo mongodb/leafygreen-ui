@@ -1,5 +1,11 @@
 # @leafygreen-ui/mongo-nav
 
+## 0.7.0
+
+### Minor Changes
+
+- 69a1673: Change Stitch to Realm in ProjectNav and across TS definitions
+
 ## 0.6.0
 
 ### Minor Changes
