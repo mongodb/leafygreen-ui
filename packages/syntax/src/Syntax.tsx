@@ -22,10 +22,7 @@ function initializeSyntaxHighlighting() {
     );
   });
 
-  hljs.registerLanguage(
-    'graphql',
-    hljsDefineGraphQL
-  );
+  hljs.registerLanguage('graphql', hljsDefineGraphQL);
 
   // hljs.registerLanguage(
   //   'graphql',
