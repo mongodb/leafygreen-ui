@@ -14,9 +14,9 @@
       "access": "public"
     },
     "devDependencies": {
-      "@leafygreen-ui/lib": "^4.0.0",
+      "@leafygreen-ui/lib": "^4.2.0",
       "@leafygreen-ui/icon": "^4.0.0",
-      "@leafygreen-ui/leafygreen-provider": "^4.0.0",
-      "@leafygreen-ui/palette": "^4.0.0"
+      "@leafygreen-ui/leafygreen-provider": "^1.0.0",
+      "@leafygreen-ui/palette": "^2.0.0"
     }
   }

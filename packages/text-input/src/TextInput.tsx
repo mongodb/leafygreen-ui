@@ -7,9 +7,9 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp } from '@leafygreen-ui/lib';
 
 export const State = {
-  none: 'none',
-  valid: 'valid',
-  error: 'error',
+  None: 'none',
+  Valid: 'valid',
+  Error: 'error',
 } as const;
 
 export type State = typeof State[keyof typeof State];
@@ -82,7 +82,7 @@ const textInputStyle = css`
 `;
 
 const labelStyle = css`
-  color: #3d4f58;
+  color: ${uiColors.gray.dark2};
   font-size: 14px;
   font-weight: bold;
   height: 20px;
@@ -104,7 +104,7 @@ const inputStyle = css`
   font-size: 14px;
   font-weight: normal;
   &:placeholder {
-    color: #89989b;
+    color: ${uiColors.gray.base};
   }
   &:focus {
     outline: none;
@@ -114,26 +114,26 @@ const inputStyle = css`
 const errorIconStyle = css`
   position: absolute;
   right: 10px;
-  color: #cf4a22;
+  color: ${uiColors.red.base};
 `;
 
 const validIconStyle = css`
   position: absolute;
   right: 10px;
-  color: #13aa52;
+  color: ${uiColors.green.base};
 `;
 
 const optionalStyle = css`
   position: absolute;
   right: 12px;
-  color: #5d6c74;
+  color: ${uiColors.gray.dark1};
   font-size: 12px;
   font-style: italic;
   font-weight: normal;
 `;
 
 const errorMessageStyle = css`
-  color: #cf4a22;
+  color: ${uiColors.red.base};
   font-size: 14px;
   height: 20px;
   padding-top: 4px;
@@ -186,23 +186,21 @@ const TextInput = React.forwardRef(
     const inputSelectorProp = createDataProp('input-selector');
 
     function getInputColorFromState() {
-      if (state === State.none) {
+      if (state === State.None) {
         return '#CCC';
-      } else {
-        return state === State.valid ? '#13AA52' : '#CF4A22';
       }
+      return state === State.Valid ? uiColors.green.base : uiColors.red.base;
     }
 
     function getInputPaddingFromState() {
-      if (state === State.valid || state === State.error) {
+      if (state === State.Valid || state === State.Error) {
         return '30px';
-      } else {
-        return optional ? '60px' : '12px';
       }
+      return optional ? '60px' : '12px';
     }
 
     function onValueChange(e: React.ChangeEvent<HTMLInputElement>) {
-      if (onChange != undefined) {
+      if (onChange !== undefined) {
         state = onChange(e.target.value);
       }
 
@@ -226,7 +224,7 @@ const TextInput = React.forwardRef(
     `;
 
     const descriptionStyle = css`
-      color: #5d6c74;
+      color: ${uiColors.gray.dark1};
       font-size: 14px;
       height: ${description === '' ? '0' : '20'}px;
       font-weight: normal;
@@ -235,7 +233,7 @@ const TextInput = React.forwardRef(
 
     const conditionalStyling = css`
       z-index: ${hasFocus ? 2 : 1};
-      background: ${disabled ? '#E7EEEC' : '#FFFFFF'};
+      background: ${disabled ? uiColors.gray.light2 : '#FFFFFF'};
       padding-right: ${getInputPaddingFromState()};
       border: 1px solid ${getInputColorFromState()};
     `;
@@ -259,7 +257,7 @@ const TextInput = React.forwardRef(
             onBlur={() => setHasFocus(false)}
           />
 
-          {state === State.valid && (
+          {state === State.Valid && 
             <Icon
               glyph="Checkmark"
               className={cx(
@@ -269,9 +267,9 @@ const TextInput = React.forwardRef(
                 `,
               )}
             />
-          )}
+          }
 
-          {state === State.error && (
+          {state === State.Error && 
             <Icon
               glyph="Warning"
               className={cx(
@@ -281,9 +279,9 @@ const TextInput = React.forwardRef(
                 `,
               )}
             />
-          )}
+          }
 
-          {state === State.none && optional && (
+          {state === State.None && optional && 
             <div
               className={cx(
                 optionalStyle,
@@ -294,7 +292,7 @@ const TextInput = React.forwardRef(
             >
               <p>Optional</p>
             </div>
-          )}
+          }
 
           <div
             className={cx(interactionRing, interactionRingHoverStyle, {
@@ -302,11 +300,11 @@ const TextInput = React.forwardRef(
             })}
           />
         </div>
-        {state === State.error && (
+        {state === State.Error && 
           <div className={errorMessageStyle}>
             <label>{errorMessage}</label>
           </div>
-        )}
+        }
       </label>
     );
   },

@@ -21,13 +21,17 @@ npm install @leafygreen-ui/text-input
 ```Javascript
 import TextInput from '@leafygreen-ui/text-input';
 
-<TextInput
-  label='Email'
-  description='Enter your email below'
-  placeholder='your.email@example.com'
-  className='email-text-input'
-  onClick={(event) => {/* Something to handle the click event */}}
-/>
+const [value, setValue] = useState('');
+
+return (
+  <TextInput
+    label='Email'
+    description='Enter your email below'
+    placeholder='your.email@example.com'
+    onChange={event => setValue(event.target.value)}
+    value={value}
+  />
+)
 
 ```
 

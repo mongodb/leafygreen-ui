@@ -28,7 +28,7 @@ describe('packages/text-input', () => {
       label={label}
       description={description}
       onChange={onChange}
-      state={State.none}
+      state={State.None}
       optional={true}
     />,
   );
@@ -73,7 +73,7 @@ describe('packages/text-input', () => {
         className={className}
         label={label}
         description={description}
-        state={State.valid}
+        state={State.Valid}
         value={validEmail}
         optional={true}
       />,
@@ -97,7 +97,7 @@ describe('packages/text-input', () => {
         className={className}
         label={label}
         description={description}
-        state={State.error}
+        state={State.Error}
         value={invalidEmail}
         errorMessage={error}
         optional={true}
