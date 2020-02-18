@@ -151,11 +151,6 @@ const TextInput = React.forwardRef(
       }
     `;
 
-    const defaultPosition = css`
-      position: relative;
-      z-index: 0;
-    `;
-
     const textInputStyle = css`
       display: flex;
       flex-direction: column;
@@ -181,6 +176,7 @@ const TextInput = React.forwardRef(
       position: relative;
       display: flex;
       align-items: center;
+      z-index: 0;
     `;
 
     const inputStyle = css`
@@ -234,13 +230,12 @@ const TextInput = React.forwardRef(
         <label className={textInputStyle + ' ' + labelStyle}>
           {label}
           <label className={descriptionStyle}>{description}</label>
-          <div className={cx(inputContainerStyle, defaultPosition)}>
+          <div className={inputContainerStyle}>
             <input
               {...inputSelectorProp.prop}
               className={cx(
                 inputStyle,
                 css`
-                  position: relative;
                   z-index: ${hasFocus ? 2 : 1};
                 `,
               )}
