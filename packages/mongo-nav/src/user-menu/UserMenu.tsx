@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import defaultsDeep from 'lodash/defaultsDeep';
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
@@ -20,9 +21,16 @@ import {
   URLSInterface,
   Product,
   HostsInterface,
-  UserMenuURLSInterface,
-  UserMenuHostsInterface,
 } from '../types';
+
+const defaultHosts: Required<HostsInterface> = {
+  account: 'https://account.mongodb.com',
+  cloud: 'https://cloud.mongodb.com',
+  university: 'https://university.mongodb.com',
+  support: 'https://support.mongodb.com',
+  charts: 'https://charts.mongodb.com',
+  realm: 'https://stitch.mongodb.com',
+};
 
 const subMenuContainer = createDataProp('sub-menu-container');
 
@@ -156,19 +164,74 @@ interface UserMenuProps {
    */
   onProductChange?: React.MouseEventHandler;
 
-  urls: Required<URLSInterface> | UserMenuURLSInterface;
+  /**
+   * Object that supplies URL overrides to UserMenu component.
+   * Shape: { userMenu:{ cloud: { userPreferences, organizations, invitations, mfa }, university: { videoPreferences }, support: { userPreferences }, account: { homepage } }}
+   */
+  urls: URLSInterface;
 
-  hosts: Required<HostsInterface> | UserMenuHostsInterface;
+  /**
+   * Object that supplies host overrides to UserMenu component.
+   * Shape: { cloud, realm, charts, account, university, support }
+   * Defaults to the production homepages of each product
+   */
+  hosts: HostsInterface;
 }
 
+/**
+ * # UserMenu
+ *
+ * UserMenu component
+ *
+ * ```
+<UserMenu
+  account={account}
+  activeProduct="cloud"
+  onLogout={onLogout}
+  onProductChange={onProductChange}
+  urls={urls}
+  hosts={hosts}
+/>
+```
+ * @param props.account Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
+ * @param props.activeProduct MongoDB product that is currently active: ['cloud', 'university', 'support'].
+ * @param props.onLogout Callback invoked after the user clicks log out.
+ * @param props.onProductChange Callback invoked after the user clicks a product.
+ * @param props.hosts Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<UserMenu />` to work across all environments.
+ * @param props.urls Object to enable custom overrides for every `href` used in `<UserMenu />`.
+ */
 function UserMenu({
   account: { firstName, lastName, email, openInvitations },
   activeProduct,
   onLogout = () => {},
   onProductChange = () => {},
-  urls,
-  hosts,
+  urls: urlsProp,
+  hosts: hostsProp,
 }: UserMenuProps) {
+  const hosts = defaultsDeep(hostsProp, defaultHosts);
+
+  const defaultURLs = {
+    userMenu: {
+      cloud: {
+        userPreferences: `${hosts.cloud}/v2#/preferences/personalization`,
+        organizations: `${hosts.cloud}/v2#/preferences/organizations`,
+        invitations: `${hosts.cloud}/v2#/preferences/invitations`,
+        mfa: `${hosts.cloud}/v2#/preferences/2fa`,
+      },
+      university: {
+        videoPreferences: `${hosts.university}`,
+      },
+      support: {
+        userPreferences: `${hosts.support}/profile`,
+      },
+      account: {
+        homepage: `${hosts.account}/account/profile/overview`,
+      },
+    },
+  };
+
+  const urls = defaultsDeep(urlsProp, defaultURLs);
+
   const [open, setOpen] = useState(false);
 
   const name = `${firstName} ${lastName}`;
