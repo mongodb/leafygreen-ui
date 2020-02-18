@@ -11,30 +11,14 @@ const triggerDataProp = createDataProp('org-trigger');
 const anchorDataProp = createDataProp('anchor-data-prop');
 const projectTriggerDataProp = createDataProp('project-trigger');
 
-const orgTriggerContainer = css`
-  position: relative;
-  z-index: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 20px;
-`;
-
-const buttonStyles = css`
+const baseButtonStyles = css`
   padding: unset;
-  border: none;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 180px;
   color: ${uiColors.gray.dark2};
   cursor: pointer;
-  position: relative;
   background-color: white;
-  border-radius: 5px 0 0 5px;
-  border: 1px solid ${uiColors.gray.light2};
-  height: 30px;
-  padding: 3px 5px;
+  position: relative;
 
   &:focus {
     outline: none;
@@ -43,6 +27,33 @@ const buttonStyles = css`
   &::-moz-focus-inner {
     border: 0;
   }
+`;
+
+const orgButtonStyles = css`
+  justify-content: space-between;
+  border-radius: 5px 0 0 5px;
+  border: 1px solid ${uiColors.gray.light2};
+  width: 180px;
+  height: 30px;
+  padding: 3px 5px;
+`;
+
+const projectButtonStyles = css`
+  justify-content: space-around;
+  border-color: transparent;
+  border-radius: 5px;
+  padding: 2px;
+  width: 174px;
+  height: 28px;
+`;
+
+const orgTriggerContainer = css`
+  position: relative;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
 `;
 
 const selectedStyle = css`
@@ -67,30 +78,12 @@ const anchorStyle = css`
   background-color: white;
   margin-right: 20px;
   outline: none;
+  transition: all 150ms ease-in-out;
 
   &:hover {
     background-color: ${uiColors.gray.light2};
     border-color: ${uiColors.gray.light2};
     color: ${uiColors.gray.dark2};
-  }
-`;
-
-const projectTriggerStyle = css`
-  width: 174px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: unset;
-  border-color: transparent;
-  background-color: white;
-  position: relative;
-  color: ${uiColors.gray.dark2};
-  padding: 2px;
-  border-radius: 5px;
-
-  &:focus {
-    outline: none;
   }
 `;
 
@@ -113,6 +106,11 @@ const focusStyle = css`
     color: ${uiColors.blue.dark2};
     border-color: ${uiColors.blue.light2};
   }
+`;
+
+const activeButtonColor = css`
+  transition: background-color 150ms ease-in-out;
+  background-color: ${uiColors.gray.light2};
 `;
 
 interface OrganizationTriggerProps {
@@ -140,10 +138,17 @@ export function OrganizationTrigger({
         ringClassName={orgTriggerBorderRadius}
         selector={triggerDataProp.selector}
       >
-        <button {...rest} {...triggerDataProp.prop} className={buttonStyles}>
+        <button
+          {...rest}
+          {...triggerDataProp.prop}
+          className={cx(baseButtonStyles, orgButtonStyles, {
+            [activeButtonColor]: open,
+          })}
+        >
           <Icon size="small" glyph="Building" />
           <span className={selectedStyle}>{placeholder}</span>
           <Icon size="small" glyph={open ? 'CaretUp' : 'CaretDown'} />
+          {children}
         </button>
       </InteractionRingWrapper>
 
@@ -160,7 +165,6 @@ export function OrganizationTrigger({
           })}
         />
       </a>
-      {children}
     </>
   );
 }
@@ -174,7 +178,7 @@ interface ProjectTriggerProps {
 export function ProjectTrigger({
   children,
   placeholder,
-  open,
+  open = false,
   ...rest
 }: ProjectTriggerProps) {
   return (
@@ -188,7 +192,9 @@ export function ProjectTrigger({
       <button
         {...rest}
         {...projectTriggerDataProp.prop}
-        className={projectTriggerStyle}
+        className={cx(baseButtonStyles, projectButtonStyles, {
+          [activeButtonColor]: open,
+        })}
       >
         <Icon size="small" glyph="Bell" />
         <span className={selectedStyle}>{placeholder}</span>

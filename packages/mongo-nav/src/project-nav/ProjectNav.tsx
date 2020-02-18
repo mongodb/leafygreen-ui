@@ -189,6 +189,7 @@ export default function ProjectNav({
   hosts,
   alerts = 0,
 }: ProjectNavInterface) {
+  const [open, setOpen] = React.useState(false);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { projectNav } = urls;
 
@@ -219,6 +220,8 @@ export default function ProjectNav({
           />
         </div>
         <Menu
+          open={open}
+          setOpen={setOpen}
           trigger={
             <IconButton ariaLabel="More" className={menuIconButtonStyle}>
               <Icon glyph="Ellipsis" className={menuIconStyle} />

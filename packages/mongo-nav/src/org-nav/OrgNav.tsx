@@ -199,7 +199,7 @@ export default function OrgNav({
                     <strong>Organization Access:</strong> {current.orgName}
                   </p>
                   <p className={accessManagerMenuItem}>
-                    <strong>Project Access:</strong>{' '}
+                    <strong>Project Access:</strong>
                     {currentProjectName ?? 'None'}
                   </p>
                 </Menu>
