@@ -36,7 +36,7 @@ const navContainer = css`
   box-sizing: border-box;
 `;
 
-const leftSideContainer = css`
+const flexContainer = css`
   display: flex;
   align-items: center;
 `;
@@ -133,7 +133,7 @@ export default function OrgNav({
       aria-label="organization navigation"
       data-testid="organization-nav"
     >
-      <div className={leftSideContainer}>
+      <div className={flexContainer}>
         <Tooltip
           align="bottom"
           justify="start"
@@ -227,7 +227,7 @@ export default function OrgNav({
           </>
         </ul>
       </div>
-      <div>
+      <div className={flexContainer}>
         <OrgNavLink
           href={orgNav.allClusters}
           isActive={activeNav === 'allClusters'}

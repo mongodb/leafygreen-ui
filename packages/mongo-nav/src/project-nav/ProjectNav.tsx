@@ -15,7 +15,7 @@ import {
   Product,
   HostsInterface,
 } from '../types';
-import { iconLoadingStyle, textLoadingStyle } from '../styles';
+import { iconLoadingStyle } from '../styles';
 
 const productIconProp = createDataProp('charts-data-prop');
 
@@ -170,7 +170,7 @@ const productIconStyle = css`
 `;
 
 interface ProjectNavInterface {
-  current: CurrentProjectInterface;
+  current?: CurrentProjectInterface;
   data?: Array<ProjectInterface>;
   constructProjectURL: (orgID: string, projID: string) => string;
   urls: Required<URLSInterface>;
@@ -212,7 +212,7 @@ export default function ProjectNav({
       >
         <div className={mongoSelectWrapper}>
           <ProjectSelect
-            current={current ?? ''}
+            current={current}
             data={data}
             constructProjectURL={constructProjectURL}
             urls={urls}

@@ -254,7 +254,7 @@ export default function MongoNav({
           data={data?.projects}
           constructProjectURL={constructProjectURL}
           urls={urls}
-          alerts={data?.currentProject.alertsOpen}
+          alerts={data?.currentProject?.alertsOpen}
           onProjectChange={onProjectChange}
           hosts={hosts}
         />

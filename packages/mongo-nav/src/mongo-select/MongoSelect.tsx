@@ -86,7 +86,7 @@ interface BaseMongoSelectProps {
 
 interface ProjectMongoSelectProps extends BaseMongoSelectProps {
   data?: Array<ProjectInterface>;
-  current: CurrentProjectInterface;
+  current?: CurrentProjectInterface;
   constructProjectURL: (orgID: string, projectID: string) => string;
 }
 
@@ -211,7 +211,7 @@ function ProjectSelect({
     <Menu
       trigger={
         <ProjectTrigger
-          placeholder={current.projectName}
+          placeholder={current?.projectName ?? ''}
           open={open}
           disabled={disabled}
         />
