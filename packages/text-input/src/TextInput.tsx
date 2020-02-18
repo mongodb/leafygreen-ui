@@ -24,11 +24,13 @@ interface TextInputProps {
    */
   description?: string;
   /**
-   * Whether or not the field is optional. This is false by default.
+   * Whether or not the field is optional.
+   * Default: false
    */
   optional?: boolean;
   /**
-   * Whether or not the field is currently disabled. This is false by default.
+   * Whether or not the field is currently disabled.
+   * Default: false
    */
   disabled?: boolean;
   /**
@@ -61,13 +63,90 @@ interface TextInputProps {
   className?: string;
 }
 
+const interactionRing = css`
+  transition: all 150ms ease-in-out;
+  transform: scale(0.9, 0.8);
+  border-radius: 7px;
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  left: -3px;
+  right: -3px;
+  pointer-events: none;
+  background-color: ${uiColors.gray.light2};
+`;
+
+const textInputStyle = css`
+  display: flex;
+  flex-direction: column;
+`;
+
+const labelStyle = css`
+  color: #3d4f58;
+  font-size: 14px;
+  font-weight: bold;
+  height: 20px;
+  padding-bottom: 8px;
+`;
+
+const inputContainerStyle = css`
+  position: relative;
+  display: flex;
+  align-items: center;
+  z-index: 0;
+`;
+
+const inputStyle = css`
+  width: 400px;
+  height: 36px;
+  border-radius: 4px;
+  padding-left: 12px;
+  font-size: 14px;
+  font-weight: normal;
+  &:placeholder {
+    color: #89989b;
+  }
+  &:focus {
+    outline: none;
+  }
+`;
+
+const errorIconStyle = css`
+  position: absolute;
+  right: 10px;
+  color: #cf4a22;
+`;
+
+const validIconStyle = css`
+  position: absolute;
+  right: 10px;
+  color: #13aa52;
+`;
+
+const optionalStyle = css`
+  position: absolute;
+  right: 12px;
+  color: #5d6c74;
+  font-size: 12px;
+  font-style: italic;
+  font-weight: normal;
+`;
+
+const errorMessageStyle = css`
+  color: #cf4a22;
+  font-size: 14px;
+  height: 20px;
+  padding-top: 4px;
+  font-weight: normal;
+`;
+
 /**
  * # TextInput
  *
  * TextInput component
  *
  * ```
-<TextInput label={'Input Label'} onChange={() => execute when value of input field changes}/>
+<TextInput label='Input Label' onChange={() => execute when value of input field changes}/>
 ```
  * @param props.label Text shown in bold above the input element.
  * @param props.description Text that gives more detail about the requirements for the input.
@@ -132,19 +211,6 @@ const TextInput = React.forwardRef(
       }
     }
 
-    const interactionRing = css`
-      transition: all 150ms ease-in-out;
-      transform: scale(0.9, 0.8);
-      border-radius: 7px;
-      position: absolute;
-      top: -3px;
-      bottom: -3px;
-      left: -3px;
-      right: -3px;
-      pointer-events: none;
-      background-color: ${uiColors.gray.light2};
-    `;
-
     const interactionRingFocusStyle = css`
       ${inputSelectorProp.selector}:focus ~ & {
         background-color: #9dd0e7;
@@ -159,19 +225,6 @@ const TextInput = React.forwardRef(
       }
     `;
 
-    const textInputStyle = css`
-      display: flex;
-      flex-direction: column;
-    `;
-
-    const labelStyle = css`
-      color: #3d4f58;
-      font-size: 14px;
-      font-weight: bold;
-      height: 20px;
-      padding-bottom: 8px;
-    `;
-
     const descriptionStyle = css`
       color: #5d6c74;
       font-size: 14px;
@@ -180,131 +233,81 @@ const TextInput = React.forwardRef(
       padding-bottom: 8px;
     `;
 
-    const inputContainerStyle = css`
-      position: relative;
-      display: flex;
-      align-items: center;
-      z-index: 0;
-    `;
-
-    const inputStyle = css`
-      width: 400px;
-      height: 36px;
-      border-radius: 4px;
-      padding-left: 12px;
-      font-size: 14px;
-      font-weight: normal;
-      &:placeholder {
-        color: #89989b;
-      }
-      &:focus {
-        outline: none;
-      }
-    `;
-
-    const errorIconStyle = css`
-      position: absolute;
-      right: 10px;
-      color: #cf4a22;
-    `;
-
-    const validIconStyle = css`
-      position: absolute;
-      right: 10px;
-      color: #13aa52;
-    `;
-
-    const optionalStyle = css`
-      position: absolute;
-      right: 12px;
-      color: #5d6c74;
-      font-size: 12px;
-      font-style: italic;
-      font-weight: normal;
-    `;
-
-    const errorMessageStyle = css`
-      color: #cf4a22;
-      font-size: 14px;
-      height: 20px;
-      padding-top: 4px;
-      font-weight: normal;
+    const conditionalStyling = css`
+      z-index: ${hasFocus ? 2 : 1};
+      background: ${disabled ? '#E7EEEC' : '#FFFFFF'};
+      padding-right: ${getInputPaddingFromState()};
+      border: 1px solid ${getInputColorFromState()};
     `;
 
     return (
-      <div className={className}>
-        <label className={textInputStyle + ' ' + labelStyle}>
-          {label}
-          <label className={descriptionStyle}>{description}</label>
-          <div className={inputContainerStyle}>
-            <input
-              {...inputSelectorProp.prop}
+      <label className={cx(textInputStyle, labelStyle, className)}>
+        {label}
+        <label className={descriptionStyle}>{description}</label>
+        <div className={inputContainerStyle}>
+          <input
+            {...inputSelectorProp.prop}
+            className={cx(inputStyle, conditionalStyling)}
+            type="text"
+            value={value}
+            required={!optional}
+            disabled={disabled}
+            placeholder={placeholder}
+            onChange={e => onValueChange(e)}
+            ref={forwardRef}
+            onFocus={() => setHasFocus(true)}
+            onBlur={() => setHasFocus(false)}
+          />
+
+          {state === State.valid && (
+            <Icon
+              glyph="Checkmark"
               className={cx(
-                inputStyle,
+                validIconStyle,
                 css`
                   z-index: ${hasFocus ? 2 : 1};
-                  background: ${disabled ? '#E7EEEC' : '#FFFFFF'};
-                  padding-right: ${getInputPaddingFromState()};
-                  border: 1px solid ${getInputColorFromState()};
                 `,
               )}
-              type="text"
-              value={value}
-              required={!optional}
-              disabled={disabled}
-              placeholder={placeholder}
-              onChange={e => onValueChange(e)}
-              ref={forwardRef}
-              onFocus={() => setHasFocus(true)}
-              onBlur={() => setHasFocus(false)}
             />
-            {state === State.valid && (
-              <Icon
-                glyph="Checkmark"
-                className={cx(
-                  validIconStyle,
-                  css`
-                    z-index: ${hasFocus ? 2 : 1};
-                  `,
-                )}
-              />
-            )}
-            {state === State.error && (
-              <Icon
-                glyph="Warning"
-                className={cx(
-                  errorIconStyle,
-                  css`
-                    z-index: ${hasFocus ? 2 : 1};
-                  `,
-                )}
-              />
-            )}
-            {state === State.none && optional && (
-              <div
-                className={cx(
-                  optionalStyle,
-                  css`
-                    z-index: ${hasFocus ? 2 : 1};
-                  `,
-                )}
-              >
-                <p>Optional</p>
-              </div>
-            )}
-            <div
-              className={cx(interactionRing, interactionRingHoverStyle, {
-                [interactionRingFocusStyle]: showFocus,
-              })}
-            />
-          </div>
+          )}
+
           {state === State.error && (
-            <div className={errorMessageStyle}>
-              <label>{errorMessage}</label>
+            <Icon
+              glyph="Warning"
+              className={cx(
+                errorIconStyle,
+                css`
+                  z-index: ${hasFocus ? 2 : 1};
+                `,
+              )}
+            />
+          )}
+
+          {state === State.none && optional && (
+            <div
+              className={cx(
+                optionalStyle,
+                css`
+                  z-index: ${hasFocus ? 2 : 1};
+                `,
+              )}
+            >
+              <p>Optional</p>
             </div>
           )}
-        </label>
-      </div>
+
+          <div
+            className={cx(interactionRing, interactionRingHoverStyle, {
+              [interactionRingFocusStyle]: showFocus,
+            })}
+          />
+        </div>
+        {state === State.error && (
+          <div className={errorMessageStyle}>
+            <label>{errorMessage}</label>
+          </div>
+        )}
+      </label>
     );
   },
 );
