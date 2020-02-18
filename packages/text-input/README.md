@@ -18,10 +18,37 @@ npm install @leafygreen-ui/text-input
 
 ## Example
 
+```Javascript
+import TextInput from '@leafygreen-ui/text-input';
+
+<TextInput
+  label='Email'
+  description='Enter your email below'
+  placeholder='your.email@example.com'
+  className='email-text-input'
+  onClick={(event) => {/* Something to handle the click event */}}
+/>
+
+```
+
 **Output HTML**
+
+```
+not really sure what should go here...
+```
 
 ## Properties
 
-| Prop | Type | Description | Default |
-| ---- | ---- | ----------- | ------- |
-
+| Prop           | Type                     | Description                                                                  | Default |
+| -------------- | ------------------------ | ---------------------------------------------------------------------------- | ------- |
+| `label`        | `string`                 | Text shown in bold above the input element.                                  |         |
+| `description`  | `string`                 | Text that gives more detail about the requirements for the input.            |         |
+| `optional`     | `boolean`                | Marks the input as optional                                                  | `false` |
+| `disabled`     | `boolean`                | Disabled the input                                                           | `false` |
+| `onChange`     | `function`               | The event handler function for the 'onchange' event.                         |         |
+| `placeholder`  | `string`                 | The placeholder text shown in the input field before the user begins typing. |         |
+| `errorMessage` | `string`                 | Text that gives more detail about the requirements for the input.            |         |
+| `state`        | `none`, `valid`, `error` | Text that gives more detail about the requirements for the input.            | `none`  |
+| `value`        | `string`                 | Sets the HTML `value` attribute.                                             | `''`    |
+| `setValue`     | `function`               | Callback used to set the value of the input field.                           |         |
+| `className`    | `string`                 | Adds a className to the class attribute.                                     | `''`    |
