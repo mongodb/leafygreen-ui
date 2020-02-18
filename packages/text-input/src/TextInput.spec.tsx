@@ -13,25 +13,21 @@ import { typeIs } from '@leafygreen-ui/lib';
 afterAll(cleanup);
 
 describe('packages/text-input', () => {
-  const className = 'test-text-input-class';
-  const label = 'Test Input Label';
-  const description = 'This is the description';
   const error = 'This is the error message';
   const validEmail = 'test.email@mongodb.com';
   const invalidEmail = 'invalid.email';
-  const onChange = jest.fn();
-  onChange.mockReturnValue('none');
+  const props = {
+    className: 'test-text-input-class',
+    label: 'Test Input Label',
+    description: 'This is the description',
+    onChange: jest.fn(),
+    state: State.None,
+    optional: true,
+  };
 
-  const renderedTextInput = render(
-    <TextInput
-      className={className}
-      label={label}
-      description={description}
-      onChange={onChange}
-      state={State.None}
-      optional={true}
-    />,
-  );
+  props.onChange.mockReturnValue('none');
+
+  const renderedTextInput = render(<TextInput {...props} />);
 
   const renderedChildren = renderedTextInput.container.firstChild;
 
@@ -39,8 +35,7 @@ describe('packages/text-input', () => {
     throw new Error('TextInput component failed to render');
   }
 
-  const renderedInputElement =
-    renderedChildren.children[0].children[1].children[0];
+  const renderedInputElement = renderedChildren.children[1].children[0];
 
   if (!typeIs.input(renderedInputElement)) {
     throw new Error('Could not find input element');
@@ -48,9 +43,9 @@ describe('packages/text-input', () => {
 
   const optionalText = getByText(renderedChildren, 'Optional').parentElement;
 
-  test(`renders "${label}" as the input's label and "${description}" as the description`, () => {
-    expect(renderedChildren.innerHTML).toContain(label);
-    expect(renderedChildren.innerHTML).toContain(description);
+  test(`renders "${props.label}" as the input's label and "${props.description}" as the description`, () => {
+    expect(renderedChildren.innerHTML).toContain(props.label);
+    expect(renderedChildren.innerHTML).toContain(props.description);
   });
 
   test(`check that "optional" text is visible`, () => {
@@ -63,16 +58,15 @@ describe('packages/text-input', () => {
       target: { value: 'a' },
     });
     expect(renderedInputElement.value).toBe('a');
-    expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveReturnedWith('none');
+    expect(props.onChange).toHaveBeenCalledTimes(1);
+    expect(props.onChange).toHaveReturnedWith('none');
   });
 
   test('checkmark icon shows when input is valid', async () => {
     render(
       <TextInput
-        className={className}
-        label={label}
-        description={description}
+        label={props.label}
+        description={props.description}
         state={State.Valid}
         value={validEmail}
         optional={true}
@@ -94,9 +88,8 @@ describe('packages/text-input', () => {
   test('warning icon and error message show when input is invalid', async () => {
     render(
       <TextInput
-        className={className}
-        label={label}
-        description={description}
+        label={props.label}
+        description={props.description}
         state={State.Error}
         value={invalidEmail}
         errorMessage={error}
