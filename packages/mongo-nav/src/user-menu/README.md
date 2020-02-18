@@ -6,15 +6,15 @@
 
 ### Yarn
 
-\`\`\`shell
+```shell
 yarn add @leafygreen-ui/mongo-nav
-\`\`\`
+```
 
 ### NPM
 
-\`\`\`shell
+```shell
 npm install @leafygreen-ui/mongo-nav
-\`\`\`
+```
 
 ## Example
 
