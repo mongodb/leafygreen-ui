@@ -115,6 +115,32 @@ export interface DataInterface {
   readonly projects: Array<ProjectInterface>;
 }
 
+export interface UserMenuURLSInterface {
+  userMenu: {
+    cloud: {
+      userPreferences: string;
+      organizations: string;
+      invitations: string;
+      mfa: string;
+    };
+    university: {
+      videoPreferences: string;
+    };
+    support: {
+      userPreferences: string;
+    };
+    account: {
+      homepage: string;
+    };
+  };
+}
+
+export interface UserMenuHostsInterface {
+  cloud: string;
+  support: string;
+  university: string;
+}
+
 export interface URLSInterface {
   userMenu?: {
     cloud?: {

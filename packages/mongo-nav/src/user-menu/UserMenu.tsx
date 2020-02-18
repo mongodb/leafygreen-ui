@@ -20,6 +20,8 @@ import {
   URLSInterface,
   Product,
   HostsInterface,
+  UserMenuURLSInterface,
+  UserMenuHostsInterface,
 } from '../types';
 
 const subMenuContainer = createDataProp('sub-menu-container');
@@ -154,9 +156,9 @@ interface UserMenuProps {
    */
   onProductChange?: React.MouseEventHandler;
 
-  urls: Required<URLSInterface>;
+  urls: Required<URLSInterface> | UserMenuURLSInterface;
 
-  hosts: Required<HostsInterface>;
+  hosts: Required<HostsInterface> | UserMenuHostsInterface;
 }
 
 function UserMenu({
