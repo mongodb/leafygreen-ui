@@ -210,7 +210,7 @@ function UserMenu({
 }: UserMenuProps) {
   const hosts = defaultsDeep(hostsProp, defaultHosts);
 
-  // wil make this logic more abstract, but wanted to get a quick fix in so that UserMenu can be consumed outside of MongoNav
+  // will make this logic more abstract, but wanted to get a quick fix in so that UserMenu can be consumed outside of MongoNav
   const defaultURLs = {
     userMenu: {
       cloud: {
