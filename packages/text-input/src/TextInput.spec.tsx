@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  render,
-  cleanup,
-  fireEvent,
-  getByTitle,
-  getByText,
-} from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import TextInput, { State } from './TextInput';
 import { typeIs } from '@leafygreen-ui/lib';
@@ -20,6 +14,7 @@ describe('packages/text-input', () => {
     className: 'test-text-input-class',
     label: 'Test Input Label',
     description: 'This is the description',
+    placeholder: 'This is some placeholder text',
     onChange: jest.fn(),
     state: State.None,
     optional: true,
@@ -27,21 +22,23 @@ describe('packages/text-input', () => {
 
   props.onChange.mockReturnValue('none');
 
-  const renderedTextInput = render(<TextInput {...props} />);
+  const { getByPlaceholderText, getByText, getByTitle, container } = render(
+    <TextInput {...props} />,
+  );
 
-  const renderedChildren = renderedTextInput.container.firstChild;
+  const renderedChildren = container.firstChild;
 
   if (!typeIs.element(renderedChildren)) {
     throw new Error('TextInput component failed to render');
   }
 
-  const renderedInputElement = renderedChildren.children[1].children[0];
+  const renderedInputElement = getByPlaceholderText(props.placeholder);
 
   if (!typeIs.input(renderedInputElement)) {
     throw new Error('Could not find input element');
   }
 
-  const optionalText = getByText(renderedChildren, 'Optional').parentElement;
+  const optionalText = getByText('Optional');
 
   test(`renders "${props.label}" as the input's label and "${props.description}" as the description`, () => {
     expect(renderedChildren.innerHTML).toContain(props.label);
@@ -72,13 +69,12 @@ describe('packages/text-input', () => {
         optional={true}
       />,
       {
-        container: renderedTextInput.container,
+        container: container,
       },
     );
 
     expect(renderedInputElement.value).toBe(validEmail);
-    const checkmarkIcon = getByTitle(renderedChildren, 'Checkmark Icon')
-      .parentElement;
+    const checkmarkIcon = getByTitle('Checkmark Icon').parentElement;
 
     if (!typeIs.element(checkmarkIcon)) {
       throw new Error('Could not find checkmark icon element');
@@ -96,13 +92,12 @@ describe('packages/text-input', () => {
         optional={true}
       />,
       {
-        container: renderedTextInput.container,
+        container: container,
       },
     );
 
     expect(renderedInputElement.value).toBe(invalidEmail);
-    const warningIcon = getByTitle(renderedChildren, 'Warning Icon')
-      .parentElement;
+    const warningIcon = getByTitle('Warning Icon').parentElement;
 
     if (!typeIs.element(warningIcon)) {
       throw new Error('Could not find warning icon element');
