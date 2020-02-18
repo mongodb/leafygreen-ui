@@ -6,6 +6,11 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { URLSInterface } from '../types';
 import { InteractionRingWrapper } from '../helpers/index';
+import {
+  textLoadingStyle,
+  iconLoadingStyle,
+  removePointerEvents,
+} from '../styles';
 
 const triggerDataProp = createDataProp('org-trigger');
 const anchorDataProp = createDataProp('anchor-data-prop');
@@ -121,6 +126,7 @@ interface OrganizationTriggerProps {
   urls: Required<URLSInterface>;
   isActive?: boolean;
   open?: boolean;
+  disabled?: boolean;
 }
 
 export function OrganizationTrigger({
@@ -129,6 +135,7 @@ export function OrganizationTrigger({
   urls,
   isActive = false,
   open = false,
+  disabled = false,
   ...rest
 }: OrganizationTriggerProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -140,23 +147,41 @@ export function OrganizationTrigger({
         ringClassName={orgTriggerBorderRadius}
         selector={triggerDataProp.selector}
       >
-        <button {...rest} {...triggerDataProp.prop} className={buttonStyles}>
-          <Icon size="small" glyph="Building" />
+        <button
+          {...rest}
+          {...triggerDataProp.prop}
+          className={cx(buttonStyles, { [textLoadingStyle]: disabled })}
+          aria-disabled={disabled}
+        >
+          <Icon
+            size="small"
+            glyph="Building"
+            className={cx({ [iconLoadingStyle]: disabled })}
+          />
           <span className={selectedStyle}>{placeholder}</span>
-          <Icon size="small" glyph={open ? 'CaretUp' : 'CaretDown'} />
+          <Icon
+            size="small"
+            glyph={open ? 'CaretUp' : 'CaretDown'}
+            className={cx({ [iconLoadingStyle]: disabled })}
+          />
         </button>
       </InteractionRingWrapper>
 
       <a
         {...anchorDataProp.prop}
-        className={cx(anchorStyle, { [focusStyle]: showFocus })}
+        className={cx(anchorStyle, {
+          [focusStyle]: showFocus,
+          [removePointerEvents]: disabled,
+        })}
         href={urls.mongoSelect.orgSettings}
         aria-label="settings"
+        aria-disabled={disabled}
       >
         <Icon
           glyph="Settings"
           className={cx({
             [activeColor]: isActive,
+            [iconLoadingStyle]: disabled,
           })}
         />
       </a>
@@ -169,12 +194,14 @@ interface ProjectTriggerProps {
   children?: React.ReactNode;
   placeholder: string;
   open?: boolean;
+  disabled?: boolean;
 }
 
 export function ProjectTrigger({
   children,
   placeholder,
   open,
+  disabled = false,
   ...rest
 }: ProjectTriggerProps) {
   return (
@@ -189,10 +216,21 @@ export function ProjectTrigger({
         {...rest}
         {...projectTriggerDataProp.prop}
         className={projectTriggerStyle}
+        aria-disabled={disabled}
       >
-        <Icon size="small" glyph="Bell" />
-        <span className={selectedStyle}>{placeholder}</span>
-        <Icon size="small" glyph={open ? 'CaretUp' : 'CaretDown'} />
+        <Icon
+          size="small"
+          glyph="Bell"
+          className={cx({ [iconLoadingStyle]: disabled })}
+        />
+        <span className={cx(selectedStyle, { [textLoadingStyle]: disabled })}>
+          {placeholder}
+        </span>
+        <Icon
+          size="small"
+          glyph={open ? 'CaretUp' : 'CaretDown'}
+          className={cx({ [iconLoadingStyle]: disabled })}
+        />
         {children}
       </button>
     </InteractionRingWrapper>

@@ -81,6 +81,7 @@ interface BaseMongoSelectProps {
   urls: Required<URLSInterface>;
   onChange: React.ChangeEventHandler;
   isActive?: boolean;
+  disabled?: boolean;
 }
 
 interface ProjectMongoSelectProps extends BaseMongoSelectProps {
@@ -109,6 +110,7 @@ function OrgSelect({
   onChange,
   onClick,
   constructOrganizationURL,
+  disabled = false,
 }: OrganizationMongoSelectProps) {
   const [open, setOpen] = useState(false);
 
@@ -134,10 +136,11 @@ function OrgSelect({
     <Menu
       trigger={
         <OrganizationTrigger
-          placeholder={current?.orgName ?? 'All Organizations'}
+          placeholder={current?.orgName ?? ''}
           urls={urls}
           isActive={isActive}
           open={open}
+          disabled={disabled}
         />
       }
       className={menuContainerStyle}
@@ -185,6 +188,7 @@ function ProjectSelect({
   onClick,
   constructProjectURL,
   urls,
+  disabled,
 }: ProjectMongoSelectProps) {
   const [open, setOpen] = useState(false);
 
@@ -205,7 +209,13 @@ function ProjectSelect({
 
   return (
     <Menu
-      trigger={<ProjectTrigger placeholder={current.projectName} open={open} />}
+      trigger={
+        <ProjectTrigger
+          placeholder={current.projectName}
+          open={open}
+          disabled={disabled}
+        />
+      }
       className={menuContainerStyle}
       justify="start"
       spacing={0}

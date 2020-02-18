@@ -87,7 +87,7 @@ const paymentStatusMap: { readonly [K in Colors]: Array<string> } = {
 };
 
 interface OrgNav {
-  account: AccountInterface;
+  account?: AccountInterface;
   activeProduct: Product;
   current?: CurrentOrganizationInterface;
   data?: Array<OrganizationInterface>;
@@ -154,6 +154,7 @@ export default function OrgNav({
           urls={urls}
           onChange={onOrganizationChange}
           isActive={activeNav === 'orgSettings'}
+          disabled={!current}
         />
 
         <ul className={ulContainer}>
@@ -169,59 +170,61 @@ export default function OrgNav({
               </Badge>
             </li>
           )}
-          {current && (
-            <>
-              <li
-                role="none"
-                className={css`
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                `}
+
+          <>
+            <li
+              role="none"
+              className={css`
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              `}
+            >
+              <OrgNavLink
+                href={orgNav.accessManager}
+                isActive={activeNav === 'accessManager'}
+                disabled={!current}
               >
-                <OrgNavLink
-                  href={orgNav.accessManager}
-                  isActive={activeNav === 'accessManager'}
-                >
-                  Access Manager
-                </OrgNavLink>
-                <Menu
-                  open={open}
-                  setOpen={setOpen}
-                  trigger={
-                    <IconButton ariaLabel="Dropdown">
-                      <Icon glyph={open ? 'CaretUp' : 'CaretDown'} />
-                    </IconButton>
-                  }
-                  className={accessManagerMenuContainer}
-                >
-                  <p className={accessManagerMenuItem}>
-                    <strong>Organization Access:</strong> {current.orgName}
-                  </p>
-                  <p className={accessManagerMenuItem}>
-                    <strong>Project Access:</strong>{' '}
-                    {currentProjectName ?? 'None'}
-                  </p>
-                </Menu>
-              </li>
-              <li role="none" className={supportContainer}>
-                <OrgNavLink
-                  href={orgNav.support}
-                  isActive={activeNav === 'support'}
-                >
-                  Support
-                </OrgNavLink>
-              </li>
-              <li role="none">
-                <OrgNavLink
-                  href={orgNav.billing}
-                  isActive={activeNav === 'billing'}
-                >
-                  Billing
-                </OrgNavLink>
-              </li>
-            </>
-          )}
+                Access Manager
+              </OrgNavLink>
+              <IconButton ariaLabel="Dropdown" disabled={!current}>
+                <Icon glyph={open ? 'CaretUp' : 'CaretDown'} />
+                {current && (
+                  <Menu
+                    open={open}
+                    setOpen={setOpen}
+                    className={accessManagerMenuContainer}
+                  >
+                    <p className={accessManagerMenuItem}>
+                      <strong>Organization Access:</strong> {current?.orgName}
+                    </p>
+                    <p className={accessManagerMenuItem}>
+                      <strong>Project Access:</strong>{' '}
+                      {currentProjectName ?? 'None'}
+                    </p>
+                  </Menu>
+                )}
+              </IconButton>
+            </li>
+            <li role="none" className={supportContainer}>
+              <OrgNavLink
+                href={orgNav.support}
+                isActive={activeNav === 'support'}
+                disabled={!current}
+              >
+                Support
+              </OrgNavLink>
+            </li>
+            <li role="none">
+              <OrgNavLink
+                href={orgNav.billing}
+                isActive={activeNav === 'billing'}
+                disabled={!current}
+              >
+                Billing
+              </OrgNavLink>
+            </li>
+          </>
         </ul>
       </div>
       <div>

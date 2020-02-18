@@ -137,7 +137,7 @@ interface UserMenuProps {
   /**
    * Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
    */
-  account: AccountInterface;
+  account?: AccountInterface;
 
   /**
    * MongoDB product that is currently active: ['cloud', 'university', 'support'].
@@ -160,7 +160,7 @@ interface UserMenuProps {
 }
 
 function UserMenu({
-  account: { firstName, lastName, email, openInvitations },
+  account,
   activeProduct,
   onLogout = () => {},
   onProductChange = () => {},
@@ -169,7 +169,7 @@ function UserMenu({
 }: UserMenuProps) {
   const [open, setOpen] = useState(false);
 
-  const name = `${firstName} ${lastName}`;
+  const name = account ? `${account?.firstName} ${account?.lastName}` : '';
 
   const isAccount = activeProduct === 'account';
   const cloudProducts = ['cloud', 'stitch', 'charts'];
@@ -196,7 +196,11 @@ function UserMenu({
 
   return (
     <div className={triggerWrapper}>
-      <UserMenuTrigger open={open} name={firstName} setOpen={setOpen} />
+      <UserMenuTrigger
+        open={open}
+        name={account?.firstName ?? ''}
+        setOpen={setOpen}
+      />
 
       <Menu open={open} setOpen={setOpen} className={menuStyle}>
         <div className={headerStyle}>
@@ -206,7 +210,9 @@ function UserMenu({
 
           <h3 className={cx(nameStyle, truncate)}>{name}</h3>
 
-          <p className={cx(descriptionStyle, truncate)}>{email}</p>
+          <p className={cx(descriptionStyle, truncate)}>
+            {account?.email ?? ''}
+          </p>
 
           <FocusableMenuItem>
             <Button
@@ -224,6 +230,7 @@ function UserMenu({
           {...subMenuContainer.prop}
           {...sharedProps}
           active={isCloud}
+          disabled={!account}
           href={hosts.cloud}
           description={<Description isActive={isCloud} product="cloud" />}
           title="Atlas"
@@ -236,9 +243,10 @@ function UserMenu({
             User Preferences
           </MenuItem>
           <MenuItem href={userMenu?.cloud?.invitations}>
-            {openInvitations ? (
+            {account?.openInvitations ? (
               <span className={subMenuItemStyle}>
-                Invitations <Badge variant="blue">{openInvitations}</Badge>
+                Invitations{' '}
+                <Badge variant="blue">{account?.openInvitations}</Badge>
               </span>
             ) : (
               'Invitations'
@@ -265,6 +273,7 @@ function UserMenu({
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isUniversity,
           })}
+          disabled={!account}
         >
           <MenuItem href={userMenu?.university?.videoPreferences}>
             Video Preferences
@@ -282,6 +291,7 @@ function UserMenu({
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isSupport,
           })}
+          disabled={!account}
         >
           <MenuItem href={userMenu?.support?.userPreferences}>
             User Preferences
