@@ -1,5 +1,11 @@
 # @leafygreen-ui/mongo-nav
 
+## 0.8.0
+
+### Minor Changes
+
+- ecbf286: Update UserMenu types such that Component can work independently of <MongoNav />
+
 ## 0.7.0
 
 ### Minor Changes
