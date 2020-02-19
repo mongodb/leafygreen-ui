@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { ulStyleOverrides } from './styles';
+import { ulStyleOverrides, sideNavWidth } from './styles';
 
 const navStyles = css`
-  width: 200px;
+  width: ${sideNavWidth}px;
 `;
 
 interface SideNavProps {

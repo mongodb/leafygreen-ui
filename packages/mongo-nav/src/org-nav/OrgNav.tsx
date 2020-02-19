@@ -123,7 +123,7 @@ export default function OrgNav({
   hosts,
 }: OrgNav) {
   const { orgNav } = urls;
-  const disabled = activeNav === 'preferences';
+  const disabled = activeNav === 'userSettings';
 
   let paymentVariant: Colors | undefined;
   let key: Colors;

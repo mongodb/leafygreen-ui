@@ -9,7 +9,7 @@ import {
 import { OrgSelect, ProjectSelect } from './MongoSelect';
 import {
   dataFixtures,
-  urlFixtures,
+  urlDefaults,
   constructOrganizationURL,
   constructProjectURL,
 } from '../data';
@@ -82,7 +82,7 @@ describe('packages/mongo-select', () => {
             current={currentOrganization}
             data={organizations}
             constructOrganizationURL={constructOrganizationURL}
-            urls={urlFixtures}
+            urls={urlDefaults}
             onChange={onChange}
             onClick={onClick}
             {...props}
@@ -182,7 +182,7 @@ describe('packages/mongo-select', () => {
       setQueries(
         render(
           <ProjectSelect
-            urls={urlFixtures}
+            urls={urlDefaults}
             data={projects}
             current={currentProject as CurrentProjectInterface}
             onClick={onClick}

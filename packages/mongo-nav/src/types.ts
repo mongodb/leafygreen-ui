@@ -18,7 +18,7 @@ const NavItem = {
   AllClusters: 'allClusters',
   Admin: 'admin',
   OrgSettings: 'orgSettings',
-  Preferences: 'preferences',
+  UserSettings: 'userSettings',
 } as const;
 
 type NavItem = typeof NavItem[keyof typeof NavItem];

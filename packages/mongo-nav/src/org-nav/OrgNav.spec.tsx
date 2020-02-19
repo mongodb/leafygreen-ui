@@ -4,8 +4,8 @@ import { render, cleanup } from '@testing-library/react';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import {
   dataFixtures,
-  urlFixtures,
-  hostFixtures,
+  urlDefaults,
+  hostDefaults,
   constructOrganizationURL,
 } from '../data';
 import OrgNav from './OrgNav';
@@ -24,7 +24,7 @@ interface LinkNameToUrls {
 const { account, currentOrganization, organizations } = dataFixtures;
 const {
   orgNav: { accessManager, support, billing, allClusters, admin },
-} = urlFixtures;
+} = urlDefaults;
 
 // this avoids having to explicitly type orgNav with nullable fields
 // and then extend it to allow string indexes
@@ -77,9 +77,9 @@ describe('packages/mongo-nav/src/org-nav', () => {
           data={organizations}
           constructOrganizationURL={constructOrganizationURL}
           onOrganizationChange={onOrganizationChange}
-          urls={urlFixtures}
+          urls={urlDefaults}
           admin={false}
-          hosts={hostFixtures}
+          hosts={hostDefaults}
           {...props}
         />,
       ),
@@ -128,7 +128,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
   });
 
   describe('when rendered with an active preferences nav', () => {
-    beforeEach(() => renderComponent({ activeNav: 'preferences' }));
+    beforeEach(() => renderComponent({ activeNav: 'userSettings' }));
     testForPaymentStatus(false);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
@@ -145,7 +145,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
 
   describe('when rendered as an admin with an active preferences nav', () => {
     beforeEach(() =>
-      renderComponent({ activeNav: 'preferences', admin: true }),
+      renderComponent({ activeNav: 'userSettings', admin: true }),
     );
     testForPaymentStatus(false);
 

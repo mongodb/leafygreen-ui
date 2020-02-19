@@ -50,7 +50,7 @@ export const dataFixtures = {
   ],
 } as DataInterface;
 
-export const urlFixtures: Required<URLSInterface> = {
+export const urlDefaults: Required<URLSInterface> = {
   userMenu: {
     cloud: {
       userPreferences: `https://cloud.mongodb.com/v2#/preferences/personalization`,
@@ -92,7 +92,7 @@ export const urlFixtures: Required<URLSInterface> = {
   },
 };
 
-export const hostFixtures: Required<HostsInterface> = {
+export const hostDefaults: Required<HostsInterface> = {
   account: 'https://account.mongodb.com',
   cloud: 'https://cloud.mongodb.com',
   charts: 'https://charts.mongodb.com',
@@ -102,7 +102,7 @@ export const hostFixtures: Required<HostsInterface> = {
 };
 
 export const constructOrganizationURL = (orgId: string) =>
-  `https://cloud-dev.mongodb.com/v2#/org/${orgId}/projects`;
+  `https://cloud.mongodb.com/v2#/org/${orgId}/projects`;
 
 export const constructProjectURL = (projectId: string) =>
-  `https://cloud-dev.mongodb.com/v2#/${projectId}`;
+  `https://cloud.mongodb.com/v2#/${projectId}`;
