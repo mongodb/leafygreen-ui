@@ -6,6 +6,7 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { URLSInterface } from '../types';
 import { InteractionRingWrapper } from '../helpers/index';
+import {facepaint, useWindowSize, breakpoints} from '../breakpoints'
 
 const triggerDataProp = createDataProp('org-trigger');
 const anchorDataProp = createDataProp('anchor-data-prop');
@@ -19,6 +20,10 @@ const baseButtonStyles = css`
   cursor: pointer;
   background-color: white;
   position: relative;
+
+  ${facepaint({
+    width: ['90px', '90px', '180px'],
+  })}
 
   &:focus {
     outline: none;
@@ -45,6 +50,14 @@ const projectButtonStyles = css`
   padding: 2px;
   width: 174px;
   height: 28px;
+
+  ${facepaint({
+    width: ['106px', '106px', '196px'],
+  })}
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const orgTriggerContainer = css`
@@ -62,6 +75,9 @@ const selectedStyle = css`
   flex-grow: 1;
   text-align: left;
   font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const anchorStyle = css`
@@ -76,9 +92,12 @@ const anchorStyle = css`
   border: 1px solid ${uiColors.gray.light2};
   border-left: 0;
   background-color: white;
-  margin-right: 20px;
   outline: none;
   transition: all 150ms ease-in-out;
+
+  ${facepaint({
+    marginRight: ['16px', '16px', '20px'],
+  })}
 
   &:hover {
     background-color: ${uiColors.gray.light2};
@@ -92,8 +111,13 @@ const orgTriggerBorderRadius = css`
 `;
 
 const projectTriggerWrapper = css`
-  margin-left: 9px;
-  margin-right: 4px;
+  margin-left: 16px;
+  margin-right: 2px;
+
+
+  ${facepaint({
+    marginLeft: ['16px', '0px', '16px'],
+  })}
 `;
 
 const activeColor = css`
@@ -130,6 +154,8 @@ export function OrganizationTrigger({
   ...rest
 }: OrganizationTriggerProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+  const windowSize = useWindowSize()
+  const isTablet = windowSize < breakpoints.medium;
 
   return (
     <>
@@ -145,9 +171,9 @@ export function OrganizationTrigger({
             [activeButtonColor]: open,
           })}
         >
-          <Icon size="small" glyph="Building" />
+          {!isTablet && <Icon size="small" glyph="Building" />}
           <span className={selectedStyle}>{placeholder}</span>
-          <Icon size="small" glyph={open ? 'CaretUp' : 'CaretDown'} />
+          <Icon size="small" className={css`flex-shrink: 0;`} glyph={open ? 'CaretUp' : 'CaretDown'} />
           {children}
         </button>
       </InteractionRingWrapper>
@@ -196,9 +222,9 @@ export function ProjectTrigger({
           [activeButtonColor]: open,
         })}
       >
-        <Icon size="small" glyph="Bell" />
+        <Icon glyph="Bell" className={css`color: ${uiColors.gray.base};`} />
         <span className={selectedStyle}>{placeholder}</span>
-        <Icon size="small" glyph={open ? 'CaretUp' : 'CaretDown'} />
+        <Icon size="small" glyph={open ? 'CaretUp' : 'CaretDown'} className={css`flex-shrink: 0;`} />
         {children}
       </button>
     </InteractionRingWrapper>

@@ -8,6 +8,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import { Menu } from '@leafygreen-ui/menu';
 import { OrgNavLink } from '../helpers/index';
+import {breakpoints, useWindowSize, facepaint} from '../breakpoints'
 import {
   AccountInterface,
   OrganizationInterface,
@@ -49,12 +50,16 @@ const ulContainer = css`
 `;
 
 const supportContainer = css`
-  margin-left: 30px;
-  margin-right: 30px;
+  ${facepaint({
+    marginRight: ['16px', '16px', '24px'],
+    marginLeft: ['16px', '16px', '24px'],
+  })}
 `;
 
 const rightLinkMargin = css`
-  margin-right: 30px;
+  ${facepaint({
+    marginRight: ['16px', '16px', '24px'],
+  })}
 `;
 
 const accessManagerMenuContainer = css`
@@ -115,6 +120,9 @@ export default function OrgNav({
 }: OrgNav) {
   const [open, setOpen] = useState(false);
   const { orgNav } = urls;
+  const windowSize = useWindowSize()
+  const isTablet = windowSize < breakpoints.medium;
+  const isMobile = windowSize < breakpoints.small;
 
   let paymentVariant: Colors | undefined;
   let key: Colors;
@@ -157,7 +165,7 @@ export default function OrgNav({
         />
 
         <ul className={ulContainer}>
-          {paymentVariant && current?.paymentStatus && (
+          {!isTablet && paymentVariant && current?.paymentStatus && (
             <li>
               <Badge
                 className={css`
@@ -169,7 +177,7 @@ export default function OrgNav({
               </Badge>
             </li>
           )}
-          {current && (
+          {!isMobile && current && (
             <>
               <li
                 role="none"
@@ -185,6 +193,7 @@ export default function OrgNav({
                 >
                   Access Manager
                 </OrgNavLink>
+
                 <Menu
                   open={open}
                   setOpen={setOpen}
@@ -198,12 +207,14 @@ export default function OrgNav({
                   <p className={accessManagerMenuItem}>
                     <strong>Organization Access:</strong> {current.orgName}
                   </p>
+
                   <p className={accessManagerMenuItem}>
                     <strong>Project Access:</strong>
                     {currentProjectName ?? 'None'}
                   </p>
                 </Menu>
               </li>
+
               <li role="none" className={supportContainer}>
                 <OrgNavLink
                   href={orgNav.support}
@@ -212,6 +223,7 @@ export default function OrgNav({
                   Support
                 </OrgNavLink>
               </li>
+
               <li role="none">
                 <OrgNavLink
                   href={orgNav.billing}
@@ -224,15 +236,19 @@ export default function OrgNav({
           )}
         </ul>
       </div>
+
       <div>
-        <OrgNavLink
-          href={orgNav.allClusters}
-          isActive={activeNav === 'allClusters'}
-          className={rightLinkMargin}
-        >
-          All Clusters
-        </OrgNavLink>
-        {admin && (
+        {!isMobile &&
+          <OrgNavLink
+            href={orgNav.allClusters}
+            isActive={activeNav === 'allClusters'}
+            className={rightLinkMargin}
+          >
+            All Clusters
+          </OrgNavLink>
+        }
+
+        {!isTablet && admin && (
           <OrgNavLink
             href={orgNav.admin}
             isActive={activeNav === 'admin'}
@@ -241,6 +257,7 @@ export default function OrgNav({
             Admin
           </OrgNavLink>
         )}
+
         <UserMenu
           account={account}
           activeProduct={activeProduct}
