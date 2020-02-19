@@ -203,7 +203,7 @@ const TextInput = React.forwardRef(
 
     function onValueChange(e: React.ChangeEvent<HTMLInputElement>) {
       if (onChange !== undefined) {
-        state = onChange(e.target.value);
+        state = onChange(e);
       }
 
       if (setValue != undefined) {
