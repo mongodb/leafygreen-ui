@@ -37,7 +37,6 @@ const mongoSelectWrapper = css`
 
 const menuIconButtonStyle = css`
   margin: auto;
-  background-color: white;
 `;
 
 const menuIconStyle = css`
@@ -223,7 +222,11 @@ export default function ProjectNav({
           open={open}
           setOpen={setOpen}
           trigger={
-            <IconButton ariaLabel="More" className={menuIconButtonStyle}>
+            <IconButton
+              ariaLabel="More"
+              className={menuIconButtonStyle}
+              active={open}
+            >
               <Icon glyph="Ellipsis" className={menuIconStyle} />
             </IconButton>
           }

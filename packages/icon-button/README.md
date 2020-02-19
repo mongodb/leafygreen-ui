@@ -59,5 +59,6 @@ import IconButton from '@leafygreen-ui/icon-button';
 | `children`  | `node`                       | Content rendered inside of the `<IconButton />` component                                                         |           |
 | `ariaLabel` | **Required** `string`        | Value passed to `aria-label` attribute to ensure component's accessibility                                        |           |
 | `size`      | `default`, `large`, `xlarge` | Determines the size of the IconButton                                                                             | `default` |
+| `active`    | `boolean`                    | Determines whether the `<IconButton />` will appear `active`                                                      | `false`   |
 
 _Any other properties will be spread on the container element._

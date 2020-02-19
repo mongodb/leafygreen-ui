@@ -189,7 +189,7 @@ export default function OrgNav({
                   open={open}
                   setOpen={setOpen}
                   trigger={
-                    <IconButton ariaLabel="Dropdown">
+                    <IconButton ariaLabel="Dropdown" active={open}>
                       <Icon glyph={open ? 'CaretUp' : 'CaretDown'} />
                     </IconButton>
                   }
