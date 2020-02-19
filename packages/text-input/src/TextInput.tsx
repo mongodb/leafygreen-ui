@@ -19,44 +19,54 @@ interface TextInputProps {
    * Text shown in bold above the input element.
    */
   label?: string;
+
   /**
    * Text that gives more detail about the requirements for the input.
    */
   description?: string;
+
   /**
    * Whether or not the field is optional.
    * Default: false
    */
   optional?: boolean;
+
   /**
    * Whether or not the field is currently disabled.
    * Default: false
    */
   disabled?: boolean;
+
   /**
    * Callback to be executed when the value of the input field changes.
    */
-  onChange?: Function;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+
   /**
    * The placeholder text shown in the input field before the user begins typing.
    */
   placeholder?: string;
+
   /**
    * The message shown below the input field if the value is invalid.
    */
   errorMessage?: string;
+
   /**
    * The current state of the TextInput. This can be none, valid, or error.
    */
   state?: State;
+
   /**
    * The current value of the input field. If a value is passed to this prop, component will be controlled by consumer.
    */
   value?: string;
+
   /**
    * Callback used to set the value of the input field.
    */
   setValue?: Function;
+
   /**
    * className supplied to the TextInput container.
    */
@@ -94,21 +104,6 @@ const inputContainerStyle = css`
   display: flex;
   align-items: center;
   z-index: 0;
-`;
-
-const inputStyle = css`
-  width: 400px;
-  height: 36px;
-  border-radius: 4px;
-  padding-left: 12px;
-  font-size: 14px;
-  font-weight: normal;
-  &:placeholder {
-    color: ${uiColors.gray.base};
-  }
-  &:focus {
-    outline: none;
-  }
 `;
 
 const errorIconStyle = css`
@@ -186,11 +181,15 @@ const TextInput = React.forwardRef(
     const inputSelectorProp = createDataProp('input-selector');
 
     function getInputColorFromState() {
-      if (state === State.None) {
-        return '#CCC';
+      if (state === State.Error) {
+        return uiColors.red.base;
       }
 
-      return state === State.Valid ? uiColors.green.base : uiColors.red.base;
+      if (state === State.Valid) {
+        return uiColors.green.base;
+      }
+
+      return '#CCC';
     }
 
     function getInputPaddingFromState() {
@@ -198,12 +197,16 @@ const TextInput = React.forwardRef(
         return '30px';
       }
 
-      return optional ? '60px' : '12px';
+      if (optional) {
+        return '60px';
+      }
+
+      return '12px';
     }
 
     function onValueChange(e: React.ChangeEvent<HTMLInputElement>) {
       if (onChange !== undefined) {
-        state = onChange(e);
+        onChange(e);
       }
 
       if (setValue != undefined) {
@@ -233,11 +236,23 @@ const TextInput = React.forwardRef(
       padding-bottom: 8px;
     `;
 
-    const conditionalStyling = css`
+    const inputStyle = css`
+      width: 400px;
+      height: 36px;
+      border-radius: 4px;
+      padding-left: 12px;
+      font-size: 14px;
+      font-weight: normal;
       z-index: ${hasFocus ? 2 : 1};
-      background: ${disabled ? uiColors.gray.light2 : '#FFFFFF'};
+      background-color: ${disabled ? uiColors.gray.light2 : '#FFFFFF'};
       padding-right: ${getInputPaddingFromState()};
       border: 1px solid ${getInputColorFromState()};
+      &:placeholder {
+        color: ${uiColors.gray.base};
+      }
+      &:focus {
+        outline: none;
+      }
     `;
 
     return (
@@ -247,13 +262,13 @@ const TextInput = React.forwardRef(
         <div className={inputContainerStyle}>
           <input
             {...inputSelectorProp.prop}
-            className={cx(inputStyle, conditionalStyling)}
+            className={inputStyle}
             type="text"
             value={value}
             required={!optional}
             disabled={disabled}
             placeholder={placeholder}
-            onChange={e => onValueChange(e)}
+            onChange={onValueChange}
             ref={forwardRef}
             onFocus={() => setHasFocus(true)}
             onBlur={() => setHasFocus(false)}
