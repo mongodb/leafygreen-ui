@@ -16,18 +16,15 @@ function initializeSyntaxHighlighting() {
   const SupportedLanguagesList = Object.values(SupportedLanguages);
 
   SupportedLanguagesList.forEach(language => {
-    hljs.registerLanguage(
-      language,
-      require(`highlight.js/lib/languages/${language}`),
-    );
+    if (language === 'graphql') {
+      hljsDefineGraphQL(hljs);
+    } else {
+      hljs.registerLanguage(
+        language,
+        require(`highlight.js/lib/languages/${language}`),
+      );
+    }
   });
-
-  hljs.registerLanguage('graphql', hljsDefineGraphQL);
-
-  // hljs.registerLanguage(
-  //   'graphql',
-  //   require('highlightjs-graphql'),
-  // );
 
   hljs.configure({
     languages: SupportedLanguagesList,
