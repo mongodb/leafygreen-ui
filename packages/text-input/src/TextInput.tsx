@@ -261,11 +261,10 @@ const TextInput = React.forwardRef(
     `;
 
     return (
-      <label
-        htmlFor={generatedId}
-        className={cx(textInputStyle, labelStyle, className)}
-      >
-        {label}
+      <div className={cx(textInputStyle, labelStyle, className)}>
+        <label htmlFor={generatedId} className={labelStyle}>
+          {label}
+        </label>
         <p className={descriptionStyle}>{description}</p>
         <div className={inputContainerStyle}>
           <input
@@ -331,7 +330,7 @@ const TextInput = React.forwardRef(
             <label>{errorMessage}</label>
           </div>
         )}
-      </label>
+      </div>
     );
   },
 );
