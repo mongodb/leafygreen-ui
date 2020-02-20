@@ -4,8 +4,8 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
-import {useViewportSize} from '@leafygreen-ui/hooks';
-import {breakpoints, facepaint} from '../breakpoints'
+import { useViewportSize } from '@leafygreen-ui/hooks';
+import { breakpoints, facepaint } from '../breakpoints';
 
 const buttonDataProp = createDataProp('button-data-prop');
 const iconDataProp = createDataProp('icon-data-prop');
@@ -119,11 +119,11 @@ export default function UserMenuTrigger({
 }: UserMenuTriggerProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const {width: viewportWidth} = useViewportSize()
+  const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
 
   // Show first initial on tablets and smaller, otherwise use the full name passed in
-  const displayName = isTablet ? name.split('')[0] : name
+  const displayName = isTablet ? name.split('')[0] : name;
 
   const activeWidth = css`
     width: ${buttonRef?.current?.getBoundingClientRect().width}px;

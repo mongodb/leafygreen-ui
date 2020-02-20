@@ -8,8 +8,8 @@ import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { ProjectSelect } from '../mongo-select/index';
-import {facepaint, breakpoints} from '../breakpoints';
-import {useViewportSize} from '@leafygreen-ui/hooks';
+import { facepaint, breakpoints } from '../breakpoints';
+import { useViewportSize } from '@leafygreen-ui/hooks';
 import {
   ProjectInterface,
   URLSInterface,
@@ -66,7 +66,7 @@ const productStyle = css`
 
   ${facepaint({
     width: ['100px', '60px', '100px'],
-    marginRight: ['16px', '8px', '16px']
+    marginRight: ['16px', '8px', '16px'],
   })}
 
   &:last-of-type {
@@ -261,49 +261,46 @@ export default function ProjectNav({
         <ul className={productListStyle}>
           <li role="none" className={productStyle}>
             <a href={hosts.cloud} className={getProductClassName('cloud')}>
-              {!isMobile &&
+              {!isMobile && (
                 <Icon
                   {...productIconProp.prop}
                   className={productIconStyle}
                   glyph="Cloud"
                 />
-              }
-
+              )}
               Atlas
             </a>
           </li>
 
           <li role="none" className={productStyle}>
             <a href={hosts.realm} className={getProductClassName('realm')}>
-              {!isMobile &&
+              {!isMobile && (
                 <Icon
                   {...productIconProp.prop}
                   className={productIconStyle}
                   glyph="Stitch"
                 />
-              }
-
+              )}
               Realm
             </a>
           </li>
 
           <li role="none" className={productStyle}>
             <a href={hosts.charts} className={getProductClassName('charts')}>
-              {!isMobile &&
+              {!isMobile && (
                 <Icon
                   {...productIconProp.prop}
                   className={productIconStyle}
                   glyph="Charts"
                 />
-              }
-
+              )}
               Charts
             </a>
           </li>
         </ul>
       </div>
 
-      {!isMobile &&
+      {!isMobile && (
         <div
           className={css`
             display: flex;
@@ -364,7 +361,7 @@ export default function ProjectNav({
             View the Project Alerts
           </Tooltip>
         </div>
-      }
+      )}
     </nav>
   );
 }

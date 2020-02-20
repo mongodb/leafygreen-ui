@@ -9,7 +9,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import { Menu } from '@leafygreen-ui/menu';
 import { OrgNavLink } from '../helpers/index';
-import {breakpoints, facepaint} from '../breakpoints'
+import { breakpoints, facepaint } from '../breakpoints';
 import {
   AccountInterface,
   OrganizationInterface,
@@ -239,7 +239,7 @@ export default function OrgNav({
       </div>
 
       <div>
-        {!isMobile &&
+        {!isMobile && (
           <OrgNavLink
             href={orgNav.allClusters}
             isActive={activeNav === 'allClusters'}
@@ -247,7 +247,7 @@ export default function OrgNav({
           >
             All Clusters
           </OrgNavLink>
-        }
+        )}
 
         {!isTablet && admin && (
           <OrgNavLink

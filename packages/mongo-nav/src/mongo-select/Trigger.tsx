@@ -7,7 +7,7 @@ import { createDataProp } from '@leafygreen-ui/lib';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { URLSInterface } from '../types';
 import { InteractionRingWrapper } from '../helpers/index';
-import {facepaint,  breakpoints} from '../breakpoints'
+import { facepaint, breakpoints } from '../breakpoints';
 
 const triggerDataProp = createDataProp('org-trigger');
 const anchorDataProp = createDataProp('anchor-data-prop');
@@ -120,7 +120,6 @@ const projectTriggerWrapper = css`
   margin-left: 16px;
   margin-right: 2px;
 
-
   ${facepaint({
     marginLeft: ['16px', '0px', '16px'],
   })}
@@ -179,7 +178,13 @@ export function OrganizationTrigger({
         >
           {!isTablet && <Icon size="small" glyph="Building" />}
           <span className={selectedStyle}>{placeholder}</span>
-          <Icon size="small" className={css`flex-shrink: 0;`} glyph={open ? 'CaretUp' : 'CaretDown'} />
+          <Icon
+            size="small"
+            className={css`
+              flex-shrink: 0;
+            `}
+            glyph={open ? 'CaretUp' : 'CaretDown'}
+          />
           {children}
         </button>
       </InteractionRingWrapper>
@@ -228,9 +233,20 @@ export function ProjectTrigger({
           [activeButtonColor]: open,
         })}
       >
-        <Icon glyph="Bell" className={css`color: ${uiColors.gray.base};`} />
+        <Icon
+          glyph="Bell"
+          className={css`
+            color: ${uiColors.gray.base};
+          `}
+        />
         <span className={selectedStyle}>{placeholder}</span>
-        <Icon size="small" glyph={open ? 'CaretUp' : 'CaretDown'} className={css`flex-shrink: 0;`} />
+        <Icon
+          size="small"
+          glyph={open ? 'CaretUp' : 'CaretDown'}
+          className={css`
+            flex-shrink: 0;
+          `}
+        />
         {children}
       </button>
     </InteractionRingWrapper>
