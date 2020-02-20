@@ -42,6 +42,10 @@ const selectedStyle = css`
   font-size: 13px;
 `;
 
+const disabledStyle = css`
+  color: ${uiColors.gray.light1};
+`;
+
 const anchorStyle = css`
   color: ${uiColors.gray.base};
   padding-left: 5px;
@@ -59,6 +63,7 @@ interface OrganizationTriggerProps {
   className?: string;
   urls: Required<URLSInterface>;
   isActive?: boolean;
+  disabled?: boolean;
 }
 
 export function OrganizationTrigger({
@@ -67,25 +72,45 @@ export function OrganizationTrigger({
   className,
   urls,
   isActive,
+  disabled = false,
   ...rest
 }: OrganizationTriggerProps) {
+  const orgTriggerPlaceholder = disabled ? 'All Organizations' : placeholder;
   return (
     <div className={cx(orgTriggerContainer, className)}>
-      <button {...rest} className={buttonContainer}>
-        <Icon size="small" glyph="Building" />
-        <span className={selectedStyle}>{placeholder}</span>
-        <Icon size="small" glyph="CaretDown" />
-      </button>
-      <a
-        href={urls.mongoSelect.orgSettings}
-        className={cx(anchorStyle, border)}
-        aria-label="settings"
+      <button
+        {...rest}
+        className={buttonContainer}
+        data-testid="org-trigger"
+        disabled={disabled}
       >
         <Icon
-          glyph={'Settings'}
-          fill={isActive ? uiColors.green.base : uiColors.gray.base}
+          className={cx({ [disabledStyle]: disabled })}
+          size="small"
+          glyph="Building"
         />
-      </a>
+        <span className={cx(selectedStyle, { [disabledStyle]: disabled })}>
+          {orgTriggerPlaceholder}
+        </span>
+        <Icon
+          className={cx({ [disabledStyle]: disabled })}
+          size="small"
+          glyph="CaretDown"
+        />
+      </button>
+      {!disabled && (
+        <a
+          href={urls.mongoSelect.orgSettings}
+          className={cx(anchorStyle, border)}
+          aria-label="settings"
+          data-testid="org-trigger-settings"
+        >
+          <Icon
+            glyph="Settings"
+            fill={isActive ? uiColors.green.base : uiColors.gray.base}
+          />
+        </a>
+      )}
       {children}
     </div>
   );
@@ -106,6 +131,7 @@ export function ProjectTrigger({
   return (
     <button
       {...rest}
+      data-testid="project-select-trigger"
       className={cx(buttonContainer, projectTriggerContainer, className)}
     >
       <Icon size="small" glyph="Bell" />

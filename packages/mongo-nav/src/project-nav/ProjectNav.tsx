@@ -15,6 +15,8 @@ import {
   HostsInterface,
 } from '../types';
 
+export const projectNavHeight = 45;
+
 const navContainerStyle = css`
   display: flex;
   align-items: center;
@@ -22,7 +24,7 @@ const navContainerStyle = css`
   width: 100%;
   padding-left: 15px;
   padding-right: 15px;
-  height: 45px;
+  height: ${projectNavHeight}px;
   box-shadow: 0 3px 7px 0 rgba(67, 117, 151, 0.08);
   overflow: hidden;
 `;
