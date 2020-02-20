@@ -12,6 +12,7 @@ import {
   NavItem,
   CurrentOrganizationInterface,
   HostsInterface,
+  OrgPaymentLabel,
 } from '../types';
 
 import { OrgSelect } from '../mongo-select/index';
@@ -91,10 +92,22 @@ export const Colors = {
 export type Colors = typeof Colors[keyof typeof Colors];
 
 const paymentStatusMap: { readonly [K in Colors]: Array<string> } = {
-  [Colors.Lightgray]: ['embargoed', 'embargo confirmed'],
-  [Colors.Green]: ['ok'],
-  [Colors.Yellow]: ['warning', 'suspended', 'closing'],
-  [Colors.Red]: ['dead', 'locked', 'closed'],
+  [Colors.Lightgray]: [
+    OrgPaymentLabel.Embargoed,
+    OrgPaymentLabel.EmbargoConfirmed,
+  ],
+  [Colors.Green]: [OrgPaymentLabel.Ok],
+  [Colors.Yellow]: [
+    OrgPaymentLabel.Warning,
+    OrgPaymentLabel.Suspended,
+    OrgPaymentLabel.Closing,
+  ],
+  [Colors.Red]: [
+    OrgPaymentLabel.Dead,
+    OrgPaymentLabel.AdminSuspended,
+    OrgPaymentLabel.Locked,
+    OrgPaymentLabel.Closed,
+  ],
 };
 
 interface OrgNav {
@@ -136,6 +149,12 @@ export default function OrgNav({
     }
   }
 
+  const paymentValues: Array<OrgPaymentLabel> = [
+    OrgPaymentLabel.Suspended,
+    OrgPaymentLabel.Locked,
+    OrgPaymentLabel.AdminSuspended,
+  ];
+
   return (
     <nav
       className={navContainer}
@@ -144,7 +163,6 @@ export default function OrgNav({
     >
       <div className={leftSideContainer}>
         <LogoMark height={30} />
-
         <OrgSelect
           className={cx(orgSelectContainer, { [disabledOrgSelect]: disabled })}
           data={data}
@@ -155,23 +173,24 @@ export default function OrgNav({
           isActive={activeNav === 'orgSettings'}
           disabled={disabled}
         />
-
         {!disabled && (
           <ul className={ulContainer}>
-            {paymentVariant && current?.paymentStatus && (
-              <li>
-                <Badge
-                  className={css`
-                    margin-right: 25px;
-                    text-transform: uppercase;
-                  `}
-                  variant={paymentVariant}
-                  data-testid="org-payment-status"
-                >
-                  {current.paymentStatus}
-                </Badge>
-              </li>
-            )}
+            {current?.paymentStatus &&
+              paymentVariant &&
+              (admin || paymentValues.includes(current.paymentStatus)) && (
+                <li>
+                  <Badge
+                    className={css`
+                      margin-right: 25px;
+                    `}
+                    variant={paymentVariant}
+                    data-testid="org-payment-status"
+                  >
+                    {current.paymentStatus.split('_').join()}
+                  </Badge>
+                </li>
+              )}
+
             {current && (
               <>
                 <li role="none">
