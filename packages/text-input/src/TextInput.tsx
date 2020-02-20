@@ -158,7 +158,7 @@ const errorMessageStyle = css`
 const TextInput = React.forwardRef(
   (
     {
-      id,
+      id: propsId,
       label,
       description,
       optional = false,
@@ -181,7 +181,7 @@ const TextInput = React.forwardRef(
     const [generatedId] = useState(
       `text-input-${Math.floor(Math.random() * 10000000)}`,
     );
-    const internalId = id ?? generatedId;
+    const id = propsId ?? generatedId;
 
     function getInputColorFromState() {
       if (state === State.Error) {
@@ -262,7 +262,7 @@ const TextInput = React.forwardRef(
 
     return (
       <div className={cx(textInputStyle, labelStyle, className)}>
-        <label htmlFor={internalId} className={labelStyle}>
+        <label htmlFor={id} className={labelStyle}>
           {label}
         </label>
         <p className={descriptionStyle}>{description}</p>
@@ -279,7 +279,7 @@ const TextInput = React.forwardRef(
             ref={forwardRef}
             onFocus={() => setHasFocus(true)}
             onBlur={() => setHasFocus(false)}
-            id={internalId}
+            id={id}
           />
 
           {state === State.Valid && (
