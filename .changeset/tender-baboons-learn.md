@@ -1,7 +1,7 @@
 ---
 '@leafygreen-ui/mongo-nav': minor
 '@leafygreen-ui/side-nav': minor
-'@leafygreen-ui/lib': patch
+'@leafygreen-ui/lib': minor
 ---
 
 This introduces the following updaters:
