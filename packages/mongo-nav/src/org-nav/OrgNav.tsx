@@ -149,6 +149,12 @@ export default function OrgNav({
     }
   }
 
+  const paymentValues: Array<OrgPaymentLabel> = [
+    'SUSPENDED',
+    'LOCKED',
+    'ADMIN_SUSPENDED',
+  ];
+
   return (
     <nav
       className={navContainer}
@@ -171,10 +177,7 @@ export default function OrgNav({
           <ul className={ulContainer}>
             {current?.paymentStatus &&
               paymentVariant &&
-              (admin ||
-                ['SUSPENDED', 'LOCKED', 'ADMIN_SUSPENDED'].includes(
-                  current.paymentStatus,
-                )) && (
+              (admin || paymentValues.includes(current.paymentStatus)) && (
                 <li>
                   <Badge
                     className={css`
