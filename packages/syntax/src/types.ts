@@ -25,6 +25,7 @@ export const SupportedLanguages = {
   Sql: 'sql',
   Yaml: 'yaml',
   Json: 'json',
+  Graphql: 'graphql',
 } as const;
 
 export type SupportedLanguages = typeof SupportedLanguages[keyof typeof SupportedLanguages];
