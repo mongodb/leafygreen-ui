@@ -22,7 +22,7 @@ const baseButtonStyles = css`
   position: relative;
 
   ${facepaint({
-    width: ['90px', '90px', '180px'],
+    width: ['180px', '90px', '90px'],
   })}
 
   &:focus {
@@ -52,7 +52,7 @@ const projectButtonStyles = css`
   height: 28px;
 
   ${facepaint({
-    width: ['106px', '106px', '196px'],
+    width: ['196px', '106px', '106px'],
   })}
 
   &:focus {
