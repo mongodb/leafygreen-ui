@@ -120,7 +120,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
 
   describe('when rendered with default props', () => {
     beforeEach(renderComponent);
-    testForPaymentStatus();
+    testForPaymentStatus(false);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, linkName !== 'admin'),

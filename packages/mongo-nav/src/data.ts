@@ -12,7 +12,7 @@ export const dataFixtures = {
     orgId: '5d729a93',
     orgName: 'Demo Organization',
     planType: 'atlas',
-    paymentStatus: 'ok',
+    paymentStatus: 'OK',
   },
   currentProject: {
     alertsOpen: 1,
