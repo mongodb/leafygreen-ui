@@ -1,4 +1,3 @@
-import {useState, useEffect} from 'react';
 import fp from 'facepaint';
 
 export const breakpoints = {
@@ -12,16 +11,3 @@ export const facepaint = fp([
   `@media only screen and (min-width: ${breakpoints.small + 1}px) and (max-width: ${breakpoints.medium}px)`,
   `@media only screen and (min-width: ${breakpoints.medium + 1}px)`,
 ]);
-
-export function useWindowSize() {
-	const [size, setSize] = useState(window.innerWidth)
-
-	useEffect(() => {
-		const resizeHandler = () => setSize(window.innerWidth)
-		window.addEventListener('resize', resizeHandler)
-
-		return () => window.removeEventListener('resize', resizeHandler)
-	}, [])
-
-	return size;
-}

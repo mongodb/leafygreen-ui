@@ -8,7 +8,8 @@ import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { ProjectSelect } from '../mongo-select/index';
-import {facepaint, breakpoints, useWindowSize} from '../breakpoints'
+import {facepaint, breakpoints} from '../breakpoints';
+import {useViewportSize} from '@leafygreen-ui/hooks';
 import {
   ProjectInterface,
   URLSInterface,
@@ -206,8 +207,8 @@ export default function ProjectNav({
   const [open, setOpen] = React.useState(false);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { projectNav } = urls;
-  const windowSize = useWindowSize();
-  const isMobile = windowSize < breakpoints.small;
+  const { width: viewportWidth } = useViewportSize();
+  const isMobile = viewportWidth < breakpoints.small;
 
   const getProductClassName = (product: Product) =>
     cx(productTextStyle, {

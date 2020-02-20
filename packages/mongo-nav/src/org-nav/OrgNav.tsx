@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { LogoMark } from '@leafygreen-ui/logo';
+import { useViewportSize } from '@leafygreen-ui/hooks';
 import Tooltip from '@leafygreen-ui/tooltip';
 import Badge from '@leafygreen-ui/badge';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import { Menu } from '@leafygreen-ui/menu';
 import { OrgNavLink } from '../helpers/index';
-import {breakpoints, useWindowSize, facepaint} from '../breakpoints'
+import {breakpoints, facepaint} from '../breakpoints'
 import {
   AccountInterface,
   OrganizationInterface,
@@ -120,9 +121,9 @@ export default function OrgNav({
 }: OrgNav) {
   const [open, setOpen] = useState(false);
   const { orgNav } = urls;
-  const windowSize = useWindowSize()
-  const isTablet = windowSize < breakpoints.medium;
-  const isMobile = windowSize < breakpoints.small;
+  const { width: viewportWidth } = useViewportSize();
+  const isTablet = viewportWidth < breakpoints.medium;
+  const isMobile = viewportWidth < breakpoints.small;
 
   let paymentVariant: Colors | undefined;
   let key: Colors;

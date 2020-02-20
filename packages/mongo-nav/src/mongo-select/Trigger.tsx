@@ -4,9 +4,10 @@ import { uiColors } from '@leafygreen-ui/palette';
 import Icon from '@leafygreen-ui/icon';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp } from '@leafygreen-ui/lib';
+import { useViewportSize } from '@leafygreen-ui/hooks';
 import { URLSInterface } from '../types';
 import { InteractionRingWrapper } from '../helpers/index';
-import {facepaint, useWindowSize, breakpoints} from '../breakpoints'
+import {facepaint,  breakpoints} from '../breakpoints'
 
 const triggerDataProp = createDataProp('org-trigger');
 const anchorDataProp = createDataProp('anchor-data-prop');
@@ -20,9 +21,13 @@ const baseButtonStyles = css`
   cursor: pointer;
   background-color: white;
   position: relative;
+  border-radius: 5px 0 0 5px;
+  border: 1px solid ${uiColors.gray.light2};
+  padding: 3px 5px;
 
   ${facepaint({
     width: ['180px', '90px', '90px'],
+    height: ['30px', '36px', '36px'],
   })}
 
   &:focus {
@@ -53,6 +58,7 @@ const projectButtonStyles = css`
 
   ${facepaint({
     width: ['196px', '106px', '106px'],
+    height: ['28px', '36px', '36px'],
   })}
 
   &:focus {
@@ -80,11 +86,8 @@ const selectedStyle = css`
   text-overflow: ellipsis;
 `;
 
-const anchorStyle = css`
+const orgSettingsButtonStyle = css`
   color: ${uiColors.gray.base};
-  padding-left: 6px;
-  padding-right: 6px;
-  height: 30px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -97,6 +100,9 @@ const anchorStyle = css`
 
   ${facepaint({
     marginRight: ['16px', '16px', '20px'],
+    height: ['30px', '36px', '36px'],
+    paddingRight: ['6px', '8px', '8px'],
+    paddingLeft: ['6px', '8px', '8px'],
   })}
 
   &:hover {
@@ -154,8 +160,8 @@ export function OrganizationTrigger({
   ...rest
 }: OrganizationTriggerProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const windowSize = useWindowSize()
-  const isTablet = windowSize < breakpoints.medium;
+  const { width: viewportWidth } = useViewportSize();
+  const isTablet = viewportWidth < breakpoints.medium;
 
   return (
     <>
@@ -180,7 +186,7 @@ export function OrganizationTrigger({
 
       <a
         {...anchorDataProp.prop}
-        className={cx(anchorStyle, { [focusStyle]: showFocus })}
+        className={cx(orgSettingsButtonStyle, { [focusStyle]: showFocus })}
         href={urls.mongoSelect.orgSettings}
         aria-label="settings"
       >
