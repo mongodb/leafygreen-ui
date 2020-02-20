@@ -247,8 +247,6 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
     ...rest
   } = props;
 
-  console.log(active);
-
   const renderIconButton = (Root: React.ElementType<any> = 'button') => (
     <Root
       {...rest}
@@ -289,6 +287,7 @@ IconButton.propTypes = {
   disabled: PropTypes.bool,
   href: PropTypes.string,
   ariaLabel: PropTypes.string.isRequired,
+  active: PropTypes.bool,
 };
 
 export default IconButton;

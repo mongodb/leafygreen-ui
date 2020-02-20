@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import OrgNav from './org-nav/index';
 import ProjectNav from './project-nav/index';
 import Loading from './Loading';
+import { css } from '@leafygreen-ui/emotion';
+import { uiColors } from '@leafygreen-ui/palette';
 import {
   Product,
   URLSInterface,
@@ -26,6 +28,11 @@ const defaultHosts: Required<HostsInterface> = {
 const ErrorCodeMap = {
   401: ErrorCode.NO_AUTHORIZATION,
 };
+
+const navContainerStyle = css`
+  background-color: ${uiColors.white};
+  box-shadow: 0 3px 7px 0 rgba(67, 117, 151, 0.08);
+`;
 
 interface MongoNavInterface {
   /**
@@ -247,7 +254,7 @@ export default function MongoNav({
   } = data;
 
   return (
-    <>
+    <section className={navContainerStyle}>
       <OrgNav
         account={account}
         activeProduct={activeProduct}
@@ -273,6 +280,6 @@ export default function MongoNav({
           hosts={hosts}
         />
       )}
-    </>
+    </section>
   );
 }

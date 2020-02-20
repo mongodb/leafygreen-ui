@@ -4,8 +4,10 @@ import { uiColors } from '@leafygreen-ui/palette';
 import Icon from '@leafygreen-ui/icon';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp } from '@leafygreen-ui/lib';
+import { useViewportSize } from '@leafygreen-ui/hooks';
 import { URLSInterface } from '../types';
 import { InteractionRingWrapper } from '../helpers/index';
+import { facepaint, breakpoints } from '../breakpoints';
 
 const triggerDataProp = createDataProp('org-trigger');
 const anchorDataProp = createDataProp('anchor-data-prop');
@@ -19,6 +21,14 @@ const baseButtonStyles = css`
   cursor: pointer;
   background-color: white;
   position: relative;
+  border-radius: 5px 0 0 5px;
+  border: 1px solid ${uiColors.gray.light2};
+  padding: 3px 5px;
+
+  ${facepaint({
+    width: ['180px', '90px', '90px'],
+    height: ['30px', '36px', '36px'],
+  })}
 
   &:focus {
     outline: none;
@@ -45,6 +55,15 @@ const projectButtonStyles = css`
   padding: 2px;
   width: 174px;
   height: 28px;
+
+  ${facepaint({
+    width: ['196px', '106px', '106px'],
+    height: ['28px', '36px', '36px'],
+  })}
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const orgTriggerContainer = css`
@@ -62,13 +81,13 @@ const selectedStyle = css`
   flex-grow: 1;
   text-align: left;
   font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
-const anchorStyle = css`
+const orgSettingsButtonStyle = css`
   color: ${uiColors.gray.base};
-  padding-left: 6px;
-  padding-right: 6px;
-  height: 30px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -76,9 +95,15 @@ const anchorStyle = css`
   border: 1px solid ${uiColors.gray.light2};
   border-left: 0;
   background-color: white;
-  margin-right: 20px;
   outline: none;
   transition: all 150ms ease-in-out;
+
+  ${facepaint({
+    marginRight: ['16px', '16px', '20px'],
+    height: ['30px', '36px', '36px'],
+    paddingRight: ['6px', '8px', '8px'],
+    paddingLeft: ['6px', '8px', '8px'],
+  })}
 
   &:hover {
     background-color: ${uiColors.gray.light2};
@@ -92,8 +117,12 @@ const orgTriggerBorderRadius = css`
 `;
 
 const projectTriggerWrapper = css`
-  margin-left: 9px;
-  margin-right: 4px;
+  margin-left: 16px;
+  margin-right: 2px;
+
+  ${facepaint({
+    marginLeft: ['16px', '0px', '16px'],
+  })}
 `;
 
 const activeColor = css`
@@ -130,6 +159,8 @@ export function OrganizationTrigger({
   ...rest
 }: OrganizationTriggerProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+  const { width: viewportWidth } = useViewportSize();
+  const isTablet = viewportWidth < breakpoints.medium;
 
   return (
     <>
@@ -145,16 +176,22 @@ export function OrganizationTrigger({
             [activeButtonColor]: open,
           })}
         >
-          <Icon size="small" glyph="Building" />
+          {!isTablet && <Icon size="small" glyph="Building" />}
           <span className={selectedStyle}>{placeholder}</span>
-          <Icon size="small" glyph={open ? 'CaretUp' : 'CaretDown'} />
+          <Icon
+            size="small"
+            className={css`
+              flex-shrink: 0;
+            `}
+            glyph={open ? 'CaretUp' : 'CaretDown'}
+          />
           {children}
         </button>
       </InteractionRingWrapper>
 
       <a
         {...anchorDataProp.prop}
-        className={cx(anchorStyle, { [focusStyle]: showFocus })}
+        className={cx(orgSettingsButtonStyle, { [focusStyle]: showFocus })}
         href={urls.mongoSelect.orgSettings}
         aria-label="settings"
       >
@@ -196,9 +233,20 @@ export function ProjectTrigger({
           [activeButtonColor]: open,
         })}
       >
-        <Icon size="small" glyph="Bell" />
+        <Icon
+          glyph="Bell"
+          className={css`
+            color: ${uiColors.gray.base};
+          `}
+        />
         <span className={selectedStyle}>{placeholder}</span>
-        <Icon size="small" glyph={open ? 'CaretUp' : 'CaretDown'} />
+        <Icon
+          size="small"
+          glyph={open ? 'CaretUp' : 'CaretDown'}
+          className={css`
+            flex-shrink: 0;
+          `}
+        />
         {children}
       </button>
     </InteractionRingWrapper>
