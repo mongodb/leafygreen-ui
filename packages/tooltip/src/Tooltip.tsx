@@ -266,6 +266,11 @@ function Tooltip({
   );
 
   if (trigger) {
+
+    if (!children) {
+      console.error('You must pass children to render this Tooltip')
+    }
+
     if (typeof trigger === 'function') {
       return trigger({
         ...createTriggerProps(triggerEvent),
