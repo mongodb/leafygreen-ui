@@ -121,6 +121,14 @@ export default function OrgNav({
     }
   }
 
+  const showPaymentStatus =
+    current &&
+    current?.paymentStatus &&
+    (admin ||
+      ['supsended', 'locked', 'admin suspended'].includes(
+        current.paymentStatus,
+      ));
+
   return (
     <nav
       className={navContainer}
@@ -141,7 +149,7 @@ export default function OrgNav({
         />
 
         <ul className={ulContainer}>
-          {paymentVariant && current?.paymentStatus && (
+          {paymentVariant && showPaymentStatus && (
             <li>
               <Badge
                 className={css`
@@ -149,7 +157,7 @@ export default function OrgNav({
                 `}
                 variant={paymentVariant}
               >
-                {current.paymentStatus.toUpperCase()}
+                {current?.paymentStatus?.toUpperCase()}
               </Badge>
             </li>
           )}
