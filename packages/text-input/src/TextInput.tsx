@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
@@ -178,13 +178,13 @@ const TextInput = React.forwardRef(
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const [hasFocus, setHasFocus] = useState(false);
     const inputSelectorProp = createDataProp('input-selector');
-    const [generatedId, setId] = useState(
-      id || `text-input-${Math.floor(Math.random() * 10000000)}`,
+    const [generatedId] = useState(
+      `text-input-${Math.floor(Math.random() * 10000000)}`,
     );
-    useEffect(() => setId(id || generatedId), [id]);
+    const internalId = id ?? generatedId;
 
     function getInputColorFromState() {
-      if (state === State.Error && errorMessage) {
+      if (state === State.Error) {
         return uiColors.red.base;
       }
 
@@ -262,7 +262,7 @@ const TextInput = React.forwardRef(
 
     return (
       <div className={cx(textInputStyle, labelStyle, className)}>
-        <label htmlFor={generatedId} className={labelStyle}>
+        <label htmlFor={internalId} className={labelStyle}>
           {label}
         </label>
         <p className={descriptionStyle}>{description}</p>
@@ -279,7 +279,7 @@ const TextInput = React.forwardRef(
             ref={forwardRef}
             onFocus={() => setHasFocus(true)}
             onBlur={() => setHasFocus(false)}
-            id={generatedId}
+            id={internalId}
           />
 
           {state === State.Valid && (
@@ -294,7 +294,7 @@ const TextInput = React.forwardRef(
             />
           )}
 
-          {state === State.Error && errorMessage && (
+          {state === State.Error && (
             <Icon
               glyph="Warning"
               className={cx(
