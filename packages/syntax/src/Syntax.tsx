@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
 import hljs from 'highlight.js/lib/highlight';
+import hljsDefineGraphQL from 'highlightjs-graphql';
 import { Variant, SupportedLanguages, Language } from './types';
 import { injectGlobalStyles } from './globalStyles';
 
@@ -15,10 +16,14 @@ function initializeSyntaxHighlighting() {
   const SupportedLanguagesList = Object.values(SupportedLanguages);
 
   SupportedLanguagesList.forEach(language => {
-    hljs.registerLanguage(
-      language,
-      require(`highlight.js/lib/languages/${language}`),
-    );
+    if (language === 'graphql') {
+      hljsDefineGraphQL(hljs);
+    } else {
+      hljs.registerLanguage(
+        language,
+        require(`highlight.js/lib/languages/${language}`),
+      );
+    }
   });
 
   hljs.configure({
