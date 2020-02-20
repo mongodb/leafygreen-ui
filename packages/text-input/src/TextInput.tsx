@@ -226,6 +226,8 @@ const TextInput = React.forwardRef(
       height: ${description === '' ? '0' : '20'}px;
       font-weight: normal;
       padding-bottom: 8px;
+      margin-top: 0px;
+      margin-bottom: 0px;
     `;
 
     const inputStyle = css`
@@ -250,7 +252,7 @@ const TextInput = React.forwardRef(
     return (
       <label className={cx(textInputStyle, labelStyle, className)}>
         {label}
-        <label className={descriptionStyle}>{description}</label>
+        <p className={descriptionStyle}>{description}</p>
         <div className={inputContainerStyle}>
           <input
             {...inputSelectorProp.prop}
