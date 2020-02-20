@@ -166,7 +166,7 @@ const TextInput = React.forwardRef(
     forwardRef: React.Ref<HTMLInputElement>,
   ) => {
     const isControlled = typeof controlledValue === 'string';
-    const [uncontrolledValue, setUncontrolledValue] = useState('');
+    const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const [hasFocus, setHasFocus] = useState(false);
@@ -197,12 +197,12 @@ const TextInput = React.forwardRef(
     }
 
     function onValueChange(e: React.ChangeEvent<HTMLInputElement>) {
-      if (onChange !== undefined) {
+      if (onChange) {
         onChange(e);
       }
 
       if (!isControlled) {
-        setUncontrolledValue(e.target.value);
+        setValue(e.target.value);
       }
     }
 
