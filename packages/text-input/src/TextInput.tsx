@@ -184,7 +184,7 @@ const TextInput = React.forwardRef(
     useEffect(() => setId(id || generatedId), [id]);
 
     function getInputColorFromState() {
-      if (state === State.Error) {
+      if (state === State.Error && errorMessage) {
         return uiColors.red.base;
       }
 
@@ -295,7 +295,7 @@ const TextInput = React.forwardRef(
             />
           )}
 
-          {state === State.Error && (
+          {state === State.Error && errorMessage && (
             <Icon
               glyph="Warning"
               className={cx(
@@ -326,7 +326,7 @@ const TextInput = React.forwardRef(
             })}
           />
         </div>
-        {state === State.Error && (
+        {state === State.Error && errorMessage && (
           <div className={errorMessageStyle}>
             <label>{errorMessage}</label>
           </div>
