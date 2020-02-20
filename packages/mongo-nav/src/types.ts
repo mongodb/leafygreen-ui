@@ -61,16 +61,16 @@ type ErrorCode = typeof ErrorCode[keyof typeof ErrorCode];
 export { ErrorCode };
 
 const OrgPaymentLabel = {
-  Embargoed: 'embargoed',
-  EmbargoConfirmed: 'embargo confirmed',
-  Ok: 'ok',
-  Warning: 'warning',
-  Suspended: 'suspended',
-  Closing: 'closing',
-  AdminSuspended: 'admin suspended',
-  Dead: 'dead',
-  Locked: 'locked',
-  Closed: 'closed',
+  Embargoed: 'EMBARGOED',
+  EmbargoConfirmed: 'EMBARGO_CONFIRMED',
+  Ok: 'OK',
+  Warning: 'WARNING',
+  Suspended: 'SUSPENDED',
+  Closing: 'CLOSING',
+  AdminSuspended: 'ADMIN_SUSPENDED',
+  Dead: 'DEAD',
+  Locked: 'LOCKED',
+  Closed: 'CLOSED',
 } as const;
 
 type OrgPaymentLabel = typeof OrgPaymentLabel[keyof typeof OrgPaymentLabel];

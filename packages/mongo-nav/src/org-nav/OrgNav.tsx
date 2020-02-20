@@ -12,6 +12,7 @@ import {
   NavItem,
   CurrentOrganizationInterface,
   HostsInterface,
+  OrgPaymentLabel,
 } from '../types';
 
 import { OrgSelect } from '../mongo-select/index';
@@ -77,10 +78,22 @@ export const Colors = {
 export type Colors = typeof Colors[keyof typeof Colors];
 
 const paymentStatusMap: { readonly [K in Colors]: Array<string> } = {
-  [Colors.Lightgray]: ['embargoed', 'embargo confirmed'],
-  [Colors.Green]: ['ok'],
-  [Colors.Yellow]: ['warning', 'suspended', 'closing'],
-  [Colors.Red]: ['dead', 'locked', 'closed'],
+  [Colors.Lightgray]: [
+    OrgPaymentLabel.Embargoed,
+    OrgPaymentLabel.EmbargoConfirmed,
+  ],
+  [Colors.Green]: [OrgPaymentLabel.Ok],
+  [Colors.Yellow]: [
+    OrgPaymentLabel.Warning,
+    OrgPaymentLabel.Suspended,
+    OrgPaymentLabel.Closing,
+  ],
+  [Colors.Red]: [
+    OrgPaymentLabel.Dead,
+    OrgPaymentLabel.AdminSuspended,
+    OrgPaymentLabel.Locked,
+    OrgPaymentLabel.Closed,
+  ],
 };
 
 interface OrgNav {
@@ -141,11 +154,10 @@ export default function OrgNav({
         />
 
         <ul className={ulContainer}>
-          {current &&
-            current.paymentStatus &&
+          {current?.paymentStatus &&
             paymentVariant &&
             (admin ||
-              ['supsended', 'locked', 'admin suspended'].includes(
+              ['SUSPENDED', 'LOCKED', 'ADMIN_SUSPENDED'].includes(
                 current.paymentStatus,
               )) && (
               <li>
