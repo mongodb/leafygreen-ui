@@ -45,8 +45,13 @@ describe('packages/text-input', () => {
     expect(renderedChildren.innerHTML).toContain(props.description);
   });
 
-  test(`check that "optional" text is visible`, () => {
+  test(`"optional" text is present when TextInput is optional and state is None`, () => {
     expect(optionalText).toBeVisible();
+  });
+
+  test(`valid/error icons are not present when state is None`, () => {
+    expect(renderedChildren.innerHTML).not.toContain('Checkmark Icon');
+    expect(renderedChildren.innerHTML).not.toContain('Warning Icon');
   });
 
   test('key presses are reflected in component state and onChange function is called when value changes', () => {
@@ -74,7 +79,8 @@ describe('packages/text-input', () => {
     );
 
     expect(renderedInputElement.value).toBe(validEmail);
-    const checkmarkIcon = getByTitle('Checkmark Icon').parentElement;
+    expect(renderedChildren.innerHTML).not.toContain(optionalText);
+    const checkmarkIcon = getByTitle('Checkmark Icon');
 
     if (!typeIs.element(checkmarkIcon)) {
       throw new Error('Could not find checkmark icon element');
@@ -97,11 +103,42 @@ describe('packages/text-input', () => {
     );
 
     expect(renderedInputElement.value).toBe(invalidEmail);
-    const warningIcon = getByTitle('Warning Icon').parentElement;
+    const warningIcon = getByTitle('Warning Icon');
 
     if (!typeIs.element(warningIcon)) {
       throw new Error('Could not find warning icon element');
     }
     expect(renderedChildren.innerHTML).toContain(error);
+    expect(renderedChildren.innerHTML).not.toContain(optionalText);
+  });
+
+  test('error state still shows when error message is empty', async () => {
+    render(
+      <TextInput
+        label={props.label}
+        description={props.description}
+        state={State.Error}
+        value={invalidEmail}
+        optional={true}
+      />,
+      {
+        container: container,
+      },
+    );
+
+    expect(renderedInputElement.value).toBe(invalidEmail);
+    expect(renderedChildren.innerHTML).not.toContain(optionalText);
+    const warningIcon = getByTitle('Warning Icon');
+
+    if (!typeIs.element(warningIcon)) {
+      throw new Error('Could not find warning icon element');
+    }
+  });
+
+  test(`check that "optional" text is not visible when TextInput is required`, () => {
+    render(<TextInput label={props.label} description={props.description} />, {
+      container: container,
+    });
+    expect(renderedChildren.innerHTML).not.toContain(optionalText);
   });
 });
