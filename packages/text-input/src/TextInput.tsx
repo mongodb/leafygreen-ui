@@ -63,11 +63,6 @@ interface TextInputProps {
   value?: string;
 
   /**
-   * Callback used to set the value of the input field.
-   */
-  setValue?: Function;
-
-  /**
    * className supplied to the TextInput container.
    */
   className?: string;
@@ -152,7 +147,6 @@ const errorMessageStyle = css`
  * @param props.errorMessage The message shown below the input field if the value is invalid.
  * @param props.state The current state of the TextInput. This can be none, valid, or error.
  * @param props.value The current value of the input field. If a value is passed to this prop, component will be controlled by consumer.
- * @param props.setValue Callback used to set the value of the input field.
  * @param props.className className supplied to the TextInput container.
  */
 const TextInput = React.forwardRef(
@@ -167,7 +161,6 @@ const TextInput = React.forwardRef(
       errorMessage,
       state,
       value: controlledValue,
-      setValue: setControlledValue,
       className,
     }: TextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -175,7 +168,6 @@ const TextInput = React.forwardRef(
     const isControlled = typeof controlledValue === 'string';
     const [uncontrolledValue, setUncontrolledValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
-    const setValue = isControlled ? setControlledValue : setUncontrolledValue;
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const [hasFocus, setHasFocus] = useState(false);
     const inputSelectorProp = createDataProp('input-selector');
@@ -209,8 +201,8 @@ const TextInput = React.forwardRef(
         onChange(e);
       }
 
-      if (setValue != undefined) {
-        setValue(e.target.value);
+      if (!isControlled) {
+        setUncontrolledValue(e.target.value);
       }
     }
 
@@ -339,7 +331,6 @@ TextInput.propTypes = {
   errorMessage: PropTypes.string,
   state: PropTypes.oneOf(Object.values(State)),
   value: PropTypes.string,
-  setValue: PropTypes.func,
   className: PropTypes.string,
 };
 

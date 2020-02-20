@@ -54,5 +54,4 @@ not really sure what should go here...
 | `errorMessage` | `string`                 | Text that gives more detail about the requirements for the input.            |         |
 | `state`        | `none`, `valid`, `error` | Text that gives more detail about the requirements for the input.            | `none`  |
 | `value`        | `string`                 | Sets the HTML `value` attribute.                                             | `''`    |
-| `setValue`     | `function`               | Callback used to set the value of the input field.                           |         |
 | `className`    | `string`                 | Adds a className to the class attribute.                                     | `''`    |
