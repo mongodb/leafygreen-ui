@@ -168,14 +168,14 @@ interface UserMenuProps {
    * Object that supplies URL overrides to UserMenu component.
    * Shape: { userMenu:{ cloud: { userPreferences, organizations, invitations, mfa }, university: { videoPreferences }, support: { userPreferences }, account: { homepage } }}
    */
-  urls: URLSInterface;
+  urls?: URLSInterface;
 
   /**
    * Object that supplies host overrides to UserMenu component.
    * Shape: { cloud, realm, charts, account, university, support }
    * Defaults to the production homepages of each product
    */
-  hosts: HostsInterface;
+  hosts?: HostsInterface;
 }
 
 /**
