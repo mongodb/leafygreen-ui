@@ -17,8 +17,10 @@ import {
 import { OrgSelect } from '../mongo-select/index';
 import UserMenu from '../user-menu/index';
 
+export const orgNavHeight = 60;
+
 const navContainer = css`
-  height: 60px;
+  height: ${orgNavHeight}px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -41,16 +43,28 @@ const orgSelectContainer = css`
   margin-right: 20px;
 `;
 
+const disabledOrgSelect = css`
+  cursor: default;
+  pointer-events: none;
+`;
+
 const ulContainer = css`
   list-style: none;
   display: flex;
   align-items: center;
   padding-inline-start: 0px;
+  margin: 0; // browser default overrides
 `;
 
 const linkText = css`
   text-decoration: none;
   color: ${uiColors.gray.dark3};
+
+  &:focus,
+  &:hover {
+    text-decoration: none;
+    color: ${uiColors.gray.dark3};
+  }
 `;
 
 const activeLink = css`
@@ -109,6 +123,7 @@ export default function OrgNav({
   hosts,
 }: OrgNav) {
   const { orgNav } = urls;
+  const disabled = activeNav === 'userSettings';
 
   let paymentVariant: Colors | undefined;
   let key: Colors;
@@ -131,90 +146,98 @@ export default function OrgNav({
         <LogoMark height={30} />
 
         <OrgSelect
-          className={orgSelectContainer}
+          className={cx(orgSelectContainer, { [disabledOrgSelect]: disabled })}
           data={data}
           current={current}
           constructOrganizationURL={constructOrganizationURL}
           urls={urls}
           onChange={onOrganizationChange}
           isActive={activeNav === 'orgSettings'}
+          disabled={disabled}
         />
 
-        <ul className={ulContainer}>
-          {paymentVariant && current?.paymentStatus && (
-            <li>
-              <Badge
-                className={css`
-                  margin-right: 25px;
-                `}
-                variant={paymentVariant}
-              >
-                {current.paymentStatus.toUpperCase()}
-              </Badge>
-            </li>
-          )}
-          {current && (
-            <>
-              <li role="none">
-                <Tooltip
-                  align="bottom"
-                  justify="middle"
-                  variant="dark"
-                  trigger={
-                    <a
-                      href={orgNav.accessManager}
-                      className={cx(linkText, {
-                        [activeLink]: activeNav === 'accessManager',
-                      })}
-                    >
-                      Access Manager
-                    </a>
-                  }
+        {!disabled && (
+          <ul className={ulContainer}>
+            {paymentVariant && current?.paymentStatus && (
+              <li>
+                <Badge
+                  className={css`
+                    margin-right: 25px;
+                    text-transform: uppercase;
+                  `}
+                  variant={paymentVariant}
+                  data-testid="org-payment-status"
                 >
-                  Organization Access Manager
-                </Tooltip>
+                  {current.paymentStatus}
+                </Badge>
               </li>
-              <li role="none" className={supportContainer}>
-                <Tooltip
-                  align="bottom"
-                  justify="middle"
-                  variant="dark"
-                  trigger={
-                    <a
-                      href={orgNav.support}
-                      className={cx(linkText, {
-                        [activeLink]: activeNav === 'support',
-                      })}
-                    >
-                      Support
-                    </a>
-                  }
-                >
-                  Organization Support
-                </Tooltip>
-              </li>
-              <li role="none">
-                <Tooltip
-                  align="bottom"
-                  justify="middle"
-                  variant="dark"
-                  trigger={
-                    <a
-                      href={orgNav.billing}
-                      className={cx(linkText, {
-                        [activeLink]: activeNav === 'billing',
-                      })}
-                    >
-                      Billing
-                    </a>
-                  }
-                >
-                  Billing
-                </Tooltip>
-              </li>
-            </>
-          )}
-        </ul>
+            )}
+            {current && (
+              <>
+                <li role="none">
+                  <Tooltip
+                    align="bottom"
+                    justify="middle"
+                    variant="dark"
+                    trigger={
+                      <a
+                        href={orgNav.accessManager}
+                        className={cx(linkText, {
+                          [activeLink]: activeNav === 'accessManager',
+                        })}
+                        data-testid="org-access-manager"
+                      >
+                        Access Manager
+                      </a>
+                    }
+                  >
+                    Organization Access Manager
+                  </Tooltip>
+                </li>
+                <li role="none" className={supportContainer}>
+                  <Tooltip
+                    align="bottom"
+                    justify="middle"
+                    variant="dark"
+                    trigger={
+                      <a
+                        href={orgNav.support}
+                        className={cx(linkText, {
+                          [activeLink]: activeNav === 'support',
+                        })}
+                        data-testid="org-support"
+                      >
+                        Support
+                      </a>
+                    }
+                  >
+                    Organization Support
+                  </Tooltip>
+                </li>
+                <li role="none">
+                  <Tooltip
+                    align="bottom"
+                    justify="middle"
+                    variant="dark"
+                    trigger={
+                      <a
+                        href={orgNav.billing}
+                        className={cx(linkText, {
+                          [activeLink]: activeNav === 'billing',
+                        })}
+                        data-testid="org-billing"
+                      >
+                        Billing
+                      </a>
+                    }
+                  >
+                    Billing
+                  </Tooltip>
+                </li>
+              </>
+            )}
+          </ul>
+        )}
       </div>
       <div>
         <Tooltip
@@ -227,6 +250,7 @@ export default function OrgNav({
               className={cx(rightSideLinkStyle, linkText, {
                 [activeLink]: activeNav === 'allClusters',
               })}
+              data-testid="all-clusters-link"
             >
               All Clusters
             </a>
@@ -241,6 +265,7 @@ export default function OrgNav({
             className={cx(rightSideLinkStyle, linkText, {
               [activeLink]: activeNav === 'admin',
             })}
+            data-testid="admin-link"
           >
             Admin
           </a>

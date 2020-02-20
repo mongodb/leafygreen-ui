@@ -1,6 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 
-export const SIDE_OFFSET = 15;
+export const sideNavItemSidePadding = 16;
+export const sideNavWidth = 200;
 
 export const ulStyleOverrides = css`
   margin-block-start: 0px;
