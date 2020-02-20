@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
@@ -15,6 +15,11 @@ export const State = {
 export type State = typeof State[keyof typeof State];
 
 interface TextInputProps {
+  /**
+   * id associated with the TextInput component.
+   */
+  id?: string;
+
   /**
    * Text shown in bold above the input element.
    */
@@ -138,6 +143,7 @@ const errorMessageStyle = css`
  * ```
 <TextInput label='Input Label' onChange={() => execute when value of input field changes}/>
 ```
+ * @param props.id id associated with the TextInput component.
  * @param props.label Text shown in bold above the input element.
  * @param props.description Text that gives more detail about the requirements for the input.
  * @param props.optional Whether or not the field is optional.
@@ -152,6 +158,7 @@ const errorMessageStyle = css`
 const TextInput = React.forwardRef(
   (
     {
+      id,
       label,
       description,
       optional = false,
@@ -171,6 +178,10 @@ const TextInput = React.forwardRef(
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const [hasFocus, setHasFocus] = useState(false);
     const inputSelectorProp = createDataProp('input-selector');
+    const [generatedId, setId] = useState(
+      id || `text-input-${Math.floor(Math.random() * 10000000)}`,
+    );
+    useEffect(() => setId(id || generatedId), [id]);
 
     function getInputColorFromState() {
       if (state === State.Error) {
@@ -250,7 +261,10 @@ const TextInput = React.forwardRef(
     `;
 
     return (
-      <label className={cx(textInputStyle, labelStyle, className)}>
+      <label
+        htmlFor={generatedId}
+        className={cx(textInputStyle, labelStyle, className)}
+      >
         {label}
         <p className={descriptionStyle}>{description}</p>
         <div className={inputContainerStyle}>
@@ -266,6 +280,7 @@ const TextInput = React.forwardRef(
             ref={forwardRef}
             onFocus={() => setHasFocus(true)}
             onBlur={() => setHasFocus(false)}
+            id={generatedId}
           />
 
           {state === State.Valid && (
@@ -324,6 +339,7 @@ const TextInput = React.forwardRef(
 TextInput.displayName = 'TextInput';
 
 TextInput.propTypes = {
+  id: PropTypes.string,
   label: PropTypes.string,
   description: PropTypes.string,
   optional: PropTypes.bool,

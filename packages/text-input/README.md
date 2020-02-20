@@ -45,6 +45,7 @@ not really sure what should go here...
 
 | Prop           | Type                     | Description                                                                  | Default |
 | -------------- | ------------------------ | ---------------------------------------------------------------------------- | ------- |
+| `id`           | `string`                 | id associated with the TextInput component.                                  |         |
 | `label`        | `string`                 | Text shown in bold above the input element.                                  |         |
 | `description`  | `string`                 | Text that gives more detail about the requirements for the input.            |         |
 | `optional`     | `boolean`                | Marks the input as optional                                                  | `false` |
