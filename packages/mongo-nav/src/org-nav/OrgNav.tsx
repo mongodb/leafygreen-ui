@@ -150,9 +150,9 @@ export default function OrgNav({
   }
 
   const paymentValues: Array<OrgPaymentLabel> = [
-    'SUSPENDED',
-    'LOCKED',
-    'ADMIN_SUSPENDED',
+    OrgPaymentLabel.Suspended,
+    OrgPaymentLabel.Locked,
+    OrgPaymentLabel.AdminSuspended,
   ];
 
   return (
