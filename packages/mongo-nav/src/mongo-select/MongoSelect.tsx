@@ -72,6 +72,7 @@ interface BaseMongoSelectProps {
   urls: Required<URLSInterface>;
   onChange: React.ChangeEventHandler;
   isActive?: boolean;
+  disabled?: boolean;
 }
 
 interface ProjectMongoSelectProps extends BaseMongoSelectProps {
@@ -98,6 +99,7 @@ function OrgSelect({
   className,
   urls,
   isActive,
+  disabled,
   onChange,
   onClick,
   constructOrganizationURL,
@@ -107,6 +109,7 @@ function OrgSelect({
 
     return (
       <MenuItem
+        data-testid="org-option"
         key={orgId}
         className={menuItemContainerStyle}
         onClick={onClick}
@@ -128,6 +131,7 @@ function OrgSelect({
           className={className}
           urls={urls}
           isActive={isActive}
+          disabled={disabled}
         />
       }
       className={menuContainerStyle}
@@ -136,6 +140,7 @@ function OrgSelect({
     >
       <FocusableMenuItem>
         <Input
+          data-testid="org-filter-input"
           onChange={onChange}
           onKeyDown={onKeyDown}
           variant="organization"
@@ -180,6 +185,7 @@ function ProjectSelect({
 
     return (
       <MenuItem
+        data-testid="project-option"
         key={projectId}
         className={cx(menuItemContainerStyle, nameStyle)}
         onClick={onClick}
@@ -203,7 +209,12 @@ function ProjectSelect({
       spacing={0}
     >
       <FocusableMenuItem>
-        <Input onChange={onChange} onKeyDown={onKeyDown} variant="project" />
+        <Input
+          data-testid="project-filter-input"
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          variant="project"
+        />
       </FocusableMenuItem>
 
       <>{data?.map(datum => renderProjectOption(datum))}</>
