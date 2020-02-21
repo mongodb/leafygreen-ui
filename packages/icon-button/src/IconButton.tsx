@@ -15,7 +15,7 @@ export { Variant };
 
 const Size = {
   Default: 'default',
-  Larger: 'large',
+  Large: 'large',
   XLarge: 'xlarge',
 } as const;
 
