@@ -17,7 +17,7 @@ describe('packages/Button', () => {
     </Button>,
   );
 
-  const renderedButton = renderedComponent.container.firstChild;
+  const renderedButton = renderedComponent.container.firstChild
 
   if (!typeIs.element(renderedButton)) {
     throw new Error('Button component failed to render');
