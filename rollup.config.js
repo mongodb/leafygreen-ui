@@ -62,12 +62,9 @@ function generateConfig(target) {
 
   const typescriptPlugin = typescript({
     tsconfig: 'tsconfig.json',
-
     tsconfigOverride: {
       module: target === 'esm' ? 'esnext' : 'commonjs',
     },
-
-    verbosity: 2,
   });
 
   const urlLoaderPlugin = urlPlugin({
@@ -80,6 +77,11 @@ function generateConfig(target) {
     output: {
       file: `dist/index.${target}.js`,
       format: target === 'esm' ? 'esm' : 'cjs',
+
+      // Rollup warns about mixing named and default exports when building for CJS.
+      // Explicitly setting exports to 'named' for those builds disables the warning,
+      // though we might want to address this in the future by changing how we export.
+      exports: target === 'node' ? 'named' : 'auto',
       sourcemap: true,
     },
     external,
