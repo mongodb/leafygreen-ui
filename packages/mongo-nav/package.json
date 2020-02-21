@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/mongo-nav",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "LeafyGreen UI Kit Mongo Nav",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
@@ -13,7 +13,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^4.2.0",
+    "@leafygreen-ui/lib": "^4.3.0",
     "@leafygreen-ui/palette": "^2.0.0",
     "@leafygreen-ui/logo": "^2.0.0",
     "@leafygreen-ui/menu": "^6.0.0",
