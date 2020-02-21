@@ -119,24 +119,66 @@ const inputContainerStyle = css`
   z-index: 0;
 `;
 
+const inputStyle = css`
+  width: 400px;
+  height: 36px;
+  border-radius: 4px;
+  padding-left: 12px;
+  font-size: 14px;
+  font-weight: normal;
+  background-color: ${uiColors.white};
+  border: 1px solid;
+  z-index: 1;
+
+  &:placeholder {
+    color: ${uiColors.gray.base};
+  }
+
+  &:focus {
+    outline: none;
+    z-index: 2;
+
+    & ~ ${iconSelectorProp.selector} {
+      z-index: 2;
+    }
+  }
+
+  &:disabled {
+    background-color: ${uiColors.gray.light2};
+  }
+`;
+
+const interactionRingFocusStyle = css`
+  ${inputSelectorProp.selector}:focus ~ & {
+    background-color: #9dd0e7;
+    transform: scale(1);
+    z-index: 1;
+  }
+`;
+
+const interactionRingHoverStyle = css`
+  ${inputSelectorProp.selector}:hover ~ & {
+    transform: scale(1);
+  }
+`;
+
 const inputIconStyle = css`
   position: absolute;
+  display: flex;
+  align-items: center;
   right: 12px;
   z-index: 1;
 `;
 
 const errorIconStyle = css`
-  ${inputIconStyle};
   color: ${uiColors.red.base};
 `;
 
 const validIconStyle = css`
-  ${inputIconStyle};
   color: ${uiColors.green.base};
 `;
 
 const optionalStyle = css`
-  ${inputIconStyle};
   color: ${uiColors.gray.dark1};
   font-size: 12px;
   font-style: italic;
@@ -233,49 +275,6 @@ const TextInput = React.forwardRef(
       }
     }
 
-    const interactionRingFocusStyle = css`
-      ${inputSelectorProp.selector}:focus ~ & {
-        background-color: #9dd0e7;
-        transform: scale(1);
-        z-index: 1;
-      }
-    `;
-
-    const interactionRingHoverStyle = css`
-      ${inputSelectorProp.selector}:hover ~ & {
-        transform: scale(1);
-      }
-    `;
-
-    const inputStyle = css`
-      width: 400px;
-      height: 36px;
-      border-radius: 4px;
-      padding-left: 12px;
-      font-size: 14px;
-      font-weight: normal;
-      background-color: ${uiColors.white};
-      border: 1px solid;
-      z-index: 1;
-
-      &:placeholder {
-        color: ${uiColors.gray.base};
-      }
-
-      &:focus {
-        outline: none;
-        z-index: 2;
-
-        & ~ ${iconSelectorProp.selector} {
-          z-index: 2;
-        }
-      }
-
-      &:disabled {
-        background-color: ${uiColors.gray.light2};
-      }
-    `;
-
     return (
       <div className={cx(textInputStyle, labelStyle, className)}>
         <label htmlFor={id} className={labelStyle}>
@@ -296,29 +295,21 @@ const TextInput = React.forwardRef(
             ref={forwardRef}
             id={id}
           />
+          <div {...iconSelectorProp.prop} className={inputIconStyle}>
+            {state === State.Valid && (
+              <Icon glyph="Checkmark" className={validIconStyle} />
+            )}
 
-          {state === State.Valid && (
-            <Icon
-              {...iconSelectorProp.prop}
-              glyph="Checkmark"
-              className={validIconStyle}
-            />
-          )}
+            {state === State.Error && (
+              <Icon glyph="Warning" className={errorIconStyle} />
+            )}
 
-          {state === State.Error && (
-            <Icon
-              {...iconSelectorProp.prop}
-              glyph="Warning"
-              className={errorIconStyle}
-            />
-          )}
-
-          {state === State.None && optional && (
-            <div {...iconSelectorProp.prop} className={optionalStyle}>
-              <p>Optional</p>
-            </div>
-          )}
-
+            {state === State.None && optional && (
+              <div className={optionalStyle}>
+                <p>Optional</p>
+              </div>
+            )}
+          </div>
           <div
             className={cx(interactionRing, interactionRingHoverStyle, {
               [interactionRingFocusStyle]: showFocus,
