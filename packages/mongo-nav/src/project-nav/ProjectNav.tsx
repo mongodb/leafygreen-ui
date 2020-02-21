@@ -19,6 +19,7 @@ import {
 } from '../types';
 
 const productIconProp = createDataProp('charts-data-prop');
+export const projectNavHeight = 45;
 
 const navContainerStyle = css`
   display: flex;
@@ -26,7 +27,8 @@ const navContainerStyle = css`
   width: 100%;
   padding-left: 15px;
   padding-right: 15px;
-  height: 45px;
+  height: ${projectNavHeight}px;
+  box-shadow: 0 3px 7px 0 rgba(67, 117, 151, 0.08);
   overflow: hidden;
   box-sizing: border-box;
 `;
@@ -328,7 +330,7 @@ export default function ProjectNav({
           <Tooltip
             align="bottom"
             variant="dark"
-            justify="end"
+            justify="middle"
             trigger={
               <IconButton
                 ariaLabel="Project Activity Feed"

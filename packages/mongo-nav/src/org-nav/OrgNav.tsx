@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { LogoMark } from '@leafygreen-ui/logo';
 import { useViewportSize } from '@leafygreen-ui/hooks';
@@ -18,13 +18,16 @@ import {
   NavItem,
   CurrentOrganizationInterface,
   HostsInterface,
+  OrgPaymentLabel,
 } from '../types';
 
 import { OrgSelect } from '../mongo-select/index';
 import UserMenu from '../user-menu/index';
 
+export const orgNavHeight = 60;
+
 const navContainer = css`
-  height: 60px;
+  height: ${orgNavHeight}px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -43,11 +46,22 @@ const leftSideContainer = css`
   align-items: center;
 `;
 
+const orgSelectContainer = css`
+  margin-left: 20px;
+  margin-right: 20px;
+`;
+
+const disabledOrgSelect = css`
+  cursor: default;
+  pointer-events: none;
+`;
+
 const ulContainer = css`
   list-style: none;
   display: flex;
   align-items: center;
   padding-inline-start: 0px;
+  margin: 0; // browser default overrides
 `;
 
 const supportContainer = css`
@@ -86,10 +100,22 @@ export const Colors = {
 export type Colors = typeof Colors[keyof typeof Colors];
 
 const paymentStatusMap: { readonly [K in Colors]: Array<string> } = {
-  [Colors.Lightgray]: ['embargoed', 'embargo confirmed'],
-  [Colors.Green]: ['ok'],
-  [Colors.Yellow]: ['warning', 'suspended', 'closing'],
-  [Colors.Red]: ['dead', 'locked', 'closed'],
+  [Colors.Lightgray]: [
+    OrgPaymentLabel.Embargoed,
+    OrgPaymentLabel.EmbargoConfirmed,
+  ],
+  [Colors.Green]: [OrgPaymentLabel.Ok],
+  [Colors.Yellow]: [
+    OrgPaymentLabel.Warning,
+    OrgPaymentLabel.Suspended,
+    OrgPaymentLabel.Closing,
+  ],
+  [Colors.Red]: [
+    OrgPaymentLabel.Dead,
+    OrgPaymentLabel.AdminSuspended,
+    OrgPaymentLabel.Locked,
+    OrgPaymentLabel.Closed,
+  ],
 };
 
 interface OrgNav {
@@ -124,6 +150,7 @@ export default function OrgNav({
   const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
   const isMobile = viewportWidth < breakpoints.small;
+  const disabled = activeNav === 'userSettings';
 
   let paymentVariant: Colors | undefined;
   let key: Colors;
@@ -135,6 +162,12 @@ export default function OrgNav({
       paymentVariant = key;
     }
   }
+
+  const paymentValues: Array<OrgPaymentLabel> = [
+    OrgPaymentLabel.Suspended,
+    OrgPaymentLabel.Locked,
+    OrgPaymentLabel.AdminSuspended,
+  ];
 
   return (
     <nav
@@ -157,93 +190,104 @@ export default function OrgNav({
         </Tooltip>
 
         <OrgSelect
+          className={cx(orgSelectContainer, { [disabledOrgSelect]: disabled })}
           data={data}
           current={current}
           constructOrganizationURL={constructOrganizationURL}
           urls={urls}
           onChange={onOrganizationChange}
           isActive={activeNav === 'orgSettings'}
+          disabled={disabled}
         />
+        {!disabled && (
+          <ul className={ulContainer}>
+            {!isTablet &&
+              current?.paymentStatus &&
+              paymentVariant &&
+              (admin || paymentValues.includes(current.paymentStatus)) && (
+                <li>
+                  <Badge
+                    className={css`
+                      margin-right: 25px;
+                    `}
+                    variant={paymentVariant}
+                    data-testid="org-payment-status"
+                  >
+                    {current.paymentStatus.split('_').join()}
+                  </Badge>
+                </li>
+              )}
 
-        <ul className={ulContainer}>
-          {!isTablet && paymentVariant && current?.paymentStatus && (
-            <li>
-              <Badge
-                className={css`
-                  margin-right: 25px;
-                `}
-                variant={paymentVariant}
-              >
-                {current.paymentStatus.toUpperCase()}
-              </Badge>
-            </li>
-          )}
-          {!isMobile && current && (
-            <>
-              <li
-                role="none"
-                className={css`
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                `}
-              >
-                <OrgNavLink
-                  href={orgNav.accessManager}
-                  isActive={activeNav === 'accessManager'}
+            {!isMobile && current && (
+              <>
+                <li
+                  role="none"
+                  className={css`
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  `}
                 >
-                  Access Manager
-                </OrgNavLink>
+                  <OrgNavLink
+                    href={orgNav.accessManager}
+                    isActive={activeNav === 'accessManager'}
+                    data-testid="org-access-manager"
+                  >
+                    Access Manager
+                  </OrgNavLink>
 
-                <Menu
-                  open={open}
-                  setOpen={setOpen}
-                  trigger={
-                    <IconButton ariaLabel="Dropdown" active={open}>
-                      <Icon glyph={open ? 'CaretUp' : 'CaretDown'} />
-                    </IconButton>
-                  }
-                  className={accessManagerMenuContainer}
-                >
-                  <p className={accessManagerMenuItem}>
-                    <strong>Organization Access:</strong> {current.orgName}
-                  </p>
+                  <Menu
+                    open={open}
+                    setOpen={setOpen}
+                    trigger={
+                      <IconButton ariaLabel="Dropdown" active={open}>
+                        <Icon glyph={open ? 'CaretUp' : 'CaretDown'} />
+                      </IconButton>
+                    }
+                    className={accessManagerMenuContainer}
+                  >
+                    <p className={accessManagerMenuItem}>
+                      <strong>Organization Access:</strong> {current.orgName}
+                    </p>
 
-                  <p className={accessManagerMenuItem}>
-                    <strong>Project Access:</strong>
-                    {currentProjectName ?? 'None'}
-                  </p>
-                </Menu>
-              </li>
+                    <p className={accessManagerMenuItem}>
+                      <strong>Project Access:</strong>
+                      {currentProjectName ?? 'None'}
+                    </p>
+                  </Menu>
+                </li>
 
-              <li role="none" className={supportContainer}>
-                <OrgNavLink
-                  href={orgNav.support}
-                  isActive={activeNav === 'support'}
-                >
-                  Support
-                </OrgNavLink>
-              </li>
+                <li role="none" className={supportContainer}>
+                  <OrgNavLink
+                    href={orgNav.support}
+                    isActive={activeNav === 'support'}
+                    data-testid="org-support"
+                  >
+                    Support
+                  </OrgNavLink>
+                </li>
 
-              <li role="none">
-                <OrgNavLink
-                  href={orgNav.billing}
-                  isActive={activeNav === 'billing'}
-                >
-                  Billing
-                </OrgNavLink>
-              </li>
-            </>
-          )}
-        </ul>
+                <li role="none">
+                  <OrgNavLink
+                    href={orgNav.billing}
+                    isActive={activeNav === 'billing'}
+                    data-testid="org-billing"
+                  >
+                    Billing
+                  </OrgNavLink>
+                </li>
+              </>
+            )}
+          </ul>
+        )}
       </div>
-
       <div>
         {!isMobile && (
           <OrgNavLink
             href={orgNav.allClusters}
             isActive={activeNav === 'allClusters'}
             className={rightLinkMargin}
+            data-testid="all-clusters-link"
           >
             All Clusters
           </OrgNavLink>
@@ -254,6 +298,7 @@ export default function OrgNav({
             href={orgNav.admin}
             isActive={activeNav === 'admin'}
             className={rightLinkMargin}
+            data-testid="admin-link"
           >
             Admin
           </OrgNavLink>

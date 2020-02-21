@@ -10,7 +10,7 @@ import {
   createDataProp,
 } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { SIDE_OFFSET } from './styles';
+import { sideNavItemSidePadding } from './styles';
 
 const sideNavItemContainer = createDataProp('side-nav-item-container');
 
@@ -21,7 +21,7 @@ const defaultStyle = css`
   position: relative;
   width: 100%;
   margin: unset;
-  padding: 8px ${SIDE_OFFSET}px 8px ${SIDE_OFFSET}px;
+  padding: 8px ${sideNavItemSidePadding}px 8px ${sideNavItemSidePadding}px;
   min-height: 0;
   display: flex;
   flex-direction: column;

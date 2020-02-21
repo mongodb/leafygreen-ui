@@ -86,6 +86,10 @@ const selectedStyle = css`
   text-overflow: ellipsis;
 `;
 
+const disabledStyle = css`
+  color: ${uiColors.gray.light1};
+`;
+
 const orgSettingsButtonStyle = css`
   color: ${uiColors.gray.base};
   display: inline-flex;
@@ -148,6 +152,7 @@ interface OrganizationTriggerProps {
   urls: Required<URLSInterface>;
   isActive?: boolean;
   open?: boolean;
+  disabled?: boolean;
 }
 
 export function OrganizationTrigger({
@@ -156,11 +161,14 @@ export function OrganizationTrigger({
   urls,
   isActive = false,
   open = false,
+  disabled = false,
   ...rest
 }: OrganizationTriggerProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
+
+  const orgTriggerPlaceholder = disabled ? 'All Organizations' : placeholder;
 
   return (
     <>
@@ -176,32 +184,46 @@ export function OrganizationTrigger({
             [activeButtonColor]: open,
           })}
         >
-          {!isTablet && <Icon size="small" glyph="Building" />}
-          <span className={selectedStyle}>{placeholder}</span>
+          {!isTablet && (
+            <Icon
+              size="small"
+              glyph="Building"
+              className={cx({ [disabledStyle]: disabled })}
+            />
+          )}
+          <span className={cx(selectedStyle, { [disabledStyle]: disabled })}>
+            {orgTriggerPlaceholder}
+          </span>
           <Icon
             size="small"
-            className={css`
-              flex-shrink: 0;
-            `}
             glyph={open ? 'CaretUp' : 'CaretDown'}
+            className={cx(
+              css`
+                flex-shrink: 0;
+              `,
+              { [disabledStyle]: disabled },
+            )}
           />
           {children}
         </button>
       </InteractionRingWrapper>
 
-      <a
-        {...anchorDataProp.prop}
-        className={cx(orgSettingsButtonStyle, { [focusStyle]: showFocus })}
-        href={urls.mongoSelect.orgSettings}
-        aria-label="settings"
-      >
-        <Icon
-          glyph="Settings"
-          className={cx({
-            [activeColor]: isActive,
-          })}
-        />
-      </a>
+      {!disabled && (
+        <a
+          {...anchorDataProp.prop}
+          className={cx(orgSettingsButtonStyle, { [focusStyle]: showFocus })}
+          href={urls.mongoSelect.orgSettings}
+          aria-label="settings"
+          data-testid="org-trigger-settings"
+        >
+          <Icon
+            glyph="Settings"
+            className={cx({
+              [activeColor]: isActive,
+            })}
+          />
+        </a>
+      )}
     </>
   );
 }
@@ -229,6 +251,7 @@ export function ProjectTrigger({
       <button
         {...rest}
         {...projectTriggerDataProp.prop}
+        data-testid="project-select-trigger"
         className={cx(baseButtonStyles, projectButtonStyles, {
           [activeButtonColor]: open,
         })}
