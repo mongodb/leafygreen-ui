@@ -99,6 +99,16 @@ const labelStyle = css`
   padding-bottom: 8px;
 `;
 
+const descriptionStyle = css`
+  color: ${uiColors.gray.dark1};
+  font-size: 14px;
+  height: 20px;
+  font-weight: normal;
+  padding-bottom: 8px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+`;
+
 const inputContainerStyle = css`
   position: relative;
   display: flex;
@@ -135,6 +145,31 @@ const errorMessageStyle = css`
   font-weight: normal;
 `;
 
+function getStatefulInputStyles(state: State, optional: boolean) {
+  switch (state) {
+    case State.Valid: {
+      return css`
+        padding-right: 30px;
+        border-color: ${uiColors.green.base};
+      `;
+    }
+
+    case State.Error: {
+      return css`
+        padding-right: 30px;
+        border-color: ${uiColors.red.base};
+      `;
+    }
+
+    default: {
+      return css`
+        padding-right: ${optional ? 60 : 12}px;
+        border-color: ${uiColors.gray.light1};
+      `;
+    }
+  }
+}
+
 /**
  * # TextInput
  *
@@ -166,9 +201,10 @@ const TextInput = React.forwardRef(
       onChange,
       placeholder,
       errorMessage,
-      state,
+      state = State.None,
       value: controlledValue,
       className,
+      ...rest
     }: TextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
   ) => {
@@ -182,30 +218,6 @@ const TextInput = React.forwardRef(
       `text-input-${Math.floor(Math.random() * 10000000)}`,
     );
     const id = propsId ?? generatedId;
-
-    function getInputColorFromState() {
-      if (state === State.Error) {
-        return uiColors.red.base;
-      }
-
-      if (state === State.Valid) {
-        return uiColors.green.base;
-      }
-
-      return '#CCC';
-    }
-
-    function getInputPaddingFromState() {
-      if (state === State.Valid || state === State.Error) {
-        return '30px';
-      }
-
-      if (optional) {
-        return '60px';
-      }
-
-      return '12px';
-    }
 
     function onValueChange(e: React.ChangeEvent<HTMLInputElement>) {
       if (onChange) {
@@ -231,16 +243,6 @@ const TextInput = React.forwardRef(
       }
     `;
 
-    const descriptionStyle = css`
-      color: ${uiColors.gray.dark1};
-      font-size: 14px;
-      height: ${description === '' ? '0' : '20'}px;
-      font-weight: normal;
-      padding-bottom: 8px;
-      margin-top: 0px;
-      margin-bottom: 0px;
-    `;
-
     const inputStyle = css`
       width: 400px;
       height: 36px;
@@ -249,14 +251,16 @@ const TextInput = React.forwardRef(
       font-size: 14px;
       font-weight: normal;
       z-index: ${hasFocus ? 2 : 1};
-      background-color: ${disabled ? uiColors.gray.light2 : '#FFFFFF'};
-      padding-right: ${getInputPaddingFromState()};
-      border: 1px solid ${getInputColorFromState()};
+      background-color: ${uiColors.white};
+      border: 1px solid;
       &:placeholder {
         color: ${uiColors.gray.base};
       }
       &:focus {
         outline: none;
+      }
+      &:disabled {
+        background-color: ${uiColors.gray.light2};
       }
     `;
 
@@ -265,11 +269,12 @@ const TextInput = React.forwardRef(
         <label htmlFor={id} className={labelStyle}>
           {label}
         </label>
-        <p className={descriptionStyle}>{description}</p>
+        {description && <p className={descriptionStyle}>{description}</p>}
         <div className={inputContainerStyle}>
           <input
             {...inputSelectorProp.prop}
-            className={inputStyle}
+            {...rest}
+            className={cx(inputStyle, getStatefulInputStyles(state, optional))}
             type="text"
             value={value}
             required={!optional}
