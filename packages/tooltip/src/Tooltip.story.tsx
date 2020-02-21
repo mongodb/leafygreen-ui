@@ -43,8 +43,8 @@ storiesOf('Tooltip', module)
     <Tooltip
       align={select('Align', Object.values(Align), 'top')}
       justify={select('justify', Object.values(Justify), 'start')}
-      trigger={({children, ...rest}: any) => {
-        return (<button {...rest}>trigger {children}</button>);
+      trigger={({ children, ...rest }: any) => {
+        return <button {...rest}>trigger {children}</button>;
       }}
       triggerEvent={select(
         'triggerEvent',

@@ -266,7 +266,6 @@ function Tooltip({
   );
 
   if (trigger) {
-
     if (typeof trigger === 'function') {
       return trigger({
         ...createTriggerProps(triggerEvent),
