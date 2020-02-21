@@ -266,12 +266,11 @@ function Tooltip({
   );
 
   if (trigger) {
-
     console.log(typeof trigger);
     // console.error('You must invoke the function passed to render this tooltip');
 
     if (typeof trigger === 'function') {
-      console.log('function trigger')
+      console.log('function trigger');
       return trigger({
         ...createTriggerProps(triggerEvent),
         'aria-describedby': tooltipId,

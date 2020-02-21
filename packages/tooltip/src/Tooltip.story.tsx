@@ -17,7 +17,7 @@ class Button extends React.Component {
 }
 
 function triggerTest() {
-  return (<button>trigger</button>);
+  return <button>trigger</button>;
 }
 
 function ControlledTooltip() {
