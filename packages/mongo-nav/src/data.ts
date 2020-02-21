@@ -1,6 +1,6 @@
-import { DataInterface } from './types';
+import { DataInterface, URLSInterface, HostsInterface } from './types';
 
-export default {
+export const dataFixtures = {
   account: {
     email: 'dev+only+mode@example.com',
     firstName: 'DevMode',
@@ -12,7 +12,7 @@ export default {
     orgId: '5d729a93',
     orgName: 'Demo Organization',
     planType: 'atlas',
-    paymentStatus: 'ok',
+    paymentStatus: 'OK',
   },
   currentProject: {
     alertsOpen: 1,
@@ -49,3 +49,60 @@ export default {
     },
   ],
 } as DataInterface;
+
+export const urlDefaults: Required<URLSInterface> = {
+  userMenu: {
+    cloud: {
+      userPreferences: `https://cloud.mongodb.com/v2#/preferences/personalization`,
+      organizations: `https://cloud.mongodb.com/v2#/preferences/organizations`,
+      invitations: `https://cloud.mongodb.com/v2#/preferences/invitations`,
+      mfa: `https://cloud.mongodb.com/v2#/preferences/2fa`,
+    },
+    university: {
+      videoPreferences: `https://university.mongodb.com/override-test`,
+    },
+    support: {
+      userPreferences: `https://support.mongodb.com/profile`,
+    },
+    account: {
+      homepage: `https://account.mongodb.com/account/profile/overview`,
+    },
+  },
+  mongoSelect: {
+    viewAllProjects: `https://cloud.mongodb.com/v2#/org/${dataFixtures.currentOrganization?.orgId}/projects`,
+    newProject: `https://cloud.mongodb.com/v2#/org/${dataFixtures.currentOrganization?.orgId}/projects/create`,
+    viewAllOrganizations: `https://cloud-dev.mongodb.com/v2#/preferences/organizations`,
+    orgSettings: `https://cloud-dev.mongodb.com/v2#/org/${dataFixtures.currentOrganization?.orgId}/settings/general`,
+  },
+  orgNav: {
+    settings: `https://cloud.mongodb.com/v2#/org/${dataFixtures.currentOrganization?.orgId}/settings/general`,
+    accessManager: `https://cloud.mongodb.com/v2#/org/${dataFixtures.currentOrganization?.orgId}/access/users`,
+    support: `https://cloud.mongodb.com/v2#/org/${dataFixtures.currentOrganization?.orgId}/support`,
+    billing: `https://cloud.mongodb.com/v2#/org/${dataFixtures.currentOrganization?.orgId}/billing/overview`,
+    allClusters: `https://cloud.mongodb.com/v2#/clusters`,
+    admin: `https://cloud.mongodb.com/v2/admin#general/overview/servers`,
+  },
+  projectNav: {
+    settings: `https://cloud.mongodb.com/v2/currentProjectId098#settings/groupSettings`,
+    accessManager: `https://cloud.mongodb.com/v2/currentProjectId098#access`,
+    support: `https://cloud.mongodb.com/v2/currentProjectId098#info/support`,
+    integrations: `https://cloud.mongodb.com/v2/currentProjectId098#integrations`,
+    alerts: `https://cloud.mongodb.com/v2/currentProjectId098#alerts`,
+    activityFeed: `https://cloud.mongodb.com/v2/currentProjectId098#activity`,
+  },
+};
+
+export const hostDefaults: Required<HostsInterface> = {
+  account: 'https://account.mongodb.com',
+  cloud: 'https://cloud.mongodb.com',
+  charts: 'https://charts.mongodb.com',
+  realm: 'https://stitch.mongodb.com',
+  support: 'https://support.mongodb.com',
+  university: 'https://university.mongodb.com',
+};
+
+export const constructOrganizationURL = (orgId: string) =>
+  `https://cloud.mongodb.com/v2#/org/${orgId}/projects`;
+
+export const constructProjectURL = (projectId: string) =>
+  `https://cloud.mongodb.com/v2#/${projectId}`;

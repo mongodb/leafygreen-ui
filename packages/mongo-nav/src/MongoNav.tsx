@@ -11,7 +11,7 @@ import {
   DataInterface,
   ErrorCode,
 } from './types';
-import fixtureData from './data';
+import { dataFixtures } from './data';
 import defaultsDeep from 'lodash/defaultsDeep';
 
 const defaultHosts: Required<HostsInterface> = {
@@ -151,10 +151,10 @@ export default function MongoNav({
     });
   }
 
-  function getFixtureData() {
+  function getDataFixtures() {
     return new Promise(resolve => {
-      resolve(fixtureData);
-      onSuccess?.(fixtureData);
+      resolve(dataFixtures);
+      onSuccess?.(dataFixtures);
     });
   }
 
@@ -172,7 +172,7 @@ export default function MongoNav({
 
   useEffect(() => {
     if (mode === Mode.Dev) {
-      getFixtureData().then(data => setData(data as DataInterface));
+      getDataFixtures().then(data => setData(data as DataInterface));
     } else {
       getProductionData()
         .then(handleResponse)

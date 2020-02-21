@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "start-storybook -p 9001 -c storybook -s ./storybook/static",
-    "build": "lerna run build -- --env production",
+    "build": "lerna run --parallel build -- --env production",
     "build:storybook": "build-storybook -c storybook -o ./storybook/public -s ./storybook/static",
     "clean": "rimraf packages/*/{dist,node_modules} node_modules",
     "create-package": "node ./scripts/package-builder.js",
