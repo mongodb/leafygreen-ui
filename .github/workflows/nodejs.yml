@@ -31,6 +31,9 @@ jobs:
         run: yarn test --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
         env:
           JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
+      - uses: preactjs/compressed-size-action@v1
+        with:
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'
 
   lints:
     name: Check lints and types
