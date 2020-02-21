@@ -54,7 +54,6 @@ function generateConfigFunc(target = 'web') {
             'react',
             'react-dom',
             'emotion',
-            'lodash',
             'react-emotion',
             'create-emotion',
             'create-emotion-server',
