@@ -6,6 +6,9 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp } from '@leafygreen-ui/lib';
 
+const inputSelectorProp = createDataProp('input-selector');
+const iconSelectorProp = createDataProp('icon-selector');
+
 export const State = {
   None: 'none',
   Valid: 'valid',
@@ -116,21 +119,24 @@ const inputContainerStyle = css`
   z-index: 0;
 `;
 
-const errorIconStyle = css`
+const inputIconStyle = css`
   position: absolute;
-  right: 10px;
+  right: 12px;
+  z-index: 1;
+`;
+
+const errorIconStyle = css`
+  ${inputIconStyle};
   color: ${uiColors.red.base};
 `;
 
 const validIconStyle = css`
-  position: absolute;
-  right: 10px;
+  ${inputIconStyle};
   color: ${uiColors.green.base};
 `;
 
 const optionalStyle = css`
-  position: absolute;
-  right: 12px;
+  ${inputIconStyle};
   color: ${uiColors.gray.dark1};
   font-size: 12px;
   font-style: italic;
@@ -212,8 +218,6 @@ const TextInput = React.forwardRef(
     const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-    const [hasFocus, setHasFocus] = useState(false);
-    const inputSelectorProp = createDataProp('input-selector');
     const [generatedId] = useState(
       `text-input-${Math.floor(Math.random() * 10000000)}`,
     );
@@ -250,15 +254,23 @@ const TextInput = React.forwardRef(
       padding-left: 12px;
       font-size: 14px;
       font-weight: normal;
-      z-index: ${hasFocus ? 2 : 1};
       background-color: ${uiColors.white};
       border: 1px solid;
+      z-index: 1;
+
       &:placeholder {
         color: ${uiColors.gray.base};
       }
+
       &:focus {
         outline: none;
+        z-index: 2;
+
+        & ~ ${iconSelectorProp.selector} {
+          z-index: 2;
+        }
       }
+
       &:disabled {
         background-color: ${uiColors.gray.light2};
       }
@@ -282,44 +294,27 @@ const TextInput = React.forwardRef(
             placeholder={placeholder}
             onChange={onValueChange}
             ref={forwardRef}
-            onFocus={() => setHasFocus(true)}
-            onBlur={() => setHasFocus(false)}
             id={id}
           />
 
           {state === State.Valid && (
             <Icon
+              {...iconSelectorProp.prop}
               glyph="Checkmark"
-              className={cx(
-                validIconStyle,
-                css`
-                  z-index: ${hasFocus ? 2 : 1};
-                `,
-              )}
+              className={validIconStyle}
             />
           )}
 
           {state === State.Error && (
             <Icon
+              {...iconSelectorProp.prop}
               glyph="Warning"
-              className={cx(
-                errorIconStyle,
-                css`
-                  z-index: ${hasFocus ? 2 : 1};
-                `,
-              )}
+              className={errorIconStyle}
             />
           )}
 
           {state === State.None && optional && (
-            <div
-              className={cx(
-                optionalStyle,
-                css`
-                  z-index: ${hasFocus ? 2 : 1};
-                `,
-              )}
-            >
+            <div {...iconSelectorProp.prop} className={optionalStyle}>
               <p>Optional</p>
             </div>
           )}
