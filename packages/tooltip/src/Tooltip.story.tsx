@@ -16,6 +16,10 @@ class Button extends React.Component {
   }
 }
 
+function triggerTest() {
+  return (<button>trigger</button>);
+}
+
 function ControlledTooltip() {
   const [open, setOpen] = useState(false);
 
@@ -43,7 +47,7 @@ storiesOf('Tooltip', module)
     <Tooltip
       align={select('Align', Object.values(Align), 'top')}
       justify={select('justify', Object.values(Justify), 'start')}
-      trigger={<button>trigger</button>}
+      trigger={triggerTest}
       triggerEvent={select(
         'triggerEvent',
         Object.values(TriggerEvent),
