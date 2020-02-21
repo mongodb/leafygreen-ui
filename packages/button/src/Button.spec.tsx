@@ -17,14 +17,14 @@ describe('packages/Button', () => {
     </Button>,
   );
 
-  const renderedButton = renderedComponent.container.firstChild
+  const renderedButton = renderedComponent.container.firstChild;
 
   if (!typeIs.element(renderedButton)) {
     throw new Error('Button component failed to render');
   }
 
   test(`renders "${className}" in the button's classList`, () => {
-    expect(renderedButton.classList.contains(className)).toBe(false);
+    expect(renderedButton.classList.contains(className)).toBe(true);
   });
 
   test(`renders "${child}" as the button's textContent`, () => {

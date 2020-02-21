@@ -63,7 +63,7 @@ describe('packages/Checkbox', () => {
     });
 
     test('onChange fires once when the label is clicked', () => {
-      expect(controlledOnChange.mock.calls.length).toBe(2);
+      expect(controlledOnChange.mock.calls.length).toBe(1);
     });
 
     test('checkbox does not become checked when clicked', () => {
