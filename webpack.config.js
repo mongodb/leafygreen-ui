@@ -51,7 +51,6 @@ function generateConfigFunc(target = 'web') {
 
       externals: isProduction
         ? [
-            'react',
             'react-dom',
             'emotion',
             'react-emotion',
