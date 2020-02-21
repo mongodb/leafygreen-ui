@@ -210,11 +210,7 @@ function UserMenu({
 
           <FocusableMenuItem>
             <Button
-              href={
-                isAccount
-                  ? undefined
-                  : userMenu && userMenu.account && userMenu.account.homepage
-              }
+              href={isAccount ? undefined : userMenu?.account?.homepage}
               disabled={isAccount}
               as={isAccount ? 'button' : 'a'}
             >

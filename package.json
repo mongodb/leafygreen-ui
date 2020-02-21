@@ -25,7 +25,7 @@
     "clean": "rimraf packages/*/{dist,node_modules} node_modules",
     "create-package": "node ./scripts/package-builder.js",
     "format": "yarn prettier && yarn eslint:format",
-    "init": "yarn && yarn build && yarn ts --verbose --force",
+    "init": "yarn && yarn build && yarn ts --verbose --force --noEmit",
     "link-all-packages": "lerna exec --ignore @leafygreen-ui/lib --ignore @leafygreen-ui/theme -- yarn link",
     "link": "./scripts/link.sh",
     "lint": "yarn prettier:check && yarn eslint",
