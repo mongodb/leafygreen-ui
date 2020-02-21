@@ -67,19 +67,6 @@ function generateConfig(target) {
       module: target === 'esm' ? 'esnext' : 'commonjs',
     },
 
-    // This property is supported as a way around an error we frequently received:
-    // Error: Unknown object type "asyncfunction"
-    //
-    // This property is documented in the main README as a workaround:
-    // https://github.com/ezolenko/rollup-plugin-typescript2
-    objectHashIgnoreUnknownHack: true,
-
-    // We need to clean frequently because of the "hack" property above.
-    // We can probably do this less than "always" in the future.
-    clean: true,
-
-    // This property allows us to use the latest TS version, rather than the supported 2.x
-    typescript: require('typescript'),
     verbosity: 2,
   });
 
