@@ -1,5 +1,16 @@
 # @leafygreen-ui/syntax
 
+## 2.2.0
+
+### Minor Changes
+
+- 130919a: Add support for GraphQL syntax highlighting
+
+### Patch Changes
+
+- Updated dependencies [6eb9d26]
+  - @leafygreen-ui/lib@4.3.0
+
 ## 2.1.0
 
 ### Minor Changes
