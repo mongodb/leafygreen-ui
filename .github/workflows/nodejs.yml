@@ -31,9 +31,6 @@ jobs:
         run: yarn test --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
         env:
           JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
-      - uses: preactjs/compressed-size-action@v1
-        with:
-          repo-token: '${{ secrets.GITHUB_TOKEN }}'
 
   lints:
     name: Check lints and types
@@ -62,3 +59,24 @@ jobs:
         run: yarn eslint --format junit -o reports/junit/js-lint-results.xml
       - name: types
         run: yarn ts --verbose
+
+  sizeDiff:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+    - uses: actions/cache@v1
+      id: yarn-cache
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - uses: preactjs/compressed-size-action@v1
+      with:
+        repo-token: '${{ secrets.GITHUB_TOKEN }}'
