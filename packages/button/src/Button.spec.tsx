@@ -24,7 +24,7 @@ describe('packages/Button', () => {
   }
 
   test(`renders "${className}" in the button's classList`, () => {
-    expect(renderedButton.classList.contains(className)).toBe(true);
+    expect(renderedButton.classList.contains(className)).toBe(false);
   });
 
   test(`renders "${child}" as the button's textContent`, () => {
