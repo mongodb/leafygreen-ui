@@ -86,7 +86,7 @@ describe('packages/mongo-select', () => {
             onChange={onChange}
             onClick={onClick}
             {...props}
-          />
+          />,
         ),
       );
     };
