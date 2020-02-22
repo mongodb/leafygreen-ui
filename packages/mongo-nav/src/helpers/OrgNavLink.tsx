@@ -70,6 +70,7 @@ function OrgNavLink({
   href,
   children,
   className,
+  ...rest
 }: OrgNavLinkProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
@@ -84,6 +85,7 @@ function OrgNavLink({
         },
         className,
       )}
+      {...rest}
     >
       <span
         className={cx(

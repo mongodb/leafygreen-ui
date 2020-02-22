@@ -180,6 +180,8 @@ export function OrganizationTrigger({
         <button
           {...rest}
           {...triggerDataProp.prop}
+          data-testid="org-trigger"
+          disabled={disabled}
           className={cx(baseButtonStyles, orgButtonStyles, {
             [activeButtonColor]: open,
           })}

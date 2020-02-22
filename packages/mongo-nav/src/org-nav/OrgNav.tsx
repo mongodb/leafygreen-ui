@@ -216,7 +216,8 @@ export default function OrgNav({
                     {current.paymentStatus.split('_').join()}
                   </Badge>
                 </li>
-              )}
+              )
+            }
 
             {!isMobile && current && (
               <>
