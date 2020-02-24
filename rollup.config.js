@@ -7,94 +7,81 @@ import fs from 'fs';
 import path from 'path';
 
 function getAllPackages(dir) {
-  const dirList = fs.readdirSync(dir);
-  return dirList.map(function(subDir) {
-    subDir = path.resolve(dir, subDir);
-    const json = require(`${subDir}/package.json`);
-    return json.name;
+  const dirContent = fs.readdirSync(dir);
+
+  return dirContent.map(subDir => {
+    const packageConfigPath = path.resolve(dir, subDir) + '/package.json';
+
+    return require(packageConfigPath).name;
   });
 }
 
-const leafyGreenPackages = getAllPackages('../../packages');
-
-const external = id => {
-  const externals = [
-    'react',
-    'react-dom',
-    'emotion',
-    'react-emotion',
-    'create-emotion',
-    'create-emotion-server',
-    'polished',
-    'prop-types',
-    'react-transition-group',
-    // LeafyGreen UI Packages
-    ...leafyGreenPackages,
-  ];
-
-  if (externals.includes(id)) {
-    return true;
-  }
-
-  // We handle lodash imports this way so we can treat 'lodash/omit'
-  // as an external as we do with 'lodash'
-  if (/lodash/.test(id)) {
-    return true;
-  }
-
-  return false;
-};
-
 function generateConfig(target) {
-  const replacePlugin = replace({ __TARGET__: `'${target}'` });
-
-  const commonjsPlugin = commonjs({
-    include: /node_modules/,
-    namedExports: {
-      react: ['useRef', 'useEffect', 'useState', 'useCallback', 'useMemo'],
-    },
-  });
-
-  const typescriptPlugin = typescript({
-    tsconfig: 'tsconfig.json',
-    tsconfigOverride: {
-      module: target === 'esm' ? 'esnext' : 'commonjs',
-    },
-  });
-
-  const pngUrlLoaderPlugin = urlPlugin({
-    limit: 50000,
-    include: ['**/*.png'],
-  });
-
-  const lessUrlLoaderPlugin = urlPlugin({
-    limit: 0,
-    include: ['**/*.less'],
-    fileName: '[name][extname]',
-  });
+  const isESM = target === 'esm';
 
   return {
     input: 'src/index.ts',
     output: {
       file: `dist/index.${target}.js`,
-      format: target === 'esm' ? 'esm' : 'cjs',
+      format: isESM ? 'esm' : 'cjs',
 
       // Rollup warns about mixing named and default exports when building for CJS.
       // Explicitly setting exports to 'named' for those builds disables the warning,
       // though we might want to address this in the future by changing how we export.
-      exports: target === 'node' ? 'named' : 'auto',
+      exports: isESM ? 'auto' : 'named',
       sourcemap: true,
     },
-    external,
+
+    external: id =>
+      [
+        'react',
+        'react-dom',
+        'emotion',
+        'react-emotion',
+        'create-emotion',
+        'create-emotion-server',
+        'polished',
+        'prop-types',
+        'react-transition-group',
+        ...getAllPackages('../../packages'), // LeafyGreen UI Packages
+
+        // We test if an import includes lodash to avoid having to whitelist every nested lodash module individually
+      ].includes(id) || /lodash/.test(id),
+
     plugins: [
-      replacePlugin,
-      commonjsPlugin,
-      typescriptPlugin,
-      pngUrlLoaderPlugin,
-      lessUrlLoaderPlugin,
+      replace({ __TARGET__: target }),
+
+      commonjs({
+        include: /node_modules/,
+        namedExports: {
+          // React only exports CJS for hooks
+          react: ['useRef', 'useEffect', 'useState', 'useCallback', 'useMemo'],
+        },
+      }),
+
+      typescript({
+        tsconfig: 'tsconfig.json',
+        tsconfigOverride: {
+          module: isESM ? 'esnext' : 'commonjs',
+        },
+      }),
+
+      urlPlugin({
+        limit: 50000,
+        include: ['**/*.png'],
+      }),
+
+      urlPlugin({
+        limit: 0,
+        include: ['**/*.less'],
+        fileName: '[name][extname]',
+      }),
+
       svgr(),
     ],
   };
 }
 
-export default [generateConfig('esm'), generateConfig('node')];
+const targets = ['esm', 'node'];
+
+export default targets.map(generateConfig);
