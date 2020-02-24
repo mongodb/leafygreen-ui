@@ -157,6 +157,14 @@ export interface URLSInterface {
     activityFeed?: string;
     invite?: string;
   };
+  onPrem: {
+    profile?: string;
+    mfa?: string;
+    personalization?: string;
+    invitations?: string;
+    organizations?: string;
+    featureRequest?: string;
+  };
 }
 
 export interface HostsInterface {
