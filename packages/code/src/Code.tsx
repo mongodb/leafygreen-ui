@@ -11,7 +11,6 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LineNumbers from './LineNumbers';
 import WindowChrome from './WindowChrome';
-import { uiColors } from '@leafygreen-ui/palette/src';
 
 function stringFragmentIsBlank(str: string): str is '' | ' ' {
   return str === '' || str === ' ';
@@ -96,16 +95,18 @@ function getWrapperVariantStyle(variant: Variant): string {
 }
 
 function getSidebarVariantStyle(variant: Variant): string {
+  const colors = variantColors[variant];
+
   switch(variant) {
     case 'light':
       return css`
-        border-color: ${uiColors.gray.light2};
+        border-color: ${colors[1]};
         background-color: white;
       `;
     case 'dark':
       return css`
-        border-color: ${uiColors.gray.dark3};
-        background-color: ${uiColors.gray.dark3};
+        border-color: ${colors[1]};
+        background-color: ${colors[1]};
       `;
   }
 }
