@@ -109,6 +109,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
 
       if (isVisible) {
         expect(navLink).toBeInTheDocument();
+
         expect((navLink as HTMLAnchorElement)?.href).toEqual(
           linkNamesToUrls[linkName],
         );
