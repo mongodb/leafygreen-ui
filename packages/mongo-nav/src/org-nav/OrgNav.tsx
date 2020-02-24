@@ -89,6 +89,15 @@ const accessManagerMenuItem = css`
   margin-bottom: 0px;
 `;
 
+const versionStyle = css`
+  color: ${uiColors.green.base};
+  display: inline-block;
+  font-size: 10px;
+  ${facepaint({
+    marginRight: ['96px', '24px', '24px'],
+  })}
+`;
+
 export const Colors = {
   Lightgray: 'lightgray',
   Green: 'green',
@@ -131,6 +140,7 @@ interface OrgNav {
   currentProjectName?: string;
   isOnPrem?: boolean;
   onLogout?: React.MouseEventHandler;
+  version?: string;
 }
 
 export default function OrgNav({
@@ -147,6 +157,7 @@ export default function OrgNav({
   currentProjectName,
   isOnPrem,
   onLogout,
+  version,
 }: OrgNav) {
   const [accessManagerOpen, setAccessManagerOpen] = useState(false);
   const [onPremMenuOpen, setOnPremMenuOpen] = useState(false);
@@ -293,6 +304,12 @@ export default function OrgNav({
         )}
       </div>
       <div>
+        {isOnPrem && version && (
+          <div className={versionStyle} data-testid="onPrem-version">
+            {version}
+          </div>
+        )}
+
         {!isMobile && (
           <OrgNavLink
             href={orgNav.allClusters}
