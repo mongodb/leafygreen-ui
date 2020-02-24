@@ -184,11 +184,11 @@ describe('packages/mongo-nav/src/org-nav', () => {
       renderComponent({ isOnPrem: true, admin: true, version: '4.4.0' }),
     );
 
-    testForPaymentStatus(true);
+    testForPaymentStatus(false);
     testForVersion(true);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
-      testForNavLink(linkName, linkName !== 'billing'),
+      testForNavLink(linkName, ['billing', 'admin'].indexOf(linkName) === -1),
     );
   });
 });

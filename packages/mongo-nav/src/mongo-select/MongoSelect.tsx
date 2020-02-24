@@ -94,6 +94,7 @@ interface OrganizationMongoSelectProps extends BaseMongoSelectProps {
   data?: Array<OrganizationInterface>;
   current?: CurrentOrganizationInterface;
   constructOrganizationURL: (orgID: string) => string;
+  isOnPrem?: boolean;
 }
 
 const onKeyDown: React.KeyboardEventHandler = e => {
@@ -111,6 +112,7 @@ function OrgSelect({
   onChange,
   onClick,
   constructOrganizationURL,
+  isOnPrem,
 }: OrganizationMongoSelectProps) {
   const [open, setOpen] = useState(false);
 
@@ -127,7 +129,9 @@ function OrgSelect({
       >
         <div className={orgOptionContainerStyle}>
           <span className={nameStyle}>{orgName}</span>
-          <span className={productStyle}>{formattedPlanTypes[planType]}</span>
+          {!isOnPrem && (
+            <span className={productStyle}>{formattedPlanTypes[planType]}</span>
+          )}
         </div>
       </MenuItem>
     );
