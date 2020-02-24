@@ -255,7 +255,7 @@ export default function OrgNav({
                     href={current && orgNav.accessManager}
                     isActive={activeNav === 'accessManager'}
                     data-testid="org-access-manager"
-                    disabled={!current}
+                    loading={!current}
                   >
                     Access Manager
                   </OrgNavLink>
@@ -291,7 +291,7 @@ export default function OrgNav({
                     href={current && orgNav.support}
                     isActive={activeNav === 'support'}
                     data-testid="org-support"
-                    disabled={!current}
+                    loading={!current}
                   >
                     Support
                   </OrgNavLink>
@@ -303,7 +303,7 @@ export default function OrgNav({
                       href={current && orgNav.billing}
                       isActive={activeNav === 'billing'}
                       data-testid="org-billing"
-                      disabled={!current}
+                      loading={!current}
                     >
                       Billing
                     </OrgNavLink>

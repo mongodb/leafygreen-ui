@@ -64,12 +64,12 @@ interface OrgNavLinkProps {
   href?: string;
   children?: React.ReactNode;
   className?: string;
-  disabled?: boolean;
+  loading?: boolean;
 }
 
 function OrgNavLink({
   isActive = false,
-  disabled = false,
+  loading = false,
   href,
   children,
   className,
@@ -80,13 +80,13 @@ function OrgNavLink({
   return (
     <a
       href={href}
-      aria-disabled={disabled}
+      aria-disabled={loading}
       className={cx(
         linkText,
         {
           [activeLink]: isActive,
           [navItemFocusStyle]: showFocus,
-          [textLoadingStyle]: disabled,
+          [textLoadingStyle]: loading,
         },
         className,
       )}
