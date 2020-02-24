@@ -110,6 +110,11 @@ interface MongoNavInterface {
    * Callback executed when user logs out
    */
   onLogout?: React.MouseEventHandler;
+
+  /**
+   * Version of Ops Manager that a user is using
+   */
+  onPremVersion?: string;
 }
 
 /**
@@ -142,6 +147,7 @@ interface MongoNavInterface {
  * @param props.onError Function that is passed an error code as a string, so that consuming application can handle fetch failures.
  * @param props.isOnPrem Whether or not a user is using Ops Manager
  * @param props.onLogout Callback executed when user logs out
+ * @param props.onPremVersion Version of Ops Manager that a user is using
  */
 export default function MongoNav({
   activeProduct,
@@ -159,6 +165,7 @@ export default function MongoNav({
   onError = () => {},
   onSuccess = () => {},
   onLogout = () => {},
+  onPremVersion,
 }: MongoNavInterface) {
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
@@ -291,6 +298,7 @@ export default function MongoNav({
         currentProjectName={currentProject?.projectName}
         isOnPrem={isOnPrem}
         onLogout={onLogout}
+        version={onPremVersion}
       />
       {showProjNav && !isOnPrem && currentProject && (
         <ProjectNav
