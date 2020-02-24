@@ -115,6 +115,11 @@ interface MongoNavInterface {
    * Version of Ops Manager that a user is using
    */
   onPremVersion?: string;
+
+  /**
+   * Determines whether or not MFA is enabled for the Ops Manager instance
+   */
+  onPremMFA?: boolean;
 }
 
 /**
@@ -148,6 +153,7 @@ interface MongoNavInterface {
  * @param props.isOnPrem Whether or not a user is using Ops Manager
  * @param props.onLogout Callback executed when user logs out
  * @param props.onPremVersion Version of Ops Manager that a user is using
+ * @param props.onPremMFA Determines whether or not MFA is enabled for the Ops Manager instance
  */
 export default function MongoNav({
   activeProduct,
@@ -166,6 +172,7 @@ export default function MongoNav({
   onSuccess = () => {},
   onLogout = () => {},
   onPremVersion,
+  onPremMFA = false,
 }: MongoNavInterface) {
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
@@ -299,6 +306,7 @@ export default function MongoNav({
         isOnPrem={isOnPrem}
         onLogout={onLogout}
         version={onPremVersion}
+        onPremMFA={onPremMFA}
       />
       {showProjNav && !isOnPrem && currentProject && (
         <ProjectNav
