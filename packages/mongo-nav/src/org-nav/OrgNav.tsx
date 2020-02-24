@@ -7,7 +7,7 @@ import Tooltip from '@leafygreen-ui/tooltip';
 import Badge from '@leafygreen-ui/badge';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
-import { Menu } from '@leafygreen-ui/menu';
+import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { OrgNavLink } from '../helpers/index';
 import { breakpoints, facepaint } from '../breakpoints';
 import {
@@ -20,9 +20,8 @@ import {
   HostsInterface,
   OrgPaymentLabel,
 } from '../types';
-
 import { OrgSelect } from '../mongo-select/index';
-import UserMenu from '../user-menu/index';
+import UserMenu, { UserMenuTrigger } from '../user-menu/index';
 
 export const orgNavHeight = 60;
 
@@ -130,6 +129,8 @@ interface OrgNav {
   admin: boolean;
   hosts: Required<HostsInterface>;
   currentProjectName?: string;
+  isOnPrem?: boolean;
+  onLogout?: React.MouseEventHandler;
 }
 
 export default function OrgNav({
@@ -144,8 +145,11 @@ export default function OrgNav({
   admin,
   hosts,
   currentProjectName,
+  isOnPrem,
+  onLogout,
 }: OrgNav) {
-  const [open, setOpen] = useState(false);
+  const [accessManagerOpen, setAccessManagerOpen] = useState(false);
+  const [onPremMenuOpen, setOnPremMenuOpen] = useState(false);
   const { orgNav } = urls;
   const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
@@ -237,11 +241,16 @@ export default function OrgNav({
                   </OrgNavLink>
 
                   <Menu
-                    open={open}
-                    setOpen={setOpen}
+                    open={accessManagerOpen}
+                    setOpen={setAccessManagerOpen}
                     trigger={
-                      <IconButton ariaLabel="Dropdown" active={open}>
-                        <Icon glyph={open ? 'CaretUp' : 'CaretDown'} />
+                      <IconButton
+                        ariaLabel="Dropdown"
+                        active={accessManagerOpen}
+                      >
+                        <Icon
+                          glyph={accessManagerOpen ? 'CaretUp' : 'CaretDown'}
+                        />
                       </IconButton>
                     }
                     className={accessManagerMenuContainer}
@@ -267,15 +276,17 @@ export default function OrgNav({
                   </OrgNavLink>
                 </li>
 
-                <li role="none">
-                  <OrgNavLink
-                    href={orgNav.billing}
-                    isActive={activeNav === 'billing'}
-                    data-testid="org-billing"
-                  >
-                    Billing
-                  </OrgNavLink>
-                </li>
+                {!isOnPrem && (
+                  <li role="none">
+                    <OrgNavLink
+                      href={orgNav.billing}
+                      isActive={activeNav === 'billing'}
+                      data-testid="org-billing"
+                    >
+                      Billing
+                    </OrgNavLink>
+                  </li>
+                )}
               </>
             )}
           </ul>
@@ -304,12 +315,46 @@ export default function OrgNav({
           </OrgNavLink>
         )}
 
-        <UserMenu
-          account={account}
-          activeProduct={activeProduct}
-          urls={urls}
-          hosts={hosts}
-        />
+        {isOnPrem ? (
+          <div
+            className={css`
+              display: inline-block;
+              position: relative;
+              z-index: 0;
+            `}
+          >
+            <UserMenuTrigger
+              name={account.firstName}
+              open={onPremMenuOpen}
+              setOpen={setOnPremMenuOpen}
+            />
+            <Menu open={onPremMenuOpen} setOpen={setOnPremMenuOpen}>
+              <MenuItem href={urls.onPrem.profile}>Profile</MenuItem>
+              <MenuItem href={urls.onPrem.mfa}>
+                Two-factor Authentication
+              </MenuItem>
+              <MenuItem href={urls.onPrem.personalization}>
+                Personalization
+              </MenuItem>
+              <MenuItem href={urls.onPrem.invitations}>Invitations</MenuItem>
+              <MenuItem href={urls.onPrem.organizations}>
+                Organizations
+              </MenuItem>
+              <MenuItem href={urls.onPrem.featureRequest}>
+                Feature Request
+              </MenuItem>
+              <MenuItem onClick={onLogout}>Sign Out</MenuItem>
+            </Menu>
+          </div>
+        ) : (
+          <UserMenu
+            account={account}
+            activeProduct={activeProduct}
+            urls={urls}
+            hosts={hosts}
+            onLogout={onLogout}
+          />
+        )}
       </div>
     </nav>
   );

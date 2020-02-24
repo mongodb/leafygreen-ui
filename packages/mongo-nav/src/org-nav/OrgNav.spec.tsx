@@ -154,4 +154,13 @@ describe('packages/mongo-nav/src/org-nav', () => {
       testForNavLink(linkName, ['allClusters', 'admin'].includes(linkName)),
     );
   });
+
+  describe('when rendered onPrem', () => {
+    beforeEach(() => renderComponent({ isOnPrem: true }));
+    console.log(document.innerHTML);
+    // testForPaymentStatus(true);
+    // Object.keys(linkNamesToUrls).forEach(linkName =>
+    //   testForNavLink(linkName, linkName !== 'billing'),
+    // );
+  });
 });

@@ -32,6 +32,7 @@
 | `urls`                     | `URLInterface` (see below for type)                                            | Object to enable custom overrides for every `href` used in `<MongoNav />`                                                                                 |
 | `onError`                  | `(ErrorCode) => {}`,                                                           | Function that is passed an error code as a string, so that consuming application can handle fetch failures                                                | `() => {}`                                              |
 | `onSuccess`                | `(response) => {}`                                                             | Callback that receives the response of the fetched data, having been converted from JSON into an object                                                   | `() => {}`                                              |
+| `isOnPrem`                 | `boolean`                                                                      | Whether or not a user is using Ops Manager                                                                                                                | `false`                                                 |
 
 ### URLInterface
 
