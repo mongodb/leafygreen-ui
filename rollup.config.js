@@ -1,4 +1,3 @@
-import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
 import replace from '@rollup/plugin-replace';
@@ -49,10 +48,6 @@ const external = id => {
 function generateConfig(target) {
   const replacePlugin = replace({ __TARGET__: `'${target}'` });
 
-  const resolvePlugin = resolve({
-    extensions: ['.js', '.jsx', '.ts', 'tsx'],
-  });
-
   const commonjsPlugin = commonjs({
     include: /node_modules/,
     namedExports: {
@@ -87,7 +82,6 @@ function generateConfig(target) {
     external,
     plugins: [
       replacePlugin,
-      resolvePlugin,
       commonjsPlugin,
       typescriptPlugin,
       urlLoaderPlugin,
