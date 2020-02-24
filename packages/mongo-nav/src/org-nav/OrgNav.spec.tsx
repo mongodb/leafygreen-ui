@@ -144,6 +144,9 @@ describe('packages/mongo-nav/src/org-nav', () => {
 
       if (isVisible) {
         expect(onPremUserMenuMFA).toBeInTheDocument();
+        expect((onPremUserMenuMFA as HTMLAnchorElement).href).toBe(
+          'https://cloud.mongodb.com/v2#/preferences/2fa',
+        );
       } else {
         expect(onPremUserMenuMFA).toBeNull();
       }
