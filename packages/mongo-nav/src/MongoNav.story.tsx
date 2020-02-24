@@ -15,7 +15,7 @@ storiesOf('MongoNav', module).add('Default', () => (
   <LeafygreenProvider>
     <div className={setStorybookWidth}>
       <MongoNav
-        // mode="dev"
+        mode="dev"
         activeProduct={select(
           'activeProduct',
           Object.values(Product),
