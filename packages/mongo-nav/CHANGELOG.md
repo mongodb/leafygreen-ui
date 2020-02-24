@@ -1,5 +1,16 @@
 # @leafygreen-ui/mongo-nav
 
+## 0.10.0
+
+### Minor Changes
+
+- 0bfe2ad: Updated styles to fit latest spec
+
+### Patch Changes
+
+- Updated dependencies [0bfe2ad]
+  - @leafygreen-ui/icon-button@4.1.0
+
 ## 0.9.0
 
 ### Minor Changes
