@@ -126,11 +126,12 @@ const inputStyle = css`
   padding-left: 12px;
   font-size: 14px;
   font-weight: normal;
+  font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
   background-color: ${uiColors.white};
   border: 1px solid;
   z-index: 1;
 
-  &:placeholder {
+  &::placeholder {
     color: ${uiColors.gray.base};
   }
 
