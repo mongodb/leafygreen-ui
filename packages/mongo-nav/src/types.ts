@@ -155,6 +155,7 @@ export interface URLSInterface {
     integrations?: string;
     alerts?: string;
     activityFeed?: string;
+    invite?: string;
   };
 }
 

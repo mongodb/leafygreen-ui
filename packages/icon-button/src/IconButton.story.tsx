@@ -25,6 +25,7 @@ storiesOf('IconButton', module)
 
     return (
       <IconButton
+        active={boolean('active', true)}
         size={size}
         variant={select(
           'variant',

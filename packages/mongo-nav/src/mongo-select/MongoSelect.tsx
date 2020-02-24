@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Menu,
   FocusableMenuItem,
@@ -20,6 +20,8 @@ import {
   PlanType,
 } from '../types';
 
+const menuItemHeight = 36;
+
 const menuContainerStyle = css`
   width: 280px;
   padding-top: 20px;
@@ -30,6 +32,13 @@ const menuItemContainerStyle = css`
   justify-content: space-between;
   align-items: center;
   text-align: left;
+`;
+
+const ulStyle = css`
+  max-height: ${5 * menuItemHeight}px;
+  overflow: scroll;
+  list-style: none;
+  padding: unset;
 `;
 
 const viewAllStyle = css`
@@ -96,7 +105,6 @@ const onKeyDown: React.KeyboardEventHandler = e => {
 function OrgSelect({
   current,
   data,
-  className,
   urls,
   isActive,
   disabled,
@@ -104,6 +112,8 @@ function OrgSelect({
   onClick,
   constructOrganizationURL,
 }: OrganizationMongoSelectProps) {
+  const [open, setOpen] = useState(false);
+
   const renderOrganizationOption = (datum: OrganizationInterface) => {
     const { orgId, orgName, planType } = datum;
 
@@ -128,15 +138,17 @@ function OrgSelect({
       trigger={
         <OrganizationTrigger
           placeholder={current?.orgName ?? 'All Organizations'}
-          className={className}
           urls={urls}
           isActive={isActive}
+          open={open}
           disabled={disabled}
         />
       }
       className={menuContainerStyle}
       justify="start"
       spacing={0}
+      setOpen={setOpen}
+      open={open}
     >
       <FocusableMenuItem>
         <Input
@@ -147,14 +159,14 @@ function OrgSelect({
         />
       </FocusableMenuItem>
 
-      <>
+      <ul className={ulStyle}>
         {data?.map(renderOrganizationOption) ?? (
           <li>
             You do not belong to any organizations. Create an organization to
             start using MongoDB Cloud
           </li>
         )}
-      </>
+      </ul>
 
       <MenuSeparator />
       <MenuItem
@@ -173,13 +185,14 @@ export { OrgSelect };
 
 function ProjectSelect({
   current,
-  className,
   onChange,
   data,
   onClick,
   constructProjectURL,
   urls,
 }: ProjectMongoSelectProps) {
+  const [open, setOpen] = useState(false);
+
   const renderProjectOption = (datum: ProjectInterface) => {
     const { projectId, projectName, orgId } = datum;
 
@@ -198,15 +211,12 @@ function ProjectSelect({
 
   return (
     <Menu
-      trigger={
-        <ProjectTrigger
-          placeholder={current.projectName}
-          className={className}
-        />
-      }
+      trigger={<ProjectTrigger placeholder={current.projectName} open={open} />}
       className={menuContainerStyle}
       justify="start"
       spacing={0}
+      open={open}
+      setOpen={setOpen}
     >
       <FocusableMenuItem>
         <Input
@@ -217,7 +227,9 @@ function ProjectSelect({
         />
       </FocusableMenuItem>
 
-      <>{data?.map(datum => renderProjectOption(datum))}</>
+      <ul className={ulStyle}>
+        {data?.map(datum => renderProjectOption(datum))}
+      </ul>
 
       <MenuSeparator />
 
