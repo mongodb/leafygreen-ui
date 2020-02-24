@@ -89,6 +89,12 @@ const accessManagerMenuItem = css`
   margin-bottom: 0px;
 `;
 
+const onPremMenuWrapper = css`
+  display: inline-block;
+  position: relative;
+  z-index: 0;
+`;
+
 const versionStyle = css`
   color: ${uiColors.green.base};
   display: inline-block;
@@ -213,10 +219,12 @@ export default function OrgNav({
           onChange={onOrganizationChange}
           isActive={activeNav === 'orgSettings'}
           disabled={disabled}
+          isOnPrem={isOnPrem}
         />
         {!disabled && (
           <ul className={ulContainer}>
             {!isTablet &&
+              !isOnPrem &&
               current?.paymentStatus &&
               paymentVariant &&
               (admin || paymentValues.includes(current.paymentStatus)) && (
@@ -321,7 +329,7 @@ export default function OrgNav({
           </OrgNavLink>
         )}
 
-        {!isTablet && admin && (
+        {!isTablet && admin && !isOnPrem && (
           <OrgNavLink
             href={orgNav.admin}
             isActive={activeNav === 'admin'}
@@ -333,13 +341,7 @@ export default function OrgNav({
         )}
 
         {isOnPrem ? (
-          <div
-            className={css`
-              display: inline-block;
-              position: relative;
-              z-index: 0;
-            `}
-          >
+          <div className={onPremMenuWrapper}>
             <UserMenuTrigger
               name={account.firstName}
               open={onPremMenuOpen}
