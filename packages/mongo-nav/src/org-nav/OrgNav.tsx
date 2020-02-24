@@ -40,7 +40,7 @@ const navContainer = css`
   box-sizing: border-box;
 `;
 
-const leftSideContainer = css`
+const flexContainer = css`
   display: flex;
   align-items: center;
 `;
@@ -133,7 +133,7 @@ const paymentStatusMap: { readonly [K in Colors]: Array<string> } = {
 };
 
 interface OrgNav {
-  account: AccountInterface;
+  account?: AccountInterface;
   activeProduct: Product;
   current?: CurrentOrganizationInterface;
   data?: Array<OrganizationInterface>;
@@ -196,7 +196,7 @@ export default function OrgNav({
       aria-label="organization navigation"
       data-testid="organization-nav"
     >
-      <div className={leftSideContainer}>
+      <div className={flexContainer}>
         <Tooltip
           align="bottom"
           justify="start"
@@ -218,7 +218,7 @@ export default function OrgNav({
           urls={urls}
           onChange={onOrganizationChange}
           isActive={activeNav === 'orgSettings'}
-          disabled={disabled}
+          loading={!current}
           isOnPrem={isOnPrem}
         />
         {!disabled && (
@@ -241,7 +241,7 @@ export default function OrgNav({
                 </li>
               )}
 
-            {!isMobile && current && (
+            {!isMobile && (
               <>
                 <li
                   role="none"
@@ -252,44 +252,46 @@ export default function OrgNav({
                   `}
                 >
                   <OrgNavLink
-                    href={orgNav.accessManager}
+                    href={current && orgNav.accessManager}
                     isActive={activeNav === 'accessManager'}
                     data-testid="org-access-manager"
+                    disabled={!current}
                   >
                     Access Manager
                   </OrgNavLink>
 
-                  <Menu
-                    open={accessManagerOpen}
-                    setOpen={setAccessManagerOpen}
-                    trigger={
-                      <IconButton
-                        ariaLabel="Dropdown"
-                        active={accessManagerOpen}
-                      >
-                        <Icon
-                          glyph={accessManagerOpen ? 'CaretUp' : 'CaretDown'}
-                        />
-                      </IconButton>
-                    }
-                    className={accessManagerMenuContainer}
+                  <IconButton
+                    ariaLabel="Dropdown"
+                    active={accessManagerOpen}
+                    disabled={!current}
                   >
-                    <p className={accessManagerMenuItem}>
-                      <strong>Organization Access:</strong> {current.orgName}
-                    </p>
+                    <Icon glyph={accessManagerOpen ? 'CaretUp' : 'CaretDown'} />
+                    {current && (
+                      <Menu
+                        open={accessManagerOpen}
+                        setOpen={setAccessManagerOpen}
+                        className={accessManagerMenuContainer}
+                      >
+                        <p className={accessManagerMenuItem}>
+                          <strong>Organization Access:</strong>{' '}
+                          {current.orgName}
+                        </p>
 
-                    <p className={accessManagerMenuItem}>
-                      <strong>Project Access:</strong>
-                      {currentProjectName ?? 'None'}
-                    </p>
-                  </Menu>
+                        <p className={accessManagerMenuItem}>
+                          <strong>Project Access:</strong>
+                          {currentProjectName ?? 'None'}
+                        </p>
+                      </Menu>
+                    )}
+                  </IconButton>
                 </li>
 
                 <li role="none" className={supportContainer}>
                   <OrgNavLink
-                    href={orgNav.support}
+                    href={current && orgNav.support}
                     isActive={activeNav === 'support'}
                     data-testid="org-support"
+                    disabled={!current}
                   >
                     Support
                   </OrgNavLink>
@@ -298,9 +300,10 @@ export default function OrgNav({
                 {!isOnPrem && (
                   <li role="none">
                     <OrgNavLink
-                      href={orgNav.billing}
+                      href={current && orgNav.billing}
                       isActive={activeNav === 'billing'}
                       data-testid="org-billing"
+                      disabled={!current}
                     >
                       Billing
                     </OrgNavLink>
@@ -311,7 +314,7 @@ export default function OrgNav({
           </ul>
         )}
       </div>
-      <div>
+      <div className={flexContainer}>
         {isOnPrem && version && (
           <div className={versionStyle} data-testid="onPrem-version">
             {version}
@@ -343,7 +346,7 @@ export default function OrgNav({
         {isOnPrem ? (
           <div className={onPremMenuWrapper}>
             <UserMenuTrigger
-              name={account.firstName}
+              name={account?.firstName ?? ''}
               open={onPremMenuOpen}
               setOpen={setOnPremMenuOpen}
             />

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import OrgNav from './org-nav/index';
 import ProjectNav from './project-nav/index';
-import Loading from './Loading';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import {
@@ -208,11 +207,6 @@ export default function MongoNav({
     }
   }, [mode, endpointURI]);
 
-  if (data?.account == null) {
-    // Eventually this logic will be more robust, but for this version we will return the placeholder <Loading /> component
-    return <Loading />;
-  }
-
   const defaultURLS: Required<URLSInterface> = {
     userMenu: {
       cloud: {
@@ -274,40 +268,32 @@ export default function MongoNav({
     `${hosts.cloud}/v2#/${projectId}`;
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
-  const {
-    account,
-    currentOrganization,
-    currentProject,
-    organizations,
-    projects,
-  } = data;
-
   return (
     <section className={navContainerStyle}>
       <OrgNav
-        account={account}
+        account={data?.account}
         activeProduct={activeProduct}
-        current={currentOrganization}
-        data={organizations}
+        current={data?.currentOrganization}
+        data={data?.organizations}
         constructOrganizationURL={constructOrganizationURL}
         urls={urls}
         activeNav={activeNav}
         onOrganizationChange={onOrganizationChange}
         admin={admin}
         hosts={hosts}
-        currentProjectName={currentProject?.projectName}
+        currentProjectName={data?.currentProject?.projectName}
         isOnPrem={isOnPrem}
         onLogout={onLogout}
         version={onPremVersion}
       />
-      {showProjNav && !isOnPrem && currentProject && (
+      {showProjNav && !isOnPrem && (
         <ProjectNav
           activeProduct={activeProduct}
-          current={currentProject}
-          data={projects}
+          current={data?.currentProject}
+          data={data?.projects}
           constructProjectURL={constructProjectURL}
           urls={urls}
-          alerts={currentProject.alertsOpen}
+          alerts={data?.currentProject?.alertsOpen}
           onProjectChange={onProjectChange}
           hosts={hosts}
         />

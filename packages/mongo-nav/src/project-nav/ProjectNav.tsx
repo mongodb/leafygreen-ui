@@ -17,6 +17,7 @@ import {
   Product,
   HostsInterface,
 } from '../types';
+import { iconLoadingStyle, textLoadingStyle } from '../styles';
 
 const productIconProp = createDataProp('charts-data-prop');
 export const projectNavHeight = 45;
@@ -87,7 +88,7 @@ const activeProductColor = css`
   font-weight: bolder;
   color: ${uiColors.green.dark3};
 
-  > ${productIconProp.selector} {
+  &:not:disabled > ${productIconProp.selector} {
     color: ${uiColors.green.base};
   }
 
@@ -135,7 +136,7 @@ const productTextStyle = css`
   width: 100px;
   transition: 150ms color ease-in-out;
 
-  &:after {
+  &:not:disabled &:after {
     content: '';
     height: 3px;
     position: absolute;
@@ -186,7 +187,7 @@ const productIconStyle = css`
 `;
 
 interface ProjectNavInterface {
-  current: CurrentProjectInterface;
+  current?: CurrentProjectInterface;
   data?: Array<ProjectInterface>;
   constructProjectURL: (orgID: string, projID: string) => string;
   urls: Required<URLSInterface>;
@@ -236,6 +237,7 @@ export default function ProjectNav({
             constructProjectURL={constructProjectURL}
             urls={urls}
             onChange={onProjectChange}
+            loading={!current}
           />
         </div>
 
@@ -247,6 +249,7 @@ export default function ProjectNav({
               ariaLabel="More"
               className={menuIconButtonStyle}
               active={open}
+              disabled={!current}
             >
               <Icon glyph="Ellipsis" className={menuIconStyle} />
             </IconButton>
@@ -262,11 +265,19 @@ export default function ProjectNav({
 
         <ul className={productListStyle}>
           <li role="none" className={productStyle}>
-            <a href={hosts.cloud} className={getProductClassName('cloud')}>
+            <a
+              href={hosts.cloud}
+              className={cx(getProductClassName('cloud'), {
+                [textLoadingStyle]: !current,
+              })}
+              aria-disabled={!current}
+            >
               {!isMobile && (
                 <Icon
                   {...productIconProp.prop}
-                  className={productIconStyle}
+                  className={cx(productIconStyle, {
+                    [iconLoadingStyle]: !current,
+                  })}
                   glyph="Cloud"
                 />
               )}
@@ -275,11 +286,19 @@ export default function ProjectNav({
           </li>
 
           <li role="none" className={productStyle}>
-            <a href={hosts.realm} className={getProductClassName('realm')}>
+            <a
+              href={hosts.realm}
+              className={cx(getProductClassName('realm'), {
+                [textLoadingStyle]: !current,
+              })}
+              aria-disabled={!current}
+            >
               {!isMobile && (
                 <Icon
                   {...productIconProp.prop}
-                  className={productIconStyle}
+                  className={cx(productIconStyle, {
+                    [iconLoadingStyle]: !current,
+                  })}
                   glyph="Stitch"
                 />
               )}
@@ -288,11 +307,19 @@ export default function ProjectNav({
           </li>
 
           <li role="none" className={productStyle}>
-            <a href={hosts.charts} className={getProductClassName('charts')}>
+            <a
+              href={hosts.charts}
+              className={cx(getProductClassName('charts'), {
+                [textLoadingStyle]: !current,
+              })}
+              aria-disabled={!current}
+            >
               {!isMobile && (
                 <Icon
                   {...productIconProp.prop}
-                  className={productIconStyle}
+                  className={cx(productIconStyle, {
+                    [iconLoadingStyle]: !current,
+                  })}
                   glyph="Charts"
                 />
               )}
@@ -319,6 +346,7 @@ export default function ProjectNav({
                 href={projectNav.invite as string}
                 className={iconButtonMargin}
                 size="large"
+                disabled={!current}
               >
                 <Icon glyph="Person" size="large" />
               </IconButton>
@@ -337,6 +365,7 @@ export default function ProjectNav({
                 href={projectNav.activityFeed as string}
                 size="large"
                 className={iconButtonMargin}
+                disabled={!current}
               >
                 <Icon glyph="Save" size="large" />
               </IconButton>
@@ -354,6 +383,7 @@ export default function ProjectNav({
                 ariaLabel="Alerts"
                 href={projectNav.alerts as string}
                 size="large"
+                disabled={!current}
               >
                 {alerts > 0 && <div className={alertBadgeStyle}>{alerts}</div>}
                 <Icon glyph="Bell" size="large" />
