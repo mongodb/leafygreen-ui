@@ -190,6 +190,30 @@ export default function OrgNav({
     OrgPaymentLabel.AdminSuspended,
   ];
 
+  let badgeItem: React.ReactElement | null = null;
+
+  if (
+    !isTablet &&
+    !isOnPrem &&
+    current?.paymentStatus &&
+    paymentVariant &&
+    (admin || paymentValues.includes(current.paymentStatus))
+  ) {
+    badgeItem = (
+      <li>
+        <Badge
+          className={css`
+            margin-right: 25px;
+          `}
+          variant={paymentVariant}
+          data-testid="org-nav-payment-status"
+        >
+          {current.paymentStatus.split('_').join()}
+        </Badge>
+      </li>
+    );
+  }
+
   return (
     <nav
       className={navContainer}
@@ -223,23 +247,7 @@ export default function OrgNav({
         />
         {!disabled && (
           <ul className={ulContainer}>
-            {!isTablet &&
-              !isOnPrem &&
-              current?.paymentStatus &&
-              paymentVariant &&
-              (admin || paymentValues.includes(current.paymentStatus)) && (
-                <li>
-                  <Badge
-                    className={css`
-                      margin-right: 25px;
-                    `}
-                    variant={paymentVariant}
-                    data-testid="org-payment-status"
-                  >
-                    {current.paymentStatus.split('_').join()}
-                  </Badge>
-                </li>
-              )}
+            {badgeItem}
 
             {!isMobile && current && (
               <>
@@ -254,7 +262,7 @@ export default function OrgNav({
                   <OrgNavLink
                     href={orgNav.accessManager}
                     isActive={activeNav === 'accessManager'}
-                    data-testid="org-access-manager"
+                    data-testid="org-nav-access-manager"
                   >
                     Access Manager
                   </OrgNavLink>
@@ -289,7 +297,7 @@ export default function OrgNav({
                   <OrgNavLink
                     href={orgNav.support}
                     isActive={activeNav === 'support'}
-                    data-testid="org-support"
+                    data-testid="org-nav-support"
                   >
                     Support
                   </OrgNavLink>
@@ -300,7 +308,7 @@ export default function OrgNav({
                     <OrgNavLink
                       href={orgNav.billing}
                       isActive={activeNav === 'billing'}
-                      data-testid="org-billing"
+                      data-testid="org-nav-billing"
                     >
                       Billing
                     </OrgNavLink>
@@ -313,7 +321,7 @@ export default function OrgNav({
       </div>
       <div>
         {isOnPrem && version && (
-          <div className={versionStyle} data-testid="onPrem-version">
+          <div className={versionStyle} data-testid="org-nav-on-prem-version">
             {version}
           </div>
         )}
@@ -323,7 +331,7 @@ export default function OrgNav({
             href={orgNav.allClusters}
             isActive={activeNav === 'allClusters'}
             className={rightLinkMargin}
-            data-testid="all-clusters-link"
+            data-testid="org-nav-all-clusters-link"
           >
             All Clusters
           </OrgNavLink>
@@ -334,7 +342,7 @@ export default function OrgNav({
             href={orgNav.admin}
             isActive={activeNav === 'admin'}
             className={rightLinkMargin}
-            data-testid="admin-link"
+            data-testid="org-nav-admin-link"
           >
             Admin
           </OrgNavLink>
@@ -346,23 +354,51 @@ export default function OrgNav({
               name={account.firstName}
               open={onPremMenuOpen}
               setOpen={setOnPremMenuOpen}
+              data-testid="om-user-menu-trigger"
             />
             <Menu open={onPremMenuOpen} setOpen={setOnPremMenuOpen}>
-              <MenuItem href={urls.onPrem.profile}>Profile</MenuItem>
-              <MenuItem href={urls.onPrem.mfa}>
+              <MenuItem
+                href={urls.onPrem.profile}
+                data-testid="om-user-menuitem-profile"
+              >
+                Profile
+              </MenuItem>
+              <MenuItem
+                href={urls.onPrem.mfa}
+                data-testid="om-user-menuitem-mfa"
+              >
                 Two-factor Authentication
               </MenuItem>
-              <MenuItem href={urls.onPrem.personalization}>
+              <MenuItem
+                href={urls.onPrem.personalization}
+                data-testid="om-user-menuitem-personalization"
+              >
                 Personalization
               </MenuItem>
-              <MenuItem href={urls.onPrem.invitations}>Invitations</MenuItem>
-              <MenuItem href={urls.onPrem.organizations}>
+              <MenuItem
+                href={urls.onPrem.invitations}
+                data-testid="om-user-menuitem-invitations"
+              >
+                Invitations
+              </MenuItem>
+              <MenuItem
+                href={urls.onPrem.organizations}
+                data-testid="om-user-menuitem-organizations"
+              >
                 Organizations
               </MenuItem>
-              <MenuItem href={urls.onPrem.featureRequest}>
+              <MenuItem
+                href={urls.onPrem.featureRequest}
+                data-testid="om-user-menuitem-feature-request"
+              >
                 Feature Request
               </MenuItem>
-              <MenuItem onClick={onLogout}>Sign Out</MenuItem>
+              <MenuItem
+                onClick={onLogout}
+                data-testid="om-user-menuitem-sign-out"
+              >
+                Sign Out
+              </MenuItem>
             </Menu>
           </div>
         ) : (
