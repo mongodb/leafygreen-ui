@@ -62,9 +62,15 @@ function generateConfig(target) {
     },
   });
 
-  const urlLoaderPlugin = urlPlugin({
+  const pngUrlLoaderPlugin = urlPlugin({
     limit: 50000,
     include: ['**/*.png'],
+  });
+
+  const lessUrlLoaderPlugin = urlPlugin({
+    limit: 0,
+    include: ['**/*.less'],
+    fileName: '[name][extname]',
   });
 
   return {
@@ -84,7 +90,8 @@ function generateConfig(target) {
       replacePlugin,
       commonjsPlugin,
       typescriptPlugin,
-      urlLoaderPlugin,
+      pngUrlLoaderPlugin,
+      lessUrlLoaderPlugin,
       svgr(),
     ],
   };
