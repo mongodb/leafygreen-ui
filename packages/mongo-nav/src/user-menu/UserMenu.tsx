@@ -262,7 +262,12 @@ function UserMenu({
 
   return (
     <div className={triggerWrapper}>
-      <UserMenuTrigger open={open} name={firstName} setOpen={setOpen} />
+      <UserMenuTrigger
+        open={open}
+        name={firstName}
+        setOpen={setOpen}
+        data-testid="user-menu-trigger"
+      />
 
       <Menu open={open} setOpen={setOpen} className={menuStyle}>
         <div className={headerStyle}>
@@ -298,10 +303,16 @@ function UserMenu({
             [subMenuActiveContainerStyle]: isCloud,
           })}
         >
-          <MenuItem href={userMenu?.cloud?.userPreferences}>
+          <MenuItem
+            href={userMenu?.cloud?.userPreferences}
+            data-testid="user-menuitem-cloud-user-preferences"
+          >
             User Preferences
           </MenuItem>
-          <MenuItem href={userMenu?.cloud?.invitations}>
+          <MenuItem
+            href={userMenu?.cloud?.invitations}
+            data-testid="user-menuitem-cloud-invitations"
+          >
             {openInvitations ? (
               <span className={subMenuItemStyle}>
                 Invitations <Badge variant="blue">{openInvitations}</Badge>
@@ -310,10 +321,16 @@ function UserMenu({
               'Invitations'
             )}
           </MenuItem>
-          <MenuItem href={userMenu?.cloud?.organizations}>
+          <MenuItem
+            href={userMenu?.cloud?.organizations}
+            data-testid="user-menuitem-cloud-organizations"
+          >
             Organizations
           </MenuItem>
-          <MenuItem href={userMenu?.cloud?.mfa}>
+          <MenuItem
+            href={userMenu?.cloud?.mfa}
+            data-testid="user-menuitem-cloud-mfa"
+          >
             Two-Factor Authorization
           </MenuItem>
         </SubMenu>
@@ -332,7 +349,10 @@ function UserMenu({
             [subMenuActiveContainerStyle]: isUniversity,
           })}
         >
-          <MenuItem href={userMenu?.university?.videoPreferences}>
+          <MenuItem
+            href={userMenu?.university?.videoPreferences}
+            data-testid="user-menuitem-university-video-preferences"
+          >
             Video Preferences
           </MenuItem>
         </SubMenu>
@@ -349,7 +369,10 @@ function UserMenu({
             [subMenuActiveContainerStyle]: isSupport,
           })}
         >
-          <MenuItem href={userMenu?.support?.userPreferences}>
+          <MenuItem
+            href={userMenu?.support?.userPreferences}
+            data-testid="user-menuitem-support-user-preferences"
+          >
             User Preferences
           </MenuItem>
         </SubMenu>
@@ -360,13 +383,18 @@ function UserMenu({
           {...feedbackAnchorProps}
           size="large"
           glyph={<Icon glyph="Bell" size="xlarge" />}
+          data-testid="user-menuitem-feedback"
         >
           Give us feedback
         </MenuItem>
 
         <MenuSeparator />
 
-        <MenuItem onClick={onLogout} size="large">
+        <MenuItem
+          onClick={onLogout}
+          size="large"
+          data-testid="user-menuitem-logout"
+        >
           Logout
         </MenuItem>
       </Menu>

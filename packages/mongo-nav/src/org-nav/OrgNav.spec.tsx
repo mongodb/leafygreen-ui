@@ -47,13 +47,15 @@ describe('packages/mongo-nav/src/org-nav', () => {
 
   const setExpectedElements = () => {
     const { queryByTestId = () => null } = queries;
-    expectedElements.paymentStatus = queryByTestId('org-payment-status');
-    expectedElements.accessManager = queryByTestId('org-access-manager');
-    expectedElements.support = queryByTestId('org-support');
-    expectedElements.billing = queryByTestId('org-billing');
-    expectedElements.allClusters = queryByTestId('all-clusters-link');
-    expectedElements.admin = queryByTestId('admin-link');
-    expectedElements.version = queryByTestId('onPrem-version');
+    expectedElements.paymentStatus = queryByTestId('org-nav-payment-status');
+    expectedElements.accessManager = queryByTestId('org-nav-access-manager');
+    expectedElements.support = queryByTestId('org-nav-support');
+    expectedElements.billing = queryByTestId('org-nav-billing');
+    expectedElements.allClusters = queryByTestId('org-nav-all-clusters-link');
+    expectedElements.admin = queryByTestId('org-nav-admin-link');
+    expectedElements.version = queryByTestId('org-nav-on-prem-version');
+    expectedElements.userMenu = queryByTestId('user-menu-trigger');
+    expectedElements.onPremUserMenu = queryByTestId('om-user-menu-trigger');
   };
 
   let onOrganizationChange: jest.Mock;
@@ -114,6 +116,23 @@ describe('packages/mongo-nav/src/org-nav', () => {
     });
   };
 
+  const testForUserMenu = (isVisible = true) => {
+    it(`${isVisible ? 'displays' : 'does not display'} the UserMenu and ${
+      isVisible ? 'does not display' : 'displays'
+    } the onPrem User Menu`, () => {
+      const userMenu = expectedElements['userMenu'];
+      const onPremUserMenu = expectedElements['onPremUserMenu'];
+
+      if (isVisible) {
+        expect(userMenu).toBeInTheDocument();
+        expect(onPremUserMenu).toBeNull();
+      } else {
+        expect(onPremUserMenu).toBeInTheDocument();
+        expect(userMenu).toBeNull();
+      }
+    });
+  };
+
   const testForNavLink = (linkName: string, isVisible = true) => {
     it(`${isVisible ? 'displays' : 'does not display'} the ${startCase(
       linkName,
@@ -136,6 +155,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
     beforeEach(renderComponent);
     testForPaymentStatus(false);
     testForVersion(false);
+    testForUserMenu(true);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, linkName !== 'admin'),
@@ -172,7 +192,6 @@ describe('packages/mongo-nav/src/org-nav', () => {
     );
 
     testForPaymentStatus(false);
-    testForVersion(false);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, ['allClusters', 'admin'].includes(linkName)),
@@ -186,6 +205,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
 
     testForPaymentStatus(false);
     testForVersion(true);
+    testForUserMenu(false);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, ['billing', 'admin'].indexOf(linkName) === -1),
