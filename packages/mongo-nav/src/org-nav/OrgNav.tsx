@@ -311,7 +311,7 @@ export default function OrgNav({
       </div>
       <div>
         {isOnPrem && version && (
-          <div className={versionStyle} data-testid="onPrem-version">
+          <div className={versionStyle} data-testid="on-prem-version">
             {version}
           </div>
         )}
@@ -339,7 +339,7 @@ export default function OrgNav({
         )}
 
         {isOnPrem ? (
-          <div className={onPremMenuWrapper}>
+          <div className={onPremMenuWrapper} data-testid="on-prem-user-menu">
             <UserMenuTrigger
               name={account.firstName}
               open={onPremMenuOpen}
