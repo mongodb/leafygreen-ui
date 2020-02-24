@@ -168,6 +168,12 @@ function Tooltip({
     triggerEvent: TriggerEvent,
     triggerProps?: any,
   ) => {
+    if (!React.isValidElement(trigger)) {
+      console.warn(
+        'You are not using a React Element as your trigger. Make sure the function you are calling explicitly returns children for the Tooltip to render.',
+      );
+    }
+
     if (triggerEvent === TriggerEvent.Hover) {
       return {
         onMouseEnter: debounce(() => {
