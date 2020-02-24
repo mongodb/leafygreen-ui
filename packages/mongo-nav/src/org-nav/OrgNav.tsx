@@ -219,6 +219,7 @@ export default function OrgNav({
           onChange={onOrganizationChange}
           isActive={activeNav === 'orgSettings'}
           loading={!current}
+          disabled={disabled}
           isOnPrem={isOnPrem}
         />
         {!disabled && (

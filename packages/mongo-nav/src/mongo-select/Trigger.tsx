@@ -200,7 +200,12 @@ export function OrganizationTrigger({
               className={cx({ [iconLoadingStyle]: loading })}
             />
           )}
-          <span className={cx(selectedStyle, { [disabledStyle]: loading })}>
+          <span
+            className={cx(selectedStyle, {
+              [disabledStyle]: disabled,
+              [textLoadingStyle]: loading,
+            })}
+          >
             {placeholder}
           </span>
           <Icon
