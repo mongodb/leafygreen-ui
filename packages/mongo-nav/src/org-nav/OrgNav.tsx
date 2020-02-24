@@ -147,6 +147,7 @@ interface OrgNav {
   isOnPrem?: boolean;
   onLogout?: React.MouseEventHandler;
   version?: string;
+  onPremMFA?: boolean;
 }
 
 export default function OrgNav({
@@ -164,6 +165,7 @@ export default function OrgNav({
   isOnPrem,
   onLogout,
   version,
+  onPremMFA,
 }: OrgNav) {
   const [accessManagerOpen, setAccessManagerOpen] = useState(false);
   const [onPremMenuOpen, setOnPremMenuOpen] = useState(false);
@@ -363,12 +365,16 @@ export default function OrgNav({
               >
                 Profile
               </MenuItem>
-              <MenuItem
-                href={urls.onPrem.mfa}
-                data-testid="om-user-menuitem-mfa"
-              >
-                Two-factor Authentication
-              </MenuItem>
+              {onPremMFA ? (
+                <MenuItem
+                  href={urls.onPrem.mfa}
+                  data-testid="om-user-menuitem-mfa"
+                >
+                  Two-factor Authentication
+                </MenuItem>
+              ) : (
+                <></> // Have to fix typing in Menu to allow for a non-React Element here
+              )}
               <MenuItem
                 href={urls.onPrem.personalization}
                 data-testid="om-user-menuitem-personalization"
