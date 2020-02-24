@@ -13,9 +13,11 @@ const containerStyle = css`
   z-index: 0;
   height: 30px;
   margin: 0px 15px 12px 15px;
+  box-sizing: border-box;
 `;
 
 const inputStyle = css`
+  box-sizing: border-box;
   height: 30px;
   padding: 0px 24px 0px 12px;
   width: 100%;
