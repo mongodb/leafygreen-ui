@@ -97,7 +97,7 @@ function getWrapperVariantStyle(variant: Variant): string {
 function getSidebarVariantStyle(variant: Variant): string {
   const colors = variantColors[variant];
 
-  switch(variant) {
+  switch (variant) {
     case 'light':
       return css`
         border-color: ${colors[1]};
@@ -172,7 +172,7 @@ function Code({
   ...rest
 }: CodeProps) {
   const wrapperStyle = css`
-    display: flex;
+    display: block;
     border: 1px solid ${variantColors[variant][1]};
     border-radius: 4px;
     overflow: hidden;
@@ -218,21 +218,33 @@ function Code({
   return (
     <div className={wrapperStyle}>
       {renderedWindowChrome}
-
-      <pre
-        {...(rest as DetailedElementProps<HTMLPreElement>)}
-        className={wrapperClassName}
+      <div
+        className={css`
+          display: flex;
+        `}
       >
-        {showLineNumbers && (
-          <LineNumbers variant={variant} lineCount={lineCount} />
-        )}
+        <pre
+          {...(rest as DetailedElementProps<HTMLPreElement>)}
+          className={wrapperClassName}
+        >
+          {showLineNumbers && (
+            <LineNumbers variant={variant} lineCount={lineCount} />
+          )}
 
-        {renderedSyntaxComponent}
-      </pre>
-      <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
-        <IconButton variant={variant} ariaLabel={'Copy'} className={buttonStyle}>
-          <Icon glyph='Copy'/>
-        </IconButton>
+          {renderedSyntaxComponent}
+        </pre>
+
+        {!showWindowChrome && (
+          <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
+            <IconButton
+              variant={variant}
+              ariaLabel={'Copy'}
+              className={buttonStyle}
+            >
+              <Icon glyph="Copy" />
+            </IconButton>
+          </div>
+        )}
       </div>
     </div>
   );
