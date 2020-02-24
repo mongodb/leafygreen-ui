@@ -49,7 +49,7 @@ function generateConfig(target) {
       ].includes(id) || /lodash/.test(id),
 
     plugins: [
-      replace({ __TARGET__: target }),
+      replace({ __TARGET__: `'${target}'` }),
 
       commonjs({
         include: /node_modules/,

@@ -32,7 +32,7 @@ module.exports = {
   },
 
   // The test environment that will be used for testing
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   testPathIgnorePatterns: ['/node_modules/'],
@@ -40,10 +40,16 @@ module.exports = {
   // The regexp pattern Jest uses to detect test files
   testRegex: '.spec.[jt]sx?',
 
+  globals: {
+    'ts-jest': {
+      tsConfig: 'jest.tsconfig.json',
+    },
+  },
+
   // A map from regular expressions to paths to transformers
   transform: {
-    '^.+\\.[jt]sx?$': 'babel-jest',
     '.svg': '<rootDir>/__mocks__/svgTransformer.js',
+    '^.+\\.[jt]sx?$': 'ts-jest',
   },
 
   // Ignore transforming node_modules except for:

@@ -1,0 +1,8 @@
+{
+  "extends": "./package.tsconfig.json",
+  "include": ["./packages/**/*", "./typings/**/*"],
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowJs": true
+  }
+}

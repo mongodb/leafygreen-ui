@@ -5,7 +5,6 @@ module.exports = ({ config }) => {
       use: {
         loader: 'babel-loader',
         options: {
-          // Makes Babel treat the directory containing babel.config.js as the project root
           presets: [
             '@babel/preset-typescript',
             '@babel/preset-react',
