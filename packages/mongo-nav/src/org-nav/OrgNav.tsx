@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { LogoMark } from '@leafygreen-ui/logo';
+import { useViewportSize } from '@leafygreen-ui/hooks';
 import Tooltip from '@leafygreen-ui/tooltip';
 import Badge from '@leafygreen-ui/badge';
+import IconButton from '@leafygreen-ui/icon-button';
+import Icon from '@leafygreen-ui/icon';
+import { Menu } from '@leafygreen-ui/menu';
+import { OrgNavLink } from '../helpers/index';
+import { breakpoints, facepaint } from '../breakpoints';
 import {
   AccountInterface,
   OrganizationInterface,
@@ -32,6 +38,7 @@ const navContainer = css`
   line-height: 15px;
   color: ${uiColors.gray.dark3};
   border-bottom: 1px solid ${uiColors.gray.light2};
+  box-sizing: border-box;
 `;
 
 const leftSideContainer = css`
@@ -57,29 +64,30 @@ const ulContainer = css`
   margin: 0; // browser default overrides
 `;
 
-const linkText = css`
-  text-decoration: none;
-  color: ${uiColors.gray.dark3};
-
-  &:focus,
-  &:hover {
-    text-decoration: none;
-    color: ${uiColors.gray.dark3};
-  }
-`;
-
-const activeLink = css`
-  font-weight: bold;
-  color: ${uiColors.green.base};
-`;
-
 const supportContainer = css`
-  margin-left: 30px;
-  margin-right: 30px;
+  ${facepaint({
+    marginRight: ['16px', '16px', '24px'],
+    marginLeft: ['16px', '16px', '24px'],
+  })}
 `;
 
-const rightSideLinkStyle = css`
-  margin-right: 30px;
+const rightLinkMargin = css`
+  ${facepaint({
+    marginRight: ['16px', '16px', '24px'],
+  })}
+`;
+
+const accessManagerMenuContainer = css`
+  padding: 16px;
+  width: 220px;
+`;
+
+const accessManagerMenuItem = css`
+  font-size: 14px;
+  color: ${uiColors.gray.dark2};
+  line-height: 19.6px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 `;
 
 export const Colors = {
@@ -121,6 +129,7 @@ interface OrgNav {
   onOrganizationChange: React.ChangeEventHandler;
   admin: boolean;
   hosts: Required<HostsInterface>;
+  currentProjectName?: string;
 }
 
 export default function OrgNav({
@@ -134,8 +143,13 @@ export default function OrgNav({
   urls,
   admin,
   hosts,
+  currentProjectName,
 }: OrgNav) {
+  const [open, setOpen] = useState(false);
   const { orgNav } = urls;
+  const { width: viewportWidth } = useViewportSize();
+  const isTablet = viewportWidth < breakpoints.medium;
+  const isMobile = viewportWidth < breakpoints.small;
   const disabled = activeNav === 'userSettings';
 
   let paymentVariant: Colors | undefined;
@@ -162,7 +176,19 @@ export default function OrgNav({
       data-testid="organization-nav"
     >
       <div className={leftSideContainer}>
-        <LogoMark height={30} />
+        <Tooltip
+          align="bottom"
+          justify="start"
+          variant="dark"
+          trigger={
+            <span>
+              <LogoMark height={30} />
+            </span>
+          }
+        >
+          View the Organization Home
+        </Tooltip>
+
         <OrgSelect
           className={cx(orgSelectContainer, { [disabledOrgSelect]: disabled })}
           data={data}
@@ -175,7 +201,8 @@ export default function OrgNav({
         />
         {!disabled && (
           <ul className={ulContainer}>
-            {current?.paymentStatus &&
+            {!isTablet &&
+              current?.paymentStatus &&
               paymentVariant &&
               (admin || paymentValues.includes(current.paymentStatus)) && (
                 <li>
@@ -191,67 +218,63 @@ export default function OrgNav({
                 </li>
               )}
 
-            {current && (
+            {!isMobile && current && (
               <>
-                <li role="none">
-                  <Tooltip
-                    align="bottom"
-                    justify="middle"
-                    variant="dark"
-                    trigger={
-                      <a
-                        href={orgNav.accessManager}
-                        className={cx(linkText, {
-                          [activeLink]: activeNav === 'accessManager',
-                        })}
-                        data-testid="org-access-manager"
-                      >
-                        Access Manager
-                      </a>
-                    }
+                <li
+                  role="none"
+                  className={css`
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  `}
+                >
+                  <OrgNavLink
+                    href={orgNav.accessManager}
+                    isActive={activeNav === 'accessManager'}
+                    data-testid="org-access-manager"
                   >
-                    Organization Access Manager
-                  </Tooltip>
+                    Access Manager
+                  </OrgNavLink>
+
+                  <Menu
+                    open={open}
+                    setOpen={setOpen}
+                    trigger={
+                      <IconButton ariaLabel="Dropdown" active={open}>
+                        <Icon glyph={open ? 'CaretUp' : 'CaretDown'} />
+                      </IconButton>
+                    }
+                    className={accessManagerMenuContainer}
+                  >
+                    <p className={accessManagerMenuItem}>
+                      <strong>Organization Access:</strong> {current.orgName}
+                    </p>
+
+                    <p className={accessManagerMenuItem}>
+                      <strong>Project Access:</strong>
+                      {currentProjectName ?? 'None'}
+                    </p>
+                  </Menu>
                 </li>
+
                 <li role="none" className={supportContainer}>
-                  <Tooltip
-                    align="bottom"
-                    justify="middle"
-                    variant="dark"
-                    trigger={
-                      <a
-                        href={orgNav.support}
-                        className={cx(linkText, {
-                          [activeLink]: activeNav === 'support',
-                        })}
-                        data-testid="org-support"
-                      >
-                        Support
-                      </a>
-                    }
+                  <OrgNavLink
+                    href={orgNav.support}
+                    isActive={activeNav === 'support'}
+                    data-testid="org-support"
                   >
-                    Organization Support
-                  </Tooltip>
+                    Support
+                  </OrgNavLink>
                 </li>
+
                 <li role="none">
-                  <Tooltip
-                    align="bottom"
-                    justify="middle"
-                    variant="dark"
-                    trigger={
-                      <a
-                        href={orgNav.billing}
-                        className={cx(linkText, {
-                          [activeLink]: activeNav === 'billing',
-                        })}
-                        data-testid="org-billing"
-                      >
-                        Billing
-                      </a>
-                    }
+                  <OrgNavLink
+                    href={orgNav.billing}
+                    isActive={activeNav === 'billing'}
+                    data-testid="org-billing"
                   >
                     Billing
-                  </Tooltip>
+                  </OrgNavLink>
                 </li>
               </>
             )}
@@ -259,36 +282,28 @@ export default function OrgNav({
         )}
       </div>
       <div>
-        <Tooltip
-          align="bottom"
-          justify="middle"
-          variant="dark"
-          trigger={
-            <a
-              href={orgNav.allClusters}
-              className={cx(rightSideLinkStyle, linkText, {
-                [activeLink]: activeNav === 'allClusters',
-              })}
-              data-testid="all-clusters-link"
-            >
-              All Clusters
-            </a>
-          }
-        >
-          View all clusters across your organizations
-        </Tooltip>
+        {!isMobile && (
+          <OrgNavLink
+            href={orgNav.allClusters}
+            isActive={activeNav === 'allClusters'}
+            className={rightLinkMargin}
+            data-testid="all-clusters-link"
+          >
+            All Clusters
+          </OrgNavLink>
+        )}
 
-        {admin && (
-          <a
+        {!isTablet && admin && (
+          <OrgNavLink
             href={orgNav.admin}
-            className={cx(rightSideLinkStyle, linkText, {
-              [activeLink]: activeNav === 'admin',
-            })}
+            isActive={activeNav === 'admin'}
+            className={rightLinkMargin}
             data-testid="admin-link"
           >
             Admin
-          </a>
+          </OrgNavLink>
         )}
+
         <UserMenu
           account={account}
           activeProduct={activeProduct}

@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 4.1.0
+
+### Minor Changes
+
+- 0bfe2ad: Add active prop to IconButton component
+
 ## 4.0.0
 
 ### Major Changes
