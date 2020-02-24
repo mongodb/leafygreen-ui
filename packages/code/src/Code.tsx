@@ -7,8 +7,11 @@ import Syntax, {
   Language,
   variantColors,
 } from '@leafygreen-ui/syntax';
+import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
 import LineNumbers from './LineNumbers';
 import WindowChrome from './WindowChrome';
+import { uiColors } from '@leafygreen-ui/palette/src';
 
 function stringFragmentIsBlank(str: string): str is '' | ' ' {
   return str === '' || str === ' ';
@@ -70,6 +73,18 @@ const codeWrapperStyleWithWindowChrome = css`
   border-left: 0;
 `;
 
+const copyStyle = css`
+  width: 38px;
+  border: solid 1px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 6px;
+`;
+
+const buttonStyle = css`
+  align-self: center;
+`;
+
 function getWrapperVariantStyle(variant: Variant): string {
   const colors = variantColors[variant];
 
@@ -78,6 +93,21 @@ function getWrapperVariantStyle(variant: Variant): string {
     background-color: ${colors[0]};
     color: ${colors[3]};
   `;
+}
+
+function getSidebarVariantStyle(variant: Variant): string {
+  switch(variant) {
+    case 'light':
+      return css`
+        border-color: ${uiColors.gray.light2};
+        background-color: white;
+      `;
+    case 'dark':
+      return css`
+        border-color: ${uiColors.gray.dark3};
+        background-color: ${uiColors.gray.dark3};
+      `;
+  }
 }
 
 interface CodeProps extends SyntaxProps {
@@ -141,7 +171,7 @@ function Code({
   ...rest
 }: CodeProps) {
   const wrapperStyle = css`
-    display: inline-block;
+    display: flex;
     border: 1px solid ${variantColors[variant][1]};
     border-radius: 4px;
     overflow: hidden;
@@ -198,6 +228,11 @@ function Code({
 
         {renderedSyntaxComponent}
       </pre>
+      <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
+        <IconButton variant={variant} ariaLabel={'Copy'} className={buttonStyle}>
+          <Icon glyph='Copy'/>
+        </IconButton>
+      </div>
     </div>
   );
 }
