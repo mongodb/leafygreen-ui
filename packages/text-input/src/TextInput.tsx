@@ -138,6 +138,8 @@ const inputStyle = css`
   &:focus {
     outline: none;
     z-index: 2;
+    border-color: #9dd0e7;
+    transition: border-color 150ms ease-in-out;
 
     & ~ ${iconSelectorProp.selector} {
       z-index: 2;
