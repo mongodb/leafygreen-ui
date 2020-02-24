@@ -100,6 +100,16 @@ interface MongoNavInterface {
    * Callback that receives the response of the fetched data, having been converted from JSON into an object.
    */
   onSuccess?: (response: DataInterface) => void;
+
+  /**
+   * Whether or not a user is using Ops Manager
+   */
+  isOnPrem?: boolean;
+
+  /**
+   * Callback executed when user logs out
+   */
+  onLogout?: React.MouseEventHandler;
 }
 
 /**
@@ -130,6 +140,8 @@ interface MongoNavInterface {
  * @param props.mode Describes what environment the component is being used in, defaults to `production`.
  * @param props.onSuccess Callback that receives the response of the fetched data, having been converted from JSON into an object.
  * @param props.onError Function that is passed an error code as a string, so that consuming application can handle fetch failures.
+ * @param props.isOnPrem Whether or not a user is using Ops Manager
+ * @param props.onLogout Callback executed when user logs out
  */
 export default function MongoNav({
   activeProduct,
@@ -139,12 +151,14 @@ export default function MongoNav({
   mode = Mode.Production,
   showProjNav = true,
   admin = false,
+  isOnPrem = false,
   hosts: hostsProp,
   urls: urlsProp,
   constructOrganizationURL: constructOrganizationURLProp,
   constructProjectURL: constructProjectURLProp,
   onError = () => {},
   onSuccess = () => {},
+  onLogout = () => {},
 }: MongoNavInterface) {
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
@@ -232,6 +246,14 @@ export default function MongoNav({
       alerts: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#alerts`,
       activityFeed: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#activity`,
     },
+    onPrem: {
+      profile: `${hosts.cloud}/v2#/account/profile`,
+      mfa: `${hosts.cloud}/v2#/preferences/2fa`,
+      personalization: `${hosts.cloud}/v2#/account/personalization`,
+      invitations: `${hosts.cloud}/v2#/preferences/invitations`,
+      organizations: `${hosts.cloud}/v2#/preferences/organizations`,
+      featureRequest: ``,
+    },
   };
 
   const urls = defaultsDeep(urlsProp, defaultURLS);
@@ -267,8 +289,10 @@ export default function MongoNav({
         admin={admin}
         hosts={hosts}
         currentProjectName={currentProject?.projectName}
+        isOnPrem={isOnPrem}
+        onLogout={onLogout}
       />
-      {showProjNav && currentProject && (
+      {showProjNav && !isOnPrem && currentProject && (
         <ProjectNav
           activeProduct={activeProduct}
           current={currentProject}

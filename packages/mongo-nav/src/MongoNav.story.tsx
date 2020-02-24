@@ -25,6 +25,7 @@ storiesOf('MongoNav', module).add('Default', () => (
         onOrganizationChange={() => {}}
         onProjectChange={() => {}}
         admin={boolean('admin', true)}
+        isOnPrem={boolean('isOnPrem', true)}
       />
     </div>
   </LeafygreenProvider>
