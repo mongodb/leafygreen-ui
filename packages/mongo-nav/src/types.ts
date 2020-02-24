@@ -157,7 +157,7 @@ export interface URLSInterface {
     activityFeed?: string;
     invite?: string;
   };
-  onPrem: {
+  onPrem?: {
     profile?: string;
     mfa?: string;
     personalization?: string;

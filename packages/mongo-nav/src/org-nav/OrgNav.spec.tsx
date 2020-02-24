@@ -53,6 +53,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
     expectedElements.billing = queryByTestId('org-billing');
     expectedElements.allClusters = queryByTestId('all-clusters-link');
     expectedElements.admin = queryByTestId('admin-link');
+    expectedElements.version = queryByTestId('onPrem-version');
   };
 
   let onOrganizationChange: jest.Mock;
@@ -84,6 +85,18 @@ describe('packages/mongo-nav/src/org-nav', () => {
         />,
       ),
     );
+  };
+
+  const testForVersion = (isVisible = true) => {
+    it(`${isVisible ? 'displays' : 'does not display'} the version`, () => {
+      const version = expectedElements['version'];
+
+      if (isVisible) {
+        expect(version).toBeInTheDocument();
+      } else {
+        expect(version).toBeNull();
+      }
+    });
   };
 
   const testForPaymentStatus = (isVisible = true) => {
@@ -122,6 +135,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
   describe('when rendered with default props', () => {
     beforeEach(renderComponent);
     testForPaymentStatus(false);
+    testForVersion(false);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, linkName !== 'admin'),
@@ -129,8 +143,13 @@ describe('packages/mongo-nav/src/org-nav', () => {
   });
 
   describe('when rendered with an active preferences nav', () => {
-    beforeEach(() => renderComponent({ activeNav: 'userSettings' }));
+    beforeEach(() =>
+      renderComponent({
+        activeNav: 'userSettings',
+      }),
+    );
     testForPaymentStatus(false);
+    testForVersion(false);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, linkName === 'allClusters'),
@@ -146,9 +165,14 @@ describe('packages/mongo-nav/src/org-nav', () => {
 
   describe('when rendered as an admin with an active preferences nav', () => {
     beforeEach(() =>
-      renderComponent({ activeNav: 'userSettings', admin: true }),
+      renderComponent({
+        activeNav: 'userSettings',
+        admin: true,
+      }),
     );
+
     testForPaymentStatus(false);
+    testForVersion(false);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, ['allClusters', 'admin'].includes(linkName)),
@@ -156,11 +180,15 @@ describe('packages/mongo-nav/src/org-nav', () => {
   });
 
   describe('when rendered onPrem', () => {
-    beforeEach(() => renderComponent({ isOnPrem: true }));
-    console.log(document.innerHTML);
-    // testForPaymentStatus(true);
-    // Object.keys(linkNamesToUrls).forEach(linkName =>
-    //   testForNavLink(linkName, linkName !== 'billing'),
-    // );
+    beforeEach(() =>
+      renderComponent({ isOnPrem: true, admin: true, version: '4.4.0' }),
+    );
+
+    testForPaymentStatus(true);
+    testForVersion(true);
+
+    Object.keys(linkNamesToUrls).forEach(linkName =>
+      testForNavLink(linkName, linkName !== 'billing'),
+    );
   });
 });

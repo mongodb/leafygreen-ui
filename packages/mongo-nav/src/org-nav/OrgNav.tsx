@@ -89,12 +89,6 @@ const accessManagerMenuItem = css`
   margin-bottom: 0px;
 `;
 
-const onPremMenuWrapper = css`
-  display: inline-block;
-  position: relative;
-  z-index: 0;
-`;
-
 const versionStyle = css`
   color: ${uiColors.green.base};
   display: inline-block;
@@ -146,6 +140,7 @@ interface OrgNav {
   currentProjectName?: string;
   isOnPrem?: boolean;
   onLogout?: React.MouseEventHandler;
+  version?: string;
 }
 
 export default function OrgNav({
@@ -162,6 +157,7 @@ export default function OrgNav({
   currentProjectName,
   isOnPrem,
   onLogout,
+  version,
 }: OrgNav) {
   const [accessManagerOpen, setAccessManagerOpen] = useState(false);
   const [onPremMenuOpen, setOnPremMenuOpen] = useState(false);
@@ -308,6 +304,12 @@ export default function OrgNav({
         )}
       </div>
       <div>
+        {isOnPrem && version && (
+          <div className={versionStyle} data-testid="onPrem-version">
+            {version}
+          </div>
+        )}
+
         {!isMobile && (
           <OrgNavLink
             href={orgNav.allClusters}
@@ -331,7 +333,13 @@ export default function OrgNav({
         )}
 
         {isOnPrem ? (
-          <div className={onPremMenuWrapper}>
+          <div
+            className={css`
+              display: inline-block;
+              position: relative;
+              z-index: 0;
+            `}
+          >
             <UserMenuTrigger
               name={account.firstName}
               open={onPremMenuOpen}
