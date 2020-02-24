@@ -15,10 +15,6 @@ function createEmotionInstance() {
     key: 'leafygreen-ui',
   };
 
-  // TypeScript will always throw an error here in non-web builds
-  // since we replace __TARGET__ with the actual value.
-  //
-  // @ts-ignore
   if (['web', 'esm'].includes(__TARGET__)) {
     config.container = document.createElement('div');
 
