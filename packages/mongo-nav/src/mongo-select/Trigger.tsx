@@ -254,7 +254,6 @@ export function ProjectTrigger({
   children,
   placeholder,
   open = false,
-  disabled = false,
   loading = false,
   ...rest
 }: ProjectTriggerProps) {
@@ -274,7 +273,7 @@ export function ProjectTrigger({
           [activeButtonColor]: open,
           [textLoadingStyle]: loading,
         })}
-        aria-disabled={disabled || loading}
+        aria-disabled={loading}
       >
         <Icon
           glyph="Bell"
