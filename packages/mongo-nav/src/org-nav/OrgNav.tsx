@@ -89,6 +89,21 @@ const accessManagerMenuItem = css`
   margin-bottom: 0px;
 `;
 
+const onPremMenuWrapper = css`
+  display: inline-block;
+  position: relative;
+  z-index: 0;
+`;
+
+const versionStyle = css`
+  color: ${uiColors.green.base};
+  display: inline-block;
+  font-size: 10px;
+  ${facepaint({
+    marginRight: ['96px', '24px', '24px'],
+  })}
+`;
+
 export const Colors = {
   Lightgray: 'lightgray',
   Green: 'green',
@@ -316,13 +331,7 @@ export default function OrgNav({
         )}
 
         {isOnPrem ? (
-          <div
-            className={css`
-              display: inline-block;
-              position: relative;
-              z-index: 0;
-            `}
-          >
+          <div className={onPremMenuWrapper}>
             <UserMenuTrigger
               name={account.firstName}
               open={onPremMenuOpen}
