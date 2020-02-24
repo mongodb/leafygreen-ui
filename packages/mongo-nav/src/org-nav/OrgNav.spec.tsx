@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import {
   dataFixtures,
@@ -56,6 +56,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
     expectedElements.version = queryByTestId('org-nav-on-prem-version');
     expectedElements.userMenu = queryByTestId('user-menu-trigger');
     expectedElements.onPremUserMenu = queryByTestId('om-user-menu-trigger');
+    expectedElements.onPremUserMenuMFA = queryByTestId('om-user-menuitem-mfa');
   };
 
   let onOrganizationChange: jest.Mock;
@@ -133,6 +134,22 @@ describe('packages/mongo-nav/src/org-nav', () => {
     });
   };
 
+  const testForMFA = (isVisible = true) => {
+    it(`${isVisible ? 'displays' : 'does not display'} the MFA option`, () => {
+      const onPremUserMenu = expectedElements['onPremUserMenu'];
+      fireEvent.click(onPremUserMenu as Element);
+      setExpectedElements();
+
+      const onPremUserMenuMFA = expectedElements['onPremUserMenuMFA'];
+
+      if (isVisible) {
+        expect(onPremUserMenuMFA).toBeInTheDocument();
+      } else {
+        expect(onPremUserMenuMFA).toBeNull();
+      }
+    });
+  };
+
   const testForNavLink = (linkName: string, isVisible = true) => {
     it(`${isVisible ? 'displays' : 'does not display'} the ${startCase(
       linkName,
@@ -199,16 +216,26 @@ describe('packages/mongo-nav/src/org-nav', () => {
   });
 
   describe('when rendered onPrem', () => {
-    beforeEach(() =>
-      renderComponent({ isOnPrem: true, admin: true, version: '4.4.0' }),
-    );
+    beforeEach(() => renderComponent({ isOnPrem: true, version: '4.4.0' }));
 
     testForPaymentStatus(false);
     testForVersion(true);
     testForUserMenu(false);
+    testForMFA(false);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, ['billing', 'admin'].indexOf(linkName) === -1),
     );
+  });
+
+  describe('when rendered onPrem and onPremMFA is true', () => {
+    beforeEach(() =>
+      renderComponent({
+        isOnPrem: true,
+        onPremMFA: true,
+      }),
+    );
+
+    testForMFA(true);
   });
 });
