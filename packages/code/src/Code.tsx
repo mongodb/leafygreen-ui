@@ -11,6 +11,7 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LineNumbers from './LineNumbers';
 import WindowChrome from './WindowChrome';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 function stringFragmentIsBlank(str: string): str is '' | ' ' {
   return str === '' || str === ' ';
@@ -236,13 +237,15 @@ function Code({
 
         {!showWindowChrome && (
           <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
-            <IconButton
-              variant={variant}
-              ariaLabel={'Copy'}
-              className={buttonStyle}
-            >
-              <Icon glyph="Copy" />
-            </IconButton>
+            <CopyToClipboard text={content} onCopy={() => { console.log('hello world') }}>
+              <IconButton
+                variant={variant}
+                ariaLabel={'Copy'}
+                className={buttonStyle}
+              >
+                <Icon glyph="Copy" />
+              </IconButton>
+            </CopyToClipboard>
           </div>
         )}
       </div>
