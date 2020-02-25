@@ -5,7 +5,7 @@ import { css } from '@leafygreen-ui/emotion';
 import TextInput from '.';
 
 const wrapperStyle = css`
-  width:400px;
+  width: 400px;
 `;
 
 storiesOf('TextInput', module).add('Default', () => (
