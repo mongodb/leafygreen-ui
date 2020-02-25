@@ -116,6 +116,7 @@ export default function UserMenuTrigger({
   open,
   name,
   setOpen,
+  ...rest
 }: UserMenuTriggerProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -132,6 +133,7 @@ export default function UserMenuTrigger({
   return (
     <>
       <button
+        {...rest}
         {...buttonDataProp.prop}
         ref={buttonRef}
         className={cx(baseButtonStyles, {
