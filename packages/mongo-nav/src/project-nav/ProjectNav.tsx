@@ -31,6 +31,8 @@ const navContainerStyle = css`
   box-shadow: 0 3px 7px 0 rgba(67, 117, 151, 0.08);
   box-sizing: border-box;
   background-color: white;
+  position: relative;
+  z-index: 0;
 `;
 
 const mongoSelectWrapper = css`
@@ -160,8 +162,6 @@ const productTextStyle = css`
 `;
 
 const iconButtonMargin = css`
-  position: relative;
-  z-index: 1;
   ${facepaint({
     marginRight: ['16px', '16px', '20px'],
   })}
@@ -185,6 +185,11 @@ const alertBadgeStyle = css`
 const productIconStyle = css`
   margin-right: 4px;
   color: ${uiColors.gray.base};
+`;
+
+const tooltipStyles = css`
+  width: 150px;
+  text-align: center;
 `;
 
 interface ProjectNavInterface {
@@ -219,6 +224,12 @@ export default function ProjectNav({
       [activeProductColor]: activeProduct === product,
       [focusProductColor]: showFocus,
     });
+
+  const sharedTooltipProps = {
+    variant: 'dark',
+    usePortal: false,
+    className: tooltipStyles,
+  } as const;
 
   return (
     <nav
@@ -309,14 +320,9 @@ export default function ProjectNav({
           `}
         >
           <Tooltip
+            {...sharedTooltipProps}
             align="bottom"
             justify="middle"
-            variant="dark"
-            usePortal={false}
-            className={css`
-              width: 150px;
-              text-align: center;
-            `}
             trigger={
               <IconButton
                 ariaLabel="Invite"
@@ -332,14 +338,9 @@ export default function ProjectNav({
           </Tooltip>
 
           <Tooltip
+            {...sharedTooltipProps}
             align="bottom"
-            variant="dark"
             justify="middle"
-            usePortal={false}
-            className={css`
-              width: 150px;
-              text-align: center;
-            `}
             trigger={
               <IconButton
                 ariaLabel="Project Activity Feed"
@@ -355,14 +356,9 @@ export default function ProjectNav({
           </Tooltip>
 
           <Tooltip
+            {...sharedTooltipProps}
             align="bottom"
             justify="end"
-            variant="dark"
-            usePortal={false}
-            className={css`
-              width: 150px;
-              text-align: center;
-            `}
             trigger={
               <IconButton
                 ariaLabel="Alerts"

@@ -186,9 +186,9 @@ export default function OrgNav({
           justify="start"
           variant="dark"
           trigger={
-            <span>
+            <a href="/">
               <LogoMark height={30} />
-            </span>
+            </a>
           }
         >
           View the Organization Home
@@ -204,6 +204,7 @@ export default function OrgNav({
           isActive={activeNav === 'orgSettings'}
           disabled={disabled}
         />
+
         {!disabled && (
           <ul className={ulContainer}>
             {!isTablet &&

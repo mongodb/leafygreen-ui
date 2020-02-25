@@ -55,7 +55,6 @@ const projectButtonStyles = css`
   padding: 2px;
   width: 174px;
   height: 28px;
-  z-index: 1;
 
   ${facepaint({
     width: ['196px', '106px', '106px'],
@@ -124,6 +123,7 @@ const orgTriggerBorderRadius = css`
 const projectTriggerWrapper = css`
   margin-left: 16px;
   margin-right: 2px;
+  z-index: 1;
 
   ${facepaint({
     marginLeft: ['16px', '0px', '16px'],
