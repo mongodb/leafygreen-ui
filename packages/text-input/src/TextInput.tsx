@@ -120,7 +120,7 @@ const inputContainerStyle = css`
 `;
 
 const inputStyle = css`
-  width: 400px;
+  width: 100%;
   height: 36px;
   border-radius: 4px;
   padding-left: 12px;
@@ -279,7 +279,7 @@ const TextInput = React.forwardRef(
     }
 
     return (
-      <div className={cx(textInputStyle, labelStyle, className)}>
+      <div className={cx(textInputStyle, className)}>
         <label htmlFor={id} className={labelStyle}>
           {label}
         </label>
