@@ -132,6 +132,27 @@ function getCopyButtonStyle(variant: Variant, copied: boolean): string {
   `;
 }
 
+function getScrollShadowStyle(canScrollLeft: boolean, canScrollRight: boolean): string {
+
+  if (canScrollLeft && canScrollRight) {
+  
+  }
+
+  if (canScrollLeft) {
+    return css`
+      box-shadow: inset 8px 0 10px -6px #888;
+    `;
+  }
+
+  if (canScrollRight) {
+    return css`
+      box-shadow: inset -8px 0 10px -6px #888;
+    `;
+  }
+
+  return '';  
+}
+
 interface CodeProps extends SyntaxProps {
   /**
    * Shows line numbers in preformatted code blocks.
@@ -193,6 +214,8 @@ function Code({
   ...rest
 }: CodeProps) {
   const [copied, setCopied] = useState(false);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
   const wrapperStyle = css`
     display: block;
     border: 1px solid ${variantColors[variant][1]};
@@ -208,6 +231,7 @@ function Code({
       [codeWrapperStyleWithWindowChrome]: showWindowChrome,
     },
     className,
+    getScrollShadowStyle(canScrollLeft, canScrollRight)
   );
 
   const { content, lineCount } = useProcessedCodeSnippet(children);
@@ -221,6 +245,26 @@ function Code({
       {content}
     </Syntax>
   );
+
+  function handleScroll(e: React.UIEvent) {
+    const scrollWidth = e.currentTarget.scrollWidth;
+    const scrollPosition = e.currentTarget.scrollLeft;
+    if (scrollPosition !== scrollWidth) {
+      setCanScrollRight(true);
+      // console.log('can scroll left');
+    }
+    else {
+      setCanScrollRight(false);
+    }
+
+    if (scrollPosition !== 0) {
+      setCanScrollLeft(true);
+      // console.log('can scroll right');
+    }
+    else {
+      setCanScrollLeft(false);
+    }
+  }  
 
   if (!multiline) {
     return (
@@ -248,6 +292,7 @@ function Code({
         <pre
           {...(rest as DetailedElementProps<HTMLPreElement>)}
           className={wrapperClassName}
+          onScroll={handleScroll}
         >
           {showLineNumbers && (
             <LineNumbers variant={variant} lineCount={lineCount} />
