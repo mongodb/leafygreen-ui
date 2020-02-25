@@ -76,7 +76,7 @@ const codeWrapperStyleWithWindowChrome = css`
 
 const copyStyle = css`
   width: 38px;
-  border: solid 1px;
+  border-left: solid 1px;
   display: flex;
   flex-direction: column;
   padding-top: 6px;
@@ -113,18 +113,22 @@ function getCopyButtonStyle(variant: Variant, copied: boolean): string {
   if (copied) {
     return css`
       align-self: center;
-      color: ${uiColors.green.base};
+      color: ${uiColors.white};
+      background-color: ${uiColors.green.base};
     `;
   }
 
   if (variant === Variant.Dark) {
     return css`
       align-self: center;
+      color: ${uiColors.gray.base};
+      background-color: ${uiColors.gray.dark3};
     `;
   }
 
   return css`
     align-self: center;
+    color: ${uiColors.gray.base};
   `;
 }
 
