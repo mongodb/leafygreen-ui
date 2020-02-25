@@ -132,10 +132,14 @@ function getCopyButtonStyle(variant: Variant, copied: boolean): string {
   `;
 }
 
-function getScrollShadowStyle(canScrollLeft: boolean, canScrollRight: boolean): string {
-
+function getScrollShadowStyle(
+  canScrollLeft: boolean,
+  canScrollRight: boolean,
+): string {
   if (canScrollLeft && canScrollRight) {
-  
+    return css`
+      box-shadow: inset 8px 0 10px -6px #888;
+    `;
   }
 
   if (canScrollLeft) {
@@ -150,7 +154,7 @@ function getScrollShadowStyle(canScrollLeft: boolean, canScrollRight: boolean): 
     `;
   }
 
-  return '';  
+  return '';
 }
 
 interface CodeProps extends SyntaxProps {
@@ -231,7 +235,7 @@ function Code({
       [codeWrapperStyleWithWindowChrome]: showWindowChrome,
     },
     className,
-    getScrollShadowStyle(canScrollLeft, canScrollRight)
+    getScrollShadowStyle(canScrollLeft, canScrollRight),
   );
 
   const { content, lineCount } = useProcessedCodeSnippet(children);
@@ -249,22 +253,21 @@ function Code({
   function handleScroll(e: React.UIEvent) {
     const scrollWidth = e.currentTarget.scrollWidth;
     const scrollPosition = e.currentTarget.scrollLeft;
+
     if (scrollPosition !== scrollWidth) {
       setCanScrollRight(true);
       // console.log('can scroll left');
-    }
-    else {
+    } else {
       setCanScrollRight(false);
     }
 
     if (scrollPosition !== 0) {
       setCanScrollLeft(true);
       // console.log('can scroll right');
-    }
-    else {
+    } else {
       setCanScrollLeft(false);
     }
-  }  
+  }
 
   if (!multiline) {
     return (
