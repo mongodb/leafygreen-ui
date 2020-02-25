@@ -1,7 +1,5 @@
 # LeafyGreen UI Kit
 
-[![Build Status](https://img.shields.io/circleci/project/github/mongodb/leafygreen-ui/master.svg)](https://circleci.com/gh/mongodb/leafygreen-ui)
-
 A set of CSS styles and React components built with design in mind.
 
 ## Package Table of Contents
