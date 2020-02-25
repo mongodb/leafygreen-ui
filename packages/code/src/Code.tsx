@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Syntax, {
@@ -172,6 +172,7 @@ function Code({
   chromeTitle = '',
   ...rest
 }: CodeProps) {
+  const [copied, setCopied] = useState(false);
   const wrapperStyle = css`
     display: block;
     border: 1px solid ${variantColors[variant][1]};
@@ -237,13 +238,18 @@ function Code({
 
         {!showWindowChrome && (
           <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
-            <CopyToClipboard text={content} onCopy={() => { console.log('hello world') }}>
+            <CopyToClipboard
+              text={content}
+              onCopy={() => {
+                setCopied(true);
+              }}
+            >
               <IconButton
                 variant={variant}
                 ariaLabel={'Copy'}
                 className={buttonStyle}
               >
-                <Icon glyph="Copy" />
+                <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
               </IconButton>
             </CopyToClipboard>
           </div>
