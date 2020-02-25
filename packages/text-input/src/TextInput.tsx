@@ -98,16 +98,16 @@ const labelStyle = css`
   color: ${uiColors.gray.dark2};
   font-size: 14px;
   font-weight: bold;
-  height: 20px;
-  padding-bottom: 8px;
+  line-height: 16px;
+  padding-bottom: 4px;
 `;
 
 const descriptionStyle = css`
   color: ${uiColors.gray.dark1};
   font-size: 14px;
-  height: 20px;
+  line-height: 16px;
   font-weight: normal;
-  padding-bottom: 8px;
+  padding-bottom: 4px;
   margin-top: 0px;
   margin-bottom: 0px;
 `;
