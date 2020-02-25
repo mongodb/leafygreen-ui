@@ -54,7 +54,7 @@ interface MenuProps
    */
   shouldClose?: () => boolean;
 
-  children: Array<React.ReactElement>;
+  children: React.ReactNode;
 }
 
 /**
@@ -107,7 +107,7 @@ function Menu({
   const { setUsingKeyboard } = useUsingKeyboardContext();
 
   function updateChildren(
-    children: Array<React.ReactElement>,
+    children: React.ReactElement | Array<React.ReactElement>,
   ): Array<React.ReactElement> {
     return React.Children.map(children, (child: React.ReactElement) => {
       if (child.props?.disabled) {
@@ -225,13 +225,16 @@ function Menu({
     }
   }, [currentSubMenu]);
 
-  const updatedChildren = React.useMemo(() => updateChildren(children), [
-    children,
-    focused,
-    currentSubMenu,
-    open,
-    refs,
-  ]);
+  const updatedChildren = React.useMemo(() => {
+    if (
+      children == null ||
+      ['boolean', 'number', 'string'].includes(typeof children)
+    ) {
+      return;
+    }
+
+    return updateChildren(children);
+  }, [children, focused, currentSubMenu, open, refs]);
 
   const popoverRef: React.RefObject<HTMLUListElement> = useRef(null);
 

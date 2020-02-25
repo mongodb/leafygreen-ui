@@ -45,6 +45,12 @@ const flexContainer = css`
   align-items: center;
 `;
 
+const leftWrapper = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const orgSelectContainer = css`
   margin-left: 20px;
   margin-right: 20px;
@@ -201,12 +207,14 @@ export default function OrgNav({
     paymentVariant &&
     (admin || paymentValues.includes(current.paymentStatus))
   ) {
+    const badgeMargin = css`
+      margin-right: 25px;
+    `;
+
     badgeItem = (
       <li>
         <Badge
-          className={css`
-            margin-right: 25px;
-          `}
+          className={badgeMargin}
           variant={paymentVariant}
           data-testid="org-nav-payment-status"
         >
@@ -248,20 +256,14 @@ export default function OrgNav({
           disabled={disabled}
           isOnPrem={isOnPrem}
         />
+
         {!disabled && (
           <ul className={ulContainer}>
             {badgeItem}
 
             {!isMobile && (
               <>
-                <li
-                  role="none"
-                  className={css`
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                  `}
-                >
+                <li role="none" className={leftWrapper}>
                   <OrgNavLink
                     href={current && orgNav.accessManager}
                     isActive={activeNav === 'accessManager'}
@@ -277,6 +279,7 @@ export default function OrgNav({
                     disabled={!current}
                   >
                     <Icon glyph={accessManagerOpen ? 'CaretUp' : 'CaretDown'} />
+
                     {current && (
                       <Menu
                         open={accessManagerOpen}
@@ -325,11 +328,12 @@ export default function OrgNav({
           </ul>
         )}
       </div>
+
       <div className={flexContainer}>
         {isOnPrem && version && (
-          <div className={versionStyle} data-testid="org-nav-on-prem-version">
+          <span className={versionStyle} data-testid="org-nav-on-prem-version">
             {version}
-          </div>
+          </span>
         )}
 
         {!isMobile && (
@@ -369,40 +373,44 @@ export default function OrgNav({
               >
                 Profile
               </MenuItem>
-              {onPremMFA ? (
+
+              {onPremMFA && (
                 <MenuItem
                   href={urls.onPrem.mfa}
                   data-testid="om-user-menuitem-mfa"
                 >
                   Two-factor Authentication
                 </MenuItem>
-              ) : (
-                <></> // Have to fix typing in Menu to allow for a non-React Element here
               )}
+
               <MenuItem
                 href={urls.onPrem.personalization}
                 data-testid="om-user-menuitem-personalization"
               >
                 Personalization
               </MenuItem>
+
               <MenuItem
                 href={urls.onPrem.invitations}
                 data-testid="om-user-menuitem-invitations"
               >
                 Invitations
               </MenuItem>
+
               <MenuItem
                 href={urls.onPrem.organizations}
                 data-testid="om-user-menuitem-organizations"
               >
                 Organizations
               </MenuItem>
+
               <MenuItem
                 href={urls.onPrem.featureRequest}
                 data-testid="om-user-menuitem-feature-request"
               >
                 Feature Request
               </MenuItem>
+
               <MenuItem
                 onClick={onLogout}
                 data-testid="om-user-menuitem-sign-out"
