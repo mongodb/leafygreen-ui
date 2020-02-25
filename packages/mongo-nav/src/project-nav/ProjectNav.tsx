@@ -158,13 +158,6 @@ const productStyle = css`
   }
 `;
 
-const iconButtonContainer = css`
-  display: flex;
-  align-items: center;
-  flex-grow: 1;
-  justify-content: flex-end;
-`;
-
 const iconButtonMargin = css`
   ${facepaint({
     marginRight: ['16px', '16px', '20px'],

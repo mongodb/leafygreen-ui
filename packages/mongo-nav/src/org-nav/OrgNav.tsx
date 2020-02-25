@@ -29,7 +29,7 @@ const navContainer = css`
   height: ${orgNavHeight}px;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   align-items: center;
   padding-left: 15px;
   padding-right: 15px;
@@ -40,17 +40,6 @@ const navContainer = css`
   box-sizing: border-box;
 `;
 
-const flexContainer = css`
-  display: flex;
-  align-items: center;
-`;
-
-const leftWrapper = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 const orgSelectContainer = css`
   margin-left: 20px;
   margin-right: 20px;
@@ -59,15 +48,6 @@ const orgSelectContainer = css`
 const disabledOrgSelect = css`
   cursor: default;
   pointer-events: none;
-`;
-
-const ulContainer = css`
-  list-style: none;
-  display: flex;
-  align-items: center;
-  flex-grow: 1;
-  padding-inline-start: 0px;
-  margin: 0; // browser default overrides
 `;
 
 const supportContainer = css`
@@ -213,19 +193,17 @@ export default function OrgNav({
     `;
 
     badgeItem = (
-      <li>
-        <Badge
-          className={badgeMargin}
-          variant={paymentVariant}
-          data-testid="org-nav-payment-status"
-        >
-          {current.paymentStatus.split('_').join()}
-        </Badge>
-      </li>
+      <Badge
+        className={badgeMargin}
+        variant={paymentVariant}
+        data-testid="org-nav-payment-status"
+      >
+        {current.paymentStatus.split('_').join()}
+      </Badge>
     );
   }
 
-  const omUserMenu = (
+  const renderedUserMenu = isOnPrem ? (
     <div className={onPremMenuWrapper}>
       <UserMenuTrigger
         name={account?.firstName ?? ''}
@@ -233,6 +211,7 @@ export default function OrgNav({
         setOpen={setOnPremMenuOpen}
         data-testid="om-user-menu-trigger"
       />
+
       <Menu open={onPremMenuOpen} setOpen={setOnPremMenuOpen}>
         <MenuItem
           href={urls.onPrem.profile}
@@ -280,6 +259,14 @@ export default function OrgNav({
         </MenuItem>
       </Menu>
     </div>
+  ) : (
+    <UserMenu
+      account={account}
+      activeProduct={activeProduct}
+      urls={urls}
+      hosts={hosts}
+      onLogout={onLogout}
+    />
   );
 
   return (
@@ -315,114 +302,105 @@ export default function OrgNav({
       />
 
       {!disabled && (
-        <ul className={ulContainer}>
+        <>
           {badgeItem}
 
           {!isMobile && (
             <>
-              <li role="none" className={leftWrapper}>
-                <OrgNavLink
-                  href={current && orgNav.accessManager}
-                  isActive={activeNav === 'accessManager'}
-                  loading={!current}
-                  data-testid="org-nav-access-manager"
-                >
-                  Access Manager
-                </OrgNavLink>
+              <OrgNavLink
+                href={current && orgNav.accessManager}
+                isActive={activeNav === 'accessManager'}
+                loading={!current}
+                data-testid="org-nav-access-manager"
+              >
+                Access Manager
+              </OrgNavLink>
 
-                <IconButton
-                  ariaLabel="Dropdown"
-                  active={accessManagerOpen}
-                  disabled={!current}
-                >
-                  <Icon glyph={accessManagerOpen ? 'CaretUp' : 'CaretDown'} />
+              <IconButton
+                ariaLabel="Dropdown"
+                active={accessManagerOpen}
+                disabled={!current}
+              >
+                <Icon glyph={accessManagerOpen ? 'CaretUp' : 'CaretDown'} />
 
-                  {current && (
-                    <Menu
-                      open={accessManagerOpen}
-                      setOpen={setAccessManagerOpen}
-                      className={accessManagerMenuContainer}
-                    >
-                      <p className={accessManagerMenuItem}>
-                        <strong>Organization Access:</strong> {current.orgName}
-                      </p>
+                {current && (
+                  <Menu
+                    open={accessManagerOpen}
+                    setOpen={setAccessManagerOpen}
+                    className={accessManagerMenuContainer}
+                  >
+                    <p className={accessManagerMenuItem}>
+                      <strong>Organization Access:</strong> {current.orgName}
+                    </p>
 
-                      <p className={accessManagerMenuItem}>
-                        <strong>Project Access:</strong>
-                        {currentProjectName ?? 'None'}
-                      </p>
-                    </Menu>
-                  )}
-                </IconButton>
-              </li>
+                    <p className={accessManagerMenuItem}>
+                      <strong>Project Access:</strong>
+                      {currentProjectName ?? 'None'}
+                    </p>
+                  </Menu>
+                )}
+              </IconButton>
 
-              <li role="none" className={supportContainer}>
-                <OrgNavLink
-                  href={current && orgNav.support}
-                  isActive={activeNav === 'support'}
-                  loading={!current}
-                  data-testid="org-nav-support"
-                >
-                  Support
-                </OrgNavLink>
-              </li>
+              <OrgNavLink
+                href={current && orgNav.support}
+                isActive={activeNav === 'support'}
+                loading={!current}
+                className={supportContainer}
+                data-testid="org-nav-support"
+              >
+                Support
+              </OrgNavLink>
 
               {!isOnPrem && (
-                <li role="none">
-                  <OrgNavLink
-                    href={current && orgNav.billing}
-                    isActive={activeNav === 'billing'}
-                    loading={!current}
-                    data-testid="org-nav-billing"
-                  >
-                    Billing
-                  </OrgNavLink>
-                </li>
+                <OrgNavLink
+                  href={current && orgNav.billing}
+                  isActive={activeNav === 'billing'}
+                  loading={!current}
+                  data-testid="org-nav-billing"
+                >
+                  Billing
+                </OrgNavLink>
               )}
             </>
           )}
-        </ul>
+        </>
       )}
 
-      {isOnPrem && version && (
-        <span className={versionStyle} data-testid="org-nav-on-prem-version">
-          {version}
-        </span>
-      )}
+      <div
+        className={css`
+          margin-left: auto;
+        `}
+      >
+        {isOnPrem && version && (
+          <span className={versionStyle} data-testid="org-nav-on-prem-version">
+            {version}
+          </span>
+        )}
 
-      {!isMobile && (
-        <OrgNavLink
-          href={orgNav.allClusters}
-          isActive={activeNav === 'allClusters'}
-          className={rightLinkMargin}
-          data-testid="org-nav-all-clusters-link"
-        >
-          All Clusters
-        </OrgNavLink>
-      )}
+        {!isMobile && (
+          <OrgNavLink
+            href={orgNav.allClusters}
+            isActive={activeNav === 'allClusters'}
+            className={rightLinkMargin}
+            data-testid="org-nav-all-clusters-link"
+          >
+            All Clusters
+          </OrgNavLink>
+        )}
 
-      {!isTablet && admin && !isOnPrem && (
-        <OrgNavLink
-          href={orgNav.admin}
-          isActive={activeNav === 'admin'}
-          className={rightLinkMargin}
-          data-testid="org-nav-admin-link"
-        >
-          Admin
-        </OrgNavLink>
-      )}
+        {!isTablet && admin && !isOnPrem && (
+          <OrgNavLink
+            href={orgNav.admin}
+            isActive={activeNav === 'admin'}
+            className={rightLinkMargin}
+            data-testid="org-nav-admin-link"
+          >
+            Admin
+          </OrgNavLink>
+        )}
+      </div>
 
-      {isOnPrem ? (
-        omUserMenu
-      ) : (
-        <UserMenu
-          account={account}
-          activeProduct={activeProduct}
-          urls={urls}
-          hosts={hosts}
-          onLogout={onLogout}
-        />
-      )}
+      {renderedUserMenu}
     </nav>
   );
 }

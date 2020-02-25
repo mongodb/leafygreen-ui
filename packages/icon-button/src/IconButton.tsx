@@ -101,6 +101,8 @@ const baseIconButtonStyle = css`
   color: ${uiColors.gray.base};
   position: relative;
   cursor: pointer;
+  background-color: rgba(255, 255, 255, 0);
+
   &:before {
     content: '';
     transition: 150ms all ease-in-out;
@@ -113,11 +115,13 @@ const baseIconButtonStyle = css`
     opacity: 0;
     transform: scale(0.8);
   }
+
   &:hover:before,
   &:focus:before {
     opacity: 1;
     transform: scale(1);
   }
+
   &:focus {
     outline: none;
   }
