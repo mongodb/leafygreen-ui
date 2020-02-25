@@ -12,6 +12,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import LineNumbers from './LineNumbers';
 import WindowChrome from './WindowChrome';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { uiColors } from '@leafygreen-ui/palette/src';
 
 function stringFragmentIsBlank(str: string): str is '' | ' ' {
   return str === '' || str === ' ';
@@ -81,10 +82,6 @@ const copyStyle = css`
   padding-top: 6px;
 `;
 
-const buttonStyle = css`
-  align-self: center;
-`;
-
 function getWrapperVariantStyle(variant: Variant): string {
   const colors = variantColors[variant];
 
@@ -110,6 +107,25 @@ function getSidebarVariantStyle(variant: Variant): string {
         background-color: ${colors[1]};
       `;
   }
+}
+
+function getCopyButtonStyle(variant: Variant, copied: boolean): string {
+  if (copied) {
+    return css`
+      align-self: center;
+      color: ${uiColors.green.base};
+    `;
+  }
+
+  if (variant === Variant.Dark) {
+    return css`
+      align-self: center;
+    `;
+  }
+
+  return css`
+    align-self: center;
+  `;
 }
 
 interface CodeProps extends SyntaxProps {
@@ -247,7 +263,7 @@ function Code({
               <IconButton
                 variant={variant}
                 ariaLabel={'Copy'}
-                className={buttonStyle}
+                className={getCopyButtonStyle(variant, copied)}
               >
                 <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
               </IconButton>
