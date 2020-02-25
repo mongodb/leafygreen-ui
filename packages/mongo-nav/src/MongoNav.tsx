@@ -32,6 +32,8 @@ const ErrorCodeMap = {
 const navContainerStyle = css`
   background-color: ${uiColors.white};
   box-shadow: 0 3px 7px 0 rgba(67, 117, 151, 0.08);
+  z-index: 0;
+  position: relative;
 `;
 
 interface MongoNavInterface {

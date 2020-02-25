@@ -39,6 +39,9 @@ const navContainer = css`
   color: ${uiColors.gray.dark3};
   border-bottom: 1px solid ${uiColors.gray.light2};
   box-sizing: border-box;
+  z-index: 1;
+  position: relative;
+  background-color: white;
 `;
 
 const leftSideContainer = css`
@@ -80,6 +83,8 @@ const rightLinkMargin = css`
 const accessManagerMenuContainer = css`
   padding: 16px;
   width: 220px;
+  background-color: white;
+  text-align: left;
 `;
 
 const accessManagerMenuItem = css`
@@ -236,25 +241,29 @@ export default function OrgNav({
                     Access Manager
                   </OrgNavLink>
 
-                  <Menu
-                    open={open}
-                    setOpen={setOpen}
-                    trigger={
-                      <IconButton ariaLabel="Dropdown" active={open}>
-                        <Icon glyph={open ? 'CaretUp' : 'CaretDown'} />
-                      </IconButton>
-                    }
-                    className={accessManagerMenuContainer}
+                  <IconButton
+                    ariaLabel="Dropdown"
+                    active={open}
+                    onClick={() => setOpen(curr => !curr)}
                   >
-                    <p className={accessManagerMenuItem}>
-                      <strong>Organization Access:</strong> {current.orgName}
-                    </p>
+                    <Icon glyph={open ? 'CaretUp' : 'CaretDown'} />
 
-                    <p className={accessManagerMenuItem}>
-                      <strong>Project Access:</strong>
-                      {currentProjectName ?? 'None'}
-                    </p>
-                  </Menu>
+                    <Menu
+                      open={open}
+                      setOpen={setOpen}
+                      usePortal={false}
+                      className={accessManagerMenuContainer}
+                    >
+                      <p className={accessManagerMenuItem}>
+                        <strong>Organization Access:</strong> {current.orgName}
+                      </p>
+
+                      <p className={accessManagerMenuItem}>
+                        <strong>Project Access: </strong>
+                        {currentProjectName ?? 'None'}
+                      </p>
+                    </Menu>
+                  </IconButton>
                 </li>
 
                 <li role="none" className={supportContainer}>

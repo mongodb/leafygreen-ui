@@ -110,12 +110,14 @@ interface UserMenuTriggerProps {
   name: string;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  children?: React.ReactElement;
 }
 
 export default function UserMenuTrigger({
   open,
   name,
   setOpen,
+  children,
 }: UserMenuTriggerProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -155,6 +157,7 @@ export default function UserMenuTrigger({
           glyph={open ? 'CaretUp' : 'CaretDown'}
           className={open ? openIconStyle : closedIconStyle}
         />
+        {children}
       </button>
       <div
         className={cx(interactionRing, {

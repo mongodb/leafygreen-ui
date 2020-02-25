@@ -55,6 +55,7 @@ const projectButtonStyles = css`
   padding: 2px;
   width: 174px;
   height: 28px;
+  z-index: 1;
 
   ${facepaint({
     width: ['196px', '106px', '106px'],
@@ -153,6 +154,7 @@ interface OrganizationTriggerProps {
   isActive?: boolean;
   open?: boolean;
   disabled?: boolean;
+  onClick?: React.MouseEventHandler;
 }
 
 export function OrganizationTrigger({
@@ -162,6 +164,7 @@ export function OrganizationTrigger({
   isActive = false,
   open = false,
   disabled = false,
+  onClick = () => {},
   ...rest
 }: OrganizationTriggerProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -180,6 +183,7 @@ export function OrganizationTrigger({
         <button
           {...rest}
           {...triggerDataProp.prop}
+          onClick={onClick}
           data-testid="org-trigger"
           disabled={disabled}
           className={cx(baseButtonStyles, orgButtonStyles, {
@@ -234,12 +238,14 @@ interface ProjectTriggerProps {
   children?: React.ReactNode;
   placeholder: string;
   open?: boolean;
+  onClick: React.MouseEventHandler;
 }
 
 export function ProjectTrigger({
   children,
   placeholder,
   open = false,
+  onClick,
   ...rest
 }: ProjectTriggerProps) {
   return (
@@ -253,6 +259,7 @@ export function ProjectTrigger({
       <button
         {...rest}
         {...projectTriggerDataProp.prop}
+        onClick={onClick}
         data-testid="project-select-trigger"
         className={cx(baseButtonStyles, projectButtonStyles, {
           [activeButtonColor]: open,

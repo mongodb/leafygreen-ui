@@ -36,6 +36,10 @@ const baseStyles = css`
   box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
 `;
 
+const positionRelative = css`
+  position: relative;
+`;
+
 const tooltipVariants: { readonly [K in Variant]: string } = {
   [Variant.Dark]: css`
     background-color: ${uiColors.gray.dark3};
@@ -68,7 +72,7 @@ interface PopoverFunctionParameters {
 }
 
 interface TooltipProps
-  extends Omit<PopoverProps, 'active' | 'spacing' | 'refEl' | 'usePortal'> {
+  extends Omit<PopoverProps, 'active' | 'spacing' | 'refEl'> {
   /**
    * A slot for the element used to trigger the `Tooltip`.
    * default: hover
@@ -135,6 +139,7 @@ interface TooltipProps
  * @param props.trigger Trigger element can be ReactNode or function.
  * @param props.triggerEvent Whether the Tooltip should be triggered by a `click` or `hover`.
  * @param props.id id given to Tooltip content.
+ * @param props.usePortal Determines whether or not Tooltip will be Portaled
  */
 function Tooltip({
   open: controlledOpen,
@@ -148,6 +153,7 @@ function Tooltip({
   justify = 'start',
   id,
   shouldClose,
+  usePortal = true,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
@@ -229,7 +235,7 @@ function Tooltip({
       active={open}
       align={align}
       justify={justify}
-      usePortal={true}
+      usePortal={usePortal}
       adjustOnMutation={true}
       spacing={12}
       key="tooltip"
@@ -269,6 +275,7 @@ function Tooltip({
     if (typeof trigger === 'function') {
       return trigger({
         ...createTriggerProps(triggerEvent),
+        className: positionRelative,
         'aria-describedby': tooltipId,
         children: tooltip,
       });
@@ -277,6 +284,7 @@ function Tooltip({
     const { children: triggerChildren } = trigger.props;
     return React.cloneElement(trigger, {
       ...createTriggerProps(triggerEvent, trigger.props),
+      className: positionRelative,
       'aria-describedby': tooltipId,
       children: triggerChildren
         ? [

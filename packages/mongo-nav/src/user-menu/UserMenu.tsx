@@ -262,114 +262,114 @@ function UserMenu({
 
   return (
     <div className={triggerWrapper}>
-      <UserMenuTrigger open={open} name={firstName} setOpen={setOpen} />
+      <UserMenuTrigger open={open} name={firstName} setOpen={setOpen}>
+        <Menu open={open} setOpen={setOpen} className={menuStyle}>
+          <div className={headerStyle}>
+            <div className={logoMarkBackground}>
+              <LogoMark height={30} />
+            </div>
 
-      <Menu open={open} setOpen={setOpen} className={menuStyle}>
-        <div className={headerStyle}>
-          <div className={logoMarkBackground}>
-            <LogoMark height={30} />
+            <h3 className={cx(nameStyle, truncate)}>{name}</h3>
+
+            <p className={cx(descriptionStyle, truncate)}>{email}</p>
+
+            <FocusableMenuItem>
+              <Button
+                href={isAccount ? undefined : userMenu?.account?.homepage}
+                disabled={isAccount}
+                as={isAccount ? 'button' : 'a'}
+              >
+                Manage your MongoDB Account
+              </Button>
+            </FocusableMenuItem>
           </div>
+          <MenuSeparator />
 
-          <h3 className={cx(nameStyle, truncate)}>{name}</h3>
+          <SubMenu
+            {...subMenuContainer.prop}
+            {...sharedProps}
+            active={isCloud}
+            href={hosts.cloud}
+            description={<Description isActive={isCloud} product="cloud" />}
+            title="Atlas"
+            glyph={<Icon glyph="Cloud" size="xlarge" />}
+            className={cx(subMenuContainerStyle, {
+              [subMenuActiveContainerStyle]: isCloud,
+            })}
+          >
+            <MenuItem href={userMenu?.cloud?.userPreferences}>
+              User Preferences
+            </MenuItem>
+            <MenuItem href={userMenu?.cloud?.invitations}>
+              {openInvitations ? (
+                <span className={subMenuItemStyle}>
+                  Invitations <Badge variant="blue">{openInvitations}</Badge>
+                </span>
+              ) : (
+                'Invitations'
+              )}
+            </MenuItem>
+            <MenuItem href={userMenu?.cloud?.organizations}>
+              Organizations
+            </MenuItem>
+            <MenuItem href={userMenu?.cloud?.mfa}>
+              Two-Factor Authorization
+            </MenuItem>
+          </SubMenu>
 
-          <p className={cx(descriptionStyle, truncate)}>{email}</p>
+          <SubMenu
+            {...subMenuContainer.prop}
+            {...sharedProps}
+            active={isUniversity}
+            href={hosts.university}
+            description={
+              <Description isActive={isUniversity} product="university" />
+            }
+            title="University"
+            glyph={<Icon glyph="Laptop" size="xlarge" />}
+            className={cx(subMenuContainerStyle, {
+              [subMenuActiveContainerStyle]: isUniversity,
+            })}
+          >
+            <MenuItem href={userMenu?.university?.videoPreferences}>
+              Video Preferences
+            </MenuItem>
+          </SubMenu>
 
-          <FocusableMenuItem>
-            <Button
-              href={isAccount ? undefined : userMenu?.account?.homepage}
-              disabled={isAccount}
-              as={isAccount ? 'button' : 'a'}
-            >
-              Manage your MongoDB Account
-            </Button>
-          </FocusableMenuItem>
-        </div>
-        <MenuSeparator />
+          <SubMenu
+            {...subMenuContainer.prop}
+            {...sharedProps}
+            active={isSupport}
+            href={hosts.support}
+            description={<Description isActive={isSupport} product="support" />}
+            title="Support"
+            glyph={<Icon glyph="Support" size="xlarge" />}
+            className={cx(subMenuContainerStyle, {
+              [subMenuActiveContainerStyle]: isSupport,
+            })}
+          >
+            <MenuItem href={userMenu?.support?.userPreferences}>
+              User Preferences
+            </MenuItem>
+          </SubMenu>
 
-        <SubMenu
-          {...subMenuContainer.prop}
-          {...sharedProps}
-          active={isCloud}
-          href={hosts.cloud}
-          description={<Description isActive={isCloud} product="cloud" />}
-          title="Atlas"
-          glyph={<Icon glyph="Cloud" size="xlarge" />}
-          className={cx(subMenuContainerStyle, {
-            [subMenuActiveContainerStyle]: isCloud,
-          })}
-        >
-          <MenuItem href={userMenu?.cloud?.userPreferences}>
-            User Preferences
+          <MenuSeparator />
+
+          <MenuItem
+            {...feedbackAnchorProps}
+            size="large"
+            glyph={<Icon glyph="Bell" size="xlarge" />}
+          >
+            Give us feedback
           </MenuItem>
-          <MenuItem href={userMenu?.cloud?.invitations}>
-            {openInvitations ? (
-              <span className={subMenuItemStyle}>
-                Invitations <Badge variant="blue">{openInvitations}</Badge>
-              </span>
-            ) : (
-              'Invitations'
-            )}
+
+          <MenuSeparator />
+
+          <MenuItem onClick={onLogout} size="large">
+            Logout
           </MenuItem>
-          <MenuItem href={userMenu?.cloud?.organizations}>
-            Organizations
-          </MenuItem>
-          <MenuItem href={userMenu?.cloud?.mfa}>
-            Two-Factor Authorization
-          </MenuItem>
-        </SubMenu>
-
-        <SubMenu
-          {...subMenuContainer.prop}
-          {...sharedProps}
-          active={isUniversity}
-          href={hosts.university}
-          description={
-            <Description isActive={isUniversity} product="university" />
-          }
-          title="University"
-          glyph={<Icon glyph="Laptop" size="xlarge" />}
-          className={cx(subMenuContainerStyle, {
-            [subMenuActiveContainerStyle]: isUniversity,
-          })}
-        >
-          <MenuItem href={userMenu?.university?.videoPreferences}>
-            Video Preferences
-          </MenuItem>
-        </SubMenu>
-
-        <SubMenu
-          {...subMenuContainer.prop}
-          {...sharedProps}
-          active={isSupport}
-          href={hosts.support}
-          description={<Description isActive={isSupport} product="support" />}
-          title="Support"
-          glyph={<Icon glyph="Support" size="xlarge" />}
-          className={cx(subMenuContainerStyle, {
-            [subMenuActiveContainerStyle]: isSupport,
-          })}
-        >
-          <MenuItem href={userMenu?.support?.userPreferences}>
-            User Preferences
-          </MenuItem>
-        </SubMenu>
-
-        <MenuSeparator />
-
-        <MenuItem
-          {...feedbackAnchorProps}
-          size="large"
-          glyph={<Icon glyph="Bell" size="xlarge" />}
-        >
-          Give us feedback
-        </MenuItem>
-
-        <MenuSeparator />
-
-        <MenuItem onClick={onLogout} size="large">
-          Logout
-        </MenuItem>
-      </Menu>
+        </Menu>
+      </UserMenuTrigger>
     </div>
   );
 }

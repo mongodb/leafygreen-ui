@@ -29,8 +29,8 @@ const navContainerStyle = css`
   padding-right: 15px;
   height: ${projectNavHeight}px;
   box-shadow: 0 3px 7px 0 rgba(67, 117, 151, 0.08);
-  overflow: hidden;
   box-sizing: border-box;
+  background-color: white;
 `;
 
 const mongoSelectWrapper = css`
@@ -160,6 +160,8 @@ const productTextStyle = css`
 `;
 
 const iconButtonMargin = css`
+  position: relative;
+  z-index: 1;
   ${facepaint({
     marginRight: ['16px', '16px', '20px'],
   })}
@@ -239,26 +241,23 @@ export default function ProjectNav({
           />
         </div>
 
-        <Menu
-          open={open}
-          setOpen={setOpen}
-          trigger={
-            <IconButton
-              ariaLabel="More"
-              className={menuIconButtonStyle}
-              active={open}
-            >
-              <Icon glyph="Ellipsis" className={menuIconStyle} />
-            </IconButton>
-          }
+        <IconButton
+          ariaLabel="More"
+          className={menuIconButtonStyle}
+          active={open}
+          onClick={() => setOpen(curr => !curr)}
         >
-          <MenuItem href={projectNav.settings}>Project Settings</MenuItem>
-          <MenuItem href={projectNav.accessManager}>
-            Project Access Manager
-          </MenuItem>
-          <MenuItem href={projectNav.support}>Project Support</MenuItem>
-          <MenuItem href={projectNav.integrations}>Integrations</MenuItem>
-        </Menu>
+          <Icon glyph="Ellipsis" className={menuIconStyle} />
+
+          <Menu open={open} setOpen={setOpen} usePortal={false}>
+            <MenuItem href={projectNav.settings}>Project Settings</MenuItem>
+            <MenuItem href={projectNav.accessManager}>
+              Project Access Manager
+            </MenuItem>
+            <MenuItem href={projectNav.support}>Project Support</MenuItem>
+            <MenuItem href={projectNav.integrations}>Integrations</MenuItem>
+          </Menu>
+        </IconButton>
 
         <ul className={productListStyle}>
           <li role="none" className={productStyle}>
@@ -313,6 +312,11 @@ export default function ProjectNav({
             align="bottom"
             justify="middle"
             variant="dark"
+            usePortal={false}
+            className={css`
+              width: 150px;
+              text-align: center;
+            `}
             trigger={
               <IconButton
                 ariaLabel="Invite"
@@ -331,6 +335,11 @@ export default function ProjectNav({
             align="bottom"
             variant="dark"
             justify="middle"
+            usePortal={false}
+            className={css`
+              width: 150px;
+              text-align: center;
+            `}
             trigger={
               <IconButton
                 ariaLabel="Project Activity Feed"
@@ -347,8 +356,13 @@ export default function ProjectNav({
 
           <Tooltip
             align="bottom"
-            justify="middle"
+            justify="end"
             variant="dark"
+            usePortal={false}
+            className={css`
+              width: 150px;
+              text-align: center;
+            `}
             trigger={
               <IconButton
                 ariaLabel="Alerts"
