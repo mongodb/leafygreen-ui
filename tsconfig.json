@@ -72,6 +72,9 @@
       "path": "./packages/syntax"
     },
     {
+      "path": "./packages/text-input"
+    },
+    {
       "path": "./packages/theme"
     },
     {
