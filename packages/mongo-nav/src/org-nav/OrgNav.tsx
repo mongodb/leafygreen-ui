@@ -65,6 +65,7 @@ const ulContainer = css`
   list-style: none;
   display: flex;
   align-items: center;
+  flex-grow: 1;
   padding-inline-start: 0px;
   margin: 0; // browser default overrides
 `;
@@ -224,211 +225,204 @@ export default function OrgNav({
     );
   }
 
+  const omUserMenu = (
+    <div className={onPremMenuWrapper}>
+      <UserMenuTrigger
+        name={account?.firstName ?? ''}
+        open={onPremMenuOpen}
+        setOpen={setOnPremMenuOpen}
+        data-testid="om-user-menu-trigger"
+      />
+      <Menu open={onPremMenuOpen} setOpen={setOnPremMenuOpen}>
+        <MenuItem
+          href={urls.onPrem.profile}
+          data-testid="om-user-menuitem-profile"
+        >
+          Profile
+        </MenuItem>
+
+        {onPremMFA && (
+          <MenuItem href={urls.onPrem.mfa} data-testid="om-user-menuitem-mfa">
+            Two-factor Authentication
+          </MenuItem>
+        )}
+
+        <MenuItem
+          href={urls.onPrem.personalization}
+          data-testid="om-user-menuitem-personalization"
+        >
+          Personalization
+        </MenuItem>
+
+        <MenuItem
+          href={urls.onPrem.invitations}
+          data-testid="om-user-menuitem-invitations"
+        >
+          Invitations
+        </MenuItem>
+
+        <MenuItem
+          href={urls.onPrem.organizations}
+          data-testid="om-user-menuitem-organizations"
+        >
+          Organizations
+        </MenuItem>
+
+        <MenuItem
+          href={urls.onPrem.featureRequest}
+          data-testid="om-user-menuitem-feature-request"
+        >
+          Feature Request
+        </MenuItem>
+
+        <MenuItem onClick={onLogout} data-testid="om-user-menuitem-sign-out">
+          Sign Out
+        </MenuItem>
+      </Menu>
+    </div>
+  );
+
   return (
     <nav
       className={navContainer}
       aria-label="organization navigation"
       data-testid="organization-nav"
     >
-      <div className={flexContainer}>
-        <Tooltip
-          align="bottom"
-          justify="start"
-          variant="dark"
-          trigger={
-            <span>
-              <LogoMark height={30} />
-            </span>
-          }
-        >
-          View the Organization Home
-        </Tooltip>
-
-        <OrgSelect
-          className={cx(orgSelectContainer, { [disabledOrgSelect]: disabled })}
-          data={data}
-          current={current}
-          constructOrganizationURL={constructOrganizationURL}
-          urls={urls}
-          onChange={onOrganizationChange}
-          isActive={activeNav === 'orgSettings'}
-          loading={!current}
-          disabled={disabled}
-          isOnPrem={isOnPrem}
-        />
-
-        {!disabled && (
-          <ul className={ulContainer}>
-            {badgeItem}
-
-            {!isMobile && (
-              <>
-                <li role="none" className={leftWrapper}>
-                  <OrgNavLink
-                    href={current && orgNav.accessManager}
-                    isActive={activeNav === 'accessManager'}
-                    loading={!current}
-                    data-testid="org-nav-access-manager"
-                  >
-                    Access Manager
-                  </OrgNavLink>
-
-                  <IconButton
-                    ariaLabel="Dropdown"
-                    active={accessManagerOpen}
-                    disabled={!current}
-                  >
-                    <Icon glyph={accessManagerOpen ? 'CaretUp' : 'CaretDown'} />
-
-                    {current && (
-                      <Menu
-                        open={accessManagerOpen}
-                        setOpen={setAccessManagerOpen}
-                        className={accessManagerMenuContainer}
-                      >
-                        <p className={accessManagerMenuItem}>
-                          <strong>Organization Access:</strong>{' '}
-                          {current.orgName}
-                        </p>
-
-                        <p className={accessManagerMenuItem}>
-                          <strong>Project Access:</strong>
-                          {currentProjectName ?? 'None'}
-                        </p>
-                      </Menu>
-                    )}
-                  </IconButton>
-                </li>
-
-                <li role="none" className={supportContainer}>
-                  <OrgNavLink
-                    href={current && orgNav.support}
-                    isActive={activeNav === 'support'}
-                    loading={!current}
-                    data-testid="org-nav-support"
-                  >
-                    Support
-                  </OrgNavLink>
-                </li>
-
-                {!isOnPrem && (
-                  <li role="none">
-                    <OrgNavLink
-                      href={current && orgNav.billing}
-                      isActive={activeNav === 'billing'}
-                      loading={!current}
-                      data-testid="org-nav-billing"
-                    >
-                      Billing
-                    </OrgNavLink>
-                  </li>
-                )}
-              </>
-            )}
-          </ul>
-        )}
-      </div>
-
-      <div className={flexContainer}>
-        {isOnPrem && version && (
-          <span className={versionStyle} data-testid="org-nav-on-prem-version">
-            {version}
+      <Tooltip
+        align="bottom"
+        justify="start"
+        variant="dark"
+        trigger={
+          <span>
+            <LogoMark height={30} />
           </span>
-        )}
+        }
+      >
+        View the Organization Home
+      </Tooltip>
 
-        {!isMobile && (
-          <OrgNavLink
-            href={orgNav.allClusters}
-            isActive={activeNav === 'allClusters'}
-            className={rightLinkMargin}
-            data-testid="org-nav-all-clusters-link"
-          >
-            All Clusters
-          </OrgNavLink>
-        )}
+      <OrgSelect
+        className={cx(orgSelectContainer, { [disabledOrgSelect]: disabled })}
+        data={data}
+        current={current}
+        constructOrganizationURL={constructOrganizationURL}
+        urls={urls}
+        onChange={onOrganizationChange}
+        isActive={activeNav === 'orgSettings'}
+        loading={!current}
+        disabled={disabled}
+        isOnPrem={isOnPrem}
+      />
 
-        {!isTablet && admin && !isOnPrem && (
-          <OrgNavLink
-            href={orgNav.admin}
-            isActive={activeNav === 'admin'}
-            className={rightLinkMargin}
-            data-testid="org-nav-admin-link"
-          >
-            Admin
-          </OrgNavLink>
-        )}
+      {!disabled && (
+        <ul className={ulContainer}>
+          {badgeItem}
 
-        {isOnPrem ? (
-          <div className={onPremMenuWrapper}>
-            <UserMenuTrigger
-              name={account?.firstName ?? ''}
-              open={onPremMenuOpen}
-              setOpen={setOnPremMenuOpen}
-              data-testid="om-user-menu-trigger"
-            />
-            <Menu open={onPremMenuOpen} setOpen={setOnPremMenuOpen}>
-              <MenuItem
-                href={urls.onPrem.profile}
-                data-testid="om-user-menuitem-profile"
-              >
-                Profile
-              </MenuItem>
-
-              {onPremMFA && (
-                <MenuItem
-                  href={urls.onPrem.mfa}
-                  data-testid="om-user-menuitem-mfa"
+          {!isMobile && (
+            <>
+              <li role="none" className={leftWrapper}>
+                <OrgNavLink
+                  href={current && orgNav.accessManager}
+                  isActive={activeNav === 'accessManager'}
+                  loading={!current}
+                  data-testid="org-nav-access-manager"
                 >
-                  Two-factor Authentication
-                </MenuItem>
+                  Access Manager
+                </OrgNavLink>
+
+                <IconButton
+                  ariaLabel="Dropdown"
+                  active={accessManagerOpen}
+                  disabled={!current}
+                >
+                  <Icon glyph={accessManagerOpen ? 'CaretUp' : 'CaretDown'} />
+
+                  {current && (
+                    <Menu
+                      open={accessManagerOpen}
+                      setOpen={setAccessManagerOpen}
+                      className={accessManagerMenuContainer}
+                    >
+                      <p className={accessManagerMenuItem}>
+                        <strong>Organization Access:</strong> {current.orgName}
+                      </p>
+
+                      <p className={accessManagerMenuItem}>
+                        <strong>Project Access:</strong>
+                        {currentProjectName ?? 'None'}
+                      </p>
+                    </Menu>
+                  )}
+                </IconButton>
+              </li>
+
+              <li role="none" className={supportContainer}>
+                <OrgNavLink
+                  href={current && orgNav.support}
+                  isActive={activeNav === 'support'}
+                  loading={!current}
+                  data-testid="org-nav-support"
+                >
+                  Support
+                </OrgNavLink>
+              </li>
+
+              {!isOnPrem && (
+                <li role="none">
+                  <OrgNavLink
+                    href={current && orgNav.billing}
+                    isActive={activeNav === 'billing'}
+                    loading={!current}
+                    data-testid="org-nav-billing"
+                  >
+                    Billing
+                  </OrgNavLink>
+                </li>
               )}
+            </>
+          )}
+        </ul>
+      )}
 
-              <MenuItem
-                href={urls.onPrem.personalization}
-                data-testid="om-user-menuitem-personalization"
-              >
-                Personalization
-              </MenuItem>
+      {isOnPrem && version && (
+        <span className={versionStyle} data-testid="org-nav-on-prem-version">
+          {version}
+        </span>
+      )}
 
-              <MenuItem
-                href={urls.onPrem.invitations}
-                data-testid="om-user-menuitem-invitations"
-              >
-                Invitations
-              </MenuItem>
+      {!isMobile && (
+        <OrgNavLink
+          href={orgNav.allClusters}
+          isActive={activeNav === 'allClusters'}
+          className={rightLinkMargin}
+          data-testid="org-nav-all-clusters-link"
+        >
+          All Clusters
+        </OrgNavLink>
+      )}
 
-              <MenuItem
-                href={urls.onPrem.organizations}
-                data-testid="om-user-menuitem-organizations"
-              >
-                Organizations
-              </MenuItem>
+      {!isTablet && admin && !isOnPrem && (
+        <OrgNavLink
+          href={orgNav.admin}
+          isActive={activeNav === 'admin'}
+          className={rightLinkMargin}
+          data-testid="org-nav-admin-link"
+        >
+          Admin
+        </OrgNavLink>
+      )}
 
-              <MenuItem
-                href={urls.onPrem.featureRequest}
-                data-testid="om-user-menuitem-feature-request"
-              >
-                Feature Request
-              </MenuItem>
-
-              <MenuItem
-                onClick={onLogout}
-                data-testid="om-user-menuitem-sign-out"
-              >
-                Sign Out
-              </MenuItem>
-            </Menu>
-          </div>
-        ) : (
-          <UserMenu
-            account={account}
-            activeProduct={activeProduct}
-            urls={urls}
-            hosts={hosts}
-            onLogout={onLogout}
-          />
-        )}
-      </div>
+      {isOnPrem ? (
+        omUserMenu
+      ) : (
+        <UserMenu
+          account={account}
+          activeProduct={activeProduct}
+          urls={urls}
+          hosts={hosts}
+          onLogout={onLogout}
+        />
+      )}
     </nav>
   );
 }

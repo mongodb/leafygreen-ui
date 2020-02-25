@@ -21,8 +21,7 @@ const rootMenuStyle = css`
   padding: 0px;
 `;
 
-interface MenuProps
-  extends Omit<PopoverProps, 'active' | 'spacing' | 'children'> {
+interface MenuProps extends Omit<PopoverProps, 'active' | 'spacing'> {
   /**
    * A slot for the element used to trigger the Menu. Passing a trigger allows
    * Menu to control opening and closing itself internally.
@@ -54,7 +53,7 @@ interface MenuProps
    */
   shouldClose?: () => boolean;
 
-  children: React.ReactNode;
+  // children: React.ReactNode;
 }
 
 /**
@@ -106,13 +105,13 @@ function Menu({
   > | null>(null);
   const { setUsingKeyboard } = useUsingKeyboardContext();
 
-  function updateChildren(
-    children: React.ReactElement | Array<React.ReactElement>,
-  ): Array<React.ReactElement> {
-    return React.Children.map(children, (child: React.ReactElement) => {
-      if (child.props?.disabled) {
+  function updateChildren(children: React.ReactNode): React.ReactNode {
+    return React.Children.map(children, child => {
+      if (!React.isValidElement(child) || child.props?.disabled) {
         return child;
       }
+
+      const { props } = child;
 
       let currentChildRef: HTMLElement | null = null;
 
@@ -132,7 +131,7 @@ function Menu({
         }
       };
 
-      const title = child?.props?.title ?? false;
+      const title = props?.title ?? false;
 
       const onFocus = ({ target }: { target: HTMLElement }) => {
         setFocused(target);
@@ -145,7 +144,7 @@ function Menu({
 
         titleArr.push(title);
 
-        if (child.props.active && !hasSetInitialOpen.current) {
+        if (props.active && !hasSetInitialOpen.current) {
           setCurrentSubMenu(child);
           hasSetInitialOpen.current = true;
         }
@@ -172,7 +171,7 @@ function Menu({
             }
           },
           onFocus,
-          children: updateChildren(child.props.children),
+          children: updateChildren(props.children),
           onExited: () => {
             setClosed(curr => !curr);
           },
@@ -189,9 +188,9 @@ function Menu({
         });
       }
 
-      if (child.props?.children) {
+      if (props?.children) {
         return React.cloneElement(child, {
-          children: updateChildren(child.props.children),
+          children: updateChildren(props.children),
         });
       }
 
