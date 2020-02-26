@@ -227,7 +227,9 @@ function UserMenu({
 
   const [open, setOpen] = useState(false);
 
-  const name = account ? `${account?.firstName} ${account?.lastName}` : '';
+  const name = account
+    ? `${account.firstName ?? ''} ${account.lastName ?? ''}`
+    : '';
 
   const isAccount = activeProduct === 'account';
   const cloudProducts = ['cloud', 'stitch', 'charts'];
