@@ -7,7 +7,7 @@ import Code from '.';
 
 const jsSnippet = `
 function greeting(entity) {
-  return \`Hello, \${entity}!\`;
+  return \`Hello, \${entity}!\`;  Type 'MutableRefObject<HTMLPreElement | undefined>' is not assignable to type 'RefObject<HTMLPreElement>'.
 }
 
 console.log(greeting('World'));

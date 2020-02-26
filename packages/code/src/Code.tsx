@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Syntax, {
@@ -135,14 +135,17 @@ function getCopyButtonStyle(variant: Variant, copied: boolean): string {
 function getScrollShadowStyle(
   canScrollLeft: boolean,
   canScrollRight: boolean,
+  variant: Variant
 ): string {
+  const colors = variantColors[variant];
   if (canScrollLeft && canScrollRight) {
     return css`
-      box-shadow: inset 8px 0 10px -6px #888;
+      box-shadow: inset 8px 0 10px -6px #888, inset -8px 0 10px -6px #888, inset 0 8px 10px -6px ${colors[0]}, inset 0 -8px 10px -6px ${colors[0]};
     `;
   }
 
   if (canScrollLeft) {
+    console.log(canScrollRight)
     return css`
       box-shadow: inset 8px 0 10px -6px #888;
     `;
@@ -220,6 +223,17 @@ function Code({
   const [copied, setCopied] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const scrollableElement = useRef<HTMLPreElement>(null);
+  useEffect(() => {
+    if(!isLoaded && scrollableElement.current !==  null) {
+      setIsLoaded(true);
+      if(scrollableElement.current.scrollWidth > scrollableElement.current.clientWidth) {
+        setCanScrollRight(true);
+      }
+    }
+  });
+
   const wrapperStyle = css`
     display: block;
     border: 1px solid ${variantColors[variant][1]};
@@ -235,7 +249,7 @@ function Code({
       [codeWrapperStyleWithWindowChrome]: showWindowChrome,
     },
     className,
-    getScrollShadowStyle(canScrollLeft, canScrollRight),
+    getScrollShadowStyle(canScrollLeft, canScrollRight, variant),
   );
 
   const { content, lineCount } = useProcessedCodeSnippet(children);
@@ -252,20 +266,13 @@ function Code({
 
   function handleScroll(e: React.UIEvent) {
     const scrollWidth = e.currentTarget.scrollWidth;
-    const scrollPosition = e.currentTarget.scrollLeft;
+    const elementWidth = e.currentTarget.clientHeight;
+    const isScrollable = scrollWidth > elementWidth;
 
-    if (scrollPosition !== scrollWidth) {
-      setCanScrollRight(true);
-      // console.log('can scroll left');
-    } else {
-      setCanScrollRight(false);
-    }
-
-    if (scrollPosition !== 0) {
-      setCanScrollLeft(true);
-      // console.log('can scroll right');
-    } else {
-      setCanScrollLeft(false);
+    if (isScrollable) {
+      const scrollPosition = e.currentTarget.scrollLeft;
+      setCanScrollLeft(scrollPosition > 10);
+      setCanScrollRight(scrollPosition < scrollWidth - 10);
     }
   }
 
@@ -296,6 +303,7 @@ function Code({
           {...(rest as DetailedElementProps<HTMLPreElement>)}
           className={wrapperClassName}
           onScroll={handleScroll}
+          ref={scrollableElement}
         >
           {showLineNumbers && (
             <LineNumbers variant={variant} lineCount={lineCount} />
