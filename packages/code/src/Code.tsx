@@ -135,17 +135,19 @@ function getCopyButtonStyle(variant: Variant, copied: boolean): string {
 function getScrollShadowStyle(
   canScrollLeft: boolean,
   canScrollRight: boolean,
-  variant: Variant
+  variant: Variant,
 ): string {
   const colors = variantColors[variant];
+
   if (canScrollLeft && canScrollRight) {
     return css`
-      box-shadow: inset 8px 0 10px -6px #888, inset -8px 0 10px -6px #888, inset 0 8px 10px -6px ${colors[0]}, inset 0 -8px 10px -6px ${colors[0]};
+      box-shadow: inset 8px 0 10px -6px #888, inset -8px 0 10px -6px #888,
+        inset 0 8px 10px -6px ${colors[0]}, inset 0 -8px 10px -6px ${colors[0]};
     `;
   }
 
   if (canScrollLeft) {
-    console.log(canScrollRight)
+    console.log(canScrollRight);
     return css`
       box-shadow: inset 8px 0 10px -6px #888;
     `;
@@ -226,9 +228,12 @@ function Code({
   const [isLoaded, setIsLoaded] = useState(false);
   const scrollableElement = useRef<HTMLPreElement>(null);
   useEffect(() => {
-    if(!isLoaded && scrollableElement.current !==  null) {
+    if (!isLoaded && scrollableElement.current !== null) {
       setIsLoaded(true);
-      if(scrollableElement.current.scrollWidth > scrollableElement.current.clientWidth) {
+      if (
+        scrollableElement.current.scrollWidth >
+        scrollableElement.current.clientWidth
+      ) {
         setCanScrollRight(true);
       }
     }
