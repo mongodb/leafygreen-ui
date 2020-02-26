@@ -199,7 +199,7 @@ export default function OrgNav({
   const renderedUserMenu = isOnPrem ? (
     <OnPremUserMenu
       onLogout={onLogout}
-      name={name}
+      name={account?.firstName ?? ''}
       open={onPremMenuOpen}
       setOpen={setOnPremMenuOpen}
       urls={urls}

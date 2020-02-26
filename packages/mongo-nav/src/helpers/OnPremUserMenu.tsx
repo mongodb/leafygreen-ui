@@ -30,7 +30,7 @@ export default function OnPremUserMenu({
   return (
     <div className={onPremMenuWrapper}>
       <UserMenuTrigger
-        name={name ?? ''}
+        name={name}
         open={open}
         setOpen={setOpen}
         data-testid="om-user-menu-trigger"
