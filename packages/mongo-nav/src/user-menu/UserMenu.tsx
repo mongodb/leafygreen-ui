@@ -313,10 +313,8 @@ function UserMenu({
           >
             <span className={subMenuItemStyle}>
               Invitations
-              {account?.openInvitations && account.openInvitations > 0 ? (
-                <Badge variant="blue">{account.openInvitations}</Badge>
-              ) : (
-                ''
+              {(account?.openInvitations ?? 0) > 0 && (
+                <Badge variant="blue">{account?.openInvitations}</Badge>
               )}
             </span>
           </MenuItem>
