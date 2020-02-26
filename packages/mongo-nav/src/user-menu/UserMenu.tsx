@@ -22,15 +22,7 @@ import {
   Product,
   HostsInterface,
 } from '../types';
-
-const defaultHosts: Required<HostsInterface> = {
-  account: 'https://account.mongodb.com',
-  cloud: 'https://cloud.mongodb.com',
-  university: 'https://university.mongodb.com',
-  support: 'https://support.mongodb.com',
-  charts: 'https://charts.mongodb.com',
-  realm: 'https://stitch.mongodb.com',
-} as const;
+import { hostDefaults } from '../data';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 
@@ -208,7 +200,7 @@ function UserMenu({
   urls: urlsProp,
   hosts: hostsProp,
 }: UserMenuProps) {
-  const hosts = defaultsDeep(hostsProp, defaultHosts);
+  const hosts = defaultsDeep(hostsProp, hostDefaults);
 
   // will make this logic more abstract, but wanted to get a quick fix in so that UserMenu can be consumed outside of MongoNav
   const defaultURLs = {

@@ -12,17 +12,8 @@ import {
   DataInterface,
   ErrorCode,
 } from './types';
-import { dataFixtures } from './data';
+import { dataFixtures, hostDefaults } from './data';
 import defaultsDeep from 'lodash/defaultsDeep';
-
-const defaultHosts: Required<HostsInterface> = {
-  account: 'https://account.mongodb.com',
-  cloud: 'https://cloud.mongodb.com',
-  university: 'https://university.mongodb.com',
-  support: 'https://support.mongodb.com',
-  charts: 'https://charts.mongodb.com',
-  realm: 'https://stitch.mongodb.com',
-};
 
 const ErrorCodeMap = {
   401: ErrorCode.NO_AUTHORIZATION,
@@ -175,7 +166,7 @@ export default function MongoNav({
 }: MongoNavInterface) {
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
-  const hosts = defaultsDeep(hostsProp, defaultHosts);
+  const hosts = defaultsDeep(hostsProp, hostDefaults);
   const endpointURI = `${hosts.cloud}/user/shared`;
 
   function getProductionData() {
@@ -260,7 +251,7 @@ export default function MongoNav({
       personalization: `${hosts.cloud}/v2#/account/personalization`,
       invitations: `${hosts.cloud}/v2#/preferences/invitations`,
       organizations: `${hosts.cloud}/v2#/preferences/organizations`,
-      featureRequest: ``,
+      featureRequest: `https://feedback.mongodb.com`,
     },
   };
 

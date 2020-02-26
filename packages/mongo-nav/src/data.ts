@@ -96,7 +96,7 @@ export const urlDefaults: Required<URLSInterface> = {
     personalization: `https://cloud.mongodb.com/v2#/account/personalization`,
     invitations: `https://cloud.mongodb.com/v2#/preferences/invitations`,
     organizations: `https://cloud.mongodb.com/v2#/preferences/organizations`,
-    featureRequest: ``,
+    featureRequest: `https://feedback.mongodb.com`,
   },
 };
 

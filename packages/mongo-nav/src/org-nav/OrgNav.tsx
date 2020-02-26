@@ -29,7 +29,6 @@ const navContainer = css`
   height: ${orgNavHeight}px;
   width: 100%;
   display: flex;
-  // justify-content: space-between;
   align-items: center;
   padding-left: 15px;
   padding-right: 15px;

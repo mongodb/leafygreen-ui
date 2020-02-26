@@ -52,8 +52,6 @@ interface MenuProps extends Omit<PopoverProps, 'active' | 'spacing'> {
    *
    */
   shouldClose?: () => boolean;
-
-  // children: React.ReactNode;
 }
 
 /**
