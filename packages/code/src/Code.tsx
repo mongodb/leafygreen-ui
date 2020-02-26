@@ -138,23 +138,26 @@ function getScrollShadowStyle(
   variant: Variant,
 ): string {
   const colors = variantColors[variant];
+  const shadowColor =
+    variant === Variant.Light ? 'rgba(93,108,116,0.3)' : 'rgba(0,0,0,0.35)';
 
   if (canScrollLeft && canScrollRight) {
     return css`
-      box-shadow: inset 8px 0 10px -6px #888, inset -8px 0 10px -6px #888,
-        inset 0 8px 10px -6px ${colors[0]}, inset 0 -8px 10px -6px ${colors[0]};
+      box-shadow: inset 6px 0 6px -6px ${shadowColor},
+        inset -6px 0 6px -6px ${shadowColor}, inset 0 6px 6px -6px ${colors[0]},
+        inset 0 -6px 6px -6px ${colors[0]};
     `;
   }
 
   if (canScrollLeft) {
     return css`
-      box-shadow: inset 8px 0 10px -6px #888;
+      box-shadow: inset 6px 0 6px -6px ${shadowColor};
     `;
   }
 
   if (canScrollRight) {
     return css`
-      box-shadow: inset -8px 0 10px -6px #888;
+      box-shadow: inset -6px 0 6px -6px ${shadowColor};
     `;
   }
 
