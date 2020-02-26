@@ -150,7 +150,6 @@ export default function MongoNav({
   onLogout = () => {},
   onPrem = { mfa: false, enabled: false, version: '' },
 }: MongoNavInterface) {
-  const { mfa, enabled, version } = onPrem;
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
   const hosts = defaultsDeep(hostsProp, hostDefaults);
@@ -267,12 +266,12 @@ export default function MongoNav({
         admin={admin}
         hosts={hosts}
         currentProjectName={data?.currentProject?.projectName}
-        isOnPrem={enabled}
         onLogout={onLogout}
-        version={version}
-        onPremMFA={mfa}
+        onPremEnabled={onPrem.enabled}
+        onPremVersion={onPrem.version}
+        onPremMFA={onPrem.mfa}
       />
-      {showProjNav && !enabled && (
+      {showProjNav && !onPrem.enabled && (
         <ProjectNav
           activeProduct={activeProduct}
           current={data?.currentProject}

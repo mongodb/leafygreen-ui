@@ -219,7 +219,9 @@ describe('packages/mongo-nav/src/org-nav', () => {
   });
 
   describe('when rendered onPrem', () => {
-    beforeEach(() => renderComponent({ isOnPrem: true, version: '4.4.0' }));
+    beforeEach(() =>
+      renderComponent({ onPremEnabled: true, onPremVersion: '4.4.0' }),
+    );
 
     testForPaymentStatus(false);
     testForVersion(true);
@@ -234,7 +236,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
   describe('when rendered onPrem and onPremMFA is true', () => {
     beforeEach(() =>
       renderComponent({
-        isOnPrem: true,
+        onPremEnabled: true,
         onPremMFA: true,
       }),
     );

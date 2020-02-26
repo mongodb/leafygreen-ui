@@ -311,14 +311,14 @@ function UserMenu({
             href={userMenu?.cloud?.invitations}
             data-testid="user-menuitem-cloud-invitations"
           >
-            {account?.openInvitations ? (
-              <span className={subMenuItemStyle}>
-                Invitations{' '}
+            <span className={subMenuItemStyle}>
+              Invitations
+              {account?.openInvitations && account.openInvitations > 0 ? (
                 <Badge variant="blue">{account.openInvitations}</Badge>
-              </span>
-            ) : (
-              'Invitations'
-            )}
+              ) : (
+                ''
+              )}
+            </span>
           </MenuItem>
           <MenuItem
             href={userMenu?.cloud?.organizations}

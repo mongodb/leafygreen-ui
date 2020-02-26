@@ -124,9 +124,9 @@ interface OrgNav {
   admin: boolean;
   hosts: Required<HostsInterface>;
   currentProjectName?: string;
-  isOnPrem?: boolean;
   onLogout?: React.MouseEventHandler;
-  version?: string;
+  onPremEnabled?: boolean;
+  onPremVersion?: string;
   onPremMFA?: boolean;
 }
 
@@ -142,9 +142,9 @@ export default function OrgNav({
   admin,
   hosts,
   currentProjectName,
-  isOnPrem,
   onLogout,
-  version,
+  onPremEnabled,
+  onPremVersion,
   onPremMFA = false,
 }: OrgNav) {
   const [accessManagerOpen, setAccessManagerOpen] = useState(false);
@@ -176,7 +176,7 @@ export default function OrgNav({
 
   if (
     !isTablet &&
-    !isOnPrem &&
+    !onPremEnabled &&
     current?.paymentStatus &&
     paymentVariant &&
     (admin || paymentValues.includes(current.paymentStatus))
@@ -196,7 +196,7 @@ export default function OrgNav({
     );
   }
 
-  const renderedUserMenu = isOnPrem ? (
+  const renderedUserMenu = onPremEnabled ? (
     <OnPremUserMenu
       onLogout={onLogout}
       name={account?.firstName ?? ''}
@@ -244,7 +244,7 @@ export default function OrgNav({
         isActive={activeNav === 'orgSettings'}
         loading={!current}
         disabled={disabled}
-        isOnPrem={isOnPrem}
+        isOnPrem={onPremEnabled}
       />
 
       {!disabled && (
@@ -297,7 +297,7 @@ export default function OrgNav({
                 Support
               </OrgNavLink>
 
-              {!isOnPrem && (
+              {!onPremEnabled && (
                 <OrgNavLink
                   href={current && orgNav.billing}
                   isActive={activeNav === 'billing'}
@@ -317,9 +317,9 @@ export default function OrgNav({
           margin-left: auto;
         `}
       >
-        {isOnPrem && version && (
+        {onPremEnabled && onPremVersion && (
           <span className={versionStyle} data-testid="org-nav-on-prem-version">
-            {version}
+            {onPremVersion}
           </span>
         )}
 
@@ -334,7 +334,7 @@ export default function OrgNav({
           </OrgNavLink>
         )}
 
-        {!isTablet && admin && !isOnPrem && (
+        {!isTablet && admin && !onPremEnabled && (
           <OrgNavLink
             href={orgNav.admin}
             isActive={activeNav === 'admin'}
