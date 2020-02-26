@@ -147,7 +147,6 @@ function getScrollShadowStyle(
   }
 
   if (canScrollLeft) {
-    console.log(canScrollRight);
     return css`
       box-shadow: inset 8px 0 10px -6px #888;
     `;
@@ -271,13 +270,14 @@ function Code({
 
   function handleScroll(e: React.UIEvent) {
     const scrollWidth = e.currentTarget.scrollWidth;
-    const elementWidth = e.currentTarget.clientHeight;
+    const elementWidth = e.currentTarget.clientWidth;
     const isScrollable = scrollWidth > elementWidth;
 
     if (isScrollable) {
       const scrollPosition = e.currentTarget.scrollLeft;
-      setCanScrollLeft(scrollPosition > 10);
-      setCanScrollRight(scrollPosition < scrollWidth - 10);
+      const maxPosition = scrollWidth - elementWidth;
+      setCanScrollLeft(scrollPosition > 0);
+      setCanScrollRight(scrollPosition < maxPosition);
     }
   }
 
