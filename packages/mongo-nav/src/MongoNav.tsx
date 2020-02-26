@@ -92,24 +92,14 @@ interface MongoNavInterface {
   onSuccess?: (response: DataInterface) => void;
 
   /**
-   * Whether or not a user is using Ops Manager
-   */
-  isOnPrem?: boolean;
-
-  /**
    * Callback executed when user logs out
    */
   onLogout?: React.MouseEventHandler;
 
   /**
-   * Version of Ops Manager that a user is using
+   * onPrem config object with three keys: enabled, version and mfa
    */
-  onPremVersion?: string;
-
-  /**
-   * Determines whether or not MFA is enabled for the Ops Manager instance
-   */
-  onPremMFA?: boolean;
+  onPrem?: { mfa?: boolean; version?: string; enabled?: boolean };
 }
 
 /**
@@ -140,10 +130,8 @@ interface MongoNavInterface {
  * @param props.mode Describes what environment the component is being used in, defaults to `production`.
  * @param props.onSuccess Callback that receives the response of the fetched data, having been converted from JSON into an object.
  * @param props.onError Function that is passed an error code as a string, so that consuming application can handle fetch failures.
- * @param props.isOnPrem Whether or not a user is using Ops Manager
+ * @param props.onPrem onPrem config object with three keys: enabled, version and mfa
  * @param props.onLogout Callback executed when user logs out
- * @param props.onPremVersion Version of Ops Manager that a user is using
- * @param props.onPremMFA Determines whether or not MFA is enabled for the Ops Manager instance
  */
 export default function MongoNav({
   activeProduct,
@@ -153,7 +141,6 @@ export default function MongoNav({
   mode = Mode.Production,
   showProjNav = true,
   admin = false,
-  isOnPrem = false,
   hosts: hostsProp,
   urls: urlsProp,
   constructOrganizationURL: constructOrganizationURLProp,
@@ -161,9 +148,9 @@ export default function MongoNav({
   onError = () => {},
   onSuccess = () => {},
   onLogout = () => {},
-  onPremVersion,
-  onPremMFA = false,
+  onPrem = { mfa: false, enabled: false, version: '' },
 }: MongoNavInterface) {
+  const { mfa, enabled, version } = onPrem;
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
   const hosts = defaultsDeep(hostsProp, hostDefaults);
@@ -280,12 +267,12 @@ export default function MongoNav({
         admin={admin}
         hosts={hosts}
         currentProjectName={data?.currentProject?.projectName}
-        isOnPrem={isOnPrem}
+        isOnPrem={enabled}
         onLogout={onLogout}
-        version={onPremVersion}
-        onPremMFA={onPremMFA}
+        version={version}
+        onPremMFA={mfa}
       />
-      {showProjNav && !isOnPrem && (
+      {showProjNav && !enabled && (
         <ProjectNav
           activeProduct={activeProduct}
           current={data?.currentProject}
