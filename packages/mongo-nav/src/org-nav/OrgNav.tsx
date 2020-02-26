@@ -7,8 +7,8 @@ import Tooltip from '@leafygreen-ui/tooltip';
 import Badge from '@leafygreen-ui/badge';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
-import { Menu, MenuItem } from '@leafygreen-ui/menu';
-import { OrgNavLink } from '../helpers/index';
+import { Menu } from '@leafygreen-ui/menu';
+import { OrgNavLink, OnPremUserMenu } from '../helpers/index';
 import { breakpoints, facepaint } from '../breakpoints';
 import {
   AccountInterface,
@@ -21,7 +21,7 @@ import {
   OrgPaymentLabel,
 } from '../types';
 import { OrgSelect } from '../mongo-select/index';
-import UserMenu, { UserMenuTrigger } from '../user-menu/index';
+import UserMenu from '../user-menu/index';
 
 export const orgNavHeight = 60;
 
@@ -73,12 +73,6 @@ const accessManagerMenuItem = css`
   line-height: 19.6px;
   margin-top: 0px;
   margin-bottom: 0px;
-`;
-
-const onPremMenuWrapper = css`
-  display: inline-block;
-  position: relative;
-  z-index: 0;
 `;
 
 const versionStyle = css`
@@ -151,7 +145,7 @@ export default function OrgNav({
   isOnPrem,
   onLogout,
   version,
-  onPremMFA,
+  onPremMFA = false,
 }: OrgNav) {
   const [accessManagerOpen, setAccessManagerOpen] = useState(false);
   const [onPremMenuOpen, setOnPremMenuOpen] = useState(false);
@@ -203,61 +197,14 @@ export default function OrgNav({
   }
 
   const renderedUserMenu = isOnPrem ? (
-    <div className={onPremMenuWrapper}>
-      <UserMenuTrigger
-        name={account?.firstName ?? ''}
-        open={onPremMenuOpen}
-        setOpen={setOnPremMenuOpen}
-        data-testid="om-user-menu-trigger"
-      />
-
-      <Menu open={onPremMenuOpen} setOpen={setOnPremMenuOpen}>
-        <MenuItem
-          href={urls.onPrem.profile}
-          data-testid="om-user-menuitem-profile"
-        >
-          Profile
-        </MenuItem>
-
-        {onPremMFA && (
-          <MenuItem href={urls.onPrem.mfa} data-testid="om-user-menuitem-mfa">
-            Two-factor Authentication
-          </MenuItem>
-        )}
-
-        <MenuItem
-          href={urls.onPrem.personalization}
-          data-testid="om-user-menuitem-personalization"
-        >
-          Personalization
-        </MenuItem>
-
-        <MenuItem
-          href={urls.onPrem.invitations}
-          data-testid="om-user-menuitem-invitations"
-        >
-          Invitations
-        </MenuItem>
-
-        <MenuItem
-          href={urls.onPrem.organizations}
-          data-testid="om-user-menuitem-organizations"
-        >
-          Organizations
-        </MenuItem>
-
-        <MenuItem
-          href={urls.onPrem.featureRequest}
-          data-testid="om-user-menuitem-feature-request"
-        >
-          Feature Request
-        </MenuItem>
-
-        <MenuItem onClick={onLogout} data-testid="om-user-menuitem-sign-out">
-          Sign Out
-        </MenuItem>
-      </Menu>
-    </div>
+    <OnPremUserMenu
+      onLogout={onLogout}
+      name={name}
+      open={onPremMenuOpen}
+      setOpen={setOnPremMenuOpen}
+      urls={urls}
+      mfa={onPremMFA}
+    />
   ) : (
     <UserMenu
       account={account}
