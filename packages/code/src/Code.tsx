@@ -299,31 +299,37 @@ function Code({
         {renderedWindowChrome}
 
         <div
-          {...(rest as DetailedElementProps<HTMLDivElement>)}
-          className={wrapperClassName}
-          onScroll={handleScroll}
-          ref={scrollableSingleLine}
+          className={css`
+            display: flex;
+          `}
         >
-          {renderedSyntaxComponent}
-        </div>
-        {!showWindowChrome && (
-          <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
-            <CopyToClipboard
-              text={content}
-              onCopy={() => {
-                setCopied(true);
-              }}
-            >
-              <IconButton
-                variant={variant}
-                ariaLabel={'Copy'}
-                className={getCopyButtonStyle(variant, copied)}
-              >
-                <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
-              </IconButton>
-            </CopyToClipboard>
+          <div
+            {...(rest as DetailedElementProps<HTMLDivElement>)}
+            className={wrapperClassName}
+            onScroll={handleScroll}
+            ref={scrollableSingleLine}
+          >
+            {renderedSyntaxComponent}
           </div>
-        )}
+          {!showWindowChrome && (
+            <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
+              <CopyToClipboard
+                text={content}
+                onCopy={() => {
+                  setCopied(true);
+                }}
+              >
+                <IconButton
+                  variant={variant}
+                  ariaLabel={'Copy'}
+                  className={getCopyButtonStyle(variant, copied)}
+                >
+                  <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
+                </IconButton>
+              </CopyToClipboard>
+            </div>
+          )}
+        </div>
       </div>
     );
   }
