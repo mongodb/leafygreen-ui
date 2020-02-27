@@ -290,6 +290,7 @@ function UserMenu({
             {...subMenuContainer.prop}
             {...sharedProps}
             active={isCloud}
+            disabled={!account}
             href={hosts.cloud}
             description={<Description isActive={isCloud} product="cloud" />}
             title="Atlas"
@@ -312,7 +313,10 @@ function UserMenu({
                 )}
               </span>
             </MenuItem>
-            <MenuItem href={userMenu?.cloud?.organizations}>
+            <MenuItem
+              href={userMenu?.cloud?.organizations}
+              data-testid="user-menuitem-cloud-organizations"
+            >
               Organizations
             </MenuItem>
             <MenuItem href={userMenu?.cloud?.mfa}>
@@ -324,6 +328,7 @@ function UserMenu({
             {...subMenuContainer.prop}
             {...sharedProps}
             active={isUniversity}
+            disabled={!account}
             href={hosts.university}
             description={
               <Description isActive={isUniversity} product="university" />
@@ -334,7 +339,10 @@ function UserMenu({
               [subMenuActiveContainerStyle]: isUniversity,
             })}
           >
-            <MenuItem href={userMenu?.university?.videoPreferences}>
+            <MenuItem
+              href={userMenu?.university?.videoPreferences}
+              data-testid="user-menuitem-cloud-mfa"
+            >
               Video Preferences
             </MenuItem>
           </SubMenu>
@@ -343,6 +351,7 @@ function UserMenu({
             {...subMenuContainer.prop}
             {...sharedProps}
             active={isSupport}
+            disabled={!account}
             href={hosts.support}
             description={<Description isActive={isSupport} product="support" />}
             title="Support"
@@ -351,7 +360,10 @@ function UserMenu({
               [subMenuActiveContainerStyle]: isSupport,
             })}
           >
-            <MenuItem href={userMenu?.support?.userPreferences}>
+            <MenuItem
+              href={userMenu?.support?.userPreferences}
+              data-testid="user-menuitem-support-user-preferences"
+            >
               User Preferences
             </MenuItem>
           </SubMenu>
@@ -362,13 +374,18 @@ function UserMenu({
             {...feedbackAnchorProps}
             size="large"
             glyph={<Icon glyph="Bell" size="xlarge" />}
+            data-testid="user-menuitem-feedback"
           >
             Give us feedback
           </MenuItem>
 
           <MenuSeparator />
 
-          <MenuItem onClick={onLogout} size="large">
+          <MenuItem
+            onClick={onLogout}
+            size="large"
+            data-testid="user-menuitem-logout"
+          >
             Logout
           </MenuItem>
         </Menu>
