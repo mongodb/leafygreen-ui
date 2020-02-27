@@ -61,6 +61,7 @@ function generateConfigFunc(target = 'web') {
             'polished',
             'prop-types',
             'react-transition-group',
+            '@testing-library/react',
             ...getAllPackages('../../packages'),
           ]
         : [],
