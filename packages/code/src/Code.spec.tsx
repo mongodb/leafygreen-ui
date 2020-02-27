@@ -16,9 +16,14 @@ describe('packages/Syntax', () => {
 
     const codeContainer = (containerRoot as HTMLElement).lastChild;
     const codeRoot = (codeContainer as HTMLElement).firstChild;
+    const copyRoot = (codeContainer as HTMLElement).lastChild;
 
     if (!codeRoot || !typeIs.element(codeRoot)) {
       throw new Error('Multiline code element not found');
+    }
+
+    if (!copyRoot || !typeIs.element(copyRoot)) {
+      throw new Error('Multiline copy button not found');
     }
 
     test('root element renders as a <pre> tag', () => {
@@ -28,6 +33,10 @@ describe('packages/Syntax', () => {
     test(`renders "${className}" in the root element's classList`, () => {
       expect(codeRoot.classList.contains(className)).toBe(true);
     });
+
+    test(`copy button is clickable`, () => {});
+
+    test(`copy button actually copies text to clipboard`, () => {});
   });
 
   describe('when multiline is false', () => {
@@ -41,9 +50,14 @@ describe('packages/Syntax', () => {
 
     const codeContainer = (containerRoot as HTMLElement).lastChild;
     const codeRoot = (codeContainer as HTMLElement).firstChild;
+    const copyRoot = (codeContainer as HTMLElement).lastChild;
 
     if (!codeRoot || !typeIs.element(codeRoot)) {
       throw new Error('Single line code element not found');
+    }
+
+    if (!copyRoot || !typeIs.element(copyRoot)) {
+      throw new Error('Single line copy button not found');
     }
 
     test('code wrapper element renders as a <div> tag', () => {
