@@ -101,6 +101,10 @@ interface MongoNavInterface {
    * onPrem config object with three keys: enabled, version and mfa
    */
   onPrem?: OnPremInterface;
+
+  activeOrgId?: string;
+
+  activeProjectId?: string;
 }
 
 /**
@@ -150,6 +154,8 @@ export default function MongoNav({
   onSuccess = () => {},
   onLogout = () => {},
   onPrem = { mfa: false, enabled: false, version: '' },
+  activeOrgId,
+  activeProjectId,
 }: MongoNavInterface) {
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
@@ -162,6 +168,28 @@ export default function MongoNav({
       method: 'GET',
     });
   }
+
+  function fetchProductionData(body) {
+    return fetch(endpointURI, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(body),
+    });
+  }
+
+  fetch('http://localhost:8080/user/shared', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ activeOrgId: 'xxxx' }),
+  });
 
   function getDataFixtures() {
     return new Promise(resolve => {
@@ -185,12 +213,20 @@ export default function MongoNav({
   useEffect(() => {
     if (mode === Mode.Dev) {
       getDataFixtures().then(data => setData(data as DataInterface));
+    } else if (activeProjectId) {
+      fetchProductionData({ activeProjectId })
+        .then(handleResponse)
+        .catch(console.error);
+    } else if (activeOrgId) {
+      fetchProductionData({ activeOrgId })
+        .then(handleResponse)
+        .catch(console.error);
     } else {
       getProductionData()
         .then(handleResponse)
         .catch(console.error);
     }
-  }, [mode, endpointURI]);
+  }, [mode, endpointURI, activeOrgId, activeProjectId]);
 
   const defaultURLS: Required<URLSInterface> = {
     userMenu: {
