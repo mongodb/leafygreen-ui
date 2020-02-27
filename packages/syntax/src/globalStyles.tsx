@@ -67,6 +67,7 @@ const getStyles = (variant: Variant): string => `
   
     .lg-highlight-comment {
       color: ${variantColors[variant][2]};
+      font-style: italic;
     }
 
     .lg-highlight-doctag,
