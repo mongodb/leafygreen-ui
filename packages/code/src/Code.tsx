@@ -75,7 +75,7 @@ const codeWrapperStyleWithWindowChrome = css`
 `;
 
 const copyStyle = css`
-  width: 38px;
+  min-width: 38px;
   border-left: solid 1px;
   display: flex;
   flex-direction: column;
