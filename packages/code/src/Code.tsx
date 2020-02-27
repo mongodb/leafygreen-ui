@@ -228,15 +228,24 @@ function Code({
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const scrollableElement = useRef<HTMLPreElement>(null);
+  const scrollableMultiLine = useRef<HTMLPreElement>(null);
+  const scrollableSingleLine = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (!isLoaded && scrollableElement.current !== null) {
-      setIsLoaded(true);
-      if (
-        scrollableElement.current.scrollWidth >
-        scrollableElement.current.clientWidth
-      ) {
-        setCanScrollRight(true);
+    if (multiline) {
+      if (!isLoaded && scrollableMultiLine.current !== null) {
+        setIsLoaded(true);
+        setCanScrollRight(
+          scrollableMultiLine.current.scrollWidth >
+            scrollableMultiLine.current.clientWidth,
+        );
+      }
+    } else {
+      if (!isLoaded && scrollableSingleLine.current !== null) {
+        setIsLoaded(true);
+        setCanScrollRight(
+          scrollableSingleLine.current.scrollWidth >
+            scrollableSingleLine.current.clientWidth,
+        );
       }
     }
   });
@@ -292,9 +301,29 @@ function Code({
         <div
           {...(rest as DetailedElementProps<HTMLDivElement>)}
           className={wrapperClassName}
+          onScroll={handleScroll}
+          ref={scrollableSingleLine}
         >
           {renderedSyntaxComponent}
         </div>
+        {!showWindowChrome && (
+          <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
+            <CopyToClipboard
+              text={content}
+              onCopy={() => {
+                setCopied(true);
+              }}
+            >
+              <IconButton
+                variant={variant}
+                ariaLabel={'Copy'}
+                className={getCopyButtonStyle(variant, copied)}
+              >
+                <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
+              </IconButton>
+            </CopyToClipboard>
+          </div>
+        )}
       </div>
     );
   }
@@ -311,7 +340,7 @@ function Code({
           {...(rest as DetailedElementProps<HTMLPreElement>)}
           className={wrapperClassName}
           onScroll={handleScroll}
-          ref={scrollableElement}
+          ref={scrollableMultiLine}
         >
           {showLineNumbers && (
             <LineNumbers variant={variant} lineCount={lineCount} />
