@@ -1,3 +1,4 @@
 import OrgNavLink from './OrgNavLink';
 import InteractionRingWrapper from './InteractionRingWrapper';
-export { OrgNavLink, InteractionRingWrapper };
+import OnPremUserMenu from './OnPremUserMenu';
+export { OrgNavLink, InteractionRingWrapper, OnPremUserMenu };

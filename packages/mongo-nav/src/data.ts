@@ -90,6 +90,14 @@ export const urlDefaults: Required<URLSInterface> = {
     alerts: `https://cloud.mongodb.com/v2/currentProjectId098#alerts`,
     activityFeed: `https://cloud.mongodb.com/v2/currentProjectId098#activity`,
   },
+  onPrem: {
+    profile: `https://cloud.mongodb.com/v2#/account/profile`,
+    mfa: `https://cloud.mongodb.com/v2#/preferences/2fa`,
+    personalization: `https://cloud.mongodb.com/v2#/account/personalization`,
+    invitations: `https://cloud.mongodb.com/v2#/preferences/invitations`,
+    organizations: `https://cloud.mongodb.com/v2#/preferences/organizations`,
+    featureRequest: `https://feedback.mongodb.com`,
+  },
 };
 
 export const hostDefaults: Required<HostsInterface> = {

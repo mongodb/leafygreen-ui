@@ -25,6 +25,11 @@ storiesOf('MongoNav', module).add('Default', () => (
         onOrganizationChange={() => {}}
         onProjectChange={() => {}}
         admin={boolean('admin', true)}
+        onPrem={{
+          mfa: true,
+          version: '4.4.0',
+          enabled: boolean('enabled', false),
+        }}
       />
     </div>
   </LeafygreenProvider>

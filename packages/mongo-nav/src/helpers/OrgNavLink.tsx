@@ -2,6 +2,7 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { textLoadingStyle } from '../styles';
 
 const linkText = css`
   text-decoration: none;
@@ -63,10 +64,12 @@ interface OrgNavLinkProps {
   href?: string;
   children?: React.ReactNode;
   className?: string;
+  loading?: boolean;
 }
 
 function OrgNavLink({
   isActive = false,
+  loading = false,
   href,
   children,
   className,
@@ -77,11 +80,13 @@ function OrgNavLink({
   return (
     <a
       href={href}
+      aria-disabled={loading}
       className={cx(
         linkText,
         {
           [activeLink]: isActive,
           [navItemFocusStyle]: showFocus,
+          [textLoadingStyle]: loading,
         },
         className,
       )}
