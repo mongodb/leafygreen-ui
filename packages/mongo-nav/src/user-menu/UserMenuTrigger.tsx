@@ -1,39 +1,14 @@
 import React, { useRef } from 'react';
 import Icon from '@leafygreen-ui/icon';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { breakpoints, facepaint } from '../breakpoints';
+import InteractionRingWrapper from '../helpers/InteractionRingWrapper';
 
 const buttonDataProp = createDataProp('button-data-prop');
 const iconDataProp = createDataProp('icon-data-prop');
-
-const interactionRing = css`
-  position: absolute;
-  top: -3px;
-  bottom: -3px;
-  left: -3px;
-  right: -3px;
-  border-radius: 50px;
-  transform: scale(0.9, 0.8);
-  transition: transform 150ms ease-in-out;
-  background-color: ${uiColors.gray.light2};
-  ${buttonDataProp.selector}:hover ~ & {
-    transform: scale(1);
-  }
-  ${buttonDataProp.selector}:active ~ & {
-    transform: scale(1);
-  }
-`;
-
-const interactionRingFocusState = css`
-  ${buttonDataProp.selector}:focus ~ & {
-    background-color: #9dd0e7;
-    transform: scale(1);
-  }
-`;
 
 const baseButtonStyles = css`
   appearance: none;
@@ -74,6 +49,10 @@ const baseButtonStyles = css`
   &::-moz-focus-inner {
     border: 0;
   }
+`;
+
+const ringClassName = css`
+  border-radius: 50px;
 `;
 
 const openBaseButtonStyle = css`
@@ -118,8 +97,8 @@ export default function UserMenuTrigger({
   name,
   setOpen,
   children,
+  ...rest
 }: UserMenuTriggerProps) {
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
@@ -132,8 +111,12 @@ export default function UserMenuTrigger({
   `;
 
   return (
-    <>
+    <InteractionRingWrapper
+      ringClassName={ringClassName}
+      selector={buttonDataProp.selector}
+    >
       <button
+        {...rest}
         {...buttonDataProp.prop}
         ref={buttonRef}
         className={cx(baseButtonStyles, {
@@ -159,11 +142,6 @@ export default function UserMenuTrigger({
         />
         {children}
       </button>
-      <div
-        className={cx(interactionRing, {
-          [interactionRingFocusState]: showFocus,
-        })}
-      />
-    </>
+    </InteractionRingWrapper>
   );
 }

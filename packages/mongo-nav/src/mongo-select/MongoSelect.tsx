@@ -82,12 +82,13 @@ interface BaseMongoSelectProps {
   urls: Required<URLSInterface>;
   onChange: React.ChangeEventHandler;
   isActive?: boolean;
+  loading?: boolean;
   disabled?: boolean;
 }
 
 interface ProjectMongoSelectProps extends BaseMongoSelectProps {
   data?: Array<ProjectInterface>;
-  current: CurrentProjectInterface;
+  current?: CurrentProjectInterface;
   constructProjectURL: (orgID: string, projectID: string) => string;
 }
 
@@ -95,6 +96,7 @@ interface OrganizationMongoSelectProps extends BaseMongoSelectProps {
   data?: Array<OrganizationInterface>;
   current?: CurrentOrganizationInterface;
   constructOrganizationURL: (orgID: string) => string;
+  isOnPrem?: boolean;
 }
 
 const onKeyDown: React.KeyboardEventHandler = e => {
@@ -108,10 +110,12 @@ function OrgSelect({
   data,
   urls,
   isActive,
-  disabled,
   onChange,
   onClick,
   constructOrganizationURL,
+  isOnPrem,
+  disabled,
+  loading = false,
 }: OrganizationMongoSelectProps) {
   const [open, setOpen] = useState(false);
 
@@ -128,7 +132,9 @@ function OrgSelect({
       >
         <div className={orgOptionContainerStyle}>
           <span className={nameStyle}>{orgName}</span>
-          <span className={productStyle}>{formattedPlanTypes[planType]}</span>
+          {!isOnPrem && (
+            <span className={productStyle}>{formattedPlanTypes[planType]}</span>
+          )}
         </div>
       </MenuItem>
     );
@@ -136,11 +142,12 @@ function OrgSelect({
 
   return (
     <OrganizationTrigger
-      placeholder={current?.orgName ?? 'All Organizations'}
+      placeholder={disabled ? 'All Organizations' : current?.orgName ?? ''}
       urls={urls}
       isActive={isActive}
       open={open}
       disabled={disabled}
+      loading={loading}
       onClick={() => setOpen(current => !current)}
     >
       <Menu
@@ -192,6 +199,7 @@ function ProjectSelect({
   onClick,
   constructProjectURL,
   urls,
+  loading = false,
 }: ProjectMongoSelectProps) {
   const [open, setOpen] = useState(false);
 
@@ -213,8 +221,9 @@ function ProjectSelect({
 
   return (
     <ProjectTrigger
-      placeholder={current.projectName}
+      placeholder={current?.projectName ?? ''}
       open={open}
+      loading={loading}
       onClick={() => setOpen(curr => !curr)}
     >
       <Menu

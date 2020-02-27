@@ -32,6 +32,7 @@
 | `urls`                     | `URLInterface` (see below for type)                                            | Object to enable custom overrides for every `href` used in `<MongoNav />`                                                                                 |
 | `onError`                  | `(ErrorCode) => {}`,                                                           | Function that is passed an error code as a string, so that consuming application can handle fetch failures                                                | `() => {}`                                              |
 | `onSuccess`                | `(response) => {}`                                                             | Callback that receives the response of the fetched data, having been converted from JSON into an object                                                   | `() => {}`                                              |
+| `onPrem`                   | `{enabled: boolean, mfa: boolean, version: string}`                            | onPrem config object with three keys: enabled, version and mfa                                                                                            | `{enabled: false, mfa: false, version: ''}`             |
 
 ### URLInterface
 
@@ -75,6 +76,14 @@ export interface URLSInterface {
     integrations?: string,
     alerts?: string,
     activityFeed?: string,
+  };
+  onPrem?: {
+    profile?: string,
+    mfa?: string,
+    personalization?: string,
+    invitations?: string,
+    organizations?: string,
+    featureRequest?: string,
   };
 }
 ```

@@ -26,12 +26,14 @@ const inputStyle = css`
   border-radius: 5px;
   position: relative;
   z-index: 1;
-  &: focus {
+  font-family: 'Akzidenz', Helvetica, Arial, sans-serif;
+
+  &:focus {
     outline: none;
   }
+
   &::placeholder {
-    color: ${uiColors.gray.light1};
-    font-family: 'Akzidenz', Helvetica, Arial, sans-serif;
+    color: ${uiColors.gray.base};
   }
 `;
 

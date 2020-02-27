@@ -22,15 +22,7 @@ import {
   Product,
   HostsInterface,
 } from '../types';
-
-const defaultHosts: Required<HostsInterface> = {
-  account: 'https://account.mongodb.com',
-  cloud: 'https://cloud.mongodb.com',
-  university: 'https://university.mongodb.com',
-  support: 'https://support.mongodb.com',
-  charts: 'https://charts.mongodb.com',
-  realm: 'https://stitch.mongodb.com',
-} as const;
+import { hostDefaults } from '../data';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 
@@ -147,7 +139,7 @@ interface UserMenuProps {
   /**
    * Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
    */
-  account: AccountInterface;
+  account?: AccountInterface;
 
   /**
    * MongoDB product that is currently active: ['cloud', 'university', 'support'].
@@ -201,14 +193,14 @@ interface UserMenuProps {
  * @param props.urls Object to enable custom overrides for every `href` used in `<UserMenu />`.
  */
 function UserMenu({
-  account: { firstName, lastName, email, openInvitations },
+  account,
   activeProduct,
   onLogout = () => {},
   onProductChange = () => {},
   urls: urlsProp,
   hosts: hostsProp,
 }: UserMenuProps) {
-  const hosts = defaultsDeep(hostsProp, defaultHosts);
+  const hosts = defaultsDeep(hostsProp, hostDefaults);
 
   // will make this logic more abstract, but wanted to get a quick fix in so that UserMenu can be consumed outside of MongoNav
   const defaultURLs = {
@@ -235,7 +227,9 @@ function UserMenu({
 
   const [open, setOpen] = useState(false);
 
-  const name = `${firstName} ${lastName}`;
+  const name = account
+    ? `${account.firstName ?? ''} ${account.lastName ?? ''}`
+    : '';
 
   const isAccount = activeProduct === 'account';
   const cloudProducts = ['cloud', 'stitch', 'charts'];
@@ -262,7 +256,12 @@ function UserMenu({
 
   return (
     <div className={triggerWrapper}>
-      <UserMenuTrigger open={open} name={firstName} setOpen={setOpen}>
+      <UserMenuTrigger
+        open={open}
+        name={account?.firstName ?? ''}
+        setOpen={setOpen}
+        data-testid="user-menu-trigger"
+      >
         <Menu open={open} setOpen={setOpen} className={menuStyle}>
           <div className={headerStyle}>
             <div className={logoMarkBackground}>
@@ -271,7 +270,9 @@ function UserMenu({
 
             <h3 className={cx(nameStyle, truncate)}>{name}</h3>
 
-            <p className={cx(descriptionStyle, truncate)}>{email}</p>
+            <p className={cx(descriptionStyle, truncate)}>
+              {account?.email ?? ''}
+            </p>
 
             <FocusableMenuItem>
               <Button
@@ -300,14 +301,16 @@ function UserMenu({
             <MenuItem href={userMenu?.cloud?.userPreferences}>
               User Preferences
             </MenuItem>
-            <MenuItem href={userMenu?.cloud?.invitations}>
-              {openInvitations ? (
-                <span className={subMenuItemStyle}>
-                  Invitations <Badge variant="blue">{openInvitations}</Badge>
-                </span>
-              ) : (
-                'Invitations'
-              )}
+            <MenuItem
+              href={userMenu?.cloud?.invitations}
+              data-testid="user-menuitem-cloud-invitations"
+            >
+              <span className={subMenuItemStyle}>
+                Invitations
+                {(account?.openInvitations ?? 0) > 0 && (
+                  <Badge variant="blue">{account?.openInvitations}</Badge>
+                )}
+              </span>
             </MenuItem>
             <MenuItem href={userMenu?.cloud?.organizations}>
               Organizations
