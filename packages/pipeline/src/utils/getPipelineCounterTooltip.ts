@@ -10,7 +10,7 @@ import flatMap from 'lodash/flatMap';
  * @returns string - the tooltip text
  */
 export default function getPipelineCounterTooltip(children: ReactNode): string {
-  const stages = (React.Children.map(children, onlyText) ?? []).filter(Boolean);
+  const stages = (React.Children.map(children, onlyText) || []).filter(Boolean);
 
   return flatMap(stages, (value, index, array) =>
     array.length - 1 !== index ? [value, '>'] : value,
