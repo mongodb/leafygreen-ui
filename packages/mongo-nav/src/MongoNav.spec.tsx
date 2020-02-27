@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, wait } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import MongoNav from './MongoNav';
 
@@ -48,12 +48,16 @@ describe('packages/MongoNav', () => {
       const support = getByText('Support').parentNode;
       const billing = getByText('Billing').parentNode;
 
-      expect((support as HTMLAnchorElement).href).toBe(
-        `${cloudHost}/v2#/org/5d729a93/support`,
+      wait(() =>
+        expect((support as HTMLAnchorElement).href).toBe(
+          `${cloudHost}/v2#/org/5d729a93/support`,
+        ),
       );
 
-      expect((billing as HTMLAnchorElement).href).toBe(
-        `${cloudHost}/v2#/org/5d729a93/billing/overview`,
+      wait(() =>
+        expect((billing as HTMLAnchorElement).href).toBe(
+          `${cloudHost}/v2#/org/5d729a93/billing/overview`,
+        ),
       );
     });
   });

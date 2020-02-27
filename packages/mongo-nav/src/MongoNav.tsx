@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import OrgNav from './org-nav/index';
 import ProjectNav from './project-nav/index';
-import Loading from './Loading';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import {
@@ -12,18 +11,10 @@ import {
   Mode,
   DataInterface,
   ErrorCode,
+  OnPremInterface,
 } from './types';
-import { dataFixtures } from './data';
+import { dataFixtures, hostDefaults } from './data';
 import defaultsDeep from 'lodash/defaultsDeep';
-
-const defaultHosts: Required<HostsInterface> = {
-  account: 'https://account.mongodb.com',
-  cloud: 'https://cloud.mongodb.com',
-  university: 'https://university.mongodb.com',
-  support: 'https://support.mongodb.com',
-  charts: 'https://charts.mongodb.com',
-  realm: 'https://stitch.mongodb.com',
-};
 
 const ErrorCodeMap = {
   401: ErrorCode.NO_AUTHORIZATION,
@@ -100,6 +91,16 @@ interface MongoNavInterface {
    * Callback that receives the response of the fetched data, having been converted from JSON into an object.
    */
   onSuccess?: (response: DataInterface) => void;
+
+  /**
+   * Callback executed when user logs out
+   */
+  onLogout?: React.MouseEventHandler;
+
+  /**
+   * onPrem config object with three keys: enabled, version and mfa
+   */
+  onPrem?: OnPremInterface;
 }
 
 /**
@@ -130,6 +131,8 @@ interface MongoNavInterface {
  * @param props.mode Describes what environment the component is being used in, defaults to `production`.
  * @param props.onSuccess Callback that receives the response of the fetched data, having been converted from JSON into an object.
  * @param props.onError Function that is passed an error code as a string, so that consuming application can handle fetch failures.
+ * @param props.onPrem onPrem config object with three keys: enabled, version and mfa
+ * @param props.onLogout Callback executed when user logs out
  */
 export default function MongoNav({
   activeProduct,
@@ -145,10 +148,12 @@ export default function MongoNav({
   constructProjectURL: constructProjectURLProp,
   onError = () => {},
   onSuccess = () => {},
+  onLogout = () => {},
+  onPrem = { mfa: false, enabled: false, version: '' },
 }: MongoNavInterface) {
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
-  const hosts = defaultsDeep(hostsProp, defaultHosts);
+  const hosts = defaultsDeep(hostsProp, hostDefaults);
   const endpointURI = `${hosts.cloud}/user/shared`;
 
   function getProductionData() {
@@ -186,11 +191,6 @@ export default function MongoNav({
         .catch(console.error);
     }
   }, [mode, endpointURI]);
-
-  if (data?.account == null) {
-    // Eventually this logic will be more robust, but for this version we will return the placeholder <Loading /> component
-    return <Loading />;
-  }
 
   const defaultURLS: Required<URLSInterface> = {
     userMenu: {
@@ -232,6 +232,14 @@ export default function MongoNav({
       alerts: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#alerts`,
       activityFeed: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#activity`,
     },
+    onPrem: {
+      profile: `${hosts.cloud}/v2#/account/profile`,
+      mfa: `${hosts.cloud}/v2#/preferences/2fa`,
+      personalization: `${hosts.cloud}/v2#/account/personalization`,
+      invitations: `${hosts.cloud}/v2#/preferences/invitations`,
+      organizations: `${hosts.cloud}/v2#/preferences/organizations`,
+      featureRequest: `https://feedback.mongodb.com`,
+    },
   };
 
   const urls = defaultsDeep(urlsProp, defaultURLS);
@@ -245,37 +253,33 @@ export default function MongoNav({
     `${hosts.cloud}/v2#/${projectId}`;
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
-  const {
-    account,
-    currentOrganization,
-    currentProject,
-    organizations,
-    projects,
-  } = data;
-
   return (
     <section className={navContainerStyle}>
       <OrgNav
-        account={account}
+        account={data?.account}
         activeProduct={activeProduct}
-        current={currentOrganization}
-        data={organizations}
+        current={data?.currentOrganization}
+        data={data?.organizations}
         constructOrganizationURL={constructOrganizationURL}
         urls={urls}
         activeNav={activeNav}
         onOrganizationChange={onOrganizationChange}
         admin={admin}
         hosts={hosts}
-        currentProjectName={currentProject?.projectName}
+        currentProjectName={data?.currentProject?.projectName}
+        onLogout={onLogout}
+        onPremEnabled={onPrem.enabled}
+        onPremVersion={onPrem.version}
+        onPremMFA={onPrem.mfa}
       />
-      {showProjNav && currentProject && (
+      {showProjNav && !onPrem.enabled && (
         <ProjectNav
           activeProduct={activeProduct}
-          current={currentProject}
-          data={projects}
+          current={data?.currentProject}
+          data={data?.projects}
           constructProjectURL={constructProjectURL}
           urls={urls}
-          alerts={currentProject.alertsOpen}
+          alerts={data?.currentProject?.alertsOpen}
           onProjectChange={onProjectChange}
           hosts={hosts}
         />

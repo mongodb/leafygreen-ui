@@ -116,6 +116,12 @@ export interface DataInterface {
   readonly projects: Array<ProjectInterface>;
 }
 
+export interface OnPremInterface {
+  mfa?: boolean;
+  version?: string;
+  enabled?: boolean;
+}
+
 export interface URLSInterface {
   userMenu?: {
     cloud?: {
@@ -156,6 +162,14 @@ export interface URLSInterface {
     alerts?: string;
     activityFeed?: string;
     invite?: string;
+  };
+  onPrem?: {
+    profile?: string;
+    mfa?: string;
+    personalization?: string;
+    invitations?: string;
+    organizations?: string;
+    featureRequest?: string;
   };
 }
 

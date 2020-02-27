@@ -8,7 +8,7 @@ import Badge from '@leafygreen-ui/badge';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import { Menu } from '@leafygreen-ui/menu';
-import { OrgNavLink } from '../helpers/index';
+import { OrgNavLink, OnPremUserMenu } from '../helpers/index';
 import { breakpoints, facepaint } from '../breakpoints';
 import {
   AccountInterface,
@@ -20,7 +20,6 @@ import {
   HostsInterface,
   OrgPaymentLabel,
 } from '../types';
-
 import { OrgSelect } from '../mongo-select/index';
 import UserMenu from '../user-menu/index';
 
@@ -30,7 +29,6 @@ const navContainer = css`
   height: ${orgNavHeight}px;
   width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding-left: 15px;
   padding-right: 15px;
@@ -41,11 +39,6 @@ const navContainer = css`
   box-sizing: border-box;
 `;
 
-const leftSideContainer = css`
-  display: flex;
-  align-items: center;
-`;
-
 const orgSelectContainer = css`
   margin-left: 20px;
   margin-right: 20px;
@@ -54,14 +47,6 @@ const orgSelectContainer = css`
 const disabledOrgSelect = css`
   cursor: default;
   pointer-events: none;
-`;
-
-const ulContainer = css`
-  list-style: none;
-  display: flex;
-  align-items: center;
-  padding-inline-start: 0px;
-  margin: 0; // browser default overrides
 `;
 
 const supportContainer = css`
@@ -88,6 +73,15 @@ const accessManagerMenuItem = css`
   line-height: 19.6px;
   margin-top: 0px;
   margin-bottom: 0px;
+`;
+
+const versionStyle = css`
+  color: ${uiColors.green.base};
+  display: inline-block;
+  font-size: 10px;
+  ${facepaint({
+    marginRight: ['96px', '24px', '24px'],
+  })}
 `;
 
 export const Colors = {
@@ -119,7 +113,7 @@ const paymentStatusMap: { readonly [K in Colors]: Array<string> } = {
 };
 
 interface OrgNav {
-  account: AccountInterface;
+  account?: AccountInterface;
   activeProduct: Product;
   current?: CurrentOrganizationInterface;
   data?: Array<OrganizationInterface>;
@@ -130,6 +124,10 @@ interface OrgNav {
   admin: boolean;
   hosts: Required<HostsInterface>;
   currentProjectName?: string;
+  onLogout: React.MouseEventHandler;
+  onPremEnabled?: boolean;
+  onPremVersion?: string;
+  onPremMFA?: boolean;
 }
 
 export default function OrgNav({
@@ -144,8 +142,13 @@ export default function OrgNav({
   admin,
   hosts,
   currentProjectName,
+  onLogout,
+  onPremEnabled,
+  onPremVersion,
+  onPremMFA = false,
 }: OrgNav) {
-  const [open, setOpen] = useState(false);
+  const [accessManagerOpen, setAccessManagerOpen] = useState(false);
+  const [onPremMenuOpen, setOnPremMenuOpen] = useState(false);
   const { orgNav } = urls;
   const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
@@ -169,81 +172,107 @@ export default function OrgNav({
     OrgPaymentLabel.AdminSuspended,
   ];
 
+  let badgeItem: React.ReactElement | null = null;
+
+  if (
+    !isTablet &&
+    !onPremEnabled &&
+    current?.paymentStatus &&
+    paymentVariant &&
+    (admin || paymentValues.includes(current.paymentStatus))
+  ) {
+    const badgeMargin = css`
+      margin-right: 25px;
+    `;
+
+    badgeItem = (
+      <Badge
+        className={badgeMargin}
+        variant={paymentVariant}
+        data-testid="org-nav-payment-status"
+      >
+        {current.paymentStatus.split('_').join()}
+      </Badge>
+    );
+  }
+
+  const renderedUserMenu = onPremEnabled ? (
+    <OnPremUserMenu
+      onLogout={onLogout}
+      name={account?.firstName ?? ''}
+      open={onPremMenuOpen}
+      setOpen={setOnPremMenuOpen}
+      urls={urls}
+      mfa={onPremMFA}
+    />
+  ) : (
+    <UserMenu
+      account={account}
+      activeProduct={activeProduct}
+      urls={urls}
+      hosts={hosts}
+      onLogout={onLogout}
+    />
+  );
+
   return (
     <nav
       className={navContainer}
       aria-label="organization navigation"
       data-testid="organization-nav"
     >
-      <div className={leftSideContainer}>
-        <Tooltip
-          align="bottom"
-          justify="start"
-          variant="dark"
-          trigger={
-            <span>
-              <LogoMark height={30} />
-            </span>
-          }
-        >
-          View the Organization Home
-        </Tooltip>
+      <Tooltip
+        align="bottom"
+        justify="start"
+        variant="dark"
+        trigger={
+          <span>
+            <LogoMark height={30} />
+          </span>
+        }
+      >
+        View the Organization Home
+      </Tooltip>
 
-        <OrgSelect
-          className={cx(orgSelectContainer, { [disabledOrgSelect]: disabled })}
-          data={data}
-          current={current}
-          constructOrganizationURL={constructOrganizationURL}
-          urls={urls}
-          onChange={onOrganizationChange}
-          isActive={activeNav === 'orgSettings'}
-          disabled={disabled}
-        />
-        {!disabled && (
-          <ul className={ulContainer}>
-            {!isTablet &&
-              current?.paymentStatus &&
-              paymentVariant &&
-              (admin || paymentValues.includes(current.paymentStatus)) && (
-                <li>
-                  <Badge
-                    className={css`
-                      margin-right: 25px;
-                    `}
-                    variant={paymentVariant}
-                    data-testid="org-payment-status"
-                  >
-                    {current.paymentStatus.split('_').join()}
-                  </Badge>
-                </li>
-              )}
+      <OrgSelect
+        className={cx(orgSelectContainer, { [disabledOrgSelect]: disabled })}
+        data={data}
+        current={current}
+        constructOrganizationURL={constructOrganizationURL}
+        urls={urls}
+        onChange={onOrganizationChange}
+        isActive={activeNav === 'orgSettings'}
+        loading={!current}
+        disabled={disabled}
+        isOnPrem={onPremEnabled}
+      />
 
-            {!isMobile && current && (
-              <>
-                <li
-                  role="none"
-                  className={css`
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                  `}
-                >
-                  <OrgNavLink
-                    href={orgNav.accessManager}
-                    isActive={activeNav === 'accessManager'}
-                    data-testid="org-access-manager"
-                  >
-                    Access Manager
-                  </OrgNavLink>
+      {!disabled && (
+        <>
+          {badgeItem}
 
+          {!isMobile && (
+            <>
+              <OrgNavLink
+                href={current && orgNav.accessManager}
+                isActive={activeNav === 'accessManager'}
+                loading={!current}
+                data-testid="org-nav-access-manager"
+              >
+                Access Manager
+              </OrgNavLink>
+
+              <IconButton
+                ariaLabel="Dropdown"
+                active={accessManagerOpen}
+                disabled={!current}
+              >
+                <Icon glyph={accessManagerOpen ? 'CaretUp' : 'CaretDown'} />
+
+                {current && (
                   <Menu
-                    open={open}
-                    setOpen={setOpen}
-                    trigger={
-                      <IconButton ariaLabel="Dropdown" active={open}>
-                        <Icon glyph={open ? 'CaretUp' : 'CaretDown'} />
-                      </IconButton>
-                    }
+                    open={accessManagerOpen}
+                    setOpen={setAccessManagerOpen}
                     className={accessManagerMenuContainer}
                   >
                     <p className={accessManagerMenuItem}>
@@ -255,62 +284,69 @@ export default function OrgNav({
                       {currentProjectName ?? 'None'}
                     </p>
                   </Menu>
-                </li>
+                )}
+              </IconButton>
 
-                <li role="none" className={supportContainer}>
-                  <OrgNavLink
-                    href={orgNav.support}
-                    isActive={activeNav === 'support'}
-                    data-testid="org-support"
-                  >
-                    Support
-                  </OrgNavLink>
-                </li>
+              <OrgNavLink
+                href={current && orgNav.support}
+                isActive={activeNav === 'support'}
+                loading={!current}
+                className={supportContainer}
+                data-testid="org-nav-support"
+              >
+                Support
+              </OrgNavLink>
 
-                <li role="none">
-                  <OrgNavLink
-                    href={orgNav.billing}
-                    isActive={activeNav === 'billing'}
-                    data-testid="org-billing"
-                  >
-                    Billing
-                  </OrgNavLink>
-                </li>
-              </>
-            )}
-          </ul>
+              {!onPremEnabled && (
+                <OrgNavLink
+                  href={current && orgNav.billing}
+                  isActive={activeNav === 'billing'}
+                  loading={!current}
+                  data-testid="org-nav-billing"
+                >
+                  Billing
+                </OrgNavLink>
+              )}
+            </>
+          )}
+        </>
+      )}
+
+      <div
+        className={css`
+          margin-left: auto;
+        `}
+      >
+        {onPremEnabled && onPremVersion && (
+          <span className={versionStyle} data-testid="org-nav-on-prem-version">
+            {onPremVersion}
+          </span>
         )}
-      </div>
-      <div>
+
         {!isMobile && (
           <OrgNavLink
             href={orgNav.allClusters}
             isActive={activeNav === 'allClusters'}
             className={rightLinkMargin}
-            data-testid="all-clusters-link"
+            data-testid="org-nav-all-clusters-link"
           >
             All Clusters
           </OrgNavLink>
         )}
 
-        {!isTablet && admin && (
+        {!isTablet && admin && !onPremEnabled && (
           <OrgNavLink
             href={orgNav.admin}
             isActive={activeNav === 'admin'}
             className={rightLinkMargin}
-            data-testid="admin-link"
+            data-testid="org-nav-admin-link"
           >
             Admin
           </OrgNavLink>
         )}
-
-        <UserMenu
-          account={account}
-          activeProduct={activeProduct}
-          urls={urls}
-          hosts={hosts}
-        />
       </div>
+
+      {renderedUserMenu}
     </nav>
   );
 }
