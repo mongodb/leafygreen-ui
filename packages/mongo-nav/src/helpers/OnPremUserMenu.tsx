@@ -15,7 +15,7 @@ interface OnPremUserMenuProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   urls: Required<URLSInterface>;
-  onLogout?: React.MouseEventHandler;
+  onLogout: React.MouseEventHandler;
   mfa: boolean;
 }
 

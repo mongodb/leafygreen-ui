@@ -267,6 +267,7 @@ export default function ProjectNav({
             href={hosts.cloud}
             className={getProductClassName('cloud')}
             aria-disabled={!current}
+            tabIndex={!current ? -1 : 0}
           >
             {!isMobile && (
               <Icon
@@ -284,6 +285,7 @@ export default function ProjectNav({
             href={hosts.realm}
             className={getProductClassName('realm')}
             aria-disabled={!current}
+            tabIndex={!current ? -1 : 0}
           >
             {!isMobile && (
               <Icon
@@ -301,6 +303,7 @@ export default function ProjectNav({
             href={hosts.charts}
             className={getProductClassName('charts')}
             aria-disabled={!current}
+            tabIndex={!current ? -1 : 0}
           >
             {!isMobile && (
               <Icon

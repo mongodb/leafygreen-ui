@@ -124,7 +124,7 @@ interface OrgNav {
   admin: boolean;
   hosts: Required<HostsInterface>;
   currentProjectName?: string;
-  onLogout?: React.MouseEventHandler;
+  onLogout: React.MouseEventHandler;
   onPremEnabled?: boolean;
   onPremVersion?: string;
   onPremMFA?: boolean;

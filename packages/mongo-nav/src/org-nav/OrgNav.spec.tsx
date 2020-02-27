@@ -87,6 +87,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
           urls={urlDefaults}
           admin={false}
           hosts={hostDefaults}
+          onLogout={jest.fn()}
           {...props}
         />,
       ),
