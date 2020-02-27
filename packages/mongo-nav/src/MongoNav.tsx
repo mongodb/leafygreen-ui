@@ -11,6 +11,7 @@ import {
   Mode,
   DataInterface,
   ErrorCode,
+  OnPremInterface,
 } from './types';
 import { dataFixtures, hostDefaults } from './data';
 import defaultsDeep from 'lodash/defaultsDeep';
@@ -99,7 +100,7 @@ interface MongoNavInterface {
   /**
    * onPrem config object with three keys: enabled, version and mfa
    */
-  onPrem?: { mfa?: boolean; version?: string; enabled?: boolean };
+  onPrem?: OnPremInterface;
 }
 
 /**
