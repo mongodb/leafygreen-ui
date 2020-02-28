@@ -1,7 +1,10 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
 import Code from './Code';
+
+// I had to add this in to prevent another error being thrown on the click event (in addition to the TypeError)
+window.prompt = jest.fn();
 
 afterAll(cleanup);
 
@@ -10,19 +13,19 @@ const className = 'test-class';
 
 describe('packages/Syntax', () => {
   describe('when multiline is true', () => {
-    const {
-      container: { firstChild: containerRoot },
-    } = render(<Code className={className}>{codeSnippet}</Code>);
+    const { container } = render(
+      <Code className={className}>{codeSnippet}</Code>,
+    );
 
-    const codeContainer = (containerRoot as HTMLElement).lastChild;
+    const codeContainer = (container.firstChild as HTMLElement).lastChild;
     const codeRoot = (codeContainer as HTMLElement).firstChild;
-    const copyRoot = (codeContainer as HTMLElement).lastChild;
+    const copyButton = codeRoot?.nextSibling?.firstChild as HTMLElement;
 
     if (!codeRoot || !typeIs.element(codeRoot)) {
       throw new Error('Multiline code element not found');
     }
 
-    if (!copyRoot || !typeIs.element(copyRoot)) {
+    if (!copyButton || !typeIs.element(copyButton)) {
       throw new Error('Multiline copy button not found');
     }
 
@@ -34,9 +37,38 @@ describe('packages/Syntax', () => {
       expect(codeRoot.classList.contains(className)).toBe(true);
     });
 
-    test(`copy button is clickable`, () => {});
-
-    test(`copy button actually copies text to clipboard`, () => {});
+    test(`copy button actually copies text to clipboard`, () => {
+      // the following line does fire a click event, but it also produces an error
+      // TypeError: reselectPrevious is not a function
+      fireEvent.click(copyButton);
+      const arbitraryInput = render(
+        <input
+          aria-label="test-input"
+          value=""
+          onChange={() => {
+            console.log('value change');
+          }}
+        />,
+        {
+          container: container,
+        },
+      );
+      const inputElement = arbitraryInput.container
+        .firstChild as HTMLInputElement;
+      // when a paste event is fired, it does not automatically grab text from the clipboard
+      // instead, you need to define the value that gets pasted in to the target
+      // ideally, I could do this by using the following snippet, but navigator.clipboard is undefined so I can't access it
+      /*
+        navigator.clipboard.readText().then(
+          clipText => fireEvent.paste(inputElement,  { target: { value: clipText }});
+          expect(inputElement.value).toBe(codeSnippet);
+        );
+      */
+      fireEvent.paste(inputElement, {
+        target: { value: 'this should be the copied text from the clipboard' },
+      });
+      expect(inputElement.value).toBe(codeSnippet);
+    });
   });
 
   describe('when multiline is false', () => {
