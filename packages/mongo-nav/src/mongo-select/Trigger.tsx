@@ -237,6 +237,7 @@ export function OrganizationTrigger({
           aria-label="settings"
           data-testid="org-trigger-settings"
           aria-disabled={loading}
+          tabIndex={loading ? -1 : 0}
         >
           <Icon
             glyph="Settings"
@@ -285,6 +286,7 @@ export function ProjectTrigger({
           [activeButtonColor]: open,
           [textLoadingStyle]: loading,
         })}
+        disabled={loading}
         aria-disabled={loading}
       >
         <Icon

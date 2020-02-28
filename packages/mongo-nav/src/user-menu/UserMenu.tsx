@@ -299,7 +299,10 @@ function UserMenu({
               [subMenuActiveContainerStyle]: isCloud,
             })}
           >
-            <MenuItem href={userMenu?.cloud?.userPreferences}>
+            <MenuItem
+              href={userMenu?.cloud?.userPreferences}
+              data-testid="user-menuitem-cloud-user-preferences"
+            >
               User Preferences
             </MenuItem>
             <MenuItem

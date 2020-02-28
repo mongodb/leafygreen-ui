@@ -270,6 +270,7 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
         },
         className,
       )}
+      tabIndex={disabled ? -1 : 0}
     >
       <span className={getIconStyle(size)}>{children}</span>
     </Root>

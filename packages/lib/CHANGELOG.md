@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 4.3.1
+
+### Patch Changes
+
+- 704e25c: Add missing testing library dependency
+
 ## 4.3.0
 
 ### Minor Changes

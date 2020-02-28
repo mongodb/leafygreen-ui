@@ -116,6 +116,12 @@ export interface DataInterface {
   readonly projects: Array<ProjectInterface>;
 }
 
+export interface OnPremInterface {
+  mfa?: boolean;
+  version?: string;
+  enabled?: boolean;
+}
+
 export interface URLSInterface {
   userMenu?: {
     cloud?: {
