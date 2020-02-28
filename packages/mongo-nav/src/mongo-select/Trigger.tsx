@@ -8,6 +8,11 @@ import { useViewportSize } from '@leafygreen-ui/hooks';
 import { URLSInterface } from '../types';
 import { InteractionRingWrapper } from '../helpers/index';
 import { facepaint, breakpoints } from '../breakpoints';
+import {
+  textLoadingStyle,
+  iconLoadingStyle,
+  removePointerEvents,
+} from '../styles';
 
 const triggerDataProp = createDataProp('org-trigger');
 const anchorDataProp = createDataProp('anchor-data-prop');
@@ -153,6 +158,7 @@ interface OrganizationTriggerProps {
   isActive?: boolean;
   open?: boolean;
   disabled?: boolean;
+  loading?: boolean;
 }
 
 export function OrganizationTrigger({
@@ -162,13 +168,12 @@ export function OrganizationTrigger({
   isActive = false,
   open = false,
   disabled = false,
+  loading = false,
   ...rest
 }: OrganizationTriggerProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
-
-  const orgTriggerPlaceholder = disabled ? 'All Organizations' : placeholder;
 
   return (
     <>
@@ -180,21 +185,28 @@ export function OrganizationTrigger({
         <button
           {...rest}
           {...triggerDataProp.prop}
+          aria-disabled={disabled || loading}
           data-testid="org-trigger"
-          disabled={disabled}
+          disabled={disabled || loading}
           className={cx(baseButtonStyles, orgButtonStyles, {
             [activeButtonColor]: open,
+            [textLoadingStyle]: loading,
           })}
         >
           {!isTablet && (
             <Icon
               size="small"
               glyph="Building"
-              className={cx({ [disabledStyle]: disabled })}
+              className={cx({ [iconLoadingStyle]: loading })}
             />
           )}
-          <span className={cx(selectedStyle, { [disabledStyle]: disabled })}>
-            {orgTriggerPlaceholder}
+          <span
+            className={cx(selectedStyle, {
+              [disabledStyle]: disabled,
+              [textLoadingStyle]: loading,
+            })}
+          >
+            {placeholder}
           </span>
           <Icon
             size="small"
@@ -203,7 +215,7 @@ export function OrganizationTrigger({
               css`
                 flex-shrink: 0;
               `,
-              { [disabledStyle]: disabled },
+              { [iconLoadingStyle]: loading },
             )}
           />
           {children}
@@ -213,15 +225,21 @@ export function OrganizationTrigger({
       {!disabled && (
         <a
           {...anchorDataProp.prop}
-          className={cx(orgSettingsButtonStyle, { [focusStyle]: showFocus })}
+          className={cx(orgSettingsButtonStyle, {
+            [focusStyle]: showFocus,
+            [removePointerEvents]: loading,
+          })}
           href={urls.mongoSelect.orgSettings}
           aria-label="settings"
           data-testid="org-trigger-settings"
+          aria-disabled={loading}
+          tabIndex={loading ? -1 : 0}
         >
           <Icon
             glyph="Settings"
             className={cx({
               [activeColor]: isActive,
+              [iconLoadingStyle]: loading,
             })}
           />
         </a>
@@ -234,12 +252,15 @@ interface ProjectTriggerProps {
   children?: React.ReactNode;
   placeholder: string;
   open?: boolean;
+  disabled?: boolean;
+  loading?: boolean;
 }
 
 export function ProjectTrigger({
   children,
   placeholder,
   open = false,
+  loading = false,
   ...rest
 }: ProjectTriggerProps) {
   return (
@@ -256,21 +277,32 @@ export function ProjectTrigger({
         data-testid="project-select-trigger"
         className={cx(baseButtonStyles, projectButtonStyles, {
           [activeButtonColor]: open,
+          [textLoadingStyle]: loading,
         })}
+        disabled={loading}
+        aria-disabled={loading}
       >
         <Icon
           glyph="Bell"
-          className={css`
-            color: ${uiColors.gray.base};
-          `}
+          className={cx(
+            css`
+              color: ${uiColors.gray.base};
+            `,
+            { [iconLoadingStyle]: loading },
+          )}
         />
-        <span className={selectedStyle}>{placeholder}</span>
+        <span className={cx(selectedStyle, { [textLoadingStyle]: loading })}>
+          {placeholder}
+        </span>
         <Icon
           size="small"
           glyph={open ? 'CaretUp' : 'CaretDown'}
-          className={css`
-            flex-shrink: 0;
-          `}
+          className={cx(
+            css`
+              flex-shrink: 0;
+            `,
+            { [iconLoadingStyle]: loading },
+          )}
         />
         {children}
       </button>

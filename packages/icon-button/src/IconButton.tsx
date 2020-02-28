@@ -101,6 +101,9 @@ const baseIconButtonStyle = css`
   color: ${uiColors.gray.base};
   position: relative;
   cursor: pointer;
+  // added for cross-browser compatability
+  background-color: rgba(255, 255, 255, 0);
+
   &:before {
     content: '';
     transition: 150ms all ease-in-out;
@@ -113,11 +116,13 @@ const baseIconButtonStyle = css`
     opacity: 0;
     transform: scale(0.8);
   }
+
   &:hover:before,
   &:focus:before {
     opacity: 1;
     transform: scale(1);
   }
+
   &:focus {
     outline: none;
   }
@@ -265,6 +270,7 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
         },
         className,
       )}
+      tabIndex={disabled ? -1 : 0}
     >
       <span className={getIconStyle(size)}>{children}</span>
     </Root>

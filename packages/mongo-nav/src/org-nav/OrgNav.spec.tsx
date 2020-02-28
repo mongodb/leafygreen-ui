@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import {
   dataFixtures,
@@ -47,12 +47,19 @@ describe('packages/mongo-nav/src/org-nav', () => {
 
   const setExpectedElements = () => {
     const { queryByTestId = () => null } = queries;
-    expectedElements.paymentStatus = queryByTestId('org-payment-status');
-    expectedElements.accessManager = queryByTestId('org-access-manager');
-    expectedElements.support = queryByTestId('org-support');
-    expectedElements.billing = queryByTestId('org-billing');
-    expectedElements.allClusters = queryByTestId('all-clusters-link');
-    expectedElements.admin = queryByTestId('admin-link');
+    expectedElements.paymentStatus = queryByTestId('org-nav-payment-status');
+    expectedElements.accessManager = queryByTestId('org-nav-access-manager');
+    expectedElements.support = queryByTestId('org-nav-support');
+    expectedElements.billing = queryByTestId('org-nav-billing');
+    expectedElements.allClusters = queryByTestId('org-nav-all-clusters-link');
+    expectedElements.admin = queryByTestId('org-nav-admin-link');
+    expectedElements.version = queryByTestId('org-nav-on-prem-version');
+    expectedElements.userMenu = queryByTestId('user-menu-trigger');
+    expectedElements.onPremUserMenu = queryByTestId('om-user-menu-trigger');
+    expectedElements.onPremUserMenuMFA = queryByTestId('om-user-menuitem-mfa');
+    expectedElements.onPremUserMenuSignOut = queryByTestId(
+      'om-user-menuitem-sign-out',
+    );
   };
 
   let onOrganizationChange: jest.Mock;
@@ -80,10 +87,23 @@ describe('packages/mongo-nav/src/org-nav', () => {
           urls={urlDefaults}
           admin={false}
           hosts={hostDefaults}
+          onLogout={jest.fn()}
           {...props}
         />,
       ),
     );
+  };
+
+  const testForVersion = (isVisible = true) => {
+    it(`${isVisible ? 'displays' : 'does not display'} the version`, () => {
+      const version = expectedElements['version'];
+
+      if (isVisible) {
+        expect(version).toBeInTheDocument();
+      } else {
+        expect(version).toBeNull();
+      }
+    });
   };
 
   const testForPaymentStatus = (isVisible = true) => {
@@ -98,6 +118,57 @@ describe('packages/mongo-nav/src/org-nav', () => {
       } else {
         expect(badge).toBeNull();
       }
+    });
+  };
+
+  const testForUserMenu = (isVisible = true) => {
+    it(`${isVisible ? 'displays' : 'does not display'} the UserMenu and ${
+      isVisible ? 'does not display' : 'displays'
+    } the onPrem User Menu`, () => {
+      const userMenu = expectedElements['userMenu'];
+      const onPremUserMenu = expectedElements['onPremUserMenu'];
+
+      if (isVisible) {
+        expect(userMenu).toBeInTheDocument();
+        expect(onPremUserMenu).toBeNull();
+      } else {
+        expect(onPremUserMenu).toBeInTheDocument();
+        expect(userMenu).toBeNull();
+      }
+    });
+  };
+
+  const testForMFA = (isVisible = true) => {
+    it(`${isVisible ? 'displays' : 'does not display'} the MFA option`, () => {
+      const onPremUserMenu = expectedElements['onPremUserMenu'];
+      fireEvent.click(onPremUserMenu as Element);
+      setExpectedElements();
+
+      const onPremUserMenuMFA = expectedElements['onPremUserMenuMFA'];
+
+      if (isVisible) {
+        expect(onPremUserMenuMFA).toBeInTheDocument();
+        expect((onPremUserMenuMFA as HTMLAnchorElement).href).toBe(
+          'https://cloud.mongodb.com/v2#/preferences/2fa',
+        );
+      } else {
+        expect(onPremUserMenuMFA).toBeNull();
+      }
+    });
+  };
+
+  const testForLogoutCallback = (onLogout: MouseEventHandler) => {
+    it('fires onLogout callback when OnPremUserMenu is rendered and the prop is set', () => {
+      const onPremUserMenu = expectedElements['onPremUserMenu'];
+      fireEvent.click(onPremUserMenu as Element);
+      setExpectedElements();
+      const onPremUserMenuSignOut = expectedElements['onPremUserMenuSignOut'];
+
+      fireEvent.click(onPremUserMenu as Element);
+      setExpectedElements();
+      expect(onPremUserMenuSignOut).toBeInTheDocument();
+      fireEvent.click(onPremUserMenuSignOut as Element);
+      expect(onLogout).toHaveBeenCalled();
     });
   };
 
@@ -122,6 +193,8 @@ describe('packages/mongo-nav/src/org-nav', () => {
   describe('when rendered with default props', () => {
     beforeEach(renderComponent);
     testForPaymentStatus(false);
+    testForVersion(false);
+    testForUserMenu(true);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, linkName !== 'admin'),
@@ -129,8 +202,13 @@ describe('packages/mongo-nav/src/org-nav', () => {
   });
 
   describe('when rendered with an active preferences nav', () => {
-    beforeEach(() => renderComponent({ activeNav: 'userSettings' }));
+    beforeEach(() =>
+      renderComponent({
+        activeNav: 'userSettings',
+      }),
+    );
     testForPaymentStatus(false);
+    testForVersion(false);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, linkName === 'allClusters'),
@@ -146,12 +224,63 @@ describe('packages/mongo-nav/src/org-nav', () => {
 
   describe('when rendered as an admin with an active preferences nav', () => {
     beforeEach(() =>
-      renderComponent({ activeNav: 'userSettings', admin: true }),
+      renderComponent({
+        activeNav: 'userSettings',
+        admin: true,
+      }),
     );
+
     testForPaymentStatus(false);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, ['allClusters', 'admin'].includes(linkName)),
+    );
+  });
+
+  describe('when rendered onPrem', () => {
+    const onLogout = jest.fn();
+
+    beforeEach(() =>
+      renderComponent({
+        onPremEnabled: true,
+        onPremVersion: '4.4.0',
+        onLogout: onLogout,
+      }),
+    );
+
+    testForPaymentStatus(false);
+    testForVersion(true);
+    testForUserMenu(false);
+    testForMFA(false);
+    testForLogoutCallback(onLogout);
+
+    Object.keys(linkNamesToUrls).forEach(linkName =>
+      testForNavLink(linkName, ['billing', 'admin'].indexOf(linkName) === -1),
+    );
+  });
+
+  describe('when rendered onPrem and onPremMFA is true', () => {
+    beforeEach(() =>
+      renderComponent({
+        onPremEnabled: true,
+        onPremMFA: true,
+      }),
+    );
+
+    testForMFA(true);
+  });
+
+  describe('when rendered onPrem and admin is set to true', () => {
+    beforeEach(() =>
+      renderComponent({
+        onPremEnabled: true,
+        onPremVersion: '4.4.0',
+        admin: true,
+      }),
+    );
+
+    Object.keys(linkNamesToUrls).forEach(linkName =>
+      testForNavLink(linkName, ['billing', 'admin'].indexOf(linkName) === -1),
     );
   });
 });
