@@ -315,7 +315,7 @@ export default function ProjectNav({
                 glyph="Cloud"
               />
             )}
-            {isCloudManager ? 'Cloud Manger' : 'Atlas'}
+            {isCloudManager ? 'Cloud Manager' : 'Atlas'}
           </a>
         </li>
 
