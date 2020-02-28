@@ -16,6 +16,7 @@ import {
   CurrentProjectInterface,
   Product,
   HostsInterface,
+  PlanType,
 } from '../types';
 import { iconLoadingStyle, textLoadingStyle } from '../styles';
 
@@ -71,7 +72,7 @@ const productTabStyle = css`
   position: relative;
 
   ${facepaint({
-    width: ['100px', '60px', '100px'],
+    minWidth: ['100px', '60px', '100px'],
     marginRight: ['16px', '8px', '16px'],
   })}
 `;
@@ -160,6 +161,10 @@ const productStyle = css`
   }
 `;
 
+const cloudManagerStyle = css`
+  width: unset;
+`;
+
 const iconButtonMargin = css`
   ${facepaint({
     marginRight: ['16px', '16px', '20px'],
@@ -217,12 +222,14 @@ export default function ProjectNav({
   const { projectNav } = urls;
   const { width: viewportWidth } = useViewportSize();
   const isMobile = viewportWidth < breakpoints.small;
+  const isCloudManager = current?.planType === PlanType.Cloud;
 
   const getProductClassName = (product: Product) =>
     cx(productStyle, {
       [productStates.active]: !!(activeProduct === product && current),
       [productStates.focus]: showFocus,
       [productStates.loading]: !current,
+      [cloudManagerStyle]: isCloudManager,
     });
 
   const sharedTooltipProps = {
@@ -261,21 +268,40 @@ export default function ProjectNav({
             className={menuIconButtonStyle}
             active={open}
             disabled={!current}
+            data-testid="project-nav-project-menu"
           >
             <Icon glyph="Ellipsis" className={menuIconStyle} />
           </IconButton>
         }
       >
-        <MenuItem href={projectNav.settings}>Project Settings</MenuItem>
-        <MenuItem href={projectNav.accessManager}>
+        <MenuItem href={projectNav.settings} data-testid="project-nav-settings">
+          Project Settings
+        </MenuItem>
+        <MenuItem
+          href={projectNav.accessManager}
+          data-testid="project-nav-access-manager"
+        >
           Project Access Manager
         </MenuItem>
-        <MenuItem href={projectNav.support}>Project Support</MenuItem>
-        <MenuItem href={projectNav.integrations}>Integrations</MenuItem>
+        <MenuItem href={projectNav.support} data-testid="project-nav-support">
+          Project Support
+        </MenuItem>
+        <MenuItem
+          href={projectNav.integrations}
+          data-testid="project-nav-integrations"
+        >
+          Integrations
+        </MenuItem>
       </Menu>
 
       <ul className={productListStyle}>
-        <li role="none" className={productTabStyle}>
+        <li
+          role="none"
+          className={productTabStyle}
+          data-testid={`project-nav-${
+            isCloudManager ? 'cloud-manager' : 'atlas'
+          }`}
+        >
           <a
             href={hosts.cloud}
             className={getProductClassName('cloud')}
@@ -289,45 +315,57 @@ export default function ProjectNav({
                 glyph="Cloud"
               />
             )}
-            Atlas
+            {isCloudManager ? 'Cloud Manger' : 'Atlas'}
           </a>
         </li>
 
-        <li role="none" className={productTabStyle}>
-          <a
-            href={hosts.realm}
-            className={getProductClassName('realm')}
-            aria-disabled={!current}
-            tabIndex={!current ? -1 : 0}
+        {!isCloudManager && (
+          <li
+            role="none"
+            className={productTabStyle}
+            data-testid="project-nav-realm"
           >
-            {!isMobile && (
-              <Icon
-                {...productIconProp.prop}
-                className={iconStyle}
-                glyph="Stitch"
-              />
-            )}
-            Realm
-          </a>
-        </li>
+            <a
+              href={hosts.realm}
+              className={getProductClassName('realm')}
+              aria-disabled={!current}
+              tabIndex={!current ? -1 : 0}
+            >
+              {!isMobile && (
+                <Icon
+                  {...productIconProp.prop}
+                  className={iconStyle}
+                  glyph="Stitch"
+                />
+              )}
+              Realm
+            </a>
+          </li>
+        )}
 
-        <li role="none" className={productTabStyle}>
-          <a
-            href={hosts.charts}
-            className={getProductClassName('charts')}
-            aria-disabled={!current}
-            tabIndex={!current ? -1 : 0}
+        {!isCloudManager && (
+          <li
+            role="none"
+            className={productTabStyle}
+            data-testid="project-nav-charts"
           >
-            {!isMobile && (
-              <Icon
-                {...productIconProp.prop}
-                className={iconStyle}
-                glyph="Charts"
-              />
-            )}
-            Charts
-          </a>
-        </li>
+            <a
+              href={hosts.charts}
+              className={getProductClassName('charts')}
+              aria-disabled={!current}
+              tabIndex={!current ? -1 : 0}
+            >
+              {!isMobile && (
+                <Icon
+                  {...productIconProp.prop}
+                  className={iconStyle}
+                  glyph="Charts"
+                />
+              )}
+              Charts
+            </a>
+          </li>
+        )}
       </ul>
 
       {!isMobile && (
@@ -343,6 +381,7 @@ export default function ProjectNav({
                 className={iconButtonMargin}
                 size="large"
                 disabled={!current}
+                data-testid="project-nav-invite"
               >
                 <Icon glyph="Person" size="large" />
               </IconButton>
@@ -362,6 +401,7 @@ export default function ProjectNav({
                 size="large"
                 className={iconButtonMargin}
                 disabled={!current}
+                data-testid="project-nav-activity-feed"
               >
                 <Icon glyph="Save" size="large" />
               </IconButton>
@@ -380,8 +420,16 @@ export default function ProjectNav({
                 href={projectNav.alerts as string}
                 size="large"
                 disabled={!current}
+                data-testid="project-nav-alerts"
               >
-                {alerts > 0 && <div className={alertBadgeStyle}>{alerts}</div>}
+                {alerts > 0 && (
+                  <div
+                    className={alertBadgeStyle}
+                    data-testid="project-nav-alerts-badge"
+                  >
+                    {alerts}
+                  </div>
+                )}
                 <Icon glyph="Bell" size="large" />
               </IconButton>
             }
