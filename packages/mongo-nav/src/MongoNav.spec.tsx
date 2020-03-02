@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, waitForDomChange } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import { dataFixtures } from './data';
@@ -24,11 +24,8 @@ describe('packages/mongo-nav', () => {
     expectedElements.orgNav = queryByTestId('organization-nav');
     expectedElements.projectNav = queryByTestId('project-nav');
     expectedElements.admin = queryByTestId('org-nav-admin-link');
-    expectedElements.userMenu = queryByTestId('user-menu-trigger');
     expectedElements.billing = queryByTestId('org-nav-billing');
-    expectedElements.activeProject = queryByTestId(
-      'project-select-active-project',
-    );
+    expectedElements.invite = queryByTestId('project-nav-invite');
   };
 
   let onOrganizationChange: jest.Mock;
@@ -43,6 +40,7 @@ describe('packages/mongo-nav', () => {
   });
 
   afterEach(() => {
+    window.fetch;
     jest.restoreAllMocks();
     cleanup();
   });
@@ -61,7 +59,11 @@ describe('packages/mongo-nav', () => {
   };
 
   describe('when rendered in dev mode', () => {
-    beforeEach(() => renderComponent({ mode: 'dev' }));
+    beforeEach(() =>
+      renderComponent({
+        mode: 'dev',
+      }),
+    );
 
     test('the organization nav is rendered', () => {
       const organizationNav = expectedElements['orgNav'];
@@ -115,10 +117,11 @@ describe('packages/mongo-nav', () => {
   });
 
   describe('when in production mode and activeProjectId is supplied', () => {
-    const activeProjectId = dataFixtures.projects[0].projectId;
+    const newActiveProject = dataFixtures.projects[0];
+    const activeProjectId = newActiveProject.projectId;
     const expectedPostData = {
       ...dataFixtures,
-      currentProject: { ...dataFixtures.projects[0] },
+      currentProject: { ...newActiveProject },
     };
     const responseObject = {
       ok: true,
@@ -135,9 +138,17 @@ describe('packages/mongo-nav', () => {
       expect(fetchMock).toHaveBeenCalledTimes(1);
     });
 
-    // test('active project is rendered correctly', () => {
-    //   const activeProject = expectedElements['activeProject'];
-    //   console.log(activeProject?.innerText);
-    // });
+    test('current orgId is set based on the new activeProjectId', () => {
+      const billing = expectedElements['billing'];
+      expect((billing as HTMLAnchorElement).href).toBe(
+        `https://cloud.mongodb.com/v2#/org/${newActiveProject.orgId}/billing/overview`,
+      );
+    });
+
+    test('current projectId is set based on the new activeProjectId', () => {
+      const invite = expectedElements['invite'];
+      setExpectedElements();
+      console.log(invite);
+    });
   });
 });

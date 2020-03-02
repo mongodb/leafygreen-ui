@@ -330,6 +330,7 @@ export default function ProjectNav({
                 className={iconButtonMargin}
                 size="large"
                 disabled={!current}
+                data-testid="project-nav-invite"
               >
                 <Icon glyph="Person" size="large" />
               </IconButton>
