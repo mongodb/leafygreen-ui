@@ -330,7 +330,6 @@ export default function ProjectNav({
                 className={iconButtonMargin}
                 size="large"
                 disabled={!current}
-                data-testid="project-nav-invite"
               >
                 <Icon glyph="Person" size="large" />
               </IconButton>
@@ -350,6 +349,7 @@ export default function ProjectNav({
                 size="large"
                 className={iconButtonMargin}
                 disabled={!current}
+                data-testid="project-nav-activity-feed"
               >
                 <Icon glyph="Save" size="large" />
               </IconButton>

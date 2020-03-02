@@ -208,7 +208,6 @@ export default function MongoNav({
       console.error(ErrorCodeMap[status]);
     } else {
       const data = await response.json();
-
       setData(data);
       onSuccess?.(data);
     }
@@ -220,9 +219,7 @@ export default function MongoNav({
     } else {
       const body =
         activeProjectId || activeOrgId
-          ? activeProjectId
-            ? { activeProjectId }
-            : { activeOrgId }
+          ? { activeProjectId, activeOrgId }
           : undefined;
 
       fetchProductionData(body)
