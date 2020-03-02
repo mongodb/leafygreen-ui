@@ -201,6 +201,7 @@ export function OrganizationTrigger({
             />
           )}
           <span
+            data-testid="org-select-active-org"
             className={cx(selectedStyle, {
               [disabledStyle]: disabled,
               [textLoadingStyle]: loading,
@@ -291,7 +292,10 @@ export function ProjectTrigger({
             { [iconLoadingStyle]: loading },
           )}
         />
-        <span className={cx(selectedStyle, { [textLoadingStyle]: loading })}>
+        <span
+          className={cx(selectedStyle, { [textLoadingStyle]: loading })}
+          data-testid="project-select-active-project"
+        >
           {placeholder}
         </span>
         <Icon
