@@ -132,16 +132,19 @@ function getCopyButtonStyle(variant: Variant, copied: boolean): string {
   `;
 }
 
-function getScrollShadowStyle(
-  canScrollLeft: boolean,
-  canScrollRight: boolean,
-  variant: Variant,
-): string {
+const ScrollState = {
+  None: 'none',
+  Left: 'left',
+  Right: 'right',
+  Both: 'both',
+};
+
+function getScrollShadowStyle(scrollState: string, variant: Variant): string {
   const colors = variantColors[variant];
   const shadowColor =
     variant === Variant.Light ? 'rgba(93,108,116,0.3)' : 'rgba(0,0,0,0.35)';
 
-  if (canScrollLeft && canScrollRight) {
+  if (scrollState === ScrollState.Both) {
     return css`
       box-shadow: inset 6px 0 6px -6px ${shadowColor},
         inset -6px 0 6px -6px ${shadowColor}, inset 0 6px 6px -6px ${colors[0]},
@@ -149,13 +152,13 @@ function getScrollShadowStyle(
     `;
   }
 
-  if (canScrollLeft) {
+  if (scrollState === ScrollState.Left) {
     return css`
       box-shadow: inset 6px 0 6px -6px ${shadowColor};
     `;
   }
 
-  if (canScrollRight) {
+  if (scrollState === ScrollState.Right) {
     return css`
       box-shadow: inset -6px 0 6px -6px ${shadowColor};
     `;
@@ -165,8 +168,7 @@ function getScrollShadowStyle(
 }
 
 const initialState = {
-  canScrollLeft: false,
-  canScrollRight: false,
+  scroll: ScrollState.None,
   copied: false,
   isLoaded: false,
 };
@@ -176,20 +178,17 @@ function scrollReducer(state: any, action: any) {
     case 'scrollLeft':
       return {
         ...state,
-        canScrollLeft: true,
-        canScrollRight: false,
+        scroll: ScrollState.Left,
       };
     case 'scrollRight':
       return {
         ...state,
-        canScrollLeft: false,
-        canScrollRight: true,
+        scroll: ScrollState.Right,
       };
     case 'scrollBoth':
       return {
         ...state,
-        canScrollLeft: true,
-        canScrollRight: true,
+        scroll: ScrollState.Both,
       };
     case 'load': {
       return {
@@ -309,7 +308,7 @@ function Code({
       [codeWrapperStyleWithWindowChrome]: showWindowChrome,
     },
     className,
-    getScrollShadowStyle(state.canScrollLeft, state.canScrollRight, variant),
+    getScrollShadowStyle(state.scroll, variant),
   );
 
   const { content, lineCount } = useProcessedCodeSnippet(children);
