@@ -215,18 +215,18 @@ export default function MongoNav({
   useEffect(() => {
     if (mode === Mode.Dev) {
       getDataFixtures().then(data => setData(data as DataInterface));
+    } else {
+      const body =
+        activeProjectId || activeOrgId
+          ? activeProjectId
+            ? { activeProjectId }
+            : { activeOrgId }
+          : undefined;
+
+      fetchProductionData(body)
+        .then(handleResponse)
+        .catch(console.error);
     }
-
-    const body =
-      activeProjectId || activeOrgId
-        ? activeProjectId
-          ? { activeProjectId }
-          : { activeOrgId }
-        : undefined;
-
-    fetchProductionData(body)
-      .then(handleResponse)
-      .catch(console.error);
   }, [mode, endpointURI, activeOrgId, activeProjectId]);
 
   const defaultURLS: Required<URLSInterface> = {
