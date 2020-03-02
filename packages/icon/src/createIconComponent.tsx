@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-interface GlyphMap {
+interface GlyphObject {
   [glyph: string]: SVGR.Component;
 }
 
@@ -14,18 +14,18 @@ export const Size = {
 
 export type Size = typeof Size[keyof typeof Size];
 
-export interface IconProps<G extends GlyphMap>
+export interface IconProps<G extends GlyphObject>
   extends Omit<SVGR.ComponentProps, 'size'> {
   glyph: keyof G;
   size?: number | Size;
 }
 
-const sizeMap: { [S in Size]: number } = {
+const sizeMap: Record<Size, number> = {
   small: 14,
   default: 16,
   large: 20,
   xlarge: 24,
-};
+} as const;
 
 // Converts a camel-case name to a human-readable name
 //
@@ -34,7 +34,7 @@ function humanReadableTitle(glyph: string) {
   return `${glyph.replace(/([A-Z][a-z])/g, ' $1')} Icon`;
 }
 
-export default function createIconComponent<G extends GlyphMap>(
+export default function createIconComponent<G extends GlyphObject>(
   glyphs: G,
 ): React.ComponentType<IconProps<G>> {
   const Icon = ({ glyph, size = Size.Default, ...rest }: IconProps<G>) => {
