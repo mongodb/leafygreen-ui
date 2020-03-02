@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, act } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import { dataFixtures } from './data';
@@ -26,6 +26,11 @@ describe('packages/mongo-nav', () => {
     expectedElements.admin = queryByTestId('org-nav-admin-link');
     expectedElements.billing = queryByTestId('org-nav-billing');
     expectedElements.activityFeed = queryByTestId('project-nav-activity-feed');
+    expectedElements.currentOrg = queryByTestId('org-select-active-org');
+    expectedElements.currentProject = queryByTestId(
+      'project-select-active-project',
+    );
+    expectedElements.userMenu = queryByTestId('user-menu-trigger');
   };
 
   let onOrganizationChange: jest.Mock;
@@ -64,9 +69,11 @@ describe('packages/mongo-nav', () => {
       json: () => Promise.resolve(dataFixtures),
     };
 
-    beforeEach(() => {
-      fetchMock.mockResolvedValue(responseObject).mock;
+    beforeEach(async () => {
+      fetchMock.mockResolvedValue(responseObject);
       renderComponent();
+
+      await act(() => responseObject.json());
     });
 
     test('fetch is called', () => {
@@ -90,11 +97,35 @@ describe('packages/mongo-nav', () => {
       );
     });
 
+    test('current orgName is displayed inside the OrgSelect based on data returned from fetch', () => {
+      const currentOrg = expectedElements['currentOrg'];
+      expect(
+        currentOrg?.innerHTML.includes(
+          dataFixtures?.currentOrganization?.orgName as string,
+        ),
+      ).toBe(true);
+    });
+
     test('current projectId is set based on data returned from fetch', () => {
       const activityFeed = expectedElements['activityFeed'];
       expect((activityFeed as HTMLAnchorElement).href).toBe(
         `https://cloud.mongodb.com/v2/${dataFixtures?.currentProject?.projectId}#activity`,
       );
+    });
+
+    test('current projectName is displayed inside the ProjectSelect based on data returned from fetch', () => {
+      const currentProject = expectedElements['currentProject'];
+
+      expect(
+        currentProject?.innerHTML.includes(
+          dataFixtures?.currentProject?.projectName as string,
+        ),
+      ).toBe(true);
+    });
+
+    test('user is set based on data returned from fetch', () => {
+      const userMenu = expectedElements['userMenu'];
+      expect(userMenu?.innerHTML.includes('DevMode')).toBe(true);
     });
   });
 
@@ -110,10 +141,11 @@ describe('packages/mongo-nav', () => {
       json: () => Promise.resolve(expectedPostData),
     };
 
-    beforeEach(() => {
+    beforeEach(async () => {
       fetchMock.mockResolvedValue(responseObject);
       renderComponent({ activeProjectId });
-      setExpectedElements();
+
+      await act(() => responseObject.json());
     });
 
     test('fetch is called', () => {
@@ -143,6 +175,13 @@ describe('packages/mongo-nav', () => {
         `https://cloud.mongodb.com/v2/${newActiveProject.projectId}#activity`,
       );
     });
+
+    test('current projectName is displayed inside the ProjectSelect based on the new activeProjectId', () => {
+      const currentProject = expectedElements['currentProject'];
+      expect(
+        currentProject?.innerHTML.includes(newActiveProject.projectName),
+      ).toBe(true);
+    });
   });
 
   describe('when activeOrgId is supplied', () => {
@@ -157,10 +196,11 @@ describe('packages/mongo-nav', () => {
       json: () => Promise.resolve(expectedPostData),
     };
 
-    beforeEach(() => {
+    beforeEach(async () => {
       fetchMock.mockResolvedValue(responseObject);
       renderComponent({ activeOrgId });
-      setExpectedElements();
+
+      await act(() => responseObject.json());
     });
 
     test('fetch is called', () => {
@@ -183,6 +223,11 @@ describe('packages/mongo-nav', () => {
         `https://cloud.mongodb.com/v2#/org/${newActiveOrg.orgId}/billing/overview`,
       );
     });
+
+    test('current orgName is displayed inside the OrgSelect based on the new activeOrgId', () => {
+      const currentOrg = expectedElements['currentOrg'];
+      expect(currentOrg?.innerHTML.includes(newActiveOrg.orgName)).toBe(true);
+    });
   });
 
   describe('when activeProjectId and activeOrgID are both supplied', () => {
@@ -201,10 +246,11 @@ describe('packages/mongo-nav', () => {
       json: () => Promise.resolve(expectedPostData),
     };
 
-    beforeEach(() => {
+    beforeEach(async () => {
       fetchMock.mockResolvedValue(responseObject);
       renderComponent({ activeOrgId, activeProjectId });
-      setExpectedElements();
+
+      await act(() => responseObject.json());
     });
 
     test('fetch is called', () => {
@@ -223,6 +269,13 @@ describe('packages/mongo-nav', () => {
       expect((activityFeed as HTMLAnchorElement).href).toBe(
         `https://cloud.mongodb.com/v2/${newActiveProject.projectId}#activity`,
       );
+    });
+
+    test('current projectName is displayed inside the ProjectSelect based on the new activeProjectId', () => {
+      const currentProject = expectedElements['currentProject'];
+      expect(
+        currentProject?.innerHTML.includes(newActiveProject.projectName),
+      ).toBe(true);
     });
   });
 
