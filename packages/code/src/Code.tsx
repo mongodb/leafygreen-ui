@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useRef, useEffect } from 'react';
+import React, { useMemo, useRef, useLayoutEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Syntax, {
@@ -164,6 +164,50 @@ function getScrollShadowStyle(
   return '';
 }
 
+const initialState = {
+  canScrollLeft: false,
+  canScrollRight: false,
+  copied: false,
+  isLoaded: false,
+};
+
+function scrollReducer(state: any, action: any) {
+  switch (action.type) {
+    case 'scrollLeft':
+      return {
+        ...state,
+        canScrollLeft: true,
+        canScrollRight: false,
+      };
+    case 'scrollRight':
+      return {
+        ...state,
+        canScrollLeft: false,
+        canScrollRight: true,
+      };
+    case 'scrollBoth':
+      return {
+        ...state,
+        canScrollLeft: true,
+        canScrollRight: true,
+      };
+    case 'load': {
+      return {
+        ...state,
+        isLoaded: true,
+      };
+    }
+
+    case 'copy':
+      return {
+        ...state,
+        copied: true,
+      };
+    default:
+      return state;
+  }
+}
+
 interface CodeProps extends SyntaxProps {
   /**
    * Shows line numbers in preformatted code blocks.
@@ -224,28 +268,28 @@ function Code({
   chromeTitle = '',
   ...rest
 }: CodeProps) {
-  const [copied, setCopied] = useState(false);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
   const scrollableMultiLine = useRef<HTMLPreElement>(null);
   const scrollableSingleLine = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (multiline) {
-      if (!isLoaded && scrollableMultiLine.current !== null) {
-        setIsLoaded(true);
-        setCanScrollRight(
+  const [state, dispatch] = useReducer(scrollReducer, initialState);
+  useLayoutEffect(() => {
+    if (!state.isLoaded) {
+      dispatch({ type: 'load' });
+      if (multiline) {
+        if (
+          scrollableMultiLine.current !== null &&
           scrollableMultiLine.current.scrollWidth >
-            scrollableMultiLine.current.clientWidth,
-        );
-      }
-    } else {
-      if (!isLoaded && scrollableSingleLine.current !== null) {
-        setIsLoaded(true);
-        setCanScrollRight(
+            scrollableMultiLine.current.clientWidth
+        ) {
+          dispatch({ type: 'scrollRight' });
+        }
+      } else {
+        if (
+          scrollableSingleLine.current !== null &&
           scrollableSingleLine.current.scrollWidth >
-            scrollableSingleLine.current.clientWidth,
-        );
+            scrollableSingleLine.current.clientWidth
+        ) {
+          dispatch({ type: 'scrollRight' });
+        }
       }
     }
   });
@@ -265,7 +309,7 @@ function Code({
       [codeWrapperStyleWithWindowChrome]: showWindowChrome,
     },
     className,
-    getScrollShadowStyle(canScrollLeft, canScrollRight, variant),
+    getScrollShadowStyle(state.canScrollLeft, state.canScrollRight, variant),
   );
 
   const { content, lineCount } = useProcessedCodeSnippet(children);
@@ -288,8 +332,14 @@ function Code({
     if (isScrollable) {
       const scrollPosition = e.currentTarget.scrollLeft;
       const maxPosition = scrollWidth - elementWidth;
-      setCanScrollLeft(scrollPosition > 0);
-      setCanScrollRight(scrollPosition < maxPosition);
+
+      if (scrollPosition > 0 && scrollPosition < maxPosition) {
+        dispatch({ type: 'scrollBoth' });
+      } else if (scrollPosition > 0) {
+        dispatch({ type: 'scrollLeft' });
+      } else if (scrollPosition < maxPosition) {
+        dispatch({ type: 'scrollRight' });
+      }
     }
   }
 
@@ -306,7 +356,9 @@ function Code({
           <div
             {...(rest as DetailedElementProps<HTMLDivElement>)}
             className={wrapperClassName}
-            onScroll={handleScroll}
+            onScroll={e => {
+              handleScroll(e);
+            }}
             ref={scrollableSingleLine}
           >
             {renderedSyntaxComponent}
@@ -316,15 +368,15 @@ function Code({
               <CopyToClipboard
                 text={content}
                 onCopy={() => {
-                  setCopied(true);
+                  dispatch({ type: 'copy' });
                 }}
               >
                 <IconButton
                   variant={variant}
                   ariaLabel={'Copy'}
-                  className={getCopyButtonStyle(variant, copied)}
+                  className={getCopyButtonStyle(variant, state.copied)}
                 >
-                  <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
+                  <Icon glyph={state.copied ? 'Checkmark' : 'Copy'} />
                 </IconButton>
               </CopyToClipboard>
             </div>
@@ -345,7 +397,9 @@ function Code({
         <pre
           {...(rest as DetailedElementProps<HTMLPreElement>)}
           className={wrapperClassName}
-          onScroll={handleScroll}
+          onScroll={e => {
+            handleScroll(e);
+          }}
           ref={scrollableMultiLine}
         >
           {showLineNumbers && (
@@ -360,15 +414,15 @@ function Code({
             <CopyToClipboard
               text={content}
               onCopy={() => {
-                setCopied(true);
+                dispatch({ type: 'copy' });
               }}
             >
               <IconButton
                 variant={variant}
                 ariaLabel={'Copy'}
-                className={getCopyButtonStyle(variant, copied)}
+                className={getCopyButtonStyle(variant, state.copied)}
               >
-                <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
+                <Icon glyph={state.copied ? 'Checkmark' : 'Copy'} />
               </IconButton>
             </CopyToClipboard>
           </div>
