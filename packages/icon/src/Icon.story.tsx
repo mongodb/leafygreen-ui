@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { color, select } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
-import Icon, { Size, glyphs } from '.';
+import Icon, { glyphs, Size } from '.';
 
 const containerStyle = css`
   width: 150px;
