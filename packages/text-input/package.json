@@ -12,7 +12,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "devDependencies": {
+  "dependencies": {
     "@leafygreen-ui/lib": "^4.3.1",
     "@leafygreen-ui/icon": "^4.0.0",
     "@leafygreen-ui/leafygreen-provider": "^1.0.0",

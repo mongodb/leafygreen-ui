@@ -282,7 +282,7 @@ export default function MongoNav({
     constructOrganizationURLProp ?? defaultOrgURL;
 
   const defaultProjectURL = (projectId: string) =>
-    `${hosts.cloud}/v2#/${projectId}`;
+    `${hosts.cloud}/v2/${projectId}#`;
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
   return (
