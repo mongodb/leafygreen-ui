@@ -1,5 +1,11 @@
 # @leafygreen-ui/mongo-nav
 
+## 0.11.1
+
+### Patch Changes
+
+- eee1bac: This fixes a bug involving broken project links.
+
 ## 0.11.0
 
 ### Minor Changes
