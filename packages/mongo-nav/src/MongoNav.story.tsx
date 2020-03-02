@@ -21,8 +21,6 @@ storiesOf('MongoNav', module).add('Default', () => (
           Object.values(Product),
           Product.Cloud,
         )}
-        hosts={{ cloud: 'http://localhost:8080' }}
-        activeOrgId="5e5d18a9ea61251c23772ad3"
         activeNav={select('activeNav', Object.values(NavItem), 'accessManager')}
         onOrganizationChange={() => {}}
         onProjectChange={() => {}}

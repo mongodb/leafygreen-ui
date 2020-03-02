@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import OrgNav from './org-nav/index';
 import ProjectNav from './project-nav/index';
 import { css } from '@leafygreen-ui/emotion';
@@ -149,7 +150,7 @@ interface MongoNavInterface {
  * @param props.activeOrgId ID for active organization, will cause a POST request to cloud to update current active organization.
  * @param props.activeProjectId ID for active project, will cause a POST request to cloud to update current active project.
  */
-export default function MongoNav({
+function MongoNav({
   activeProduct,
   activeNav,
   onOrganizationChange,
@@ -323,3 +324,31 @@ export default function MongoNav({
     </section>
   );
 }
+
+MongoNav.displayName = 'MongoNav';
+
+MongoNav.propTypes = {
+  activeProduct: PropTypes.oneOf(Object.values(Product)),
+  activeNav: PropTypes.oneOf(Object.values(NavItem)),
+  hosts: PropTypes.objectOf(PropTypes.string),
+  onOrganizationChange: PropTypes.func,
+  onProjectChange: PropTypes.func,
+  urls: PropTypes.objectOf(PropTypes.object),
+  showProjectNav: PropTypes.bool,
+  admin: PropTypes.bool,
+  constructOrganizationURL: PropTypes.func,
+  constructProjectURL: PropTypes.func,
+  mode: PropTypes.oneOf(Object.values(Mode)),
+  onSuccess: PropTypes.func,
+  onError: PropTypes.func,
+  onPrem: PropTypes.shape({
+    mfa: PropTypes.bool,
+    enabled: PropTypes.bool,
+    version: PropTypes.string,
+  }),
+  onLogout: PropTypes.func,
+  activeOrgId: PropTypes.string,
+  activeProjectId: PropTypes.string,
+};
+
+export default MongoNav;
