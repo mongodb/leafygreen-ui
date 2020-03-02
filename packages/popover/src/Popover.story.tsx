@@ -8,13 +8,18 @@ import Popover, { Align, Justify } from '.';
 
 const containerStyle = css`
   position: absolute;
+  min-height: 50px;
+  appearance: none;
+  box-shadow: 0 0 4px #000;
+  background-color: ${colors.gray[5]};
 `;
 
 const popoverStyle = css`
   border: 1px solid ${colors.gray[5]};
   text-align: center;
-  padding: 20px 20px;
+  padding: 20px;
   background-color: ${colors.mongodb.white};
+  max-height: 100%;
 `;
 
 const referenceElPositions = {

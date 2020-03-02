@@ -1,4 +1,4 @@
-import { Align, Justification, Justify, ElementPosition } from './types';
+import { Align, Justify, ElementPosition } from './types';
 
 type ReferencePosition = ElementPosition;
 type ContentPosition = ElementPosition;
@@ -32,7 +32,7 @@ export function calculatePosition({
   windowWidth = window.innerWidth,
 }: CalculatePosition): {
   alignment: Align;
-  justification: Justification | Justify;
+  justify: Justify;
   positionCSS: any;
 } {
   const windowSafeCommonArgs = {
@@ -44,7 +44,7 @@ export function calculatePosition({
   };
 
   const alignment = getWindowSafeAlignment(align, windowSafeCommonArgs);
-  const justification = getWindowSafeJustification(
+  const windowSafeJustify = getWindowSafeJustify(
     justify,
     alignment,
     windowSafeCommonArgs,
@@ -52,7 +52,7 @@ export function calculatePosition({
 
   const transformOrigin = getTransformOrigin({
     alignment,
-    justification,
+    justify,
   });
 
   const transform = getTransform(alignment, spacing);
@@ -60,11 +60,11 @@ export function calculatePosition({
   if (useRelativePositioning) {
     return {
       alignment,
-      justification,
+      justify: windowSafeJustify,
       positionCSS: {
         ...calcRelativePosition({
           alignment,
-          justification,
+          justify: windowSafeJustify,
           referenceElPos,
           contentElPos,
           spacing,
@@ -77,21 +77,16 @@ export function calculatePosition({
 
   return {
     alignment,
-    justification,
+    justify: windowSafeJustify,
     positionCSS: {
-      top: calcTop({
+      ...calcAbsolutePosition({
         alignment,
-        justification,
-        contentElPos,
+        justify: windowSafeJustify,
         referenceElPos,
-        spacing,
-      }),
-      left: calcLeft({
-        alignment,
-        justification,
         contentElPos,
-        referenceElPos,
         spacing,
+        windowHeight,
+        windowWidth,
       }),
       transformOrigin,
       transform,
@@ -124,60 +119,44 @@ export function getElementPosition(
 
 interface TransformOriginArgs {
   alignment: Align;
-  justification: Justification;
+  justify: Justify;
 }
+
+type XOrigin = 'left' | 'right' | 'center';
+type YOrigin = 'top' | 'bottom' | 'center';
+
+const yJustifyOrigins: { [J in Justify]: YOrigin } = {
+  [Justify.Start]: 'top',
+  [Justify.Middle]: 'center',
+  [Justify.End]: 'bottom',
+  [Justify.Fit]: 'center',
+};
+const xJustifyOrigins: { [J in Justify]: XOrigin } = {
+  [Justify.Start]: 'left',
+  [Justify.Middle]: 'center',
+  [Justify.End]: 'right',
+  [Justify.Fit]: 'center',
+};
+
+const transformOriginMappings: {
+  [A in Align]: { x: XOrigin; y?: undefined } | { x?: undefined; y: YOrigin };
+} = {
+  [Align.Left]: { x: 'right' },
+  [Align.Right]: { x: 'left' },
+  [Align.Top]: { y: 'bottom' },
+  [Align.Bottom]: { y: 'top' },
+  [Align.CenterHorizontal]: { x: 'center' },
+  [Align.CenterVertical]: { y: 'center' },
+};
 
 // Constructs the transform origin for any given pair of alignment / justification
 function getTransformOrigin({
   alignment,
-  justification,
+  justify,
 }: TransformOriginArgs): string {
-  let x = '';
-  let y = '';
-
-  switch (alignment) {
-    case Align.Left:
-      x = 'right';
-      break;
-
-    case Align.Right:
-      x = 'left';
-      break;
-
-    case Align.Bottom:
-      y = 'top';
-      break;
-
-    case Align.Top:
-      y = 'bottom';
-      break;
-  }
-
-  switch (justification) {
-    case Justification.Left:
-      x = 'left';
-      break;
-
-    case Justification.Right:
-      x = 'right';
-      break;
-
-    case Justification.Bottom:
-      y = 'bottom';
-      break;
-
-    case Justification.Top:
-      y = 'top';
-      break;
-
-    case Justification.CenterHorizontal:
-      x = 'center';
-      break;
-
-    case Justification.CenterVertical:
-      y = 'center';
-      break;
-  }
+  const alignmentMapping = transformOriginMappings[alignment];
+  const x: XOrigin = alignmentMapping.x ?? xJustifyOrigins[justify];
+  const y: YOrigin = alignmentMapping.y ?? yJustifyOrigins[justify];
 
   return `${x} ${y}`;
 }
@@ -198,6 +177,11 @@ function getTransform(alignment: Align, transformAmount: number): string {
 
     case Align.Right:
       return `translate3d(-${transformAmount}px, 0, 0) scale(${scaleAmount})`;
+
+    case Align.CenterHorizontal:
+    case Align.CenterVertical:
+      // NOTE(JeT): For centered alignments, "spacing" doesn't make sense
+      return `scale(${scaleAmount})`;
   }
 }
 
@@ -208,97 +192,186 @@ interface AbsolutePositionObject {
   right?: string | 0;
 }
 
-interface CalcRelativePositionArgs extends ElementPositions {
+interface CalcPositionArgs extends ElementPositions {
   alignment: Align;
-  justification: Justification;
+  justify: Justify;
 }
+
+type JustifyPositions = {
+  readonly [J in Justify]:
+    | AbsolutePositionObject
+    | ((positions: ElementPositions) => AbsolutePositionObject);
+};
+
+/**
+ * Position mappings for when the main axis alignment is horizontal
+ * (left/right/horizontal-center)
+ */
+const verticalJustifyRelativePositions: JustifyPositions = {
+  [Justify.Start]: { top: 0 },
+  [Justify.End]: { bottom: 0 },
+  [Justify.Middle]: ({ contentElPos, referenceElPos }) => ({
+    top: `${referenceElPos.height / 2 - contentElPos.height / 2}px`,
+  }),
+  [Justify.Fit]: { top: 0, bottom: 0 },
+};
+
+/**
+ * Position mappings for when the main axis alignment is vertical
+ * (top/bottom/vertical-center)
+ */
+const horizontalJustifyRelativePositions: JustifyPositions = {
+  [Justify.Start]: { left: 0 },
+  [Justify.End]: { right: 0 },
+  [Justify.Middle]: ({ contentElPos, referenceElPos }) => ({
+    left: `${referenceElPos.width / 2 - contentElPos.width / 2}px`,
+  }),
+  [Justify.Fit]: { left: 0, right: 0 },
+};
+
+const relativePositionMappings: {
+  [A in Align]: {
+    constant?: (positions: ElementPositions) => AbsolutePositionObject;
+    justifyPositions: JustifyPositions;
+  };
+} = {
+  [Align.Top]: {
+    constant: ({ spacing }) => ({ bottom: `calc(100% + ${spacing}px)` }),
+    justifyPositions: horizontalJustifyRelativePositions,
+  },
+  [Align.Bottom]: {
+    constant: ({ spacing }) => ({ top: `calc(100% + ${spacing}px)` }),
+    justifyPositions: horizontalJustifyRelativePositions,
+  },
+  [Align.CenterVertical]: {
+    constant: ({ referenceElPos }) => ({
+      top: `calc(${referenceElPos.height / 2}px - 50%)`,
+    }),
+    justifyPositions: horizontalJustifyRelativePositions,
+  },
+  [Align.Left]: {
+    constant: ({ spacing }) => ({ right: `calc(100% + ${spacing}px)` }),
+    justifyPositions: verticalJustifyRelativePositions,
+  },
+  [Align.Right]: {
+    constant: ({ spacing }) => ({ left: `calc(100% + ${spacing}px)` }),
+    justifyPositions: verticalJustifyRelativePositions,
+  },
+  [Align.CenterHorizontal]: {
+    constant: ({ referenceElPos }) => ({
+      left: `calc(${referenceElPos.width / 2}px - 50%)`,
+    }),
+    justifyPositions: verticalJustifyRelativePositions,
+  },
+};
 
 // Returns positioning for an element absolutely positioned within it's relative parent
 function calcRelativePosition({
   alignment,
-  justification,
+  justify,
   referenceElPos,
   contentElPos,
   spacing,
-}: CalcRelativePositionArgs): AbsolutePositionObject {
-  const positionObject: AbsolutePositionObject = {};
+}: CalcPositionArgs): AbsolutePositionObject {
+  const alignMapping = relativePositionMappings[alignment];
+  const justifyMapping = alignMapping.justifyPositions[justify];
+  return {
+    ...alignMapping.constant?.({ contentElPos, referenceElPos, spacing }),
+    ...(typeof justifyMapping === 'function'
+      ? justifyMapping({ contentElPos, referenceElPos, spacing })
+      : justifyMapping),
+  };
+}
 
-  switch (alignment) {
-    case Align.Top:
-      positionObject.bottom = `calc(100% + ${spacing}px)`;
-      break;
+type CalcAbsolutePositionArgs = CalcPositionArgs & WindowSize;
 
-    case Align.Bottom:
-      positionObject.top = `calc(100% + ${spacing}px)`;
-      break;
+function calcAbsolutePosition({
+  alignment,
+  justify,
+  referenceElPos,
+  contentElPos,
+  spacing,
+  windowWidth,
+  windowHeight,
+}: CalcAbsolutePositionArgs): AbsolutePositionObject {
+  const left = `${calcLeft({
+    alignment,
+    justify,
+    referenceElPos,
+    contentElPos,
+    spacing,
+  })}px`;
+  const top = `${calcTop({
+    alignment,
+    justify,
+    referenceElPos,
+    contentElPos,
+    spacing,
+  })}px`;
 
-    case Align.Left:
-      positionObject.right = `calc(100% + ${spacing}px)`;
-      break;
-
-    case Align.Right:
-      positionObject.left = `calc(100% + ${spacing}px)`;
-      break;
+  if (justify !== Justify.Fit) {
+    return { left, top };
   }
 
-  switch (justification) {
-    case Justification.Top:
-      positionObject.top = 0;
-      break;
-
-    case Justification.Bottom:
-      positionObject.bottom = 0;
-      break;
-
-    case Justification.Left:
-      positionObject.left = 0;
-      break;
-
-    case Justification.Right:
-      positionObject.right = 0;
-      break;
-
-    case Justification.CenterHorizontal:
-      positionObject.left = `${referenceElPos.width / 2 -
-        contentElPos.width / 2}px`;
-      break;
-
-    case Justification.CenterVertical:
-      positionObject.top = `${referenceElPos.height / 2 -
-        contentElPos.height / 2}px`;
-      break;
+  if (
+    ([Align.Left, Align.Right, Align.CenterHorizontal] as Array<
+      Align
+    >).includes(alignment)
+  ) {
+    return {
+      left,
+      top,
+      bottom: `${windowHeight - referenceElPos.bottom}px`,
+    };
   }
 
-  return positionObject;
+  return {
+    left,
+    top,
+    right: `${windowWidth - referenceElPos.right}px`,
+  };
 }
 
 interface CalcPosition extends ElementPositions {
   alignment?: Align;
-  justification?: Justification;
+  justify?: Justify;
 }
 
 // Returns the 'top' position in pixels for a valid alignment or justification.
 function calcTop({
   alignment,
-  justification,
+  justify,
   contentElPos,
   referenceElPos,
   spacing,
 }: CalcPosition): number {
-  switch (justification) {
-    case Justification.Top:
-      return referenceElPos.top;
+  switch (alignment) {
+    case Align.Left:
+    case Align.Right:
+    case Align.CenterHorizontal:
+      switch (justify) {
+        case Justify.Start:
+        case Justify.Fit:
+          return referenceElPos.top;
 
-    case Justification.Bottom:
-      return referenceElPos.top + referenceElPos.height - contentElPos.height;
+        case Justify.End:
+          return (
+            referenceElPos.top + referenceElPos.height - contentElPos.height
+          );
 
-    case Justification.CenterVertical:
+        case Justify.Middle:
+        default:
+          return (
+            referenceElPos.top -
+            (contentElPos.height - referenceElPos.height) / 2
+          );
+      }
+
+    case Align.CenterVertical:
       return (
         referenceElPos.top - (contentElPos.height - referenceElPos.height) / 2
       );
-  }
 
-  switch (alignment) {
     case Align.Top:
       return referenceElPos.top - contentElPos.height - spacing;
 
@@ -311,31 +384,44 @@ function calcTop({
 // Returns the 'left' position in pixels for a valid alignment or justification.
 function calcLeft({
   alignment,
-  justification,
+  justify,
   contentElPos,
   referenceElPos,
   spacing,
 }: CalcPosition): number {
   switch (alignment) {
+    case Align.Top:
+    case Align.Bottom:
+    case Align.CenterVertical:
+      switch (justify) {
+        case Justify.End:
+          return (
+            referenceElPos.left + referenceElPos.width - contentElPos.width
+          );
+
+        case Justify.Middle:
+          return (
+            referenceElPos.left -
+            (contentElPos.width - referenceElPos.width) / 2
+          );
+
+        case Justify.Start:
+        case Justify.Fit:
+        default:
+          return referenceElPos.left;
+      }
+
     case Align.Left:
       return referenceElPos.left - contentElPos.width - spacing;
 
     case Align.Right:
       return referenceElPos.left + referenceElPos.width + spacing;
-  }
 
-  switch (justification) {
-    case Justification.Right:
-      return referenceElPos.left + referenceElPos.width - contentElPos.width;
-
-    case Justification.CenterHorizontal:
+    case Align.CenterHorizontal:
+    default:
       return (
         referenceElPos.left - (contentElPos.width - referenceElPos.width) / 2
       );
-
-    case Justification.Left:
-    default:
-      return referenceElPos.left;
   }
 }
 
@@ -386,23 +472,24 @@ function getWindowSafeAlignment(
     referenceElPos,
   } = windowSafeCommon;
 
-  const alignments: {
-    top: ReadonlyArray<Align>;
-    bottom: ReadonlyArray<Align>;
-    left: ReadonlyArray<Align>;
-    right: ReadonlyArray<Align>;
-  } = {
-    top: [Align.Top, Align.Bottom],
-    bottom: [Align.Bottom, Align.Top],
-    left: [Align.Left, Align.Right],
-    right: [Align.Right, Align.Left],
+  const alignments: { [A in Align]: ReadonlyArray<Align> } = {
+    [Align.Top]: [Align.Top, Align.Bottom],
+    [Align.Bottom]: [Align.Bottom, Align.Top],
+    [Align.Left]: [Align.Left, Align.Right],
+    [Align.Right]: [Align.Right, Align.Left],
+    [Align.CenterHorizontal]: [Align.CenterHorizontal, Align.Left, Align.Right],
+    [Align.CenterVertical]: [Align.CenterVertical, Align.Top, Align.Bottom],
   };
 
   return (
     alignments[align].find(alignment => {
       // Check that an alignment will not cause the popover to collide with the window.
 
-      if (([Align.Top, Align.Bottom] as Array<Align>).includes(alignment)) {
+      if (
+        ([Align.Top, Align.Bottom, Align.CenterVertical] as Array<
+          Align
+        >).includes(alignment)
+      ) {
         const top = calcTop({
           alignment,
           contentElPos,
@@ -416,7 +503,11 @@ function getWindowSafeAlignment(
         });
       }
 
-      if (([Align.Left, Align.Right] as Array<Align>).includes(alignment)) {
+      if (
+        ([Align.Left, Align.Right, Align.CenterHorizontal] as Array<
+          Align
+        >).includes(alignment)
+      ) {
         const left = calcLeft({
           alignment,
           contentElPos,
@@ -435,14 +526,21 @@ function getWindowSafeAlignment(
   );
 }
 
+const justifyFallbacks: { [J in Justify]: ReadonlyArray<Justify> } = {
+  [Justify.Start]: [Justify.End, Justify.Middle],
+  [Justify.Middle]: [Justify.End, Justify.Start],
+  [Justify.End]: [Justify.Start, Justify.Middle],
+  [Justify.Fit]: [Justify.Middle, Justify.Start, Justify.End],
+};
+
 // Determines the justification to render based on an order of justification fallbacks
 // Returns the first justification that doesn't collide with the window,
 // defaulting to the justify prop if all justifications fail.
-function getWindowSafeJustification(
+function getWindowSafeJustify(
   justify: Justify,
   alignment: Align,
   windowSafeCommon: WindowSafeCommonArgs,
-): Justification {
+): Justify {
   const {
     spacing,
     contentElPos,
@@ -451,105 +549,43 @@ function getWindowSafeJustification(
     referenceElPos,
   } = windowSafeCommon;
 
-  let justifications: {
-    [Justify.Start]: ReadonlyArray<Justification>;
-    [Justify.Middle]: ReadonlyArray<Justification>;
-    [Justify.End]: ReadonlyArray<Justification>;
-  };
+  const justifyOptions = [justify, ...justifyFallbacks[justify]];
 
   switch (alignment) {
-    case Align.Left:
-    case Align.Right: {
-      justifications = {
-        [Justify.Start]: [
-          Justification.Top,
-          Justification.Bottom,
-          Justification.CenterVertical,
-        ],
-        [Justify.Middle]: [
-          Justification.CenterVertical,
-          Justification.Bottom,
-          Justification.Top,
-        ],
-        [Justify.End]: [
-          Justification.Bottom,
-          Justification.Top,
-          Justification.CenterVertical,
-        ],
-      };
-      break;
-    }
-
     case Align.Top:
     case Align.Bottom:
-    default: {
-      justifications = {
-        [Justify.Start]: [
-          Justification.Left,
-          Justification.Right,
-          Justification.CenterHorizontal,
-        ],
-        [Justify.Middle]: [
-          Justification.CenterHorizontal,
-          Justification.Right,
-          Justification.Left,
-        ],
-        [Justify.End]: [
-          Justification.Right,
-          Justification.Left,
-          Justification.CenterHorizontal,
-        ],
-      };
-      break;
-    }
+    case Align.CenterVertical:
+      return (
+        justifyOptions.find(fallback =>
+          safelyWithinHorizontalWindow({
+            contentWidth: contentElPos.width,
+            windowWidth,
+            left: calcLeft({
+              contentElPos,
+              referenceElPos,
+              spacing,
+              justify: fallback,
+            }),
+          }),
+        ) ?? justifyFallbacks[justify][0]
+      );
+
+    case Align.Left:
+    case Align.Right:
+    case Align.CenterHorizontal:
+      return (
+        justifyOptions.find(fallback =>
+          safelyWithinVerticalWindow({
+            contentHeight: contentElPos.height,
+            windowHeight,
+            top: calcTop({
+              contentElPos,
+              referenceElPos,
+              spacing,
+              justify: fallback,
+            }),
+          }),
+        ) ?? justifyFallbacks[justify][0]
+      );
   }
-
-  return (
-    justifications[justify].find(justification => {
-      // Check that a justification will not cause the popover to collide with the window.
-      if (
-        ([
-          Justification.Top,
-          Justification.Bottom,
-          Justification.CenterVertical,
-        ] as Array<Justification>).includes(justification)
-      ) {
-        const top = calcTop({
-          justification,
-          contentElPos,
-          referenceElPos,
-          spacing,
-        });
-
-        return safelyWithinVerticalWindow({
-          top,
-          windowHeight,
-          contentHeight: contentElPos.height,
-        });
-      }
-
-      if (
-        ([
-          Justification.Left,
-          Justification.Right,
-          Justification.CenterHorizontal,
-        ] as Array<Justification>).includes(justification)
-      ) {
-        const left = calcLeft({
-          justification,
-          contentElPos,
-          referenceElPos,
-          spacing,
-        });
-
-        return safelyWithinHorizontalWindow({
-          left,
-          windowWidth,
-          contentWidth: contentElPos.width,
-        });
-      }
-
-      return false;
-    }) || justifications[justify][0]
-  );
 }

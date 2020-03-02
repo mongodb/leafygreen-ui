@@ -108,7 +108,11 @@ function Popover({
     justify,
   ]);
 
-  const { alignment, justification, positionCSS } = calculatePosition({
+  const {
+    alignment,
+    justify: windowSafeJustify,
+    positionCSS,
+  } = calculatePosition({
     useRelativePositioning: !usePortal,
     spacing,
     align,
@@ -132,7 +136,11 @@ function Popover({
     }
 
     if (typeof children === 'function') {
-      return children({ alignment, justification, referenceElPos });
+      return children({
+        alignment,
+        justify: windowSafeJustify,
+        referenceElPos,
+      });
     }
 
     return children;
