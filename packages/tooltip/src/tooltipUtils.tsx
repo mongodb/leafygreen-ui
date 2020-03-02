@@ -1,8 +1,9 @@
 import { css } from '@leafygreen-ui/emotion';
+import { Align, Justify } from '@leafygreen-ui/popover';
 
 export function trianglePosition(
-  alignment: string,
-  justification: string,
+  alignment: Align,
+  justification: Justify,
   triggerRect: DOMRect | ClientRect | null,
 ) {
   if (!alignment || !justification || !triggerRect) {
@@ -36,16 +37,17 @@ export function trianglePosition(
       }
 
       switch (justification) {
-        case 'left':
+        case Justify.Start:
           containerStyleObj.left = `${containerOffsetX}px`;
           break;
 
-        case 'center-horizontal':
+        case Justify.Middle:
+        case Justify.Fit:
           containerStyleObj.left = '0px';
           containerStyleObj.right = '0px';
           break;
 
-        case 'right':
+        case Justify.End:
           containerStyleObj.right = `${containerOffsetX}px`;
           break;
       }
@@ -68,16 +70,17 @@ export function trianglePosition(
       }
 
       switch (justification) {
-        case 'top':
+        case Justify.Start:
           containerStyleObj.top = `${containerOffsetY}px`;
           break;
 
-        case 'center-vertical':
+        case Justify.Middle:
+        case Justify.Fit:
           containerStyleObj.top = '0px';
           containerStyleObj.bottom = '0px';
           break;
 
-        case 'bottom':
+        case Justify.End:
           containerStyleObj.bottom = `${containerOffsetY}px`;
           break;
       }

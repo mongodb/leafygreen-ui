@@ -4,7 +4,6 @@ import Popover, {
   PopoverProps,
   Align,
   Justify,
-  Justification,
   ElementPosition,
 } from '@leafygreen-ui/popover';
 import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
@@ -63,7 +62,7 @@ const notchVariants = {
 
 interface PopoverFunctionParameters {
   alignment: Align;
-  justification: Justification | Justify;
+  justification: Justify;
   referenceElPos: ElementPosition;
 }
 
