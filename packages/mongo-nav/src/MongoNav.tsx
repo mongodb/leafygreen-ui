@@ -12,6 +12,7 @@ import {
   DataInterface,
   ErrorCode,
   OnPremInterface,
+  PostBodyInterface,
 } from './types';
 import { dataFixtures, hostDefaults } from './data';
 import defaultsDeep from 'lodash/defaultsDeep';
@@ -102,8 +103,16 @@ interface MongoNavInterface {
    */
   onPrem?: OnPremInterface;
 
+  /**
+   * ID for active organization, will cause a POST request to the database to update
+   * current active organization.
+   */
   activeOrgId?: string;
 
+  /**
+   * ID for active project, will cause a POST request to the database to update
+   * current active project.
+   */
   activeProjectId?: string;
 }
 
@@ -137,6 +146,8 @@ interface MongoNavInterface {
  * @param props.onError Function that is passed an error code as a string, so that consuming application can handle fetch failures.
  * @param props.onPrem onPrem config object with three keys: enabled, version and mfa
  * @param props.onLogout Callback executed when user logs out
+ * @param props.activeOrgId ID for active organization, will cause a POST request to the database to update current active organization.
+ * @param props.activeProjectId ID for active project, will cause a POST request to the database to update current active project.
  */
 export default function MongoNav({
   activeProduct,
@@ -169,27 +180,15 @@ export default function MongoNav({
     });
   }
 
-  function fetchProductionData(body) {
+  function fetchProductionData(body: PostBodyInterface) {
     return fetch(endpointURI, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
       credentials: 'include',
+      method: 'POST',
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     });
   }
-
-  fetch('http://localhost:8080/user/shared', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-    body: JSON.stringify({ activeOrgId: 'xxxx' }),
-  });
 
   function getDataFixtures() {
     return new Promise(resolve => {
@@ -213,12 +212,9 @@ export default function MongoNav({
   useEffect(() => {
     if (mode === Mode.Dev) {
       getDataFixtures().then(data => setData(data as DataInterface));
-    } else if (activeProjectId) {
-      fetchProductionData({ activeProjectId })
-        .then(handleResponse)
-        .catch(console.error);
-    } else if (activeOrgId) {
-      fetchProductionData({ activeOrgId })
+    } else if (activeProjectId || activeOrgId) {
+      const body = activeProjectId ? { activeProjectId } : { activeOrgId };
+      fetchProductionData(body)
         .then(handleResponse)
         .catch(console.error);
     } else {
