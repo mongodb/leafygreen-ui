@@ -35,7 +35,15 @@ storiesOf('Buttons', module)
           null,
         ) as any
       }
-      glyph={<Icon glyph={select('Glyph', Object.keys(glyphs), 'Edit')} />}
+      glyph={
+        <Icon
+          glyph={select(
+            'Glyph',
+            Object.keys(glyphs) as Array<keyof typeof glyphs>,
+            'Edit',
+          )}
+        />
+      }
       className={buttonClass}
     >
       {text('Children', 'Button')}
