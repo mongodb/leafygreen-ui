@@ -104,13 +104,13 @@ interface MongoNavInterface {
   onPrem?: OnPremInterface;
 
   /**
-   * ID for active organization, will cause a POST request to the database to update
+   * ID for active organization, will cause a POST request to cloud to update
    * current active organization.
    */
   activeOrgId?: string;
 
   /**
-   * ID for active project, will cause a POST request to the database to update
+   * ID for active project, will cause a POST request to cloud to update
    * current active project.
    */
   activeProjectId?: string;
@@ -146,8 +146,8 @@ interface MongoNavInterface {
  * @param props.onError Function that is passed an error code as a string, so that consuming application can handle fetch failures.
  * @param props.onPrem onPrem config object with three keys: enabled, version and mfa
  * @param props.onLogout Callback executed when user logs out
- * @param props.activeOrgId ID for active organization, will cause a POST request to the database to update current active organization.
- * @param props.activeProjectId ID for active project, will cause a POST request to the database to update current active project.
+ * @param props.activeOrgId ID for active organization, will cause a POST request to cloud to update current active organization.
+ * @param props.activeProjectId ID for active project, will cause a POST request to cloud to update current active project.
  */
 export default function MongoNav({
   activeProduct,
@@ -173,21 +173,24 @@ export default function MongoNav({
   const hosts = defaultsDeep(hostsProp, hostDefaults);
   const endpointURI = `${hosts.cloud}/user/shared`;
 
-  function getProductionData() {
-    return fetch(endpointURI, {
+  function fetchProductionData(body?: PostBodyInterface) {
+    const configObject: RequestInit = {
       credentials: 'include',
-      method: 'GET',
-    });
-  }
-
-  function fetchProductionData(body: PostBodyInterface) {
-    return fetch(endpointURI, {
-      credentials: 'include',
-      method: 'POST',
       mode: 'cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
+      method: 'GET',
+    };
+
+    if (body) {
+      Object.assign(configObject, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+    }
+
+    return fetch(endpointURI, configObject);
   }
 
   function getDataFixtures() {
@@ -212,16 +215,18 @@ export default function MongoNav({
   useEffect(() => {
     if (mode === Mode.Dev) {
       getDataFixtures().then(data => setData(data as DataInterface));
-    } else if (activeProjectId || activeOrgId) {
-      const body = activeProjectId ? { activeProjectId } : { activeOrgId };
-      fetchProductionData(body)
-        .then(handleResponse)
-        .catch(console.error);
-    } else {
-      getProductionData()
-        .then(handleResponse)
-        .catch(console.error);
     }
+
+    const body =
+      activeProjectId || activeOrgId
+        ? activeProjectId
+          ? { activeProjectId }
+          : { activeOrgId }
+        : undefined;
+
+    fetchProductionData(body)
+      .then(handleResponse)
+      .catch(console.error);
   }, [mode, endpointURI, activeOrgId, activeProjectId]);
 
   const defaultURLS: Required<URLSInterface> = {
