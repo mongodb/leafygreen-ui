@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, wait } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import { dataFixtures } from './data';
@@ -95,7 +95,7 @@ describe('packages/mongo-nav', () => {
     };
 
     beforeEach(() => {
-      fetchMock.mockResolvedValue(responseObject);
+      fetchMock.mockResolvedValue(responseObject).mock;
       renderComponent();
     });
 
