@@ -262,6 +262,7 @@ export default function ProjectNav({
       <Menu
         open={open}
         setOpen={setOpen}
+        usePortal={false}
         trigger={
           <IconButton
             ariaLabel="More"
@@ -374,6 +375,7 @@ export default function ProjectNav({
             {...sharedTooltipProps}
             align="bottom"
             justify="middle"
+            usePortal={false}
             trigger={
               <IconButton
                 ariaLabel="Invite"
@@ -394,6 +396,7 @@ export default function ProjectNav({
             {...sharedTooltipProps}
             align="bottom"
             justify="middle"
+            usePortal={false}
             trigger={
               <IconButton
                 ariaLabel="Project Activity Feed"
@@ -414,6 +417,7 @@ export default function ProjectNav({
             {...sharedTooltipProps}
             align="bottom"
             justify="end"
+            usePortal={false}
             trigger={
               <IconButton
                 ariaLabel="Alerts"

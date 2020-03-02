@@ -262,7 +262,12 @@ function UserMenu({
         setOpen={setOpen}
         data-testid="user-menu-trigger"
       >
-        <Menu open={open} setOpen={setOpen} className={menuStyle}>
+        <Menu
+          open={open}
+          setOpen={setOpen}
+          className={menuStyle}
+          usePortal={false}
+        >
           <div className={headerStyle}>
             <div className={logoMarkBackground}>
               <LogoMark height={30} />

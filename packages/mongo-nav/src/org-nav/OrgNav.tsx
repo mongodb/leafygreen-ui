@@ -230,6 +230,7 @@ export default function OrgNav({
         align="bottom"
         justify="start"
         variant="dark"
+        usePortal={false}
         trigger={
           <a href="/">
             <LogoMark height={30} />
