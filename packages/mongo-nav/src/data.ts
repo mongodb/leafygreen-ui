@@ -83,12 +83,12 @@ export const urlDefaults: Required<URLSInterface> = {
     admin: `https://cloud.mongodb.com/v2/admin#general/overview/servers`,
   },
   projectNav: {
-    settings: `https://cloud.mongodb.com/v2/currentProjectId098#settings/groupSettings`,
-    accessManager: `https://cloud.mongodb.com/v2/currentProjectId098#access`,
-    support: `https://cloud.mongodb.com/v2/currentProjectId098#info/support`,
-    integrations: `https://cloud.mongodb.com/v2/currentProjectId098#integrations`,
-    alerts: `https://cloud.mongodb.com/v2/currentProjectId098#alerts`,
-    activityFeed: `https://cloud.mongodb.com/v2/currentProjectId098#activity`,
+    settings: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#settings/groupSettings`,
+    accessManager: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#access`,
+    support: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#info/support`,
+    integrations: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#integrations`,
+    alerts: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#alerts`,
+    activityFeed: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#activity`,
   },
   onPrem: {
     profile: `https://cloud.mongodb.com/v2#/account/profile`,
