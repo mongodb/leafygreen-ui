@@ -18,7 +18,7 @@ export const dataFixtures = {
     alertsOpen: 1,
     chartsActivated: false,
     orgId: '5d729a93',
-    planType: 'cloud',
+    planType: 'atlas',
     projectId: '020019e',
     projectName: 'Test Project',
   },

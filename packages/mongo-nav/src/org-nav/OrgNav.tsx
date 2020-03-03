@@ -37,6 +37,9 @@ const navContainer = css`
   color: ${uiColors.gray.dark3};
   border-bottom: 1px solid ${uiColors.gray.light2};
   box-sizing: border-box;
+  z-index: 1;
+  position: relative;
+  background-color: white;
 `;
 
 const orgSelectContainer = css`
@@ -65,6 +68,8 @@ const rightLinkMargin = css`
 const accessManagerMenuContainer = css`
   padding: 16px;
   width: 220px;
+  background-color: white;
+  text-align: left;
 `;
 
 const accessManagerMenuItem = css`
@@ -225,10 +230,11 @@ export default function OrgNav({
         align="bottom"
         justify="start"
         variant="dark"
+        usePortal={false}
         trigger={
-          <span>
+          <a href="/">
             <LogoMark height={30} />
-          </span>
+          </a>
         }
       >
         View the Organization Home
@@ -266,6 +272,7 @@ export default function OrgNav({
                 ariaLabel="Dropdown"
                 active={accessManagerOpen}
                 disabled={!current}
+                onClick={() => setAccessManagerOpen(curr => !curr)}
               >
                 <Icon glyph={accessManagerOpen ? 'CaretUp' : 'CaretDown'} />
 
@@ -273,6 +280,7 @@ export default function OrgNav({
                   <Menu
                     open={accessManagerOpen}
                     setOpen={setAccessManagerOpen}
+                    usePortal={false}
                     className={accessManagerMenuContainer}
                   >
                     <p className={accessManagerMenuItem}>
@@ -280,7 +288,7 @@ export default function OrgNav({
                     </p>
 
                     <p className={accessManagerMenuItem}>
-                      <strong>Project Access:</strong>
+                      <strong>Project Access: </strong>
                       {currentProjectName ?? 'None'}
                     </p>
                   </Menu>
