@@ -167,13 +167,23 @@ function getScrollShadowStyle(scrollState: string, variant: Variant): string {
   return '';
 }
 
+interface ActionType {
+  type: string;
+}
+
+interface StateType {
+  scroll: string;
+  copied: boolean;
+  isLoaded: boolean;
+}
+
 const initialState = {
   scroll: ScrollState.None,
   copied: false,
   isLoaded: false,
 };
 
-function scrollReducer(state: any, action: any) {
+function scrollReducer(state: StateType, action: ActionType) {
   switch (action.type) {
     case 'scrollLeft':
       return {
