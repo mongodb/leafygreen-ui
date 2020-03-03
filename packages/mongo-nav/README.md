@@ -36,6 +36,7 @@
 | `onPrem.enabled`           | `boolean`                                                                      | Determines whether or not a user is onPrem                                                                                                                | `false`                                                 |
 | `onPrem.mfa`               | `boolean`                                                                      | Determines if an onPrem user has multi-factor authentication enabled                                                                                      | `false`                                                 |
 | `onPrem.version`           | `string`                                                                       | Describes the version of Ops Manager that an `onPrem` user is using                                                                                       | `''`                                                    |
+| `className`                | `string`                                                                       | Applies a className to the root element                                                                                                                   |
 
 ### URLInterface
 
