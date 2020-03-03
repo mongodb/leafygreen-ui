@@ -268,7 +268,7 @@ function UserMenu({
           className={menuStyle}
           usePortal={false}
         >
-          <div className={headerStyle}>
+          <li role="none" className={headerStyle}>
             <div className={logoMarkBackground}>
               <LogoMark height={30} />
             </div>
@@ -288,7 +288,7 @@ function UserMenu({
                 Manage your MongoDB Account
               </Button>
             </FocusableMenuItem>
-          </div>
+          </li>
           <MenuSeparator />
 
           <SubMenu
@@ -381,7 +381,7 @@ function UserMenu({
           <MenuItem
             {...feedbackAnchorProps}
             size="large"
-            glyph={<Icon glyph="Bell" size="xlarge" />}
+            glyph={<Icon glyph="Megaphone" size="xlarge" />}
             data-testid="user-menuitem-feedback"
           >
             Give us feedback

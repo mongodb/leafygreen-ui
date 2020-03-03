@@ -385,7 +385,7 @@ export default function ProjectNav({
                 disabled={!current}
                 data-testid="project-nav-invite"
               >
-                <Icon glyph="Person" size="large" />
+                <Icon glyph="InviteUser" size="large" />
               </IconButton>
             }
           >
@@ -406,7 +406,7 @@ export default function ProjectNav({
                 disabled={!current}
                 data-testid="project-nav-activity-feed"
               >
-                <Icon glyph="Save" size="large" />
+                <Icon glyph="ActivityFeed" size="large" />
               </IconButton>
             }
           >

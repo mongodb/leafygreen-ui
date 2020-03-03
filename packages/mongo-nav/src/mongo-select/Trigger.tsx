@@ -290,7 +290,7 @@ export function ProjectTrigger({
         aria-disabled={loading}
       >
         <Icon
-          glyph="Bell"
+          glyph="Folder"
           className={cx(
             css`
               color: ${uiColors.gray.base};
