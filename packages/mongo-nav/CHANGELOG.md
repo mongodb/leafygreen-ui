@@ -1,5 +1,20 @@
 # @leafygreen-ui/mongo-nav
 
+## 0.12.0
+
+### Minor Changes
+
+- ab1a1c1: Fix z-index stacking context issue
+- ab1a1c1: Add support for Cloud Manager
+
+### Patch Changes
+
+- Updated dependencies [ab1a1c1]
+- Updated dependencies [71327dd]
+  - @leafygreen-ui/tooltip@3.1.0
+  - @leafygreen-ui/icon@4.1.0
+  - @leafygreen-ui/icon-button@4.1.2
+
 ## 0.11.1
 
 ### Patch Changes
