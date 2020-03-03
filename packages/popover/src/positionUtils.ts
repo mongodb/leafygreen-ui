@@ -52,7 +52,7 @@ export function calculatePosition({
 
   const transformOrigin = getTransformOrigin({
     alignment,
-    justify,
+    justify: windowSafeJustify,
   });
 
   const transform = getTransform(alignment, spacing);
@@ -564,6 +564,7 @@ function getWindowSafeJustify(
               contentElPos,
               referenceElPos,
               spacing,
+              alignment,
               justify: fallback,
             }),
           }),
@@ -582,6 +583,7 @@ function getWindowSafeJustify(
               contentElPos,
               referenceElPos,
               spacing,
+              alignment,
               justify: fallback,
             }),
           }),
