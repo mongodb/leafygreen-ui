@@ -36,7 +36,7 @@ export default function OnPremUserMenu({
         data-testid="om-user-menu-trigger"
       />
 
-      <Menu open={open} setOpen={setOpen}>
+      <Menu open={open} setOpen={setOpen} usePortal={false}>
         <MenuItem
           href={urls.onPrem.profile}
           data-testid="om-user-menuitem-profile"
