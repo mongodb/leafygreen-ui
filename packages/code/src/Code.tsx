@@ -285,6 +285,7 @@ function Code({
   const scrollableMultiLine = useRef<HTMLPreElement>(null);
   const scrollableSingleLine = useRef<HTMLDivElement>(null);
   const [state, dispatch] = useReducer(scrollReducer, initialState);
+
   useLayoutEffect(() => {
     if (!state.isLoaded) {
       dispatch({ type: 'load' });
@@ -370,9 +371,7 @@ function Code({
           <div
             {...(rest as DetailedElementProps<HTMLDivElement>)}
             className={wrapperClassName}
-            onScroll={e => {
-              handleScroll(e);
-            }}
+            onScroll={handleScroll}
             ref={scrollableSingleLine}
           >
             {renderedSyntaxComponent}
