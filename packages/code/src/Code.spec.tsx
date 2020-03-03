@@ -65,9 +65,14 @@ describe('packages/Syntax', () => {
         );
       */
       fireEvent.paste(inputElement, {
-        target: { value: 'this should be the copied text from the clipboard' },
+        target: {
+          value:
+            'ideally the codeSnippet copied from the clipboard would go here instead of this string',
+        },
       });
-      expect(inputElement.value).toBe(codeSnippet);
+      expect(inputElement.value).toBe(
+        'ideally the codeSnippet copied from the clipboard would go here instead of this string',
+      );
     });
   });
 

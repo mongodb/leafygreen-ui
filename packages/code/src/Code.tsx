@@ -137,9 +137,14 @@ const ScrollState = {
   Left: 'left',
   Right: 'right',
   Both: 'both',
-};
+} as const;
 
-function getScrollShadowStyle(scrollState: string, variant: Variant): string {
+type ScrollState = typeof ScrollState[keyof typeof ScrollState];
+
+function getScrollShadowStyle(
+  scrollState: ScrollState,
+  variant: Variant,
+): string {
   const colors = variantColors[variant];
   const shadowColor =
     variant === Variant.Light ? 'rgba(93,108,116,0.3)' : 'rgba(0,0,0,0.35)';
@@ -172,7 +177,7 @@ interface ActionType {
 }
 
 interface StateType {
-  scroll: string;
+  scroll: ScrollState;
   copied: boolean;
   isLoaded: boolean;
 }
@@ -406,9 +411,7 @@ function Code({
         <pre
           {...(rest as DetailedElementProps<HTMLPreElement>)}
           className={wrapperClassName}
-          onScroll={e => {
-            handleScroll(e);
-          }}
+          onScroll={handleScroll}
           ref={scrollableMultiLine}
         >
           {showLineNumbers && (
