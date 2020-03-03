@@ -36,16 +36,21 @@ describe('packages/mongo-nav', () => {
   let onOrganizationChange: jest.Mock;
   let onProjectChange: jest.Mock;
   let fetchMock: jest.Mock;
+  let originalFetch: (
+    input: RequestInfo,
+    init?: RequestInit | undefined,
+  ) => Promise<Response>;
 
   beforeEach(() => {
     onOrganizationChange = jest.fn();
     onProjectChange = jest.fn();
     fetchMock = jest.fn();
+    originalFetch = window.fetch;
     window.fetch = fetchMock;
   });
 
   afterEach(() => {
-    delete window.fetch;
+    window.fetch = originalFetch;
     jest.restoreAllMocks();
     cleanup();
   });
@@ -80,52 +85,47 @@ describe('packages/mongo-nav', () => {
       expect(fetchMock).toHaveBeenCalledTimes(1);
     });
 
-    test('the organization nav is rendered', () => {
-      const organizationNav = expectedElements['orgNav'];
-      expect(organizationNav).toBeInTheDocument();
-    });
-
-    test('the project nav is rendered', () => {
-      const projectNav = expectedElements['projectNav'];
-      expect(projectNav).toBeInTheDocument();
+    test('the organization and project navs are rendered', () => {
+      expect(expectedElements.orgNav).toBeInTheDocument();
+      expect(expectedElements.projectNav).toBeInTheDocument();
     });
 
     test('current orgId is set based on data returned from fetch', () => {
-      const billing = expectedElements['billing'];
-      expect((billing as HTMLAnchorElement).href).toBe(
-        `https://cloud.mongodb.com/v2#/org/${dataFixtures?.currentOrganization?.orgId}/billing/overview`,
+      expect((expectedElements.billing as HTMLAnchorElement).href).toBe(
+        `https://cloud.mongodb.com/v2#/org/${
+          dataFixtures!.currentOrganization?.orgId
+        }/billing/overview`,
       );
     });
 
     test('current orgName is displayed inside the OrgSelect based on data returned from fetch', () => {
-      const currentOrg = expectedElements['currentOrg'];
       expect(
-        currentOrg?.innerHTML.includes(
-          dataFixtures?.currentOrganization?.orgName as string,
+        expectedElements.currentOrg?.innerHTML.includes(
+          dataFixtures!.currentOrganization?.orgName as string,
         ),
       ).toBe(true);
     });
 
     test('current projectId is set based on data returned from fetch', () => {
-      const activityFeed = expectedElements['activityFeed'];
-      expect((activityFeed as HTMLAnchorElement).href).toBe(
-        `https://cloud.mongodb.com/v2/${dataFixtures?.currentProject?.projectId}#activity`,
+      expect((expectedElements.activityFeed as HTMLAnchorElement).href).toBe(
+        `https://cloud.mongodb.com/v2/${
+          dataFixtures!.currentProject?.projectId
+        }#activity`,
       );
     });
 
     test('current projectName is displayed inside the ProjectSelect based on data returned from fetch', () => {
-      const currentProject = expectedElements['currentProject'];
-
       expect(
-        currentProject?.innerHTML.includes(
-          dataFixtures?.currentProject?.projectName as string,
+        expectedElements.currentProject?.innerHTML.includes(
+          dataFixtures!.currentProject?.projectName as string,
         ),
       ).toBe(true);
     });
 
     test('user is set based on data returned from fetch', () => {
-      const userMenu = expectedElements['userMenu'];
-      expect(userMenu?.innerHTML.includes('DevMode')).toBe(true);
+      expect(expectedElements.userMenu?.innerHTML.includes('DevMode')).toBe(
+        true,
+      );
     });
   });
 
@@ -152,34 +152,28 @@ describe('packages/mongo-nav', () => {
       expect(fetchMock).toHaveBeenCalledTimes(1);
     });
 
-    test('the organization nav is rendered', () => {
-      const organizationNav = expectedElements['orgNav'];
-      expect(organizationNav).toBeInTheDocument();
-    });
-
-    test('the project nav is rendered', () => {
-      const projectNav = expectedElements['projectNav'];
-      expect(projectNav).toBeInTheDocument();
+    test('the organization and project navs are rendered', () => {
+      expect(expectedElements.orgNav).toBeInTheDocument();
+      expect(expectedElements.projectNav).toBeInTheDocument();
     });
 
     test('current orgId is set based on the new activeProjectId', () => {
-      const billing = expectedElements['billing'];
-      expect((billing as HTMLAnchorElement).href).toBe(
+      expect((expectedElements.billing as HTMLAnchorElement).href).toBe(
         `https://cloud.mongodb.com/v2#/org/${newActiveProject.orgId}/billing/overview`,
       );
     });
 
     test('current projectId is set based on the new activeProjectId', () => {
-      const activityFeed = expectedElements['activityFeed'];
-      expect((activityFeed as HTMLAnchorElement).href).toBe(
+      expect((expectedElements.activityFeed as HTMLAnchorElement).href).toBe(
         `https://cloud.mongodb.com/v2/${newActiveProject.projectId}#activity`,
       );
     });
 
     test('current projectName is displayed inside the ProjectSelect based on the new activeProjectId', () => {
-      const currentProject = expectedElements['currentProject'];
       expect(
-        currentProject?.innerHTML.includes(newActiveProject.projectName),
+        expectedElements.currentProject?.innerHTML.includes(
+          newActiveProject.projectName,
+        ),
       ).toBe(true);
     });
   });
@@ -207,26 +201,21 @@ describe('packages/mongo-nav', () => {
       expect(fetchMock).toHaveBeenCalledTimes(1);
     });
 
-    test('the organization nav is rendered', () => {
-      const organizationNav = expectedElements['orgNav'];
-      expect(organizationNav).toBeInTheDocument();
-    });
-
-    test('the project nav is rendered', () => {
-      const projectNav = expectedElements['projectNav'];
-      expect(projectNav).toBeInTheDocument();
+    test('the organization and project navs are rendered', () => {
+      expect(expectedElements.orgNav).toBeInTheDocument();
+      expect(expectedElements.projectNav).toBeInTheDocument();
     });
 
     test('current orgId is set based on the new activeOrgId', () => {
-      const billing = expectedElements['billing'];
-      expect((billing as HTMLAnchorElement).href).toBe(
+      expect((expectedElements.billing as HTMLAnchorElement).href).toBe(
         `https://cloud.mongodb.com/v2#/org/${newActiveOrg.orgId}/billing/overview`,
       );
     });
 
     test('current orgName is displayed inside the OrgSelect based on the new activeOrgId', () => {
-      const currentOrg = expectedElements['currentOrg'];
-      expect(currentOrg?.innerHTML.includes(newActiveOrg.orgName)).toBe(true);
+      expect(
+        expectedElements.currentOrg?.innerHTML.includes(newActiveOrg.orgName),
+      ).toBe(true);
     });
   });
 
@@ -258,23 +247,22 @@ describe('packages/mongo-nav', () => {
     });
 
     test('current orgId is set based on the new activeProjectId', () => {
-      const billing = expectedElements['billing'];
-      expect((billing as HTMLAnchorElement).href).toBe(
+      expect((expectedElements.billing as HTMLAnchorElement).href).toBe(
         `https://cloud.mongodb.com/v2#/org/${newActiveProject.orgId}/billing/overview`,
       );
     });
 
     test('current projectId is set based on the new activeProjectId', () => {
-      const activityFeed = expectedElements['activityFeed'];
-      expect((activityFeed as HTMLAnchorElement).href).toBe(
+      expect((expectedElements.activityFeed as HTMLAnchorElement).href).toBe(
         `https://cloud.mongodb.com/v2/${newActiveProject.projectId}#activity`,
       );
     });
 
     test('current projectName is displayed inside the ProjectSelect based on the new activeProjectId', () => {
-      const currentProject = expectedElements['currentProject'];
       expect(
-        currentProject?.innerHTML.includes(newActiveProject.projectName),
+        expectedElements.currentProject?.innerHTML.includes(
+          newActiveProject.projectName,
+        ),
       ).toBe(true);
     });
   });
@@ -286,8 +274,7 @@ describe('packages/mongo-nav', () => {
     );
 
     test('link is properly constructured based on host override prop', () => {
-      const billing = expectedElements['billing'];
-      expect((billing as HTMLAnchorElement).href).toBe(
+      expect((expectedElements.billing as HTMLAnchorElement).href).toBe(
         `${cloudHost}/v2#/org/${dataFixtures.currentOrganization?.orgId}/billing/overview`,
       );
     });
@@ -303,8 +290,9 @@ describe('packages/mongo-nav', () => {
     );
 
     test('link is properly constructured based on host override prop', () => {
-      const activityFeed = expectedElements['activityFeed'];
-      expect((activityFeed as HTMLAnchorElement).href).toBe(activityFeedHref);
+      expect((expectedElements.activityFeed as HTMLAnchorElement).href).toBe(
+        activityFeedHref,
+      );
     });
   });
 });

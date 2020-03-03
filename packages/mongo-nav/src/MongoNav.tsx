@@ -203,7 +203,6 @@ function MongoNav({
 
   async function handleResponse(response: Response) {
     if (!response.ok) {
-      console.log(response);
       const status = response.status as 401; //typecasting for now until we have more types to handle
       onError?.(ErrorCodeMap[status]);
       console.error(ErrorCodeMap[status]);
