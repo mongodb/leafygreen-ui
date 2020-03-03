@@ -59,6 +59,11 @@ interface SharedIconButtonProps {
    * Determines size of IconButton can be: default, large, xlarge
    */
   size?: Size;
+
+  /**
+   * Determines whether `IconButton` will appear `active`
+   */
+  active?: boolean;
 }
 
 interface LinkIconButtonProps
@@ -96,6 +101,9 @@ const baseIconButtonStyle = css`
   color: ${uiColors.gray.base};
   position: relative;
   cursor: pointer;
+  // added for cross-browser compatability
+  background-color: rgba(255, 255, 255, 0);
+
   &:before {
     content: '';
     transition: 150ms all ease-in-out;
@@ -108,11 +116,13 @@ const baseIconButtonStyle = css`
     opacity: 0;
     transform: scale(0.8);
   }
+
   &:hover:before,
   &:focus:before {
     opacity: 1;
     transform: scale(1);
   }
+
   &:focus {
     outline: none;
   }
@@ -177,6 +187,26 @@ const disabledStyle: { readonly [K in Variant]: string } = {
   `,
 };
 
+const activeStyle: { readonly [K in Variant]: string } = {
+  [Variant.Light]: css`
+    color: ${uiColors.gray.dark2};
+    background-color: ${uiColors.gray.light2};
+
+    &:before {
+      background-color: ${uiColors.gray.light2};
+    }
+  `,
+
+  [Variant.Dark]: css`
+    color: ${uiColors.white};
+    background-color: ${uiColors.gray.dark2};
+
+    &:before {
+      background-color: ${uiColors.gray.dark2};
+    }
+  `,
+};
+
 const getIconStyle = (size: Size) => css`
   position: absolute;
   top: 0;
@@ -205,6 +235,8 @@ const getIconStyle = (size: Size) => css`
  * @param props.href Destination URL, if supplied `IconButton` will render in `a` tags, rather than `button` tags.
  * @param props.onClick Callback fired when `IconButton` is clicked.
  * @param props.ariaLabel Required prop that will be passed to `aria-label` attribute
+ * @param props.active Determines whether `IconButton` will appear `active`
+ *
  */
 
 const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
@@ -212,6 +244,7 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
     variant = 'light',
     disabled = false,
     size = 'default',
+    active = false,
     className,
     href,
     children,
@@ -233,9 +266,11 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
         iconButtonVariants[variant],
         {
           [disabledStyle[variant]]: disabled,
+          [activeStyle[variant]]: active,
         },
         className,
       )}
+      tabIndex={disabled ? -1 : 0}
     >
       <span className={getIconStyle(size)}>{children}</span>
     </Root>
@@ -258,6 +293,7 @@ IconButton.propTypes = {
   disabled: PropTypes.bool,
   href: PropTypes.string,
   ariaLabel: PropTypes.string.isRequired,
+  active: PropTypes.bool,
 };
 
 export default IconButton;

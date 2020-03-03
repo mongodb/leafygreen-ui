@@ -1,12 +1,15 @@
 import React from 'react';
 import Tooltip from '@leafygreen-ui/tooltip';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
+import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
-import { AtlasActive, AtlasInactive } from './SubBrandIcons';
-import MongoSelect from '../mongo-select/index';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { ProjectSelect } from '../mongo-select/index';
+import { facepaint, breakpoints } from '../breakpoints';
+import { useViewportSize } from '@leafygreen-ui/hooks';
 import {
   ProjectInterface,
   URLSInterface,
@@ -14,77 +17,109 @@ import {
   Product,
   HostsInterface,
 } from '../types';
+import { iconLoadingStyle, textLoadingStyle } from '../styles';
+
+const productIconProp = createDataProp('charts-data-prop');
+export const projectNavHeight = 45;
 
 const navContainerStyle = css`
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
   padding-left: 15px;
   padding-right: 15px;
-  height: 45px;
+  height: ${projectNavHeight}px;
   box-shadow: 0 3px 7px 0 rgba(67, 117, 151, 0.08);
   overflow: hidden;
+  box-sizing: border-box;
 `;
 
-const leftSide = css`
+const mongoSelectWrapper = css`
   display: flex;
-  position: relative;
-`;
-
-const projectSelectMargin = css`
-  margin-right: 6px;
+  align-items: center;
 `;
 
 const menuIconButtonStyle = css`
-  margin: auto;
-  background-color: white;
+  background-color: transparent;
+
+  ${facepaint({
+    marginRight: ['20px', '14px', '20px'],
+  })}
 `;
 
 const menuIconStyle = css`
   transform: rotate(90deg);
 `;
 
-const olStyle = css`
-  list-style: none;
+const productListStyle = css`
   display: flex;
+  align-self: stretch;
   position: relative;
   padding: 0;
   margin: 0;
+  list-style: none;
   margin-block-start: 0;
   margin-block-end: 0;
+  flex-grow: 1;
 `;
 
-const productStyle = css`
-  width: 100px;
-  margin-left: 25px;
-  margin-right: 25px;
+const productTabStyle = css`
   display: inline-flex;
-  align-items: center;
   justify-content: center;
+  position: relative;
+
+  ${facepaint({
+    width: ['100px', '60px', '100px'],
+    marginRight: ['16px', '8px', '16px'],
+  })}
 `;
 
-const productMargin = css`
-  margin-left: 4px;
-  margin-top: 2px;
-`;
+const productStates = {
+  focus: css`
+    outline: none;
 
-const activeProductColor = {
-  cloud: css`
+    &:focus {
+      color: ${uiColors.blue.base};
+
+      > ${productIconProp.selector} {
+        color: ${uiColors.blue.base};
+      }
+
+      &:after {
+        background-color: #9dd0e7;
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  `,
+
+  active: css`
+    font-weight: bolder;
     color: ${uiColors.green.dark3};
-    font-weight: bold;
+
+    &:hover {
+      color: ${uiColors.green.dark3};
+
+      > ${productIconProp.selector} {
+        color: ${uiColors.green.base};
+      }
+    }
+
+    > ${productIconProp.selector} {
+      color: ${uiColors.green.base};
+    }
+
+    &:after {
+      opacity: 1;
+      transform: scale(1);
+      background-color: ${uiColors.green.base}};
+    }
   `,
-  stitch: css`
-    color: #39477f;
-    font-weight: bold;
-  `,
-  charts: css`
-    color: #0e4d4c;
-    font-weight: bold;
-  `,
+
+  loading: textLoadingStyle,
 };
 
-const productTextStyle = css`
+const productStyle = css`
   text-decoration: none;
   font-size: 14px;
   line-height: 16px;
@@ -92,18 +127,41 @@ const productTextStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const highlightColor = css`
-  height: 3px;
   width: 100px;
-  position: absolute;
-  bottom: 0;
-  transition: 150ms transform ease-in-out, 150ms width ease-in-out 10ms;
+  transition: 150ms color ease-in-out;
+
+  &:after {
+    content: '';
+    height: 3px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transform: scale(0.6, 1);
+    background-color: ${uiColors.gray.light2};
+    transition: 150ms all ease-in-out;
+    border-radius: 50px 50px 0 0;
+  }
+
+  &:hover {
+    color: ${uiColors.gray.dark3};
+
+    &:after {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    > ${productIconProp.selector} {
+      color: ${uiColors.gray.dark2};
+    }
+  }
 `;
 
-const alertIconButtonStyle = css`
-  margin-right: 20px;
+const iconButtonMargin = css`
+  ${facepaint({
+    marginRight: ['16px', '16px', '20px'],
+  })}
 `;
 
 const alertBadgeStyle = css`
@@ -121,32 +179,14 @@ const alertBadgeStyle = css`
   justify-content: center;
 `;
 
-function calcStyle(activeProduct: Product) {
-  const products = {
-    cloud: uiColors.green.base,
-    stitch: '#59569D',
-    charts: '#00C6BF',
-  };
-
-  const currentIndex = Object.keys(products).indexOf(activeProduct);
-
-  let computedX = 25;
-
-  for (let i = 0; i < currentIndex; i++) {
-    computedX += 150;
-  }
-
-  return css`
-    transform: translate3d(${computedX}px, 0, 0);
-    background-color: ${products[
-      activeProduct as 'stitch' | 'cloud' | 'charts'
-    ]};
-  `;
-}
+const productIconStyle = css`
+  margin-right: 4px;
+  color: ${uiColors.gray.base};
+`;
 
 interface ProjectNavInterface {
-  current: CurrentProjectInterface;
-  data: Array<ProjectInterface>;
+  current?: CurrentProjectInterface;
+  data?: Array<ProjectInterface>;
   constructProjectURL: (orgID: string, projID: string) => string;
   urls: Required<URLSInterface>;
   hosts: Required<HostsInterface>;
@@ -160,12 +200,27 @@ export default function ProjectNav({
   data,
   constructProjectURL,
   urls,
-  alerts,
   activeProduct,
   onProjectChange,
   hosts,
+  alerts = 0,
 }: ProjectNavInterface) {
+  const [open, setOpen] = React.useState(false);
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { projectNav } = urls;
+  const { width: viewportWidth } = useViewportSize();
+  const isMobile = viewportWidth < breakpoints.small;
+
+  const getProductClassName = (product: Product) =>
+    cx(productStyle, {
+      [productStates.active]: !!(activeProduct === product && current),
+      [productStates.focus]: showFocus,
+      [productStates.loading]: !current,
+    });
+
+  const iconStyle = cx(productIconStyle, {
+    [iconLoadingStyle]: !current,
+  });
 
   return (
     <nav
@@ -173,114 +228,155 @@ export default function ProjectNav({
       aria-label="project navigation"
       data-testid="project-nav"
     >
-      <div className={leftSide}>
-        <MongoSelect
-          variant="project"
+      <div className={mongoSelectWrapper}>
+        <ProjectSelect
           current={current}
           data={data}
           constructProjectURL={constructProjectURL}
           urls={urls}
-          className={projectSelectMargin}
           onChange={onProjectChange}
+          loading={!current}
         />
-        <Menu
-          trigger={
-            <IconButton ariaLabel="More" className={menuIconButtonStyle}>
-              <Icon glyph="Ellipsis" className={menuIconStyle} />
-            </IconButton>
-          }
-        >
-          <MenuItem href={projectNav.settings}>Project Settings</MenuItem>
-          <MenuItem href={projectNav.accessManager}>
-            Project Access Manager
-          </MenuItem>
-          <MenuItem href={projectNav.support}>Project Support</MenuItem>
-          <MenuItem href={projectNav.integrations}>Integrations</MenuItem>
-        </Menu>
-        <ol className={olStyle}>
-          <li role="none" className={productStyle}>
-            <a href={hosts.cloud} className={productTextStyle}>
-              {activeProduct === 'cloud' ? <AtlasActive /> : <AtlasInactive />}
-              <span
-                className={cx(productMargin, {
-                  [activeProductColor.cloud]: activeProduct === 'cloud',
-                })}
-              >
-                Atlas
-              </span>
-            </a>
-          </li>
-          <li role="none" className={productStyle}>
-            <a href={hosts.stitch} className={productTextStyle}>
+      </div>
+
+      <Menu
+        open={open}
+        setOpen={setOpen}
+        trigger={
+          <IconButton
+            ariaLabel="More"
+            className={menuIconButtonStyle}
+            active={open}
+            disabled={!current}
+          >
+            <Icon glyph="Ellipsis" className={menuIconStyle} />
+          </IconButton>
+        }
+      >
+        <MenuItem href={projectNav.settings}>Project Settings</MenuItem>
+        <MenuItem href={projectNav.accessManager}>
+          Project Access Manager
+        </MenuItem>
+        <MenuItem href={projectNav.support}>Project Support</MenuItem>
+        <MenuItem href={projectNav.integrations}>Integrations</MenuItem>
+      </Menu>
+
+      <ul className={productListStyle}>
+        <li role="none" className={productTabStyle}>
+          <a
+            href={hosts.cloud}
+            className={getProductClassName('cloud')}
+            aria-disabled={!current}
+            tabIndex={!current ? -1 : 0}
+          >
+            {!isMobile && (
               <Icon
+                {...productIconProp.prop}
+                className={iconStyle}
+                glyph="Cloud"
+              />
+            )}
+            Atlas
+          </a>
+        </li>
+
+        <li role="none" className={productTabStyle}>
+          <a
+            href={hosts.realm}
+            className={getProductClassName('realm')}
+            aria-disabled={!current}
+            tabIndex={!current ? -1 : 0}
+          >
+            {!isMobile && (
+              <Icon
+                {...productIconProp.prop}
+                className={iconStyle}
                 glyph="Stitch"
-                fill={
-                  activeProduct === 'stitch' ? '#59569D' : uiColors.gray.base
-                }
               />
-              <span
-                className={cx(productMargin, {
-                  [activeProductColor.stitch]: activeProduct === 'stitch',
-                })}
-              >
-                Stitch
-              </span>
-            </a>
-          </li>
-          <li role="none" className={productStyle}>
-            <a href={hosts.charts} className={productTextStyle}>
+            )}
+            Realm
+          </a>
+        </li>
+
+        <li role="none" className={productTabStyle}>
+          <a
+            href={hosts.charts}
+            className={getProductClassName('charts')}
+            aria-disabled={!current}
+            tabIndex={!current ? -1 : 0}
+          >
+            {!isMobile && (
               <Icon
+                {...productIconProp.prop}
+                className={iconStyle}
                 glyph="Charts"
-                fill={
-                  activeProduct === 'charts' ? '#00C6BF' : uiColors.gray.base
-                }
               />
-              <span
-                className={cx(productMargin, {
-                  [activeProductColor.charts]: activeProduct === 'charts',
-                })}
+            )}
+            Charts
+          </a>
+        </li>
+      </ul>
+
+      {!isMobile && (
+        <>
+          <Tooltip
+            align="bottom"
+            justify="middle"
+            variant="dark"
+            trigger={
+              <IconButton
+                ariaLabel="Invite"
+                href={projectNav.invite as string}
+                className={iconButtonMargin}
+                size="large"
+                disabled={!current}
               >
-                Charts
-              </span>
-            </a>
-          </li>
-          <div className={cx(highlightColor, calcStyle(activeProduct))} />
-        </ol>
-      </div>
-      <div>
-        <Tooltip
-          align="bottom"
-          justify="middle"
-          variant="dark"
-          trigger={
-            <IconButton
-              ariaLabel="Alerts"
-              href={projectNav.alerts as string}
-              className={alertIconButtonStyle}
-            >
-              {alerts && <div className={alertBadgeStyle}>{alerts}</div>}
-              <Icon glyph="Bell" />
-            </IconButton>
-          }
-        >
-          Project Alerts
-        </Tooltip>
-        <Tooltip
-          align="bottom"
-          variant="dark"
-          justify="middle"
-          trigger={
-            <IconButton
-              ariaLabel="Project Activity Feed"
-              href={projectNav.activityFeed as string}
-            >
-              <Icon glyph="Save" />
-            </IconButton>
-          }
-        >
-          Project Activity Feed
-        </Tooltip>
-      </div>
+                <Icon glyph="Person" size="large" />
+              </IconButton>
+            }
+          >
+            Invite To Project
+          </Tooltip>
+
+          <Tooltip
+            align="bottom"
+            variant="dark"
+            justify="middle"
+            trigger={
+              <IconButton
+                ariaLabel="Project Activity Feed"
+                href={projectNav.activityFeed as string}
+                size="large"
+                className={iconButtonMargin}
+                disabled={!current}
+              >
+                <Icon glyph="Save" size="large" />
+              </IconButton>
+            }
+          >
+            View the Project Activity Feed
+          </Tooltip>
+
+          <Tooltip
+            align="bottom"
+            justify="middle"
+            variant="dark"
+            trigger={
+              <IconButton
+                ariaLabel="Alerts"
+                href={projectNav.alerts as string}
+                size="large"
+                disabled={!current}
+              >
+                {alerts > 0 && <div className={alertBadgeStyle}>{alerts}</div>}
+                <Icon glyph="Bell" size="large" />
+              </IconButton>
+            }
+          >
+            View the Project Alerts
+          </Tooltip>
+        </>
+      )}
     </nav>
   );
 }

@@ -1,294 +1,257 @@
 import React from 'react';
-import { render, fireEvent, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import MongoSelect from './MongoSelect';
-import { Variant, PlanType } from '../types';
+import { render, fireEvent, cleanup } from '@testing-library/react';
+import {
+  nullableElement,
+  nullableElementArray,
+  Queries,
+} from 'packages/lib/src/testHelpers';
+import { OrgSelect, ProjectSelect } from './MongoSelect';
+import {
+  dataFixtures,
+  urlDefaults,
+  constructOrganizationURL,
+  constructProjectURL,
+} from '../data';
+import { CurrentProjectInterface } from '../types';
 
-const generateId = () =>
-  Math.random()
-    .toString(36)
-    .substring(7);
+// types
+interface ExpectedElements {
+  orgTrigger?: nullableElement;
+  orgInput?: nullableElement;
+  orgSettingsIcon?: nullableElement;
+  orgResults?: nullableElementArray;
+  projectTrigger?: nullableElement;
+  projectInput?: nullableElement;
+  projectResults?: nullableElementArray;
+}
 
-afterAll(cleanup);
+// data
+const {
+  currentOrganization,
+  currentProject,
+  organizations,
+  projects,
+} = dataFixtures;
+
+const currentProjectName = currentProject?.projectName;
+const currentOrgName = currentOrganization?.orgName;
 
 describe('packages/mongo-select', () => {
-  describe('when variant is set to organization', () => {
-    const organizationData = [
-      { orgId: generateId(), orgName: 'GlobalWork', planType: PlanType.Atlas },
-      { orgId: generateId(), orgName: 'LocalWork', planType: PlanType.Atlas },
-      {
-        orgId: generateId(),
-        orgName: 'Pizza on Demand',
-        planType: PlanType.Atlas,
-      },
-      { orgId: generateId(), orgName: 'YouWork', planType: PlanType.Atlas },
-      {
-        orgId: generateId(),
-        orgName: 'YouWork Enterprise',
-        planType: PlanType.Cloud,
-      },
-    ];
+  const queries: Queries = {};
+  const expectedElements: ExpectedElements = {};
 
-    const current = organizationData[3];
-    const onClick = jest.fn();
+  const setQueries = ({ queryByTestId, queryAllByTestId }: Queries) => {
+    Object.assign(queries, { queryByTestId, queryAllByTestId });
+    setExpectedElements();
+  };
 
-    const { getByText, getByPlaceholderText, getAllByTitle } = render(
-      <MongoSelect
-        current={current}
-        onChange={jest.fn()}
-        data={organizationData}
-        onClick={onClick}
-        variant={Variant.Organization}
-        constructOrganizationURL={orgID => orgID}
-        urls={{
-          userMenu: {
-            cloud: {
-              userPreferences: `https://cloud.mongodb.com/v2#/preferences/personalization`,
-              organizations: `https://cloud.mongodb.com/v2#/preferences/organizations`,
-              invitations: `https://cloud.mongodb.com/v2#/preferences/invitations`,
-              mfa: `https://cloud.mongodb.com/v2#/preferences/2fa`,
-            },
-            university: {
-              videoPreferences: `https://university.mongodb.com`,
-            },
-            support: {
-              userPreferences: `https://support.mongodb.com/profile`,
-            },
-            account: {
-              homepage: `https://account.mongodb.com/account/profile/overview`,
-            },
-          },
-          mongoSelect: {
-            viewAllProjects: `https://cloud.mongodb.com/v2#/org/${current.orgId}/projects`,
-            newProject: `https://cloud.mongodb.com/v2#/org/${current.orgId}/projects/create`,
-            viewAllOrganizations: `https://cloud-dev.mongodb.com/v2#/preferences/organizations`,
-            orgSettings: `https://cloud-dev.mongodb.com/v2#/org/${current.orgId}/settings/general`,
-          },
-          orgNav: {
-            settings: `https://cloud.mongodb.com/v2#/org/${current.orgId}/settings/general`,
-            accessManager: `https://cloud.mongodb.com/v2#/org/${current.orgId}/access/users`,
-            support: `https://cloud.mongodb.com/v2#/org/${current.orgId}/support`,
-            billing: `https://cloud.mongodb.com/v2#/org/${current.orgId}/billing/overview`,
-            allClusters: `https://cloud.mongodb.com/v2#/clusters`,
-            admin: `https://cloud.mongodb.com/v2/admin#general/overview/servers`,
-          },
-          projectNav: {
-            settings: `https://cloud.mongodb.com/v2/currentProjectId098#settings/groupSettings`,
-            accessManager: `https://cloud.mongodb.com/v2/currentProjectId098#access`,
-            support: `https://cloud.mongodb.com/v2/currentProjectId098#info/support`,
-            integrations: `https://cloud.mongodb.com/v2/currentProjectId098#integrations`,
-            alerts: `https://cloud.mongodb.com/v2/currentProjectId098#alerts`,
-            activityFeed: `https://cloud.mongodb.com/v2/currentProjectId098#activity`,
-          },
-        }}
-      />,
-    );
+  const setExpectedElements = () => {
+    const {
+      queryByTestId = () => null,
+      queryAllByTestId = () => null,
+    } = queries;
 
-    test('by default, current organization is rendered', () => {
-      const currentOrg = getByText(current.orgName);
-      expect(currentOrg).toBeInTheDocument();
-    });
+    expectedElements.orgTrigger = queryByTestId('org-trigger');
+    expectedElements.orgInput = queryByTestId('org-filter-input');
+    expectedElements.orgSettingsIcon = queryByTestId('org-trigger-settings');
+    expectedElements.orgResults = queryAllByTestId('org-option');
+    expectedElements.projectTrigger = queryByTestId('project-select-trigger');
+    expectedElements.projectInput = queryByTestId('project-filter-input');
+    expectedElements.projectResults = queryAllByTestId('project-option');
+  };
 
-    test('clicking current organization opens and closes the menu', () => {
-      const currentOrg = getByText(current.orgName);
-      fireEvent.click(currentOrg);
-      const input = getByPlaceholderText('Search for an Organization...');
-      expect(input).toBeInTheDocument();
+  let onClick: jest.Mock;
+  let onChange: jest.Mock;
 
-      fireEvent.click(currentOrg);
-      expect(input).not.toBeVisible();
-    });
+  beforeEach(() => {
+    onClick = jest.fn();
+    onChange = jest.fn();
+  });
 
-    test('typing in the input field changes what data is displayed', () => {
-      const caretDown = getAllByTitle('Caret Down Icon')[0];
-      fireEvent.click(caretDown);
+  afterEach(() => {
+    jest.restoreAllMocks();
+    cleanup();
+  });
 
-      const input = getByPlaceholderText('Search for an Organization...');
-      expect(input).toBeInTheDocument();
+  describe('OrgSelect', () => {
+    const renderComponent = (props = {}) => {
+      setQueries(
+        render(
+          <OrgSelect
+            current={currentOrganization}
+            data={organizations}
+            constructOrganizationURL={constructOrganizationURL}
+            urls={urlDefaults}
+            onChange={onChange}
+            onClick={onClick}
+            {...props}
+          />,
+        ),
+      );
+    };
 
-      const pizza = getByText('Pizza on Demand');
-      expect(pizza).toBeInTheDocument();
+    describe('when rendered with default props', () => {
+      beforeEach(renderComponent);
 
-      const localWork = getByText('LocalWork');
-      expect(localWork).toBeInTheDocument();
-
-      fireEvent.change(input, {
-        target: {
-          value: 'work',
-        },
+      it('displays the org select trigger with the current org name', () => {
+        const { orgTrigger } = expectedElements;
+        expect(orgTrigger).toBeVisible();
+        expect(orgTrigger?.textContent).toContain(currentOrgName);
       });
 
-      expect(localWork).toBeInTheDocument();
-      expect(pizza).not.toBeVisible();
+      describe('when clicking the current organization trigger', () => {
+        beforeEach(() => {
+          const { orgTrigger } = expectedElements;
+          fireEvent.click(orgTrigger as Element);
+          setExpectedElements();
+        });
+
+        it('displays a search input with a placeholder', () => {
+          const { orgInput } = expectedElements;
+          expect(orgInput).toBeInTheDocument();
+          expect(orgInput?.getAttribute('placeholder')).toContain(
+            'Search for an Organization...',
+          );
+        });
+
+        it('displays two organization results', () => {
+          const { orgResults } = expectedElements;
+          expect(orgResults?.length).toEqual(2);
+        });
+
+        it('displays the correct names of each result', () => {
+          const { orgResults } = expectedElements;
+          expect(orgResults?.[0]?.textContent).toContain('Demo Organization');
+          expect(orgResults?.[1]?.textContent).toContain('Demo Organization 2');
+        });
+
+        it('displays the correct org type of each result', () => {
+          const { orgResults } = expectedElements;
+          expect(orgResults?.[0]?.textContent).toContain('Atlas');
+          expect(orgResults?.[1]?.textContent).toContain('Cloud Manager');
+        });
+
+        it('displays the correct link to projects of each result', () => {
+          const { orgResults } = expectedElements;
+          expect((orgResults?.[0] as HTMLAnchorElement).href).toBe(
+            constructOrganizationURL('5d729a93'),
+          );
+          expect((orgResults?.[1] as HTMLAnchorElement).href).toBe(
+            constructOrganizationURL('5e0fa79'),
+          );
+        });
+
+        describe('when clicking an org', () => {
+          beforeEach(() => {
+            const { orgResults } = expectedElements;
+            onClick.mockClear();
+            fireEvent.click(orgResults?.[0] as Element);
+            setExpectedElements();
+          });
+
+          it('calls the on click handler', () => {
+            expect(onClick).toHaveBeenCalledTimes(1);
+          });
+        });
+      });
     });
 
-    test('onClick is fired when organization is clicked', () => {
-      const caretDown = getAllByTitle('Caret Down Icon')[0];
-      fireEvent.click(caretDown);
+    describe('when rendered in a disabled state', () => {
+      beforeEach(() => renderComponent({ disabled: true }));
 
-      const localWork = getByText('LocalWork');
-      fireEvent.click(localWork);
+      it('displays the menu trigger as disabled', () => {
+        const { orgTrigger } = expectedElements;
+        expect((orgTrigger as HTMLButtonElement)?.disabled).toBeTruthy();
+      });
 
-      expect(onClick).toHaveBeenCalled();
-    });
+      it('displays the current org as "All Organizations"', () => {
+        const { orgTrigger } = expectedElements;
+        expect(orgTrigger?.textContent).toContain('All Organizations');
+      });
 
-    test('view all organizations href is changed, when the urls prop is set', () => {
-      const viewAllOrganizations = getByText('View All Organizations')
-        .parentNode?.parentNode;
-      expect((viewAllOrganizations as HTMLAnchorElement)?.href).toBe(
-        `https://cloud-dev.mongodb.com/v2#/preferences/organizations`,
-      );
+      it('does not display an org settings icon', () => {
+        const { orgSettingsIcon } = expectedElements;
+        expect(orgSettingsIcon).toBeNull();
+      });
     });
   });
 
-  describe('when variant is set to project', () => {
-    const onClick = jest.fn();
-    const projectData = [
-      {
-        projectId: generateId(),
-        projectName: 'Core',
-        orgId: generateId(),
-        planType: PlanType.Atlas,
-        alertsOpen: 2,
-        chartsActivated: true,
-      },
-      {
-        projectId: generateId(),
-        projectName: 'London',
-        orgId: generateId(),
-        planType: PlanType.Atlas,
-        alertsOpen: 2,
-        chartsActivated: true,
-      },
-      {
-        projectId: generateId(),
-        projectName: 'Madrid',
-        orgId: generateId(),
-        planType: PlanType.Atlas,
-        alertsOpen: 2,
-        chartsActivated: false,
-      },
-    ];
+  describe('ProjectSelect', () => {
+    const renderComponent = (props = {}) => {
+      setQueries(
+        render(
+          <ProjectSelect
+            urls={urlDefaults}
+            data={projects}
+            current={currentProject as CurrentProjectInterface}
+            onClick={onClick}
+            onChange={onChange}
+            constructProjectURL={constructProjectURL}
+            {...props}
+          />,
+        ),
+      );
+    };
 
-    const currentProject = projectData[0];
-    const viewAllProjectsHref = 'https://cloud.mongodb.com/test-link';
+    describe('when rendered with default props', () => {
+      beforeEach(renderComponent);
 
-    const { getByText, getByPlaceholderText, getAllByTitle } = render(
-      <MongoSelect
-        onChange={jest.fn()}
-        variant={Variant.Project}
-        current={currentProject}
-        onClick={onClick}
-        data={projectData}
-        constructProjectURL={(orgID, projID) => `${orgID + projID}`}
-        urls={{
-          userMenu: {
-            cloud: {
-              userPreferences: `https://cloud.mongodb.com/v2#/preferences/personalization`,
-              organizations: `https://cloud.mongodb.com/v2#/preferences/organizations`,
-              invitations: `https://cloud.mongodb.com/v2#/preferences/invitations`,
-              mfa: `https://cloud.mongodb.com/v2#/preferences/2fa`,
-            },
-            university: {
-              videoPreferences: `https://university.mongodb.com`,
-            },
-            support: {
-              userPreferences: `https://support.mongodb.com/profile`,
-            },
-            account: {
-              homepage: `https://account.mongodb.com/account/profile/overview`,
-            },
-          },
-          mongoSelect: {
-            viewAllOrganizations: `https://cloud-dev.mongodb.com/v2#/preferences/organizations`,
-            orgSettings: `https://cloud-dev.mongodb.com/v2#/org/currentOrganizationId098/settings/general`,
-            viewAllProjects: viewAllProjectsHref,
-            newProject: `https://cloud-dev.mongodb.com/v2#/org/${currentProject.orgId}/projects/create`,
-          },
-          orgNav: {
-            settings: `https://cloud.mongodb.com/v2#/org/currentOrganizationId098#settings/settings/general`,
-            accessManager: `https://cloud.mongodb.com/v2#/org/currentOrganizationId098#settings/access/users`,
-            support: `https://cloud.mongodb.com/v2#/org/currentOrganizationId098#settings/support`,
-            billing: `https://cloud.mongodb.com/v2#/org/currentOrganizationId098#settings/billing/overview`,
-            allClusters: `https://cloud.mongodb.com/v2#/clusters`,
-            admin: `https://cloud.mongodb.com/v2/admin#general/overview/servers`,
-          },
-          projectNav: {
-            settings: `https://cloud.mongodb.com/v2/currentProjectId098#settings/groupSettings`,
-            accessManager: `https://cloud.mongodb.com/v2/currentProjectId098#access`,
-            support: `https://cloud.mongodb.com/v2/currentProjectId098#info/support`,
-            integrations: `https://cloud.mongodb.com/v2/currentProjectId098#integrations`,
-            alerts: `https://cloud.mongodb.com/v2/currentProjectId098#alerts`,
-            activityFeed: `https://cloud.mongodb.com/v2/currentProjectId098#activity`,
-          },
-        }}
-      />,
-    );
-
-    test('by default, current organization is rendered', () => {
-      const current = getByText(currentProject.projectName);
-      expect(current).toBeInTheDocument();
-    });
-
-    test('clicking current project opens and closes the menu', () => {
-      const current = getByText(currentProject.projectName);
-      fireEvent.click(current);
-      const input = getByPlaceholderText('Search for a Project...');
-      expect(input).toBeInTheDocument();
-
-      fireEvent.click(current);
-      expect(input).not.toBeVisible();
-    });
-
-    test('typing in the input field changes what data is displayed', () => {
-      const caretDown = getAllByTitle('Caret Down Icon')[1];
-      fireEvent.click(caretDown);
-
-      const input = getByPlaceholderText('Search for a Project...');
-      expect(input).toBeInTheDocument();
-
-      const london = getByText('London');
-      expect(london).toBeInTheDocument();
-
-      const madrid = getByText('Madrid');
-      expect(madrid).toBeInTheDocument();
-
-      fireEvent.change(input, {
-        target: {
-          value: 'london',
-        },
+      it('displays the org select trigger with the current project name', () => {
+        const { projectTrigger } = expectedElements;
+        expect(projectTrigger).toBeInTheDocument();
+        expect(projectTrigger?.textContent).toContain(currentProjectName);
       });
 
-      expect(london).toBeInTheDocument();
-      expect(madrid).not.toBeVisible();
-    });
+      describe('when clicking the current organization trigger', () => {
+        beforeEach(() => {
+          const { projectTrigger } = expectedElements;
+          fireEvent.click(projectTrigger as Element);
+          setExpectedElements();
+        });
 
-    test('onClick is fired when project is clicked', () => {
-      const caretDown = getAllByTitle('Caret Down Icon')[1];
-      fireEvent.click(caretDown);
-      const london = getByText('London');
-      fireEvent.click(london);
+        it('displays a placeholder without an existing value', () => {
+          const { projectInput } = expectedElements;
+          expect(projectInput).toBeInTheDocument();
+          expect(projectInput?.getAttribute('placeholder')).toContain(
+            'Search for a Project...',
+          );
+        });
 
-      expect(onClick).toHaveBeenCalled();
-    });
+        it('displays two organization results', () => {
+          const { projectResults } = expectedElements;
+          expect(projectResults?.length).toEqual(2);
+        });
 
-    test('view all projects link changes when the url overrides prop is set', () => {
-      const caretDown = getAllByTitle('Caret Down Icon')[1];
-      fireEvent.click(caretDown);
+        it('displays the correct names of each result', () => {
+          const { projectResults } = expectedElements;
+          expect(projectResults?.[0]?.textContent).toContain('Demo Project');
+          expect(projectResults?.[1]?.textContent).toContain('Demo Project 2');
+        });
 
-      const viewAllProjectsLink = (getByText('View All Projects')
-        .parentNode as HTMLAnchorElement)?.href;
+        it('displays the correct link to projects of each result', () => {
+          const { projectResults } = expectedElements;
+          expect((projectResults?.[0] as HTMLAnchorElement).href).toBe(
+            constructProjectURL('5d729a93'),
+          );
+          expect((projectResults?.[1] as HTMLAnchorElement).href).toBe(
+            constructProjectURL('5e0fa79'),
+          );
+        });
 
-      expect(viewAllProjectsLink).toBe(viewAllProjectsHref);
-    });
+        describe('when clicking a project', () => {
+          beforeEach(() => {
+            const { projectResults } = expectedElements;
+            onClick.mockClear();
+            fireEvent.click(projectResults?.[0] as Element);
+            setExpectedElements();
+          });
 
-    test('add a project link changes when the host override prop is set', () => {
-      const addProjectLink = (getByText('+ New Project')
-        .parentNode as HTMLAnchorElement)?.href;
-
-      expect(addProjectLink).toBe(
-        `https://cloud-dev.mongodb.com/v2#/org/${currentProject.orgId}/projects/create`,
-      );
+          it('calls the on click handler', () => {
+            expect(onClick).toHaveBeenCalledTimes(1);
+          });
+        });
+      });
     });
   });
 });

@@ -10,25 +10,19 @@
       "path": "../emotion"
     },
     {
-      "path": "../hooks"
-    },
-    {
       "path": "../lib"
     },
     {
-      "path": "../popover"
-    },
-    {
-      "path": "../portal"
-    },
-    {
-      "path": "../menu"
+      "path": "../theme"
     },
     {
       "path": "../icon"
     },
     {
       "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../palette"
     }
   ]
 }

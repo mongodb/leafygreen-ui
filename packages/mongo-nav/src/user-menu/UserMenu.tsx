@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import defaultsDeep from 'lodash/defaultsDeep';
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
@@ -21,6 +22,7 @@ import {
   Product,
   HostsInterface,
 } from '../types';
+import { hostDefaults } from '../data';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 
@@ -115,11 +117,6 @@ const descriptionStyle = css`
   max-width: 100%;
 `;
 
-const logoutContainer = css`
-  height: 56px;
-  background-color: ${uiColors.gray.light3};
-`;
-
 interface DescriptionProps {
   isActive: boolean;
   product: 'cloud' | 'university' | 'support';
@@ -142,7 +139,7 @@ interface UserMenuProps {
   /**
    * Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
    */
-  account: AccountInterface;
+  account?: AccountInterface;
 
   /**
    * MongoDB product that is currently active: ['cloud', 'university', 'support'].
@@ -159,22 +156,80 @@ interface UserMenuProps {
    */
   onProductChange?: React.MouseEventHandler;
 
-  urls: Required<URLSInterface>;
+  /**
+   * Object that supplies URL overrides to UserMenu component.
+   * Shape: { userMenu:{ cloud: { userPreferences, organizations, invitations, mfa }, university: { videoPreferences }, support: { userPreferences }, account: { homepage } }}
+   */
+  urls?: URLSInterface;
 
-  hosts: Required<HostsInterface>;
+  /**
+   * Object that supplies host overrides to UserMenu component.
+   * Shape: { cloud, realm, charts, account, university, support }
+   * Defaults to the production homepages of each product
+   */
+  hosts?: HostsInterface;
 }
 
+/**
+ * # UserMenu
+ *
+ * UserMenu component
+ *
+ * ```
+<UserMenu
+  account={account}
+  activeProduct="cloud"
+  onLogout={onLogout}
+  onProductChange={onProductChange}
+  urls={urls}
+  hosts={hosts}
+/>
+```
+ * @param props.account Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
+ * @param props.activeProduct MongoDB product that is currently active: ['cloud', 'university', 'support'].
+ * @param props.onLogout Callback invoked after the user clicks log out.
+ * @param props.onProductChange Callback invoked after the user clicks a product.
+ * @param props.hosts Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<UserMenu />` to work across all environments.
+ * @param props.urls Object to enable custom overrides for every `href` used in `<UserMenu />`.
+ */
 function UserMenu({
-  account: { firstName, lastName, email, openInvitations },
+  account,
   activeProduct,
   onLogout = () => {},
   onProductChange = () => {},
-  urls,
-  hosts,
+  urls: urlsProp,
+  hosts: hostsProp,
 }: UserMenuProps) {
+  const hosts = defaultsDeep(hostsProp, hostDefaults);
+
+  // will make this logic more abstract, but wanted to get a quick fix in so that UserMenu can be consumed outside of MongoNav
+  const defaultURLs = {
+    userMenu: {
+      cloud: {
+        userPreferences: `${hosts.cloud}/v2#/preferences/personalization`,
+        organizations: `${hosts.cloud}/v2#/preferences/organizations`,
+        invitations: `${hosts.cloud}/v2#/preferences/invitations`,
+        mfa: `${hosts.cloud}/v2#/preferences/2fa`,
+      },
+      university: {
+        videoPreferences: `${hosts.university}`,
+      },
+      support: {
+        userPreferences: `${hosts.support}/profile`,
+      },
+      account: {
+        homepage: `${hosts.account}/account/profile/overview`,
+      },
+    },
+  };
+
+  const urls = defaultsDeep(urlsProp, defaultURLs);
+
   const [open, setOpen] = useState(false);
 
-  const name = `${firstName} ${lastName}`;
+  const name = account
+    ? `${account.firstName ?? ''} ${account.lastName ?? ''}`
+    : '';
 
   const isAccount = activeProduct === 'account';
   const cloudProducts = ['cloud', 'stitch', 'charts'];
@@ -193,9 +248,20 @@ function UserMenu({
 
   const { userMenu } = urls;
 
+  const feedbackAnchorProps = {
+    href: 'https://feedback.mongodb.com/',
+    target: '_blank',
+    rel: 'noopener noreferrer',
+  };
+
   return (
     <div className={triggerWrapper}>
-      <UserMenuTrigger open={open} name={firstName} setOpen={setOpen} />
+      <UserMenuTrigger
+        open={open}
+        name={account?.firstName ?? ''}
+        setOpen={setOpen}
+        data-testid="user-menu-trigger"
+      />
 
       <Menu open={open} setOpen={setOpen} className={menuStyle}>
         <div className={headerStyle}>
@@ -205,7 +271,9 @@ function UserMenu({
 
           <h3 className={cx(nameStyle, truncate)}>{name}</h3>
 
-          <p className={cx(descriptionStyle, truncate)}>{email}</p>
+          <p className={cx(descriptionStyle, truncate)}>
+            {account?.email ?? ''}
+          </p>
 
           <FocusableMenuItem>
             <Button
@@ -223,30 +291,43 @@ function UserMenu({
           {...subMenuContainer.prop}
           {...sharedProps}
           active={isCloud}
+          disabled={!account}
           href={hosts.cloud}
           description={<Description isActive={isCloud} product="cloud" />}
           title="Atlas"
-          glyph="Cloud"
+          glyph={<Icon glyph="Cloud" size="xlarge" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isCloud,
           })}
         >
-          <MenuItem href={userMenu?.cloud?.userPreferences}>
+          <MenuItem
+            href={userMenu?.cloud?.userPreferences}
+            data-testid="user-menuitem-cloud-user-preferences"
+          >
             User Preferences
           </MenuItem>
-          <MenuItem href={userMenu?.cloud?.invitations}>
-            {openInvitations ? (
-              <span className={subMenuItemStyle}>
-                Invitations <Badge variant="blue">{openInvitations}</Badge>
-              </span>
-            ) : (
-              'Invitations'
-            )}
+
+          <MenuItem
+            href={userMenu?.cloud?.invitations}
+            data-testid="user-menuitem-cloud-invitations"
+          >
+            <span className={subMenuItemStyle}>
+              Invitations
+              {(account?.openInvitations ?? 0) > 0 && (
+                <Badge variant="blue">{account?.openInvitations}</Badge>
+              )}
+            </span>
           </MenuItem>
-          <MenuItem href={userMenu?.cloud?.organizations}>
+          <MenuItem
+            href={userMenu?.cloud?.organizations}
+            data-testid="user-menuitem-cloud-organizations"
+          >
             Organizations
           </MenuItem>
-          <MenuItem href={userMenu?.cloud?.mfa}>
+          <MenuItem
+            href={userMenu?.cloud?.mfa}
+            data-testid="user-menuitem-cloud-mfa"
+          >
             Two-Factor Authorization
           </MenuItem>
         </SubMenu>
@@ -260,12 +341,16 @@ function UserMenu({
             <Description isActive={isUniversity} product="university" />
           }
           title="University"
-          glyph="Laptop"
+          glyph={<Icon glyph="Laptop" size="xlarge" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isUniversity,
           })}
+          disabled={!account}
         >
-          <MenuItem href={userMenu?.university?.videoPreferences}>
+          <MenuItem
+            href={userMenu?.university?.videoPreferences}
+            data-testid="user-menuitem-university-video-preferences"
+          >
             Video Preferences
           </MenuItem>
         </SubMenu>
@@ -277,19 +362,38 @@ function UserMenu({
           href={hosts.support}
           description={<Description isActive={isSupport} product="support" />}
           title="Support"
-          glyph="Support"
+          glyph={<Icon glyph="Support" size="xlarge" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isSupport,
           })}
+          disabled={!account}
         >
-          <MenuItem href={userMenu?.support?.userPreferences}>
+          <MenuItem
+            href={userMenu?.support?.userPreferences}
+            data-testid="user-menuitem-support-user-preferences"
+          >
             User Preferences
           </MenuItem>
         </SubMenu>
 
         <MenuSeparator />
 
-        <MenuItem onClick={onLogout} className={logoutContainer}>
+        <MenuItem
+          {...feedbackAnchorProps}
+          size="large"
+          glyph={<Icon glyph="Bell" size="xlarge" />}
+          data-testid="user-menuitem-feedback"
+        >
+          Give us feedback
+        </MenuItem>
+
+        <MenuSeparator />
+
+        <MenuItem
+          onClick={onLogout}
+          size="large"
+          data-testid="user-menuitem-logout"
+        >
           Logout
         </MenuItem>
       </Menu>
@@ -306,7 +410,7 @@ UserMenu.propTypes = {
     'cloud',
     'support',
     'university',
-    'stitch',
+    'realm',
     'charts',
   ]),
   onLogout: PropTypes.func,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, wait } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import MongoNav from './MongoNav';
 
@@ -12,7 +12,7 @@ describe('packages/MongoNav', () => {
 
   const { getByText, getByTestId } = render(
     <MongoNav
-      activeProduct="stitch"
+      activeProduct="realm"
       mode="dev"
       onOrganizationChange={onOrganizationChange}
       onProjectChange={onProjectChange}
@@ -39,25 +39,28 @@ describe('packages/MongoNav', () => {
 
   describe('it successfully constructs urls based on hosts and urls props', () => {
     test('specific url overrides take precedence over hosts, when the prop is set', () => {
-      const accessManager = getByText('Access Manager');
+      const accessManager = getByText('Access Manager').parentNode;
       expect((accessManager as HTMLAnchorElement).href).toBe(
         'https://cloud.mongodb.com/access-manager-test',
       );
     });
     test('host string changes default host, when the prop is set', () => {
-      const support = getByText('Support');
-      const billing = getByText('Billing');
+      const support = getByText('Support').parentNode;
+      const billing = getByText('Billing').parentNode;
 
-      expect((support as HTMLAnchorElement).href).toBe(
-        `${cloudHost}/v2#/org/5d729a93/support`,
+      wait(() =>
+        expect((support as HTMLAnchorElement).href).toBe(
+          `${cloudHost}/v2#/org/5d729a93/support`,
+        ),
       );
 
-      expect((billing as HTMLAnchorElement).href).toBe(
-        `${cloudHost}/v2#/org/5d729a93/billing/overview`,
+      wait(() =>
+        expect((billing as HTMLAnchorElement).href).toBe(
+          `${cloudHost}/v2#/org/5d729a93/billing/overview`,
+        ),
       );
     });
   });
-
   test('when mode prop is set to `dev`, fixture data is rendered inside of MongoNav', () => {
     const firstName = getByText('DevMode');
     expect(firstName).toBeInTheDocument();

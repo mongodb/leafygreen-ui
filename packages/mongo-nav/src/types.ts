@@ -2,7 +2,7 @@ const Product = {
   Account: 'account',
   Charts: 'charts',
   Cloud: 'cloud',
-  Stitch: 'stitch',
+  Realm: 'realm',
   Support: 'support',
   University: 'university',
 } as const;
@@ -18,6 +18,7 @@ const NavItem = {
   AllClusters: 'allClusters',
   Admin: 'admin',
   OrgSettings: 'orgSettings',
+  UserSettings: 'userSettings',
 } as const;
 
 type NavItem = typeof NavItem[keyof typeof NavItem];
@@ -52,17 +53,25 @@ type PlanType = typeof PlanType[keyof typeof PlanType];
 
 export { PlanType };
 
+const ErrorCode = {
+  NO_AUTHORIZATION: 'NO_AUTHORIZATION',
+};
+
+type ErrorCode = typeof ErrorCode[keyof typeof ErrorCode];
+
+export { ErrorCode };
+
 const OrgPaymentLabel = {
-  Embargoed: 'embargoed',
-  EmbargoConfirmed: 'embargo confirmed',
-  Ok: 'ok',
-  Warning: 'warning',
-  Suspended: 'suspended',
-  Closing: 'closing',
-  AdminSuspended: 'admin suspended',
-  Dead: 'dead',
-  Locked: 'locked',
-  Closed: 'closed',
+  Embargoed: 'EMBARGOED',
+  EmbargoConfirmed: 'EMBARGO_CONFIRMED',
+  Ok: 'OK',
+  Warning: 'WARNING',
+  Suspended: 'SUSPENDED',
+  Closing: 'CLOSING',
+  AdminSuspended: 'ADMIN_SUSPENDED',
+  Dead: 'DEAD',
+  Locked: 'LOCKED',
+  Closed: 'CLOSED',
 } as const;
 
 type OrgPaymentLabel = typeof OrgPaymentLabel[keyof typeof OrgPaymentLabel];
@@ -101,10 +110,16 @@ export interface CurrentOrganizationInterface extends OrganizationInterface {
 
 export interface DataInterface {
   readonly account: AccountInterface;
-  currentOrganization: CurrentOrganizationInterface;
-  currentProject: CurrentProjectInterface;
+  currentOrganization?: CurrentOrganizationInterface;
+  currentProject?: CurrentProjectInterface;
   readonly organizations: Array<OrganizationInterface>;
   readonly projects: Array<ProjectInterface>;
+}
+
+export interface OnPremInterface {
+  mfa?: boolean;
+  version?: string;
+  enabled?: boolean;
 }
 
 export interface URLSInterface {
@@ -146,6 +161,15 @@ export interface URLSInterface {
     integrations?: string;
     alerts?: string;
     activityFeed?: string;
+    invite?: string;
+  };
+  onPrem?: {
+    profile?: string;
+    mfa?: string;
+    personalization?: string;
+    invitations?: string;
+    organizations?: string;
+    featureRequest?: string;
   };
 }
 
@@ -153,7 +177,7 @@ export interface HostsInterface {
   account?: string;
   charts?: string;
   cloud?: string;
-  stitch?: string;
+  realm?: string;
   support?: string;
   university?: string;
 }

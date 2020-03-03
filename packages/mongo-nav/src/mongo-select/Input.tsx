@@ -13,9 +13,11 @@ const containerStyle = css`
   z-index: 0;
   height: 30px;
   margin: 0px 15px 12px 15px;
+  box-sizing: border-box;
 `;
 
 const inputStyle = css`
+  box-sizing: border-box;
   height: 30px;
   padding: 0px 24px 0px 12px;
   width: 100%;
@@ -24,12 +26,14 @@ const inputStyle = css`
   border-radius: 5px;
   position: relative;
   z-index: 1;
-  &: focus {
+  font-family: 'Akzidenz', Helvetica, Arial, sans-serif;
+
+  &:focus {
     outline: none;
   }
+
   &::placeholder {
-    color: ${uiColors.gray.light1};
-    font-family: 'Akzidenz', Helvetica, Arial, sans-serif;
+    color: ${uiColors.gray.base};
   }
 `;
 
@@ -56,7 +60,7 @@ const magnifyingGlassStyle = css`
   position: absolute;
   top: 8px;
   right: 8px;
-  color: ${uiColors.gray.dark2};
+  color: ${uiColors.gray.base};
   z-index: 1;
 `;
 

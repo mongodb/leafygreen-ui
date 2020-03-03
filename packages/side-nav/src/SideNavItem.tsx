@@ -10,7 +10,7 @@ import {
   createDataProp,
 } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { SIDE_OFFSET } from './styles';
+import { sideNavItemSidePadding } from './styles';
 
 const sideNavItemContainer = createDataProp('side-nav-item-container');
 
@@ -21,7 +21,7 @@ const defaultStyle = css`
   position: relative;
   width: 100%;
   margin: unset;
-  padding: 10px ${SIDE_OFFSET}px 10px ${SIDE_OFFSET}px;
+  padding: 8px ${sideNavItemSidePadding}px 8px ${sideNavItemSidePadding}px;
   min-height: 0;
   display: flex;
   flex-direction: column;
@@ -72,12 +72,14 @@ const defaultStyle = css`
   }
 
   &:focus {
+    text-decoration: none;
     outline: none;
   }
 `;
 
 const activeStyle = css`
   cursor: default;
+  text-decoration: none;
   background-color: ${uiColors.green.light3};
 
   &:hover {
@@ -92,6 +94,7 @@ const disabledStyle = css`
 
 const focusedStyle = css`
   &:focus {
+    text-decoration: none;
     color: ${uiColors.blue.dark3};
 
     &:before {

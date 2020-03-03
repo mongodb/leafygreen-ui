@@ -1,5 +1,19 @@
 # @leafygreen-ui/icon-button
 
+## 4.1.1
+
+### Patch Changes
+
+- 347bcf6: - Add default background-color for cross-browser compatability.
+  - IconButtons are no longer focusbale when disabled.- Updated dependencies [704e25c]
+  - @leafygreen-ui/lib@4.3.1
+
+## 4.1.0
+
+### Minor Changes
+
+- 0bfe2ad: Add active prop to IconButton component
+
 ## 4.0.0
 
 ### Major Changes

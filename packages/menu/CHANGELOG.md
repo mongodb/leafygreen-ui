@@ -1,5 +1,31 @@
 # @leafygreen-ui/menu
 
+## 6.0.1
+
+### Patch Changes
+
+- 347bcf6: Fix typings in Menu component
+- Updated dependencies [347bcf6]
+- Updated dependencies [704e25c]
+  - @leafygreen-ui/icon-button@4.1.1
+  - @leafygreen-ui/lib@4.3.1
+
+## 6.0.0
+
+### Major Changes
+
+- 786ccf1: - Changes `glyph` prop from `string` to `React.ReactElement` in `<SubMenu />`
+  - Adds `glyph` and `size` props to `<MenuItem />`
+
+### Minor Changes
+
+- 690888a: Add `spacing` prop to `<Menu />` component
+
+### Patch Changes
+
+- Updated dependencies [ac5c473]
+  - @leafygreen-ui/hooks@2.0.1
+
 ## 5.1.0
 
 ### Minor Changes

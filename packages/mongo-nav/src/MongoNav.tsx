@@ -1,52 +1,73 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import OrgNav from './org-nav/index';
 import ProjectNav from './project-nav/index';
-import { Product, URLSInterface, HostsInterface, NavItem, Mode } from './types';
-import devModeData from './data';
+import { css } from '@leafygreen-ui/emotion';
+import { uiColors } from '@leafygreen-ui/palette';
+import {
+  Product,
+  URLSInterface,
+  HostsInterface,
+  NavItem,
+  Mode,
+  DataInterface,
+  ErrorCode,
+  OnPremInterface,
+} from './types';
+import { dataFixtures, hostDefaults } from './data';
+import defaultsDeep from 'lodash/defaultsDeep';
+
+const ErrorCodeMap = {
+  401: ErrorCode.NO_AUTHORIZATION,
+};
+
+const navContainerStyle = css`
+  background-color: ${uiColors.white};
+  box-shadow: 0 3px 7px 0 rgba(67, 117, 151, 0.08);
+`;
 
 interface MongoNavInterface {
   /**
-   * Describes what product is currently active
+   * Describes what product is currently active.
    */
   activeProduct: Product;
 
   /**
-   * Determines what nav item is currently active
+   * Determines what nav item is currently active.
    */
   activeNav?: NavItem;
 
   /**
-   * Describes whether or not user is an `admin`
+   * Describes whether or not user is an `admin`.
    */
   admin?: boolean;
 
   /**
-   * Callback invoked when user types into organization picker
+   * Callback invoked when user types into organization picker.
    */
   onOrganizationChange: React.ChangeEventHandler;
 
   /**
-   * Callback invoked when user types into project picker
+   * Callback invoked when user types into project picker.
    */
   onProjectChange: React.ChangeEventHandler;
 
   /**
-   *  Function to determine destination URL when user selects a organization from the organization picker
+   *  Function to determine destination URL when user selects a organization from the organization picker, see also `hosts`.
    */
   constructOrganizationURL?: (orgID: string) => string;
 
   /**
-   *  Function to determine destination URL when user selects a project from the project picker
+   *  Function to determine destination URL when user selects a project from the project picker, see also `hosts`.
    */
   constructProjectURL?: (orgID: string, projID: string) => string;
 
   /**
-   * Determines whether the project navigation should be shown
+   * Determines whether the project navigation should be shown.
    */
   showProjNav?: boolean;
 
   /**
-   * Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<MongoNav />` to work across all environments
+   * Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<MongoNav />` to work across all environments.
    */
   hosts?: HostsInterface;
 
@@ -56,10 +77,30 @@ interface MongoNavInterface {
   urls?: URLSInterface;
 
   /**
-   * Describes what environment the component is being used in
-   * By default the value is set to `production`
+   * Describes what environment the component is being used in.
+   * By default the value is set to `production`.
    */
   mode?: Mode;
+
+  /**
+   * Function that is passed an error code as a string, so that consuming application can handle fetch failures.
+   */
+  onError?: (error: ErrorCode) => void;
+
+  /**
+   * Callback that receives the response of the fetched data, having been converted from JSON into an object.
+   */
+  onSuccess?: (response: DataInterface) => void;
+
+  /**
+   * Callback executed when user logs out
+   */
+  onLogout?: React.MouseEventHandler;
+
+  /**
+   * onPrem config object with three keys: enabled, version and mfa
+   */
+  onPrem?: OnPremInterface;
 }
 
 /**
@@ -85,172 +126,164 @@ interface MongoNavInterface {
  * @param props.urls Object to enable custom overrides for every `href` used in `<MongoNav />`.
  * @param props.showProjectNav Determines whether the project navigation should be shown.
  * @param props.admin Describes whether or not user is an `admin`.
- * @param props.constructOrganizationURL Function to determine destination URL when user selects a organization from the organization picker.
- * @param props.constructProjectURL Function to determine destination URL when user selects a project from the project picker.
- * @param props.mode Describes what environment the component is being used in, defaults to `production`
+ * @param props.constructOrganizationURL Function to determine destination URL when user selects a organization from the organization picker, see also `hosts`.
+ * @param props.constructProjectURL Function to determine destination URL when user selects a project from the project picker, see also `hosts`.
+ * @param props.mode Describes what environment the component is being used in, defaults to `production`.
+ * @param props.onSuccess Callback that receives the response of the fetched data, having been converted from JSON into an object.
+ * @param props.onError Function that is passed an error code as a string, so that consuming application can handle fetch failures.
+ * @param props.onPrem onPrem config object with three keys: enabled, version and mfa
+ * @param props.onLogout Callback executed when user logs out
  */
 export default function MongoNav({
   activeProduct,
   activeNav,
-  hosts,
   onOrganizationChange,
   onProjectChange,
-  urls,
   mode = Mode.Production,
   showProjNav = true,
   admin = false,
+  hosts: hostsProp,
+  urls: urlsProp,
   constructOrganizationURL: constructOrganizationURLProp,
   constructProjectURL: constructProjectURLProp,
+  onError = () => {},
+  onSuccess = () => {},
+  onLogout = () => {},
+  onPrem = { mfa: false, enabled: false, version: '' },
 }: MongoNavInterface) {
-  let data;
+  const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
-  if (mode === Mode.Dev) {
-    data = devModeData;
+  const hosts = defaultsDeep(hostsProp, hostDefaults);
+  const endpointURI = `${hosts.cloud}/user/shared`;
+
+  function getProductionData() {
+    return fetch(endpointURI, {
+      credentials: 'include',
+      method: 'GET',
+    });
   }
 
-  if (!data) {
-    // Eventually this logic will be more robust, but for an alpha version will return null without data
-    return null;
+  function getDataFixtures() {
+    return new Promise(resolve => {
+      resolve(dataFixtures);
+      onSuccess?.(dataFixtures);
+    });
   }
 
-  const {
-    account,
-    currentOrganization,
-    currentProject,
-    organizations,
-    projects,
-  } = data;
+  async function handleResponse(response: Response) {
+    if (!response.ok) {
+      const status = response.status as 401; //typecasting for now until we have more types to handle
+      onError?.(ErrorCodeMap[status]);
+      console.error(ErrorCodeMap[status]);
+    } else {
+      const data = await response.json();
+      setData(data);
+      onSuccess?.(data);
+    }
+  }
 
-  const accountHost = hosts?.account ?? `https://account.mongodb.com`;
-  const cloudHost = hosts?.cloud ?? `https://cloud.mongodb.com`;
-  const universityHost = hosts?.university ?? `https://university.mongodb.com`;
-  const supportHost = hosts?.support ?? `https://support.mongodb.com`;
+  useEffect(() => {
+    if (mode === Mode.Dev) {
+      getDataFixtures().then(data => setData(data as DataInterface));
+    } else {
+      getProductionData()
+        .then(handleResponse)
+        .catch(console.error);
+    }
+  }, [mode, endpointURI]);
 
-  const sanitizedHosts: Required<HostsInterface> = {
-    account: accountHost,
-    cloud: cloudHost,
-    university: universityHost,
-    support: supportHost,
-    charts: hosts?.charts ?? `https://charts.mongodb.com`,
-    stitch: hosts?.stitch ?? `https://stitch.mongodb.com`,
+  const defaultURLS: Required<URLSInterface> = {
+    userMenu: {
+      cloud: {
+        userPreferences: `${hosts.cloud}/v2#/preferences/personalization`,
+        organizations: `${hosts.cloud}/v2#/preferences/organizations`,
+        invitations: `${hosts.cloud}/v2#/preferences/invitations`,
+        mfa: `${hosts.cloud}/v2#/preferences/2fa`,
+      },
+      university: {
+        videoPreferences: `${hosts.university}`,
+      },
+      support: {
+        userPreferences: `${hosts.support}/profile`,
+      },
+      account: {
+        homepage: `${hosts.account}/account/profile/overview`,
+      },
+    },
+    mongoSelect: {
+      viewAllProjects: `${hosts.cloud}/v2#/org/${data?.currentProject?.orgId}/projects`,
+      viewAllOrganizations: `${hosts.cloud}/v2#/preferences/organizations`,
+      newProject: `${hosts.cloud}/v2#/org/${data?.currentProject?.orgId}/projects/create`,
+      orgSettings: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/settings/general`,
+    },
+    orgNav: {
+      settings: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/settings/general`,
+      accessManager: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/access/users`,
+      support: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/support`,
+      billing: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/billing/overview`,
+      allClusters: `${hosts.cloud}/v2#/clusters`,
+      admin: `${hosts.cloud}/v2/admin#general/overview/servers`,
+    },
+    projectNav: {
+      settings: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#settings/groupSettings`,
+      accessManager: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#access`,
+      support: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#info/support`,
+      integrations: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#integrations`,
+      alerts: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#alerts`,
+      activityFeed: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#activity`,
+    },
+    onPrem: {
+      profile: `${hosts.cloud}/v2#/account/profile`,
+      mfa: `${hosts.cloud}/v2#/preferences/2fa`,
+      personalization: `${hosts.cloud}/v2#/account/personalization`,
+      invitations: `${hosts.cloud}/v2#/preferences/invitations`,
+      organizations: `${hosts.cloud}/v2#/preferences/organizations`,
+      featureRequest: `https://feedback.mongodb.com`,
+    },
   };
 
+  const urls = defaultsDeep(urlsProp, defaultURLS);
+
   const defaultOrgURL = (orgId: string) =>
-    `${cloudHost}/v2#/org/${orgId}/projects`;
+    `${hosts.cloud}/v2#/org/${orgId}/projects`;
   const constructOrganizationURL =
     constructOrganizationURLProp ?? defaultOrgURL;
 
   const defaultProjectURL = (projectId: string) =>
-    `${cloudHost}/v2#/${projectId}`;
+    `${hosts.cloud}/v2/${projectId}#`;
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
-  const constructedUrls: Required<URLSInterface> = {
-    userMenu: {
-      cloud: {
-        userPreferences:
-          urls?.userMenu?.cloud?.userPreferences ??
-          `${cloudHost}/v2#/preferences/personalization`,
-        organizations:
-          urls?.userMenu?.cloud?.organizations ??
-          `${cloudHost}/v2#/preferences/organizations`,
-        invitations:
-          urls?.userMenu?.cloud?.invitations ??
-          `${cloudHost}/v2#/preferences/invitations`,
-        mfa: urls?.userMenu?.cloud?.mfa ?? `${cloudHost}/v2#/preferences/2fa`,
-      },
-      university: {
-        videoPreferences:
-          urls?.userMenu?.university?.videoPreferences ?? `${universityHost}`,
-      },
-      support: {
-        userPreferences:
-          urls?.userMenu?.support?.userPreferences ?? `${supportHost}/profile`,
-      },
-      account: {
-        homepage:
-          urls?.userMenu?.account?.homepage ??
-          `${accountHost}/account/profile/overview`,
-      },
-    },
-    mongoSelect: {
-      viewAllProjects:
-        urls?.mongoSelect?.viewAllProjects ??
-        `${cloudHost}/v2#/org/${data.currentProject.orgId}/projects`,
-      viewAllOrganizations:
-        urls?.mongoSelect?.viewAllOrganizations ??
-        `${cloudHost}/v2#/preferences/organizations`,
-      newProject:
-        urls?.mongoSelect?.newProject ??
-        `${cloudHost}/v2#/org/${data.currentProject.orgId}/projects/create`,
-      orgSettings:
-        urls?.mongoSelect?.newProject ??
-        `${cloudHost}/v2#/org/${data.currentOrganization.orgId}/settings/general`,
-    },
-    orgNav: {
-      settings:
-        urls?.orgNav?.settings ??
-        `${cloudHost}/v2#/org/${data.currentOrganization.orgId}/settings/general`,
-      accessManager:
-        urls?.orgNav?.accessManager ??
-        `${cloudHost}/v2#/org/${data.currentOrganization.orgId}/access/users`,
-      support:
-        urls?.orgNav?.support ??
-        `${cloudHost}/v2#/org/${data.currentOrganization.orgId}/support`,
-      billing:
-        urls?.orgNav?.billing ??
-        `${cloudHost}/v2#/org/${data.currentOrganization.orgId}/billing/overview`,
-      allClusters: urls?.orgNav?.allClusters ?? `${cloudHost}/v2#/clusters`,
-      admin:
-        urls?.orgNav?.admin ?? `${cloudHost}/v2/admin#general/overview/servers`,
-    },
-    projectNav: {
-      settings:
-        urls?.projectNav?.settings ??
-        `${cloudHost}/v2/${data.currentProject.projectId}#settings/groupSettings`,
-      accessManager:
-        urls?.projectNav?.accessManager ??
-        `${cloudHost}/v2/${data.currentProject.projectId}#access`,
-      support:
-        urls?.projectNav?.support ??
-        `${cloudHost}/v2/${data.currentProject.projectId}#info/support`,
-      integrations:
-        urls?.projectNav?.integrations ??
-        `${cloudHost}/v2/${data.currentProject.projectId}#integrations`,
-      alerts:
-        urls?.projectNav?.alerts ??
-        `${cloudHost}/v2/${data.currentProject.projectId}#alerts`,
-      activityFeed:
-        urls?.projectNav?.activityFeed ??
-        `${cloudHost}/v2/${data.currentProject.projectId}#activity`,
-    },
-  };
-
   return (
-    <>
+    <section className={navContainerStyle}>
       <OrgNav
-        account={account}
+        account={data?.account}
         activeProduct={activeProduct}
-        current={currentOrganization}
-        data={organizations}
+        current={data?.currentOrganization}
+        data={data?.organizations}
         constructOrganizationURL={constructOrganizationURL}
-        urls={constructedUrls}
+        urls={urls}
         activeNav={activeNav}
         onOrganizationChange={onOrganizationChange}
         admin={admin}
-        hosts={sanitizedHosts}
+        hosts={hosts}
+        currentProjectName={data?.currentProject?.projectName}
+        onLogout={onLogout}
+        onPremEnabled={onPrem.enabled}
+        onPremVersion={onPrem.version}
+        onPremMFA={onPrem.mfa}
       />
-      {showProjNav && (
+      {showProjNav && !onPrem.enabled && (
         <ProjectNav
           activeProduct={activeProduct}
-          current={currentProject}
-          data={projects}
+          current={data?.currentProject}
+          data={data?.projects}
           constructProjectURL={constructProjectURL}
-          urls={constructedUrls}
-          alerts={currentProject.alertsOpen}
+          urls={urls}
+          alerts={data?.currentProject?.alertsOpen}
           onProjectChange={onProjectChange}
-          hosts={sanitizedHosts}
+          hosts={hosts}
         />
       )}
-    </>
+    </section>
   );
 }
