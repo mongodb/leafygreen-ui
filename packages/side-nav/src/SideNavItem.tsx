@@ -49,7 +49,6 @@ const defaultStyle = css`
     right: 0;
 
     border-radius: 5px;
-    // z-index: -1;
     background-color: transparent;
     transform: scale(0.9, 0.7);
     transition: all 150ms ease-in-out;
