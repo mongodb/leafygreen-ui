@@ -34,6 +34,7 @@ const defaultStyle = css`
   font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
   appearance: none;
   background: none;
+  z-index: 0;
 
   &::-moz-focus-inner {
     border: 0;
@@ -48,7 +49,6 @@ const defaultStyle = css`
     right: 0;
 
     border-radius: 5px;
-    z-index: -1;
     background-color: transparent;
     transform: scale(0.9, 0.7);
     transition: all 150ms ease-in-out;
@@ -58,7 +58,7 @@ const defaultStyle = css`
   &:focus {
     &:before {
       transform: scale(0.95, 0.85);
-      background-color: ${uiColors.gray.light3};
+      background-color: ${uiColors.gray.light2};
     }
   }
 
@@ -84,6 +84,10 @@ const activeStyle = css`
 
   &:hover {
     color: ${uiColors.green.dark3};
+
+    &:before {
+      background-color: ${uiColors.green.light3};
+    }
   }
 `;
 
@@ -104,8 +108,9 @@ const focusedStyle = css`
 `;
 
 // text content styles
-
 const textStyle = css`
+  position: relative;
+  z-index: 1;
   font-size: 14px;
   font-weight: normal;
   text-transform: capitalize;
@@ -205,7 +210,7 @@ const RootComponentTypes = {
  *  by this prop. Other additional props will be spread on the anchor element.
  */
 
-function SideNavItem(props: SideNavItemProps) {
+const SideNavItem = React.forwardRef((props: SideNavItemProps, forwardRef) => {
   const {
     active = false,
     disabled = false,
@@ -257,6 +262,7 @@ function SideNavItem(props: SideNavItemProps) {
         aria-current={active ? ariaCurrentValue : AriaCurrentValue.Unset}
         aria-disabled={disabled}
         tabIndex={disabled ? -1 : undefined}
+        ref={forwardRef}
       >
         <div
           className={cx(textStyle, {
@@ -269,7 +275,7 @@ function SideNavItem(props: SideNavItemProps) {
       </Root>
     </li>
   );
-}
+});
 
 SideNavItem.displayName = 'SideNavItem';
 
