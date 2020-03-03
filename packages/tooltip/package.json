@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tooltip",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "description": "LeafyGreen UI Kit Tooltip",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
