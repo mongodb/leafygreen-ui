@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 4.1.0
+
+### Minor Changes
+
+- 71327dd: Adds ActivityFeed, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Folder, InviteUser, and Megaphone icons
+
 ## 4.0.0
 
 ### Major Changes

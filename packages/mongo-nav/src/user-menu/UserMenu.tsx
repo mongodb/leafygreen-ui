@@ -30,6 +30,7 @@ const triggerWrapper = css`
   display: inline-block;
   position: relative;
   z-index: 0;
+  font-family: 'Akzidenz', Helvetica, Arial, sans-serif;
 `;
 
 const truncate = css`
@@ -40,6 +41,7 @@ const truncate = css`
 
 const menuStyle = css`
   width: 300px;
+  font-weight: normal;
 `;
 
 const headerStyle = css`
