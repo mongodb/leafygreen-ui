@@ -25,6 +25,7 @@ const menuItemHeight = 36;
 const menuContainerStyle = css`
   width: 280px;
   padding-top: 20px;
+  position: relative;
 `;
 
 const menuItemContainerStyle = css`
@@ -140,49 +141,50 @@ function OrgSelect({
   };
 
   return (
-    <Menu
-      trigger={
-        <OrganizationTrigger
-          placeholder={disabled ? 'All Organizations' : current?.orgName ?? ''}
-          urls={urls}
-          isActive={isActive}
-          open={open}
-          loading={loading}
-          disabled={disabled}
-        />
-      }
-      className={menuContainerStyle}
-      justify="start"
-      spacing={0}
-      setOpen={setOpen}
+    <OrganizationTrigger
+      placeholder={disabled ? 'All Organizations' : current?.orgName ?? ''}
+      urls={urls}
+      isActive={isActive}
       open={open}
+      disabled={disabled}
+      loading={loading}
+      onClick={() => setOpen(current => !current)}
     >
-      <FocusableMenuItem>
-        <Input
-          data-testid="org-filter-input"
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-          variant="organization"
-        />
-      </FocusableMenuItem>
-
-      <ul className={ulStyle}>
-        {data?.map(renderOrganizationOption) ?? (
-          <li>
-            You do not belong to any organizations. Create an organization to
-            start using MongoDB Cloud
-          </li>
-        )}
-      </ul>
-
-      <MenuSeparator />
-      <MenuItem
-        onKeyDown={onKeyDown}
-        href={urls.mongoSelect?.viewAllOrganizations}
+      <Menu
+        usePortal={false}
+        className={menuContainerStyle}
+        justify="start"
+        spacing={0}
+        setOpen={setOpen}
+        open={open}
       >
-        <strong className={viewAllStyle}>View All Organizations</strong>
-      </MenuItem>
-    </Menu>
+        <FocusableMenuItem>
+          <Input
+            data-testid="org-filter-input"
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+            variant="organization"
+          />
+        </FocusableMenuItem>
+
+        <ul className={ulStyle}>
+          {data?.map(renderOrganizationOption) ?? (
+            <li>
+              You do not belong to any organizations. Create an organization to
+              start using MongoDB Cloud
+            </li>
+          )}
+        </ul>
+
+        <MenuSeparator />
+        <MenuItem
+          onKeyDown={onKeyDown}
+          href={urls.mongoSelect?.viewAllOrganizations}
+        >
+          <strong className={viewAllStyle}>View All Organizations</strong>
+        </MenuItem>
+      </Menu>
+    </OrganizationTrigger>
   );
 }
 
@@ -218,48 +220,49 @@ function ProjectSelect({
   };
 
   return (
-    <Menu
-      trigger={
-        <ProjectTrigger
-          placeholder={current?.projectName ?? ''}
-          open={open}
-          loading={loading}
-        />
-      }
-      className={menuContainerStyle}
-      justify="start"
-      spacing={0}
+    <ProjectTrigger
+      placeholder={current?.projectName ?? ''}
       open={open}
-      setOpen={setOpen}
+      loading={loading}
+      onClick={() => setOpen(curr => !curr)}
     >
-      <FocusableMenuItem>
-        <Input
-          data-testid="project-filter-input"
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-          variant="project"
-        />
-      </FocusableMenuItem>
-
-      <ul className={ulStyle}>
-        {data?.map(datum => renderProjectOption(datum))}
-      </ul>
-
-      <MenuSeparator />
-
-      <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
+      <Menu
+        usePortal={false}
+        className={menuContainerStyle}
+        justify="start"
+        spacing={0}
+        open={open}
+        setOpen={setOpen}
+      >
         <FocusableMenuItem>
-          <Button href={urls.mongoSelect.viewAllProjects as string}>
-            View All Projects
-          </Button>
+          <Input
+            data-testid="project-filter-input"
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+            variant="project"
+          />
         </FocusableMenuItem>
-        <FocusableMenuItem>
-          <Button href={urls.mongoSelect.newProject as string}>
-            + New Project
-          </Button>
-        </FocusableMenuItem>
-      </li>
-    </Menu>
+
+        <ul className={ulStyle}>
+          {data?.map(datum => renderProjectOption(datum))}
+        </ul>
+
+        <MenuSeparator />
+
+        <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
+          <FocusableMenuItem>
+            <Button href={urls.mongoSelect.viewAllProjects as string}>
+              View All Projects
+            </Button>
+          </FocusableMenuItem>
+          <FocusableMenuItem>
+            <Button href={urls.mongoSelect.newProject as string}>
+              + New Project
+            </Button>
+          </FocusableMenuItem>
+        </li>
+      </Menu>
+    </ProjectTrigger>
   );
 }
 

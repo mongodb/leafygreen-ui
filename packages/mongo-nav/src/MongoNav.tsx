@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import OrgNav from './org-nav/index';
 import ProjectNav from './project-nav/index';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import {
   Product,
@@ -23,6 +23,8 @@ const ErrorCodeMap = {
 const navContainerStyle = css`
   background-color: ${uiColors.white};
   box-shadow: 0 3px 7px 0 rgba(67, 117, 151, 0.08);
+  z-index: 0;
+  position: relative;
 `;
 
 interface MongoNavInterface {
@@ -101,6 +103,11 @@ interface MongoNavInterface {
    * onPrem config object with three keys: enabled, version and mfa
    */
   onPrem?: OnPremInterface;
+
+  /**
+   * Applies a className to the root element
+   */
+  className?: string;
 }
 
 /**
@@ -133,6 +140,7 @@ interface MongoNavInterface {
  * @param props.onError Function that is passed an error code as a string, so that consuming application can handle fetch failures.
  * @param props.onPrem onPrem config object with three keys: enabled, version and mfa
  * @param props.onLogout Callback executed when user logs out
+ * @param props.className Applies a className to the root element
  */
 export default function MongoNav({
   activeProduct,
@@ -150,6 +158,8 @@ export default function MongoNav({
   onSuccess = () => {},
   onLogout = () => {},
   onPrem = { mfa: false, enabled: false, version: '' },
+  className,
+  ...rest
 }: MongoNavInterface) {
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
@@ -254,7 +264,7 @@ export default function MongoNav({
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
   return (
-    <section className={navContainerStyle}>
+    <section {...rest} className={cx(navContainerStyle, className)}>
       <OrgNav
         account={data?.account}
         activeProduct={activeProduct}
