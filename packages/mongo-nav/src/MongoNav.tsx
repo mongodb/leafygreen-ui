@@ -159,6 +159,7 @@ export default function MongoNav({
   onLogout = () => {},
   onPrem = { mfa: false, enabled: false, version: '' },
   className,
+  ...rest
 }: MongoNavInterface) {
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
@@ -263,7 +264,7 @@ export default function MongoNav({
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
   return (
-    <section className={cx(navContainerStyle, className)}>
+    <section {...rest} className={cx(navContainerStyle, className)}>
       <OrgNav
         account={data?.account}
         activeProduct={activeProduct}

@@ -38,6 +38,8 @@
 | `onPrem.version`           | `string`                                                                       | Describes the version of Ops Manager that an `onPrem` user is using                                                                                       | `''`                                                    |
 | `className`                | `string`                                                                       | Applies a className to the root element                                                                                                                   |
 
+_Any other properties will be spread on the root element_
+
 ### URLInterface
 
 ```js
