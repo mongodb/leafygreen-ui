@@ -1,5 +1,12 @@
 # @leafygreen-ui/icon-button
 
+## 4.1.3
+
+### Patch Changes
+
+- Updated dependencies [a2948f6]
+  - @leafygreen-ui/icon@4.2.0
+
 ## 4.1.2
 
 ### Patch Changes
