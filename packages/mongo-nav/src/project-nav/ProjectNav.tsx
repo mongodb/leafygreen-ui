@@ -206,7 +206,7 @@ interface ProjectNavInterface {
   alerts?: number;
   activeProduct: Product;
   onProjectChange: React.ChangeEventHandler;
-  onElementClick?: (type: OnElementClick, event: React.MouseEvent) => void;
+  onElementClick: (type: OnElementClick, event: React.MouseEvent) => void;
 }
 
 export default function ProjectNav({

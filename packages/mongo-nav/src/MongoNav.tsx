@@ -148,7 +148,7 @@ interface MongoNavInterface {
  * @param props.onError Function that is passed an error code as a string, so that consuming application can handle fetch failures.
  * @param props.onPrem onPrem config object with three keys: enabled, version and mfa
  * @param props.className Applies a className to the root element
- * @param props.onElementClick Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second. This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally. 
+ * @param props.onElementClick Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second. This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally.
  */
 export default function MongoNav({
   activeProduct,

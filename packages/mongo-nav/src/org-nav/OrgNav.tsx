@@ -19,6 +19,7 @@ import {
   CurrentOrganizationInterface,
   HostsInterface,
   OrgPaymentLabel,
+  OnElementClick,
 } from '../types';
 import { OrgSelect } from '../mongo-select/index';
 import UserMenu from '../user-menu/index';
@@ -129,7 +130,6 @@ interface OrgNav {
   admin: boolean;
   hosts: Required<HostsInterface>;
   currentProjectName?: string;
-  onLogout: React.MouseEventHandler;
   onPremEnabled?: boolean;
   onPremVersion?: string;
   onPremMFA?: boolean;
@@ -204,9 +204,7 @@ export default function OrgNav({
 
   const renderedUserMenu = onPremEnabled ? (
     <OnPremUserMenu
-      // onLogout={onLogout}
       onElementClick={onElementClick}
-      onClick
       name={account?.firstName ?? ''}
       open={onPremMenuOpen}
       setOpen={setOnPremMenuOpen}
@@ -220,8 +218,6 @@ export default function OrgNav({
       urls={urls}
       hosts={hosts}
       onElementClick={onElementClick}
-
-      // onLogout={onLogout}
     />
   );
 

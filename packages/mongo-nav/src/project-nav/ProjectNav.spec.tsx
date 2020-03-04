@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import {
   dataFixtures,
@@ -65,9 +65,11 @@ describe('packages/mongo-nav/src/project-nav', () => {
   };
 
   let onProjectChange: jest.Mock;
+  let onElementClick: jest.Mock;
 
   beforeEach(() => {
     onProjectChange = jest.fn();
+    onElementClick = jest.fn();
   });
 
   afterEach(() => {
@@ -85,6 +87,7 @@ describe('packages/mongo-nav/src/project-nav', () => {
           activeProduct="cloud"
           hosts={hostDefaults}
           onProjectChange={onProjectChange}
+          onElementClick={onElementClick}
           {...props}
         />,
       ),
@@ -123,6 +126,21 @@ describe('packages/mongo-nav/src/project-nav', () => {
     });
   };
 
+  const testForCallback = (product: Products, isClicked: boolean) => {
+    it(`${
+      isClicked ? 'calls' : 'does not call'
+    } the onElementClick callback`, () => {
+      const foundProduct = expectedElements[product]?.firstChild;
+
+      if (isClicked) {
+        fireEvent.click(foundProduct as Element);
+        expect(onElementClick).toHaveBeenCalled();
+      } else {
+        expect(onElementClick).not.toHaveBeenCalled();
+      }
+    });
+  };
+
   const testForAlerts = (alerts: number, isVisible: boolean) => {
     it(`${
       isVisible ? 'displays' : 'does not display'
@@ -144,6 +162,10 @@ describe('packages/mongo-nav/src/project-nav', () => {
 
     Object.values(Products).forEach(product =>
       testForVisibleProducts(product, product !== 'cloudManager'),
+    );
+
+    Object.values(Products).forEach(product =>
+      testForCallback(product, product !== 'cloudManager'),
     );
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
