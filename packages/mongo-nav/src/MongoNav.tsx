@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import OrgNav from './org-nav/index';
 import ProjectNav from './project-nav/index';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -12,6 +13,7 @@ import {
   DataInterface,
   ErrorCode,
   OnPremInterface,
+  PostBodyInterface,
 } from './types';
 import { dataFixtures, hostDefaults } from './data';
 import defaultsDeep from 'lodash/defaultsDeep';
@@ -105,6 +107,18 @@ interface MongoNavInterface {
   onPrem?: OnPremInterface;
 
   /**
+   * ID for active organization, will cause a POST request to cloud to update
+   * current active organization.
+   */
+  activeOrgId?: string;
+
+  /**
+   * ID for active project, will cause a POST request to cloud to update
+   * current active project.
+   */
+  activeProjectId?: string;
+
+  /**
    * Applies a className to the root element
    */
   className?: string;
@@ -140,9 +154,11 @@ interface MongoNavInterface {
  * @param props.onError Function that is passed an error code as a string, so that consuming application can handle fetch failures.
  * @param props.onPrem onPrem config object with three keys: enabled, version and mfa
  * @param props.onLogout Callback executed when user logs out
+ * @param props.activeOrgId ID for active organization, will cause a POST request to cloud to update current active organization.
+ * @param props.activeProjectId ID for active project, will cause a POST request to cloud to update current active project.
  * @param props.className Applies a className to the root element
  */
-export default function MongoNav({
+function MongoNav({
   activeProduct,
   activeNav,
   onOrganizationChange,
@@ -158,6 +174,8 @@ export default function MongoNav({
   onSuccess = () => {},
   onLogout = () => {},
   onPrem = { mfa: false, enabled: false, version: '' },
+  activeOrgId,
+  activeProjectId,
   className,
   ...rest
 }: MongoNavInterface) {
@@ -166,11 +184,24 @@ export default function MongoNav({
   const hosts = defaultsDeep(hostsProp, hostDefaults);
   const endpointURI = `${hosts.cloud}/user/shared`;
 
-  function getProductionData() {
-    return fetch(endpointURI, {
+  function fetchProductionData(body?: PostBodyInterface) {
+    const configObject: RequestInit = {
       credentials: 'include',
+      mode: 'cors',
       method: 'GET',
-    });
+    };
+
+    if (body) {
+      Object.assign(configObject, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+    }
+
+    return fetch(endpointURI, configObject);
   }
 
   function getDataFixtures() {
@@ -196,11 +227,16 @@ export default function MongoNav({
     if (mode === Mode.Dev) {
       getDataFixtures().then(data => setData(data as DataInterface));
     } else {
-      getProductionData()
+      const body =
+        activeProjectId || activeOrgId
+          ? { activeProjectId, activeOrgId }
+          : undefined;
+
+      fetchProductionData(body)
         .then(handleResponse)
         .catch(console.error);
     }
-  }, [mode, endpointURI]);
+  }, [mode, endpointURI, activeOrgId, activeProjectId]);
 
   const defaultURLS: Required<URLSInterface> = {
     userMenu: {
@@ -297,3 +333,31 @@ export default function MongoNav({
     </section>
   );
 }
+
+MongoNav.displayName = 'MongoNav';
+
+MongoNav.propTypes = {
+  activeProduct: PropTypes.oneOf(Object.values(Product)),
+  activeNav: PropTypes.oneOf(Object.values(NavItem)),
+  hosts: PropTypes.objectOf(PropTypes.string),
+  onOrganizationChange: PropTypes.func,
+  onProjectChange: PropTypes.func,
+  urls: PropTypes.objectOf(PropTypes.object),
+  showProjectNav: PropTypes.bool,
+  admin: PropTypes.bool,
+  constructOrganizationURL: PropTypes.func,
+  constructProjectURL: PropTypes.func,
+  mode: PropTypes.oneOf(Object.values(Mode)),
+  onSuccess: PropTypes.func,
+  onError: PropTypes.func,
+  onPrem: PropTypes.shape({
+    mfa: PropTypes.bool,
+    enabled: PropTypes.bool,
+    version: PropTypes.string,
+  }),
+  onLogout: PropTypes.func,
+  activeOrgId: PropTypes.string,
+  activeProjectId: PropTypes.string,
+};
+
+export default MongoNav;
