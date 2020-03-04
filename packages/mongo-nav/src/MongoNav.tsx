@@ -112,7 +112,6 @@ interface MongoNavInterface {
 
   /**
    * Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second
-   * `type` can be ['logout', 'cloud', 'realm', 'charts']
    * This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally
    */
   onElementClick?: (type: OnElementClick, event: React.MouseEvent) => void;
