@@ -17,14 +17,14 @@ describe('packages/UserMenu', () => {
     lastName: 'Green',
     email: 'leafy@mongodb.com',
   };
-  const onLogout = jest.fn();
+  const onElementClick = jest.fn();
   const onProductChange = jest.fn();
 
   const renderedComponent = render(
     <UserMenu
       account={account}
       activeProduct={'cloud'}
-      onLogout={onLogout}
+      onElementClick={onElementClick}
       onProductChange={onProductChange}
       urls={urlDefaults}
       hosts={hostDefaults}
@@ -104,7 +104,7 @@ describe('packages/UserMenu', () => {
 
     fireEvent.click(logout);
 
-    expect(onLogout).toHaveBeenCalledTimes(1);
+    expect(onElementClick).toHaveBeenCalledTimes(1);
   });
 
   describe('renders appropriate links to SubMenu Items based on overrides prop', () => {

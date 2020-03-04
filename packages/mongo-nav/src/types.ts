@@ -1,3 +1,14 @@
+const OnElementClick = {
+  Logout: 'logout',
+  Cloud: 'cloud',
+  Realm: 'realm',
+  Charts: 'charts',
+} as const;
+
+type OnElementClick = typeof OnElementClick[keyof typeof OnElementClick];
+
+export { OnElementClick };
+
 const Product = {
   Account: 'account',
   Charts: 'charts',

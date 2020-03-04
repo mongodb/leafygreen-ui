@@ -12,6 +12,7 @@ import {
   DataInterface,
   ErrorCode,
   OnPremInterface,
+  OnElementClick,
 } from './types';
 import { dataFixtures, hostDefaults } from './data';
 import defaultsDeep from 'lodash/defaultsDeep';
@@ -108,6 +109,13 @@ interface MongoNavInterface {
    * Applies a className to the root element
    */
   className?: string;
+
+  /**
+   * Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second
+   * `type` can be ['logout', 'cloud', 'realm', 'charts']
+   * This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally
+   */
+  onElementClick?: (type: OnElementClick, event: React.MouseEvent) => void;
 }
 
 /**
@@ -139,8 +147,8 @@ interface MongoNavInterface {
  * @param props.onSuccess Callback that receives the response of the fetched data, having been converted from JSON into an object.
  * @param props.onError Function that is passed an error code as a string, so that consuming application can handle fetch failures.
  * @param props.onPrem onPrem config object with three keys: enabled, version and mfa
- * @param props.onLogout Callback executed when user logs out
  * @param props.className Applies a className to the root element
+ * @param props.onElementClick Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second. This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally. 
  */
 export default function MongoNav({
   activeProduct,
@@ -156,7 +164,7 @@ export default function MongoNav({
   constructProjectURL: constructProjectURLProp,
   onError = () => {},
   onSuccess = () => {},
-  onLogout = () => {},
+  onElementClick = () => {},
   onPrem = { mfa: false, enabled: false, version: '' },
   className,
   ...rest
@@ -277,7 +285,7 @@ export default function MongoNav({
         admin={admin}
         hosts={hosts}
         currentProjectName={data?.currentProject?.projectName}
-        onLogout={onLogout}
+        onElementClick={onElementClick}
         onPremEnabled={onPrem.enabled}
         onPremVersion={onPrem.version}
         onPremMFA={onPrem.mfa}
@@ -292,6 +300,7 @@ export default function MongoNav({
           alerts={data?.currentProject?.alertsOpen}
           onProjectChange={onProjectChange}
           hosts={hosts}
+          onElementClick={onElementClick}
         />
       )}
     </section>

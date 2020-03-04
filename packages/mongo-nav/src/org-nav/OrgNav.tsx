@@ -133,6 +133,7 @@ interface OrgNav {
   onPremEnabled?: boolean;
   onPremVersion?: string;
   onPremMFA?: boolean;
+  onElementClick?: (type: OnElementClick, event: React.MouseEvent) => void;
 }
 
 export default function OrgNav({
@@ -147,7 +148,7 @@ export default function OrgNav({
   admin,
   hosts,
   currentProjectName,
-  onLogout,
+  onElementClick,
   onPremEnabled,
   onPremVersion,
   onPremMFA = false,
@@ -203,7 +204,9 @@ export default function OrgNav({
 
   const renderedUserMenu = onPremEnabled ? (
     <OnPremUserMenu
-      onLogout={onLogout}
+      // onLogout={onLogout}
+      onElementClick={onElementClick}
+      onClick
       name={account?.firstName ?? ''}
       open={onPremMenuOpen}
       setOpen={setOnPremMenuOpen}
@@ -216,7 +219,9 @@ export default function OrgNav({
       activeProduct={activeProduct}
       urls={urls}
       hosts={hosts}
-      onLogout={onLogout}
+      onElementClick={onElementClick}
+
+      // onLogout={onLogout}
     />
   );
 

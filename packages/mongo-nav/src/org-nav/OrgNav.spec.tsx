@@ -87,7 +87,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
           urls={urlDefaults}
           admin={false}
           hosts={hostDefaults}
-          onLogout={jest.fn()}
+          onElementClick={jest.fn()}
           {...props}
         />,
       ),
@@ -157,8 +157,8 @@ describe('packages/mongo-nav/src/org-nav', () => {
     });
   };
 
-  const testForLogoutCallback = (onLogout: MouseEventHandler) => {
-    it('fires onLogout callback when OnPremUserMenu is rendered and the prop is set', () => {
+  const testForLogoutCallback = (onElementClick: MouseEventHandler) => {
+    it('fires onElementClick callback when OnPremUserMenu is rendered and the prop is set', () => {
       const onPremUserMenu = expectedElements['onPremUserMenu'];
       fireEvent.click(onPremUserMenu as Element);
       setExpectedElements();
@@ -168,7 +168,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
       setExpectedElements();
       expect(onPremUserMenuSignOut).toBeInTheDocument();
       fireEvent.click(onPremUserMenuSignOut as Element);
-      expect(onLogout).toHaveBeenCalled();
+      expect(onElementClick).toHaveBeenCalled();
     });
   };
 
@@ -238,13 +238,13 @@ describe('packages/mongo-nav/src/org-nav', () => {
   });
 
   describe('when rendered onPrem', () => {
-    const onLogout = jest.fn();
+    const onElementClick = jest.fn();
 
     beforeEach(() =>
       renderComponent({
         onPremEnabled: true,
         onPremVersion: '4.4.0',
-        onLogout: onLogout,
+        onElementClick: onElementClick,
       }),
     );
 
@@ -252,7 +252,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
     testForVersion(true);
     testForUserMenu(false);
     testForMFA(false);
-    testForLogoutCallback(onLogout);
+    testForLogoutCallback(onElementClick);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, ['billing', 'admin'].indexOf(linkName) === -1),

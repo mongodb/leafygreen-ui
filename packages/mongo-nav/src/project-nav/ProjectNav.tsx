@@ -17,6 +17,7 @@ import {
   Product,
   HostsInterface,
   PlanType,
+  OnElementClick,
 } from '../types';
 import { iconLoadingStyle, textLoadingStyle } from '../styles';
 
@@ -205,6 +206,7 @@ interface ProjectNavInterface {
   alerts?: number;
   activeProduct: Product;
   onProjectChange: React.ChangeEventHandler;
+  onElementClick?: (type: OnElementClick, event: React.MouseEvent) => void;
 }
 
 export default function ProjectNav({
@@ -216,6 +218,7 @@ export default function ProjectNav({
   onProjectChange,
   hosts,
   alerts = 0,
+  onElementClick,
 }: ProjectNavInterface) {
   const [open, setOpen] = React.useState(false);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -308,6 +311,7 @@ export default function ProjectNav({
             className={getProductClassName('cloud')}
             aria-disabled={!current}
             tabIndex={!current ? -1 : 0}
+            onClick={event => onElementClick(OnElementClick.Cloud, event)}
           >
             {!isMobile && (
               <Icon
@@ -331,6 +335,7 @@ export default function ProjectNav({
               className={getProductClassName('realm')}
               aria-disabled={!current}
               tabIndex={!current ? -1 : 0}
+              onClick={event => onElementClick(OnElementClick.Realm, event)}
             >
               {!isMobile && (
                 <Icon
@@ -355,6 +360,7 @@ export default function ProjectNav({
               className={getProductClassName('charts')}
               aria-disabled={!current}
               tabIndex={!current ? -1 : 0}
+              onClick={event => onElementClick(OnElementClick.Charts, event)}
             >
               {!isMobile && (
                 <Icon
