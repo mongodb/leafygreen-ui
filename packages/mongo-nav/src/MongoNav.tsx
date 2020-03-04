@@ -122,6 +122,8 @@ interface MongoNavInterface {
    * Applies a className to the root element
    */
   className?: string;
+
+  loadData?: boolean;
 }
 
 /**
@@ -164,6 +166,7 @@ function MongoNav({
   onOrganizationChange,
   onProjectChange,
   mode = Mode.Production,
+  loadData = true,
   showProjNav = true,
   admin = false,
   hosts: hostsProp,
@@ -224,7 +227,9 @@ function MongoNav({
   }
 
   useEffect(() => {
-    if (mode === Mode.Dev) {
+    if (!loadData) {
+      setData(undefined);
+    } else if (mode === Mode.Dev) {
       getDataFixtures().then(data => setData(data as DataInterface));
     } else {
       const body =
@@ -236,7 +241,7 @@ function MongoNav({
         .then(handleResponse)
         .catch(console.error);
     }
-  }, [mode, endpointURI, activeOrgId, activeProjectId]);
+  }, [mode, endpointURI, activeOrgId, activeProjectId, loadData]);
 
   const defaultURLS: Required<URLSInterface> = {
     userMenu: {

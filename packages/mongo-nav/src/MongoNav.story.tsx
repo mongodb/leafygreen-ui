@@ -30,6 +30,7 @@ storiesOf('MongoNav', module).add('Default', () => (
           version: '4.4.0',
           enabled: boolean('enabled', false),
         }}
+        loadData={boolean('loadData', false)}
       />
     </div>
   </LeafygreenProvider>
