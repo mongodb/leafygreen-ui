@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/side-nav",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "leafyGreen UI Kit Side Nav",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",

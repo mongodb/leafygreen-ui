@@ -1,5 +1,12 @@
 # @leafygreen-ui/side-nav
 
+## 2.0.0
+
+### Major Changes
+
+- ed2e2f8: - Wrap SideNavItem components in `React.useRef`
+  - Update z-index rules on hover styles for SideNavItem components
+
 ## 1.1.1
 
 ### Patch Changes
