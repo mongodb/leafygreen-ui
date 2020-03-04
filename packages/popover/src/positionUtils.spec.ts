@@ -301,85 +301,219 @@ describe('positionUtils', () => {
           );
         });
       });
-    });
 
-    describe('Align.Left', () => {
-      test('Justify.Start', () => {
-        const { alignment, justify, positionCSS } = calculatePosition({
-          spacing: SPACING,
-          windowHeight: WINDOW_HEIGHT,
-          windowWidth: WINDOW_WIDTH,
-          useRelativePositioning: false,
-          align: Align.Left,
-          justify: Justify.Start,
-          referenceElPos: refElPos.top,
-          contentElPos: contentElPos,
+      describe('Align.Left', () => {
+        test('Justify.Start', () => {
+          const { alignment, justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Left,
+            justify: Justify.Start,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(alignment).toBe('left');
+          expect(justify).toBe('start');
+          expect(positionCSS.top).toBePx(0);
+          expect(positionCSS.left).toBePx(20);
+          expect(positionCSS.transformOrigin).toBe('right top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(5px, 0, 0) scale(0.8)',
+          );
+        });
+        test('Justify.Center respositions to Justify.Start based on available space', () => {
+          const { alignment, justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Left,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(alignment).toBe('left');
+          expect(justify).toBe('start');
+          expect(positionCSS.top).toBePx(0);
+          expect(positionCSS.left).toBePx(20);
+          expect(positionCSS.transformOrigin).toBe('right top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(5px, 0, 0) scale(0.8)',
+          );
         });
 
-        expect(alignment).toBe('left');
-        expect(justify).toBe('start');
-        expect(positionCSS.top).toBePx(0);
-        expect(positionCSS.left).toBePx(20);
-        expect(positionCSS.transformOrigin).toBe('right top');
-        expect(positionCSS.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
+        test('Justify.End respositions to Justify.Start based on available space', () => {
+          const { alignment, justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Left,
+            justify: Justify.End,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(alignment).toBe('left');
+          expect(justify).toBe('start');
+          expect(positionCSS.top).toBePx(0);
+          expect(positionCSS.left).toBePx(20);
+          expect(positionCSS.transformOrigin).toBe('right top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(5px, 0, 0) scale(0.8)',
+          );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Left,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          expect(positionCSS.top).toBePx(0);
+          expect(positionCSS.bottom).toBePx(90);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe(
+            'translate3d(5px, 0, 0) scale(0.8)',
+          );
+        });
       });
-      test('Justify.Center respositions to Justify.Start based on available space', () => {
-        const { alignment, justify, positionCSS } = calculatePosition({
-          spacing: SPACING,
-          windowHeight: WINDOW_HEIGHT,
-          windowWidth: WINDOW_WIDTH,
-          useRelativePositioning: false,
-          align: Align.Left,
-          justify: Justify.Middle,
-          referenceElPos: refElPos.top,
-          contentElPos: contentElPos,
+
+      describe('Align.CenterVertical', () => {
+        test('Align.CenterVertical respositions to Align.Bottom based on available space', () => {
+          const { alignment, justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Start,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(alignment).toBe('bottom');
+          expect(justify).toBe('start');
+          expect(positionCSS.top).toBePx(15);
+          expect(positionCSS.left).toBePx(45);
+          expect(positionCSS.transformOrigin).toBe('left top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, -5px, 0) scale(0.8)',
+          );
         });
 
-        expect(alignment).toBe('left');
-        expect(justify).toBe('start');
-        expect(positionCSS.top).toBePx(0);
-        expect(positionCSS.left).toBePx(20);
-        expect(positionCSS.transformOrigin).toBe('right top');
-        expect(positionCSS.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          expect(positionCSS.left).toBePx(45);
+          expect(positionCSS.right).toBePx(45);
+          expect(positionCSS.transformOrigin).toBe('center top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, -5px, 0) scale(0.8)',
+          );
+        });
       });
 
-      test('Justify.End respositions to Justify.Start based on available space', () => {
-        const { alignment, justify, positionCSS } = calculatePosition({
-          spacing: SPACING,
-          windowHeight: WINDOW_HEIGHT,
-          windowWidth: WINDOW_WIDTH,
-          useRelativePositioning: false,
-          align: Align.Left,
-          justify: Justify.End,
-          referenceElPos: refElPos.top,
-          contentElPos: contentElPos,
+      describe('Align.CenterHorizontal', () => {
+        test('Justify.Start', () => {
+          const { alignment, justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Start,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(alignment).toBe('center-horizontal');
+          expect(justify).toBe('start');
+          expect(positionCSS.top).toBePx(0);
+          expect(positionCSS.left).toBePx(40);
+          expect(positionCSS.transformOrigin).toBe('center top');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+        test('Justify.Center respositions to Justify.Start based on available space', () => {
+          const { alignment, justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(alignment).toBe('center-horizontal');
+          expect(justify).toBe('start');
+          expect(positionCSS.top).toBePx(0);
+          expect(positionCSS.left).toBePx(40);
+          expect(positionCSS.transformOrigin).toBe('center top');
+          expect(positionCSS.transform).toBe('scale(0.8)');
         });
 
-        expect(alignment).toBe('left');
-        expect(justify).toBe('start');
-        expect(positionCSS.top).toBePx(0);
-        expect(positionCSS.left).toBePx(20);
-        expect(positionCSS.transformOrigin).toBe('right top');
-        expect(positionCSS.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
-      });
+        test('Justify.End respositions to Justify.Start based on available space', () => {
+          const { alignment, justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.End,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
 
-      test('Justify.Fit works', () => {
-        const { justify, positionCSS } = calculatePosition({
-          spacing: SPACING,
-          windowHeight: WINDOW_HEIGHT,
-          windowWidth: WINDOW_WIDTH,
-          useRelativePositioning: false,
-          align: Align.Left,
-          justify: Justify.Fit,
-          referenceElPos: refElPos.top,
-          contentElPos: contentElPos,
+          expect(alignment).toBe('center-horizontal');
+          expect(justify).toBe('start');
+          expect(positionCSS.top).toBePx(0);
+          expect(positionCSS.left).toBePx(40);
+          expect(positionCSS.transformOrigin).toBe('center top');
+          expect(positionCSS.transform).toBe('scale(0.8)');
         });
 
-        expect(justify).toBe('fit');
-        expect(positionCSS.top).toBePx(0);
-        expect(positionCSS.bottom).toBePx(90);
-        expect(positionCSS.transformOrigin).toBe('right center');
-        expect(positionCSS.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          expect(positionCSS.top).toBePx(0);
+          expect(positionCSS.left).toBePx(40);
+          expect(positionCSS.bottom).toBePx(90);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
       });
     });
 
@@ -641,6 +775,100 @@ describe('positionUtils', () => {
           expect(positionCSS.top).toBePx(45);
           expect(positionCSS.bottom).toBePx(45);
           expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe(
+            'translate3d(5px, 0, 0) scale(0.8)',
+          );
+        });
+      });
+      describe('Align.CenterVertical', () => {
+        test('Justify.Start repositions to Justify.End based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Start,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(40);
+          expect(positionCSS.left).toBePx(80);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Middle repositions to Justify.Start based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(40);
+          expect(positionCSS.left).toBePx(80);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+        test('Justify.End works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.End,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(40);
+          expect(positionCSS.left).toBePx(80);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          expect(positionCSS.left).toBePx(90);
+          expect(positionCSS.right).toBePx(0);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+      });
+      describe('Align.CenterHorizontal', () => {
+        test('Align.CenterHorizontal respositions to Align.Left based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Start,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(45);
+          expect(positionCSS.left).toBePx(65);
+          expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
           );
@@ -917,6 +1145,103 @@ describe('positionUtils', () => {
           );
         });
       });
+
+      describe('Align.CenterVertical', () => {
+        test('Align.CenterVertical repositions to Align.Start based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Start,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(65);
+          expect(positionCSS.left).toBePx(45);
+          expect(positionCSS.transformOrigin).toBe('left bottom');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, 5px, 0) scale(0.8)',
+          );
+        });
+      });
+
+      describe('Align.CenterHorizontal', () => {
+        test('Justify.Start repositions to Justify.End based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Start,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(80);
+          expect(positionCSS.left).toBePx(40);
+          expect(positionCSS.transformOrigin).toBe('center bottom');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Middle repositions to Justify.End based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(80);
+          expect(positionCSS.left).toBePx(40);
+          expect(positionCSS.transformOrigin).toBe('center bottom');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.End works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.End,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(80);
+          expect(positionCSS.left).toBePx(40);
+          expect(positionCSS.transformOrigin).toBe('center bottom');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          expect(positionCSS.top).toBePx(90);
+          expect(positionCSS.bottom).toBePx(0);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+      });
     });
 
     describe('when reference element is on the left', () => {
@@ -1170,6 +1495,100 @@ describe('positionUtils', () => {
             windowWidth: WINDOW_WIDTH,
             useRelativePositioning: false,
             align: Align.Left,
+            justify: Justify.Start,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(45);
+          expect(positionCSS.left).toBePx(15);
+          expect(positionCSS.transformOrigin).toBe('left top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(-5px, 0, 0) scale(0.8)',
+          );
+        });
+      });
+
+      describe('Align.CenterVertical', () => {
+        test('Justify.Start works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Start,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(40);
+          expect(positionCSS.left).toBePx(0);
+          expect(positionCSS.transformOrigin).toBe('left center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+        test('Justify.Middle repositions to Justify.Start based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(40);
+          expect(positionCSS.left).toBePx(0);
+          expect(positionCSS.transformOrigin).toBe('left center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+        test('Justify.End repositions to Justify.Start based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.End,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(40);
+          expect(positionCSS.left).toBePx(0);
+          expect(positionCSS.transformOrigin).toBe('left center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          expect(positionCSS.left).toBePx(0);
+          expect(positionCSS.right).toBePx(90);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+      });
+
+      describe('Align.CenterHorizontal', () => {
+        test('Align.CenterHorizontal repositions to Align.Right based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
             justify: Justify.Start,
             referenceElPos: refElPos.left,
             contentElPos: contentElPos,
@@ -1495,25 +1914,177 @@ describe('positionUtils', () => {
             'translate3d(5px, 0, 0) scale(0.8)',
           );
         });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Left,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          expect(positionCSS.top).toBePx(45);
+          expect(positionCSS.bottom).toBePx(45);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe(
+            'translate3d(5px, 0, 0) scale(0.8)',
+          );
+        });
       });
 
-      test('Justify.Fit works', () => {
-        const { justify, positionCSS } = calculatePosition({
-          spacing: SPACING,
-          windowHeight: WINDOW_HEIGHT,
-          windowWidth: WINDOW_WIDTH,
-          useRelativePositioning: false,
-          align: Align.Left,
-          justify: Justify.Fit,
-          referenceElPos: refElPos.center,
-          contentElPos: contentElPos,
+      describe('Align.CenterVertical', () => {
+        test('Justify.Start works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Start,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(40);
+          expect(positionCSS.left).toBePx(45);
+          expect(positionCSS.transformOrigin).toBe('left center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
         });
 
-        expect(justify).toBe('fit');
-        expect(positionCSS.top).toBePx(45);
-        expect(positionCSS.bottom).toBePx(45);
-        expect(positionCSS.transformOrigin).toBe('right center');
-        expect(positionCSS.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
+        test('Justify.Middle works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(40);
+          expect(positionCSS.left).toBePx(40);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.End works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.End,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(40);
+          expect(positionCSS.left).toBePx(35);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          expect(positionCSS.left).toBePx(45);
+          expect(positionCSS.right).toBePx(45);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+      });
+
+      describe('Align.CenterHorizontal', () => {
+        test('Justify.Start works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Start,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(45);
+          expect(positionCSS.left).toBePx(40);
+          expect(positionCSS.transformOrigin).toBe('center top');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Middle works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(40);
+          expect(positionCSS.left).toBePx(40);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.End works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.End,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(35);
+          expect(positionCSS.left).toBePx(40);
+          expect(positionCSS.transformOrigin).toBe('center bottom');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          expect(positionCSS.top).toBePx(45);
+          expect(positionCSS.bottom).toBePx(45);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
       });
     });
 
@@ -1847,6 +2418,156 @@ describe('positionUtils', () => {
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
           );
+        });
+      });
+
+      describe('Align.CenterVertical', () => {
+        test('Justify.Start works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.CenterVertical,
+            justify: Justify.Start,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBe('calc(5px - 50%)');
+          expect(positionCSS.left).toBePx(0);
+          expect(positionCSS.transformOrigin).toBe('left center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Middle works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.CenterVertical,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBe('calc(5px - 50%)');
+          expect(positionCSS.left).toBe('-5px');
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.End works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.CenterVertical,
+            justify: Justify.End,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBe('calc(5px - 50%)');
+          expect(positionCSS.right).toBePx(0);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.CenterVertical,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          expect(positionCSS.left).toBePx(0);
+          expect(positionCSS.right).toBePx(0);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+      });
+
+      describe('Align.CenterHorizontal', () => {
+        test('Justify.Start works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.CenterHorizontal,
+            justify: Justify.Start,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBePx(0);
+          expect(positionCSS.left).toBe('calc(5px - 50%)');
+          expect(positionCSS.transformOrigin).toBe('center top');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Middle works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.CenterHorizontal,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBe('-5px');
+          expect(positionCSS.left).toBe('calc(5px - 50%)');
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.End works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.CenterHorizontal,
+            justify: Justify.End,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.bottom).toBePx(0);
+          expect(positionCSS.left).toBe('calc(5px - 50%)');
+          expect(positionCSS.transformOrigin).toBe('center bottom');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.CenterHorizontal,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          expect(positionCSS.top).toBePx(0);
+          expect(positionCSS.bottom).toBePx(0);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
         });
       });
     });

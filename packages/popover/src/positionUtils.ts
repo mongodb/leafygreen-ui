@@ -368,10 +368,6 @@ function calcTop({
       }
 
     case Align.CenterVertical:
-      if (justify === Justify.Fit) {
-        return referenceElPos.top;
-      }
-
       return (
         referenceElPos.top - (contentElPos.height - referenceElPos.height) / 2
       );
@@ -423,10 +419,6 @@ function calcLeft({
 
     case Align.CenterHorizontal:
     default:
-      if (justify === Justify.Fit) {
-        return referenceElPos.left;
-      }
-
       return (
         referenceElPos.left - (contentElPos.width - referenceElPos.width) / 2
       );
