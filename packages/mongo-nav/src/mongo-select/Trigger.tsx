@@ -128,6 +128,7 @@ const orgTriggerBorderRadius = css`
 const projectTriggerWrapper = css`
   margin-left: 16px;
   margin-right: 2px;
+  z-index: 1;
 
   ${facepaint({
     marginLeft: ['16px', '0px', '16px'],
@@ -158,6 +159,7 @@ interface OrganizationTriggerProps {
   isActive?: boolean;
   open?: boolean;
   disabled?: boolean;
+  onClick?: React.MouseEventHandler;
   loading?: boolean;
 }
 
@@ -168,6 +170,7 @@ export function OrganizationTrigger({
   isActive = false,
   open = false,
   disabled = false,
+  onClick = () => {},
   loading = false,
   ...rest
 }: OrganizationTriggerProps) {
@@ -185,6 +188,7 @@ export function OrganizationTrigger({
         <button
           {...rest}
           {...triggerDataProp.prop}
+          onClick={onClick}
           aria-disabled={disabled || loading}
           data-testid="org-trigger"
           disabled={disabled || loading}
@@ -253,6 +257,7 @@ interface ProjectTriggerProps {
   children?: React.ReactNode;
   placeholder: string;
   open?: boolean;
+  onClick: React.MouseEventHandler;
   disabled?: boolean;
   loading?: boolean;
 }
@@ -261,6 +266,7 @@ export function ProjectTrigger({
   children,
   placeholder,
   open = false,
+  onClick,
   loading = false,
   ...rest
 }: ProjectTriggerProps) {
@@ -275,6 +281,7 @@ export function ProjectTrigger({
       <button
         {...rest}
         {...projectTriggerDataProp.prop}
+        onClick={onClick}
         data-testid="project-select-trigger"
         className={cx(baseButtonStyles, projectButtonStyles, {
           [activeButtonColor]: open,
@@ -284,7 +291,7 @@ export function ProjectTrigger({
         aria-disabled={loading}
       >
         <Icon
-          glyph="Bell"
+          glyph="Folder"
           className={cx(
             css`
               color: ${uiColors.gray.base};

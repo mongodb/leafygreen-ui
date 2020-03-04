@@ -1,5 +1,11 @@
 # @leafygreen-ui/tooltip
 
+## 3.1.0
+
+### Minor Changes
+
+- ab1a1c1: Expose usePortal prop
+
 ## 3.0.2
 
 ### Patch Changes

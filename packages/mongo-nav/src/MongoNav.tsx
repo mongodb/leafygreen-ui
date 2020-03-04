@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import OrgNav from './org-nav/index';
 import ProjectNav from './project-nav/index';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import {
   Product,
@@ -25,6 +25,8 @@ const ErrorCodeMap = {
 const navContainerStyle = css`
   background-color: ${uiColors.white};
   box-shadow: 0 3px 7px 0 rgba(67, 117, 151, 0.08);
+  z-index: 0;
+  position: relative;
 `;
 
 interface MongoNavInterface {
@@ -115,6 +117,11 @@ interface MongoNavInterface {
    * current active project.
    */
   activeProjectId?: string;
+
+  /**
+   * Applies a className to the root element
+   */
+  className?: string;
 }
 
 /**
@@ -149,6 +156,7 @@ interface MongoNavInterface {
  * @param props.onLogout Callback executed when user logs out
  * @param props.activeOrgId ID for active organization, will cause a POST request to cloud to update current active organization.
  * @param props.activeProjectId ID for active project, will cause a POST request to cloud to update current active project.
+ * @param props.className Applies a className to the root element
  */
 function MongoNav({
   activeProduct,
@@ -168,6 +176,8 @@ function MongoNav({
   onPrem = { mfa: false, enabled: false, version: '' },
   activeOrgId,
   activeProjectId,
+  className,
+  ...rest
 }: MongoNavInterface) {
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
 
@@ -290,7 +300,7 @@ function MongoNav({
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
   return (
-    <section className={navContainerStyle}>
+    <section {...rest} className={cx(navContainerStyle, className)}>
       <OrgNav
         account={data?.account}
         activeProduct={activeProduct}

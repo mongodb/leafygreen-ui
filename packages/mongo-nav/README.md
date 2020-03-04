@@ -38,6 +38,9 @@
 | `onPrem.version`           | `string`                                                                       | Describes the version of Ops Manager that an `onPrem` user is using                                                                                       | `''`                                                    |
 | `activeOrgId`              | `string`                                                                       | ID for active organization, will cause a POST request to cloud to update current active organization.                                                     |                                                         |
 | `activeProjectId`          | `string`                                                                       | ID for active project, will cause a POST request to cloud to update current active project.                                                               |
+| `className`                | `string`                                                                       | Applies a className to the root element                                                                                                                   |
+
+_Any other properties will be spread on the root element_
 
 ### URLInterface
 

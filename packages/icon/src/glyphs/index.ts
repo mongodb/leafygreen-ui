@@ -1,3 +1,8 @@
+import ActivityFeed from './ActivityFeed.svg';
+import ArrowDown from './ArrowDown.svg';
+import ArrowLeft from './ArrowLeft.svg';
+import ArrowRight from './ArrowRight.svg';
+import ArrowUp from './ArrowUp.svg';
 import Copy from './Copy.svg';
 import Bell from './Bell.svg';
 import Building from './Building.svg';
@@ -16,10 +21,13 @@ import Cloud from './Cloud.svg';
 import CreditCard from './CreditCard.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
+import Folder from './Folder.svg';
 import InfoWithCircle from './InfoWithCircle.svg';
+import InviteUser from './InviteUser.svg';
 import Laptop from './Laptop.svg';
 import Lock from './Lock.svg';
 import MagnifyingGlass from './MagnifyingGlass.svg';
+import Megaphone from './Megaphone.svg';
 import Menu from './Menu.svg';
 import NotAllowed from './NotAllowed.svg';
 import Person from './Person.svg';
@@ -33,11 +41,17 @@ import Settings from './Settings.svg';
 import Stitch from './Stitch.svg';
 import Support from './Support.svg';
 import Trash from './Trash.svg';
+import University from './University.svg';
 import Warning from './Warning.svg';
 import X from './X.svg';
 import XWithCircle from './XWithCircle.svg';
 
 export default {
+  ActivityFeed,
+  ArrowDown,
+  ArrowLeft,
+  ArrowRight,
+  ArrowUp,
   Copy,
   Bell,
   Building,
@@ -56,10 +70,13 @@ export default {
   CreditCard,
   Edit,
   Ellipsis,
+  Folder,
   InfoWithCircle,
+  InviteUser,
   Laptop,
   Lock,
   MagnifyingGlass,
+  Megaphone,
   Menu,
   NotAllowed,
   Person,
@@ -73,7 +90,8 @@ export default {
   Stitch,
   Support,
   Trash,
+  University,
   Warning,
   X,
   XWithCircle,
-} as { readonly [K: string]: SVGR.Component };
+} as const;
