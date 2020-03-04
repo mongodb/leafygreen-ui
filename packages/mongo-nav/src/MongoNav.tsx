@@ -122,6 +122,11 @@ interface MongoNavInterface {
    * Applies a className to the root element
    */
   className?: string;
+
+  /**
+   * Determines whether or not the component will fetch data from cloud
+   */
+  loadData?: boolean;
 }
 
 /**
@@ -157,6 +162,7 @@ interface MongoNavInterface {
  * @param props.activeOrgId ID for active organization, will cause a POST request to cloud to update current active organization.
  * @param props.activeProjectId ID for active project, will cause a POST request to cloud to update current active project.
  * @param props.className Applies a className to the root element
+ * @param props.loadData Determines whether or not the component will fetch data from cloud
  */
 function MongoNav({
   activeProduct,
@@ -164,6 +170,7 @@ function MongoNav({
   onOrganizationChange,
   onProjectChange,
   mode = Mode.Production,
+  loadData = true,
   showProjNav = true,
   admin = false,
   hosts: hostsProp,
@@ -224,7 +231,9 @@ function MongoNav({
   }
 
   useEffect(() => {
-    if (mode === Mode.Dev) {
+    if (!loadData) {
+      setData(undefined);
+    } else if (mode === Mode.Dev) {
       getDataFixtures().then(data => setData(data as DataInterface));
     } else {
       const body =
@@ -236,7 +245,7 @@ function MongoNav({
         .then(handleResponse)
         .catch(console.error);
     }
-  }, [mode, endpointURI, activeOrgId, activeProjectId]);
+  }, [mode, endpointURI, activeOrgId, activeProjectId, loadData]);
 
   const defaultURLS: Required<URLSInterface> = {
     userMenu: {
