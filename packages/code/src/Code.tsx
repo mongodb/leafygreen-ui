@@ -236,30 +236,26 @@ function Code({
   const scrollableSingleLine = useRef<HTMLDivElement>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [copied, setCopied] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   useLayoutEffect(() => {
-    if (!isLoaded) {
-      setIsLoaded(true);
-      if (multiline) {
-        if (
-          scrollableMultiLine.current !== null &&
-          scrollableMultiLine.current.scrollWidth >
-            scrollableMultiLine.current.clientWidth
-        ) {
-          setScrollState(ScrollState.Right);
-        }
-      } else {
-        if (
-          scrollableSingleLine.current !== null &&
-          scrollableSingleLine.current.scrollWidth >
-            scrollableSingleLine.current.clientWidth
-        ) {
-          setScrollState(ScrollState.Right);
-        }
+    if (multiline) {
+      if (
+        scrollableMultiLine.current !== null &&
+        scrollableMultiLine.current.scrollWidth >
+          scrollableMultiLine.current.clientWidth
+      ) {
+        setScrollState(ScrollState.Right);
+      }
+    } else {
+      if (
+        scrollableSingleLine.current !== null &&
+        scrollableSingleLine.current.scrollWidth >
+          scrollableSingleLine.current.clientWidth
+      ) {
+        setScrollState(ScrollState.Right);
       }
     }
-  });
+  }, []);
 
   const wrapperStyle = css`
     display: block;
