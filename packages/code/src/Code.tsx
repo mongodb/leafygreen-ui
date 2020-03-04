@@ -12,7 +12,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import LineNumbers from './LineNumbers';
 import WindowChrome from './WindowChrome';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { uiColors } from '@leafygreen-ui/palette/src';
+import { uiColors } from '@leafygreen-ui/palette';
 
 function stringFragmentIsBlank(str: string): str is '' | ' ' {
   return str === '' || str === ' ';
@@ -75,10 +75,11 @@ const codeWrapperStyleWithWindowChrome = css`
 `;
 
 const copyStyle = css`
-  min-width: 38px;
+  width: 38px;
   border-left: solid 1px;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   padding-top: 6px;
 `;
 
@@ -96,12 +97,12 @@ function getSidebarVariantStyle(variant: Variant): string {
   const colors = variantColors[variant];
 
   switch (variant) {
-    case 'light':
+    case Variant.Light:
       return css`
         border-color: ${colors[1]};
         background-color: white;
       `;
-    case 'dark':
+    case Variant.Dark:
       return css`
         border-color: ${colors[1]};
         background-color: ${colors[1]};
@@ -239,18 +240,20 @@ function Code({
 
   useLayoutEffect(() => {
     if (multiline) {
+      const multilineEl = scrollableMultiLine.current;
+
       if (
-        scrollableMultiLine.current !== null &&
-        scrollableMultiLine.current.scrollWidth >
-          scrollableMultiLine.current.clientWidth
+        multilineEl != null &&
+        multilineEl.scrollWidth > multilineEl.clientWidth
       ) {
         setScrollState(ScrollState.Right);
       }
     } else {
+      const singlelineEl = scrollableSingleLine.current;
+
       if (
-        scrollableSingleLine.current !== null &&
-        scrollableSingleLine.current.scrollWidth >
-          scrollableSingleLine.current.clientWidth
+        singlelineEl != null &&
+        singlelineEl.scrollWidth > singlelineEl.clientWidth
       ) {
         setScrollState(ScrollState.Right);
       }
@@ -288,8 +291,7 @@ function Code({
   );
 
   function handleScroll(e: React.UIEvent) {
-    const scrollWidth = e.currentTarget.scrollWidth;
-    const elementWidth = e.currentTarget.clientWidth;
+    const { scrollWidth, clientWidth: elementWidth } = e.currentTarget;
     const isScrollable = scrollWidth > elementWidth;
 
     if (isScrollable) {
@@ -334,7 +336,7 @@ function Code({
               >
                 <IconButton
                   variant={variant}
-                  ariaLabel={'Copy'}
+                  ariaLabel="Copy"
                   className={getCopyButtonStyle(variant, copied)}
                 >
                   <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
@@ -378,7 +380,7 @@ function Code({
             >
               <IconButton
                 variant={variant}
-                ariaLabel={'Copy'}
+                ariaLabel="Copy"
                 className={getCopyButtonStyle(variant, copied)}
               >
                 <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
