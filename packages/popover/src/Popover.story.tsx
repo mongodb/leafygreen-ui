@@ -20,6 +20,7 @@ const popoverStyle = css`
   padding: 20px;
   background-color: ${colors.mongodb.white};
   max-height: 100%;
+  overflow: hidden;
 `;
 
 const referenceElPositions = {

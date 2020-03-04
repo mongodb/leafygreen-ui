@@ -368,6 +368,10 @@ function calcTop({
       }
 
     case Align.CenterVertical:
+      if (justify === Justify.Fit) {
+        return referenceElPos.top;
+      }
+
       return (
         referenceElPos.top - (contentElPos.height - referenceElPos.height) / 2
       );
@@ -419,6 +423,10 @@ function calcLeft({
 
     case Align.CenterHorizontal:
     default:
+      if (justify === Justify.Fit) {
+        return referenceElPos.left;
+      }
+
       return (
         referenceElPos.left - (contentElPos.width - referenceElPos.width) / 2
       );
@@ -558,7 +566,10 @@ function getWindowSafeJustify(
       return (
         justifyOptions.find(fallback =>
           safelyWithinHorizontalWindow({
-            contentWidth: contentElPos.width,
+            contentWidth:
+              fallback === Justify.Fit
+                ? referenceElPos.width
+                : contentElPos.width,
             windowWidth,
             left: calcLeft({
               contentElPos,
@@ -577,7 +588,10 @@ function getWindowSafeJustify(
       return (
         justifyOptions.find(fallback =>
           safelyWithinVerticalWindow({
-            contentHeight: contentElPos.height,
+            contentHeight:
+              fallback === Justify.Fit
+                ? referenceElPos.height
+                : contentElPos.height,
             windowHeight,
             top: calcTop({
               contentElPos,
