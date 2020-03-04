@@ -123,6 +123,9 @@ interface MongoNavInterface {
    */
   className?: string;
 
+  /**
+   * Determines whether or not the component will fetch data from cloud
+   */
   loadData?: boolean;
 }
 
@@ -159,6 +162,7 @@ interface MongoNavInterface {
  * @param props.activeOrgId ID for active organization, will cause a POST request to cloud to update current active organization.
  * @param props.activeProjectId ID for active project, will cause a POST request to cloud to update current active project.
  * @param props.className Applies a className to the root element
+ * @param props.loadData Determines whether or not the component will fetch data from cloud
  */
 function MongoNav({
   activeProduct,
