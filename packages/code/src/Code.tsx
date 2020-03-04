@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useLayoutEffect, useReducer } from 'react';
+import React, { useMemo, useRef, useLayoutEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Syntax, {
@@ -172,56 +172,6 @@ function getScrollShadowStyle(
   return '';
 }
 
-interface ActionType {
-  type: string;
-}
-
-interface StateType {
-  scroll: ScrollState;
-  copied: boolean;
-  isLoaded: boolean;
-}
-
-const initialState = {
-  scroll: ScrollState.None,
-  copied: false,
-  isLoaded: false,
-};
-
-function scrollReducer(state: StateType, action: ActionType) {
-  switch (action.type) {
-    case 'scrollLeft':
-      return {
-        ...state,
-        scroll: ScrollState.Left,
-      };
-    case 'scrollRight':
-      return {
-        ...state,
-        scroll: ScrollState.Right,
-      };
-    case 'scrollBoth':
-      return {
-        ...state,
-        scroll: ScrollState.Both,
-      };
-    case 'load': {
-      return {
-        ...state,
-        isLoaded: true,
-      };
-    }
-
-    case 'copy':
-      return {
-        ...state,
-        copied: true,
-      };
-    default:
-      return state;
-  }
-}
-
 interface CodeProps extends SyntaxProps {
   /**
    * Shows line numbers in preformatted code blocks.
@@ -284,18 +234,20 @@ function Code({
 }: CodeProps) {
   const scrollableMultiLine = useRef<HTMLPreElement>(null);
   const scrollableSingleLine = useRef<HTMLDivElement>(null);
-  const [state, dispatch] = useReducer(scrollReducer, initialState);
+  const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
+  const [copied, setCopied] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useLayoutEffect(() => {
-    if (!state.isLoaded) {
-      dispatch({ type: 'load' });
+    if (!isLoaded) {
+      setIsLoaded(true);
       if (multiline) {
         if (
           scrollableMultiLine.current !== null &&
           scrollableMultiLine.current.scrollWidth >
             scrollableMultiLine.current.clientWidth
         ) {
-          dispatch({ type: 'scrollRight' });
+          setScrollState(ScrollState.Right);
         }
       } else {
         if (
@@ -303,7 +255,7 @@ function Code({
           scrollableSingleLine.current.scrollWidth >
             scrollableSingleLine.current.clientWidth
         ) {
-          dispatch({ type: 'scrollRight' });
+          setScrollState(ScrollState.Right);
         }
       }
     }
@@ -324,7 +276,7 @@ function Code({
       [codeWrapperStyleWithWindowChrome]: showWindowChrome,
     },
     className,
-    getScrollShadowStyle(state.scroll, variant),
+    getScrollShadowStyle(scrollState, variant),
   );
 
   const { content, lineCount } = useProcessedCodeSnippet(children);
@@ -349,11 +301,11 @@ function Code({
       const maxPosition = scrollWidth - elementWidth;
 
       if (scrollPosition > 0 && scrollPosition < maxPosition) {
-        dispatch({ type: 'scrollBoth' });
+        setScrollState(ScrollState.Both);
       } else if (scrollPosition > 0) {
-        dispatch({ type: 'scrollLeft' });
+        setScrollState(ScrollState.Left);
       } else if (scrollPosition < maxPosition) {
-        dispatch({ type: 'scrollRight' });
+        setScrollState(ScrollState.Right);
       }
     }
   }
@@ -381,15 +333,15 @@ function Code({
               <CopyToClipboard
                 text={content}
                 onCopy={() => {
-                  dispatch({ type: 'copy' });
+                  setCopied(true);
                 }}
               >
                 <IconButton
                   variant={variant}
                   ariaLabel={'Copy'}
-                  className={getCopyButtonStyle(variant, state.copied)}
+                  className={getCopyButtonStyle(variant, copied)}
                 >
-                  <Icon glyph={state.copied ? 'Checkmark' : 'Copy'} />
+                  <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
                 </IconButton>
               </CopyToClipboard>
             </div>
@@ -425,15 +377,15 @@ function Code({
             <CopyToClipboard
               text={content}
               onCopy={() => {
-                dispatch({ type: 'copy' });
+                setCopied(true);
               }}
             >
               <IconButton
                 variant={variant}
                 ariaLabel={'Copy'}
-                className={getCopyButtonStyle(variant, state.copied)}
+                className={getCopyButtonStyle(variant, copied)}
               >
-                <Icon glyph={state.copied ? 'Checkmark' : 'Copy'} />
+                <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
               </IconButton>
             </CopyToClipboard>
           </div>
