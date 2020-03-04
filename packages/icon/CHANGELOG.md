@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 4.2.0
+
+### Minor Changes
+
+- a2948f6: Adds University glyph
+
 ## 4.1.0
 
 ### Minor Changes
