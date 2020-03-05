@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
@@ -87,7 +87,6 @@ describe('packages/mongo-nav/src/org-nav', () => {
           urls={urlDefaults}
           admin={false}
           hosts={hostDefaults}
-          onElementClick={jest.fn()}
           {...props}
         />,
       ),
@@ -157,21 +156,6 @@ describe('packages/mongo-nav/src/org-nav', () => {
     });
   };
 
-  const testForLogoutCallback = (onElementClick: MouseEventHandler) => {
-    it('fires onElementClick callback when OnPremUserMenu is rendered and the prop is set', () => {
-      const onPremUserMenu = expectedElements['onPremUserMenu'];
-      fireEvent.click(onPremUserMenu as Element);
-      setExpectedElements();
-      const onPremUserMenuSignOut = expectedElements['onPremUserMenuSignOut'];
-
-      fireEvent.click(onPremUserMenu as Element);
-      setExpectedElements();
-      expect(onPremUserMenuSignOut).toBeInTheDocument();
-      fireEvent.click(onPremUserMenuSignOut as Element);
-      expect(onElementClick).toHaveBeenCalled();
-    });
-  };
-
   const testForNavLink = (linkName: string, isVisible = true) => {
     it(`${isVisible ? 'displays' : 'does not display'} the ${startCase(
       linkName,
@@ -238,13 +222,10 @@ describe('packages/mongo-nav/src/org-nav', () => {
   });
 
   describe('when rendered onPrem', () => {
-    const onElementClick = jest.fn();
-
     beforeEach(() =>
       renderComponent({
         onPremEnabled: true,
         onPremVersion: '4.4.0',
-        onElementClick: onElementClick,
       }),
     );
 
@@ -252,7 +233,6 @@ describe('packages/mongo-nav/src/org-nav', () => {
     testForVersion(true);
     testForUserMenu(false);
     testForMFA(false);
-    testForLogoutCallback(onElementClick);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, ['billing', 'admin'].indexOf(linkName) === -1),

@@ -24,6 +24,7 @@ import {
   OnElementClick,
 } from '../types';
 import { hostDefaults } from '../data';
+import { useOnElementClick } from '../MongoNav';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 
@@ -171,13 +172,6 @@ interface UserMenuProps {
    * Defaults to the production homepages of each product
    */
   hosts?: HostsInterface;
-
-  /**
-   * Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second
-   * `type` should be `logout`
-   * This prop provides a hook into the logout link clicks and allows consuming applications to handle routing internally
-   */
-  onElementClick?: (type: OnElementClick, event: React.MouseEvent) => void;
 }
 
 /**
@@ -197,7 +191,7 @@ interface UserMenuProps {
 ```
  * @param props.account Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
  * @param props.activeProduct MongoDB product that is currently active: ['cloud', 'university', 'support'].
- * @param props.onElementClick Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second. This prop provides a hook into the logout link clicks and allows consuming applications to handle routing internally.
+ * @param props.onLogout Callback fired when a user logs out
  * @param props.onProductChange Callback invoked after the user clicks a product.
  * @param props.hosts Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<UserMenu />` to work across all environments.
  * @param props.urls Object to enable custom overrides for every `href` used in `<UserMenu />`.
@@ -205,12 +199,21 @@ interface UserMenuProps {
 function UserMenu({
   account,
   activeProduct,
-  onElementClick = () => {},
+  onLogout: onLogoutProp,
   onProductChange = () => {},
   urls: urlsProp,
   hosts: hostsProp,
 }: UserMenuProps) {
   const hosts = defaultsDeep(hostsProp, hostDefaults);
+  const onElementClick = useOnElementClick();
+
+  const onLogout = (e: React.MouseEvent) => {
+    if (onLogoutProp) {
+      onLogoutProp(e);
+    } else {
+      onElementClick(OnElementClick.Logout, e);
+    }
+  };
 
   // will make this logic more abstract, but wanted to get a quick fix in so that UserMenu can be consumed outside of MongoNav
   const defaultURLs = {
@@ -400,9 +403,7 @@ function UserMenu({
         <MenuSeparator />
 
         <MenuItem
-          onClick={(event: React.MouseEvent) =>
-            onElementClick(OnElementClick.Logout, event)
-          }
+          onClick={onLogout}
           size="large"
           data-testid="user-menuitem-logout"
         >

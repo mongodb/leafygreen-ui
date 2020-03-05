@@ -3,6 +3,7 @@ import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { css } from '@leafygreen-ui/emotion';
 import { URLSInterface, OnElementClick } from '../types';
 import { UserMenuTrigger } from '../user-menu/index';
+import { useOnElementClick } from '../MongoNav';
 
 const onPremMenuWrapper = css`
   display: inline-block;
@@ -16,7 +17,6 @@ interface OnPremUserMenuProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   urls: Required<URLSInterface>;
   mfa: boolean;
-  onElementClick?: (type: OnElementClick, event: React.MouseEvent) => void;
 }
 
 export default function OnPremUserMenu({
@@ -24,9 +24,10 @@ export default function OnPremUserMenu({
   open,
   setOpen,
   urls,
-  onElementClick = () => {},
   mfa,
 }: OnPremUserMenuProps) {
+  const onElementClick = useOnElementClick();
+
   return (
     <div className={onPremMenuWrapper}>
       <UserMenuTrigger

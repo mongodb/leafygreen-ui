@@ -41,6 +41,7 @@ import Settings from './Settings.svg';
 import Stitch from './Stitch.svg';
 import Support from './Support.svg';
 import Trash from './Trash.svg';
+import University from './University.svg';
 import Warning from './Warning.svg';
 import X from './X.svg';
 import XWithCircle from './XWithCircle.svg';
@@ -89,6 +90,7 @@ export default {
   Stitch,
   Support,
   Trash,
+  University,
   Warning,
   X,
   XWithCircle,

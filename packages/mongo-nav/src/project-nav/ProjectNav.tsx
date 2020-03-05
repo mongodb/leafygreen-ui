@@ -20,6 +20,7 @@ import {
   OnElementClick,
 } from '../types';
 import { iconLoadingStyle, textLoadingStyle } from '../styles';
+import { useOnElementClick } from '../MongoNav';
 
 const productIconProp = createDataProp('charts-data-prop');
 export const projectNavHeight = 45;
@@ -206,7 +207,6 @@ interface ProjectNavInterface {
   alerts?: number;
   activeProduct: Product;
   onProjectChange: React.ChangeEventHandler;
-  onElementClick: (type: OnElementClick, event: React.MouseEvent) => void;
 }
 
 export default function ProjectNav({
@@ -218,7 +218,6 @@ export default function ProjectNav({
   onProjectChange,
   hosts,
   alerts = 0,
-  onElementClick,
 }: ProjectNavInterface) {
   const [open, setOpen] = React.useState(false);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -226,6 +225,7 @@ export default function ProjectNav({
   const { width: viewportWidth } = useViewportSize();
   const isMobile = viewportWidth < breakpoints.small;
   const isCloudManager = current?.planType === PlanType.Cloud;
+  const onElementClick = useOnElementClick();
 
   const getProductClassName = (product: Product) =>
     cx(productStyle, {

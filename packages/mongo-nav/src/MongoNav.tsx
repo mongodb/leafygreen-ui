@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, createContext, useContext } from 'react';
+import PropTypes from 'prop-types';
 import OrgNav from './org-nav/index';
 import ProjectNav from './project-nav/index';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -13,6 +14,7 @@ import {
   ErrorCode,
   OnPremInterface,
   OnElementClick,
+  PostBodyInterface,
 } from './types';
 import { dataFixtures, hostDefaults } from './data';
 import defaultsDeep from 'lodash/defaultsDeep';
@@ -27,6 +29,20 @@ const navContainerStyle = css`
   z-index: 0;
   position: relative;
 `;
+
+type OnElementClickType = (
+  type?: OnElementClick,
+  event?: React.MouseEvent,
+) => void;
+
+export const OnElementClickContext = createContext<OnElementClickType>(
+  () => {},
+);
+
+export function useOnElementClick() {
+  const onElementClick = useContext(OnElementClickContext);
+  return onElementClick;
+}
 
 interface MongoNavInterface {
   /**
@@ -96,14 +112,21 @@ interface MongoNavInterface {
   onSuccess?: (response: DataInterface) => void;
 
   /**
-   * Callback executed when user logs out
-   */
-  onLogout?: React.MouseEventHandler;
-
-  /**
    * onPrem config object with three keys: enabled, version and mfa
    */
   onPrem?: OnPremInterface;
+
+  /**
+   * ID for active organization, will cause a POST request to cloud to update
+   * current active organization.
+   */
+  activeOrgId?: string;
+
+  /**
+   * ID for active project, will cause a POST request to cloud to update
+   * current active project.
+   */
+  activeProjectId?: string;
 
   /**
    * Applies a className to the root element
@@ -114,7 +137,12 @@ interface MongoNavInterface {
    * Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second
    * This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally
    */
-  onElementClick?: (type: OnElementClick, event: React.MouseEvent) => void;
+  onElementClick?: (type?: OnElementClick, event?: React.MouseEvent) => void;
+
+  /**
+   * Determines whether or not the component will fetch data from cloud
+   */
+  loadData?: boolean;
 }
 
 /**
@@ -148,13 +176,18 @@ interface MongoNavInterface {
  * @param props.onPrem onPrem config object with three keys: enabled, version and mfa
  * @param props.className Applies a className to the root element
  * @param props.onElementClick Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second. This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally.
+ * @param props.activeOrgId ID for active organization, will cause a POST request to cloud to update current active organization.
+ * @param props.activeProjectId ID for active project, will cause a POST request to cloud to update current active project.
+ * @param props.className Applies a className to the root element
+ * @param props.loadData Determines whether or not the component will fetch data from cloud
  */
-export default function MongoNav({
+function MongoNav({
   activeProduct,
   activeNav,
   onOrganizationChange,
   onProjectChange,
   mode = Mode.Production,
+  loadData = true,
   showProjNav = true,
   admin = false,
   hosts: hostsProp,
@@ -165,6 +198,8 @@ export default function MongoNav({
   onSuccess = () => {},
   onElementClick = () => {},
   onPrem = { mfa: false, enabled: false, version: '' },
+  activeOrgId,
+  activeProjectId,
   className,
   ...rest
 }: MongoNavInterface) {
@@ -173,11 +208,24 @@ export default function MongoNav({
   const hosts = defaultsDeep(hostsProp, hostDefaults);
   const endpointURI = `${hosts.cloud}/user/shared`;
 
-  function getProductionData() {
-    return fetch(endpointURI, {
+  function fetchProductionData(body?: PostBodyInterface) {
+    const configObject: RequestInit = {
       credentials: 'include',
+      mode: 'cors',
       method: 'GET',
-    });
+    };
+
+    if (body) {
+      Object.assign(configObject, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+    }
+
+    return fetch(endpointURI, configObject);
   }
 
   function getDataFixtures() {
@@ -200,14 +248,21 @@ export default function MongoNav({
   }
 
   useEffect(() => {
-    if (mode === Mode.Dev) {
+    if (!loadData) {
+      setData(undefined);
+    } else if (mode === Mode.Dev) {
       getDataFixtures().then(data => setData(data as DataInterface));
     } else {
-      getProductionData()
+      const body =
+        activeProjectId || activeOrgId
+          ? { activeProjectId, activeOrgId }
+          : undefined;
+
+      fetchProductionData(body)
         .then(handleResponse)
         .catch(console.error);
     }
-  }, [mode, endpointURI]);
+  }, [mode, endpointURI, activeOrgId, activeProjectId, loadData]);
 
   const defaultURLS: Required<URLSInterface> = {
     userMenu: {
@@ -271,37 +326,65 @@ export default function MongoNav({
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
   return (
-    <section {...rest} className={cx(navContainerStyle, className)}>
-      <OrgNav
-        account={data?.account}
-        activeProduct={activeProduct}
-        current={data?.currentOrganization}
-        data={data?.organizations}
-        constructOrganizationURL={constructOrganizationURL}
-        urls={urls}
-        activeNav={activeNav}
-        onOrganizationChange={onOrganizationChange}
-        admin={admin}
-        hosts={hosts}
-        currentProjectName={data?.currentProject?.projectName}
-        onElementClick={onElementClick}
-        onPremEnabled={onPrem.enabled}
-        onPremVersion={onPrem.version}
-        onPremMFA={onPrem.mfa}
-      />
-      {showProjNav && !onPrem.enabled && (
-        <ProjectNav
+    <OnElementClickContext.Provider value={onElementClick}>
+      <section {...rest} className={cx(navContainerStyle, className)}>
+        <OrgNav
+          account={data?.account}
           activeProduct={activeProduct}
-          current={data?.currentProject}
-          data={data?.projects}
-          constructProjectURL={constructProjectURL}
+          current={data?.currentOrganization}
+          data={data?.organizations}
+          constructOrganizationURL={constructOrganizationURL}
           urls={urls}
-          alerts={data?.currentProject?.alertsOpen}
-          onProjectChange={onProjectChange}
+          activeNav={activeNav}
+          onOrganizationChange={onOrganizationChange}
+          admin={admin}
           hosts={hosts}
-          onElementClick={onElementClick}
+          currentProjectName={data?.currentProject?.projectName}
+          onPremEnabled={onPrem.enabled}
+          onPremVersion={onPrem.version}
+          onPremMFA={onPrem.mfa}
         />
-      )}
-    </section>
+        {showProjNav && !onPrem.enabled && (
+          <ProjectNav
+            activeProduct={activeProduct}
+            current={data?.currentProject}
+            data={data?.projects}
+            constructProjectURL={constructProjectURL}
+            urls={urls}
+            alerts={data?.currentProject?.alertsOpen}
+            onProjectChange={onProjectChange}
+            hosts={hosts}
+          />
+        )}
+      </section>
+    </OnElementClickContext.Provider>
   );
 }
+
+MongoNav.displayName = 'MongoNav';
+
+MongoNav.propTypes = {
+  activeProduct: PropTypes.oneOf(Object.values(Product)),
+  activeNav: PropTypes.oneOf(Object.values(NavItem)),
+  hosts: PropTypes.objectOf(PropTypes.string),
+  onOrganizationChange: PropTypes.func,
+  onProjectChange: PropTypes.func,
+  urls: PropTypes.objectOf(PropTypes.object),
+  showProjectNav: PropTypes.bool,
+  admin: PropTypes.bool,
+  constructOrganizationURL: PropTypes.func,
+  constructProjectURL: PropTypes.func,
+  mode: PropTypes.oneOf(Object.values(Mode)),
+  onSuccess: PropTypes.func,
+  onError: PropTypes.func,
+  onPrem: PropTypes.shape({
+    mfa: PropTypes.bool,
+    enabled: PropTypes.bool,
+    version: PropTypes.string,
+  }),
+  onElementClick: PropTypes.func,
+  activeOrgId: PropTypes.string,
+  activeProjectId: PropTypes.string,
+};
+
+export default MongoNav;
