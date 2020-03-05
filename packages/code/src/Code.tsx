@@ -324,7 +324,7 @@ function Code({
 
   function showCheckmark() {
     setCopied(true);
-    // setTimeout(() => setCopied(false), 1500);
+    setTimeout(() => setCopied(false), 1500);
   }
 
   if (!multiline) {
