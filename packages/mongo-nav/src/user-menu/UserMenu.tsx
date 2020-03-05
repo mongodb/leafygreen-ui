@@ -21,8 +21,10 @@ import {
   URLSInterface,
   Product,
   HostsInterface,
+  OnElementClick,
 } from '../types';
 import { hostDefaults } from '../data';
+import { useOnElementClick } from '../OnElementClickProvider';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 
@@ -189,7 +191,7 @@ interface UserMenuProps {
 ```
  * @param props.account Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
  * @param props.activeProduct MongoDB product that is currently active: ['cloud', 'university', 'support'].
- * @param props.onLogout Callback invoked after the user clicks log out.
+ * @param props.onLogout Callback fired when a user logs out
  * @param props.onProductChange Callback invoked after the user clicks a product.
  * @param props.hosts Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<UserMenu />` to work across all environments.
  * @param props.urls Object to enable custom overrides for every `href` used in `<UserMenu />`.
@@ -197,12 +199,21 @@ interface UserMenuProps {
 function UserMenu({
   account,
   activeProduct,
-  onLogout = () => {},
+  onLogout: onLogoutProp,
   onProductChange = () => {},
   urls: urlsProp,
   hosts: hostsProp,
 }: UserMenuProps) {
   const hosts = defaultsDeep(hostsProp, hostDefaults);
+  const onElementClick = useOnElementClick();
+
+  const onLogout = (e: React.MouseEvent) => {
+    if (onLogoutProp) {
+      onLogoutProp(e);
+    } else {
+      onElementClick(OnElementClick.Logout, e);
+    }
+  };
 
   // will make this logic more abstract, but wanted to get a quick fix in so that UserMenu can be consumed outside of MongoNav
   const defaultURLs = {
@@ -263,143 +274,142 @@ function UserMenu({
         name={account?.firstName ?? ''}
         setOpen={setOpen}
         data-testid="user-menu-trigger"
+      />
+      <Menu
+        open={open}
+        setOpen={setOpen}
+        className={menuStyle}
+        usePortal={false}
       >
-        <Menu
-          open={open}
-          setOpen={setOpen}
-          className={menuStyle}
-          usePortal={false}
+        <li role="none" className={headerStyle}>
+          <div className={logoMarkBackground}>
+            <LogoMark height={30} />
+          </div>
+
+          <h3 className={cx(nameStyle, truncate)}>{name}</h3>
+
+          <p className={cx(descriptionStyle, truncate)}>
+            {account?.email ?? ''}
+          </p>
+
+          <FocusableMenuItem>
+            <Button
+              href={isAccount ? undefined : userMenu?.account?.homepage}
+              disabled={isAccount}
+              as={isAccount ? 'button' : 'a'}
+            >
+              Manage your MongoDB Account
+            </Button>
+          </FocusableMenuItem>
+        </li>
+        <MenuSeparator />
+
+        <SubMenu
+          {...subMenuContainer.prop}
+          {...sharedProps}
+          active={isCloud}
+          disabled={!account}
+          href={hosts.cloud}
+          description={<Description isActive={isCloud} product="cloud" />}
+          title="Atlas"
+          glyph={<Icon glyph="Cloud" size="xlarge" />}
+          className={cx(subMenuContainerStyle, {
+            [subMenuActiveContainerStyle]: isCloud,
+          })}
         >
-          <li role="none" className={headerStyle}>
-            <div className={logoMarkBackground}>
-              <LogoMark height={30} />
-            </div>
-
-            <h3 className={cx(nameStyle, truncate)}>{name}</h3>
-
-            <p className={cx(descriptionStyle, truncate)}>
-              {account?.email ?? ''}
-            </p>
-
-            <FocusableMenuItem>
-              <Button
-                href={isAccount ? undefined : userMenu?.account?.homepage}
-                disabled={isAccount}
-                as={isAccount ? 'button' : 'a'}
-              >
-                Manage your MongoDB Account
-              </Button>
-            </FocusableMenuItem>
-          </li>
-          <MenuSeparator />
-
-          <SubMenu
-            {...subMenuContainer.prop}
-            {...sharedProps}
-            active={isCloud}
-            disabled={!account}
-            href={hosts.cloud}
-            description={<Description isActive={isCloud} product="cloud" />}
-            title="Atlas"
-            glyph={<Icon glyph="Cloud" size="xlarge" />}
-            className={cx(subMenuContainerStyle, {
-              [subMenuActiveContainerStyle]: isCloud,
-            })}
-          >
-            <MenuItem
-              href={userMenu?.cloud?.userPreferences}
-              data-testid="user-menuitem-cloud-user-preferences"
-            >
-              User Preferences
-            </MenuItem>
-            <MenuItem
-              href={userMenu?.cloud?.invitations}
-              data-testid="user-menuitem-cloud-invitations"
-            >
-              <span className={subMenuItemStyle}>
-                Invitations
-                {(account?.openInvitations ?? 0) > 0 && (
-                  <Badge variant="blue">{account?.openInvitations}</Badge>
-                )}
-              </span>
-            </MenuItem>
-            <MenuItem
-              href={userMenu?.cloud?.organizations}
-              data-testid="user-menuitem-cloud-organizations"
-            >
-              Organizations
-            </MenuItem>
-            <MenuItem href={userMenu?.cloud?.mfa}>
-              Two-Factor Authorization
-            </MenuItem>
-          </SubMenu>
-
-          <SubMenu
-            {...subMenuContainer.prop}
-            {...sharedProps}
-            active={isUniversity}
-            disabled={!account}
-            href={hosts.university}
-            description={
-              <Description isActive={isUniversity} product="university" />
-            }
-            title="University"
-            glyph={<Icon glyph="Laptop" size="xlarge" />}
-            className={cx(subMenuContainerStyle, {
-              [subMenuActiveContainerStyle]: isUniversity,
-            })}
-          >
-            <MenuItem
-              href={userMenu?.university?.videoPreferences}
-              data-testid="user-menuitem-cloud-mfa"
-            >
-              Video Preferences
-            </MenuItem>
-          </SubMenu>
-
-          <SubMenu
-            {...subMenuContainer.prop}
-            {...sharedProps}
-            active={isSupport}
-            disabled={!account}
-            href={hosts.support}
-            description={<Description isActive={isSupport} product="support" />}
-            title="Support"
-            glyph={<Icon glyph="Support" size="xlarge" />}
-            className={cx(subMenuContainerStyle, {
-              [subMenuActiveContainerStyle]: isSupport,
-            })}
-          >
-            <MenuItem
-              href={userMenu?.support?.userPreferences}
-              data-testid="user-menuitem-support-user-preferences"
-            >
-              User Preferences
-            </MenuItem>
-          </SubMenu>
-
-          <MenuSeparator />
-
           <MenuItem
-            {...feedbackAnchorProps}
-            size="large"
-            glyph={<Icon glyph="Megaphone" size="xlarge" />}
-            data-testid="user-menuitem-feedback"
+            href={userMenu?.cloud?.userPreferences}
+            data-testid="user-menuitem-cloud-user-preferences"
           >
-            Give us feedback
+            User Preferences
           </MenuItem>
-
-          <MenuSeparator />
-
           <MenuItem
-            onClick={onLogout}
-            size="large"
-            data-testid="user-menuitem-logout"
+            href={userMenu?.cloud?.invitations}
+            data-testid="user-menuitem-cloud-invitations"
           >
-            Logout
+            <span className={subMenuItemStyle}>
+              Invitations
+              {(account?.openInvitations ?? 0) > 0 && (
+                <Badge variant="blue">{account?.openInvitations}</Badge>
+              )}
+            </span>
           </MenuItem>
-        </Menu>
-      </UserMenuTrigger>
+          <MenuItem
+            href={userMenu?.cloud?.organizations}
+            data-testid="user-menuitem-cloud-organizations"
+          >
+            Organizations
+          </MenuItem>
+          <MenuItem href={userMenu?.cloud?.mfa}>
+            Two-Factor Authorization
+          </MenuItem>
+        </SubMenu>
+
+        <SubMenu
+          {...subMenuContainer.prop}
+          {...sharedProps}
+          active={isUniversity}
+          disabled={!account}
+          href={hosts.university}
+          description={
+            <Description isActive={isUniversity} product="university" />
+          }
+          title="University"
+          glyph={<Icon glyph="University" size="xlarge" />}
+          className={cx(subMenuContainerStyle, {
+            [subMenuActiveContainerStyle]: isUniversity,
+          })}
+        >
+          <MenuItem
+            href={userMenu?.university?.videoPreferences}
+            data-testid="user-menuitem-cloud-mfa"
+          >
+            Video Preferences
+          </MenuItem>
+        </SubMenu>
+
+        <SubMenu
+          {...subMenuContainer.prop}
+          {...sharedProps}
+          active={isSupport}
+          disabled={!account}
+          href={hosts.support}
+          description={<Description isActive={isSupport} product="support" />}
+          title="Support"
+          glyph={<Icon glyph="Support" size="xlarge" />}
+          className={cx(subMenuContainerStyle, {
+            [subMenuActiveContainerStyle]: isSupport,
+          })}
+        >
+          <MenuItem
+            href={userMenu?.support?.userPreferences}
+            data-testid="user-menuitem-support-user-preferences"
+          >
+            User Preferences
+          </MenuItem>
+        </SubMenu>
+
+        <MenuSeparator />
+
+        <MenuItem
+          {...feedbackAnchorProps}
+          size="large"
+          glyph={<Icon glyph="Megaphone" size="xlarge" />}
+          data-testid="user-menuitem-feedback"
+        >
+          Give us feedback
+        </MenuItem>
+
+        <MenuSeparator />
+
+        <MenuItem
+          onClick={onLogout}
+          size="large"
+          data-testid="user-menuitem-logout"
+        >
+          Logout
+        </MenuItem>
+      </Menu>
     </div>
   );
 }
