@@ -38,6 +38,9 @@ describe('packages/Syntax', () => {
       fireEvent.click(copyButton);
       // the following statement produces the error:
       // TypeError: Cannot read property 'readText' of undefined
+      // this is because we don't have read permission for the clipboard
+      // and we can't request it because the Permissions API is still experimental
+      // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/read
       // navigator.clipboard
       //   .readText()
       //   .then(clipText => expect(clipText).toBe(codeSnippet));
