@@ -355,7 +355,7 @@ function UserMenu({
             <Description isActive={isUniversity} product="university" />
           }
           title="University"
-          glyph={<Icon glyph="Laptop" size="xlarge" />}
+          glyph={<Icon glyph="University" size="xlarge" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isUniversity,
           })}
