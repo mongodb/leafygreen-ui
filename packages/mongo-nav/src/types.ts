@@ -61,6 +61,11 @@ type ErrorCode = typeof ErrorCode[keyof typeof ErrorCode];
 
 export { ErrorCode };
 
+export interface PostBodyInterface {
+  activeProjectId?: string;
+  activeOrgId?: string;
+}
+
 const OrgPaymentLabel = {
   Embargoed: 'EMBARGOED',
   EmbargoConfirmed: 'EMBARGO_CONFIRMED',
