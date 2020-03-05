@@ -35,44 +35,12 @@ describe('packages/Syntax', () => {
     });
 
     test(`copy button actually copies text to clipboard`, () => {
-      // I had to add this in to prevent another error being thrown on the click event (in addition to the TypeError)
-      window.prompt = jest.fn();
-
-      // the following line does fire a click event, but it also produces an error
-      // TypeError: reselectPrevious is not a function
       fireEvent.click(copyButton);
-      const arbitraryInput = render(
-        <input
-          aria-label="test-input"
-          value=""
-          onChange={() => {
-            console.log('value change');
-          }}
-        />,
-        {
-          container: container,
-        },
-      );
-      const inputElement = arbitraryInput.container
-        .firstChild as HTMLInputElement;
-      // when a paste event is fired, it does not automatically grab text from the clipboard
-      // instead, you need to define the value that gets pasted in to the target
-      // ideally, I could do this by using the following snippet, but navigator.clipboard is undefined so I can't access it
-      /*
-        navigator.clipboard.readText().then(
-          clipText => fireEvent.paste(inputElement,  { target: { value: clipText }});
-          expect(inputElement.value).toBe(codeSnippet);
-        );
-      */
-      fireEvent.paste(inputElement, {
-        target: {
-          value:
-            'ideally the codeSnippet copied from the clipboard would go here instead of this string',
-        },
-      });
-      expect(inputElement.value).toBe(
-        'ideally the codeSnippet copied from the clipboard would go here instead of this string',
-      );
+      // the following statement produces the error:
+      // TypeError: Cannot read property 'readText' of undefined
+      // navigator.clipboard
+      //   .readText()
+      //   .then(clipText => expect(clipText).toBe(codeSnippet));
     });
   });
 

@@ -11,9 +11,9 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LineNumbers from './LineNumbers';
 import WindowChrome from './WindowChrome';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import debounce from 'lodash/debounce';
 import { uiColors } from '@leafygreen-ui/palette';
+import ClipboardJS from 'clipboard';
 
 function stringFragmentIsBlank(str: string): str is '' | ' ' {
   return str === '' || str === ' ';
@@ -322,6 +322,8 @@ function Code({
 
   const debounceScroll = debounce(handleScroll, 50, { leading: true });
 
+  new ClipboardJS('.copy-btn');
+
   function showCheckmark() {
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
@@ -350,15 +352,17 @@ function Code({
           </div>
           {!showWindowChrome && (
             <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
-              <CopyToClipboard text={content} onCopy={showCheckmark}>
-                <IconButton
-                  variant={variant}
-                  ariaLabel="Copy"
-                  className={getCopyButtonStyle(variant, copied)}
-                >
-                  <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
-                </IconButton>
-              </CopyToClipboard>
+              {/* <CopyToClipboard text={content} onCopy={showCheckmark}> */}
+              <IconButton
+                variant={variant}
+                ariaLabel="Copy"
+                className={cx(getCopyButtonStyle(variant, copied), 'copy-btn')}
+                onClick={showCheckmark}
+                data-clipboard-text={content}
+              >
+                <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
+              </IconButton>
+              {/* </CopyToClipboard> */}
             </div>
           )}
         </div>
@@ -392,15 +396,17 @@ function Code({
 
         {!showWindowChrome && (
           <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
-            <CopyToClipboard text={content} onCopy={showCheckmark}>
-              <IconButton
-                variant={variant}
-                ariaLabel="Copy"
-                className={getCopyButtonStyle(variant, copied)}
-              >
-                <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
-              </IconButton>
-            </CopyToClipboard>
+            {/* <CopyToClipboard text={content} onCopy={showCheckmark}> */}
+            <IconButton
+              variant={variant}
+              ariaLabel="Copy"
+              className={cx(getCopyButtonStyle(variant, copied), 'copy-btn')}
+              onClick={showCheckmark}
+              data-clipboard-text={content}
+            >
+              <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
+            </IconButton>
+            {/* </CopyToClipboard> */}
           </div>
         )}
       </div>
