@@ -12,6 +12,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import LineNumbers from './LineNumbers';
 import WindowChrome from './WindowChrome';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import debounce from 'lodash/debounce';
 import { uiColors } from '@leafygreen-ui/palette';
 
 function stringFragmentIsBlank(str: string): str is '' | ' ' {
@@ -84,7 +85,7 @@ const copyStyle = css`
 `;
 
 function getWrapperVariantStyle(variant: Variant): string {
-  const colors = variantColors[variant];
+  const colors = variantColors[variant] ?? variantColors[Variant.Light];
 
   return css`
     border-color: ${colors[1]};
@@ -94,7 +95,7 @@ function getWrapperVariantStyle(variant: Variant): string {
 }
 
 function getSidebarVariantStyle(variant: Variant): string {
-  const colors = variantColors[variant];
+  const colors = variantColors[variant] ?? variantColors[Variant.Light];
 
   switch (variant) {
     case Variant.Light:
@@ -291,11 +292,11 @@ function Code({
   );
 
   function handleScroll(e: React.UIEvent) {
-    const { scrollWidth, clientWidth: elementWidth } = e.currentTarget;
+    const { scrollWidth, clientWidth: elementWidth } = e.target as HTMLElement;
     const isScrollable = scrollWidth > elementWidth;
 
     if (isScrollable) {
-      const scrollPosition = e.currentTarget.scrollLeft;
+      const scrollPosition = (e.target as HTMLElement).scrollLeft;
       const maxPosition = scrollWidth - elementWidth;
 
       if (scrollPosition > 0 && scrollPosition < maxPosition) {
@@ -307,6 +308,8 @@ function Code({
       }
     }
   }
+
+  const debounceScroll = debounce(handleScroll, 50, { leading: true });
 
   if (!multiline) {
     return (
@@ -321,7 +324,10 @@ function Code({
           <div
             {...(rest as DetailedElementProps<HTMLDivElement>)}
             className={wrapperClassName}
-            onScroll={handleScroll}
+            onScroll={e => {
+              e.persist();
+              debounceScroll(e);
+            }}
             ref={scrollableSingleLine}
           >
             {renderedSyntaxComponent}
@@ -360,7 +366,10 @@ function Code({
         <pre
           {...(rest as DetailedElementProps<HTMLPreElement>)}
           className={wrapperClassName}
-          onScroll={handleScroll}
+          onScroll={e => {
+            e.persist();
+            debounceScroll(e);
+          }}
           ref={scrollableMultiLine}
         >
           {showLineNumbers && (
