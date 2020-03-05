@@ -62,6 +62,14 @@ const contentElPos = {
   width: 20,
 };
 
+function checkPixelValue(actual: string | number, expected: number) {
+  if (typeof actual === 'string') {
+    expect(actual).toBe(`${expected}px`);
+  } else {
+    expect(actual).toBe(expected);
+  }
+}
+
 describe('positionUtils', () => {
   describe('calculatePosition', () => {
     describe('returns an object with three key-value pairs', () => {
@@ -97,8 +105,8 @@ describe('positionUtils', () => {
 
           expect(alignment).toBe('bottom');
           expect(justify).toBe('start');
-          expect(positionCSS.top).toBePx(15);
-          expect(positionCSS.left).toBePx(45);
+          checkPixelValue(positionCSS.top, 15);
+          checkPixelValue(positionCSS.left, 45);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -118,8 +126,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.left).toBePx(45);
-          expect(positionCSS.right).toBePx(45);
+          checkPixelValue(positionCSS.left, 45);
+          checkPixelValue(positionCSS.right, 45);
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -142,8 +150,8 @@ describe('positionUtils', () => {
 
           expect(alignment).toBe('right');
           expect(justify).toBe('start');
-          expect(positionCSS.top).toBePx(0);
-          expect(positionCSS.left).toBePx(60);
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -164,8 +172,8 @@ describe('positionUtils', () => {
 
           expect(alignment).toBe('right');
           expect(justify).toBe('start');
-          expect(positionCSS.top).toBePx(0);
-          expect(positionCSS.left).toBePx(60);
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -186,8 +194,8 @@ describe('positionUtils', () => {
 
           expect(alignment).toBe('right');
           expect(justify).toBe('start');
-          expect(positionCSS.top).toBePx(0);
-          expect(positionCSS.left).toBePx(60);
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -207,8 +215,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.top).toBePx(0);
-          expect(positionCSS.bottom).toBePx(90);
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.bottom, 90);
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -231,8 +239,8 @@ describe('positionUtils', () => {
 
           expect(alignment).toBe('bottom');
           expect(justify).toBe('start');
-          expect(positionCSS.top).toBePx(15);
-          expect(positionCSS.left).toBePx(45);
+          checkPixelValue(positionCSS.top, 15);
+          checkPixelValue(positionCSS.left, 45);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -252,8 +260,8 @@ describe('positionUtils', () => {
 
           expect(alignment).toBe('bottom');
           expect(justify).toBe('middle');
-          expect(positionCSS.top).toBePx(15);
-          expect(positionCSS.left).toBePx(40);
+          checkPixelValue(positionCSS.top, 15);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -273,8 +281,8 @@ describe('positionUtils', () => {
 
           expect(alignment).toBe('bottom');
           expect(justify).toBe('end');
-          expect(positionCSS.top).toBePx(15);
-          expect(positionCSS.left).toBePx(35);
+          checkPixelValue(positionCSS.top, 15);
+          checkPixelValue(positionCSS.left, 35);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -293,8 +301,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.left).toBePx(45);
-          expect(positionCSS.right).toBePx(45);
+          checkPixelValue(positionCSS.left, 45);
+          checkPixelValue(positionCSS.right, 45);
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -317,8 +325,8 @@ describe('positionUtils', () => {
 
           expect(alignment).toBe('left');
           expect(justify).toBe('start');
-          expect(positionCSS.top).toBePx(0);
-          expect(positionCSS.left).toBePx(20);
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 20);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -338,8 +346,8 @@ describe('positionUtils', () => {
 
           expect(alignment).toBe('left');
           expect(justify).toBe('start');
-          expect(positionCSS.top).toBePx(0);
-          expect(positionCSS.left).toBePx(20);
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 20);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -360,8 +368,8 @@ describe('positionUtils', () => {
 
           expect(alignment).toBe('left');
           expect(justify).toBe('start');
-          expect(positionCSS.top).toBePx(0);
-          expect(positionCSS.left).toBePx(20);
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 20);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -381,8 +389,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.top).toBePx(0);
-          expect(positionCSS.bottom).toBePx(90);
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.bottom, 90);
           expect(positionCSS.transformOrigin).toBe('right center');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -405,8 +413,8 @@ describe('positionUtils', () => {
 
           expect(alignment).toBe('bottom');
           expect(justify).toBe('start');
-          expect(positionCSS.top).toBePx(15);
-          expect(positionCSS.left).toBePx(45);
+          checkPixelValue(positionCSS.top, 15);
+          checkPixelValue(positionCSS.left, 45);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -426,8 +434,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.left).toBePx(45);
-          expect(positionCSS.right).toBePx(45);
+          checkPixelValue(positionCSS.left, 45);
+          checkPixelValue(positionCSS.right, 45);
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -450,8 +458,8 @@ describe('positionUtils', () => {
 
           expect(alignment).toBe('center-horizontal');
           expect(justify).toBe('start');
-          expect(positionCSS.top).toBePx(0);
-          expect(positionCSS.left).toBePx(40);
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -469,8 +477,8 @@ describe('positionUtils', () => {
 
           expect(alignment).toBe('center-horizontal');
           expect(justify).toBe('start');
-          expect(positionCSS.top).toBePx(0);
-          expect(positionCSS.left).toBePx(40);
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -489,8 +497,8 @@ describe('positionUtils', () => {
 
           expect(alignment).toBe('center-horizontal');
           expect(justify).toBe('start');
-          expect(positionCSS.top).toBePx(0);
-          expect(positionCSS.left).toBePx(40);
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -508,9 +516,9 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.top).toBePx(0);
-          expect(positionCSS.left).toBePx(40);
-          expect(positionCSS.bottom).toBePx(90);
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 40);
+          checkPixelValue(positionCSS.bottom, 90);
           expect(positionCSS.transformOrigin).toBe('center center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -531,8 +539,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(20);
-          expect(positionCSS.left).toBePx(80);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 80);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -551,8 +559,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(20);
-          expect(positionCSS.left).toBePx(80);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 80);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -570,8 +578,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(20);
-          expect(positionCSS.left).toBePx(80);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 80);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -591,8 +599,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.left).toBePx(90);
-          expect(positionCSS.right).toBePx(0);
+          checkPixelValue(positionCSS.left, 90);
+          checkPixelValue(positionCSS.right, 0);
           expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -612,8 +620,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(45);
-          expect(positionCSS.left).toBePx(65);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 65);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -633,8 +641,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(60);
-          expect(positionCSS.left).toBePx(80);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 80);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -652,8 +660,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(60);
-          expect(positionCSS.left).toBePx(80);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 80);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -671,8 +679,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(60);
-          expect(positionCSS.left).toBePx(80);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 80);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -691,8 +699,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.left).toBePx(90);
-          expect(positionCSS.right).toBePx(0);
+          checkPixelValue(positionCSS.left, 90);
+          checkPixelValue(positionCSS.right, 0);
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -712,8 +720,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(45);
-          expect(positionCSS.left).toBePx(65);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 65);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -731,8 +739,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(40);
-          expect(positionCSS.left).toBePx(65);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 65);
           expect(positionCSS.transformOrigin).toBe('right center');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -751,8 +759,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(35);
-          expect(positionCSS.left).toBePx(65);
+          checkPixelValue(positionCSS.top, 35);
+          checkPixelValue(positionCSS.left, 65);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -772,8 +780,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.top).toBePx(45);
-          expect(positionCSS.bottom).toBePx(45);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.bottom, 45);
           expect(positionCSS.transformOrigin).toBe('right center');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -793,8 +801,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(40);
-          expect(positionCSS.left).toBePx(80);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 80);
           expect(positionCSS.transformOrigin).toBe('right center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -811,8 +819,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(40);
-          expect(positionCSS.left).toBePx(80);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 80);
           expect(positionCSS.transformOrigin).toBe('right center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -828,8 +836,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(40);
-          expect(positionCSS.left).toBePx(80);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 80);
           expect(positionCSS.transformOrigin).toBe('right center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -847,8 +855,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.left).toBePx(90);
-          expect(positionCSS.right).toBePx(0);
+          checkPixelValue(positionCSS.left, 90);
+          checkPixelValue(positionCSS.right, 0);
           expect(positionCSS.transformOrigin).toBe('center center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -866,8 +874,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(45);
-          expect(positionCSS.left).toBePx(65);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 65);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -890,8 +898,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(65);
-          expect(positionCSS.left).toBePx(45);
+          checkPixelValue(positionCSS.top, 65);
+          checkPixelValue(positionCSS.left, 45);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -910,8 +918,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(65);
-          expect(positionCSS.left).toBePx(40);
+          checkPixelValue(positionCSS.top, 65);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -930,8 +938,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(65);
-          expect(positionCSS.left).toBePx(35);
+          checkPixelValue(positionCSS.top, 65);
+          checkPixelValue(positionCSS.left, 35);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -951,8 +959,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.left).toBePx(45);
-          expect(positionCSS.right).toBePx(45);
+          checkPixelValue(positionCSS.left, 45);
+          checkPixelValue(positionCSS.right, 45);
           expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -973,8 +981,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(80);
-          expect(positionCSS.left).toBePx(60);
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -992,8 +1000,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(80);
-          expect(positionCSS.left).toBePx(60);
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -1012,8 +1020,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(80);
-          expect(positionCSS.left).toBePx(60);
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -1033,8 +1041,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.top).toBePx(90);
-          expect(positionCSS.bottom).toBePx(0);
+          checkPixelValue(positionCSS.top, 90);
+          checkPixelValue(positionCSS.bottom, 0);
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -1054,8 +1062,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(65);
-          expect(positionCSS.left).toBePx(45);
+          checkPixelValue(positionCSS.top, 65);
+          checkPixelValue(positionCSS.left, 45);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -1076,8 +1084,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(80);
-          expect(positionCSS.left).toBePx(20);
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 20);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -1096,8 +1104,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(80);
-          expect(positionCSS.left).toBePx(20);
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 20);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -1116,8 +1124,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(80);
-          expect(positionCSS.left).toBePx(20);
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 20);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -1137,8 +1145,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.top).toBePx(90);
-          expect(positionCSS.bottom).toBePx(0);
+          checkPixelValue(positionCSS.top, 90);
+          checkPixelValue(positionCSS.bottom, 0);
           expect(positionCSS.transformOrigin).toBe('right center');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -1159,8 +1167,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(65);
-          expect(positionCSS.left).toBePx(45);
+          checkPixelValue(positionCSS.top, 65);
+          checkPixelValue(positionCSS.left, 45);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -1181,8 +1189,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(80);
-          expect(positionCSS.left).toBePx(40);
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -1199,8 +1207,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(80);
-          expect(positionCSS.left).toBePx(40);
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -1217,8 +1225,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(80);
-          expect(positionCSS.left).toBePx(40);
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -1236,8 +1244,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.top).toBePx(90);
-          expect(positionCSS.bottom).toBePx(0);
+          checkPixelValue(positionCSS.top, 90);
+          checkPixelValue(positionCSS.bottom, 0);
           expect(positionCSS.transformOrigin).toBe('center center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -1258,8 +1266,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(20);
-          expect(positionCSS.left).toBePx(0);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -1277,8 +1285,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(20);
-          expect(positionCSS.left).toBePx(0);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -1296,8 +1304,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(20);
-          expect(positionCSS.left).toBePx(0);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -1316,8 +1324,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.left).toBePx(0);
-          expect(positionCSS.right).toBePx(90);
+          checkPixelValue(positionCSS.left, 0);
+          checkPixelValue(positionCSS.right, 90);
           expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -1338,8 +1346,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(45);
-          expect(positionCSS.left).toBePx(15);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 15);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -1357,8 +1365,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(40);
-          expect(positionCSS.left).toBePx(15);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 15);
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -1376,8 +1384,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(35);
-          expect(positionCSS.left).toBePx(15);
+          checkPixelValue(positionCSS.top, 35);
+          checkPixelValue(positionCSS.left, 15);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -1396,8 +1404,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.top).toBePx(45);
-          expect(positionCSS.bottom).toBePx(45);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.bottom, 45);
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -1417,8 +1425,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(60);
-          expect(positionCSS.left).toBePx(0);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -1437,8 +1445,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(60);
-          expect(positionCSS.left).toBePx(0);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -1457,8 +1465,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(60);
-          expect(positionCSS.left).toBePx(0);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -1478,8 +1486,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.left).toBePx(0);
-          expect(positionCSS.right).toBePx(90);
+          checkPixelValue(positionCSS.left, 0);
+          checkPixelValue(positionCSS.right, 90);
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -1500,8 +1508,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(45);
-          expect(positionCSS.left).toBePx(15);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 15);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -1522,8 +1530,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(40);
-          expect(positionCSS.left).toBePx(0);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -1539,8 +1547,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(40);
-          expect(positionCSS.left).toBePx(0);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -1556,8 +1564,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(40);
-          expect(positionCSS.left).toBePx(0);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -1574,8 +1582,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.left).toBePx(0);
-          expect(positionCSS.right).toBePx(90);
+          checkPixelValue(positionCSS.left, 0);
+          checkPixelValue(positionCSS.right, 90);
           expect(positionCSS.transformOrigin).toBe('center center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -1594,8 +1602,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(45);
-          expect(positionCSS.left).toBePx(15);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 15);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -1618,8 +1626,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(20);
-          expect(positionCSS.left).toBePx(45);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 45);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -1638,8 +1646,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(20);
-          expect(positionCSS.left).toBePx(40);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -1658,8 +1666,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(20);
-          expect(positionCSS.left).toBePx(35);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 35);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -1679,8 +1687,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.left).toBePx(45);
-          expect(positionCSS.right).toBePx(45);
+          checkPixelValue(positionCSS.left, 45);
+          checkPixelValue(positionCSS.right, 45);
           expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -1701,8 +1709,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(45);
-          expect(positionCSS.left).toBePx(60);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -1721,8 +1729,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(40);
-          expect(positionCSS.left).toBePx(60);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -1741,8 +1749,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(35);
-          expect(positionCSS.left).toBePx(60);
+          checkPixelValue(positionCSS.top, 35);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -1762,8 +1770,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.top).toBePx(45);
-          expect(positionCSS.bottom).toBePx(45);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.bottom, 45);
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -1784,8 +1792,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(60);
-          expect(positionCSS.left).toBePx(45);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 45);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -1804,8 +1812,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(60);
-          expect(positionCSS.left).toBePx(40);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -1824,8 +1832,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(60);
-          expect(positionCSS.left).toBePx(35);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 35);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -1845,8 +1853,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.left).toBePx(45);
-          expect(positionCSS.right).toBePx(45);
+          checkPixelValue(positionCSS.left, 45);
+          checkPixelValue(positionCSS.right, 45);
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -1867,8 +1875,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(45);
-          expect(positionCSS.left).toBePx(20);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 20);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -1887,8 +1895,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(40);
-          expect(positionCSS.left).toBePx(20);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 20);
           expect(positionCSS.transformOrigin).toBe('right center');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -1907,8 +1915,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(35);
-          expect(positionCSS.left).toBePx(20);
+          checkPixelValue(positionCSS.top, 35);
+          checkPixelValue(positionCSS.left, 20);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -1928,8 +1936,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.top).toBePx(45);
-          expect(positionCSS.bottom).toBePx(45);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.bottom, 45);
           expect(positionCSS.transformOrigin).toBe('right center');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -1950,8 +1958,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(40);
-          expect(positionCSS.left).toBePx(45);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 45);
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -1968,8 +1976,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(40);
-          expect(positionCSS.left).toBePx(40);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -1986,8 +1994,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(40);
-          expect(positionCSS.left).toBePx(35);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 35);
           expect(positionCSS.transformOrigin).toBe('right center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -2005,8 +2013,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.left).toBePx(45);
-          expect(positionCSS.right).toBePx(45);
+          checkPixelValue(positionCSS.left, 45);
+          checkPixelValue(positionCSS.right, 45);
           expect(positionCSS.transformOrigin).toBe('center center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -2025,8 +2033,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(45);
-          expect(positionCSS.left).toBePx(40);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -2043,8 +2051,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(40);
-          expect(positionCSS.left).toBePx(40);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -2061,8 +2069,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(35);
-          expect(positionCSS.left).toBePx(40);
+          checkPixelValue(positionCSS.top, 35);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -2080,8 +2088,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.top).toBePx(45);
-          expect(positionCSS.bottom).toBePx(45);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.bottom, 45);
           expect(positionCSS.transformOrigin).toBe('center center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -2103,7 +2111,7 @@ describe('positionUtils', () => {
           });
 
           expect(positionCSS.bottom).toBe('calc(100% + 5px)');
-          expect(positionCSS.left).toBePx(0);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -2143,7 +2151,7 @@ describe('positionUtils', () => {
           });
 
           expect(positionCSS.bottom).toBe('calc(100% + 5px)');
-          expect(positionCSS.right).toBePx(0);
+          checkPixelValue(positionCSS.right, 0);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -2163,8 +2171,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.left).toBePx(0);
-          expect(positionCSS.right).toBePx(0);
+          checkPixelValue(positionCSS.left, 0);
+          checkPixelValue(positionCSS.right, 0);
           expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -2185,7 +2193,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(0);
+          checkPixelValue(positionCSS.top, 0);
           expect(positionCSS.left).toBe('calc(100% + 5px)');
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
@@ -2225,7 +2233,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.bottom).toBePx(0);
+          checkPixelValue(positionCSS.bottom, 0);
           expect(positionCSS.left).toBe('calc(100% + 5px)');
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
@@ -2246,8 +2254,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.top).toBePx(0);
-          expect(positionCSS.bottom).toBePx(0);
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.bottom, 0);
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -2269,7 +2277,7 @@ describe('positionUtils', () => {
           });
 
           expect(positionCSS.top).toBe('calc(100% + 5px)');
-          expect(positionCSS.left).toBePx(0);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -2309,7 +2317,7 @@ describe('positionUtils', () => {
           });
 
           expect(positionCSS.top).toBe('calc(100% + 5px)');
-          expect(positionCSS.right).toBePx(0);
+          checkPixelValue(positionCSS.right, 0);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -2329,8 +2337,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.left).toBePx(0);
-          expect(positionCSS.right).toBePx(0);
+          checkPixelValue(positionCSS.left, 0);
+          checkPixelValue(positionCSS.right, 0);
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -2351,7 +2359,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(0);
+          checkPixelValue(positionCSS.top, 0);
           expect(positionCSS.right).toBe('calc(100% + 5px)');
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
@@ -2391,7 +2399,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.bottom).toBePx(0);
+          checkPixelValue(positionCSS.bottom, 0);
           expect(positionCSS.right).toBe('calc(100% + 5px)');
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
@@ -2412,8 +2420,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.top).toBePx(0);
-          expect(positionCSS.bottom).toBePx(0);
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.bottom, 0);
           expect(positionCSS.transformOrigin).toBe('right center');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -2435,7 +2443,7 @@ describe('positionUtils', () => {
           });
 
           expect(positionCSS.top).toBe('calc(5px - 50%)');
-          expect(positionCSS.left).toBePx(0);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -2471,7 +2479,7 @@ describe('positionUtils', () => {
           });
 
           expect(positionCSS.top).toBe('calc(5px - 50%)');
-          expect(positionCSS.right).toBePx(0);
+          checkPixelValue(positionCSS.right, 0);
           expect(positionCSS.transformOrigin).toBe('right center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -2489,8 +2497,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.left).toBePx(0);
-          expect(positionCSS.right).toBePx(0);
+          checkPixelValue(positionCSS.left, 0);
+          checkPixelValue(positionCSS.right, 0);
           expect(positionCSS.transformOrigin).toBe('center center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
@@ -2509,7 +2517,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBePx(0);
+          checkPixelValue(positionCSS.top, 0);
           expect(positionCSS.left).toBe('calc(5px - 50%)');
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe('scale(0.8)');
@@ -2545,7 +2553,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.bottom).toBePx(0);
+          checkPixelValue(positionCSS.bottom, 0);
           expect(positionCSS.left).toBe('calc(5px - 50%)');
           expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe('scale(0.8)');
@@ -2564,8 +2572,8 @@ describe('positionUtils', () => {
           });
 
           expect(justify).toBe('fit');
-          expect(positionCSS.top).toBePx(0);
-          expect(positionCSS.bottom).toBePx(0);
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.bottom, 0);
           expect(positionCSS.transformOrigin).toBe('center center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });

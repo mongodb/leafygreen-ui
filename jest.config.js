@@ -51,5 +51,4 @@ module.exports = {
   transformIgnorePatterns: ['/node_modules/(?!(react-children-utilities)/)'],
 
   setupFiles: ['<rootDir>/scripts/jestSetup.js'],
-  setupTestFrameworkScriptFile: '<rootDir>/scripts/expectToBePx.ts',
 };
