@@ -24,7 +24,7 @@ import {
   OnElementClick,
 } from '../types';
 import { hostDefaults } from '../data';
-import { useOnElementClick } from '../MongoNav';
+import { useOnElementClick } from '../OnElementClickProvider';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 

@@ -3,7 +3,7 @@ import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { css } from '@leafygreen-ui/emotion';
 import { URLSInterface, OnElementClick } from '../types';
 import { UserMenuTrigger } from '../user-menu/index';
-import { useOnElementClick } from '../MongoNav';
+import { useOnElementClick } from '../OnElementClickProvider';
 
 const onPremMenuWrapper = css`
   display: inline-block;

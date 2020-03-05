@@ -20,7 +20,7 @@ import {
   OnElementClick,
 } from '../types';
 import { iconLoadingStyle, textLoadingStyle } from '../styles';
-import { useOnElementClick } from '../MongoNav';
+import { useOnElementClick } from '../OnElementClickProvider';
 
 const productIconProp = createDataProp('charts-data-prop');
 export const projectNavHeight = 45;

@@ -146,10 +146,6 @@ describe('packages/mongo-nav/src/project-nav', () => {
       testForVisibleProducts(product, product !== 'cloudManager'),
     );
 
-    // Object.values(Products).forEach(product =>
-    //   testForCallback(product, product !== 'cloudManager'),
-    // );
-
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, true),
     );

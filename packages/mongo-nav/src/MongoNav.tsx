@@ -1,4 +1,4 @@
-import React, { useEffect, createContext, useContext } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import OrgNav from './org-nav/index';
 import ProjectNav from './project-nav/index';
@@ -18,6 +18,7 @@ import {
 } from './types';
 import { dataFixtures, hostDefaults } from './data';
 import defaultsDeep from 'lodash/defaultsDeep';
+import OnElementClickProvider from './OnElementClickProvider';
 
 const ErrorCodeMap = {
   401: ErrorCode.NO_AUTHORIZATION,
@@ -29,20 +30,6 @@ const navContainerStyle = css`
   z-index: 0;
   position: relative;
 `;
-
-type OnElementClickType = (
-  type?: OnElementClick,
-  event?: React.MouseEvent,
-) => void;
-
-export const OnElementClickContext = createContext<OnElementClickType>(
-  () => {},
-);
-
-export function useOnElementClick() {
-  const onElementClick = useContext(OnElementClickContext);
-  return onElementClick;
-}
 
 interface MongoNavInterface {
   /**
@@ -326,7 +313,7 @@ function MongoNav({
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
   return (
-    <OnElementClickContext.Provider value={onElementClick}>
+    <OnElementClickProvider onElementClick={onElementClick}>
       <section {...rest} className={cx(navContainerStyle, className)}>
         <OrgNav
           account={data?.account}
@@ -357,7 +344,7 @@ function MongoNav({
           />
         )}
       </section>
-    </OnElementClickContext.Provider>
+    </OnElementClickProvider>
   );
 }
 
