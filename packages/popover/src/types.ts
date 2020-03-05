@@ -50,7 +50,7 @@ export interface ElementPosition {
 }
 
 interface ChildrenFunctionParameters {
-  alignment: Align;
+  align: Align;
   justify: Justify;
   referenceElPos: ElementPosition;
 }

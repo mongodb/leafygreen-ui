@@ -65,8 +65,8 @@ const notchVariants = {
 };
 
 interface PopoverFunctionParameters {
-  alignment: Align;
-  justification: Justify;
+  align: Align;
+  justify: Justify;
   referenceElPos: ElementPosition;
 }
 
@@ -239,14 +239,10 @@ function Tooltip({
       spacing={12}
       key="tooltip"
     >
-      {({
-        alignment,
-        justification,
-        referenceElPos,
-      }: PopoverFunctionParameters) => {
+      {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
         const triangleStyle = trianglePosition(
-          alignment,
-          justification,
+          align,
+          justify,
           referenceElPos,
         ) as { containerStyle: string; notchStyle: string };
 

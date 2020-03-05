@@ -84,7 +84,7 @@ describe('positionUtils', () => {
         contentElPos: contentElPos,
       });
 
-      expect(calcPositionObject.alignment).toBeTruthy();
+      expect(calcPositionObject.align).toBeTruthy();
       expect(calcPositionObject.justify).toBeTruthy();
       expect(calcPositionObject.positionCSS).toBeTruthy();
     });
@@ -92,7 +92,7 @@ describe('positionUtils', () => {
     describe('when the reference element is on the top', () => {
       describe('Align.Top', () => {
         test('Align.Top respositions to Align.Bottom based on available space', () => {
-          const { alignment, justify, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -103,7 +103,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('bottom');
+          expect(align).toBe('bottom');
           expect(justify).toBe('start');
           checkPixelValue(positionCSS.top, 15);
           checkPixelValue(positionCSS.left, 45);
@@ -137,7 +137,7 @@ describe('positionUtils', () => {
 
       describe('Align.Right', () => {
         test('Justify.Start works', () => {
-          const { alignment, justify, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -148,7 +148,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('right');
+          expect(align).toBe('right');
           expect(justify).toBe('start');
           checkPixelValue(positionCSS.top, 0);
           checkPixelValue(positionCSS.left, 60);
@@ -159,7 +159,7 @@ describe('positionUtils', () => {
         });
 
         test('Justify.Middle repositions to Justify.Start based on available space', () => {
-          const { alignment, justify, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -170,7 +170,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('right');
+          expect(align).toBe('right');
           expect(justify).toBe('start');
           checkPixelValue(positionCSS.top, 0);
           checkPixelValue(positionCSS.left, 60);
@@ -181,7 +181,7 @@ describe('positionUtils', () => {
         });
 
         test('Justify.Bottom repositions to Justify.Start based on available space', () => {
-          const { alignment, justify, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -192,7 +192,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('right');
+          expect(align).toBe('right');
           expect(justify).toBe('start');
           checkPixelValue(positionCSS.top, 0);
           checkPixelValue(positionCSS.left, 60);
@@ -226,7 +226,7 @@ describe('positionUtils', () => {
 
       describe('Align.Bottom', () => {
         test('Justify.Start works', () => {
-          const { alignment, justify, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -237,7 +237,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('bottom');
+          expect(align).toBe('bottom');
           expect(justify).toBe('start');
           checkPixelValue(positionCSS.top, 15);
           checkPixelValue(positionCSS.left, 45);
@@ -247,7 +247,7 @@ describe('positionUtils', () => {
           );
         });
         test('Justify.Middle works', () => {
-          const { alignment, justify, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -258,7 +258,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('bottom');
+          expect(align).toBe('bottom');
           expect(justify).toBe('middle');
           checkPixelValue(positionCSS.top, 15);
           checkPixelValue(positionCSS.left, 40);
@@ -268,7 +268,7 @@ describe('positionUtils', () => {
           );
         });
         test('Justify.End works', () => {
-          const { alignment, justify, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -279,7 +279,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('bottom');
+          expect(align).toBe('bottom');
           expect(justify).toBe('end');
           checkPixelValue(positionCSS.top, 15);
           checkPixelValue(positionCSS.left, 35);
@@ -312,7 +312,7 @@ describe('positionUtils', () => {
 
       describe('Align.Left', () => {
         test('Justify.Start', () => {
-          const { alignment, justify, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -323,7 +323,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('left');
+          expect(align).toBe('left');
           expect(justify).toBe('start');
           checkPixelValue(positionCSS.top, 0);
           checkPixelValue(positionCSS.left, 20);
@@ -333,7 +333,7 @@ describe('positionUtils', () => {
           );
         });
         test('Justify.Center respositions to Justify.Start based on available space', () => {
-          const { alignment, justify, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -344,7 +344,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('left');
+          expect(align).toBe('left');
           expect(justify).toBe('start');
           checkPixelValue(positionCSS.top, 0);
           checkPixelValue(positionCSS.left, 20);
@@ -355,7 +355,7 @@ describe('positionUtils', () => {
         });
 
         test('Justify.End respositions to Justify.Start based on available space', () => {
-          const { alignment, justify, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -366,7 +366,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('left');
+          expect(align).toBe('left');
           expect(justify).toBe('start');
           checkPixelValue(positionCSS.top, 0);
           checkPixelValue(positionCSS.left, 20);
@@ -400,7 +400,7 @@ describe('positionUtils', () => {
 
       describe('Align.CenterVertical', () => {
         test('Align.CenterVertical respositions to Align.Bottom based on available space', () => {
-          const { alignment, justify, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -411,7 +411,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('bottom');
+          expect(align).toBe('bottom');
           expect(justify).toBe('start');
           checkPixelValue(positionCSS.top, 15);
           checkPixelValue(positionCSS.left, 45);
@@ -445,7 +445,7 @@ describe('positionUtils', () => {
 
       describe('Align.CenterHorizontal', () => {
         test('Justify.Start', () => {
-          const { alignment, justify, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -456,7 +456,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('center-horizontal');
+          expect(align).toBe('center-horizontal');
           expect(justify).toBe('start');
           checkPixelValue(positionCSS.top, 0);
           checkPixelValue(positionCSS.left, 40);
@@ -464,7 +464,7 @@ describe('positionUtils', () => {
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
         test('Justify.Center respositions to Justify.Start based on available space', () => {
-          const { alignment, justify, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -475,7 +475,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('center-horizontal');
+          expect(align).toBe('center-horizontal');
           expect(justify).toBe('start');
           checkPixelValue(positionCSS.top, 0);
           checkPixelValue(positionCSS.left, 40);
@@ -484,7 +484,7 @@ describe('positionUtils', () => {
         });
 
         test('Justify.End respositions to Justify.Start based on available space', () => {
-          const { alignment, justify, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -495,7 +495,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('center-horizontal');
+          expect(align).toBe('center-horizontal');
           expect(justify).toBe('start');
           checkPixelValue(positionCSS.top, 0);
           checkPixelValue(positionCSS.left, 40);

@@ -2,11 +2,11 @@ import { css } from '@leafygreen-ui/emotion';
 import { Align, Justify } from '@leafygreen-ui/popover';
 
 export function trianglePosition(
-  alignment: Align,
-  justification: Justify,
+  align: Align,
+  justify: Justify,
   triggerRect: DOMRect | ClientRect | null,
 ) {
-  if (!alignment || !justification || !triggerRect) {
+  if (!align || !justify || !triggerRect) {
     return '';
   }
 
@@ -22,13 +22,13 @@ export function trianglePosition(
   const notchStyleObj: { [K in Styles]?: string } = {};
   const containerStyleObj: { [K in Styles]?: string } = {};
 
-  switch (alignment) {
+  switch (align) {
     case 'top':
     case 'bottom':
       notchStyleObj.left = '0px';
       notchStyleObj.right = '0px';
 
-      if (alignment === 'top') {
+      if (align === 'top') {
         containerStyleObj.top = `${borderOffset}`;
         notchStyleObj.top = `${notchOverlap}px`;
       } else {
@@ -36,7 +36,7 @@ export function trianglePosition(
         notchStyleObj.bottom = `${notchOverlap}px`;
       }
 
-      switch (justification) {
+      switch (justify) {
         case Justify.Start:
           containerStyleObj.left = `${containerOffsetX}px`;
           break;
@@ -59,7 +59,7 @@ export function trianglePosition(
       notchStyleObj.top = '0px';
       notchStyleObj.bottom = '0px';
 
-      if (alignment === 'left') {
+      if (align === 'left') {
         notchStyleObj.left = `${notchOverlap}px`;
 
         // right align is .8px off, factoring that in here to correct offset
@@ -69,7 +69,7 @@ export function trianglePosition(
         containerStyleObj.right = `${borderOffset}`;
       }
 
-      switch (justification) {
+      switch (justify) {
         case Justify.Start:
           containerStyleObj.top = `${containerOffsetY}px`;
           break;
