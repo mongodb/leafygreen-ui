@@ -295,4 +295,35 @@ describe('packages/mongo-nav', () => {
       );
     });
   });
+
+  describe('when loadData is set to false', () => {
+    beforeEach(() =>
+      renderComponent({
+        mode: 'dev',
+        loadData: false,
+      }),
+    );
+
+    test('the user name is not displayed', () => {
+      expect(expectedElements.userMenu?.innerHTML.includes('DevMode')).toBe(
+        false,
+      );
+    });
+
+    test('the current project name is not displayed', () => {
+      expect(
+        expectedElements.currentProject?.innerHTML.includes(
+          dataFixtures!.currentProject!.projectName,
+        ),
+      ).toBe(false);
+    });
+
+    test('the current organization name is not displayed', () => {
+      expect(
+        expectedElements.currentOrg?.innerHTML.includes(
+          dataFixtures!.currentOrganization!.orgName,
+        ),
+      ).toBe(false);
+    });
+  });
 });

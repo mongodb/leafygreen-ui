@@ -1,5 +1,18 @@
 # @leafygreen-ui/mongo-nav
 
+## 0.13.0
+
+### Minor Changes
+
+- 2cf1a43: Add `activeOrgId` and `activeProjectId` props to MongoNav
+- 0d5bb89: Add `loadData` prop to `MongoNav`
+
+### Patch Changes
+
+- Updated dependencies [a2948f6]
+  - @leafygreen-ui/icon@4.2.0
+  - @leafygreen-ui/icon-button@4.1.3
+
 ## 0.12.0
 
 ### Minor Changes
