@@ -2,8 +2,8 @@ import React, { createContext, useContext } from 'react';
 import { OnElementClick } from './types';
 
 type OnElementClickType = (
-  type?: OnElementClick,
-  event?: React.MouseEvent,
+  type: OnElementClick,
+  event: React.MouseEvent,
 ) => void;
 
 interface OnElementClickProviderProps {
