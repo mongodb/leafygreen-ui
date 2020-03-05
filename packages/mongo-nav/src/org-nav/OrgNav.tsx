@@ -85,7 +85,7 @@ const versionStyle = css`
   display: inline-block;
   font-size: 10px;
   ${facepaint({
-    marginRight: ['96px', '24px', '24px'],
+    marginRight: ['16px', '16px', '16px'],
   })}
 `;
 
@@ -129,7 +129,6 @@ interface OrgNav {
   admin: boolean;
   hosts: Required<HostsInterface>;
   currentProjectName?: string;
-  onLogout: React.MouseEventHandler;
   onPremEnabled?: boolean;
   onPremVersion?: string;
   onPremMFA?: boolean;
@@ -147,7 +146,6 @@ export default function OrgNav({
   admin,
   hosts,
   currentProjectName,
-  onLogout,
   onPremEnabled,
   onPremVersion,
   onPremMFA = false,
@@ -203,7 +201,6 @@ export default function OrgNav({
 
   const renderedUserMenu = onPremEnabled ? (
     <OnPremUserMenu
-      onLogout={onLogout}
       name={account?.firstName ?? ''}
       open={onPremMenuOpen}
       setOpen={setOnPremMenuOpen}
@@ -216,7 +213,6 @@ export default function OrgNav({
       activeProduct={activeProduct}
       urls={urls}
       hosts={hosts}
-      onLogout={onLogout}
     />
   );
 

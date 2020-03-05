@@ -17,8 +17,10 @@ import {
   Product,
   HostsInterface,
   PlanType,
+  OnElementClick,
 } from '../types';
 import { iconLoadingStyle, textLoadingStyle } from '../styles';
+import { useOnElementClick } from '../OnElementClickProvider';
 
 const productIconProp = createDataProp('charts-data-prop');
 export const projectNavHeight = 45;
@@ -223,6 +225,7 @@ export default function ProjectNav({
   const { width: viewportWidth } = useViewportSize();
   const isMobile = viewportWidth < breakpoints.small;
   const isCloudManager = current?.planType === PlanType.Cloud;
+  const onElementClick = useOnElementClick();
 
   const getProductClassName = (product: Product) =>
     cx(productStyle, {
@@ -308,6 +311,7 @@ export default function ProjectNav({
             className={getProductClassName('cloud')}
             aria-disabled={!current}
             tabIndex={!current ? -1 : 0}
+            onClick={event => onElementClick(OnElementClick.Cloud, event)}
           >
             {!isMobile && (
               <Icon
@@ -331,6 +335,7 @@ export default function ProjectNav({
               className={getProductClassName('realm')}
               aria-disabled={!current}
               tabIndex={!current ? -1 : 0}
+              onClick={event => onElementClick(OnElementClick.Realm, event)}
             >
               {!isMobile && (
                 <Icon
@@ -355,6 +360,7 @@ export default function ProjectNav({
               className={getProductClassName('charts')}
               aria-disabled={!current}
               tabIndex={!current ? -1 : 0}
+              onClick={event => onElementClick(OnElementClick.Charts, event)}
             >
               {!isMobile && (
                 <Icon
