@@ -85,7 +85,7 @@ const versionStyle = css`
   display: inline-block;
   font-size: 10px;
   ${facepaint({
-    marginRight: ['96px', '24px', '24px'],
+    marginRight: ['16px', '16px', '16px'],
   })}
 `;
 
