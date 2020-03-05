@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import Box from '@leafygreen-ui/box'
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 const containerStyle = css`
@@ -27,12 +28,11 @@ function Card({ children, as = 'section', className, ...rest }: CardProps) {
   const Root = as;
 
   return (
-    <Root
-      {...(rest as HTMLElementProps<any>)}
-      className={cx(containerStyle, className)}
-    >
-      {children}
-    </Root>
+    <Box {...(rest as HTMLElementProps<any>)}>
+      <Root className={cx(containerStyle, className)}>
+        {children}
+      </Root>
+    </Box>
   );
 }
 
