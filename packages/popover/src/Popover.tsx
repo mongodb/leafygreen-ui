@@ -1,4 +1,11 @@
-import React, { useMemo, Fragment } from 'react';
+import React, {
+  useMemo,
+  Fragment,
+  useState,
+  useLayoutEffect,
+  useRef,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import Portal from '@leafygreen-ui/portal';
@@ -61,6 +68,7 @@ function Popover({
 }: PopoverProps) {
   const [placeholderNode, setPlaceholderNode] = useElementNode();
   const [contentNode, setContentNode] = useElementNode();
+  const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
 
   let referenceElement: HTMLElement | null = null;
 
@@ -97,6 +105,7 @@ function Popover({
     active,
     align,
     justify,
+    forceUpdateCounter,
   ]);
 
   const contentElPos = useMemo(() => getElementPosition(contentNode), [
@@ -106,7 +115,26 @@ function Popover({
     active,
     align,
     justify,
+    forceUpdateCounter,
   ]);
+
+  const prevJustifyRef = useRef<Justify>();
+  const prevJustify = prevJustifyRef.current;
+
+  useEffect(() => {
+    prevJustifyRef.current = justify;
+  });
+
+  useLayoutEffect(() => {
+    // justify={Justify.Fit} can cause the content's height/width to change
+    // If we're switching to/from Fit, force an extra pass to make sure the popover is positioned correctly.
+    if (
+      prevJustify !== justify &&
+      (justify === Justify.Fit || prevJustify === Justify.Fit)
+    ) {
+      setForceUpdateCounter(n => n + 1);
+    }
+  });
 
   const {
     align: windowSafeAlign,
