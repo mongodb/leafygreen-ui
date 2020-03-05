@@ -112,26 +112,38 @@ function getSidebarVariantStyle(variant: Variant): string {
 }
 
 function getCopyButtonStyle(variant: Variant, copied: boolean): string {
-  if (copied) {
-    return css`
-      align-self: center;
-      color: ${uiColors.white};
-      background-color: ${uiColors.green.base};
-    `;
-  }
-
-  if (variant === Variant.Dark) {
-    return css`
-      align-self: center;
-      color: ${uiColors.gray.base};
-      background-color: ${uiColors.gray.dark3};
-    `;
-  }
-
-  return css`
+  const baseStyle = css`
     align-self: center;
     color: ${uiColors.gray.base};
   `;
+
+  if (copied) {
+    return cx(
+      baseStyle,
+      css`
+        color: ${uiColors.white};
+        &:before {
+          &:focus {
+            background-color: ${uiColors.green.base};
+          }
+          &:hover {
+            background-color: ${uiColors.green.base};
+          }
+        }
+      `,
+    );
+  }
+
+  if (variant === Variant.Dark) {
+    return cx(
+      baseStyle,
+      css`
+        background-color: ${uiColors.gray.dark3};
+      `,
+    );
+  }
+
+  return baseStyle;
 }
 
 const ScrollState = {
@@ -262,7 +274,6 @@ function Code({
   }, []);
 
   const wrapperStyle = css`
-    display: block;
     border: 1px solid ${variantColors[variant][1]};
     border-radius: 4px;
     overflow: hidden;
@@ -311,6 +322,11 @@ function Code({
 
   const debounceScroll = debounce(handleScroll, 50, { leading: true });
 
+  function showCheckmark() {
+    setCopied(true);
+    // setTimeout(() => setCopied(false), 1500);
+  }
+
   if (!multiline) {
     return (
       <div className={wrapperStyle}>
@@ -334,12 +350,7 @@ function Code({
           </div>
           {!showWindowChrome && (
             <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
-              <CopyToClipboard
-                text={content}
-                onCopy={() => {
-                  setCopied(true);
-                }}
-              >
+              <CopyToClipboard text={content} onCopy={showCheckmark}>
                 <IconButton
                   variant={variant}
                   ariaLabel="Copy"
@@ -381,12 +392,7 @@ function Code({
 
         {!showWindowChrome && (
           <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
-            <CopyToClipboard
-              text={content}
-              onCopy={() => {
-                setCopied(true);
-              }}
-            >
+            <CopyToClipboard text={content} onCopy={showCheckmark}>
               <IconButton
                 variant={variant}
                 ariaLabel="Copy"

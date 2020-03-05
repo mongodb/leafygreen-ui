@@ -3,9 +3,6 @@ import { render, cleanup, fireEvent } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
 import Code from './Code';
 
-// I had to add this in to prevent another error being thrown on the click event (in addition to the TypeError)
-window.prompt = jest.fn();
-
 afterAll(cleanup);
 
 const codeSnippet = 'const greeting = "Hello, world!";';
@@ -38,6 +35,9 @@ describe('packages/Syntax', () => {
     });
 
     test(`copy button actually copies text to clipboard`, () => {
+      // I had to add this in to prevent another error being thrown on the click event (in addition to the TypeError)
+      window.prompt = jest.fn();
+
       // the following line does fire a click event, but it also produces an error
       // TypeError: reselectPrevious is not a function
       fireEvent.click(copyButton);
