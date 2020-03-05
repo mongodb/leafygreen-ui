@@ -352,7 +352,6 @@ function Code({
           </div>
           {!showWindowChrome && (
             <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
-              {/* <CopyToClipboard text={content} onCopy={showCheckmark}> */}
               <IconButton
                 variant={variant}
                 ariaLabel="Copy"
@@ -362,7 +361,6 @@ function Code({
               >
                 <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
               </IconButton>
-              {/* </CopyToClipboard> */}
             </div>
           )}
         </div>
@@ -396,7 +394,6 @@ function Code({
 
         {!showWindowChrome && (
           <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
-            {/* <CopyToClipboard text={content} onCopy={showCheckmark}> */}
             <IconButton
               variant={variant}
               ariaLabel="Copy"
@@ -406,7 +403,6 @@ function Code({
             >
               <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
             </IconButton>
-            {/* </CopyToClipboard> */}
           </div>
         )}
       </div>
