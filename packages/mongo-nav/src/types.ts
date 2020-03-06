@@ -1,4 +1,4 @@
-const NavItem = {
+const NavElement = {
   Logout: 'logout',
   Cloud: 'cloud',
   Realm: 'realm',
@@ -12,9 +12,9 @@ const NavItem = {
   UserSettings: 'userSettings',
 } as const;
 
-type NavItem = typeof NavItem[keyof typeof NavItem];
+type NavElement = typeof NavElement[keyof typeof NavElement];
 
-export { NavItem };
+export { NavElement };
 
 const Product = {
   Account: 'account',

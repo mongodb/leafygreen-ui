@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import { dataFixtures } from './data';
 import MongoNav from './MongoNav';
-import { NavItem } from './types';
+import { NavElement } from './types';
 
 // types
 interface ExpectedElements {
@@ -349,7 +349,7 @@ describe('packages/mongo-nav', () => {
       fireEvent.click(atlas as HTMLElement);
       expect(onElementClick).toHaveBeenCalled();
       expect(onElementClick).toHaveBeenCalledWith(
-        NavItem.Cloud,
+        NavElement.Cloud,
         expect.anything(),
       );
     });
@@ -359,7 +359,7 @@ describe('packages/mongo-nav', () => {
       fireEvent.click(realm as HTMLElement);
       expect(onElementClick).toHaveBeenCalled();
       expect(onElementClick).toHaveBeenCalledWith(
-        NavItem.Realm,
+        NavElement.Realm,
         expect.anything(),
       );
     });
@@ -369,7 +369,7 @@ describe('packages/mongo-nav', () => {
       fireEvent.click(charts as HTMLElement);
       expect(onElementClick).toHaveBeenCalled();
       expect(onElementClick).toHaveBeenCalledWith(
-        NavItem.Charts,
+        NavElement.Charts,
         expect.anything(),
       );
     });
@@ -381,7 +381,7 @@ describe('packages/mongo-nav', () => {
       const logout = expectedElements.userMenuLogout;
       fireEvent.click(logout as HTMLElement);
       expect(onElementClick).toHaveBeenCalledWith(
-        NavItem.Logout,
+        NavElement.Logout,
         expect.anything(),
       );
     });
@@ -405,7 +405,7 @@ describe('packages/mongo-nav', () => {
       const logout = expectedElements.onPremLogout;
       fireEvent.click(logout as HTMLElement);
       expect(onElementClick).toHaveBeenCalledWith(
-        NavItem.Logout,
+        NavElement.Logout,
         expect.anything(),
       );
     });

@@ -17,7 +17,7 @@ import {
   Product,
   HostsInterface,
   PlanType,
-  NavItem,
+  NavElement,
 } from '../types';
 import { iconLoadingStyle, textLoadingStyle } from '../styles';
 import { useOnElementClick } from '../OnElementClickProvider';
@@ -311,7 +311,7 @@ export default function ProjectNav({
             className={getProductClassName('cloud')}
             aria-disabled={!current}
             tabIndex={!current ? -1 : 0}
-            onClick={event => onElementClick(NavItem.Cloud, event)}
+            onClick={event => onElementClick(NavElement.Cloud, event)}
           >
             {!isMobile && (
               <Icon
@@ -335,7 +335,7 @@ export default function ProjectNav({
               className={getProductClassName('realm')}
               aria-disabled={!current}
               tabIndex={!current ? -1 : 0}
-              onClick={event => onElementClick(NavItem.Realm, event)}
+              onClick={event => onElementClick(NavElement.Realm, event)}
             >
               {!isMobile && (
                 <Icon
@@ -360,7 +360,7 @@ export default function ProjectNav({
               className={getProductClassName('charts')}
               aria-disabled={!current}
               tabIndex={!current ? -1 : 0}
-              onClick={event => onElementClick(NavItem.Charts, event)}
+              onClick={event => onElementClick(NavElement.Charts, event)}
             >
               {!isMobile && (
                 <Icon

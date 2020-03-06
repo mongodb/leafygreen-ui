@@ -15,7 +15,7 @@ import {
   OrganizationInterface,
   Product,
   URLSInterface,
-  NavItem,
+  NavElement,
   CurrentOrganizationInterface,
   HostsInterface,
   OrgPaymentLabel,
@@ -124,7 +124,7 @@ interface OrgNav {
   data?: Array<OrganizationInterface>;
   constructOrganizationURL: (orgID: string) => string;
   urls: Required<URLSInterface>;
-  activeNav?: NavItem;
+  activeNav?: NavElement;
   onOrganizationChange: React.ChangeEventHandler;
   admin: boolean;
   hosts: Required<HostsInterface>;
