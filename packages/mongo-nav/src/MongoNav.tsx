@@ -13,7 +13,6 @@ import {
   DataInterface,
   ErrorCode,
   OnPremInterface,
-  OnElementClick,
   PostBodyInterface,
 } from './types';
 import { dataFixtures, hostDefaults } from './data';
@@ -124,7 +123,7 @@ interface MongoNavInterface {
    * Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second
    * This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally
    */
-  onElementClick?: (type: OnElementClick, event: React.MouseEvent) => void;
+  onElementClick?: (type: NavItem, event: React.MouseEvent) => void;
 
   /**
    * Determines whether or not the component will fetch data from cloud
@@ -183,7 +182,7 @@ function MongoNav({
   constructProjectURL: constructProjectURLProp,
   onError = () => {},
   onSuccess = () => {},
-  onElementClick = (_type: OnElementClick, _event: React.MouseEvent) => {}, // eslint-disable-line @typescript-eslint/no-unused-vars
+  onElementClick = (_type: NavItem, _event: React.MouseEvent) => {}, // eslint-disable-line @typescript-eslint/no-unused-vars
   onPrem = { mfa: false, enabled: false, version: '' },
   activeOrgId,
   activeProjectId,

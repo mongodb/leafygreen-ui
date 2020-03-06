@@ -1,13 +1,20 @@
-const OnElementClick = {
+const NavItem = {
   Logout: 'logout',
   Cloud: 'cloud',
   Realm: 'realm',
   Charts: 'charts',
+  Billing: 'billing',
+  Support: 'support',
+  AccessManager: 'accessManager',
+  AllClusters: 'allClusters',
+  Admin: 'admin',
+  OrgSettings: 'orgSettings',
+  UserSettings: 'userSettings',
 } as const;
 
-type OnElementClick = typeof OnElementClick[keyof typeof OnElementClick];
+type NavItem = typeof NavItem[keyof typeof NavItem];
 
-export { OnElementClick };
+export { NavItem };
 
 const Product = {
   Account: 'account',
@@ -21,20 +28,6 @@ const Product = {
 type Product = typeof Product[keyof typeof Product];
 
 export { Product };
-
-const NavItem = {
-  Billing: 'billing',
-  Support: 'support',
-  AccessManager: 'accessManager',
-  AllClusters: 'allClusters',
-  Admin: 'admin',
-  OrgSettings: 'orgSettings',
-  UserSettings: 'userSettings',
-} as const;
-
-type NavItem = typeof NavItem[keyof typeof NavItem];
-
-export { NavItem };
 
 const Mode = {
   Dev: 'dev',
