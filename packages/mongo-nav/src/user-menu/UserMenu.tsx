@@ -21,7 +21,7 @@ import {
   URLSInterface,
   Product,
   HostsInterface,
-  OnElementClick,
+  NavElement,
 } from '../types';
 import { hostDefaults } from '../data';
 import { useOnElementClick } from '../OnElementClickProvider';
@@ -211,7 +211,7 @@ function UserMenu({
     if (onLogoutProp) {
       onLogoutProp(e);
     } else {
-      onElementClick(OnElementClick.Logout, e);
+      onElementClick(NavElement.Logout, e);
     }
   };
 
