@@ -156,7 +156,7 @@ export default function OrgNav({
   const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
   const isMobile = viewportWidth < breakpoints.small;
-  const disabled = activeNav === 'userSettings';
+  const disabled = activeNav === NavElement.UserSettings;
 
   let paymentVariant: Colors | undefined;
   let key: Colors;
@@ -243,7 +243,7 @@ export default function OrgNav({
         constructOrganizationURL={constructOrganizationURL}
         urls={urls}
         onChange={onOrganizationChange}
-        isActive={activeNav === 'orgSettings'}
+        isActive={activeNav === NavElement.OrgSettings}
         loading={!current}
         disabled={disabled}
         isOnPrem={onPremEnabled}
@@ -257,7 +257,7 @@ export default function OrgNav({
             <>
               <OrgNavLink
                 href={current && orgNav.accessManager}
-                isActive={activeNav === 'accessManager'}
+                isActive={activeNav === NavElement.AccessManager}
                 loading={!current}
                 data-testid="org-nav-access-manager"
               >
@@ -293,7 +293,7 @@ export default function OrgNav({
 
               <OrgNavLink
                 href={current && orgNav.support}
-                isActive={activeNav === 'support'}
+                isActive={activeNav === NavElement.Support}
                 loading={!current}
                 className={supportContainer}
                 data-testid="org-nav-support"
@@ -304,7 +304,7 @@ export default function OrgNav({
               {!onPremEnabled && (
                 <OrgNavLink
                   href={current && orgNav.billing}
-                  isActive={activeNav === 'billing'}
+                  isActive={activeNav === NavElement.Billing}
                   loading={!current}
                   data-testid="org-nav-billing"
                 >
@@ -330,7 +330,7 @@ export default function OrgNav({
         {!isMobile && (
           <OrgNavLink
             href={orgNav.allClusters}
-            isActive={activeNav === 'allClusters'}
+            isActive={activeNav === NavElement.AllClusters}
             className={rightLinkMargin}
             data-testid="org-nav-all-clusters-link"
           >
@@ -341,7 +341,7 @@ export default function OrgNav({
         {!isTablet && admin && !onPremEnabled && (
           <OrgNavLink
             href={orgNav.admin}
-            isActive={activeNav === 'admin'}
+            isActive={activeNav === NavElement.Admin}
             className={rightLinkMargin}
             data-testid="org-nav-admin-link"
           >

@@ -206,6 +206,7 @@ interface ProjectNavInterface {
   hosts: Required<HostsInterface>;
   alerts?: number;
   activeProduct: Product;
+  activeNav?: NavElement;
   onProjectChange: React.ChangeEventHandler;
 }
 
@@ -215,6 +216,7 @@ export default function ProjectNav({
   constructProjectURL,
   urls,
   activeProduct,
+  activeNav,
   onProjectChange,
   hosts,
   alerts = 0,
@@ -401,6 +403,7 @@ export default function ProjectNav({
                 className={iconButtonMargin}
                 size="large"
                 disabled={!current}
+                active={activeNav === NavElement.ProjectInvite}
                 data-testid="project-nav-invite"
               >
                 <Icon glyph="InviteUser" size="large" />
@@ -422,6 +425,7 @@ export default function ProjectNav({
                 size="large"
                 className={iconButtonMargin}
                 disabled={!current}
+                active={activeNav === NavElement.ProjectActivityFeed}
                 data-testid="project-nav-activity-feed"
               >
                 <Icon glyph="ActivityFeed" size="large" />
@@ -442,6 +446,7 @@ export default function ProjectNav({
                 href={projectNav.alerts as string}
                 size="large"
                 disabled={!current}
+                active={activeNav === NavElement.ProjectAlerts}
                 data-testid="project-nav-alerts"
               >
                 {alerts > 0 && (

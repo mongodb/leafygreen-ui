@@ -333,6 +333,7 @@ function MongoNav({
         {showProjNav && !onPrem.enabled && (
           <ProjectNav
             activeProduct={activeProduct}
+            activeNav={activeNav}
             current={data?.currentProject}
             data={data?.projects}
             constructProjectURL={constructProjectURL}

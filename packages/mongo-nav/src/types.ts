@@ -10,6 +10,9 @@ const NavElement = {
   Admin: 'admin',
   OrgSettings: 'orgSettings',
   UserSettings: 'userSettings',
+  ProjectInvite: 'projectInvite',
+  ProjectActivityFeed: 'projectActivityFeed',
+  ProjectAlerts: 'projectAlerts',
 } as const;
 
 type NavElement = typeof NavElement[keyof typeof NavElement];

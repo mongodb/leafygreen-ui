@@ -32,7 +32,7 @@ storiesOf('MongoNav', module).add('Default', () => (
         onPrem={{
           mfa: true,
           version: '4.4.0',
-          enabled: boolean('enabled', false),
+          enabled: boolean('onPrem', false),
         }}
         loadData={boolean('loadData', true)}
       />
