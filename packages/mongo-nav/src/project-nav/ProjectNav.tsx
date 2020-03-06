@@ -209,6 +209,8 @@ function displayProductName() {
   return 'Stitch';
 }
 
+const secondTabName = displayProductName();
+
 interface ProjectNavInterface {
   current?: CurrentProjectInterface;
   data?: Array<ProjectInterface>;
@@ -239,8 +241,6 @@ export default function ProjectNav({
   const isMobile = viewportWidth < breakpoints.small;
   const isCloudManager = current?.planType === PlanType.Cloud;
   const onElementClick = useOnElementClick();
-
-  const secondTabName = displayProductName();
 
   const getProductClassName = (product: Product) =>
     cx(productStyle, {
