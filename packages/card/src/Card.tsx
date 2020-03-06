@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import Box from '@leafygreen-ui/box';
+import Box, { BoxProps } from '@leafygreen-ui/box';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { BoxProps } from 'packages/box/src/Box';
 import omit from 'lodash/omit';
 
 const containerStyle = css`
