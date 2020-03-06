@@ -6,7 +6,6 @@ import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 const rootMenuStyle = css`
   width: 200px;
@@ -105,8 +104,6 @@ function Menu({
   > | null>(null);
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
 
-  const { setUsingKeyboard } = useUsingKeyboardContext();
-
   const setOpen =
     (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
     uncontrolledSetOpen;
@@ -132,8 +129,6 @@ function Menu({
 
         if (open && hasSetInitialFocus.current === false) {
           setFocus(refs[0]);
-          // This allows the focus state to be shown via the LeafyGreen Provider
-          setUsingKeyboard(true);
           hasSetInitialFocus.current = true;
         }
       };
@@ -213,13 +208,11 @@ function Menu({
       if (focusedRefIndex !== -1) {
         const subMenu = refs[focusedRefIndex];
         subMenu.focus();
-        setUsingKeyboard(true);
       }
     } else {
       if (focusedRefIndex !== -1) {
         const subMenuFirstChild = refs[focusedRefIndex + 1];
         subMenuFirstChild?.focus();
-        setUsingKeyboard(true);
       }
     }
   }, [currentSubMenu]);

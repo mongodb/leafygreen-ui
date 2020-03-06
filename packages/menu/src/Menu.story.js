@@ -51,7 +51,6 @@ function Controlled() {
           setOpen={setOpen}
         >
           <MenuItem
-            active
             size={select('Size', ['default', 'large'], 'large')}
             glyph={<Icon glyph="Laptop" size="xlarge" />}
           >
@@ -60,7 +59,7 @@ function Controlled() {
           <MenuItem disabled={boolean('Disabled', true)} size="large">
             Disabled Menu Item
           </MenuItem>
-          <MenuItem description="I am a description" size="large">
+          <MenuItem active description="I am a description" size="large">
             Menu Item With Description
           </MenuItem>
           <MenuItem href="http://mongodb.design" size="large">
