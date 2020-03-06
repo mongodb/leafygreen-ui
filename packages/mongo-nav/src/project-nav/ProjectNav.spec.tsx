@@ -43,6 +43,8 @@ const linkNamesToUrls: LinkNameToUrls = {
   invite,
 };
 
+let dateMock, originalDate: () => number;
+
 describe('packages/mongo-nav/src/project-nav', () => {
   const queries: Queries = {};
   const expectedElements: ExpectedElements = {};
@@ -168,5 +170,62 @@ describe('packages/mongo-nav/src/project-nav', () => {
     );
 
     testForAlerts(alerts, true);
+  });
+
+  describe('when the date is before May 4th', () => {
+    beforeEach(renderComponent);
+
+    test('it displays Realm in the ProjectNav', () => {
+      expect(
+        ((expectedElements.realm
+          ?.firstChild as HTMLElement)?.innerHTML).includes('Realm'),
+      ).toBe(false);
+    });
+  });
+
+  describe('when the date is May 4th', () => {
+    const mdbworld = new Date('May 4, 2020 0:00:00');
+
+    beforeEach(() => {
+      dateMock = () => mdbworld.valueOf();
+      originalDate = Date.now;
+      Date.now = dateMock;
+      renderComponent();
+    });
+
+    afterEach(() => {
+      Date.now = originalDate;
+      jest.restoreAllMocks();
+    });
+
+    test('it displays Realm in the ProjectNav', () => {
+      expect(
+        ((expectedElements.realm
+          ?.firstChild as HTMLElement)?.innerHTML).includes('Realm'),
+      ).toBe(true);
+    });
+  });
+
+  describe('when the date is after May 4th', () => {
+    const setDate = new Date('May 5, 2020 0:00:00');
+
+    beforeEach(() => {
+      dateMock = () => setDate.valueOf();
+      originalDate = Date.now;
+      Date.now = dateMock;
+      renderComponent();
+    });
+
+    afterEach(() => {
+      Date.now = originalDate;
+      jest.restoreAllMocks();
+    });
+
+    test('it displays Realm in the ProjectNav', () => {
+      expect(
+        ((expectedElements.realm
+          ?.firstChild as HTMLElement)?.innerHTML).includes('Realm'),
+      ).toBe(true);
+    });
   });
 });
