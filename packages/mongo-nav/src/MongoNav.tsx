@@ -8,7 +8,7 @@ import {
   Product,
   URLSInterface,
   HostsInterface,
-  NavItem,
+  NavElement,
   Mode,
   DataInterface,
   ErrorCode,
@@ -17,6 +17,7 @@ import {
 } from './types';
 import { dataFixtures, hostDefaults } from './data';
 import defaultsDeep from 'lodash/defaultsDeep';
+import OnElementClickProvider from './OnElementClickProvider';
 
 const ErrorCodeMap = {
   401: ErrorCode.NO_AUTHORIZATION,
@@ -38,7 +39,7 @@ interface MongoNavInterface {
   /**
    * Determines what nav item is currently active.
    */
-  activeNav?: NavItem;
+  activeNav?: NavElement;
 
   /**
    * Describes whether or not user is an `admin`.
@@ -97,11 +98,6 @@ interface MongoNavInterface {
   onSuccess?: (response: DataInterface) => void;
 
   /**
-   * Callback executed when user logs out
-   */
-  onLogout?: React.MouseEventHandler;
-
-  /**
    * onPrem config object with three keys: enabled, version and mfa
    */
   onPrem?: OnPremInterface;
@@ -122,6 +118,12 @@ interface MongoNavInterface {
    * Applies a className to the root element
    */
   className?: string;
+
+  /**
+   * Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second
+   * This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally
+   */
+  onElementClick?: (type: NavElement, event: React.MouseEvent) => void;
 
   /**
    * Determines whether or not the component will fetch data from cloud
@@ -158,7 +160,8 @@ interface MongoNavInterface {
  * @param props.onSuccess Callback that receives the response of the fetched data, having been converted from JSON into an object.
  * @param props.onError Function that is passed an error code as a string, so that consuming application can handle fetch failures.
  * @param props.onPrem onPrem config object with three keys: enabled, version and mfa
- * @param props.onLogout Callback executed when user logs out
+ * @param props.className Applies a className to the root element
+ * @param props.onElementClick Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second. This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally.
  * @param props.activeOrgId ID for active organization, will cause a POST request to cloud to update current active organization.
  * @param props.activeProjectId ID for active project, will cause a POST request to cloud to update current active project.
  * @param props.className Applies a className to the root element
@@ -179,7 +182,7 @@ function MongoNav({
   constructProjectURL: constructProjectURLProp,
   onError = () => {},
   onSuccess = () => {},
-  onLogout = () => {},
+  onElementClick = (_type: NavElement, _event: React.MouseEvent) => {}, // eslint-disable-line @typescript-eslint/no-unused-vars
   onPrem = { mfa: false, enabled: false, version: '' },
   activeOrgId,
   activeProjectId,
@@ -309,37 +312,39 @@ function MongoNav({
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
   return (
-    <section {...rest} className={cx(navContainerStyle, className)}>
-      <OrgNav
-        account={data?.account}
-        activeProduct={activeProduct}
-        current={data?.currentOrganization}
-        data={data?.organizations}
-        constructOrganizationURL={constructOrganizationURL}
-        urls={urls}
-        activeNav={activeNav}
-        onOrganizationChange={onOrganizationChange}
-        admin={admin}
-        hosts={hosts}
-        currentProjectName={data?.currentProject?.projectName}
-        onLogout={onLogout}
-        onPremEnabled={onPrem.enabled}
-        onPremVersion={onPrem.version}
-        onPremMFA={onPrem.mfa}
-      />
-      {showProjNav && !onPrem.enabled && (
-        <ProjectNav
+    <OnElementClickProvider onElementClick={onElementClick}>
+      <section {...rest} className={cx(navContainerStyle, className)}>
+        <OrgNav
+          account={data?.account}
           activeProduct={activeProduct}
-          current={data?.currentProject}
-          data={data?.projects}
-          constructProjectURL={constructProjectURL}
+          current={data?.currentOrganization}
+          data={data?.organizations}
+          constructOrganizationURL={constructOrganizationURL}
           urls={urls}
-          alerts={data?.currentProject?.alertsOpen}
-          onProjectChange={onProjectChange}
+          activeNav={activeNav}
+          onOrganizationChange={onOrganizationChange}
+          admin={admin}
           hosts={hosts}
+          currentProjectName={data?.currentProject?.projectName}
+          onPremEnabled={onPrem.enabled}
+          onPremVersion={onPrem.version}
+          onPremMFA={onPrem.mfa}
         />
-      )}
-    </section>
+        {showProjNav && !onPrem.enabled && (
+          <ProjectNav
+            activeProduct={activeProduct}
+            activeNav={activeNav}
+            current={data?.currentProject}
+            data={data?.projects}
+            constructProjectURL={constructProjectURL}
+            urls={urls}
+            alerts={data?.currentProject?.alertsOpen}
+            onProjectChange={onProjectChange}
+            hosts={hosts}
+          />
+        )}
+      </section>
+    </OnElementClickProvider>
   );
 }
 
@@ -347,7 +352,7 @@ MongoNav.displayName = 'MongoNav';
 
 MongoNav.propTypes = {
   activeProduct: PropTypes.oneOf(Object.values(Product)),
-  activeNav: PropTypes.oneOf(Object.values(NavItem)),
+  activeNav: PropTypes.oneOf(Object.values(NavElement)),
   hosts: PropTypes.objectOf(PropTypes.string),
   onOrganizationChange: PropTypes.func,
   onProjectChange: PropTypes.func,
@@ -364,7 +369,7 @@ MongoNav.propTypes = {
     enabled: PropTypes.bool,
     version: PropTypes.string,
   }),
-  onLogout: PropTypes.func,
+  onElementClick: PropTypes.func,
   activeOrgId: PropTypes.string,
   activeProjectId: PropTypes.string,
 };

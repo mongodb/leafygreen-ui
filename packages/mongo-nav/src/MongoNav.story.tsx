@@ -4,7 +4,7 @@ import { select, boolean } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import MongoNav from '.';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Product, NavItem } from './types';
+import { Product, NavElement } from './types';
 
 const setStorybookWidth = css`
   width: 100%;
@@ -21,14 +21,18 @@ storiesOf('MongoNav', module).add('Default', () => (
           Object.values(Product),
           Product.Cloud,
         )}
-        activeNav={select('activeNav', Object.values(NavItem), 'accessManager')}
+        activeNav={select(
+          'activeNav',
+          Object.values(NavElement),
+          'accessManager',
+        )}
         onOrganizationChange={() => {}}
         onProjectChange={() => {}}
         admin={boolean('admin', true)}
         onPrem={{
           mfa: true,
           version: '4.4.0',
-          enabled: boolean('enabled', false),
+          enabled: boolean('onPrem', false),
         }}
         loadData={boolean('loadData', true)}
       />

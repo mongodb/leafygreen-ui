@@ -1,3 +1,24 @@
+const NavElement = {
+  Logout: 'logout',
+  Cloud: 'cloud',
+  Realm: 'realm',
+  Charts: 'charts',
+  Billing: 'billing',
+  Support: 'support',
+  AccessManager: 'accessManager',
+  AllClusters: 'allClusters',
+  Admin: 'admin',
+  OrgSettings: 'orgSettings',
+  UserSettings: 'userSettings',
+  ProjectInvite: 'projectInvite',
+  ProjectActivityFeed: 'projectActivityFeed',
+  ProjectAlerts: 'projectAlerts',
+} as const;
+
+type NavElement = typeof NavElement[keyof typeof NavElement];
+
+export { NavElement };
+
 const Product = {
   Account: 'account',
   Charts: 'charts',
@@ -10,20 +31,6 @@ const Product = {
 type Product = typeof Product[keyof typeof Product];
 
 export { Product };
-
-const NavItem = {
-  Billing: 'billing',
-  Support: 'support',
-  AccessManager: 'accessManager',
-  AllClusters: 'allClusters',
-  Admin: 'admin',
-  OrgSettings: 'orgSettings',
-  UserSettings: 'userSettings',
-} as const;
-
-type NavItem = typeof NavItem[keyof typeof NavItem];
-
-export { NavItem };
 
 const Mode = {
   Dev: 'dev',

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { css } from '@leafygreen-ui/emotion';
-import { URLSInterface } from '../types';
+import { URLSInterface, NavElement } from '../types';
 import { UserMenuTrigger } from '../user-menu/index';
+import { useOnElementClick } from '../OnElementClickProvider';
 
 const onPremMenuWrapper = css`
   display: inline-block;
@@ -15,7 +16,6 @@ interface OnPremUserMenuProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   urls: Required<URLSInterface>;
-  onLogout: React.MouseEventHandler;
   mfa: boolean;
 }
 
@@ -24,9 +24,10 @@ export default function OnPremUserMenu({
   open,
   setOpen,
   urls,
-  onLogout,
   mfa,
 }: OnPremUserMenuProps) {
+  const onElementClick = useOnElementClick();
+
   return (
     <div className={onPremMenuWrapper}>
       <UserMenuTrigger
@@ -78,7 +79,12 @@ export default function OnPremUserMenu({
           Feature Request
         </MenuItem>
 
-        <MenuItem onClick={onLogout} data-testid="om-user-menuitem-sign-out">
+        <MenuItem
+          onClick={(event: React.MouseEvent) =>
+            onElementClick(NavElement.Logout, event)
+          }
+          data-testid="om-user-menuitem-sign-out"
+        >
           Sign Out
         </MenuItem>
       </Menu>
