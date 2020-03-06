@@ -1,4 +1,10 @@
-import React, { useMemo, useRef, useLayoutEffect, useState } from 'react';
+import React, {
+  useMemo,
+  useRef,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Syntax, {
@@ -256,6 +262,16 @@ function Code({
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [copied, setCopied] = useState(false);
 
+  useEffect(() => {
+    let timeoutId: any;
+
+    if (copied) {
+      timeoutId = setTimeout(() => setCopied(false), 1500);
+    }
+
+    return () => clearTimeout(timeoutId);
+  });
+
   useLayoutEffect(() => {
     if (multiline) {
       const multilineEl = scrollableMultiLine.current;
@@ -276,6 +292,10 @@ function Code({
         setScrollState(ScrollState.Right);
       }
     }
+
+    const copyButton = document.getElementsByClassName('.copy-btn');
+    const clipboard = new ClipboardJS(copyButton);
+    clipboard.destroy();
   }, []);
 
   const wrapperStyle = css`
@@ -327,13 +347,6 @@ function Code({
 
   const debounceScroll = debounce(handleScroll, 50, { leading: true });
 
-  new ClipboardJS('.copy-btn');
-
-  function showCheckmark() {
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  }
-
   if (!multiline) {
     return (
       <div className={wrapperStyle}>
@@ -361,7 +374,9 @@ function Code({
                 variant={variant}
                 ariaLabel="Copy"
                 className={cx(getCopyButtonStyle(variant, copied), 'copy-btn')}
-                onClick={showCheckmark}
+                onClick={() => {
+                  setCopied(true);
+                }}
                 data-clipboard-text={content}
               >
                 <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
@@ -403,7 +418,9 @@ function Code({
               variant={variant}
               ariaLabel="Copy"
               className={cx(getCopyButtonStyle(variant, copied), 'copy-btn')}
-              onClick={showCheckmark}
+              onClick={() => {
+                setCopied(true);
+              }}
               data-clipboard-text={content}
             >
               <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
