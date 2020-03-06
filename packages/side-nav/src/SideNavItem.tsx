@@ -56,6 +56,8 @@ const defaultStyle = css`
 
   &:hover,
   &:focus {
+    background-color: ${uiColors.gray.light2};
+
     &:before {
       transform: scale(0.95, 0.85);
       background-color: ${uiColors.gray.light2};
@@ -64,11 +66,11 @@ const defaultStyle = css`
 
   &:active:before {
     transform: scale(0.95, 0.85);
-    background-color: ${uiColors.gray.light2};
   }
 
   &:hover {
     text-decoration: none;
+    background-color: ${uiColors.gray.light2};
   }
 
   &:focus {
@@ -83,9 +85,11 @@ const activeStyle = css`
   background-color: ${uiColors.green.light3};
 
   &:hover {
+    background-color: ${uiColors.green.light3};
     color: ${uiColors.green.dark3};
 
     &:before {
+      transform: scale(0.95, 0.85);
       background-color: ${uiColors.green.light3};
     }
   }
@@ -98,6 +102,8 @@ const disabledStyle = css`
 
 const focusedStyle = css`
   &:focus {
+    background-color: ${uiColors.blue.light3};
+
     text-decoration: none;
     color: ${uiColors.blue.dark3};
 
