@@ -259,7 +259,7 @@ function MongoNav({
         mfa: `${hosts.cloud}/v2#/preferences/2fa`,
       },
       university: {
-        videoPreferences: `${hosts.university}`,
+        universityPreferences: `${hosts.university}/edit_profile`,
       },
       support: {
         userPreferences: `${hosts.support}/profile`,
