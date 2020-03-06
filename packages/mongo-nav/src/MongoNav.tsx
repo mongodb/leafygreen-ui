@@ -8,12 +8,11 @@ import {
   Product,
   URLSInterface,
   HostsInterface,
-  NavItem,
+  NavElement,
   Mode,
   DataInterface,
   ErrorCode,
   OnPremInterface,
-  OnElementClick,
   PostBodyInterface,
 } from './types';
 import { dataFixtures, hostDefaults } from './data';
@@ -40,7 +39,7 @@ interface MongoNavInterface {
   /**
    * Determines what nav item is currently active.
    */
-  activeNav?: NavItem;
+  activeNav?: NavElement;
 
   /**
    * Describes whether or not user is an `admin`.
@@ -124,7 +123,7 @@ interface MongoNavInterface {
    * Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second
    * This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally
    */
-  onElementClick?: (type: OnElementClick, event: React.MouseEvent) => void;
+  onElementClick?: (type: NavElement, event: React.MouseEvent) => void;
 
   /**
    * Determines whether or not the component will fetch data from cloud
@@ -183,7 +182,7 @@ function MongoNav({
   constructProjectURL: constructProjectURLProp,
   onError = () => {},
   onSuccess = () => {},
-  onElementClick = (_type: OnElementClick, _event: React.MouseEvent) => {}, // eslint-disable-line @typescript-eslint/no-unused-vars
+  onElementClick = (_type: NavElement, _event: React.MouseEvent) => {}, // eslint-disable-line @typescript-eslint/no-unused-vars
   onPrem = { mfa: false, enabled: false, version: '' },
   activeOrgId,
   activeProjectId,
@@ -334,6 +333,7 @@ function MongoNav({
         {showProjNav && !onPrem.enabled && (
           <ProjectNav
             activeProduct={activeProduct}
+            activeNav={activeNav}
             current={data?.currentProject}
             data={data?.projects}
             constructProjectURL={constructProjectURL}
@@ -352,7 +352,7 @@ MongoNav.displayName = 'MongoNav';
 
 MongoNav.propTypes = {
   activeProduct: PropTypes.oneOf(Object.values(Product)),
-  activeNav: PropTypes.oneOf(Object.values(NavItem)),
+  activeNav: PropTypes.oneOf(Object.values(NavElement)),
   hosts: PropTypes.objectOf(PropTypes.string),
   onOrganizationChange: PropTypes.func,
   onProjectChange: PropTypes.func,
