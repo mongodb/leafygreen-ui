@@ -8,7 +8,7 @@ import {
   hostDefaults,
   constructProjectURL,
 } from '../data';
-import ProjectNav from './ProjectNav';
+import ProjectNav, { displayProductName } from './ProjectNav';
 import { startCase } from 'lodash';
 
 // types
@@ -172,20 +172,15 @@ describe('packages/mongo-nav/src/project-nav', () => {
     testForAlerts(alerts, true);
   });
 
-  describe('when the date is before May 4th', () => {
-    beforeEach(renderComponent);
-
-    test('it displays Realm in the ProjectNav', () => {
-      expect(
-        ((expectedElements.realm
-          ?.firstChild as HTMLElement)?.innerHTML).includes('Realm'),
-      ).toBe(false);
+  describe('when the date is before MongoDB World', () => {
+    test('Stitch is displayed in the ProjectNav', () => {
+      const productName = displayProductName();
+      expect(productName).toBe('Stitch');
     });
   });
 
-  describe('when the date is May 4th', () => {
+  describe('when the date is the day of MongoDB World', () => {
     const mdbworld = new Date('May 4, 2020 0:00:00');
-
     beforeEach(() => {
       dateMock = () => mdbworld.valueOf();
       originalDate = Date.now;
@@ -198,19 +193,16 @@ describe('packages/mongo-nav/src/project-nav', () => {
       jest.restoreAllMocks();
     });
 
-    test('it displays Realm in the ProjectNav', () => {
-      expect(
-        ((expectedElements.realm
-          ?.firstChild as HTMLElement)?.innerHTML).includes('Realm'),
-      ).toBe(true);
+    test('Realm is displayed in the ProjectNav', () => {
+      const productName = displayProductName();
+      expect(productName).toBe('Realm');
     });
   });
 
-  describe('when the date is after May 4th', () => {
-    const setDate = new Date('May 5, 2020 0:00:00');
-
+  describe('when the date is after MongoDB World', () => {
+    const testDate = new Date('May 5, 2020 0:00:00');
     beforeEach(() => {
-      dateMock = () => setDate.valueOf();
+      dateMock = () => testDate.valueOf();
       originalDate = Date.now;
       Date.now = dateMock;
       renderComponent();
@@ -221,11 +213,9 @@ describe('packages/mongo-nav/src/project-nav', () => {
       jest.restoreAllMocks();
     });
 
-    test('it displays Realm in the ProjectNav', () => {
-      expect(
-        ((expectedElements.realm
-          ?.firstChild as HTMLElement)?.innerHTML).includes('Realm'),
-      ).toBe(true);
+    test('Realm is displayed in the ProjectNav', () => {
+      const productName = displayProductName();
+      expect(productName).toBe('Realm');
     });
   });
 });
