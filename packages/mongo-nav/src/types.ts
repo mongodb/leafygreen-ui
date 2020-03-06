@@ -147,7 +147,7 @@ export interface URLSInterface {
       mfa: string;
     };
     university?: {
-      videoPreferences: string;
+      universityPreferences: string;
     };
     support?: {
       userPreferences: string;
