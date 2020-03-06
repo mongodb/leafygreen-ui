@@ -245,6 +245,8 @@ export default function ProjectNav({
     [iconLoadingStyle]: !current,
   });
 
+  const onMenuClick = () => setOpen(false);
+
   return (
     <nav
       className={navContainerStyle}
@@ -278,20 +280,30 @@ export default function ProjectNav({
           </IconButton>
         }
       >
-        <MenuItem href={projectNav.settings} data-testid="project-nav-settings">
+        <MenuItem
+          href={projectNav.settings}
+          onClick={onMenuClick}
+          data-testid="project-nav-settings"
+        >
           Project Settings
         </MenuItem>
         <MenuItem
           href={projectNav.accessManager}
+          onClick={onMenuClick}
           data-testid="project-nav-access-manager"
         >
           Project Access Manager
         </MenuItem>
-        <MenuItem href={projectNav.support} data-testid="project-nav-support">
+        <MenuItem
+          href={projectNav.support}
+          onClick={onMenuClick}
+          data-testid="project-nav-support"
+        >
           Project Support
         </MenuItem>
         <MenuItem
           href={projectNav.integrations}
+          onClick={onMenuClick}
           data-testid="project-nav-integrations"
         >
           Integrations
