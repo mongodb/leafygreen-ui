@@ -1,10 +1,7 @@
 import React, { createContext, useContext } from 'react';
-import { OnElementClick } from './types';
+import { NavElement } from './types';
 
-type OnElementClickType = (
-  type: OnElementClick,
-  event: React.MouseEvent,
-) => void;
+type OnElementClickType = (type: NavElement, event: React.MouseEvent) => void;
 
 interface OnElementClickProviderProps {
   children: React.ReactNode;
