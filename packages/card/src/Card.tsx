@@ -4,6 +4,8 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Box from '@leafygreen-ui/box';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { BoxProps } from 'packages/box/src/Box';
+import omit from 'lodash/omit';
 
 const containerStyle = css`
   background-color: white;
@@ -18,17 +20,19 @@ const containerStyle = css`
   }
 `;
 
-interface CardProps {
-  children: React.ReactNode;
+type CardProps<T> = BoxProps<T> & {
   as?: React.ElementType<any>;
-  className?: string;
-}
+};
 
-function Card({ children, as = 'section', className, ...rest }: CardProps) {
+function Card<T extends React.ReactNode>(props: CardProps<T>) {
+  const { as, className, children } = props;
+  const rest = omit(props as any, ['as', 'className', 'children']);
+
   return (
     <Box
-      {...(rest as HTMLElementProps<any>)}
       className={cx(containerStyle, className)}
+      component={as}
+      {...(rest as HTMLElementProps<any>)}
     >
       {children}
     </Box>
@@ -38,9 +42,7 @@ function Card({ children, as = 'section', className, ...rest }: CardProps) {
 Card.displayName = 'Card';
 
 Card.propTypes = {
-  children: PropTypes.node,
   as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  className: PropTypes.string,
 };
 
 export default Card;
