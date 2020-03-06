@@ -17,7 +17,7 @@ import {
   Product,
   HostsInterface,
   PlanType,
-  OnElementClick,
+  NavElement,
 } from '../types';
 import { iconLoadingStyle, textLoadingStyle } from '../styles';
 import { useOnElementClick } from '../OnElementClickProvider';
@@ -217,6 +217,7 @@ interface ProjectNavInterface {
   hosts: Required<HostsInterface>;
   alerts?: number;
   activeProduct: Product;
+  activeNav?: NavElement;
   onProjectChange: React.ChangeEventHandler;
 }
 
@@ -226,6 +227,7 @@ export default function ProjectNav({
   constructProjectURL,
   urls,
   activeProduct,
+  activeNav,
   onProjectChange,
   hosts,
   alerts = 0,
@@ -255,6 +257,8 @@ export default function ProjectNav({
   const iconStyle = cx(productIconStyle, {
     [iconLoadingStyle]: !current,
   });
+
+  const onMenuClick = () => setOpen(false);
 
   return (
     <nav
@@ -289,20 +293,30 @@ export default function ProjectNav({
           </IconButton>
         }
       >
-        <MenuItem href={projectNav.settings} data-testid="project-nav-settings">
+        <MenuItem
+          href={projectNav.settings}
+          onClick={onMenuClick}
+          data-testid="project-nav-settings"
+        >
           Project Settings
         </MenuItem>
         <MenuItem
           href={projectNav.accessManager}
+          onClick={onMenuClick}
           data-testid="project-nav-access-manager"
         >
           Project Access Manager
         </MenuItem>
-        <MenuItem href={projectNav.support} data-testid="project-nav-support">
+        <MenuItem
+          href={projectNav.support}
+          onClick={onMenuClick}
+          data-testid="project-nav-support"
+        >
           Project Support
         </MenuItem>
         <MenuItem
           href={projectNav.integrations}
+          onClick={onMenuClick}
           data-testid="project-nav-integrations"
         >
           Integrations
@@ -322,7 +336,7 @@ export default function ProjectNav({
             className={getProductClassName('cloud')}
             aria-disabled={!current}
             tabIndex={!current ? -1 : 0}
-            onClick={event => onElementClick(OnElementClick.Cloud, event)}
+            onClick={event => onElementClick(NavElement.Cloud, event)}
           >
             {!isMobile && (
               <Icon
@@ -346,7 +360,7 @@ export default function ProjectNav({
               className={getProductClassName('realm')}
               aria-disabled={!current}
               tabIndex={!current ? -1 : 0}
-              onClick={event => onElementClick(OnElementClick.Realm, event)}
+              onClick={event => onElementClick(NavElement.Realm, event)}
             >
               {!isMobile && (
                 <Icon
@@ -371,7 +385,7 @@ export default function ProjectNav({
               className={getProductClassName('charts')}
               aria-disabled={!current}
               tabIndex={!current ? -1 : 0}
-              onClick={event => onElementClick(OnElementClick.Charts, event)}
+              onClick={event => onElementClick(NavElement.Charts, event)}
             >
               {!isMobile && (
                 <Icon
@@ -400,6 +414,7 @@ export default function ProjectNav({
                 className={iconButtonMargin}
                 size="large"
                 disabled={!current}
+                active={activeNav === NavElement.ProjectInvite}
                 data-testid="project-nav-invite"
               >
                 <Icon glyph="InviteUser" size="large" />
@@ -421,6 +436,7 @@ export default function ProjectNav({
                 size="large"
                 className={iconButtonMargin}
                 disabled={!current}
+                active={activeNav === NavElement.ProjectActivityFeed}
                 data-testid="project-nav-activity-feed"
               >
                 <Icon glyph="ActivityFeed" size="large" />
@@ -441,6 +457,7 @@ export default function ProjectNav({
                 href={projectNav.alerts as string}
                 size="large"
                 disabled={!current}
+                active={activeNav === NavElement.ProjectAlerts}
                 data-testid="project-nav-alerts"
               >
                 {alerts > 0 && (
