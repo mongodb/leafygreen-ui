@@ -240,6 +240,8 @@ export default function ProjectNav({
   const isCloudManager = current?.planType === PlanType.Cloud;
   const onElementClick = useOnElementClick();
 
+  const secondTabName = displayProductName();
+
   const getProductClassName = (product: Product) =>
     cx(productStyle, {
       [productStates.active]: !!(activeProduct === product && current),
@@ -369,7 +371,7 @@ export default function ProjectNav({
                   glyph="Stitch"
                 />
               )}
-              {displayProductName()}
+              {secondTabName}
             </a>
           </li>
         )}
