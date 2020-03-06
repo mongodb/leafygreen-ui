@@ -1,7 +1,7 @@
-import MongoNav from './MongoNav';
-import { orgNavHeight } from './org-nav/index';
-import { projectNavHeight } from './project-nav/index';
-import UserMenu from './user-menu/index';
+export { default } from './MongoNav';
 
-export { UserMenu, orgNavHeight, projectNavHeight };
-export default MongoNav;
+export { default as UserMenu } from './user-menu/index';
+
+export { NavElement } from './types';
+export { orgNavHeight } from './org-nav/index';
+export { projectNavHeight } from './project-nav/index';

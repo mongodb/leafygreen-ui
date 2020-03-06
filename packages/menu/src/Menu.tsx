@@ -97,11 +97,20 @@ function Menu({
 
   const hasSetInitialFocus = useRef(false);
   const hasSetInitialOpen = useRef(false);
+  const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
+
   const [, setClosed] = useState(false);
   const [currentSubMenu, setCurrentSubMenu] = useState<React.ReactElement<
     HTMLLIElement
   > | null>(null);
+  const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
+
   const { setUsingKeyboard } = useUsingKeyboardContext();
+
+  const setOpen =
+    (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
+    uncontrolledSetOpen;
+  const open = controlledOpen ?? uncontrolledOpen;
 
   function updateChildren(children: React.ReactNode): React.ReactNode {
     return React.Children.map(children, child => {
@@ -195,13 +204,6 @@ function Menu({
       return child;
     });
   }
-
-  const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
-  const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
-  const setOpen =
-    (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
-    uncontrolledSetOpen;
-  const open = controlledOpen ?? uncontrolledOpen;
 
   // When a SubMenu becomes open, it's set to currentSubMenu, and we focus on the first child.
   useEffect(() => {
