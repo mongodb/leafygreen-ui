@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Box, { BoxProps } from '@leafygreen-ui/box';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import omit from 'lodash/omit';
 
 const containerStyle = css`
@@ -19,23 +18,10 @@ const containerStyle = css`
   }
 `;
 
-type CardProps<T> = BoxProps<T> & {
-  as?: React.ElementType<any>;
-};
+function Card<T extends React.ReactNode>(props: BoxProps<T>) {
+  const rest = omit(props as any, ['className']);
 
-function Card<T extends React.ReactNode>(props: CardProps<T>) {
-  const { as, className, children } = props;
-  const rest = omit(props as any, ['as', 'className', 'children']);
-
-  return (
-    <Box
-      className={cx(containerStyle, className)}
-      component={as}
-      {...(rest as HTMLElementProps<any>)}
-    >
-      {children}
-    </Box>
-  );
+  return <Box className={cx(containerStyle, props.className)} {...rest} />;
 }
 
 Card.displayName = 'Card';
