@@ -35,28 +35,43 @@ const SomeComponent = () => <Code>{codeSnippet}</Code>;
 **Output HTML**
 
 ```HTML
-<pre class="leafygreen-ui-5u6rr1">
-	<code class="lg-highlight-hljs-light leafygreen-ui-16k3j4z">
-		<span class="lg-highlight-function">
-			<span class="lg-highlight-keyword">function</span>
-
-			<span class="lg-highlight-title">greeting</span>
-			(
-			<span class="lg-highlight-params">entity</span>
-			)
-		</span>
-		{
-		<span class="lg-highlight-keyword">return</span>
-
-		<span class="lg-highlight-string">
-			`Hello, <span class="lg-highlight-subst">${entity}</span>!`
-		</span>;
-		}
-		<span class="lg-highlight-built_in">console</span>
-		.log(greeting(
-		<span class="lg-highlight-string">'World'</span>));
-	</code>
-</pre>
+<div class="leafygreen-ui-1xban8j">
+    <div class="leafygreen-ui-1q8jsgx">
+        <pre class="leafygreen-ui-5u6rr1">
+			<code class="lg-highlight-hljs-light leafygreen-ui-16k3j4z">
+				<span class="lg-highlight-function">
+					<span class="lg-highlight-keyword">function</span>
+					<span class="lg-highlight-title">greeting</span>
+					(
+					<span class="lg-highlight-params">entity</span>
+					)
+				</span>
+				{
+				<span class="lg-highlight-keyword">return</span>
+				<span class="lg-highlight-string">
+					`Hello, <span class="lg-highlight-subst">${entity}</span>!`
+				</span>;
+				}
+				<span class="lg-highlight-built_in">console</span>
+				.log(greeting(
+				<span class="lg-highlight-string">'World'</span>));
+			</code>
+		</pre>
+        <div class="leafygreen-ui-1p8ha9w">
+            <button data-clipboard-text="function greeting(entity) { return `Hello, ${entity}!`; } console.log(greeting('World'));" aria-disabled="false" aria-label="Copy" class="copy-btn leafygreen-ui-nx7krf" tabindex="0">
+                <span class="leafygreen-ui-1rvdyoi">
+					<svg width="16" height="16" role="img" viewBox="0 0 16 16" class="">
+						<title> Copy Icon</title>
+						<g fill="currentColor" fill-rule="evenodd">
+							<path d="M13 5h-3V2H7v9h6V5zm2 0v8H5V0h5l5 5z"></path>
+							<path d="M4 4v1H2v10h7v-1h1v2H1V4h3z"></path>
+						</g>
+					</svg>
+				</span>
+            </button>
+        </div>
+    </div>
+</div>
 ```
 
 ## Properties
