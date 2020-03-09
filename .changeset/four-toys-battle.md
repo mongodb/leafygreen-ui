@@ -1,6 +1,6 @@
 ---
-'@leafygreen-ui/code': patch
-'@leafygreen-ui/syntax': patch
+'@leafygreen-ui/code': minor
+'@leafygreen-ui/syntax': minor
 ---
 
 Add Kotlin language highlight support
