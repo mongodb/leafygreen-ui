@@ -25,14 +25,14 @@ describe('packages/Card', () => {
     expect(renderedCard.textContent).toBe(children);
   });
 
-  test(`renders inside of a section tag by default`, () => {
-    expect(renderedCard.tagName.toLowerCase()).toBe('section');
+  test(`renders inside of a div tag by default`, () => {
+    expect(renderedCard.tagName.toLowerCase()).toBe('div');
   });
 
   test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
     const newCardId = 'newCardID';
     const { getByTestId } = render(
-      <Card data-testid={newCardId} as="section">
+      <Card data-testid={newCardId} component="section">
         Card!
       </Card>,
     );
