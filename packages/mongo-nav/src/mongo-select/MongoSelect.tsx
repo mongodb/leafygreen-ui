@@ -18,7 +18,11 @@ import {
   CurrentProjectInterface,
   CurrentOrganizationInterface,
   PlanType,
+  NavElement,
 } from '../types';
+import OnElementClickProvider, {
+  useOnElementClick,
+} from '../OnElementClickProvider';
 
 const menuItemHeight = 36;
 
@@ -118,6 +122,7 @@ function OrgSelect({
   loading = false,
 }: OrganizationMongoSelectProps) {
   const [open, setOpen] = useState(false);
+  const onElementClick = useOnElementClick();
 
   const renderOrganizationOption = (datum: OrganizationInterface) => {
     const { orgId, orgName, planType } = datum;
@@ -180,6 +185,9 @@ function OrgSelect({
         <MenuItem
           onKeyDown={onKeyDown}
           href={urls.mongoSelect?.viewAllOrganizations}
+          onClick={(e: React.MouseEvent) =>
+            onElementClick(NavElement.ViewAllOrganizations, e)
+          }
         >
           <strong className={viewAllStyle}>View All Organizations</strong>
         </MenuItem>
@@ -202,6 +210,7 @@ function ProjectSelect({
   loading = false,
 }: ProjectMongoSelectProps) {
   const [open, setOpen] = useState(false);
+  const onElementClick = useOnElementClick();
 
   const renderProjectOption = (datum: ProjectInterface) => {
     const { projectId, projectName, orgId } = datum;
@@ -251,12 +260,22 @@ function ProjectSelect({
 
         <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
           <FocusableMenuItem>
-            <Button href={urls.mongoSelect.viewAllProjects as string}>
+            <Button
+              href={urls.mongoSelect.viewAllProjects as string}
+              onClick={(e: React.MouseEvent) =>
+                onElementClick(NavElement.ViewAllProjects, e)
+              }
+            >
               View All Projects
             </Button>
           </FocusableMenuItem>
           <FocusableMenuItem>
-            <Button href={urls.mongoSelect.newProject as string}>
+            <Button
+              href={urls.mongoSelect.newProject as string}
+              onClick={(e: React.MouseEvent) =>
+                onElementClick(NavElement.AddProject, e)
+              }
+            >
               + New Project
             </Button>
           </FocusableMenuItem>

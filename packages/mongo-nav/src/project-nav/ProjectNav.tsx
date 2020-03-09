@@ -247,7 +247,10 @@ export default function ProjectNav({
     [iconLoadingStyle]: !current,
   });
 
-  const onMenuClick = () => setOpen(false);
+  const onMenuClick = (type: NavElement, e: React.MouseEvent) => {
+    onElementClick(type, e);
+    setOpen(false);
+  };
 
   return (
     <nav
@@ -284,28 +287,36 @@ export default function ProjectNav({
       >
         <MenuItem
           href={projectNav.settings}
-          onClick={onMenuClick}
+          onClick={(e: React.MouseEvent) =>
+            onMenuClick(NavElement.ProjectSettings, e)
+          }
           data-testid="project-nav-settings"
         >
           Project Settings
         </MenuItem>
         <MenuItem
           href={projectNav.accessManager}
-          onClick={onMenuClick}
+          onClick={(e: React.MouseEvent) =>
+            onMenuClick(NavElement.ProjectAccessManager, e)
+          }
           data-testid="project-nav-access-manager"
         >
           Project Access Manager
         </MenuItem>
         <MenuItem
           href={projectNav.support}
-          onClick={onMenuClick}
           data-testid="project-nav-support"
+          onClick={(e: React.MouseEvent) =>
+            onMenuClick(NavElement.ProjectSuport, e)
+          }
         >
           Project Support
         </MenuItem>
         <MenuItem
           href={projectNav.integrations}
-          onClick={onMenuClick}
+          onClick={(e: React.MouseEvent) =>
+            onMenuClick(NavElement.ProjectIntegrations, e)
+          }
           data-testid="project-nav-integrations"
         >
           Integrations
@@ -325,7 +336,7 @@ export default function ProjectNav({
             className={getProductClassName('cloud')}
             aria-disabled={!current}
             tabIndex={!current ? -1 : 0}
-            onClick={event => onElementClick(NavElement.Cloud, event)}
+            onClick={e => onElementClick(NavElement.Cloud, e)}
           >
             {!isMobile && (
               <Icon
@@ -349,7 +360,7 @@ export default function ProjectNav({
               className={getProductClassName('realm')}
               aria-disabled={!current}
               tabIndex={!current ? -1 : 0}
-              onClick={event => onElementClick(NavElement.Realm, event)}
+              onClick={e => onElementClick(NavElement.Realm, e)}
             >
               {!isMobile && (
                 <Icon
@@ -374,7 +385,7 @@ export default function ProjectNav({
               className={getProductClassName('charts')}
               aria-disabled={!current}
               tabIndex={!current ? -1 : 0}
-              onClick={event => onElementClick(NavElement.Charts, event)}
+              onClick={e => onElementClick(NavElement.Charts, e)}
             >
               {!isMobile && (
                 <Icon
@@ -405,6 +416,9 @@ export default function ProjectNav({
                 disabled={!current}
                 active={activeNav === NavElement.ProjectInvite}
                 data-testid="project-nav-invite"
+                onClick={(e: React.MouseEvent) =>
+                  onElementClick(NavElement.ProjectInvite, e)
+                }
               >
                 <Icon glyph="InviteUser" size="large" />
               </IconButton>
@@ -427,6 +441,9 @@ export default function ProjectNav({
                 disabled={!current}
                 active={activeNav === NavElement.ProjectActivityFeed}
                 data-testid="project-nav-activity-feed"
+                onClick={(e: React.MouseEvent) =>
+                  onElementClick(NavElement.ProjectActivityFeed, e)
+                }
               >
                 <Icon glyph="ActivityFeed" size="large" />
               </IconButton>
@@ -448,6 +465,9 @@ export default function ProjectNav({
                 disabled={!current}
                 active={activeNav === NavElement.ProjectAlerts}
                 data-testid="project-nav-alerts"
+                onClick={(e: React.MouseEvent) =>
+                  onElementClick(NavElement.ProjectAlerts, e)
+                }
               >
                 {alerts > 0 && (
                   <div

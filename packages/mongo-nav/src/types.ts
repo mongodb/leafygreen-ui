@@ -1,4 +1,5 @@
 const NavElement = {
+  Leaf: 'leaf',
   Logout: 'logout',
   Cloud: 'cloud',
   Realm: 'realm',
@@ -13,6 +14,13 @@ const NavElement = {
   ProjectInvite: 'projectInvite',
   ProjectActivityFeed: 'projectActivityFeed',
   ProjectAlerts: 'projectAlerts',
+  ProjectSettings: 'projectSettings',
+  ProjectSuport: 'projectSupport',
+  ProjectIntegrations: 'projectIntegrations',
+  ProjectAccessManager: 'projectAccessManager',
+  ViewAllOrganizations: 'viewAllOrganizations',
+  ViewAllProjects: 'viewAllProjects',
+  AddProject: 'addProject',
 } as const;
 
 type NavElement = typeof NavElement[keyof typeof NavElement];

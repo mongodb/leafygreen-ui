@@ -22,6 +22,7 @@ import {
 } from '../types';
 import { OrgSelect } from '../mongo-select/index';
 import UserMenu from '../user-menu/index';
+import { useOnElementClick } from '../OnElementClickProvider';
 
 export const orgNavHeight = 60;
 
@@ -152,6 +153,7 @@ export default function OrgNav({
 }: OrgNav) {
   const [accessManagerOpen, setAccessManagerOpen] = useState(false);
   const [onPremMenuOpen, setOnPremMenuOpen] = useState(false);
+  const onElementClick = useOnElementClick();
   const { orgNav } = urls;
   const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
@@ -228,7 +230,7 @@ export default function OrgNav({
         variant="dark"
         usePortal={false}
         trigger={
-          <a href="/">
+          <a href="/" onClick={e => onElementClick(NavElement.Leaf, e)}>
             <LogoMark height={30} />
           </a>
         }
@@ -297,6 +299,7 @@ export default function OrgNav({
                 loading={!current}
                 className={supportContainer}
                 data-testid="org-nav-support"
+                onClick={e => onElementClick(NavElement.Support, e)}
               >
                 Support
               </OrgNavLink>
@@ -307,6 +310,7 @@ export default function OrgNav({
                   isActive={activeNav === NavElement.Billing}
                   loading={!current}
                   data-testid="org-nav-billing"
+                  onClick={e => onElementClick(NavElement.Billing, e)}
                 >
                   Billing
                 </OrgNavLink>
@@ -333,6 +337,7 @@ export default function OrgNav({
             isActive={activeNav === NavElement.AllClusters}
             className={rightLinkMargin}
             data-testid="org-nav-all-clusters-link"
+            onClick={e => onElementClick(NavElement.AllClusters, e)}
           >
             All Clusters
           </OrgNavLink>
