@@ -59,7 +59,7 @@ export const urlDefaults: Required<URLSInterface> = {
       mfa: `https://cloud.mongodb.com/v2#/preferences/2fa`,
     },
     university: {
-      videoPreferences: `https://university.mongodb.com/override-test`,
+      universityPreferences: `https://university.mongodb.com/override-test`,
     },
     support: {
       userPreferences: `https://support.mongodb.com/profile`,

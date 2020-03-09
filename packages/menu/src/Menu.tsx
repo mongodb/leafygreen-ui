@@ -6,7 +6,6 @@ import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 const rootMenuStyle = css`
   width: 200px;
@@ -97,11 +96,18 @@ function Menu({
 
   const hasSetInitialFocus = useRef(false);
   const hasSetInitialOpen = useRef(false);
+  const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
+
   const [, setClosed] = useState(false);
   const [currentSubMenu, setCurrentSubMenu] = useState<React.ReactElement<
     HTMLLIElement
   > | null>(null);
-  const { setUsingKeyboard } = useUsingKeyboardContext();
+  const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
+
+  const setOpen =
+    (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
+    uncontrolledSetOpen;
+  const open = controlledOpen ?? uncontrolledOpen;
 
   function updateChildren(children: React.ReactNode): React.ReactNode {
     return React.Children.map(children, child => {
@@ -123,8 +129,6 @@ function Menu({
 
         if (open && hasSetInitialFocus.current === false) {
           setFocus(refs[0]);
-          // This allows the focus state to be shown via the LeafyGreen Provider
-          setUsingKeyboard(true);
           hasSetInitialFocus.current = true;
         }
       };
@@ -196,13 +200,6 @@ function Menu({
     });
   }
 
-  const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
-  const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
-  const setOpen =
-    (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
-    uncontrolledSetOpen;
-  const open = controlledOpen ?? uncontrolledOpen;
-
   // When a SubMenu becomes open, it's set to currentSubMenu, and we focus on the first child.
   useEffect(() => {
     const focusedRefIndex = refs.indexOf(focused);
@@ -211,13 +208,11 @@ function Menu({
       if (focusedRefIndex !== -1) {
         const subMenu = refs[focusedRefIndex];
         subMenu.focus();
-        setUsingKeyboard(true);
       }
     } else {
       if (focusedRefIndex !== -1) {
         const subMenuFirstChild = refs[focusedRefIndex + 1];
         subMenuFirstChild?.focus();
-        setUsingKeyboard(true);
       }
     }
   }, [currentSubMenu]);
