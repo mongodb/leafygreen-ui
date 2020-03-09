@@ -270,7 +270,7 @@ function Code({
     }
 
     return () => clearTimeout(timeoutId);
-  });
+  }, [copied]);
 
   useLayoutEffect(() => {
     if (multiline) {
