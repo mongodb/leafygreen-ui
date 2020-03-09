@@ -17,7 +17,7 @@ function MockSideNav() {
     <SideNav>
       <SideNavGroup header={textHeader}>
         <SideNavItem active>Active State</SideNavItem>
-        <SideNavItem>Disabled State</SideNavItem>
+        <SideNavItem disabled>Disabled State</SideNavItem>
       </SideNavGroup>
 
       <SideNavGroup header={contentHeader}>
