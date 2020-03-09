@@ -65,7 +65,7 @@ describe('packages/UserMenu', () => {
     );
     fireEvent.click(universityArrowButton as HTMLElement);
 
-    const universityMenuItem = getByText('Video Preferences');
+    const universityMenuItem = getByText('University Preferences');
     expect(universityMenuItem).toBeInTheDocument();
     waitForElementToBeRemoved(() => userPreferences).then(() =>
       expect(userPreferences).not.toBeVisible(),
@@ -115,7 +115,7 @@ describe('packages/UserMenu', () => {
 
       fireEvent.click(universityItem);
 
-      const universitySubMenuItem = getByText('Video Preferences');
+      const universitySubMenuItem = getByText('University Preferences');
       expect(
         (universitySubMenuItem?.parentNode?.parentNode as HTMLAnchorElement)
           .href,
