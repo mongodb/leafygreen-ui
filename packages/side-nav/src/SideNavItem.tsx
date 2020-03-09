@@ -15,7 +15,6 @@ import { sideNavItemSidePadding } from './styles';
 const sideNavItemContainer = createDataProp('side-nav-item-container');
 
 // container styles
-
 const defaultStyle = css`
   box-sizing: border-box;
   position: relative;
@@ -57,14 +56,13 @@ const defaultStyle = css`
   &:hover,
   &:focus {
     &:before {
-      transform: scale(0.95, 0.85);
+      transform: scale(1);
       background-color: ${uiColors.gray.light2};
     }
   }
 
   &:active:before {
-    transform: scale(0.95, 0.85);
-    background-color: ${uiColors.gray.light2};
+    transform: scale(1);
   }
 
   &:hover {
@@ -80,12 +78,17 @@ const defaultStyle = css`
 const activeStyle = css`
   cursor: default;
   text-decoration: none;
-  background-color: ${uiColors.green.light3};
+
+  &:before {
+    transform: scale(1);
+    background-color: ${uiColors.green.light3};
+  }
 
   &:hover {
     color: ${uiColors.green.dark3};
 
     &:before {
+      transform: scale(1);
       background-color: ${uiColors.green.light3};
     }
   }
