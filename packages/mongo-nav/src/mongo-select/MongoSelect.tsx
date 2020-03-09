@@ -39,10 +39,7 @@ const ulStyle = css`
   max-height: ${5 * menuItemHeight}px;
   list-style: none;
   padding: unset;
-`;
-
-const overflowScroll = css`
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 const viewAllStyle = css`
@@ -121,7 +118,6 @@ function OrgSelect({
   loading = false,
 }: OrganizationMongoSelectProps) {
   const [open, setOpen] = useState(false);
-  const menuItemLength = data?.length ?? 0;
 
   const renderOrganizationOption = (datum: OrganizationInterface) => {
     const { orgId, orgName, planType } = datum;
@@ -171,11 +167,7 @@ function OrgSelect({
           />
         </FocusableMenuItem>
 
-        <ul
-          className={cx(ulStyle, {
-            [overflowScroll]: menuItemLength > 5,
-          })}
-        >
+        <ul className={ulStyle}>
           {data?.map(renderOrganizationOption) ?? (
             <li>
               You do not belong to any organizations. Create an organization to
@@ -210,7 +202,6 @@ function ProjectSelect({
   loading = false,
 }: ProjectMongoSelectProps) {
   const [open, setOpen] = useState(false);
-  const menuItemLength = data?.length ?? 0;
 
   const renderProjectOption = (datum: ProjectInterface) => {
     const { projectId, projectName, orgId } = datum;
@@ -252,11 +243,7 @@ function ProjectSelect({
           />
         </FocusableMenuItem>
 
-        <ul
-          className={cx(ulStyle, {
-            [overflowScroll]: menuItemLength > 5,
-          })}
-        >
+        <ul className={ulStyle}>
           {data?.map(datum => renderProjectOption(datum))}
         </ul>
 

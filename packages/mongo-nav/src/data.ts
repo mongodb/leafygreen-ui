@@ -33,6 +33,26 @@ export const dataFixtures = {
       orgName: 'Demo Organization 2',
       planType: 'cloud',
     },
+    {
+      orgId: '5d729a93',
+      orgName: 'Demo Organization',
+      planType: 'atlas',
+    },
+    {
+      orgId: '5e0fa79',
+      orgName: 'Demo Organization 2',
+      planType: 'cloud',
+    },
+    {
+      orgId: '5d729a93',
+      orgName: 'Demo Organization',
+      planType: 'atlas',
+    },
+    {
+      orgId: '5e0fa79',
+      orgName: 'Demo Organization 2',
+      planType: 'cloud',
+    },
   ],
   projects: [
     {
