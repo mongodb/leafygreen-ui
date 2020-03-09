@@ -37,9 +37,9 @@ const menuItemContainerStyle = css`
 
 const ulStyle = css`
   max-height: ${5 * menuItemHeight}px;
-  overflow: scroll;
   list-style: none;
   padding: unset;
+  overflow-y: auto;
 `;
 
 const viewAllStyle = css`
