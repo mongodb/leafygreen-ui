@@ -320,12 +320,18 @@ function UserMenu({
           <MenuItem
             href={userMenu?.cloud?.userPreferences}
             data-testid="user-menuitem-cloud-user-preferences"
+            onClick={(e: React.MouseEvent) =>
+              onElementClick(NavElement.UserMenuCloudUserPreferences, e)
+            }
           >
             User Preferences
           </MenuItem>
           <MenuItem
             href={userMenu?.cloud?.invitations}
             data-testid="user-menuitem-cloud-invitations"
+            onClick={(e: React.MouseEvent) =>
+              onElementClick(NavElement.UserMenuCloudInvitations, e)
+            }
           >
             <span className={subMenuItemStyle}>
               Invitations
@@ -337,10 +343,18 @@ function UserMenu({
           <MenuItem
             href={userMenu?.cloud?.organizations}
             data-testid="user-menuitem-cloud-organizations"
+            onClick={(e: React.MouseEvent) =>
+              onElementClick(NavElement.UserMenuCloudOrganizations, e)
+            }
           >
             Organizations
           </MenuItem>
-          <MenuItem href={userMenu?.cloud?.mfa}>
+          <MenuItem
+            href={userMenu?.cloud?.mfa}
+            onClick={(e: React.MouseEvent) =>
+              onElementClick(NavElement.UserMenuCloudMFA, e)
+            }
+          >
             Two-Factor Authorization
           </MenuItem>
         </SubMenu>
@@ -396,6 +410,9 @@ function UserMenu({
           size="large"
           glyph={<Icon glyph="Megaphone" size="xlarge" />}
           data-testid="user-menuitem-feedback"
+          onClick={(e: React.MouseEvent) =>
+            onElementClick(NavElement.UserMenuFeedback, e)
+          }
         >
           Give us feedback
         </MenuItem>

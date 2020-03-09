@@ -21,6 +21,11 @@ const NavElement = {
   ViewAllOrganizations: 'viewAllOrganizations',
   ViewAllProjects: 'viewAllProjects',
   AddProject: 'addProject',
+  UserMenuFeedback: 'userMenuFeedback',
+  UserMenuCloudMFA: 'userMenuCloudMFA',
+  UserMenuCloudInvitations: 'userMenuCloudInvitations',
+  UserMenuCloudOrganizations: 'userMenuCloudOrganizations',
+  UserMenuCloudUserPreferences: 'userMenuCloudUserPreferences',
 } as const;
 
 type NavElement = typeof NavElement[keyof typeof NavElement];

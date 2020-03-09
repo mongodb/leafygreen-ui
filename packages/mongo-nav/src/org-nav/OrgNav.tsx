@@ -230,7 +230,11 @@ export default function OrgNav({
         variant="dark"
         usePortal={false}
         trigger={
-          <a href="/" onClick={e => onElementClick(NavElement.Leaf, e)}>
+          <a
+            href="/"
+            onClick={e => onElementClick(NavElement.Leaf, e)}
+            data-testid="org-nav-leaf"
+          >
             <LogoMark height={30} />
           </a>
         }
