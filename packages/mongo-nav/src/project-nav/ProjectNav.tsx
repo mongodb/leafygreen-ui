@@ -198,9 +198,8 @@ const tooltipStyles = css`
   text-align: center;
 `;
 
-export function displayProductName() {
+export function displayProductName(today = new Date(Date.now())) {
   const mdbworld = new Date('May 4, 2020 0:00:00');
-  const today = new Date(Date.now());
 
   if (today >= mdbworld) {
     return 'Realm';

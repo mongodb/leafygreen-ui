@@ -43,8 +43,6 @@ const linkNamesToUrls: LinkNameToUrls = {
   invite,
 };
 
-let dateMock, originalDate: () => number;
-
 describe('packages/mongo-nav/src/project-nav', () => {
   const queries: Queries = {};
   const expectedElements: ExpectedElements = {};
@@ -173,48 +171,27 @@ describe('packages/mongo-nav/src/project-nav', () => {
   });
 
   describe('when the date is before MongoDB World', () => {
+    const testDate = new Date('March 20, 2020 0:00:00');
+
     test('Stitch is displayed in the ProjectNav', () => {
-      const productName = displayProductName();
+      const productName = displayProductName(testDate);
       expect(productName).toBe('Stitch');
     });
   });
 
   describe('when the date is the day of MongoDB World', () => {
     const mdbworld = new Date('May 4, 2020 0:00:00');
-    beforeEach(() => {
-      dateMock = () => mdbworld.valueOf();
-      originalDate = Date.now;
-      Date.now = dateMock;
-      renderComponent();
-    });
-
-    afterEach(() => {
-      Date.now = originalDate;
-      jest.restoreAllMocks();
-    });
 
     test('Realm is displayed in the ProjectNav', () => {
-      const productName = displayProductName();
+      const productName = displayProductName(mdbworld);
       expect(productName).toBe('Realm');
     });
   });
 
   describe('when the date is after MongoDB World', () => {
     const testDate = new Date('May 5, 2020 0:00:00');
-    beforeEach(() => {
-      dateMock = () => testDate.valueOf();
-      originalDate = Date.now;
-      Date.now = dateMock;
-      renderComponent();
-    });
-
-    afterEach(() => {
-      Date.now = originalDate;
-      jest.restoreAllMocks();
-    });
-
     test('Realm is displayed in the ProjectNav', () => {
-      const productName = displayProductName();
+      const productName = displayProductName(testDate);
       expect(productName).toBe('Realm');
     });
   });
