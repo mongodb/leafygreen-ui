@@ -21,7 +21,7 @@ import {
   URLSInterface,
   Product,
   HostsInterface,
-  OnElementClick,
+  NavElement,
 } from '../types';
 import { hostDefaults } from '../data';
 import { useOnElementClick } from '../OnElementClickProvider';
@@ -162,7 +162,7 @@ interface UserMenuProps {
 
   /**
    * Object that supplies URL overrides to UserMenu component.
-   * Shape: { userMenu:{ cloud: { userPreferences, organizations, invitations, mfa }, university: { videoPreferences }, support: { userPreferences }, account: { homepage } }}
+   * Shape: { userMenu:{ cloud: { userPreferences, organizations, invitations, mfa }, university: { universityPreferences }, support: { userPreferences }, account: { homepage } }}
    */
   urls?: URLSInterface;
 
@@ -211,7 +211,7 @@ function UserMenu({
     if (onLogoutProp) {
       onLogoutProp(e);
     } else {
-      onElementClick(OnElementClick.Logout, e);
+      onElementClick(NavElement.Logout, e);
     }
   };
 
@@ -225,7 +225,7 @@ function UserMenu({
         mfa: `${hosts.cloud}/v2#/preferences/2fa`,
       },
       university: {
-        videoPreferences: `${hosts.university}`,
+        universityPreferences: `${hosts.university}/edit_profile`,
       },
       support: {
         userPreferences: `${hosts.support}/profile`,
@@ -361,10 +361,10 @@ function UserMenu({
           })}
         >
           <MenuItem
-            href={userMenu?.university?.videoPreferences}
+            href={userMenu?.university?.universityPreferences}
             data-testid="user-menuitem-cloud-mfa"
           >
-            Video Preferences
+            University Preferences
           </MenuItem>
         </SubMenu>
 
