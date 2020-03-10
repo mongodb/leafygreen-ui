@@ -20,6 +20,7 @@ export const SupportedLanguages = {
   Ruby: 'ruby',
   Scala: 'scala',
   Swift: 'swift',
+  Kotlin: 'kotlin',
   Bash: 'bash',
   Shell: 'shell',
   Sql: 'sql',
