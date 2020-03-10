@@ -22,7 +22,7 @@ import {
 } from '../types';
 import { OrgSelect } from '../mongo-select/index';
 import UserMenu from '../user-menu/index';
-import { useOnElementClick } from '../OnElementClickProvider';
+import { useOnElementClick } from '../on-element-click-provider/index';
 
 export const orgNavHeight = 60;
 
@@ -79,6 +79,8 @@ const accessManagerMenuItem = css`
   line-height: 19.6px;
   margin-top: 0px;
   margin-bottom: 0px;
+  text-decoration: none;
+  display: block;
 `;
 
 const versionStyle = css`
@@ -232,7 +234,7 @@ export default function OrgNav({
         trigger={
           <a
             href="/"
-            onClick={e => onElementClick(NavElement.Leaf, e)}
+            onClick={e => onElementClick(NavElement.OrgNavLeaf, e)}
             data-testid="org-nav-leaf"
           >
             <LogoMark height={30} />
@@ -249,7 +251,7 @@ export default function OrgNav({
         constructOrganizationURL={constructOrganizationURL}
         urls={urls}
         onChange={onOrganizationChange}
-        isActive={activeNav === NavElement.OrgSettings}
+        isActive={activeNav === NavElement.OrgNavOrgSettings}
         loading={!current}
         disabled={disabled}
         isOnPrem={onPremEnabled}
@@ -263,9 +265,10 @@ export default function OrgNav({
             <>
               <OrgNavLink
                 href={current && orgNav.accessManager}
-                isActive={activeNav === NavElement.AccessManager}
+                isActive={activeNav === NavElement.OrgNavAccessManager}
                 loading={!current}
                 data-testid="org-nav-access-manager"
+                onClick={e => onElementClick(NavElement.OrgNavAccessManager, e)}
               >
                 Access Manager
               </OrgNavLink>
@@ -274,7 +277,11 @@ export default function OrgNav({
                 ariaLabel="Dropdown"
                 active={accessManagerOpen}
                 disabled={!current}
-                onClick={() => setAccessManagerOpen(curr => !curr)}
+                onClick={(e: React.MouseEvent) => {
+                  onElementClick(NavElement.OrgNavDropdown, e);
+                  setAccessManagerOpen(curr => !curr);
+                }}
+                data-testid="org-nav-dropdown"
               >
                 <Icon glyph={accessManagerOpen ? 'CaretUp' : 'CaretDown'} />
 
@@ -285,25 +292,45 @@ export default function OrgNav({
                     usePortal={false}
                     className={accessManagerMenuContainer}
                   >
-                    <p className={accessManagerMenuItem}>
+                    <a
+                      className={accessManagerMenuItem}
+                      href={orgNav.accessManager}
+                      data-testid="org-nav-dropdown-org-access-manager"
+                      onClick={e =>
+                        onElementClick(
+                          NavElement.OrgNavDropdownOrgAccessManager,
+                          e,
+                        )
+                      }
+                    >
                       <strong>Organization Access:</strong> {current.orgName}
-                    </p>
+                    </a>
 
-                    <p className={accessManagerMenuItem}>
+                    <a
+                      className={accessManagerMenuItem}
+                      href={urls.projectNav.accessManager}
+                      data-testid="org-nav-dropdown-project-access-manager"
+                      onClick={e =>
+                        onElementClick(
+                          NavElement.OrgNavDropdownProjectAccessManager,
+                          e,
+                        )
+                      }
+                    >
                       <strong>Project Access: </strong>
                       {currentProjectName ?? 'None'}
-                    </p>
+                    </a>
                   </Menu>
                 )}
               </IconButton>
 
               <OrgNavLink
                 href={current && orgNav.support}
-                isActive={activeNav === NavElement.Support}
+                isActive={activeNav === NavElement.OrgNavSupport}
                 loading={!current}
                 className={supportContainer}
                 data-testid="org-nav-support"
-                onClick={e => onElementClick(NavElement.Support, e)}
+                onClick={e => onElementClick(NavElement.OrgNavSupport, e)}
               >
                 Support
               </OrgNavLink>
@@ -311,10 +338,10 @@ export default function OrgNav({
               {!onPremEnabled && (
                 <OrgNavLink
                   href={current && orgNav.billing}
-                  isActive={activeNav === NavElement.Billing}
+                  isActive={activeNav === NavElement.OrgNavBilling}
                   loading={!current}
                   data-testid="org-nav-billing"
-                  onClick={e => onElementClick(NavElement.Billing, e)}
+                  onClick={e => onElementClick(NavElement.OrgNavBilling, e)}
                 >
                   Billing
                 </OrgNavLink>
@@ -338,10 +365,10 @@ export default function OrgNav({
         {!isMobile && (
           <OrgNavLink
             href={orgNav.allClusters}
-            isActive={activeNav === NavElement.AllClusters}
+            isActive={activeNav === NavElement.OrgNavAllClusters}
             className={rightLinkMargin}
             data-testid="org-nav-all-clusters-link"
-            onClick={e => onElementClick(NavElement.AllClusters, e)}
+            onClick={e => onElementClick(NavElement.OrgNavAllClusters, e)}
           >
             All Clusters
           </OrgNavLink>
@@ -350,7 +377,7 @@ export default function OrgNav({
         {!isTablet && admin && !onPremEnabled && (
           <OrgNavLink
             href={orgNav.admin}
-            isActive={activeNav === NavElement.Admin}
+            isActive={activeNav === NavElement.OrgNavAdmin}
             className={rightLinkMargin}
             data-testid="org-nav-admin-link"
           >

@@ -1,10 +1,9 @@
 import React from 'react';
-import { render, cleanup, act, fireEvent } from '@testing-library/react';
+import { render, cleanup, act } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import { dataFixtures } from './data';
 import MongoNav from './MongoNav';
-import { NavElement } from './types';
 
 // types
 interface ExpectedElements {
@@ -331,83 +330,6 @@ describe('packages/mongo-nav', () => {
           dataFixtures!.currentOrganization!.orgName,
         ),
       ).toBe(false);
-    });
-  });
-
-  describe('when onElementClick is set', () => {
-    const onElementClick = jest.fn();
-
-    beforeEach(() =>
-      renderComponent({
-        mode: 'dev',
-        onElementClick,
-      }),
-    );
-
-    test('when Atlas is clicked', () => {
-      const atlas = (expectedElements.atlas as HTMLElement).firstChild;
-      fireEvent.click(atlas as HTMLElement);
-      expect(onElementClick).toHaveBeenCalled();
-      expect(onElementClick).toHaveBeenCalledWith(
-        NavElement.Cloud,
-        expect.anything(),
-      );
-    });
-
-    test('when Realm is clicked', () => {
-      const realm = (expectedElements.realm as HTMLElement).firstChild;
-      fireEvent.click(realm as HTMLElement);
-      expect(onElementClick).toHaveBeenCalled();
-      expect(onElementClick).toHaveBeenCalledWith(
-        NavElement.Realm,
-        expect.anything(),
-      );
-    });
-
-    test('when Charts is clicked', () => {
-      const charts = (expectedElements.charts as HTMLElement).firstChild;
-      fireEvent.click(charts as HTMLElement);
-      expect(onElementClick).toHaveBeenCalled();
-      expect(onElementClick).toHaveBeenCalledWith(
-        NavElement.Charts,
-        expect.anything(),
-      );
-    });
-
-    test('when logout is clicked', () => {
-      const userMenu = expectedElements.userMenu;
-      fireEvent.click(userMenu as HTMLElement);
-      setExpectedElements();
-      const logout = expectedElements.userMenuLogout;
-      fireEvent.click(logout as HTMLElement);
-      expect(onElementClick).toHaveBeenCalledWith(
-        NavElement.Logout,
-        expect.anything(),
-      );
-    });
-  });
-
-  describe('when onPrem and onElementClick is set', () => {
-    const onElementClick = jest.fn();
-
-    beforeEach(() =>
-      renderComponent({
-        mode: 'dev',
-        onElementClick,
-        onPrem: { enabled: true },
-      }),
-    );
-
-    test('when logout is clicked', () => {
-      const onPremUserMenu = expectedElements.onPremUserMenu;
-      fireEvent.click(onPremUserMenu as HTMLElement);
-      setExpectedElements();
-      const logout = expectedElements.onPremLogout;
-      fireEvent.click(logout as HTMLElement);
-      expect(onElementClick).toHaveBeenCalledWith(
-        NavElement.Logout,
-        expect.anything(),
-      );
     });
   });
 });

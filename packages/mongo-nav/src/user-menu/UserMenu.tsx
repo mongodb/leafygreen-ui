@@ -24,7 +24,7 @@ import {
   NavElement,
 } from '../types';
 import { hostDefaults } from '../data';
-import { useOnElementClick } from '../OnElementClickProvider';
+import { useOnElementClick } from '../on-element-click-provider/index';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 
@@ -354,6 +354,7 @@ function UserMenu({
             onClick={(e: React.MouseEvent) =>
               onElementClick(NavElement.UserMenuCloudMFA, e)
             }
+            data-testid="user-menuitem-cloud-mfa"
           >
             Two-Factor Authorization
           </MenuItem>

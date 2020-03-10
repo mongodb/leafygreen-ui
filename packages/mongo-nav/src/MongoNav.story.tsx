@@ -24,15 +24,16 @@ storiesOf('MongoNav', module).add('Default', () => (
         activeNav={select(
           'activeNav',
           Object.values(NavElement),
-          'accessManager',
+          'orgNavAccessManager',
         )}
         onOrganizationChange={() => {}}
         onProjectChange={() => {}}
         admin={boolean('admin', true)}
+        onElementClick={(t, e) => console.log(t)}
         onPrem={{
           mfa: true,
           version: '4.4.0',
-          enabled: boolean('onPrem', false),
+          enabled: boolean('onPrem enabled', false),
         }}
         loadData={boolean('loadData', true)}
       />

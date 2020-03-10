@@ -20,7 +20,7 @@ import {
   PlanType,
   NavElement,
 } from '../types';
-import { useOnElementClick } from '../OnElementClickProvider';
+import { useOnElementClick } from '../on-element-click-provider/index';
 
 const menuItemHeight = 36;
 
@@ -151,7 +151,10 @@ function OrgSelect({
       open={open}
       disabled={disabled}
       loading={loading}
-      onClick={() => setOpen(current => !current)}
+      onClick={e => {
+        setOpen(current => !current);
+        onElementClick(NavElement.OrgNavOrgSelectTrigger, e);
+      }}
     >
       <Menu
         usePortal={false}
@@ -184,8 +187,9 @@ function OrgSelect({
           onKeyDown={onKeyDown}
           href={urls.mongoSelect?.viewAllOrganizations}
           onClick={(e: React.MouseEvent) =>
-            onElementClick(NavElement.ViewAllOrganizations, e)
+            onElementClick(NavElement.OrgNavViewAllOrganizations, e)
           }
+          data-testid="org-select-view-all-orgs"
         >
           <strong className={viewAllStyle}>View All Organizations</strong>
         </MenuItem>
@@ -231,7 +235,10 @@ function ProjectSelect({
       placeholder={current?.projectName ?? ''}
       open={open}
       loading={loading}
-      onClick={() => setOpen(curr => !curr)}
+      onClick={e => {
+        onElementClick(NavElement.ProjectNavProjectSelectTrigger, e);
+        setOpen(curr => !curr);
+      }}
     >
       <Menu
         usePortal={false}
@@ -261,8 +268,9 @@ function ProjectSelect({
             <Button
               href={urls.mongoSelect.viewAllProjects as string}
               onClick={(e: React.MouseEvent) =>
-                onElementClick(NavElement.ViewAllProjects, e)
+                onElementClick(NavElement.ProjectNavViewAllProjects, e)
               }
+              data-testid="project-select-view-all-projects"
             >
               View All Projects
             </Button>
@@ -271,8 +279,9 @@ function ProjectSelect({
             <Button
               href={urls.mongoSelect.newProject as string}
               onClick={(e: React.MouseEvent) =>
-                onElementClick(NavElement.AddProject, e)
+                onElementClick(NavElement.ProjectNavAddProject, e)
               }
+              data-testid="project-select-add-new-project"
             >
               + New Project
             </Button>

@@ -17,7 +17,7 @@ import {
 } from './types';
 import { dataFixtures, hostDefaults } from './data';
 import defaultsDeep from 'lodash/defaultsDeep';
-import OnElementClickProvider from './OnElementClickProvider';
+import OnElementClickProvider from './on-element-click-provider/index';
 
 const ErrorCodeMap = {
   401: ErrorCode.NO_AUTHORIZATION,

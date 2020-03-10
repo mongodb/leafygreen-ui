@@ -20,7 +20,7 @@ import {
   NavElement,
 } from '../types';
 import { iconLoadingStyle, textLoadingStyle } from '../styles';
-import { useOnElementClick } from '../OnElementClickProvider';
+import { useOnElementClick } from '../on-element-click-provider/index';
 
 const productIconProp = createDataProp('charts-data-prop');
 export const projectNavHeight = 45;
@@ -292,6 +292,9 @@ export default function ProjectNav({
             active={open}
             disabled={!current}
             data-testid="project-nav-project-menu"
+            onClick={(e: React.MouseEvent) =>
+              onElementClick(NavElement.ProjectNavProjectDropdown, e)
+            }
           >
             <Icon glyph="Ellipsis" className={menuIconStyle} />
           </IconButton>
@@ -300,26 +303,18 @@ export default function ProjectNav({
         <MenuItem
           href={projectNav.settings}
           onClick={(e: React.MouseEvent) =>
-            onMenuClick(NavElement.ProjectSettings, e)
+            onMenuClick(NavElement.ProjectNavProjectSettings, e)
           }
           data-testid="project-nav-settings"
         >
           Project Settings
         </MenuItem>
-        <MenuItem
-          href={projectNav.accessManager}
-          onClick={(e: React.MouseEvent) =>
-            onMenuClick(NavElement.ProjectAccessManager, e)
-          }
-          data-testid="project-nav-access-manager"
-        >
-          Project Access Manager
-        </MenuItem>
+
         <MenuItem
           href={projectNav.support}
           data-testid="project-nav-support"
           onClick={(e: React.MouseEvent) =>
-            onMenuClick(NavElement.ProjectSuport, e)
+            onMenuClick(NavElement.ProjectNavProjectSupport, e)
           }
         >
           Project Support
@@ -327,7 +322,7 @@ export default function ProjectNav({
         <MenuItem
           href={projectNav.integrations}
           onClick={(e: React.MouseEvent) =>
-            onMenuClick(NavElement.ProjectIntegrations, e)
+            onMenuClick(NavElement.ProjectNavProjectIntegrations, e)
           }
           data-testid="project-nav-integrations"
         >
@@ -336,19 +331,16 @@ export default function ProjectNav({
       </Menu>
 
       <ul className={productListStyle}>
-        <li
-          role="none"
-          className={productTabStyle}
-          data-testid={`project-nav-${
-            isCloudManager ? 'cloud-manager' : 'atlas'
-          }`}
-        >
+        <li role="none" className={productTabStyle}>
           <a
+            data-testid={`project-nav-${
+              isCloudManager ? 'cloud-manager' : 'atlas'
+            }`}
             href={hosts.cloud}
             className={getProductClassName('cloud')}
             aria-disabled={!current}
             tabIndex={!current ? -1 : 0}
-            onClick={e => onElementClick(NavElement.Cloud, e)}
+            onClick={e => onElementClick(NavElement.ProjectNavCloud, e)}
           >
             {!isMobile && (
               <Icon
@@ -362,17 +354,14 @@ export default function ProjectNav({
         </li>
 
         {!isCloudManager && (
-          <li
-            role="none"
-            className={productTabStyle}
-            data-testid="project-nav-realm"
-          >
+          <li role="none" className={productTabStyle}>
             <a
+              data-testid="project-nav-realm"
               href={hosts.realm}
               className={getProductClassName('realm')}
               aria-disabled={!current}
               tabIndex={!current ? -1 : 0}
-              onClick={e => onElementClick(NavElement.Realm, e)}
+              onClick={e => onElementClick(NavElement.ProjectNavRealm, e)}
             >
               {!isMobile && (
                 <Icon
@@ -387,17 +376,14 @@ export default function ProjectNav({
         )}
 
         {!isCloudManager && (
-          <li
-            role="none"
-            className={productTabStyle}
-            data-testid="project-nav-charts"
-          >
+          <li role="none" className={productTabStyle}>
             <a
+              data-testid="project-nav-charts"
               href={hosts.charts}
               className={getProductClassName('charts')}
               aria-disabled={!current}
               tabIndex={!current ? -1 : 0}
-              onClick={e => onElementClick(NavElement.Charts, e)}
+              onClick={e => onElementClick(NavElement.ProjectNavCharts, e)}
             >
               {!isMobile && (
                 <Icon
@@ -426,10 +412,10 @@ export default function ProjectNav({
                 className={iconButtonMargin}
                 size="large"
                 disabled={!current}
-                active={activeNav === NavElement.ProjectInvite}
+                active={activeNav === NavElement.ProjectNavInvite}
                 data-testid="project-nav-invite"
                 onClick={(e: React.MouseEvent) =>
-                  onElementClick(NavElement.ProjectInvite, e)
+                  onElementClick(NavElement.ProjectNavInvite, e)
                 }
               >
                 <Icon glyph="InviteUser" size="large" />
@@ -451,10 +437,10 @@ export default function ProjectNav({
                 size="large"
                 className={iconButtonMargin}
                 disabled={!current}
-                active={activeNav === NavElement.ProjectActivityFeed}
+                active={activeNav === NavElement.ProjectNavActivityFeed}
                 data-testid="project-nav-activity-feed"
                 onClick={(e: React.MouseEvent) =>
-                  onElementClick(NavElement.ProjectActivityFeed, e)
+                  onElementClick(NavElement.ProjectNavActivityFeed, e)
                 }
               >
                 <Icon glyph="ActivityFeed" size="large" />
@@ -475,10 +461,10 @@ export default function ProjectNav({
                 href={projectNav.alerts as string}
                 size="large"
                 disabled={!current}
-                active={activeNav === NavElement.ProjectAlerts}
+                active={activeNav === NavElement.ProjectNavAlerts}
                 data-testid="project-nav-alerts"
                 onClick={(e: React.MouseEvent) =>
-                  onElementClick(NavElement.ProjectAlerts, e)
+                  onElementClick(NavElement.ProjectNavAlerts, e)
                 }
               >
                 {alerts > 0 && (

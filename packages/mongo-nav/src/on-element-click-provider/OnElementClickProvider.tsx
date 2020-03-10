@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { NavElement } from './types';
+import { NavElement } from '../types';
 
 type OnElementClickType = (type: NavElement, event: React.MouseEvent) => void;
 

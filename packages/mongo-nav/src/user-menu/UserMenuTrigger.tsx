@@ -5,7 +5,9 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { breakpoints, facepaint } from '../breakpoints';
+import { NavElement } from '../types';
 import InteractionRingWrapper from '../helpers/InteractionRingWrapper';
+import { useOnElementClick } from '../on-element-click-provider/index';
 
 const buttonDataProp = createDataProp('button-data-prop');
 const iconDataProp = createDataProp('icon-data-prop');
@@ -99,6 +101,7 @@ export default function UserMenuTrigger({
   children,
   ...rest
 }: UserMenuTriggerProps) {
+  const onElementClick = useOnElementClick();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
@@ -123,7 +126,10 @@ export default function UserMenuTrigger({
           [openBaseButtonStyle]: open,
           [activeWidth]: open,
         })}
-        onClick={() => setOpen(curr => !curr)}
+        onClick={e => {
+          onElementClick(NavElement.UserMenuTrigger, e);
+          setOpen(curr => !curr);
+        }}
       >
         <span
           className={cx(menuNameStyle, truncate, {
