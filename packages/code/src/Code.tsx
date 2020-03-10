@@ -264,9 +264,13 @@ function Code({
 
   useEffect(() => {
     let timeoutId: any;
+    const clipboard = new ClipboardJS('.copy-btn');
 
     if (copied) {
-      timeoutId = setTimeout(() => setCopied(false), 1500);
+      timeoutId = setTimeout(() => {
+        setCopied(false);
+        clipboard.destroy();
+      }, 1500);
     }
 
     return () => clearTimeout(timeoutId);
@@ -292,9 +296,6 @@ function Code({
         setScrollState(ScrollState.Right);
       }
     }
-
-    const clipboard = new ClipboardJS('.copy-btn');
-    clipboard.destroy();
   }, []);
 
   const wrapperStyle = css`
