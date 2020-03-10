@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- 208d881: Refactor Card component to be a styled wrapper for Box
+- 208d881: Export BoxProps as named export from index
 
 ## 1.0.0
 
