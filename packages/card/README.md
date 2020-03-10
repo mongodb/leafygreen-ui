@@ -22,8 +22,8 @@ npm install @leafygreen-ui/card
 import Card from '@leafygreen-ui/card';
 
 <Card
-  as='div'
   className='card-styles'
+  component='div'
 >
   This is my card component
 </Card>
@@ -32,15 +32,15 @@ import Card from '@leafygreen-ui/card';
 **Output HTML**
 
 ```HTML
- <div class="leafygreen-ui-1xf4bcx">This is a card component</div>
+<div class="leafygreen-ui-1lu17q2 card-styles">This is my card component</div>
 ```
 
 ## Properties
 
-| Prop        | Type                          | Description                                                                                                                                        | Default   |
-| ----------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
-| `as`        | `HTML Tag` or `React Element` | Determines the root element. For example, `Link` or `a` tags can be supplied to replace `div` from being the DOM element that wraps the component. | `section` |
-| `className` | `string`                      | Adds a className to the class attribute                                                                                                            |           |
-| `children`  | `node`                        | The children of the rendered inside of the `<Card/>` component.                                                                                    |           |
+Card is a styled wrapper for the Box component. Any properties you would pass to Box can also be passed to Card.
 
-_Any other properties will be spread on the input element._
+| Prop        | Type     | Description                             | Default |
+| ----------- | -------- | --------------------------------------- | ------- |
+| `className` | `string` | Adds a className to the class attribute |         |
+
+_Any other properties will be spread on the Box element._

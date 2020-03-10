@@ -198,6 +198,18 @@ const tooltipStyles = css`
   text-align: center;
 `;
 
+export function displayProductName(today = new Date(Date.now())) {
+  const mdbworld = new Date('May 4, 2020 0:00:00');
+
+  if (today >= mdbworld) {
+    return 'Realm';
+  }
+
+  return 'Stitch';
+}
+
+const secondTabName = displayProductName();
+
 interface ProjectNavInterface {
   current?: CurrentProjectInterface;
   data?: Array<ProjectInterface>;
@@ -369,7 +381,7 @@ export default function ProjectNav({
                   glyph="Stitch"
                 />
               )}
-              Realm
+              {secondTabName}
             </a>
           </li>
         )}
