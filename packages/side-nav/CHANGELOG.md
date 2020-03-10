@@ -1,5 +1,11 @@
 # @leafygreen-ui/side-nav
 
+## 2.0.1
+
+### Patch Changes
+
+- 0c26f35: Fix inconsistencies in active/hover highlight sizes
+
 ## 2.0.0
 
 ### Major Changes
