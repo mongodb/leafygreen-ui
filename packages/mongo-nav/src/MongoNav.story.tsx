@@ -29,7 +29,6 @@ storiesOf('MongoNav', module).add('Default', () => (
         onOrganizationChange={() => {}}
         onProjectChange={() => {}}
         admin={boolean('admin', true)}
-        onElementClick={(t, e) => console.log(t)}
         onPrem={{
           mfa: true,
           version: '4.4.0',
