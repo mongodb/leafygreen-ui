@@ -293,8 +293,7 @@ function Code({
       }
     }
 
-    const copyButton = document.getElementsByClassName('.copy-btn');
-    const clipboard = new ClipboardJS(copyButton);
+    const clipboard = new ClipboardJS('.copy-btn');
     clipboard.destroy();
   }, []);
 
