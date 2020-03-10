@@ -119,18 +119,24 @@ function Popover({
   ]);
 
   const prevJustifyRef = useRef<Justify>();
+  const prevAlignRef = useRef<Align>();
   const prevJustify = prevJustifyRef.current;
+  const prevAlign = prevAlignRef.current;
 
   useEffect(() => {
     prevJustifyRef.current = justify;
+    prevAlignRef.current = align;
   });
 
   useLayoutEffect(() => {
     // justify={Justify.Fit} can cause the content's height/width to change
     // If we're switching to/from Fit, force an extra pass to make sure the popover is positioned correctly.
+    // Also if we're switching between alignments and have Justify.Fit, it may switch between setting the width and
+    // setting the height, so force an update in that case as well.
     if (
-      prevJustify !== justify &&
-      (justify === Justify.Fit || prevJustify === Justify.Fit)
+      (prevJustify !== justify &&
+        (justify === Justify.Fit || prevJustify === Justify.Fit)) ||
+      (prevAlign !== align && justify === Justify.Fit)
     ) {
       setForceUpdateCounter(n => n + 1);
     }
