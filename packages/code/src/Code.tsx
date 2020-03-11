@@ -71,6 +71,7 @@ const codeWrapperStyle = css`
   padding: ${whiteSpace}px;
   margin: 0;
   position: relative;
+  flex-grow: 1;
 `;
 
 const codeWrapperStyleWithLineNumbers = css`
@@ -88,6 +89,10 @@ const copyStyle = css`
   flex-direction: column;
   flex-shrink: 0;
   padding-top: 6px;
+`;
+
+const singleLineCopyStyle = css`
+  padding: 10px;
 `;
 
 function getWrapperVariantStyle(variant: Variant): string {
@@ -223,6 +228,13 @@ interface CodeProps extends SyntaxProps {
    * default: `true`
    * */
   multiline?: boolean;
+
+  /**
+   * When true, allows the code block to be copied to the user's clipboard
+   *
+   * default: `true`
+   */
+  copyable?: boolean;
 }
 
 type DetailedElementProps<T> = React.DetailedHTMLProps<
@@ -255,12 +267,14 @@ function Code({
   showLineNumbers = false,
   showWindowChrome = false,
   chromeTitle = '',
+  copyable = true,
   ...rest
 }: CodeProps) {
   const scrollableMultiLine = useRef<HTMLPreElement>(null);
   const scrollableSingleLine = useRef<HTMLDivElement>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [copied, setCopied] = useState(false);
+  const showCopyBar = !showWindowChrome && copyable;
 
   useEffect(() => {
     let timeoutId: any;
@@ -368,8 +382,15 @@ function Code({
           >
             {renderedSyntaxComponent}
           </div>
-          {!showWindowChrome && (
-            <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
+
+          {showCopyBar && (
+            <div
+              className={cx(
+                copyStyle,
+                singleLineCopyStyle,
+                getSidebarVariantStyle(variant),
+              )}
+            >
               <IconButton
                 variant={variant}
                 ariaLabel="Copy"
@@ -412,7 +433,7 @@ function Code({
           {renderedSyntaxComponent}
         </pre>
 
-        {!showWindowChrome && (
+        {showCopyBar && (
           <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
             <IconButton
               variant={variant}
