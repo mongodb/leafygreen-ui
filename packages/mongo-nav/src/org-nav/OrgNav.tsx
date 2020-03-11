@@ -8,7 +8,7 @@ import Badge from '@leafygreen-ui/badge';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import { Menu } from '@leafygreen-ui/menu';
-import { OrgNavLink, OnPremUserMenu } from '../helpers/index';
+import { OrgNavLink, OnPremUserMenu } from '../helpers';
 import { breakpoints, facepaint } from '../breakpoints';
 import {
   AccountInterface,
@@ -20,8 +20,8 @@ import {
   HostsInterface,
   OrgPaymentLabel,
 } from '../types';
-import { OrgSelect } from '../mongo-select/index';
-import UserMenu from '../user-menu/index';
+import { OrgSelect } from '../mongo-select';
+import UserMenu from '../user-menu';
 import { useOnElementClick } from '../on-element-click-provider';
 
 export const orgNavHeight = 60;

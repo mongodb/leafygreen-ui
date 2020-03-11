@@ -2,7 +2,7 @@ import React from 'react';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { css } from '@leafygreen-ui/emotion';
 import { URLSInterface, NavElement } from '../types';
-import { UserMenuTrigger } from '../user-menu/index';
+import { UserMenuTrigger } from '../user-menu';
 import { useOnElementClick } from '../on-element-click-provider';
 
 const onPremMenuWrapper = css`

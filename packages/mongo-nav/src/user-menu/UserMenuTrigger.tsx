@@ -6,7 +6,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { breakpoints, facepaint } from '../breakpoints';
 import { NavElement } from '../types';
-import InteractionRingWrapper from '../helpers/InteractionRingWrapper';
+import { InteractionRingWrapper } from '../helpers';
 import { useOnElementClick } from '../on-element-click-provider';
 
 const buttonDataProp = createDataProp('button-data-prop');

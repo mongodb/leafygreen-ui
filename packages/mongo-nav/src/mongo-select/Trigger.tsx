@@ -6,7 +6,7 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { URLSInterface, NavElement } from '../types';
-import { InteractionRingWrapper } from '../helpers/index';
+import { InteractionRingWrapper } from '../helpers';
 import { facepaint, breakpoints } from '../breakpoints';
 import {
   textLoadingStyle,
