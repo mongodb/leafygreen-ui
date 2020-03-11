@@ -2,6 +2,7 @@ import { configure, addDecorator, addParameters } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { withA11y } from '@storybook/addon-a11y';
 import ComponentPreview from './decorators/ComponentPreview';
+import ReactStrictMode from './decorators/ReactStrictMode';
 import theme from './theme';
 
 addParameters({
@@ -12,6 +13,7 @@ addParameters({
 });
 
 // Add decorators globally to wrap our stories with
+addDecorator(ReactStrictMode);
 addDecorator(ComponentPreview);
 addDecorator(withKnobs);
 addDecorator(withA11y);
