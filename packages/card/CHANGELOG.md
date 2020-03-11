@@ -1,5 +1,16 @@
 # @leafygreen-ui/card
 
+## 3.0.0
+
+### Major Changes
+
+- 208d881: Refactor Card component to be a styled wrapper for Box
+
+### Patch Changes
+
+- Updated dependencies [208d881]
+  - @leafygreen-ui/box@1.1.0
+
 ## 2.0.0
 
 ### Major Changes

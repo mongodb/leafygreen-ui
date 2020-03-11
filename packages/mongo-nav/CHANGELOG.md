@@ -1,5 +1,18 @@
 # @leafygreen-ui/mongo-nav
 
+## 0.14.0
+
+### Minor Changes
+
+- 4e1e9dc: Add remaining activeNav values. Unify OnElementClick into NavElement.
+- ebb5102: Update the university preferences link in the mongo nav
+- 0f7d8a3: Add onElementClick prop
+
+### Patch Changes
+
+- 3f7719e: Add logic to determine whether to display Realm or Stitch
+- 97cadc1: Conditionally apply overflow rule to MongoSelect components
+
 ## 0.13.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/syntax
 
+## 2.3.0
+
+### Minor Changes
+
+- c117a62: Add Kotlin language highlight support
+
 ## 2.2.0
 
 ### Minor Changes
