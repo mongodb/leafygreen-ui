@@ -20,7 +20,7 @@ import {
   NavElement,
 } from '../types';
 import { iconLoadingStyle, textLoadingStyle } from '../styles';
-import { useOnElementClick } from '../on-element-click-provider/index';
+import { useOnElementClick } from '../on-element-click-provider';
 
 const productIconProp = createDataProp('charts-data-prop');
 export const projectNavHeight = 45;

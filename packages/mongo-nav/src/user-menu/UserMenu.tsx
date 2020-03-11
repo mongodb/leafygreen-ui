@@ -24,7 +24,7 @@ import {
   NavElement,
 } from '../types';
 import { hostDefaults } from '../data';
-import { useOnElementClick } from '../on-element-click-provider/index';
+import { useOnElementClick } from '../on-element-click-provider';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 

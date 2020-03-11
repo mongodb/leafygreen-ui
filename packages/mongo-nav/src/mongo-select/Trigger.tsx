@@ -13,7 +13,7 @@ import {
   iconLoadingStyle,
   removePointerEvents,
 } from '../styles';
-import { useOnElementClick } from '../on-element-click-provider/index';
+import { useOnElementClick } from '../on-element-click-provider';
 
 const triggerDataProp = createDataProp('org-trigger');
 const anchorDataProp = createDataProp('anchor-data-prop');

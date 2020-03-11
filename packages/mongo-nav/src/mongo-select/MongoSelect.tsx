@@ -20,7 +20,7 @@ import {
   PlanType,
   NavElement,
 } from '../types';
-import { useOnElementClick } from '../on-element-click-provider/index';
+import { useOnElementClick } from '../on-element-click-provider';
 
 const menuItemHeight = 36;
 

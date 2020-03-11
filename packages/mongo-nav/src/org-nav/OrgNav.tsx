@@ -22,7 +22,7 @@ import {
 } from '../types';
 import { OrgSelect } from '../mongo-select/index';
 import UserMenu from '../user-menu/index';
-import { useOnElementClick } from '../on-element-click-provider/index';
+import { useOnElementClick } from '../on-element-click-provider';
 
 export const orgNavHeight = 60;
 
