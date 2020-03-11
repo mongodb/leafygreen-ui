@@ -1,11 +1,12 @@
 import React from 'react';
-import { render, cleanup, act, fireEvent } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { nullableElement, Queries } from '@leafygreen-ui/lib/src/testHelpers';
 import MongoNav from '../MongoNav';
 import { NavElement } from '../types';
 
-const links = {
+afterAll(cleanup);
+
+const defaultElements: { [K in NavElement]?: string } = {
   [NavElement.OrgNavLeaf]: 'org-nav-leaf',
   [NavElement.OrgNavOrgSelectTrigger]: 'org-trigger',
   [NavElement.OrgNavOrgSettings]: 'org-trigger-settings',
@@ -16,7 +17,7 @@ const links = {
   [NavElement.OrgNavAllClusters]: 'org-nav-all-clusters-link',
   [NavElement.ProjectNavProjectSelectTrigger]: 'project-select-trigger',
   [NavElement.ProjectNavProjectDropdown]: 'project-nav-project-menu',
-  [NavElement.ProjectNavCloud]: 'project-nav-cloud-manager',
+  [NavElement.ProjectNavCloud]: 'project-nav-atlas',
   [NavElement.ProjectNavRealm]: 'project-nav-realm',
   [NavElement.ProjectNavCharts]: 'project-nav-charts',
   [NavElement.ProjectNavInvite]: 'project-nav-invite',
@@ -25,249 +26,149 @@ const links = {
   [NavElement.UserMenuTrigger]: 'user-menu-trigger',
 };
 
-const orgSelectLink = {
-  [NavElement.OrgNavViewAllOrganizations]: 'org-select-view-all-orgs',
-};
-
-const orgDropdownLinks = {
-  [NavElement.OrgNavDropdownOrgAccessManager]:
-    'org-nav-dropdown-org-access-manager',
-  [NavElement.OrgNavDropdownProjectAccessManager]:
-    'org-nav-dropdown-org-project-manager',
-};
-
-const projectSelectLink = {
-  [NavElement.ProjectNavViewAllProjects]: 'project-select-view-all-projects',
-  [NavElement.ProjectNavAddProject]: 'project-select-add-new-project',
-};
-
-const projectDropdownLinks = {
-  [NavElement.ProjectNavProjectSettings]: 'project-nav-settings',
-  [NavElement.ProjectNavProjectSupport]: 'project-nav-settings',
-  [NavElement.ProjectNavProjectIntegrations]: 'project-nav-integrations',
-};
-
-const userMenuLinks = {
-  [NavElement.UserMenuFeedback]: 'user-menuitem-feedback',
-  [NavElement.UserMenuCloudMFA]: 'user-menuitem-cloud-mfa',
-  [NavElement.UserMenuCloudInvitations]: 'user-menuitem-cloud-invitations',
-  [NavElement.UserMenuCloudOrganizations]: 'user-menuitem-cloud-organizations',
-  [NavElement.UserMenuCloudUserPreferences]:
-    'user-menuitem-cloud-user-preferences',
-  [NavElement.Logout]: 'user-menuitem-logout',
-};
-
-// types
-interface ExpectedElements {
-  [key: string]: nullableElement;
-}
-
 describe('packages/mongo-nav/on-element-click-provider', () => {
-  const queries: Queries = {};
-  const expectedElements: ExpectedElements = {};
+  const onElementClick = jest.fn();
 
-  const setQueries = ({ queryByTestId }: Queries) => {
-    Object.assign(queries, { queryByTestId });
-    act(setExpectedElements);
+  const testForCallback = (navElement: HTMLElement, type: string) => {
+    fireEvent.click(navElement);
+    expect(onElementClick).toHaveBeenCalled();
+    expect(onElementClick).toHaveBeenCalledWith(type, expect.anything());
   };
 
-  const setExpectedElements = () => {
-    const { queryByTestId = () => null } = queries;
-    expectedElements.test = null;
-    expectedElements[NavElement.Logout] = queryByTestId('user-menuitem-logout');
-    expectedElements[NavElement.OrgNavLeaf] = queryByTestId('org-nav-leaf');
-    expectedElements[NavElement.OrgNavOrgSelectTrigger] = queryByTestId(
-      'org-trigger',
+  describe('by default', () => {
+    const { getByTestId } = render(
+      <MongoNav
+        activeProduct="cloud"
+        mode="dev"
+        admin={true}
+        onOrganizationChange={jest.fn()}
+        onProjectChange={jest.fn()}
+        onElementClick={onElementClick}
+      />,
     );
-    expectedElements[NavElement.OrgNavViewAllOrganizations] = queryByTestId(
-      'org-select-view-all-orgs',
-    );
-    expectedElements[NavElement.OrgNavOrgSettings] = queryByTestId(
-      'org-trigger-settings',
-    );
-    expectedElements[NavElement.OrgNavAccessManager] = queryByTestId(
-      'org-nav-access-manager',
-    );
-    expectedElements[NavElement.OrgNavDropdown] = queryByTestId(
-      'org-nav-dropdown',
-    );
-    expectedElements[NavElement.OrgNavDropdownOrgAccessManager] = queryByTestId(
-      'org-nav-dropdown-org-access-manager',
-    );
-    expectedElements[
-      NavElement.OrgNavDropdownProjectAccessManager
-    ] = queryByTestId('org-nav-dropdown-project-access-manager');
-    expectedElements[NavElement.OrgNavSupport] = queryByTestId(
-      'org-nav-support',
-    );
-    expectedElements[NavElement.OrgNavBilling] = queryByTestId(
-      'org-nav-billing',
-    );
-    expectedElements[NavElement.OrgNavAdmin] = queryByTestId(
-      'org-nav-admin-link',
-    );
-    expectedElements[NavElement.OrgNavAllClusters] = queryByTestId(
-      'org-nav-all-clusters-link',
-    );
-    expectedElements[NavElement.ProjectNavProjectSelectTrigger] = queryByTestId(
-      'project-select-trigger',
-    );
-    expectedElements[NavElement.ProjectNavViewAllProjects] = queryByTestId(
-      'project-select-view-all-projects',
-    );
-    expectedElements[NavElement.ProjectNavAddProject] = queryByTestId(
-      'project-select-add-new-project',
-    );
-    expectedElements[NavElement.ProjectNavProjectDropdown] = queryByTestId(
-      'project-nav-project-menu',
-    );
-    expectedElements[NavElement.ProjectNavProjectSettings] = queryByTestId(
-      'project-nav-settings',
-    );
-    expectedElements[NavElement.ProjectNavProjectSupport] = queryByTestId(
-      'project-nav-support',
-    );
-    expectedElements[NavElement.ProjectNavProjectIntegrations] = queryByTestId(
-      'project-nav-integrations',
-    );
-    expectedElements[NavElement.ProjectNavCloud] = queryByTestId(
-      'project-nav-atlas',
-    );
-    expectedElements[NavElement.ProjectNavRealm] = queryByTestId(
-      'project-nav-realm',
-    );
-    expectedElements[NavElement.ProjectNavCharts] = queryByTestId(
-      'project-nav-charts',
-    );
-    expectedElements[NavElement.ProjectNavInvite] = queryByTestId(
-      'project-nav-invite',
-    );
-    expectedElements[NavElement.ProjectNavActivityFeed] = queryByTestId(
-      'project-nav-activity-feed',
-    );
-    expectedElements[NavElement.ProjectNavAlerts] = queryByTestId(
-      'project-nav-alerts',
-    );
-    expectedElements[NavElement.UserMenuTrigger] = queryByTestId(
-      'user-menu-trigger',
-    );
-    expectedElements[NavElement.UserMenuFeedback] = queryByTestId(
-      'user-menuitem-feedback',
-    );
-    expectedElements[NavElement.UserMenuCloudMFA] = queryByTestId(
-      'user-menuitem-cloud-mfa',
-    );
-    expectedElements[NavElement.UserMenuCloudInvitations] = queryByTestId(
-      'user-menuitem-cloud-invitations',
-    );
-    expectedElements[NavElement.UserMenuCloudOrganizations] = queryByTestId(
-      'user-menuitem-cloud-organizations',
-    );
-    expectedElements[NavElement.UserMenuCloudUserPreferences] = queryByTestId(
-      'user-menuitem-cloud-user-preferences',
-    );
-  };
 
-  let onElementClick: jest.Mock,
-    onProjectChange: jest.Mock,
-    onOrganizationChange: jest.Mock;
+    Object.keys(defaultElements).forEach(el =>
+      test(`it fires onElementClick callback on ${el}`, () =>
+        testForCallback(getByTestId(defaultElements[el]), el)),
+    );
 
-  beforeEach(() => {
-    onElementClick = jest.fn();
-    onProjectChange = jest.fn();
-    onOrganizationChange = jest.fn();
+    test('when OrgSelect is open', async () => {
+      fireEvent.click(getByTestId('org-trigger'));
+
+      const viewOrgs = await getByTestId('org-select-view-all-orgs');
+
+      testForCallback(viewOrgs, NavElement.OrgNavViewAllOrganizations);
+    });
+
+    test('when OrgNav dropdown is open', async () => {
+      fireEvent.click(getByTestId('org-nav-dropdown'));
+
+      const orgNavOrgAccessManager = await getByTestId(
+        'org-nav-dropdown-org-access-manager',
+      );
+      const orgNavProjectAccesManger = getByTestId(
+        'org-nav-dropdown-project-access-manager',
+      );
+
+      testForCallback(
+        orgNavOrgAccessManager,
+        NavElement.OrgNavDropdownOrgAccessManager,
+      );
+
+      testForCallback(
+        orgNavProjectAccesManger,
+        NavElement.OrgNavDropdownProjectAccessManager,
+      );
+    });
+
+    test('when ProjectSelect is open', async () => {
+      fireEvent.click(getByTestId('project-select-trigger'));
+
+      const viewAllProjects = await getByTestId(
+        'project-select-view-all-projects',
+      );
+      const addNewProject = getByTestId('project-select-add-new-project');
+
+      testForCallback(viewAllProjects, NavElement.ProjectNavViewAllProjects);
+
+      testForCallback(addNewProject, NavElement.ProjectNavAddProject);
+    });
+
+    test('when the Project dropdown is open', async () => {
+      fireEvent.click(getByTestId('project-nav-project-menu'));
+
+      const projectNavSettings = await getByTestId('project-nav-settings');
+      const projectNavSupport = getByTestId('project-nav-support');
+      const projectNavIntegrations = getByTestId('project-nav-integrations');
+
+      testForCallback(projectNavSettings, NavElement.ProjectNavProjectSettings);
+
+      testForCallback(projectNavSupport, NavElement.ProjectNavProjectSupport);
+
+      testForCallback(
+        projectNavIntegrations,
+        NavElement.ProjectNavProjectIntegrations,
+      );
+    });
+
+    test('when the UserMenu is open', async () => {
+      fireEvent.click(getByTestId('user-menu-trigger'));
+
+      const userMenuFeedback = await getByTestId('user-menuitem-feedback');
+      const userMenuCloudMFA = getByTestId('user-menuitem-cloud-mfa');
+      const userMenuCloudInvitations = getByTestId(
+        'user-menuitem-cloud-invitations',
+      );
+      const userMenuCloudOrganizations = getByTestId(
+        'user-menuitem-cloud-organizations',
+      );
+
+      const userMenuCloudUserPreferences = getByTestId(
+        'user-menuitem-cloud-user-preferences',
+      );
+
+      const userMenuLogout = getByTestId('user-menuitem-logout');
+
+      testForCallback(userMenuFeedback, NavElement.UserMenuFeedback);
+
+      testForCallback(userMenuCloudMFA, NavElement.UserMenuCloudMFA);
+
+      testForCallback(
+        userMenuCloudInvitations,
+        NavElement.UserMenuCloudInvitations,
+      );
+
+      testForCallback(
+        userMenuCloudOrganizations,
+        NavElement.UserMenuCloudOrganizations,
+      );
+
+      testForCallback(
+        userMenuCloudUserPreferences,
+        NavElement.UserMenuCloudUserPreferences,
+      );
+
+      testForCallback(userMenuLogout, NavElement.Logout);
+    });
   });
+});
 
-  afterEach(() => {
-    jest.restoreAllMocks();
-    cleanup();
-  });
+describe('NavElement', () => {
+  function checkDupes(array: Array<string>) {
+    const checkArr: Array<string> = [];
 
-  const renderComponent = (props = {}) => {
-    setQueries(
-      render(
-        <MongoNav
-          activeProduct="cloud"
-          mode="dev"
-          admin={true}
-          onOrganizationChange={onOrganizationChange}
-          onProjectChange={onProjectChange}
-          onElementClick={onElementClick}
-          {...props}
-        />,
-      ),
-    );
-  };
-
-  const testForNavLink = (linkName: string, fireFirst?: string) => {
-    test(`calls the onElementClick callback on the ${linkName}`, () => {
-      if (fireFirst) {
-        fireEvent.click(expectedElements[fireFirst] as HTMLElement);
-        act(setExpectedElements);
+    array.forEach(val => {
+      if (checkArr.includes(val)) {
+        return true;
       }
 
-      const navElement = expectedElements[linkName];
-      fireEvent.click(navElement as HTMLElement);
-      expect(onElementClick).toHaveBeenCalled();
-      expect(onElementClick).toHaveBeenCalledWith(linkName, expect.anything());
-    });
-  };
-
-  describe('when rendered with default props', () => {
-    beforeEach(() => {
-      act(renderComponent);
+      checkArr.push(val);
     });
 
-    Object.keys(links).forEach(linkName => testForNavLink(linkName));
-  });
+    return false;
+  }
 
-  describe('when OrgSelect is open', () => {
-    beforeEach(() => {
-      act(renderComponent);
-    });
-
-    Object.keys(orgSelectLink).forEach(linkName =>
-      testForNavLink(linkName, NavElement.OrgNavOrgSelectTrigger),
-    );
-  });
-
-  describe('when the Access Manager dropdown is open', () => {
-    beforeEach(() => {
-      act(renderComponent);
-    });
-
-    Object.keys(orgDropdownLinks).forEach(linkName =>
-      testForNavLink(linkName, NavElement.OrgNavDropdown),
-    );
-  });
-
-  describe('when ProjectSelect is open', () => {
-    beforeEach(() => {
-      act(renderComponent);
-    });
-
-    Object.keys(projectSelectLink).forEach(linkName =>
-      testForNavLink(linkName, NavElement.ProjectNavProjectSelectTrigger),
-    );
-  });
-
-  describe('when the ProjectNav dropdown is open', () => {
-    beforeEach(() => {
-      act(renderComponent);
-    });
-
-    Object.keys(projectDropdownLinks).forEach(linkName =>
-      testForNavLink(linkName, NavElement.ProjectNavProjectDropdown),
-    );
-  });
-
-  describe('when the UserMenu is open', () => {
-    beforeEach(() => {
-      act(renderComponent);
-    });
-
-    Object.keys(userMenuLinks).forEach(linkName =>
-      testForNavLink(linkName, NavElement.UserMenuTrigger),
-    );
+  test('NavElement const only contains unique values', () => {
+    expect(checkDupes(Object.values(NavElement))).toBe(false);
   });
 });
