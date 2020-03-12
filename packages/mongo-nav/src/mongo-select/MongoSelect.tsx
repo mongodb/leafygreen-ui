@@ -33,7 +33,7 @@ const menuContainerStyle = css`
 const menuItemContainerStyle = css`
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  walign-items: center;
   text-align: left;
 `;
 
@@ -186,10 +186,10 @@ function OrgSelect({
         <MenuItem
           onKeyDown={onKeyDown}
           href={urls.mongoSelect?.viewAllOrganizations}
+          data-testid="org-select-view-all-orgs"
           onClick={(e: React.MouseEvent) =>
             onElementClick(NavElement.OrgNavViewAllOrganizations, e)
           }
-          data-testid="org-select-view-all-orgs"
         >
           <strong className={viewAllStyle}>View All Organizations</strong>
         </MenuItem>
@@ -267,10 +267,10 @@ function ProjectSelect({
           <FocusableMenuItem>
             <Button
               href={urls.mongoSelect.viewAllProjects as string}
+              data-testid="project-select-view-all-projects"
               onClick={(e: React.MouseEvent) =>
                 onElementClick(NavElement.ProjectNavViewAllProjects, e)
               }
-              data-testid="project-select-view-all-projects"
             >
               View All Projects
             </Button>
@@ -278,10 +278,10 @@ function ProjectSelect({
           <FocusableMenuItem>
             <Button
               href={urls.mongoSelect.newProject as string}
+              data-testid="project-select-add-new-project"
               onClick={(e: React.MouseEvent) =>
                 onElementClick(NavElement.ProjectNavAddProject, e)
               }
-              data-testid="project-select-add-new-project"
             >
               + New Project
             </Button>

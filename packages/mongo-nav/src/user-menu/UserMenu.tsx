@@ -351,10 +351,10 @@ function UserMenu({
           </MenuItem>
           <MenuItem
             href={userMenu?.cloud?.mfa}
+            data-testid="user-menuitem-cloud-mfa"
             onClick={(e: React.MouseEvent) =>
               onElementClick(NavElement.UserMenuCloudMFA, e)
             }
-            data-testid="user-menuitem-cloud-mfa"
           >
             Two-Factor Authorization
           </MenuItem>
@@ -366,14 +366,14 @@ function UserMenu({
           active={isUniversity}
           disabled={!account}
           href={hosts.university}
-          description={
-            <Description isActive={isUniversity} product="university" />
-          }
           title="University"
           glyph={<Icon glyph="University" size="xlarge" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isUniversity,
           })}
+          description={
+            <Description isActive={isUniversity} product="university" />
+          }
         >
           <MenuItem
             href={userMenu?.university?.universityPreferences}
@@ -389,9 +389,9 @@ function UserMenu({
           active={isSupport}
           disabled={!account}
           href={hosts.support}
-          description={<Description isActive={isSupport} product="support" />}
           title="Support"
           glyph={<Icon glyph="Support" size="xlarge" />}
+          description={<Description isActive={isSupport} product="support" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isSupport,
           })}

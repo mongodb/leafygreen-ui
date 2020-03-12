@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import { LogoMark } from '@leafygreen-ui/logo';
-import { useViewportSize } from '@leafygreen-ui/hooks';
 import Tooltip from '@leafygreen-ui/tooltip';
 import Badge from '@leafygreen-ui/badge';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
+import UserMenu from '../user-menu';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { uiColors } from '@leafygreen-ui/palette';
+import { LogoMark } from '@leafygreen-ui/logo';
+import { useViewportSize } from '@leafygreen-ui/hooks';
 import { Menu } from '@leafygreen-ui/menu';
 import { OrgNavLink, OnPremUserMenu } from '../helpers';
 import { breakpoints, facepaint } from '../breakpoints';
+import { OrgSelect } from '../mongo-select';
+import { useOnElementClick } from '../on-element-click-provider';
 import {
   AccountInterface,
   OrganizationInterface,
@@ -20,27 +23,23 @@ import {
   HostsInterface,
   OrgPaymentLabel,
 } from '../types';
-import { OrgSelect } from '../mongo-select';
-import UserMenu from '../user-menu';
-import { useOnElementClick } from '../on-element-click-provider';
 
 export const orgNavHeight = 60;
 
 const navContainer = css`
-  height: ${orgNavHeight}px;
-  width: 100%;
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
+  box-sizing: border-box;
+  height: ${orgNavHeight}px;
   padding-left: 15px;
   padding-right: 15px;
   font-size: 13px;
   line-height: 15px;
-  color: ${uiColors.gray.dark3};
-  border-bottom: 1px solid ${uiColors.gray.light2};
-  box-sizing: border-box;
-  z-index: 1;
-  position: relative;
   background-color: white;
+  border-bottom: 1px solid ${uiColors.gray.light2};
+  color: ${uiColors.gray.dark3};
 `;
 
 const orgSelectContainer = css`
@@ -67,26 +66,27 @@ const rightLinkMargin = css`
 `;
 
 const accessManagerMenuContainer = css`
-  padding: 16px;
   width: 220px;
-  background-color: white;
+  padding: 16px;
   text-align: left;
+  background-color: white;
 `;
 
 const accessManagerMenuItem = css`
-  font-size: 14px;
-  color: ${uiColors.gray.dark2};
-  line-height: 19.6px;
+  display: block;
   margin-top: 0px;
   margin-bottom: 0px;
+  font-size: 14px;
+  line-height: 19.6px;
   text-decoration: none;
-  display: block;
+  color: ${uiColors.gray.dark2};
 `;
 
 const versionStyle = css`
-  color: ${uiColors.green.base};
   display: inline-block;
   font-size: 10px;
+  color: ${uiColors.green.base};
+
   ${facepaint({
     marginRight: ['16px', '16px', '16px'],
   })}
@@ -101,7 +101,7 @@ export const Colors = {
 
 export type Colors = typeof Colors[keyof typeof Colors];
 
-const paymentStatusMap: { readonly [K in Colors]: Array<string> } = {
+const paymentStatusMap: Record<Colors, ReadonlyArray<OrgPaymentLabel>> = {
   [Colors.Lightgray]: [
     OrgPaymentLabel.Embargoed,
     OrgPaymentLabel.EmbargoConfirmed,
@@ -118,7 +118,7 @@ const paymentStatusMap: { readonly [K in Colors]: Array<string> } = {
     OrgPaymentLabel.Locked,
     OrgPaymentLabel.Closed,
   ],
-};
+} as const;
 
 interface OrgNav {
   account?: AccountInterface;
@@ -155,9 +155,9 @@ export default function OrgNav({
 }: OrgNav) {
   const [accessManagerOpen, setAccessManagerOpen] = useState(false);
   const [onPremMenuOpen, setOnPremMenuOpen] = useState(false);
+  const { width: viewportWidth } = useViewportSize();
   const onElementClick = useOnElementClick();
   const { orgNav } = urls;
-  const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
   const isMobile = viewportWidth < breakpoints.small;
   const disabled = activeNav === NavElement.UserSettings;
@@ -166,9 +166,9 @@ export default function OrgNav({
   let key: Colors;
 
   for (key in paymentStatusMap) {
-    if (!current?.paymentStatus) {
-      paymentVariant = undefined;
-    } else if (paymentStatusMap[key].includes(current?.paymentStatus)) {
+    const paymentStatus = current?.paymentStatus;
+
+    if (paymentStatus && paymentStatusMap[key].includes(paymentStatus)) {
       paymentVariant = key;
     }
   }
@@ -277,11 +277,11 @@ export default function OrgNav({
                 ariaLabel="Dropdown"
                 active={accessManagerOpen}
                 disabled={!current}
+                data-testid="org-nav-dropdown"
                 onClick={(e: React.MouseEvent) => {
                   onElementClick(NavElement.OrgNavDropdown, e);
                   setAccessManagerOpen(curr => !curr);
                 }}
-                data-testid="org-nav-dropdown"
               >
                 <Icon glyph={accessManagerOpen ? 'CaretUp' : 'CaretDown'} />
 

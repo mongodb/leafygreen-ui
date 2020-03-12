@@ -302,10 +302,10 @@ export default function ProjectNav({
       >
         <MenuItem
           href={projectNav.settings}
+          data-testid="project-nav-settings"
           onClick={(e: React.MouseEvent) =>
             onMenuClick(NavElement.ProjectNavProjectSettings, e)
           }
-          data-testid="project-nav-settings"
         >
           Project Settings
         </MenuItem>
@@ -321,10 +321,10 @@ export default function ProjectNav({
         </MenuItem>
         <MenuItem
           href={projectNav.integrations}
+          data-testid="project-nav-integrations"
           onClick={(e: React.MouseEvent) =>
             onMenuClick(NavElement.ProjectNavProjectIntegrations, e)
           }
-          data-testid="project-nav-integrations"
         >
           Integrations
         </MenuItem>
@@ -333,14 +333,14 @@ export default function ProjectNav({
       <ul className={productListStyle}>
         <li role="none" className={productTabStyle}>
           <a
-            data-testid={`project-nav-${
-              isCloudManager ? 'cloud-manager' : 'atlas'
-            }`}
             href={hosts.cloud}
             className={getProductClassName('cloud')}
             aria-disabled={!current}
             tabIndex={!current ? -1 : 0}
             onClick={e => onElementClick(NavElement.ProjectNavCloud, e)}
+            data-testid={`project-nav-${
+              isCloudManager ? 'cloud-manager' : 'atlas'
+            }`}
           >
             {!isMobile && (
               <Icon

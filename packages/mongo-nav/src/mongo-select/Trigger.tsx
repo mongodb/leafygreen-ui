@@ -232,16 +232,16 @@ export function OrganizationTrigger({
       {!disabled && (
         <a
           {...anchorDataProp.prop}
-          className={cx(orgSettingsButtonStyle, {
-            [focusStyle]: showFocus,
-            [removePointerEvents]: loading,
-          })}
           href={urls.mongoSelect.orgSettings}
           aria-label="settings"
           data-testid="org-trigger-settings"
           aria-disabled={loading}
           tabIndex={loading ? -1 : 0}
           onClick={e => onElementClick(NavElement.OrgNavOrgSettings, e)}
+          className={cx(orgSettingsButtonStyle, {
+            [focusStyle]: showFocus,
+            [removePointerEvents]: loading,
+          })}
         >
           <Icon
             glyph="Settings"

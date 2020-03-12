@@ -6,7 +6,7 @@ import { NavElement } from '../types';
 
 afterAll(cleanup);
 
-const defaultElements: { [K in NavElement]?: string } = {
+const defaultElements = {
   [NavElement.OrgNavLeaf]: 'org-nav-leaf',
   [NavElement.OrgNavOrgSelectTrigger]: 'org-trigger',
   [NavElement.OrgNavOrgSettings]: 'org-trigger-settings',
@@ -24,7 +24,7 @@ const defaultElements: { [K in NavElement]?: string } = {
   [NavElement.ProjectNavActivityFeed]: 'project-nav-activity-feed',
   [NavElement.ProjectNavAlerts]: 'project-nav-alerts',
   [NavElement.UserMenuTrigger]: 'user-menu-trigger',
-};
+} as const;
 
 describe('packages/mongo-nav/on-element-click-provider', () => {
   const onElementClick = jest.fn();
@@ -47,10 +47,12 @@ describe('packages/mongo-nav/on-element-click-provider', () => {
       />,
     );
 
-    Object.keys(defaultElements).forEach(el =>
+    let el: keyof typeof defaultElements;
+
+    for (el in defaultElements) {
       test(`it fires onElementClick callback on ${el}`, () =>
-        testForCallback(getByTestId(defaultElements[el]), el)),
-    );
+        testForCallback(getByTestId(defaultElements[el]), el));
+    }
 
     test('when OrgSelect is open', async () => {
       fireEvent.click(getByTestId('org-trigger'));
