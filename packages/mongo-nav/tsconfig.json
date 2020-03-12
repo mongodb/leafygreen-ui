@@ -35,6 +35,9 @@
     },
     {
       "path": "../icon-button"
+    },
+    {
+      "path": "../box"
     }
   ]
 }
