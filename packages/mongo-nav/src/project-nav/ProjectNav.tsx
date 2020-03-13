@@ -173,7 +173,7 @@ const productStyle = css`
 `;
 
 const cloudManagerStyle = css`
-  width: unset;
+  width: 130px;
 `;
 
 const iconButtonMargin = css`
