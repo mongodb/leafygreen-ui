@@ -106,6 +106,8 @@ export default function UserMenuTrigger({
   const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
 
+  // console.log('open is', open, onElementClick);
+
   // Show first initial on tablets and smaller, otherwise use the full name passed in
   const displayName = isTablet ? name.split('')[0] : name;
 
@@ -126,10 +128,9 @@ export default function UserMenuTrigger({
           [openBaseButtonStyle]: open,
           [activeWidth]: open,
         })}
-        onClick={e => {
-          onElementClick(NavElement.UserMenuTrigger, e);
+        onClick={onElementClick(NavElement.UserMenuTrigger, () => {
           setOpen(curr => !curr);
-        }}
+        })}
       >
         <span
           className={cx(menuNameStyle, truncate, {

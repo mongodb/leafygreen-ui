@@ -229,7 +229,7 @@ function OrgNav({
         trigger={
           <a
             href="/"
-            onClick={e => onElementClick(NavElement.OrgNavLeaf, e)}
+            onClick={onElementClick(NavElement.OrgNavLeaf)}
             data-testid="org-nav-leaf"
           >
             <LogoMark height={30} />
@@ -261,7 +261,7 @@ function OrgNav({
             isActive={activeNav === NavElement.OrgNavAccessManager}
             loading={!current}
             data-testid="org-nav-access-manager"
-            onClick={e => onElementClick(NavElement.OrgNavAccessManager, e)}
+            onClick={onElementClick(NavElement.OrgNavAccessManager)}
           >
             Access Manager
           </OrgNavLink>
@@ -271,10 +271,9 @@ function OrgNav({
             active={accessManagerOpen}
             disabled={!current}
             data-testid="org-nav-dropdown"
-            onClick={(e: React.MouseEvent) => {
-              onElementClick(NavElement.OrgNavDropdown, e);
-              setAccessManagerOpen(curr => !curr);
-            }}
+            onClick={onElementClick(NavElement.OrgNavDropdown, () =>
+              setAccessManagerOpen(curr => !curr),
+            )}
           >
             <Icon glyph={accessManagerOpen ? 'CaretUp' : 'CaretDown'} />
 
@@ -289,9 +288,9 @@ function OrgNav({
                   data-testid="org-nav-dropdown-org-access-manager"
                   description={current.orgName}
                   size="large"
-                  onClick={(e: React.MouseEvent) =>
-                    onElementClick(NavElement.OrgNavDropdownOrgAccessManager, e)
-                  }
+                  onClick={onElementClick(
+                    NavElement.OrgNavDropdownOrgAccessManager,
+                  )}
                 >
                   Organization Access
                 </MenuItem>
@@ -301,12 +300,9 @@ function OrgNav({
                   data-testid="org-nav-dropdown-project-access-manager"
                   size="large"
                   description={currentProjectName}
-                  onClick={(e: React.MouseEvent) =>
-                    onElementClick(
-                      NavElement.OrgNavDropdownProjectAccessManager,
-                      e,
-                    )
-                  }
+                  onClick={onElementClick(
+                    NavElement.OrgNavDropdownProjectAccessManager,
+                  )}
                 >
                   Project Access
                 </MenuItem>
@@ -320,7 +316,7 @@ function OrgNav({
             loading={!current}
             className={supportContainer}
             data-testid="org-nav-support"
-            onClick={e => onElementClick(NavElement.OrgNavSupport, e)}
+            onClick={onElementClick(NavElement.OrgNavSupport)}
           >
             Support
           </OrgNavLink>
@@ -331,7 +327,7 @@ function OrgNav({
               isActive={activeNav === NavElement.OrgNavBilling}
               loading={!current}
               data-testid="org-nav-billing"
-              onClick={e => onElementClick(NavElement.OrgNavBilling, e)}
+              onClick={onElementClick(NavElement.OrgNavBilling)}
             >
               Billing
             </OrgNavLink>
@@ -372,7 +368,7 @@ function OrgNav({
             isActive={activeNav === NavElement.OrgNavAllClusters}
             className={rightLinkMargin}
             data-testid="org-nav-all-clusters-link"
-            onClick={e => onElementClick(NavElement.OrgNavAllClusters, e)}
+            onClick={onElementClick(NavElement.OrgNavAllClusters)}
           >
             All Clusters
           </OrgNavLink>

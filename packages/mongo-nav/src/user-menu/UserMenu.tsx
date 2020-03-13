@@ -213,7 +213,7 @@ function UserMenu({
     if (onLogoutProp) {
       onLogoutProp(e);
     } else {
-      onElementClick(NavElement.Logout, e);
+      onElementClick(NavElement.Logout)(e);
     }
   };
 
@@ -322,18 +322,14 @@ function UserMenu({
           <MenuItem
             href={userMenu?.cloud?.userPreferences}
             data-testid="user-menuitem-cloud-user-preferences"
-            onClick={(e: React.MouseEvent) =>
-              onElementClick(NavElement.UserMenuCloudUserPreferences, e)
-            }
+            onClick={onElementClick(NavElement.UserMenuCloudUserPreferences)}
           >
             User Preferences
           </MenuItem>
           <MenuItem
             href={userMenu?.cloud?.invitations}
             data-testid="user-menuitem-cloud-invitations"
-            onClick={(e: React.MouseEvent) =>
-              onElementClick(NavElement.UserMenuCloudInvitations, e)
-            }
+            onClick={onElementClick(NavElement.UserMenuCloudInvitations)}
           >
             <span className={subMenuItemStyle}>
               Invitations
@@ -345,18 +341,14 @@ function UserMenu({
           <MenuItem
             href={userMenu?.cloud?.organizations}
             data-testid="user-menuitem-cloud-organizations"
-            onClick={(e: React.MouseEvent) =>
-              onElementClick(NavElement.UserMenuCloudOrganizations, e)
-            }
+            onClick={onElementClick(NavElement.UserMenuCloudOrganizations)}
           >
             Organizations
           </MenuItem>
           <MenuItem
             href={userMenu?.cloud?.mfa}
             data-testid="user-menuitem-cloud-mfa"
-            onClick={(e: React.MouseEvent) =>
-              onElementClick(NavElement.UserMenuCloudMFA, e)
-            }
+            onClick={onElementClick(NavElement.UserMenuCloudMFA)}
           >
             Two-Factor Authorization
           </MenuItem>
@@ -413,9 +405,7 @@ function UserMenu({
           size="large"
           glyph={<Icon glyph="Megaphone" size="xlarge" />}
           data-testid="user-menuitem-feedback"
-          onClick={(e: React.MouseEvent) =>
-            onElementClick(NavElement.UserMenuFeedback, e)
-          }
+          onClick={onElementClick(NavElement.UserMenuFeedback)}
         >
           Give us feedback
         </MenuItem>

@@ -167,10 +167,9 @@ function OrgSelect({
       open={open}
       disabled={disabled}
       loading={loading}
-      onClick={e => {
-        setOpen(current => !current);
-        onElementClick(NavElement.OrgNavOrgSelectTrigger, e);
-      }}
+      onClick={onElementClick(NavElement.OrgNavOrgSelectTrigger, () =>
+        setOpen(current => !current),
+      )}
     >
       <Menu
         usePortal={false}
@@ -214,9 +213,7 @@ function OrgSelect({
               onKeyDown={onKeyDown}
               href={urls.mongoSelect?.viewAllOrganizations}
               data-testid="org-select-view-all-orgs"
-              onClick={(e: React.MouseEvent) =>
-                onElementClick(NavElement.OrgNavViewAllOrganizations, e)
-              }
+              onClick={onElementClick(NavElement.OrgNavViewAllOrganizations)}
             >
               <strong className={viewAllStyle}>View All Organizations</strong>
             </MenuItem>
@@ -264,10 +261,9 @@ function ProjectSelect({
       placeholder={current?.projectName ?? ''}
       open={open}
       loading={loading}
-      onClick={e => {
-        onElementClick(NavElement.ProjectNavProjectSelectTrigger, e);
-        setOpen(curr => !curr);
-      }}
+      onClick={onElementClick(NavElement.ProjectNavProjectSelectTrigger, () =>
+        setOpen(curr => !curr),
+      )}
     >
       <Menu
         usePortal={false}
@@ -297,9 +293,7 @@ function ProjectSelect({
             <Button
               href={urls.mongoSelect.viewAllProjects as string}
               data-testid="project-select-view-all-projects"
-              onClick={(e: React.MouseEvent) =>
-                onElementClick(NavElement.ProjectNavViewAllProjects, e)
-              }
+              onClick={onElementClick(NavElement.ProjectNavViewAllProjects)}
             >
               View All Projects
             </Button>
@@ -308,9 +302,7 @@ function ProjectSelect({
             <Button
               href={urls.mongoSelect.newProject as string}
               data-testid="project-select-add-new-project"
-              onClick={(e: React.MouseEvent) =>
-                onElementClick(NavElement.ProjectNavAddProject, e)
-              }
+              onClick={onElementClick(NavElement.ProjectNavAddProject)}
             >
               + New Project
             </Button>

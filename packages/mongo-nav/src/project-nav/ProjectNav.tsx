@@ -250,11 +250,6 @@ export default function ProjectNav({
   const isMobile = viewportWidth < breakpoints.small;
   const isCloudManager = current?.planType === PlanType.Cloud;
 
-  const onMenuClick = (type: NavElement, e: React.MouseEvent) => {
-    onElementClick(type, e);
-    setOpen(false);
-  };
-
   const sharedTooltipProps = {
     variant: 'dark',
     usePortal: false,
@@ -299,9 +294,7 @@ export default function ProjectNav({
             active={open}
             disabled={!current}
             data-testid="project-nav-project-menu"
-            onClick={(e: React.MouseEvent) =>
-              onElementClick(ProjectNavProjectDropdown, e)
-            }
+            onClick={onElementClick(ProjectNavProjectDropdown)}
           >
             <Icon glyph="Ellipsis" className={menuIconStyle} />
           </IconButton>
@@ -310,9 +303,9 @@ export default function ProjectNav({
         <MenuItem
           href={projectNav.settings}
           data-testid="project-nav-settings"
-          onClick={(e: React.MouseEvent) =>
-            onMenuClick(ProjectNavProjectSettings, e)
-          }
+          onClick={onElementClick(ProjectNavProjectSettings, () =>
+            setOpen(false),
+          )}
         >
           Project Settings
         </MenuItem>
@@ -320,18 +313,18 @@ export default function ProjectNav({
         <MenuItem
           href={projectNav.support}
           data-testid="project-nav-support"
-          onClick={(e: React.MouseEvent) =>
-            onMenuClick(ProjectNavProjectSupport, e)
-          }
+          onClick={onElementClick(ProjectNavProjectSupport, () =>
+            setOpen(false),
+          )}
         >
           Project Support
         </MenuItem>
         <MenuItem
           href={projectNav.integrations}
           data-testid="project-nav-integrations"
-          onClick={(e: React.MouseEvent) =>
-            onMenuClick(ProjectNavProjectIntegrations, e)
-          }
+          onClick={onElementClick(ProjectNavProjectIntegrations, () =>
+            setOpen(false),
+          )}
         >
           Integrations
         </MenuItem>
@@ -344,7 +337,7 @@ export default function ProjectNav({
             className={getProductClassName('cloud')}
             aria-disabled={!current}
             tabIndex={current ? 0 : -1}
-            onClick={e => onElementClick(ProjectNavCloud, e)}
+            onClick={onElementClick(ProjectNavCloud)}
             data-testid={`project-nav-${
               isCloudManager ? 'cloud-manager' : 'atlas'
             }`}
@@ -369,7 +362,7 @@ export default function ProjectNav({
                 className={getProductClassName('realm')}
                 aria-disabled={!current}
                 tabIndex={current ? 0 : -1}
-                onClick={e => onElementClick(ProjectNavRealm, e)}
+                onClick={onElementClick(ProjectNavRealm)}
               >
                 {!isMobile && (
                   <Icon
@@ -390,7 +383,7 @@ export default function ProjectNav({
                 className={getProductClassName('charts')}
                 aria-disabled={!current}
                 tabIndex={current ? 0 : -1}
-                onClick={e => onElementClick(ProjectNavCharts, e)}
+                onClick={onElementClick(ProjectNavCharts)}
               >
                 {!isMobile && (
                   <Icon
@@ -422,9 +415,7 @@ export default function ProjectNav({
                 disabled={!current}
                 active={activeNav === ProjectNavInvite}
                 data-testid="project-nav-invite"
-                onClick={(e: React.MouseEvent) =>
-                  onElementClick(ProjectNavInvite, e)
-                }
+                onClick={onElementClick(ProjectNavInvite)}
               >
                 <Icon glyph="InviteUser" size="large" />
               </IconButton>
@@ -447,9 +438,7 @@ export default function ProjectNav({
                 disabled={!current}
                 active={activeNav === ProjectNavActivityFeed}
                 data-testid="project-nav-activity-feed"
-                onClick={(e: React.MouseEvent) =>
-                  onElementClick(ProjectNavActivityFeed, e)
-                }
+                onClick={onElementClick(ProjectNavActivityFeed)}
               >
                 <Icon glyph="ActivityFeed" size="large" />
               </IconButton>
@@ -471,9 +460,7 @@ export default function ProjectNav({
                 disabled={!current}
                 active={activeNav === ProjectNavAlerts}
                 data-testid="project-nav-alerts"
-                onClick={(e: React.MouseEvent) =>
-                  onElementClick(ProjectNavAlerts, e)
-                }
+                onClick={onElementClick(ProjectNavAlerts)}
               >
                 {alerts > 0 && (
                   <div

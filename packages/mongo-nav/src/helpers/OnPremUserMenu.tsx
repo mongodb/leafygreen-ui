@@ -80,9 +80,7 @@ export default function OnPremUserMenu({
         </MenuItem>
 
         <MenuItem
-          onClick={(event: React.MouseEvent) =>
-            onElementClick(NavElement.Logout, event)
-          }
+          onClick={onElementClick(NavElement.Logout)}
           data-testid="om-user-menuitem-sign-out"
         >
           Sign Out

@@ -31,14 +31,14 @@ describe('packages/UserMenu', () => {
     />,
   );
 
-  const { getByText } = renderedComponent;
+  const { getByText, getByTestId } = renderedComponent;
   test('renders closed UserMenu with users name in button by default', () => {
-    const leafy = getByText('Leafy');
-    expect(leafy).toBeInTheDocument();
+    const trigger = getByTestId('user-menu-trigger');
+    expect(trigger).toBeInTheDocument();
   });
 
   test('opens when trigger is clicked', () => {
-    const trigger = getByText('Leafy');
+    const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
   });
 

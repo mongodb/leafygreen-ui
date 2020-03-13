@@ -237,7 +237,7 @@ export function OrganizationTrigger({
           data-testid="org-trigger-settings"
           aria-disabled={loading}
           tabIndex={loading ? -1 : 0}
-          onClick={e => onElementClick(NavElement.OrgNavOrgSettings, e)}
+          onClick={onElementClick(NavElement.OrgNavOrgSettings)}
           className={cx(orgSettingsButtonStyle, {
             [focusStyle]: showFocus,
             [removePointerEvents]: loading,
