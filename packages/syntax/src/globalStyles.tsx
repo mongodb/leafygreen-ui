@@ -32,8 +32,8 @@ export const variantColors: { readonly [K in Variant]: Base16Palette } = {
   },
 
   [Variant.Dark]: {
-    0: uiColors.gray.dark3,
-    1: uiColors.black,
+    0: uiColors.black,
+    1: uiColors.gray.dark3,
     2: uiColors.gray.light1,
     3: uiColors.gray.light3,
     4: uiColors.gray.dark2,
@@ -67,6 +67,7 @@ const getStyles = (variant: Variant): string => `
   
     .lg-highlight-comment {
       color: ${variantColors[variant][2]};
+      font-style: italic;
     }
 
     .lg-highlight-doctag,
