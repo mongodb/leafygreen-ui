@@ -87,7 +87,7 @@ const productLinkStyle = css`
   font-size: 12px;
   color: ${uiColors.blue.base};
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   ${subMenuContainer.selector}:hover & {
     color: ${uiColors.blue.dark2};
   }
@@ -98,6 +98,8 @@ const activeProductLinkStyle = css`
 `;
 
 const productLinkIconStyle = css`
+  height: 10px;
+  width: 10px;
   opacity: 0;
   transform: translate3d(-3px, 0, 0px);
   transition: all 100ms ease-in;
@@ -134,7 +136,7 @@ function Description({ isActive, product }: DescriptionProps) {
       })}
     >
       {`${product}.mongodb.com`}
-      <Icon size="small" glyph="CaretRight" className={productLinkIconStyle} />
+      <Icon size="small" glyph="ArrowRight" className={productLinkIconStyle} />
     </div>
   );
 }

@@ -71,6 +71,21 @@ const orgOptionContainerStyle = css`
   justify-content: space-between;
 `;
 
+const noOrgStyle = css`
+  font-size: 14px;
+  padding: 4px 8px;
+  margin-bottom: 20px;
+`;
+
+const allOrgLinkStyle = css`
+  color: ${uiColors.blue.base};
+  text-decoration: none;
+  &:visited {
+    color: ${uiColors.blue.base};
+    text-decoration: none;
+  }
+`;
+
 const formattedPlanTypes: Record<PlanType, string> = {
   [PlanType.Atlas]: 'Atlas',
   [PlanType.Cloud]: 'Cloud Manager',
@@ -165,26 +180,29 @@ function OrgSelect({
         setOpen={setOpen}
         open={open}
       >
-        <FocusableMenuItem>
-          <Input
-            data-testid="org-filter-input"
-            variant="organization"
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-          />
-        </FocusableMenuItem>
+        {data && (
+          <FocusableMenuItem>
+            <Input
+              data-testid="org-filter-input"
+              variant="organization"
+              onChange={onChange}
+              onKeyDown={onKeyDown}
+            />
+          </FocusableMenuItem>
+        )}
 
         <ul className={ulStyle}>
           {data?.map(renderOrganizationOption) ?? (
-            <li
-              className={css`
-                font-size: 14px;
-                padding: 4px 8px;
-                margin-bottom: 8px;
-              `}
-            >
-              You do not belong to any organizations. Create an organization to
-              start using MongoDB Cloud
+            <li className={noOrgStyle}>
+              You do not belong to any organizations. Create an organization on
+              the{' '}
+              <a
+                href={urls.mongoSelect.viewAllOrganizations}
+                className={allOrgLinkStyle}
+              >
+                Organizations
+              </a>{' '}
+              page.
             </li>
           )}
         </ul>
