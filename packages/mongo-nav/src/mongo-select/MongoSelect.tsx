@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
+import Button from '@leafygreen-ui/button';
+import Input from './Input';
+import { uiColors } from '@leafygreen-ui/palette';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { keyMap } from '@leafygreen-ui/lib';
+import { OrganizationTrigger, ProjectTrigger } from './Trigger';
+import { useOnElementClick } from '../on-element-click-provider';
 import {
   Menu,
   FocusableMenuItem,
   MenuItem,
   MenuSeparator,
 } from '@leafygreen-ui/menu';
-import Button from '@leafygreen-ui/button';
-import { uiColors } from '@leafygreen-ui/palette';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { keyMap } from '@leafygreen-ui/lib';
-import Input from './Input';
-import { OrganizationTrigger, ProjectTrigger } from './Trigger';
 import {
   ProjectInterface,
   OrganizationInterface,
@@ -20,20 +21,18 @@ import {
   PlanType,
   NavElement,
 } from '../types';
-import { useOnElementClick } from '../on-element-click-provider';
 
 const menuItemHeight = 36;
 
 const menuContainerStyle = css`
+  position: relative;
   width: 280px;
   padding-top: 20px;
-  position: relative;
 `;
 
 const menuItemContainerStyle = css`
   flex-direction: row;
   justify-content: space-between;
-  walign-items: center;
   text-align: left;
 `;
 
@@ -102,6 +101,7 @@ interface OrganizationMongoSelectProps extends BaseMongoSelectProps {
 }
 
 const onKeyDown: React.KeyboardEventHandler = e => {
+  // Stops default browser behavior from automatically scrolling the component
   if ([keyMap.ArrowUp, keyMap.ArrowDown].includes(e.keyCode)) {
     e.preventDefault();
   }
@@ -135,6 +135,7 @@ function OrgSelect({
       >
         <div className={orgOptionContainerStyle}>
           <span className={nameStyle}>{orgName}</span>
+
           {!isOnPrem && (
             <span className={productStyle}>{formattedPlanTypes[planType]}</span>
           )}
@@ -167,32 +168,42 @@ function OrgSelect({
         <FocusableMenuItem>
           <Input
             data-testid="org-filter-input"
+            variant="organization"
             onChange={onChange}
             onKeyDown={onKeyDown}
-            variant="organization"
           />
         </FocusableMenuItem>
 
         <ul className={ulStyle}>
           {data?.map(renderOrganizationOption) ?? (
-            <li>
+            <li
+              className={css`
+                font-size: 14px;
+                padding: 4px 8px;
+                margin-bottom: 8px;
+              `}
+            >
               You do not belong to any organizations. Create an organization to
               start using MongoDB Cloud
             </li>
           )}
         </ul>
 
-        <MenuSeparator />
-        <MenuItem
-          onKeyDown={onKeyDown}
-          href={urls.mongoSelect?.viewAllOrganizations}
-          data-testid="org-select-view-all-orgs"
-          onClick={(e: React.MouseEvent) =>
-            onElementClick(NavElement.OrgNavViewAllOrganizations, e)
-          }
-        >
-          <strong className={viewAllStyle}>View All Organizations</strong>
-        </MenuItem>
+        {data && (
+          <>
+            <MenuSeparator />
+            <MenuItem
+              onKeyDown={onKeyDown}
+              href={urls.mongoSelect?.viewAllOrganizations}
+              data-testid="org-select-view-all-orgs"
+              onClick={(e: React.MouseEvent) =>
+                onElementClick(NavElement.OrgNavViewAllOrganizations, e)
+              }
+            >
+              <strong className={viewAllStyle}>View All Organizations</strong>
+            </MenuItem>
+          </>
+        )}
       </Menu>
     </OrganizationTrigger>
   );

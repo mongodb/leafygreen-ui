@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '@leafygreen-ui/tooltip';
-import Box from '@leafygreen-ui/box';
 import Badge from '@leafygreen-ui/badge';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
@@ -10,7 +9,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { LogoMark } from '@leafygreen-ui/logo';
 import { useViewportSize } from '@leafygreen-ui/hooks';
-import { Menu } from '@leafygreen-ui/menu';
+import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { OrgNavLink, OnPremUserMenu } from '../helpers';
 import { breakpoints, facepaint } from '../breakpoints';
 import { OrgSelect } from '../mongo-select';
@@ -67,24 +66,8 @@ const rightLinkMargin = css`
   })}
 `;
 
-const accessManagerMenuContainer = css`
-  width: 220px;
-  padding: 16px;
-  text-align: left;
-  background-color: white;
-`;
-
-const accessManagerMenuItem = css`
-  display: block;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  font-size: 14px;
-  line-height: 19.6px;
-  text-decoration: none;
-  color: ${uiColors.gray.dark2};
-`;
-
 const versionStyle = css`
+  position: relative;
   display: inline-block;
   font-size: 10px;
   color: ${uiColors.green.base};
@@ -188,7 +171,7 @@ function OrgNav({
       isTablet ||
       onPremEnabled ||
       !paymentVariant ||
-      !(admin || paymentValues.includes(current.paymentStatus))
+      (!admin && !paymentValues.includes(current.paymentStatus))
     ) {
       return null;
     }
@@ -239,6 +222,9 @@ function OrgNav({
         align="bottom"
         justify="start"
         variant="dark"
+        className={css`
+          width: 150px;
+        `}
         usePortal={false}
         trigger={
           <a
@@ -297,23 +283,24 @@ function OrgNav({
                 open={accessManagerOpen}
                 setOpen={setAccessManagerOpen}
                 usePortal={false}
-                className={accessManagerMenuContainer}
               >
-                <a
-                  className={accessManagerMenuItem}
+                <MenuItem
                   href={orgNav.accessManager}
                   data-testid="org-nav-dropdown-org-access-manager"
-                  onClick={e =>
+                  description={current.orgName}
+                  size="large"
+                  onClick={(e: React.MouseEvent) =>
                     onElementClick(NavElement.OrgNavDropdownOrgAccessManager, e)
                   }
                 >
-                  <strong>Organization Access:</strong> {current.orgName}
-                </a>
+                  Organization Access
+                </MenuItem>
 
-                <Box
-                  className={accessManagerMenuItem}
+                <MenuItem
                   href={currentProjectName && urls.projectNav.accessManager}
                   data-testid="org-nav-dropdown-project-access-manager"
+                  size="large"
+                  description={currentProjectName}
                   onClick={(e: React.MouseEvent) =>
                     onElementClick(
                       NavElement.OrgNavDropdownProjectAccessManager,
@@ -321,10 +308,8 @@ function OrgNav({
                     )
                   }
                 >
-                  <strong>Project Access: </strong>
-
-                  {currentProjectName}
-                </Box>
+                  Project Access
+                </MenuItem>
               </Menu>
             )}
           </IconButton>
@@ -360,9 +345,25 @@ function OrgNav({
         `}
       >
         {onPremEnabled && onPremVersion && (
-          <span className={versionStyle} data-testid="org-nav-on-prem-version">
-            {onPremVersion}
-          </span>
+          <Tooltip
+            usePortal={false}
+            variant="dark"
+            align="bottom"
+            justify="middle"
+            className={css`
+              width: 165px;
+            `}
+            trigger={
+              <span
+                className={versionStyle}
+                data-testid="org-nav-on-prem-version"
+              >
+                {onPremVersion}
+              </span>
+            }
+          >
+            Ops Manager Version
+          </Tooltip>
         )}
 
         {!isMobile && (

@@ -69,7 +69,7 @@ interface MongoNavInterface {
   /**
    * Determines whether the project navigation should be shown.
    */
-  showProjNav?: boolean;
+  showProjectNav?: boolean;
 
   /**
    * Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<MongoNav />` to work across all environments.
@@ -174,7 +174,7 @@ function MongoNav({
   onProjectChange,
   mode = Mode.Production,
   loadData = true,
-  showProjNav = true,
+  showProjectNav = true,
   admin = false,
   hosts: hostsProp,
   urls: urlsProp,
@@ -189,7 +189,7 @@ function MongoNav({
   className,
   ...rest
 }: MongoNavInterface) {
-  const shouldShowProjectNav = showProjNav && !onPrem.enabled;
+  const shouldShowProjectNav = showProjectNav && !onPrem.enabled;
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
   const hosts = defaultsDeep(hostsProp, hostDefaults);
   const endpointURI = `${hosts.cloud}/user/shared`;
