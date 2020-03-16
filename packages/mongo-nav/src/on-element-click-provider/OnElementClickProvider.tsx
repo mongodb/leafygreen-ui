@@ -37,11 +37,7 @@ export default function OnElementClickProvider({
     };
   };
 
-  const callbackWrapper = useCallback(
-    (navElement, additionalWork) =>
-      wrappedOnElementClick(navElement, additionalWork),
-    [onElementClick],
-  );
+  const callbackWrapper = useCallback(wrappedOnElementClick, [onElementClick]);
 
   return (
     <OnElementClickContext.Provider value={callbackWrapper}>
