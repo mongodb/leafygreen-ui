@@ -11,6 +11,7 @@ import {
   Product,
   URLSInterface,
   HostsInterface,
+  ActiveNavElement,
   NavElement,
   Mode,
   DataInterface,
@@ -39,7 +40,7 @@ interface MongoNavInterface {
   /**
    * Determines what nav item is currently active.
    */
-  activeNav?: NavElement;
+  activeNav?: ActiveNavElement;
 
   /**
    * Describes whether or not user is an `admin`.
@@ -219,7 +220,7 @@ function MongoNav({
     },
     orgNav: {
       leaf: data?.currentOrganization
-        ? `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/`
+        ? `${hosts.cloud}/v2#/org/${data.currentOrganization?.orgId}/`
         : `/`,
       settings: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/settings/general`,
       accessManager: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/access/users`,

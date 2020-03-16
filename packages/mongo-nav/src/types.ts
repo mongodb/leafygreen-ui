@@ -1,16 +1,3 @@
-const ActiveNavElement = {
-  OrgNavOrgSettings: 'orgNavOrgSettings',
-  OrgNavAccessManager: 'orgNavAccessManager',
-  OrgNavSupport: 'orgNavSupport',
-  OrgNavBilling: 'orgNavBilling',
-  OrgNavAdmin: 'orgNavAdmin',
-  OrgNavAllClusters: 'orgNavAllClusters',
-} as const;
-
-type ActiveNavElement = typeof ActiveNavElement[keyof typeof ActiveNavElement];
-
-export { ActiveNavElement };
-
 const NavElement = {
   OrgNavOrgSettings: 'orgNavOrgSettings',
   OrgNavAccessManager: 'orgNavAccessManager',
@@ -50,6 +37,23 @@ const NavElement = {
 type NavElement = typeof NavElement[keyof typeof NavElement];
 
 export { NavElement };
+
+const ActiveNavElement = {
+  OrgNavOrgSettings: NavElement.OrgNavOrgSettings,
+  OrgNavAccessManager: NavElement.OrgNavAccessManager,
+  OrgNavSupport: NavElement.OrgNavSupport,
+  OrgNavBilling: NavElement.OrgNavBilling,
+  OrgNavAdmin: NavElement.OrgNavAdmin,
+  OrgNavAllClusters: NavElement.OrgNavAllClusters,
+  ProjectNavInvite: NavElement.ProjectNavInvite,
+  ProjectNavActivityFeed: NavElement.ProjectNavActivityFeed,
+  ProjectNavAlerts: NavElement.ProjectNavAlerts,
+  UserSettings: NavElement.UserSettings,
+} as const;
+
+type ActiveNavElement = typeof ActiveNavElement[keyof typeof ActiveNavElement];
+
+export { ActiveNavElement };
 
 const Product = {
   Account: 'account',

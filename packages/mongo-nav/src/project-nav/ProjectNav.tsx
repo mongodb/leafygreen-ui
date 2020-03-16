@@ -19,6 +19,7 @@ import {
   Product,
   HostsInterface,
   PlanType,
+  ActiveNavElement,
   NavElement,
 } from '../types';
 
@@ -413,7 +414,7 @@ export default function ProjectNav({
                 className={iconButtonMargin}
                 size="large"
                 disabled={!current}
-                active={activeNav === ProjectNavInvite}
+                active={activeNav === ActiveNavElement.ProjectNavInvite}
                 data-testid="project-nav-invite"
                 onClick={onElementClick(ProjectNavInvite)}
               >
@@ -436,7 +437,7 @@ export default function ProjectNav({
                 size="large"
                 className={iconButtonMargin}
                 disabled={!current}
-                active={activeNav === ProjectNavActivityFeed}
+                active={activeNav === ActiveNavElement.ProjectNavActivityFeed}
                 data-testid="project-nav-activity-feed"
                 onClick={onElementClick(ProjectNavActivityFeed)}
               >
@@ -458,7 +459,7 @@ export default function ProjectNav({
                 href={projectNav.alerts as string}
                 size="large"
                 disabled={!current}
-                active={activeNav === ProjectNavAlerts}
+                active={activeNav === ActiveNavElement.ProjectNavAlerts}
                 data-testid="project-nav-alerts"
                 onClick={onElementClick(ProjectNavAlerts)}
               >

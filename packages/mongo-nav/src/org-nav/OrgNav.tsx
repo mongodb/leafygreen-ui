@@ -23,6 +23,7 @@ import {
   CurrentOrganizationInterface,
   HostsInterface,
   OrgPaymentLabel,
+  ActiveNavElement,
 } from '../types';
 
 export const orgNavHeight = 60;
@@ -145,7 +146,7 @@ function OrgNav({
   const { orgNav } = urls;
   const isTablet = viewportWidth < breakpoints.medium;
   const isMobile = viewportWidth < breakpoints.small;
-  const disabled = activeNav === NavElement.UserSettings;
+  const disabled = activeNav === ActiveNavElement.UserSettings;
 
   let paymentVariant: Colors | undefined;
   let key: Colors;
@@ -246,7 +247,7 @@ function OrgNav({
         constructOrganizationURL={constructOrganizationURL}
         urls={urls}
         onChange={onOrganizationChange}
-        isActive={activeNav === NavElement.OrgNavOrgSettings}
+        isActive={activeNav === ActiveNavElement.OrgNavOrgSettings}
         loading={!current}
         disabled={disabled}
         isOnPrem={onPremEnabled}
@@ -258,7 +259,7 @@ function OrgNav({
         <>
           <OrgNavLink
             href={current && orgNav.accessManager}
-            isActive={activeNav === NavElement.OrgNavAccessManager}
+            isActive={activeNav === ActiveNavElement.OrgNavAccessManager}
             loading={!current}
             data-testid="org-nav-access-manager"
             onClick={onElementClick(NavElement.OrgNavAccessManager)}
@@ -312,7 +313,7 @@ function OrgNav({
 
           <OrgNavLink
             href={current && orgNav.support}
-            isActive={activeNav === NavElement.OrgNavSupport}
+            isActive={activeNav === ActiveNavElement.OrgNavSupport}
             loading={!current}
             className={supportContainer}
             data-testid="org-nav-support"
@@ -324,7 +325,7 @@ function OrgNav({
           {!onPremEnabled && (
             <OrgNavLink
               href={current && orgNav.billing}
-              isActive={activeNav === NavElement.OrgNavBilling}
+              isActive={activeNav === ActiveNavElement.OrgNavBilling}
               loading={!current}
               data-testid="org-nav-billing"
               onClick={onElementClick(NavElement.OrgNavBilling)}
@@ -365,7 +366,7 @@ function OrgNav({
         {!isMobile && (
           <OrgNavLink
             href={orgNav.allClusters}
-            isActive={activeNav === NavElement.OrgNavAllClusters}
+            isActive={activeNav === ActiveNavElement.OrgNavAllClusters}
             className={rightLinkMargin}
             data-testid="org-nav-all-clusters-link"
             onClick={onElementClick(NavElement.OrgNavAllClusters)}
@@ -377,7 +378,7 @@ function OrgNav({
         {!isTablet && admin && !onPremEnabled && (
           <OrgNavLink
             href={orgNav.admin}
-            isActive={activeNav === NavElement.OrgNavAdmin}
+            isActive={activeNav === ActiveNavElement.OrgNavAdmin}
             className={rightLinkMargin}
             data-testid="org-nav-admin-link"
           >

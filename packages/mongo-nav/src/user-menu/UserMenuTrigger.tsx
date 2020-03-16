@@ -106,8 +106,6 @@ export default function UserMenuTrigger({
   const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
 
-  // console.log('open is', open, onElementClick);
-
   // Show first initial on tablets and smaller, otherwise use the full name passed in
   const displayName = isTablet ? name.split('')[0] : name;
 

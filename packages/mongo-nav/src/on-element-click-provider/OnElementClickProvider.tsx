@@ -37,29 +37,12 @@ export default function OnElementClickProvider({
     };
   };
 
-  // const memoizedValue = useMemo(
-  //   (navElement: NavElement, additionalWork?: (e: React.MouseEvent) => void) =>
-  //     wrappedOnElementClick(navElement, additionalWork),
-  //   [onElementClick],
-  // );
-
-  // const wrappedOnElementClick = useMemo(
-  //   (
-  //     navElement: NavElement,
-  //     additionalWork?: (e: React.MouseEvent) => void,
-  //   ) => {
-  //     return (e: React.MouseEvent) => {
-  //       onElementClick(navElement, e);
-  //       if (additionalWork) {
-  //         return additionalWork(e);
-  //       }
-  //     };
-  //   },
-  //   [onElementClick],
-  // );
+  const memoizedWrapper = React.useMemo(() => wrappedOnElementClick, [
+    onElementClick,
+  ]);
 
   return (
-    <OnElementClickContext.Provider value={wrappedOnElementClick}>
+    <OnElementClickContext.Provider value={memoizedWrapper}>
       {children}
     </OnElementClickContext.Provider>
   );
