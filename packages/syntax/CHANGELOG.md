@@ -1,5 +1,11 @@
 # @leafygreen-ui/syntax
 
+## 2.4.0
+
+### Minor Changes
+
+- f2fed7c: Code component styling updates
+
 ## 2.3.0
 
 ### Minor Changes
