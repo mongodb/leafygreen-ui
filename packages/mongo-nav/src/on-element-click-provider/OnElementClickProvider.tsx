@@ -37,12 +37,14 @@ export default function OnElementClickProvider({
     };
   };
 
-  const memoizedWrapper = React.useMemo(() => wrappedOnElementClick, [
-    onElementClick,
-  ]);
+  const callbackWrapper = React.useCallback(
+    (navElement, additionalWork) =>
+      wrappedOnElementClick(navElement, additionalWork),
+    [onElementClick],
+  );
 
   return (
-    <OnElementClickContext.Provider value={memoizedWrapper}>
+    <OnElementClickContext.Provider value={callbackWrapper}>
       {children}
     </OnElementClickContext.Provider>
   );

@@ -220,7 +220,7 @@ function MongoNav({
     },
     orgNav: {
       leaf: data?.currentOrganization
-        ? `${hosts.cloud}/v2#/org/${data.currentOrganization?.orgId}/`
+        ? `${hosts.cloud}/v2#/org/${data.currentOrganization.orgId}/`
         : `/`,
       settings: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/settings/general`,
       accessManager: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/access/users`,
