@@ -51,19 +51,7 @@ const ActiveNavElement = {
   UserSettings: NavElement.UserSettings,
 } as const;
 
-type ActiveNavElement = Pick<
-  typeof NavElement,
-  | 'OrgNavOrgSettings'
-  | 'OrgNavAccessManager'
-  | 'OrgNavSupport'
-  | 'OrgNavBilling'
-  | 'OrgNavAdmin'
-  | 'OrgNavAllClusters'
-  | 'ProjectNavInvite'
-  | 'ProjectNavActivityFeed'
-  | 'ProjectNavAlerts'
-  | 'UserSettings'
->;
+type ActiveNavElement = typeof ActiveNavElement[keyof typeof ActiveNavElement];
 
 export { ActiveNavElement };
 

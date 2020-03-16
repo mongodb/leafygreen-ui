@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useCallback } from 'react';
 import { NavElement } from '../types';
 
 type OnElementClickType = (
@@ -37,7 +37,7 @@ export default function OnElementClickProvider({
     };
   };
 
-  const callbackWrapper = React.useCallback(
+  const callbackWrapper = useCallback(
     (navElement, additionalWork) =>
       wrappedOnElementClick(navElement, additionalWork),
     [onElementClick],
