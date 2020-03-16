@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/code",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "leafyGreen UI Kit Code Blocks",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/lib": "^4.0.0",
-    "@leafygreen-ui/syntax": "^2.1.0",
+    "@leafygreen-ui/syntax": "^2.4.0",
     "@leafygreen-ui/icon": "^4.0.0",
     "@leafygreen-ui/icon-button": "^4.1.0",
     "clipboard": "^2.0.6"
