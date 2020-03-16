@@ -228,7 +228,7 @@ function OrgNav({
         usePortal={false}
         trigger={
           <a
-            href="/"
+            href={orgNav.leaf}
             onClick={onElementClick(NavElement.OrgNavLeaf)}
             data-testid="org-nav-leaf"
           >

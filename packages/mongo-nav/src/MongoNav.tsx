@@ -49,12 +49,12 @@ interface MongoNavInterface {
   /**
    * Callback invoked when user types into organization picker.
    */
-  onOrganizationChange: React.ChangeEventHandler;
+  onOrganizationChange?: React.ChangeEventHandler;
 
   /**
    * Callback invoked when user types into project picker.
    */
-  onProjectChange: React.ChangeEventHandler;
+  onProjectChange?: React.ChangeEventHandler;
 
   /**
    *  Function to determine destination URL when user selects a organization from the organization picker, see also `hosts`.
@@ -170,8 +170,8 @@ interface MongoNavInterface {
 function MongoNav({
   activeProduct,
   activeNav,
-  onOrganizationChange,
-  onProjectChange,
+  onOrganizationChange = () => {},
+  onProjectChange = () => {},
   mode = Mode.Production,
   loadData = true,
   showProjectNav = true,
@@ -218,6 +218,9 @@ function MongoNav({
       orgSettings: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/settings/general`,
     },
     orgNav: {
+      leaf: data?.currentOrganization
+        ? `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/`
+        : `/`,
       settings: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/settings/general`,
       accessManager: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/access/users`,
       support: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/support`,
@@ -232,6 +235,7 @@ function MongoNav({
       integrations: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#integrations`,
       alerts: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#alerts`,
       activityFeed: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#activity`,
+      invite: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#access/add`,
     },
     onPrem: {
       profile: `${hosts.cloud}/v2#/account/profile`,

@@ -1,17 +1,30 @@
-const NavElement = {
-  Logout: 'logout',
-  OrgNavLeaf: 'leaf',
-  OrgNavOrgSelectTrigger: 'orgNavOrgSelectTrigger',
-  OrgNavViewAllOrganizations: 'orgNavViewAllOrganizations',
+const ActiveNavElement = {
   OrgNavOrgSettings: 'orgNavOrgSettings',
   OrgNavAccessManager: 'orgNavAccessManager',
-  OrgNavDropdown: 'orgNavDropdown',
-  OrgNavDropdownOrgAccessManager: 'orgNavDropdownOrgAccessManager',
-  OrgNavDropdownProjectAccessManager: 'orgNavDropdownProjectAccessManager',
   OrgNavSupport: 'orgNavSupport',
   OrgNavBilling: 'orgNavBilling',
   OrgNavAdmin: 'orgNavAdmin',
   OrgNavAllClusters: 'orgNavAllClusters',
+} as const;
+
+type ActiveNavElement = typeof ActiveNavElement[keyof typeof ActiveNavElement];
+
+export { ActiveNavElement };
+
+const NavElement = {
+  OrgNavOrgSettings: 'orgNavOrgSettings',
+  OrgNavAccessManager: 'orgNavAccessManager',
+  OrgNavSupport: 'orgNavSupport',
+  OrgNavBilling: 'orgNavBilling',
+  OrgNavAdmin: 'orgNavAdmin',
+  OrgNavAllClusters: 'orgNavAllClusters',
+  Logout: 'logout',
+  OrgNavLeaf: 'leaf',
+  OrgNavOrgSelectTrigger: 'orgNavOrgSelectTrigger',
+  OrgNavViewAllOrganizations: 'orgNavViewAllOrganizations',
+  OrgNavDropdown: 'orgNavDropdown',
+  OrgNavDropdownOrgAccessManager: 'orgNavDropdownOrgAccessManager',
+  OrgNavDropdownProjectAccessManager: 'orgNavDropdownProjectAccessManager',
   ProjectNavProjectSelectTrigger: 'projectNavProjectSelectTrigger',
   ProjectNavViewAllProjects: 'projectNavViewAllProjects',
   ProjectNavAddProject: 'projectNavAddProject',
@@ -178,6 +191,7 @@ export interface URLSInterface {
     orgSettings?: string;
   };
   orgNav?: {
+    leaf?: string;
     settings?: string;
     accessManager?: string;
     support?: string;
