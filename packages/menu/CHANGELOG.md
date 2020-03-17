@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 6.0.2
+
+### Patch Changes
+
+- cda96b2: Update text color when MenuItem is focused
+
 ## 6.0.1
 
 ### Patch Changes
