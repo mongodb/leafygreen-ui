@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
+import Button from '@leafygreen-ui/button';
+import Input from './Input';
+import { uiColors } from '@leafygreen-ui/palette';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { keyMap } from '@leafygreen-ui/lib';
+import { OrganizationTrigger, ProjectTrigger } from './Trigger';
+import { useOnElementClick } from '../on-element-click-provider';
 import {
   Menu,
   FocusableMenuItem,
   MenuItem,
   MenuSeparator,
 } from '@leafygreen-ui/menu';
-import Button from '@leafygreen-ui/button';
-import { uiColors } from '@leafygreen-ui/palette';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { keyMap } from '@leafygreen-ui/lib';
-import Input from './Input';
-import { OrganizationTrigger, ProjectTrigger } from './Trigger';
 import {
   ProjectInterface,
   OrganizationInterface,
@@ -18,20 +19,20 @@ import {
   CurrentProjectInterface,
   CurrentOrganizationInterface,
   PlanType,
+  NavElement,
 } from '../types';
 
 const menuItemHeight = 36;
 
 const menuContainerStyle = css`
+  position: relative;
   width: 280px;
   padding-top: 20px;
-  position: relative;
 `;
 
 const menuItemContainerStyle = css`
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
   text-align: left;
 `;
 
@@ -70,6 +71,21 @@ const orgOptionContainerStyle = css`
   justify-content: space-between;
 `;
 
+const noOrgStyle = css`
+  font-size: 14px;
+  padding: 4px 8px;
+  margin-bottom: 20px;
+`;
+
+const allOrgLinkStyle = css`
+  color: ${uiColors.blue.base};
+  text-decoration: none;
+  &:visited {
+    color: ${uiColors.blue.base};
+    text-decoration: none;
+  }
+`;
+
 const formattedPlanTypes: Record<PlanType, string> = {
   [PlanType.Atlas]: 'Atlas',
   [PlanType.Cloud]: 'Cloud Manager',
@@ -100,6 +116,7 @@ interface OrganizationMongoSelectProps extends BaseMongoSelectProps {
 }
 
 const onKeyDown: React.KeyboardEventHandler = e => {
+  // Stops default browser behavior from automatically scrolling the component
   if ([keyMap.ArrowUp, keyMap.ArrowDown].includes(e.keyCode)) {
     e.preventDefault();
   }
@@ -118,6 +135,7 @@ function OrgSelect({
   loading = false,
 }: OrganizationMongoSelectProps) {
   const [open, setOpen] = useState(false);
+  const onElementClick = useOnElementClick();
 
   const renderOrganizationOption = (datum: OrganizationInterface) => {
     const { orgId, orgName, planType } = datum;
@@ -132,6 +150,7 @@ function OrgSelect({
       >
         <div className={orgOptionContainerStyle}>
           <span className={nameStyle}>{orgName}</span>
+
           {!isOnPrem && (
             <span className={productStyle}>{formattedPlanTypes[planType]}</span>
           )}
@@ -148,7 +167,9 @@ function OrgSelect({
       open={open}
       disabled={disabled}
       loading={loading}
-      onClick={() => setOpen(current => !current)}
+      onClick={onElementClick(NavElement.OrgNavOrgSelectTrigger, () =>
+        setOpen(current => !current),
+      )}
     >
       <Menu
         usePortal={false}
@@ -158,31 +179,46 @@ function OrgSelect({
         setOpen={setOpen}
         open={open}
       >
-        <FocusableMenuItem>
-          <Input
-            data-testid="org-filter-input"
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-            variant="organization"
-          />
-        </FocusableMenuItem>
+        {data && (
+          <FocusableMenuItem>
+            <Input
+              data-testid="org-filter-input"
+              variant="organization"
+              onChange={onChange}
+              onKeyDown={onKeyDown}
+            />
+          </FocusableMenuItem>
+        )}
 
         <ul className={ulStyle}>
           {data?.map(renderOrganizationOption) ?? (
-            <li>
-              You do not belong to any organizations. Create an organization to
-              start using MongoDB Cloud
+            <li className={noOrgStyle}>
+              You do not belong to any organizations. Create an organization on
+              the{' '}
+              <a
+                href={urls.mongoSelect.viewAllOrganizations}
+                className={allOrgLinkStyle}
+              >
+                Organizations
+              </a>{' '}
+              page.
             </li>
           )}
         </ul>
 
-        <MenuSeparator />
-        <MenuItem
-          onKeyDown={onKeyDown}
-          href={urls.mongoSelect?.viewAllOrganizations}
-        >
-          <strong className={viewAllStyle}>View All Organizations</strong>
-        </MenuItem>
+        {data && (
+          <>
+            <MenuSeparator />
+            <MenuItem
+              onKeyDown={onKeyDown}
+              href={urls.mongoSelect?.viewAllOrganizations}
+              data-testid="org-select-view-all-orgs"
+              onClick={onElementClick(NavElement.OrgNavViewAllOrganizations)}
+            >
+              <strong className={viewAllStyle}>View All Organizations</strong>
+            </MenuItem>
+          </>
+        )}
       </Menu>
     </OrganizationTrigger>
   );
@@ -202,6 +238,7 @@ function ProjectSelect({
   loading = false,
 }: ProjectMongoSelectProps) {
   const [open, setOpen] = useState(false);
+  const onElementClick = useOnElementClick();
 
   const renderProjectOption = (datum: ProjectInterface) => {
     const { projectId, projectName, orgId } = datum;
@@ -224,7 +261,9 @@ function ProjectSelect({
       placeholder={current?.projectName ?? ''}
       open={open}
       loading={loading}
-      onClick={() => setOpen(curr => !curr)}
+      onClick={onElementClick(NavElement.ProjectNavProjectSelectTrigger, () =>
+        setOpen(curr => !curr),
+      )}
     >
       <Menu
         usePortal={false}
@@ -252,12 +291,20 @@ function ProjectSelect({
 
         <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
           <FocusableMenuItem>
-            <Button href={urls.mongoSelect.viewAllProjects as string}>
+            <Button
+              href={urls.mongoSelect.viewAllProjects as string}
+              data-testid="project-select-view-all-projects"
+              onClick={onElementClick(NavElement.ProjectNavViewAllProjects)}
+            >
               View All Projects
             </Button>
           </FocusableMenuItem>
           <FocusableMenuItem>
-            <Button href={urls.mongoSelect.newProject as string}>
+            <Button
+              href={urls.mongoSelect.newProject as string}
+              data-testid="project-select-add-new-project"
+              onClick={onElementClick(NavElement.ProjectNavAddProject)}
+            >
               + New Project
             </Button>
           </FocusableMenuItem>

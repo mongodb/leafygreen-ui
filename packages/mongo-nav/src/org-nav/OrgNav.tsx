@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import { LogoMark } from '@leafygreen-ui/logo';
-import { useViewportSize } from '@leafygreen-ui/hooks';
+import PropTypes from 'prop-types';
 import Tooltip from '@leafygreen-ui/tooltip';
 import Badge from '@leafygreen-ui/badge';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
-import { Menu } from '@leafygreen-ui/menu';
-import { OrgNavLink, OnPremUserMenu } from '../helpers/index';
+import UserMenu from '../user-menu';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { uiColors } from '@leafygreen-ui/palette';
+import { LogoMark } from '@leafygreen-ui/logo';
+import { useViewportSize } from '@leafygreen-ui/hooks';
+import { Menu, MenuItem } from '@leafygreen-ui/menu';
+import { OrgNavLink, OnPremUserMenu } from '../helpers';
 import { breakpoints, facepaint } from '../breakpoints';
+import { OrgSelect } from '../mongo-select';
+import { useOnElementClick } from '../on-element-click-provider';
 import {
   AccountInterface,
   OrganizationInterface,
@@ -19,27 +23,25 @@ import {
   CurrentOrganizationInterface,
   HostsInterface,
   OrgPaymentLabel,
+  ActiveNavElement,
 } from '../types';
-import { OrgSelect } from '../mongo-select/index';
-import UserMenu from '../user-menu/index';
 
 export const orgNavHeight = 60;
 
 const navContainer = css`
-  height: ${orgNavHeight}px;
-  width: 100%;
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
+  box-sizing: border-box;
+  height: ${orgNavHeight}px;
   padding-left: 15px;
   padding-right: 15px;
   font-size: 13px;
   line-height: 15px;
-  color: ${uiColors.gray.dark3};
-  border-bottom: 1px solid ${uiColors.gray.light2};
-  box-sizing: border-box;
-  z-index: 1;
-  position: relative;
   background-color: white;
+  border-bottom: 1px solid ${uiColors.gray.light2};
+  color: ${uiColors.gray.dark3};
 `;
 
 const orgSelectContainer = css`
@@ -65,25 +67,12 @@ const rightLinkMargin = css`
   })}
 `;
 
-const accessManagerMenuContainer = css`
-  padding: 16px;
-  width: 220px;
-  background-color: white;
-  text-align: left;
-`;
-
-const accessManagerMenuItem = css`
-  font-size: 14px;
-  color: ${uiColors.gray.dark2};
-  line-height: 19.6px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-`;
-
 const versionStyle = css`
-  color: ${uiColors.green.base};
+  position: relative;
   display: inline-block;
   font-size: 10px;
+  color: ${uiColors.green.base};
+
   ${facepaint({
     marginRight: ['16px', '16px', '16px'],
   })}
@@ -98,7 +87,7 @@ export const Colors = {
 
 export type Colors = typeof Colors[keyof typeof Colors];
 
-const paymentStatusMap: { readonly [K in Colors]: Array<string> } = {
+const paymentStatusMap: Record<Colors, ReadonlyArray<OrgPaymentLabel>> = {
   [Colors.Lightgray]: [
     OrgPaymentLabel.Embargoed,
     OrgPaymentLabel.EmbargoConfirmed,
@@ -115,7 +104,7 @@ const paymentStatusMap: { readonly [K in Colors]: Array<string> } = {
     OrgPaymentLabel.Locked,
     OrgPaymentLabel.Closed,
   ],
-};
+} as const;
 
 interface OrgNav {
   account?: AccountInterface;
@@ -134,7 +123,7 @@ interface OrgNav {
   onPremMFA?: boolean;
 }
 
-export default function OrgNav({
+function OrgNav({
   account,
   activeNav,
   activeProduct,
@@ -145,26 +134,27 @@ export default function OrgNav({
   urls,
   admin,
   hosts,
-  currentProjectName,
+  currentProjectName = 'None',
   onPremEnabled,
   onPremVersion,
   onPremMFA = false,
 }: OrgNav) {
   const [accessManagerOpen, setAccessManagerOpen] = useState(false);
   const [onPremMenuOpen, setOnPremMenuOpen] = useState(false);
-  const { orgNav } = urls;
   const { width: viewportWidth } = useViewportSize();
+  const onElementClick = useOnElementClick();
+  const { orgNav } = urls;
   const isTablet = viewportWidth < breakpoints.medium;
   const isMobile = viewportWidth < breakpoints.small;
-  const disabled = activeNav === NavElement.UserSettings;
+  const disabled = activeNav === ActiveNavElement.UserSettings;
 
   let paymentVariant: Colors | undefined;
   let key: Colors;
 
   for (key in paymentStatusMap) {
-    if (!current?.paymentStatus) {
-      paymentVariant = undefined;
-    } else if (paymentStatusMap[key].includes(current?.paymentStatus)) {
+    const paymentStatus = current?.paymentStatus;
+
+    if (paymentStatus && paymentStatusMap[key].includes(paymentStatus)) {
       paymentVariant = key;
     }
   }
@@ -175,46 +165,53 @@ export default function OrgNav({
     OrgPaymentLabel.AdminSuspended,
   ];
 
-  let badgeItem: React.ReactElement | null = null;
+  function renderBadgeItem() {
+    if (
+      disabled ||
+      current?.paymentStatus == null ||
+      isTablet ||
+      onPremEnabled ||
+      !paymentVariant ||
+      (!admin && !paymentValues.includes(current.paymentStatus))
+    ) {
+      return null;
+    }
 
-  if (
-    !isTablet &&
-    !onPremEnabled &&
-    current?.paymentStatus &&
-    paymentVariant &&
-    (admin || paymentValues.includes(current.paymentStatus))
-  ) {
-    const badgeMargin = css`
-      margin-right: 25px;
-    `;
-
-    badgeItem = (
+    return (
       <Badge
-        className={badgeMargin}
         variant={paymentVariant}
         data-testid="org-nav-payment-status"
+        className={css`
+          margin-right: 25px;
+        `}
       >
         {current.paymentStatus.split('_').join()}
       </Badge>
     );
   }
 
-  const renderedUserMenu = onPremEnabled ? (
-    <OnPremUserMenu
-      name={account?.firstName ?? ''}
-      open={onPremMenuOpen}
-      setOpen={setOnPremMenuOpen}
-      urls={urls}
-      mfa={onPremMFA}
-    />
-  ) : (
-    <UserMenu
-      account={account}
-      activeProduct={activeProduct}
-      urls={urls}
-      hosts={hosts}
-    />
-  );
+  function renderUserMenu() {
+    if (onPremEnabled) {
+      return (
+        <OnPremUserMenu
+          name={account?.firstName ?? ''}
+          open={onPremMenuOpen}
+          setOpen={setOnPremMenuOpen}
+          urls={urls}
+          mfa={onPremMFA}
+        />
+      );
+    }
+
+    return (
+      <UserMenu
+        account={account}
+        activeProduct={activeProduct}
+        urls={urls}
+        hosts={hosts}
+      />
+    );
+  }
 
   return (
     <nav
@@ -226,9 +223,16 @@ export default function OrgNav({
         align="bottom"
         justify="start"
         variant="dark"
+        className={css`
+          width: 150px;
+        `}
         usePortal={false}
         trigger={
-          <a href="/">
+          <a
+            href={orgNav.leaf}
+            onClick={onElementClick(NavElement.OrgNavLeaf)}
+            data-testid="org-nav-leaf"
+          >
             <LogoMark height={30} />
           </a>
         }
@@ -243,75 +247,91 @@ export default function OrgNav({
         constructOrganizationURL={constructOrganizationURL}
         urls={urls}
         onChange={onOrganizationChange}
-        isActive={activeNav === NavElement.OrgSettings}
+        isActive={activeNav === ActiveNavElement.OrgNavOrgSettings}
         loading={!current}
         disabled={disabled}
         isOnPrem={onPremEnabled}
       />
 
-      {!disabled && (
+      {renderBadgeItem()}
+
+      {!disabled && !isMobile && (
         <>
-          {badgeItem}
+          <OrgNavLink
+            href={current && orgNav.accessManager}
+            isActive={activeNav === ActiveNavElement.OrgNavAccessManager}
+            loading={!current}
+            data-testid="org-nav-access-manager"
+            onClick={onElementClick(NavElement.OrgNavAccessManager)}
+          >
+            Access Manager
+          </OrgNavLink>
 
-          {!isMobile && (
-            <>
-              <OrgNavLink
-                href={current && orgNav.accessManager}
-                isActive={activeNav === NavElement.AccessManager}
-                loading={!current}
-                data-testid="org-nav-access-manager"
+          <IconButton
+            ariaLabel="Dropdown"
+            active={accessManagerOpen}
+            disabled={!current}
+            data-testid="org-nav-dropdown"
+            onClick={onElementClick(NavElement.OrgNavDropdown, () =>
+              setAccessManagerOpen(curr => !curr),
+            )}
+          >
+            <Icon glyph={accessManagerOpen ? 'CaretUp' : 'CaretDown'} />
+
+            {current && (
+              <Menu
+                open={accessManagerOpen}
+                setOpen={setAccessManagerOpen}
+                usePortal={false}
               >
-                Access Manager
-              </OrgNavLink>
-
-              <IconButton
-                ariaLabel="Dropdown"
-                active={accessManagerOpen}
-                disabled={!current}
-                onClick={() => setAccessManagerOpen(curr => !curr)}
-              >
-                <Icon glyph={accessManagerOpen ? 'CaretUp' : 'CaretDown'} />
-
-                {current && (
-                  <Menu
-                    open={accessManagerOpen}
-                    setOpen={setAccessManagerOpen}
-                    usePortal={false}
-                    className={accessManagerMenuContainer}
-                  >
-                    <p className={accessManagerMenuItem}>
-                      <strong>Organization Access:</strong> {current.orgName}
-                    </p>
-
-                    <p className={accessManagerMenuItem}>
-                      <strong>Project Access: </strong>
-                      {currentProjectName ?? 'None'}
-                    </p>
-                  </Menu>
-                )}
-              </IconButton>
-
-              <OrgNavLink
-                href={current && orgNav.support}
-                isActive={activeNav === NavElement.Support}
-                loading={!current}
-                className={supportContainer}
-                data-testid="org-nav-support"
-              >
-                Support
-              </OrgNavLink>
-
-              {!onPremEnabled && (
-                <OrgNavLink
-                  href={current && orgNav.billing}
-                  isActive={activeNav === NavElement.Billing}
-                  loading={!current}
-                  data-testid="org-nav-billing"
+                <MenuItem
+                  href={orgNav.accessManager}
+                  data-testid="org-nav-dropdown-org-access-manager"
+                  description={current.orgName}
+                  size="large"
+                  onClick={onElementClick(
+                    NavElement.OrgNavDropdownOrgAccessManager,
+                  )}
                 >
-                  Billing
-                </OrgNavLink>
-              )}
-            </>
+                  Organization Access
+                </MenuItem>
+
+                <MenuItem
+                  href={currentProjectName && urls.projectNav.accessManager}
+                  data-testid="org-nav-dropdown-project-access-manager"
+                  size="large"
+                  description={currentProjectName}
+                  onClick={onElementClick(
+                    NavElement.OrgNavDropdownProjectAccessManager,
+                  )}
+                >
+                  Project Access
+                </MenuItem>
+              </Menu>
+            )}
+          </IconButton>
+
+          <OrgNavLink
+            href={current && orgNav.support}
+            isActive={activeNav === ActiveNavElement.OrgNavSupport}
+            loading={!current}
+            className={supportContainer}
+            data-testid="org-nav-support"
+            onClick={onElementClick(NavElement.OrgNavSupport)}
+          >
+            Support
+          </OrgNavLink>
+
+          {!onPremEnabled && (
+            <OrgNavLink
+              href={current && orgNav.billing}
+              isActive={activeNav === ActiveNavElement.OrgNavBilling}
+              loading={!current}
+              data-testid="org-nav-billing"
+              onClick={onElementClick(NavElement.OrgNavBilling)}
+            >
+              Billing
+            </OrgNavLink>
           )}
         </>
       )}
@@ -322,17 +342,34 @@ export default function OrgNav({
         `}
       >
         {onPremEnabled && onPremVersion && (
-          <span className={versionStyle} data-testid="org-nav-on-prem-version">
-            {onPremVersion}
-          </span>
+          <Tooltip
+            usePortal={false}
+            variant="dark"
+            align="bottom"
+            justify="middle"
+            className={css`
+              width: 165px;
+            `}
+            trigger={
+              <span
+                className={versionStyle}
+                data-testid="org-nav-on-prem-version"
+              >
+                {onPremVersion}
+              </span>
+            }
+          >
+            Ops Manager Version
+          </Tooltip>
         )}
 
         {!isMobile && (
           <OrgNavLink
             href={orgNav.allClusters}
-            isActive={activeNav === NavElement.AllClusters}
+            isActive={activeNav === ActiveNavElement.OrgNavAllClusters}
             className={rightLinkMargin}
             data-testid="org-nav-all-clusters-link"
+            onClick={onElementClick(NavElement.OrgNavAllClusters)}
           >
             All Clusters
           </OrgNavLink>
@@ -341,7 +378,7 @@ export default function OrgNav({
         {!isTablet && admin && !onPremEnabled && (
           <OrgNavLink
             href={orgNav.admin}
-            isActive={activeNav === NavElement.Admin}
+            isActive={activeNav === ActiveNavElement.OrgNavAdmin}
             className={rightLinkMargin}
             data-testid="org-nav-admin-link"
           >
@@ -350,7 +387,17 @@ export default function OrgNav({
         )}
       </div>
 
-      {renderedUserMenu}
+      {renderUserMenu()}
     </nav>
   );
 }
+
+OrgNav.displayName = 'OrgNav';
+
+OrgNav.propTypes = {
+  current: PropTypes.shape({
+    paymentStatus: PropTypes.string,
+  }),
+};
+
+export default OrgNav;

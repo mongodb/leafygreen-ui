@@ -75,6 +75,7 @@ export const urlDefaults: Required<URLSInterface> = {
     orgSettings: `https://cloud-dev.mongodb.com/v2#/org/${dataFixtures.currentOrganization?.orgId}/settings/general`,
   },
   orgNav: {
+    leaf: `https://cloud.mongodb.com/v2#/org/${dataFixtures.currentOrganization?.orgId}/projects`,
     settings: `https://cloud.mongodb.com/v2#/org/${dataFixtures.currentOrganization?.orgId}/settings/general`,
     accessManager: `https://cloud.mongodb.com/v2#/org/${dataFixtures.currentOrganization?.orgId}/access/users`,
     support: `https://cloud.mongodb.com/v2#/org/${dataFixtures.currentOrganization?.orgId}/support`,
@@ -89,6 +90,7 @@ export const urlDefaults: Required<URLSInterface> = {
     integrations: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#integrations`,
     alerts: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#alerts`,
     activityFeed: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#activity`,
+    invite: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#access/add`,
   },
   onPrem: {
     profile: `https://cloud.mongodb.com/v2#/account/profile`,

@@ -1,15 +1,17 @@
 import React from 'react';
 import Tooltip from '@leafygreen-ui/tooltip';
+import IconButton from '@leafygreen-ui/icon-button';
+import Icon from '@leafygreen-ui/icon';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import IconButton from '@leafygreen-ui/icon-button';
-import Icon from '@leafygreen-ui/icon';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { ProjectSelect } from '../mongo-select/index';
+import { ProjectSelect } from '../mongo-select';
 import { facepaint, breakpoints } from '../breakpoints';
 import { useViewportSize } from '@leafygreen-ui/hooks';
+import { iconLoadingStyle, textLoadingStyle } from '../styles';
+import { useOnElementClick } from '../on-element-click-provider';
 import {
   ProjectInterface,
   URLSInterface,
@@ -17,13 +19,26 @@ import {
   Product,
   HostsInterface,
   PlanType,
+  ActiveNavElement,
   NavElement,
 } from '../types';
-import { iconLoadingStyle, textLoadingStyle } from '../styles';
-import { useOnElementClick } from '../OnElementClickProvider';
+
+const {
+  ProjectNavProjectDropdown,
+  ProjectNavProjectSettings,
+  ProjectNavProjectSupport,
+  ProjectNavProjectIntegrations,
+  ProjectNavCloud,
+  ProjectNavRealm,
+  ProjectNavCharts,
+  ProjectNavInvite,
+  ProjectNavActivityFeed,
+  ProjectNavAlerts,
+} = NavElement;
+
+export const projectNavHeight = 45;
 
 const productIconProp = createDataProp('charts-data-prop');
-export const projectNavHeight = 45;
 
 const navContainerStyle = css`
   display: flex;
@@ -37,11 +52,6 @@ const navContainerStyle = css`
   background-color: white;
   position: relative;
   z-index: 0;
-`;
-
-const mongoSelectWrapper = css`
-  display: flex;
-  align-items: center;
 `;
 
 const menuIconButtonStyle = css`
@@ -86,14 +96,14 @@ const productStates = {
     &:focus {
       color: ${uiColors.blue.base};
 
-      > ${productIconProp.selector} {
-        color: ${uiColors.blue.base};
-      }
-
       &:after {
         background-color: #9dd0e7;
         opacity: 1;
         transform: scale(1);
+      }
+
+      > ${productIconProp.selector} {
+        color: ${uiColors.blue.base};
       }
     }
   `,
@@ -110,14 +120,14 @@ const productStates = {
       }
     }
 
-    > ${productIconProp.selector} {
-      color: ${uiColors.green.base};
-    }
-
     &:after {
       opacity: 1;
       transform: scale(1);
       background-color: ${uiColors.green.base}};
+    }
+
+    > ${productIconProp.selector} {
+      color: ${uiColors.green.base};
     }
   `,
 
@@ -164,7 +174,7 @@ const productStyle = css`
 `;
 
 const cloudManagerStyle = css`
-  width: unset;
+  width: 130px;
 `;
 
 const iconButtonMargin = css`
@@ -199,13 +209,13 @@ const tooltipStyles = css`
 `;
 
 export function displayProductName(today = new Date(Date.now())) {
-  const mdbworld = new Date('May 4, 2020 0:00:00');
+  const mdbLiveDate = new Date('May 4, 2020 0:00:00');
 
-  if (today >= mdbworld) {
-    return 'Realm';
+  if (today < mdbLiveDate) {
+    return 'Stitch';
   }
 
-  return 'Stitch';
+  return 'Realm';
 }
 
 const secondTabName = displayProductName();
@@ -235,11 +245,17 @@ export default function ProjectNav({
 }: ProjectNavInterface) {
   const [open, setOpen] = React.useState(false);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const { projectNav } = urls;
   const { width: viewportWidth } = useViewportSize();
+  const onElementClick = useOnElementClick();
+  const { projectNav } = urls;
   const isMobile = viewportWidth < breakpoints.small;
   const isCloudManager = current?.planType === PlanType.Cloud;
-  const onElementClick = useOnElementClick();
+
+  const sharedTooltipProps = {
+    variant: 'dark',
+    usePortal: false,
+    className: tooltipStyles,
+  } as const;
 
   const getProductClassName = (product: Product) =>
     cx(productStyle, {
@@ -249,17 +265,9 @@ export default function ProjectNav({
       [cloudManagerStyle]: isCloudManager,
     });
 
-  const sharedTooltipProps = {
-    variant: 'dark',
-    usePortal: false,
-    className: tooltipStyles,
-  } as const;
-
   const iconStyle = cx(productIconStyle, {
     [iconLoadingStyle]: !current,
   });
-
-  const onMenuClick = () => setOpen(false);
 
   return (
     <nav
@@ -267,16 +275,14 @@ export default function ProjectNav({
       aria-label="project navigation"
       data-testid="project-nav"
     >
-      <div className={mongoSelectWrapper}>
-        <ProjectSelect
-          current={current}
-          data={data}
-          constructProjectURL={constructProjectURL}
-          urls={urls}
-          onChange={onProjectChange}
-          loading={!current}
-        />
-      </div>
+      <ProjectSelect
+        current={current}
+        data={data}
+        constructProjectURL={constructProjectURL}
+        urls={urls}
+        onChange={onProjectChange}
+        loading={!current}
+      />
 
       <Menu
         open={open}
@@ -289,6 +295,7 @@ export default function ProjectNav({
             active={open}
             disabled={!current}
             data-testid="project-nav-project-menu"
+            onClick={onElementClick(ProjectNavProjectDropdown)}
           >
             <Icon glyph="Ellipsis" className={menuIconStyle} />
           </IconButton>
@@ -296,48 +303,45 @@ export default function ProjectNav({
       >
         <MenuItem
           href={projectNav.settings}
-          onClick={onMenuClick}
           data-testid="project-nav-settings"
+          onClick={onElementClick(ProjectNavProjectSettings, () =>
+            setOpen(false),
+          )}
         >
           Project Settings
         </MenuItem>
-        <MenuItem
-          href={projectNav.accessManager}
-          onClick={onMenuClick}
-          data-testid="project-nav-access-manager"
-        >
-          Project Access Manager
-        </MenuItem>
+
         <MenuItem
           href={projectNav.support}
-          onClick={onMenuClick}
           data-testid="project-nav-support"
+          onClick={onElementClick(ProjectNavProjectSupport, () =>
+            setOpen(false),
+          )}
         >
           Project Support
         </MenuItem>
         <MenuItem
           href={projectNav.integrations}
-          onClick={onMenuClick}
           data-testid="project-nav-integrations"
+          onClick={onElementClick(ProjectNavProjectIntegrations, () =>
+            setOpen(false),
+          )}
         >
           Integrations
         </MenuItem>
       </Menu>
 
       <ul className={productListStyle}>
-        <li
-          role="none"
-          className={productTabStyle}
-          data-testid={`project-nav-${
-            isCloudManager ? 'cloud-manager' : 'atlas'
-          }`}
-        >
+        <li role="none" className={productTabStyle}>
           <a
             href={hosts.cloud}
             className={getProductClassName('cloud')}
             aria-disabled={!current}
-            tabIndex={!current ? -1 : 0}
-            onClick={event => onElementClick(NavElement.Cloud, event)}
+            tabIndex={current ? 0 : -1}
+            onClick={onElementClick(ProjectNavCloud)}
+            data-testid={`project-nav-${
+              isCloudManager ? 'cloud-manager' : 'atlas'
+            }`}
           >
             {!isMobile && (
               <Icon
@@ -351,53 +355,48 @@ export default function ProjectNav({
         </li>
 
         {!isCloudManager && (
-          <li
-            role="none"
-            className={productTabStyle}
-            data-testid="project-nav-realm"
-          >
-            <a
-              href={hosts.realm}
-              className={getProductClassName('realm')}
-              aria-disabled={!current}
-              tabIndex={!current ? -1 : 0}
-              onClick={event => onElementClick(NavElement.Realm, event)}
-            >
-              {!isMobile && (
-                <Icon
-                  {...productIconProp.prop}
-                  className={iconStyle}
-                  glyph="Stitch"
-                />
-              )}
-              {secondTabName}
-            </a>
-          </li>
-        )}
+          <>
+            <li role="none" className={productTabStyle}>
+              <a
+                data-testid="project-nav-realm"
+                href={hosts.realm}
+                className={getProductClassName('realm')}
+                aria-disabled={!current}
+                tabIndex={current ? 0 : -1}
+                onClick={onElementClick(ProjectNavRealm)}
+              >
+                {!isMobile && (
+                  <Icon
+                    {...productIconProp.prop}
+                    className={iconStyle}
+                    glyph="Stitch"
+                  />
+                )}
 
-        {!isCloudManager && (
-          <li
-            role="none"
-            className={productTabStyle}
-            data-testid="project-nav-charts"
-          >
-            <a
-              href={hosts.charts}
-              className={getProductClassName('charts')}
-              aria-disabled={!current}
-              tabIndex={!current ? -1 : 0}
-              onClick={event => onElementClick(NavElement.Charts, event)}
-            >
-              {!isMobile && (
-                <Icon
-                  {...productIconProp.prop}
-                  className={iconStyle}
-                  glyph="Charts"
-                />
-              )}
-              Charts
-            </a>
-          </li>
+                {secondTabName}
+              </a>
+            </li>
+
+            <li role="none" className={productTabStyle}>
+              <a
+                data-testid="project-nav-charts"
+                href={hosts.charts}
+                className={getProductClassName('charts')}
+                aria-disabled={!current}
+                tabIndex={current ? 0 : -1}
+                onClick={onElementClick(ProjectNavCharts)}
+              >
+                {!isMobile && (
+                  <Icon
+                    {...productIconProp.prop}
+                    className={iconStyle}
+                    glyph="Charts"
+                  />
+                )}
+                Charts
+              </a>
+            </li>
+          </>
         )}
       </ul>
 
@@ -415,8 +414,9 @@ export default function ProjectNav({
                 className={iconButtonMargin}
                 size="large"
                 disabled={!current}
-                active={activeNav === NavElement.ProjectInvite}
+                active={activeNav === ActiveNavElement.ProjectNavInvite}
                 data-testid="project-nav-invite"
+                onClick={onElementClick(ProjectNavInvite)}
               >
                 <Icon glyph="InviteUser" size="large" />
               </IconButton>
@@ -437,8 +437,9 @@ export default function ProjectNav({
                 size="large"
                 className={iconButtonMargin}
                 disabled={!current}
-                active={activeNav === NavElement.ProjectActivityFeed}
+                active={activeNav === ActiveNavElement.ProjectNavActivityFeed}
                 data-testid="project-nav-activity-feed"
+                onClick={onElementClick(ProjectNavActivityFeed)}
               >
                 <Icon glyph="ActivityFeed" size="large" />
               </IconButton>
@@ -458,8 +459,9 @@ export default function ProjectNav({
                 href={projectNav.alerts as string}
                 size="large"
                 disabled={!current}
-                active={activeNav === NavElement.ProjectAlerts}
+                active={activeNav === ActiveNavElement.ProjectNavAlerts}
                 data-testid="project-nav-alerts"
+                onClick={onElementClick(ProjectNavAlerts)}
               >
                 {alerts > 0 && (
                   <div
@@ -469,6 +471,7 @@ export default function ProjectNav({
                     {alerts}
                   </div>
                 )}
+
                 <Icon glyph="Bell" size="large" />
               </IconButton>
             }
