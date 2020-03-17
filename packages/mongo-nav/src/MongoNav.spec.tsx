@@ -31,6 +31,7 @@ describe('packages/mongo-nav', () => {
     expectedElements.currentProject = queryByTestId(
       'project-select-active-project',
     );
+    expectedElements.allProjects = queryByTestId('project-select-project-list');
     expectedElements.userMenu = queryByTestId('user-menu-trigger');
     expectedElements.userMenuLogout = queryByTestId('user-menuitem-logout');
     expectedElements.onPremUserMenu = queryByTestId('om-user-menu-trigger');
@@ -127,6 +128,19 @@ describe('packages/mongo-nav', () => {
           dataFixtures!.currentProject?.projectName as string,
         ),
       ).toBe(true);
+    });
+
+    test('projects displayed in ProjectSelect are only shown if they have the same orgId as the current project', () => {
+      const currentProject = expectedElements.currentProject;
+      fireEvent.click(currentProject as HTMLElement);
+      setExpectedElements();
+
+      const projectList = expectedElements!.allProjects;
+      const projectOptions = projectList!.querySelectorAll(
+        '[data-testid="project-option"]',
+      );
+      expect(projectOptions[0].innerHTML.includes('Demo Project 1')).toBe(true);
+      expect(projectOptions.length).toBe(1);
     });
 
     test('user is set based on data returned from fetch', () => {

@@ -233,6 +233,7 @@ function ProjectSelect({
         spacing={0}
         open={open}
         setOpen={setOpen}
+        data-testid="project-select-project-list"
       >
         <FocusableMenuItem>
           <Input
