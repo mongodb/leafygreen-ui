@@ -31,7 +31,7 @@ This is the context provider for LeafyGreen Provider, and should be added as hig
 ```JS
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-<LeafyGreenProvider>
+<LeafyGreenProvider typescale={14}>
   <div>My Children</div>
 </LeafyGreenProvider>
 ```
@@ -44,9 +44,10 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 ### Properties
 
-| Prop       | Type   | Description                                                                                        |
-| ---------- | ------ | -------------------------------------------------------------------------------------------------- |
-| `children` | `node` | Children passed to `LeafyGreenProvider` will be unmodified, aside from having access to its state. |
+| Prop        | Type         | Description                                                                                                                                          | Default |
+| ----------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `children`  | `node`       | Children passed to `LeafyGreenProvider` will be unmodified, aside from having access to its state.                                                   |         |
+| `typescale` | `14` or `16` | Describes the typescale that the application is using. `<Body/>` and `<Code />` components use this value to determine `font-size` and `line-height` | `14`    |
 
 ## useUsingKeyboardContext
 
