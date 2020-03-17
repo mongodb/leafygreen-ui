@@ -5,14 +5,15 @@ import Icon from '@leafygreen-ui/icon';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { useViewportSize } from '@leafygreen-ui/hooks';
-import { URLSInterface } from '../types';
-import { InteractionRingWrapper } from '../helpers/index';
+import { URLSInterface, NavElement } from '../types';
+import { InteractionRingWrapper } from '../helpers';
 import { facepaint, breakpoints } from '../breakpoints';
 import {
   textLoadingStyle,
   iconLoadingStyle,
   removePointerEvents,
 } from '../styles';
+import { useOnElementClick } from '../on-element-click-provider';
 
 const triggerDataProp = createDataProp('org-trigger');
 const anchorDataProp = createDataProp('anchor-data-prop');
@@ -174,6 +175,7 @@ export function OrganizationTrigger({
   loading = false,
   ...rest
 }: OrganizationTriggerProps) {
+  const onElementClick = useOnElementClick();
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
@@ -230,15 +232,16 @@ export function OrganizationTrigger({
       {!disabled && (
         <a
           {...anchorDataProp.prop}
-          className={cx(orgSettingsButtonStyle, {
-            [focusStyle]: showFocus,
-            [removePointerEvents]: loading,
-          })}
           href={urls.mongoSelect.orgSettings}
           aria-label="settings"
           data-testid="org-trigger-settings"
           aria-disabled={loading}
           tabIndex={loading ? -1 : 0}
+          onClick={onElementClick(NavElement.OrgNavOrgSettings)}
+          className={cx(orgSettingsButtonStyle, {
+            [focusStyle]: showFocus,
+            [removePointerEvents]: loading,
+          })}
         >
           <Icon
             glyph="Settings"

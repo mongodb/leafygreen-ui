@@ -10,6 +10,7 @@ import {
 } from '../data';
 import OrgNav from './OrgNav';
 import { startCase } from 'lodash';
+import { NavElement } from '../types';
 
 // types
 interface ExpectedElements {
@@ -78,7 +79,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
       render(
         <OrgNav
           account={account}
-          activeNav="orgSettings"
+          activeNav={NavElement.OrgNavOrgSettings}
           activeProduct="cloud"
           current={currentOrganization}
           data={organizations}

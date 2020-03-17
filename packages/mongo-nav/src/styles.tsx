@@ -12,5 +12,5 @@ export const textLoadingStyle = css`
 `;
 
 export const iconLoadingStyle = css`
-  color: ${uiColors.gray.light1};
+  color: ${uiColors.gray.light2};
 `;

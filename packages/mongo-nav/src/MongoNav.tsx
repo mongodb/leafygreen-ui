@@ -1,13 +1,17 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import OrgNav from './org-nav/index';
-import ProjectNav from './project-nav/index';
+import OrgNav from './org-nav';
+import ProjectNav from './project-nav';
+import defaultsDeep from 'lodash/defaultsDeep';
+import OnElementClickProvider from './on-element-click-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { dataFixtures, hostDefaults } from './data';
 import {
   Product,
   URLSInterface,
   HostsInterface,
+  ActiveNavElement,
   NavElement,
   Mode,
   DataInterface,
@@ -15,13 +19,10 @@ import {
   OnPremInterface,
   PostBodyInterface,
 } from './types';
-import { dataFixtures, hostDefaults } from './data';
-import defaultsDeep from 'lodash/defaultsDeep';
-import OnElementClickProvider from './OnElementClickProvider';
 
-const ErrorCodeMap = {
+const ErrorCodeMap: Record<number, ErrorCode> = {
   401: ErrorCode.NO_AUTHORIZATION,
-};
+} as const;
 
 const navContainerStyle = css`
   background-color: ${uiColors.white};
@@ -39,7 +40,7 @@ interface MongoNavInterface {
   /**
    * Determines what nav item is currently active.
    */
-  activeNav?: NavElement;
+  activeNav?: ActiveNavElement;
 
   /**
    * Describes whether or not user is an `admin`.
@@ -49,27 +50,27 @@ interface MongoNavInterface {
   /**
    * Callback invoked when user types into organization picker.
    */
-  onOrganizationChange: React.ChangeEventHandler;
+  onOrganizationChange?: React.ChangeEventHandler;
 
   /**
    * Callback invoked when user types into project picker.
    */
-  onProjectChange: React.ChangeEventHandler;
+  onProjectChange?: React.ChangeEventHandler;
 
   /**
    *  Function to determine destination URL when user selects a organization from the organization picker, see also `hosts`.
    */
-  constructOrganizationURL?: (orgID: string) => string;
+  constructOrganizationURL?: (organizationId: string) => string;
 
   /**
    *  Function to determine destination URL when user selects a project from the project picker, see also `hosts`.
    */
-  constructProjectURL?: (orgID: string, projID: string) => string;
+  constructProjectURL?: (organizationId: string, projectId: string) => string;
 
   /**
    * Determines whether the project navigation should be shown.
    */
-  showProjNav?: boolean;
+  showProjectNav?: boolean;
 
   /**
    * Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<MongoNav />` to work across all environments.
@@ -170,11 +171,11 @@ interface MongoNavInterface {
 function MongoNav({
   activeProduct,
   activeNav,
-  onOrganizationChange,
-  onProjectChange,
+  onOrganizationChange = () => {},
+  onProjectChange = () => {},
   mode = Mode.Production,
   loadData = true,
-  showProjNav = true,
+  showProjectNav = true,
   admin = false,
   hosts: hostsProp,
   urls: urlsProp,
@@ -189,67 +190,10 @@ function MongoNav({
   className,
   ...rest
 }: MongoNavInterface) {
+  const shouldShowProjectNav = showProjectNav && !onPrem.enabled;
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
-
   const hosts = defaultsDeep(hostsProp, hostDefaults);
   const endpointURI = `${hosts.cloud}/user/shared`;
-
-  function fetchProductionData(body?: PostBodyInterface) {
-    const configObject: RequestInit = {
-      credentials: 'include',
-      mode: 'cors',
-      method: 'GET',
-    };
-
-    if (body) {
-      Object.assign(configObject, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      });
-    }
-
-    return fetch(endpointURI, configObject);
-  }
-
-  function getDataFixtures() {
-    return new Promise(resolve => {
-      resolve(dataFixtures);
-      onSuccess?.(dataFixtures);
-    });
-  }
-
-  async function handleResponse(response: Response) {
-    if (!response.ok) {
-      const status = response.status as 401; //typecasting for now until we have more types to handle
-      onError?.(ErrorCodeMap[status]);
-      console.error(ErrorCodeMap[status]);
-    } else {
-      const data = await response.json();
-      setData(data);
-      onSuccess?.(data);
-    }
-  }
-
-  useEffect(() => {
-    if (!loadData) {
-      setData(undefined);
-    } else if (mode === Mode.Dev) {
-      getDataFixtures().then(data => setData(data as DataInterface));
-    } else {
-      const body =
-        activeProjectId || activeOrgId
-          ? { activeProjectId, activeOrgId }
-          : undefined;
-
-      fetchProductionData(body)
-        .then(handleResponse)
-        .catch(console.error);
-    }
-  }, [mode, endpointURI, activeOrgId, activeProjectId, loadData]);
-
   const defaultURLS: Required<URLSInterface> = {
     userMenu: {
       cloud: {
@@ -275,6 +219,9 @@ function MongoNav({
       orgSettings: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/settings/general`,
     },
     orgNav: {
+      leaf: data?.currentOrganization
+        ? `${hosts.cloud}/v2#/org/${data.currentOrganization.orgId}/`
+        : `/`,
       settings: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/settings/general`,
       accessManager: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/access/users`,
       support: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/support`,
@@ -289,6 +236,7 @@ function MongoNav({
       integrations: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#integrations`,
       alerts: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#alerts`,
       activityFeed: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#activity`,
+      invite: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#access/add`,
     },
     onPrem: {
       profile: `${hosts.cloud}/v2#/account/profile`,
@@ -296,7 +244,7 @@ function MongoNav({
       personalization: `${hosts.cloud}/v2#/account/personalization`,
       invitations: `${hosts.cloud}/v2#/preferences/invitations`,
       organizations: `${hosts.cloud}/v2#/preferences/organizations`,
-      featureRequest: `https://feedback.mongodb.com`,
+      featureRequest: 'https://feedback.mongodb.com',
     },
   };
 
@@ -310,6 +258,61 @@ function MongoNav({
   const defaultProjectURL = (projectId: string) =>
     `${hosts.cloud}/v2/${projectId}#`;
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
+
+  function fetchProductionData(body?: PostBodyInterface) {
+    const configObject: RequestInit = {
+      credentials: 'include',
+      mode: 'cors',
+      method: 'GET',
+    };
+
+    if (body) {
+      Object.assign(configObject, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    }
+
+    return fetch(endpointURI, configObject);
+  }
+
+  async function getDataFixtures() {
+    onSuccess?.(dataFixtures);
+    return dataFixtures;
+  }
+
+  async function handleResponse(response: Response) {
+    if (!response.ok) {
+      const mappedStatus = ErrorCodeMap[response.status];
+      onError?.(mappedStatus);
+      console.error(mappedStatus);
+    } else {
+      const data = await response.json();
+      setData(data);
+      onSuccess?.(data);
+    }
+  }
+
+  useEffect(() => {
+    if (!loadData) {
+      setData(undefined);
+    } else if (mode === Mode.Dev) {
+      getDataFixtures().then(data => setData(data as DataInterface));
+    } else {
+      let body: PostBodyInterface | undefined;
+
+      if (activeProjectId || activeOrgId) {
+        body = { activeProjectId, activeOrgId };
+      }
+
+      fetchProductionData(body)
+        .then(handleResponse)
+        .catch(console.error);
+    }
+  }, [mode, endpointURI, activeOrgId, activeProjectId, loadData]);
 
   const filteredProjects = data?.projects.filter(project => {
     return project.orgId === data.currentProject?.orgId;
@@ -334,7 +337,8 @@ function MongoNav({
           onPremVersion={onPrem.version}
           onPremMFA={onPrem.mfa}
         />
-        {showProjNav && !onPrem.enabled && (
+
+        {shouldShowProjectNav && (
           <ProjectNav
             activeProduct={activeProduct}
             activeNav={activeNav}

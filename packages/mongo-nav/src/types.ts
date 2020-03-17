@@ -1,23 +1,59 @@
 const NavElement = {
+  OrgNavOrgSettings: 'orgNavOrgSettings',
+  OrgNavAccessManager: 'orgNavAccessManager',
+  OrgNavSupport: 'orgNavSupport',
+  OrgNavBilling: 'orgNavBilling',
+  OrgNavAdmin: 'orgNavAdmin',
+  OrgNavAllClusters: 'orgNavAllClusters',
   Logout: 'logout',
-  Cloud: 'cloud',
-  Realm: 'realm',
-  Charts: 'charts',
-  Billing: 'billing',
-  Support: 'support',
-  AccessManager: 'accessManager',
-  AllClusters: 'allClusters',
-  Admin: 'admin',
-  OrgSettings: 'orgSettings',
+  OrgNavLeaf: 'leaf',
+  OrgNavOrgSelectTrigger: 'orgNavOrgSelectTrigger',
+  OrgNavViewAllOrganizations: 'orgNavViewAllOrganizations',
+  OrgNavDropdown: 'orgNavDropdown',
+  OrgNavDropdownOrgAccessManager: 'orgNavDropdownOrgAccessManager',
+  OrgNavDropdownProjectAccessManager: 'orgNavDropdownProjectAccessManager',
+  ProjectNavProjectSelectTrigger: 'projectNavProjectSelectTrigger',
+  ProjectNavViewAllProjects: 'projectNavViewAllProjects',
+  ProjectNavAddProject: 'projectNavAddProject',
+  ProjectNavProjectDropdown: 'projectNavProjectDropdown',
+  ProjectNavProjectSettings: 'projectNavProjectSettings',
+  ProjectNavProjectSupport: 'projectNavProjectSupport',
+  ProjectNavProjectIntegrations: 'projectNavProjectIntegrations',
+  ProjectNavCloud: 'projectNavCloud',
+  ProjectNavRealm: 'projectNavRealm',
+  ProjectNavCharts: 'projectNavCharts',
+  ProjectNavInvite: 'projectNavInvite',
+  ProjectNavActivityFeed: 'projectNavActivityFeed',
+  ProjectNavAlerts: 'projectNavAlerts',
   UserSettings: 'userSettings',
-  ProjectInvite: 'projectInvite',
-  ProjectActivityFeed: 'projectActivityFeed',
-  ProjectAlerts: 'projectAlerts',
+  UserMenuTrigger: 'userMenuTrigger',
+  UserMenuFeedback: 'userMenuFeedback',
+  UserMenuCloudMFA: 'userMenuCloudMFA',
+  UserMenuCloudInvitations: 'userMenuCloudInvitations',
+  UserMenuCloudOrganizations: 'userMenuCloudOrganizations',
+  UserMenuCloudUserPreferences: 'userMenuCloudUserPreferences',
 } as const;
 
 type NavElement = typeof NavElement[keyof typeof NavElement];
 
 export { NavElement };
+
+const ActiveNavElement = {
+  OrgNavOrgSettings: NavElement.OrgNavOrgSettings,
+  OrgNavAccessManager: NavElement.OrgNavAccessManager,
+  OrgNavSupport: NavElement.OrgNavSupport,
+  OrgNavBilling: NavElement.OrgNavBilling,
+  OrgNavAdmin: NavElement.OrgNavAdmin,
+  OrgNavAllClusters: NavElement.OrgNavAllClusters,
+  ProjectNavInvite: NavElement.ProjectNavInvite,
+  ProjectNavActivityFeed: NavElement.ProjectNavActivityFeed,
+  ProjectNavAlerts: NavElement.ProjectNavAlerts,
+  UserSettings: NavElement.UserSettings,
+} as const;
+
+type ActiveNavElement = typeof ActiveNavElement[keyof typeof ActiveNavElement];
+
+export { ActiveNavElement };
 
 const Product = {
   Account: 'account',
@@ -159,6 +195,7 @@ export interface URLSInterface {
     orgSettings?: string;
   };
   orgNav?: {
+    leaf?: string;
     settings?: string;
     accessManager?: string;
     support?: string;

@@ -2,8 +2,8 @@ import React from 'react';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { css } from '@leafygreen-ui/emotion';
 import { URLSInterface, NavElement } from '../types';
-import { UserMenuTrigger } from '../user-menu/index';
-import { useOnElementClick } from '../OnElementClickProvider';
+import { UserMenuTrigger } from '../user-menu';
+import { useOnElementClick } from '../on-element-click-provider';
 
 const onPremMenuWrapper = css`
   display: inline-block;
@@ -80,9 +80,7 @@ export default function OnPremUserMenu({
         </MenuItem>
 
         <MenuItem
-          onClick={(event: React.MouseEvent) =>
-            onElementClick(NavElement.Logout, event)
-          }
+          onClick={onElementClick(NavElement.Logout)}
           data-testid="om-user-menuitem-sign-out"
         >
           Sign Out
