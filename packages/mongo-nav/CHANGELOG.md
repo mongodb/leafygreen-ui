@@ -1,5 +1,18 @@
 # @leafygreen-ui/mongo-nav
 
+## 0.15.0
+
+### Minor Changes
+
+- cda96b2: Extend onElementClick to support segment tracking across navs
+- 589120c: Add alertsCount prop to overwrite number of alerts received from cloud endpoint
+
+### Patch Changes
+
+- 4e721d7: Only display projects in ProjectSelect where the project's orgId matches the current orgId
+- Updated dependencies [cda96b2]
+  - @leafygreen-ui/menu@6.0.2
+
 ## 0.14.0
 
 ### Minor Changes
