@@ -8,7 +8,7 @@ const fs = require('fs');
 const hljsSupportedLanguages = [
   'javascript',
   'typescript',
-  'csp', // C#
+  'cs', // C#
   'cpp', // C++
   'go',
   'java',

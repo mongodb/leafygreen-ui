@@ -10,7 +10,7 @@ export type Variant = typeof Variant[keyof typeof Variant];
 export const SupportedLanguages = {
   JavaScript: 'javascript',
   TypeScript: 'typescript',
-  Csp: 'csp', // C#
+  Csp: 'cs', // C#
   Cpp: 'cpp', // C++
   Go: 'go',
   Java: 'java',
