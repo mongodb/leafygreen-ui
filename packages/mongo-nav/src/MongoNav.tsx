@@ -314,6 +314,10 @@ function MongoNav({
     }
   }, [mode, endpointURI, activeOrgId, activeProjectId, loadData]);
 
+  const filteredProjects = data?.projects.filter(project => {
+    return project.orgId === data.currentProject?.orgId;
+  });
+
   return (
     <OnElementClickProvider onElementClick={onElementClick}>
       <section {...rest} className={cx(navContainerStyle, className)}>
@@ -339,7 +343,7 @@ function MongoNav({
             activeProduct={activeProduct}
             activeNav={activeNav}
             current={data?.currentProject}
-            data={data?.projects}
+            data={filteredProjects}
             constructProjectURL={constructProjectURL}
             urls={urls}
             alerts={data?.currentProject?.alertsOpen}
