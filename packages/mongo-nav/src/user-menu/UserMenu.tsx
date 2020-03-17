@@ -24,7 +24,7 @@ import {
   NavElement,
 } from '../types';
 import { hostDefaults } from '../data';
-import { useOnElementClick } from '../OnElementClickProvider';
+import { useOnElementClick } from '../on-element-click-provider';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 
@@ -87,7 +87,7 @@ const productLinkStyle = css`
   font-size: 12px;
   color: ${uiColors.blue.base};
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   ${subMenuContainer.selector}:hover & {
     color: ${uiColors.blue.dark2};
   }
@@ -98,6 +98,8 @@ const activeProductLinkStyle = css`
 `;
 
 const productLinkIconStyle = css`
+  height: 10px;
+  width: 10px;
   opacity: 0;
   transform: translate3d(-3px, 0, 0px);
   transition: all 100ms ease-in;
@@ -134,7 +136,7 @@ function Description({ isActive, product }: DescriptionProps) {
       })}
     >
       {`${product}.mongodb.com`}
-      <Icon size="small" glyph="CaretRight" className={productLinkIconStyle} />
+      <Icon size="small" glyph="ArrowRight" className={productLinkIconStyle} />
     </div>
   );
 }
@@ -211,7 +213,7 @@ function UserMenu({
     if (onLogoutProp) {
       onLogoutProp(e);
     } else {
-      onElementClick(NavElement.Logout, e);
+      onElementClick(NavElement.Logout)(e);
     }
   };
 
@@ -320,12 +322,14 @@ function UserMenu({
           <MenuItem
             href={userMenu?.cloud?.userPreferences}
             data-testid="user-menuitem-cloud-user-preferences"
+            onClick={onElementClick(NavElement.UserMenuCloudUserPreferences)}
           >
             User Preferences
           </MenuItem>
           <MenuItem
             href={userMenu?.cloud?.invitations}
             data-testid="user-menuitem-cloud-invitations"
+            onClick={onElementClick(NavElement.UserMenuCloudInvitations)}
           >
             <span className={subMenuItemStyle}>
               Invitations
@@ -337,10 +341,15 @@ function UserMenu({
           <MenuItem
             href={userMenu?.cloud?.organizations}
             data-testid="user-menuitem-cloud-organizations"
+            onClick={onElementClick(NavElement.UserMenuCloudOrganizations)}
           >
             Organizations
           </MenuItem>
-          <MenuItem href={userMenu?.cloud?.mfa}>
+          <MenuItem
+            href={userMenu?.cloud?.mfa}
+            data-testid="user-menuitem-cloud-mfa"
+            onClick={onElementClick(NavElement.UserMenuCloudMFA)}
+          >
             Two-Factor Authorization
           </MenuItem>
         </SubMenu>
@@ -351,14 +360,14 @@ function UserMenu({
           active={isUniversity}
           disabled={!account}
           href={hosts.university}
-          description={
-            <Description isActive={isUniversity} product="university" />
-          }
           title="University"
           glyph={<Icon glyph="University" size="xlarge" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isUniversity,
           })}
+          description={
+            <Description isActive={isUniversity} product="university" />
+          }
         >
           <MenuItem
             href={userMenu?.university?.universityPreferences}
@@ -374,9 +383,9 @@ function UserMenu({
           active={isSupport}
           disabled={!account}
           href={hosts.support}
-          description={<Description isActive={isSupport} product="support" />}
           title="Support"
           glyph={<Icon glyph="Support" size="xlarge" />}
+          description={<Description isActive={isSupport} product="support" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isSupport,
           })}
@@ -396,6 +405,7 @@ function UserMenu({
           size="large"
           glyph={<Icon glyph="Megaphone" size="xlarge" />}
           data-testid="user-menuitem-feedback"
+          onClick={onElementClick(NavElement.UserMenuFeedback)}
         >
           Give us feedback
         </MenuItem>
