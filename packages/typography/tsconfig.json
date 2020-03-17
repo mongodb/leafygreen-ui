@@ -1,4 +1,3 @@
-
 {
   "extends": "../../package.tsconfig.json",
   "compilerOptions": {
@@ -9,6 +8,15 @@
   "references": [
     {
       "path": "../lib"
+    },
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }

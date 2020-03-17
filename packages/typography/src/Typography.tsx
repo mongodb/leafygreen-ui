@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTypographyScale } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 
@@ -26,16 +27,34 @@ const subtitle = css`
   letter-spacing: 0px;
 `;
 
-const body = css`
+const typeScale1 = css`
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0px;
+`;
+
+const typeScale2 = css`
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0px;
+`;
+
+const code = css`
+  font-family: 'Source Code Pro', monospace;
 `;
 
 const disclaimer = css`
   font-size: 12px;
   line-height: 20px;
   letter-spacing: 0.2px;
+`;
+
+const overline = css`
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  line-height: 16px;
+  letter-spacing: 0.4px;
 `;
 
 interface TypographyProps {
@@ -56,16 +75,28 @@ function H2({ children, className }: TypographyProps) {
 }
 
 function Subtitle({ children, className }: TypographyProps) {
-  return <h4 className={cx(sharedStyles, subtitle, className)}>{children}</h4>;
+  return <h6 className={cx(sharedStyles, subtitle, className)}>{children}</h6>;
 }
 
 function Body({ children, className, weight = 'regular' }: BodyProps) {
+  const size = useTypographyScale();
+  const body = size === 16 ? typeScale2 : typeScale1;
+
   const fontWeight = css`
     font-weight: ${weight === 'regular' ? 400 : 600};
   `;
 
   return (
     <p className={cx(sharedStyles, body, fontWeight, className)}>{children}</p>
+  );
+}
+
+function InlineCode({ children, className }: TypographyProps) {
+  const size = useTypographyScale();
+  const body = size === 16 ? typeScale2 : typeScale1;
+
+  return (
+    <code className={cx(sharedStyles, code, body, className)}>{children}</code>
   );
 }
 
@@ -77,4 +108,8 @@ function Disclaimer({ children, className }: TypographyProps) {
   );
 }
 
-export { H1, H2, Subtitle, Body, Disclaimer };
+function Overline({ children, className }: TypographyProps) {
+  return <h6 className={cx(sharedStyles, overline, className)}>{children}</h6>;
+}
+
+export { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline };
