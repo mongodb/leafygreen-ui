@@ -19,6 +19,7 @@ const hljsSupportedLanguages = [
   'scala',
   'swift',
   'kotlin',
+  'objectivec',
   'bash',
   'shell',
   'sql',
