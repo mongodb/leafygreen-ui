@@ -132,7 +132,7 @@ interface MongoNavInterface {
   loadData?: boolean;
 
   /**
-   * Overwrites number of alerts that a user has, as received from cloud endpoint
+   * Overwrite number of alerts received from cloud endpoint
    */
   alertsCount?: number;
 }
@@ -172,7 +172,7 @@ interface MongoNavInterface {
  * @param props.activeProjectId ID for active project, will cause a POST request to cloud to update current active project.
  * @param props.className Applies a className to the root element
  * @param props.loadData Determines whether or not the component will fetch data from cloud
- * @param props.alertsCount Overwrites number of alerts that a user has, as received from cloud endpoint
+ * @param props.alertsCount Overwrite number of alerts received from cloud endpoint
  */
 function MongoNav({
   activeProduct,
