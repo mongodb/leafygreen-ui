@@ -312,7 +312,7 @@ function MongoNav({
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
   const filteredProjects = data?.projects.filter(project => {
-    return project.orgId === data?.currentProject?.orgId;
+    return project.orgId === data.currentProject?.orgId;
   });
 
   return (
