@@ -130,6 +130,11 @@ interface MongoNavInterface {
    * Determines whether or not the component will fetch data from cloud
    */
   loadData?: boolean;
+
+  /**
+   * Overwrites number of alerts that a user has, as received from cloud endpoint
+   */
+  alertsCount?: number;
 }
 
 /**
@@ -167,6 +172,7 @@ interface MongoNavInterface {
  * @param props.activeProjectId ID for active project, will cause a POST request to cloud to update current active project.
  * @param props.className Applies a className to the root element
  * @param props.loadData Determines whether or not the component will fetch data from cloud
+ * @param props.alertsCount Overwrites number of alerts that a user has, as received from cloud endpoint
  */
 function MongoNav({
   activeProduct,
@@ -188,6 +194,7 @@ function MongoNav({
   activeOrgId,
   activeProjectId,
   className,
+  alertsCount,
   ...rest
 }: MongoNavInterface) {
   const shouldShowProjectNav = showProjectNav && !onPrem.enabled;
@@ -346,7 +353,7 @@ function MongoNav({
             data={filteredProjects}
             constructProjectURL={constructProjectURL}
             urls={urls}
-            alerts={data?.currentProject?.alertsOpen}
+            alerts={alertsCount ?? data?.currentProject?.alertsOpen}
             onProjectChange={onProjectChange}
             hosts={hosts}
           />
@@ -380,6 +387,7 @@ MongoNav.propTypes = {
   onElementClick: PropTypes.func,
   activeOrgId: PropTypes.string,
   activeProjectId: PropTypes.string,
+  alertsCount: PropTypes.number,
 };
 
 export default MongoNav;
