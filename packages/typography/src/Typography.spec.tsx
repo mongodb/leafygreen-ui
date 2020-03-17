@@ -1,12 +1,9 @@
+// import React from 'react';
+// import { render, cleanup } from '@testing-library/react';
+// import Typography from '.';
 
-import React from 'react';
-import { render, cleanup } from '@testing-library/react';
-import Typography from '.';
+// afterAll(cleanup);
 
-afterAll(cleanup);
-
-describe('packages/typography', () => {
-  test('condition', () => {
-
-  })
-})
+// describe('packages/typography', () => {
+//   test('condition', () => {});
+// });

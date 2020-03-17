@@ -1,10 +1,14 @@
 import React from 'react';
+import Box, { BoxProps } from '@leafygreen-ui/box';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { useTypographyScale } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import omit from 'lodash/omit';
 
 const sharedStyles = css`
   display: block;
+  margin: unset;
   font-family: Akzidenz, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: ${uiColors.gray.dark2};
 `;
@@ -57,24 +61,43 @@ const overline = css`
   letter-spacing: 0.4px;
 `;
 
-interface TypographyProps {
-  children: React.ReactNode;
-  className?: string;
-}
+type H1Props = HTMLElementProps<'h1'>;
 
-interface BodyProps extends TypographyProps {
+type H2Props = HTMLElementProps<'h2'>;
+
+type SubtitleProps = HTMLElementProps<'h6'>;
+
+type BodyProps = HTMLElementProps<'p'> & {
+  /**
+   * font-weight applied to typography element
+   * default: `regular`
+   */
   weight?: 'regular' | 'medium';
+};
+
+type InlineCodeProps = HTMLElementProps<'code'>;
+
+type DisclaimerProps = HTMLElementProps<'small'>;
+
+type OverlineProps<T> = T & BoxProps<T>;
+
+function H1({ children, className, ...rest }: H1Props) {
+  return (
+    <h1 {...rest} className={cx(sharedStyles, h1, className)}>
+      {children}
+    </h1>
+  );
 }
 
-function H1({ children, className }: TypographyProps) {
-  return <h1 className={cx(sharedStyles, h1, className)}>{children}</h1>;
+function H2({ children, className, ...rest }: H2Props) {
+  return (
+    <h2 {...rest} className={cx(sharedStyles, h2, className)}>
+      {children}
+    </h2>
+  );
 }
 
-function H2({ children, className }: TypographyProps) {
-  return <h2 className={cx(sharedStyles, h2, className)}>{children}</h2>;
-}
-
-function Subtitle({ children, className }: TypographyProps) {
+function Subtitle({ children, className }: SubtitleProps) {
   return <h6 className={cx(sharedStyles, subtitle, className)}>{children}</h6>;
 }
 
@@ -83,7 +106,7 @@ function Body({ children, className, weight = 'regular' }: BodyProps) {
   const body = size === 16 ? typeScale2 : typeScale1;
 
   const fontWeight = css`
-    font-weight: ${weight === 'regular' ? 400 : 600};
+    font-weight: ${weight === 'regular' ? 400 : 500};
   `;
 
   return (
@@ -91,7 +114,7 @@ function Body({ children, className, weight = 'regular' }: BodyProps) {
   );
 }
 
-function InlineCode({ children, className }: TypographyProps) {
+function InlineCode({ children, className }: InlineCodeProps) {
   const size = useTypographyScale();
   const body = size === 16 ? typeScale2 : typeScale1;
 
@@ -100,7 +123,7 @@ function InlineCode({ children, className }: TypographyProps) {
   );
 }
 
-function Disclaimer({ children, className }: TypographyProps) {
+function Disclaimer({ children, className }: DisclaimerProps) {
   return (
     <small className={cx(sharedStyles, disclaimer, className)}>
       {children}
@@ -108,8 +131,11 @@ function Disclaimer({ children, className }: TypographyProps) {
   );
 }
 
-function Overline({ children, className }: TypographyProps) {
-  return <h6 className={cx(sharedStyles, overline, className)}>{children}</h6>;
+function Overline<T extends React.ReactNode>(props: OverlineProps<T>) {
+  const rest = omit(props as any, ['className']);
+  return (
+    <Box className={cx(sharedStyles, overline, props.className)} {...rest} />
+  );
 }
 
 export { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline };
