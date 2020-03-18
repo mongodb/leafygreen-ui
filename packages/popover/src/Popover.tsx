@@ -48,8 +48,8 @@ const mutationOptions = {
  * @param props.children Content to appear inside of Popover container.
  * @param props.active Boolean to describe whether or not Popover is active.
  * @param props.className Classname applied to Popover container.
- * @param props.align Alignment of Popover component relative to another element: `top`, `bottom`, `left`, `right`.
- * @param props.justify Justification of Popover component relative to another element: `start`, `middle`, `end`.
+ * @param props.align Alignment of Popover component relative to another element: `top`, `bottom`, `left`, `right`, `center-horizontal`, `center-vertical`.
+ * @param props.justify Justification of Popover component relative to another element: `start`, `middle`, `end`, `fit`.
  * @param props.refEl Reference element that Popover component should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
  * @param props.adjustOnMutation Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
