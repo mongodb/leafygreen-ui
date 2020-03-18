@@ -10,7 +10,7 @@ export type Variant = typeof Variant[keyof typeof Variant];
 export const SupportedLanguages = {
   JavaScript: 'javascript',
   TypeScript: 'typescript',
-  Csp: 'csp', // C#
+  Csp: 'cs', // C#
   Cpp: 'cpp', // C++
   Go: 'go',
   Java: 'java',
@@ -21,6 +21,7 @@ export const SupportedLanguages = {
   Scala: 'scala',
   Swift: 'swift',
   Kotlin: 'kotlin',
+  ObjectiveC: 'objectivec',
   Bash: 'bash',
   Shell: 'shell',
   Sql: 'sql',

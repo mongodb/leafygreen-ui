@@ -1,6 +1,7 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { textLoadingStyle } from '../styles';
 
@@ -59,7 +60,7 @@ const navItemFocusStyle = css`
   }
 `;
 
-interface OrgNavLinkProps {
+interface OrgNavLinkProps extends HTMLElementProps<'a'> {
   isActive?: boolean;
   href?: string;
   children?: React.ReactNode;

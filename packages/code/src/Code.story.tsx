@@ -28,6 +28,7 @@ storiesOf('Code', module).add(
           showLineNumbers={boolean('Show line numbers', false)}
           showWindowChrome={boolean('Show window chrome', false)}
           multiline={boolean('Multiline', true)}
+          copyable={boolean('Copyable', true)}
           chromeTitle={text('Chrome label', 'directory/fileName.js')}
           variant={select('Variant', Object.values(Variant), Variant.Light)}
           language={select('Language', Object.values(Language), Language.Auto)}

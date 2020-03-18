@@ -23,6 +23,9 @@ const titleTextStyle = css`
   font-size: 14px;
   font-weight: normal;
   color: ${uiColors.gray.dark2};
+`;
+
+const focusTitleTextStyle = css`
   ${menuItemContainer.selector}:focus & {
     color: ${uiColors.blue.dark3};
   }
@@ -41,6 +44,9 @@ const descriptionTextStyle = css`
   font-size: 12px;
   font-weight: normal;
   color: ${uiColors.gray.dark1};
+`;
+
+const focusDescriptionTextStyle = css`
   ${menuItemContainer.selector}:focus & {
     color: ${uiColors.blue.dark2};
   }
@@ -216,6 +222,7 @@ const MenuItem = React.forwardRef(
               className={cx(titleTextStyle, {
                 [activeTitleTextStyle]: active,
                 [disabledTextStyle]: disabled,
+                [focusTitleTextStyle]: showFocus,
               })}
             >
               {children}
@@ -225,6 +232,7 @@ const MenuItem = React.forwardRef(
                 className={cx(descriptionTextStyle, {
                   [activeDescriptionTextStyle]: active,
                   [disabledTextStyle]: disabled,
+                  [focusDescriptionTextStyle]: showFocus,
                 })}
               >
                 {description}

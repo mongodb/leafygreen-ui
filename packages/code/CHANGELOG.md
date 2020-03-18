@@ -1,5 +1,16 @@
 # @leafygreen-ui/code
 
+## 3.3.0
+
+### Minor Changes
+
+- f2fed7c: Code component styling updates
+
+### Patch Changes
+
+- Updated dependencies [f2fed7c]
+  - @leafygreen-ui/syntax@2.4.0
+
 ## 3.2.0
 
 ### Minor Changes

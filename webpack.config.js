@@ -8,7 +8,7 @@ const fs = require('fs');
 const hljsSupportedLanguages = [
   'javascript',
   'typescript',
-  'csp', // C#
+  'cs', // C#
   'cpp', // C++
   'go',
   'java',
@@ -19,6 +19,7 @@ const hljsSupportedLanguages = [
   'scala',
   'swift',
   'kotlin',
+  'objectivec',
   'bash',
   'shell',
   'sql',
