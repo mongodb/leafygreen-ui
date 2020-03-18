@@ -31,7 +31,7 @@ This is the context provider for LeafyGreen Provider, and should be added as hig
 ```JS
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-<LeafyGreenProvider typescale={14}>
+<LeafyGreenProvider baseFontSize={14}>
   <div>My Children</div>
 </LeafyGreenProvider>
 ```
@@ -44,10 +44,10 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 ### Properties
 
-| Prop        | Type         | Description                                                                                                                                          | Default |
-| ----------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `children`  | `node`       | Children passed to `LeafyGreenProvider` will be unmodified, aside from having access to its state.                                                   |         |
-| `typescale` | `14` or `16` | Describes the typescale that the application is using. `<Body/>` and `<Code />` components use this value to determine `font-size` and `line-height` | `14`    |
+| Prop           | Type         | Description                                                                                                                                                                               | Default |
+| -------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `children`     | `node`       | Children passed to `LeafyGreenProvider` will be unmodified, aside from having access to its state.                                                                                        |         |
+| `baseFontSize` | `14` or `16` | Describes the `font-size` that the application is using. `<Body/>` and `<InlineCode />` components use this value to determine the `font-size` and `line-height` applied to their content | `14`    |
 
 ## useUsingKeyboardContext
 
@@ -81,7 +81,7 @@ function autoFocus() {
 <input type={text} ref={inputRef} />;
 ```
 
-## useTypographyScale
+## useBaseFontSize
 
 **Returns:**
 
@@ -89,15 +89,15 @@ function autoFocus() {
 `number`;
 ```
 
-This hook allows you to read the typescale of an application, based on the number returned from the hook. The number corresponds to the font-size (in pixels) of the body copy.
+This hook allows you to read the base `font-size` of an application, based on the number returned from the hook.
 
 ### Example
 
 ```js
-import { useTypographyScale } from '@leafygreen-ui/leafygreen-provider';
+import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 
 function InlineCode({ children, className }: InlineCodeProps) {
-  const size = useTypographyScale();
+  const size = useBaseFontSize();
   const body = size === 16 ? typeScale2 : typeScale1;
 
   return (

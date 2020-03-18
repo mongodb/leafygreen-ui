@@ -1,7 +1,7 @@
 import React from 'react';
 import Box, { BoxProps } from '@leafygreen-ui/box';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { useTypographyScale } from '@leafygreen-ui/leafygreen-provider';
+import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import omit from 'lodash/omit';
@@ -102,11 +102,11 @@ function Subtitle({ children, className }: SubtitleProps) {
 }
 
 function Body({ children, className, weight = 'regular' }: BodyProps) {
-  const size = useTypographyScale();
+  const size = useBaseFontSize();
   const body = size === 16 ? typeScale2 : typeScale1;
 
   const fontWeight = css`
-    font-weight: ${weight === 'regular' ? 400 : 500};
+    font-weight: ${weight !== 'regular' ? 500 : 400};
   `;
 
   return (
@@ -115,7 +115,7 @@ function Body({ children, className, weight = 'regular' }: BodyProps) {
 }
 
 function InlineCode({ children, className }: InlineCodeProps) {
-  const size = useTypographyScale();
+  const size = useBaseFontSize();
   const body = size === 16 ? typeScale2 : typeScale1;
 
   return (

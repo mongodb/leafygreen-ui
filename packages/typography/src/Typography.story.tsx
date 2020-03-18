@@ -5,7 +5,7 @@ import { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline } from '.';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 storiesOf('Typography', module).add('Default', () => (
-  <LeafygreenProvider typescale={select('typescale', [14, 16], 14)}>
+  <LeafygreenProvider baseFontSize={select('baseFontSize', [14, 16], 14)}>
     <div>
       <H1>Heading 1</H1>
       <H2>Heading 2</H2>

@@ -1,24 +1,24 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
-import LeafyGreenProvider, { useTypographyScale } from '.';
+import LeafyGreenProvider, { useBaseFontSize } from '.';
 
 afterAll(cleanup);
 
-describe('packages/leafygreen-provider/TypographyProvider', () => {
+describe('packages/leafygreen-provider/BaseFontSizeProvider', () => {
   const value = 16;
 
   const TestComponent = () => {
-    const test = useTypographyScale();
+    const test = useBaseFontSize();
     return <div>{test}</div>;
   };
 
-  test('without a provider, by default useTypographyScale returns 14', () => {
+  test('without a provider, by default useBaseFontSize returns 14', () => {
     const { container } = render(<TestComponent />);
 
     expect(container.innerHTML.includes('14')).toBeTruthy();
   });
 
-  test('with a provider, by default useTypographyScale returns 14', () => {
+  test('with a provider, by default useBaseFontSize returns 14', () => {
     const { container } = render(
       <LeafyGreenProvider>
         <TestComponent />
@@ -28,9 +28,9 @@ describe('packages/leafygreen-provider/TypographyProvider', () => {
     expect(container.innerHTML.includes('14')).toBeTruthy();
   });
 
-  test(`when typescale prop is set to ${value}, useTypographyScale returns ${value}`, () => {
+  test(`when baseFontSize prop is set to ${value}, useBaseFontSize returns ${value}`, () => {
     const { container } = render(
-      <LeafyGreenProvider typescale={value}>
+      <LeafyGreenProvider baseFontSize={value}>
         <TestComponent />
       </LeafyGreenProvider>,
     );

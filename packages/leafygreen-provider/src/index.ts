@@ -1,6 +1,6 @@
 import LeafyGreenProvider from './LeafyGreenProvider';
 import { useUsingKeyboardContext } from './UsingKeyboardProvider';
-import { useTypographyScale } from './TypographyScaleProvider';
+import { useBaseFontSize } from './BaseFontSizeProvider';
 
-export { useUsingKeyboardContext, useTypographyScale };
+export { useUsingKeyboardContext, useBaseFontSize };
 export default LeafyGreenProvider;
