@@ -80,3 +80,35 @@ function autoFocus() {
 
 <input type={text} ref={inputRef} />;
 ```
+
+## useTypographyScale
+
+**Returns:**
+
+```js
+{
+  usingKeyboard: boolean | undefined,
+  setUsingKeyboard: boolean => void,
+}
+```
+
+This hook allows you to directly read, and set the state of whether a user is interacting with the keyboard. The primary use-case for this is to set `usingKeyboard` to `true` when manually setting focus on an element.
+
+### Example
+
+```js
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+
+const { usingKeyboard, setUsingKeyboard } = useUsingKeyboardContext();
+const inputRef = useRef(null);
+
+function autoFocus() {
+  inputRef.current?.focus();
+
+  if (!usingKeyboard) {
+    setUsingKeyboard(true);
+  }
+}
+
+<input type={text} ref={inputRef} />;
+```
