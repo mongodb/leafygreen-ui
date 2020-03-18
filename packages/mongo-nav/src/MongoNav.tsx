@@ -246,6 +246,9 @@ function MongoNav({
       alerts: `${hosts.cloud}/v2/${currentProjectId}#alerts`,
       activityFeed: `${hosts.cloud}/v2/${currentProjectId}#activity`,
       invite: `${hosts.cloud}/v2/${currentProjectId}#access/add`,
+      charts: data?.currentProject?.chartsActivated
+        ? `${hosts.cloud}/charts/${currentProjectId}`
+        : `${hosts.cloud}/v2/${currentProjectId}#charts`,
     },
     onPrem: {
       profile: `${hosts.cloud}/v2#/account/profile`,
