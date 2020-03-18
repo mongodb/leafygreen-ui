@@ -18,25 +18,29 @@
 
 ### Patch Changes
 
-- 347bcf6: - Add default background-color for cross-browser compatability.
-  - IconButtons are no longer focusbale when disabled.- Updated dependencies [704e25c]
+- 347bcf6:
+
+  - Adds default background-color for cross-browser compatability
+  - Removes ability of IconButton components to be focusbale when disabled
+
+- Updated dependencies [704e25c]
   - @leafygreen-ui/lib@4.3.1
 
 ## 4.1.0
 
 ### Minor Changes
 
-- 0bfe2ad: Add active prop to IconButton component
+- 0bfe2ad: Adds `active` prop to IconButton component
 
 ## 4.0.0
 
 ### Major Changes
 
-- fabc1c9: Wrapping component with `React.forwardRef` to provide direct access to the underlying element
+- fabc1c9: Wraps component with `React.forwardRef` to provide direct access to the underlying element
 
 ### Minor Changes
 
-- 0a75bd6: Adds optional size prop to IconButton component to be compatible with default, large and xlarge size variants of Icon component
+- 0a75bd6: Adds optional `size` prop to IconButton component to be compatible with `default`, `large` and `xlarge` size variants of Icon component
 
 ### Patch Changes
 
@@ -74,7 +78,7 @@
 
 ### Patch Changes
 
-- e19a757: Fix Typescript bugs with onClick handling
+- e19a757: Fix Typescript bugs with `onClick` handling
 
 ## 2.0.0
 

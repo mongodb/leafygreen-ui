@@ -4,12 +4,12 @@
 
 ### Minor Changes
 
-- cda96b2: Extend onElementClick to support segment tracking across navs
-- 589120c: Add alertsCount prop to overwrite number of alerts received from cloud endpoint
+- cda96b2: Extends `onElementClick` to support segment tracking across navs
+- 589120c: Adds `alertsCount` prop to overwrite number of alerts received from cloud endpoint
 
 ### Patch Changes
 
-- 4e721d7: Only display projects in ProjectSelect where the project's orgId matches the current orgId
+- 4e721d7: Only displays projects in ProjectSelect where the project's `orgId` matches the current `orgId`
 - Updated dependencies [cda96b2]
   - @leafygreen-ui/menu@6.0.2
 
@@ -17,21 +17,21 @@
 
 ### Minor Changes
 
-- 4e1e9dc: Add remaining activeNav values. Unify OnElementClick into NavElement.
-- ebb5102: Update the university preferences link in the mongo nav
-- 0f7d8a3: Add onElementClick prop
+- 4e1e9dc: Adds remaining activeNav values, and unifies `OnElementClick` into `NavElement` enum
+- ebb5102: Updates the university preferences link in the mongo nav
+- 0f7d8a3: Adds `onElementClick` prop
 
 ### Patch Changes
 
-- 3f7719e: Add logic to determine whether to display Realm or Stitch
-- 97cadc1: Conditionally apply overflow rule to MongoSelect components
+- 3f7719e: Adds logic to determine whether to display Realm or Stitch
+- 97cadc1: Conditionally applies overflow rule to MongoSelect components
 
 ## 0.13.0
 
 ### Minor Changes
 
-- 2cf1a43: Add `activeOrgId` and `activeProjectId` props to MongoNav
-- 0d5bb89: Add `loadData` prop to `MongoNav`
+- 2cf1a43: Adds `activeOrgId` and `activeProjectId` props to MongoNav
+- 0d5bb89: Adds `loadData` prop to `MongoNav`
 
 ### Patch Changes
 
@@ -43,8 +43,8 @@
 
 ### Minor Changes
 
-- ab1a1c1: Fix z-index stacking context issue
-- ab1a1c1: Add support for Cloud Manager
+- ab1a1c1: Fixes `z-index` stacking context issue
+- ab1a1c1: Adds support for Cloud Manager
 
 ### Patch Changes
 
@@ -58,13 +58,13 @@
 
 ### Patch Changes
 
-- eee1bac: This fixes a bug involving broken project links.
+- eee1bac: Fixes a bug involving broken project links.
 
 ## 0.11.0
 
 ### Minor Changes
 
-- 347bcf6: Add Ops Manager state
+- 347bcf6: Adds Ops Manager state
 
 ### Patch Changes
 
@@ -79,7 +79,7 @@
 
 ### Minor Changes
 
-- 0bfe2ad: Updated styles to fit latest spec
+- 0bfe2ad: Updates styles to fit latest spec
 
 ### Patch Changes
 
@@ -90,14 +90,14 @@
 
 ### Minor Changes
 
-- 6eb9d26: This introduces the following updates:
-  - Lib is updated internally with shared test helpers
-  - Side Nav is updated to match design standards, and to export width and side padding so that users can reference both in integrating the side nav without hardcoding these values and to future-proof design changes
-  - Mongo Nav is updated with a disabled state for the Org Nav, used for pages where there is no concept of a current project or organization. Additionally, Mongo Nav exports the different nav heights for the above reason- 87e88e6: Make `hosts` and `urls` prop optional in `UserMenu`
+- 6eb9d26:
+  - Adds disabled state for the Org Nav, used for pages where there is no concept of a current project or organization.
+  - Exports the different nav heights for the above reason
+- 87e88e6: Make `hosts` and `urls` prop optional in UserMenu
 
 ### Patch Changes
 
-- da35e55: Add more robust logic to determine whether or not to show payment status
+- da35e55: Adds more robust logic to determine whether or not to show payment status
 - Updated dependencies [6eb9d26]
   - @leafygreen-ui/lib@4.3.0
 
@@ -105,22 +105,22 @@
 
 ### Minor Changes
 
-- ecbf286: Update UserMenu types such that Component can work independently of <MongoNav />
+- ecbf286: Updates UserMenu types such that component can work independently of MongoNav
 
 ## 0.7.0
 
 ### Minor Changes
 
-- 69a1673: Change Stitch to Realm in ProjectNav and across TS definitions
+- 69a1673: Changes Stitch to Realm in ProjectNav and across TS definitions
 
 ## 0.6.0
 
 ### Minor Changes
 
-- 786ccf1: Adds User Feedback link to `UserMenu`
-- 4c16d51: Add fetch to production mode, enabling consumers to get data from cloudHost
-- c8d50f2: Rename internal MongoMenu component to UserMenu
-- 4c16d51: Design updates to <MongoNav /> based on the latest design spec
+- 786ccf1: Adds User Feedback link to UserMenu
+- 4c16d51: Adds fetch to production mode, enabling consumers to get data from cloud endpoint
+- c8d50f2: Renames internal MongoMenu component to UserMenu
+- 4c16d51: Design updates to MongoNav based on the latest design spec
 
 ### Patch Changes
 
