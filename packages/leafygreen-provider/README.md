@@ -86,29 +86,22 @@ function autoFocus() {
 **Returns:**
 
 ```js
-{
-  usingKeyboard: boolean | undefined,
-  setUsingKeyboard: boolean => void,
-}
+`number`;
 ```
 
-This hook allows you to directly read, and set the state of whether a user is interacting with the keyboard. The primary use-case for this is to set `usingKeyboard` to `true` when manually setting focus on an element.
+This hook allows you to read the typescale of an application, based on the number returned from the hook. The number corresponds to the font-size (in pixels) of the body copy.
 
 ### Example
 
 ```js
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { useTypographyScale } from '@leafygreen-ui/leafygreen-provider';
 
-const { usingKeyboard, setUsingKeyboard } = useUsingKeyboardContext();
-const inputRef = useRef(null);
+function InlineCode({ children, className }: InlineCodeProps) {
+  const size = useTypographyScale();
+  const body = size === 16 ? typeScale2 : typeScale1;
 
-function autoFocus() {
-  inputRef.current?.focus();
-
-  if (!usingKeyboard) {
-    setUsingKeyboard(true);
-  }
+  return (
+    <code className={cx(sharedStyles, code, body, className)}>{children}</code>
+  );
 }
-
-<input type={text} ref={inputRef} />;
 ```
