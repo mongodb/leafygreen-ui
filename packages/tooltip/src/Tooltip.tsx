@@ -2,7 +2,7 @@ import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Popover, {
   PopoverProps,
-  Align,
+  Align as PopoverAlign,
   Justify,
   ElementPosition,
 } from '@leafygreen-ui/popover';
@@ -25,7 +25,18 @@ export const Variant = {
   Dark: 'dark',
 } as const;
 
-type Variant = typeof Variant[keyof typeof Variant];
+export type Variant = typeof Variant[keyof typeof Variant];
+
+export const Align = {
+  Top: PopoverAlign.Top,
+  Bottom: PopoverAlign.Bottom,
+  Left: PopoverAlign.Left,
+  Right: PopoverAlign.Right,
+} as const;
+
+export type Align = typeof Align[keyof typeof Align];
+
+export { Justify };
 
 const baseStyles = css`
   font-size: 14px;

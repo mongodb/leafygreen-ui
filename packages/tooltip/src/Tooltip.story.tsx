@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { storiesOf } from '@storybook/react';
 import { select } from '@storybook/addon-knobs';
-import { Align, Justify } from '@leafygreen-ui/popover';
-import Tooltip, { TriggerEvent, Variant } from '.';
+import Tooltip, { TriggerEvent, Variant, Align, Justify } from '.';
 
 class Button extends React.Component {
   static propTypes = {
