@@ -87,6 +87,7 @@ export interface URLSInterface {
     integrations?: string,
     alerts?: string,
     activityFeed?: string,
+    charts?: string,
   };
   onPrem?: {
     profile?: string,
