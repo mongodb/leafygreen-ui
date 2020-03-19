@@ -16,7 +16,7 @@
 
 ### Major Changes
 
-- 0a75bd6: Change values of `large` and `xlarge` icons to be `20` and `24` respectively. If using `<Icon size="large" />` previously, update to `<Icon size="xlarge" />`
+- 0a75bd6: Changes values of `large` and `xlarge` icons to be `20` and `24` respectively. If using `<Icon size="large" />` previously, update to `<Icon size="xlarge" />`
 
 ### Patch Changes
 
@@ -27,7 +27,7 @@
 
 ### Patch Changes
 
-- 8fd107a: Fixes an issue where leafygreen-ui's local module definition for SVG files was overriding the module definition in consuming applications
+- 8fd107a: Fixes an issue where local module definition for SVG files was overriding the module definition in consuming applications
 - Updated dependencies [11b2217]
   - @leafygreen-ui/lib@4.1.0
 
@@ -47,11 +47,12 @@
 
 ### Minor Changes
 
-- cdcf687: Add support for `title`
+- cdcf687: Adds support for `title` prop
 
 ## 2.0.0
 
 ### Major Changes
 
-- eb49b56: - Icon now uses currentColor to set fill. If the fill prop is not set, the fill of an icon will now be inherited from its decendent's color.
+- eb49b56:
+  - Uses `currentColor` to set fill. If the fill prop is not set, the fill of an icon will now be inherited from its decendent's color.
   - Icon now includes a `small` size variant that renders the glyph as a 14x14px SVG element.

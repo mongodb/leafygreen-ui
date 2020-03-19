@@ -16,7 +16,7 @@
 
 ### Patch Changes
 
-- 2f9a300: Use exported keyMap from lib
+- 2f9a300: Uses exported `keyMap` from lib
 - Updated dependencies [2f9a300]
   - @leafygreen-ui/lib@3.2.0
 
@@ -32,19 +32,19 @@
 
 ### Patch Changes
 
-- 4de039a: Further accessibility updates to make components compliant with a11y standards
+- 4de039a: Further accessibility updates to make component compliant with a11y standards
 
 ## 1.0.2
 
 ### Patch Changes
 
-- e1e42f0: Fixed aria tags in Tab component to be accessible against a11y standards
+- e1e42f0: Fixes Aria tags in Tab component to be accessible against a11y standards
 
 ## 1.0.1
 
 ### Patch Changes
 
-- 37d690f: Fixed component dependency on theme to palette
+- 37d690f: Fixes component dependency on theme to palette
 
 ## 1.0.0
 

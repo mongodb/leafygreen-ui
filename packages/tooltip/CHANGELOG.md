@@ -4,13 +4,13 @@
 
 ### Minor Changes
 
-- ab1a1c1: Expose usePortal prop
+- ab1a1c1: Exposes `usePortal` prop
 
 ## 3.0.2
 
 ### Patch Changes
 
-- ac5c473: Add lodash as dependency
+- ac5c473: Adds lodash as dependency
 - Updated dependencies [ac5c473]
   - @leafygreen-ui/hooks@2.0.1
 
@@ -18,7 +18,7 @@
 
 ### Patch Changes
 
-- fabc1c9: Conditionally enable `useEscapeKey` hook, to ensure that escapeKey events are not unintentionally blocked from propagating
+- fabc1c9: Conditionally enables `useEscapeKey` hook, to ensure that escapeKey events are not unintentionally blocked from propagating
 - Updated dependencies [fabc1c9]
 - Updated dependencies [232cf52]
   - @leafygreen-ui/lib@4.2.0
@@ -42,7 +42,7 @@
 
 ### Patch Changes
 
-- 13e3eab: Enable trigger prop to accept nested components
+- 13e3eab: Enables `trigger` prop to accept nested components
 - Updated dependencies [319844d]
   - @leafygreen-ui/palette@1.1.1
 
@@ -50,17 +50,17 @@
 
 ### Patch Changes
 
-- 50853ca: Upgrade dependencies
+- 50853ca: Upgrades dependencies
 
 ## 2.0.0
 
 ### Major Changes
 
-- f6b6b7a: Children of Popover are no longer rendered to the DOM when the Popover is closed
+- f6b6b7a: No longer renders Children of Poopover to the DOM when the Popover is closed
 
 ### Patch Changes
 
-- 319fb82: Update PropTypes based on eslint updates
+- 319fb82: Updates PropTypes based on eslint updates
 - Updated dependencies [9c45cb4]
 - Updated dependencies [f6b6b7a]
   - @leafygreen-ui/lib@3.1.0

@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- cda96b2: Update text color when MenuItem is focused
+- cda96b2: Updates text color when MenuItem is focused
 
 ## 6.0.1
 
@@ -20,12 +20,13 @@
 
 ### Major Changes
 
-- 786ccf1: - Changes `glyph` prop from `string` to `React.ReactElement` in `<SubMenu />`
-  - Adds `glyph` and `size` props to `<MenuItem />`
+- 786ccf1:
+  - Changes `glyph` prop from `string` to `React.ReactElement` in SubMenu component
+  - Adds `glyph` and `size` props to MenuItem component
 
 ### Minor Changes
 
-- 690888a: Add `spacing` prop to `<Menu />` component
+- 690888a: Adds `spacing` prop to Menu component
 
 ### Patch Changes
 
@@ -36,7 +37,9 @@
 
 ### Minor Changes
 
-- fabc1c9: MenuItems accept an `as` prop to determine what component to render as. Introduce `SubMenu` components with stronger accessibility logic
+- fabc1c9:
+  - MenuItems accept an `as` prop to determine what component to render as.
+  - Introduces `SubMenu` components with stronger accessibility logic
 
 ### Patch Changes
 
@@ -60,7 +63,7 @@
 
 ### Patch Changes
 
-- 31f6bfd: Initial release of @leafygreen-ui/pipeline component. Removed deprecated title prop from the @leafygreen-ui/menu component propTypes.
+- 31f6bfd: Removes deprecated `title` prop from the Menu component propTypes
 - Updated dependencies [5c9202d]
 - Updated dependencies [464c09d]
   - @leafygreen-ui/leafygreen-provider@1.0.0
@@ -73,22 +76,22 @@
 
 ### Patch Changes
 
-- 8c2e838: Update styles to fix bugs on Safari and Firefox
+- 8c2e838: Updates styles to fix bugs on Safari and Firefox
 
 ## 4.0.2
 
 ### Patch Changes
 
-- ad74307: Change default behavior on MenuItems with anchor tags, such that the default is to target="\_self", and ensure ability of consumer to override the default
-- ff55bb5: Update anchor styles to minimize overrides
-- baf45f6: Allow target and rel props to be passed to MenuItem, when MenuItem is a link
+- ad74307: Changes default behavior in MenuItems with anchor tags, such that the default is to `target="\_self"`, and ensures ability of consumer to override the default
+- ff55bb5: Updates anchor styles to minimize overrides
+- baf45f6: Allows target and rel props to be passed to MenuItem, when MenuItem is a link
 
 ## 4.0.1
 
 ### Patch Changes
 
-- 2f9a300: Use exported keyMap from lib
-- 759523f: Add border-box property to MenuItems and update documentation
+- 2f9a300: Uses exported keyMap from lib
+- 759523f: Adds border-box property to MenuItems and update documentation
 - Updated dependencies [2f9a300]
   - @leafygreen-ui/lib@3.2.0
 
@@ -97,11 +100,11 @@
 ### Major Changes
 
 - 9c45cb4: Traps focus within the Menu when Menu is open and keyboard navigation is now accessible
-- f6b6b7a: Children of Popover are no longer rendered to the DOM when the Popover is closed
+- f6b6b7a: No longer renders children of Popover component to the DOM when the Popover is closed
 
 ### Patch Changes
 
-- 319fb82: Update PropTypes based on eslint updates
+- 319fb82: Updates PropTypes based on eslint updates
 - Updated dependencies [9c45cb4]
 - Updated dependencies [f6b6b7a]
   - @leafygreen-ui/lib@3.1.0
@@ -116,7 +119,7 @@
 
 ### Patch Changes
 
-- 3a24668: Replaced existing Escape handling with new useEscapeKey hook
+- 3a24668: Replaces existing Escape handling with new useEscapeKey hook
 
 ## 3.0.1
 
@@ -130,18 +133,18 @@
 
 ### Major Changes
 
-- 23c7d20: Changed the semantic HTML for MenuItem component, as well as updated the styles of the entire Menu, which involved removing @leafygreen-ui/theme as a dependency and adding @leafygreen-ui/palette.
+- 23c7d20: Changes the semantic HTML for MenuItem component, as well as updates the styles of the entire Menu, which involves removing @leafygreen-ui/theme as a dependency and adding @leafygreen-ui/palette.
 
 ### Patch Changes
 
-- ec4d8da: Removed `role='menu'` from MenuGroup in order to make component accessible
+- ec4d8da: Removes `role='menu'` from MenuGroup in order to make component accessible
 
 ## 2.0.0
 
 ### Major Changes
 
-- 7825641: Updated Menu API, such that the controlled version now accepts open and setOpen props. Using setOpen allows leafygreen to handle backdrop clicks and escape key-presses for consuming applications.
-
+- 7825641:
+  - Updates Menu API, such that the controlled version now accepts `open` and `setOpen` props. Using `setOpen` allows leafygreen to handle backdrop clicks and Escape key-presses for consuming applications.
   - Previously the prop that controlled whether or not the Menu component would appear as open was called `active`, now the prop's name is `open`.
-  - Added `setOpen` prop to allow leafygreen to help a consuming application, using the controlled api, close `Menu` component when backdrop is clicked or escape key is pressed.
-  - Added `shouldClose` prop, so that consuming application can opt-out of default closing behavior.
+  - Adds `setOpen` prop to allow leafygreen to help a consuming application, using the controlled api, close `Menu` component when backdrop is clicked or escape key is pressed.
+  - Adds `shouldClose` prop, so that consuming application can opt-out of default closing behavior.

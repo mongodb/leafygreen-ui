@@ -10,10 +10,10 @@
 
 ### Patch Changes
 
-- 319844d: Fix bug in storybook such that HEX values are now displayed
+- 319844d: Fixes bug in storybook such that HEX values are now displayed
 
 ## 1.1.0
 
 ### Minor Changes
 
-- a0fdc57: Add ui-colors.less file
+- a0fdc57: Adds ui-colors.less file
