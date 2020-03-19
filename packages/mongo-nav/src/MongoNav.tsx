@@ -326,7 +326,7 @@ function MongoNav({
     }
   }, [mode, endpointURI, activeOrgId, activeProjectId, loadData]);
 
-  const filteredProjects = data?.projects.filter(project => {
+  const filteredProjects = data?.projects?.filter(project => {
     return project.orgId === data.currentProject?.orgId;
   });
 
