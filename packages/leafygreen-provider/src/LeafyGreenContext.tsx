@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import UsingKeyboardProvider from './UsingKeyboardProvider';
+import UsingKeyboardProvider from './UsingKeyboardContext';
 import TypographyProvider, {
   TypographyProviderProps,
-} from './TypographyProvider';
+} from './TypographyContext';
 
 type LeafyGreenProviderProps = {
   children: React.ReactNode;
