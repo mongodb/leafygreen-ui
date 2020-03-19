@@ -2,4 +2,4 @@
 '@leafygreen-ui/leafygreen-provider': minor
 ---
 
-Add BaseFontSizeProvider to LeafygreenProvider to allow applications to set their baseFontSize
+Adds TypographyProvider to LeafygreenProvider to allow applications to set their baseFontSize

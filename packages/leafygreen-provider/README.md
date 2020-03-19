@@ -31,7 +31,7 @@ This is the context provider for LeafyGreen Provider, and should be added as hig
 ```JS
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-<LeafyGreenProvider baseFontSize={14}>
+<LeafyGreenProvider>
   <div>My Children</div>
 </LeafyGreenProvider>
 ```

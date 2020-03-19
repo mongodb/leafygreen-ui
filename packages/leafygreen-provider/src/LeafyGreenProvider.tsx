@@ -1,22 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import UsingKeyboardProvider from './UsingKeyboardProvider';
-import BaseFontSizeProvider from './BaseFontSizeProvider';
+import TypographyProvider, {
+  TypographyProviderProps,
+} from './TypographyProvider';
 
-interface LeafyGreenProviderProps {
+type LeafyGreenProviderProps = {
   children: React.ReactNode;
-  baseFontSize?: number;
-}
+} & TypographyProviderProps;
 
 function LeafyGreenProvider({
   children,
-  baseFontSize = 14,
+  baseFontSize,
 }: LeafyGreenProviderProps) {
   return (
     <UsingKeyboardProvider>
-      <BaseFontSizeProvider baseFontSize={baseFontSize}>
+      <TypographyProvider baseFontSize={baseFontSize}>
         {children}
-      </BaseFontSizeProvider>
+      </TypographyProvider>
     </UsingKeyboardProvider>
   );
 }

@@ -4,7 +4,7 @@ import LeafyGreenProvider, { useBaseFontSize } from '.';
 
 afterAll(cleanup);
 
-describe('packages/leafygreen-provider/BaseFontSizeProvider', () => {
+describe('packages/leafygreen-provider/TypographyProvider', () => {
   const value = 16;
 
   const TestComponent = () => {

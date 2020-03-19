@@ -1,9 +1,9 @@
 import React, { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-interface BaseFontSizeProviderProps {
+export interface TypographyProviderProps {
   children: React.ReactNode;
-  baseFontSize: number;
+  baseFontSize?: 14 | 16;
 }
 
 const BaseFontSizeContext = createContext<number>(14);
@@ -12,10 +12,10 @@ export function useBaseFontSize() {
   return useContext(BaseFontSizeContext);
 }
 
-function BaseFontSizeProvider({
+function TypographyProvider({
   children,
-  baseFontSize,
-}: BaseFontSizeProviderProps) {
+  baseFontSize = 14,
+}: TypographyProviderProps) {
   return (
     <BaseFontSizeContext.Provider value={baseFontSize}>
       {children}
@@ -23,11 +23,11 @@ function BaseFontSizeProvider({
   );
 }
 
-BaseFontSizeProvider.displayName = 'BaseFontSizeProvider';
+TypographyProvider.displayName = 'TypographyProvider';
 
-BaseFontSizeProvider.propTypes = {
+TypographyProvider.propTypes = {
   children: PropTypes.node,
   baseFontSize: PropTypes.number,
 };
 
-export default BaseFontSizeProvider;
+export default TypographyProvider;

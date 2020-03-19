@@ -13,25 +13,6 @@ const sharedStyles = css`
   color: ${uiColors.gray.dark2};
 `;
 
-const h1 = css`
-  font-weight: 500;
-  font-size: 60px;
-  line-height: 68px;
-  letter-spacing: -0.3px;
-`;
-
-const h2 = css`
-  font-size: 32px;
-  line-height: 40px;
-  letter-spacing: 0px;
-`;
-
-const subtitle = css`
-  font-size: 18px;
-  line-height: 24px;
-  letter-spacing: 0px;
-`;
-
 const typeScale1 = css`
   font-size: 14px;
   line-height: 20px;
@@ -44,43 +25,14 @@ const typeScale2 = css`
   letter-spacing: 0px;
 `;
 
-const code = css`
-  font-family: 'Source Code Pro', monospace;
-`;
-
-const disclaimer = css`
-  font-size: 12px;
-  line-height: 20px;
-  letter-spacing: 0.2px;
-`;
-
-const overline = css`
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  line-height: 16px;
-  letter-spacing: 0.4px;
+const h1 = css`
+  font-weight: 500;
+  font-size: 60px;
+  line-height: 68px;
+  letter-spacing: -0.3px;
 `;
 
 type H1Props = HTMLElementProps<'h1'>;
-
-type H2Props = HTMLElementProps<'h2'>;
-
-type SubtitleProps = HTMLElementProps<'h6'>;
-
-type BodyProps = HTMLElementProps<'p'> & {
-  /**
-   * font-weight applied to typography element
-   * default: `regular`
-   */
-  weight?: 'regular' | 'medium';
-};
-
-type InlineCodeProps = HTMLElementProps<'code'>;
-
-type DisclaimerProps = HTMLElementProps<'small'>;
-
-type OverlineProps<T> = T & BoxProps<T>;
 
 function H1({ children, className, ...rest }: H1Props) {
   return (
@@ -90,6 +42,14 @@ function H1({ children, className, ...rest }: H1Props) {
   );
 }
 
+const h2 = css`
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: 0px;
+`;
+
+type H2Props = HTMLElementProps<'h2'>;
+
 function H2({ children, className, ...rest }: H2Props) {
   return (
     <h2 {...rest} className={cx(sharedStyles, h2, className)}>
@@ -98,9 +58,25 @@ function H2({ children, className, ...rest }: H2Props) {
   );
 }
 
+const subtitle = css`
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0px;
+`;
+
+type SubtitleProps = HTMLElementProps<'h6'>;
+
 function Subtitle({ children, className }: SubtitleProps) {
   return <h6 className={cx(sharedStyles, subtitle, className)}>{children}</h6>;
 }
+
+type BodyProps = HTMLElementProps<'p'> & {
+  /**
+   * font-weight applied to typography element
+   * default: `regular`
+   */
+  weight?: 'regular' | 'medium';
+};
 
 function Body({ children, className, weight = 'regular' }: BodyProps) {
   const size = useBaseFontSize();
@@ -115,6 +91,12 @@ function Body({ children, className, weight = 'regular' }: BodyProps) {
   );
 }
 
+const code = css`
+  font-family: 'Source Code Pro', monospace;
+`;
+
+type InlineCodeProps = HTMLElementProps<'code'>;
+
 function InlineCode({ children, className }: InlineCodeProps) {
   const size = useBaseFontSize();
   const body = size === 16 ? typeScale2 : typeScale1;
@@ -124,6 +106,14 @@ function InlineCode({ children, className }: InlineCodeProps) {
   );
 }
 
+const disclaimer = css`
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.2px;
+`;
+
+type DisclaimerProps = HTMLElementProps<'small'>;
+
 function Disclaimer({ children, className }: DisclaimerProps) {
   return (
     <small className={cx(sharedStyles, disclaimer, className)}>
@@ -131,6 +121,16 @@ function Disclaimer({ children, className }: DisclaimerProps) {
     </small>
   );
 }
+
+const overline = css`
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  line-height: 16px;
+  letter-spacing: 0.4px;
+`;
+
+type OverlineProps<T> = T & BoxProps<T>;
 
 function Overline<T extends React.ReactNode>(props: OverlineProps<T>) {
   const rest = omit(props as any, ['className']);
