@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- f2fed7c: Code component styling updates
+- f2fed7c: Adds copy functionality to Code component
 
 ### Patch Changes
 
@@ -15,7 +15,7 @@
 
 ### Minor Changes
 
-- c117a62: Add Kotlin language highlight support
+- c117a62: Enables Kotlin language support
 
 ### Patch Changes
 
@@ -26,7 +26,7 @@
 
 ### Minor Changes
 
-- a0d0d7b: Enable Swift language support
+- a0d0d7b: Enables Swift language support
 
 ## 3.0.0
 

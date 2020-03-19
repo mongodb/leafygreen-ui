@@ -15,7 +15,7 @@
 
 ### Patch Changes
 
-- 319fb82: Update PropTypes based on eslint updates
+- 319fb82: Updates PropTypes based on eslint updates
 - Updated dependencies [9c45cb4]
   - @leafygreen-ui/lib@3.1.0
 
@@ -23,4 +23,4 @@
 
 ### Patch Changes
 
-- 563dc2e: Dramatically reduces the package's bundle size by excluding react-dom from the bundle.
+- 563dc2e: Dramatically reduces the package's bundle size by excluding `react-dom` from the bundle.

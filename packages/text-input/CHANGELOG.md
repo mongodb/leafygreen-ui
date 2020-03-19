@@ -4,13 +4,13 @@
 
 ### Patch Changes
 
-- 62455d4: switch devDependencies to dependencies in package.json
+- 62455d4: Switches devDependencies to dependencies in package.json
 
 ## 1.0.0
 
 ### Major Changes
 
-- 5f08f87: Initial release of TextInput
+- 5f08f87: Initial release of TextInput component
 
 ### Patch Changes
 

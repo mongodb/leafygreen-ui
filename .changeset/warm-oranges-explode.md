@@ -2,4 +2,4 @@
 '@leafygreen-ui/mongo-nav': minor
 ---
 
-Add projectNav.charts key.
+Adds projectNav.charts key.

@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- 232cf52: React-transition-group now dependency instead of peer dependency
+- 232cf52: `React-transition-group` now dependency instead of peer dependency
 - Updated dependencies [fabc1c9]
   - @leafygreen-ui/lib@4.2.0
 
@@ -12,7 +12,7 @@
 
 ### Patch Changes
 
-- 69792b8: Make react-transition-group an external dependency of the build
+- 69792b8: Make `react-transition-group` an external dependency of the build
 - Updated dependencies [11b2217]
   - @leafygreen-ui/lib@4.1.0
 
@@ -47,7 +47,7 @@
 
 ### Minor Changes
 
-- 12fb220: Now accepts children as a function, with signature ({alignment, justification, referenceElementPosition }) => {} or React.Element
+- 12fb220: Accepts children as a function, with signature `({alignment, justification, referenceElementPosition }) => {}` or `React.Element`
 
 - Updated dependencies [563dc2e]:
   - @leafygreen-ui/portal@1.1.7
