@@ -1,5 +1,20 @@
 # @leafygreen-ui/mongo-nav
 
+## 0.16.0
+
+### Minor Changes
+
+- dd342f5: The Mongo-Nav UserMenu now displays Atlas content only in cloud products. The internal MenuItem component now renders any ReactElement description, rather than only strings.
+- beccf70: Adds projectNav.charts key.
+
+### Patch Changes
+
+- Updated dependencies [e1568c6]
+- Updated dependencies [dd342f5]
+  - @leafygreen-ui/icon@4.3.0
+  - @leafygreen-ui/menu@6.0.3
+  - @leafygreen-ui/icon-button@4.1.4
+
 ## 0.15.0
 
 ### Minor Changes
