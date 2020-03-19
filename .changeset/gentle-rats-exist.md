@@ -3,4 +3,4 @@
 '@leafygreen-ui/syntax': minor
 ---
 
-Add Objective-C language highlight support
+Adds Objective-C language highlight support
