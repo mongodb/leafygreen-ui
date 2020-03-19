@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, cleanup } from '@testing-library/react';
+import { render, fireEvent, cleanup, act } from '@testing-library/react';
 import {
   nullableElement,
   nullableElementArray,
@@ -62,11 +62,9 @@ describe('packages/mongo-select', () => {
   };
 
   let onClick: jest.Mock;
-  let onChange: jest.Mock;
 
   beforeEach(() => {
     onClick = jest.fn();
-    onChange = jest.fn();
   });
 
   afterEach(() => {
@@ -83,7 +81,6 @@ describe('packages/mongo-select', () => {
             data={organizations}
             constructOrganizationURL={constructOrganizationURL}
             urls={urlDefaults}
-            onChange={onChange}
             onClick={onClick}
             {...props}
           />,
@@ -175,6 +172,40 @@ describe('packages/mongo-select', () => {
         expect(orgSettingsIcon).toBeNull();
       });
     });
+
+    describe('when a user filters organizations', () => {
+      beforeEach(renderComponent);
+
+      it('displays one organization when only one matches the search', () => {
+        fireEvent.click(expectedElements.orgTrigger as HTMLElement);
+        setExpectedElements();
+
+        const input = expectedElements!.orgInput;
+
+        fireEvent.change(input as HTMLElement, {
+          target: { value: '2' },
+        });
+
+        act(setExpectedElements);
+
+        expect(expectedElements!.orgResults!.length).toBe(1);
+      });
+
+      it('displays no organizations when none matches the search', () => {
+        fireEvent.click(expectedElements.orgTrigger as HTMLElement);
+        setExpectedElements();
+
+        const input = expectedElements!.orgInput;
+
+        fireEvent.change(input as HTMLElement, {
+          target: { value: 'xx' },
+        });
+
+        act(setExpectedElements);
+
+        expect(expectedElements!.orgResults!.length).toBe(0);
+      });
+    });
   });
 
   describe('ProjectSelect', () => {
@@ -186,7 +217,6 @@ describe('packages/mongo-select', () => {
             data={projects}
             current={currentProject as CurrentProjectInterface}
             onClick={onClick}
-            onChange={onChange}
             constructProjectURL={constructProjectURL}
             {...props}
           />,
@@ -251,6 +281,40 @@ describe('packages/mongo-select', () => {
             expect(onClick).toHaveBeenCalledTimes(1);
           });
         });
+      });
+    });
+
+    describe('when a user filters projects', () => {
+      beforeEach(renderComponent);
+
+      it('displays one project when only one matches the search', () => {
+        fireEvent.click(expectedElements.projectTrigger as HTMLElement);
+        setExpectedElements();
+
+        const input = expectedElements!.projectInput;
+
+        fireEvent.change(input as HTMLElement, {
+          target: { value: '1' },
+        });
+
+        act(setExpectedElements);
+
+        expect(expectedElements!.projectResults!.length).toBe(1);
+      });
+
+      it('displays no projects when none matches the search', () => {
+        fireEvent.click(expectedElements.projectTrigger as HTMLElement);
+        setExpectedElements();
+
+        const input = expectedElements!.projectInput;
+
+        fireEvent.change(input as HTMLElement, {
+          target: { value: 'xx' },
+        });
+
+        act(setExpectedElements);
+
+        expect(expectedElements!.projectResults!.length).toBe(0);
       });
     });
   });
