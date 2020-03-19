@@ -106,7 +106,7 @@ interface SharedMenuItemProps {
   /**
    * Description element displayed below title in MenuItem.
    */
-  description?: React.ReactElement;
+  description?: React.ReactNode;
   /**
    * Determines whether or not the MenuItem is disabled.
    */
@@ -262,7 +262,7 @@ MenuItem.propTypes = {
   href: PropTypes.string,
   onClick: PropTypes.func,
   className: PropTypes.string,
-  description: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  description: PropTypes.node,
   disabled: PropTypes.bool,
   active: PropTypes.bool,
   children: PropTypes.node,
