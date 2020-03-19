@@ -1,3 +1,6 @@
+import createGlyphComponent from '../createGlyphComponent';
+
+// Glyphs
 import ActivityFeed from './ActivityFeed.svg';
 import ArrowDown from './ArrowDown.svg';
 import ArrowLeft from './ArrowLeft.svg';
@@ -46,7 +49,7 @@ import Warning from './Warning.svg';
 import X from './X.svg';
 import XWithCircle from './XWithCircle.svg';
 
-export default {
+const glyphs = {
   ActivityFeed,
   ArrowDown,
   ArrowLeft,
@@ -95,3 +98,19 @@ export default {
   X,
   XWithCircle,
 } as const;
+
+type GlyphName = keyof typeof glyphs;
+type GlyphEntry<C = SVGR.Component> = [GlyphName, C];
+
+function processEntries(entry: GlyphEntry): GlyphEntry<LGGlyph.Component> {
+  return [entry[0], createGlyphComponent(...entry)];
+}
+
+const processedEntries = (Object.entries(glyphs) as Array<GlyphEntry>).map(
+  processEntries,
+);
+
+export default Object.fromEntries(processedEntries) as Record<
+  GlyphName,
+  LGGlyph.Component
+>;

@@ -25,7 +25,7 @@ const textStyle = css`
 `;
 
 type GlyphUnion = keyof typeof glyphs;
-const glyphKeys = Object.keys(glyphs) as Array<GlyphUnion>;
+const glyphNames = Object.keys(glyphs) as Array<GlyphUnion>;
 
 storiesOf('Icons', module).add('Icon', () => {
   const fill = color('Fill', '#000000');
@@ -38,5 +38,5 @@ storiesOf('Icons', module).add('Icon', () => {
     </div>
   );
 
-  return <>{glyphKeys.map(renderGlyph)}</>;
+  return <>{glyphNames.map(renderGlyph)}</>;
 });
