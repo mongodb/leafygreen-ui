@@ -380,7 +380,7 @@ export default function ProjectNav({
             <li role="none" className={productTabStyle}>
               <a
                 data-testid="project-nav-charts"
-                href={hosts.charts}
+                href={projectNav.charts}
                 className={getProductClassName('charts')}
                 aria-disabled={!current}
                 tabIndex={current ? 0 : -1}
