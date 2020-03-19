@@ -22,6 +22,12 @@ import {
   ActiveNavElement,
   NavElement,
 } from '../types';
+import {
+  AtlasActive,
+  AtlasInactive,
+  ChartsActive,
+  ChartsInactive,
+} from './SubBrandIcons';
 
 const {
   ProjectNavProjectDropdown,
@@ -343,12 +349,17 @@ export default function ProjectNav({
               isCloudManager ? 'cloud-manager' : 'atlas'
             }`}
           >
-            {!isMobile && (
+            {/* {!isMobile && (
               <Icon
                 {...productIconProp.prop}
                 className={iconStyle}
                 glyph="Cloud"
               />
+            )} */}
+            {!isMobile && activeProduct === 'cloud' ? (
+              <AtlasActive {...productIconProp.prop} className={iconStyle} />
+            ) : (
+              <AtlasInactive {...productIconProp.prop} className={iconStyle} />
             )}
             {isCloudManager ? 'Cloud Manager' : 'Atlas'}
           </a>
@@ -386,13 +397,18 @@ export default function ProjectNav({
                 tabIndex={current ? 0 : -1}
                 onClick={onElementClick(ProjectNavCharts)}
               >
-                {!isMobile && (
-                  <Icon
-                    {...productIconProp.prop}
-                    className={iconStyle}
-                    glyph="Charts"
-                  />
-                )}
+                {!isMobile &&
+                  (activeProduct === 'charts' ? (
+                    <ChartsActive
+                      {...productIconProp.prop}
+                      className={iconStyle}
+                    />
+                  ) : (
+                    <ChartsInactive
+                      {...productIconProp.prop}
+                      className={iconStyle}
+                    />
+                  ))}
                 Charts
               </a>
             </li>
