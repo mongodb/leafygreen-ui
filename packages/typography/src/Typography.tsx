@@ -14,6 +14,7 @@ const sharedStyles = css`
 `;
 
 const h1 = css`
+  font-weight: 500;
   font-size: 60px;
   line-height: 68px;
   letter-spacing: -0.3px;
@@ -106,7 +107,7 @@ function Body({ children, className, weight = 'regular' }: BodyProps) {
   const body = size === 16 ? typeScale2 : typeScale1;
 
   const fontWeight = css`
-    font-weight: ${weight !== 'regular' ? 500 : 400};
+    font-weight: ${weight !== 'regular' ? 600 : 400};
   `;
 
   return (

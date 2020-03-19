@@ -10,8 +10,10 @@ storiesOf('Typography', module).add('Default', () => (
       <H1>Heading 1</H1>
       <H2>Heading 2</H2>
       <Subtitle>Subtitle</Subtitle>
-      <Body weight="medium">Body</Body>
-      <InlineCode>Code</InlineCode>
+      <Body weight={select('weight', ['medium', 'regular'], 'regular')}>
+        Body
+      </Body>
+      <InlineCode>InlineCode</InlineCode>
       <Disclaimer>Disclaimer</Disclaimer>
       <Overline>Overline</Overline>
     </div>
