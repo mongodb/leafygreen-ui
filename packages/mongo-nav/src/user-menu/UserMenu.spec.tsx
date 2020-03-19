@@ -31,7 +31,7 @@ describe('packages/UserMenu', () => {
     />,
   );
 
-  const { getByText, getByTestId } = renderedComponent;
+  const { getByText, getByTestId, queryByText } = renderedComponent;
   test('renders closed UserMenu with users name in button by default', () => {
     const trigger = getByTestId('user-menu-trigger');
     expect(trigger).toBeInTheDocument();
@@ -138,5 +138,17 @@ describe('packages/UserMenu', () => {
     expect(accountButton.tagName.toLowerCase()).toBe('button');
     expect(accountButton.disabled).toBe(true);
     expect(accountButton.getAttribute('aria-disabled')).toBe('true');
+  });
+
+  test('does not render atlas MenuItems when a non-cloud product is active', () => {
+    const userPreferences = queryByText('User Preferences');
+    const invitations = queryByText('Invitations');
+    const organizations = queryByText('Organizations');
+    const mfa = queryByText('Two-Factor Authorization');
+
+    expect(userPreferences).toBeNull();
+    expect(invitations).toBeNull();
+    expect(organizations).toBeNull();
+    expect(mfa).toBeNull();
   });
 });
