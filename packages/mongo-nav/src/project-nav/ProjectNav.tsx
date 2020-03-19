@@ -229,7 +229,7 @@ interface ProjectNavInterface {
   alerts?: number;
   activeProduct: Product;
   activeNav?: NavElement;
-  onProjectChange: React.ChangeEventHandler;
+  onProjectChange?: React.ChangeEventHandler;
 }
 
 export default function ProjectNav({

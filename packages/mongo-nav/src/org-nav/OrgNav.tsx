@@ -114,7 +114,7 @@ interface OrgNav {
   constructOrganizationURL: (orgID: string) => string;
   urls: Required<URLSInterface>;
   activeNav?: NavElement;
-  onOrganizationChange: React.ChangeEventHandler;
+  onOrganizationChange?: React.ChangeEventHandler;
   admin: boolean;
   hosts: Required<HostsInterface>;
   currentProjectName?: string;

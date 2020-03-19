@@ -177,8 +177,8 @@ interface MongoNavInterface {
 function MongoNav({
   activeProduct,
   activeNav,
-  onOrganizationChange = () => {},
-  onProjectChange = () => {},
+  onOrganizationChange,
+  onProjectChange,
   mode = Mode.Production,
   loadData = true,
   showProjectNav = true,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@leafygreen-ui/button';
 import Input from './Input';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -96,7 +96,7 @@ interface BaseMongoSelectProps {
   onClick?: React.MouseEventHandler;
   className?: string;
   urls: Required<URLSInterface>;
-  onChange: React.ChangeEventHandler;
+  onChange?: React.ChangeEventHandler;
   isActive?: boolean;
   loading?: boolean;
   disabled?: boolean;
@@ -127,15 +127,37 @@ function OrgSelect({
   data,
   urls,
   isActive,
-  onChange,
+  onChange: onChangeProp,
   onClick,
   constructOrganizationURL,
   isOnPrem,
   disabled,
   loading = false,
 }: OrganizationMongoSelectProps) {
+  const [renderedData, setRenderedData] = useState(data);
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
+
+  useEffect(() => {
+    setRenderedData(data);
+  }, [data]);
+
+  const onChange = (e: React.ChangeEvent) => {
+    e.stopPropagation();
+
+    if (onChangeProp) {
+      onChangeProp(e);
+      return;
+    }
+
+    const search = new RegExp(`${e.target.value}`, 'i');
+
+    const foundData = data?.filter(datum => {
+      return search.test(datum.orgName);
+    });
+
+    setRenderedData(foundData);
+  };
 
   const renderOrganizationOption = (datum: OrganizationInterface) => {
     const { orgId, orgName, planType } = datum;
@@ -191,7 +213,7 @@ function OrgSelect({
         )}
 
         <ul className={ulStyle}>
-          {data?.map(renderOrganizationOption) ?? (
+          {renderedData?.map(renderOrganizationOption) ?? (
             <li className={noOrgStyle}>
               You do not belong to any organizations. Create an organization on
               the{' '}
@@ -206,7 +228,7 @@ function OrgSelect({
           )}
         </ul>
 
-        {data && (
+        {renderedData && (
           <>
             <MenuSeparator />
             <MenuItem
@@ -230,15 +252,35 @@ export { OrgSelect };
 
 function ProjectSelect({
   current,
-  onChange,
+  onChange: onChangeProp,
   data,
   onClick,
   constructProjectURL,
   urls,
   loading = false,
 }: ProjectMongoSelectProps) {
+  const [renderedData, setRenderedData] = useState(data);
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
+
+  useEffect(() => {
+    setRenderedData(data);
+  }, [data]);
+
+  const onChange = (e: React.ChangeEvent) => {
+    if (onChangeProp) {
+      onChangeProp(e);
+      return;
+    }
+
+    const search = new RegExp(`${e.target.value}`, 'i');
+
+    const foundData = data?.filter(datum => {
+      return search.test(datum.projectName);
+    });
+
+    setRenderedData(foundData);
+  };
 
   const renderProjectOption = (datum: ProjectInterface) => {
     const { projectId, projectName, orgId } = datum;
@@ -284,7 +326,7 @@ function ProjectSelect({
         </FocusableMenuItem>
 
         <ul className={ulStyle}>
-          {data?.map(datum => renderProjectOption(datum))}
+          {renderedData?.map(datum => renderProjectOption(datum))}
         </ul>
 
         <MenuSeparator />
