@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- dd342f5: The Mongo-Nav UserMenu now displays Atlas content only in cloud products. The internal MenuItem component now renders any ReactElement description, rather than only strings.
+- dd342f5: MenuItem component renders any ReactElement description, rather than only strings.
 - Updated dependencies [e1568c6]
   - @leafygreen-ui/icon@4.3.0
   - @leafygreen-ui/icon-button@4.1.4
