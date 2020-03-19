@@ -1,4 +1,4 @@
-import {
+export {
   H1,
   H2,
   Subtitle,
@@ -7,4 +7,3 @@ import {
   Disclaimer,
   Overline,
 } from './Typography';
-export { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline };
