@@ -326,11 +326,9 @@ function MongoNav({
     }
   }, [mode, endpointURI, activeOrgId, activeProjectId, loadData]);
 
-  const filteredProjects = data?.projects
-    ? data.projects.filter(project => {
-        return project.orgId === data.currentProject?.orgId;
-      })
-    : undefined;
+  const filteredProjects = data?.projects?.filter(project => {
+    return project.orgId === data.currentProject?.orgId;
+  });
 
   return (
     <OnElementClickProvider onElementClick={onElementClick}>
