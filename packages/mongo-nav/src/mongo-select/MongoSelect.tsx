@@ -115,13 +115,6 @@ interface OrganizationMongoSelectProps extends BaseMongoSelectProps {
   isOnPrem?: boolean;
 }
 
-const onKeyDown: React.KeyboardEventHandler = e => {
-  // Stops default browser behavior from automatically scrolling the component
-  if ([keyMap.ArrowUp, keyMap.ArrowDown].includes(e.keyCode)) {
-    e.preventDefault();
-  }
-};
-
 function OrgSelect({
   current,
   data,
@@ -135,6 +128,7 @@ function OrgSelect({
   loading = false,
 }: OrganizationMongoSelectProps) {
   const [renderedData, setRenderedData] = useState(data);
+  const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
 
@@ -142,8 +136,8 @@ function OrgSelect({
     setRenderedData(data);
   }, [data]);
 
-  const onChange = (e: React.ChangeEvent) => {
-    e.stopPropagation();
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
 
     if (onChangeProp) {
       onChangeProp(e);
@@ -157,6 +151,23 @@ function OrgSelect({
     });
 
     setRenderedData(foundData);
+  };
+
+  const onKeyDown: React.KeyboardEventHandler = e => {
+    // Stops default browser behavior from automatically scrolling the component
+    if ([keyMap.ArrowUp, keyMap.ArrowDown].includes(e.keyCode)) {
+      e.preventDefault();
+    }
+
+    if (keyMap.Space === e.keyCode) {
+      e.preventDefault();
+
+      // Because we are not portaling Menu component in order to allow consuming applications to control z-index
+      // Pressing the spacebar from inside of the Input closes the Menu
+      // The browser is adding a onClick event that we are not able to cancel through stopPropagation()
+      // To fix, we have to prevent that browser behavior and then manually add a space to the current value
+      setValue(currentValue => `${currentValue} `);
+    }
   };
 
   const renderOrganizationOption = (datum: OrganizationInterface) => {
@@ -208,6 +219,7 @@ function OrgSelect({
               variant="organization"
               onChange={onChange}
               onKeyDown={onKeyDown}
+              value={value}
             />
           </FocusableMenuItem>
         )}
@@ -260,6 +272,7 @@ function ProjectSelect({
   loading = false,
 }: ProjectMongoSelectProps) {
   const [renderedData, setRenderedData] = useState(data);
+  const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
 
@@ -267,7 +280,9 @@ function ProjectSelect({
     setRenderedData(data);
   }, [data]);
 
-  const onChange = (e: React.ChangeEvent) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+
     if (onChangeProp) {
       onChangeProp(e);
       return;
@@ -280,6 +295,23 @@ function ProjectSelect({
     });
 
     setRenderedData(foundData);
+  };
+
+  const onKeyDown: React.KeyboardEventHandler = e => {
+    // Stops default browser behavior from automatically scrolling the component
+    if ([keyMap.ArrowUp, keyMap.ArrowDown].includes(e.keyCode)) {
+      e.preventDefault();
+    }
+
+    if (keyMap.Space === e.keyCode) {
+      e.preventDefault();
+
+      // Because we are not portaling Menu component in order to allow consuming applications to control z-index
+      // Pressing the spacebar from inside of the Input closes the Menu
+      // The browser is adding a onClick event that we are not able to cancel through stopPropagation()
+      // To fix, we have to prevent that browser behavior and then manually add a space to the current value
+      setValue(currentValue => `${currentValue} `);
+    }
   };
 
   const renderProjectOption = (datum: ProjectInterface) => {
@@ -322,6 +354,7 @@ function ProjectSelect({
             onChange={onChange}
             onKeyDown={onKeyDown}
             variant="project"
+            value={value}
           />
         </FocusableMenuItem>
 
