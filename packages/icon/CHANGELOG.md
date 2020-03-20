@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 4.3.0
+
+### Minor Changes
+
+- e1568c6: Updates the visual weight of the InviteUser glyph.
+
 ## 4.2.0
 
 ### Minor Changes
