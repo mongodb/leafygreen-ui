@@ -208,8 +208,6 @@ const alertBadgeStyle = css`
 
 const productIconStyle = css`
   margin-right: 4px;
-  // color: ${uiColors.gray.base};
-  color: orange;
 `;
 
 const tooltipStyles = css`

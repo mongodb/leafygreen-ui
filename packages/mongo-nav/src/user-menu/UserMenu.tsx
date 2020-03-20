@@ -261,7 +261,7 @@ function UserMenu({
     : '';
 
   const isAccount = activeProduct === Product.Account;
-  const cloudProducts = ['cloud', 'stitch', 'charts'];
+  const cloudProducts = ['cloud', 'realm', 'charts'];
   const isCloud = cloudProducts.includes(activeProduct);
   const isSupport = activeProduct === Product.Support;
   const isUniversity = activeProduct === Product.University;
