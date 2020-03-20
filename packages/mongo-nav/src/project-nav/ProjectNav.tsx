@@ -22,14 +22,7 @@ import {
   ActiveNavElement,
   NavElement,
 } from '../types';
-import {
-  AtlasActive,
-  AtlasInactive,
-  RealmActive,
-  RealmInactive,
-  ChartsActive,
-  ChartsInactive,
-} from '../helpers/Icons';
+import { Atlas, RealmActive, RealmInactive, Charts } from '../helpers/Icons';
 
 const {
   ProjectNavProjectDropdown,
@@ -351,10 +344,12 @@ export default function ProjectNav({
               isCloudManager ? 'cloud-manager' : 'atlas'
             }`}
           >
-            {!isMobile && activeProduct === Product.Cloud && current ? (
-              <AtlasActive {...productIconProp.prop} className={iconStyle} />
-            ) : (
-              <AtlasInactive {...productIconProp.prop} className={iconStyle} />
+            {!isMobile && (
+              <Atlas
+                active={activeProduct === Product.Cloud && !!current}
+                {...productIconProp.prop}
+                className={iconStyle}
+              />
             )}
             {isCloudManager ? 'Cloud Manager' : 'Atlas'}
           </a>
@@ -383,7 +378,6 @@ export default function ProjectNav({
                       className={iconStyle}
                     />
                   ))}
-
                 {secondTabName}
               </a>
             </li>
@@ -397,18 +391,13 @@ export default function ProjectNav({
                 tabIndex={current ? 0 : -1}
                 onClick={onElementClick(ProjectNavCharts)}
               >
-                {!isMobile &&
-                  (activeProduct === Product.Charts && current ? (
-                    <ChartsActive
-                      {...productIconProp.prop}
-                      className={iconStyle}
-                    />
-                  ) : (
-                    <ChartsInactive
-                      {...productIconProp.prop}
-                      className={iconStyle}
-                    />
-                  ))}
+                {!isMobile && (
+                  <Charts
+                    {...productIconProp.prop}
+                    className={iconStyle}
+                    active={activeProduct === Product.Charts && !!current}
+                  />
+                )}
                 Charts
               </a>
             </li>
