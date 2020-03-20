@@ -1,5 +1,11 @@
 # @leafygreen-ui/syntax
 
+## 2.5.0
+
+### Minor Changes
+
+- beccf70: Adds Objective-C language highlight support
+
 ## 2.4.0
 
 ### Minor Changes
