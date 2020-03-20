@@ -105,7 +105,6 @@ const onKeyDown = (e: React.KeyboardEvent, callback: Function) => {
     // Pressing the spacebar from inside of the Input closes the Menu
     // The browser is adding a onClick event that we are not able to cancel through stopPropagation()
     // To fix, we have to prevent that browser behavior and then manually add a space to the current value
-    console.log(callback);
     callback();
   }
 };
@@ -220,7 +219,7 @@ function OrgSelect({
               data-testid="org-filter-input"
               variant="organization"
               onChange={onChange}
-              onKeyDown={e =>
+              onKeyDown={(e: React.KeyboardEvent) =>
                 onKeyDown(e, () => setValue(currentValue => `${currentValue} `))
               }
               value={value}
@@ -248,7 +247,9 @@ function OrgSelect({
           <>
             <MenuSeparator />
             <MenuItem
-              onKeyDown={onKeyDown}
+              onKeyDown={(e: React.KeyboardEvent) =>
+                onKeyDown(e, () => setValue(currentValue => `${currentValue} `))
+              }
               href={urls.mongoSelect?.viewAllOrganizations}
               data-testid="org-select-view-all-orgs"
               onClick={onElementClick(NavElement.OrgNavViewAllOrganizations)}
@@ -340,7 +341,7 @@ function ProjectSelect({
           <Input
             data-testid="project-filter-input"
             onChange={onChange}
-            onKeyDown={e =>
+            onKeyDown={(e: React.KeyboardEvent) =>
               onKeyDown(e, () => setValue(currentValue => `${currentValue} `))
             }
             variant="project"
@@ -354,7 +355,13 @@ function ProjectSelect({
 
         <MenuSeparator />
 
-        <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
+        <li
+          onKeyDown={(e: React.KeyboardEvent) =>
+            onKeyDown(e, () => setValue(currentValue => `${currentValue} `))
+          }
+          role="none"
+          className={projectButtonStyle}
+        >
           <FocusableMenuItem>
             <Button
               href={urls.mongoSelect.viewAllProjects as string}
