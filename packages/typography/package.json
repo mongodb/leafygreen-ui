@@ -1,0 +1,23 @@
+
+  {
+    "name": "@leafygreen-ui/typography",
+    "version": "0.9.0",
+    "description": "leafyGreen UI Kit Typography",
+    "browser": "./dist/index.web.js",
+    "main": "./dist/index.node.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+      "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
+    },
+    "license": "Apache-2.0",
+    "publishConfig": {
+      "access": "public"
+    },
+    "devDependencies": {
+      "@leafygreen-ui/lib": "^4.0.0", 
+      "@leafygreen-ui/emotion": "^2.0.1",
+      "@leafygreen-ui/palette": "^2.0.0", 
+      "@leafygreen-ui/leafygreen-provider": "^1.0.0", 
+      "@leafygreen-ui/box": "^1.1.0"
+    }
+  }

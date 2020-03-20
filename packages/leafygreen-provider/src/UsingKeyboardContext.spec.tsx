@@ -4,7 +4,7 @@ import UsingKeyboardProvider, {
   NavigationKeyCodes,
   UsingKeyboardContext,
   useUsingKeyboardContext,
-} from './UsingKeyboardProvider';
+} from './UsingKeyboardContext';
 
 afterAll(cleanup);
 
