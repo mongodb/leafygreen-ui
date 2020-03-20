@@ -1,5 +1,19 @@
 # @leafygreen-ui/code
 
+## 3.4.0
+
+### Minor Changes
+
+- beccf70: Adds Objective-C language highlight support
+
+### Patch Changes
+
+- Updated dependencies [e1568c6]
+- Updated dependencies [beccf70]
+  - @leafygreen-ui/icon@4.3.0
+  - @leafygreen-ui/syntax@2.5.0
+  - @leafygreen-ui/icon-button@4.1.4
+
 ## 3.3.0
 
 ### Minor Changes
