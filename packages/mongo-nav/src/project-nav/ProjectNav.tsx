@@ -208,6 +208,7 @@ const alertBadgeStyle = css`
 
 const productIconStyle = css`
   margin-right: 4px;
+  color: ${uiColors.gray.base};
 `;
 
 const tooltipStyles = css`
@@ -353,11 +354,7 @@ export default function ProjectNav({
             {!isMobile && activeProduct === Product.Cloud && current ? (
               <AtlasActive {...productIconProp.prop} className={iconStyle} />
             ) : (
-              <AtlasInactive
-                {...productIconProp.prop}
-                className={iconStyle}
-                fill={current ? uiColors.gray.base : uiColors.gray.light2}
-              />
+              <AtlasInactive {...productIconProp.prop} className={iconStyle} />
             )}
             {isCloudManager ? 'Cloud Manager' : 'Atlas'}
           </a>
@@ -384,7 +381,6 @@ export default function ProjectNav({
                     <RealmInactive
                       {...productIconProp.prop}
                       className={iconStyle}
-                      fill={current ? uiColors.gray.base : uiColors.gray.light2}
                     />
                   ))}
 
@@ -410,7 +406,6 @@ export default function ProjectNav({
                   ) : (
                     <ChartsInactive
                       {...productIconProp.prop}
-                      fill={current ? uiColors.gray.base : uiColors.gray.light2}
                       className={iconStyle}
                     />
                   ))}

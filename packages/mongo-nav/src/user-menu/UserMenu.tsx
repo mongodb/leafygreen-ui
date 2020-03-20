@@ -25,15 +25,7 @@ import {
 } from '../types';
 import { hostDefaults } from '../data';
 import { useOnElementClick } from '../on-element-click-provider';
-import {
-  CloudActive,
-  CloudInactive,
-  SupportActive,
-  SupportInactive,
-  UniversityActive,
-  UniversityInactive,
-  Megaphone,
-} from '../helpers/Icons';
+import { Cloud, Support, University, Megaphone } from '../helpers/Icons';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 const menuItemContainer = createDataProp('menu-item-container');
@@ -329,7 +321,7 @@ function UserMenu({
             href={hosts.cloud}
             description={<Description isActive={isCloud} product="cloud" />}
             title="Atlas"
-            glyph={isCloud ? <CloudActive /> : <CloudInactive />}
+            glyph={<Cloud />}
             className={cx(subMenuContainerStyle, {
               [subMenuActiveContainerStyle]: isCloud,
             })}
@@ -372,7 +364,7 @@ function UserMenu({
           <MenuItem
             {...menuItemContainer.prop}
             size="large"
-            glyph={isCloud ? <CloudActive /> : <CloudInactive />}
+            glyph={<Cloud />}
             href={hosts.cloud}
             description={<Description isActive={false} product="cloud" />}
           >
@@ -387,7 +379,7 @@ function UserMenu({
           disabled={!account}
           href={hosts.university}
           title="University"
-          glyph={isUniversity ? <UniversityActive /> : <UniversityInactive />}
+          glyph={<University />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isUniversity,
           })}
@@ -410,7 +402,7 @@ function UserMenu({
           disabled={!account}
           href={hosts.support}
           title="Support"
-          glyph={isSupport ? <SupportActive /> : <SupportInactive />}
+          glyph={<Support />}
           description={<Description isActive={isSupport} product="support" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isSupport,
