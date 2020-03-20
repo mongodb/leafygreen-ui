@@ -92,6 +92,24 @@ const formattedPlanTypes: Record<PlanType, string> = {
   [PlanType.OnPrem]: 'Ops Manager',
 } as const;
 
+const onKeyDown = (e: React.KeyboardEvent, callback: Function) => {
+  // Stops default browser behavior from automatically scrolling the component
+  if ([keyMap.ArrowUp, keyMap.ArrowDown].includes(e.keyCode)) {
+    e.preventDefault();
+  }
+
+  if (keyMap.Space === e.keyCode) {
+    e.preventDefault();
+
+    // Because we are not portaling Menu component in order to allow consuming applications to control z-index
+    // Pressing the spacebar from inside of the Input closes the Menu
+    // The browser is adding a onClick event that we are not able to cancel through stopPropagation()
+    // To fix, we have to prevent that browser behavior and then manually add a space to the current value
+    console.log(callback);
+    callback();
+  }
+};
+
 interface BaseMongoSelectProps {
   onClick?: React.MouseEventHandler;
   className?: string;
@@ -137,37 +155,21 @@ function OrgSelect({
   }, [data]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    const value = e.target.value;
+    setValue(value);
 
     if (onChangeProp) {
       onChangeProp(e);
       return;
     }
 
-    const search = new RegExp(`${e.target.value}`, 'i');
+    const search = new RegExp(`${value}`, 'i');
 
     const foundData = data?.filter(datum => {
       return search.test(datum.orgName);
     });
 
     setRenderedData(foundData);
-  };
-
-  const onKeyDown: React.KeyboardEventHandler = e => {
-    // Stops default browser behavior from automatically scrolling the component
-    if ([keyMap.ArrowUp, keyMap.ArrowDown].includes(e.keyCode)) {
-      e.preventDefault();
-    }
-
-    if (keyMap.Space === e.keyCode) {
-      e.preventDefault();
-
-      // Because we are not portaling Menu component in order to allow consuming applications to control z-index
-      // Pressing the spacebar from inside of the Input closes the Menu
-      // The browser is adding a onClick event that we are not able to cancel through stopPropagation()
-      // To fix, we have to prevent that browser behavior and then manually add a space to the current value
-      setValue(currentValue => `${currentValue} `);
-    }
   };
 
   const renderOrganizationOption = (datum: OrganizationInterface) => {
@@ -218,7 +220,9 @@ function OrgSelect({
               data-testid="org-filter-input"
               variant="organization"
               onChange={onChange}
-              onKeyDown={onKeyDown}
+              onKeyDown={e =>
+                onKeyDown(e, () => setValue(currentValue => `${currentValue} `))
+              }
               value={value}
             />
           </FocusableMenuItem>
@@ -281,37 +285,21 @@ function ProjectSelect({
   }, [data]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    const value = e.target.value;
+    setValue(value);
 
     if (onChangeProp) {
       onChangeProp(e);
       return;
     }
 
-    const search = new RegExp(`${e.target.value}`, 'i');
+    const search = new RegExp(`${value}`, 'i');
 
     const foundData = data?.filter(datum => {
       return search.test(datum.projectName);
     });
 
     setRenderedData(foundData);
-  };
-
-  const onKeyDown: React.KeyboardEventHandler = e => {
-    // Stops default browser behavior from automatically scrolling the component
-    if ([keyMap.ArrowUp, keyMap.ArrowDown].includes(e.keyCode)) {
-      e.preventDefault();
-    }
-
-    if (keyMap.Space === e.keyCode) {
-      e.preventDefault();
-
-      // Because we are not portaling Menu component in order to allow consuming applications to control z-index
-      // Pressing the spacebar from inside of the Input closes the Menu
-      // The browser is adding a onClick event that we are not able to cancel through stopPropagation()
-      // To fix, we have to prevent that browser behavior and then manually add a space to the current value
-      setValue(currentValue => `${currentValue} `);
-    }
   };
 
   const renderProjectOption = (datum: ProjectInterface) => {
@@ -352,7 +340,9 @@ function ProjectSelect({
           <Input
             data-testid="project-filter-input"
             onChange={onChange}
-            onKeyDown={onKeyDown}
+            onKeyDown={e =>
+              onKeyDown(e, () => setValue(currentValue => `${currentValue} `))
+            }
             variant="project"
             value={value}
           />

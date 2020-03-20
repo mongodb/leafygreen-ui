@@ -206,6 +206,27 @@ describe('packages/mongo-select', () => {
         expect(expectedElements!.orgResults!.length).toBe(0);
       });
     });
+
+    describe('when the onChange prop is set', () => {
+      const onChange = jest.fn();
+      beforeEach(() => renderComponent({ onChange }));
+
+      it('it does not filter the projects and calls the onChange callback', () => {
+        fireEvent.click(expectedElements.orgTrigger as HTMLElement);
+        setExpectedElements();
+
+        const input = expectedElements!.orgInput;
+
+        fireEvent.change(input as HTMLElement, {
+          target: { value: '2' },
+        });
+
+        act(setExpectedElements);
+
+        expect(onChange).toHaveBeenCalledTimes(1);
+        expect(expectedElements!.orgResults!.length).toBe(2);
+      });
+    });
   });
 
   describe('ProjectSelect', () => {
@@ -315,6 +336,27 @@ describe('packages/mongo-select', () => {
         act(setExpectedElements);
 
         expect(expectedElements!.projectResults!.length).toBe(0);
+      });
+    });
+
+    describe('when the onChange prop is set', () => {
+      const onChange = jest.fn();
+      beforeEach(() => renderComponent({ onChange }));
+
+      it('it does not filter the projects and calls the onChange callback', () => {
+        fireEvent.click(expectedElements.projectTrigger as HTMLElement);
+        setExpectedElements();
+
+        const input = expectedElements!.projectInput;
+
+        fireEvent.change(input as HTMLElement, {
+          target: { value: '1' },
+        });
+
+        act(setExpectedElements);
+
+        expect(onChange).toHaveBeenCalledTimes(1);
+        expect(expectedElements!.projectResults!.length).toBe(2);
       });
     });
   });
