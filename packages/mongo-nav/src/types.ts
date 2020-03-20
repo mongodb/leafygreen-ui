@@ -211,6 +211,7 @@ export interface URLSInterface {
     alerts?: string;
     activityFeed?: string;
     invite?: string;
+    charts?: string;
   };
   onPrem?: {
     profile?: string;

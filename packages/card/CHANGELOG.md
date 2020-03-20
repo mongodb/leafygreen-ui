@@ -4,7 +4,7 @@
 
 ### Major Changes
 
-- 208d881: Refactor Card component to be a styled wrapper for Box
+- 208d881: Refactors Card component to be a styled wrapper for Box
 
 ### Patch Changes
 

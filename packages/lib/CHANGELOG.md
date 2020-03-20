@@ -4,28 +4,25 @@
 
 ### Patch Changes
 
-- 704e25c: Add missing testing library dependency
+- 704e25c: Adds missing testing library dependency
 
 ## 4.3.0
 
 ### Minor Changes
 
-- 6eb9d26: This introduces the following updates:
-  - Lib is updated internally with shared test helpers
-  - Side Nav is updated to match design standards, and to export width and side padding so that users can reference both in integrating the side nav without hardcoding these values and to future-proof design changes
-  - Mongo Nav is updated with a disabled state for the Org Nav, used for pages where there is no concept of a current project or organization. Additionally, Mongo Nav exports the different nav heights for the above reason
+- 6eb9d26: Adds shared test helpers
 
 ## 4.2.0
 
 ### Minor Changes
 
-- fabc1c9: `isComponentType` function now types return-element more specifically, rather than just as `React.ReactElement`
+- fabc1c9: `isComponentType` function now types the returned element more specifically, rather than just as `React.ReactElement`
 
 ## 4.1.0
 
 ### Minor Changes
 
-- 11b2217: Introduces the SideNav component. Adds enumerated aria-current values to lib for general use.
+- 11b2217: Adds enumerated `aria-current` values to lib for general use
 
 ### Patch Changes
 
@@ -47,10 +44,10 @@
 
 ### Minor Changes
 
-- 2f9a300: Add keyMap to lib
+- 2f9a300: Add `keyMap` to lib
 
 ## 3.1.0
 
 ### Minor Changes
 
-- 9c45cb4: Add isComponentType function
+- 9c45cb4: Add `isComponentType` function
