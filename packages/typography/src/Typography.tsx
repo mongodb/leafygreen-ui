@@ -109,6 +109,7 @@ function InlineCode({ children, className }: InlineCodeProps) {
 }
 
 const disclaimer = css`
+  display: inline-block;
   font-size: 12px;
   line-height: 20px;
   letter-spacing: 0.2px;

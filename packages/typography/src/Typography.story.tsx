@@ -22,7 +22,7 @@ storiesOf('Typography', module).add('Default', () => (
         Body
       </Body>
       <InlineCode className={displayBlock}>InlineCode</InlineCode>
-      <Disclaimer>Disclaimer</Disclaimer>
+      <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
       <Overline>Overline</Overline>
     </div>
   </LeafygreenProvider>
