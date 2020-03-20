@@ -1,3 +1,6 @@
+require('core-js/stable');
+require('regenerator-runtime/runtime');
+
 global.MutationObserver = class {
   constructor() {}
   disconnect() {}

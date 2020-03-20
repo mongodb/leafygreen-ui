@@ -5,6 +5,7 @@ import { toJson } from 'xml2json';
 import { render, cleanup } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
 import { createIconComponent, glyphs } from '.';
+import createGlyphComponent from './createGlyphComponent';
 
 afterAll(cleanup);
 
@@ -46,12 +47,10 @@ describe('packages/Icon/glyphs/', () => {
 
           if (typeof currentValue === 'object') {
             validateGlyphObject(currentValue);
-          } else {
-            if (key === 'fill') {
-              const validFills = ['#000', '#000000', 'none'];
+          } else if (key === 'fill') {
+            const validFills = ['#000', '#000000', 'none'];
 
-              expect(validFills.includes(currentValue)).toBeTruthy();
-            }
+            expect(validFills.includes(currentValue)).toBeTruthy();
           }
         });
       }
@@ -66,9 +65,31 @@ describe('packages/Icon/glyphs/', () => {
 const text = 'Hello world';
 
 // eslint-disable-next-line react/display-name
-const MyGlyph: React.FC<React.SVGProps<SVGSVGElement>> = () => (
-  <div>{text}</div>
-);
+const MyGlyph: SVGR.Component = () => <div>{text}</div>;
+
+describe('packages/Icon/createGlyphComponent', () => {
+  const GlyphComponent = createGlyphComponent('MyGlyph', MyGlyph);
+
+  test('createGlyphComponent returns a function', () => {
+    expect(typeof GlyphComponent).toBe('function');
+  });
+
+  test('The function returned by createGlyphComponent has the displayName: "MyGlyph"', () => {
+    expect(GlyphComponent.displayName).toBe('MyGlyph');
+  });
+
+  const renderedGlyph = render(<GlyphComponent />);
+  const glyph = renderedGlyph.container.firstChild;
+
+  test('The function returned by createGlyphComponent renders the glyph specified', () => {
+    if (!typeIs.element(glyph)) {
+      throw new Error('Glyph was not rendered');
+    }
+
+    expect(glyph.nodeName.toLowerCase()).toBe('div');
+    expect(glyph.textContent).toBe(text);
+  });
+});
 
 const customGlyphs = { MyGlyph };
 
