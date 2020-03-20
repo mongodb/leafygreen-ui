@@ -25,9 +25,11 @@ import {
 import {
   AtlasActive,
   AtlasInactive,
+  RealmActive,
+  RealmInactive,
   ChartsActive,
   ChartsInactive,
-} from './SubBrandIcons';
+} from '../helpers/Icons';
 
 const {
   ProjectNavProjectDropdown,
@@ -206,7 +208,8 @@ const alertBadgeStyle = css`
 
 const productIconStyle = css`
   margin-right: 4px;
-  color: ${uiColors.gray.base};
+  // color: ${uiColors.gray.base};
+  color: orange;
 `;
 
 const tooltipStyles = css`
@@ -349,17 +352,14 @@ export default function ProjectNav({
               isCloudManager ? 'cloud-manager' : 'atlas'
             }`}
           >
-            {/* {!isMobile && (
-              <Icon
-                {...productIconProp.prop}
-                className={iconStyle}
-                glyph="Cloud"
-              />
-            )} */}
-            {!isMobile && activeProduct === 'cloud' ? (
+            {!isMobile && activeProduct === 'cloud' && current ? (
               <AtlasActive {...productIconProp.prop} className={iconStyle} />
             ) : (
-              <AtlasInactive {...productIconProp.prop} className={iconStyle} />
+              <AtlasInactive
+                {...productIconProp.prop}
+                className={iconStyle}
+                fill={current ? uiColors.gray.base : uiColors.gray.light2}
+              />
             )}
             {isCloudManager ? 'Cloud Manager' : 'Atlas'}
           </a>
@@ -376,13 +376,19 @@ export default function ProjectNav({
                 tabIndex={current ? 0 : -1}
                 onClick={onElementClick(ProjectNavRealm)}
               >
-                {!isMobile && (
-                  <Icon
-                    {...productIconProp.prop}
-                    className={iconStyle}
-                    glyph="Stitch"
-                  />
-                )}
+                {!isMobile &&
+                  (activeProduct === 'realm' && current ? (
+                    <RealmActive
+                      {...productIconProp.prop}
+                      className={iconStyle}
+                    />
+                  ) : (
+                    <RealmInactive
+                      {...productIconProp.prop}
+                      className={iconStyle}
+                      fill={current ? uiColors.gray.base : uiColors.gray.light2}
+                    />
+                  ))}
 
                 {secondTabName}
               </a>
@@ -398,7 +404,7 @@ export default function ProjectNav({
                 onClick={onElementClick(ProjectNavCharts)}
               >
                 {!isMobile &&
-                  (activeProduct === 'charts' ? (
+                  (activeProduct === 'charts' && current ? (
                     <ChartsActive
                       {...productIconProp.prop}
                       className={iconStyle}
@@ -406,6 +412,7 @@ export default function ProjectNav({
                   ) : (
                     <ChartsInactive
                       {...productIconProp.prop}
+                      fill={current ? uiColors.gray.base : uiColors.gray.light2}
                       className={iconStyle}
                     />
                   ))}
