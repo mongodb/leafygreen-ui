@@ -17,13 +17,13 @@ import { useOnElementClick } from '../on-element-click-provider';
 import {
   AccountInterface,
   OrganizationInterface,
-  Product,
   URLSInterface,
   NavElement,
   CurrentOrganizationInterface,
-  HostsInterface,
   OrgPaymentLabel,
   ActiveNavElement,
+  MongoNavInterface,
+  HostsInterface,
 } from '../types';
 
 export const orgNavHeight = 60;
@@ -106,22 +106,21 @@ const paymentStatusMap: Record<Colors, ReadonlyArray<OrgPaymentLabel>> = {
   ],
 } as const;
 
-interface OrgNav {
+type OrgNavProps = Pick<
+  MongoNavInterface,
+  'activeProduct' | 'onOrganizationChange' | 'activeNav' | 'admin'
+> & {
   account?: AccountInterface;
-  activeProduct: Product;
   current?: CurrentOrganizationInterface;
   data?: Array<OrganizationInterface>;
-  constructOrganizationURL: (orgID: string) => string;
-  urls: Required<URLSInterface>;
-  activeNav?: NavElement;
-  onOrganizationChange?: React.ChangeEventHandler;
-  admin: boolean;
-  hosts: Required<HostsInterface>;
   currentProjectName?: string;
   onPremEnabled?: boolean;
   onPremVersion?: string;
   onPremMFA?: boolean;
-}
+  urls: Required<URLSInterface>;
+  hosts: Required<HostsInterface>;
+  constructOrganizationURL: (orgID: string) => string;
+};
 
 function OrgNav({
   account,
@@ -138,7 +137,7 @@ function OrgNav({
   onPremEnabled,
   onPremVersion,
   onPremMFA = false,
-}: OrgNav) {
+}: OrgNavProps) {
   const [accessManagerOpen, setAccessManagerOpen] = useState(false);
   const [onPremMenuOpen, setOnPremMenuOpen] = useState(false);
   const { width: viewportWidth } = useViewportSize();

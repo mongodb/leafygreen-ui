@@ -21,6 +21,7 @@ import {
   PlanType,
   ActiveNavElement,
   NavElement,
+  MongoNavInterface,
 } from '../types';
 
 const {
@@ -220,17 +221,20 @@ export function displayProductName(today = new Date(Date.now())) {
 
 const secondTabName = displayProductName();
 
-interface ProjectNavInterface {
+type ProjectNavProps = Pick<
+  MongoNavInterface,
+  'activeProduct' | 'activeNav' | 'onProjectChange'
+> & {
   current?: CurrentProjectInterface;
   data?: Array<ProjectInterface>;
-  constructProjectURL: (orgID: string, projID: string) => string;
+  onPremEnabled?: boolean;
+  onPremVersion?: string;
+  onPremMFA?: boolean;
+  alerts?: number;
   urls: Required<URLSInterface>;
   hosts: Required<HostsInterface>;
-  alerts?: number;
-  activeProduct: Product;
-  activeNav?: NavElement;
-  onProjectChange?: React.ChangeEventHandler;
-}
+  constructProjectURL: (orgID: string, projectID: string) => string;
+};
 
 export default function ProjectNav({
   current,
@@ -242,7 +246,7 @@ export default function ProjectNav({
   onProjectChange,
   hosts,
   alerts = 0,
-}: ProjectNavInterface) {
+}: ProjectNavProps) {
   const [open, setOpen] = React.useState(false);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { width: viewportWidth } = useViewportSize();

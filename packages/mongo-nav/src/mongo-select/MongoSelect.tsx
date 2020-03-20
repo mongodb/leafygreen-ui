@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Button from '@leafygreen-ui/button';
 import Input from './Input';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -113,7 +113,7 @@ interface BaseMongoSelectProps {
   onClick?: React.MouseEventHandler;
   className?: string;
   urls: Required<URLSInterface>;
-  onChange?: React.ChangeEventHandler;
+  onChange?: (_value: string, _event: React.ChangeEvent) => void;
   isActive?: boolean;
   loading?: boolean;
   disabled?: boolean;
@@ -144,31 +144,34 @@ function OrgSelect({
   disabled,
   loading = false,
 }: OrganizationMongoSelectProps) {
-  const [renderedData, setRenderedData] = useState(data);
   const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
 
-  useEffect(() => {
-    setRenderedData(data);
-  }, [data]);
+  let renderedData = data;
+
+  const filterData = () => {
+    const search = new RegExp(`${value}`, 'i');
+
+    const filtered = data?.filter(datum => {
+      return search.test(datum.orgName);
+    });
+
+    return filtered;
+  };
+
+  if (!onChangeProp) {
+    renderedData = filterData();
+  }
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setValue(value);
 
     if (onChangeProp) {
-      onChangeProp(e);
+      onChangeProp(value, e);
       return;
     }
-
-    const search = new RegExp(`${value}`, 'i');
-
-    const foundData = data?.filter(datum => {
-      return search.test(datum.orgName);
-    });
-
-    setRenderedData(foundData);
   };
 
   const renderOrganizationOption = (datum: OrganizationInterface) => {
@@ -276,31 +279,34 @@ function ProjectSelect({
   urls,
   loading = false,
 }: ProjectMongoSelectProps) {
-  const [renderedData, setRenderedData] = useState(data);
   const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
 
-  useEffect(() => {
-    setRenderedData(data);
-  }, [data]);
+  let renderedData = data;
+
+  const filterData = () => {
+    const search = new RegExp(`${value}`, 'i');
+
+    const filtered = data?.filter(datum => {
+      return search.test(datum.projectName);
+    });
+
+    return filtered;
+  };
+
+  if (!onChangeProp) {
+    renderedData = filterData();
+  }
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setValue(value);
 
     if (onChangeProp) {
-      onChangeProp(e);
+      onChangeProp(value, e);
       return;
     }
-
-    const search = new RegExp(`${value}`, 'i');
-
-    const foundData = data?.filter(datum => {
-      return search.test(datum.projectName);
-    });
-
-    setRenderedData(foundData);
   };
 
   const renderProjectOption = (datum: ProjectInterface) => {
