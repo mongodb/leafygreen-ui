@@ -45,9 +45,15 @@ const ActiveNavElement = {
   OrgNavBilling: NavElement.OrgNavBilling,
   OrgNavAdmin: NavElement.OrgNavAdmin,
   OrgNavAllClusters: NavElement.OrgNavAllClusters,
+  OrgNavDropdownOrgAccessManager: NavElement.OrgNavDropdownOrgAccessManager,
+  OrgNavDropdownProjectAccessManager:
+    NavElement.OrgNavDropdownProjectAccessManager,
   ProjectNavInvite: NavElement.ProjectNavInvite,
   ProjectNavActivityFeed: NavElement.ProjectNavActivityFeed,
   ProjectNavAlerts: NavElement.ProjectNavAlerts,
+  ProjectNavProjectSettings: NavElement.ProjectNavProjectSettings,
+  ProjectNavProjectSupport: NavElement.ProjectNavProjectSupport,
+  ProjectNavProjectIntegrations: NavElement.ProjectNavProjectIntegrations,
   UserSettings: NavElement.UserSettings,
 } as const;
 
