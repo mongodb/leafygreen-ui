@@ -352,7 +352,7 @@ export default function ProjectNav({
               isCloudManager ? 'cloud-manager' : 'atlas'
             }`}
           >
-            {!isMobile && activeProduct === 'cloud' && current ? (
+            {!isMobile && activeProduct === Product.Cloud && current ? (
               <AtlasActive {...productIconProp.prop} className={iconStyle} />
             ) : (
               <AtlasInactive
@@ -377,7 +377,7 @@ export default function ProjectNav({
                 onClick={onElementClick(ProjectNavRealm)}
               >
                 {!isMobile &&
-                  (activeProduct === 'realm' && current ? (
+                  (activeProduct === Product.Realm && current ? (
                     <RealmActive
                       {...productIconProp.prop}
                       className={iconStyle}
@@ -404,7 +404,7 @@ export default function ProjectNav({
                 onClick={onElementClick(ProjectNavCharts)}
               >
                 {!isMobile &&
-                  (activeProduct === 'charts' && current ? (
+                  (activeProduct === Product.Charts && current ? (
                     <ChartsActive
                       {...productIconProp.prop}
                       className={iconStyle}

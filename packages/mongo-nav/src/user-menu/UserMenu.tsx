@@ -260,11 +260,11 @@ function UserMenu({
     ? `${account.firstName ?? ''} ${account.lastName ?? ''}`
     : '';
 
-  const isAccount = activeProduct === 'account';
+  const isAccount = activeProduct === Product.Account;
   const cloudProducts = ['cloud', 'stitch', 'charts'];
   const isCloud = cloudProducts.includes(activeProduct);
-  const isSupport = activeProduct === 'support';
-  const isUniversity = activeProduct === 'university';
+  const isSupport = activeProduct === Product.Support;
+  const isUniversity = activeProduct === Product.University;
 
   const sharedProps = {
     target: '_blank',
@@ -329,9 +329,7 @@ function UserMenu({
             href={hosts.cloud}
             description={<Description isActive={isCloud} product="cloud" />}
             title="Atlas"
-            glyph={
-              activeProduct === 'cloud' ? <CloudActive /> : <CloudInactive />
-            }
+            glyph={isCloud ? <CloudActive /> : <CloudInactive />}
             className={cx(subMenuContainerStyle, {
               [subMenuActiveContainerStyle]: isCloud,
             })}
@@ -374,9 +372,7 @@ function UserMenu({
           <MenuItem
             {...menuItemContainer.prop}
             size="large"
-            glyph={
-              activeProduct === 'cloud' ? <CloudActive /> : <CloudInactive />
-            }
+            glyph={isCloud ? <CloudActive /> : <CloudInactive />}
             href={hosts.cloud}
             description={<Description isActive={false} product="cloud" />}
           >
@@ -391,13 +387,7 @@ function UserMenu({
           disabled={!account}
           href={hosts.university}
           title="University"
-          glyph={
-            activeProduct === 'university' ? (
-              <UniversityActive />
-            ) : (
-              <UniversityInactive />
-            )
-          }
+          glyph={isUniversity ? <UniversityActive /> : <UniversityInactive />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isUniversity,
           })}
@@ -420,13 +410,7 @@ function UserMenu({
           disabled={!account}
           href={hosts.support}
           title="Support"
-          glyph={
-            activeProduct === 'support' ? (
-              <SupportActive />
-            ) : (
-              <SupportInactive />
-            )
-          }
+          glyph={isSupport ? <SupportActive /> : <SupportInactive />}
           description={<Description isActive={isSupport} product="support" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isSupport,
