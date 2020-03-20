@@ -14,12 +14,14 @@ const sharedStyles = css`
 `;
 
 const typeScale1 = css`
+  display: inline-block;
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0px;
 `;
 
 const typeScale2 = css`
+  display: inline-block;
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0px;
