@@ -37,7 +37,9 @@ export default function OnPremUserMenu({
   activeNav,
 }: OnPremUserMenuProps) {
   const onElementClick = useOnElementClick();
-  const isMenuActive = (onPremNavElements as Array<string>).includes(activeNav as string);
+  const isMenuActive = (onPremNavElements as Array<string>).includes(
+    activeNav as string,
+  );
 
   return (
     <div className={onPremMenuWrapper}>
@@ -62,7 +64,8 @@ export default function OnPremUserMenu({
           <MenuItem
             href={urls.onPrem.mfa}
             active={activeNav === ActiveNavElement.UserMenuOnPremTwoFactorAuth}
-            data-testid="om-user-menuitem-mfa">
+            data-testid="om-user-menuitem-mfa"
+          >
             Two-factor Authentication
           </MenuItem>
         )}
