@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { css } from '@leafygreen-ui/emotion';
-import { URLSInterface, NavElement } from '../types';
+import { URLSInterface, NavElement, ActiveNavElement } from '../types';
 import { UserMenuTrigger } from '../user-menu';
 import { useOnElementClick } from '../on-element-click-provider';
 
@@ -11,12 +11,21 @@ const onPremMenuWrapper = css`
   z-index: 0;
 `;
 
+const onPremNavElements = [
+  ActiveNavElement.UserMenuOnPremProfile,
+  ActiveNavElement.UserMenuOnPremTwoFactorAuth,
+  ActiveNavElement.UserMenuOnPremPersonalization,
+  ActiveNavElement.UserMenuOnPremOrganizations,
+  ActiveNavElement.UserMenuOnPremFeatureRequest,
+];
+
 interface OnPremUserMenuProps {
   name: string;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   urls: Required<URLSInterface>;
   mfa: boolean;
+  activeNav?: NavElement;
 }
 
 export default function OnPremUserMenu({
@@ -25,8 +34,10 @@ export default function OnPremUserMenu({
   setOpen,
   urls,
   mfa,
+  activeNav,
 }: OnPremUserMenuProps) {
   const onElementClick = useOnElementClick();
+  const isMenuActive = (onPremNavElements as Array<string>).includes(activeNav as string);
 
   return (
     <div className={onPremMenuWrapper}>
@@ -34,25 +45,31 @@ export default function OnPremUserMenu({
         name={name}
         open={open}
         setOpen={setOpen}
+        active={isMenuActive}
         data-testid="om-user-menu-trigger"
       />
 
       <Menu open={open} setOpen={setOpen} usePortal={false}>
         <MenuItem
           href={urls.onPrem.profile}
+          active={activeNav === ActiveNavElement.UserMenuOnPremProfile}
           data-testid="om-user-menuitem-profile"
         >
           Profile
         </MenuItem>
 
         {mfa && (
-          <MenuItem href={urls.onPrem.mfa} data-testid="om-user-menuitem-mfa">
+          <MenuItem
+            href={urls.onPrem.mfa}
+            active={activeNav === ActiveNavElement.UserMenuOnPremTwoFactorAuth}
+            data-testid="om-user-menuitem-mfa">
             Two-factor Authentication
           </MenuItem>
         )}
 
         <MenuItem
           href={urls.onPrem.personalization}
+          active={activeNav === ActiveNavElement.UserMenuOnPremPersonalization}
           data-testid="om-user-menuitem-personalization"
         >
           Personalization
@@ -60,6 +77,7 @@ export default function OnPremUserMenu({
 
         <MenuItem
           href={urls.onPrem.invitations}
+          active={activeNav === ActiveNavElement.UserMenuOnPremInvitations}
           data-testid="om-user-menuitem-invitations"
         >
           Invitations
@@ -67,6 +85,7 @@ export default function OnPremUserMenu({
 
         <MenuItem
           href={urls.onPrem.organizations}
+          active={activeNav === ActiveNavElement.UserMenuOnPremOrganizations}
           data-testid="om-user-menuitem-organizations"
         >
           Organizations
@@ -74,6 +93,7 @@ export default function OnPremUserMenu({
 
         <MenuItem
           href={urls.onPrem.featureRequest}
+          active={activeNav === ActiveNavElement.UserMenuOnPremFeatureRequest}
           data-testid="om-user-menuitem-feature-request"
         >
           Feature Request

@@ -91,6 +91,7 @@ interface UserMenuTriggerProps {
   name: string;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  active?: boolean;
   children?: React.ReactElement;
 }
 
@@ -98,6 +99,7 @@ export default function UserMenuTrigger({
   open,
   name,
   setOpen,
+  active = false,
   children,
   ...rest
 }: UserMenuTriggerProps) {
@@ -123,7 +125,7 @@ export default function UserMenuTrigger({
         {...buttonDataProp.prop}
         ref={buttonRef}
         className={cx(baseButtonStyles, {
-          [openBaseButtonStyle]: open,
+          [openBaseButtonStyle]: open || active,
           [activeWidth]: open,
         })}
         onClick={onElementClick(NavElement.UserMenuTrigger, () => {

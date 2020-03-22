@@ -215,6 +215,7 @@ function OrgNav({
           setOpen={setOnPremMenuOpen}
           urls={urls}
           mfa={onPremMFA}
+          activeNav={activeNav}
         />
       );
     }
