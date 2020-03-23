@@ -1,5 +1,15 @@
 # @leafygreen-ui/menu
 
+## 6.0.4
+
+### Patch Changes
+
+- Updated dependencies [4c268a5]
+- Updated dependencies [94ed125]
+  - @leafygreen-ui/icon@5.0.0
+  - @leafygreen-ui/leafygreen-provider@1.1.0
+  - @leafygreen-ui/icon-button@4.1.5
+
 ## 6.0.3
 
 ### Patch Changes
