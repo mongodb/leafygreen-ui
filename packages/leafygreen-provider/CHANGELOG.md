@@ -1,5 +1,11 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 1.1.0
+
+### Minor Changes
+
+- 94ed125: Adds TypographyProvider to LeafygreenProvider to allow applications to set their baseFontSize
+
 ## 1.0.0
 
 ### Major Changes
