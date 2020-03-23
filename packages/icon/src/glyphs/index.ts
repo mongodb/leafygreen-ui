@@ -100,17 +100,13 @@ const glyphs = {
 } as const;
 
 type GlyphName = keyof typeof glyphs;
-type GlyphEntry<C = SVGR.Component> = [GlyphName, C];
+type ProcessedGlyphs = Record<GlyphName, LGGlyph.Component>;
 
-function processEntries(entry: GlyphEntry): GlyphEntry<LGGlyph.Component> {
-  return [entry[0], createGlyphComponent(...entry)];
-}
+const glyphKeys = Object.keys(glyphs) as Array<GlyphName>;
 
-const processedEntries = (Object.entries(glyphs) as Array<GlyphEntry>).map(
-  processEntries,
-);
+const processedGlyphs = glyphKeys.reduce((acc, name) => {
+  acc[name] = createGlyphComponent(name, glyphs[name]);
+  return acc;
+}, {} as ProcessedGlyphs);
 
-export default Object.fromEntries(processedEntries) as Record<
-  GlyphName,
-  LGGlyph.Component
->;
+export default processedGlyphs;
