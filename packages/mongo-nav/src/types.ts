@@ -32,6 +32,13 @@ const NavElement = {
   UserMenuCloudInvitations: 'userMenuCloudInvitations',
   UserMenuCloudOrganizations: 'userMenuCloudOrganizations',
   UserMenuCloudUserPreferences: 'userMenuCloudUserPreferences',
+  UserMenuOnPremProfile: 'userMenuOnPremProfile',
+  UserMenuOnPremTwoFactorAuth: 'userMenuOnPremTwoFactorAuth',
+  UserMenuOnPremPersonalization: 'userMenuOnPremPersonalization',
+  UserMenuOnPremInvitations: 'userMenuOnPremInvitations',
+  UserMenuOnPremOrganizations: 'userMenuOnPremOrganizations',
+  UserMenuOnPremFeatureRequest: 'userMenuOnPremFeatureRequest',
+  UserMenuOnPremSignOut: 'userMenuOnPremSignOut',
 } as const;
 
 type NavElement = typeof NavElement[keyof typeof NavElement];
@@ -55,6 +62,12 @@ const ActiveNavElement = {
   ProjectNavProjectSupport: NavElement.ProjectNavProjectSupport,
   ProjectNavProjectIntegrations: NavElement.ProjectNavProjectIntegrations,
   UserSettings: NavElement.UserSettings,
+  UserMenuOnPremProfile: NavElement.UserMenuOnPremProfile,
+  UserMenuOnPremTwoFactorAuth: NavElement.UserMenuOnPremTwoFactorAuth,
+  UserMenuOnPremPersonalization: NavElement.UserMenuOnPremPersonalization,
+  UserMenuOnPremInvitations: NavElement.UserMenuOnPremInvitations,
+  UserMenuOnPremOrganizations: NavElement.UserMenuOnPremOrganizations,
+  UserMenuOnPremFeatureRequest: NavElement.UserMenuOnPremFeatureRequest,
 } as const;
 
 type ActiveNavElement = typeof ActiveNavElement[keyof typeof ActiveNavElement];

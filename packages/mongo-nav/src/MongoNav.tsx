@@ -252,10 +252,10 @@ function MongoNav({
     },
     onPrem: {
       profile: `${hosts.cloud}/v2#/account/profile`,
-      mfa: `${hosts.cloud}/v2#/preferences/2fa`,
+      mfa: `${hosts.cloud}/v2#/account/2fa`,
       personalization: `${hosts.cloud}/v2#/account/personalization`,
-      invitations: `${hosts.cloud}/v2#/preferences/invitations`,
-      organizations: `${hosts.cloud}/v2#/preferences/organizations`,
+      invitations: `${hosts.cloud}/v2#/account/invitations`,
+      organizations: `${hosts.cloud}/v2#/account/organizations`,
       featureRequest: 'https://feedback.mongodb.com',
     },
   };
