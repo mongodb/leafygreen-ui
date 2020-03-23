@@ -261,6 +261,7 @@ export default function ProjectNav({
   const { projectNav } = urls;
   const isMobile = viewportWidth < breakpoints.small;
   const isCloudManager = current?.planType === PlanType.Cloud;
+  const isLoading = !!current;
   const projectDropdownIsActive =
     open ||
     (projectDropdownNavElements as Array<string>).includes(activeNav as string);
@@ -362,7 +363,7 @@ export default function ProjectNav({
           >
             {!isMobile && (
               <AtlasIcon
-                active={activeProduct === Product.Cloud && !!current}
+                active={activeProduct === Product.Cloud && isLoading}
                 {...productIconProp.prop}
                 className={iconStyle}
               />
@@ -411,7 +412,7 @@ export default function ProjectNav({
                   <ChartsIcon
                     {...productIconProp.prop}
                     className={iconStyle}
-                    active={activeProduct === Product.Charts && !!current}
+                    active={activeProduct === Product.Charts && isLoading}
                   />
                 )}
                 Charts
@@ -436,7 +437,7 @@ export default function ProjectNav({
                 size="large"
                 disabled={!current}
                 active={
-                  activeNav === ActiveNavElement.ProjectNavInvite && !!current
+                  activeNav === ActiveNavElement.ProjectNavInvite && isLoading
                 }
                 data-testid="project-nav-invite"
                 onClick={onElementClick(ProjectNavInvite)}
@@ -462,7 +463,7 @@ export default function ProjectNav({
                 disabled={!current}
                 active={
                   activeNav === ActiveNavElement.ProjectNavActivityFeed &&
-                  !!current
+                  isLoading
                 }
                 data-testid="project-nav-activity-feed"
                 onClick={onElementClick(ProjectNavActivityFeed)}
@@ -486,7 +487,7 @@ export default function ProjectNav({
                 size="large"
                 disabled={!current}
                 active={
-                  activeNav === ActiveNavElement.ProjectNavAlerts && !!current
+                  activeNav === ActiveNavElement.ProjectNavAlerts && isLoading
                 }
                 data-testid="project-nav-alerts"
                 onClick={onElementClick(ProjectNavAlerts)}
