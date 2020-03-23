@@ -25,7 +25,12 @@ import {
 } from '../types';
 import { hostDefaults } from '../data';
 import { useOnElementClick } from '../on-element-click-provider';
-import { Cloud, Support, University, Megaphone } from '../helpers/Icons';
+import {
+  CloudIcon,
+  SupportIcon,
+  UniversityIcon,
+  MegaphoneIcon,
+} from '../helpers/Icons';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 const menuItemContainer = createDataProp('menu-item-container');
@@ -321,7 +326,7 @@ function UserMenu({
             href={hosts.cloud}
             description={<Description isActive={isCloud} product="cloud" />}
             title="Atlas"
-            glyph={<Cloud />}
+            glyph={<CloudIcon />}
             className={cx(subMenuContainerStyle, {
               [subMenuActiveContainerStyle]: isCloud,
             })}
@@ -364,7 +369,7 @@ function UserMenu({
           <MenuItem
             {...menuItemContainer.prop}
             size="large"
-            glyph={<Cloud />}
+            glyph={<CloudIcon />}
             href={hosts.cloud}
             description={<Description isActive={false} product="cloud" />}
           >
@@ -379,7 +384,7 @@ function UserMenu({
           disabled={!account}
           href={hosts.university}
           title="University"
-          glyph={<University />}
+          glyph={<UniversityIcon />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isUniversity,
           })}
@@ -402,7 +407,7 @@ function UserMenu({
           disabled={!account}
           href={hosts.support}
           title="Support"
-          glyph={<Support />}
+          glyph={<SupportIcon />}
           description={<Description isActive={isSupport} product="support" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isSupport,
@@ -421,7 +426,7 @@ function UserMenu({
         <MenuItem
           {...feedbackAnchorProps}
           size="large"
-          glyph={<Megaphone />}
+          glyph={<MegaphoneIcon />}
           data-testid="user-menuitem-feedback"
           onClick={onElementClick(NavElement.UserMenuFeedback)}
         >

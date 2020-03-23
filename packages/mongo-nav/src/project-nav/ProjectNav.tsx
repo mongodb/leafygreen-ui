@@ -22,7 +22,12 @@ import {
   ActiveNavElement,
   NavElement,
 } from '../types';
-import { Atlas, RealmActive, RealmInactive, Charts } from '../helpers/Icons';
+import {
+  AtlasIcon,
+  RealmActiveIcon,
+  RealmInactiveIcon,
+  ChartsIcon,
+} from '../helpers/Icons';
 
 const {
   ProjectNavProjectDropdown,
@@ -345,7 +350,7 @@ export default function ProjectNav({
             }`}
           >
             {!isMobile && (
-              <Atlas
+              <AtlasIcon
                 active={activeProduct === Product.Cloud && !!current}
                 {...productIconProp.prop}
                 className={iconStyle}
@@ -368,12 +373,12 @@ export default function ProjectNav({
               >
                 {!isMobile &&
                   (activeProduct === Product.Realm && current ? (
-                    <RealmActive
+                    <RealmActiveIcon
                       {...productIconProp.prop}
                       className={iconStyle}
                     />
                   ) : (
-                    <RealmInactive
+                    <RealmInactiveIcon
                       {...productIconProp.prop}
                       className={iconStyle}
                     />
@@ -392,7 +397,7 @@ export default function ProjectNav({
                 onClick={onElementClick(ProjectNavCharts)}
               >
                 {!isMobile && (
-                  <Charts
+                  <ChartsIcon
                     {...productIconProp.prop}
                     className={iconStyle}
                     active={activeProduct === Product.Charts && !!current}
@@ -419,7 +424,9 @@ export default function ProjectNav({
                 className={iconButtonMargin}
                 size="large"
                 disabled={!current}
-                active={activeNav === ActiveNavElement.ProjectNavInvite}
+                active={
+                  activeNav === ActiveNavElement.ProjectNavInvite && !!current
+                }
                 data-testid="project-nav-invite"
                 onClick={onElementClick(ProjectNavInvite)}
               >
@@ -442,7 +449,10 @@ export default function ProjectNav({
                 size="large"
                 className={iconButtonMargin}
                 disabled={!current}
-                active={activeNav === ActiveNavElement.ProjectNavActivityFeed}
+                active={
+                  activeNav === ActiveNavElement.ProjectNavActivityFeed &&
+                  !!current
+                }
                 data-testid="project-nav-activity-feed"
                 onClick={onElementClick(ProjectNavActivityFeed)}
               >
@@ -464,7 +474,9 @@ export default function ProjectNav({
                 href={projectNav.alerts as string}
                 size="large"
                 disabled={!current}
-                active={activeNav === ActiveNavElement.ProjectNavAlerts}
+                active={
+                  activeNav === ActiveNavElement.ProjectNavAlerts && !!current
+                }
                 data-testid="project-nav-alerts"
                 onClick={onElementClick(ProjectNavAlerts)}
               >

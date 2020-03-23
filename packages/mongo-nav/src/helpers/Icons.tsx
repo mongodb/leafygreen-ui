@@ -5,7 +5,7 @@ type ProductProps = HTMLElementProps<'svg'> & {
   active: boolean;
 };
 
-export function Atlas({ active, ...rest }: ProductProps) {
+export function AtlasIcon({ active, ...rest }: ProductProps) {
   return (
     <svg {...rest} width="18px" height="18px" viewBox="0 0 18 18">
       <defs>
@@ -94,7 +94,7 @@ export function Atlas({ active, ...rest }: ProductProps) {
   );
 }
 
-export function RealmActive({ ...rest }: HTMLElementProps<'svg'>) {
+export function RealmActiveIcon({ ...rest }: HTMLElementProps<'svg'>) {
   return (
     <svg {...rest} width="18px" height="18px" viewBox="0 0 18 18">
       <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
@@ -149,7 +149,7 @@ export function RealmActive({ ...rest }: HTMLElementProps<'svg'>) {
   );
 }
 
-export function RealmInactive(props: HTMLElementProps<'svg'>) {
+export function RealmInactiveIcon(props: HTMLElementProps<'svg'>) {
   return (
     <svg {...props} width="18px" height="18px" viewBox="0 0 18 18">
       <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
@@ -161,7 +161,7 @@ export function RealmInactive(props: HTMLElementProps<'svg'>) {
   );
 }
 
-export function Charts({ active, ...rest }: ProductProps) {
+export function ChartsIcon({ active, ...rest }: ProductProps) {
   return (
     <svg {...rest} width="18px" height="18px" viewBox="0 0 18 18">
       <defs>
@@ -218,7 +218,7 @@ export function ChartsInactive(props: HTMLElementProps<'svg'>) {
   );
 }
 
-export function Cloud(props: HTMLElementProps<'svg'>) {
+export function CloudIcon(props: HTMLElementProps<'svg'>) {
   return (
     <svg {...props} width="25px" height="19px" viewBox="0 0 25 19">
       <g
@@ -241,7 +241,7 @@ export function Cloud(props: HTMLElementProps<'svg'>) {
   );
 }
 
-export function Support(props: HTMLElementProps<'svg'>) {
+export function SupportIcon(props: HTMLElementProps<'svg'>) {
   return (
     <svg {...props} width="24px" height="24px" viewBox="0 0 24 24">
       <g
@@ -264,7 +264,7 @@ export function Support(props: HTMLElementProps<'svg'>) {
   );
 }
 
-export function University(props: HTMLElementProps<'svg'>) {
+export function UniversityIcon(props: HTMLElementProps<'svg'>) {
   return (
     <svg {...props} width="19px" height="25px" viewBox="0 0 19 25">
       <g
@@ -286,7 +286,7 @@ export function University(props: HTMLElementProps<'svg'>) {
   );
 }
 
-export function Megaphone(props: HTMLElementProps<'svg'>) {
+export function MegaphoneIcon(props: HTMLElementProps<'svg'>) {
   return (
     <svg {...props} width="21px" height="18px" viewBox="0 0 21 18">
       <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
