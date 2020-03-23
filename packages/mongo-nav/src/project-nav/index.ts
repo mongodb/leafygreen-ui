@@ -1,3 +1,4 @@
 import ProjectNav, { projectNavHeight } from './ProjectNav';
-export { projectNavHeight };
+import { ProjectSelect } from '../mongo-select';
+export { projectNavHeight, ProjectSelect };
 export default ProjectNav;

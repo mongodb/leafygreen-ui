@@ -225,12 +225,6 @@ export function displayProductName(today = new Date(Date.now())) {
 
 const secondTabName = displayProductName();
 
-const projectDropdownNavElements = [
-  ActiveNavElement.ProjectNavProjectIntegrations,
-  ActiveNavElement.ProjectNavProjectSettings,
-  ActiveNavElement.ProjectNavProjectSupport,
-];
-
 interface ProjectNavInterface {
   current?: CurrentProjectInterface;
   data?: Array<ProjectInterface>;
@@ -262,9 +256,6 @@ export default function ProjectNav({
   const isMobile = viewportWidth < breakpoints.small;
   const isCloudManager = current?.planType === PlanType.Cloud;
   const isLoading = !!current;
-  const projectDropdownIsActive =
-    open ||
-    (projectDropdownNavElements as Array<string>).includes(activeNav as string);
 
   const sharedTooltipProps = {
     variant: 'dark',
@@ -307,7 +298,7 @@ export default function ProjectNav({
           <IconButton
             ariaLabel="More"
             className={menuIconButtonStyle}
-            active={projectDropdownIsActive}
+            active={open}
             disabled={!current}
             data-testid="project-nav-project-menu"
             onClick={onElementClick(ProjectNavProjectDropdown)}
