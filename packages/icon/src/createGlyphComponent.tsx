@@ -2,8 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 
-function humanReadableTitle(name: string) {
-  return `${name.replace(/([A-Z][a-z])/g, ' $1')} Icon`;
+export function getGlyphTitle(name: string, title?: string | null) {
+  if (title === null) {
+    // If title is null, we unset the title entirely, otherwise we generate one.
+    return undefined;
+  }
+
+  if (title === undefined) {
+    let generatedTitle = `${name.replace(/([A-Z][a-z])/g, ' $1')} Icon`;
+
+    // Trim space at beginning of title
+    while (generatedTitle.charAt(0) === ' ') {
+      generatedTitle = generatedTitle.substr(1);
+    }
+
+    return generatedTitle;
+  }
+
+  return title;
 }
 
 export default function createGlyphComponent(
@@ -17,11 +33,6 @@ export default function createGlyphComponent(
     fill,
     ...rest
   }: LGGlyph.ComponentProps) {
-    if (!title) {
-      // If title is null, we unset the title entirely, otherwise we generate one.
-      title = title === null ? undefined : humanReadableTitle(glyphName);
-    }
-
     const fillStyle = css`
       color: ${fill};
     `;
@@ -34,7 +45,7 @@ export default function createGlyphComponent(
           },
           className,
         )}
-        title={title}
+        title={getGlyphTitle(glyphName, title)}
         height={size}
         width={size}
         {...rest}
