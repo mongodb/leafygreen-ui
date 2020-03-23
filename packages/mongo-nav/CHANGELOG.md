@@ -9,7 +9,7 @@
 ### Patch Changes
 
 - 5cf9e7d: Displays admin when the prop is set and user is onPrem
-- b414edd: Remove async await syntax to avoid having to polyfill regenerator runtime
+- b414edd: Removes async await syntax to avoid having to polyfill regenerator runtime
 - 40db4b7: Updates logos in UserMenu and ProjectNav to latest logos
 - Updated dependencies [4c268a5]
 - Updated dependencies [94ed125]
