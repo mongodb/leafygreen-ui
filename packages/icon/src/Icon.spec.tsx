@@ -5,6 +5,7 @@ import { toJson } from 'xml2json';
 import { render, cleanup } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
 import { createIconComponent, glyphs } from '.';
+import createGlyphComponent, { getGlyphTitle } from './createGlyphComponent';
 
 afterAll(cleanup);
 
@@ -46,12 +47,10 @@ describe('packages/Icon/glyphs/', () => {
 
           if (typeof currentValue === 'object') {
             validateGlyphObject(currentValue);
-          } else {
-            if (key === 'fill') {
-              const validFills = ['#000', '#000000', 'none'];
+          } else if (key === 'fill') {
+            const validFills = ['#000', '#000000', 'none'];
 
-              expect(validFills.includes(currentValue)).toBeTruthy();
-            }
+            expect(validFills.includes(currentValue)).toBeTruthy();
           }
         });
       }
@@ -66,9 +65,59 @@ describe('packages/Icon/glyphs/', () => {
 const text = 'Hello world';
 
 // eslint-disable-next-line react/display-name
-const MyGlyph: React.FC<React.SVGProps<SVGSVGElement>> = () => (
-  <div>{text}</div>
-);
+const MyGlyph: SVGR.Component = () => <div>{text}</div>;
+
+describe('packages/Icon/createGlyphComponent createGlyphComponent()', () => {
+  const GlyphComponent = createGlyphComponent('MyGlyph', MyGlyph);
+
+  test('createGlyphComponent returns a function', () => {
+    expect(typeof GlyphComponent).toBe('function');
+  });
+
+  test('The function returned by createGlyphComponent has the displayName: "MyGlyph"', () => {
+    expect(GlyphComponent.displayName).toBe('MyGlyph');
+  });
+
+  const { container } = render(<GlyphComponent />);
+  const glyph = container.firstChild;
+
+  test('The function returned by createGlyphComponent renders the glyph specified', () => {
+    if (!typeIs.element(glyph)) {
+      throw new Error('Glyph was not rendered');
+    }
+
+    expect(glyph.nodeName.toLowerCase()).toBe('div');
+    expect(glyph.textContent).toBe(text);
+  });
+});
+
+describe('packages/Icon/createGlyphComponent getGlyphTitle()', () => {
+  const glyphName = 'MyCustomGlyph';
+
+  test('When the title is "false", getGlyphTitle returns "undefined"', () => {
+    expect(getGlyphTitle(glyphName, false)).toBeUndefined();
+  });
+
+  const generatedTitle = 'My Custom Glyph Icon';
+
+  test(`When the title is "undefined", getGlyphTitle returns "${generatedTitle}"`, () => {
+    expect(getGlyphTitle(glyphName)).toBe(generatedTitle);
+  });
+
+  test(`When the title is "null", getGlyphTitle returns "${generatedTitle}"`, () => {
+    expect(getGlyphTitle(glyphName, null)).toBe(generatedTitle);
+  });
+
+  test(`When the title is "true", getGlyphTitle returns "${generatedTitle}"`, () => {
+    expect(getGlyphTitle(glyphName, true)).toBe(generatedTitle);
+  });
+
+  const testTitle = 'This is a test';
+
+  test(`When the title is the string "${testTitle}", getGlyphTitle returns "${testTitle}"`, () => {
+    expect(getGlyphTitle(glyphName, testTitle)).toBe(testTitle);
+  });
+});
 
 const customGlyphs = { MyGlyph };
 
