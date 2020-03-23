@@ -1,5 +1,3 @@
-require('core-js/stable');
-
 global.MutationObserver = class {
   constructor() {}
   disconnect() {}
