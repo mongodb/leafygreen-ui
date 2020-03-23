@@ -106,6 +106,16 @@ const paymentStatusMap: Record<Colors, ReadonlyArray<OrgPaymentLabel>> = {
   ],
 } as const;
 
+const orgDropdownNavElements = [
+  ActiveNavElement.OrgNavDropdownOrgAccessManager,
+  ActiveNavElement.OrgNavDropdownProjectAccessManager,
+];
+
+const orgAccessManagerNavElements = [
+  ActiveNavElement.OrgNavAccessManager,
+  ActiveNavElement.OrgNavDropdownOrgAccessManager,
+];
+
 type OrgNavProps = Pick<
   MongoNavInterface,
   'activeProduct' | 'onOrganizationChange' | 'activeNav' | 'admin'
@@ -146,6 +156,12 @@ function OrgNav({
   const isTablet = viewportWidth < breakpoints.medium;
   const isMobile = viewportWidth < breakpoints.small;
   const disabled = activeNav === ActiveNavElement.UserSettings;
+  const isOrgDropdownActive =
+    accessManagerOpen ||
+    (orgDropdownNavElements as Array<string>).includes(activeNav as string);
+  const isOrgAccessManagerActive = (orgAccessManagerNavElements as Array<
+    string
+  >).includes(activeNav as string);
 
   let paymentVariant: Colors | undefined;
   let key: Colors;
@@ -258,7 +274,7 @@ function OrgNav({
         <>
           <OrgNavLink
             href={current && orgNav.accessManager}
-            isActive={activeNav === ActiveNavElement.OrgNavAccessManager}
+            isActive={isOrgAccessManagerActive}
             loading={!current}
             data-testid="org-nav-access-manager"
             onClick={onElementClick(NavElement.OrgNavAccessManager)}
@@ -268,7 +284,7 @@ function OrgNav({
 
           <IconButton
             ariaLabel="Dropdown"
-            active={accessManagerOpen}
+            active={isOrgDropdownActive}
             disabled={!current}
             data-testid="org-nav-dropdown"
             onClick={onElementClick(NavElement.OrgNavDropdown, () =>
@@ -288,6 +304,7 @@ function OrgNav({
                   data-testid="org-nav-dropdown-org-access-manager"
                   description={current.orgName}
                   size="large"
+                  active={isOrgAccessManagerActive}
                   onClick={onElementClick(
                     NavElement.OrgNavDropdownOrgAccessManager,
                   )}
@@ -299,6 +316,10 @@ function OrgNav({
                   href={currentProjectName && urls.projectNav.accessManager}
                   data-testid="org-nav-dropdown-project-access-manager"
                   size="large"
+                  active={
+                    activeNav ===
+                    ActiveNavElement.OrgNavDropdownProjectAccessManager
+                  }
                   description={currentProjectName}
                   onClick={onElementClick(
                     NavElement.OrgNavDropdownProjectAccessManager,
@@ -374,7 +395,7 @@ function OrgNav({
           </OrgNavLink>
         )}
 
-        {!isTablet && admin && !onPremEnabled && (
+        {!isTablet && admin && (
           <OrgNavLink
             href={orgNav.admin}
             isActive={activeNav === ActiveNavElement.OrgNavAdmin}

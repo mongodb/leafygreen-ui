@@ -1,14 +1,21 @@
 # @leafygreen-ui/button
 
+## 4.1.1
+
+### Patch Changes
+
+- Updated dependencies [4c268a5]
+  - @leafygreen-ui/icon@5.0.0
+
 ## 4.1.0
 
 ### Minor Changes
 
-- b342448: Add glyph prop to Button component
+- b342448: Adds glyph prop to Button component
 
 ### Patch Changes
 
-- ac5c473: Add lodash as dependency
+- ac5c473: Adds lodash as dependency
 
 ## 4.0.0
 
@@ -26,19 +33,19 @@
 
 ### Patch Changes
 
-- f42801b: Fix bug such that on hover, color is explicitly set rather than inherited
+- f42801b: Fixes bug such that on hover, color is explicitly set rather than inherited
 
 ## 3.0.1
 
 ### Patch Changes
 
-- ff55bb5: Added fallback CSS for focus and hover states
+- ff55bb5: Adds fallback CSS for focus and hover states
 
 ## 3.0.0
 
 ### Major Changes
 
-- 9c45cb4: Wrapping component with React.forwardRef to provide direct access to the underlying element.
+- 9c45cb4: Wraps component with `React.forwardRef` to provide direct access to the underlying element
 
 ### Patch Changes
 
@@ -49,4 +56,4 @@
 
 ### Patch Changes
 
-- eb49b56: Fixes an issue where the children of Button had a z-index that was being applied in a global stacking context.
+- eb49b56: Fixes an issue where the children of Button had a `z-index` that was being applied in a global stacking context

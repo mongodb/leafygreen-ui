@@ -1,5 +1,11 @@
 # @leafygreen-ui/syntax
 
+## 2.5.0
+
+### Minor Changes
+
+- beccf70: Adds Objective-C language highlight support
+
 ## 2.4.0
 
 ### Minor Changes
@@ -10,13 +16,13 @@
 
 ### Minor Changes
 
-- c117a62: Add Kotlin language highlight support
+- c117a62: Adds support for Kotlin syntax highlighting
 
 ## 2.2.0
 
 ### Minor Changes
 
-- 130919a: Add support for GraphQL syntax highlighting
+- 130919a: Adds support for GraphQL syntax highlighting
 
 ### Patch Changes
 
@@ -27,7 +33,7 @@
 
 ### Minor Changes
 
-- db8a89a: Enable Swift in the Code component
+- db8a89a: Adds support for Swift syntax highlighting
 
 ## 2.0.0
 

@@ -183,20 +183,26 @@ function MongoNav({
     return fetch(endpointURI, configObject);
   }
 
-  async function getDataFixtures() {
-    onSuccess?.(dataFixtures);
-    return dataFixtures;
+  function getDataFixtures() {
+    return new Promise(resolve => {
+      onSuccess?.(dataFixtures);
+      resolve(dataFixtures);
+    });
   }
 
-  async function handleResponse(response: Response) {
+  function handleResponse(response: Response) {
     if (!response.ok) {
       const mappedStatus = ErrorCodeMap[response.status];
       onError?.(mappedStatus);
       console.error(mappedStatus);
     } else {
-      const data = await response.json();
-      setData(data);
-      onSuccess?.(data);
+      response
+        .json()
+        .then(data => {
+          setData(data);
+          onSuccess?.(data);
+        })
+        .catch(console.error);
     }
   }
 

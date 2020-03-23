@@ -16,7 +16,7 @@
 
 ### Patch Changes
 
-- 4de039a: Further accessibility updates to make components compliant with a11y standards
+- 4de039a: Makes component compliant with a11y standards
 
 ## 3.2.0
 
@@ -26,4 +26,4 @@
 
 ### Patch Changes
 
-- 55f904f: Position input inside the boundary of parent label
+- 55f904f: Positions input inside the boundary of parent label

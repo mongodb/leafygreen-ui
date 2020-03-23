@@ -1,5 +1,20 @@
 # @leafygreen-ui/side-nav
 
+## 2.0.4
+
+### Patch Changes
+
+- Updated dependencies [94ed125]
+  - @leafygreen-ui/leafygreen-provider@1.1.0
+  - @leafygreen-ui/menu@6.0.4
+
+## 2.0.3
+
+### Patch Changes
+
+- Updated dependencies [dd342f5]
+  - @leafygreen-ui/menu@6.0.3
+
 ## 2.0.2
 
 ### Patch Changes
@@ -11,14 +26,15 @@
 
 ### Patch Changes
 
-- 0c26f35: Fix inconsistencies in active/hover highlight sizes
+- 0c26f35: Fixes inconsistencies in active/hover highlight sizes
 
 ## 2.0.0
 
 ### Major Changes
 
-- ed2e2f8: - Wrap SideNavItem components in `React.useRef`
-  - Update z-index rules on hover styles for SideNavItem components
+- ed2e2f8:
+  - Wrap SideNavItem components in `React.useRef`
+  - Update `z-index` rules on hover styles for SideNavItem components
 
 ## 1.1.1
 
@@ -33,10 +49,9 @@
 
 ### Minor Changes
 
-- 6eb9d26: This introduces the following updates:
-  - Lib is updated internally with shared test helpers
-  - Side Nav is updated to match design standards, and to export width and side padding so that users can reference both in integrating the side nav without hardcoding these values and to future-proof design changes
-  - Mongo Nav is updated with a disabled state for the Org Nav, used for pages where there is no concept of a current project or organization. Additionally, Mongo Nav exports the different nav heights for the above reason
+- 6eb9d26:
+  - Exports width and side padding so that users can reference both in integrating the component without hardcoding these values and to future-proof design changes
+  - Design updates to match standards
 
 ### Patch Changes
 
@@ -47,13 +62,13 @@
 
 ### Patch Changes
 
-- 3a7bd19: Modified styles to avoid conflicts with pre-existing focus states of anchors
+- 3a7bd19: Modifies styles to avoid conflicts with pre-existing focus states of anchors
 
 ## 1.0.3
 
 ### Patch Changes
 
-- d766d73: Adjust spacing in SideNav
+- d766d73: Adjusts spacing in SideNav
 - Updated dependencies [786ccf1]
 - Updated dependencies [690888a]
   - @leafygreen-ui/menu@6.0.0
@@ -71,13 +86,13 @@
 
 ### Patch Changes
 
-- 0eb010c: Improved handling of Aria roles in menu items, and increased label contrast for accessibility
+- 0eb010c: Improves handling of Aria roles in MenuItems, and increases label contrast for accessibility
 
 ## 1.0.0
 
 ### Major Changes
 
-- 11b2217: Introduces the SideNav component. Adds enumerated aria-current values to lib for general use.
+- 11b2217: Initial release of SideNav component
 
 ### Patch Changes
 

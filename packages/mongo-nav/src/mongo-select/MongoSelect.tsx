@@ -151,7 +151,7 @@ function OrgSelect({
   let renderedData = data;
 
   const filterData = () => {
-    const search = new RegExp(`${value}`, 'i');
+    const search = new RegExp(String(value), 'i');
 
     const filtered = data?.filter(datum => {
       return search.test(datum.orgName);

@@ -25,8 +25,15 @@ import {
 } from '../types';
 import { hostDefaults } from '../data';
 import { useOnElementClick } from '../on-element-click-provider';
+import {
+  CloudIcon,
+  SupportIcon,
+  UniversityIcon,
+  MegaphoneIcon,
+} from '../helpers/Icons';
 
 const subMenuContainer = createDataProp('sub-menu-container');
+const menuItemContainer = createDataProp('menu-item-container');
 
 const triggerWrapper = css`
   display: inline-block;
@@ -88,7 +95,8 @@ const productLinkStyle = css`
   color: ${uiColors.blue.base};
   display: flex;
   align-items: center;
-  ${subMenuContainer.selector}:hover & {
+  ${subMenuContainer.selector}:hover &,
+  ${menuItemContainer.selector}:hover & {
     color: ${uiColors.blue.dark2};
   }
 `;
@@ -103,7 +111,8 @@ const productLinkIconStyle = css`
   opacity: 0;
   transform: translate3d(-3px, 0, 0px);
   transition: all 100ms ease-in;
-  ${subMenuContainer.selector}:hover & {
+  ${subMenuContainer.selector}:hover &,
+  ${menuItemContainer.selector}:hover & {
     opacity: 1;
     transform: translate3d(3px, 0, 0px);
   }
@@ -148,7 +157,8 @@ interface UserMenuProps {
   account?: AccountInterface;
 
   /**
-   * MongoDB product that is currently active: ['cloud', 'university', 'support'].
+   * MongoDB product that is currently active.
+   * Possible values: ['account', 'charts', 'cloud', 'realm', 'support', 'university']
    */
   activeProduct: Product;
 
@@ -192,7 +202,8 @@ interface UserMenuProps {
 />
 ```
  * @param props.account Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
- * @param props.activeProduct MongoDB product that is currently active: ['cloud', 'university', 'support'].
+ * @param props.activeProduct MongoDB product that is currently active.
+ *  Possible values: ['account', 'charts', 'cloud', 'realm', 'support', 'university']
  * @param props.onLogout Callback fired when a user logs out
  * @param props.onProductChange Callback invoked after the user clicks a product.
  * @param props.hosts Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<UserMenu />` to work across all environments.
@@ -246,11 +257,13 @@ function UserMenu({
     ? `${account.firstName ?? ''} ${account.lastName ?? ''}`
     : '';
 
-  const isAccount = activeProduct === 'account';
-  const cloudProducts = ['cloud', 'stitch', 'charts'];
-  const isCloud = cloudProducts.includes(activeProduct);
-  const isSupport = activeProduct === 'support';
-  const isUniversity = activeProduct === 'university';
+  const isAccount = activeProduct === Product.Account;
+  const cloudProducts = [Product.Cloud, Product.Realm, Product.Charts];
+  const isCloud = (cloudProducts as Array<string>).includes(
+    activeProduct as string,
+  );
+  const isSupport = activeProduct === Product.Support;
+  const isUniversity = activeProduct === Product.University;
 
   const sharedProps = {
     target: '_blank',
@@ -306,53 +319,65 @@ function UserMenu({
         </li>
         <MenuSeparator />
 
-        <SubMenu
-          {...subMenuContainer.prop}
-          {...sharedProps}
-          active={isCloud}
-          disabled={!account}
-          href={hosts.cloud}
-          description={<Description isActive={isCloud} product="cloud" />}
-          title="Atlas"
-          glyph={<Icon glyph="Cloud" size="xlarge" />}
-          className={cx(subMenuContainerStyle, {
-            [subMenuActiveContainerStyle]: isCloud,
-          })}
-        >
-          <MenuItem
-            href={userMenu?.cloud?.userPreferences}
-            data-testid="user-menuitem-cloud-user-preferences"
-            onClick={onElementClick(NavElement.UserMenuCloudUserPreferences)}
+        {isCloud ? (
+          <SubMenu
+            {...subMenuContainer.prop}
+            {...sharedProps}
+            active={isCloud}
+            disabled={!account || !isCloud}
+            href={hosts.cloud}
+            description={<Description isActive={isCloud} product="cloud" />}
+            title="Atlas"
+            glyph={<CloudIcon />}
+            className={cx(subMenuContainerStyle, {
+              [subMenuActiveContainerStyle]: isCloud,
+            })}
           >
-            User Preferences
-          </MenuItem>
+            <MenuItem
+              href={userMenu?.cloud?.userPreferences}
+              data-testid="user-menuitem-cloud-user-preferences"
+              onClick={onElementClick(NavElement.UserMenuCloudUserPreferences)}
+            >
+              User Preferences
+            </MenuItem>
+            <MenuItem
+              href={userMenu?.cloud?.invitations}
+              data-testid="user-menuitem-cloud-invitations"
+              onClick={onElementClick(NavElement.UserMenuCloudInvitations)}
+            >
+              <span className={subMenuItemStyle}>
+                Invitations
+                {(account?.openInvitations ?? 0) > 0 && (
+                  <Badge variant="blue">{account?.openInvitations}</Badge>
+                )}
+              </span>
+            </MenuItem>
+            <MenuItem
+              href={userMenu?.cloud?.organizations}
+              data-testid="user-menuitem-cloud-organizations"
+              onClick={onElementClick(NavElement.UserMenuCloudOrganizations)}
+            >
+              Organizations
+            </MenuItem>
+            <MenuItem
+              href={userMenu?.cloud?.mfa}
+              data-testid="user-menuitem-cloud-mfa"
+              onClick={onElementClick(NavElement.UserMenuCloudMFA)}
+            >
+              Two-Factor Authorization
+            </MenuItem>
+          </SubMenu>
+        ) : (
           <MenuItem
-            href={userMenu?.cloud?.invitations}
-            data-testid="user-menuitem-cloud-invitations"
-            onClick={onElementClick(NavElement.UserMenuCloudInvitations)}
+            {...menuItemContainer.prop}
+            size="large"
+            glyph={<CloudIcon />}
+            href={hosts.cloud}
+            description={<Description isActive={false} product="cloud" />}
           >
-            <span className={subMenuItemStyle}>
-              Invitations
-              {(account?.openInvitations ?? 0) > 0 && (
-                <Badge variant="blue">{account?.openInvitations}</Badge>
-              )}
-            </span>
+            Atlas
           </MenuItem>
-          <MenuItem
-            href={userMenu?.cloud?.organizations}
-            data-testid="user-menuitem-cloud-organizations"
-            onClick={onElementClick(NavElement.UserMenuCloudOrganizations)}
-          >
-            Organizations
-          </MenuItem>
-          <MenuItem
-            href={userMenu?.cloud?.mfa}
-            data-testid="user-menuitem-cloud-mfa"
-            onClick={onElementClick(NavElement.UserMenuCloudMFA)}
-          >
-            Two-Factor Authorization
-          </MenuItem>
-        </SubMenu>
+        )}
 
         <SubMenu
           {...subMenuContainer.prop}
@@ -361,7 +386,7 @@ function UserMenu({
           disabled={!account}
           href={hosts.university}
           title="University"
-          glyph={<Icon glyph="University" size="xlarge" />}
+          glyph={<UniversityIcon />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isUniversity,
           })}
@@ -384,7 +409,7 @@ function UserMenu({
           disabled={!account}
           href={hosts.support}
           title="Support"
-          glyph={<Icon glyph="Support" size="xlarge" />}
+          glyph={<SupportIcon />}
           description={<Description isActive={isSupport} product="support" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isSupport,
@@ -403,7 +428,7 @@ function UserMenu({
         <MenuItem
           {...feedbackAnchorProps}
           size="large"
-          glyph={<Icon glyph="Megaphone" size="xlarge" />}
+          glyph={<MegaphoneIcon />}
           data-testid="user-menuitem-feedback"
           onClick={onElementClick(NavElement.UserMenuFeedback)}
         >
