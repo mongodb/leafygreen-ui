@@ -94,7 +94,7 @@ function generateConfigFunc(target = 'web') {
           },
 
           {
-            test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+            test: /\.(png|jpg|jpeg|gif|woff|woff2|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
             loader: 'url-loader',
             query: {
               limit: 50000,
