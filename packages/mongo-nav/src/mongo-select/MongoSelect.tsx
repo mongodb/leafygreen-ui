@@ -92,7 +92,7 @@ const formattedPlanTypes: Record<PlanType, string> = {
   [PlanType.OnPrem]: 'Ops Manager',
 } as const;
 
-const onKeyDown = (e: React.KeyboardEvent, callback: Function) => {
+const onKeyDown = (e: React.KeyboardEvent, setValue: Function) => {
   // Stops default browser behavior from automatically scrolling the component
   if ([keyMap.ArrowUp, keyMap.ArrowDown].includes(e.keyCode)) {
     e.preventDefault();
@@ -105,7 +105,7 @@ const onKeyDown = (e: React.KeyboardEvent, callback: Function) => {
     // Pressing the spacebar from inside of the Input closes the Menu
     // The browser is adding a onClick event that we are not able to cancel through stopPropagation()
     // To fix, we have to prevent that browser behavior and then manually add a space to the current value
-    callback();
+    setValue();
   }
 };
 
