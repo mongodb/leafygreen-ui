@@ -11,14 +11,6 @@ const onPremMenuWrapper = css`
   z-index: 0;
 `;
 
-const onPremNavElements = [
-  ActiveNavElement.UserMenuOnPremProfile,
-  ActiveNavElement.UserMenuOnPremTwoFactorAuth,
-  ActiveNavElement.UserMenuOnPremPersonalization,
-  ActiveNavElement.UserMenuOnPremOrganizations,
-  ActiveNavElement.UserMenuOnPremFeatureRequest,
-];
-
 interface OnPremUserMenuProps {
   name: string;
   open: boolean;
@@ -37,9 +29,6 @@ export default function OnPremUserMenu({
   activeNav,
 }: OnPremUserMenuProps) {
   const onElementClick = useOnElementClick();
-  const isMenuActive = (onPremNavElements as Array<string>).includes(
-    activeNav as string,
-  );
 
   return (
     <div className={onPremMenuWrapper}>
@@ -47,7 +36,6 @@ export default function OnPremUserMenu({
         name={name}
         open={open}
         setOpen={setOpen}
-        active={isMenuActive}
         data-testid="om-user-menu-trigger"
       />
 

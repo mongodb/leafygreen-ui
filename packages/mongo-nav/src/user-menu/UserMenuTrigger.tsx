@@ -99,7 +99,6 @@ export default function UserMenuTrigger({
   open,
   name,
   setOpen,
-  active = false,
   children,
   ...rest
 }: UserMenuTriggerProps) {
@@ -125,7 +124,7 @@ export default function UserMenuTrigger({
         {...buttonDataProp.prop}
         ref={buttonRef}
         className={cx(baseButtonStyles, {
-          [openBaseButtonStyle]: open || active,
+          [openBaseButtonStyle]: open,
           [activeWidth]: open,
         })}
         onClick={onElementClick(NavElement.UserMenuTrigger, () => {
