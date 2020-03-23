@@ -91,6 +91,7 @@ export const urlDefaults: Required<URLSInterface> = {
     alerts: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#alerts`,
     activityFeed: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#activity`,
     invite: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#access/add`,
+    charts: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#charts`,
   },
   onPrem: {
     profile: `https://cloud.mongodb.com/v2#/account/profile`,

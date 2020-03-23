@@ -201,6 +201,10 @@ function MongoNav({
   const [data, setData] = React.useState<DataInterface | undefined>(undefined);
   const hosts = defaultsDeep(hostsProp, hostDefaults);
   const endpointURI = `${hosts.cloud}/user/shared`;
+
+  const currentOrgId = data?.currentOrganization?.orgId;
+  const currentProjectId = data?.currentProject?.projectId;
+
   const defaultURLS: Required<URLSInterface> = {
     userMenu: {
       cloud: {
@@ -220,30 +224,31 @@ function MongoNav({
       },
     },
     mongoSelect: {
-      viewAllProjects: `${hosts.cloud}/v2#/org/${data?.currentProject?.orgId}/projects`,
+      viewAllProjects: `${hosts.cloud}/v2#/org/${currentProjectId}/projects`,
       viewAllOrganizations: `${hosts.cloud}/v2#/preferences/organizations`,
-      newProject: `${hosts.cloud}/v2#/org/${data?.currentProject?.orgId}/projects/create`,
-      orgSettings: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/settings/general`,
+      newProject: `${hosts.cloud}/v2#/org/${currentProjectId}/projects/create`,
+      orgSettings: `${hosts.cloud}/v2#/org/${currentOrgId}/settings/general`,
     },
     orgNav: {
-      leaf: data?.currentOrganization
-        ? `${hosts.cloud}/v2#/org/${data.currentOrganization.orgId}/`
-        : `/`,
-      settings: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/settings/general`,
-      accessManager: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/access/users`,
-      support: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/support`,
-      billing: `${hosts.cloud}/v2#/org/${data?.currentOrganization?.orgId}/billing/overview`,
+      leaf: currentOrgId ? `${hosts.cloud}/v2#/org/${currentOrgId}/` : `/`,
+      settings: `${hosts.cloud}/v2#/org/${currentOrgId}/settings/general`,
+      accessManager: `${hosts.cloud}/v2#/org/${currentOrgId}/access/users`,
+      support: `${hosts.cloud}/v2#/org/${currentOrgId}/support`,
+      billing: `${hosts.cloud}/v2#/org/${currentOrgId}/billing/overview`,
       allClusters: `${hosts.cloud}/v2#/clusters`,
       admin: `${hosts.cloud}/v2/admin#general/overview/servers`,
     },
     projectNav: {
-      settings: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#settings/groupSettings`,
-      accessManager: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#access`,
-      support: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#info/support`,
-      integrations: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#integrations`,
-      alerts: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#alerts`,
-      activityFeed: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#activity`,
-      invite: `${hosts.cloud}/v2/${data?.currentProject?.projectId}#access/add`,
+      settings: `${hosts.cloud}/v2/${currentProjectId}#settings/groupSettings`,
+      accessManager: `${hosts.cloud}/v2/${currentProjectId}#access`,
+      support: `${hosts.cloud}/v2/${currentProjectId}#info/support`,
+      integrations: `${hosts.cloud}/v2/${currentProjectId}#integrations`,
+      alerts: `${hosts.cloud}/v2/${currentProjectId}#alerts`,
+      activityFeed: `${hosts.cloud}/v2/${currentProjectId}#activity`,
+      invite: `${hosts.cloud}/v2/${currentProjectId}#access/add`,
+      charts: data?.currentProject?.chartsActivated
+        ? `${hosts.cloud}/charts/${currentProjectId}`
+        : `${hosts.cloud}/v2/${currentProjectId}#charts`,
     },
     onPrem: {
       profile: `${hosts.cloud}/v2#/account/profile`,
@@ -321,7 +326,7 @@ function MongoNav({
     }
   }, [mode, endpointURI, activeOrgId, activeProjectId, loadData]);
 
-  const filteredProjects = data?.projects.filter(project => {
+  const filteredProjects = data?.projects?.filter(project => {
     return project.orgId === data.currentProject?.orgId;
   });
 

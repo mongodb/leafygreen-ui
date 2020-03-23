@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- bd3bcd9: Make create-emotion-server an external dependency of the build
+- bd3bcd9: Makes `create-emotion-server` an external dependency of the build
 
 ## 2.0.0
 

@@ -4,8 +4,8 @@
 
 ### Patch Changes
 
-- fabc1c9: Conditionally enable `useEscapeKey` hook, to ensure that escapeKey events are not unintentionally blocked from propagating
-- 232cf52: React-transition-group now dependency instead of peer dependency
+- fabc1c9: Conditionally enables `useEscapeKey` hook, to ensure that escapeKey events are not unintentionally blocked from propagating
+- 232cf52: `React-transition-group` now dependency instead of peer dependency
 - Updated dependencies [0a75bd6]
 - Updated dependencies [fabc1c9]
   - @leafygreen-ui/icon@4.0.0
@@ -15,7 +15,7 @@
 
 ### Patch Changes
 
-- 69792b8: Make react-transition-group an external dependency of the build
+- 69792b8: Makes `react-transition-group` an external dependency of the build
 - Updated dependencies [11b2217]
 - Updated dependencies [8fd107a]
   - @leafygreen-ui/lib@4.1.0
@@ -40,7 +40,7 @@
 
 ### Major Changes
 
-- b04a66f: Move className prop to apply to root `div` rather than content `div`, and add contentClassName to style overlay container. Where using `className` currently, should update to `contentClassName`.
+- b04a66f: Moves className prop to apply to root `div` rather than content `div`, and adds `contentClassName` to style overlay container. Where using `className` currently, should update to `contentClassName`
 
 ## 1.2.3
 
@@ -57,9 +57,8 @@
 
 ### Patch Changes
 
-- 725e0f3: Add `title` prop to Icon component, to make purpose more clear to screenreaders
 - 4de039a: Further accessibility updates to make components compliant with a11y standards
-- 3a24668: Replaced existing Escape handling with new useEscapeKey hook
+- 3a24668: Replaces existing Escape handling with new useEscapeKey hook
 
 ## 1.2.0
 

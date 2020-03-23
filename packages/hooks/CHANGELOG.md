@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- ac5c473: Add lodash as dependency
+- ac5c473: Adds lodash as dependency
 
 ## 2.0.0
 
@@ -16,10 +16,10 @@
 
 ### Minor Changes
 
-- 3a24668: Add useEscapeKey hook
+- 3a24668: Adds useEscapeKey hook
 
 ## 1.0.7
 
 ### Patch Changes
 
-- 7825641: Patched a bug in useEventListener hook, to now ensure that eventListener is set or unset when enabled changes values.
+- 7825641: Patches a bug in useEventListeners hook, to now ensure that `eventListener` is set or unset when enabled changes values
