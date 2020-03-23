@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 
-export function getGlyphTitle(name: string, title?: string | null) {
-  if (title === null) {
+export function getGlyphTitle(name: string, title?: string | boolean | null) {
+  if (title === false) {
     // If title is null, we unset the title entirely, otherwise we generate one.
     return undefined;
   }
 
-  if (title === undefined) {
+  if (title == null || title === true) {
     let generatedTitle = `${name.replace(/([A-Z][a-z])/g, ' $1')} Icon`;
 
     // Trim space at beginning of title

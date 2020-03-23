@@ -94,14 +94,22 @@ describe('packages/Icon/createGlyphComponent createGlyphComponent()', () => {
 describe('packages/Icon/createGlyphComponent getGlyphTitle()', () => {
   const glyphName = 'MyCustomGlyph';
 
-  test('When the title is "null", getGlyphTitle returns "undefined"', () => {
-    expect(getGlyphTitle(glyphName, null)).toBeUndefined();
+  test('When the title is "false", getGlyphTitle returns "undefined"', () => {
+    expect(getGlyphTitle(glyphName, false)).toBeUndefined();
   });
 
   const generatedTitle = 'My Custom Glyph Icon';
 
   test(`When the title is "undefined", getGlyphTitle returns "${generatedTitle}"`, () => {
     expect(getGlyphTitle(glyphName)).toBe(generatedTitle);
+  });
+
+  test(`When the title is "null", getGlyphTitle returns "${generatedTitle}"`, () => {
+    expect(getGlyphTitle(glyphName, null)).toBe(generatedTitle);
+  });
+
+  test(`When the title is "true", getGlyphTitle returns "${generatedTitle}"`, () => {
+    expect(getGlyphTitle(glyphName, true)).toBe(generatedTitle);
   });
 
   const testTitle = 'This is a test';
