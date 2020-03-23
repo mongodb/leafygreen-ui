@@ -381,7 +381,7 @@ function OrgNav({
           </OrgNavLink>
         )}
 
-        {!isTablet && admin && !onPremEnabled && (
+        {!isTablet && admin && (
           <OrgNavLink
             href={orgNav.admin}
             isActive={activeNav === ActiveNavElement.OrgNavAdmin}

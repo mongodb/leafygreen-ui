@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-interface GlyphObject {
-  [glyph: string]: SVGR.Component;
-}
-
 export const Size = {
   Small: 'small',
   Default: 'default',
@@ -14,36 +10,28 @@ export const Size = {
 
 export type Size = typeof Size[keyof typeof Size];
 
-export interface IconProps<G extends GlyphObject>
-  extends Omit<SVGR.ComponentProps, 'size'> {
-  glyph: keyof G;
-  size?: number | Size;
+export interface IconProps extends LGGlyph.ComponentProps {
+  glyph: string;
 }
 
-const sizeMap: Record<Size, number> = {
+const sizeMap = {
   small: 14,
   default: 16,
   large: 20,
   xlarge: 24,
 } as const;
 
-// Converts a camel-case name to a human-readable name
-//
-// GlyphName => Glyph Name Icon
-function humanReadableTitle(glyph: string) {
-  return `${glyph.replace(/([A-Z][a-z])/g, ' $1')} Icon`;
-}
+type GlyphObject = Record<string, LGGlyph.Component>;
 
-export default function createIconComponent<G extends GlyphObject>(
-  glyphs: G,
-): React.ComponentType<IconProps<G>> {
-  const Icon = ({ glyph, size = Size.Default, ...rest }: IconProps<G>) => {
-    const SVGComponent: SVGR.Component = glyphs[glyph];
+export default function createIconComponent<
+  G extends GlyphObject = GlyphObject
+>(glyphs: G) {
+  const Icon = ({ glyph, size = Size.Default, ...rest }: IconProps) => {
+    const SVGComponent = glyphs[glyph];
 
     return (
       <SVGComponent
         {...rest}
-        title={rest.title || humanReadableTitle(glyph as string)}
         size={
           typeof size === 'number' ? size : sizeMap[size] || sizeMap.default
         }

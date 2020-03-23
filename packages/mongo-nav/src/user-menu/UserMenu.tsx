@@ -25,6 +25,12 @@ import {
 } from '../types';
 import { hostDefaults } from '../data';
 import { useOnElementClick } from '../on-element-click-provider';
+import {
+  CloudIcon,
+  SupportIcon,
+  UniversityIcon,
+  MegaphoneIcon,
+} from '../helpers/Icons';
 
 const subMenuContainer = createDataProp('sub-menu-container');
 const menuItemContainer = createDataProp('menu-item-container');
@@ -251,11 +257,13 @@ function UserMenu({
     ? `${account.firstName ?? ''} ${account.lastName ?? ''}`
     : '';
 
-  const isAccount = activeProduct === 'account';
-  const cloudProducts = ['cloud', 'stitch', 'charts'];
-  const isCloud = cloudProducts.includes(activeProduct);
-  const isSupport = activeProduct === 'support';
-  const isUniversity = activeProduct === 'university';
+  const isAccount = activeProduct === Product.Account;
+  const cloudProducts = [Product.Cloud, Product.Realm, Product.Charts];
+  const isCloud = (cloudProducts as Array<string>).includes(
+    activeProduct as string,
+  );
+  const isSupport = activeProduct === Product.Support;
+  const isUniversity = activeProduct === Product.University;
 
   const sharedProps = {
     target: '_blank',
@@ -320,7 +328,7 @@ function UserMenu({
             href={hosts.cloud}
             description={<Description isActive={isCloud} product="cloud" />}
             title="Atlas"
-            glyph={<Icon glyph="Cloud" size="xlarge" />}
+            glyph={<CloudIcon />}
             className={cx(subMenuContainerStyle, {
               [subMenuActiveContainerStyle]: isCloud,
             })}
@@ -363,7 +371,7 @@ function UserMenu({
           <MenuItem
             {...menuItemContainer.prop}
             size="large"
-            glyph={<Icon glyph="Cloud" size="xlarge" />}
+            glyph={<CloudIcon />}
             href={hosts.cloud}
             description={<Description isActive={false} product="cloud" />}
           >
@@ -378,7 +386,7 @@ function UserMenu({
           disabled={!account}
           href={hosts.university}
           title="University"
-          glyph={<Icon glyph="University" size="xlarge" />}
+          glyph={<UniversityIcon />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isUniversity,
           })}
@@ -401,7 +409,7 @@ function UserMenu({
           disabled={!account}
           href={hosts.support}
           title="Support"
-          glyph={<Icon glyph="Support" size="xlarge" />}
+          glyph={<SupportIcon />}
           description={<Description isActive={isSupport} product="support" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isSupport,
@@ -420,7 +428,7 @@ function UserMenu({
         <MenuItem
           {...feedbackAnchorProps}
           size="large"
-          glyph={<Icon glyph="Megaphone" size="xlarge" />}
+          glyph={<MegaphoneIcon />}
           data-testid="user-menuitem-feedback"
           onClick={onElementClick(NavElement.UserMenuFeedback)}
         >

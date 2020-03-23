@@ -261,7 +261,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
     );
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
-      testForNavLink(linkName, ['billing', 'admin'].indexOf(linkName) === -1),
+      testForNavLink(linkName, linkName !== 'billing'),
     );
   });
 });
