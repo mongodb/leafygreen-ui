@@ -10,7 +10,12 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { ProjectSelect } from '../mongo-select';
 import { facepaint, breakpoints } from '../breakpoints';
 import { useViewportSize } from '@leafygreen-ui/hooks';
-import { iconLoadingStyle, textLoadingStyle } from '../styles';
+import {
+  iconLoadingStyle,
+  textLoadingStyle,
+  anchorOverrides,
+  projectNavAnchorOverrides,
+} from '../styles';
 import { useOnElementClick } from '../on-element-click-provider';
 import {
   ProjectInterface,
@@ -264,7 +269,7 @@ export default function ProjectNav({
   } as const;
 
   const getProductClassName = (product: Product) =>
-    cx(productStyle, {
+    cx(anchorOverrides, projectNavAnchorOverrides, productStyle, {
       [productStates.active]: !!(activeProduct === product && current),
       [productStates.focus]: showFocus,
       [productStates.loading]: !current,
