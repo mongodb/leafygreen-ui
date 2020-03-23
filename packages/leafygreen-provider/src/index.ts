@@ -1,5 +1,4 @@
-import LeafyGreenProvider from './LeafyGreenProvider';
-import { useUsingKeyboardContext } from './UsingKeyboardProvider';
+export { useUsingKeyboardContext } from './UsingKeyboardContext';
+export { useBaseFontSize } from './TypographyContext';
 
-export { useUsingKeyboardContext };
-export default LeafyGreenProvider;
+export { default } from './LeafyGreenContext';

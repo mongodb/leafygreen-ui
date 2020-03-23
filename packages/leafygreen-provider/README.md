@@ -44,9 +44,10 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 ### Properties
 
-| Prop       | Type   | Description                                                                                        |
-| ---------- | ------ | -------------------------------------------------------------------------------------------------- |
-| `children` | `node` | Children passed to `LeafyGreenProvider` will be unmodified, aside from having access to its state. |
+| Prop           | Type         | Description                                                                                                                                                                               | Default |
+| -------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `children`     | `node`       | Children passed to `LeafyGreenProvider` will be unmodified, aside from having access to its state.                                                                                        |         |
+| `baseFontSize` | `14` or `16` | Describes the `font-size` that the application is using. `<Body/>` and `<InlineCode />` components use this value to determine the `font-size` and `line-height` applied to their content | `14`    |
 
 ## useUsingKeyboardContext
 
@@ -78,4 +79,29 @@ function autoFocus() {
 }
 
 <input type={text} ref={inputRef} />;
+```
+
+## useBaseFontSize
+
+**Returns:**
+
+```js
+`number`;
+```
+
+This hook allows you to read the base `font-size` of an application, based on the number returned from the hook.
+
+### Example
+
+```js
+import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+
+function InlineCode({ children, className }: InlineCodeProps) {
+  const size = useBaseFontSize();
+  const body = size === 16 ? typeScale2 : typeScale1;
+
+  return (
+    <code className={cx(sharedStyles, code, body, className)}>{children}</code>
+  );
+}
 ```

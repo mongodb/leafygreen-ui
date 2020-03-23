@@ -55,8 +55,7 @@ const navContainerStyle = css`
 `;
 
 const menuIconButtonStyle = css`
-  background-color: transparent;
-
+  z-index: 1;
   ${facepaint({
     marginRight: ['20px', '14px', '20px'],
   })}
@@ -220,6 +219,12 @@ export function displayProductName(today = new Date(Date.now())) {
 
 const secondTabName = displayProductName();
 
+const projectDropdownNavElements = [
+  ActiveNavElement.ProjectNavProjectIntegrations,
+  ActiveNavElement.ProjectNavProjectSettings,
+  ActiveNavElement.ProjectNavProjectSupport,
+];
+
 interface ProjectNavInterface {
   current?: CurrentProjectInterface;
   data?: Array<ProjectInterface>;
@@ -250,6 +255,9 @@ export default function ProjectNav({
   const { projectNav } = urls;
   const isMobile = viewportWidth < breakpoints.small;
   const isCloudManager = current?.planType === PlanType.Cloud;
+  const projectDropdownIsActive =
+    open ||
+    (projectDropdownNavElements as Array<string>).includes(activeNav as string);
 
   const sharedTooltipProps = {
     variant: 'dark',
@@ -292,7 +300,7 @@ export default function ProjectNav({
           <IconButton
             ariaLabel="More"
             className={menuIconButtonStyle}
-            active={open}
+            active={projectDropdownIsActive}
             disabled={!current}
             data-testid="project-nav-project-menu"
             onClick={onElementClick(ProjectNavProjectDropdown)}
@@ -304,6 +312,7 @@ export default function ProjectNav({
         <MenuItem
           href={projectNav.settings}
           data-testid="project-nav-settings"
+          active={activeNav === ActiveNavElement.ProjectNavProjectSettings}
           onClick={onElementClick(ProjectNavProjectSettings, () =>
             setOpen(false),
           )}
@@ -314,6 +323,7 @@ export default function ProjectNav({
         <MenuItem
           href={projectNav.support}
           data-testid="project-nav-support"
+          active={activeNav === ActiveNavElement.ProjectNavProjectSupport}
           onClick={onElementClick(ProjectNavProjectSupport, () =>
             setOpen(false),
           )}
@@ -323,6 +333,7 @@ export default function ProjectNav({
         <MenuItem
           href={projectNav.integrations}
           data-testid="project-nav-integrations"
+          active={activeNav === ActiveNavElement.ProjectNavProjectIntegrations}
           onClick={onElementClick(ProjectNavProjectIntegrations, () =>
             setOpen(false),
           )}
@@ -380,7 +391,7 @@ export default function ProjectNav({
             <li role="none" className={productTabStyle}>
               <a
                 data-testid="project-nav-charts"
-                href={hosts.charts}
+                href={projectNav.charts}
                 className={getProductClassName('charts')}
                 aria-disabled={!current}
                 tabIndex={current ? 0 : -1}
