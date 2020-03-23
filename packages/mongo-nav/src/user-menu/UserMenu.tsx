@@ -258,8 +258,10 @@ function UserMenu({
     : '';
 
   const isAccount = activeProduct === Product.Account;
-  const cloudProducts = ['cloud', 'realm', 'charts'];
-  const isCloud = cloudProducts.includes(activeProduct);
+  const cloudProducts = [Product.Cloud, Product.Realm, Product.Charts];
+  const isCloud = (cloudProducts as Array<string>).includes(
+    activeProduct as string,
+  );
   const isSupport = activeProduct === Product.Support;
   const isUniversity = activeProduct === Product.University;
 
