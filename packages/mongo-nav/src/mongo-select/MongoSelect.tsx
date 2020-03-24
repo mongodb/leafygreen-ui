@@ -105,7 +105,7 @@ const onKeyDown = (e: React.KeyboardEvent, setValue: Function) => {
     // Pressing the spacebar from inside of the Input closes the Menu
     // The browser is adding a onClick event that we are not able to cancel through stopPropagation()
     // To fix, we have to prevent that browser behavior and then manually add a space to the current value
-    setValue();
+    setValue((currentValue: string) => `${currentValue} `);
   }
 };
 
@@ -222,9 +222,7 @@ function OrgSelect({
               data-testid="org-filter-input"
               variant="organization"
               onChange={onChange}
-              onKeyDown={(e: React.KeyboardEvent) =>
-                onKeyDown(e, () => setValue(currentValue => `${currentValue} `))
-              }
+              onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
               value={value}
             />
           </FocusableMenuItem>
@@ -250,9 +248,7 @@ function OrgSelect({
           <>
             <MenuSeparator />
             <MenuItem
-              onKeyDown={(e: React.KeyboardEvent) =>
-                onKeyDown(e, () => setValue(currentValue => `${currentValue} `))
-              }
+              onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
               href={urls.mongoSelect?.viewAllOrganizations}
               data-testid="org-select-view-all-orgs"
               onClick={onElementClick(NavElement.OrgNavViewAllOrganizations)}
@@ -347,9 +343,7 @@ function ProjectSelect({
           <Input
             data-testid="project-filter-input"
             onChange={onChange}
-            onKeyDown={(e: React.KeyboardEvent) =>
-              onKeyDown(e, () => setValue(currentValue => `${currentValue} `))
-            }
+            onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
             variant="project"
             value={value}
           />
@@ -362,9 +356,7 @@ function ProjectSelect({
         <MenuSeparator />
 
         <li
-          onKeyDown={(e: React.KeyboardEvent) =>
-            onKeyDown(e, () => setValue(currentValue => `${currentValue} `))
-          }
+          onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
           role="none"
           className={projectButtonStyle}
         >
