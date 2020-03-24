@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/typography",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "leafyGreen UI Kit Typography",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
