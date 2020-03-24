@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 5.0.1
+
+### Patch Changes
+
+- 365412e: Adds emotion as a dependency rather than devDep to package.json
+
 ## 5.0.0
 
 ### Major Changes
