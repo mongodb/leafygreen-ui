@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import Icon from '@leafygreen-ui/icon';
 import { Variant } from '../types';
 
@@ -64,11 +64,11 @@ const magnifyingGlassStyle = css`
   z-index: 1;
 `;
 
-interface InputProps {
+type InputProps = HTMLElementProps<'input'> & {
   onChange: React.ChangeEventHandler;
   onKeyDown: React.KeyboardEventHandler;
   variant: Variant;
-}
+};
 
 const Input = React.forwardRef(({ variant, ...rest }: InputProps, ref) => {
   const placeholderVariant =
