@@ -151,7 +151,8 @@ function OrgSelect({
   let renderedData = data;
 
   const filterData = () => {
-    const search = new RegExp(String(value), 'i');
+    const sanitizedValue = value.replace(/\\/g, '\\\\');
+    const search = new RegExp(String(sanitizedValue), 'i');
 
     const filtered = data?.filter(datum => {
       return search.test(datum.orgName);
@@ -165,8 +166,10 @@ function OrgSelect({
   }
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setValue(value);
+    const val = e.target.value.replace(/\\/g, '\\');
+    console.log(val);
+
+    setValue(val);
 
     if (onChangeProp) {
       onChangeProp(value, e);
@@ -282,7 +285,8 @@ function ProjectSelect({
   let renderedData = data;
 
   const filterData = () => {
-    const search = new RegExp(`${value}`, 'i');
+    const sanitizedValue = value.replace(/\\/g, '\\\\');
+    const search = new RegExp(String(sanitizedValue), 'i');
 
     const filtered = data?.filter(datum => {
       return search.test(datum.projectName);
