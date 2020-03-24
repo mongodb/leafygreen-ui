@@ -92,11 +92,28 @@ const formattedPlanTypes: Record<PlanType, string> = {
   [PlanType.OnPrem]: 'Ops Manager',
 } as const;
 
+const onKeyDown = (e: React.KeyboardEvent, setValue: Function) => {
+  // Stops default browser behavior from automatically scrolling the component
+  if ([keyMap.ArrowUp, keyMap.ArrowDown].includes(e.keyCode)) {
+    e.preventDefault();
+  }
+
+  if (keyMap.Space === e.keyCode) {
+    e.preventDefault();
+
+    // Because we are not portaling Menu component in order to allow consuming applications to control z-index
+    // Pressing the spacebar from inside of the Input closes the Menu
+    // The browser is adding a onClick event that we are not able to cancel through stopPropagation()
+    // To fix, we have to prevent that browser behavior and then manually add a space to the current value
+    setValue((currentValue: string) => `${currentValue} `);
+  }
+};
+
 interface BaseMongoSelectProps {
   onClick?: React.MouseEventHandler;
   className?: string;
   urls: Required<URLSInterface>;
-  onChange: React.ChangeEventHandler;
+  onChange?: (_value: string, _event: React.ChangeEvent) => void;
   isActive?: boolean;
   loading?: boolean;
   disabled?: boolean;
@@ -115,27 +132,50 @@ interface OrganizationMongoSelectProps extends BaseMongoSelectProps {
   isOnPrem?: boolean;
 }
 
-const onKeyDown: React.KeyboardEventHandler = e => {
-  // Stops default browser behavior from automatically scrolling the component
-  if ([keyMap.ArrowUp, keyMap.ArrowDown].includes(e.keyCode)) {
-    e.preventDefault();
-  }
-};
-
 function OrgSelect({
   current,
   data,
   urls,
   isActive,
-  onChange,
+  onChange: onChangeProp,
   onClick,
   constructOrganizationURL,
   isOnPrem,
   disabled,
   loading = false,
 }: OrganizationMongoSelectProps) {
+  const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
+
+  let renderedData = data;
+
+  const filterData = () => {
+    const sanitizedValue = value.replace(/\\/g, '\\\\');
+    const search = new RegExp(String(sanitizedValue), 'i');
+
+    const filtered = data?.filter(datum => {
+      return search.test(datum.orgName);
+    });
+
+    return filtered;
+  };
+
+  if (!onChangeProp) {
+    renderedData = filterData();
+  }
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.replace(/\\/g, '\\');
+    console.log(val);
+
+    setValue(val);
+
+    if (onChangeProp) {
+      onChangeProp(value, e);
+      return;
+    }
+  };
 
   const renderOrganizationOption = (datum: OrganizationInterface) => {
     const { orgId, orgName, planType } = datum;
@@ -185,13 +225,14 @@ function OrgSelect({
               data-testid="org-filter-input"
               variant="organization"
               onChange={onChange}
-              onKeyDown={onKeyDown}
+              onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
+              value={value}
             />
           </FocusableMenuItem>
         )}
 
         <ul className={ulStyle}>
-          {data?.map(renderOrganizationOption) ?? (
+          {renderedData?.map(renderOrganizationOption) ?? (
             <li className={noOrgStyle}>
               You do not belong to any organizations. Create an organization on
               the{' '}
@@ -206,11 +247,11 @@ function OrgSelect({
           )}
         </ul>
 
-        {data && (
+        {renderedData && (
           <>
             <MenuSeparator />
             <MenuItem
-              onKeyDown={onKeyDown}
+              onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
               href={urls.mongoSelect?.viewAllOrganizations}
               data-testid="org-select-view-all-orgs"
               onClick={onElementClick(NavElement.OrgNavViewAllOrganizations)}
@@ -230,15 +271,43 @@ export { OrgSelect };
 
 function ProjectSelect({
   current,
-  onChange,
+  onChange: onChangeProp,
   data,
   onClick,
   constructProjectURL,
   urls,
   loading = false,
 }: ProjectMongoSelectProps) {
+  const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
+
+  let renderedData = data;
+
+  const filterData = () => {
+    const sanitizedValue = value.replace(/\\/g, '\\\\');
+    const search = new RegExp(String(sanitizedValue), 'i');
+
+    const filtered = data?.filter(datum => {
+      return search.test(datum.projectName);
+    });
+
+    return filtered;
+  };
+
+  if (!onChangeProp) {
+    renderedData = filterData();
+  }
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setValue(value);
+
+    if (onChangeProp) {
+      onChangeProp(value, e);
+      return;
+    }
+  };
 
   const renderProjectOption = (datum: ProjectInterface) => {
     const { projectId, projectName, orgId } = datum;
@@ -278,18 +347,23 @@ function ProjectSelect({
           <Input
             data-testid="project-filter-input"
             onChange={onChange}
-            onKeyDown={onKeyDown}
+            onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
             variant="project"
+            value={value}
           />
         </FocusableMenuItem>
 
         <ul className={ulStyle}>
-          {data?.map(datum => renderProjectOption(datum))}
+          {renderedData?.map(datum => renderProjectOption(datum))}
         </ul>
 
         <MenuSeparator />
 
-        <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
+        <li
+          onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
+          role="none"
+          className={projectButtonStyle}
+        >
           <FocusableMenuItem>
             <Button
               href={urls.mongoSelect.viewAllProjects as string}

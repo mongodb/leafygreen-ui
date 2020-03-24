@@ -26,8 +26,6 @@ storiesOf('MongoNav', module).add('Default', () => (
           Object.values(ActiveNavElement),
           'orgNavAccessManager',
         )}
-        onOrganizationChange={() => {}}
-        onProjectChange={() => {}}
         admin={boolean('admin', true)}
         onPrem={{
           mfa: true,

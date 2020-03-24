@@ -21,13 +21,9 @@ import {
   PlanType,
   ActiveNavElement,
   NavElement,
+  MongoNavInterface,
 } from '../types';
-import {
-  AtlasIcon,
-  RealmActiveIcon,
-  RealmInactiveIcon,
-  ChartsIcon,
-} from '../helpers/Icons';
+import { AtlasIcon, RealmIcon, ChartsIcon } from '../helpers/Icons';
 
 const {
   ProjectNavProjectDropdown,
@@ -225,17 +221,20 @@ export function displayProductName(today = new Date(Date.now())) {
 
 const secondTabName = displayProductName();
 
-interface ProjectNavInterface {
+type ProjectNavProps = Pick<
+  MongoNavInterface,
+  'activeProduct' | 'activeNav' | 'onProjectChange'
+> & {
   current?: CurrentProjectInterface;
   data?: Array<ProjectInterface>;
-  constructProjectURL: (orgID: string, projID: string) => string;
+  onPremEnabled?: boolean;
+  onPremVersion?: string;
+  onPremMFA?: boolean;
+  alerts?: number;
   urls: Required<URLSInterface>;
   hosts: Required<HostsInterface>;
-  alerts?: number;
-  activeProduct: Product;
-  activeNav?: NavElement;
-  onProjectChange: React.ChangeEventHandler;
-}
+  constructProjectURL: (orgID: string, projectID: string) => string;
+};
 
 export default function ProjectNav({
   current,
@@ -247,7 +246,7 @@ export default function ProjectNav({
   onProjectChange,
   hosts,
   alerts = 0,
-}: ProjectNavInterface) {
+}: ProjectNavProps) {
   const [open, setOpen] = React.useState(false);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { width: viewportWidth } = useViewportSize();
@@ -374,18 +373,13 @@ export default function ProjectNav({
                 tabIndex={current ? 0 : -1}
                 onClick={onElementClick(ProjectNavRealm)}
               >
-                {!isMobile &&
-                  (activeProduct === Product.Realm && current ? (
-                    <RealmActiveIcon
-                      {...productIconProp.prop}
-                      className={iconStyle}
-                    />
-                  ) : (
-                    <RealmInactiveIcon
-                      {...productIconProp.prop}
-                      className={iconStyle}
-                    />
-                  ))}
+                {!isMobile && (
+                  <RealmIcon
+                    active={activeProduct === Product.Realm && isLoading}
+                    {...productIconProp.prop}
+                    className={iconStyle}
+                  />
+                )}
                 {secondTabName}
               </a>
             </li>
