@@ -23,12 +23,7 @@ import {
   NavElement,
   MongoNavInterface,
 } from '../types';
-import {
-  AtlasIcon,
-  RealmActiveIcon,
-  RealmInactiveIcon,
-  ChartsIcon,
-} from '../helpers/Icons';
+import { AtlasIcon, RealmIcon, ChartsIcon } from '../helpers/Icons';
 
 const {
   ProjectNavProjectDropdown,
@@ -387,18 +382,13 @@ export default function ProjectNav({
                 tabIndex={current ? 0 : -1}
                 onClick={onElementClick(ProjectNavRealm)}
               >
-                {!isMobile &&
-                  (activeProduct === Product.Realm && current ? (
-                    <RealmActiveIcon
-                      {...productIconProp.prop}
-                      className={iconStyle}
-                    />
-                  ) : (
-                    <RealmInactiveIcon
-                      {...productIconProp.prop}
-                      className={iconStyle}
-                    />
-                  ))}
+                {!isMobile && (
+                  <RealmIcon
+                    {...productIconProp.prop}
+                    className={iconStyle}
+                    active={activeProduct === Product.Realm && isLoading}
+                  />
+                )}
                 {secondTabName}
               </a>
             </li>
