@@ -1,5 +1,17 @@
 # @leafygreen-ui/mongo-nav
 
+## 0.18.0
+
+### Minor Changes
+
+- 838ff82: Updates the OnPremUserMenu active states and default urls, and exports both the ProjectSelect component and the OnPremUserMenu component for usage outside the MongoNav component.
+
+### Patch Changes
+
+- Updated dependencies [365412e]
+  - @leafygreen-ui/icon@5.0.1
+  - @leafygreen-ui/icon-button@4.1.6
+
 ## 0.17.0
 
 ### Minor Changes
