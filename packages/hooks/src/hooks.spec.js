@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { render, cleanup } from '@testing-library/react';
-import { useEventListener, useElementNode, useViewportSize } from './index';
+import {
+  useEventListener,
+  useElementNode,
+  useViewportSize,
+  usePoller,
+} from './index';
 
 afterAll(cleanup);
 
@@ -137,6 +142,134 @@ describe('packages/hooks', () => {
           expect(result.current.width).toBe(updateWidth);
         }, debounceTimeoutLength * 2);
       }, debounceTimeoutLength);
+    });
+  });
+
+  describe('usePoller', () => {
+    let visibilityState = 'visible';
+
+    beforeAll(() => {
+      jest.useFakeTimers();
+
+      Object.defineProperty(document, 'visibilityState', {
+        configurable: true,
+        get() {
+          return visibilityState;
+        },
+        set(bool) {
+          visibilityState = Boolean(bool);
+        },
+      });
+    });
+
+    afterAll(() => {
+      visibilityState = 'visible';
+    });
+
+    test('used with default values', () => {
+      const pollHandler = jest.fn();
+
+      renderHook(() => usePoller(pollHandler));
+
+      expect(pollHandler).toHaveBeenCalledTimes(1);
+
+      jest.advanceTimersByTime(5e3);
+
+      expect(pollHandler).toHaveBeenCalledTimes(2);
+    });
+
+    test('used with custom interval value', () => {
+      const pollHandler = jest.fn();
+
+      renderHook(() => usePoller(pollHandler, { interval: 1e3 }));
+
+      expect(pollHandler).toHaveBeenCalledTimes(1);
+
+      jest.advanceTimersByTime(2e3);
+
+      expect(pollHandler).toHaveBeenCalledTimes(3);
+    });
+
+    test('start and stop work as expected', () => {
+      const pollHandler = jest.fn();
+
+      const { result } = renderHook(() => usePoller(pollHandler));
+
+      expect(result.current.isPolling).toBe(true);
+      expect(pollHandler).toHaveBeenCalledTimes(1);
+
+      act(() => {
+        result.current.stop();
+      });
+
+      expect(result.current.isPolling).toBe(false);
+      jest.advanceTimersByTime(5e3);
+      expect(pollHandler).toHaveBeenCalledTimes(1);
+
+      pollHandler.mockReset();
+
+      act(() => {
+        result.current.start();
+      });
+
+      expect(result.current.isPolling).toBe(true);
+      expect(pollHandler).toHaveBeenCalledTimes(1);
+    });
+
+    test('when immediate is false', () => {
+      const pollHandler = jest.fn();
+
+      const { result } = renderHook(() =>
+        usePoller(pollHandler, { immediate: false }),
+      );
+
+      expect(result.current.isPolling).toBe(true);
+      expect(pollHandler).toHaveBeenCalledTimes(0);
+
+      jest.advanceTimersByTime(5e3);
+
+      expect(pollHandler).toHaveBeenCalledTimes(1);
+
+      act(() => {
+        result.current.stop();
+      });
+
+      expect(result.current.isPolling).toBe(false);
+      expect(pollHandler).toHaveBeenCalledTimes(1);
+
+      pollHandler.mockReset();
+
+      act(() => {
+        result.current.start();
+      });
+
+      expect(result.current.isPolling).toBe(true);
+      expect(pollHandler).toHaveBeenCalledTimes(0);
+    });
+
+    test('when document is not visible', () => {
+      const pollHandler = jest.fn();
+
+      renderHook(() => usePoller(pollHandler));
+
+      expect(pollHandler).toHaveBeenCalledTimes(1);
+
+      act(() => {
+        visibilityState = 'hidden';
+        document.dispatchEvent(new Event('visibilitychange'));
+      });
+
+      jest.advanceTimersByTime(5e3);
+
+      expect(pollHandler).toHaveBeenCalledTimes(1);
+
+      act(() => {
+        visibilityState = 'visible';
+        document.dispatchEvent(new Event('visibilitychange'));
+      });
+
+      // immediate triggers the pollHandler
+      expect(pollHandler).toHaveBeenCalledTimes(2);
     });
   });
 });
