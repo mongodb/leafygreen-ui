@@ -59,16 +59,30 @@ export default function usePoller(
       return;
     }
 
+    // Using this reflection to get return type of setTimeout so we don't have to
+    // use window.setTimeout, makes this more cross-environment compatible
+    // Sourced from: https://stackoverflow.com/a/51040768
+    let id: ReturnType<typeof setTimeout>;
+
+    function scheduleNextPoll() {
+      unscheduleNextPoll();
+      id = setTimeout(poll, interval);
+    }
+
+    function unscheduleNextPoll() {
+      clearTimeout(id);
+    }
+
     function poll() {
-      savedCallback.current?.();
+      Promise.resolve(savedCallback.current?.()).finally(scheduleNextPoll);
     }
 
     if (immediate) {
       poll();
+    } else {
+      scheduleNextPoll();
     }
 
-    const id = setInterval(poll, interval);
-
-    return () => clearInterval(id);
+    return unscheduleNextPoll;
   }, [interval, immediate, isPolling]);
 }

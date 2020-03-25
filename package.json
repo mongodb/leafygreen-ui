@@ -99,7 +99,7 @@
     "file-loader": "^4.2.0",
     "gh-pages": "^2.1.1",
     "husky": "^3.0.9",
-    "jest": "23.6.0",
+    "jest": "^25.2.0",
     "jest-junit": "^6.3.0",
     "lerna": "3.18.3",
     "polished": "^3.4.2",
@@ -125,5 +125,8 @@
     "packages": [
       "packages/*"
     ]
+  },
+  "dependencies": {
+    "regenerator-runtime": "^0.13.5"
   }
 }

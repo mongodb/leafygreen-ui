@@ -166,26 +166,55 @@ describe('packages/hooks', () => {
       visibilityState = 'visible';
     });
 
-    test('used with default values', () => {
+    test('used with default values', async () => {
       const pollHandler = jest.fn();
 
       renderHook(() => usePoller(pollHandler));
 
       expect(pollHandler).toHaveBeenCalledTimes(1);
 
+      // Need to let the Promise queue flush as well :(
+      await Promise.resolve();
       jest.advanceTimersByTime(30e3);
 
       expect(pollHandler).toHaveBeenCalledTimes(2);
     });
 
-    test('used with custom interval value', () => {
+    test('used with pollHandler that returns a Promise', async () => {
+      const pollHandler = jest.fn(() => {
+        return new Promise(resolve => {
+          setTimeout(resolve, 1e3);
+        });
+      });
+
+      renderHook(() => usePoller(pollHandler, { interval: 5e3 }));
+
+      expect(pollHandler).toHaveBeenCalledTimes(1);
+
+      // Let the pollHandler promise resolve
+      await Promise.resolve();
+      jest.advanceTimersByTime(1e3);
+
+      // Then increment for the poll interval
+      await Promise.resolve();
+      jest.advanceTimersByTime(5e3);
+
+      expect(pollHandler).toHaveBeenCalledTimes(2);
+    });
+
+    test('used with custom interval value', async () => {
       const pollHandler = jest.fn();
 
       renderHook(() => usePoller(pollHandler, { interval: 1e3 }));
 
       expect(pollHandler).toHaveBeenCalledTimes(1);
 
-      jest.advanceTimersByTime(2e3);
+      // Advance through 2 polls
+      // Need to let the Promise queue flush as well :(
+      await Promise.resolve();
+      jest.advanceTimersByTime(1e3);
+      await Promise.resolve();
+      jest.advanceTimersByTime(1e3);
 
       expect(pollHandler).toHaveBeenCalledTimes(3);
     });
