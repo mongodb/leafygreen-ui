@@ -190,60 +190,52 @@ describe('packages/hooks', () => {
       expect(pollHandler).toHaveBeenCalledTimes(3);
     });
 
-    test('start and stop work as expected', () => {
+    test('changing the enabled value', () => {
       const pollHandler = jest.fn();
+      let enabled = true;
 
-      const { result } = renderHook(() => usePoller(pollHandler));
+      const { rerender } = renderHook(() =>
+        usePoller(pollHandler, { enabled }),
+      );
 
-      expect(result.current.isPolling).toBe(true);
       expect(pollHandler).toHaveBeenCalledTimes(1);
 
-      act(() => {
-        result.current.stop();
-      });
+      enabled = false;
+      rerender();
 
-      expect(result.current.isPolling).toBe(false);
       jest.advanceTimersByTime(5e3);
       expect(pollHandler).toHaveBeenCalledTimes(1);
 
       pollHandler.mockReset();
+      enabled = true;
+      rerender();
 
-      act(() => {
-        result.current.start();
-      });
-
-      expect(result.current.isPolling).toBe(true);
       expect(pollHandler).toHaveBeenCalledTimes(1);
     });
 
     test('when immediate is false', () => {
       const pollHandler = jest.fn();
+      let enabled = true;
 
-      const { result } = renderHook(() =>
-        usePoller(pollHandler, { immediate: false }),
+      const { rerender } = renderHook(() =>
+        usePoller(pollHandler, { immediate: false, enabled }),
       );
 
-      expect(result.current.isPolling).toBe(true);
       expect(pollHandler).toHaveBeenCalledTimes(0);
 
       jest.advanceTimersByTime(5e3);
 
       expect(pollHandler).toHaveBeenCalledTimes(1);
 
-      act(() => {
-        result.current.stop();
-      });
+      enabled = false;
+      rerender();
 
-      expect(result.current.isPolling).toBe(false);
       expect(pollHandler).toHaveBeenCalledTimes(1);
 
       pollHandler.mockReset();
+      enabled = true;
+      rerender();
 
-      act(() => {
-        result.current.start();
-      });
-
-      expect(result.current.isPolling).toBe(true);
       expect(pollHandler).toHaveBeenCalledTimes(0);
     });
 

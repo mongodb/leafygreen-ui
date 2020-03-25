@@ -107,12 +107,11 @@ Hook to create a Poller that polls at a given interval.
 ### Example
 
 ```js
-const {
-  isPolling,
-  start,
-  stop
-} = usePoller(onPoll, { interval = 5000, immediate = true });
-
+usePoller(onPoll, {
+  interval: 5000,
+  immediate: true,
+  enabled: true,
+});
 ```
 
 ### Properties
@@ -122,3 +121,4 @@ const {
 | `onPoll`             | `function` | Callback executed when poll interval occurs.                         |         |
 | `optional.interval`  | `number`   | What interval the onPoll should be called.                           | `5000`  |
 | `optional.immediate` | `boolean`  | If we immediately poll, if false we wait till first interval occurs. | `true`  |
+| `optional.enabled`   | `boolean`  | Is polling enabled.                                                  | `true`  |

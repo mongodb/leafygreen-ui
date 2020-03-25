@@ -19,9 +19,7 @@ function useVisibilityChange() {
   return isVisible;
 }
 
-type VoidHandler = () => void;
-
-type OnPoll = VoidHandler;
+type OnPoll = () => void;
 
 interface PollerOptions {
   /**
@@ -35,31 +33,22 @@ interface PollerOptions {
    * @default true
    */
   immediate?: boolean;
-}
 
-interface Poller {
-  isPolling: boolean;
-  start: VoidHandler;
-  stop: VoidHandler;
+  /**
+   * Should we be polling.
+   * @default true
+   */
+  enabled?: boolean;
 }
 
 export default function usePoller(
   onPoll: OnPoll,
-  { interval = 5e3, immediate = true }: PollerOptions = {},
-): Poller {
+  { interval = 5e3, immediate = true, enabled = true }: PollerOptions = {},
+) {
   const savedCallback = useRef<OnPoll>();
-  const [controlledIsPolling, setControlledIsPolling] = useState(true);
   const isVisible = useVisibilityChange();
 
-  const isPolling = isVisible && controlledIsPolling;
-
-  function start() {
-    setControlledIsPolling(true);
-  }
-
-  function stop() {
-    setControlledIsPolling(false);
-  }
+  const isPolling = isVisible && enabled;
 
   useEffect(() => {
     savedCallback.current = onPoll;
@@ -82,10 +71,4 @@ export default function usePoller(
 
     return () => clearInterval(id);
   }, [interval, immediate, isPolling]);
-
-  return {
-    isPolling,
-    start,
-    stop,
-  };
 }
