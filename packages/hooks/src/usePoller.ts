@@ -23,8 +23,8 @@ type OnPoll = () => void;
 
 interface PollerOptions {
   /**
-   * How frequently should we call the onPoll handler.
-   * @default 5000
+   * How frequently should we call the onPoll handler. Defaults to 30 seconds.
+   * @default 30000
    */
   interval?: number;
 
@@ -43,7 +43,7 @@ interface PollerOptions {
 
 export default function usePoller(
   onPoll: OnPoll,
-  { interval = 5e3, immediate = true, enabled = true }: PollerOptions = {},
+  { interval = 30e3, immediate = true, enabled = true }: PollerOptions = {},
 ) {
   const savedCallback = useRef<OnPoll>();
   const isVisible = useVisibilityChange();

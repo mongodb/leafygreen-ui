@@ -173,7 +173,7 @@ describe('packages/hooks', () => {
 
       expect(pollHandler).toHaveBeenCalledTimes(1);
 
-      jest.advanceTimersByTime(5e3);
+      jest.advanceTimersByTime(30e3);
 
       expect(pollHandler).toHaveBeenCalledTimes(2);
     });
@@ -203,7 +203,7 @@ describe('packages/hooks', () => {
       enabled = false;
       rerender();
 
-      jest.advanceTimersByTime(5e3);
+      jest.advanceTimersByTime(30e3);
       expect(pollHandler).toHaveBeenCalledTimes(1);
 
       pollHandler.mockReset();
@@ -223,7 +223,7 @@ describe('packages/hooks', () => {
 
       expect(pollHandler).toHaveBeenCalledTimes(0);
 
-      jest.advanceTimersByTime(5e3);
+      jest.advanceTimersByTime(30e3);
 
       expect(pollHandler).toHaveBeenCalledTimes(1);
 
@@ -251,7 +251,7 @@ describe('packages/hooks', () => {
         document.dispatchEvent(new Event('visibilitychange'));
       });
 
-      jest.advanceTimersByTime(5e3);
+      jest.advanceTimersByTime(30e3);
 
       expect(pollHandler).toHaveBeenCalledTimes(1);
 

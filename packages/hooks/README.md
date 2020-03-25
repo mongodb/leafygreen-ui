@@ -108,7 +108,7 @@ Hook to create a Poller that polls at a given interval.
 
 ```js
 usePoller(onPoll, {
-  interval: 5000,
+  interval: 30000,
   immediate: true,
   enabled: true,
 });
@@ -119,6 +119,6 @@ usePoller(onPoll, {
 | Prop                 | Type       | Description                                                          | Default |
 | -------------------- | ---------- | -------------------------------------------------------------------- | ------- |
 | `onPoll`             | `function` | Callback executed when poll interval occurs.                         |         |
-| `optional.interval`  | `number`   | What interval the onPoll should be called.                           | `5000`  |
+| `optional.interval`  | `number`   | What interval the onPoll should be called.                           | `30000` |
 | `optional.immediate` | `boolean`  | If we immediately poll, if false we wait till first interval occurs. | `true`  |
 | `optional.enabled`   | `boolean`  | Is polling enabled.                                                  | `true`  |
