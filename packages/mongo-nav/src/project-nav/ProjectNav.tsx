@@ -342,7 +342,9 @@ export default function ProjectNav({
       <ul className={productListStyle}>
         <li role="none" className={productTabStyle}>
           <a
-            href={hosts.cloud}
+            href={
+              current ? `${hosts.cloud}/v2/${current.projectId}#` : hosts.cloud
+            }
             className={getProductClassName('cloud')}
             aria-disabled={!current}
             tabIndex={current ? 0 : -1}
