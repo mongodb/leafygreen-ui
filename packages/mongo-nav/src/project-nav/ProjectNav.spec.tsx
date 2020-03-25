@@ -54,6 +54,9 @@ describe('packages/mongo-nav/src/project-nav', () => {
 
   const setExpectedElements = () => {
     const { queryByTestId = () => null } = queries;
+    expectedElements.projectStatusBadge = queryByTestId(
+      'project-nav-project-status-badge',
+    );
     expectedElements.atlas = queryByTestId('project-nav-atlas');
     expectedElements.cloudManager = queryByTestId('project-nav-cloud-manager');
     expectedElements.realm = queryByTestId('project-nav-realm');
@@ -138,6 +141,21 @@ describe('packages/mongo-nav/src/project-nav', () => {
     });
   };
 
+  const testForProjectStatusBadge = (isVisible: boolean) => {
+    it(`${
+      isVisible ? 'displays' : 'does not display'
+    } the project status badge in the nav`, () => {
+      const statusBadge = expectedElements.projectStatusBadge;
+
+      if (isVisible) {
+        expect(statusBadge).toBeInTheDocument();
+        expect((statusBadge as Element).innerHTML).toContain('ACTIVE');
+      } else {
+        expect(statusBadge).toBeNull();
+      }
+    });
+  };
+
   describe('when rendered with default props', () => {
     const alerts = 1;
     beforeEach(() => renderComponent({ alerts, current: currentProject }));
@@ -151,6 +169,8 @@ describe('packages/mongo-nav/src/project-nav', () => {
     );
 
     testForAlerts(alerts, true);
+
+    testForProjectStatusBadge(false);
 
     test('atlas tab shows the correct link', () => {
       expect(expectedElements!.atlas!.getAttribute('href')).toEqual(
@@ -184,6 +204,12 @@ describe('packages/mongo-nav/src/project-nav', () => {
         'https://cloud.mongodb.com',
       );
     });
+  });
+
+  describe('when admin is set to true', () => {
+    beforeEach(() => renderComponent({ admin: true, current: currentProject }));
+
+    testForProjectStatusBadge(true);
   });
 
   describe('when the date is before MongoDB World', () => {

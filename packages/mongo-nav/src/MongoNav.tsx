@@ -252,6 +252,7 @@ function MongoNav({
           <ProjectNav
             activeProduct={activeProduct}
             activeNav={activeNav}
+            admin={admin}
             current={data?.currentProject}
             data={filteredProjects}
             constructProjectURL={constructProjectURL}

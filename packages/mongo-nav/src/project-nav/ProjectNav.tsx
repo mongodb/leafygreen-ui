@@ -2,6 +2,7 @@ import React from 'react';
 import Tooltip from '@leafygreen-ui/tooltip';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
+import Badge from '@leafygreen-ui/badge';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -22,6 +23,7 @@ import {
   ActiveNavElement,
   NavElement,
   MongoNavInterface,
+  ProjectStatus,
 } from '../types';
 import { AtlasIcon, RealmIcon, ChartsIcon } from '../helpers/Icons';
 
@@ -59,12 +61,16 @@ const navContainerStyle = css`
 const menuIconButtonStyle = css`
   z-index: 1;
   ${facepaint({
-    marginRight: ['20px', '14px', '20px'],
+    marginRight: ['16px', '14px', '16px'],
   })}
 `;
 
 const menuIconStyle = css`
   transform: rotate(90deg);
+`;
+
+const projectStatusBadgeMargin = css`
+  margin-right: 20px;
 `;
 
 const productListStyle = css`
@@ -209,6 +215,12 @@ const tooltipStyles = css`
   text-align: center;
 `;
 
+const Colors = {
+  Yellow: 'yellow',
+  Red: 'red',
+  Green: 'green',
+} as const;
+
 export function displayProductName(today = new Date(Date.now())) {
   const mdbLiveDate = new Date('May 4, 2020 0:00:00');
 
@@ -223,7 +235,7 @@ const secondTabName = displayProductName();
 
 type ProjectNavProps = Pick<
   MongoNavInterface,
-  'activeProduct' | 'activeNav' | 'onProjectChange'
+  'activeProduct' | 'activeNav' | 'onProjectChange' | 'admin'
 > & {
   current?: CurrentProjectInterface;
   data?: Array<ProjectInterface>;
@@ -237,6 +249,7 @@ type ProjectNavProps = Pick<
 };
 
 export default function ProjectNav({
+  admin,
   current,
   data,
   constructProjectURL,
@@ -273,6 +286,13 @@ export default function ProjectNav({
   const iconStyle = cx(productIconStyle, {
     [iconLoadingStyle]: !current,
   });
+
+  const projectStatusBadgeVariant = {
+    [ProjectStatus.Active]: Colors.Green,
+    [ProjectStatus.Closing]: Colors.Yellow,
+    [ProjectStatus.Closed]: Colors.Red,
+    [ProjectStatus.Dead]: Colors.Red,
+  };
 
   return (
     <nav
@@ -338,6 +358,19 @@ export default function ProjectNav({
           Integrations
         </MenuItem>
       </Menu>
+
+      {!isMobile &&
+        admin &&
+        current?.status &&
+        Object.values(ProjectStatus).includes(current?.status) && (
+          <Badge
+            variant={projectStatusBadgeVariant[current.status]}
+            data-testid="project-nav-project-status-badge"
+            className={projectStatusBadgeMargin}
+          >
+            {current.status}
+          </Badge>
+        )}
 
       <ul className={productListStyle}>
         <li role="none" className={productTabStyle}>
