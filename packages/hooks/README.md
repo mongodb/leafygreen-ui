@@ -104,6 +104,8 @@ const viewportSize = useViewportSize();
 
 Hook to create a Poller that polls at a given interval.
 
+If your `onPoll` handler returns a `Promise` it will wait for the Promise to resolve or reject before scheduling the next interval.
+
 ### Example
 
 ```js
