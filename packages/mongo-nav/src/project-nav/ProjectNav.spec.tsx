@@ -151,6 +151,12 @@ describe('packages/mongo-nav/src/project-nav', () => {
     );
 
     testForAlerts(alerts, true);
+
+    test('atlas tab shows the correct link', () => {
+      expect(expectedElements!.atlas!.getAttribute('href')).toEqual(
+        'https://cloud.mongodb.com/v2/020019e#',
+      );
+    });
   });
 
   describe('when the current organization uses Cloud Manager', () => {
@@ -168,6 +174,16 @@ describe('packages/mongo-nav/src/project-nav', () => {
     );
 
     testForAlerts(alerts, true);
+  });
+
+  describe('when rendered without a current project', () => {
+    beforeEach(() => renderComponent());
+
+    test('atlas tab shows the correct link', () => {
+      expect(expectedElements!.atlas!.getAttribute('href')).toEqual(
+        'https://cloud.mongodb.com',
+      );
+    });
   });
 
   describe('when the date is before MongoDB World', () => {
