@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Tooltip from '@leafygreen-ui/tooltip';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
@@ -9,7 +9,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { ProjectSelect } from '../mongo-select';
 import { facepaint, breakpoints } from '../breakpoints';
-import { useViewportSize } from '@leafygreen-ui/hooks';
+import { useViewportSize, usePoller } from '@leafygreen-ui/hooks';
 import { iconLoadingStyle, textLoadingStyle, anchorOverrides } from '../styles';
 import { useOnElementClick } from '../on-element-click-provider';
 import {
@@ -21,6 +21,7 @@ import {
   PlanType,
   ActiveNavElement,
   NavElement,
+  Mode,
   MongoNavInterface,
 } from '../types';
 import { AtlasIcon, RealmIcon, ChartsIcon } from '../helpers/Icons';
@@ -233,7 +234,7 @@ const secondTabName = displayProductName();
 
 type ProjectNavProps = Pick<
   MongoNavInterface,
-  'activeProduct' | 'activeNav' | 'onProjectChange'
+  'activeProduct' | 'activeNav' | 'onProjectChange' | 'mode'
 > & {
   current?: CurrentProjectInterface;
   data?: Array<ProjectInterface>;
@@ -255,9 +256,11 @@ export default function ProjectNav({
   activeNav,
   onProjectChange,
   hosts,
-  alerts = 0,
+  mode,
 }: ProjectNavProps) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [alerts, setAlerts] = useState(current?.alertsOpen ?? 0);
+
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { width: viewportWidth } = useViewportSize();
   const onElementClick = useOnElementClick();
@@ -265,6 +268,32 @@ export default function ProjectNav({
   const isMobile = viewportWidth < breakpoints.small;
   const isCloudManager = current?.planType === PlanType.Cloud;
   const isLoading = !!current;
+
+  const currentProjectId = current?.projectId;
+
+  function fetchAlertsCount() {
+    return fetch(
+      `${hosts.cloud}/user/shared/alerts/project/${currentProjectId}`,
+      {
+        credentials: 'include',
+        mode: 'cors',
+        method: 'GET',
+      },
+    )
+      .then(response => response.json())
+      .then(result => setAlerts(result.length))
+      .catch(console.error);
+  }
+
+  usePoller(fetchAlertsCount, {
+    interval:
+      activeProduct === Product.Cloud
+        ? // 2 minutes for Atlas
+          120e3
+        : // 10 minutes for non-Atlas
+          600e3,
+    enabled: mode === Mode.Production && currentProjectId != null,
+  });
 
   const sharedTooltipProps = {
     variant: 'dark',
