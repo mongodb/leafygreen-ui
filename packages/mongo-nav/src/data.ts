@@ -21,6 +21,7 @@ export const dataFixtures = {
     planType: 'atlas',
     projectId: '020019e',
     projectName: 'Test Project',
+    status: 'ACTIVE',
   },
   organizations: [
     {
