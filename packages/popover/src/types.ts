@@ -13,22 +13,13 @@ const Align = {
   Bottom: 'bottom',
   Left: 'left',
   Right: 'right',
+  CenterVertical: 'center-vertical',
+  CenterHorizontal: 'center-horizontal',
 } as const;
 
 type Align = typeof Align[keyof typeof Align];
 
 export { Align };
-
-const Justification = {
-  Top: 'top',
-  Bottom: 'bottom',
-  Left: 'left',
-  Right: 'right',
-  CenterVertical: 'center-vertical',
-  CenterHorizontal: 'center-horizontal',
-} as const;
-
-type Justification = typeof Justification[keyof typeof Justification];
 
 /**
  * Options to determine the justification of the popover relative to
@@ -36,14 +27,14 @@ type Justification = typeof Justification[keyof typeof Justification];
  * @param Start will justify content against the start of other element
  * @param Middle will justify content against the middle of other element
  * @param Bottom will justify content against the end of other element
+ * @param Fit will justify content against both the start and the end of the other element
  */
 const Justify = {
   Start: 'start',
   Middle: 'middle',
   End: 'end',
+  Fit: 'fit',
 } as const;
-
-export { Justification };
 
 type Justify = typeof Justify[keyof typeof Justify];
 
@@ -59,8 +50,8 @@ export interface ElementPosition {
 }
 
 interface ChildrenFunctionParameters {
-  alignment: Align;
-  justification: Justify | Justification;
+  align: Align;
+  justify: Justify;
   referenceElPos: ElementPosition;
 }
 

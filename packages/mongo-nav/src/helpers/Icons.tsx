@@ -236,7 +236,7 @@ export function CloudIcon(props: HTMLElementProps<'svg'>) {
 
 export function SupportIcon(props: HTMLElementProps<'svg'>) {
   return (
-    <svg {...props} width="24px" height="24px" viewBox="0 0 24 24">
+    <svg {...props} width="25px" height="24px" viewBox="0 0 24 24">
       <g
         stroke="none"
         strokeWidth="1"
@@ -259,7 +259,7 @@ export function SupportIcon(props: HTMLElementProps<'svg'>) {
 
 export function UniversityIcon(props: HTMLElementProps<'svg'>) {
   return (
-    <svg {...props} width="19px" height="25px" viewBox="0 0 19 25">
+    <svg {...props} width="25px" height="25px" viewBox="0 0 19 25">
       <g
         stroke="none"
         strokeWidth="1"
@@ -281,7 +281,7 @@ export function UniversityIcon(props: HTMLElementProps<'svg'>) {
 
 export function MegaphoneIcon(props: HTMLElementProps<'svg'>) {
   return (
-    <svg {...props} width="21px" height="18px" viewBox="0 0 21 18">
+    <svg {...props} width="25px" height="18px" viewBox="0 0 21 18">
       <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
         <g stroke="currentColor">
           <g>
