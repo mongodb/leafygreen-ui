@@ -246,7 +246,7 @@ export default function ProjectNav({
   activeNav,
   onProjectChange,
   hosts,
-  mode = Mode.Production,
+  mode,
 }: ProjectNavProps) {
   const [open, setOpen] = useState(false);
   const [alerts, setAlerts] = useState(current?.alertsOpen ?? 0);

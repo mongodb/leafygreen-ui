@@ -104,6 +104,7 @@ describe('packages/mongo-nav/src/project-nav', () => {
             activeProduct="cloud"
             hosts={hostDefaults}
             onProjectChange={onProjectChange}
+            mode={Mode.Production}
             {...props}
           />,
         ),
