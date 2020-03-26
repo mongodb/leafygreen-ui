@@ -111,11 +111,13 @@ const userMenuActiveNavItems = [
   ActiveNavElement.UserMenuCloudMFA,
   ActiveNavElement.UserMenuCloudOrganizations,
   ActiveNavElement.UserMenuCloudUserPreferences,
+  ActiveNavElement.UserMenuCloudOther,
   ActiveNavElement.UserMenuOnPremInvitations,
   ActiveNavElement.UserMenuOnPremOrganizations,
   ActiveNavElement.UserMenuOnPremPersonalization,
   ActiveNavElement.UserMenuOnPremProfile,
   ActiveNavElement.UserMenuOnPremTwoFactorAuth,
+  ActiveNavElement.UserMenuOnPremOther,
 ];
 
 type OrgNavProps = Pick<
@@ -157,7 +159,9 @@ function OrgNav({
   const { orgNav } = urls;
   const isTablet = viewportWidth < breakpoints.medium;
   const isMobile = viewportWidth < breakpoints.small;
-  const disabled = (userMenuActiveNavItems as Array<string>).includes(activeNav as string);
+  const disabled = (userMenuActiveNavItems as Array<string>).includes(
+    activeNav as string,
+  );
 
   let paymentVariant: Colors | undefined;
   let key: Colors;

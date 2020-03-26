@@ -345,7 +345,9 @@ function UserMenu({
           >
             <MenuItem
               href={userMenu?.cloud?.userPreferences}
-              active={activeNav === ActiveNavElement.UserMenuCloudUserPreferences}
+              active={
+                activeNav === ActiveNavElement.UserMenuCloudUserPreferences
+              }
               data-testid="user-menuitem-cloud-user-preferences"
               onClick={onElementClick(NavElement.UserMenuCloudUserPreferences)}
             >

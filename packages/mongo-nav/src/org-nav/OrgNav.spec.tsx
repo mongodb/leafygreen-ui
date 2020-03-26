@@ -10,7 +10,7 @@ import {
 } from '../data';
 import OrgNav from './OrgNav';
 import { startCase } from 'lodash';
-import { NavElement } from '../types';
+import { NavElement, ActiveNavElement } from '../types';
 
 // types
 interface ExpectedElements {
@@ -186,20 +186,6 @@ describe('packages/mongo-nav/src/org-nav', () => {
     );
   });
 
-  describe('when rendered with an active preferences nav', () => {
-    beforeEach(() =>
-      renderComponent({
-        activeNav: 'userSettings',
-      }),
-    );
-    testForPaymentStatus(false);
-    testForVersion(false);
-
-    Object.keys(linkNamesToUrls).forEach(linkName =>
-      testForNavLink(linkName, linkName === 'allClusters'),
-    );
-  });
-
   describe('when rendered as an admin without an active preferences nav', () => {
     beforeEach(() => renderComponent({ admin: true }));
     testForPaymentStatus(true);
@@ -208,18 +194,31 @@ describe('packages/mongo-nav/src/org-nav', () => {
   });
 
   describe('when rendered as an admin with an active preferences nav', () => {
-    beforeEach(() =>
-      renderComponent({
-        activeNav: 'userSettings',
-        admin: true,
-      }),
-    );
+    const cloudUserNavItems = [
+      ActiveNavElement.UserMenuCloudInvitations,
+      ActiveNavElement.UserMenuCloudMFA,
+      ActiveNavElement.UserMenuCloudOrganizations,
+      ActiveNavElement.UserMenuCloudOther,
+      ActiveNavElement.UserMenuCloudUserPreferences,
+    ];
 
-    testForPaymentStatus(false);
+    cloudUserNavItems.forEach(activeNav => {
+      describe(`when the element ${(activeNav as string)} is active`, () => {
+        beforeEach(() =>
+          renderComponent({
+            activeNav,
+            admin: true
+          }),
+        );
 
-    Object.keys(linkNamesToUrls).forEach(linkName =>
-      testForNavLink(linkName, ['allClusters', 'admin'].includes(linkName)),
-    );
+        testForPaymentStatus(false);
+        testForVersion(false);
+
+        Object.keys(linkNamesToUrls).forEach(linkName =>
+          testForNavLink(linkName, ['allClusters', 'admin'].includes(linkName)),
+        );
+      });
+    });
   });
 
   describe('when rendered onPrem', () => {
@@ -263,5 +262,36 @@ describe('packages/mongo-nav/src/org-nav', () => {
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, linkName !== 'billing'),
     );
+  });
+
+  describe('when rendered as an ops manager admin with an active account nav', () => {
+    const onPremUserNavItems = [
+      ActiveNavElement.UserMenuOnPremInvitations,
+      ActiveNavElement.UserMenuOnPremOrganizations,
+      ActiveNavElement.UserMenuOnPremOther,
+      ActiveNavElement.UserMenuOnPremPersonalization,
+      ActiveNavElement.UserMenuOnPremProfile,
+      ActiveNavElement.UserMenuOnPremTwoFactorAuth,
+    ];
+
+    onPremUserNavItems.forEach(activeNav => {
+      describe(`when the element ${(activeNav as string)} is active`, () => {
+        beforeEach(() =>
+          renderComponent({
+            activeNav,
+            onPremEnabled: true,
+            onPremVersion: '4.4.0',
+            admin: true,
+          }),
+        );
+
+        testForPaymentStatus(false);
+        testForVersion(true);
+
+        Object.keys(linkNamesToUrls).forEach(linkName =>
+          testForNavLink(linkName, ['allClusters', 'admin'].includes(linkName)),
+        );
+      });
+    });
   });
 });
