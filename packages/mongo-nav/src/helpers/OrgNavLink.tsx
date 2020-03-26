@@ -3,7 +3,17 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { textLoadingStyle } from '../styles';
+import { textLoadingStyle, anchorOverrides } from '../styles';
+
+const orgNavAnchorOverrides = css`
+  a {
+    &:visited,
+    &:active,
+    &:link {
+      color: ${uiColors.gray.dark3};
+    }
+  }
+`;
 
 const linkText = css`
   text-decoration: none;
@@ -83,6 +93,8 @@ function OrgNavLink({
       href={href}
       aria-disabled={loading}
       className={cx(
+        anchorOverrides,
+        orgNavAnchorOverrides,
         linkText,
         {
           [activeLink]: isActive,

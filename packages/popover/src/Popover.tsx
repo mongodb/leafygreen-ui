@@ -1,4 +1,11 @@
-import React, { useMemo, Fragment } from 'react';
+import React, {
+  useMemo,
+  Fragment,
+  useState,
+  useLayoutEffect,
+  useRef,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import Portal from '@leafygreen-ui/portal';
@@ -41,8 +48,8 @@ const mutationOptions = {
  * @param props.children Content to appear inside of Popover container.
  * @param props.active Boolean to describe whether or not Popover is active.
  * @param props.className Classname applied to Popover container.
- * @param props.align Alignment of Popover component relative to another element: `top`, `bottom`, `left`, `right`.
- * @param props.justify Justification of Popover component relative to another element: `start`, `middle`, `end`.
+ * @param props.align Alignment of Popover component relative to another element: `top`, `bottom`, `left`, `right`, `center-horizontal`, `center-vertical`.
+ * @param props.justify Justification of Popover component relative to another element: `start`, `middle`, `end`, `fit`.
  * @param props.refEl Reference element that Popover component should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
  * @param props.adjustOnMutation Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
@@ -61,6 +68,7 @@ function Popover({
 }: PopoverProps) {
   const [placeholderNode, setPlaceholderNode] = useElementNode();
   const [contentNode, setContentNode] = useElementNode();
+  const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
 
   let referenceElement: HTMLElement | null = null;
 
@@ -97,6 +105,7 @@ function Popover({
     active,
     align,
     justify,
+    forceUpdateCounter,
   ]);
 
   const contentElPos = useMemo(() => getElementPosition(contentNode), [
@@ -106,9 +115,38 @@ function Popover({
     active,
     align,
     justify,
+    forceUpdateCounter,
   ]);
 
-  const { alignment, justification, positionCSS } = calculatePosition({
+  const prevJustifyRef = useRef<Justify>();
+  const prevAlignRef = useRef<Align>();
+  const prevJustify = prevJustifyRef.current;
+  const prevAlign = prevAlignRef.current;
+
+  useEffect(() => {
+    prevJustifyRef.current = justify;
+    prevAlignRef.current = align;
+  });
+
+  useLayoutEffect(() => {
+    // justify={Justify.Fit} can cause the content's height/width to change
+    // If we're switching to/from Fit, force an extra pass to make sure the popover is positioned correctly.
+    // Also if we're switching between alignments and have Justify.Fit, it may switch between setting the width and
+    // setting the height, so force an update in that case as well.
+    if (
+      (prevJustify !== justify &&
+        (justify === Justify.Fit || prevJustify === Justify.Fit)) ||
+      (prevAlign !== align && justify === Justify.Fit)
+    ) {
+      setForceUpdateCounter(n => n + 1);
+    }
+  });
+
+  const {
+    align: windowSafeAlign,
+    justify: windowSafeJustify,
+    positionCSS,
+  } = calculatePosition({
     useRelativePositioning: !usePortal,
     spacing,
     align,
@@ -132,7 +170,11 @@ function Popover({
     }
 
     if (typeof children === 'function') {
-      return children({ alignment, justification, referenceElPos });
+      return children({
+        align: windowSafeAlign,
+        justify: windowSafeJustify,
+        referenceElPos,
+      });
     }
 
     return children;

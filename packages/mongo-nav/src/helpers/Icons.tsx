@@ -226,7 +226,7 @@ export function CloudIcon(props: HTMLElementProps<'svg'>) {
 
 export function SupportIcon(props: HTMLElementProps<'svg'>) {
   return (
-    <svg {...props} width="24px" height="24px" viewBox="0 0 24 24">
+    <svg {...props} width="25px" height="24px" viewBox="0 0 24 24">
       <g
         stroke="none"
         strokeWidth="1"
