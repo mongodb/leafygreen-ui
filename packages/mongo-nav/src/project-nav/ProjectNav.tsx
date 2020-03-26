@@ -2,7 +2,6 @@ import React from 'react';
 import Tooltip from '@leafygreen-ui/tooltip';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
-import Badge from '@leafygreen-ui/badge';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -25,7 +24,12 @@ import {
   MongoNavInterface,
   ProjectStatus,
 } from '../types';
-import { AtlasIcon, RealmIcon, ChartsIcon } from '../helpers/Icons';
+import {
+  AtlasIcon,
+  RealmIcon,
+  ChartsIcon,
+  ProjectStatusBadge,
+} from '../helpers';
 
 const {
   ProjectNavProjectDropdown,
@@ -67,10 +71,6 @@ const menuIconButtonStyle = css`
 
 const menuIconStyle = css`
   transform: rotate(90deg);
-`;
-
-const projectStatusBadgeMargin = css`
-  margin-right: 20px;
 `;
 
 const productListStyle = css`
@@ -215,12 +215,6 @@ const tooltipStyles = css`
   text-align: center;
 `;
 
-const Colors = {
-  Yellow: 'yellow',
-  Red: 'red',
-  Green: 'green',
-} as const;
-
 export function displayProductName(today = new Date(Date.now())) {
   const mdbLiveDate = new Date('May 4, 2020 0:00:00');
 
@@ -286,13 +280,6 @@ export default function ProjectNav({
   const iconStyle = cx(productIconStyle, {
     [iconLoadingStyle]: !current,
   });
-
-  const projectStatusBadgeVariant = {
-    [ProjectStatus.Active]: Colors.Green,
-    [ProjectStatus.Closing]: Colors.Yellow,
-    [ProjectStatus.Closed]: Colors.Red,
-    [ProjectStatus.Dead]: Colors.Red,
-  };
 
   return (
     <nav
@@ -363,13 +350,7 @@ export default function ProjectNav({
         admin &&
         current?.status &&
         Object.values(ProjectStatus).includes(current?.status) && (
-          <Badge
-            variant={projectStatusBadgeVariant[current.status]}
-            data-testid="project-nav-project-status-badge"
-            className={projectStatusBadgeMargin}
-          >
-            {current.status}
-          </Badge>
+          <ProjectStatusBadge currentStatus={current.status} />
         )}
 
       <ul className={productListStyle}>

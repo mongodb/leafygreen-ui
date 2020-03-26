@@ -151,7 +151,7 @@ describe('packages/mongo-nav/src/project-nav', () => {
         expect(statusBadge).toBeInTheDocument();
         expect((statusBadge as Element).innerHTML).toContain('ACTIVE');
       } else {
-        expect(statusBadge).toBeNull();
+        expect(statusBadge).not.toBeInTheDocument();
       }
     });
   };
