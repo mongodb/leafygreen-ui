@@ -14,3 +14,16 @@ export const textLoadingStyle = css`
 export const iconLoadingStyle = css`
   color: ${uiColors.gray.light2};
 `;
+
+export const anchorOverrides = css`
+  a {
+    &:focus,
+    &:hover,
+    &:visited,
+    &:active,
+    &:link {
+      text-decoration: none;
+      cursor: auto;
+    }
+  }
+`;
