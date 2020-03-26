@@ -3,9 +3,9 @@ import { uiColors } from '@leafygreen-ui/palette';
 
 const indentation = 15;
 const leftBar = 5;
-export const svgWidth = 32;
+export const svgWidth = 24;
 export const menuItemPadding = 15;
-export const paddingLeft = 60;
+export const paddingLeft = 52;
 
 export const menuItemContainerStyle = css`
   display: flex;
