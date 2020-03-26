@@ -145,6 +145,17 @@ type OrgPaymentLabel = typeof OrgPaymentLabel[keyof typeof OrgPaymentLabel];
 
 export { OrgPaymentLabel };
 
+const ProjectStatus = {
+  Active: 'ACTIVE',
+  Dead: 'DEAD',
+  Closing: 'CLOSING',
+  Closed: 'CLOSED',
+};
+
+type ProjectStatus = typeof ProjectStatus[keyof typeof ProjectStatus];
+
+export { ProjectStatus };
+
 export interface AccountInterface {
   email: string;
   firstName: string;
@@ -163,6 +174,7 @@ export interface ProjectInterface {
 export interface CurrentProjectInterface extends ProjectInterface {
   alertsOpen: number;
   chartsActivated: boolean;
+  status?: ProjectStatus;
 }
 
 export interface OrganizationInterface {
