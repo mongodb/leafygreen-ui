@@ -17,11 +17,9 @@ export interface UseEventOptions {
  * @param optional.dependencies Array to be passed to useEffect hook, such that the hook will only run if the array's values have changed.
  * @param optional.element Value to be passed as target of event handler, will default to document.
  */
-export default function useEventListener<
-  Type extends keyof GlobalEventHandlersEventMap
->(
+export default function useEventListener<Type extends keyof DocumentEventMap>(
   type: Type,
-  eventCallback: (e: GlobalEventHandlersEventMap[Type]) => void,
+  eventCallback: (e: DocumentEventMap[Type]) => void,
   {
     options,
     enabled = true,
@@ -30,7 +28,7 @@ export default function useEventListener<
   }: UseEventOptions = {},
 ) {
   const memoizedEventCallback: React.MutableRefObject<(
-    e: GlobalEventHandlersEventMap[Type],
+    e: DocumentEventMap[Type],
   ) => void> = useRef(() => {});
 
   useEffect(() => {
@@ -42,7 +40,7 @@ export default function useEventListener<
       return;
     }
 
-    const callback = (e: GlobalEventHandlersEventMap[Type]) =>
+    const callback = (e: DocumentEventMap[Type]) =>
       memoizedEventCallback.current(e);
 
     // NOTE(JeT): I'm pretty sure there should be a way to avoid this type assertion, but I couldn't figure it out.
