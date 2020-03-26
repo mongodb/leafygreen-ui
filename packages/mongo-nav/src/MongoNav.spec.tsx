@@ -74,8 +74,6 @@ describe('packages/mongo-nav', () => {
           />,
         ),
       );
-
-      await Promise.resolve();
     });
   };
 

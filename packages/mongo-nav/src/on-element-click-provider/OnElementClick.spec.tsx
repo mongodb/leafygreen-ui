@@ -56,8 +56,6 @@ describe('packages/mongo-nav/on-element-click-provider', () => {
         />,
       );
 
-      await Promise.resolve();
-
       getByTestId = result.getByTestId;
     });
   });
