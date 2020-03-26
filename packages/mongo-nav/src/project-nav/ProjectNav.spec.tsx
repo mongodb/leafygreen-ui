@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, act } from '@testing-library/react';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import {
   dataFixtures,
@@ -10,6 +10,7 @@ import {
 } from '../data';
 import ProjectNav, { displayProductName } from './ProjectNav';
 import { startCase } from 'lodash';
+import { Mode } from '../types';
 
 // types
 interface ExpectedElements {
@@ -69,29 +70,49 @@ describe('packages/mongo-nav/src/project-nav', () => {
 
   let onProjectChange: jest.Mock;
 
+  let fetchMock: jest.Mock;
+  let originalFetch: (
+    input: RequestInfo,
+    init?: RequestInit | undefined,
+  ) => Promise<Response>;
+
+  let fetchData: Array<object>;
+
   beforeEach(() => {
     onProjectChange = jest.fn();
+    fetchMock = jest.fn();
+    fetchData = [];
+    fetchMock.mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve(fetchData),
+    });
+    originalFetch = window.fetch;
+    window.fetch = fetchMock;
   });
 
   afterEach(() => {
+    window.fetch = originalFetch;
     jest.restoreAllMocks();
     cleanup();
   });
 
-  const renderComponent = (props = {}) => {
-    setQueries(
-      render(
-        <ProjectNav
-          data={projects}
-          constructProjectURL={constructProjectURL}
-          urls={urlDefaults}
-          activeProduct="cloud"
-          hosts={hostDefaults}
-          onProjectChange={onProjectChange}
-          {...props}
-        />,
-      ),
-    );
+  const renderComponent = async (props = {}) => {
+    await act(async () => {
+      setQueries(
+        render(
+          <ProjectNav
+            data={projects}
+            constructProjectURL={constructProjectURL}
+            urls={urlDefaults}
+            activeProduct="cloud"
+            hosts={hostDefaults}
+            onProjectChange={onProjectChange}
+            mode={Mode.Production}
+            {...props}
+          />,
+        ),
+      );
+    });
   };
 
   const testForNavLink = (linkName: string, isVisible = true) => {
@@ -126,21 +147,6 @@ describe('packages/mongo-nav/src/project-nav', () => {
     });
   };
 
-  const testForAlerts = (alerts: number, isVisible: boolean) => {
-    it(`${
-      isVisible ? 'displays' : 'does not display'
-    } the ${alerts} in the nav`, () => {
-      const alertsBadge = expectedElements.alertsBadge;
-
-      if (isVisible) {
-        expect(alertsBadge).toBeInTheDocument();
-        expect((alertsBadge as Element).innerHTML).toContain(alerts.toString());
-      } else {
-        expect(alertsBadge).toBeNull();
-      }
-    });
-  };
-
   const testForProjectStatusBadge = (isVisible: boolean) => {
     it(`${
       isVisible ? 'displays' : 'does not display'
@@ -157,8 +163,10 @@ describe('packages/mongo-nav/src/project-nav', () => {
   };
 
   describe('when rendered with default props', () => {
-    const alerts = 1;
-    beforeEach(() => renderComponent({ alerts, current: currentProject }));
+    beforeEach(async () => {
+      fetchData = [];
+      await renderComponent({ current: currentProject });
+    });
 
     Object.values(Products).forEach(product =>
       testForVisibleProducts(product, product !== 'cloudManager'),
@@ -168,22 +176,25 @@ describe('packages/mongo-nav/src/project-nav', () => {
       testForNavLink(linkName, true),
     );
 
-    testForAlerts(alerts, true);
-
     testForProjectStatusBadge(false);
 
-    test('atlas tab shows the correct link', () => {
+    it('atlas tab shows the correct link', () => {
       expect(expectedElements!.atlas!.getAttribute('href')).toEqual(
         'https://cloud.mongodb.com/v2/020019e#',
       );
     });
+
+    it('does not show alerts badge', () => {
+      expect(expectedElements.alertsBadge).not.toBeInTheDocument();
+    });
   });
 
   describe('when the current organization uses Cloud Manager', () => {
-    const alerts = 2;
     const cloudManagerProject = projects[1];
 
-    beforeEach(() => renderComponent({ alerts, current: cloudManagerProject }));
+    beforeEach(async () => {
+      await renderComponent({ current: cloudManagerProject });
+    });
 
     Object.values(Products).forEach(product =>
       testForVisibleProducts(product, product === 'cloudManager'),
@@ -192,8 +203,49 @@ describe('packages/mongo-nav/src/project-nav', () => {
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, true),
     );
+  });
 
-    testForAlerts(alerts, true);
+  describe('alerts polling behavior', () => {
+    describe('when it should poll', () => {
+      beforeEach(async () => {
+        fetchData = [{}, {}];
+        await renderComponent({ current: currentProject });
+      });
+
+      it('calls fetch with correct arguments', () => {
+        expect(
+          fetchMock,
+        ).toHaveBeenCalledWith(
+          'https://cloud.mongodb.com/user/shared/alerts/project/020019e',
+          { credentials: 'include', method: 'GET', mode: 'cors' },
+        );
+      });
+
+      it('displays expected alerts badge', () => {
+        const alertsBadge = expectedElements.alertsBadge;
+
+        expect(alertsBadge).toBeInTheDocument();
+        expect((alertsBadge as Element).innerHTML).toContain('2');
+      });
+    });
+
+    describe('when in dev mode', () => {
+      beforeEach(async () => {
+        fetchData = [{}, {}];
+        await renderComponent({ current: currentProject, mode: Mode.Dev });
+      });
+
+      it('does not call fetch', () => {
+        expect(fetchMock).not.toHaveBeenCalled();
+      });
+
+      it('displays value from currentProject', () => {
+        const alertsBadge = expectedElements.alertsBadge;
+
+        expect(alertsBadge).toBeInTheDocument();
+        expect((alertsBadge as Element).innerHTML).toContain('1');
+      });
+    });
   });
 
   describe('when rendered without a current project', () => {
