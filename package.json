@@ -109,6 +109,7 @@
     "react-dom": "^16.9.0",
     "react-router-dom": "5.1.2",
     "react-test-renderer": "^16.9.0",
+    "regenerator-runtime": "^0.13.5",
     "rimraf": "^3.0.0",
     "source-map-loader": "^0.2.4",
     "typescript": "^3.7.2",
@@ -125,8 +126,5 @@
     "packages": [
       "packages/*"
     ]
-  },
-  "dependencies": {
-    "regenerator-runtime": "^0.13.5"
   }
 }
