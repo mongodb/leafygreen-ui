@@ -4,7 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp, HTMLElementProps } from '@leafygreen-ui/lib';
 
 const inputSelectorProp = createDataProp('input-selector');
 const iconSelectorProp = createDataProp('icon-selector');
@@ -17,7 +17,7 @@ export const State = {
 
 export type State = typeof State[keyof typeof State];
 
-interface TextInputProps {
+interface TextInputProps extends HTMLElementProps<'input'> {
   /**
    * id associated with the TextInput component.
    */
