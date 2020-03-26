@@ -350,9 +350,4 @@ export interface MongoNavInterface {
    * Determines whether or not the component will fetch data from cloud
    */
   loadData?: boolean;
-
-  /**
-   * Overwrite number of alerts received from cloud endpoint
-   */
-  alertsCount?: number;
 }
