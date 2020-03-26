@@ -106,6 +106,8 @@ Hook to create a Poller that polls at a given interval.
 
 If your `onPoll` handler returns a `Promise` it will wait for the Promise to resolve or reject before scheduling the next interval.
 
+This hooks also makes use of the [Page Visibility API](https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API). If the page is `hidden` then polling will stop. When a page becomes `visible` again then polling will resume.
+
 ### Example
 
 ```js
