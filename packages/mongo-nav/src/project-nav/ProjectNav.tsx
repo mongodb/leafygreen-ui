@@ -23,8 +23,14 @@ import {
   NavElement,
   Mode,
   MongoNavInterface,
+  ProjectStatus,
 } from '../types';
-import { AtlasIcon, RealmIcon, ChartsIcon } from '../helpers/Icons';
+import {
+  AtlasIcon,
+  RealmIcon,
+  ChartsIcon,
+  ProjectStatusBadge,
+} from '../helpers';
 
 const {
   ProjectNavProjectDropdown,
@@ -70,7 +76,7 @@ const navContainerStyle = css`
 const menuIconButtonStyle = css`
   z-index: 1;
   ${facepaint({
-    marginRight: ['20px', '14px', '20px'],
+    marginRight: ['16px', '14px', '16px'],
   })}
 `;
 
@@ -234,7 +240,7 @@ const secondTabName = displayProductName();
 
 type ProjectNavProps = Pick<
   MongoNavInterface,
-  'activeProduct' | 'activeNav' | 'onProjectChange' | 'mode'
+  'activeProduct' | 'activeNav' | 'onProjectChange' | 'admin' | 'mode'
 > & {
   current?: CurrentProjectInterface;
   data?: Array<ProjectInterface>;
@@ -248,6 +254,7 @@ type ProjectNavProps = Pick<
 };
 
 export default function ProjectNav({
+  admin,
   current,
   data,
   constructProjectURL,
@@ -377,6 +384,13 @@ export default function ProjectNav({
           Integrations
         </MenuItem>
       </Menu>
+
+      {!isMobile &&
+        admin &&
+        current?.status &&
+        Object.values(ProjectStatus).includes(current?.status) && (
+          <ProjectStatusBadge currentStatus={current.status} />
+        )}
 
       <ul className={productListStyle}>
         <li role="none" className={productTabStyle}>
