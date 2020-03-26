@@ -32,6 +32,13 @@ const NavElement = {
   UserMenuCloudInvitations: 'userMenuCloudInvitations',
   UserMenuCloudOrganizations: 'userMenuCloudOrganizations',
   UserMenuCloudUserPreferences: 'userMenuCloudUserPreferences',
+  UserMenuOnPremProfile: 'userMenuOnPremProfile',
+  UserMenuOnPremTwoFactorAuth: 'userMenuOnPremTwoFactorAuth',
+  UserMenuOnPremPersonalization: 'userMenuOnPremPersonalization',
+  UserMenuOnPremInvitations: 'userMenuOnPremInvitations',
+  UserMenuOnPremOrganizations: 'userMenuOnPremOrganizations',
+  UserMenuOnPremFeatureRequest: 'userMenuOnPremFeatureRequest',
+  UserMenuOnPremSignOut: 'userMenuOnPremSignOut',
 } as const;
 
 type NavElement = typeof NavElement[keyof typeof NavElement];
@@ -55,6 +62,12 @@ const ActiveNavElement = {
   ProjectNavProjectSupport: NavElement.ProjectNavProjectSupport,
   ProjectNavProjectIntegrations: NavElement.ProjectNavProjectIntegrations,
   UserSettings: NavElement.UserSettings,
+  UserMenuOnPremProfile: NavElement.UserMenuOnPremProfile,
+  UserMenuOnPremTwoFactorAuth: NavElement.UserMenuOnPremTwoFactorAuth,
+  UserMenuOnPremPersonalization: NavElement.UserMenuOnPremPersonalization,
+  UserMenuOnPremInvitations: NavElement.UserMenuOnPremInvitations,
+  UserMenuOnPremOrganizations: NavElement.UserMenuOnPremOrganizations,
+  UserMenuOnPremFeatureRequest: NavElement.UserMenuOnPremFeatureRequest,
 } as const;
 
 type ActiveNavElement = typeof ActiveNavElement[keyof typeof ActiveNavElement];
@@ -236,4 +249,110 @@ export interface HostsInterface {
   realm?: string;
   support?: string;
   university?: string;
+}
+
+export interface MongoNavInterface {
+  /**
+   * Describes what product is currently active.
+   */
+  activeProduct: Product;
+
+  /**
+   * Determines what nav item is currently active.
+   */
+  activeNav?: ActiveNavElement;
+
+  /**
+   * Describes whether or not user is an `admin`.
+   */
+  admin?: boolean;
+
+  /**
+   * Callback invoked when user types into organization picker. Receives value of input as first argument and ChangeEvent as the second.
+   */
+  onOrganizationChange?: (_value: string, _event: React.ChangeEvent) => void;
+
+  /**
+   * Callback invoked when user types into project picker. Receives value of input as first argument and ChangeEvent as the second.
+   */
+  onProjectChange?: (_value: string, _event: React.ChangeEvent) => void;
+
+  /**
+   *  Function to determine destination URL when user selects a organization from the organization picker, see also `hosts`.
+   */
+  constructOrganizationURL?: (organizationId: string) => string;
+
+  /**
+   *  Function to determine destination URL when user selects a project from the project picker, see also `hosts`.
+   */
+  constructProjectURL?: (organizationId: string, projectId: string) => string;
+
+  /**
+   * Determines whether the project navigation should be shown.
+   */
+  showProjectNav?: boolean;
+
+  /**
+   * Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<MongoNav />` to work across all environments.
+   */
+  hosts?: HostsInterface;
+
+  /**
+   * Object to enable custom overrides for every `href` used in `<MongoNav />`.
+   */
+  urls?: URLSInterface;
+
+  /**
+   * Describes what environment the component is being used in.
+   * By default the value is set to `production`.
+   */
+  mode?: Mode;
+
+  /**
+   * Function that is passed an error code as a string, so that consuming application can handle fetch failures.
+   */
+  onError?: (error: ErrorCode) => void;
+
+  /**
+   * Callback that receives the response of the fetched data, having been converted from JSON into an object.
+   */
+  onSuccess?: (response: DataInterface) => void;
+
+  /**
+   * onPrem config object with three keys: enabled, version and mfa
+   */
+  onPrem?: OnPremInterface;
+
+  /**
+   * ID for active organization, will cause a POST request to cloud to update
+   * current active organization.
+   */
+  activeOrgId?: string;
+
+  /**
+   * ID for active project, will cause a POST request to cloud to update
+   * current active project.
+   */
+  activeProjectId?: string;
+
+  /**
+   * Applies a className to the root element
+   */
+  className?: string;
+
+  /**
+   * Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second
+   * This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally
+   */
+  onElementClick?: (type: NavElement, event: React.MouseEvent) => void;
+
+  /**
+   * Determines whether or not the component will fetch data from cloud
+   */
+  loadData?: boolean;
+
+  /**
+   * Overwrite number of alerts received from cloud endpoint
+   */
+  alertsCount?: number;
 }

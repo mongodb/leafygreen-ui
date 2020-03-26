@@ -21,7 +21,9 @@ import {
   PlanType,
   ActiveNavElement,
   NavElement,
+  MongoNavInterface,
 } from '../types';
+import { AtlasIcon, RealmIcon, ChartsIcon } from '../helpers/Icons';
 
 const {
   ProjectNavProjectDropdown,
@@ -219,23 +221,20 @@ export function displayProductName(today = new Date(Date.now())) {
 
 const secondTabName = displayProductName();
 
-const projectDropdownNavElements = [
-  ActiveNavElement.ProjectNavProjectIntegrations,
-  ActiveNavElement.ProjectNavProjectSettings,
-  ActiveNavElement.ProjectNavProjectSupport,
-];
-
-interface ProjectNavInterface {
+type ProjectNavProps = Pick<
+  MongoNavInterface,
+  'activeProduct' | 'activeNav' | 'onProjectChange'
+> & {
   current?: CurrentProjectInterface;
   data?: Array<ProjectInterface>;
-  constructProjectURL: (orgID: string, projID: string) => string;
+  onPremEnabled?: boolean;
+  onPremVersion?: string;
+  onPremMFA?: boolean;
+  alerts?: number;
   urls: Required<URLSInterface>;
   hosts: Required<HostsInterface>;
-  alerts?: number;
-  activeProduct: Product;
-  activeNav?: NavElement;
-  onProjectChange: React.ChangeEventHandler;
-}
+  constructProjectURL: (orgID: string, projectID: string) => string;
+};
 
 export default function ProjectNav({
   current,
@@ -247,7 +246,7 @@ export default function ProjectNav({
   onProjectChange,
   hosts,
   alerts = 0,
-}: ProjectNavInterface) {
+}: ProjectNavProps) {
   const [open, setOpen] = React.useState(false);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { width: viewportWidth } = useViewportSize();
@@ -255,9 +254,7 @@ export default function ProjectNav({
   const { projectNav } = urls;
   const isMobile = viewportWidth < breakpoints.small;
   const isCloudManager = current?.planType === PlanType.Cloud;
-  const projectDropdownIsActive =
-    open ||
-    (projectDropdownNavElements as Array<string>).includes(activeNav as string);
+  const isLoading = !!current;
 
   const sharedTooltipProps = {
     variant: 'dark',
@@ -300,7 +297,7 @@ export default function ProjectNav({
           <IconButton
             ariaLabel="More"
             className={menuIconButtonStyle}
-            active={projectDropdownIsActive}
+            active={open}
             disabled={!current}
             data-testid="project-nav-project-menu"
             onClick={onElementClick(ProjectNavProjectDropdown)}
@@ -345,7 +342,9 @@ export default function ProjectNav({
       <ul className={productListStyle}>
         <li role="none" className={productTabStyle}>
           <a
-            href={hosts.cloud}
+            href={
+              current ? `${hosts.cloud}/v2/${current.projectId}#` : hosts.cloud
+            }
             className={getProductClassName('cloud')}
             aria-disabled={!current}
             tabIndex={current ? 0 : -1}
@@ -355,10 +354,10 @@ export default function ProjectNav({
             }`}
           >
             {!isMobile && (
-              <Icon
+              <AtlasIcon
+                active={activeProduct === Product.Cloud && isLoading}
                 {...productIconProp.prop}
                 className={iconStyle}
-                glyph="Cloud"
               />
             )}
             {isCloudManager ? 'Cloud Manager' : 'Atlas'}
@@ -377,13 +376,12 @@ export default function ProjectNav({
                 onClick={onElementClick(ProjectNavRealm)}
               >
                 {!isMobile && (
-                  <Icon
+                  <RealmIcon
+                    active={activeProduct === Product.Realm && isLoading}
                     {...productIconProp.prop}
                     className={iconStyle}
-                    glyph="Stitch"
                   />
                 )}
-
                 {secondTabName}
               </a>
             </li>
@@ -398,10 +396,10 @@ export default function ProjectNav({
                 onClick={onElementClick(ProjectNavCharts)}
               >
                 {!isMobile && (
-                  <Icon
+                  <ChartsIcon
                     {...productIconProp.prop}
                     className={iconStyle}
-                    glyph="Charts"
+                    active={activeProduct === Product.Charts && isLoading}
                   />
                 )}
                 Charts
@@ -425,7 +423,9 @@ export default function ProjectNav({
                 className={iconButtonMargin}
                 size="large"
                 disabled={!current}
-                active={activeNav === ActiveNavElement.ProjectNavInvite}
+                active={
+                  activeNav === ActiveNavElement.ProjectNavInvite && isLoading
+                }
                 data-testid="project-nav-invite"
                 onClick={onElementClick(ProjectNavInvite)}
               >
@@ -448,7 +448,10 @@ export default function ProjectNav({
                 size="large"
                 className={iconButtonMargin}
                 disabled={!current}
-                active={activeNav === ActiveNavElement.ProjectNavActivityFeed}
+                active={
+                  activeNav === ActiveNavElement.ProjectNavActivityFeed &&
+                  isLoading
+                }
                 data-testid="project-nav-activity-feed"
                 onClick={onElementClick(ProjectNavActivityFeed)}
               >
@@ -470,7 +473,9 @@ export default function ProjectNav({
                 href={projectNav.alerts as string}
                 size="large"
                 disabled={!current}
-                active={activeNav === ActiveNavElement.ProjectNavAlerts}
+                active={
+                  activeNav === ActiveNavElement.ProjectNavAlerts && isLoading
+                }
                 data-testid="project-nav-alerts"
                 onClick={onElementClick(ProjectNavAlerts)}
               >

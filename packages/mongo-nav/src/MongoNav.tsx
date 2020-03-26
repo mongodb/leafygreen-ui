@@ -10,14 +10,12 @@ import { dataFixtures, hostDefaults } from './data';
 import {
   Product,
   URLSInterface,
-  HostsInterface,
-  ActiveNavElement,
   NavElement,
   Mode,
   DataInterface,
   ErrorCode,
-  OnPremInterface,
   PostBodyInterface,
+  MongoNavInterface,
 } from './types';
 
 const ErrorCodeMap: Record<number, ErrorCode> = {
@@ -30,112 +28,6 @@ const navContainerStyle = css`
   z-index: 0;
   position: relative;
 `;
-
-interface MongoNavInterface {
-  /**
-   * Describes what product is currently active.
-   */
-  activeProduct: Product;
-
-  /**
-   * Determines what nav item is currently active.
-   */
-  activeNav?: ActiveNavElement;
-
-  /**
-   * Describes whether or not user is an `admin`.
-   */
-  admin?: boolean;
-
-  /**
-   * Callback invoked when user types into organization picker.
-   */
-  onOrganizationChange?: React.ChangeEventHandler;
-
-  /**
-   * Callback invoked when user types into project picker.
-   */
-  onProjectChange?: React.ChangeEventHandler;
-
-  /**
-   *  Function to determine destination URL when user selects a organization from the organization picker, see also `hosts`.
-   */
-  constructOrganizationURL?: (organizationId: string) => string;
-
-  /**
-   *  Function to determine destination URL when user selects a project from the project picker, see also `hosts`.
-   */
-  constructProjectURL?: (organizationId: string, projectId: string) => string;
-
-  /**
-   * Determines whether the project navigation should be shown.
-   */
-  showProjectNav?: boolean;
-
-  /**
-   * Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<MongoNav />` to work across all environments.
-   */
-  hosts?: HostsInterface;
-
-  /**
-   * Object to enable custom overrides for every `href` used in `<MongoNav />`.
-   */
-  urls?: URLSInterface;
-
-  /**
-   * Describes what environment the component is being used in.
-   * By default the value is set to `production`.
-   */
-  mode?: Mode;
-
-  /**
-   * Function that is passed an error code as a string, so that consuming application can handle fetch failures.
-   */
-  onError?: (error: ErrorCode) => void;
-
-  /**
-   * Callback that receives the response of the fetched data, having been converted from JSON into an object.
-   */
-  onSuccess?: (response: DataInterface) => void;
-
-  /**
-   * onPrem config object with three keys: enabled, version and mfa
-   */
-  onPrem?: OnPremInterface;
-
-  /**
-   * ID for active organization, will cause a POST request to cloud to update
-   * current active organization.
-   */
-  activeOrgId?: string;
-
-  /**
-   * ID for active project, will cause a POST request to cloud to update
-   * current active project.
-   */
-  activeProjectId?: string;
-
-  /**
-   * Applies a className to the root element
-   */
-  className?: string;
-
-  /**
-   * Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second
-   * This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally
-   */
-  onElementClick?: (type: NavElement, event: React.MouseEvent) => void;
-
-  /**
-   * Determines whether or not the component will fetch data from cloud
-   */
-  loadData?: boolean;
-
-  /**
-   * Overwrite number of alerts received from cloud endpoint
-   */
-  alertsCount?: number;
-}
 
 /**
  * # MongoNav
@@ -177,8 +69,8 @@ interface MongoNavInterface {
 function MongoNav({
   activeProduct,
   activeNav,
-  onOrganizationChange = () => {},
-  onProjectChange = () => {},
+  onOrganizationChange,
+  onProjectChange,
   mode = Mode.Production,
   loadData = true,
   showProjectNav = true,
@@ -252,10 +144,10 @@ function MongoNav({
     },
     onPrem: {
       profile: `${hosts.cloud}/v2#/account/profile`,
-      mfa: `${hosts.cloud}/v2#/preferences/2fa`,
+      mfa: `${hosts.cloud}/v2#/account/2fa`,
       personalization: `${hosts.cloud}/v2#/account/personalization`,
-      invitations: `${hosts.cloud}/v2#/preferences/invitations`,
-      organizations: `${hosts.cloud}/v2#/preferences/organizations`,
+      invitations: `${hosts.cloud}/v2#/account/invitations`,
+      organizations: `${hosts.cloud}/v2#/account/organizations`,
       featureRequest: 'https://feedback.mongodb.com',
     },
   };
@@ -291,20 +183,26 @@ function MongoNav({
     return fetch(endpointURI, configObject);
   }
 
-  async function getDataFixtures() {
-    onSuccess?.(dataFixtures);
-    return dataFixtures;
+  function getDataFixtures() {
+    return new Promise(resolve => {
+      onSuccess?.(dataFixtures);
+      resolve(dataFixtures);
+    });
   }
 
-  async function handleResponse(response: Response) {
+  function handleResponse(response: Response) {
     if (!response.ok) {
       const mappedStatus = ErrorCodeMap[response.status];
       onError?.(mappedStatus);
       console.error(mappedStatus);
     } else {
-      const data = await response.json();
-      setData(data);
-      onSuccess?.(data);
+      response
+        .json()
+        .then(data => {
+          setData(data);
+          onSuccess?.(data);
+        })
+        .catch(console.error);
     }
   }
 

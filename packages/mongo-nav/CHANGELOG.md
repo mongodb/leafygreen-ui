@@ -1,5 +1,36 @@
 # @leafygreen-ui/mongo-nav
 
+## 0.18.0
+
+### Minor Changes
+
+- 838ff82: Updates the OnPremUserMenu active states and default urls, and exports both the ProjectSelect component and the OnPremUserMenu component for usage outside the MongoNav component.
+
+### Patch Changes
+
+- Updated dependencies [365412e]
+  - @leafygreen-ui/icon@5.0.1
+  - @leafygreen-ui/icon-button@4.1.6
+
+## 0.17.0
+
+### Minor Changes
+
+- 4cb6ee0: Updates MongoNav to additionally track active states in dropdowns
+
+### Patch Changes
+
+- 5cf9e7d: Displays admin when the prop is set and user is onPrem
+- b414edd: Removes async await syntax to avoid having to polyfill regenerator runtime
+- 40db4b7: Updates logos in UserMenu and ProjectNav to latest logos
+- Updated dependencies [4c268a5]
+- Updated dependencies [94ed125]
+  - @leafygreen-ui/icon@5.0.0
+  - @leafygreen-ui/leafygreen-provider@1.1.0
+  - @leafygreen-ui/button@4.1.1
+  - @leafygreen-ui/icon-button@4.1.5
+  - @leafygreen-ui/menu@6.0.4
+
 ## 0.16.0
 
 ### Minor Changes

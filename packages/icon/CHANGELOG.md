@@ -1,5 +1,17 @@
 # @leafygreen-ui/icon
 
+## 5.0.1
+
+### Patch Changes
+
+- 365412e: Adds emotion as a dependency rather than devDep to package.json
+
+## 5.0.0
+
+### Major Changes
+
+- 4c268a5: Refactors how glyph components are generated, and allows titles to be unset by passing `false` into the title prop.
+
 ## 4.3.0
 
 ### Minor Changes
