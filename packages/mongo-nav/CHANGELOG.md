@@ -1,5 +1,24 @@
 # @leafygreen-ui/mongo-nav
 
+## 0.19.0
+
+### Minor Changes
+
+- 64c03e7: Adds project status badge to ProjectNav
+- 4e67588: Add support for polling an alerts endpoint to keep the alerts state in sync.
+- a35f23d: Set Atlas tab link to the full URL to prevent full page refreshes.
+
+### Patch Changes
+
+- ee28366: Applies more specific styles to anchor tags in the MongoNav
+- 6ed532c: Closes OnPremUserMenu when a MenuItem is clicked
+- Updated dependencies [bc47b13]
+- Updated dependencies [64c03e7]
+- Updated dependencies [1b298cc]
+  - @leafygreen-ui/tooltip@3.2.0
+  - @leafygreen-ui/menu@6.0.5
+  - @leafygreen-ui/hooks@2.1.0
+
 ## 0.18.0
 
 ### Minor Changes

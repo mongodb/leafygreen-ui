@@ -1,5 +1,15 @@
 # @leafygreen-ui/menu
 
+## 6.0.5
+
+### Patch Changes
+
+- 64c03e7: Fixes SubMenuIcon padding to account for change in size of xlarge glyphs
+- Updated dependencies [bc47b13]
+- Updated dependencies [1b298cc]
+  - @leafygreen-ui/popover@4.0.0
+  - @leafygreen-ui/hooks@2.1.0
+
 ## 6.0.4
 
 ### Patch Changes

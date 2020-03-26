@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 2.1.0
+
+### Minor Changes
+
+- 1b298cc: Create usePoller hook.
+
 ## 2.0.1
 
 ### Patch Changes
