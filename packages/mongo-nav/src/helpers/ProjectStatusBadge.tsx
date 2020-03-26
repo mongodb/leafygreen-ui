@@ -1,5 +1,5 @@
 import React from 'react';
-import Badge from '@leafygreen-ui/badge';
+import Badge, { Variant } from '@leafygreen-ui/badge';
 import { css } from '@leafygreen-ui/emotion';
 import { ProjectStatus } from '../types';
 
@@ -7,17 +7,11 @@ const projectStatusBadgeMargin = css`
   margin-right: 20px;
 `;
 
-const Colors = {
-  Yellow: 'yellow',
-  Red: 'red',
-  Green: 'green',
-} as const;
-
 const projectStatusBadgeVariant = {
-  [ProjectStatus.Active]: Colors.Green,
-  [ProjectStatus.Closing]: Colors.Yellow,
-  [ProjectStatus.Closed]: Colors.Red,
-  [ProjectStatus.Dead]: Colors.Red,
+  [ProjectStatus.Active]: Variant.Green,
+  [ProjectStatus.Closing]: Variant.Yellow,
+  [ProjectStatus.Closed]: Variant.Red,
+  [ProjectStatus.Dead]: Variant.Red,
 };
 
 interface ProjectStatusBadgeProps {
