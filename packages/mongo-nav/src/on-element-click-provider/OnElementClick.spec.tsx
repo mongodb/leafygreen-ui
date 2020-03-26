@@ -1,5 +1,12 @@
 import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import {
+  render,
+  cleanup,
+  fireEvent,
+  act,
+  BoundFunction,
+  GetByBoundAttribute,
+} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import MongoNav from '../MongoNav';
 import { NavElement } from '../types';
@@ -35,18 +42,27 @@ describe('packages/mongo-nav/on-element-click-provider', () => {
     expect(onElementClick).toHaveBeenCalledWith(type, expect.anything());
   };
 
-  describe('by default', () => {
-    const { getByTestId } = render(
-      <MongoNav
-        activeProduct="cloud"
-        mode="dev"
-        admin={true}
-        onOrganizationChange={jest.fn()}
-        onProjectChange={jest.fn()}
-        onElementClick={onElementClick}
-      />,
-    );
+  let getByTestId: BoundFunction<GetByBoundAttribute>;
+  beforeAll(async () => {
+    await act(async () => {
+      const result = render(
+        <MongoNav
+          activeProduct="cloud"
+          mode="dev"
+          admin={true}
+          onOrganizationChange={jest.fn()}
+          onProjectChange={jest.fn()}
+          onElementClick={onElementClick}
+        />,
+      );
 
+      await Promise.resolve();
+
+      getByTestId = result.getByTestId;
+    });
+  });
+
+  describe('by default', () => {
     let el: keyof typeof defaultElements;
 
     for (el in defaultElements) {

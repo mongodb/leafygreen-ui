@@ -62,17 +62,21 @@ describe('packages/mongo-nav', () => {
     cleanup();
   });
 
-  const renderComponent = (props = {}) => {
-    setQueries(
-      render(
-        <MongoNav
-          activeProduct="cloud"
-          onOrganizationChange={onOrganizationChange}
-          onProjectChange={onProjectChange}
-          {...props}
-        />,
-      ),
-    );
+  const renderComponent = async (props = {}) => {
+    await act(async () => {
+      setQueries(
+        render(
+          <MongoNav
+            activeProduct="cloud"
+            onOrganizationChange={onOrganizationChange}
+            onProjectChange={onProjectChange}
+            {...props}
+          />,
+        ),
+      );
+
+      await Promise.resolve();
+    });
   };
 
   describe('by default', () => {
@@ -83,13 +87,14 @@ describe('packages/mongo-nav', () => {
 
     beforeEach(async () => {
       fetchMock.mockResolvedValue(responseObject);
-      renderComponent();
+      await renderComponent();
 
       await act(() => responseObject.json());
     });
 
     test('fetch is called', () => {
-      expect(fetchMock).toHaveBeenCalledTimes(1);
+      // twice, once for main data and once for alerts polling
+      expect(fetchMock).toHaveBeenCalledTimes(2);
     });
 
     test('the organization and project navs are rendered', () => {
@@ -163,13 +168,14 @@ describe('packages/mongo-nav', () => {
 
     beforeEach(async () => {
       fetchMock.mockResolvedValue(responseObject);
-      renderComponent({ activeProjectId });
+      await renderComponent({ activeProjectId });
 
       await act(() => responseObject.json());
     });
 
     test('fetch is called', () => {
-      expect(fetchMock).toHaveBeenCalledTimes(1);
+      // twice, once for main data and once for alerts polling
+      expect(fetchMock).toHaveBeenCalledTimes(2);
     });
 
     test('the organization and project navs are rendered', () => {
@@ -212,13 +218,14 @@ describe('packages/mongo-nav', () => {
 
     beforeEach(async () => {
       fetchMock.mockResolvedValue(responseObject);
-      renderComponent({ activeOrgId });
+      await renderComponent({ activeOrgId });
 
       await act(() => responseObject.json());
     });
 
     test('fetch is called', () => {
-      expect(fetchMock).toHaveBeenCalledTimes(1);
+      // twice, once for main data and once for alerts polling
+      expect(fetchMock).toHaveBeenCalledTimes(2);
     });
 
     test('the organization and project navs are rendered', () => {
@@ -257,13 +264,14 @@ describe('packages/mongo-nav', () => {
 
     beforeEach(async () => {
       fetchMock.mockResolvedValue(responseObject);
-      renderComponent({ activeOrgId, activeProjectId });
+      await renderComponent({ activeOrgId, activeProjectId });
 
       await act(() => responseObject.json());
     });
 
     test('fetch is called', () => {
-      expect(fetchMock).toHaveBeenCalledTimes(1);
+      // twice, once for main data and once for alerts polling
+      expect(fetchMock).toHaveBeenCalledTimes(2);
     });
 
     test('current orgId is set based on the new activeProjectId', () => {
@@ -289,8 +297,9 @@ describe('packages/mongo-nav', () => {
 
   describe('when user passes host override', () => {
     const cloudHost = 'https://cloud-dev.mongodb.com';
-    beforeEach(() =>
-      renderComponent({ mode: 'dev', hosts: { cloud: cloudHost } }),
+    beforeEach(
+      async () =>
+        await renderComponent({ mode: 'dev', hosts: { cloud: cloudHost } }),
     );
 
     test('link is properly constructured based on host override prop', () => {
@@ -302,11 +311,12 @@ describe('packages/mongo-nav', () => {
 
   describe('when user passes url override', () => {
     const activityFeedHref = 'https://cloud.mongodb.com/activityfeed-test-url';
-    beforeEach(() =>
-      renderComponent({
-        mode: 'dev',
-        urls: { projectNav: { activityFeed: activityFeedHref } },
-      }),
+    beforeEach(
+      async () =>
+        await renderComponent({
+          mode: 'dev',
+          urls: { projectNav: { activityFeed: activityFeedHref } },
+        }),
     );
 
     test('link is properly constructured based on host override prop', () => {
@@ -317,11 +327,12 @@ describe('packages/mongo-nav', () => {
   });
 
   describe('when loadData is set to false', () => {
-    beforeEach(() =>
-      renderComponent({
-        mode: 'dev',
-        loadData: false,
-      }),
+    beforeEach(
+      async () =>
+        await renderComponent({
+          mode: 'dev',
+          loadData: false,
+        }),
     );
 
     test('the user name is not displayed', () => {

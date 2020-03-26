@@ -167,7 +167,6 @@ function OrgSelect({
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/\\/g, '\\');
-    console.log(val);
 
     setValue(val);
 
