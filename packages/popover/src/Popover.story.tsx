@@ -2,19 +2,25 @@ import React, { useState, useRef } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean, number, text } from '@storybook/addon-knobs';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { colors } from '@leafygreen-ui/theme';
+import { uiColors } from '@leafygreen-ui/palette';
 
 import Popover, { Align, Justify } from '.';
 
 const containerStyle = css`
   position: absolute;
+  min-height: 50px;
+  appearance: none;
+  box-shadow: 0 0 4px #000;
+  background-color: ${uiColors.gray.light1};
 `;
 
 const popoverStyle = css`
-  border: 1px solid ${colors.gray[5]};
+  border: 1px solid ${uiColors.gray.light1};
   text-align: center;
-  padding: 20px 20px;
-  background-color: ${colors.mongodb.white};
+  padding: 20px;
+  background-color: ${uiColors.white};
+  max-height: 100%;
+  overflow: hidden;
 `;
 
 const referenceElPositions = {

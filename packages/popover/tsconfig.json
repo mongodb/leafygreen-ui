@@ -4,7 +4,7 @@
     "declarationDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "../../typings/*"],
   "references": [
     {
       "path": "../emotion"
@@ -19,7 +19,7 @@
       "path": "../portal"
     },
     {
-      "path": "../theme"
+      "path": "../palette"
     }
   ]
 }

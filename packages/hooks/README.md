@@ -99,3 +99,30 @@ Hook to subscribe to changes in viewport size
 ```js
 const viewportSize = useViewportSize();
 ```
+
+## usePoller
+
+Hook to create a Poller that polls at a given interval.
+
+If your `onPoll` handler returns a `Promise` it will wait for the Promise to resolve or reject before scheduling the next interval.
+
+This hooks also makes use of the [Page Visibility API](https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API). If the page is `hidden` then polling will stop. When a page becomes `visible` again then polling will resume.
+
+### Example
+
+```js
+usePoller(onPoll, {
+  interval: 30000,
+  immediate: true,
+  enabled: true,
+});
+```
+
+### Properties
+
+| Prop                 | Type       | Description                                                          | Default |
+| -------------------- | ---------- | -------------------------------------------------------------------- | ------- |
+| `onPoll`             | `function` | Callback executed when poll interval occurs.                         |         |
+| `optional.interval`  | `number`   | What interval the onPoll should be called.                           | `30000` |
+| `optional.immediate` | `boolean`  | If we immediately poll, if false we wait till first interval occurs. | `true`  |
+| `optional.enabled`   | `boolean`  | Is polling enabled.                                                  | `true`  |
