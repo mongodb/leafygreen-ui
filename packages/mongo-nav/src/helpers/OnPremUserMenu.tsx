@@ -44,6 +44,7 @@ export default function OnPremUserMenu({
           href={urls.onPrem.profile}
           active={activeNav === ActiveNavElement.UserMenuOnPremProfile}
           data-testid="om-user-menuitem-profile"
+          onClick={() => setOpen(false)}
         >
           Profile
         </MenuItem>
@@ -53,6 +54,7 @@ export default function OnPremUserMenu({
             href={urls.onPrem.mfa}
             active={activeNav === ActiveNavElement.UserMenuOnPremTwoFactorAuth}
             data-testid="om-user-menuitem-mfa"
+            onClick={() => setOpen(false)}
           >
             Two-factor Authentication
           </MenuItem>
@@ -62,6 +64,7 @@ export default function OnPremUserMenu({
           href={urls.onPrem.personalization}
           active={activeNav === ActiveNavElement.UserMenuOnPremPersonalization}
           data-testid="om-user-menuitem-personalization"
+          onClick={() => setOpen(false)}
         >
           Personalization
         </MenuItem>
@@ -70,6 +73,7 @@ export default function OnPremUserMenu({
           href={urls.onPrem.invitations}
           active={activeNav === ActiveNavElement.UserMenuOnPremInvitations}
           data-testid="om-user-menuitem-invitations"
+          onClick={() => setOpen(false)}
         >
           Invitations
         </MenuItem>
@@ -78,6 +82,7 @@ export default function OnPremUserMenu({
           href={urls.onPrem.organizations}
           active={activeNav === ActiveNavElement.UserMenuOnPremOrganizations}
           data-testid="om-user-menuitem-organizations"
+          onClick={() => setOpen(false)}
         >
           Organizations
         </MenuItem>
@@ -86,12 +91,13 @@ export default function OnPremUserMenu({
           href={urls.onPrem.featureRequest}
           active={activeNav === ActiveNavElement.UserMenuOnPremFeatureRequest}
           data-testid="om-user-menuitem-feature-request"
+          onClick={() => setOpen(false)}
         >
           Feature Request
         </MenuItem>
 
         <MenuItem
-          onClick={onElementClick(NavElement.Logout)}
+          onClick={onElementClick(NavElement.Logout, () => setOpen(false))}
           data-testid="om-user-menuitem-sign-out"
         >
           Sign Out
