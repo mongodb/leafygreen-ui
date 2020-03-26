@@ -18,6 +18,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import UserMenuTrigger from './UserMenuTrigger';
 import {
   AccountInterface,
+  ActiveNavElement,
   URLSInterface,
   Product,
   HostsInterface,
@@ -152,7 +153,8 @@ function Description({ isActive, product }: DescriptionProps) {
 
 interface UserMenuProps {
   /**
-   * Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
+   * Object that contains information about the active user.
+   * {firstName: 'string', lastName: 'string', email: 'string'}
    */
   account?: AccountInterface;
 
@@ -161,6 +163,11 @@ interface UserMenuProps {
    * Possible values: ['account', 'charts', 'cloud', 'realm', 'support', 'university']
    */
   activeProduct: Product;
+
+  /**
+   * Determines what nav item is currently active.
+   */
+  activeNav?: NavElement;
 
   /**
    * Callback invoked after the user clicks log out.
@@ -201,10 +208,12 @@ interface UserMenuProps {
   hosts={hosts}
 />
 ```
- * @param props.account Object that contains information about the active user. {firstName: 'string', lastName: 'string', email: 'string'}
+ * @param props.account Object that contains information about the active user.
+*   {firstName: 'string', lastName: 'string', email: 'string'}
  * @param props.activeProduct MongoDB product that is currently active.
  *  Possible values: ['account', 'charts', 'cloud', 'realm', 'support', 'university']
- * @param props.onLogout Callback fired when a user logs out
+ * @param props.activeNav Determines what nav item is currently active.
+ * @param props.onLogout Callback fired when a user logs out.
  * @param props.onProductChange Callback invoked after the user clicks a product.
  * @param props.hosts Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<UserMenu />` to work across all environments.
  * @param props.urls Object to enable custom overrides for every `href` used in `<UserMenu />`.
@@ -212,6 +221,7 @@ interface UserMenuProps {
 function UserMenu({
   account,
   activeProduct,
+  activeNav,
   onLogout: onLogoutProp,
   onProductChange = () => {},
   urls: urlsProp,
@@ -335,6 +345,7 @@ function UserMenu({
           >
             <MenuItem
               href={userMenu?.cloud?.userPreferences}
+              active={activeNav === ActiveNavElement.UserMenuCloudUserPreferences}
               data-testid="user-menuitem-cloud-user-preferences"
               onClick={onElementClick(NavElement.UserMenuCloudUserPreferences)}
             >
@@ -342,6 +353,7 @@ function UserMenu({
             </MenuItem>
             <MenuItem
               href={userMenu?.cloud?.invitations}
+              active={activeNav === ActiveNavElement.UserMenuCloudInvitations}
               data-testid="user-menuitem-cloud-invitations"
               onClick={onElementClick(NavElement.UserMenuCloudInvitations)}
             >
@@ -354,6 +366,7 @@ function UserMenu({
             </MenuItem>
             <MenuItem
               href={userMenu?.cloud?.organizations}
+              active={activeNav === ActiveNavElement.UserMenuCloudOrganizations}
               data-testid="user-menuitem-cloud-organizations"
               onClick={onElementClick(NavElement.UserMenuCloudOrganizations)}
             >
@@ -361,6 +374,7 @@ function UserMenu({
             </MenuItem>
             <MenuItem
               href={userMenu?.cloud?.mfa}
+              active={activeNav === ActiveNavElement.UserMenuCloudMFA}
               data-testid="user-menuitem-cloud-mfa"
               onClick={onElementClick(NavElement.UserMenuCloudMFA)}
             >

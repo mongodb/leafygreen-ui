@@ -20,7 +20,7 @@
 | Prop                       | Type                                                                            | Description                                                                                                                                                                                                                                      | Default                                                 |
 | -------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------- |
 | `activeProduct`            | `'account', 'charts', 'cloud', 'realm', 'support', 'university'`                | Describes what product is currently active                                                                                                                                                                                                       |                                                         |
-| `activeNav`                | `'accessManager', 'admin', 'allClusters', 'billing', 'orgSettings', 'support'`  | Determines what nav item is currently active                                                                                                                                                                                                     |                                                         |
+| `activeNav`                | `ActiveNavElement` (see below for possible values)  | Determines what nav item is currently active                                                                                                                                                                                                     |                                                         |
 | `admin`                    | `boolean`                                                                       | Describes whether or not user is an `admin`                                                                                                                                                                                                      | `false`                                                 |
 | `mode`                     | `production` or `dev`                                                           | Describes what environment the component is being used in, defaults to `production`                                                                                                                                                              | `production`                                            |
 | `onOrganizationChange`     | `(_value: string, _event: React.ChangeEvent) => void`                           | Callback invoked when user types into organization picker. Receives value of input as first argument and ChangeEvent as the second.                                                                                                              |                                                         |
@@ -44,6 +44,39 @@
 | `alertsCount`              | `number`                                                                        | Overwrite number of alerts received from cloud endpoint                                                                                                                                                                                          |                                                         |
 
 _Any other properties will be spread on the root element_
+
+### ActiveNav Values
+
+#### Org Nav Elements
+`OrgNavAccessManager`  
+`OrgNavAdmin`  
+`OrgNavAllClusters`  
+`OrgNavBilling`  
+`OrgNavDropdownOrgAccessManager`  
+`OrgNavDropdownProjectAccessManager`
+`OrgNavOrgSettings`  
+`OrgNavSupport`  
+
+#### Project Nav Elements
+`ProjectNavActivityFeed`  
+`ProjectNavAlerts`  
+`ProjectNavInvite`  
+`ProjectNavProjectIntegrations`  
+`ProjectNavProjectSettings`  
+`ProjectNavProjectSupport`  
+
+#### Cloud User Menu Elements
+`UserMenuCloudInvitations`  
+`UserMenuCloudMFA`  
+`UserMenuCloudOrganizations`  
+`UserMenuCloudUserPreferences`  
+
+#### On Prem User Menu Elements
+`UserMenuOnPremInvitations`  
+`UserMenuOnPremOrganizations`  
+`UserMenuOnPremPersonalization`  
+`UserMenuOnPremProfile`  
+`UserMenuOnPremTwoFactorAuth`  
 
 ### URLInterface
 

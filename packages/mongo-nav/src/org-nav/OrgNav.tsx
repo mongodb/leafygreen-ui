@@ -106,6 +106,18 @@ const paymentStatusMap: Record<Colors, ReadonlyArray<OrgPaymentLabel>> = {
   ],
 } as const;
 
+const userMenuActiveNavItems = [
+  ActiveNavElement.UserMenuCloudInvitations,
+  ActiveNavElement.UserMenuCloudMFA,
+  ActiveNavElement.UserMenuCloudOrganizations,
+  ActiveNavElement.UserMenuCloudUserPreferences,
+  ActiveNavElement.UserMenuOnPremInvitations,
+  ActiveNavElement.UserMenuOnPremOrganizations,
+  ActiveNavElement.UserMenuOnPremPersonalization,
+  ActiveNavElement.UserMenuOnPremProfile,
+  ActiveNavElement.UserMenuOnPremTwoFactorAuth,
+];
+
 type OrgNavProps = Pick<
   MongoNavInterface,
   'activeProduct' | 'onOrganizationChange' | 'activeNav' | 'admin'
@@ -145,7 +157,7 @@ function OrgNav({
   const { orgNav } = urls;
   const isTablet = viewportWidth < breakpoints.medium;
   const isMobile = viewportWidth < breakpoints.small;
-  const disabled = activeNav === ActiveNavElement.UserSettings;
+  const disabled = (userMenuActiveNavItems as Array<string>).includes(activeNav as string);
 
   let paymentVariant: Colors | undefined;
   let key: Colors;
@@ -209,6 +221,7 @@ function OrgNav({
         activeProduct={activeProduct}
         urls={urls}
         hosts={hosts}
+        activeNav={activeNav}
       />
     );
   }

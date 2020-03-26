@@ -25,7 +25,6 @@ const NavElement = {
   ProjectNavInvite: 'projectNavInvite',
   ProjectNavActivityFeed: 'projectNavActivityFeed',
   ProjectNavAlerts: 'projectNavAlerts',
-  UserSettings: 'userSettings',
   UserMenuTrigger: 'userMenuTrigger',
   UserMenuFeedback: 'userMenuFeedback',
   UserMenuCloudMFA: 'userMenuCloudMFA',
@@ -61,16 +60,18 @@ const ActiveNavElement = {
   ProjectNavProjectSettings: NavElement.ProjectNavProjectSettings,
   ProjectNavProjectSupport: NavElement.ProjectNavProjectSupport,
   ProjectNavProjectIntegrations: NavElement.ProjectNavProjectIntegrations,
-  UserSettings: NavElement.UserSettings,
+  UserMenuCloudMFA: NavElement.UserMenuCloudMFA,
+  UserMenuCloudInvitations: NavElement.UserMenuCloudInvitations,
+  UserMenuCloudOrganizations: NavElement.UserMenuCloudOrganizations,
+  UserMenuCloudUserPreferences: NavElement.UserMenuCloudUserPreferences,
   UserMenuOnPremProfile: NavElement.UserMenuOnPremProfile,
   UserMenuOnPremTwoFactorAuth: NavElement.UserMenuOnPremTwoFactorAuth,
   UserMenuOnPremPersonalization: NavElement.UserMenuOnPremPersonalization,
   UserMenuOnPremInvitations: NavElement.UserMenuOnPremInvitations,
   UserMenuOnPremOrganizations: NavElement.UserMenuOnPremOrganizations,
-  UserMenuOnPremFeatureRequest: NavElement.UserMenuOnPremFeatureRequest,
 } as const;
 
-type ActiveNavElement = typeof ActiveNavElement[keyof typeof ActiveNavElement];
+type ActiveNavElement = typeof ActiveNavElement[keyof typeof ActiveNavElement]
 
 export { ActiveNavElement };
 
