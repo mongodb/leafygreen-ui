@@ -27,23 +27,3 @@ export const anchorOverrides = css`
     }
   }
 `;
-
-export const orgNavAnchorOverrides = css`
-  a {
-    &:visited,
-    &:active,
-    &:link {
-      color: ${uiColors.gray.dark3};
-    }
-  }
-`;
-
-export const projectNavAnchorOverrides = css`
-  a {
-    &:visited,
-    &:active,
-    &:link {
-      color: ${uiColors.gray.dark2};
-    }
-  }
-`;
