@@ -18,10 +18,12 @@ import { CurrentProjectInterface } from '../types';
 // types
 interface ExpectedElements {
   orgTrigger?: nullableElement;
+  orgTriggerText?: nullableElement;
   orgInput?: nullableElement;
   orgSettingsIcon?: nullableElement;
   orgResults?: nullableElementArray;
   projectTrigger?: nullableElement;
+  projectTriggerText?: nullableElement;
   projectInput?: nullableElement;
   projectResults?: nullableElementArray;
 }
@@ -33,9 +35,6 @@ const {
   organizations,
   projects,
 } = dataFixtures;
-
-const currentProjectName = currentProject?.projectName;
-const currentOrgName = currentOrganization?.orgName;
 
 describe('packages/mongo-select', () => {
   const queries: Queries = {};
@@ -53,10 +52,14 @@ describe('packages/mongo-select', () => {
     } = queries;
 
     expectedElements.orgTrigger = queryByTestId('org-trigger');
+    expectedElements.orgTriggerText = queryByTestId('org-select-active-org');
     expectedElements.orgInput = queryByTestId('org-filter-input');
     expectedElements.orgSettingsIcon = queryByTestId('org-trigger-settings');
     expectedElements.orgResults = queryAllByTestId('org-option');
     expectedElements.projectTrigger = queryByTestId('project-select-trigger');
+    expectedElements.projectTriggerText = queryByTestId(
+      'project-select-active-project',
+    );
     expectedElements.projectInput = queryByTestId('project-filter-input');
     expectedElements.projectResults = queryAllByTestId('project-option');
   };
@@ -92,9 +95,9 @@ describe('packages/mongo-select', () => {
       beforeEach(renderComponent);
 
       it('displays the org select trigger with the current org name', () => {
-        const { orgTrigger } = expectedElements;
-        expect(orgTrigger).toBeVisible();
-        expect(orgTrigger?.textContent).toContain(currentOrgName);
+        const { orgTriggerText } = expectedElements;
+        expect(orgTriggerText).toBeVisible();
+        expect(orgTriggerText?.textContent).toEqual('Demo Organization');
       });
 
       describe('when clicking the current organization trigger', () => {
@@ -132,10 +135,10 @@ describe('packages/mongo-select', () => {
         it('displays the correct link to projects of each result', () => {
           const { orgResults } = expectedElements;
           expect((orgResults?.[0] as HTMLAnchorElement).href).toBe(
-            constructOrganizationURL('5d729a93'),
+            'https://cloud.mongodb.com/v2#/org/fakeOrgId1/projects',
           );
           expect((orgResults?.[1] as HTMLAnchorElement).href).toBe(
-            constructOrganizationURL('5e0fa79'),
+            'https://cloud.mongodb.com/v2#/org/fakeOrgId2/projects',
           );
         });
 
@@ -248,13 +251,13 @@ describe('packages/mongo-select', () => {
     describe('when rendered with default props', () => {
       beforeEach(renderComponent);
 
-      it('displays the org select trigger with the current project name', () => {
-        const { projectTrigger } = expectedElements;
-        expect(projectTrigger).toBeInTheDocument();
-        expect(projectTrigger?.textContent).toContain(currentProjectName);
+      it('displays the project select trigger with the current project name', () => {
+        const { projectTriggerText } = expectedElements;
+        expect(projectTriggerText).toBeInTheDocument();
+        expect(projectTriggerText?.textContent).toEqual('Test Project');
       });
 
-      describe('when clicking the current organization trigger', () => {
+      describe('when clicking the current project trigger', () => {
         beforeEach(() => {
           const { projectTrigger } = expectedElements;
           fireEvent.click(projectTrigger as Element);
@@ -269,12 +272,12 @@ describe('packages/mongo-select', () => {
           );
         });
 
-        it('displays two organization results', () => {
+        it('displays two projects', () => {
           const { projectResults } = expectedElements;
           expect(projectResults?.length).toEqual(2);
         });
 
-        it('displays the correct names of each result', () => {
+        it('displays the correct names of each project', () => {
           const { projectResults } = expectedElements;
           expect(projectResults?.[0]?.textContent).toContain('Demo Project');
           expect(projectResults?.[1]?.textContent).toContain('Demo Project 2');
@@ -283,10 +286,10 @@ describe('packages/mongo-select', () => {
         it('displays the correct link to projects of each result', () => {
           const { projectResults } = expectedElements;
           expect((projectResults?.[0] as HTMLAnchorElement).href).toBe(
-            constructProjectURL('5d729a93'),
+            'https://cloud.mongodb.com/v2#/fakeProjectId1',
           );
           expect((projectResults?.[1] as HTMLAnchorElement).href).toBe(
-            constructProjectURL('5e0fa79'),
+            'https://cloud.mongodb.com/v2#/fakeProjectId2',
           );
         });
 

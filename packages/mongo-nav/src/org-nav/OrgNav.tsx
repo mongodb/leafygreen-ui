@@ -17,13 +17,11 @@ import { useOnElementClick } from '../on-element-click-provider';
 import {
   AccountInterface,
   OrganizationInterface,
-  URLSInterface,
   NavElement,
   CurrentOrganizationInterface,
   OrgPaymentLabel,
   ActiveNavElement,
   MongoNavInterface,
-  HostsInterface,
 } from '../types';
 
 export const orgNavHeight = 60;
@@ -110,9 +108,11 @@ type OrgNavProps = Pick<
   onPremEnabled?: boolean;
   onPremVersion?: string;
   onPremMFA?: boolean;
-  urls: Required<URLSInterface>;
-  hosts: Required<HostsInterface>;
-  constructOrganizationURL: (orgID: string) => string;
+  constructOrganizationURL: NonNullable<
+    MongoNavInterface['constructOrganizationURL']
+  >;
+  urls: Required<NonNullable<MongoNavInterface['urls']>>;
+  hosts: Required<NonNullable<MongoNavInterface['hosts']>>;
 };
 
 function OrgNav({
