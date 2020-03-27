@@ -86,6 +86,8 @@ export interface URLSInterface {
     integrations?: string,
     alerts?: string,
     activityFeed?: string,
+    invite?: string,
+    realm?: string,
     charts?: string,
   };
   onPrem?: {

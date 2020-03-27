@@ -420,7 +420,7 @@ export default function ProjectNav({
             <li role="none" className={productTabStyle}>
               <a
                 data-testid="project-nav-realm"
-                href={hosts.realm}
+                href={projectNav.realm}
                 className={getProductClassName('realm')}
                 aria-disabled={!current}
                 tabIndex={current ? 0 : -1}

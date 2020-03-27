@@ -98,6 +98,7 @@ export const urlDefaults: Required<URLSInterface> = {
     alerts: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#alerts`,
     activityFeed: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#activity`,
     invite: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#access/add`,
+    realm: `https://stitch.mongodb.com/groups/${dataFixtures.currentProject?.projectId}`,
     charts: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#charts`,
   },
   onPrem: {
