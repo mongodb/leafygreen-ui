@@ -339,7 +339,7 @@ export default function ProjectNav({
         usePortal={false}
         trigger={
           <IconButton
-            ariaLabel="More"
+            aria-label="More"
             className={menuIconButtonStyle}
             active={open}
             disabled={!current}
@@ -469,7 +469,7 @@ export default function ProjectNav({
             usePortal={false}
             trigger={
               <IconButton
-                ariaLabel="Invite"
+                aria-label="Invite"
                 href={projectNav.invite as string}
                 className={iconButtonMargin}
                 size="large"
@@ -494,7 +494,7 @@ export default function ProjectNav({
             usePortal={false}
             trigger={
               <IconButton
-                ariaLabel="Project Activity Feed"
+                aria-label="Project Activity Feed"
                 href={projectNav.activityFeed as string}
                 size="large"
                 className={iconButtonMargin}
@@ -520,7 +520,7 @@ export default function ProjectNav({
             usePortal={false}
             trigger={
               <IconButton
-                ariaLabel="Alerts"
+                aria-label="Alerts"
                 href={projectNav.alerts as string}
                 size="large"
                 disabled={!current}

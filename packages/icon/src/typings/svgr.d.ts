@@ -1,6 +1,6 @@
 declare namespace SVGR {
   interface ComponentProps extends React.SVGProps<SVGSVGElement> {
-    title?: string | null;
+    title?: string | null | boolean;
   }
 
   type Component = React.ComponentType<ComponentProps>;
@@ -8,7 +8,7 @@ declare namespace SVGR {
 
 declare namespace LGGlyph {
   interface ComponentProps extends SVGR.ComponentProps {
-    size?: 'small' | 'default' | 'large' | 'xlarge' | number;
+    size?: number;
   }
 
   type Component = React.ComponentType<ComponentProps>;

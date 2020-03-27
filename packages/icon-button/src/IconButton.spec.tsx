@@ -10,12 +10,12 @@ describe('packages/icon-button', () => {
   const className = 'test-icon-button-class';
   const testId = 'test-icon-button-component';
 
-  const { getByTestId, getAllByTestId } = render(
+  const { getByTestId } = render(
     <IconButton
       className={className}
       onClick={onClick}
       data-testid={testId}
-      ariaLabel="Ellipsis"
+      aria-label="Ellipsis"
     >
       <Icon glyph="Ellipsis" data-testid="icon-test-id" />
     </IconButton>,
@@ -28,7 +28,7 @@ describe('packages/icon-button', () => {
   });
 
   test(`renders icon as button content`, () => {
-    const renderedIcon = getAllByTestId('icon-test-id')[0];
+    const renderedIcon = getByTestId('icon-test-id');
     expect(iconButton.contains(renderedIcon)).toBe(true);
   });
 
@@ -48,7 +48,7 @@ describe('packages/icon-button', () => {
       <IconButton
         data-testid={testId}
         href="mongodb.design"
-        ariaLabel="Ellipsis"
+        aria-label="Ellipsis"
         size="large"
       >
         <Icon glyph="Ellipsis" size="large" />

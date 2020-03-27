@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { HTMLElementProps, Either, isComponentType } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 
 const Variant = {
@@ -23,72 +23,6 @@ type Size = typeof Size[keyof typeof Size];
 
 export { Size };
 
-const sizeMap: { [S in Size]: number } = {
-  default: 16,
-  large: 20,
-  xlarge: 24,
-};
-
-interface SharedIconButtonProps {
-  /**
-   * Determines color of `IconButton`. Can be `light` or `dark`.
-   */
-  variant?: Variant;
-
-  /**
-   * Classname applied to `IconButton`.
-   */
-  className?: string;
-
-  /**
-   * Content to appear inside of `IconButton`.
-   */
-  children?: React.ReactNode;
-
-  /**
-   * Determines whether or not `IconButton` is disabled.
-   */
-  disabled?: boolean;
-
-  /**
-   * Required prop which will be passed to `aria-label` attribute
-   */
-  ariaLabel: string;
-
-  /**
-   * Determines size of IconButton can be: default, large, xlarge
-   */
-  size?: Size;
-
-  /**
-   * Determines whether `IconButton` will appear `active`
-   */
-  active?: boolean;
-}
-
-interface LinkIconButtonProps
-  extends HTMLElementProps<'a'>,
-    SharedIconButtonProps {
-  /**
-   * Destination URL, if supplied `IconButton` will render in `a` tags, rather than `button` tags.
-   */
-  href: string;
-}
-
-interface ButtonIconButtonProps
-  extends HTMLElementProps<'button'>,
-    SharedIconButtonProps {
-  href?: null;
-}
-
-type IconButtonProps = LinkIconButtonProps | ButtonIconButtonProps;
-
-function usesLinkElement(
-  props: LinkIconButtonProps | ButtonIconButtonProps,
-): props is LinkIconButtonProps {
-  return props.href != null;
-}
-
 const removeButtonStyle = css`
   border: none;
   -webkit-appearance: unset;
@@ -101,7 +35,11 @@ const baseIconButtonStyle = css`
   color: ${uiColors.gray.base};
   position: relative;
   cursor: pointer;
-  // added for cross-browser compatability
+
+  // Set background to fully-transparent white for cross-browser compatability with Safari
+  //
+  // Safari treats "transparent" values in CSS as transparent black instead of white
+  // which can make things render differently across browsers if not defined explicitly.
   background-color: rgba(255, 255, 255, 0);
 
   &:before {
@@ -128,7 +66,7 @@ const baseIconButtonStyle = css`
   }
 `;
 
-const iconButtonSizes: { readonly [K in Size]: string } = {
+const iconButtonSizes = {
   [Size.Default]: css`
     height: 28px;
     width: 28px;
@@ -141,9 +79,9 @@ const iconButtonSizes: { readonly [K in Size]: string } = {
     height: 42px;
     width: 42px;
   `,
-};
+} as const;
 
-const iconButtonVariants: { readonly [K in Variant]: string } = {
+const iconButtonVariants = {
   [Variant.Light]: css`
     &:hover {
       color: ${uiColors.gray.dark2};
@@ -173,9 +111,9 @@ const iconButtonVariants: { readonly [K in Variant]: string } = {
       background-color: ${uiColors.blue.dark2};
     }
   `,
-};
+} as const;
 
-const disabledStyle: { readonly [K in Variant]: string } = {
+const disabledStyle = {
   [Variant.Light]: css`
     color: ${uiColors.gray.light2};
     pointer-events: none;
@@ -185,9 +123,9 @@ const disabledStyle: { readonly [K in Variant]: string } = {
     color: ${uiColors.gray.dark2};
     pointer-events: none;
   `,
-};
+} as const;
 
-const activeStyle: { readonly [K in Variant]: string } = {
+const activeStyle = {
   [Variant.Light]: css`
     color: ${uiColors.gray.dark2};
     background-color: ${uiColors.gray.light2};
@@ -205,18 +143,76 @@ const activeStyle: { readonly [K in Variant]: string } = {
       background-color: ${uiColors.gray.dark2};
     }
   `,
-};
+} as const;
 
-const getIconStyle = (size: Size) => css`
+const iconStyle = css`
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  margin: auto;
-  height: ${sizeMap[size]}px;
-  width: ${sizeMap[size]}px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
+
+interface SharedIconButtonProps {
+  /**
+   * Determines color of `IconButton`. Can be `light` or `dark`.
+   */
+  variant?: Variant;
+
+  /**
+   * Classname applied to `IconButton`.
+   */
+  className?: string;
+
+  /**
+   * Content to appear inside of `IconButton`.
+   */
+  children?: React.ReactNode;
+
+  /**
+   * Determines whether or not `IconButton` is disabled.
+   */
+  disabled?: boolean;
+
+  /**
+   * Determines size of IconButton can be: default, large, xlarge
+   */
+  size?: Size;
+
+  /**
+   * Determines whether `IconButton` will appear `active`
+   */
+  active?: boolean;
+}
+
+interface LinkIconButtonProps
+  extends HTMLElementProps<'a'>,
+    SharedIconButtonProps {
+  /**
+   * Destination URL, if supplied `IconButton` will render in `a` tags, rather than `button` tags.
+   */
+  href: string;
+}
+
+interface ButtonIconButtonProps
+  extends HTMLElementProps<'button'>,
+    SharedIconButtonProps {
+  href?: null;
+}
+
+type AriaLabels = 'aria-label' | 'aria-labelledby';
+type IconButtonProps =
+  | Either<LinkIconButtonProps, AriaLabels>
+  | Either<ButtonIconButtonProps, AriaLabels>;
+
+function usesLinkElement(
+  props: LinkIconButtonProps | ButtonIconButtonProps,
+): props is LinkIconButtonProps {
+  return props.href != null;
+}
 
 /**
  * # IconButton
@@ -234,31 +230,59 @@ const getIconStyle = (size: Size) => css`
  * @param props.variant Determines color of `IconButton`. Can be `light` or `dark`.
  * @param props.href Destination URL, if supplied `IconButton` will render in `a` tags, rather than `button` tags.
  * @param props.onClick Callback fired when `IconButton` is clicked.
- * @param props.ariaLabel Required prop that will be passed to `aria-label` attribute
  * @param props.active Determines whether `IconButton` will appear `active`
  *
  */
 
 const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
   const {
-    variant = 'light',
+    variant = Variant.Light,
+    size = Size.Default,
     disabled = false,
-    size = 'default',
     active = false,
     className,
     href,
     children,
-    ariaLabel,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
     ...rest
   } = props;
+
+  // We do our own proptype validation here to ensure either 'aria-label' or 'aria-labelledby' are passed to the component.
+  if (!ariaLabel && !ariaLabelledBy) {
+    console.error(
+      'For screen-reader accessibility, aria-label or aria-labelledby must be provided to IconButton.',
+    );
+  }
+
+  const processedChildren = React.Children.map(children, child => {
+    if (isComponentType(child, 'Icon')) {
+      const { label, size: childSize } = child.props;
+
+      if (typeof label === 'string' && label.length > 0) {
+        return child;
+      }
+
+      return React.cloneElement(child, {
+        // Unsets the title within an icon since the button itself will have
+        // aria-label or aria-labelledby set.
+        title: false,
+        size: childSize || size,
+      });
+    }
+
+    return child;
+  });
 
   const renderIconButton = (Root: React.ElementType<any> = 'button') => (
     <Root
       {...rest}
-      href={href ? href : undefined}
+      ref={ref}
+      href={href ?? undefined}
+      tabIndex={disabled ? -1 : 0}
       aria-disabled={disabled}
       aria-label={ariaLabel}
-      ref={ref}
+      aria-labelledby={ariaLabelledBy}
       className={cx(
         removeButtonStyle,
         baseIconButtonStyle,
@@ -270,9 +294,8 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
         },
         className,
       )}
-      tabIndex={disabled ? -1 : 0}
     >
-      <span className={getIconStyle(size)}>{children}</span>
+      <div className={iconStyle}>{processedChildren}</div>
     </Root>
   );
 
@@ -288,11 +311,11 @@ IconButton.displayName = 'IconButton';
 // @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 IconButton.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)),
+  size: PropTypes.oneOf(Object.values(Size)),
   className: PropTypes.string,
   children: PropTypes.node,
   disabled: PropTypes.bool,
   href: PropTypes.string,
-  ariaLabel: PropTypes.string.isRequired,
   active: PropTypes.bool,
 };
 

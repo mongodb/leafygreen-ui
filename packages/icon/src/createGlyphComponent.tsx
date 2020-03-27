@@ -59,7 +59,6 @@ export default function createGlyphComponent(
   GlyphComponent.propTypes = {
     fill: PropTypes.string,
     size: PropTypes.number,
-    title: PropTypes.string,
     className: PropTypes.string,
   };
 

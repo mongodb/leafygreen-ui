@@ -1,4 +1,4 @@
-/// <reference path="../typings/svgr.d.ts" />
+/// <reference path="./typings/svgr.d.ts" />
 
 import createIconComponent from './createIconComponent';
 import glyphs from './glyphs';

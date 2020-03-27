@@ -4,7 +4,7 @@
     "declarationDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*", "../../typings/*", "typings/**/*"],
+  "include": ["src/**/*"],
   "references": [
     {
       "path": "../emotion"
