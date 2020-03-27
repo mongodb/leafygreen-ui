@@ -50,6 +50,13 @@ describe('packages/mongo-nav/src/org-nav', () => {
     const { queryByTestId = () => null } = queries;
     expectedElements.paymentStatus = queryByTestId('org-nav-payment-status');
     expectedElements.accessManager = queryByTestId('org-nav-access-manager');
+    expectedElements.accessManagerDropdown = queryByTestId('org-nav-dropdown');
+    expectedElements.accessManagerOrg = queryByTestId(
+      'org-nav-dropdown-org-access-manager',
+    );
+    expectedElements.accessManagerProject = queryByTestId(
+      'org-nav-dropdown-project-access-manager',
+    );
     expectedElements.support = queryByTestId('org-nav-support');
     expectedElements.billing = queryByTestId('org-nav-billing');
     expectedElements.allClusters = queryByTestId('org-nav-all-clusters-link');
@@ -88,6 +95,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
           urls={urlDefaults}
           admin={false}
           hosts={hostDefaults}
+          showProjectNav={true}
           {...props}
         />,
       ),
@@ -220,6 +228,26 @@ describe('packages/mongo-nav/src/org-nav', () => {
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, ['allClusters', 'admin'].includes(linkName)),
     );
+  });
+
+  describe('when rendered without project nav', () => {
+    beforeEach(() =>
+      renderComponent({
+        showProjectNav: false,
+      }),
+    );
+
+    it('shows project access as disabled', () => {
+      fireEvent.click(expectedElements.accessManagerDropdown!);
+      setExpectedElements();
+
+      expect(expectedElements.accessManagerProject).toBeInTheDocument();
+      expect(expectedElements.accessManagerProject).toHaveAttribute(
+        'aria-disabled',
+        'true',
+      );
+      expect(expectedElements.accessManagerProject).toContainHTML('None');
+    });
   });
 
   describe('when rendered onPrem', () => {

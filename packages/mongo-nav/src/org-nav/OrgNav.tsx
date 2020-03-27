@@ -113,6 +113,7 @@ type OrgNavProps = Pick<
   >;
   urls: Required<NonNullable<MongoNavInterface['urls']>>;
   hosts: Required<NonNullable<MongoNavInterface['hosts']>>;
+  showProjectNav: NonNullable<MongoNavInterface['showProjectNav']>;
 };
 
 function OrgNav({
@@ -130,6 +131,7 @@ function OrgNav({
   onPremEnabled,
   onPremVersion,
   onPremMFA = false,
+  showProjectNav,
 }: OrgNavProps) {
   const [accessManagerOpen, setAccessManagerOpen] = useState(false);
   const [onPremMenuOpen, setOnPremMenuOpen] = useState(false);
@@ -298,7 +300,8 @@ function OrgNav({
                     activeNav ===
                     ActiveNavElement.OrgNavDropdownProjectAccessManager
                   }
-                  description={currentProjectName}
+                  disabled={!showProjectNav}
+                  description={showProjectNav ? currentProjectName : 'None'}
                   onClick={onElementClick(
                     NavElement.OrgNavDropdownProjectAccessManager,
                   )}

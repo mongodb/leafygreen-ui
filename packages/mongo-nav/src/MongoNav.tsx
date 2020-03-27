@@ -246,6 +246,7 @@ function MongoNav({
           onPremEnabled={onPrem.enabled}
           onPremVersion={onPrem.version}
           onPremMFA={onPrem.mfa}
+          showProjectNav={shouldShowProjectNav}
         />
 
         {shouldShowProjectNav && (
