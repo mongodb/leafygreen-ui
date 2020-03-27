@@ -203,11 +203,11 @@ describe('packages/mongo-nav/src/org-nav', () => {
     ];
 
     cloudUserNavItems.forEach(activeNav => {
-      describe(`when the element ${(activeNav as string)} is active`, () => {
+      describe(`when the element ${activeNav as string} is active`, () => {
         beforeEach(() =>
           renderComponent({
             activeNav,
-            admin: true
+            admin: true,
           }),
         );
 
@@ -275,7 +275,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
     ];
 
     onPremUserNavItems.forEach(activeNav => {
-      describe(`when the element ${(activeNav as string)} is active`, () => {
+      describe(`when the element ${activeNav as string} is active`, () => {
         beforeEach(() =>
           renderComponent({
             activeNav,
