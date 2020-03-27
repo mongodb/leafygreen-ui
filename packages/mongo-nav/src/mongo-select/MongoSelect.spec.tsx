@@ -233,7 +233,6 @@ describe('packages/mongo-select', () => {
           setExpectedElements();
           expect(expectedElements!.orgInput).not.toBeInTheDocument();
         });
-        // queries.debug();
 
         fireEvent.click(expectedElements.orgTrigger as Element);
         setExpectedElements();
@@ -389,7 +388,6 @@ describe('packages/mongo-select', () => {
           setExpectedElements();
           expect(expectedElements!.projectInput).not.toBeInTheDocument();
         });
-        // queries.debug();
 
         fireEvent.click(expectedElements.projectTrigger as Element);
         setExpectedElements();
