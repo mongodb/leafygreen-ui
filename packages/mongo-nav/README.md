@@ -44,7 +44,7 @@
 
 _Any other properties will be spread on the root element_
 
-### ActiveNav Values
+### `ActiveNavElement` Values
 
 #### Org Nav Elements
 
