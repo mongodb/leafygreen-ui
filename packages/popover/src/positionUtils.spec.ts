@@ -62,6 +62,14 @@ const contentElPos = {
   width: 20,
 };
 
+function checkPixelValue(actual: string | number, expected: number) {
+  if (typeof actual === 'string') {
+    expect(actual).toBe(`${expected}px`);
+  } else {
+    expect(actual).toBe(expected);
+  }
+}
+
 describe('positionUtils', () => {
   describe('calculatePosition', () => {
     describe('returns an object with three key-value pairs', () => {
@@ -76,15 +84,15 @@ describe('positionUtils', () => {
         contentElPos: contentElPos,
       });
 
-      expect(calcPositionObject.alignment).toBeTruthy();
-      expect(calcPositionObject.justification).toBeTruthy();
+      expect(calcPositionObject.align).toBeTruthy();
+      expect(calcPositionObject.justify).toBeTruthy();
       expect(calcPositionObject.positionCSS).toBeTruthy();
     });
 
     describe('when the reference element is on the top', () => {
       describe('Align.Top', () => {
         test('Align.Top respositions to Align.Bottom based on available space', () => {
-          const { alignment, justification, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -95,11 +103,32 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('bottom');
-          expect(justification).toBe('left');
-          expect(positionCSS.top).toBe(15);
-          expect(positionCSS.left).toBe(45);
+          expect(align).toBe('bottom');
+          expect(justify).toBe('start');
+          checkPixelValue(positionCSS.top, 15);
+          checkPixelValue(positionCSS.left, 45);
           expect(positionCSS.transformOrigin).toBe('left top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, -5px, 0) scale(0.8)',
+          );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Top,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.left, 45);
+          checkPixelValue(positionCSS.right, 45);
+          expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
           );
@@ -108,7 +137,7 @@ describe('positionUtils', () => {
 
       describe('Align.Right', () => {
         test('Justify.Start works', () => {
-          const { alignment, justification, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -119,10 +148,10 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('right');
-          expect(justification).toBe('top');
-          expect(positionCSS.top).toBe(0);
-          expect(positionCSS.left).toBe(60);
+          expect(align).toBe('right');
+          expect(justify).toBe('start');
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -130,7 +159,7 @@ describe('positionUtils', () => {
         });
 
         test('Justify.Middle repositions to Justify.Start based on available space', () => {
-          const { alignment, justification, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -141,10 +170,10 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('right');
-          expect(justification).toBe('top');
-          expect(positionCSS.top).toBe(0);
-          expect(positionCSS.left).toBe(60);
+          expect(align).toBe('right');
+          expect(justify).toBe('start');
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -152,7 +181,7 @@ describe('positionUtils', () => {
         });
 
         test('Justify.Bottom repositions to Justify.Start based on available space', () => {
-          const { alignment, justification, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -163,11 +192,32 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('right');
-          expect(justification).toBe('top');
-          expect(positionCSS.top).toBe(0);
-          expect(positionCSS.left).toBe(60);
+          expect(align).toBe('right');
+          expect(justify).toBe('start');
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(-5px, 0, 0) scale(0.8)',
+          );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Right,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.bottom, 90);
+          expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
           );
@@ -176,7 +226,7 @@ describe('positionUtils', () => {
 
       describe('Align.Bottom', () => {
         test('Justify.Start works', () => {
-          const { alignment, justification, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -187,17 +237,17 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('bottom');
-          expect(justification).toBe('left');
-          expect(positionCSS.top).toBe(15);
-          expect(positionCSS.left).toBe(45);
+          expect(align).toBe('bottom');
+          expect(justify).toBe('start');
+          checkPixelValue(positionCSS.top, 15);
+          checkPixelValue(positionCSS.left, 45);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
           );
         });
         test('Justify.Middle works', () => {
-          const { alignment, justification, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -208,17 +258,17 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('bottom');
-          expect(justification).toBe('center-horizontal');
-          expect(positionCSS.top).toBe(15);
-          expect(positionCSS.left).toBe(40);
+          expect(align).toBe('bottom');
+          expect(justify).toBe('middle');
+          checkPixelValue(positionCSS.top, 15);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
           );
         });
         test('Justify.End works', () => {
-          const { alignment, justification, positionCSS } = calculatePosition({
+          const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
             windowWidth: WINDOW_WIDTH,
@@ -229,76 +279,249 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(alignment).toBe('bottom');
-          expect(justification).toBe('right');
-          expect(positionCSS.top).toBe(15);
-          expect(positionCSS.left).toBe(35);
+          expect(align).toBe('bottom');
+          expect(justify).toBe('end');
+          checkPixelValue(positionCSS.top, 15);
+          checkPixelValue(positionCSS.left, 35);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
           );
         });
-      });
-    });
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Bottom,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
 
-    describe('Align.Left', () => {
-      test('Justify.Start', () => {
-        const { alignment, justification, positionCSS } = calculatePosition({
-          spacing: SPACING,
-          windowHeight: WINDOW_HEIGHT,
-          windowWidth: WINDOW_WIDTH,
-          useRelativePositioning: false,
-          align: Align.Left,
-          justify: Justify.Start,
-          referenceElPos: refElPos.top,
-          contentElPos: contentElPos,
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.left, 45);
+          checkPixelValue(positionCSS.right, 45);
+          expect(positionCSS.transformOrigin).toBe('center top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, -5px, 0) scale(0.8)',
+          );
         });
-
-        expect(alignment).toBe('left');
-        expect(justification).toBe('top');
-        expect(positionCSS.top).toBe(0);
-        expect(positionCSS.left).toBe(20);
-        expect(positionCSS.transformOrigin).toBe('right top');
-        expect(positionCSS.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
-      });
-      test('Justify.Center respositions to Justify.Start based on available space', () => {
-        const { alignment, justification, positionCSS } = calculatePosition({
-          spacing: SPACING,
-          windowHeight: WINDOW_HEIGHT,
-          windowWidth: WINDOW_WIDTH,
-          useRelativePositioning: false,
-          align: Align.Left,
-          justify: Justify.Middle,
-          referenceElPos: refElPos.top,
-          contentElPos: contentElPos,
-        });
-
-        expect(alignment).toBe('left');
-        expect(justification).toBe('top');
-        expect(positionCSS.top).toBe(0);
-        expect(positionCSS.left).toBe(20);
-        expect(positionCSS.transformOrigin).toBe('right top');
-        expect(positionCSS.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
       });
 
-      test('Justify.End respositions to Justify.Start based on available space', () => {
-        const { alignment, justification, positionCSS } = calculatePosition({
-          spacing: SPACING,
-          windowHeight: WINDOW_HEIGHT,
-          windowWidth: WINDOW_WIDTH,
-          useRelativePositioning: false,
-          align: Align.Left,
-          justify: Justify.End,
-          referenceElPos: refElPos.top,
-          contentElPos: contentElPos,
+      describe('Align.Left', () => {
+        test('Justify.Start', () => {
+          const { align, justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Left,
+            justify: Justify.Start,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(align).toBe('left');
+          expect(justify).toBe('start');
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 20);
+          expect(positionCSS.transformOrigin).toBe('right top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(5px, 0, 0) scale(0.8)',
+          );
+        });
+        test('Justify.Center respositions to Justify.Start based on available space', () => {
+          const { align, justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Left,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(align).toBe('left');
+          expect(justify).toBe('start');
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 20);
+          expect(positionCSS.transformOrigin).toBe('right top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(5px, 0, 0) scale(0.8)',
+          );
         });
 
-        expect(alignment).toBe('left');
-        expect(justification).toBe('top');
-        expect(positionCSS.top).toBe(0);
-        expect(positionCSS.left).toBe(20);
-        expect(positionCSS.transformOrigin).toBe('right top');
-        expect(positionCSS.transform).toBe('translate3d(5px, 0, 0) scale(0.8)');
+        test('Justify.End respositions to Justify.Start based on available space', () => {
+          const { align, justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Left,
+            justify: Justify.End,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(align).toBe('left');
+          expect(justify).toBe('start');
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 20);
+          expect(positionCSS.transformOrigin).toBe('right top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(5px, 0, 0) scale(0.8)',
+          );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Left,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.bottom, 90);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe(
+            'translate3d(5px, 0, 0) scale(0.8)',
+          );
+        });
+      });
+
+      describe('Align.CenterVertical', () => {
+        test('Align.CenterVertical respositions to Align.Bottom based on available space', () => {
+          const { align, justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Start,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(align).toBe('bottom');
+          expect(justify).toBe('start');
+          checkPixelValue(positionCSS.top, 15);
+          checkPixelValue(positionCSS.left, 45);
+          expect(positionCSS.transformOrigin).toBe('left top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, -5px, 0) scale(0.8)',
+          );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.left, 45);
+          checkPixelValue(positionCSS.right, 45);
+          expect(positionCSS.transformOrigin).toBe('center top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, -5px, 0) scale(0.8)',
+          );
+        });
+      });
+
+      describe('Align.CenterHorizontal', () => {
+        test('Justify.Start', () => {
+          const { align, justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Start,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(align).toBe('center-horizontal');
+          expect(justify).toBe('start');
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 40);
+          expect(positionCSS.transformOrigin).toBe('center top');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+        test('Justify.Center respositions to Justify.Start based on available space', () => {
+          const { align, justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(align).toBe('center-horizontal');
+          expect(justify).toBe('start');
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 40);
+          expect(positionCSS.transformOrigin).toBe('center top');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.End respositions to Justify.Start based on available space', () => {
+          const { align, justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.End,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(align).toBe('center-horizontal');
+          expect(justify).toBe('start');
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 40);
+          expect(positionCSS.transformOrigin).toBe('center top');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.top,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.left, 40);
+          checkPixelValue(positionCSS.bottom, 90);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
       });
     });
 
@@ -316,8 +539,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(20);
-          expect(positionCSS.left).toBe(80);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 80);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -336,8 +559,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(20);
-          expect(positionCSS.left).toBe(80);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 80);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -355,9 +578,30 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(20);
-          expect(positionCSS.left).toBe(80);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 80);
           expect(positionCSS.transformOrigin).toBe('right bottom');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, 5px, 0) scale(0.8)',
+          );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Top,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.left, 90);
+          checkPixelValue(positionCSS.right, 0);
+          expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
           );
@@ -376,8 +620,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(45);
-          expect(positionCSS.left).toBe(65);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 65);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -397,8 +641,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(60);
-          expect(positionCSS.left).toBe(80);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 80);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -416,8 +660,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(60);
-          expect(positionCSS.left).toBe(80);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 80);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -435,9 +679,29 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(60);
-          expect(positionCSS.left).toBe(80);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 80);
           expect(positionCSS.transformOrigin).toBe('right top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, -5px, 0) scale(0.8)',
+          );
+        });
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Bottom,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.left, 90);
+          checkPixelValue(positionCSS.right, 0);
+          expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
           );
@@ -456,8 +720,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(45);
-          expect(positionCSS.left).toBe(65);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 65);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -475,8 +739,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(40);
-          expect(positionCSS.left).toBe(65);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 65);
           expect(positionCSS.transformOrigin).toBe('right center');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -495,9 +759,124 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(35);
-          expect(positionCSS.left).toBe(65);
+          checkPixelValue(positionCSS.top, 35);
+          checkPixelValue(positionCSS.left, 65);
           expect(positionCSS.transformOrigin).toBe('right bottom');
+          expect(positionCSS.transform).toBe(
+            'translate3d(5px, 0, 0) scale(0.8)',
+          );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Left,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.bottom, 45);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe(
+            'translate3d(5px, 0, 0) scale(0.8)',
+          );
+        });
+      });
+      describe('Align.CenterVertical', () => {
+        test('Justify.Start repositions to Justify.End based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Start,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 80);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Middle repositions to Justify.Start based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 80);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+        test('Justify.End works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.End,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 80);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.left, 90);
+          checkPixelValue(positionCSS.right, 0);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+      });
+      describe('Align.CenterHorizontal', () => {
+        test('Align.CenterHorizontal respositions to Align.Left based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Start,
+            referenceElPos: refElPos.right,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 65);
+          expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
           );
@@ -519,8 +898,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(65);
-          expect(positionCSS.left).toBe(45);
+          checkPixelValue(positionCSS.top, 65);
+          checkPixelValue(positionCSS.left, 45);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -539,8 +918,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(65);
-          expect(positionCSS.left).toBe(40);
+          checkPixelValue(positionCSS.top, 65);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -559,9 +938,30 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(65);
-          expect(positionCSS.left).toBe(35);
+          checkPixelValue(positionCSS.top, 65);
+          checkPixelValue(positionCSS.left, 35);
           expect(positionCSS.transformOrigin).toBe('right bottom');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, 5px, 0) scale(0.8)',
+          );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Top,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.left, 45);
+          checkPixelValue(positionCSS.right, 45);
+          expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
           );
@@ -581,8 +981,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(80);
-          expect(positionCSS.left).toBe(60);
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -600,8 +1000,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(80);
-          expect(positionCSS.left).toBe(60);
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -620,9 +1020,30 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(80);
-          expect(positionCSS.left).toBe(60);
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left bottom');
+          expect(positionCSS.transform).toBe(
+            'translate3d(-5px, 0, 0) scale(0.8)',
+          );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Right,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.top, 90);
+          checkPixelValue(positionCSS.bottom, 0);
+          expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
           );
@@ -641,8 +1062,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(65);
-          expect(positionCSS.left).toBe(45);
+          checkPixelValue(positionCSS.top, 65);
+          checkPixelValue(positionCSS.left, 45);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -663,8 +1084,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(80);
-          expect(positionCSS.left).toBe(20);
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 20);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -683,8 +1104,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(80);
-          expect(positionCSS.left).toBe(20);
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 20);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
@@ -703,12 +1124,130 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(80);
-          expect(positionCSS.left).toBe(20);
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 20);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
           );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Left,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.top, 90);
+          checkPixelValue(positionCSS.bottom, 0);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe(
+            'translate3d(5px, 0, 0) scale(0.8)',
+          );
+        });
+      });
+
+      describe('Align.CenterVertical', () => {
+        test('Align.CenterVertical repositions to Align.Start based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Start,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 65);
+          checkPixelValue(positionCSS.left, 45);
+          expect(positionCSS.transformOrigin).toBe('left bottom');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, 5px, 0) scale(0.8)',
+          );
+        });
+      });
+
+      describe('Align.CenterHorizontal', () => {
+        test('Justify.Start repositions to Justify.End based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Start,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 40);
+          expect(positionCSS.transformOrigin).toBe('center bottom');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Middle repositions to Justify.End based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 40);
+          expect(positionCSS.transformOrigin).toBe('center bottom');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.End works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.End,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 80);
+          checkPixelValue(positionCSS.left, 40);
+          expect(positionCSS.transformOrigin).toBe('center bottom');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.bottom,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.top, 90);
+          checkPixelValue(positionCSS.bottom, 0);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
         });
       });
     });
@@ -727,8 +1266,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(20);
-          expect(positionCSS.left).toBe(0);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -746,8 +1285,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(20);
-          expect(positionCSS.left).toBe(0);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
@@ -765,9 +1304,29 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(20);
-          expect(positionCSS.left).toBe(0);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left bottom');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, 5px, 0) scale(0.8)',
+          );
+        });
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Top,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.left, 0);
+          checkPixelValue(positionCSS.right, 90);
+          expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
           );
@@ -787,8 +1346,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(45);
-          expect(positionCSS.left).toBe(15);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 15);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -806,8 +1365,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(40);
-          expect(positionCSS.left).toBe(15);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 15);
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -825,9 +1384,29 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(35);
-          expect(positionCSS.left).toBe(15);
+          checkPixelValue(positionCSS.top, 35);
+          checkPixelValue(positionCSS.left, 15);
           expect(positionCSS.transformOrigin).toBe('left bottom');
+          expect(positionCSS.transform).toBe(
+            'translate3d(-5px, 0, 0) scale(0.8)',
+          );
+        });
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Right,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.bottom, 45);
+          expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
           );
@@ -846,8 +1425,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(60);
-          expect(positionCSS.left).toBe(0);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -866,8 +1445,8 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(60);
-          expect(positionCSS.left).toBe(0);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
@@ -886,9 +1465,30 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(60);
-          expect(positionCSS.left).toBe(0);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, -5px, 0) scale(0.8)',
+          );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Bottom,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.left, 0);
+          checkPixelValue(positionCSS.right, 90);
+          expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
           );
@@ -908,8 +1508,102 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(45);
-          expect(positionCSS.left).toBe(15);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 15);
+          expect(positionCSS.transformOrigin).toBe('left top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(-5px, 0, 0) scale(0.8)',
+          );
+        });
+      });
+
+      describe('Align.CenterVertical', () => {
+        test('Justify.Start works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Start,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 0);
+          expect(positionCSS.transformOrigin).toBe('left center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+        test('Justify.Middle repositions to Justify.Start based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 0);
+          expect(positionCSS.transformOrigin).toBe('left center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+        test('Justify.End repositions to Justify.Start based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.End,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 0);
+          expect(positionCSS.transformOrigin).toBe('left center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.left, 0);
+          checkPixelValue(positionCSS.right, 90);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+      });
+
+      describe('Align.CenterHorizontal', () => {
+        test('Align.CenterHorizontal repositions to Align.Right based on available space', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Start,
+            referenceElPos: refElPos.left,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 15);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
@@ -920,7 +1614,7 @@ describe('positionUtils', () => {
 
     describe('when reference element is in the center', () => {
       describe('Align.Top', () => {
-        test('Justification.Start works', () => {
+        test('Justify.Start works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -932,15 +1626,15 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(20);
-          expect(positionCSS.left).toBe(45);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 45);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
           );
         });
 
-        test('Justification.Middle works', () => {
+        test('Justify.Middle works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -952,15 +1646,15 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(20);
-          expect(positionCSS.left).toBe(40);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
           );
         });
 
-        test('Justification.End works', () => {
+        test('Justify.End works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -972,9 +1666,30 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(20);
-          expect(positionCSS.left).toBe(35);
+          checkPixelValue(positionCSS.top, 20);
+          checkPixelValue(positionCSS.left, 35);
           expect(positionCSS.transformOrigin).toBe('right bottom');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, 5px, 0) scale(0.8)',
+          );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Top,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.left, 45);
+          checkPixelValue(positionCSS.right, 45);
+          expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
           );
@@ -982,7 +1697,7 @@ describe('positionUtils', () => {
       });
 
       describe('Align.Right', () => {
-        test('Justification.Start works', () => {
+        test('Justify.Start works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -994,15 +1709,15 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(45);
-          expect(positionCSS.left).toBe(60);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
           );
         });
 
-        test('Justification.Middle works', () => {
+        test('Justify.Middle works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1014,15 +1729,15 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(40);
-          expect(positionCSS.left).toBe(60);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
           );
         });
 
-        test('Justification.End works', () => {
+        test('Justify.End works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1034,9 +1749,30 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(35);
-          expect(positionCSS.left).toBe(60);
+          checkPixelValue(positionCSS.top, 35);
+          checkPixelValue(positionCSS.left, 60);
           expect(positionCSS.transformOrigin).toBe('left bottom');
+          expect(positionCSS.transform).toBe(
+            'translate3d(-5px, 0, 0) scale(0.8)',
+          );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Right,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.bottom, 45);
+          expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
           );
@@ -1044,7 +1780,7 @@ describe('positionUtils', () => {
       });
 
       describe('Align.Bottom', () => {
-        test('Justification.Start works', () => {
+        test('Justify.Start works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1056,15 +1792,15 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(60);
-          expect(positionCSS.left).toBe(45);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 45);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
           );
         });
 
-        test('Justification.Middle works', () => {
+        test('Justify.Middle works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1076,15 +1812,15 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(60);
-          expect(positionCSS.left).toBe(40);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 40);
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
           );
         });
 
-        test('Justification.End works', () => {
+        test('Justify.End works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1096,9 +1832,30 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(60);
-          expect(positionCSS.left).toBe(35);
+          checkPixelValue(positionCSS.top, 60);
+          checkPixelValue(positionCSS.left, 35);
           expect(positionCSS.transformOrigin).toBe('right top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, -5px, 0) scale(0.8)',
+          );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Bottom,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.left, 45);
+          checkPixelValue(positionCSS.right, 45);
+          expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
           );
@@ -1106,7 +1863,7 @@ describe('positionUtils', () => {
       });
 
       describe('Align.Left', () => {
-        test('Justification.Start works', () => {
+        test('Justify.Start works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1118,15 +1875,15 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(45);
-          expect(positionCSS.left).toBe(20);
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 20);
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
           );
         });
 
-        test('Justification.Middle works', () => {
+        test('Justify.Middle works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1138,15 +1895,15 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(40);
-          expect(positionCSS.left).toBe(20);
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 20);
           expect(positionCSS.transformOrigin).toBe('right center');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
           );
         });
 
-        test('Justification.End works', () => {
+        test('Justify.End works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1158,19 +1915,190 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(35);
-          expect(positionCSS.left).toBe(20);
+          checkPixelValue(positionCSS.top, 35);
+          checkPixelValue(positionCSS.left, 20);
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
           );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.Left,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.bottom, 45);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe(
+            'translate3d(5px, 0, 0) scale(0.8)',
+          );
+        });
+      });
+
+      describe('Align.CenterVertical', () => {
+        test('Justify.Start works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Start,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 45);
+          expect(positionCSS.transformOrigin).toBe('left center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Middle works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 40);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.End works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.End,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 35);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterVertical,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.left, 45);
+          checkPixelValue(positionCSS.right, 45);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+      });
+
+      describe('Align.CenterHorizontal', () => {
+        test('Justify.Start works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Start,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.left, 40);
+          expect(positionCSS.transformOrigin).toBe('center top');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Middle works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 40);
+          checkPixelValue(positionCSS.left, 40);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.End works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.End,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 35);
+          checkPixelValue(positionCSS.left, 40);
+          expect(positionCSS.transformOrigin).toBe('center bottom');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: false,
+            align: Align.CenterHorizontal,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.top, 45);
+          checkPixelValue(positionCSS.bottom, 45);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
         });
       });
     });
 
     describe('when useRelativePositioning is true', () => {
       describe('Align.Top', () => {
-        test('Justification.Start works', () => {
+        test('Justify.Start works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1183,14 +2111,14 @@ describe('positionUtils', () => {
           });
 
           expect(positionCSS.bottom).toBe('calc(100% + 5px)');
-          expect(positionCSS.left).toBe(0);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
           );
         });
 
-        test('Justification.Middle works', () => {
+        test('Justify.Middle works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1210,7 +2138,7 @@ describe('positionUtils', () => {
           );
         });
 
-        test('Justification.End works', () => {
+        test('Justify.End works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1223,8 +2151,29 @@ describe('positionUtils', () => {
           });
 
           expect(positionCSS.bottom).toBe('calc(100% + 5px)');
-          expect(positionCSS.right).toBe(0);
+          checkPixelValue(positionCSS.right, 0);
           expect(positionCSS.transformOrigin).toBe('right bottom');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, 5px, 0) scale(0.8)',
+          );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.Top,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.left, 0);
+          checkPixelValue(positionCSS.right, 0);
+          expect(positionCSS.transformOrigin).toBe('center bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(0, 5px, 0) scale(0.8)',
           );
@@ -1232,7 +2181,7 @@ describe('positionUtils', () => {
       });
 
       describe('Align.Right', () => {
-        test('Justification.Start works', () => {
+        test('Justify.Start works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1244,7 +2193,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(0);
+          checkPixelValue(positionCSS.top, 0);
           expect(positionCSS.left).toBe('calc(100% + 5px)');
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
@@ -1252,7 +2201,7 @@ describe('positionUtils', () => {
           );
         });
 
-        test('Justification.Middle works', () => {
+        test('Justify.Middle works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1272,7 +2221,7 @@ describe('positionUtils', () => {
           );
         });
 
-        test('Justification.End works', () => {
+        test('Justify.End works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1284,9 +2233,30 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.bottom).toBe(0);
+          checkPixelValue(positionCSS.bottom, 0);
           expect(positionCSS.left).toBe('calc(100% + 5px)');
           expect(positionCSS.transformOrigin).toBe('left bottom');
+          expect(positionCSS.transform).toBe(
+            'translate3d(-5px, 0, 0) scale(0.8)',
+          );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.Right,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.bottom, 0);
+          expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe(
             'translate3d(-5px, 0, 0) scale(0.8)',
           );
@@ -1294,7 +2264,7 @@ describe('positionUtils', () => {
       });
 
       describe('Align.Bottom', () => {
-        test('Justification.Start works', () => {
+        test('Justify.Start works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1307,14 +2277,14 @@ describe('positionUtils', () => {
           });
 
           expect(positionCSS.top).toBe('calc(100% + 5px)');
-          expect(positionCSS.left).toBe(0);
+          checkPixelValue(positionCSS.left, 0);
           expect(positionCSS.transformOrigin).toBe('left top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
           );
         });
 
-        test('Justification.Middle works', () => {
+        test('Justify.Middle works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1334,7 +2304,7 @@ describe('positionUtils', () => {
           );
         });
 
-        test('Justification.End works', () => {
+        test('Justify.End works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1347,8 +2317,29 @@ describe('positionUtils', () => {
           });
 
           expect(positionCSS.top).toBe('calc(100% + 5px)');
-          expect(positionCSS.right).toBe(0);
+          checkPixelValue(positionCSS.right, 0);
           expect(positionCSS.transformOrigin).toBe('right top');
+          expect(positionCSS.transform).toBe(
+            'translate3d(0, -5px, 0) scale(0.8)',
+          );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.Bottom,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.left, 0);
+          checkPixelValue(positionCSS.right, 0);
+          expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe(
             'translate3d(0, -5px, 0) scale(0.8)',
           );
@@ -1356,7 +2347,7 @@ describe('positionUtils', () => {
       });
 
       describe('Align.Left', () => {
-        test('Justification.Start works', () => {
+        test('Justify.Start works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1368,7 +2359,7 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.top).toBe(0);
+          checkPixelValue(positionCSS.top, 0);
           expect(positionCSS.right).toBe('calc(100% + 5px)');
           expect(positionCSS.transformOrigin).toBe('right top');
           expect(positionCSS.transform).toBe(
@@ -1376,7 +2367,7 @@ describe('positionUtils', () => {
           );
         });
 
-        test('Justification.Middle works', () => {
+        test('Justify.Middle works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1396,7 +2387,7 @@ describe('positionUtils', () => {
           );
         });
 
-        test('Justification.End works', () => {
+        test('Justify.End works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
             windowHeight: WINDOW_HEIGHT,
@@ -1408,12 +2399,183 @@ describe('positionUtils', () => {
             contentElPos: contentElPos,
           });
 
-          expect(positionCSS.bottom).toBe(0);
+          checkPixelValue(positionCSS.bottom, 0);
           expect(positionCSS.right).toBe('calc(100% + 5px)');
           expect(positionCSS.transformOrigin).toBe('right bottom');
           expect(positionCSS.transform).toBe(
             'translate3d(5px, 0, 0) scale(0.8)',
           );
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.Left,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.bottom, 0);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe(
+            'translate3d(5px, 0, 0) scale(0.8)',
+          );
+        });
+      });
+
+      describe('Align.CenterVertical', () => {
+        test('Justify.Start works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.CenterVertical,
+            justify: Justify.Start,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBe('calc(5px - 50%)');
+          checkPixelValue(positionCSS.left, 0);
+          expect(positionCSS.transformOrigin).toBe('left center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Middle works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.CenterVertical,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBe('calc(5px - 50%)');
+          expect(positionCSS.left).toBe('-5px');
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.End works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.CenterVertical,
+            justify: Justify.End,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBe('calc(5px - 50%)');
+          checkPixelValue(positionCSS.right, 0);
+          expect(positionCSS.transformOrigin).toBe('right center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.CenterVertical,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.left, 0);
+          checkPixelValue(positionCSS.right, 0);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+      });
+
+      describe('Align.CenterHorizontal', () => {
+        test('Justify.Start works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.CenterHorizontal,
+            justify: Justify.Start,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.top, 0);
+          expect(positionCSS.left).toBe('calc(5px - 50%)');
+          expect(positionCSS.transformOrigin).toBe('center top');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Middle works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.CenterHorizontal,
+            justify: Justify.Middle,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(positionCSS.top).toBe('-5px');
+          expect(positionCSS.left).toBe('calc(5px - 50%)');
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.End works', () => {
+          const { positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.CenterHorizontal,
+            justify: Justify.End,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          checkPixelValue(positionCSS.bottom, 0);
+          expect(positionCSS.left).toBe('calc(5px - 50%)');
+          expect(positionCSS.transformOrigin).toBe('center bottom');
+          expect(positionCSS.transform).toBe('scale(0.8)');
+        });
+
+        test('Justify.Fit works', () => {
+          const { justify, positionCSS } = calculatePosition({
+            spacing: SPACING,
+            windowHeight: WINDOW_HEIGHT,
+            windowWidth: WINDOW_WIDTH,
+            useRelativePositioning: true,
+            align: Align.CenterHorizontal,
+            justify: Justify.Fit,
+            referenceElPos: refElPos.center,
+            contentElPos: contentElPos,
+          });
+
+          expect(justify).toBe('fit');
+          checkPixelValue(positionCSS.top, 0);
+          checkPixelValue(positionCSS.bottom, 0);
+          expect(positionCSS.transformOrigin).toBe('center center');
+          expect(positionCSS.transform).toBe('scale(0.8)');
         });
       });
     });

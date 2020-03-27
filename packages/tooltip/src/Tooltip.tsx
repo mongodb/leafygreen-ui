@@ -2,9 +2,8 @@ import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Popover, {
   PopoverProps,
-  Align,
+  Align as PopoverAlign,
   Justify,
-  Justification,
   ElementPosition,
 } from '@leafygreen-ui/popover';
 import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
@@ -26,7 +25,18 @@ export const Variant = {
   Dark: 'dark',
 } as const;
 
-type Variant = typeof Variant[keyof typeof Variant];
+export type Variant = typeof Variant[keyof typeof Variant];
+
+export const Align = {
+  Top: PopoverAlign.Top,
+  Bottom: PopoverAlign.Bottom,
+  Left: PopoverAlign.Left,
+  Right: PopoverAlign.Right,
+} as const;
+
+export type Align = typeof Align[keyof typeof Align];
+
+export { Justify };
 
 const baseStyles = css`
   font-size: 14px;
@@ -66,8 +76,8 @@ const notchVariants = {
 };
 
 interface PopoverFunctionParameters {
-  alignment: Align;
-  justification: Justification | Justify;
+  align: Align;
+  justify: Justify;
   referenceElPos: ElementPosition;
 }
 
@@ -240,14 +250,10 @@ function Tooltip({
       spacing={12}
       key="tooltip"
     >
-      {({
-        alignment,
-        justification,
-        referenceElPos,
-      }: PopoverFunctionParameters) => {
+      {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
         const triangleStyle = trianglePosition(
-          alignment,
-          justification,
+          align,
+          justify,
           referenceElPos,
         ) as { containerStyle: string; notchStyle: string };
 

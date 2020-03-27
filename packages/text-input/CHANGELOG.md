@@ -1,5 +1,11 @@
 # @leafygreen-ui/text-input
 
+## 1.0.3
+
+### Patch Changes
+
+- 1b298cc: Fix TextInput TypeScript interface.
+
 ## 1.0.2
 
 ### Patch Changes

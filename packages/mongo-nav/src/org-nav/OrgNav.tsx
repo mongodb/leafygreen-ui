@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '@leafygreen-ui/tooltip';
-import Badge from '@leafygreen-ui/badge';
+import Badge, { Variant } from '@leafygreen-ui/badge';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import UserMenu from '../user-menu';
@@ -78,27 +78,20 @@ const versionStyle = css`
   })}
 `;
 
-export const Colors = {
-  Lightgray: 'lightgray',
-  Green: 'green',
-  Yellow: 'yellow',
-  Red: 'red',
-} as const;
-
-export type Colors = typeof Colors[keyof typeof Colors];
-
-const paymentStatusMap: Record<Colors, ReadonlyArray<OrgPaymentLabel>> = {
-  [Colors.Lightgray]: [
+const paymentStatusMap: {
+  [K in Partial<Variant>]?: ReadonlyArray<OrgPaymentLabel>;
+} = {
+  [Variant.LightGray]: [
     OrgPaymentLabel.Embargoed,
     OrgPaymentLabel.EmbargoConfirmed,
   ],
-  [Colors.Green]: [OrgPaymentLabel.Ok],
-  [Colors.Yellow]: [
+  [Variant.Green]: [OrgPaymentLabel.Ok],
+  [Variant.Yellow]: [
     OrgPaymentLabel.Warning,
     OrgPaymentLabel.Suspended,
     OrgPaymentLabel.Closing,
   ],
-  [Colors.Red]: [
+  [Variant.Red]: [
     OrgPaymentLabel.Dead,
     OrgPaymentLabel.AdminSuspended,
     OrgPaymentLabel.Locked,
@@ -163,13 +156,13 @@ function OrgNav({
     activeNav as string,
   );
 
-  let paymentVariant: Colors | undefined;
-  let key: Colors;
+  let paymentVariant: Variant | undefined;
+  let key: Variant;
 
   for (key in paymentStatusMap) {
     const paymentStatus = current?.paymentStatus;
 
-    if (paymentStatus && paymentStatusMap[key].includes(paymentStatus)) {
+    if (paymentStatus && paymentStatusMap[key]?.includes(paymentStatus)) {
       paymentVariant = key;
     }
   }

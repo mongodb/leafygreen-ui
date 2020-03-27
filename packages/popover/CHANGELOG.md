@@ -1,5 +1,19 @@
 # @leafygreen-ui/popover
 
+## 4.0.0
+
+### Major Changes
+
+- bc47b13: Added Justify.Fit to tooltip/popover, and Align.CenterHorizontal and Align.CenterVertical to popover
+
+  For direct consumers of <Popover>, the function-as-a-child pattern now passes `align` and `justify` params,
+  and the `justification` param/enum has been removed. This should be the only breaking change in this release.
+
+### Patch Changes
+
+- Updated dependencies [1b298cc]
+  - @leafygreen-ui/hooks@2.1.0
+
 ## 3.0.2
 
 ### Patch Changes

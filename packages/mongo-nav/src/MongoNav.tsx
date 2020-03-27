@@ -64,7 +64,6 @@ const navContainerStyle = css`
  * @param props.activeProjectId ID for active project, will cause a POST request to cloud to update current active project.
  * @param props.className Applies a className to the root element
  * @param props.loadData Determines whether or not the component will fetch data from cloud
- * @param props.alertsCount Overwrite number of alerts received from cloud endpoint
  */
 function MongoNav({
   activeProduct,
@@ -86,7 +85,6 @@ function MongoNav({
   activeOrgId,
   activeProjectId,
   className,
-  alertsCount,
   ...rest
 }: MongoNavInterface) {
   const shouldShowProjectNav = showProjectNav && !onPrem.enabled;
@@ -250,13 +248,14 @@ function MongoNav({
 
         {shouldShowProjectNav && (
           <ProjectNav
+            mode={mode}
             activeProduct={activeProduct}
             activeNav={activeNav}
+            admin={admin}
             current={data?.currentProject}
             data={filteredProjects}
             constructProjectURL={constructProjectURL}
             urls={urls}
-            alerts={alertsCount ?? data?.currentProject?.alertsOpen}
             onProjectChange={onProjectChange}
             hosts={hosts}
           />
@@ -290,7 +289,6 @@ MongoNav.propTypes = {
   onElementClick: PropTypes.func,
   activeOrgId: PropTypes.string,
   activeProjectId: PropTypes.string,
-  alertsCount: PropTypes.number,
 };
 
 export default MongoNav;
