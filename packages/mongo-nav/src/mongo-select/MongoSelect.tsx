@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@leafygreen-ui/button';
 import Input from './Input';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -151,6 +151,12 @@ function OrgSelect({
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
 
+  useEffect(() => {
+    if (!open) {
+      setValue('');
+    }
+  }, [open]);
+
   let renderedData = data;
 
   const filterData = () => {
@@ -283,6 +289,12 @@ function ProjectSelect({
   const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
+
+  useEffect(() => {
+    if (!open) {
+      setValue('');
+    }
+  }, [open]);
 
   let renderedData = data;
 
