@@ -292,12 +292,12 @@ export interface MongoNavInterface {
   /**
    *  Function to determine destination URL when user selects a organization from the organization picker, see also `hosts`.
    */
-  constructOrganizationURL?: (organizationId: string) => string;
+  constructOrganizationURL?: (organization: OrganizationInterface) => string;
 
   /**
    *  Function to determine destination URL when user selects a project from the project picker, see also `hosts`.
    */
-  constructProjectURL?: (organizationId: string, projectId: string) => string;
+  constructProjectURL?: (project: ProjectInterface) => string;
 
   /**
    * Determines whether the project navigation should be shown.

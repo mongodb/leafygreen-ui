@@ -180,7 +180,7 @@ describe('packages/mongo-nav/src/project-nav', () => {
 
     it('atlas tab shows the correct link', () => {
       expect(expectedElements!.atlas!.getAttribute('href')).toEqual(
-        'https://cloud.mongodb.com/v2/020019e#',
+        'https://cloud.mongodb.com/v2/fakeProjectId1#',
       );
     });
 
@@ -216,7 +216,7 @@ describe('packages/mongo-nav/src/project-nav', () => {
         expect(
           fetchMock,
         ).toHaveBeenCalledWith(
-          'https://cloud.mongodb.com/user/shared/alerts/project/020019e',
+          'https://cloud.mongodb.com/user/shared/alerts/project/fakeProjectId1',
           { credentials: 'include', method: 'GET', mode: 'cors' },
         );
       });
