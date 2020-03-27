@@ -1,4 +1,10 @@
-import { DataInterface, URLSInterface, HostsInterface } from './types';
+import {
+  DataInterface,
+  URLSInterface,
+  HostsInterface,
+  OrganizationInterface,
+  ProjectInterface,
+} from './types';
 
 export const dataFixtures = {
   account: {
@@ -113,8 +119,8 @@ export const hostDefaults: Required<HostsInterface> = {
   university: 'https://university.mongodb.com',
 };
 
-export const constructOrganizationURL = (orgId: string) =>
+export const constructOrganizationURL = ({ orgId }: OrganizationInterface) =>
   `https://cloud.mongodb.com/v2#/org/${orgId}/projects`;
 
-export const constructProjectURL = (_orgId: string, projectId: string) =>
+export const constructProjectURL = ({ projectId }: ProjectInterface) =>
   `https://cloud.mongodb.com/v2#/${projectId}`;

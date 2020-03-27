@@ -14,10 +14,8 @@ import { iconLoadingStyle, textLoadingStyle, anchorOverrides } from '../styles';
 import { useOnElementClick } from '../on-element-click-provider';
 import {
   ProjectInterface,
-  URLSInterface,
   CurrentProjectInterface,
   Product,
-  HostsInterface,
   PlanType,
   ActiveNavElement,
   NavElement,
@@ -248,9 +246,9 @@ type ProjectNavProps = Pick<
   onPremVersion?: string;
   onPremMFA?: boolean;
   alerts?: number;
-  urls: Required<URLSInterface>;
-  hosts: Required<HostsInterface>;
-  constructProjectURL: (orgID: string, projectID: string) => string;
+  constructProjectURL: NonNullable<MongoNavInterface['constructProjectURL']>;
+  urls: Required<NonNullable<MongoNavInterface['urls']>>;
+  hosts: Required<NonNullable<MongoNavInterface['hosts']>>;
 };
 
 export default function ProjectNav({

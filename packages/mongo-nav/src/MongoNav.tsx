@@ -16,6 +16,8 @@ import {
   ErrorCode,
   PostBodyInterface,
   MongoNavInterface,
+  OrganizationInterface,
+  ProjectInterface,
 } from './types';
 
 const ErrorCodeMap: Record<number, ErrorCode> = {
@@ -152,12 +154,12 @@ function MongoNav({
 
   const urls = defaultsDeep(urlsProp, defaultURLS);
 
-  const defaultOrgURL = (orgId: string) =>
+  const defaultOrgURL = ({ orgId }: OrganizationInterface) =>
     `${hosts.cloud}/v2#/org/${orgId}/projects`;
   const constructOrganizationURL =
     constructOrganizationURLProp ?? defaultOrgURL;
 
-  const defaultProjectURL = (_orgId: string, projectId: string) =>
+  const defaultProjectURL = ({ projectId }: ProjectInterface) =>
     `${hosts.cloud}/v2/${projectId}#`;
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
