@@ -148,11 +148,17 @@ describe('packages/mongo-select', () => {
             const { orgResults } = expectedElements;
             onClick.mockClear();
             fireEvent.click(orgResults?.[0] as Element);
-            setExpectedElements();
           });
 
           it('calls the on click handler', () => {
             expect(onClick).toHaveBeenCalledTimes(1);
+          });
+
+          it('closes the menu', async () => {
+            await waitFor(() => {
+              setExpectedElements();
+              expect(expectedElements!.orgInput).not.toBeInTheDocument();
+            });
           });
         });
       });

@@ -141,7 +141,7 @@ function OrgSelect({
   urls,
   isActive,
   onChange: onChangeProp,
-  onClick,
+  onClick: onClickProp,
   constructOrganizationURL,
   isOnPrem,
   disabled,
@@ -180,9 +180,13 @@ function OrgSelect({
     setValue(val);
 
     if (onChangeProp) {
-      onChangeProp(value, e);
-      return;
+      return onChangeProp(value, e);
     }
+  };
+
+  const onClick = (e: React.MouseEvent) => {
+    setOpen(false);
+    return onClickProp?.(e);
   };
 
   const renderOrganizationOption = (datum: OrganizationInterface) => {
