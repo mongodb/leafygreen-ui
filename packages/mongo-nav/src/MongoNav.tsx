@@ -114,9 +114,9 @@ function MongoNav({
       },
     },
     mongoSelect: {
-      viewAllProjects: `${hosts.cloud}/v2#/org/${currentProjectId}/projects`,
+      viewAllProjects: `${hosts.cloud}/v2#/org/${currentOrgId}/projects`,
       viewAllOrganizations: `${hosts.cloud}/v2#/preferences/organizations`,
-      newProject: `${hosts.cloud}/v2#/org/${currentProjectId}/projects/create`,
+      newProject: `${hosts.cloud}/v2#/org/${currentOrgId}/projects/create`,
       orgSettings: `${hosts.cloud}/v2#/org/${currentOrgId}/settings/general`,
     },
     orgNav: {
@@ -157,7 +157,7 @@ function MongoNav({
   const constructOrganizationURL =
     constructOrganizationURLProp ?? defaultOrgURL;
 
-  const defaultProjectURL = (projectId: string) =>
+  const defaultProjectURL = (_orgId: string, projectId: string) =>
     `${hosts.cloud}/v2/${projectId}#`;
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 

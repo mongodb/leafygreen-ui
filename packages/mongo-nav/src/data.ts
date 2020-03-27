@@ -9,7 +9,7 @@ export const dataFixtures = {
     username: 'dev+only+mode@example.com',
   },
   currentOrganization: {
-    orgId: '5d729a93',
+    orgId: 'fakeOrgId1',
     orgName: 'Demo Organization',
     planType: 'atlas',
     paymentStatus: 'OK',
@@ -17,35 +17,35 @@ export const dataFixtures = {
   currentProject: {
     alertsOpen: 1,
     chartsActivated: false,
-    orgId: '5d729a93',
+    orgId: 'fakeOrgId1',
     planType: 'atlas',
-    projectId: '020019e',
+    projectId: 'fakeProjectId1',
     projectName: 'Test Project',
     status: 'ACTIVE',
   },
   organizations: [
     {
-      orgId: '5d729a93',
+      orgId: 'fakeOrgId1',
       orgName: 'Demo Organization',
       planType: 'atlas',
     },
     {
-      orgId: '5e0fa79',
+      orgId: 'fakeOrgId2',
       orgName: 'Demo Organization 2',
       planType: 'cloud',
     },
   ],
   projects: [
     {
-      orgId: '5d729a93',
+      orgId: 'fakeOrgId1',
       planType: 'cloud',
-      projectId: '020019e',
+      projectId: 'fakeProjectId1',
       projectName: 'Demo Project 1',
     },
     {
-      orgId: '5e0fa79',
+      orgId: 'fakeOrgId2',
       planType: 'cloud',
-      projectId: '00626a',
+      projectId: 'fakeProjectId2',
       projectName: 'Demo Project 2',
     },
   ],
@@ -116,5 +116,5 @@ export const hostDefaults: Required<HostsInterface> = {
 export const constructOrganizationURL = (orgId: string) =>
   `https://cloud.mongodb.com/v2#/org/${orgId}/projects`;
 
-export const constructProjectURL = (projectId: string) =>
+export const constructProjectURL = (_orgId: string, projectId: string) =>
   `https://cloud.mongodb.com/v2#/${projectId}`;

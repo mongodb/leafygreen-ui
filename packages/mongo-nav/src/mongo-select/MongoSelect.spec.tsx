@@ -132,10 +132,10 @@ describe('packages/mongo-select', () => {
         it('displays the correct link to projects of each result', () => {
           const { orgResults } = expectedElements;
           expect((orgResults?.[0] as HTMLAnchorElement).href).toBe(
-            constructOrganizationURL('5d729a93'),
+            'https://cloud.mongodb.com/v2#/org/fakeOrgId1/projects',
           );
           expect((orgResults?.[1] as HTMLAnchorElement).href).toBe(
-            constructOrganizationURL('5e0fa79'),
+            'https://cloud.mongodb.com/v2#/org/fakeOrgId2/projects',
           );
         });
 
@@ -269,12 +269,12 @@ describe('packages/mongo-select', () => {
           );
         });
 
-        it('displays two organization results', () => {
+        it('displays two projects', () => {
           const { projectResults } = expectedElements;
           expect(projectResults?.length).toEqual(2);
         });
 
-        it('displays the correct names of each result', () => {
+        it('displays the correct names of each project', () => {
           const { projectResults } = expectedElements;
           expect(projectResults?.[0]?.textContent).toContain('Demo Project');
           expect(projectResults?.[1]?.textContent).toContain('Demo Project 2');
@@ -283,10 +283,10 @@ describe('packages/mongo-select', () => {
         it('displays the correct link to projects of each result', () => {
           const { projectResults } = expectedElements;
           expect((projectResults?.[0] as HTMLAnchorElement).href).toBe(
-            constructProjectURL('5d729a93'),
+            'https://cloud.mongodb.com/v2#/fakeProjectId1',
           );
           expect((projectResults?.[1] as HTMLAnchorElement).href).toBe(
-            constructProjectURL('5e0fa79'),
+            'https://cloud.mongodb.com/v2#/fakeProjectId2',
           );
         });
 
