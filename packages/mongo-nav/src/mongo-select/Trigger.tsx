@@ -203,7 +203,12 @@ export function OrganizationTrigger({
             <Icon
               size="small"
               glyph="Building"
-              className={cx({ [iconLoadingStyle]: loading })}
+              className={cx(
+                css`
+                  color: ${uiColors.gray.base};
+                `,
+                { [iconLoadingStyle]: loading },
+              )}
             />
           )}
           <span
