@@ -12,14 +12,60 @@ const onPremMenuWrapper = css`
 `;
 
 interface OnPremUserMenuProps {
+  /**
+   * The current user's first and last name, or username if unavailable.
+   */
   name: string;
+
+  /**
+   * Whether or not the OnPremUserMenu is expanded.
+   */
   open: boolean;
+
+  /**
+   * A function to update the open state of the OnPremUserMenu.
+   */
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
+  /**
+   * Object that supplies URL overrides to UserMenu component.
+   * Shape: { userMenu:{ cloud: { userPreferences, organizations, invitations, mfa }, university: { universityPreferences }, support: { userPreferences }, account: { homepage } }}
+   */
   urls: Required<URLSInterface>;
+
+  /**
+   * Whether or not multifactor authentication is permitted in the current enivronment.
+   */
   mfa: boolean;
+
+  /**
+   * Determines what nav item is currently active.
+   */
   activeNav?: NavElement;
 }
 
+/**
+ * # OnPremUserMenu
+ *
+ * OnPremUserMenu component
+ *
+ * ```
+<OnPremUserMenu
+  name="Pauline Oliveros"
+  open={true}
+  setOpen={updateDropdownFn}
+  urls={urls}
+  mfa={false}
+  activeNav={UserMenuOnPremProfile}
+/>
+```
+ * @param props.name The current user's first and last name, or username if unavailable.
+ * @param props.open Whether or not the OnPremUserMenu is expanded.
+ * @param props.setOpen A function to update the open state of the OnPremUserMenu.
+ * @param props.urls Object that supplies URL overrides to UserMenu component.
+ * @param props.mfa Whether or not multifactor authentication is permitted in the current enivronment.
+ * @param props.activeNav Determines what nav item is currently active.
+ */
 export default function OnPremUserMenu({
   name,
   open,
@@ -89,7 +135,6 @@ export default function OnPremUserMenu({
 
         <MenuItem
           href={urls.onPrem.featureRequest}
-          active={activeNav === ActiveNavElement.UserMenuOnPremFeatureRequest}
           data-testid="om-user-menuitem-feature-request"
           onClick={() => setOpen(false)}
         >
