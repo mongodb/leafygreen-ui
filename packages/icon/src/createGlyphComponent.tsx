@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { SVGR, LGGlyph } from './types';
 import { css, cx } from '@leafygreen-ui/emotion';
 
 export function getGlyphTitle(name: string, title?: string | boolean | null) {
@@ -53,7 +54,6 @@ export default function createGlyphComponent(
     );
   }
 
-  // For some reason, the build breaks if we don't pre-emptively coerce this to a string
   GlyphComponent.displayName = glyphName;
 
   GlyphComponent.propTypes = {

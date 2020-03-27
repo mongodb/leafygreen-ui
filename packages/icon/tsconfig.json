@@ -4,13 +4,13 @@
     "declarationDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "types/**/*"],
   "references": [
     {
-      "path": "../emotion"
+      "path": "../lib"
     },
     {
-      "path": "../lib"
+      "path": "../emotion"
     },
     {
       "path": "../theme"

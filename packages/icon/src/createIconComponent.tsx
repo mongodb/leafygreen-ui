@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { LGGlyph } from './types';
 
 export const Size = {
   Small: 'small',

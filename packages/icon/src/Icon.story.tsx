@@ -1,8 +1,8 @@
 import React from 'react';
+import Icon, { glyphs, Size } from '.';
+import { css } from '@leafygreen-ui/emotion';
 import { storiesOf } from '@storybook/react';
 import { color, select } from '@storybook/addon-knobs';
-import { css } from '@leafygreen-ui/emotion';
-import Icon, { glyphs, Size } from '.';
 
 const containerStyle = css`
   width: 150px;
