@@ -53,7 +53,7 @@ _Any other properties will be spread on the root element_
 `OrgNavAllClusters`  
 `OrgNavBilling`  
 `OrgNavDropdownOrgAccessManager`  
-`OrgNavDropdownProjectAccessManager`
+`OrgNavDropdownProjectAccessManager`  
 `OrgNavOrgSettings`  
 `OrgNavSupport`
 
@@ -71,15 +71,15 @@ _Any other properties will be spread on the root element_
 `UserMenuCloudInvitations`  
 `UserMenuCloudMFA`  
 `UserMenuCloudOrganizations`  
-`UserMenuCloudOther`
+`UserMenuCloudOther`  
 `UserMenuCloudUserPreferences`
 
 #### On Prem User Menu Elements
 
 `UserMenuOnPremInvitations`  
 `UserMenuOnPremOrganizations`  
-`UserMenuOnPremOther`
-`UserMenuOnPremPersonalization`
+`UserMenuOnPremOther`  
+`UserMenuOnPremPersonalization`  
 `UserMenuOnPremProfile`  
 `UserMenuOnPremPublicApiAccess`  
 `UserMenuOnPremTwoFactorAuth`
