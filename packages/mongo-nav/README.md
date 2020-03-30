@@ -20,13 +20,13 @@
 | Prop                       | Type                                                                            | Description                                                                                                                                                                                                                                      | Default                                                 |
 | -------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------- |
 | `activeProduct`            | `'account', 'charts', 'cloud', 'realm', 'support', 'university'`                | Describes what product is currently active                                                                                                                                                                                                       |                                                         |
-| `activeNav`                | `'accessManager', 'admin', 'allClusters', 'billing', 'orgSettings', 'support'`  | Determines what nav item is currently active                                                                                                                                                                                                     |                                                         |
+| `activeNav`                | `ActiveNavElement` (see below for possible values)                              | Determines what nav item is currently active                                                                                                                                                                                                     |                                                         |
 | `admin`                    | `boolean`                                                                       | Describes whether or not user is an `admin`                                                                                                                                                                                                      | `false`                                                 |
 | `mode`                     | `production` or `dev`                                                           | Describes what environment the component is being used in, defaults to `production`                                                                                                                                                              | `production`                                            |
 | `onOrganizationChange`     | `(_value: string, _event: React.ChangeEvent) => void`                           | Callback invoked when user types into organization picker. Receives value of input as first argument and ChangeEvent as the second.                                                                                                              |                                                         |
 | `onProjectChange`          | `(_value: string, _event: React.ChangeEvent) => void`                           | Callback invoked when user types into project picker. Receives value of input as first argument and ChangeEvent as the second.                                                                                                                   |                                                         |
-| `constructOrganizationURL` | `(orgId) => string`                                                             | Function to determine destination URL when user selects an organization from the organization picker, see also `hosts`                                                                                                                           | `(orgId) => '${hosts.cloud}/v2#/org/${orgId}/projects'` |
-| `constructProjectURL`      | `(orgId, projId) => string`                                                     | Function to determine destination URL when user selects a project from the project picker, see also `hosts`                                                                                                                                      | `(orgId, projId) => '${hosts.cloud}/v2#/${projectId}'`  |
+| `constructOrganizationURL` | `(Organization) => string`                                                      | Function to determine destination URL when user selects an organization from the organization picker, see also `hosts`                                                                                                                           | `(orgId) => '${hosts.cloud}/v2#/org/${orgId}/projects'` |
+| `constructProjectURL`      | `(Project) => string`                                                           | Function to determine destination URL when user selects a project from the project picker, see also `hosts`                                                                                                                                      | `(orgId, projId) => '${hosts.cloud}/v2#/${projectId}'`  |
 | `showProjectNav`           | `boolean`                                                                       | Determines whether the project navigation should be shown                                                                                                                                                                                        | `true`                                                  |
 | `hosts`                    | `{cloud: '', realm: '', charts: '', account: '', university: '', support: ''}`  | Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<MongoNav />` to work across all environments                                                                                        |
 | `urls`                     | `URLInterface` (see below for type)                                             | Object to enable custom overrides for every `href` used in `<MongoNav />`                                                                                                                                                                        |
@@ -43,6 +43,45 @@
 | `onElementClick`           | `(type: 'logout', 'cloud', 'realm', 'charts', event: React.MouseEvent => void)` | Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second. This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally | `() => {}`                                              |
 
 _Any other properties will be spread on the root element_
+
+### `ActiveNavElement` Values
+
+#### Org Nav Elements
+
+`OrgNavAccessManager`  
+`OrgNavAdmin`  
+`OrgNavAllClusters`  
+`OrgNavBilling`  
+`OrgNavDropdownOrgAccessManager`  
+`OrgNavDropdownProjectAccessManager`
+`OrgNavOrgSettings`  
+`OrgNavSupport`
+
+#### Project Nav Elements
+
+`ProjectNavActivityFeed`  
+`ProjectNavAlerts`  
+`ProjectNavInvite`  
+`ProjectNavProjectIntegrations`  
+`ProjectNavProjectSettings`  
+`ProjectNavProjectSupport`
+
+#### Cloud User Menu Elements
+
+`UserMenuCloudInvitations`  
+`UserMenuCloudMFA`  
+`UserMenuCloudOrganizations`  
+`UserMenuCloudOther`
+`UserMenuCloudUserPreferences`
+
+#### On Prem User Menu Elements
+
+`UserMenuOnPremInvitations`  
+`UserMenuOnPremOrganizations`  
+`UserMenuOnPremOther`
+`UserMenuOnPremPersonalization`  
+`UserMenuOnPremProfile`  
+`UserMenuOnPremTwoFactorAuth`
 
 ### URLInterface
 

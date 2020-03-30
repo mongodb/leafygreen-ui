@@ -20,6 +20,7 @@ import {
   CurrentOrganizationInterface,
   PlanType,
   NavElement,
+  MongoNavInterface,
 } from '../types';
 
 const menuItemHeight = 36;
@@ -122,13 +123,15 @@ interface BaseMongoSelectProps {
 interface ProjectMongoSelectProps extends BaseMongoSelectProps {
   data?: Array<ProjectInterface>;
   current?: CurrentProjectInterface;
-  constructProjectURL: (orgID: string, projectID: string) => string;
+  constructProjectURL: NonNullable<MongoNavInterface['constructProjectURL']>;
 }
 
 interface OrganizationMongoSelectProps extends BaseMongoSelectProps {
   data?: Array<OrganizationInterface>;
   current?: CurrentOrganizationInterface;
-  constructOrganizationURL: (orgID: string) => string;
+  constructOrganizationURL: NonNullable<
+    MongoNavInterface['constructOrganizationURL']
+  >;
   isOnPrem?: boolean;
 }
 
@@ -185,7 +188,7 @@ function OrgSelect({
         key={orgId}
         className={menuItemContainerStyle}
         onClick={onClick}
-        href={constructOrganizationURL(orgId)}
+        href={constructOrganizationURL(datum)}
       >
         <div className={orgOptionContainerStyle}>
           <span className={nameStyle}>{orgName}</span>
@@ -309,7 +312,7 @@ function ProjectSelect({
   };
 
   const renderProjectOption = (datum: ProjectInterface) => {
-    const { projectId, projectName, orgId } = datum;
+    const { projectId, projectName } = datum;
 
     return (
       <MenuItem
@@ -317,7 +320,7 @@ function ProjectSelect({
         key={projectId}
         className={cx(menuItemContainerStyle, nameStyle)}
         onClick={onClick}
-        href={constructProjectURL(orgId, projectId)}
+        href={constructProjectURL(datum)}
       >
         {projectName}
       </MenuItem>

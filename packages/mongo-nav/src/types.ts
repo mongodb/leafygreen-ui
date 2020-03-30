@@ -25,13 +25,13 @@ const NavElement = {
   ProjectNavInvite: 'projectNavInvite',
   ProjectNavActivityFeed: 'projectNavActivityFeed',
   ProjectNavAlerts: 'projectNavAlerts',
-  UserSettings: 'userSettings',
   UserMenuTrigger: 'userMenuTrigger',
   UserMenuFeedback: 'userMenuFeedback',
   UserMenuCloudMFA: 'userMenuCloudMFA',
   UserMenuCloudInvitations: 'userMenuCloudInvitations',
   UserMenuCloudOrganizations: 'userMenuCloudOrganizations',
   UserMenuCloudUserPreferences: 'userMenuCloudUserPreferences',
+  UserMenuCloudOther: 'userMenuCloudOther',
   UserMenuOnPremProfile: 'userMenuOnPremProfile',
   UserMenuOnPremTwoFactorAuth: 'userMenuOnPremTwoFactorAuth',
   UserMenuOnPremPersonalization: 'userMenuOnPremPersonalization',
@@ -39,6 +39,7 @@ const NavElement = {
   UserMenuOnPremOrganizations: 'userMenuOnPremOrganizations',
   UserMenuOnPremFeatureRequest: 'userMenuOnPremFeatureRequest',
   UserMenuOnPremSignOut: 'userMenuOnPremSignOut',
+  UserMenuOnPremOther: 'userMenuOnPremOther',
 } as const;
 
 type NavElement = typeof NavElement[keyof typeof NavElement];
@@ -61,13 +62,17 @@ const ActiveNavElement = {
   ProjectNavProjectSettings: NavElement.ProjectNavProjectSettings,
   ProjectNavProjectSupport: NavElement.ProjectNavProjectSupport,
   ProjectNavProjectIntegrations: NavElement.ProjectNavProjectIntegrations,
-  UserSettings: NavElement.UserSettings,
+  UserMenuCloudMFA: NavElement.UserMenuCloudMFA,
+  UserMenuCloudInvitations: NavElement.UserMenuCloudInvitations,
+  UserMenuCloudOrganizations: NavElement.UserMenuCloudOrganizations,
+  UserMenuCloudUserPreferences: NavElement.UserMenuCloudUserPreferences,
+  UserMenuCloudOther: NavElement.UserMenuCloudOther,
   UserMenuOnPremProfile: NavElement.UserMenuOnPremProfile,
   UserMenuOnPremTwoFactorAuth: NavElement.UserMenuOnPremTwoFactorAuth,
   UserMenuOnPremPersonalization: NavElement.UserMenuOnPremPersonalization,
   UserMenuOnPremInvitations: NavElement.UserMenuOnPremInvitations,
   UserMenuOnPremOrganizations: NavElement.UserMenuOnPremOrganizations,
-  UserMenuOnPremFeatureRequest: NavElement.UserMenuOnPremFeatureRequest,
+  UserMenuOnPremOther: NavElement.UserMenuOnPremOther,
 } as const;
 
 type ActiveNavElement = typeof ActiveNavElement[keyof typeof ActiveNavElement];
@@ -292,12 +297,12 @@ export interface MongoNavInterface {
   /**
    *  Function to determine destination URL when user selects a organization from the organization picker, see also `hosts`.
    */
-  constructOrganizationURL?: (organizationId: string) => string;
+  constructOrganizationURL?: (organization: OrganizationInterface) => string;
 
   /**
    *  Function to determine destination URL when user selects a project from the project picker, see also `hosts`.
    */
-  constructProjectURL?: (organizationId: string, projectId: string) => string;
+  constructProjectURL?: (project: ProjectInterface) => string;
 
   /**
    * Determines whether the project navigation should be shown.
