@@ -5,7 +5,8 @@ import Icon from '@leafygreen-ui/icon';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { useViewportSize } from '@leafygreen-ui/hooks';
-import { URLSInterface, NavElement } from '../types';
+import { NavElement } from '../types';
+import { BaseTriggerProps, mongoSelectUrls } from './types';
 import { InteractionRingWrapper } from '../helpers';
 import { facepaint, breakpoints } from '../breakpoints';
 import {
@@ -13,37 +14,11 @@ import {
   iconLoadingStyle,
   removePointerEvents,
 } from '../styles';
+import { baseButtonStyles, selectedStyle, activeButtonColor } from './styles';
 import { useOnElementClick } from '../on-element-click-provider';
 
 const triggerDataProp = createDataProp('org-trigger');
 const anchorDataProp = createDataProp('anchor-data-prop');
-const projectTriggerDataProp = createDataProp('project-trigger');
-
-const baseButtonStyles = css`
-  padding: unset;
-  display: flex;
-  align-items: center;
-  color: ${uiColors.gray.dark2};
-  cursor: pointer;
-  background-color: white;
-  position: relative;
-  border-radius: 5px 0 0 5px;
-  border: 1px solid ${uiColors.gray.light2};
-  padding: 3px 5px;
-
-  ${facepaint({
-    width: ['180px', '90px', '90px'],
-    height: ['30px', '36px', '36px'],
-  })}
-
-  &:focus {
-    outline: none;
-  }
-
-  &::-moz-focus-inner {
-    border: 0;
-  }
-`;
 
 const orgButtonStyles = css`
   justify-content: space-between;
@@ -54,24 +29,6 @@ const orgButtonStyles = css`
   padding: 3px 5px;
 `;
 
-const projectButtonStyles = css`
-  justify-content: space-around;
-  border-color: transparent;
-  border-radius: 5px;
-  padding: 2px;
-  width: 174px;
-  height: 28px;
-
-  ${facepaint({
-    width: ['196px', '106px', '106px'],
-    height: ['28px', '36px', '36px'],
-  })}
-
-  &:focus {
-    outline: none;
-  }
-`;
-
 const orgTriggerContainer = css`
   position: relative;
   z-index: 0;
@@ -79,17 +36,6 @@ const orgTriggerContainer = css`
   align-items: center;
   justify-content: center;
   margin-left: 20px;
-`;
-
-const selectedStyle = css`
-  margin-left: 4px;
-  font-weight: bolder;
-  flex-grow: 1;
-  text-align: left;
-  font-size: 13px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 `;
 
 const disabledStyle = css`
@@ -126,16 +72,6 @@ const orgTriggerBorderRadius = css`
   border-radius: 7px 0 0 7px;
 `;
 
-const projectTriggerWrapper = css`
-  margin-left: 16px;
-  margin-right: 2px;
-  z-index: 1;
-
-  ${facepaint({
-    marginLeft: ['16px', '0px', '16px'],
-  })}
-`;
-
 const activeColor = css`
   color: ${uiColors.green.base};
 `;
@@ -148,23 +84,13 @@ const focusStyle = css`
   }
 `;
 
-const activeButtonColor = css`
-  transition: background-color 150ms ease-in-out;
-  background-color: ${uiColors.gray.light2};
-`;
-
-interface OrganizationTriggerProps {
-  children?: React.ReactNode;
-  placeholder: string;
-  urls: Required<URLSInterface>;
+interface OrganizationTriggerProps extends BaseTriggerProps {
+  urls: mongoSelectUrls;
   isActive?: boolean;
-  open?: boolean;
-  disabled?: boolean;
   onClick?: React.MouseEventHandler;
-  loading?: boolean;
 }
 
-export function OrganizationTrigger({
+export default function OrgTrigger({
   children,
   placeholder,
   urls,
@@ -237,7 +163,7 @@ export function OrganizationTrigger({
       {!disabled && (
         <a
           {...anchorDataProp.prop}
-          href={urls.mongoSelect.orgSettings}
+          href={urls.orgSettings}
           aria-label="settings"
           data-testid="org-trigger-settings"
           aria-disabled={loading}
@@ -258,73 +184,5 @@ export function OrganizationTrigger({
         </a>
       )}
     </>
-  );
-}
-
-interface ProjectTriggerProps {
-  children?: React.ReactNode;
-  placeholder: string;
-  open?: boolean;
-  onClick: React.MouseEventHandler;
-  disabled?: boolean;
-  loading?: boolean;
-}
-
-export function ProjectTrigger({
-  children,
-  placeholder,
-  open = false,
-  onClick,
-  loading = false,
-  ...rest
-}: ProjectTriggerProps) {
-  return (
-    <InteractionRingWrapper
-      selector={projectTriggerDataProp.selector}
-      className={projectTriggerWrapper}
-      ringClassName={css`
-        border-radius: 7px;
-      `}
-    >
-      <button
-        {...rest}
-        {...projectTriggerDataProp.prop}
-        onClick={onClick}
-        data-testid="project-select-trigger"
-        className={cx(baseButtonStyles, projectButtonStyles, {
-          [activeButtonColor]: open,
-          [textLoadingStyle]: loading,
-        })}
-        disabled={loading}
-        aria-disabled={loading}
-      >
-        <Icon
-          glyph="Folder"
-          className={cx(
-            css`
-              color: ${uiColors.gray.base};
-            `,
-            { [iconLoadingStyle]: loading },
-          )}
-        />
-        <span
-          className={cx(selectedStyle, { [textLoadingStyle]: loading })}
-          data-testid="project-select-active-project"
-        >
-          {placeholder}
-        </span>
-        <Icon
-          size="small"
-          glyph={open ? 'CaretUp' : 'CaretDown'}
-          className={cx(
-            css`
-              flex-shrink: 0;
-            `,
-            { [iconLoadingStyle]: loading },
-          )}
-        />
-        {children}
-      </button>
-    </InteractionRingWrapper>
   );
 }

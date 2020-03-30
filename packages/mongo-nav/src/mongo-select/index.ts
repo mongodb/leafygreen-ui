@@ -1,2 +1,4 @@
-import { OrgSelect, ProjectSelect } from './MongoSelect';
+import OrgSelect from './OrgSelect';
+import ProjectSelect from './ProjectSelect';
+
 export { OrgSelect, ProjectSelect };
