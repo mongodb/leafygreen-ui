@@ -97,6 +97,20 @@ const paymentStatusMap: {
   ],
 } as const;
 
+const userMenuActiveNavItems = [
+  ActiveNavElement.UserMenuCloudInvitations,
+  ActiveNavElement.UserMenuCloudMFA,
+  ActiveNavElement.UserMenuCloudOrganizations,
+  ActiveNavElement.UserMenuCloudUserPreferences,
+  ActiveNavElement.UserMenuCloudOther,
+  ActiveNavElement.UserMenuOnPremInvitations,
+  ActiveNavElement.UserMenuOnPremOrganizations,
+  ActiveNavElement.UserMenuOnPremPersonalization,
+  ActiveNavElement.UserMenuOnPremProfile,
+  ActiveNavElement.UserMenuOnPremTwoFactorAuth,
+  ActiveNavElement.UserMenuOnPremOther,
+];
+
 type OrgNavProps = Pick<
   MongoNavInterface,
   'activeProduct' | 'onOrganizationChange' | 'activeNav' | 'admin'
@@ -140,7 +154,9 @@ function OrgNav({
   const { orgNav } = urls;
   const isTablet = viewportWidth < breakpoints.medium;
   const isMobile = viewportWidth < breakpoints.small;
-  const disabled = activeNav === ActiveNavElement.UserSettings;
+  const disabled = (userMenuActiveNavItems as Array<string>).includes(
+    activeNav as string,
+  );
 
   let paymentVariant: Variant | undefined;
   let key: Variant;
@@ -204,6 +220,7 @@ function OrgNav({
         activeProduct={activeProduct}
         urls={urls}
         hosts={hosts}
+        activeNav={activeNav}
       />
     );
   }
