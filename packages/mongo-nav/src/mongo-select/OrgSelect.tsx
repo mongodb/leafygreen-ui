@@ -143,7 +143,9 @@ function OrgSelect({
         href={constructOrganizationURL(datum)}
       >
         <div className={orgOptionContainerStyle}>
-          <span className={nameStyle}>{orgName}</span>
+          <span className={nameStyle}>
+            {orgName} {isActive && '(current)'}
+          </span>
 
           {!isOnPrem && (
             <span className={productStyle}>{formattedPlanTypes[planType]}</span>

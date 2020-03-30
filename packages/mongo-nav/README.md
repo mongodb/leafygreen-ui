@@ -79,8 +79,9 @@ _Any other properties will be spread on the root element_
 `UserMenuOnPremInvitations`  
 `UserMenuOnPremOrganizations`  
 `UserMenuOnPremOther`
-`UserMenuOnPremPersonalization`  
+`UserMenuOnPremPersonalization`
 `UserMenuOnPremProfile`  
+`UserMenuOnPremPublicApiAccess`  
 `UserMenuOnPremTwoFactorAuth`
 
 ### URLInterface
@@ -135,6 +136,7 @@ export interface URLSInterface {
     personalization?: string,
     invitations?: string,
     organizations?: string,
+    publicApiAccess?: string,
     featureRequest?: string,
   };
 }

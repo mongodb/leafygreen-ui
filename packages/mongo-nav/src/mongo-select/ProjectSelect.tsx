@@ -97,7 +97,7 @@ function ProjectSelect({
         onClick={onClick}
         href={constructProjectURL(datum)}
       >
-        {projectName}
+        {projectName} {isActive && '(current)'}
       </MenuItem>
     );
   };

@@ -97,6 +97,7 @@ const userMenuActiveNavItems = [
   ActiveNavElement.UserMenuOnPremOrganizations,
   ActiveNavElement.UserMenuOnPremPersonalization,
   ActiveNavElement.UserMenuOnPremProfile,
+  ActiveNavElement.UserMenuOnPremPublicApiAccess,
   ActiveNavElement.UserMenuOnPremTwoFactorAuth,
   ActiveNavElement.UserMenuOnPremOther,
 ];

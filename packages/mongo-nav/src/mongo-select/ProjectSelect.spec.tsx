@@ -80,7 +80,7 @@ describe('packages/mongo-select/ProjectSelect', () => {
       it('displays the project select trigger with the current project name', () => {
         const { projectTriggerText } = expectedElements;
         expect(projectTriggerText).toBeInTheDocument();
-        expect(projectTriggerText?.textContent).toEqual('Test Project');
+        expect(projectTriggerText?.textContent).toEqual('Demo Project 1');
       });
 
       describe('when clicking the current project trigger', () => {
@@ -116,6 +116,18 @@ describe('packages/mongo-select/ProjectSelect', () => {
           );
           expect((projectResults?.[1] as HTMLAnchorElement).href).toBe(
             'https://cloud.mongodb.com/v2#/fakeProjectId2',
+          );
+        });
+
+        it('indicates the current project', () => {
+          const { projectResults } = expectedElements;
+          const currentProjectName = currentProject?.projectName;
+          const currentResult = projectResults?.filter(result =>
+            result?.textContent?.includes('(current)'),
+          );
+          expect(currentResult?.length).toEqual(1);
+          expect(currentResult?.[0]?.textContent).toEqual(
+            `${currentProjectName} (current)`,
           );
         });
 

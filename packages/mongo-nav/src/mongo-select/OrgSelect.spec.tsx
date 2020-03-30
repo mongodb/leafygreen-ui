@@ -124,6 +124,18 @@ describe('packages/mongo-select/OrgSelect', () => {
           );
         });
 
+        it('indicates the current organization', () => {
+          const { orgResults } = expectedElements;
+          const currentOrgName = currentOrganization?.orgName;
+          const currentResult = orgResults?.filter(result =>
+            result?.textContent?.includes('(current)'),
+          );
+          expect(currentResult?.length).toEqual(1);
+          expect(currentResult?.[0]?.textContent).toContain(
+            `${currentOrgName} (current)`,
+          );
+        });
+
         describe('when clicking an org', () => {
           beforeEach(() => {
             const { orgResults } = expectedElements;

@@ -149,6 +149,7 @@ function MongoNav({
       personalization: `${hosts.cloud}/v2#/account/personalization`,
       invitations: `${hosts.cloud}/v2#/account/invitations`,
       organizations: `${hosts.cloud}/v2#/account/organizations`,
+      publicApiAccess: `${hosts.cloud}/v2#/account/publicApi`,
       featureRequest: 'https://feedback.mongodb.com',
     },
   };
