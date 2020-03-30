@@ -46,6 +46,7 @@ function ProjectSelect({
   constructProjectURL,
   urls,
   loading = false,
+  className,
 }: ProjectMongoSelectProps) {
   const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
@@ -107,6 +108,7 @@ function ProjectSelect({
       placeholder={current?.projectName ?? ''}
       open={open}
       loading={loading}
+      className={className}
       onClick={onElementClick(NavElement.ProjectNavProjectSelectTrigger, () =>
         setOpen(curr => !curr),
       )}

@@ -6,6 +6,7 @@ type pickedUrls = Pick<URLSInterface, 'mongoSelect'>;
 export type mongoSelectUrls = NonNullable<pickedUrls[keyof pickedUrls]>;
 
 export interface BaseMongoSelectProps {
+  className?: string;
   onClick?: MouseEventHandler;
   onChange?: (_value: string, _event: ChangeEvent) => void;
   loading?: boolean;
@@ -13,6 +14,7 @@ export interface BaseMongoSelectProps {
 }
 
 export interface BaseTriggerProps {
+  className?: string;
   children?: ReactNode;
   placeholder: string;
   open?: boolean;

@@ -99,6 +99,7 @@ export default function OrgTrigger({
   disabled = false,
   onClick = () => {},
   loading = false,
+  className,
   ...rest
 }: OrganizationTriggerProps) {
   const onElementClick = useOnElementClick();
@@ -120,10 +121,15 @@ export default function OrgTrigger({
           aria-disabled={disabled || loading}
           data-testid="org-trigger"
           disabled={disabled || loading}
-          className={cx(baseButtonStyles, orgButtonStyles, {
-            [activeButtonColor]: open,
-            [textLoadingStyle]: loading,
-          })}
+          className={cx(
+            baseButtonStyles,
+            orgButtonStyles,
+            {
+              [activeButtonColor]: open,
+              [textLoadingStyle]: loading,
+            },
+            className,
+          )}
         >
           {!isTablet && (
             <Icon

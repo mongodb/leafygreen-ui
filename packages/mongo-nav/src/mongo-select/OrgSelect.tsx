@@ -86,6 +86,7 @@ function OrgSelect({
   isOnPrem,
   disabled,
   loading = false,
+  className,
 }: OrganizationMongoSelectProps) {
   const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
@@ -163,6 +164,7 @@ function OrgSelect({
       open={open}
       disabled={disabled}
       loading={loading}
+      className={className}
       onClick={onElementClick(NavElement.OrgNavOrgSelectTrigger, () =>
         setOpen(current => !current),
       )}

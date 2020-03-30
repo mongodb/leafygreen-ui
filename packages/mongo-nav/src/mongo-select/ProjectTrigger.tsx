@@ -49,6 +49,7 @@ export default function ProjectTrigger({
   open = false,
   onClick,
   loading = false,
+  className,
   ...rest
 }: ProjectTriggerProps) {
   return (
@@ -64,10 +65,15 @@ export default function ProjectTrigger({
         {...projectTriggerDataProp.prop}
         onClick={onClick}
         data-testid="project-select-trigger"
-        className={cx(baseButtonStyles, projectButtonStyles, {
-          [activeButtonColor]: open,
-          [textLoadingStyle]: loading,
-        })}
+        className={cx(
+          baseButtonStyles,
+          projectButtonStyles,
+          {
+            [activeButtonColor]: open,
+            [textLoadingStyle]: loading,
+          },
+          className,
+        )}
         disabled={loading}
         aria-disabled={loading}
       >
