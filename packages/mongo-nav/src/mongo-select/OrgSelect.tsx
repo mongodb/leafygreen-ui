@@ -131,11 +131,13 @@ function OrgSelect({
 
   const renderOrganizationOption = (datum: OrganizationInterface) => {
     const { orgId, orgName, planType } = datum;
+    const isActive = orgId ? orgId === current?.orgId : false;
 
     return (
       <MenuItem
         data-testid="org-option"
         key={orgId}
+        active={isActive}
         className={menuItemContainerStyle}
         onClick={onClick}
         href={constructOrganizationURL(datum)}

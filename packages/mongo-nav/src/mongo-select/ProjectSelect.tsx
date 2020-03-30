@@ -86,11 +86,13 @@ function ProjectSelect({
 
   const renderProjectOption = (datum: ProjectInterface) => {
     const { projectId, projectName } = datum;
+    const isActive = projectId ? projectId === current?.projectId : false;
 
     return (
       <MenuItem
         data-testid="project-option"
         key={projectId}
+        active={isActive}
         className={cx(menuItemContainerStyle, nameStyle)}
         onClick={onClick}
         href={constructProjectURL(datum)}
