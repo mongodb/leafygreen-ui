@@ -96,7 +96,7 @@ export function AtlasIcon({ active, ...rest }: ProductIconProps) {
 
 export function RealmIcon({ active, ...rest }: ProductIconProps) {
   return (
-    <svg {...rest} width="18px" height="18px" viewBox="0 0 18 18">
+    <svg {...rest} width="16px" height="16px" viewBox="0 0 18 18">
       <defs>
         <linearGradient
           id="linear-gradient"
