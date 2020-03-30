@@ -247,6 +247,7 @@ export interface URLSInterface {
     alerts?: string;
     activityFeed?: string;
     invite?: string;
+    realm?: string;
     charts?: string;
   };
   onPrem?: {

@@ -33,7 +33,7 @@ storiesOf('MongoNav', module).add('Default', () => (
           enabled: boolean('onPrem enabled', false),
         }}
         loadData={boolean('loadData', true)}
-        showProjectNav={boolean('showProjNav', true)}
+        showProjectNav={boolean('showProjectNav', true)}
       />
     </div>
   </LeafygreenProvider>

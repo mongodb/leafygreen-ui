@@ -225,7 +225,7 @@ const tooltipStyles = css`
 `;
 
 export function displayProductName(today = new Date(Date.now())) {
-  const mdbLiveDate = new Date('May 4, 2020 0:00:00');
+  const mdbLiveDate = new Date('June 8, 2020 0:00:00');
 
   if (today < mdbLiveDate) {
     return 'Stitch';
@@ -420,7 +420,7 @@ export default function ProjectNav({
             <li role="none" className={productTabStyle}>
               <a
                 data-testid="project-nav-realm"
-                href={hosts.realm}
+                href={projectNav.realm}
                 className={getProductClassName('realm')}
                 aria-disabled={!current}
                 tabIndex={current ? 0 : -1}
