@@ -40,12 +40,12 @@ interface ProjectMongoSelectProps extends BaseMongoSelectProps {
 
 function ProjectSelect({
   current,
-  onChange: onChangeProp,
-  data,
+  data = [],
   onClick,
+  onChange: onChangeProp,
   constructProjectURL,
-  urls,
-  loading = false,
+  urls = {},
+  loading,
   className,
 }: ProjectMongoSelectProps) {
   const [value, setValue] = useState('');

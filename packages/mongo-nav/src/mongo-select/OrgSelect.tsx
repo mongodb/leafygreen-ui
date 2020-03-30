@@ -77,15 +77,15 @@ interface OrganizationMongoSelectProps extends BaseMongoSelectProps {
 
 function OrgSelect({
   current,
-  data,
-  urls,
+  data = [],
+  urls = {},
   isActive,
   onChange: onChangeProp,
   onClick: onClickProp,
   constructOrganizationURL,
   isOnPrem,
   disabled,
-  loading = false,
+  loading,
   className,
 }: OrganizationMongoSelectProps) {
   const [value, setValue] = useState('');
