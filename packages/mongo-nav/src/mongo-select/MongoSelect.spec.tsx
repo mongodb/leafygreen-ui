@@ -1,5 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
+import { waitFor } from '@testing-library/dom';
 import { render, fireEvent, cleanup, act } from '@testing-library/react';
 import {
   nullableElement,
@@ -147,11 +148,17 @@ describe('packages/mongo-select', () => {
             const { orgResults } = expectedElements;
             onClick.mockClear();
             fireEvent.click(orgResults?.[0] as Element);
-            setExpectedElements();
           });
 
           it('calls the on click handler', () => {
             expect(onClick).toHaveBeenCalledTimes(1);
+          });
+
+          it('closes the menu', async () => {
+            await waitFor(() => {
+              setExpectedElements();
+              expect(expectedElements!.orgInput).not.toBeInTheDocument();
+            });
           });
         });
       });
@@ -179,11 +186,15 @@ describe('packages/mongo-select', () => {
     describe('when a user filters organizations', () => {
       beforeEach(renderComponent);
 
-      it('displays one organization when only one matches the search', () => {
+      beforeEach(() => {
         fireEvent.click(expectedElements.orgTrigger as HTMLElement);
         setExpectedElements();
+      });
 
+      it('displays one organization when only one matches the search', () => {
         const input = expectedElements!.orgInput;
+
+        expect(input!.innerHTML).toEqual('');
 
         fireEvent.change(input as HTMLElement, {
           target: { value: '2' },
@@ -195,9 +206,6 @@ describe('packages/mongo-select', () => {
       });
 
       it('displays no organizations when none matches the search', () => {
-        fireEvent.click(expectedElements.orgTrigger as HTMLElement);
-        setExpectedElements();
-
         const input = expectedElements!.orgInput;
 
         fireEvent.change(input as HTMLElement, {
@@ -207,6 +215,30 @@ describe('packages/mongo-select', () => {
         act(setExpectedElements);
 
         expect(expectedElements!.orgResults!.length).toBe(0);
+      });
+
+      it('when closing the menu the filter value is reset', async () => {
+        // Close menu
+        act(() => {
+          // For some reason this causes a navigation and a console error.
+          // I can't figure out how or why yet
+          document.body.dispatchEvent(
+            new MouseEvent('click', { bubbles: true }),
+          );
+        });
+
+        // Need to wait for the UI to update as clicking on the orgTrigger so rapidly causes
+        // React to coalesce the events
+        await waitFor(() => {
+          setExpectedElements();
+          expect(expectedElements!.orgInput).not.toBeInTheDocument();
+        });
+
+        fireEvent.click(expectedElements.orgTrigger as Element);
+        setExpectedElements();
+
+        expect(expectedElements!.orgInput).toBeInTheDocument();
+        expect(expectedElements!.orgInput!.innerHTML).toEqual('');
       });
     });
 
@@ -311,10 +343,12 @@ describe('packages/mongo-select', () => {
     describe('when a user filters projects', () => {
       beforeEach(renderComponent);
 
-      it('displays one project when only one matches the search', () => {
+      beforeEach(() => {
         fireEvent.click(expectedElements.projectTrigger as HTMLElement);
         setExpectedElements();
+      });
 
+      it('displays one project when only one matches the search', () => {
         const input = expectedElements!.projectInput;
 
         fireEvent.change(input as HTMLElement, {
@@ -327,9 +361,6 @@ describe('packages/mongo-select', () => {
       });
 
       it('displays no projects when none matches the search', () => {
-        fireEvent.click(expectedElements.projectTrigger as HTMLElement);
-        setExpectedElements();
-
         const input = expectedElements!.projectInput;
 
         fireEvent.change(input as HTMLElement, {
@@ -339,6 +370,30 @@ describe('packages/mongo-select', () => {
         act(setExpectedElements);
 
         expect(expectedElements!.projectResults!.length).toBe(0);
+      });
+
+      it('when closing the menu the filter value is reset', async () => {
+        // Close menu
+        act(() => {
+          // For some reason this causes a navigation and a console error.
+          // I can't figure out how or why yet
+          document.body.dispatchEvent(
+            new MouseEvent('click', { bubbles: true }),
+          );
+        });
+
+        // Need to wait for the UI to update as clicking on the orgTrigger so rapidly causes
+        // React to coalesce the events
+        await waitFor(() => {
+          setExpectedElements();
+          expect(expectedElements!.projectInput).not.toBeInTheDocument();
+        });
+
+        fireEvent.click(expectedElements.projectTrigger as Element);
+        setExpectedElements();
+
+        expect(expectedElements!.projectInput).toBeInTheDocument();
+        expect(expectedElements!.projectInput!.innerHTML).toEqual('');
       });
     });
 

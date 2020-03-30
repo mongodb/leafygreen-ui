@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@leafygreen-ui/button';
 import Input from './Input';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -141,7 +141,7 @@ function OrgSelect({
   urls,
   isActive,
   onChange: onChangeProp,
-  onClick,
+  onClick: onClickProp,
   constructOrganizationURL,
   isOnPrem,
   disabled,
@@ -150,6 +150,12 @@ function OrgSelect({
   const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
+
+  useEffect(() => {
+    if (!open) {
+      setValue('');
+    }
+  }, [open]);
 
   let renderedData = data;
 
@@ -174,9 +180,13 @@ function OrgSelect({
     setValue(val);
 
     if (onChangeProp) {
-      onChangeProp(value, e);
-      return;
+      return onChangeProp(value, e);
     }
+  };
+
+  const onClick = (e: React.MouseEvent) => {
+    setOpen(false);
+    return onClickProp?.(e);
   };
 
   const renderOrganizationOption = (datum: OrganizationInterface) => {
@@ -283,6 +293,12 @@ function ProjectSelect({
   const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
+
+  useEffect(() => {
+    if (!open) {
+      setValue('');
+    }
+  }, [open]);
 
   let renderedData = data;
 
