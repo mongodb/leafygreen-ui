@@ -1,31 +1,105 @@
 import React, { useState, useEffect } from 'react';
-import Input from './Input';
+
+// leafygreen-ui
+import Icon from '@leafygreen-ui/icon';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { css } from '@leafygreen-ui/emotion';
-import OrgTrigger from './OrgTrigger';
-import { useOnElementClick } from '../on-element-click-provider';
-import { onKeyDown } from './selectHelpers';
+import { createDataProp } from '@leafygreen-ui/lib';
+import { useViewportSize } from '@leafygreen-ui/hooks';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   Menu,
   FocusableMenuItem,
   MenuItem,
   MenuSeparator,
 } from '@leafygreen-ui/menu';
+
+// mongo-nav
+import { useOnElementClick } from '../on-element-click-provider';
+import { InteractionRingWrapper } from '../helpers';
+import { facepaint, breakpoints } from '../breakpoints';
+import {
+  CurrentOrganizationInterface,
+  MongoNavInterface,
+  NavElement,
+  OrganizationInterface,
+  PlanType,
+} from '../types';
+import {
+  iconLoadingStyle,
+  removePointerEvents,
+  textLoadingStyle,
+} from '../styles';
+
+// mongo-select
+import Input from './Input';
+import { onKeyDown } from './selectHelpers';
 import { BaseMongoSelectProps } from './types';
 import {
-  OrganizationInterface,
-  CurrentOrganizationInterface,
-  PlanType,
-  NavElement,
-  MongoNavInterface,
-} from '../types';
-
-import {
+  activeButtonStyle,
+  baseButtonStyle,
+  caretBaseStyle,
+  iconColorStyle,
   menuContainerStyle,
   menuItemContainerStyle,
-  ulStyle,
   nameStyle,
+  selectedStyle,
+  ulStyle,
 } from './styles';
+
+// styles
+const orgButtonStyle = css`
+  justify-content: space-between;
+  border-radius: 5px 0 0 5px;
+  border: 1px solid ${uiColors.gray.light2};
+  width: 180px;
+  height: 30px;
+  padding: 3px 5px;
+`;
+
+const orgSettingsButtonStyle = css`
+  color: ${uiColors.gray.base};
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 5px 5px 0;
+  border: 1px solid ${uiColors.gray.light2};
+  border-left: 0;
+  background-color: white;
+  outline: none;
+  transition: all 150ms ease-in-out;
+
+  ${facepaint({
+    marginRight: ['16px', '16px', '20px'],
+    height: ['30px', '36px', '36px'],
+    paddingRight: ['6px', '8px', '8px'],
+    paddingLeft: ['6px', '8px', '8px'],
+  })}
+
+  &:hover {
+    background-color: ${uiColors.gray.light2};
+    border-color: ${uiColors.gray.light2};
+    color: ${uiColors.gray.dark2};
+  }
+`;
+
+const orgTriggerContainerStyle = css`
+  position: relative;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+`;
+
+const orgTriggerRingStyle = css`
+  border-radius: 7px 0 0 7px;
+`;
+
+const orgOptionContainerStyle = css`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const viewAllStyle = css`
   color: ${uiColors.blue.base};
@@ -38,18 +112,13 @@ const productStyle = css`
   white-space: nowrap;
 `;
 
-const orgOptionContainerStyle = css`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const noOrgStyle = css`
+const emptyStateStyle = css`
   font-size: 14px;
   padding: 4px 8px;
   margin-bottom: 20px;
 `;
 
-const allOrgLinkStyle = css`
+const linkStyle = css`
   color: ${uiColors.blue.base};
   text-decoration: none;
   &:visited {
@@ -58,12 +127,23 @@ const allOrgLinkStyle = css`
   }
 `;
 
-const formattedPlanTypes: Record<PlanType, string> = {
-  [PlanType.Atlas]: 'Atlas',
-  [PlanType.Cloud]: 'Cloud Manager',
-  [PlanType.OnPrem]: 'Ops Manager',
-} as const;
+const focusedLinkStyle = css`
+  &:focus {
+    background-color: ${uiColors.blue.light2};
+    color: ${uiColors.blue.dark2};
+    border-color: ${uiColors.blue.light2};
+  }
+`;
 
+const activeIconStyle = css`
+  color: ${uiColors.green.base};
+`;
+
+const disabledTextStyle = css`
+  color: ${uiColors.gray.light1};
+`;
+
+// types
 interface OrganizationMongoSelectProps extends BaseMongoSelectProps {
   data?: Array<OrganizationInterface>;
   current?: CurrentOrganizationInterface;
@@ -75,30 +155,39 @@ interface OrganizationMongoSelectProps extends BaseMongoSelectProps {
   disabled?: boolean;
 }
 
+const formattedPlanTypes: Record<PlanType, string> = {
+  [PlanType.Atlas]: 'Atlas',
+  [PlanType.Cloud]: 'Cloud Manager',
+  [PlanType.OnPrem]: 'Ops Manager',
+} as const;
+
+// data props
+const triggerDataProp = createDataProp('org-trigger');
+const anchorDataProp = createDataProp('anchor-data-prop');
+
 function OrgSelect({
   current,
   data = [],
   urls = {},
-  isActive,
   onChange: onChangeProp,
-  onClick: onClickProp,
   constructOrganizationURL,
-  isOnPrem,
-  disabled,
-  loading,
-  className,
+  isOnPrem = false,
+  isActive = false,
+  disabled = false,
+  loading = false,
 }: OrganizationMongoSelectProps) {
   const [value, setValue] = useState('');
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+  const { width: viewportWidth } = useViewportSize();
+  const isTablet = viewportWidth < breakpoints.medium;
 
   useEffect(() => {
     if (!open) {
       setValue('');
     }
   }, [open]);
-
-  let renderedData = data;
 
   const filterData = () => {
     const sanitizedValue = value.replace(/\\/g, '\\\\');
@@ -111,23 +200,12 @@ function OrgSelect({
     return filtered;
   };
 
-  if (!onChangeProp) {
-    renderedData = filterData();
-  }
+  const renderedData = onChangeProp ? data : filterData();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/\\/g, '\\');
-
     setValue(val);
-
-    if (onChangeProp) {
-      return onChangeProp(value, e);
-    }
-  };
-
-  const onClick = (e: React.MouseEvent) => {
-    setOpen(false);
-    return onClickProp?.(e);
+    return onChangeProp?.(value, e);
   };
 
   const renderOrganizationOption = (datum: OrganizationInterface) => {
@@ -140,7 +218,7 @@ function OrgSelect({
         key={orgId}
         active={isActive}
         className={menuItemContainerStyle}
-        onClick={onClick}
+        onClick={setOpen(false)}
         href={constructOrganizationURL(datum)}
       >
         <div className={orgOptionContainerStyle}>
@@ -157,66 +235,124 @@ function OrgSelect({
   };
 
   return (
-    <OrgTrigger
-      placeholder={disabled ? 'All Organizations' : current?.orgName ?? ''}
-      urls={urls}
-      isActive={isActive}
-      open={open}
-      disabled={disabled}
-      loading={loading}
-      className={className}
-      onClick={onElementClick(NavElement.OrgNavOrgSelectTrigger, () =>
-        setOpen(current => !current),
-      )}
-    >
-      <Menu
-        usePortal={false}
-        className={menuContainerStyle}
-        justify="start"
-        spacing={0}
-        setOpen={setOpen}
-        open={open}
+    <>
+      <InteractionRingWrapper
+        className={orgTriggerContainerStyle}
+        ringClassName={orgTriggerRingStyle}
+        selector={triggerDataProp.selector}
       >
-        {data && (
-          <FocusableMenuItem>
-            <Input
-              data-testid="org-filter-input"
-              variant="organization"
-              onChange={onChange}
-              onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
-              value={value}
-            />
-          </FocusableMenuItem>
-        )}
-
-        <ul className={ulStyle}>
-          {renderedData?.map(renderOrganizationOption) ?? (
-            <li className={noOrgStyle}>
-              You do not belong to any organizations. Create an organization on
-              the{' '}
-              <a href={urls.viewAllOrganizations} className={allOrgLinkStyle}>
-                Organizations
-              </a>{' '}
-              page.
-            </li>
+        <button
+          {...triggerDataProp.prop}
+          onClick={onElementClick(NavElement.OrgNavOrgSelectTrigger, () =>
+            setOpen(current => !current),
           )}
-        </ul>
+          aria-disabled={disabled || loading}
+          data-testid="org-trigger"
+          disabled={disabled || loading}
+          className={cx(baseButtonStyle, orgButtonStyle, {
+            [activeButtonStyle]: open,
+            [textLoadingStyle]: loading,
+          })}
+        >
+          {!isTablet && (
+            <Icon
+              size="small"
+              glyph="Building"
+              className={cx(iconColorStyle, { [iconLoadingStyle]: loading })}
+            />
+          )}
+          <span
+            data-testid="org-select-active-org"
+            className={cx(selectedStyle, {
+              [disabledTextStyle]: disabled,
+              [textLoadingStyle]: loading,
+            })}
+          >
+            {disabled ? 'All Organizations' : current?.orgName ?? ''}
+          </span>
+          <Icon
+            size="small"
+            glyph={open ? 'CaretUp' : 'CaretDown'}
+            className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
+          />
+          <Menu
+            usePortal={false}
+            className={menuContainerStyle}
+            justify="start"
+            spacing={0}
+            setOpen={setOpen}
+            open={open}
+          >
+            {data && (
+              <FocusableMenuItem>
+                <Input
+                  data-testid="org-filter-input"
+                  variant="organization"
+                  onChange={onChange}
+                  onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
+                  value={value}
+                />
+              </FocusableMenuItem>
+            )}
 
-        {renderedData && (
-          <>
-            <MenuSeparator />
-            <MenuItem
-              onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
-              href={urls.viewAllOrganizations}
-              data-testid="org-select-view-all-orgs"
-              onClick={onElementClick(NavElement.OrgNavViewAllOrganizations)}
-            >
-              <strong className={viewAllStyle}>View All Organizations</strong>
-            </MenuItem>
-          </>
-        )}
-      </Menu>
-    </OrgTrigger>
+            <ul className={ulStyle}>
+              {renderedData?.map(renderOrganizationOption) ?? (
+                <li className={emptyStateStyle}>
+                  You do not belong to any organizations. Create an organization
+                  on the{' '}
+                  <a href={urls.viewAllOrganizations} className={linkStyle}>
+                    Organizations
+                  </a>{' '}
+                  page.
+                </li>
+              )}
+            </ul>
+
+            {renderedData && (
+              <>
+                <MenuSeparator />
+                <MenuItem
+                  onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
+                  href={urls.viewAllOrganizations}
+                  data-testid="org-select-view-all-orgs"
+                  onClick={onElementClick(
+                    NavElement.OrgNavViewAllOrganizations,
+                  )}
+                >
+                  <strong className={viewAllStyle}>
+                    View All Organizations
+                  </strong>
+                </MenuItem>
+              </>
+            )}
+          </Menu>
+        </button>
+      </InteractionRingWrapper>
+
+      {!disabled && (
+        <a
+          {...anchorDataProp.prop}
+          href={urls.orgSettings}
+          aria-label="settings"
+          data-testid="org-trigger-settings"
+          aria-disabled={loading}
+          tabIndex={loading ? -1 : 0}
+          onClick={onElementClick(NavElement.OrgNavOrgSettings)}
+          className={cx(orgSettingsButtonStyle, {
+            [focusedLinkStyle]: showFocus,
+            [removePointerEvents]: loading,
+          })}
+        >
+          <Icon
+            glyph="Settings"
+            className={cx({
+              [activeIconStyle]: isActive,
+              [iconLoadingStyle]: loading,
+            })}
+          />
+        </a>
+      )}
+    </>
   );
 }
 

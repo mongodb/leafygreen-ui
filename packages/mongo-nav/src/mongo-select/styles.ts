@@ -28,7 +28,7 @@ export const nameStyle = css`
   color: ${uiColors.gray.dark3};
 `;
 
-export const baseButtonStyles = css`
+export const baseButtonStyle = css`
   padding: unset;
   display: flex;
   align-items: center;
@@ -65,7 +65,15 @@ export const selectedStyle = css`
   text-overflow: ellipsis;
 `;
 
-export const activeButtonColor = css`
+export const activeButtonStyle = css`
   transition: background-color 150ms ease-in-out;
   background-color: ${uiColors.gray.light2};
+`;
+
+export const iconColorStyle = css`
+  color: ${uiColors.gray.base};
+`;
+
+export const caretBaseStyle = css`
+  flex-shrink: 0;
 `;
