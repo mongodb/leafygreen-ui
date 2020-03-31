@@ -74,6 +74,7 @@ export const urlFixtures: Required<URLSInterface> = {
     account: {
       homepage: `https://account.mongodb.com/account/profile/overview`,
     },
+    logout: `https://cloud.mongodb.com/user/signout`,
   },
   mongoSelect: {
     viewAllProjects: `https://cloud.mongodb.com/v2#/org/${dataFixtures.currentOrganization?.orgId}/projects`,

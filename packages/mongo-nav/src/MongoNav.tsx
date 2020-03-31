@@ -97,24 +97,7 @@ function MongoNav({
   const currentOrgId = data?.currentOrganization?.orgId;
   const currentProjectId = data?.currentProject?.projectId;
 
-  const defaultURLS: Required<URLSInterface> = {
-    userMenu: {
-      cloud: {
-        userPreferences: `${hosts.cloud}/v2#/preferences/personalization`,
-        organizations: `${hosts.cloud}/v2#/preferences/organizations`,
-        invitations: `${hosts.cloud}/v2#/preferences/invitations`,
-        mfa: `${hosts.cloud}/v2#/preferences/2fa`,
-      },
-      university: {
-        universityPreferences: `${hosts.university}/edit_profile`,
-      },
-      support: {
-        userPreferences: `${hosts.support}/profile`,
-      },
-      account: {
-        homepage: `${hosts.account}/account/profile/overview`,
-      },
-    },
+  const defaultURLS: Required<Omit<URLSInterface, 'userMenu'>> = {
     mongoSelect: {
       viewAllProjects: `${hosts.cloud}/v2#/org/${currentOrgId}/projects`,
       viewAllOrganizations: `${hosts.cloud}/v2#/preferences/organizations`,
@@ -153,7 +136,7 @@ function MongoNav({
     },
   };
 
-  const urls = defaultsDeep(urlsProp, defaultURLS);
+  const urls: Required<URLSInterface> = defaultsDeep(urlsProp, defaultURLS);
 
   const defaultOrgURL = ({ orgId }: OrganizationInterface) =>
     `${hosts.cloud}/v2#/org/${orgId}/projects`;
