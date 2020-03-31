@@ -355,4 +355,25 @@ describe('packages/mongo-nav', () => {
       ).toBe(false);
     });
   });
+
+  describe('when dataFixtures prop is set', () => {
+    const newOrgName = 'My Test Org';
+    beforeEach(
+      async () =>
+        await renderComponent({
+          mode: 'dev',
+          dataFixtures: {
+            currentOrganization: {
+              orgName: newOrgName,
+            },
+          },
+        }),
+    );
+
+    test('prop data overrides default data', () => {
+      expect(expectedElements.currentOrg?.innerHTML.includes(newOrgName)).toBe(
+        true,
+      );
+    });
+  });
 });
