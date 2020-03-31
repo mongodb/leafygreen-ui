@@ -4,7 +4,7 @@ import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize } from '@leafygreen-ui/hooks';
-import { breakpoints, facepaint } from '../breakpoints';
+import { breakpoints, mq } from '../breakpoints';
 import { NavElement } from '../types';
 import { InteractionRingWrapper } from '../helpers';
 import { useOnElementClick } from '../on-element-click-provider';
@@ -32,7 +32,7 @@ const baseButtonStyles = css`
   cursor: pointer;
   z-index: 1;
 
-  ${facepaint({
+  ${mq({
     height: ['30px', '36px', '36px'],
   })}
 
@@ -67,7 +67,7 @@ const menuNameStyle = css`
   margin-left: 2px;
   max-width: 162px;
 
-  ${facepaint({
+  ${mq({
     marginRight: ['8px', '8px', '24px'],
   })}
 `;

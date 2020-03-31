@@ -1,4 +1,4 @@
-import fp from 'facepaint';
+import facepaint from 'facepaint';
 
 export const breakpoints = {
   small: 768,
@@ -6,7 +6,7 @@ export const breakpoints = {
   large: 1200,
 };
 
-export const facepaint = fp([
+export const mq = facepaint([
   `@media only screen and (max-width: ${breakpoints.small}px)`,
   `@media only screen and (min-width: ${breakpoints.small +
     1}px) and (max-width: ${breakpoints.medium}px)`,

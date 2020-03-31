@@ -39,6 +39,7 @@ const NavElement = {
   UserMenuOnPremPersonalization: 'userMenuOnPremPersonalization',
   UserMenuOnPremInvitations: 'userMenuOnPremInvitations',
   UserMenuOnPremOrganizations: 'userMenuOnPremOrganizations',
+  UserMenuOnPremPublicApiAccess: 'userMenuOnPremPublicApiAccess',
   UserMenuOnPremFeatureRequest: 'userMenuOnPremFeatureRequest',
   UserMenuOnPremSignOut: 'userMenuOnPremSignOut',
   UserMenuOnPremOther: 'userMenuOnPremOther',
@@ -74,6 +75,7 @@ const ActiveNavElement = {
   UserMenuOnPremPersonalization: NavElement.UserMenuOnPremPersonalization,
   UserMenuOnPremInvitations: NavElement.UserMenuOnPremInvitations,
   UserMenuOnPremOrganizations: NavElement.UserMenuOnPremOrganizations,
+  UserMenuOnPremPublicApiAccess: NavElement.UserMenuOnPremPublicApiAccess,
   UserMenuOnPremOther: NavElement.UserMenuOnPremOther,
 } as const;
 
@@ -258,6 +260,7 @@ export interface URLSInterface {
     personalization?: string;
     invitations?: string;
     organizations?: string;
+    publicApiAccess?: string;
     featureRequest?: string;
   };
 }
