@@ -8,7 +8,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { ProjectSelect } from '../mongo-select';
-import { facepaint, breakpoints } from '../breakpoints';
+import { mq, breakpoints } from '../breakpoints';
 import { useViewportSize, usePoller } from '@leafygreen-ui/hooks';
 import { iconLoadingStyle, textLoadingStyle, anchorOverrides } from '../styles';
 import { useOnElementClick } from '../on-element-click-provider';
@@ -73,7 +73,7 @@ const navContainerStyle = css`
 
 const menuIconButtonStyle = css`
   z-index: 1;
-  ${facepaint({
+  ${mq({
     marginRight: ['16px', '14px', '16px'],
   })}
 `;
@@ -99,7 +99,7 @@ const productTabStyle = css`
   justify-content: center;
   position: relative;
 
-  ${facepaint({
+  ${mq({
     minWidth: ['100px', '60px', '100px'],
     marginRight: ['16px', '8px', '16px'],
   })}
@@ -194,7 +194,7 @@ const cloudManagerStyle = css`
 `;
 
 const iconButtonMargin = css`
-  ${facepaint({
+  ${mq({
     marginRight: ['16px', '16px', '20px'],
   })}
 `;
@@ -328,7 +328,7 @@ export default function ProjectNav({
         current={current}
         data={data}
         constructProjectURL={constructProjectURL}
-        urls={urls}
+        urls={urls.mongoSelect}
         onChange={onProjectChange}
         loading={!current}
       />

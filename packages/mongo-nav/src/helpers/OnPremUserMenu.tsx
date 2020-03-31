@@ -134,6 +134,15 @@ export default function OnPremUserMenu({
         </MenuItem>
 
         <MenuItem
+          href={urls.onPrem.publicApiAccess}
+          active={activeNav === ActiveNavElement.UserMenuOnPremPublicApiAccess}
+          data-testid="om-user-menuitem-public-api-access"
+          onClick={() => setOpen(false)}
+        >
+          Public API Access
+        </MenuItem>
+
+        <MenuItem
           href={urls.onPrem.featureRequest}
           data-testid="om-user-menuitem-feature-request"
           onClick={() => setOpen(false)}
