@@ -1,6 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { facepaint } from '../breakpoints';
+import { mq } from '../breakpoints';
 
 const menuItemHeight = 36;
 
@@ -40,7 +40,7 @@ export const baseButtonStyle = css`
   border: 1px solid ${uiColors.gray.light2};
   padding: 3px 5px;
 
-  ${facepaint({
+  ${mq({
     width: ['180px', '90px', '90px'],
     height: ['30px', '36px', '36px'],
   })}

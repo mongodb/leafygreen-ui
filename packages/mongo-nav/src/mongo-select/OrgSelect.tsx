@@ -17,7 +17,7 @@ import {
 // mongo-nav
 import { useOnElementClick } from '../on-element-click-provider';
 import { InteractionRingWrapper } from '../helpers';
-import { facepaint, breakpoints } from '../breakpoints';
+import { mq, breakpoints } from '../breakpoints';
 import {
   CurrentOrganizationInterface,
   MongoNavInterface,
@@ -69,7 +69,7 @@ const orgSettingsButtonStyle = css`
   outline: none;
   transition: all 150ms ease-in-out;
 
-  ${facepaint({
+  ${mq({
     marginRight: ['16px', '16px', '20px'],
     height: ['30px', '36px', '36px'],
     paddingRight: ['6px', '8px', '8px'],
@@ -184,7 +184,7 @@ function OrgSelect({
   const isTablet = viewportWidth < breakpoints.medium;
 
   const toggleOpen = () => {
-    setOpen(!open);
+    setOpen(curr => !curr);
     if (!open) {
       setValue('');
     }

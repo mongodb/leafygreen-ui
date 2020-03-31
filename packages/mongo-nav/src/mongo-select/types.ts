@@ -1,8 +1,6 @@
 import { MouseEventHandler, ChangeEvent, ReactNode } from 'react';
 import { URLSInterface } from '../types';
 
-type pickedUrls = Pick<URLSInterface, 'mongoSelect'>;
-
 export type MongoSelectUrls = NonNullable<URLSInterface['mongoSelect']>;
 
 export interface BaseMongoSelectProps {
@@ -10,7 +8,7 @@ export interface BaseMongoSelectProps {
   onClick?: MouseEventHandler;
   onChange?: (_value: string, _event: ChangeEvent) => void;
   loading?: boolean;
-  urls: mongoSelectUrls;
+  urls: MongoSelectUrls;
 }
 
 export interface BaseTriggerProps {

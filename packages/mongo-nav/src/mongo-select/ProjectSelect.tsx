@@ -13,7 +13,7 @@ import {
 } from '@leafygreen-ui/menu';
 
 // mongo-nav
-import { facepaint } from '../breakpoints';
+import { mq } from '../breakpoints';
 import { InteractionRingWrapper } from '../helpers';
 import { useOnElementClick } from '../on-element-click-provider';
 import { textLoadingStyle, iconLoadingStyle } from '../styles';
@@ -56,7 +56,7 @@ const projectTriggerStyle = css`
   width: 174px;
   height: 28px;
 
-  ${facepaint({
+  ${mq({
     width: ['196px', '106px', '106px'],
     height: ['28px', '36px', '36px'],
   })}
@@ -71,7 +71,7 @@ const projectTriggerWrapperStyle = css`
   margin-right: 2px;
   z-index: 1;
 
-  ${facepaint({
+  ${mq({
     marginLeft: ['16px', '0px', '16px'],
   })}
 `;
@@ -105,7 +105,7 @@ function ProjectSelect({
   const onElementClick = useOnElementClick();
 
   const toggleOpen = () => {
-    setOpen(!open);
+    setOpen(curr => !curr);
     if (!open) {
       setValue('');
     }
@@ -147,11 +147,6 @@ function ProjectSelect({
     );
   };
 
-  const onClickTrigger = onElementClick(
-    NavElement.ProjectNavProjectSelectTrigger,
-    toggleOpen,
-  );
-
   return (
     <InteractionRingWrapper
       selector={projectTriggerDataProp.selector}
@@ -161,7 +156,10 @@ function ProjectSelect({
       <button
         {...rest}
         {...projectTriggerDataProp.prop}
-        onClick={onClickTrigger}
+        onClick={onElementClick(
+          NavElement.ProjectNavProjectSelectTrigger,
+          toggleOpen,
+        )}
         data-testid="project-select-trigger"
         className={cx(
           baseButtonStyle,

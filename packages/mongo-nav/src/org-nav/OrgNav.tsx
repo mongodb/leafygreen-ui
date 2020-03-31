@@ -11,7 +11,7 @@ import { LogoMark } from '@leafygreen-ui/logo';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { OrgNavLink, OnPremUserMenu } from '../helpers';
-import { breakpoints, facepaint } from '../breakpoints';
+import { breakpoints, mq } from '../breakpoints';
 import { OrgSelect } from '../mongo-select';
 import { useOnElementClick } from '../on-element-click-provider';
 import {
@@ -43,14 +43,14 @@ const navContainer = css`
 `;
 
 const supportContainer = css`
-  ${facepaint({
+  ${mq({
     marginRight: ['16px', '16px', '24px'],
     marginLeft: ['16px', '16px', '24px'],
   })}
 `;
 
 const rightLinkMargin = css`
-  ${facepaint({
+  ${mq({
     marginRight: ['16px', '16px', '24px'],
   })}
 `;
@@ -61,7 +61,7 @@ const versionStyle = css`
   font-size: 10px;
   color: ${uiColors.green.base};
 
-  ${facepaint({
+  ${mq({
     marginRight: ['16px', '16px', '16px'],
   })}
 `;
