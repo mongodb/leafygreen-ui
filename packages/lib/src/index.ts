@@ -81,3 +81,18 @@ export const AriaCurrentValue = {
 } as const;
 
 export type AriaCurrentValue = typeof AriaCurrentValue[keyof typeof AriaCurrentValue];
+
+/**
+ * Accepts a type as an argument and makes all of the keys of the type optional
+ */
+export type RecursivePartial<T> = {
+  [P in keyof T]?: T[P] extends Array<infer U>
+    ? Array<RecursivePartial<U>>
+    : T[P] extends object
+    ? RecursivePartial<T[P]>
+    : T[P] extends infer U | undefined
+    ? RecursivePartial<U> | undefined
+    : T[P] extends infer U | null
+    ? RecursivePartial<U> | null
+    : T[P];
+};

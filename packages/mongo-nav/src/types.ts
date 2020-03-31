@@ -1,3 +1,5 @@
+import { RecursivePartial } from '@leafygreen-ui/lib';
+
 const NavElement = {
   OrgNavOrgSettings: 'orgNavOrgSettings',
   OrgNavAccessManager: 'orgNavAccessManager',
@@ -368,4 +370,9 @@ export interface MongoNavInterface {
    * Determines whether or not the component will fetch data from cloud
    */
   loadData?: boolean;
+
+  /**
+   * Control fixtureData when in `dev` mode
+   */
+  dataFixtures?: RecursivePartial<DataInterface>;
 }

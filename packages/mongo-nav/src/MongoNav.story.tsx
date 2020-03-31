@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { select, boolean } from '@storybook/addon-knobs';
+import { select, boolean, text } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import MongoNav from '.';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -34,6 +34,14 @@ storiesOf('MongoNav', module).add('Default', () => (
         }}
         loadData={boolean('loadData', true)}
         showProjectNav={boolean('showProjectNav', true)}
+        dataFixtures={{
+          currentOrganization: {
+            orgName: text(
+              'dataFixtures.currentOrganization.orgName',
+              'Demo Organization',
+            ),
+          },
+        }}
       />
     </div>
   </LeafygreenProvider>
