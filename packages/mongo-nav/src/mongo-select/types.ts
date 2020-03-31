@@ -3,7 +3,7 @@ import { URLSInterface } from '../types';
 
 type pickedUrls = Pick<URLSInterface, 'mongoSelect'>;
 
-export type mongoSelectUrls = NonNullable<pickedUrls[keyof pickedUrls]>;
+export type MongoSelectUrls = NonNullable<URLSInterface['mongoSelect']>;
 
 export interface BaseMongoSelectProps {
   className?: string;
