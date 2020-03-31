@@ -1,4 +1,5 @@
 import React from 'react';
+import { css } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 type ProductIconProps = HTMLElementProps<'svg'> & {
@@ -7,206 +8,262 @@ type ProductIconProps = HTMLElementProps<'svg'> & {
 
 export function AtlasIcon({ active, ...rest }: ProductIconProps) {
   return (
-    <svg {...rest} width="18px" height="18px" viewBox="0 0 18 18">
-      <defs>
-        <linearGradient
-          x1="28.515977%"
-          y1="105.584466%"
-          x2="79.424121%"
-          y2="-9.67572816%"
-          id="linearGradient-1"
-        >
-          <stop stopColor="#0D6149" offset="0%"></stop>
-          <stop stopColor="#03AA4F" offset="36.97%"></stop>
-          <stop stopColor="#00D057" offset="64.96%"></stop>
-          <stop stopColor="#5FD891" offset="91.18%"></stop>
-          <stop stopColor="#80DBA5" offset="100%"></stop>
-        </linearGradient>
-        <linearGradient
-          x1="82.3061787%"
-          y1="109.629126%"
-          x2="7.44162975%"
-          y2="-16.1830097%"
-          id="linearGradient-2"
-        >
-          <stop stopColor="#0D6149" offset="0%"></stop>
-          <stop stopColor="#03AA4F" offset="36.97%"></stop>
-          <stop stopColor="#00D057" offset="64.96%"></stop>
-          <stop stopColor="#5FD891" offset="91.18%"></stop>
-          <stop stopColor="#80DBA5" offset="100%"></stop>
-        </linearGradient>
-        <linearGradient
-          x1="2.43172043%"
-          y1="82.3204029%"
-          x2="114.608065%"
-          y2="-3.16314823%"
-          id="linearGradient-3"
-        >
-          <stop stopColor="#0D6149" offset="0%"></stop>
-          <stop stopColor="#03AA4F" offset="36.97%"></stop>
-          <stop stopColor="#00D057" offset="64.96%"></stop>
-          <stop stopColor="#5FD891" offset="91.18%"></stop>
-          <stop stopColor="#80DBA5" offset="100%"></stop>
-        </linearGradient>
-        <linearGradient
-          x1="105.040323%"
-          y1="85.5592964%"
-          x2="-16.483871%"
-          y2="-1.59363401%"
-          id="linearGradient-4"
-        >
-          <stop stopColor="#0D6149" offset="0%"></stop>
-          <stop stopColor="#03AA4F" offset="36.97%"></stop>
-          <stop stopColor="#00D057" offset="64.96%"></stop>
-          <stop stopColor="#5FD891" offset="91.18%"></stop>
-          <stop stopColor="#80DBA5" offset="100%"></stop>
-        </linearGradient>
-      </defs>
-      <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-        <g transform="translate(1.000000, 1.000000)" fillRule="nonzero">
-          <path
-            d="M10.5142857,9.63809524 C12.2666667,8.45714286 14.1333333,8.15238095 15.6952381,8.19047619 C15.6952381,8.07619048 15.6952381,7.96190476 15.6952381,7.84761905 C15.6952381,6.36190476 15.2761905,4.99047619 14.552381,3.80952381 C13.447619,3.92380952 12.2666667,4.22857143 11.1238095,5.02857143 C9.67619048,6.01904762 8.87619048,7.35238095 8.45714286,8.34285714 L8.45714286,11.6571429 C8.99047619,10.9714286 9.63809524,10.247619 10.5142857,9.63809524 Z"
-            fill={active ? 'url(#linearGradient-1)' : 'currentColor'}
-          ></path>
-          <path
-            d="M8.45714286,6.13333333 C8.95238095,5.44761905 9.63809524,4.72380952 10.5142857,4.11428571 C11.6190476,3.35238095 12.7238095,2.97142857 13.8285714,2.78095238 C12.5333333,1.25714286 10.6285714,0.228571429 8.4952381,0.0761904762 L8.4952381,6.13333333 L8.45714286,6.13333333 Z"
-            fill={active ? '#00804B' : 'currentColor'}
-          ></path>
-          <path
-            d="M5.33333333,9.63809524 C6.20952381,10.247619 6.85714286,10.9333333 7.39047619,11.6571429 L7.39047619,8.34285714 C6.97142857,7.35238095 6.17142857,6.01904762 4.72380952,5.02857143 C3.58095238,4.26666667 2.4,3.92380952 1.2952381,3.80952381 C0.571428571,4.99047619 0.152380952,6.36190476 0.152380952,7.84761905 C0.152380952,7.96190476 0.152380952,8.07619048 0.152380952,8.19047619 C1.71428571,8.15238095 3.58095238,8.45714286 5.33333333,9.63809524 Z"
-            fill={active ? 'url(#linearGradient-2)' : 'currentColor'}
-          ></path>
-          <path
-            d="M11.1238095,10.552381 C9.67619048,11.5428571 8.87619048,12.8761905 8.45714286,13.8666667 L8.45714286,15.6571429 C12,15.4285714 14.8952381,12.7619048 15.5428571,9.33333333 C14.2095238,9.2952381 12.6095238,9.52380952 11.1238095,10.552381 Z"
-            fill={active ? 'url(#linearGradient-3)' : 'currentColor'}
-          ></path>
-          <path
-            d="M7.39047619,13.8666667 C6.97142857,12.8761905 6.17142857,11.5428571 4.72380952,10.552381 C3.23809524,9.52380952 1.63809524,9.2952381 0.304761905,9.33333333 C0.952380952,12.7619048 3.84761905,15.3904762 7.39047619,15.6571429 L7.39047619,13.8666667 Z"
-            fill={active ? 'url(#linearGradient-4)' : 'currentColor'}
-          ></path>
-          <path
-            d="M5.33333333,4.15238095 C6.20952381,4.76190476 6.85714286,5.44761905 7.39047619,6.17142857 L7.39047619,0.152380952 C5.25714286,0.304761905 3.35238095,1.2952381 2.05714286,2.85714286 C3.12380952,3.00952381 4.26666667,3.39047619 5.33333333,4.15238095 Z"
-            fill={active ? '#00804B' : 'currentColor'}
-          ></path>
-        </g>
-      </g>
+    <svg
+      {...rest}
+      x="0px"
+      y="0px"
+      viewBox="0 0 18 18"
+      width="18px"
+      height="18px"
+    >
+      <linearGradient
+        id="atlas-path-0001"
+        gradientUnits="userSpaceOnUse"
+        x1="-259.3434"
+        y1="361.1949"
+        x2="-258.8194"
+        y2="362.3814"
+        gradientTransform="matrix(8.1429 0 0 -8.8286 2123.7998 3202.6858)"
+      >
+        <stop offset="0" stopColor="#0D6149" />
+        <stop offset="0.3697" stopColor="#03AA4F" />
+        <stop offset="0.6496" stopColor="#00D057" />
+        <stop offset="0.9118" stopColor="#5FD891" />
+        <stop offset="1" stopColor="#80DBA5" />
+      </linearGradient>
+      <path
+        className={css`
+          fill: ${active ? 'url(#atlas-path-0001)' : 'currentColor'};
+        `}
+        d="M12,11c2-1.4,4.2-1.7,6-1.7c0-0.1,0-0.3,0-0.4c0-1.7-0.5-3.3-1.3-4.7c-1.3,0.1-2.6,0.5-4,1.4
+		C11,6.8,10.1,8.4,9.6,9.5v3.8C10.2,12.6,11,11.7,12,11z"
+      />
+      <linearGradient
+        id="atlas-path-0002"
+        gradientUnits="userSpaceOnUse"
+        x1="-258.827"
+        y1="361.1505"
+        x2="-259.5977"
+        y2="362.4457"
+        gradientTransform="matrix(8.1429 0 0 -8.8286 2114.457 3202.6858)"
+      >
+        <stop offset="0" stopColor="#0D6149" />
+        <stop offset="0.3697" stopColor="#03AA4F" />
+        <stop offset="0.6496" stopColor="#00D057" />
+        <stop offset="0.9118" stopColor="#5FD891" />
+        <stop offset="1" stopColor="#80DBA5" />
+      </linearGradient>
+      <path
+        className={css`
+          fill: ${active ? 'url(#atlas-path-0002)' : 'currentColor'};
+        `}
+        d="M6,11c1,0.7,1.8,1.5,2.4,2.3V9.5C7.9,8.4,7,6.8,5.3,5.7C4,4.8,2.6,4.4,1.3,4.3
+		C0.5,5.6,0,7.2,0,8.9c0,0.1,0,0.3,0,0.4C1.8,9.3,4,9.6,6,11z"
+      />
+      <linearGradient
+        id="atlas-path-0003"
+        gradientUnits="userSpaceOnUse"
+        x1="-258.8299"
+        y1="350.908"
+        x2="-257.6751"
+        y2="351.788"
+        gradientTransform="matrix(7.9714 0 0 -7.1187 2073.0569 2514.6802)"
+      >
+        <stop offset="0" stopColor="#0D6149" />
+        <stop offset="0.3697" stopColor="#03AA4F" />
+        <stop offset="0.6496" stopColor="#00D057" />
+        <stop offset="0.9118" stopColor="#5FD891" />
+        <stop offset="1" stopColor="#80DBA5" />
+      </linearGradient>
+      <path
+        className={css`
+          fill: ${active ? 'url(#atlas-path-0003)' : 'currentColor'};
+        `}
+        d="M12.7,12.1c-1.7,1.1-2.6,2.7-3.1,3.8V18c4.1-0.3,7.5-3.4,8.2-7.3C16.3,10.6,14.4,10.9,12.7,12.1z
+		"
+      />
+      <linearGradient
+        id="atlas-path-4"
+        gradientUnits="userSpaceOnUse"
+        x1="-257.8067"
+        y1="350.8745"
+        x2="-259.0576"
+        y2="351.7716"
+        gradientTransform="matrix(7.9714 0 0 -7.1187 2063.8855 2514.6802)"
+      >
+        <stop offset="0" stopColor="#0D6149" />
+        <stop offset="0.3697" stopColor="#03AA4F" />
+        <stop offset="0.6496" stopColor="#00D057" />
+        <stop offset="0.9118" stopColor="#5FD891" />
+        <stop offset="1" stopColor="#80DBA5" />
+      </linearGradient>
+      <path
+        className={css`
+          fill: ${active ? 'url(#atlas-path-4)' : 'currentColor'};
+        `}
+        d="M8.4,15.9c-0.5-1.1-1.4-2.7-3.1-3.8c-1.7-1.2-3.6-1.5-5.1-1.4c0.8,4,4.1,7,8.2,7.3V15.9z"
+      />
+      <path
+        className={css`
+          fill: ${active ? '#00804b' : 'currentColor'};
+        `}
+        d="M6,4.7C7,5.4,7.8,6.2,8.4,7V0C5.9,0.2,3.7,1.3,2.2,3.2C3.4,3.3,4.8,3.8,6,4.7z"
+      />
+      <path
+        className={css`
+          fill: ${active ? '#00804b' : 'currentColor'};
+        `}
+        d="M15.8,3.2c-1.5-1.8-3.7-3-6.2-3.1v7C10.2,6.2,11,5.4,12,4.7C13.2,3.8,14.6,3.3,15.8,3.2z"
+      />
     </svg>
   );
 }
 
 export function RealmIcon({ active, ...rest }: ProductIconProps) {
   return (
-    <svg {...rest} width="16px" height="16px" viewBox="0 0 18 18">
-      <defs>
-        <linearGradient
-          id="linear-gradient"
-          x1="12.48"
-          y1="13.26"
-          x2="13.48"
-          y2="6.77"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0" stopColor="#af478b" />
-          <stop offset="0.22" stopColor="#c66191" />
-          <stop offset="0.53" stopColor="#ec8c9a" />
-          <stop offset="0.66" stopColor="#ee99a2" />
-          <stop offset="0.88" stopColor="#f3bcb6" />
-          <stop offset="1" stopColor="#f6d0c2" />
-        </linearGradient>
-        <linearGradient
-          id="linear-gradient-2"
-          x1="8.77"
-          y1="17.71"
-          x2="8.87"
-          y2="10.47"
-          xlinkHref="#linear-gradient"
-        />
-        <linearGradient
-          id="linear-gradient-3"
-          x1="4.19"
-          y1="11.97"
-          x2="5.2"
-          y2="5.49"
-          xlinkHref="#linear-gradient"
-        />
-      </defs>
-      <g id="Layer_2" data-name="Layer 2">
-        <g id="Layer_1-2" data-name="Layer 1">
-          <path
-            d="M7.83,11.11l.78.28a12.41,12.41,0,0,0,5.31,1,9.83,9.83,0,0,0,3.78-1.08A9.12,9.12,0,0,0,18,9V8.67A11.61,11.61,0,0,0,7.83,11.11Z"
-            fill={active ? 'url(#linear-gradient)' : 'currentColor'}
-          />
-          <path
-            d="M17.07,13a10.55,10.55,0,0,1-3.07.69,13.74,13.74,0,0,1-5.82-1.11,10.45,10.45,0,0,0-5.82-.86,8.43,8.43,0,0,0-1.75.54A9,9,0,0,0,17.07,13Z"
-            fill={active ? 'url(#linear-gradient-2)' : 'currentColor'}
-          />
-          <path
-            d="M4.44,5.34a9.12,9.12,0,0,1,6.3,2.6,12.91,12.91,0,0,1,7.11-.59A9,9,0,0,0,.42,6.27,9,9,0,0,1,4.44,5.34Z"
-            fill={active ? '#6e60f2' : 'currentColor'}
-          />
-          <path
-            d="M.07,7.93A8.76,8.76,0,0,0,0,9,9.47,9.47,0,0,0,.23,11a10,10,0,0,1,1.89-.57,9.56,9.56,0,0,1,4.31.21A13.19,13.19,0,0,1,9.48,8.5,7.83,7.83,0,0,0,4.43,6.6,7.77,7.77,0,0,0,.07,7.93Z"
-            fill={active ? 'url(#linear-gradient-3)' : 'currentColor'}
-          />
-        </g>
-      </g>
+    <svg
+      {...rest}
+      x="0px"
+      y="0px"
+      viewBox="0 0 18 18"
+      width="18px"
+      height="18px"
+    >
+      <linearGradient
+        id="realm-path-0001"
+        gradientUnits="userSpaceOnUse"
+        x1="12.4555"
+        y1="6.7462"
+        x2="13.454"
+        y2="13.2264"
+        gradientTransform="matrix(1 0 0 -1 0 20)"
+      >
+        <stop offset="0" stopColor="#AF478B" />
+        <stop offset="0.22" stopColor="#C66191" />
+        <stop offset="0.53" stopColor="#EC8C9A" />
+        <stop offset="0.66" stopColor="#EE99A2" />
+        <stop offset="0.88" stopColor="#F3BCB6" />
+        <stop offset="1" stopColor="#F6D0C2" />
+      </linearGradient>
+      <path
+        className={css`
+          fill: ${active ? 'url(#realm-path-0001)' : 'currentColor'};
+        `}
+        d="M7.8,11.1l0.8,0.3c1.7,0.7,3.5,1.1,5.3,1c1.3-0.1,2.6-0.5,3.8-1.1C17.9,10.6,18,9.8,18,9V8.7
+			C14.4,7.8,10.6,8.7,7.8,11.1z"
+      />
+      <linearGradient
+        id="realm-path-0002"
+        gradientUnits="userSpaceOnUse"
+        x1="8.7566"
+        y1="2.3021"
+        x2="8.8565"
+        y2="9.5311"
+        gradientTransform="matrix(1 0 0 -1 0 20)"
+      >
+        <stop offset="0" stopColor="#AF478B" />
+        <stop offset="0.22" stopColor="#C66191" />
+        <stop offset="0.53" stopColor="#EC8C9A" />
+        <stop offset="0.66" stopColor="#EE99A2" />
+        <stop offset="0.88" stopColor="#F3BCB6" />
+        <stop offset="1" stopColor="#F6D0C2" />
+      </linearGradient>
+      <path
+        className={css`
+          fill: ${active ? 'url(#realm-path-0002)' : 'currentColor'};
+        `}
+        d="M17,13c-1,0.4-2,0.6-3.1,0.7c-2,0.1-4-0.3-5.8-1.1c-1.8-0.8-3.8-1.1-5.8-0.9c-0.6,0.1-1.2,0.3-1.7,0.5
+			c1.8,4.6,7,6.9,11.6,5.1C14.3,16.6,16,15,17,13z"
+      />
+      <path
+        className={css`
+          fill: ${active ? '#6e60f2' : 'currentColor'};
+        `}
+        d="M4.4,5.3c2.4,0,4.6,1,6.3,2.6c2.3-0.9,4.7-1.1,7.1-0.6c-0.9-4.9-5.6-8.1-10.5-7.2c-3.3,0.6-5.9,3-6.9,6.1
+			C1.7,5.7,3,5.3,4.4,5.3z"
+      />
+      <linearGradient
+        id="realm-path-0003"
+        gradientUnits="userSpaceOnUse"
+        x1="4.1834"
+        y1="8.0334"
+        x2="5.1919"
+        y2="14.5037"
+        gradientTransform="matrix(1 0 0 -1 0 20)"
+      >
+        <stop offset="0" stopColor="#AF478B" />
+        <stop offset="0.22" stopColor="#C66191" />
+        <stop offset="0.53" stopColor="#EC8C9A" />
+        <stop offset="0.66" stopColor="#EE99A2" />
+        <stop offset="0.88" stopColor="#F3BCB6" />
+        <stop offset="1" stopColor="#F6D0C2" />
+      </linearGradient>
+      <path
+        className={css`
+          fill: ${active ? 'url(#realm-path-0003)' : 'currentColor'};
+        `}
+        d="M0.1,7.9C0,8.3,0,8.6,0,9c0,0.7,0.1,1.3,0.2,2c0.6-0.3,1.2-0.4,1.9-0.6c1.4-0.3,2.9-0.2,4.3,0.2
+			c0.9-0.9,1.9-1.6,3-2.1c-1.4-1.2-3.2-1.9-5-1.9C2.9,6.6,1.4,7.1,0.1,7.9z"
+      />
     </svg>
   );
 }
 
 export function ChartsIcon({ active, ...rest }: ProductIconProps) {
   return (
-    <svg {...rest} width="18px" height="18px" viewBox="0 0 18 18">
-      <defs>
-        <linearGradient
-          x1="27.1067278%"
-          y1="70.8320287%"
-          x2="97.8314985%"
-          y2="26.6076705%"
-          id="linearGradient-1"
-        >
-          <stop stopColor="#007DAE" offset="0%"></stop>
-          <stop stopColor="#78CFDD" offset="99.15%"></stop>
-        </linearGradient>
-        <linearGradient
-          x1="57.7048969%"
-          y1="72.0328462%"
-          x2="41.5582474%"
-          y2="26.7463253%"
-          id="linearGradient-2"
-        >
-          <stop stopColor="#2AA0C7" offset="16.69%"></stop>
-          <stop stopColor="#B5E7CA" offset="73.54%"></stop>
-        </linearGradient>
-      </defs>
-      <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-        <g transform="translate(1.000000, 1.000000)" fillRule="nonzero">
-          <path
-            d="M10.0190476,12.647619 C9.82857143,12.8380952 9.52380952,12.8380952 9.33333333,12.6857143 L6.74285714,10.7809524 L3.2,14.1714286 C4.4952381,15.1619048 6.13333333,15.7333333 7.88571429,15.7333333 C12.1904762,15.7333333 15.6571429,12.2666667 15.6571429,7.96190476 C15.6571429,7.73333333 15.6571429,7.5047619 15.6190476,7.27619048 L10.0190476,12.647619 Z"
-            fill={active ? 'url(#linearGradient-1)' : 'currentColor'}
-          ></path>
-          <path
-            d="M7.00952381,9.63809524 L9.6,11.5428571 L15.352381,6.01904762 C15.047619,4.87619048 14.4761905,3.80952381 13.7142857,2.93333333 L9.56190476,6.8952381 C9.37142857,7.08571429 9.1047619,7.08571429 8.91428571,6.97142857 C8.91428571,6.97142857 8.87619048,6.97142857 8.87619048,6.93333333 C8.8,6.8952381 7.12380952,5.63809524 6.36190476,5.06666667 L0.571428571,10.6285714 C0.952380952,11.6952381 1.56190476,12.647619 2.36190476,13.447619 L6.32380952,9.67619048 C6.51428571,9.48571429 6.81904762,9.48571429 7.00952381,9.63809524 Z"
-            fill={active ? 'url(#linearGradient-2)' : 'currentColor'}
-          ></path>
-          <path
-            d="M5.94285714,3.96190476 C6.13333333,3.77142857 6.43809524,3.77142857 6.62857143,3.92380952 L9.18095238,5.79047619 L12.9904762,2.13333333 C11.6190476,0.914285714 9.82857143,0.19047619 7.88571429,0.19047619 C3.58095238,0.19047619 0.114285714,3.65714286 0.114285714,7.96190476 C0.114285714,8.45714286 0.152380952,8.95238095 0.266666667,9.40952381 L5.94285714,3.96190476 Z"
-            fill={active ? '#007DAE' : 'currentColor'}
-          ></path>
-        </g>
-      </g>
-    </svg>
-  );
-}
-
-export function ChartsInactive(props: HTMLElementProps<'svg'>) {
-  return (
-    <svg {...props} width="18px" height="18px" viewBox="0 0 18 18">
-      <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-        <g transform="translate(1.000000, 1.000000)" fill="currentColor">
-          <path d="M15.6571429,7.12380952 C15.6952381,7.35238095 15.6952381,7.58095238 15.6952381,7.80952381 C15.6952381,12.0380952 12.2666667,15.4666667 8.03809524,15.4666667 C6.32380952,15.4666667 4.72380952,14.8571429 3.42857143,13.9047619 L3.42857143,13.9047619 L6.93333333,10.552381 L9.48571429,12.4571429 C9.67619048,12.6095238 9.98095238,12.6095238 10.1714286,12.4190476 L10.1714286,12.4190476 Z M13.8285714,2.85714286 C14.5904762,3.73333333 15.1238095,4.76190476 15.4285714,5.9047619 L15.4285714,5.9047619 L9.75238095,11.352381 L7.2,9.44761905 C6.97142857,9.2952381 6.7047619,9.2952381 6.51428571,9.52380952 L6.51428571,9.52380952 L2.62857143,13.2571429 C1.82857143,12.4952381 1.21904762,11.5428571 0.838095238,10.4761905 L0.838095238,10.4761905 L6.55238095,4.99047619 C7.31428571,5.52380952 8.99047619,6.78095238 9.06666667,6.81904762 C9.06666667,6.85714286 9.1047619,6.85714286 9.1047619,6.85714286 C9.2952381,6.97142857 9.56190476,6.93333333 9.75238095,6.78095238 L9.75238095,6.78095238 Z M8,0.19047619 C9.94285714,0.19047619 11.7333333,0.914285714 13.0666667,2.0952381 L13.0666667,2.0952381 L9.33333333,5.67619048 L6.81904762,3.80952381 C6.62857143,3.65714286 6.32380952,3.65714286 6.13333333,3.84761905 L6.13333333,3.84761905 L0.495238095,9.2952381 C0.380952381,8.8 0.342857143,8.34285714 0.342857143,7.84761905 C0.342857143,3.61904762 3.77142857,0.19047619 8,0.19047619 Z"></path>
-        </g>
-      </g>
+    <svg
+      {...rest}
+      x="0px"
+      y="0px"
+      viewBox="0 0 18 18"
+      width="18px"
+      height="18px"
+    >
+      <linearGradient
+        id="charts-path-0001"
+        gradientUnits="userSpaceOnUse"
+        x1="-274.5664"
+        y1="364.6419"
+        x2="-273.8383"
+        y2="365.0972"
+        gradientTransform="matrix(14.0143 0 0 -9.5143 3855.8286 3484.9858)"
+      >
+        <stop offset="0" stopColor="#007DAE" />
+        <stop offset="0.9915" stopColor="#78CFDD" />
+      </linearGradient>
+      <path
+        className={css`
+          fill: ${active ? 'url(#charts-path-0001)' : 'currentColor'};
+        `}
+        d="M11.5,14.4c-0.2,0.2-0.6,0.2-0.8,0l-3-2.2l-4.1,3.9C5.1,17.3,7,18,9,18c5,0,9-4,9-9
+			c0-0.3,0-0.5,0-0.8L11.5,14.4z"
+      />
+      <linearGradient
+        id="charts-path-0002"
+        gradientUnits="userSpaceOnUse"
+        x1="-277.6113"
+        y1="372.6364"
+        x2="-277.7775"
+        y2="373.1026"
+        gradientTransform="matrix(16.6286 0 0 -11.8286 4626.7002 4419.7002)"
+      >
+        <stop offset="0.1669" stopColor="#2AA0C7" />
+        <stop offset="0.7354" stopColor="#B5E7CA" />
+      </linearGradient>
+      <path
+        className={css`
+          fill: ${active ? 'url(#charts-path-0002)' : 'currentColor'};
+        `}
+        d="M8,10.9l3,2.2l6.7-6.4c-0.4-1.3-1-2.6-1.9-3.6l-4.8,4.6C10.7,8,10.4,8,10.2,7.9c0,0,0,0,0,0
+			c-0.1,0-2-1.5-2.9-2.2l-6.7,6.4c0.4,1.2,1.1,2.3,2.1,3.3L7.2,11C7.4,10.8,7.8,10.8,8,10.9z"
+      />
+      <path
+        className={css`
+          fill: ${active ? '#007dae' : 'currentColor'};
+        `}
+        d="M6.7,4.4c0.2-0.2,0.6-0.2,0.8,0l3,2.2l4.4-4.2C13.3,0.8,11.2,0,9,0C4,0,0,4,0,9
+			c0,0.6,0,1.1,0.2,1.7L6.7,4.4z"
+      />
     </svg>
   );
 }
