@@ -87,6 +87,7 @@ function MongoNav({
   activeOrgId,
   activeProjectId,
   className,
+  dataFixtures: dataFixturesProp,
   ...rest
 }: MongoNavInterface) {
   const shouldShowProjectNav = showProjectNav && !onPrem.enabled;
@@ -187,8 +188,10 @@ function MongoNav({
 
   function getDataFixtures() {
     return new Promise(resolve => {
-      onSuccess?.(dataFixtures);
-      resolve(dataFixtures);
+      const mergedData = defaultsDeep(dataFixturesProp, dataFixtures);
+
+      onSuccess?.(mergedData);
+      resolve(mergedData);
     });
   }
 
@@ -224,7 +227,14 @@ function MongoNav({
         .then(handleResponse)
         .catch(console.error);
     }
-  }, [mode, endpointURI, activeOrgId, activeProjectId, loadData]);
+  }, [
+    mode,
+    endpointURI,
+    activeOrgId,
+    activeProjectId,
+    loadData,
+    dataFixturesProp,
+  ]);
 
   const filteredProjects = data?.projects?.filter(project => {
     return project.orgId === data.currentProject?.orgId;
