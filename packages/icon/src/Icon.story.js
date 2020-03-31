@@ -24,19 +24,16 @@ const textStyle = css`
   margin-top: 0.5rem;
 `;
 
-type GlyphUnion = keyof typeof glyphs;
-const glyphNames = Object.keys(glyphs) as Array<GlyphUnion>;
-
 storiesOf('Icons', module).add('Icon', () => {
   const fill = color('Fill', '#000000');
   const size = select('size', Object.values(Size), Size.Default);
 
-  const renderGlyph = (glyph: GlyphUnion) => (
+  const renderGlyph = glyph => (
     <div key={glyph} className={containerStyle}>
       <Icon glyph={glyph} fill={fill} size={size} />
       <div className={textStyle}>{glyph}</div>
     </div>
   );
 
-  return <>{glyphNames.map(renderGlyph)}</>;
+  return <>{Object.keys(glyphs).map(renderGlyph)}</>;
 });

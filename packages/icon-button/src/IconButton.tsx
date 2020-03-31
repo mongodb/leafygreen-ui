@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import PropTypes from 'prop-types';
 import { HTMLElementProps, Either, isComponentType } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 
@@ -156,6 +156,12 @@ const iconStyle = css`
   justify-content: center;
 `;
 
+interface IconProps extends React.SVGProps<SVGSVGElement> {
+  glyph: string;
+  size?: Size | number;
+  title?: string | null | boolean;
+}
+
 interface SharedIconButtonProps {
   /**
    * Determines color of `IconButton`. Can be `light` or `dark`.
@@ -188,8 +194,13 @@ interface SharedIconButtonProps {
   active?: boolean;
 }
 
+// We're omitting CSS here because of the issue with Omit and Pick's interaction
+// with Emotion's module declaration for 'react' described in this issue:
+// https://github.com/emotion-js/emotion/issues/1431
+//
+// The issue arises specifically when combined with the "Either" TS helper.
 interface LinkIconButtonProps
-  extends HTMLElementProps<'a'>,
+  extends Omit<HTMLElementProps<'a'>, 'css'>,
     SharedIconButtonProps {
   /**
    * Destination URL, if supplied `IconButton` will render in `a` tags, rather than `button` tags.
@@ -198,19 +209,25 @@ interface LinkIconButtonProps
 }
 
 interface ButtonIconButtonProps
-  extends HTMLElementProps<'button'>,
+  extends Omit<HTMLElementProps<'button'>, 'css'>,
     SharedIconButtonProps {
   href?: null;
 }
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';
+type AccessibleLinkIconButtonProps = Either<LinkIconButtonProps, AriaLabels>;
+type AccessibleButtonIconButtonProps = Either<
+  ButtonIconButtonProps,
+  AriaLabels
+>;
+
 type IconButtonProps =
-  | Either<LinkIconButtonProps, AriaLabels>
-  | Either<ButtonIconButtonProps, AriaLabels>;
+  | AccessibleLinkIconButtonProps
+  | AccessibleButtonIconButtonProps;
 
 function usesLinkElement(
-  props: LinkIconButtonProps | ButtonIconButtonProps,
-): props is LinkIconButtonProps {
+  props: IconButtonProps,
+): props is AccessibleLinkIconButtonProps {
   return props.href != null;
 }
 
@@ -221,7 +238,7 @@ function usesLinkElement(
  *
  * ```
 <IconButton variant='dark'>
-  <Icon glyph={copy} />
+  <Icon glyph='Copy' />
 </IconButton>
 ```
  * @param props.children Content to appear inside of `IconButton`.
@@ -257,9 +274,9 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
 
   const processedChildren = React.Children.map(children, child => {
     if (isComponentType(child, 'Icon')) {
-      const { label, size: childSize } = child.props;
+      const { size: childSize, title }: IconProps = child.props;
 
-      if (typeof label === 'string' && label.length > 0) {
+      if (typeof title === 'string' && title.length > 0) {
         return child;
       }
 
@@ -274,7 +291,7 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
     return child;
   });
 
-  const renderIconButton = (Root: React.ElementType<any> = 'button') => (
+  const renderIconButton = (Root: React.ElementType = 'button') => (
     <Root
       {...rest}
       ref={ref}
@@ -315,6 +332,7 @@ IconButton.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   disabled: PropTypes.bool,
+  // @ts-ignore
   href: PropTypes.string,
   active: PropTypes.bool,
 };
