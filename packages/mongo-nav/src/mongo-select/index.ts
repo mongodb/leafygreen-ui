@@ -1,4 +1,4 @@
-import OrgSelect from './OrgSelect';
-import ProjectSelect from './ProjectSelect';
+export { default as OrgSelect } from './OrgSelect';
+export { default as ProjectSelect } from './ProjectSelect';
 
 export { OrgSelect, ProjectSelect };
