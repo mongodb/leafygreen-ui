@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // leafygreen-ui
 import Icon from '@leafygreen-ui/icon';
@@ -183,11 +183,12 @@ function OrgSelect({
   const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
 
-  useEffect(() => {
+  const toggleOpen = () => {
+    setOpen(!open);
     if (!open) {
       setValue('');
     }
-  }, [open]);
+  };
 
   const filterData = () => {
     const sanitizedValue = value.replace(/\\/g, '\\\\');
@@ -218,7 +219,7 @@ function OrgSelect({
         key={orgId}
         active={isActive}
         className={menuItemContainerStyle}
-        onClick={setOpen(false)}
+        onClick={toggleOpen}
         href={constructOrganizationURL(datum)}
       >
         <div className={orgOptionContainerStyle}>
@@ -243,8 +244,9 @@ function OrgSelect({
       >
         <button
           {...triggerDataProp.prop}
-          onClick={onElementClick(NavElement.OrgNavOrgSelectTrigger, () =>
-            setOpen(current => !current),
+          onClick={onElementClick(
+            NavElement.OrgNavOrgSelectTrigger,
+            toggleOpen,
           )}
           aria-disabled={disabled || loading}
           data-testid="org-trigger"
@@ -280,7 +282,7 @@ function OrgSelect({
             className={menuContainerStyle}
             justify="start"
             spacing={0}
-            setOpen={setOpen}
+            setOpen={toggleOpen}
             open={open}
           >
             {data && (

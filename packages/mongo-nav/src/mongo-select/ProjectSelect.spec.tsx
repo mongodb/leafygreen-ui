@@ -47,12 +47,6 @@ describe('packages/mongo-select/ProjectSelect', () => {
     expectedElements.projectResults = queryAllByTestId('project-option');
   };
 
-  let onClick: jest.Mock;
-
-  beforeEach(() => {
-    onClick = jest.fn();
-  });
-
   afterEach(() => {
     jest.restoreAllMocks();
     cleanup();
@@ -66,7 +60,6 @@ describe('packages/mongo-select/ProjectSelect', () => {
             urls={mongoSelectUrls}
             data={projects}
             current={currentProject as CurrentProjectInterface}
-            onClick={onClick}
             constructProjectURL={constructProjectURL}
             {...props}
           />,
@@ -129,19 +122,6 @@ describe('packages/mongo-select/ProjectSelect', () => {
           expect(currentResult?.[0]?.textContent).toEqual(
             `${currentProjectName} (current)`,
           );
-        });
-
-        describe('when clicking a project', () => {
-          beforeEach(() => {
-            const { projectResults } = expectedElements;
-            onClick.mockClear();
-            fireEvent.click(projectResults?.[0] as Element);
-            setExpectedElements();
-          });
-
-          it('calls the on click handler', () => {
-            expect(onClick).toHaveBeenCalledTimes(1);
-          });
         });
       });
     });

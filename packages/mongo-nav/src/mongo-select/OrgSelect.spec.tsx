@@ -46,12 +46,6 @@ describe('packages/mongo-select/OrgSelect', () => {
     expectedElements.orgResults = queryAllByTestId('org-option');
   };
 
-  let onClick: jest.Mock;
-
-  beforeEach(() => {
-    onClick = jest.fn();
-  });
-
   afterEach(() => {
     jest.restoreAllMocks();
     cleanup();
@@ -66,7 +60,6 @@ describe('packages/mongo-select/OrgSelect', () => {
             data={organizations}
             constructOrganizationURL={constructOrganizationURL}
             urls={mongoSelectUrls}
-            onClick={onClick}
             {...props}
           />,
         ),
@@ -139,12 +132,7 @@ describe('packages/mongo-select/OrgSelect', () => {
         describe('when clicking an org', () => {
           beforeEach(() => {
             const { orgResults } = expectedElements;
-            onClick.mockClear();
             fireEvent.click(orgResults?.[0] as Element);
-          });
-
-          it('calls the on click handler', () => {
-            expect(onClick).toHaveBeenCalledTimes(1);
           });
 
           it('closes the menu', async () => {

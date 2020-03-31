@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // leafygreen-ui
 import Icon from '@leafygreen-ui/icon';
@@ -104,11 +104,12 @@ function ProjectSelect({
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
 
-  useEffect(() => {
+  const toggleOpen = () => {
+    setOpen(!open);
     if (!open) {
       setValue('');
     }
-  }, [open]);
+  };
 
   const filterData = () => {
     const sanitizedValue = value.replace(/\\/g, '\\\\');
@@ -148,7 +149,7 @@ function ProjectSelect({
 
   const onClickTrigger = onElementClick(
     NavElement.ProjectNavProjectSelectTrigger,
-    () => setOpen(curr => !curr),
+    toggleOpen,
   );
 
   return (
@@ -195,7 +196,7 @@ function ProjectSelect({
           justify="start"
           spacing={0}
           open={open}
-          setOpen={setOpen}
+          setOpen={toggleOpen}
           data-testid="project-select-project-list"
         >
           <FocusableMenuItem>
