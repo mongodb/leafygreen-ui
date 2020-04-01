@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 4.4.0
+
+### Minor Changes
+
+- da540d3: Adds RecursivePartial utility type to lib
+
 ## 4.3.1
 
 ### Patch Changes
