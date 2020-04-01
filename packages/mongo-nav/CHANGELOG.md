@@ -5,8 +5,8 @@
 ### Minor Changes
 
 - da540d3: Adds dataFixtures prop to MongoNav, which allows consumer to set data in dev mode
-- eb3895e: Adds active states, className overrides, and simplifies the required URLs interface required for OrgSelect and ProjectSelect. Adds the Public API Access link to the OnPremUsereMenu.
-- 7f30d61: Add support for configuring logout url. Add default logout behavior.
+- eb3895e: Adds active states, className overrides, and simplifies the required URLs interface required for OrgSelect and ProjectSelect. Adds the Public API Access link to the OnPremUserMenu.
+- 7f30d61: Adds support for configuring logout url. Add default logout behavior.
 
 ### Patch Changes
 
@@ -18,18 +18,18 @@
 
 ### Minor Changes
 
-- 1ee9966: Fix incorrect links created in the ProjectSelect menu.
+- 1ee9966: Fixes incorrect links created in the ProjectSelect menu.
 
   Also reuse types across different components.- 219859a: Change the date when we show Realm
 
-- 219859a: Update Realm URL.
-- 6e2b046: Update UserMenu and OnPremUserMenu to fix bugs and include active states for UserMenu. This eliminates the previous temporary active nav element UserSettings, so the Org Nav will now be disabled if any UserMenu or OnPremUserMenu active nav element is provided.
+- 219859a: Updates Realm URL.
+- 6e2b046: Updates UserMenu and OnPremUserMenu to fix bugs and include active states for UserMenu. This eliminates the previous temporary active nav element UserSettings, so the Org Nav will now be disabled if any UserMenu or OnPremUserMenu active nav element is provided.
 
 ### Patch Changes
 
 - 02e108c: Fixes style-related issues in MongoNav
-- 219859a: Disable Project Access when ProjectNav is not being displayed.
-- 219859a: Reset filter value in OrgSelect and ProjectSelect when menu closes.
+- 219859a: Disables Project Access when ProjectNav is not being displayed.
+- 219859a: Resets filter value in OrgSelect and ProjectSelect when menu closes.
 - 219859a: Closes OrgSelect when an org is selected.
 
 ## 0.19.0
@@ -37,8 +37,8 @@
 ### Minor Changes
 
 - 64c03e7: Adds project status badge to ProjectNav
-- 4e67588: Add support for polling an alerts endpoint to keep the alerts state in sync.
-- a35f23d: Set Atlas tab link to the full URL to prevent full page refreshes.
+- 4e67588: Adds support for polling an alerts endpoint to keep the alerts state in sync.
+- a35f23d: Sets Atlas tab link to the full URL to prevent full page refreshes.
 
 ### Patch Changes
 
