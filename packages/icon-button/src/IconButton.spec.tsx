@@ -43,10 +43,10 @@ describe('packages/icon-button', () => {
   });
 
   test("the rendered icon doesn't include a title tag", () => {
-    expect(renderedIcon.getElementsByTagName('title')[0]).toBeUndefined()
-  })
+    expect(renderedIcon.getElementsByTagName('title')[0]).toBeUndefined();
+  });
 
-  const titleText = 'My title'
+  const titleText = 'My title';
 
   test(`when '${titleText}' is set directly as the title child icon, the rendered icon includes a title tag with the text content, '${titleText}'`, () => {
     render(
@@ -59,10 +59,12 @@ describe('packages/icon-button', () => {
         <Icon glyph="Ellipsis" data-testid="icon-test-id" title={titleText} />
       </IconButton>,
       { container },
-    )
+    );
 
-    expect(renderedIcon.getElementsByTagName('title')[0].textContent).toBe(titleText)
-  })
+    expect(renderedIcon.getElementsByTagName('title')[0].textContent).toBe(
+      titleText,
+    );
+  });
 
   describe('when href prop is supplied', () => {
     const testId = 'test-icon-button-component-with-href';

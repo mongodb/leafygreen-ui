@@ -278,7 +278,7 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
 
       const newChildProps: Partial<IconProps> = {
         size: childSize || size,
-      }
+      };
 
       if (typeof title !== 'string' || title.length === 0) {
         // Unsets the title within an icon since the button itself will have
