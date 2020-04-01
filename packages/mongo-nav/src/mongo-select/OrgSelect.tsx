@@ -123,6 +123,11 @@ const emptyStateStyle = css`
   margin-bottom: 20px;
 `;
 
+const displayFlex = css`
+  display: flex;
+  align-items: center;
+`;
+
 const linkStyle = css`
   color: ${uiColors.blue.base};
   text-decoration: none;
@@ -233,12 +238,7 @@ function OrgSelect({
           </span>
 
           {!isOnPrem && (
-            <span
-              className={css`
-                display: flex;
-                align-items: center;
-              `}
-            >
+            <span className={displayFlex}>
               {planType === PlanType.Atlas ? (
                 <AtlasSmall />
               ) : (
