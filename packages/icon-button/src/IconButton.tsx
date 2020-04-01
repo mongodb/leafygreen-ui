@@ -276,16 +276,17 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
     if (isComponentType(child, 'Icon')) {
       const { size: childSize, title }: IconProps = child.props;
 
-      if (typeof title === 'string' && title.length > 0) {
-        return child;
+      const newChildProps: Partial<IconProps> = {
+        size: childSize || size,
       }
 
-      return React.cloneElement(child, {
+      if (typeof title !== 'string' || title.length === 0) {
         // Unsets the title within an icon since the button itself will have
         // aria-label or aria-labelledby set.
-        title: false,
-        size: childSize || size,
-      });
+        newChildProps.title = false;
+      }
+
+      return React.cloneElement(child, newChildProps);
     }
 
     return child;
