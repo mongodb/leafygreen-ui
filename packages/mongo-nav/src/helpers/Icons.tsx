@@ -6,6 +6,171 @@ type ProductIconProps = HTMLElementProps<'svg'> & {
   active: boolean;
 };
 
+export function CloudManagerSmall() {
+  return (
+    <svg width="10px" height="10px" viewBox="0 0 10 10">
+      <path
+        className={css`
+          fill: #00804b;
+        `}
+        d="M3.19,9.66h.4A1.32,1.32,0,0,0,3.59,7H.43A5,5,0,0,0,3.19,9.66Z"
+      />
+      <path
+        className={css`
+          fill: #03aa4f;
+        `}
+        d="M1.58,5a2,2,0,0,1,.5-1.32H.18a4.93,4.93,0,0,0,0,2.64H2.07A2,2,0,0,1,1.58,5Z"
+      />
+      <path
+        className={css`
+          fill: #00804b;
+        `}
+        d="M5.61,8.34A2,2,0,0,1,4.75,10H5A5,5,0,0,0,9.57,7H5.12A2,2,0,0,1,5.61,8.34Z"
+      />
+      <path
+        className={css`
+          fill: #007dab;
+        `}
+        d="M5,0A5,5,0,0,0,.43,3H9.57A5,5,0,0,0,5,0Z"
+      />
+      <path
+        className={css`
+          fill: #03aa4f;
+        `}
+        d="M2.28,5A1.32,1.32,0,0,0,3.6,6.32H9.82a4.93,4.93,0,0,0,0-2.64H3.6A1.32,1.32,0,0,0,2.28,5Z"
+      />
+    </svg>
+  );
+}
+
+export function AtlasSmall() {
+  return (
+    <svg width="10px" height="10px" viewBox="0 0 10 10">
+      <path
+        className={css`
+          fill: #03aa4f;
+        `}
+        d="M6.67,6.12A5.5,5.5,0,0,1,10,5.2,1.48,1.48,0,0,0,10,5a5,5,0,0,0-.73-2.61,4.63,4.63,0,0,0-2.21.77A4.78,4.78,0,0,0,5.35,5.28V7.41A5.42,5.42,0,0,1,6.67,6.12Z"
+      />
+      <path
+        className={css`
+          fill: #80dba5;
+        `}
+        d="M5.35,3.87A5.08,5.08,0,0,1,6.67,2.58a5.31,5.31,0,0,1,2.12-.85A5,5,0,0,0,5.35,0Z"
+      />
+      <path
+        className={css`
+          fill: #03aa4f;
+        `}
+        d="M3.33,6.12A5.42,5.42,0,0,1,4.65,7.41V5.29A4.75,4.75,0,0,0,2.94,3.15,4.63,4.63,0,0,0,.73,2.38,5,5,0,0,0,0,5,1.48,1.48,0,0,0,0,5.2,5.5,5.5,0,0,1,3.33,6.12Z"
+      />
+      <path
+        className={css`
+          fill: #00804b;
+        `}
+        d="M7.06,6.7A4.78,4.78,0,0,0,5.35,8.83V10A5,5,0,0,0,9.91,5.91,4.73,4.73,0,0,0,7.06,6.7Z"
+      />
+      <path
+        className={css`
+          fill: #00804b;
+        `}
+        d="M4.65,8.83A4.78,4.78,0,0,0,2.94,6.7,4.73,4.73,0,0,0,.09,5.91,5,5,0,0,0,4.65,10Z"
+      />
+      <path
+        className={css`
+          fill: #80dba5;
+        `}
+        d="M3.33,2.58A5.08,5.08,0,0,1,4.65,3.87V0A5,5,0,0,0,1.21,1.73,5.31,5.31,0,0,1,3.33,2.58Z"
+      />
+    </svg>
+  );
+}
+
+export function CloudManagerIcon({ active, ...rest }: ProductIconProps) {
+  return (
+    <svg {...rest} width="18px" height="18px" viewBox="0 0 18 18">
+      <defs>
+        <linearGradient
+          id="cloud-manager-linear-gradient"
+          x1="0.96"
+          y1="15.06"
+          x2="15.02"
+          y2="14.8"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0" stopColor="#0d6149" />
+          <stop offset="0.37" stopColor="#04a74f" />
+          <stop offset="0.65" stopColor="#00cd57" />
+          <stop offset="0.92" stopColor="#5fd590" />
+          <stop offset="1" stopColor="#7ed8a2" />
+        </linearGradient>
+        <linearGradient
+          id="cloud-manager-linear-gradient-2"
+          x1="-2.54"
+          y1="9"
+          x2="13.27"
+          y2="9"
+          xlinkHref="#cloud-manager-linear-gradient"
+        />
+        <linearGradient
+          id="cloud-manager-linear-gradient-3"
+          x1="21.41"
+          y1="15.32"
+          x2="1.11"
+          y2="15.32"
+          xlinkHref="#cloud-manager-linear-gradient"
+        />
+        <linearGradient
+          id="cloud-manager-linear-gradient-4"
+          x1="19.24"
+          y1="9"
+          x2="-3.78"
+          y2="9"
+          xlinkHref="#cloud-manager-linear-gradient"
+        />
+      </defs>
+      <path
+        className={css`
+          fill: ${active
+            ? 'url(#cloud-manager-linear-gradient)'
+            : 'currentColor'};
+        `}
+        d="M5.74,17.39h.73a2.38,2.38,0,0,0,0-4.75H.77A9,9,0,0,0,5.74,17.39Z"
+      />
+      <path
+        className={css`
+          fill: ${active
+            ? 'url(#cloud-manager-linear-gradient-2)'
+            : 'currentColor'};
+        `}
+        d="M2.84,9a3.6,3.6,0,0,1,.9-2.38H.32a9,9,0,0,0,0,4.76H3.73A3.64,3.64,0,0,1,2.84,9Z"
+      />
+      <path
+        className={css`
+          fill: ${active
+            ? 'url(#cloud-manager-linear-gradient-3)'
+            : 'currentColor'};
+        `}
+        d="M10.1,15a3.63,3.63,0,0,1-1.55,3H9a9,9,0,0,0,8.23-5.36h-8A3.58,3.58,0,0,1,10.1,15Z"
+      />
+      <path
+        className={css`
+          fill: ${active ? '#007dab' : 'currentColor'};
+        `}
+        d="M9,0A9,9,0,0,0,.77,5.36H17.23A9,9,0,0,0,9,0Z"
+      />
+      <path
+        className={css`
+          fill: ${active
+            ? 'url(#cloud-manager-linear-gradient-4)'
+            : 'currentColor'};
+        `}
+        d="M4.1,9a2.39,2.39,0,0,0,2.38,2.38h11.2a9,9,0,0,0,0-4.76H6.48A2.39,2.39,0,0,0,4.1,9Z"
+      />
+    </svg>
+  );
+}
+
 export function AtlasIcon({ active, ...rest }: ProductIconProps) {
   return (
     <svg

@@ -29,6 +29,7 @@ import {
   ChartsIcon,
   ProjectStatusBadge,
 } from '../helpers';
+import { CloudManagerIcon } from '../helpers/Icons';
 
 const {
   ProjectNavProjectDropdown,
@@ -404,7 +405,13 @@ export default function ProjectNav({
               isCloudManager ? 'cloud-manager' : 'atlas'
             }`}
           >
-            {!isMobile && (
+            {!isMobile && isCloudManager ? (
+              <CloudManagerIcon
+                active={activeProduct === Product.Cloud && isLoading}
+                {...productIconProp.prop}
+                className={iconStyle}
+              />
+            ) : (
               <AtlasIcon
                 active={activeProduct === Product.Cloud && isLoading}
                 {...productIconProp.prop}
