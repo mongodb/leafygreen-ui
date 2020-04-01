@@ -41,6 +41,7 @@
 | `className`                | `string`                                                                        | Applies a className to the root element                                                                                                                                                                                                          |
 | `loadData`                 | `boolean`                                                                       | Determines whether or not the component will fetch data from cloud                                                                                                                                                                               | `true`                                                  |
 | `onElementClick`           | `(type: 'logout', 'cloud', 'realm', 'charts', event: React.MouseEvent => void)` | Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second. This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally | `() => {}`                                              |
+| `dataFixtures`             | `DataInterface`                                                                 | Allows consumers to control fixture data when in dev mode                                                                                                                                                                                        |                                                         |
 
 _Any other properties will be spread on the root element_
 
@@ -81,62 +82,63 @@ _Any other properties will be spread on the root element_
 `UserMenuOnPremOther`
 `UserMenuOnPremPersonalization`
 `UserMenuOnPremProfile`
+`UserMenuOnPremPublicApiAccess`
 `UserMenuOnPremTwoFactorAuth`
 
 ### URLInterface
 
-```js
+```typescript
 export interface URLSInterface {
   userMenu?: {
     cloud?: {
-      userPreferences: string,
-      organizations: string,
-      invitations: string,
-      mfa: string,
-    },
+      userPreferences: string;
+      organizations: string;
+      invitations: string;
+      mfa: string;
+    };
     university?: {
-      universityPreferences: string,
-    },
+      universityPreferences: string;
+    };
     support?: {
-      userPreferences: string,
-    },
+      userPreferences: string;
+    };
     account?: {
-      homepage?: string,
-    },
-    logout: string,
+      homepage?: string;
+    };
   };
   mongoSelect?: {
-    viewAllProjects?: string,
-    viewAllOrganizations?: string,
-    newProject?: string,
-    orgSettings?: string,
+    viewAllProjects?: string;
+    viewAllOrganizations?: string;
+    newProject?: string;
+    orgSettings?: string;
   };
   orgNav?: {
-    settings?: string,
-    accessManager?: string,
-    support?: string,
-    billing?: string,
-    allClusters?: string,
-    admin?: string,
+    settings?: string;
+    accessManager?: string;
+    support?: string;
+    billing?: string;
+    allClusters?: string;
+    admin?: string;
   };
   projectNav?: {
-    settings?: string,
-    accessManager?: string,
-    support?: string,
-    integrations?: string,
-    alerts?: string,
-    activityFeed?: string,
-    invite?: string,
-    realm?: string,
-    charts?: string,
+    settings?: string;
+    accessManager?: string;
+    support?: string;
+    integrations?: string;
+    alerts?: string;
+    activityFeed?: string;
+    invite?: string;
+    realm?: string;
+    charts?: string;
   };
   onPrem?: {
-    profile?: string,
-    mfa?: string,
-    personalization?: string,
-    invitations?: string,
-    organizations?: string,
-    featureRequest?: string,
+    profile?: string;
+    mfa?: string;
+    personalization?: string;
+    invitations?: string;
+    organizations?: string;
+    publicApiAccess?: string;
+    featureRequest?: string;
   };
 }
 ```
