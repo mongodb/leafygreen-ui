@@ -1,5 +1,19 @@
 # @leafygreen-ui/mongo-nav
 
+## 0.21.0
+
+### Minor Changes
+
+- da540d3: Adds dataFixtures prop to MongoNav, which allows consumer to set data in dev mode
+- eb3895e: Adds active states, className overrides, and simplifies the required URLs interface required for OrgSelect and ProjectSelect. Adds the Public API Access link to the OnPremUsereMenu.
+- 7f30d61: Add support for configuring logout url. Add default logout behavior.
+
+### Patch Changes
+
+- 0c9e69c: Resizes all icons to fill their viewboxes
+- Updated dependencies [da540d3]
+  - @leafygreen-ui/lib@4.4.0
+
 ## 0.20.0
 
 ### Minor Changes
