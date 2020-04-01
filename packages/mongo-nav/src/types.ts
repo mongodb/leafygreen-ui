@@ -227,6 +227,7 @@ export interface URLSInterface {
     account?: {
       homepage?: string;
     };
+    logout?: string;
   };
   mongoSelect?: {
     viewAllProjects?: string;
