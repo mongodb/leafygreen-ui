@@ -47,8 +47,7 @@ export type HTMLElementProps<
  */
 export type Either<T, Keys extends keyof T = keyof T> = Omit<T, Keys> &
   {
-    [K in Keys]-?: Required<Pick<T, K>> &
-      Partial<Record<Exclude<Keys, K>, undefined>>;
+    [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
   }[Keys];
 
 /** Helper type to check if element is a specific React Component  */
