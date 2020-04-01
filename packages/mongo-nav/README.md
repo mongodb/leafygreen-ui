@@ -49,40 +49,40 @@ _Any other properties will be spread on the root element_
 
 #### Org Nav Elements
 
-`OrgNavAccessManager`  
-`OrgNavAdmin`  
-`OrgNavAllClusters`  
-`OrgNavBilling`  
-`OrgNavDropdownOrgAccessManager`  
-`OrgNavDropdownProjectAccessManager`  
-`OrgNavOrgSettings`  
+`OrgNavAccessManager`
+`OrgNavAdmin`
+`OrgNavAllClusters`
+`OrgNavBilling`
+`OrgNavDropdownOrgAccessManager`
+`OrgNavDropdownProjectAccessManager`
+`OrgNavOrgSettings`
 `OrgNavSupport`
 
 #### Project Nav Elements
 
-`ProjectNavActivityFeed`  
-`ProjectNavAlerts`  
-`ProjectNavInvite`  
-`ProjectNavProjectIntegrations`  
-`ProjectNavProjectSettings`  
+`ProjectNavActivityFeed`
+`ProjectNavAlerts`
+`ProjectNavInvite`
+`ProjectNavProjectIntegrations`
+`ProjectNavProjectSettings`
 `ProjectNavProjectSupport`
 
 #### Cloud User Menu Elements
 
-`UserMenuCloudInvitations`  
-`UserMenuCloudMFA`  
-`UserMenuCloudOrganizations`  
-`UserMenuCloudOther`  
+`UserMenuCloudInvitations`
+`UserMenuCloudMFA`
+`UserMenuCloudOrganizations`
+`UserMenuCloudOther`
 `UserMenuCloudUserPreferences`
 
 #### On Prem User Menu Elements
 
-`UserMenuOnPremInvitations`  
-`UserMenuOnPremOrganizations`  
-`UserMenuOnPremOther`  
-`UserMenuOnPremPersonalization`  
-`UserMenuOnPremProfile`  
-`UserMenuOnPremPublicApiAccess`  
+`UserMenuOnPremInvitations`
+`UserMenuOnPremOrganizations`
+`UserMenuOnPremOther`
+`UserMenuOnPremPersonalization`
+`UserMenuOnPremProfile`
+`UserMenuOnPremPublicApiAccess`
 `UserMenuOnPremTwoFactorAuth`
 
 ### URLInterface
@@ -105,6 +105,7 @@ export interface URLSInterface {
     account?: {
       homepage?: string;
     };
+    logout?: string;
   };
   mongoSelect?: {
     viewAllProjects?: string;

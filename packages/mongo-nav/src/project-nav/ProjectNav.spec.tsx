@@ -4,7 +4,7 @@ import { render, cleanup, act } from '@testing-library/react';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import {
   dataFixtures,
-  urlDefaults,
+  urlFixtures,
   hostDefaults,
   constructProjectURL,
 } from '../data';
@@ -34,7 +34,7 @@ export type Products = typeof Products[keyof typeof Products];
 const { currentProject, projects } = dataFixtures;
 const {
   projectNav: { alerts, activityFeed, invite },
-} = urlDefaults;
+} = urlFixtures;
 
 // this avoids having to explicitly type orgNav with nullable fields
 // and then extend it to allow string indexes
@@ -103,7 +103,7 @@ describe('packages/mongo-nav/src/project-nav', () => {
           <ProjectNav
             data={projects}
             constructProjectURL={constructProjectURL}
-            urls={urlDefaults}
+            urls={urlFixtures}
             activeProduct="cloud"
             hosts={hostDefaults}
             onProjectChange={onProjectChange}

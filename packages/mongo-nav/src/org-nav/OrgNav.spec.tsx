@@ -4,7 +4,7 @@ import { render, cleanup, fireEvent } from '@testing-library/react';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import {
   dataFixtures,
-  urlDefaults,
+  urlFixtures,
   hostDefaults,
   constructOrganizationURL,
 } from '../data';
@@ -25,7 +25,7 @@ interface LinkNameToUrls {
 const { account, currentOrganization, organizations } = dataFixtures;
 const {
   orgNav: { accessManager, support, billing, allClusters, admin },
-} = urlDefaults;
+} = urlFixtures;
 
 // this avoids having to explicitly type orgNav with nullable fields
 // and then extend it to allow string indexes
@@ -92,7 +92,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
           data={organizations}
           constructOrganizationURL={constructOrganizationURL}
           onOrganizationChange={onOrganizationChange}
-          urls={urlDefaults}
+          urls={urlFixtures}
           admin={false}
           hosts={hostDefaults}
           showProjectNav={true}

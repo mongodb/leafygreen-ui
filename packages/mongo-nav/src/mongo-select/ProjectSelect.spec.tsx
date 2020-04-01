@@ -8,7 +8,7 @@ import {
   Queries,
 } from 'packages/lib/src/testHelpers';
 import ProjectSelect from './ProjectSelect';
-import { dataFixtures, urlDefaults, constructProjectURL } from '../data';
+import { dataFixtures, urlFixtures, constructProjectURL } from '../data';
 import { CurrentProjectInterface } from '../types';
 
 // types
@@ -22,7 +22,7 @@ interface ExpectedElements {
 // data
 const { currentProject, projects } = dataFixtures;
 
-const mongoSelectUrls = urlDefaults.mongoSelect;
+const mongoSelectUrls = urlFixtures.mongoSelect;
 
 describe('packages/mongo-select/ProjectSelect', () => {
   const queries: Queries = {};

@@ -232,14 +232,15 @@ function UserMenu({
 
   const onLogout = (e: React.MouseEvent) => {
     if (onLogoutProp) {
-      onLogoutProp(e);
+      return onLogoutProp(e);
     } else {
-      onElementClick(NavElement.Logout)(e);
+      return onElementClick(NavElement.Logout)(e);
     }
   };
 
-  // will make this logic more abstract, but wanted to get a quick fix in so that UserMenu can be consumed outside of MongoNav
-  const defaultURLs = {
+  type UserMenuURLSInterface = Pick<URLSInterface, 'userMenu'>;
+
+  const defaultURLs: UserMenuURLSInterface = {
     userMenu: {
       cloud: {
         userPreferences: `${hosts.cloud}/v2#/preferences/personalization`,
@@ -256,10 +257,12 @@ function UserMenu({
       account: {
         homepage: `${hosts.account}/account/profile/overview`,
       },
+      logout: `${hosts.account}/account/login?signedOut=true`,
     },
   };
 
-  const urls = defaultsDeep(urlsProp, defaultURLs);
+  const urls: URLSInterface = defaultsDeep(urlsProp, defaultURLs);
+  const userMenu = urls.userMenu ?? {};
 
   const [open, setOpen] = useState(false);
 
@@ -283,8 +286,6 @@ function UserMenu({
       setOpen(false);
     },
   };
-
-  const { userMenu } = urls;
 
   const feedbackAnchorProps = {
     href: 'https://feedback.mongodb.com/',
@@ -319,7 +320,7 @@ function UserMenu({
 
           <FocusableMenuItem>
             <Button
-              href={isAccount ? undefined : userMenu?.account?.homepage}
+              href={isAccount ? undefined : userMenu.account?.homepage}
               disabled={isAccount}
               as={isAccount ? 'button' : 'a'}
             >
@@ -344,7 +345,7 @@ function UserMenu({
             })}
           >
             <MenuItem
-              href={userMenu?.cloud?.userPreferences}
+              href={userMenu.cloud?.userPreferences}
               active={
                 activeNav === ActiveNavElement.UserMenuCloudUserPreferences
               }
@@ -354,7 +355,7 @@ function UserMenu({
               User Preferences
             </MenuItem>
             <MenuItem
-              href={userMenu?.cloud?.invitations}
+              href={userMenu.cloud?.invitations}
               active={activeNav === ActiveNavElement.UserMenuCloudInvitations}
               data-testid="user-menuitem-cloud-invitations"
               onClick={onElementClick(NavElement.UserMenuCloudInvitations)}
@@ -367,7 +368,7 @@ function UserMenu({
               </span>
             </MenuItem>
             <MenuItem
-              href={userMenu?.cloud?.organizations}
+              href={userMenu.cloud?.organizations}
               active={activeNav === ActiveNavElement.UserMenuCloudOrganizations}
               data-testid="user-menuitem-cloud-organizations"
               onClick={onElementClick(NavElement.UserMenuCloudOrganizations)}
@@ -375,7 +376,7 @@ function UserMenu({
               Organizations
             </MenuItem>
             <MenuItem
-              href={userMenu?.cloud?.mfa}
+              href={userMenu.cloud?.mfa}
               active={activeNav === ActiveNavElement.UserMenuCloudMFA}
               data-testid="user-menuitem-cloud-mfa"
               onClick={onElementClick(NavElement.UserMenuCloudMFA)}
@@ -411,7 +412,7 @@ function UserMenu({
           }
         >
           <MenuItem
-            href={userMenu?.university?.universityPreferences}
+            href={userMenu.university?.universityPreferences}
             data-testid="user-menuitem-cloud-mfa"
           >
             University Preferences
@@ -432,7 +433,7 @@ function UserMenu({
           })}
         >
           <MenuItem
-            href={userMenu?.support?.userPreferences}
+            href={userMenu.support?.userPreferences}
             data-testid="user-menuitem-support-user-preferences"
           >
             User Preferences
@@ -455,6 +456,7 @@ function UserMenu({
 
         <MenuItem
           onClick={onLogout}
+          href={userMenu.logout}
           size="large"
           data-testid="user-menuitem-logout"
         >
