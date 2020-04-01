@@ -26,7 +26,7 @@ export const dataFixtures = {
     orgId: 'fakeOrgId1',
     planType: 'atlas',
     projectId: 'fakeProjectId1',
-    projectName: 'Test Project',
+    projectName: 'Demo Project 1',
     status: 'ACTIVE',
   },
   organizations: [
@@ -44,7 +44,7 @@ export const dataFixtures = {
   projects: [
     {
       orgId: 'fakeOrgId1',
-      planType: 'cloud',
+      planType: 'atlas',
       projectId: 'fakeProjectId1',
       projectName: 'Demo Project 1',
     },
@@ -57,7 +57,7 @@ export const dataFixtures = {
   ],
 } as DataInterface;
 
-export const urlDefaults: Required<URLSInterface> = {
+export const urlFixtures: Required<URLSInterface> = {
   userMenu: {
     cloud: {
       userPreferences: `https://cloud.mongodb.com/v2#/preferences/personalization`,
@@ -74,6 +74,7 @@ export const urlDefaults: Required<URLSInterface> = {
     account: {
       homepage: `https://account.mongodb.com/account/profile/overview`,
     },
+    logout: `https://cloud.mongodb.com/user/signout`,
   },
   mongoSelect: {
     viewAllProjects: `https://cloud.mongodb.com/v2#/org/${dataFixtures.currentOrganization?.orgId}/projects`,
@@ -103,10 +104,11 @@ export const urlDefaults: Required<URLSInterface> = {
   },
   onPrem: {
     profile: `https://cloud.mongodb.com/v2#/account/profile`,
-    mfa: `https://cloud.mongodb.com/v2#/preferences/2fa`,
+    mfa: `https://cloud.mongodb.com/v2#/account/2fa`,
     personalization: `https://cloud.mongodb.com/v2#/account/personalization`,
-    invitations: `https://cloud.mongodb.com/v2#/preferences/invitations`,
-    organizations: `https://cloud.mongodb.com/v2#/preferences/organizations`,
+    invitations: `https://cloud.mongodb.com/v2#/account/invitations`,
+    organizations: `https://cloud.mongodb.com/v2#/account/organizations`,
+    publicApiAccess: `https://cloud.mongodb.com/v2#/account/publicApi`,
     featureRequest: `https://feedback.mongodb.com`,
   },
 };

@@ -5,13 +5,13 @@ import Badge, { Variant } from '@leafygreen-ui/badge';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import UserMenu from '../user-menu';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { LogoMark } from '@leafygreen-ui/logo';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { OrgNavLink, OnPremUserMenu } from '../helpers';
-import { breakpoints, facepaint } from '../breakpoints';
+import { breakpoints, mq } from '../breakpoints';
 import { OrgSelect } from '../mongo-select';
 import { useOnElementClick } from '../on-element-click-provider';
 import {
@@ -42,25 +42,15 @@ const navContainer = css`
   color: ${uiColors.gray.dark3};
 `;
 
-const orgSelectContainer = css`
-  margin-left: 20px;
-  margin-right: 20px;
-`;
-
-const disabledOrgSelect = css`
-  cursor: default;
-  pointer-events: none;
-`;
-
 const supportContainer = css`
-  ${facepaint({
+  ${mq({
     marginRight: ['16px', '16px', '24px'],
     marginLeft: ['16px', '16px', '24px'],
   })}
 `;
 
 const rightLinkMargin = css`
-  ${facepaint({
+  ${mq({
     marginRight: ['16px', '16px', '24px'],
   })}
 `;
@@ -71,7 +61,7 @@ const versionStyle = css`
   font-size: 10px;
   color: ${uiColors.green.base};
 
-  ${facepaint({
+  ${mq({
     marginRight: ['16px', '16px', '16px'],
   })}
 `;
@@ -107,6 +97,7 @@ const userMenuActiveNavItems = [
   ActiveNavElement.UserMenuOnPremOrganizations,
   ActiveNavElement.UserMenuOnPremPersonalization,
   ActiveNavElement.UserMenuOnPremProfile,
+  ActiveNavElement.UserMenuOnPremPublicApiAccess,
   ActiveNavElement.UserMenuOnPremTwoFactorAuth,
   ActiveNavElement.UserMenuOnPremOther,
 ];
@@ -253,11 +244,10 @@ function OrgNav({
       </Tooltip>
 
       <OrgSelect
-        className={cx(orgSelectContainer, { [disabledOrgSelect]: disabled })}
         data={data}
         current={current}
         constructOrganizationURL={constructOrganizationURL}
-        urls={urls}
+        urls={urls.mongoSelect}
         onChange={onOrganizationChange}
         isActive={activeNav === ActiveNavElement.OrgNavOrgSettings}
         loading={!current}

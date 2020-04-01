@@ -4,7 +4,7 @@ import { render, cleanup, fireEvent } from '@testing-library/react';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import {
   dataFixtures,
-  urlDefaults,
+  urlFixtures,
   hostDefaults,
   constructOrganizationURL,
 } from '../data';
@@ -25,7 +25,7 @@ interface LinkNameToUrls {
 const { account, currentOrganization, organizations } = dataFixtures;
 const {
   orgNav: { accessManager, support, billing, allClusters, admin },
-} = urlDefaults;
+} = urlFixtures;
 
 // this avoids having to explicitly type orgNav with nullable fields
 // and then extend it to allow string indexes
@@ -92,7 +92,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
           data={organizations}
           constructOrganizationURL={constructOrganizationURL}
           onOrganizationChange={onOrganizationChange}
-          urls={urlDefaults}
+          urls={urlFixtures}
           admin={false}
           hosts={hostDefaults}
           showProjectNav={true}
@@ -157,7 +157,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
       if (isVisible) {
         expect(onPremUserMenuMFA).toBeInTheDocument();
         expect((onPremUserMenuMFA as HTMLAnchorElement).href).toBe(
-          'https://cloud.mongodb.com/v2#/preferences/2fa',
+          'https://cloud.mongodb.com/v2#/account/2fa',
         );
       } else {
         expect(onPremUserMenuMFA).toBeNull();
@@ -299,6 +299,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
       ActiveNavElement.UserMenuOnPremOther,
       ActiveNavElement.UserMenuOnPremPersonalization,
       ActiveNavElement.UserMenuOnPremProfile,
+      ActiveNavElement.UserMenuOnPremPublicApiAccess,
       ActiveNavElement.UserMenuOnPremTwoFactorAuth,
     ];
 

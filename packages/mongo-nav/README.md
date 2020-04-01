@@ -49,94 +49,97 @@ _Any other properties will be spread on the root element_
 
 #### Org Nav Elements
 
-`OrgNavAccessManager`  
-`OrgNavAdmin`  
-`OrgNavAllClusters`  
-`OrgNavBilling`  
-`OrgNavDropdownOrgAccessManager`  
+`OrgNavAccessManager`
+`OrgNavAdmin`
+`OrgNavAllClusters`
+`OrgNavBilling`
+`OrgNavDropdownOrgAccessManager`
 `OrgNavDropdownProjectAccessManager`
-`OrgNavOrgSettings`  
+`OrgNavOrgSettings`
 `OrgNavSupport`
 
 #### Project Nav Elements
 
-`ProjectNavActivityFeed`  
-`ProjectNavAlerts`  
-`ProjectNavInvite`  
-`ProjectNavProjectIntegrations`  
-`ProjectNavProjectSettings`  
+`ProjectNavActivityFeed`
+`ProjectNavAlerts`
+`ProjectNavInvite`
+`ProjectNavProjectIntegrations`
+`ProjectNavProjectSettings`
 `ProjectNavProjectSupport`
 
 #### Cloud User Menu Elements
 
-`UserMenuCloudInvitations`  
-`UserMenuCloudMFA`  
-`UserMenuCloudOrganizations`  
+`UserMenuCloudInvitations`
+`UserMenuCloudMFA`
+`UserMenuCloudOrganizations`
 `UserMenuCloudOther`
 `UserMenuCloudUserPreferences`
 
 #### On Prem User Menu Elements
 
-`UserMenuOnPremInvitations`  
-`UserMenuOnPremOrganizations`  
+`UserMenuOnPremInvitations`
+`UserMenuOnPremOrganizations`
 `UserMenuOnPremOther`
-`UserMenuOnPremPersonalization`  
-`UserMenuOnPremProfile`  
+`UserMenuOnPremPersonalization`
+`UserMenuOnPremProfile`
+`UserMenuOnPremPublicApiAccess`
 `UserMenuOnPremTwoFactorAuth`
 
 ### URLInterface
 
-```js
+```typescript
 export interface URLSInterface {
   userMenu?: {
     cloud?: {
-      userPreferences: string,
-      organizations: string,
-      invitations: string,
-      mfa: string,
-    },
+      userPreferences: string;
+      organizations: string;
+      invitations: string;
+      mfa: string;
+    };
     university?: {
-      universityPreferences: string,
-    },
+      universityPreferences: string;
+    };
     support?: {
-      userPreferences: string,
-    },
+      userPreferences: string;
+    };
     account?: {
-      homepage?: string,
-    },
+      homepage?: string;
+    };
+    logout?: string;
   };
   mongoSelect?: {
-    viewAllProjects?: string,
-    viewAllOrganizations?: string,
-    newProject?: string,
-    orgSettings?: string,
+    viewAllProjects?: string;
+    viewAllOrganizations?: string;
+    newProject?: string;
+    orgSettings?: string;
   };
   orgNav?: {
-    settings?: string,
-    accessManager?: string,
-    support?: string,
-    billing?: string,
-    allClusters?: string,
-    admin?: string,
+    settings?: string;
+    accessManager?: string;
+    support?: string;
+    billing?: string;
+    allClusters?: string;
+    admin?: string;
   };
   projectNav?: {
-    settings?: string,
-    accessManager?: string,
-    support?: string,
-    integrations?: string,
-    alerts?: string,
-    activityFeed?: string,
-    invite?: string,
-    realm?: string,
-    charts?: string,
+    settings?: string;
+    accessManager?: string;
+    support?: string;
+    integrations?: string;
+    alerts?: string;
+    activityFeed?: string;
+    invite?: string;
+    realm?: string;
+    charts?: string;
   };
   onPrem?: {
-    profile?: string,
-    mfa?: string,
-    personalization?: string,
-    invitations?: string,
-    organizations?: string,
-    featureRequest?: string,
+    profile?: string;
+    mfa?: string;
+    personalization?: string;
+    invitations?: string;
+    organizations?: string;
+    publicApiAccess?: string;
+    featureRequest?: string;
   };
 }
 ```

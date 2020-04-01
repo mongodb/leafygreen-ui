@@ -6,7 +6,7 @@ import {
   cleanup,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import { urlDefaults, hostDefaults } from '../data';
+import { urlFixtures, hostDefaults } from '../data';
 import UserMenu from '.';
 
 afterAll(cleanup);
@@ -26,7 +26,7 @@ describe('packages/UserMenu', () => {
       activeProduct={'cloud'}
       onLogout={onLogout}
       onProductChange={onProductChange}
-      urls={urlDefaults}
+      urls={urlFixtures}
       hosts={hostDefaults}
     />,
   );
@@ -128,7 +128,7 @@ describe('packages/UserMenu', () => {
       <UserMenu
         account={account}
         activeProduct="account"
-        urls={urlDefaults}
+        urls={urlFixtures}
         hosts={hostDefaults}
       />,
     );
