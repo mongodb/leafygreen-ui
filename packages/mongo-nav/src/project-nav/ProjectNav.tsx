@@ -407,14 +407,14 @@ export default function ProjectNav({
           >
             {!isMobile && isCloudManager ? (
               <CloudManagerIcon
-                active={activeProduct === Product.Cloud && isLoading}
                 {...productIconProp.prop}
+                active={activeProduct === Product.Cloud && isLoading}
                 className={iconStyle}
               />
             ) : (
               <AtlasIcon
-                active={activeProduct === Product.Cloud && isLoading}
                 {...productIconProp.prop}
+                active={activeProduct === Product.Cloud && isLoading}
                 className={iconStyle}
               />
             )}
@@ -435,8 +435,8 @@ export default function ProjectNav({
               >
                 {!isMobile && (
                   <RealmIcon
-                    active={activeProduct === Product.Realm && isLoading}
                     {...productIconProp.prop}
+                    active={activeProduct === Product.Realm && isLoading}
                     className={iconStyle}
                   />
                 )}

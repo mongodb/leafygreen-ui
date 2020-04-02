@@ -18,8 +18,8 @@ import {
 import { useOnElementClick } from '../on-element-click-provider';
 import {
   InteractionRingWrapper,
-  CloudManagerSmall,
-  AtlasSmall,
+  CloudManagerIcon,
+  AtlasIcon,
 } from '../helpers';
 import { mq, breakpoints } from '../breakpoints';
 import {
@@ -238,16 +238,16 @@ function OrgSelect({
           </span>
 
           {!isOnPrem && (
-            <span className={displayFlex}>
+            <div className={displayFlex}>
               {planType === PlanType.Atlas ? (
-                <AtlasSmall />
+                <AtlasIcon variant="small" />
               ) : (
-                <CloudManagerSmall />
+                <CloudManagerIcon variant="small" />
               )}
               <span className={productStyle}>
                 {formattedPlanTypes[planType]}
               </span>
-            </span>
+            </div>
           )}
         </div>
       </MenuItem>

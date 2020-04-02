@@ -1,69 +1,33 @@
 import React from 'react';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 type ProductIconProps = HTMLElementProps<'svg'> & {
-  active: boolean;
+  active?: boolean;
+  variant?: 'small' | 'default';
 };
 
-export function CloudManagerSmall() {
-  return (
-    <svg width="10px" height="10px" viewBox="0 0 10 10">
-      <path
-        fill="#00804b"
-        d="M3.19,9.66h.4A1.32,1.32,0,0,0,3.59,7H.43A5,5,0,0,0,3.19,9.66Z"
-      />
-      <path
-        fill="#03aa4f"
-        d="M1.58,5a2,2,0,0,1,.5-1.32H.18a4.93,4.93,0,0,0,0,2.64H2.07A2,2,0,0,1,1.58,5Z"
-      />
-      <path
-        fill="#00804b"
-        d="M5.61,8.34A2,2,0,0,1,4.75,10H5A5,5,0,0,0,9.57,7H5.12A2,2,0,0,1,5.61,8.34Z"
-      />
-      <path fill="#007dab" d="M5,0A5,5,0,0,0,.43,3H9.57A5,5,0,0,0,5,0Z" />
-      <path
-        fill="#03aa4f"
-        d="M2.28,5A1.32,1.32,0,0,0,3.6,6.32H9.82a4.93,4.93,0,0,0,0-2.64H3.6A1.32,1.32,0,0,0,2.28,5Z"
-      />
-    </svg>
-  );
-}
+export function CloudManagerIcon({
+  variant = 'default',
+  active = false,
+  className,
+  ...rest
+}: ProductIconProps) {
+  const size = variant === 'small' ? 10 : 18;
 
-export function AtlasSmall() {
   return (
-    <svg width="10px" height="10px" viewBox="0 0 10 10">
-      <path
-        fill="#03aa4f"
-        d="M6.67,6.12A5.5,5.5,0,0,1,10,5.2,1.48,1.48,0,0,0,10,5a5,5,0,0,0-.73-2.61,4.63,4.63,0,0,0-2.21.77A4.78,4.78,0,0,0,5.35,5.28V7.41A5.42,5.42,0,0,1,6.67,6.12Z"
-      />
-      <path
-        fill="#80dba5"
-        d="M5.35,3.87A5.08,5.08,0,0,1,6.67,2.58a5.31,5.31,0,0,1,2.12-.85A5,5,0,0,0,5.35,0Z"
-      />
-      <path
-        fill="#03aa4f"
-        d="M3.33,6.12A5.42,5.42,0,0,1,4.65,7.41V5.29A4.75,4.75,0,0,0,2.94,3.15,4.63,4.63,0,0,0,.73,2.38,5,5,0,0,0,0,5,1.48,1.48,0,0,0,0,5.2,5.5,5.5,0,0,1,3.33,6.12Z"
-      />
-      <path
-        fill="#00804b"
-        d="M7.06,6.7A4.78,4.78,0,0,0,5.35,8.83V10A5,5,0,0,0,9.91,5.91,4.73,4.73,0,0,0,7.06,6.7Z"
-      />
-      <path
-        fill="#00804b"
-        d="M4.65,8.83A4.78,4.78,0,0,0,2.94,6.7,4.73,4.73,0,0,0,.09,5.91,5,5,0,0,0,4.65,10Z"
-      />
-      <path
-        fill="#80dba5"
-        d="M3.33,2.58A5.08,5.08,0,0,1,4.65,3.87V0A5,5,0,0,0,1.21,1.73,5.31,5.31,0,0,1,3.33,2.58Z"
-      />
-    </svg>
-  );
-}
-
-export function CloudManagerIcon({ active, ...rest }: ProductIconProps) {
-  return (
-    <svg {...rest} width="18px" height="18px" viewBox="0 0 18 18">
+    <svg
+      {...rest}
+      width={`${size}px`}
+      height={`${size}px`}
+      viewBox={`0 0 18 18`}
+      className={cx(
+        css`
+          flex-shrink: 0;
+        `,
+        className,
+      )}
+    >
       <defs>
         <linearGradient
           id="cloud-manager-linear-gradient"
@@ -106,7 +70,9 @@ export function CloudManagerIcon({ active, ...rest }: ProductIconProps) {
       </defs>
       <path
         className={css`
-          fill: ${active
+          fill: ${variant === 'small'
+            ? '#00804b'
+            : active
             ? 'url(#cloud-manager-linear-gradient)'
             : 'currentColor'};
         `}
@@ -114,7 +80,9 @@ export function CloudManagerIcon({ active, ...rest }: ProductIconProps) {
       />
       <path
         className={css`
-          fill: ${active
+          fill: ${variant === 'small'
+            ? '#03aa4f'
+            : active
             ? 'url(#cloud-manager-linear-gradient-2)'
             : 'currentColor'};
         `}
@@ -122,7 +90,9 @@ export function CloudManagerIcon({ active, ...rest }: ProductIconProps) {
       />
       <path
         className={css`
-          fill: ${active
+          fill: ${variant === 'small'
+            ? '#00804b'
+            : active
             ? 'url(#cloud-manager-linear-gradient-3)'
             : 'currentColor'};
         `}
@@ -130,13 +100,19 @@ export function CloudManagerIcon({ active, ...rest }: ProductIconProps) {
       />
       <path
         className={css`
-          fill: ${active ? '#007dab' : 'currentColor'};
+          fill: ${variant === 'small'
+            ? '#007dab'
+            : active
+            ? '#007dab'
+            : 'currentColor'};
         `}
         d="M9,0A9,9,0,0,0,.77,5.36H17.23A9,9,0,0,0,9,0Z"
       />
       <path
         className={css`
-          fill: ${active
+          fill: ${variant === 'small'
+            ? '#03aa4f'
+            : active
             ? 'url(#cloud-manager-linear-gradient-4)'
             : 'currentColor'};
         `}
@@ -146,15 +122,28 @@ export function CloudManagerIcon({ active, ...rest }: ProductIconProps) {
   );
 }
 
-export function AtlasIcon({ active, ...rest }: ProductIconProps) {
+export function AtlasIcon({
+  variant = 'default',
+  active,
+  className,
+  ...rest
+}: ProductIconProps) {
+  const size = variant === 'small' ? 10 : 18;
+
   return (
     <svg
       {...rest}
       x="0px"
       y="0px"
       viewBox="0 0 18 18"
-      width="18px"
-      height="18px"
+      width={`${size}px`}
+      height={`${size}px`}
+      className={cx(
+        css`
+          flex-shrink: 0;
+        `,
+        className,
+      )}
     >
       <linearGradient
         id="atlas-path-0001"
@@ -173,7 +162,11 @@ export function AtlasIcon({ active, ...rest }: ProductIconProps) {
       </linearGradient>
       <path
         className={css`
-          fill: ${active ? 'url(#atlas-path-0001)' : 'currentColor'};
+          fill: ${variant === 'small'
+            ? '#03aa4f'
+            : active
+            ? 'url(#atlas-path-0001)'
+            : 'currentColor'};
         `}
         d="M12,11c2-1.4,4.2-1.7,6-1.7c0-0.1,0-0.3,0-0.4c0-1.7-0.5-3.3-1.3-4.7c-1.3,0.1-2.6,0.5-4,1.4
 		C11,6.8,10.1,8.4,9.6,9.5v3.8C10.2,12.6,11,11.7,12,11z"
@@ -195,7 +188,11 @@ export function AtlasIcon({ active, ...rest }: ProductIconProps) {
       </linearGradient>
       <path
         className={css`
-          fill: ${active ? 'url(#atlas-path-0002)' : 'currentColor'};
+          fill: ${variant === 'small'
+            ? '#03aa4f'
+            : active
+            ? 'url(#atlas-path-0002)'
+            : 'currentColor'};
         `}
         d="M6,11c1,0.7,1.8,1.5,2.4,2.3V9.5C7.9,8.4,7,6.8,5.3,5.7C4,4.8,2.6,4.4,1.3,4.3
 		C0.5,5.6,0,7.2,0,8.9c0,0.1,0,0.3,0,0.4C1.8,9.3,4,9.6,6,11z"
@@ -217,7 +214,11 @@ export function AtlasIcon({ active, ...rest }: ProductIconProps) {
       </linearGradient>
       <path
         className={css`
-          fill: ${active ? 'url(#atlas-path-0003)' : 'currentColor'};
+          fill: ${variant === 'small'
+            ? '#00804b'
+            : active
+            ? 'url(#atlas-path-0003)'
+            : 'currentColor'};
         `}
         d="M12.7,12.1c-1.7,1.1-2.6,2.7-3.1,3.8V18c4.1-0.3,7.5-3.4,8.2-7.3C16.3,10.6,14.4,10.9,12.7,12.1z
 		"
@@ -239,19 +240,31 @@ export function AtlasIcon({ active, ...rest }: ProductIconProps) {
       </linearGradient>
       <path
         className={css`
-          fill: ${active ? 'url(#atlas-path-4)' : 'currentColor'};
+          fill: ${variant === 'small'
+            ? '#00804b'
+            : active
+            ? 'url(#atlas-path-4)'
+            : 'currentColor'};
         `}
         d="M8.4,15.9c-0.5-1.1-1.4-2.7-3.1-3.8c-1.7-1.2-3.6-1.5-5.1-1.4c0.8,4,4.1,7,8.2,7.3V15.9z"
       />
       <path
         className={css`
-          fill: ${active ? '#00804b' : 'currentColor'};
+          fill: ${variant === 'small'
+            ? '#80dba5'
+            : active
+            ? '#00804b'
+            : 'currentColor'};
         `}
         d="M6,4.7C7,5.4,7.8,6.2,8.4,7V0C5.9,0.2,3.7,1.3,2.2,3.2C3.4,3.3,4.8,3.8,6,4.7z"
       />
       <path
         className={css`
-          fill: ${active ? '#00804b' : 'currentColor'};
+          fill: ${variant === 'small'
+            ? '#80dba5'
+            : active
+            ? '#00804b'
+            : 'currentColor'};
         `}
         d="M15.8,3.2c-1.5-1.8-3.7-3-6.2-3.1v7C10.2,6.2,11,5.4,12,4.7C13.2,3.8,14.6,3.3,15.8,3.2z"
       />
