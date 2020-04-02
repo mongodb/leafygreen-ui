@@ -296,7 +296,7 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
     <Root
       {...rest}
       ref={ref}
-      href={href ?? undefined}
+      href={href}
       tabIndex={disabled ? -1 : 0}
       aria-disabled={disabled}
       aria-label={ariaLabel}

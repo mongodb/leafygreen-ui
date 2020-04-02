@@ -43,7 +43,9 @@ describe('packages/icon-button', () => {
   });
 
   test("the rendered icon doesn't include a title tag", () => {
-    expect(renderedIcon.getElementsByTagName('title')[0]).toBeUndefined();
+    expect(
+      renderedIcon.getElementsByTagName('title').length === 0,
+    ).toBeTruthy();
   });
 
   const titleText = 'My title';
