@@ -16,14 +16,12 @@ export const iconLoadingStyle = css`
 `;
 
 export const anchorOverrides = css`
-  a {
-    &:focus,
-    &:hover,
-    &:visited,
-    &:active,
-    &:link {
-      text-decoration: none;
-      cursor: auto;
-    }
+  a:focus,
+  a:hover,
+  a:visited,
+  a:active,
+  a:link {
+    text-decoration: none;
+    cursor: auto;
   }
 `;
