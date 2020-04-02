@@ -139,10 +139,6 @@ const activeIconStyle = css`
   color: ${uiColors.green.base};
 `;
 
-const disabledTextStyle = css`
-  color: ${uiColors.gray.light1};
-`;
-
 // types
 interface OrganizationMongoSelectProps extends BaseMongoSelectProps {
   data?: Array<OrganizationInterface>;
