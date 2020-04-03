@@ -148,11 +148,6 @@ describe('packages/mongo-select/OrgSelect', () => {
     describe('when rendered in a disabled state', () => {
       beforeEach(() => renderComponent({ disabled: true }));
 
-      it('displays the menu trigger as disabled', () => {
-        const { orgTrigger } = expectedElements;
-        expect((orgTrigger as HTMLButtonElement)?.disabled).toBeTruthy();
-      });
-
       it('displays the current org as "All Organizations"', () => {
         const { orgTrigger } = expectedElements;
         expect(orgTrigger?.textContent).toContain('All Organizations');
