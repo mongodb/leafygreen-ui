@@ -201,7 +201,7 @@ const iconButtonMargin = css`
 
 const iconButtonStyles = css`
   color: ${uiColors.green.base};
-  background-color: white;
+  background-color: transparent;
 `;
 
 const alertBadgeStyle = css`
