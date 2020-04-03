@@ -6,12 +6,10 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { textLoadingStyle, anchorOverrides } from '../styles';
 
 const orgNavAnchorOverrides = css`
-  a {
-    &:visited,
-    &:active,
-    &:link {
-      color: ${uiColors.gray.dark3};
-    }
+  a:visited,
+  a:active,
+  a:link {
+    color: ${uiColors.gray.dark3};
   }
 `;
 
