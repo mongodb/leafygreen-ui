@@ -27,6 +27,7 @@ import {
   AtlasIcon,
   RealmIcon,
   ChartsIcon,
+  CloudManagerIcon,
   ProjectStatusBadge,
 } from '../helpers';
 
@@ -431,14 +432,24 @@ export default function ProjectNav({
               isCloudManager ? 'cloud-manager' : 'atlas'
             }`}
           >
-            {!isMobile && (
-              <AtlasIcon
+            {!isMobile && isCloudManager ? (
+              <CloudManagerIcon
+                {...productIconProp.prop}
                 active={
                   activeProduct === Product.Cloud &&
                   isLoading &&
                   !hideActiveProductTab
                 }
+                className={iconStyle}
+              />
+            ) : (
+              <AtlasIcon
                 {...productIconProp.prop}
+                active={
+                  activeProduct === Product.Cloud &&
+                  isLoading &&
+                  !hideActiveProductTab
+                }
                 className={iconStyle}
               />
             )}
@@ -459,12 +470,8 @@ export default function ProjectNav({
               >
                 {!isMobile && (
                   <RealmIcon
-                    active={
-                      activeProduct === Product.Realm &&
-                      isLoading &&
-                      !hideActiveProductTab
-                    }
                     {...productIconProp.prop}
+                    active={activeProduct === Product.Realm && isLoading}
                     className={iconStyle}
                   />
                 )}
@@ -485,11 +492,7 @@ export default function ProjectNav({
                   <ChartsIcon
                     {...productIconProp.prop}
                     className={iconStyle}
-                    active={
-                      activeProduct === Product.Charts &&
-                      isLoading &&
-                      !hideActiveProductTab
-                    }
+                    active={activeProduct === Product.Charts && isLoading}
                   />
                 )}
                 Charts

@@ -16,7 +16,11 @@ import {
 
 // mongo-nav
 import { useOnElementClick } from '../on-element-click-provider';
-import { InteractionRingWrapper } from '../helpers';
+import {
+  InteractionRingWrapper,
+  CloudManagerIcon,
+  AtlasIcon,
+} from '../helpers';
 import { mq, breakpoints } from '../breakpoints';
 import {
   CurrentOrganizationInterface,
@@ -110,12 +114,18 @@ const productStyle = css`
   color: ${uiColors.gray.dark2};
   font-weight: bolder;
   white-space: nowrap;
+  margin-left: 4px;
 `;
 
 const emptyStateStyle = css`
   font-size: 14px;
   padding: 4px 8px;
   margin-bottom: 20px;
+`;
+
+const displayFlex = css`
+  display: flex;
+  align-items: center;
 `;
 
 const linkStyle = css`
@@ -224,7 +234,16 @@ function OrgSelect({
           </span>
 
           {!isOnPrem && (
-            <span className={productStyle}>{formattedPlanTypes[planType]}</span>
+            <div className={displayFlex}>
+              {planType === PlanType.Atlas ? (
+                <AtlasIcon size={10} />
+              ) : (
+                <CloudManagerIcon size={10} />
+              )}
+              <span className={productStyle}>
+                {formattedPlanTypes[planType]}
+              </span>
+            </div>
           )}
         </div>
       </MenuItem>

@@ -1,20 +1,141 @@
 import React from 'react';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 type ProductIconProps = HTMLElementProps<'svg'> & {
-  active: boolean;
+  active?: boolean;
+  size?: number;
 };
 
-export function AtlasIcon({ active, ...rest }: ProductIconProps) {
+export function CloudManagerIcon({
+  size = 18,
+  active = false,
+  className,
+  ...rest
+}: ProductIconProps) {
+  return (
+    <svg
+      {...rest}
+      width={`${size}px`}
+      height={`${size}px`}
+      viewBox={`0 0 18 18`}
+      className={cx(
+        css`
+          flex-shrink: 0;
+        `,
+        className,
+      )}
+    >
+      <defs>
+        <linearGradient
+          id="cloud-manager-linear-gradient"
+          x1="0.96"
+          y1="15.06"
+          x2="15.02"
+          y2="14.8"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0" stopColor="#0d6149" />
+          <stop offset="0.37" stopColor="#04a74f" />
+          <stop offset="0.65" stopColor="#00cd57" />
+          <stop offset="0.92" stopColor="#5fd590" />
+          <stop offset="1" stopColor="#7ed8a2" />
+        </linearGradient>
+        <linearGradient
+          id="cloud-manager-linear-gradient-2"
+          x1="-2.54"
+          y1="9"
+          x2="13.27"
+          y2="9"
+          xlinkHref="#cloud-manager-linear-gradient"
+        />
+        <linearGradient
+          id="cloud-manager-linear-gradient-3"
+          x1="21.41"
+          y1="15.32"
+          x2="1.11"
+          y2="15.32"
+          xlinkHref="#cloud-manager-linear-gradient"
+        />
+        <linearGradient
+          id="cloud-manager-linear-gradient-4"
+          x1="19.24"
+          y1="9"
+          x2="-3.78"
+          y2="9"
+          xlinkHref="#cloud-manager-linear-gradient"
+        />
+      </defs>
+      <path
+        className={css`
+          fill: ${size <= 10
+            ? '#00804b'
+            : active
+            ? 'url(#cloud-manager-linear-gradient)'
+            : 'currentColor'};
+        `}
+        d="M5.74,17.39h.73a2.38,2.38,0,0,0,0-4.75H.77A9,9,0,0,0,5.74,17.39Z"
+      />
+      <path
+        className={css`
+          fill: ${size <= 10
+            ? '#03aa4f'
+            : active
+            ? 'url(#cloud-manager-linear-gradient-2)'
+            : 'currentColor'};
+        `}
+        d="M2.84,9a3.6,3.6,0,0,1,.9-2.38H.32a9,9,0,0,0,0,4.76H3.73A3.64,3.64,0,0,1,2.84,9Z"
+      />
+      <path
+        className={css`
+          fill: ${size <= 10
+            ? '#00804b'
+            : active
+            ? 'url(#cloud-manager-linear-gradient-3)'
+            : 'currentColor'};
+        `}
+        d="M10.1,15a3.63,3.63,0,0,1-1.55,3H9a9,9,0,0,0,8.23-5.36h-8A3.58,3.58,0,0,1,10.1,15Z"
+      />
+      <path
+        className={css`
+          fill: ${size <= 10 ? '#007dab' : active ? '#007dab' : 'currentColor'};
+        `}
+        d="M9,0A9,9,0,0,0,.77,5.36H17.23A9,9,0,0,0,9,0Z"
+      />
+      <path
+        className={css`
+          fill: ${size <= 10
+            ? '#03aa4f'
+            : active
+            ? 'url(#cloud-manager-linear-gradient-4)'
+            : 'currentColor'};
+        `}
+        d="M4.1,9a2.39,2.39,0,0,0,2.38,2.38h11.2a9,9,0,0,0,0-4.76H6.48A2.39,2.39,0,0,0,4.1,9Z"
+      />
+    </svg>
+  );
+}
+
+export function AtlasIcon({
+  size = 18,
+  active,
+  className,
+  ...rest
+}: ProductIconProps) {
   return (
     <svg
       {...rest}
       x="0px"
       y="0px"
       viewBox="0 0 18 18"
-      width="18px"
-      height="18px"
+      width={`${size}px`}
+      height={`${size}px`}
+      className={cx(
+        css`
+          flex-shrink: 0;
+        `,
+        className,
+      )}
     >
       <linearGradient
         id="atlas-path-0001"
@@ -33,7 +154,11 @@ export function AtlasIcon({ active, ...rest }: ProductIconProps) {
       </linearGradient>
       <path
         className={css`
-          fill: ${active ? 'url(#atlas-path-0001)' : 'currentColor'};
+          fill: ${size <= 10
+            ? '#03aa4f'
+            : active
+            ? 'url(#atlas-path-0001)'
+            : 'currentColor'};
         `}
         d="M12,11c2-1.4,4.2-1.7,6-1.7c0-0.1,0-0.3,0-0.4c0-1.7-0.5-3.3-1.3-4.7c-1.3,0.1-2.6,0.5-4,1.4
 		C11,6.8,10.1,8.4,9.6,9.5v3.8C10.2,12.6,11,11.7,12,11z"
@@ -55,7 +180,11 @@ export function AtlasIcon({ active, ...rest }: ProductIconProps) {
       </linearGradient>
       <path
         className={css`
-          fill: ${active ? 'url(#atlas-path-0002)' : 'currentColor'};
+          fill: ${size <= 10
+            ? '#03aa4f'
+            : active
+            ? 'url(#atlas-path-0002)'
+            : 'currentColor'};
         `}
         d="M6,11c1,0.7,1.8,1.5,2.4,2.3V9.5C7.9,8.4,7,6.8,5.3,5.7C4,4.8,2.6,4.4,1.3,4.3
 		C0.5,5.6,0,7.2,0,8.9c0,0.1,0,0.3,0,0.4C1.8,9.3,4,9.6,6,11z"
@@ -77,7 +206,11 @@ export function AtlasIcon({ active, ...rest }: ProductIconProps) {
       </linearGradient>
       <path
         className={css`
-          fill: ${active ? 'url(#atlas-path-0003)' : 'currentColor'};
+          fill: ${size <= 10
+            ? '#00804b'
+            : active
+            ? 'url(#atlas-path-0003)'
+            : 'currentColor'};
         `}
         d="M12.7,12.1c-1.7,1.1-2.6,2.7-3.1,3.8V18c4.1-0.3,7.5-3.4,8.2-7.3C16.3,10.6,14.4,10.9,12.7,12.1z
 		"
@@ -99,19 +232,23 @@ export function AtlasIcon({ active, ...rest }: ProductIconProps) {
       </linearGradient>
       <path
         className={css`
-          fill: ${active ? 'url(#atlas-path-4)' : 'currentColor'};
+          fill: ${size <= 10
+            ? '#00804b'
+            : active
+            ? 'url(#atlas-path-4)'
+            : 'currentColor'};
         `}
         d="M8.4,15.9c-0.5-1.1-1.4-2.7-3.1-3.8c-1.7-1.2-3.6-1.5-5.1-1.4c0.8,4,4.1,7,8.2,7.3V15.9z"
       />
       <path
         className={css`
-          fill: ${active ? '#00804b' : 'currentColor'};
+          fill: ${size <= 10 ? '#80dba5' : active ? '#00804b' : 'currentColor'};
         `}
         d="M6,4.7C7,5.4,7.8,6.2,8.4,7V0C5.9,0.2,3.7,1.3,2.2,3.2C3.4,3.3,4.8,3.8,6,4.7z"
       />
       <path
         className={css`
-          fill: ${active ? '#00804b' : 'currentColor'};
+          fill: ${size <= 10 ? '#80dba5' : active ? '#00804b' : 'currentColor'};
         `}
         d="M15.8,3.2c-1.5-1.8-3.7-3-6.2-3.1v7C10.2,6.2,11,5.4,12,4.7C13.2,3.8,14.6,3.3,15.8,3.2z"
       />
