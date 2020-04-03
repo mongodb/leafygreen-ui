@@ -197,6 +197,11 @@ const iconButtonMargin = css`
   })}
 `;
 
+const iconButtonStyles = css`
+  color: ${uiColors.green.base};
+  background-color: transparent;
+`;
+
 const alertBadgeStyle = css`
   position: absolute;
   top: -6px;
@@ -271,6 +276,13 @@ export default function ProjectNav({
   const isMobile = viewportWidth < breakpoints.small;
   const isCloudManager = current?.planType === PlanType.Cloud;
   const isLoading = !!current;
+
+  const isProjectInvite =
+    activeNav === ActiveNavElement.ProjectNavInvite && isLoading;
+  const isActivityFeed =
+    activeNav === ActiveNavElement.ProjectNavActivityFeed && isLoading;
+  const isProjectAlerts =
+    activeNav === ActiveNavElement.ProjectNavAlerts && isLoading;
 
   const currentProjectId = current?.projectId;
 
@@ -469,12 +481,12 @@ export default function ProjectNav({
               <IconButton
                 aria-label="Invite"
                 href={projectNav.invite as string}
-                className={iconButtonMargin}
+                className={cx(iconButtonMargin, {
+                  [iconButtonStyles]: isProjectInvite,
+                })}
                 size="large"
                 disabled={!current}
-                active={
-                  activeNav === ActiveNavElement.ProjectNavInvite && isLoading
-                }
+                active={isProjectInvite}
                 data-testid="project-nav-invite"
                 onClick={onElementClick(ProjectNavInvite)}
               >
@@ -495,12 +507,11 @@ export default function ProjectNav({
                 aria-label="Project Activity Feed"
                 href={projectNav.activityFeed as string}
                 size="large"
-                className={iconButtonMargin}
+                className={cx(iconButtonMargin, {
+                  [iconButtonStyles]: isActivityFeed,
+                })}
                 disabled={!current}
-                active={
-                  activeNav === ActiveNavElement.ProjectNavActivityFeed &&
-                  isLoading
-                }
+                active={isActivityFeed}
                 data-testid="project-nav-activity-feed"
                 onClick={onElementClick(ProjectNavActivityFeed)}
               >
@@ -522,11 +533,10 @@ export default function ProjectNav({
                 href={projectNav.alerts as string}
                 size="large"
                 disabled={!current}
-                active={
-                  activeNav === ActiveNavElement.ProjectNavAlerts && isLoading
-                }
+                active={isProjectAlerts}
                 data-testid="project-nav-alerts"
                 onClick={onElementClick(ProjectNavAlerts)}
+                className={cx({ [iconButtonStyles]: isProjectAlerts })}
               >
                 {alerts > 0 && (
                   <div
