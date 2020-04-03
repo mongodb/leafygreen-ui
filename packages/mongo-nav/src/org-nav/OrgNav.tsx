@@ -100,6 +100,7 @@ const userMenuActiveNavItems = [
   ActiveNavElement.UserMenuOnPremPublicApiAccess,
   ActiveNavElement.UserMenuOnPremTwoFactorAuth,
   ActiveNavElement.UserMenuOnPremOther,
+  ActiveNavElement.OrgNavAllClusters,
 ];
 
 type OrgNavProps = Pick<

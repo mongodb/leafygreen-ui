@@ -48,12 +48,10 @@ export const projectNavHeight = 45;
 const productIconProp = createDataProp('charts-data-prop');
 
 const projectNavAnchorOverrides = css`
-  a {
-    &:visited,
-    &:active,
-    &:link {
-      color: ${uiColors.gray.dark2};
-    }
+  a:visited,
+  a:active,
+  a:link {
+    color: ${uiColors.gray.dark2};
   }
 `;
 
