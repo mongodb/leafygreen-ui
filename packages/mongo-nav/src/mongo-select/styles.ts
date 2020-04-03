@@ -26,6 +26,8 @@ export const ulStyle = css`
 export const nameStyle = css`
   font-size: 14px;
   color: ${uiColors.gray.dark3};
+  word-break: break-word;
+  padding-right: 5px;
 `;
 
 export const baseButtonStyle = css`
