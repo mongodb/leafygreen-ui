@@ -62,7 +62,7 @@ const MyIconComponent = createIconComponent(myGlyphs);
 // Your icon is now ready to use!
 const SomeComponent = () => (
   <div>
-    <Icon glyph="MyCustomGlyph" />
+    <MyIconComponent glyph="MyCustomGlyph" />
   </div>
 );
 ```

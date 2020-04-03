@@ -393,7 +393,7 @@ function Code({
             >
               <IconButton
                 variant={variant}
-                ariaLabel="Copy"
+                aria-label="Copy"
                 className={cx(getCopyButtonStyle(variant, copied), 'copy-btn')}
                 onClick={() => {
                   setCopied(true);
@@ -437,7 +437,7 @@ function Code({
           <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
             <IconButton
               variant={variant}
-              ariaLabel="Copy"
+              aria-label="Copy"
               className={cx(getCopyButtonStyle(variant, copied), 'copy-btn')}
               onClick={() => {
                 setCopied(true);

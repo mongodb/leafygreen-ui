@@ -4,6 +4,7 @@ import fs from 'fs';
 import { toJson } from 'xml2json';
 import { render, cleanup } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
+import { SVGR } from './types';
 import { createIconComponent, glyphs } from '.';
 import createGlyphComponent, { getGlyphTitle } from './createGlyphComponent';
 
