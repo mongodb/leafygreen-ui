@@ -254,6 +254,15 @@ type ProjectNavProps = Pick<
   hosts: Required<NonNullable<MongoNavInterface['hosts']>>;
 };
 
+const ProjectActiveMenuItems = [
+  ActiveNavElement.ProjectNavActivityFeed,
+  ActiveNavElement.ProjectNavAlerts,
+  ActiveNavElement.ProjectNavInvite,
+  ActiveNavElement.ProjectNavProjectIntegrations,
+  ActiveNavElement.ProjectNavProjectSettings,
+  ActiveNavElement.ProjectNavProjectSupport,
+];
+
 export default function ProjectNav({
   admin,
   current,
@@ -283,6 +292,10 @@ export default function ProjectNav({
     activeNav === ActiveNavElement.ProjectNavActivityFeed && isLoading;
   const isProjectAlerts =
     activeNav === ActiveNavElement.ProjectNavAlerts && isLoading;
+
+  const hideActiveProductTab = (ProjectActiveMenuItems as Array<
+    string
+  >).includes(activeNav as string);
 
   const currentProjectId = current?.projectId;
 
@@ -318,7 +331,11 @@ export default function ProjectNav({
 
   const getProductClassName = (product: Product) =>
     cx(anchorOverrides, projectNavAnchorOverrides, productStyle, {
-      [productStates.active]: !!(activeProduct === product && current),
+      [productStates.active]: !!(
+        activeProduct === product &&
+        current &&
+        !hideActiveProductTab
+      ),
       [productStates.focus]: showFocus,
       [productStates.loading]: !current,
       [cloudManagerStyle]: isCloudManager,
@@ -416,7 +433,11 @@ export default function ProjectNav({
           >
             {!isMobile && (
               <AtlasIcon
-                active={activeProduct === Product.Cloud && isLoading}
+                active={
+                  activeProduct === Product.Cloud &&
+                  isLoading &&
+                  !hideActiveProductTab
+                }
                 {...productIconProp.prop}
                 className={iconStyle}
               />
@@ -438,7 +459,11 @@ export default function ProjectNav({
               >
                 {!isMobile && (
                   <RealmIcon
-                    active={activeProduct === Product.Realm && isLoading}
+                    active={
+                      activeProduct === Product.Realm &&
+                      isLoading &&
+                      !hideActiveProductTab
+                    }
                     {...productIconProp.prop}
                     className={iconStyle}
                   />
@@ -460,7 +485,11 @@ export default function ProjectNav({
                   <ChartsIcon
                     {...productIconProp.prop}
                     className={iconStyle}
-                    active={activeProduct === Product.Charts && isLoading}
+                    active={
+                      activeProduct === Product.Charts &&
+                      isLoading &&
+                      !hideActiveProductTab
+                    }
                   />
                 )}
                 Charts
