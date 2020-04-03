@@ -293,7 +293,7 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
       <IconButton
         {...iconButton.prop}
         ref={iconButtonRef}
-        ariaLabel={open ? 'Close Sub-menu' : 'Open Sub-menu'}
+        aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
         className={cx(iconButtonStyle, {
           [openIconButtonStyle]: open,
           [iconButtonFocusedStyle]: showFocus,

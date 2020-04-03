@@ -271,7 +271,7 @@ function OrgNav({
           </OrgNavLink>
 
           <IconButton
-            ariaLabel="Dropdown"
+            aria-label="Dropdown"
             active={accessManagerOpen}
             disabled={!current}
             data-testid="org-nav-dropdown"
