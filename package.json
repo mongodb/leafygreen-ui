@@ -35,7 +35,7 @@
     "prettier:check": "prettier --check \"**/*.{js,ts,tsx,json,md}\"",
     "test": "jest --env jsdom",
     "ts": "tsc --build tsconfig.json",
-    "prepublishOnly": "yarn lint && yarn test && yarn build && yarn ts",
+    "prepublishOnly": "yarn lint && yarn test && yarn build",
     "release": "yarn changeset publish --public",
     "release:site": "gh-pages --dist storybook/public"
   },

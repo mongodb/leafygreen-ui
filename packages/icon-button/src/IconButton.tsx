@@ -156,6 +156,7 @@ const iconStyle = css`
   justify-content: center;
 `;
 
+// Since applications can't yet tree-shake, we're duplicating this interface from the types in the namespaces within the Icon package rather than importing the Icon package.
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   glyph: string;
   size?: Size | number;
@@ -165,6 +166,8 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
 interface SharedIconButtonProps {
   /**
    * Determines color of `IconButton`. Can be `light` or `dark`.
+   *
+   * default: `'light'`
    */
   variant?: Variant;
 
@@ -180,16 +183,22 @@ interface SharedIconButtonProps {
 
   /**
    * Determines whether or not `IconButton` is disabled.
+   *
+   * default: `false`
    */
   disabled?: boolean;
 
   /**
    * Determines size of IconButton can be: default, large, xlarge
+   *
+   * default: `'default'`
    */
   size?: Size;
 
   /**
    * Determines whether `IconButton` will appear `active`
+   *
+   * default: `false`
    */
   active?: boolean;
 }
