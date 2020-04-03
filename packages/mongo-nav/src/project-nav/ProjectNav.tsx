@@ -49,12 +49,10 @@ export const projectNavHeight = 45;
 const productIconProp = createDataProp('charts-data-prop');
 
 const projectNavAnchorOverrides = css`
-  a {
-    &:visited,
-    &:active,
-    &:link {
-      color: ${uiColors.gray.dark2};
-    }
+  a:visited,
+  a:active,
+  a:link {
+    color: ${uiColors.gray.dark2};
   }
 `;
 
@@ -200,6 +198,11 @@ const iconButtonMargin = css`
   })}
 `;
 
+const iconButtonStyles = css`
+  color: ${uiColors.green.base};
+  background-color: transparent;
+`;
+
 const alertBadgeStyle = css`
   position: absolute;
   top: -6px;
@@ -275,6 +278,13 @@ export default function ProjectNav({
   const isCloudManager = current?.planType === PlanType.Cloud;
   const isLoading = !!current;
 
+  const isProjectInvite =
+    activeNav === ActiveNavElement.ProjectNavInvite && isLoading;
+  const isActivityFeed =
+    activeNav === ActiveNavElement.ProjectNavActivityFeed && isLoading;
+  const isProjectAlerts =
+    activeNav === ActiveNavElement.ProjectNavAlerts && isLoading;
+
   const currentProjectId = current?.projectId;
 
   function fetchAlertsCount() {
@@ -340,7 +350,7 @@ export default function ProjectNav({
         usePortal={false}
         trigger={
           <IconButton
-            ariaLabel="More"
+            aria-label="More"
             className={menuIconButtonStyle}
             active={open}
             disabled={!current}
@@ -476,14 +486,14 @@ export default function ProjectNav({
             usePortal={false}
             trigger={
               <IconButton
-                ariaLabel="Invite"
+                aria-label="Invite"
                 href={projectNav.invite as string}
-                className={iconButtonMargin}
+                className={cx(iconButtonMargin, {
+                  [iconButtonStyles]: isProjectInvite,
+                })}
                 size="large"
                 disabled={!current}
-                active={
-                  activeNav === ActiveNavElement.ProjectNavInvite && isLoading
-                }
+                active={isProjectInvite}
                 data-testid="project-nav-invite"
                 onClick={onElementClick(ProjectNavInvite)}
               >
@@ -501,15 +511,14 @@ export default function ProjectNav({
             usePortal={false}
             trigger={
               <IconButton
-                ariaLabel="Project Activity Feed"
+                aria-label="Project Activity Feed"
                 href={projectNav.activityFeed as string}
                 size="large"
-                className={iconButtonMargin}
+                className={cx(iconButtonMargin, {
+                  [iconButtonStyles]: isActivityFeed,
+                })}
                 disabled={!current}
-                active={
-                  activeNav === ActiveNavElement.ProjectNavActivityFeed &&
-                  isLoading
-                }
+                active={isActivityFeed}
                 data-testid="project-nav-activity-feed"
                 onClick={onElementClick(ProjectNavActivityFeed)}
               >
@@ -527,15 +536,14 @@ export default function ProjectNav({
             usePortal={false}
             trigger={
               <IconButton
-                ariaLabel="Alerts"
+                aria-label="Alerts"
                 href={projectNav.alerts as string}
                 size="large"
                 disabled={!current}
-                active={
-                  activeNav === ActiveNavElement.ProjectNavAlerts && isLoading
-                }
+                active={isProjectAlerts}
                 data-testid="project-nav-alerts"
                 onClick={onElementClick(ProjectNavAlerts)}
+                className={cx({ [iconButtonStyles]: isProjectAlerts })}
               >
                 {alerts > 0 && (
                   <div

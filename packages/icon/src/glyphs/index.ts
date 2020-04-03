@@ -1,4 +1,5 @@
 import createGlyphComponent from '../createGlyphComponent';
+import { LGGlyph } from '../types';
 
 // Glyphs
 import ActivityFeed from './ActivityFeed.svg';
@@ -100,13 +101,13 @@ const glyphs = {
 } as const;
 
 type GlyphName = keyof typeof glyphs;
-type ProcessedGlyphs = Record<GlyphName, LGGlyph.Component>;
 
 const glyphKeys = Object.keys(glyphs) as Array<GlyphName>;
 
 const processedGlyphs = glyphKeys.reduce((acc, name) => {
   acc[name] = createGlyphComponent(name, glyphs[name]);
+
   return acc;
-}, {} as ProcessedGlyphs);
+}, {} as Record<GlyphName, LGGlyph.Component>);
 
 export default processedGlyphs;

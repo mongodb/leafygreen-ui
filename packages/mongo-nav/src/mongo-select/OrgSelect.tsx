@@ -149,10 +149,6 @@ const activeIconStyle = css`
   color: ${uiColors.green.base};
 `;
 
-const disabledTextStyle = css`
-  color: ${uiColors.gray.light1};
-`;
-
 // types
 interface OrganizationMongoSelectProps extends BaseMongoSelectProps {
   data?: Array<OrganizationInterface>;
@@ -267,9 +263,9 @@ function OrgSelect({
             NavElement.OrgNavOrgSelectTrigger,
             toggleOpen,
           )}
-          aria-disabled={disabled || loading}
+          aria-disabled={loading}
           data-testid="org-trigger"
-          disabled={disabled || loading}
+          disabled={loading}
           className={cx(baseButtonStyle, orgButtonStyle, {
             [activeButtonStyle]: open,
             [textLoadingStyle]: loading,
@@ -285,7 +281,6 @@ function OrgSelect({
           <span
             data-testid="org-select-active-org"
             className={cx(selectedStyle, {
-              [disabledTextStyle]: disabled,
               [textLoadingStyle]: loading,
             })}
           >

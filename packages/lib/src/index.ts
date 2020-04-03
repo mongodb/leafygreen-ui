@@ -1,6 +1,68 @@
 import * as typeIs from './typeIs';
 import * as testHelpers from './testHelpers';
 
+export { typeIs, testHelpers };
+
+/** Helper type to extract an HTML element's valid props */
+export type HTMLElementProps<
+  Element extends keyof JSX.IntrinsicElements
+> = JSX.IntrinsicElements[Element] extends React.DetailedHTMLProps<
+  infer Props,
+  any
+>
+  ? Props
+  : never;
+
+/**
+ * Helper that constructs a type requiring at least one of the passed keys
+ * to be present in the passed interface.
+ *
+ * Example
+ * ```
+ * interface ExampleInterface {
+ *   alwaysRequired: boolean,
+ *   sometimesRequired: boolean,
+ *   requiredOtherTimes: boolean,
+ * }
+ *
+ * type ExampleEither = Either<ExampleInterface, 'sometimesRequired' | 'requiredOtherTimes'>
+ *
+ * // The above is equivalent to:
+ * interface SharedInExampleInterface {
+ *   alwaysRequired: boolean,
+ * }
+ *
+ * interface FirstIsRequired extends SharedInExampleInterface {
+ *   sometimesRequired: boolean,
+ *   requiredOtherTimes?: boolean,
+ * }
+ *
+ * interface SecondIsRequired extends SharedInExampleInterface {
+ *   sometimesRequired?: boolean,
+ *   requiredOtherTimes: boolean,
+ * }
+ *
+ * type EquivalentToExampleEither = FirstIsRequired | SecondIsRequired
+ * ```
+ */
+export type Either<T, Keys extends keyof T = keyof T> = Omit<T, Keys> &
+  {
+    [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
+  }[Keys];
+
+/** Helper type to check if element is a specific React Component  */
+export function isComponentType<T = React.ReactElement>(
+  element: React.ReactNode,
+  displayName: string,
+): element is T {
+  return (
+    element != null &&
+    typeof element === 'object' &&
+    'type' in element &&
+    (element.type as any).displayName === displayName
+  );
+}
+
 /**
  * Utility for making it easier to couple a React Component to a css selector.
  * Useful when writing css selectors that rely on interactivity, i.e. :hover.
@@ -22,31 +84,6 @@ export function createDataProp(name: string) {
     },
     selector: `[${prefix}="${name}"]`,
   };
-}
-
-/** Helper type to extract an HTML element's valid props */
-export type HTMLElementProps<
-  Element extends keyof JSX.IntrinsicElements
-> = JSX.IntrinsicElements[Element] extends React.DetailedHTMLProps<
-  infer Props,
-  any
->
-  ? Props
-  : never;
-
-export { typeIs, testHelpers };
-
-/** Helper type to check if element is a specific React Component  */
-export function isComponentType<T = React.ReactElement>(
-  element: React.ReactNode,
-  displayName: string,
-): element is T {
-  return (
-    element != null &&
-    typeof element === 'object' &&
-    'type' in element &&
-    (element.type as any).displayName === displayName
-  );
 }
 
 /** Object mapping keyCodes to keys */

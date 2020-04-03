@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { LGGlyph } from './types';
 
 export const Size = {
   Small: 'small',
@@ -10,11 +11,13 @@ export const Size = {
 
 export type Size = typeof Size[keyof typeof Size];
 
-export interface IconProps extends LGGlyph.ComponentProps {
+// We omit size here because we map string values for size to numbers in this component.
+export interface IconProps extends Omit<LGGlyph.ComponentProps, 'size'> {
   glyph: string;
+  size?: Size | number;
 }
 
-const sizeMap = {
+const sizeMap: Record<Size, number> = {
   small: 14,
   default: 16,
   large: 20,
@@ -32,9 +35,7 @@ export default function createIconComponent<
     return (
       <SVGComponent
         {...rest}
-        size={
-          typeof size === 'number' ? size : sizeMap[size] || sizeMap.default
-        }
+        size={typeof size === 'number' ? size : sizeMap[size]}
       />
     );
   };

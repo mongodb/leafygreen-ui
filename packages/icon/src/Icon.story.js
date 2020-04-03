@@ -1,8 +1,8 @@
 import React from 'react';
+import Icon, { glyphs, Size } from '.';
+import { css } from '@leafygreen-ui/emotion';
 import { storiesOf } from '@storybook/react';
 import { color, select } from '@storybook/addon-knobs';
-import { css } from '@leafygreen-ui/emotion';
-import Icon, { glyphs, Size } from '.';
 
 const containerStyle = css`
   width: 150px;
@@ -24,19 +24,16 @@ const textStyle = css`
   margin-top: 0.5rem;
 `;
 
-type GlyphUnion = keyof typeof glyphs;
-const glyphNames = Object.keys(glyphs) as Array<GlyphUnion>;
-
 storiesOf('Icons', module).add('Icon', () => {
   const fill = color('Fill', '#000000');
   const size = select('size', Object.values(Size), Size.Default);
 
-  const renderGlyph = (glyph: GlyphUnion) => (
+  const renderGlyph = glyph => (
     <div key={glyph} className={containerStyle}>
       <Icon glyph={glyph} fill={fill} size={size} />
       <div className={textStyle}>{glyph}</div>
     </div>
   );
 
-  return <>{glyphNames.map(renderGlyph)}</>;
+  return <>{Object.keys(glyphs).map(renderGlyph)}</>;
 });
