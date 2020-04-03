@@ -29,6 +29,7 @@ import {
   ChartsIcon,
   ProjectStatusBadge,
 } from '../helpers';
+import { CloudManagerIcon } from '../helpers/Icons';
 
 const {
   ProjectNavProjectDropdown,
@@ -414,10 +415,16 @@ export default function ProjectNav({
               isCloudManager ? 'cloud-manager' : 'atlas'
             }`}
           >
-            {!isMobile && (
-              <AtlasIcon
-                active={activeProduct === Product.Cloud && isLoading}
+            {!isMobile && isCloudManager ? (
+              <CloudManagerIcon
                 {...productIconProp.prop}
+                active={activeProduct === Product.Cloud && isLoading}
+                className={iconStyle}
+              />
+            ) : (
+              <AtlasIcon
+                {...productIconProp.prop}
+                active={activeProduct === Product.Cloud && isLoading}
                 className={iconStyle}
               />
             )}
@@ -438,8 +445,8 @@ export default function ProjectNav({
               >
                 {!isMobile && (
                   <RealmIcon
-                    active={activeProduct === Product.Realm && isLoading}
                     {...productIconProp.prop}
+                    active={activeProduct === Product.Realm && isLoading}
                     className={iconStyle}
                   />
                 )}
