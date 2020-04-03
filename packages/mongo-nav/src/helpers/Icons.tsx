@@ -4,17 +4,15 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 type ProductIconProps = HTMLElementProps<'svg'> & {
   active?: boolean;
-  variant?: 'small' | 'default';
+  size?: number;
 };
 
 export function CloudManagerIcon({
-  variant = 'default',
+  size = 18,
   active = false,
   className,
   ...rest
 }: ProductIconProps) {
-  const size = variant === 'small' ? 10 : 18;
-
   return (
     <svg
       {...rest}
@@ -70,7 +68,7 @@ export function CloudManagerIcon({
       </defs>
       <path
         className={css`
-          fill: ${variant === 'small'
+          fill: ${size <= 10
             ? '#00804b'
             : active
             ? 'url(#cloud-manager-linear-gradient)'
@@ -80,7 +78,7 @@ export function CloudManagerIcon({
       />
       <path
         className={css`
-          fill: ${variant === 'small'
+          fill: ${size <= 10
             ? '#03aa4f'
             : active
             ? 'url(#cloud-manager-linear-gradient-2)'
@@ -90,7 +88,7 @@ export function CloudManagerIcon({
       />
       <path
         className={css`
-          fill: ${variant === 'small'
+          fill: ${size <= 10
             ? '#00804b'
             : active
             ? 'url(#cloud-manager-linear-gradient-3)'
@@ -100,17 +98,13 @@ export function CloudManagerIcon({
       />
       <path
         className={css`
-          fill: ${variant === 'small'
-            ? '#007dab'
-            : active
-            ? '#007dab'
-            : 'currentColor'};
+          fill: ${size <= 10 ? '#007dab' : active ? '#007dab' : 'currentColor'};
         `}
         d="M9,0A9,9,0,0,0,.77,5.36H17.23A9,9,0,0,0,9,0Z"
       />
       <path
         className={css`
-          fill: ${variant === 'small'
+          fill: ${size <= 10
             ? '#03aa4f'
             : active
             ? 'url(#cloud-manager-linear-gradient-4)'
@@ -123,13 +117,11 @@ export function CloudManagerIcon({
 }
 
 export function AtlasIcon({
-  variant = 'default',
+  size = 18,
   active,
   className,
   ...rest
 }: ProductIconProps) {
-  const size = variant === 'small' ? 10 : 18;
-
   return (
     <svg
       {...rest}
@@ -162,7 +154,7 @@ export function AtlasIcon({
       </linearGradient>
       <path
         className={css`
-          fill: ${variant === 'small'
+          fill: ${size <= 10
             ? '#03aa4f'
             : active
             ? 'url(#atlas-path-0001)'
@@ -188,7 +180,7 @@ export function AtlasIcon({
       </linearGradient>
       <path
         className={css`
-          fill: ${variant === 'small'
+          fill: ${size <= 10
             ? '#03aa4f'
             : active
             ? 'url(#atlas-path-0002)'
@@ -214,7 +206,7 @@ export function AtlasIcon({
       </linearGradient>
       <path
         className={css`
-          fill: ${variant === 'small'
+          fill: ${size <= 10
             ? '#00804b'
             : active
             ? 'url(#atlas-path-0003)'
@@ -240,7 +232,7 @@ export function AtlasIcon({
       </linearGradient>
       <path
         className={css`
-          fill: ${variant === 'small'
+          fill: ${size <= 10
             ? '#00804b'
             : active
             ? 'url(#atlas-path-4)'
@@ -250,21 +242,13 @@ export function AtlasIcon({
       />
       <path
         className={css`
-          fill: ${variant === 'small'
-            ? '#80dba5'
-            : active
-            ? '#00804b'
-            : 'currentColor'};
+          fill: ${size <= 10 ? '#80dba5' : active ? '#00804b' : 'currentColor'};
         `}
         d="M6,4.7C7,5.4,7.8,6.2,8.4,7V0C5.9,0.2,3.7,1.3,2.2,3.2C3.4,3.3,4.8,3.8,6,4.7z"
       />
       <path
         className={css`
-          fill: ${variant === 'small'
-            ? '#80dba5'
-            : active
-            ? '#00804b'
-            : 'currentColor'};
+          fill: ${size <= 10 ? '#80dba5' : active ? '#00804b' : 'currentColor'};
         `}
         d="M15.8,3.2c-1.5-1.8-3.7-3-6.2-3.1v7C10.2,6.2,11,5.4,12,4.7C13.2,3.8,14.6,3.3,15.8,3.2z"
       />

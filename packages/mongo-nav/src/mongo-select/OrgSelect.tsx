@@ -240,9 +240,9 @@ function OrgSelect({
           {!isOnPrem && (
             <div className={displayFlex}>
               {planType === PlanType.Atlas ? (
-                <AtlasIcon variant="small" />
+                <AtlasIcon size={10} />
               ) : (
-                <CloudManagerIcon variant="small" />
+                <CloudManagerIcon size={10} />
               )}
               <span className={productStyle}>
                 {formattedPlanTypes[planType]}
