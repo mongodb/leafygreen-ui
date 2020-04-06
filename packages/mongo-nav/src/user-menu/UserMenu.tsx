@@ -162,7 +162,7 @@ interface UserMenuProps {
    * MongoDB product that is currently active.
    * Possible values: ['account', 'charts', 'cloud', 'realm', 'support', 'university']
    */
-  activeProduct: Product;
+  activeProduct?: Product;
 
   /**
    * Determines what nav item is currently active.
