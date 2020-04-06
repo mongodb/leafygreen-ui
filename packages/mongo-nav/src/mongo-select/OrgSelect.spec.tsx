@@ -220,7 +220,7 @@ describe('packages/mongo-select/OrgSelect', () => {
     });
 
     describe('when the onChange prop is set', () => {
-      function onChange({ value, setData, event }: OnChangeInterface) {
+      function onChange({ setData }: OnChangeInterface) {
         return setData([
           {
             orgId: 'testOrgId',
