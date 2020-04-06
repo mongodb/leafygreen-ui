@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/button': patch
+'@leafygreen-ui/button': minor
 ---
 
 Adds leafygreen-provider to Button component
