@@ -9,6 +9,7 @@ import {
 } from 'packages/lib/src/testHelpers';
 import OrgSelect from './OrgSelect';
 import { dataFixtures, urlFixtures, constructOrganizationURL } from '../data';
+import { OnChangeInterface } from '../types';
 
 // types
 interface ExpectedElements {
@@ -219,10 +220,19 @@ describe('packages/mongo-select/OrgSelect', () => {
     });
 
     describe('when the onChange prop is set', () => {
-      const onChange = jest.fn();
+      function onChange({ value, setData, event }: OnChangeInterface) {
+        return setData([
+          {
+            orgId: 'testOrgId',
+            orgName: 'Test SetData',
+            planType: 'atlas',
+          },
+        ]);
+      }
+
       beforeEach(() => renderComponent({ onChange }));
 
-      it('it does not filter the projects and calls the onChange callback', () => {
+      it('it filters the organizations based on the onChange callback', () => {
         fireEvent.click(expectedElements.orgTrigger as HTMLElement);
         setExpectedElements();
 
@@ -234,8 +244,10 @@ describe('packages/mongo-select/OrgSelect', () => {
 
         act(setExpectedElements);
 
-        expect(onChange).toHaveBeenCalledTimes(1);
-        expect(expectedElements!.orgResults!.length).toBe(2);
+        expect(expectedElements!.orgResults!.length).toBe(1);
+        expect(
+          expectedElements!.orgResults?.[0].innerHTML.includes('Test SetData'),
+        ).toBe(true);
       });
     });
   });
