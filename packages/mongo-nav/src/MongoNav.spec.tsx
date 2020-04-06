@@ -40,8 +40,6 @@ describe('packages/mongo-nav', () => {
     expectedElements.charts = queryByTestId('project-nav-charts');
   };
 
-  let onOrganizationChange: jest.Mock;
-  let onProjectChange: jest.Mock;
   let fetchMock: jest.Mock;
   let originalFetch: (
     input: RequestInfo,
@@ -49,8 +47,6 @@ describe('packages/mongo-nav', () => {
   ) => Promise<Response>;
 
   beforeEach(() => {
-    onOrganizationChange = jest.fn();
-    onProjectChange = jest.fn();
     fetchMock = jest.fn();
     originalFetch = window.fetch;
     window.fetch = fetchMock;
@@ -64,16 +60,7 @@ describe('packages/mongo-nav', () => {
 
   const renderComponent = async (props = {}) => {
     await act(async () => {
-      setQueries(
-        render(
-          <MongoNav
-            activeProduct="cloud"
-            onOrganizationChange={onOrganizationChange}
-            onProjectChange={onProjectChange}
-            {...props}
-          />,
-        ),
-      );
+      setQueries(render(<MongoNav activeProduct="cloud" {...props} />));
     });
   };
 

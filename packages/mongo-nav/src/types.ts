@@ -275,6 +275,12 @@ export interface HostsInterface {
   university?: string;
 }
 
+export interface OnChangeInterface {
+  value: string;
+  setData: Function;
+  event: React.ChangeEvent;
+}
+
 export interface MongoNavInterface {
   /**
    * Describes what product is currently active.
@@ -294,12 +300,12 @@ export interface MongoNavInterface {
   /**
    * Callback invoked when user types into organization picker. Receives value of input as first argument and ChangeEvent as the second.
    */
-  onOrganizationChange?: (_value: string, _event: React.ChangeEvent) => void;
+  onOrganizationChange?: (OnChangeInterface: OnChangeInterface) => void;
 
   /**
    * Callback invoked when user types into project picker. Receives value of input as first argument and ChangeEvent as the second.
    */
-  onProjectChange?: (_value: string, _event: React.ChangeEvent) => void;
+  onProjectChange?: (OnChangeInterface: OnChangeInterface) => void;
 
   /**
    *  Function to determine destination URL when user selects a organization from the organization picker, see also `hosts`.
