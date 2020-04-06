@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { transparentize } from 'polished';
 import omit from 'lodash/omit';
 
@@ -218,6 +219,20 @@ const glyphMargins: Record<Size, string> = {
   `,
 } as const;
 
+const focusStyle = css`
+  &:focus {
+    text-decoration: none;
+  }
+
+  &:not(:disabled) {
+    &:focus {
+      &:before {
+        opacity: 1;
+      }
+    }
+  }
+`;
+
 const baseStyle = css`
   position: relative;
   // Establishes the root element as a new stacking context
@@ -237,7 +252,6 @@ const baseStyle = css`
   user-select: none;
   overflow: hidden;
 
-  &:focus,
   &:hover {
     text-decoration: none;
   }
@@ -321,6 +335,8 @@ function usesLinkElement(
 }
 
 const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+
   const {
     className = '',
     children = null,
@@ -336,6 +352,7 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
       buttonSizes[size],
       buttonVariants[variant],
       { [disabledStyle]: disabled },
+      { [focusStyle]: showFocus },
       className,
     ),
     // only add a disabled prop if not an anchor
