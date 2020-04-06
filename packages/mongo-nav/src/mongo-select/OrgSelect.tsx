@@ -190,13 +190,7 @@ function OrgSelect({
   const isTablet = viewportWidth < breakpoints.medium;
 
   const checkPlanType = data?.[0]?.planType;
-  const showPlanType = data.reduce((shouldDisplay, datum) => {
-    if (datum.planType !== checkPlanType) {
-      shouldDisplay = true;
-    }
-
-    return shouldDisplay;
-  }, false);
+  const showPlanType = !data?.every(datum => datum.planType === checkPlanType);
 
   const toggleOpen = () => {
     setOpen(curr => !curr);
