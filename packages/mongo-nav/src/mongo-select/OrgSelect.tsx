@@ -264,13 +264,13 @@ function OrgSelect({
       >
         <button
           {...triggerDataProp.prop}
+          aria-disabled={loading}
+          data-testid="org-trigger"
+          disabled={loading}
           onClick={onElementClick(
             NavElement.OrgNavOrgSelectTrigger,
             toggleOpen,
           )}
-          aria-disabled={loading}
-          data-testid="org-trigger"
-          disabled={loading}
           className={cx(baseButtonStyle, orgButtonStyle, {
             [activeButtonStyle]: open,
             [textLoadingStyle]: loading,
@@ -317,7 +317,8 @@ function OrgSelect({
             )}
 
             <ul className={ulStyle}>
-              {renderedData?.map(renderOrganizationOption) ?? (
+              {(Array.isArray(renderedData) &&
+                renderedData.map(renderOrganizationOption)) ?? (
                 <li className={emptyStateStyle}>
                   You do not belong to any organizations. Create an organization
                   on the{' '}
