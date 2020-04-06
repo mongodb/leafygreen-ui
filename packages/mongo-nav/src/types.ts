@@ -279,7 +279,7 @@ export interface MongoNavInterface {
   /**
    * Describes what product is currently active.
    */
-  activeProduct: Product;
+  activeProduct?: Product;
 
   /**
    * Determines what nav item is currently active.
