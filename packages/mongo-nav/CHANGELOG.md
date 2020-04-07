@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- 899b9cc: Make activeProduct optional and export Product object.
+- 899b9cc: Makes activeProduct optional and export Product object.
 - e503de2: Conditionally renders logos in OrgSelect, based on whether or not plan types differ across a users orgs
 
 ### Patch Changes
