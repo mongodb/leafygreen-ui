@@ -183,6 +183,7 @@ function OrgSelect({
   loading = false,
 }: OrganizationMongoSelectProps) {
   const [value, setValue] = useState('');
+  const [consumerFilteredData, setConsumerFilteredData] = useState(data);
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -210,12 +211,16 @@ function OrgSelect({
     return filtered;
   };
 
-  const renderedData = onChangeProp ? data : filterData();
+  const renderedData = onChangeProp ? consumerFilteredData : filterData();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/\\/g, '\\');
     setValue(val);
-    return onChangeProp?.(value, e);
+    return onChangeProp?.({
+      value,
+      setData: setConsumerFilteredData,
+      event: e,
+    });
   };
 
   const renderOrganizationOption = (datum: OrganizationInterface) => {
@@ -262,13 +267,13 @@ function OrgSelect({
       >
         <button
           {...triggerDataProp.prop}
+          aria-disabled={loading}
+          data-testid="org-trigger"
+          disabled={loading}
           onClick={onElementClick(
             NavElement.OrgNavOrgSelectTrigger,
             toggleOpen,
           )}
-          aria-disabled={loading}
-          data-testid="org-trigger"
-          disabled={loading}
           className={cx(baseButtonStyle, orgButtonStyle, {
             [activeButtonStyle]: open,
             [textLoadingStyle]: loading,
@@ -315,7 +320,8 @@ function OrgSelect({
             )}
 
             <ul className={ulStyle}>
-              {renderedData?.map(renderOrganizationOption) ?? (
+              {(Array.isArray(renderedData) &&
+                renderedData.map(renderOrganizationOption)) ?? (
                 <li className={emptyStateStyle}>
                   You do not belong to any organizations. Create an organization
                   on the{' '}

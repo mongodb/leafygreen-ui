@@ -1,12 +1,12 @@
-import { MouseEventHandler, ChangeEvent, ReactNode } from 'react';
-import { URLSInterface } from '../types';
+import { MouseEventHandler, ReactNode } from 'react';
+import { URLSInterface, OnChangeInterface } from '../types';
 
 export type MongoSelectUrls = NonNullable<URLSInterface['mongoSelect']>;
 
 export interface BaseMongoSelectProps {
   className?: string;
   onClick?: MouseEventHandler;
-  onChange?: (_value: string, _event: ChangeEvent) => void;
+  onChange?: (OnChangeInterface: OnChangeInterface) => void;
   loading?: boolean;
   urls: MongoSelectUrls;
 }
