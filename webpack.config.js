@@ -11,7 +11,7 @@ const hljsSupportedLanguages = [
   'cs', // C#
   'cpp', // C++
   'go',
-  'ini',  // includes toml
+  'ini', // includes toml
   'java',
   'perl',
   'php',
