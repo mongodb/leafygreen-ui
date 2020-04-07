@@ -1,5 +1,13 @@
 # @leafygreen-ui/portal
 
+## 2.0.1
+
+### Patch Changes
+
+- 5aafd72: Fixes an issue where some built type definition files had a triple-slash reference directive pointing to a package that might not exist in a consuming application.
+- Updated dependencies [5aafd72]
+  - @leafygreen-ui/lib@4.4.1
+
 ## 2.0.0
 
 ### Major Changes
