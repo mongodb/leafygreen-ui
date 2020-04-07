@@ -118,6 +118,13 @@ describe('packages/mongo-select/OrgSelect', () => {
           );
         });
 
+        it('renders the logo associated with the planType', () => {
+          const { orgResults } = expectedElements;
+          expect((orgResults?.[0] as HTMLAnchorElement).innerHTML).toContain(
+            'svg',
+          );
+        });
+
         it('indicates the current organization', () => {
           const { orgResults } = expectedElements;
           const currentOrgName = currentOrganization?.orgName;
@@ -216,6 +223,37 @@ describe('packages/mongo-select/OrgSelect', () => {
 
         expect(expectedElements!.orgInput).toBeInTheDocument();
         expect(expectedElements!.orgInput!.innerHTML).toEqual('');
+      });
+    });
+
+    describe('when all organizations have the same planType ', () => {
+      beforeEach(() =>
+        renderComponent({
+          data: [
+            {
+              orgId: 'fakeOrgId1',
+              orgName: 'Demo Organization',
+              planType: 'atlas',
+            },
+            {
+              orgId: 'fakeOrgId2',
+              orgName: 'Demo Organization 2',
+              planType: 'atlas',
+            },
+          ],
+        }),
+      );
+
+      beforeEach(() => {
+        fireEvent.click(expectedElements.orgTrigger as HTMLElement);
+        setExpectedElements();
+      });
+
+      it('does not render the logo associated with the planType', () => {
+        const { orgResults } = expectedElements;
+        expect((orgResults?.[0] as HTMLAnchorElement).innerHTML).not.toContain(
+          'svg',
+        );
       });
     });
 

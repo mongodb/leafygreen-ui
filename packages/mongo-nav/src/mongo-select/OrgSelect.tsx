@@ -190,6 +190,9 @@ function OrgSelect({
   const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
 
+  const checkPlanType = data?.[0]?.planType;
+  const showPlanType = !data?.every(datum => datum.planType === checkPlanType);
+
   const toggleOpen = () => {
     setOpen(curr => !curr);
     if (!open) {
@@ -238,7 +241,7 @@ function OrgSelect({
             {orgName} {isActive && '(current)'}
           </span>
 
-          {!isOnPrem && (
+          {!isOnPrem && showPlanType && (
             <div className={displayFlex}>
               {planType === PlanType.Atlas ? (
                 <AtlasIcon size={10} />
