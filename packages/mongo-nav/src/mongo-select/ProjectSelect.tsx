@@ -101,6 +101,7 @@ function ProjectSelect({
   ...rest
 }: ProjectMongoSelectProps) {
   const [value, setValue] = useState('');
+  const [consumerFilteredData, setConsumerFilteredData] = useState(data);
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
 
@@ -122,12 +123,16 @@ function ProjectSelect({
     return filtered;
   };
 
-  const renderedData = onChangeProp ? data : filterData();
+  const renderedData = onChangeProp ? consumerFilteredData : filterData();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setValue(value);
-    onChangeProp?.(value, e);
+    return onChangeProp?.({
+      value,
+      setData: setConsumerFilteredData,
+      event: e,
+    });
   };
 
   const renderProjectOption = (datum: ProjectInterface) => {
