@@ -222,13 +222,9 @@ const glyphMargins: Record<Size, string> = {
 const focusStyle = css`
   &:focus {
     text-decoration: none;
-  }
 
-  &:not(:disabled) {
-    &:focus {
-      &:before {
-        opacity: 1;
-      }
+    &:not(:disabled):before {
+      opacity: 1;
     }
   }
 `;
@@ -372,7 +368,7 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
 
   const spanStyle = css`
     // Usually for this to take effect, you would need the element to be
-    // "positioned". Due to an obscure part of CSS spec, flex children
+    /* ￿positioned￿. Due to an obscure part of CSS spec, flex children */
     // respect z-index without the position property being set.
     //
     // https://www.w3.org/TR/css-flexbox-1/#painting
