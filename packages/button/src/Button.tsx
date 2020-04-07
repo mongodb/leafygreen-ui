@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { transparentize } from 'polished';
 import omit from 'lodash/omit';
 
@@ -218,6 +219,16 @@ const glyphMargins: Record<Size, string> = {
   `,
 } as const;
 
+const focusStyle = css`
+  &:focus {
+    text-decoration: none;
+
+    &:not(:disabled):before {
+      opacity: 1;
+    }
+  }
+`;
+
 const baseStyle = css`
   position: relative;
   // Establishes the root element as a new stacking context
@@ -237,7 +248,6 @@ const baseStyle = css`
   user-select: none;
   overflow: hidden;
 
-  &:focus,
   &:hover {
     text-decoration: none;
   }
@@ -321,6 +331,8 @@ function usesLinkElement(
 }
 
 const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+
   const {
     className = '',
     children = null,
@@ -336,6 +348,7 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
       buttonSizes[size],
       buttonVariants[variant],
       { [disabledStyle]: disabled },
+      { [focusStyle]: showFocus },
       className,
     ),
     // only add a disabled prop if not an anchor
@@ -355,7 +368,7 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
 
   const spanStyle = css`
     // Usually for this to take effect, you would need the element to be
-    // "positioned". Due to an obscure part of CSS spec, flex children
+    /* ￿positioned￿. Due to an obscure part of CSS spec, flex children */
     // respect z-index without the position property being set.
     //
     // https://www.w3.org/TR/css-flexbox-1/#painting
