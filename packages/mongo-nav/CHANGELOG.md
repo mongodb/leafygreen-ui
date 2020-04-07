@@ -14,7 +14,7 @@
 - 5aafd72: IconButton now accepts `aria-label` instead of `ariaLabel`
   When an Icon is a child of IconButton, the Icon's title will be unset unless explicitly set on Icon, and its size will be inherited from IconButton unless its explicitly set.
   Previously, IconButton required that `ariaLabel` exists as a prop to IconButton. Now IconButton is more flexible, and requires that one of `aria-label` or `aria-labelledby` are set.- cdb3eb5: Adds Cloud Manager Icon to ProjectNav and small Cloud Manager and Atlas Icons to the OrgSelect component
-- 04704c4: Fixes onOrganizationChange and onProjectChange such that they can hook into the OrganizationSelect and ProjectSelect compoenents respectively and determine what organizations and projects are rendered based on a search
+- 04704c4: Fixes onOrganizationChange and onProjectChange such that they can hook into the OrganizationSelect and ProjectSelect components respectively and determine what organizations and projects are rendered based on a search
 - Updated dependencies [ebbac0e]
 - Updated dependencies [5aafd72]
 - Updated dependencies [5aafd72]
