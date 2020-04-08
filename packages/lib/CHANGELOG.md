@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 4.4.1
+
+### Patch Changes
+
+- 5aafd72: Adds Either utility type to lib
+
 ## 4.4.0
 
 ### Minor Changes

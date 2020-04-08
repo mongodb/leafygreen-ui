@@ -1,5 +1,29 @@
 # @leafygreen-ui/mongo-nav
 
+## 0.22.0
+
+### Minor Changes
+
+- 899b9cc: Makes activeProduct optional and export Product object.
+- e503de2: Conditionally renders logos in OrgSelect, based on whether or not plan types differ across a users orgs
+
+### Patch Changes
+
+- 194c7ea: Fixes anchor tag overrides and enables the trigger on OrgSelect
+- de42634: Changes color of active IconButtons in ProjectNav to match design spec
+- 5aafd72: IconButton now accepts `aria-label` instead of `ariaLabel`
+  When an Icon is a child of IconButton, the Icon's title will be unset unless explicitly set on Icon, and its size will be inherited from IconButton unless its explicitly set.
+  Previously, IconButton required that `ariaLabel` exists as a prop to IconButton. Now IconButton is more flexible, and requires that one of `aria-label` or `aria-labelledby` are set.- cdb3eb5: Adds Cloud Manager Icon to ProjectNav and small Cloud Manager and Atlas Icons to the OrgSelect component
+- 04704c4: Fixes onOrganizationChange and onProjectChange such that they can hook into the OrganizationSelect and ProjectSelect components respectively and determine what organizations and projects are rendered based on a search
+- Updated dependencies [ebbac0e]
+- Updated dependencies [5aafd72]
+- Updated dependencies [5aafd72]
+  - @leafygreen-ui/button@4.2.0
+  - @leafygreen-ui/icon-button@5.0.0
+  - @leafygreen-ui/icon@5.0.2
+  - @leafygreen-ui/lib@4.4.1
+  - @leafygreen-ui/menu@6.0.6
+
 ## 0.21.0
 
 ### Minor Changes
