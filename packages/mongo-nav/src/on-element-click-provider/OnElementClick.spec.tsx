@@ -64,14 +64,12 @@ describe('packages/mongo-nav/on-element-click-provider', () => {
     let el: keyof typeof defaultElements;
 
     for (el in defaultElements) {
-      // expect wrapped inside a function
-      // eslint-disable-next-line
+      // eslint-disable-next-line jest/expect-expect
       test(`it fires onElementClick callback on ${el}`, () =>
         testForCallback(getByTestId(defaultElements[el]), el));
     }
 
-    // expect wrapped inside a function
-    // eslint-disable-next-line
+    // eslint-disable-next-line jest/expect-expect
     test('when OrgSelect is open', async () => {
       fireEvent.click(getByTestId('org-trigger'));
 
@@ -80,8 +78,7 @@ describe('packages/mongo-nav/on-element-click-provider', () => {
       testForCallback(viewOrgs, NavElement.OrgNavViewAllOrganizations);
     });
 
-    // expect wrapped inside a function
-    // eslint-disable-next-line
+    // eslint-disable-next-line jest/expect-expect
     test('when OrgNav dropdown is open', async () => {
       fireEvent.click(getByTestId('org-nav-dropdown'));
 
@@ -103,8 +100,7 @@ describe('packages/mongo-nav/on-element-click-provider', () => {
       );
     });
 
-    // expect wrapped inside a function
-    // eslint-disable-next-line
+    // eslint-disable-next-line jest/expect-expect
     test('when ProjectSelect is open', async () => {
       fireEvent.click(getByTestId('project-select-trigger'));
 
@@ -118,8 +114,7 @@ describe('packages/mongo-nav/on-element-click-provider', () => {
       testForCallback(addNewProject, NavElement.ProjectNavAddProject);
     });
 
-    // expect wrapped inside a function
-    // eslint-disable-next-line
+    // eslint-disable-next-line jest/expect-expect
     test('when the Project dropdown is open', async () => {
       fireEvent.click(getByTestId('project-nav-project-menu'));
 
@@ -137,8 +132,7 @@ describe('packages/mongo-nav/on-element-click-provider', () => {
       );
     });
 
-    // expect wrapped inside a function
-    // eslint-disable-next-line
+    // eslint-disable-next-line jest/expect-expect
     test('when the UserMenu is open', async () => {
       fireEvent.click(getByTestId('user-menu-trigger'));
 
