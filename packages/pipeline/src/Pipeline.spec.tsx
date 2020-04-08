@@ -41,7 +41,7 @@ describe('packages/pipeline/Pipeline', () => {
     expect(element.classList.contains(className)).toBe(true);
   });
 
-  test(`renders each child as a Stage`, function() {
+  test(`renders each child as a Stage`, function () {
     const { getByText } = renderPipeline();
 
     stages.forEach(stage => {

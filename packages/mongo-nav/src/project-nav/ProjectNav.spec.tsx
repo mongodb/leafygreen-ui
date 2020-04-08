@@ -28,7 +28,7 @@ const Products = {
   Charts: 'charts',
 };
 
-export type Products = typeof Products[keyof typeof Products];
+type Products = typeof Products[keyof typeof Products];
 
 // data
 const { currentProject, projects } = dataFixtures;

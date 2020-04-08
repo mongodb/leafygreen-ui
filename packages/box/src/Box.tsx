@@ -61,6 +61,7 @@ Box.displayName = 'Box';
 Box.propTypes = {
   children: PropTypes.node,
   href: PropTypes.string,
+  // @ts-ignore
   component: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 };
 

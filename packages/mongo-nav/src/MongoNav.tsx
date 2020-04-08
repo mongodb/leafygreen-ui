@@ -206,9 +206,7 @@ function MongoNav({
         body = { activeProjectId, activeOrgId };
       }
 
-      fetchProductionData(body)
-        .then(handleResponse)
-        .catch(console.error);
+      fetchProductionData(body).then(handleResponse).catch(console.error);
     }
   }, [
     mode,
