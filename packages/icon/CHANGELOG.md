@@ -1,5 +1,14 @@
 # @leafygreen-ui/icon
 
+## 5.0.2
+
+### Patch Changes
+
+- 5aafd72: When an Icon is a child of IconButton, the Icon's title will be unset unless explicitly set on Icon, and its size will be inherited from IconButton unless its explicitly set.
+- 5aafd72: Fixes an issue where some built type definition files had a triple-slash reference directive pointing to a package that might not exist in a consuming application.
+- Updated dependencies [5aafd72]
+  - @leafygreen-ui/lib@4.4.1
+
 ## 5.0.1
 
 ### Patch Changes
