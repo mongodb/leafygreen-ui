@@ -1,5 +1,18 @@
 # @leafygreen-ui/button
 
+## 4.2.0
+
+### Minor Changes
+
+- ebbac0e: Adds leafygreen-provider to Button component
+
+### Patch Changes
+
+- Updated dependencies [5aafd72]
+- Updated dependencies [5aafd72]
+  - @leafygreen-ui/icon@5.0.2
+  - @leafygreen-ui/lib@4.4.1
+
 ## 4.1.1
 
 ### Patch Changes

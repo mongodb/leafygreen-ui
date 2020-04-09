@@ -1,5 +1,20 @@
 # @leafygreen-ui/icon-button
 
+## 5.0.0
+
+### Major Changes
+
+- 5aafd72: IconButton now accepts `aria-label` instead of `ariaLabel`
+  When an Icon is a child of IconButton, the Icon's title will be unset unless explicitly set on Icon, and its size will be inherited from IconButton unless its explicitly set.
+  Previously, IconButton required that `ariaLabel` exists as a prop to IconButton. Now IconButton is more flexible, and requires that one of `aria-label` or `aria-labelledby` are set.
+
+### Patch Changes
+
+- Updated dependencies [5aafd72]
+- Updated dependencies [5aafd72]
+  - @leafygreen-ui/icon@5.0.2
+  - @leafygreen-ui/lib@4.4.1
+
 ## 4.1.6
 
 ### Patch Changes
