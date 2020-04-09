@@ -2,6 +2,26 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/mongo-nav.svg)
 
+## Installation
+
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/mongo-nav @leafygreen-ui/leafygreen-provider@1.1.0
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/mongo-nav @leafygreen-ui/leafygreen-provider@1.1.0
+```
+
+## Peer Dependencies
+
+| Package                              | Version  |
+| ------------------------------------ | -------- |
+| `@leafygreen-ui/leafygreen-provider` | `^1.1.0` |
+
 ## Example
 
 ```js
