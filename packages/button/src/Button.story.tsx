@@ -61,13 +61,9 @@ storiesOf('Buttons', module)
       'Edit',
     );
 
-    function CustomElement(props: object): React.ReactElement {
-      return <CustomRoot {...props} />;
-    }
-
     return (
       <Button
-        as={CustomElement}
+        component={CustomRoot}
         size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
         variant={select(
           'Variant',

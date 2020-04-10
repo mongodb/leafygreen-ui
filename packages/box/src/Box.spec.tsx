@@ -60,9 +60,9 @@ describe('packages/box', () => {
     const linkWrapperFn = jest.fn();
 
     interface LinkWrapperInterface {
-      href: string;
-      target: string;
-      children: React.ReactNode;
+      href?: string;
+      target?: string;
+      children?: React.ReactNode;
     }
 
     function LinkWrapper({
