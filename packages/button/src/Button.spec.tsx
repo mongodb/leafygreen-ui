@@ -114,7 +114,7 @@ describe('packages/Button', () => {
   });
 
   test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
-    const { container } = render(<Button as="div">Click me!</Button>);
+    const { container } = render(<Button component="div">Click me!</Button>);
     const buttonComponent = container.firstChild;
 
     if (!typeIs.element(buttonComponent)) {
@@ -126,7 +126,7 @@ describe('packages/Button', () => {
 
   test(`renders component inside of a React Element/HTML tag based on as prop, even when "href" is set`, () => {
     const { container } = render(
-      <Button as="div" href="http://mongodb.design">
+      <Button component="div" href="http://mongodb.design">
         Click me!
       </Button>,
     );

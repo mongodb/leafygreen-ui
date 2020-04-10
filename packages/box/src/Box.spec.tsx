@@ -2,125 +2,102 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, cleanup } from '@testing-library/react';
 import Box from '.';
-import { BoxProps } from './Box';
 
-// types
-interface SharedProps {
-  name?: string;
-}
-
-interface RenderedEls {
-  box?: HTMLElement | null;
-  child?: HTMLElement | null;
-}
-
-interface LinkWrapperProps {
-  href: string;
-  target: string;
-  children: React.ReactNode;
-}
-
-type testProps = BoxProps<SharedProps>;
+afterAll(cleanup);
 
 describe('packages/box', () => {
-  const renderedEls: RenderedEls = {};
-  const linkWrapperFn = jest.fn();
-
-  function LinkWrapper({ href, target, children, ...rest }: LinkWrapperProps) {
-    linkWrapperFn();
-    return (
-      <span {...rest}>
-        <a data-testid="link-component" href={href} target={target}>
-          {children}
-        </a>
-      </span>
-    );
-  }
-
-  const sharedProps = { name: 'testName' };
-  const anchorProps = {
-    href: 'https://cloud.mongodb.com',
-    target: '_blank',
-    ...sharedProps,
-  };
-  const linkProps = { component: LinkWrapper, ...anchorProps };
-
-  const renderBox = (props: testProps = sharedProps) => {
-    const { queryByTestId } = render(
-      <Box data-testid="box" {...props}>
-        <div data-testid="child">Child Content</div>
+  describe('when rendered with only shared props', () => {
+    const { getByTestId } = render(
+      <Box data-testid="default-box">
+        <div data-testid="child">hi</div>
       </Box>,
     );
 
-    renderedEls.child = queryByTestId('child');
-    renderedEls.box = queryByTestId('box');
-  };
-
-  afterEach(() => {
-    jest.clearAllMocks();
-    cleanup();
-  });
-
-  describe('when rendered with only shared props', () => {
-    beforeEach(() => {
-      renderBox();
-    });
+    const box = getByTestId('default-box');
+    const child = getByTestId('child');
 
     test('it renders the box component as a div', () => {
-      expect(renderedEls.box).toBeInTheDocument();
-      expect(renderedEls.box?.tagName.toLowerCase()).toBe('div');
+      expect(box).toBeInTheDocument();
+      expect(box?.tagName.toLowerCase()).toBe('div');
     });
 
     test('it renders the child content', () => {
-      expect(renderedEls.child).toBeInTheDocument();
-    });
-
-    test('it preserves the shared props', () => {
-      expect(renderedEls.box).toHaveAttribute('name', sharedProps.name);
+      expect(child).toBeInTheDocument();
     });
   });
 
   describe('when rendered with the expected anchor props', () => {
-    beforeEach(() => {
-      renderBox(anchorProps);
-    });
+    const { getByTestId } = render(
+      <Box
+        data-testid="anchor-box"
+        component="a"
+        href="https://mongodb.design/"
+        target="_blank"
+      >
+        <span data-testid="anchor-child-content">hi</span>
+      </Box>,
+    );
+
+    const box = getByTestId('anchor-box');
+    const child = getByTestId('anchor-child-content');
 
     test('it renders the box component as an anchor', () => {
-      expect(renderedEls.box).toBeInTheDocument();
-      expect(renderedEls.box?.tagName.toLowerCase()).toBe('a');
+      expect(box).toBeInTheDocument();
+      expect(box?.tagName.toLowerCase()).toBe('a');
     });
 
     test('it renders the child content', () => {
-      expect(renderedEls.child).toBeInTheDocument();
-    });
-
-    test('it preserves the shared props', () => {
-      expect(renderedEls.box).toHaveAttribute('name', sharedProps.name);
+      expect(child).toBeInTheDocument();
     });
 
     test('it sets the anchor-specific attributes', () => {
-      expect(renderedEls.box).toHaveAttribute('href', anchorProps.href);
-      expect(renderedEls.box).toHaveAttribute('target', anchorProps.target);
+      expect(box).toHaveAttribute('href', 'https://mongodb.design/');
+      expect(box).toHaveAttribute('target', '_blank');
     });
   });
 
   describe('when rendered as a custom component', () => {
-    beforeEach(() => {
-      renderBox(linkProps);
-    });
+    const linkWrapperFn = jest.fn();
+
+    interface LinkWrapperInterface {
+      href: string;
+      target: string;
+      children: React.ReactNode;
+    }
+
+    function LinkWrapper({
+      href,
+      target,
+      children,
+      ...rest
+    }: LinkWrapperInterface) {
+      linkWrapperFn();
+      return (
+        <span {...rest}>
+          <a data-testid="link-component" href={href} target={target}>
+            {children}
+          </a>
+        </span>
+      );
+    }
+
+    const { getByTestId } = render(
+      <Box data-testid="custom-box" component={LinkWrapper}>
+        <span data-testid="custom-child-content">custom child content</span>
+      </Box>,
+    );
+
+    const box = getByTestId('custom-box');
+    const child = getByTestId('custom-child-content');
 
     test('it renders the box component as the custom component', () => {
-      expect(renderedEls.box).toBeInTheDocument();
+      expect(box).toBeInTheDocument();
       expect(linkWrapperFn).toHaveBeenCalledTimes(1);
-      expect(renderedEls.box?.tagName.toLowerCase()).toBe('span');
+      expect(box?.tagName.toLowerCase()).toBe('span');
     });
 
     test('it renders the child content', () => {
-      expect(renderedEls.child).toBeInTheDocument();
-    });
-
-    test('it preserves the shared props', () => {
-      expect(renderedEls.box).toHaveAttribute('name', sharedProps.name);
+      expect(child).toBeInTheDocument();
     });
   });
 });
