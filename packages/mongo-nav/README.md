@@ -7,7 +7,7 @@
 ### Yarn
 
 ```shell
-yarn add @leafygreen-ui/mongo-nav @leafygreen-ui/leafygreen-provider@1.1.0
+yarn add @leafygreen-ui/mongo-nav @leafygreen-ui/leafygreen-provider
 ```
 
 ### NPM
