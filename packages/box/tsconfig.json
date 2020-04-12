@@ -2,12 +2,11 @@
   "extends": "../../package.tsconfig.json",
   "compilerOptions": {
     "declarationDir": "dist",
+    "outDir": "dist",
     "rootDir": "src"
   },
   "include": ["src/**/*"],
-  "references": [
-    {
-      "path": "../lib"
-    }
-  ]
+  "references": [{
+    "path": "../lib"
+  }]
 }
