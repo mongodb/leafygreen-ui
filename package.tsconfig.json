@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "module": "esnext",
-    "target": "esnext",
-    "jsx": "preserve",
+    "target": "ES5",
+    "jsx": "react",
     "allowJs": false,
     "pretty": true,
     "declaration": true,
@@ -15,8 +15,11 @@
     "paths": {
       "@leafygreen-ui/*": ["packages/*/src"]
     },
-    "emitDeclarationOnly": true,
+    "sourceMap": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": false,
+    "importHelpers": true,
     "composite": true
   },
-  "exclude": ["*.story.*", "*.spec.*", "dist"]
+  "exclude": ["**/*/*.spec.*", "**/*/*.story.*"]
 }
