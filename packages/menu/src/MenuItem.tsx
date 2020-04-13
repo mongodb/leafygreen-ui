@@ -266,7 +266,7 @@ MenuItem.propTypes = {
   disabled: PropTypes.bool,
   active: PropTypes.bool,
   children: PropTypes.node,
-  ref: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ref: PropTypes.shape({ current: PropTypes.instanceOf(Element).isRequired }),
 };
 
 export default MenuItem;

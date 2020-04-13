@@ -72,7 +72,7 @@ function checkPixelValue(actual: string | number, expected: number) {
 
 describe('positionUtils', () => {
   describe('calculatePosition', () => {
-    describe('returns an object with three key-value pairs', () => {
+    test('returns an object with three key-value pairs', () => {
       const calcPositionObject = calculatePosition({
         spacing: SPACING,
         windowHeight: WINDOW_HEIGHT,
