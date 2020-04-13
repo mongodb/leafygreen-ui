@@ -93,10 +93,9 @@ const Input = React.forwardRef(({ variant, ...rest }: InputProps, ref) => {
 
 Input.displayName = 'Input';
 
-// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 Input.propTypes = {
-  onChange: PropTypes.func,
-  onKeyDown: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
+  onKeyDown: PropTypes.func.isRequired,
 };
 
 export default Input;
