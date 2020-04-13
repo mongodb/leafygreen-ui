@@ -37,12 +37,10 @@ describe('packages/UserMenu', () => {
     expect(trigger).toBeInTheDocument();
   });
 
-  test('opens when trigger is clicked', () => {
+  test('renders atlas MenuItems when atlas is the active product', () => {
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
-  });
 
-  test('renders atlas MenuItems when atlas is the active product', () => {
     const userPreferences = getByText('User Preferences');
     const invitations = getByText('Invitations');
     const organizations = getByText('Organizations');
@@ -67,6 +65,7 @@ describe('packages/UserMenu', () => {
 
     const universityMenuItem = getByText('University Preferences');
     expect(universityMenuItem).toBeInTheDocument();
+    // eslint-disable-next-line jest/valid-expect-in-promise
     waitForElementToBeRemoved(() => userPreferences).then(() =>
       expect(userPreferences).not.toBeVisible(),
     );
