@@ -381,7 +381,7 @@ function UserMenu({
               data-testid="user-menuitem-cloud-mfa"
               onClick={onElementClick(NavElement.UserMenuCloudMFA)}
             >
-              Two-Factor Authorization
+              Two-Factor Authentication
             </MenuItem>
           </SubMenu>
         ) : (
