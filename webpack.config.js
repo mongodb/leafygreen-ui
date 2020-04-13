@@ -29,7 +29,7 @@ const hljsSupportedLanguages = [
 
 function getAllPackages(dir) {
   const dirList = fs.readdirSync(dir);
-  return dirList.map(function(subDir) {
+  return dirList.map(function (subDir) {
     subDir = path.resolve(dir, subDir);
     const json = require(`${subDir}/package.json`);
     return json.name;
@@ -38,7 +38,7 @@ function getAllPackages(dir) {
 
 // Base Webpack configuration, used by all other configurations for common settings
 function generateConfigFunc(target = 'web') {
-  return function(env = 'production') {
+  return function (env = 'production') {
     const isProduction = env === 'production';
 
     return {
@@ -110,7 +110,7 @@ function generateConfigFunc(target = 'web') {
         ],
       },
 
-      plugins: (function() {
+      plugins: (function () {
         // Defines global variables
         const DefinePluginInstance = new webpack.DefinePlugin({
           __DEV__: JSON.stringify((!isProduction).toString()),
