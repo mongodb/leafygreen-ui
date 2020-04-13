@@ -44,7 +44,7 @@ describe('packages/UserMenu', () => {
     const userPreferences = getByText('User Preferences');
     const invitations = getByText('Invitations');
     const organizations = getByText('Organizations');
-    const mfa = getByText('Two-Factor Authorization');
+    const mfa = getByText('Two-Factor Authentication');
 
     expect(userPreferences).toBeInTheDocument();
     expect(invitations).toBeInTheDocument();
@@ -143,7 +143,7 @@ describe('packages/UserMenu', () => {
     const userPreferences = queryByText('User Preferences');
     const invitations = queryByText('Invitations');
     const organizations = queryByText('Organizations');
-    const mfa = queryByText('Two-Factor Authorization');
+    const mfa = queryByText('Two-Factor Authentication');
 
     expect(userPreferences).toBeNull();
     expect(invitations).toBeNull();
