@@ -5,7 +5,7 @@ import Badge, { Variant } from '@leafygreen-ui/badge';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import UserMenu from '../user-menu';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { LogoMark } from '@leafygreen-ui/logo';
 import { useViewportSize } from '@leafygreen-ui/hooks';
@@ -370,6 +370,19 @@ function OrgNav({
           >
             Ops Manager Version
           </Tooltip>
+        )}
+
+        {!onPremEnabled && !isMobile && window.Appcues && (
+          <OrgNavLink
+            className={cx(
+              rightLinkMargin,
+              css`
+                color: ${uiColors.blue.base};
+              `,
+            )}
+          >
+            See Product Tour
+          </OrgNavLink>
         )}
 
         {!isMobile && (
