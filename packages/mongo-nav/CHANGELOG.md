@@ -1,5 +1,23 @@
 # @leafygreen-ui/mongo-nav
 
+## 0.23.0
+
+### Minor Changes
+
+- 5245370: Changes leafygreen-provider to a peer dependency to help avoid version conflicts
+
+### Patch Changes
+
+- 81826ca: Fixes bug in styling of alerts badge
+- 75c0693: Upgrades workspace dependencies
+- bbd03b2: Changes Two-Factor Authorization to Authentication
+- Updated dependencies [75c0693]
+  - @leafygreen-ui/button@4.2.1
+  - @leafygreen-ui/icon@5.0.3
+  - @leafygreen-ui/menu@6.0.7
+  - @leafygreen-ui/palette@2.0.1
+  - @leafygreen-ui/icon-button@5.0.1
+
 ## 0.22.0
 
 ### Minor Changes

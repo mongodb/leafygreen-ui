@@ -1,5 +1,13 @@
 # @leafygreen-ui/popover
 
+## 4.0.1
+
+### Patch Changes
+
+- 75c0693: Upgrades workspace dependencies
+- Updated dependencies [75c0693]
+  - @leafygreen-ui/palette@2.0.1
+
 ## 4.0.0
 
 ### Major Changes

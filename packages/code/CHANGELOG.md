@@ -1,5 +1,16 @@
 # @leafygreen-ui/code
 
+## 3.4.3
+
+### Patch Changes
+
+- 75c0693: Upgrades workspace dependencies
+- Updated dependencies [75c0693]
+- Updated dependencies [9c34e9f]
+  - @leafygreen-ui/icon@5.0.3
+  - @leafygreen-ui/syntax@2.6.0
+  - @leafygreen-ui/icon-button@5.0.1
+
 ## 3.4.2
 
 ### Patch Changes
