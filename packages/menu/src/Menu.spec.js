@@ -149,6 +149,7 @@ describe('packages/Menu', () => {
       fireEvent.click(subMenuBArrow);
       const subMenuItemB = getByTestId('sub-menu-item-b');
       expect(subMenuItemB).toBeVisible();
+      // eslint-disable-next-line jest/valid-expect-in-promise
       waitForElementToBeRemoved(() => subMenuItemA).then(() =>
         expect(subMenuItemA).not.toBeVisible(),
       );

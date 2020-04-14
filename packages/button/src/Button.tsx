@@ -418,9 +418,14 @@ Button.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   disabled: PropTypes.bool,
-  as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  // @ts-ignore
+  as: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.elementType,
+    PropTypes.func,
+  ]),
   href: PropTypes.string,
-  glyph: PropTypes.node,
+  glyph: PropTypes.element,
 };
 
 export default Button;

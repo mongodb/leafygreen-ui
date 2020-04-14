@@ -38,7 +38,9 @@ describe('packages/Icon/glyphs/', () => {
     describe(`${glyphPath}`, () => {
       const { svg } = require(path.resolve(__dirname, `./glyphs/${glyphPath}`));
 
-      type SVGNodeObject = { readonly [K in string]: string | SVGNodeObject };
+      type SVGNodeObject = {
+        readonly [K in string]: string | SVGNodeObject;
+      };
 
       const rootGlyphObject: SVGNodeObject = toJson(svg, { object: true });
 
@@ -56,6 +58,7 @@ describe('packages/Icon/glyphs/', () => {
         });
       }
 
+      // eslint-disable-next-line jest/expect-expect
       test('all fills used in SVG files are "none", "#000", or "#000000"', () => {
         validateGlyphObject(rootGlyphObject);
       });
