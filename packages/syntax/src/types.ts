@@ -13,11 +13,13 @@ export const SupportedLanguages = {
   Csp: 'cs', // C#
   Cpp: 'cpp', // C++
   Go: 'go',
+  Ini: 'ini',
   Java: 'java',
   Perl: 'perl',
   Php: 'php',
   Python: 'python',
   Ruby: 'ruby',
+  Rust: 'rust',
   Scala: 'scala',
   Swift: 'swift',
   Kotlin: 'kotlin',
