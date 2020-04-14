@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 5.0.3
+
+### Patch Changes
+
+- 75c0693: Upgrades workspace dependencies
+
 ## 5.0.2
 
 ### Patch Changes
