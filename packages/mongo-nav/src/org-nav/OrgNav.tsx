@@ -372,8 +372,14 @@ function OrgNav({
           </Tooltip>
         )}
 
-        {!onPremEnabled && !isMobile && window.Appcues && (
+        {!onPremEnabled && !isMobile && (
           <OrgNavLink
+            href={
+              // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'.ts(2339)
+              window.Appcues
+                ? "javascript:Appcues.show('-M4PVbE05VI91MJihJGv')"
+                : `https://cloud-dev.mongodb.com/v2/5dd6a2d5f10fab46624c2ffd#clusters?appcue=-M4PVbE05VI91MJihJGv`
+            }
             className={cx(
               rightLinkMargin,
               css`
