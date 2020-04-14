@@ -375,6 +375,7 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
     z-index: 1;
     display: inline-flex;
     align-items: center;
+    text-align: center;
   `;
 
   const modifiedGlyph =
