@@ -1,5 +1,16 @@
 # @leafygreen-ui/syntax
 
+## 2.6.0
+
+### Minor Changes
+
+- 9c34e9f: Added 'rust' and 'ini' as supported syntaxes.
+
+### Patch Changes
+
+- Updated dependencies [75c0693]
+  - @leafygreen-ui/palette@2.0.1
+
 ## 2.5.0
 
 ### Minor Changes

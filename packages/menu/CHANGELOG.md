@@ -1,5 +1,16 @@
 # @leafygreen-ui/menu
 
+## 6.0.7
+
+### Patch Changes
+
+- 75c0693: Upgrades workspace dependencies
+- Updated dependencies [75c0693]
+  - @leafygreen-ui/icon@5.0.3
+  - @leafygreen-ui/palette@2.0.1
+  - @leafygreen-ui/popover@4.0.1
+  - @leafygreen-ui/icon-button@5.0.1
+
 ## 6.0.6
 
 ### Patch Changes
