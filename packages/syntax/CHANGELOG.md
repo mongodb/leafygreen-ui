@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- 9c34e9f: Added 'rust' and 'ini' as supported syntaxes.
+- 9c34e9f: Adds 'rust' and 'ini' as supported syntaxes.
 
 ### Patch Changes
 
