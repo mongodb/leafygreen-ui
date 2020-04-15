@@ -1,11 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { transparentize } from 'polished';
-// import omit from 'lodash/omit';
 import Box, { OverrideComponentProps } from '@leafygreen-ui/box';
 
 export const Variant = {
@@ -307,7 +304,7 @@ export type ButtonProps<C extends React.ElementType> = OverrideComponentProps<
 
 // eslint-disable-next-line
 const Button = React.forwardRef(
-  <C extends React.ElementType = 'button'>(
+  (
     {
       className,
       children,
@@ -316,11 +313,10 @@ const Button = React.forwardRef(
       size = Size.Normal,
       glyph,
       ...rest
-    }: ButtonProps<C>,
+    }: ButtonBaseProps,
     ref: React.Ref<any>,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-    const isAnchor = rest.href === true;
 
     const commonProps = {
       className: cx(
@@ -369,108 +365,8 @@ const Button = React.forwardRef(
       </Box>
     );
   },
-);
-
-const App = () => {
-  return <Button to="ox" />;
-};
-
-// const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
-// const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-
-//   const {
-//     className = '',
-//     children = null,
-//     disabled = false,
-//     variant = Variant.Default,
-//     size = Size.Normal,
-//     glyph,
-//   } = props;
-
-// const commonProps = {
-//   className: cx(
-//     baseStyle,
-//     buttonSizes[size],
-//     buttonVariants[variant],
-//     { [disabledStyle]: disabled },
-//     { [focusStyle]: showFocus },
-//     className,
-//   ),
-//   // only add a disabled prop if not an anchor
-//   ...(!usesLinkElement(props) && { disabled }),
-//   'aria-disabled': disabled,
-// };
-
-//   const rest = omit(props, [
-//     'as',
-//     'className',
-//     'disabled',
-//     'size',
-//     'variant',
-//     'children',
-//     'glyph',
-//   ]);
-
-// const spanStyle = css`
-//   // Usually for this to take effect, you would need the element to be
-//   /* ￿positioned￿. Due to an obscure part of CSS spec, flex children */
-//   // respect z-index without the position property being set.
-//   //
-//   // https://www.w3.org/TR/css-flexbox-1/#painting
-//   z-index: 1;
-//   display: inline-flex;
-//   align-items: center;
-// `;
-
-// const modifiedGlyph =
-//   glyph && children
-//     ? React.cloneElement(glyph, {
-//         className: cx({ [glyphMargins[size]]: glyph != null }),
-//       })
-//     : glyph;
-
-//   const renderButton = (Root: React.ElementType<any> = 'button') => (
-//   <Root
-//     ref={forwardRef}
-//     type={Root === 'button' ? 'button' : undefined}
-//     {...(rest as HTMLElementProps<any>)}
-//     {...commonProps}
-//   >
-//     <span className={spanStyle}>
-//       {modifiedGlyph}
-//       {children}
-//     </span>
-//   </Root>
-// );
-
-//   if (usesCustomElement(props)) {
-//     return renderButton(props.as);
-//   }
-
-//   if (usesLinkElement(props)) {
-//     return renderButton('a');
-//   }
-
-//   return renderButton();
-// });
-
-// Button.displayName = 'Button';
-
-// // @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
-// Button.propTypes = {
-//   variant: PropTypes.oneOf(Object.values(Variant)),
-//   size: PropTypes.oneOf(Object.values(Size)),
-//   className: PropTypes.string,
-//   children: PropTypes.node,
-//   disabled: PropTypes.bool,
-//   // @ts-ignore
-//   as: PropTypes.oneOfType([
-//     PropTypes.element,
-//     PropTypes.elementType,
-//     PropTypes.func,
-//   ]),
-//   href: PropTypes.string,
-//   glyph: PropTypes.element,
-// };
+) as <C extends React.ElementType = 'button'>(
+  props: ButtonProps<C>,
+) => JSX.Element;
 
 export default Button;

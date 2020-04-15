@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
+import Box, { OverrideComponentProps } from '@leafygreen-ui/box';
+import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
@@ -92,7 +92,7 @@ const menuItemHeight: Record<Size, string> = {
   `,
 };
 
-interface SharedMenuItemProps {
+interface BaseMenuItemProps {
   /**
    * Class name that will be applied to root MenuItem element.
    */
@@ -123,43 +123,21 @@ interface SharedMenuItemProps {
   size?: Size;
 
   ref?: React.Ref<any>;
+
+  href?: string;
+
+  children?: React.ReactNode;
 }
 
-interface LinkMenuItemProps extends HTMLElementProps<'a'>, SharedMenuItemProps {
-  href: string;
-}
+export type MenuItemProps<C extends React.ElementType> = OverrideComponentProps<
+  C,
+  BaseMenuItemProps
+>;
 
-interface ButtonMenuItemProps
-  extends HTMLElementProps<'button'>,
-    SharedMenuItemProps {
-  href?: null;
-}
-
-type CustomMenuItemProps = SharedMenuItemProps & {
-  as: React.ElementType<any>;
-  [key: string]: any;
-};
-
-type MenuItemProps =
-  | LinkMenuItemProps
-  | ButtonMenuItemProps
-  | CustomMenuItemProps;
-
-function usesCustomElement(props: MenuItemProps): props is CustomMenuItemProps {
-  return (props as any).as != null;
-}
-
-function usesLinkElement(
-  props: LinkMenuItemProps | ButtonMenuItemProps,
-): props is LinkMenuItemProps {
-  return props.href != null;
-}
-
+// eslint-disable-next-line
 const MenuItem = React.forwardRef(
-  (props: MenuItemProps, forwardRef: React.Ref<any>) => {
-    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-
-    const {
+  <C extends React.ElementType = 'button'>(
+    {
       disabled = false,
       active = false,
       size = 'default',
@@ -169,7 +147,10 @@ const MenuItem = React.forwardRef(
       href,
       glyph,
       ...rest
-    } = props;
+    }: MenuItemProps<C>,
+    ref: React.Ref<any>,
+  ) => {
+    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
     const updatedGlyph =
       glyph &&
@@ -190,12 +171,12 @@ const MenuItem = React.forwardRef(
       href,
     };
 
-    const renderMenuItem = (Root: React.ElementType<any> = 'button') => (
+    return (
       <li role="none">
-        <Root
+        <Box
           {...anchorProps}
-          {...rest}
           {...menuItemContainer.prop}
+          component={href ? 'a' : 'button'}
           className={cx(
             menuItemContainerStyle,
             menuItemHeight[size],
@@ -209,8 +190,9 @@ const MenuItem = React.forwardRef(
           )}
           role="menuitem"
           aria-disabled={disabled}
-          ref={forwardRef}
+          ref={ref}
           tabIndex={disabled ? -1 : undefined}
+          {...rest}
         >
           {updatedGlyph}
           <div
@@ -239,34 +221,10 @@ const MenuItem = React.forwardRef(
               </div>
             )}
           </div>
-        </Root>
+        </Box>
       </li>
     );
-
-    if (usesCustomElement(props)) {
-      return renderMenuItem(props.as);
-    }
-
-    if (usesLinkElement(props)) {
-      return renderMenuItem('a');
-    }
-
-    return renderMenuItem();
   },
 );
-
-MenuItem.displayName = 'MenuItem';
-
-// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
-MenuItem.propTypes = {
-  href: PropTypes.string,
-  onClick: PropTypes.func,
-  className: PropTypes.string,
-  description: PropTypes.node,
-  disabled: PropTypes.bool,
-  active: PropTypes.bool,
-  children: PropTypes.node,
-  ref: PropTypes.shape({ current: PropTypes.instanceOf(Element).isRequired }),
-};
 
 export default MenuItem;

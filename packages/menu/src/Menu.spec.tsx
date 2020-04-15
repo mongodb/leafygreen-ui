@@ -80,7 +80,7 @@ describe('packages/Menu', () => {
         >
           Item 2
         </MenuItem>
-        <MenuItem data-testid="third-item" as="div">
+        <MenuItem data-testid="third-item" component="div">
           Item 3
         </MenuItem>
         <MenuItem data-testid="fourth-item" glyph={<Icon glyph="Cloud" />}>
@@ -111,7 +111,7 @@ describe('packages/Menu', () => {
       expect(secondItem.rel).toBe('help');
     });
 
-    test('renders as `div` tag when the as prop is set', () => {
+    test('renders as `div` tag when the "component" prop is set', () => {
       expect(thirdItem.tagName.toLowerCase()).toBe('div');
     });
   });

@@ -16,7 +16,7 @@
     "@leafygreen-ui/lib": "^4.4.1",
     "@leafygreen-ui/palette": "^2.0.1",
     "@leafygreen-ui/leafygreen-provider": "^1.1.0",
-    "lodash": "^4.17.15"
+    "@leafygreen-ui/box": "^1.1.1"
   },
   "devDependencies": {
     "@leafygreen-ui/icon": "^5.0.3"

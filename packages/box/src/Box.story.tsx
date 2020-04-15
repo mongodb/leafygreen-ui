@@ -6,7 +6,7 @@ import Box from '.';
 storiesOf('Box', module)
   .add('Default', () => <Box>I am a div</Box>)
   .add('Anchor', () => (
-    <Box href="https://mongodb.design">
+    <Box component="a" href="https://mongodb.design">
       {text('Children', 'I am an anchor tag')}
     </Box>
   ))

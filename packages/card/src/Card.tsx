@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import Box, { BoxProps } from '@leafygreen-ui/box';
-import omit from 'lodash/omit';
+import Box, { OverrideComponentProps } from '@leafygreen-ui/box';
 
 const containerStyle = css`
   background-color: white;
@@ -18,16 +17,33 @@ const containerStyle = css`
   }
 `;
 
-function Card<T extends React.ReactNode>(props: BoxProps<T>) {
-  const rest = omit(props as any, ['className']);
+interface BaseCardProps {
+  className?: string;
+}
 
-  return <Box className={cx(containerStyle, props.className)} {...rest} />;
+type CardProps<C extends React.ElementType> = OverrideComponentProps<
+  C,
+  BaseCardProps
+>;
+
+function Card<C extends React.ElementType = 'div'>({
+  className,
+  ...rest
+}: CardProps<C>) {
+  return (
+    <Box component="div" className={cx(containerStyle, className)} {...rest} />
+  );
 }
 
 Card.displayName = 'Card';
 
 Card.propTypes = {
-  as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  component: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+    PropTypes.elementType,
+  ]),
+  className: PropTypes.string,
 };
 
 export default Card;
