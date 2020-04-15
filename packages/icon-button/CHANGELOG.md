@@ -1,5 +1,13 @@
 # @leafygreen-ui/icon-button
 
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies [75c0693]
+  - @leafygreen-ui/icon@5.0.3
+  - @leafygreen-ui/palette@2.0.1
+
 ## 5.0.0
 
 ### Major Changes
