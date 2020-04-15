@@ -66,6 +66,10 @@ const versionStyle = css`
   })}
 `;
 
+const productTourColor = css`
+  color: ${uiColors.blue.base};
+`;
+
 const paymentStatusMap: {
   [K in Partial<Variant>]?: ReadonlyArray<OrgPaymentLabel>;
 } = {
@@ -134,6 +138,7 @@ function OrgNav({
   admin,
   hosts,
   currentProjectName = 'None',
+
   onPremEnabled,
   onPremVersion,
   onPremMFA = false,
@@ -372,24 +377,19 @@ function OrgNav({
           </Tooltip>
         )}
 
-        {!onPremEnabled && !isMobile && (
-          <OrgNavLink
-            href={
-              // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'.ts(2339)
-              window.Appcues
-                ? "javascript:Appcues.show('-M4PVbE05VI91MJihJGv')"
-                : `https://cloud-dev.mongodb.com/v2/5dd6a2d5f10fab46624c2ffd#clusters?appcue=-M4PVbE05VI91MJihJGv`
-            }
-            className={cx(
-              rightLinkMargin,
-              css`
-                color: ${uiColors.blue.base};
-              `,
-            )}
-          >
-            See Product Tour
-          </OrgNavLink>
-        )}
+        {!onPremEnabled &&
+          !isMobile &&
+          // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'.ts(2339)
+          window.Appcues && (
+            <OrgNavLink
+              // @ts-ignore 'Cannot find name Appcues'
+              onClick={() => Appcues.show('-M4PVbE05VI91MJihJGv')} // eslint-disable-line no-undef
+              className={cx(rightLinkMargin, productTourColor)}
+              data-testid="org-nav-see-product-tour"
+            >
+              See Product Tour
+            </OrgNavLink>
+          )}
 
         {!isMobile && (
           <OrgNavLink
