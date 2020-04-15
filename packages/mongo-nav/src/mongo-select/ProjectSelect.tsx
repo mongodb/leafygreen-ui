@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // leafygreen-ui
 import Icon from '@leafygreen-ui/icon';
@@ -87,6 +87,11 @@ interface ProjectMongoSelectProps extends BaseMongoSelectProps {
   constructProjectURL: NonNullable<MongoNavInterface['constructProjectURL']>;
 }
 
+interface ProjectFilterResponse {
+  cid: string;
+  gn: string;
+}
+
 // data props
 const projectTriggerDataProp = createDataProp('project-trigger');
 
@@ -95,13 +100,15 @@ function ProjectSelect({
   data = [],
   onChange: onChangeProp,
   constructProjectURL,
+  hosts = {},
   urls = {},
+  admin = false,
   loading = false,
   className,
   ...rest
 }: ProjectMongoSelectProps) {
   const [value, setValue] = useState('');
-  const [consumerFilteredData, setConsumerFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState(data);
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
 
@@ -112,6 +119,29 @@ function ProjectSelect({
     }
   };
 
+  function fetchProjectsAsGlobalUser(searchTerm: string) {
+    const queryString = searchTerm ? `?term=${searchTerm}` : '';
+    const endpointURI = `${hosts.cloud}/user/shared/projects/search${queryString}`;
+    return fetch(endpointURI, {
+      credentials: 'include',
+      mode: 'cors',
+      method: 'GET',
+    });
+  }
+
+  const filterDataAsAdmin = async () => {
+    const response = await fetchProjectsAsGlobalUser(value);
+    response
+      .json()
+      .then(data =>
+        data.map(({ cid, gn }: ProjectFilterResponse) => {
+          return { projectId: cid, projectName: gn };
+        }),
+      )
+      .then(setFilteredData)
+      .catch(console.error);
+  };
+
   const filterData = () => {
     const sanitizedValue = value.replace(/\\/g, '\\\\');
     const search = new RegExp(String(sanitizedValue), 'i');
@@ -120,17 +150,42 @@ function ProjectSelect({
       return search.test(datum.projectName);
     });
 
-    return filtered;
+    setFilteredData(filtered);
   };
 
-  const renderedData = onChangeProp ? consumerFilteredData : filterData();
+  const didMount = useRef(false);
+  useEffect(() => {
+    // allow the user to provide filtered data
+    if (onChangeProp) {
+      return;
+    }
+
+    // manage serverside filtering for a global user
+    if (admin) {
+      // save the fetch call during initial render
+      if (!didMount.current) {
+        didMount.current = true;
+        return;
+      }
+
+      filterDataAsAdmin();
+      return;
+    }
+
+    // otherwise, filter the provided data clientside
+    filterData();
+  }, [value]);
+
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setValue(value);
     return onChangeProp?.({
       value,
-      setData: setConsumerFilteredData,
+      setData: setFilteredData,
       event: e,
     });
   };
@@ -213,7 +268,7 @@ function ProjectSelect({
           </FocusableMenuItem>
 
           <ul className={ulStyle}>
-            {renderedData?.map(datum => renderProjectOption(datum))}
+            {filteredData?.map(datum => renderProjectOption(datum))}
           </ul>
 
           <MenuSeparator />

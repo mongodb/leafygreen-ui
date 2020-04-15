@@ -248,11 +248,13 @@ function OrgNav({
         data={data}
         current={current}
         constructOrganizationURL={constructOrganizationURL}
+        hosts={hosts}
         urls={urls.mongoSelect}
         onChange={onOrganizationChange}
         isActive={activeNav === ActiveNavElement.OrgNavOrgSettings}
         loading={!current}
         disabled={disabled}
+        admin={admin}
         isOnPrem={onPremEnabled}
       />
 

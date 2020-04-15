@@ -339,7 +339,9 @@ export default function ProjectNav({
         current={current}
         data={data}
         constructProjectURL={constructProjectURL}
+        hosts={hosts}
         urls={urls.mongoSelect}
+        admin={admin}
         onChange={onProjectChange}
         loading={!current}
       />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // leafygreen-ui
 import Icon from '@leafygreen-ui/icon';
@@ -167,23 +167,29 @@ const formattedPlanTypes: Record<PlanType, string> = {
   [PlanType.OnPrem]: 'Ops Manager',
 } as const;
 
+interface OrgFilterResponse extends OrganizationInterface {
+  groups: null;
+}
+
 // data props
 const triggerDataProp = createDataProp('org-trigger');
 const anchorDataProp = createDataProp('anchor-data-prop');
 
 function OrgSelect({
   current,
+  hosts = {},
   data = [],
   urls = {},
   onChange: onChangeProp,
   constructOrganizationURL,
+  admin = false,
   isOnPrem = false,
   isActive = false,
   disabled = false,
   loading = false,
 }: OrganizationMongoSelectProps) {
   const [value, setValue] = useState('');
-  const [consumerFilteredData, setConsumerFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState(data);
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -200,6 +206,30 @@ function OrgSelect({
     }
   };
 
+  function fetchOrgsAsGlobalUser(searchTerm: string) {
+    const queryString = searchTerm ? `?term=${searchTerm}` : '';
+    const endpointURI = `${hosts.cloud}/user/shared/organizations/search${queryString}`;
+    return fetch(endpointURI, {
+      credentials: 'include',
+      mode: 'cors',
+      method: 'GET',
+    });
+  }
+
+  const filterDataAsAdmin = async () => {
+    const response = await fetchOrgsAsGlobalUser(value);
+    response
+      .json()
+      .then(data => {
+        setFilteredData(
+          data.map(({ groups, ...org }: OrgFilterResponse) => {
+            return org;
+          }),
+        );
+      })
+      .catch(console.error);
+  };
+
   const filterData = () => {
     const sanitizedValue = value.replace(/\\/g, '\\\\');
     const search = new RegExp(String(sanitizedValue), 'i');
@@ -208,17 +238,43 @@ function OrgSelect({
       return search.test(datum.orgName);
     });
 
-    return filtered;
+    setFilteredData(filtered);
   };
 
-  const renderedData = onChangeProp ? consumerFilteredData : filterData();
+  const didMount = useRef(false);
+  useEffect(() => {
+    // allow the user to provide filtered data
+    if (onChangeProp) {
+      return;
+    }
 
+    // manage serverside filtering for a global user
+    if (admin) {
+      // don't fetch data initially, only when filtering
+      if (!didMount.current) {
+        didMount.current = true;
+        return;
+      }
+
+      filterDataAsAdmin();
+      return;
+    }
+
+    // otherwise, filter the provided data clientside
+    filterData();
+  }, [value]);
+
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
+
+  // on change, make sure value actually changes
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/\\/g, '\\');
     setValue(val);
     return onChangeProp?.({
       value,
-      setData: setConsumerFilteredData,
+      setData: setFilteredData,
       event: e,
     });
   };
@@ -320,8 +376,8 @@ function OrgSelect({
             )}
 
             <ul className={ulStyle}>
-              {(Array.isArray(renderedData) &&
-                renderedData.map(renderOrganizationOption)) ?? (
+              {(Array.isArray(filteredData) &&
+                filteredData.map(renderOrganizationOption)) ?? (
                 <li className={emptyStateStyle}>
                   You do not belong to any organizations. Create an organization
                   on the{' '}
@@ -333,7 +389,7 @@ function OrgSelect({
               )}
             </ul>
 
-            {renderedData && (
+            {filteredData && (
               <>
                 <MenuSeparator />
                 <MenuItem
