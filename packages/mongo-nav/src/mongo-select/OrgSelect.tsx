@@ -178,6 +178,7 @@ const anchorDataProp = createDataProp('anchor-data-prop');
 
 function OrgSelect({
   current,
+  mode,
   hosts = {},
   data = [],
   urls = {},
@@ -207,7 +208,7 @@ function OrgSelect({
     }
   };
 
-  const fetchOrgsAsGlobalUser = (searchTerm: string) => {
+  const fetchOrgsAsAdmin = (searchTerm = '') => {
     const queryString = searchTerm ? `?term=${searchTerm}` : '';
     const endpointURI = `${hosts.cloud}/user/shared/organizations/search${queryString}`;
     return fetch(endpointURI, {
@@ -218,9 +219,11 @@ function OrgSelect({
   };
 
   const filterDataAsAdmin = debounce(() => {
-    fetchOrgsAsGlobalUser(value)
+    const mapResponseToOrgs = (response: Array<OrgFilterResponse>) =>
+      response.map(({ groups, ...org }) => org);
+    fetchOrgsAsAdmin(value)
       .then(response => response.json())
-      .then(data => data.map(({ groups, ...org }: OrgFilterResponse) => org))
+      .then(mapResponseToOrgs)
       .then(setFilteredData)
       .catch(console.error);
   }, 300);
@@ -249,8 +252,8 @@ function OrgSelect({
       return;
     }
 
-    // serverside filtering (global read only)
-    if (admin) {
+    // serverside filtering (admin users only)
+    if (admin && mode !== 'dev') {
       // skip fetch request on initial render
       if (!didMount.current) {
         didMount.current = true;

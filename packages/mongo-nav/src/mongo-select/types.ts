@@ -1,17 +1,18 @@
 import { MouseEventHandler, ReactNode } from 'react';
-import { HostsInterface, URLSInterface, OnChangeInterface } from '../types';
+import { MongoNavInterface, URLSInterface, OnChangeInterface } from '../types';
 
 export type MongoSelectUrls = NonNullable<URLSInterface['mongoSelect']>;
 
-export interface BaseMongoSelectProps {
+export type BaseMongoSelectProps = Pick<
+  MongoNavInterface,
+  'hosts' | 'admin' | 'mode'
+> & {
   className?: string;
   onClick?: MouseEventHandler;
   onChange?: (OnChangeInterface: OnChangeInterface) => void;
   loading?: boolean;
-  admin?: boolean;
-  hosts?: HostsInterface;
   urls: MongoSelectUrls;
-}
+};
 
 export interface BaseTriggerProps {
   className?: string;

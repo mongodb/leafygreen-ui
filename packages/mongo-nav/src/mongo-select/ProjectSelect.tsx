@@ -98,6 +98,7 @@ const projectTriggerDataProp = createDataProp('project-trigger');
 
 function ProjectSelect({
   current,
+  mode,
   data = [],
   onChange: onChangeProp,
   constructProjectURL,
@@ -120,7 +121,7 @@ function ProjectSelect({
     }
   };
 
-  const fetchProjectsAsGlobalUser = (searchTerm: string) => {
+  const fetchProjectsAsAdmin = (searchTerm = '') => {
     const queryString = searchTerm ? `?term=${searchTerm}` : '';
     const endpointURI = `${hosts.cloud}/user/shared/projects/search${queryString}`;
     return fetch(endpointURI, {
@@ -131,14 +132,15 @@ function ProjectSelect({
   };
 
   const filterDataAsAdmin = debounce(() => {
-    fetchProjectsAsGlobalUser(value)
+    const mapResponseToProjects = (response: Array<ProjectFilterResponse>) => {
+      return response.map(({ cid: projectId, gn: projectName }) => ({
+        projectId,
+        projectName,
+      }));
+    };
+    fetchProjectsAsAdmin(value)
       .then(response => response.json())
-      .then(data =>
-        data.map(({ cid, gn }: ProjectFilterResponse) => ({
-          projectId: cid,
-          projectName: gn,
-        })),
-      )
+      .then(mapResponseToProjects)
       .then(setFilteredData)
       .catch(console.error);
   }, 300);
@@ -167,8 +169,8 @@ function ProjectSelect({
       return;
     }
 
-    // serverside filtering (global read only)
-    if (admin) {
+    // serverside filtering (admin users only)
+    if (admin && mode !== 'dev') {
       // skip fetch request on initial render
       if (!didMount.current) {
         didMount.current = true;
@@ -274,9 +276,7 @@ function ProjectSelect({
             />
           </FocusableMenuItem>
 
-          <ul className={ulStyle}>
-            {filteredData?.map(datum => renderProjectOption(datum))}
-          </ul>
+          <ul className={ulStyle}>{filteredData?.map(renderProjectOption)}</ul>
 
           <MenuSeparator />
 
