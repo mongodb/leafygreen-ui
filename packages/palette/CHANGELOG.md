@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 2.0.1
+
+### Patch Changes
+
+- 75c0693: Upgrades workspace dependencies
+
 ## 2.0.0
 
 ### Major Changes

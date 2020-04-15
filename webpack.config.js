@@ -11,11 +11,13 @@ const hljsSupportedLanguages = [
   'cs', // C#
   'cpp', // C++
   'go',
+  'ini', // includes toml
   'java',
   'perl',
   'php',
   'python',
   'ruby',
+  'rust',
   'scala',
   'swift',
   'kotlin',

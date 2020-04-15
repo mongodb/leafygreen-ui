@@ -1,5 +1,11 @@
 # @leafygreen-ui/box
 
+## 1.1.1
+
+### Patch Changes
+
+- 75c0693: Upgrades workspace dependencies
+
 ## 1.1.0
 
 ### Minor Changes
