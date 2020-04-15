@@ -380,8 +380,7 @@ function OrgSelect({
             )}
 
             <ul className={ulStyle}>
-              {(Array.isArray(filteredData) &&
-                filteredData.map(renderOrganizationOption)) ?? (
+              {filteredData?.map(renderOrganizationOption) ?? (
                 <li className={emptyStateStyle}>
                   You do not belong to any organizations. Create an organization
                   on the{' '}
