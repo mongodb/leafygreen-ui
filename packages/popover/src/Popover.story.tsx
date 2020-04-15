@@ -12,8 +12,6 @@ const containerStyle = css`
   appearance: none;
   box-shadow: 0 0 4px #000;
   background-color: ${uiColors.gray.light1};
-  margin-top: 80vh;
-  margin-bottom: 80vh;
 `;
 
 const popoverStyle = css`
