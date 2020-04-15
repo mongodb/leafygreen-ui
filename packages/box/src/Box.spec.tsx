@@ -39,6 +39,7 @@ describe('packages/box', () => {
 
   const sharedProps = { name: 'testName' };
   const anchorProps = {
+    component: 'a',
     href: 'https://cloud.mongodb.com',
     target: '_blank',
     ...sharedProps,
