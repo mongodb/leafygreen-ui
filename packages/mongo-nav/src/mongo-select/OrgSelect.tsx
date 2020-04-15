@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import debounce from 'lodash/debounce';
 
 // leafygreen-ui
 import Icon from '@leafygreen-ui/icon';
@@ -206,7 +207,7 @@ function OrgSelect({
     }
   };
 
-  function fetchOrgsAsGlobalUser(searchTerm: string) {
+  const fetchOrgsAsGlobalUser = (searchTerm: string) => {
     const queryString = searchTerm ? `?term=${searchTerm}` : '';
     const endpointURI = `${hosts.cloud}/user/shared/organizations/search${queryString}`;
     return fetch(endpointURI, {
@@ -214,21 +215,15 @@ function OrgSelect({
       mode: 'cors',
       method: 'GET',
     });
-  }
-
-  const filterDataAsAdmin = async () => {
-    const response = await fetchOrgsAsGlobalUser(value);
-    response
-      .json()
-      .then(data => {
-        setFilteredData(
-          data.map(({ groups, ...org }: OrgFilterResponse) => {
-            return org;
-          }),
-        );
-      })
-      .catch(console.error);
   };
+
+  const filterDataAsAdmin = debounce(() => {
+    fetchOrgsAsGlobalUser(value)
+      .then(response => response.json())
+      .then(data => data.map(({ groups, ...org }: OrgFilterResponse) => org))
+      .then(setFilteredData)
+      .catch(console.error);
+  }, 300);
 
   const filterData = () => {
     const sanitizedValue = value.replace(/\\/g, '\\\\');
@@ -243,14 +238,20 @@ function OrgSelect({
 
   const didMount = useRef(false);
   useEffect(() => {
-    // allow the user to provide filtered data
+    // defer all behavior to user-provided filtering
     if (onChangeProp) {
       return;
     }
 
-    // manage serverside filtering for a global user
+    // clear filtering if the search term is cleared
+    if (value === '') {
+      setFilteredData(data);
+      return;
+    }
+
+    // serverside filtering (global read only)
     if (admin) {
-      // don't fetch data initially, only when filtering
+      // skip fetch request on initial render
       if (!didMount.current) {
         didMount.current = true;
         return;
@@ -260,7 +261,7 @@ function OrgSelect({
       return;
     }
 
-    // otherwise, filter the provided data clientside
+    // clientside filtering (default)
     filterData();
   }, [value]);
 
