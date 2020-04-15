@@ -68,6 +68,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
     expectedElements.onPremUserMenuSignOut = queryByTestId(
       'om-user-menuitem-sign-out',
     );
+    expectedElements.seeProductTour = queryByTestId('org-nav-see-product-tour');
   };
 
   let onOrganizationChange: jest.Mock;
@@ -183,11 +184,26 @@ describe('packages/mongo-nav/src/org-nav', () => {
     });
   };
 
+  const testForSeeProductTour = (isVisible = true) => {
+    it(`${
+      isVisible ? 'displays' : 'does not display'
+    } the See Product Tour link`, () => {
+      const productTour = expectedElements.seeProductTour;
+
+      if (isVisible) {
+        expect(productTour).toBeInTheDocument();
+      } else {
+        expect(productTour).toBeNull();
+      }
+    });
+  };
+
   describe('when rendered with default props', () => {
     beforeEach(renderComponent);
     testForPaymentStatus(false);
     testForVersion(false);
     testForUserMenu(true);
+    testForSeeProductTour(false);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, linkName !== 'admin'),
@@ -322,5 +338,26 @@ describe('packages/mongo-nav/src/org-nav', () => {
         );
       });
     });
+  });
+
+  describe('when window.Appcues is true', () => {
+    let originalWindowAppcues: boolean;
+
+    beforeEach(() => {
+      // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'
+      originalWindowAppcues = window.Appcues;
+      // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'
+      window.Appcues = true;
+      renderComponent();
+    });
+
+    afterEach(() => {
+      // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'
+      window.Appcues = originalWindowAppcues;
+      jest.restoreAllMocks();
+      cleanup();
+    });
+
+    testForSeeProductTour(true);
   });
 });
