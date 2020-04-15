@@ -16,7 +16,7 @@ import {
   useElementNode,
 } from '@leafygreen-ui/hooks';
 import { Align, Justify, PopoverProps } from './types';
-import { calculatePosition, getElementPosition } from './positionUtils';
+import { calculatePosition, getElementViewportPosition, getElementDocumentPosition } from './positionUtils';
 
 const rootPopoverStyle = css`
   transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
@@ -98,7 +98,11 @@ function Popover({
     adjustOnMutation,
   );
 
-  const referenceElPos = useMemo(() => getElementPosition(referenceElement), [
+  // We don't memoize these values as they're reliant on scroll positioning
+  const referenceElViewportPos = getElementViewportPosition(referenceElement);
+  const contentElViewportPos = getElementViewportPosition(contentNode);
+
+  const referenceElDocumentPos = useMemo(() => getElementDocumentPosition(referenceElement), [
     referenceElement,
     viewportSize,
     lastTimeRefElMutated,
@@ -108,7 +112,7 @@ function Popover({
     forceUpdateCounter,
   ]);
 
-  const contentElPos = useMemo(() => getElementPosition(contentNode), [
+  const contentElDocumentPos = useMemo(() => getElementDocumentPosition(contentNode), [
     contentNode,
     viewportSize,
     lastTimeContentElMutated,
@@ -151,8 +155,10 @@ function Popover({
     spacing,
     align,
     justify,
-    referenceElPos,
-    contentElPos,
+    referenceElViewportPos,
+    referenceElDocumentPos,
+    contentElViewportPos,
+    contentElDocumentPos,
   });
 
   const activeStyle = css`

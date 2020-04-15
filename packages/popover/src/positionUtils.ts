@@ -1,12 +1,9 @@
 import { Align, Justify, ElementPosition } from './types';
 
-type ReferencePosition = ElementPosition;
-type ContentPosition = ElementPosition;
-
 interface ElementPositions {
   spacing: number;
-  referenceElPos: ReferencePosition;
-  contentElPos: ContentPosition;
+  referenceElPos: ElementPosition;
+  contentElPos: ElementPosition;
 }
 
 interface WindowSize {
@@ -103,8 +100,27 @@ const defaultElementPosition = {
   width: 0,
 };
 
+export function getElementDocumentPosition(element: HTMLElement | null): ElementPosition {
+  if (!element) {
+    return defaultElementPosition;
+  }
+
+  const { top, bottom, left, right } = element.getBoundingClientRect();
+  const { offsetHeight: height, offsetWidth: width } = element;
+  const {scrollX, scrollY} = window
+
+  return {
+    top: top + scrollY,
+    bottom: bottom + scrollY,
+    left: left + scrollX,
+    right: right + scrollX,
+    height,
+    width,
+  };
+}
+
 // Gets top offset, left offset, width and height dimensions for a node
-export function getElementPosition(
+export function getElementViewportPosition(
   element: HTMLElement | null,
 ): ElementPosition {
   if (!element) {
@@ -114,7 +130,14 @@ export function getElementPosition(
   const { top, bottom, left, right } = element.getBoundingClientRect();
   const { offsetHeight: height, offsetWidth: width } = element;
 
-  return { top, bottom, left, right, height, width };
+  return {
+    top,
+    bottom,
+    left,
+    right,
+    height,
+    width,
+  };
 }
 
 interface TransformOriginArgs {
@@ -125,13 +148,14 @@ interface TransformOriginArgs {
 type XOrigin = 'left' | 'right' | 'center';
 type YOrigin = 'top' | 'bottom' | 'center';
 
-const yJustifyOrigins: { [J in Justify]: YOrigin } = {
+const yJustifyOrigins: Record<Justify, YOrigin> = {
   [Justify.Start]: 'top',
   [Justify.Middle]: 'center',
   [Justify.End]: 'bottom',
   [Justify.Fit]: 'center',
 };
-const xJustifyOrigins: { [J in Justify]: XOrigin } = {
+
+const xJustifyOrigins: Record<Justify, XOrigin> = {
   [Justify.Start]: 'left',
   [Justify.Middle]: 'center',
   [Justify.End]: 'right',
@@ -272,6 +296,7 @@ function calcRelativePosition({
 }: CalcPositionArgs): AbsolutePositionObject {
   const alignMapping = relativePositionMappings[align];
   const justifyMapping = alignMapping.justifyPositions[justify];
+
   return {
     ...alignMapping.constant?.({ contentElPos, referenceElPos, spacing }),
     ...(typeof justifyMapping === 'function'
@@ -298,6 +323,7 @@ function calcAbsolutePosition({
     contentElPos,
     spacing,
   })}px`;
+
   const top = `${calcTop({
     align,
     justify,
