@@ -16,7 +16,11 @@ import {
   useElementNode,
 } from '@leafygreen-ui/hooks';
 import { Align, Justify, PopoverProps } from './types';
-import { calculatePosition, getElementViewportPosition, getElementDocumentPosition } from './positionUtils';
+import {
+  calculatePosition,
+  getElementViewportPosition,
+  getElementDocumentPosition,
+} from './positionUtils';
 
 const rootPopoverStyle = css`
   transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
@@ -102,25 +106,31 @@ function Popover({
   const referenceElViewportPos = getElementViewportPosition(referenceElement);
   const contentElViewportPos = getElementViewportPosition(contentNode);
 
-  const referenceElDocumentPos = useMemo(() => getElementDocumentPosition(referenceElement), [
-    referenceElement,
-    viewportSize,
-    lastTimeRefElMutated,
-    active,
-    align,
-    justify,
-    forceUpdateCounter,
-  ]);
+  const referenceElDocumentPos = useMemo(
+    () => getElementDocumentPosition(referenceElement),
+    [
+      referenceElement,
+      viewportSize,
+      lastTimeRefElMutated,
+      active,
+      align,
+      justify,
+      forceUpdateCounter,
+    ],
+  );
 
-  const contentElDocumentPos = useMemo(() => getElementDocumentPosition(contentNode), [
-    contentNode,
-    viewportSize,
-    lastTimeContentElMutated,
-    active,
-    align,
-    justify,
-    forceUpdateCounter,
-  ]);
+  const contentElDocumentPos = useMemo(
+    () => getElementDocumentPosition(contentNode),
+    [
+      contentNode,
+      viewportSize,
+      lastTimeContentElMutated,
+      active,
+      align,
+      justify,
+      forceUpdateCounter,
+    ],
+  );
 
   const prevJustifyRef = useRef<Justify>();
   const prevAlignRef = useRef<Align>();

@@ -12,14 +12,18 @@ interface ElementDocumentPositions {
   spacing: number;
 }
 
-interface ElementPositions extends Partial<ElementViewportPositions>, Partial<ElementDocumentPositions> {}
+interface ElementPositions
+  extends Partial<ElementViewportPositions>,
+    Partial<ElementDocumentPositions> {}
 
 interface WindowSize {
   windowWidth: number;
   windowHeight: number;
 }
 
-interface CalculatePosition extends Required<ElementPositions>, Partial<WindowSize> {
+interface CalculatePosition
+  extends Required<ElementPositions>,
+    Partial<WindowSize> {
   useRelativePositioning: boolean;
   align: Align;
   justify: Justify;
@@ -110,14 +114,16 @@ const defaultElementPosition = {
   width: 0,
 };
 
-export function getElementDocumentPosition(element: HTMLElement | null): ElementPosition {
+export function getElementDocumentPosition(
+  element: HTMLElement | null,
+): ElementPosition {
   if (!element) {
     return defaultElementPosition;
   }
 
   const { top, bottom, left, right } = element.getBoundingClientRect();
   const { offsetHeight: height, offsetWidth: width } = element;
-  const {scrollX, scrollY} = window
+  const { scrollX, scrollY } = window;
 
   return {
     top: top + scrollY,
@@ -243,7 +249,9 @@ const verticalJustifyRelativePositions: JustifyPositions = {
   [Justify.Start]: { top: 0 },
   [Justify.End]: { bottom: 0 },
   [Justify.Middle]: ({ contentElDocumentPos, referenceElDocumentPos }) => ({
-    top: `${referenceElDocumentPos.height / 2 - contentElDocumentPos.height / 2}px`,
+    top: `${
+      referenceElDocumentPos.height / 2 - contentElDocumentPos.height / 2
+    }px`,
   }),
   [Justify.Fit]: { top: 0, bottom: 0 },
 };
@@ -256,15 +264,20 @@ const horizontalJustifyRelativePositions: JustifyPositions = {
   [Justify.Start]: { left: 0 },
   [Justify.End]: { right: 0 },
   [Justify.Middle]: ({ contentElDocumentPos, referenceElDocumentPos }) => ({
-    left: `${referenceElDocumentPos.width / 2 - contentElDocumentPos.width / 2}px`,
+    left: `${
+      referenceElDocumentPos.width / 2 - contentElDocumentPos.width / 2
+    }px`,
   }),
   [Justify.Fit]: { left: 0, right: 0 },
 };
 
-const relativePositionMappings: Record<Align, {
-  constant?: (positions: ElementDocumentPositions) => AbsolutePositionObject;
-  justifyPositions: JustifyPositions;
-}> = {
+const relativePositionMappings: Record<
+  Align,
+  {
+    constant?: (positions: ElementDocumentPositions) => AbsolutePositionObject;
+    justifyPositions: JustifyPositions;
+  }
+> = {
   [Align.Top]: {
     constant: ({ spacing }) => ({ bottom: `calc(100% + ${spacing}px)` }),
     justifyPositions: horizontalJustifyRelativePositions,
@@ -309,7 +322,9 @@ function calcRelativePosition({
 
   return {
     ...alignMapping.constant?.(mappingArgs),
-    ...(typeof justifyMapping === 'function' ? justifyMapping(mappingArgs) : justifyMapping),
+    ...(typeof justifyMapping === 'function'
+      ? justifyMapping(mappingArgs)
+      : justifyMapping),
   };
 }
 
