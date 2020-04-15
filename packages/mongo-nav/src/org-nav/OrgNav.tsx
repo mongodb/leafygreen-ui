@@ -5,7 +5,7 @@ import Badge, { Variant } from '@leafygreen-ui/badge';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import UserMenu from '../user-menu';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { LogoMark } from '@leafygreen-ui/logo';
 import { useViewportSize } from '@leafygreen-ui/hooks';
@@ -64,6 +64,10 @@ const versionStyle = css`
   ${mq({
     marginRight: ['16px', '16px', '16px'],
   })}
+`;
+
+const productTourColor = css`
+  color: ${uiColors.blue.base};
 `;
 
 const paymentStatusMap: {
@@ -134,6 +138,7 @@ function OrgNav({
   admin,
   hosts,
   currentProjectName = 'None',
+
   onPremEnabled,
   onPremVersion,
   onPremMFA = false,
@@ -371,6 +376,20 @@ function OrgNav({
             Ops Manager Version
           </Tooltip>
         )}
+
+        {!onPremEnabled &&
+          !isMobile &&
+          // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'.ts(2339)
+          window.Appcues && (
+            <OrgNavLink
+              // @ts-ignore 'Cannot find name Appcues'
+              onClick={() => Appcues.show('-M4PVbE05VI91MJihJGv')} // eslint-disable-line no-undef
+              className={cx(rightLinkMargin, productTourColor)}
+              data-testid="org-nav-see-product-tour"
+            >
+              See Product Tour
+            </OrgNavLink>
+          )}
 
         {!isMobile && (
           <OrgNavLink
