@@ -1,17 +1,25 @@
 import { Align, Justify, ElementPosition } from './types';
 
-interface ElementPositions {
+interface ElementViewportPositions {
+  referenceElViewportPos: ElementPosition;
+  contentElViewportPos: ElementPosition;
   spacing: number;
-  referenceElPos: ElementPosition;
-  contentElPos: ElementPosition;
 }
+
+interface ElementDocumentPositions {
+  referenceElDocumentPos: ElementPosition;
+  contentElDocumentPos: ElementPosition;
+  spacing: number;
+}
+
+interface ElementPositions extends Partial<ElementViewportPositions>, Partial<ElementDocumentPositions> {}
 
 interface WindowSize {
   windowWidth: number;
   windowHeight: number;
 }
 
-interface CalculatePosition extends ElementPositions, Partial<WindowSize> {
+interface CalculatePosition extends Required<ElementPositions>, Partial<WindowSize> {
   useRelativePositioning: boolean;
   align: Align;
   justify: Justify;
@@ -23,8 +31,10 @@ export function calculatePosition({
   spacing,
   align,
   justify,
-  referenceElPos = defaultElementPosition,
-  contentElPos = defaultElementPosition,
+  referenceElViewportPos = defaultElementPosition,
+  referenceElDocumentPos = defaultElementPosition,
+  contentElViewportPos = defaultElementPosition,
+  contentElDocumentPos = defaultElementPosition,
   windowHeight = window.innerHeight,
   windowWidth = window.innerWidth,
 }: CalculatePosition): {
@@ -35,8 +45,8 @@ export function calculatePosition({
   const windowSafeCommonArgs = {
     windowWidth,
     windowHeight,
-    referenceElPos,
-    contentElPos,
+    referenceElViewportPos,
+    contentElViewportPos,
     spacing,
   };
 
@@ -62,8 +72,8 @@ export function calculatePosition({
         ...calcRelativePosition({
           align: windowSafeAlign,
           justify: windowSafeJustify,
-          referenceElPos,
-          contentElPos,
+          referenceElDocumentPos,
+          contentElDocumentPos,
           spacing,
         }),
         transformOrigin,
@@ -79,8 +89,8 @@ export function calculatePosition({
       ...calcAbsolutePosition({
         align: windowSafeAlign,
         justify: windowSafeJustify,
-        referenceElPos,
-        contentElPos,
+        referenceElDocumentPos,
+        contentElDocumentPos,
         spacing,
         windowHeight,
         windowWidth,
@@ -213,15 +223,16 @@ interface AbsolutePositionObject {
   right?: string | 0;
 }
 
-interface CalcPositionArgs extends ElementPositions {
+interface CalcPositionArgs extends ElementDocumentPositions {
   align: Align;
   justify: Justify;
+  spacing: number;
 }
 
 type JustifyPositions = {
   readonly [J in Justify]:
     | AbsolutePositionObject
-    | ((positions: ElementPositions) => AbsolutePositionObject);
+    | ((positions: ElementDocumentPositions) => AbsolutePositionObject);
 };
 
 /**
@@ -231,8 +242,8 @@ type JustifyPositions = {
 const verticalJustifyRelativePositions: JustifyPositions = {
   [Justify.Start]: { top: 0 },
   [Justify.End]: { bottom: 0 },
-  [Justify.Middle]: ({ contentElPos, referenceElPos }) => ({
-    top: `${referenceElPos.height / 2 - contentElPos.height / 2}px`,
+  [Justify.Middle]: ({ contentElDocumentPos, referenceElDocumentPos }) => ({
+    top: `${referenceElDocumentPos.height / 2 - contentElDocumentPos.height / 2}px`,
   }),
   [Justify.Fit]: { top: 0, bottom: 0 },
 };
@@ -244,18 +255,16 @@ const verticalJustifyRelativePositions: JustifyPositions = {
 const horizontalJustifyRelativePositions: JustifyPositions = {
   [Justify.Start]: { left: 0 },
   [Justify.End]: { right: 0 },
-  [Justify.Middle]: ({ contentElPos, referenceElPos }) => ({
-    left: `${referenceElPos.width / 2 - contentElPos.width / 2}px`,
+  [Justify.Middle]: ({ contentElDocumentPos, referenceElDocumentPos }) => ({
+    left: `${referenceElDocumentPos.width / 2 - contentElDocumentPos.width / 2}px`,
   }),
   [Justify.Fit]: { left: 0, right: 0 },
 };
 
-const relativePositionMappings: {
-  [A in Align]: {
-    constant?: (positions: ElementPositions) => AbsolutePositionObject;
-    justifyPositions: JustifyPositions;
-  };
-} = {
+const relativePositionMappings: Record<Align, {
+  constant?: (positions: ElementDocumentPositions) => AbsolutePositionObject;
+  justifyPositions: JustifyPositions;
+}> = {
   [Align.Top]: {
     constant: ({ spacing }) => ({ bottom: `calc(100% + ${spacing}px)` }),
     justifyPositions: horizontalJustifyRelativePositions,
@@ -265,8 +274,8 @@ const relativePositionMappings: {
     justifyPositions: horizontalJustifyRelativePositions,
   },
   [Align.CenterVertical]: {
-    constant: ({ referenceElPos }) => ({
-      top: `calc(${referenceElPos.height / 2}px - 50%)`,
+    constant: ({ referenceElDocumentPos }) => ({
+      top: `calc(${referenceElDocumentPos.height / 2}px - 50%)`,
     }),
     justifyPositions: horizontalJustifyRelativePositions,
   },
@@ -279,8 +288,8 @@ const relativePositionMappings: {
     justifyPositions: verticalJustifyRelativePositions,
   },
   [Align.CenterHorizontal]: {
-    constant: ({ referenceElPos }) => ({
-      left: `calc(${referenceElPos.width / 2}px - 50%)`,
+    constant: ({ referenceElDocumentPos }) => ({
+      left: `calc(${referenceElDocumentPos.width / 2}px - 50%)`,
     }),
     justifyPositions: verticalJustifyRelativePositions,
   },
@@ -290,18 +299,17 @@ const relativePositionMappings: {
 function calcRelativePosition({
   align,
   justify,
-  referenceElPos,
-  contentElPos,
+  referenceElDocumentPos,
+  contentElDocumentPos,
   spacing,
 }: CalcPositionArgs): AbsolutePositionObject {
   const alignMapping = relativePositionMappings[align];
   const justifyMapping = alignMapping.justifyPositions[justify];
+  const mappingArgs = { contentElDocumentPos, referenceElDocumentPos, spacing };
 
   return {
-    ...alignMapping.constant?.({ contentElPos, referenceElPos, spacing }),
-    ...(typeof justifyMapping === 'function'
-      ? justifyMapping({ contentElPos, referenceElPos, spacing })
-      : justifyMapping),
+    ...alignMapping.constant?.(mappingArgs),
+    ...(typeof justifyMapping === 'function' ? justifyMapping(mappingArgs) : justifyMapping),
   };
 }
 
@@ -310,8 +318,8 @@ type CalcAbsolutePositionArgs = CalcPositionArgs & WindowSize;
 function calcAbsolutePosition({
   align,
   justify,
-  referenceElPos,
-  contentElPos,
+  referenceElDocumentPos,
+  contentElDocumentPos,
   spacing,
   windowWidth,
   windowHeight,
@@ -319,16 +327,16 @@ function calcAbsolutePosition({
   const left = `${calcLeft({
     align,
     justify,
-    referenceElPos,
-    contentElPos,
+    referenceElPos: referenceElDocumentPos,
+    contentElPos: contentElDocumentPos,
     spacing,
   })}px`;
 
   const top = `${calcTop({
     align,
     justify,
-    referenceElPos,
-    contentElPos,
+    referenceElPos: referenceElDocumentPos,
+    contentElPos: contentElDocumentPos,
     spacing,
   })}px`;
 
@@ -344,20 +352,23 @@ function calcAbsolutePosition({
     return {
       left,
       top,
-      bottom: `${windowHeight - referenceElPos.bottom}px`,
+      bottom: `${windowHeight - referenceElDocumentPos.bottom}px`,
     };
   }
 
   return {
     left,
     top,
-    right: `${windowWidth - referenceElPos.right}px`,
+    right: `${windowWidth - referenceElDocumentPos.right}px`,
   };
 }
 
-interface CalcPosition extends ElementPositions {
+interface CalcPosition {
   align?: Align;
   justify?: Justify;
+  spacing: number;
+  contentElPos: ElementPosition;
+  referenceElPos: ElementPosition;
 }
 
 // Returns the 'top' position in pixels for a valid alignment or justification.
@@ -478,7 +489,7 @@ function safelyWithinVerticalWindow({
   return top >= 0 && !tooTall;
 }
 
-interface WindowSafeCommonArgs extends ElementPositions, WindowSize {}
+interface WindowSafeCommonArgs extends ElementViewportPositions, WindowSize {}
 
 const alignFallbacks: { [A in Align]: ReadonlyArray<Align> } = {
   [Align.Top]: [Align.Bottom],
@@ -498,10 +509,10 @@ function getWindowSafeAlign(
 ): Align {
   const {
     spacing,
-    contentElPos,
     windowWidth,
     windowHeight,
-    referenceElPos,
+    contentElViewportPos,
+    referenceElViewportPos,
   } = windowSafeCommon;
 
   const alignOptions = [align, ...alignFallbacks[align]];
@@ -517,14 +528,15 @@ function getWindowSafeAlign(
       ) {
         const top = calcTop({
           align: fallback,
-          contentElPos,
-          referenceElPos,
+          contentElPos: contentElViewportPos,
+          referenceElPos: referenceElViewportPos,
           spacing,
         });
+
         return safelyWithinVerticalWindow({
           top,
           windowHeight,
-          contentHeight: contentElPos.height,
+          contentHeight: contentElViewportPos.height,
         });
       }
 
@@ -535,14 +547,14 @@ function getWindowSafeAlign(
       ) {
         const left = calcLeft({
           align: fallback,
-          contentElPos,
-          referenceElPos,
+          contentElPos: contentElViewportPos,
+          referenceElPos: referenceElViewportPos,
           spacing,
         });
         return safelyWithinHorizontalWindow({
           left,
           windowWidth,
-          contentWidth: contentElPos.width,
+          contentWidth: contentElViewportPos.width,
         });
       }
 
@@ -568,10 +580,10 @@ function getWindowSafeJustify(
 ): Justify {
   const {
     spacing,
-    contentElPos,
     windowWidth,
     windowHeight,
-    referenceElPos,
+    contentElViewportPos,
+    referenceElViewportPos,
   } = windowSafeCommon;
 
   const justifyOptions = [justify, ...justifyFallbacks[justify]];
@@ -585,12 +597,12 @@ function getWindowSafeJustify(
           safelyWithinHorizontalWindow({
             contentWidth:
               fallback === Justify.Fit
-                ? referenceElPos.width
-                : contentElPos.width,
+                ? referenceElViewportPos.width
+                : contentElViewportPos.width,
             windowWidth,
             left: calcLeft({
-              contentElPos,
-              referenceElPos,
+              contentElPos: contentElViewportPos,
+              referenceElPos: referenceElViewportPos,
               spacing,
               align: align,
               justify: fallback,
@@ -607,12 +619,12 @@ function getWindowSafeJustify(
           safelyWithinVerticalWindow({
             contentHeight:
               fallback === Justify.Fit
-                ? referenceElPos.height
-                : contentElPos.height,
+                ? referenceElViewportPos.height
+                : contentElViewportPos.height,
             windowHeight,
             top: calcTop({
-              contentElPos,
-              referenceElPos,
+              contentElPos: contentElViewportPos,
+              referenceElPos: referenceElViewportPos,
               spacing,
               align,
               justify: fallback,

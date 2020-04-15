@@ -179,7 +179,7 @@ function Popover({
       return children({
         align: windowSafeAlign,
         justify: windowSafeJustify,
-        referenceElPos,
+        referenceElPos: referenceElDocumentPos,
       });
     }
 
