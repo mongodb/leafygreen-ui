@@ -109,7 +109,7 @@ const userMenuActiveNavItems = [
 
 type OrgNavProps = Pick<
   MongoNavInterface,
-  'activeProduct' | 'onOrganizationChange' | 'activeNav' | 'admin'
+  'activeProduct' | 'onOrganizationChange' | 'activeNav' | 'admin' | 'mode'
 > & {
   account?: AccountInterface;
   current?: CurrentOrganizationInterface;
@@ -132,6 +132,7 @@ function OrgNav({
   activeProduct,
   current,
   data,
+  mode,
   constructOrganizationURL,
   onOrganizationChange,
   urls,
@@ -252,12 +253,15 @@ function OrgNav({
       <OrgSelect
         data={data}
         current={current}
+        mode={mode}
         constructOrganizationURL={constructOrganizationURL}
+        hosts={hosts}
         urls={urls.mongoSelect}
         onChange={onOrganizationChange}
         isActive={activeNav === ActiveNavElement.OrgNavOrgSettings}
         loading={!current}
         disabled={disabled}
+        admin={admin}
         isOnPrem={onPremEnabled}
       />
 
