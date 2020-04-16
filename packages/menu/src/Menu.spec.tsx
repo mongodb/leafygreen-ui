@@ -107,8 +107,8 @@ describe('packages/Menu', () => {
     });
 
     test('renders with correct target and rel values when set', () => {
-      expect(secondItem.target).toBe('_blank');
-      expect(secondItem.rel).toBe('help');
+      expect((secondItem as HTMLAnchorElement).target).toBe('_blank');
+      expect((secondItem as HTMLAnchorElement).rel).toBe('help');
     });
 
     test('renders as `div` tag when the "component" prop is set', () => {
@@ -146,7 +146,7 @@ describe('packages/Menu', () => {
     });
 
     test('when a SubMenu is clicked, it opens and closes the previously opened SubMenu', () => {
-      fireEvent.click(subMenuBArrow);
+      fireEvent.click(subMenuBArrow as HTMLElement);
       const subMenuItemB = getByTestId('sub-menu-item-b');
       expect(subMenuItemB).toBeVisible();
       // eslint-disable-next-line jest/valid-expect-in-promise

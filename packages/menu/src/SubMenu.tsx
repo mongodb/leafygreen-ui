@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
-import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
+import PropTypes from 'prop-types';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
+import Box, { OverrideComponentProps } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   menuItemContainerStyle,
@@ -145,7 +146,7 @@ const menuItemBorder = css`
   top: 0;
 `;
 
-interface SharedSubMenuProps {
+interface BaseSubMenuItemProps {
   /**
    * Determines if `<SubMenu />` item appears open
    */
@@ -164,7 +165,7 @@ interface SharedSubMenuProps {
   /**
    * Content to appear below main text of SubMenu
    */
-  description?: React.ReactElement;
+  description?: React.ReactNode;
 
   /**
    * Determines if `<SubMenu />` item appears disabled
@@ -183,198 +184,182 @@ interface SharedSubMenuProps {
   onExited?: ExitHandler;
 }
 
-interface LinkSubMenuProps extends HTMLElementProps<'a'>, SharedSubMenuProps {
-  href: string;
-}
-
-interface ButtonSubMenuProps
-  extends HTMLElementProps<'button'>,
-    SharedSubMenuProps {
-  href?: null;
-}
-
-type SubMenuProps = LinkSubMenuProps | ButtonSubMenuProps;
-
-function usesLinkElement(
-  props: LinkSubMenuProps | ButtonSubMenuProps,
-): props is LinkSubMenuProps {
-  return props.href != null;
-}
+type SubMenuItemProps<C extends React.ElementType> = OverrideComponentProps<
+  C,
+  BaseSubMenuItemProps
+>;
 
 const subMenuItemHeight = 36;
 
-const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
-  const {
-    title,
-    description,
-    href,
-    children,
-    setOpen,
-    onKeyDown,
-    className,
-    onClick,
-    glyph,
-    onExited = () => {},
-    open = false,
-    active = false,
-    disabled = false,
-    ...rest
-  } = props;
-
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-
-  const iconButtonRef: React.RefObject<HTMLElement | null> = useRef(null);
-
-  const onRootClick = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
-      React.MouseEvent<HTMLButtonElement, MouseEvent>,
+// eslint-disable-next-line
+const SubMenu = React.forwardRef(
+  <C extends React.ElementType = 'button'>(
+    {
+      title,
+      description,
+      href,
+      children,
+      setOpen,
+      onKeyDown,
+      className,
+      onClick,
+      glyph,
+      onExited = () => {},
+      open = false,
+      active = false,
+      disabled = false,
+      ...rest
+    }: SubMenuItemProps<C>,
+    ref: React.Ref<any>,
   ) => {
-    if (iconButtonRef.current?.contains(e.target as HTMLElement)) {
-      e.preventDefault();
-    } else if (onClick) {
-      onClick(e);
-    }
-  };
+    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
-  const numberOfMenuItems = React.Children.toArray(children).length;
+    const iconButtonRef: React.RefObject<HTMLElement | null> = useRef(null);
 
-  const updatedGlyph =
-    glyph &&
-    React.cloneElement(glyph, {
-      className: cx(
-        mainIconStyle,
-        {
-          [activeIconStyle]: active,
-          [mainIconFocusedStyle]: showFocus,
-        },
-        glyph.props?.className,
-      ),
-    });
+    const onRootClick = (
+      e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
+        React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    ) => {
+      if (iconButtonRef.current?.contains(e.target as HTMLElement)) {
+        e.preventDefault();
+      } else if (onClick) {
+        onClick(e);
+      }
+    };
 
-  const renderedSubMenuItem = (Root: React.ElementType<any> = 'button') => (
-    <li role="none" className={liStyle}>
-      <Root
-        {...subMenuContainer.prop}
-        {...rest}
-        onKeyDown={onKeyDown}
-        role="menuitem"
-        href={href}
-        aria-haspopup="true"
-        ref={ref}
-        onClick={onRootClick}
-        className={cx(
-          menuItemContainerStyle,
-          subMenuStyle,
-          linkStyle,
+    const numberOfMenuItems = React.Children.toArray(children).length;
+
+    const updatedGlyph =
+      glyph &&
+      React.cloneElement(glyph, {
+        className: cx(
+          mainIconStyle,
           {
-            [activeMenuItemContainerStyle]: active,
-            [disabledMenuItemContainerStyle]: disabled,
-            [subMenuOpenStyle]: open,
-            [focusedMenuItemContainerStyle]: showFocus,
+            [activeIconStyle]: active,
+            [mainIconFocusedStyle]: showFocus,
           },
-          className,
-        )}
-      >
-        {updatedGlyph}
-        <div>
-          <div
-            className={cx(mainTextStyle, {
-              [activeMainTextStyle]: active,
-            })}
-          >
-            {title}
-          </div>
+          glyph.props?.className,
+        ),
+      });
 
-          <div className={cx({ [disabledTextStyle]: disabled })}>
-            {description}
-          </div>
-        </div>
-      </Root>
-      <IconButton
-        {...iconButton.prop}
-        ref={iconButtonRef}
-        aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
-        className={cx(iconButtonStyle, {
-          [openIconButtonStyle]: open,
-          [iconButtonFocusedStyle]: showFocus,
-        })}
-        onClick={(e: React.MouseEvent) => {
-          // we stop the event from propagating and closing the entire menu
-          e.nativeEvent.stopImmediatePropagation();
+    return (
+      <li role="none" className={liStyle}>
+        <Box
+          component={href ? 'a' : 'button'}
+          onKeyDown={onKeyDown}
+          role="menuitem"
+          href={href}
+          aria-haspopup="true"
+          ref={ref}
+          onClick={onRootClick}
+          className={cx(
+            menuItemContainerStyle,
+            subMenuStyle,
+            linkStyle,
+            {
+              [activeMenuItemContainerStyle]: active,
+              [disabledMenuItemContainerStyle]: disabled,
+              [subMenuOpenStyle]: open,
+              [focusedMenuItemContainerStyle]: showFocus,
+            },
+            className,
+          )}
+          {...subMenuContainer.prop}
+          {...rest}
+        >
+          {updatedGlyph}
+          <div>
+            <div
+              className={cx(mainTextStyle, {
+                [activeMainTextStyle]: active,
+              })}
+            >
+              {title}
+            </div>
 
-          if (setOpen) {
-            setOpen(!open);
-          }
-        }}
-      >
-        <Icon
-          glyph={open ? 'CaretUp' : 'CaretDown'}
-          className={cx(open ? openIconStyle : closedIconStyle, {
-            [focusedIconStyle]: showFocus,
+            <div className={cx({ [disabledTextStyle]: disabled })}>
+              {description}
+            </div>
+          </div>
+        </Box>
+        <IconButton
+          {...iconButton.prop}
+          ref={iconButtonRef}
+          aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
+          className={cx(iconButtonStyle, {
+            [openIconButtonStyle]: open,
+            [iconButtonFocusedStyle]: showFocus,
           })}
-        />
-      </IconButton>
-      <Transition
-        in={open}
-        timeout={{
-          enter: 0,
-          exit: 150,
-        }}
-        mountOnEnter
-        unmountOnExit
-        onExited={onExited}
-      >
-        {(state: string) => (
-          <ul
-            className={cx(ulStyle, {
-              [css`
-                height: ${subMenuItemHeight * numberOfMenuItems}px;
-              `]: state === 'entered',
+          onClick={(e: React.MouseEvent) => {
+            // we stop the event from propagating and closing the entire menu
+            e.nativeEvent.stopImmediatePropagation();
+
+            if (setOpen) {
+              setOpen(!open);
+            }
+          }}
+        >
+          <Icon
+            glyph={open ? 'CaretUp' : 'CaretDown'}
+            className={cx(open ? openIconStyle : closedIconStyle, {
+              [focusedIconStyle]: showFocus,
             })}
-            role="menu"
-            aria-label={title}
-          >
-            {React.Children.map(children as React.ReactElement, child => {
-              return React.cloneElement(child, {
-                children: (
-                  <>
-                    <div className={menuItemBorder} />
-                    {child.props.children}
-                  </>
-                ),
-                className: cx(
-                  // SubMenuItem indentation based on how indented the title of a SubMenuItem is
-                  // glyphs push title further in, therefore their children should have a thicker padding-left
-                  css`
-                    padding-left: ${glyph ? paddingLeft : 28}px;
-                  `,
-                  child.props.className,
-                ),
-                onClick: (
-                  e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
-                    React.MouseEvent<HTMLButtonElement, MouseEvent>,
-                ) => {
-                  child.props?.onClick?.(e);
-                  if (onClick) {
-                    onClick(e);
-                  }
-                },
-              });
-            })}
-          </ul>
-        )}
-      </Transition>
-    </li>
-  );
-
-  if (usesLinkElement(props)) {
-    return renderedSubMenuItem('a');
-  }
-
-  return renderedSubMenuItem();
-});
-
-SubMenu.displayName = 'SubMenu';
+          />
+        </IconButton>
+        <Transition
+          in={open}
+          timeout={{
+            enter: 0,
+            exit: 150,
+          }}
+          mountOnEnter
+          unmountOnExit
+          onExited={onExited}
+        >
+          {(state: string) => (
+            <ul
+              className={cx(ulStyle, {
+                [css`
+                  height: ${subMenuItemHeight * numberOfMenuItems}px;
+                `]: state === 'entered',
+              })}
+              role="menu"
+              aria-label={title}
+            >
+              {React.Children.map(children as React.ReactElement, child => {
+                return React.cloneElement(child, {
+                  children: (
+                    <>
+                      <div className={menuItemBorder} />
+                      {child.props.children}
+                    </>
+                  ),
+                  className: cx(
+                    // SubMenuItem indentation based on how indented the title of a SubMenuItem is
+                    // glyphs push title further in, therefore their children should have a thicker padding-left
+                    css`
+                      padding-left: ${glyph ? paddingLeft : 28}px;
+                    `,
+                    child.props.className,
+                  ),
+                  onClick: (
+                    e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
+                      React.MouseEvent<HTMLButtonElement, MouseEvent>,
+                  ) => {
+                    child.props?.onClick?.(e);
+                    if (onClick) {
+                      onClick(e);
+                    }
+                  },
+                });
+              })}
+            </ul>
+          )}
+        </Transition>
+      </li>
+    );
+  },
+) as <C extends React.ElementType>(props: SubMenuItemProps<C>) => JSX.Element;
 
 // @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 SubMenu.propTypes = {

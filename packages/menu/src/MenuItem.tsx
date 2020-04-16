@@ -225,6 +225,6 @@ const MenuItem = React.forwardRef(
       </li>
     );
   },
-);
+) as <C extends React.ElementType>(props: MenuItemProps<C>) => JSX.Element;
 
 export default MenuItem;
