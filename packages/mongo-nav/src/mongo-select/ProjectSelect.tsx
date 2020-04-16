@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import debounce from 'lodash/debounce';
 
 // leafygreen-ui
 import Icon from '@leafygreen-ui/icon';
@@ -22,6 +23,7 @@ import {
   MongoNavInterface,
   NavElement,
   ProjectInterface,
+  Mode,
 } from '../types';
 
 // mongo-select
@@ -80,6 +82,12 @@ const projectTriggerRingStyle = css`
   border-radius: 7px;
 `;
 
+const emptyStateStyle = css`
+  font-size: 14px;
+  padding: 4px 8px;
+  margin-bottom: 20px;
+`;
+
 // types
 interface ProjectMongoSelectProps extends BaseMongoSelectProps {
   data?: Array<ProjectInterface>;
@@ -87,23 +95,37 @@ interface ProjectMongoSelectProps extends BaseMongoSelectProps {
   constructProjectURL: NonNullable<MongoNavInterface['constructProjectURL']>;
 }
 
+interface ProjectFilterResponse {
+  cid: string;
+  gn: string;
+}
+
 // data props
 const projectTriggerDataProp = createDataProp('project-trigger');
 
 function ProjectSelect({
   current,
+  mode,
   data = [],
   onChange: onChangeProp,
   constructProjectURL,
+  hosts = {},
   urls = {},
+  admin = false,
   loading = false,
   className,
   ...rest
 }: ProjectMongoSelectProps) {
   const [value, setValue] = useState('');
-  const [consumerFilteredData, setConsumerFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState(data);
+  const [isFetching, setIsFetching] = useState(false);
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
+
+  const isFiltered = value !== '';
+  const isAdminSearch = isFiltered && admin && mode === Mode.Production;
+
+  const renderedData = isFiltered ? filteredData : data;
 
   const toggleOpen = () => {
     setOpen(curr => !curr);
@@ -111,6 +133,34 @@ function ProjectSelect({
       setValue('');
     }
   };
+
+  const fetchProjectsAsAdmin = (searchTerm = '') => {
+    const queryString = searchTerm ? `?term=${searchTerm}` : '';
+    const endpointURI = `${hosts.cloud}/user/shared/projects/search${queryString}`;
+    return fetch(endpointURI, {
+      credentials: 'include',
+      mode: 'cors',
+      method: 'GET',
+    });
+  };
+
+  const filterDataAsAdmin = useCallback(
+    debounce((fetchValue: string) => {
+      fetchProjectsAsAdmin(fetchValue)
+        .then(response => response.json())
+        .then((response: Array<ProjectFilterResponse>) => {
+          const data = response.map(({ cid: projectId, gn: projectName }) => ({
+            projectId,
+            projectName,
+          }));
+
+          setFilteredData(data);
+          setIsFetching(false);
+        })
+        .catch(console.error);
+    }, 300),
+    [],
+  );
 
   const filterData = () => {
     const sanitizedValue = value.replace(/\\/g, '\\\\');
@@ -120,17 +170,37 @@ function ProjectSelect({
       return search.test(datum.projectName);
     });
 
-    return filtered;
+    setFilteredData(filtered);
   };
 
-  const renderedData = onChangeProp ? consumerFilteredData : filterData();
+  useEffect(() => {
+    // Skip if we're not filtering
+    if (!isFiltered) {
+      return;
+    }
+
+    // defer all behavior to user-provided filtering
+    if (onChangeProp) {
+      return;
+    }
+
+    // serverside filtering (admin users only)
+    if (isAdminSearch) {
+      setIsFetching(true);
+      filterDataAsAdmin(value);
+      return;
+    }
+
+    // clientside filtering (default)
+    filterData();
+  }, [value]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setValue(value);
     return onChangeProp?.({
       value,
-      setData: setConsumerFilteredData,
+      setData: setFilteredData,
       event: e,
     });
   };
@@ -213,7 +283,13 @@ function ProjectSelect({
           </FocusableMenuItem>
 
           <ul className={ulStyle}>
-            {renderedData?.map(datum => renderProjectOption(datum))}
+            {isAdminSearch && isFetching && (
+              <li className={emptyStateStyle}>Searching...</li>
+            )}
+            {isAdminSearch && !isFetching && renderedData.length === 0 && (
+              <li className={emptyStateStyle}>No matches found</li>
+            )}
+            {renderedData?.map(renderProjectOption)}
           </ul>
 
           <MenuSeparator />

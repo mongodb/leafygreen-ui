@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import debounce from 'lodash/debounce';
 
 // leafygreen-ui
 import Icon from '@leafygreen-ui/icon';
@@ -28,6 +29,7 @@ import {
   NavElement,
   OrganizationInterface,
   PlanType,
+  Mode,
 } from '../types';
 import {
   iconLoadingStyle,
@@ -167,31 +169,46 @@ const formattedPlanTypes: Record<PlanType, string> = {
   [PlanType.OnPrem]: 'Ops Manager',
 } as const;
 
+interface OrgFilterResponse extends OrganizationInterface {
+  groups: null;
+}
+
 // data props
 const triggerDataProp = createDataProp('org-trigger');
 const anchorDataProp = createDataProp('anchor-data-prop');
 
 function OrgSelect({
   current,
+  mode,
+  hosts = {},
   data = [],
   urls = {},
   onChange: onChangeProp,
   constructOrganizationURL,
+  admin = false,
   isOnPrem = false,
   isActive = false,
   disabled = false,
   loading = false,
 }: OrganizationMongoSelectProps) {
   const [value, setValue] = useState('');
-  const [consumerFilteredData, setConsumerFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState(data);
+  const [isFetching, setIsFetching] = useState(false);
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
 
-  const checkPlanType = data?.[0]?.planType;
-  const showPlanType = !data?.every(datum => datum.planType === checkPlanType);
+  const isFiltered = value !== '';
+  const isAdminSearch = isFiltered && admin && mode === Mode.Production;
+
+  const renderedData = isFiltered ? filteredData : data;
+
+  const checkPlanType = renderedData?.[0]?.planType;
+  const showPlanType = !renderedData?.every(
+    datum => datum.planType === checkPlanType,
+  );
 
   const toggleOpen = () => {
     setOpen(curr => !curr);
@@ -199,6 +216,31 @@ function OrgSelect({
       setValue('');
     }
   };
+
+  const fetchOrgsAsAdmin = (searchTerm = '') => {
+    const queryString = searchTerm ? `?term=${searchTerm}` : '';
+    const endpointURI = `${hosts.cloud}/user/shared/organizations/search${queryString}`;
+    return fetch(endpointURI, {
+      credentials: 'include',
+      mode: 'cors',
+      method: 'GET',
+    });
+  };
+
+  const filterDataAsAdmin = useCallback(
+    debounce((fetchValue: string) => {
+      fetchOrgsAsAdmin(fetchValue)
+        .then(response => response.json())
+        .then((response: Array<OrgFilterResponse>) => {
+          const data = response.map(({ groups, ...org }) => org);
+
+          setFilteredData(data);
+          setIsFetching(false);
+        })
+        .catch(console.error);
+    }, 300),
+    [],
+  );
 
   const filterData = () => {
     const sanitizedValue = value.replace(/\\/g, '\\\\');
@@ -208,17 +250,38 @@ function OrgSelect({
       return search.test(datum.orgName);
     });
 
-    return filtered;
+    setFilteredData(filtered);
   };
 
-  const renderedData = onChangeProp ? consumerFilteredData : filterData();
+  useEffect(() => {
+    // Skip if we're not filtering
+    if (!isFiltered) {
+      return;
+    }
 
+    // defer all behavior to user-provided filtering
+    if (onChangeProp) {
+      return;
+    }
+
+    // serverside filtering (admin users only)
+    if (isAdminSearch) {
+      setIsFetching(true);
+      filterDataAsAdmin(value);
+      return;
+    }
+
+    // clientside filtering (default)
+    filterData();
+  }, [value]);
+
+  // on change, make sure value actually changes
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/\\/g, '\\');
     setValue(val);
     return onChangeProp?.({
       value,
-      setData: setConsumerFilteredData,
+      setData: setFilteredData,
       event: e,
     });
   };
@@ -320,8 +383,13 @@ function OrgSelect({
             )}
 
             <ul className={ulStyle}>
-              {(Array.isArray(renderedData) &&
-                renderedData.map(renderOrganizationOption)) ?? (
+              {isAdminSearch && isFetching && (
+                <li className={emptyStateStyle}>Searching...</li>
+              )}
+              {isAdminSearch && !isFetching && renderedData.length === 0 && (
+                <li className={emptyStateStyle}>No matches found</li>
+              )}
+              {renderedData?.map(renderOrganizationOption) ?? (
                 <li className={emptyStateStyle}>
                   You do not belong to any organizations. Create an organization
                   on the{' '}
