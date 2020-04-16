@@ -158,7 +158,7 @@ function ProjectSelect({
           setIsFetching(false);
         })
         .catch(console.error);
-    }, 500),
+    }, 300),
     [],
   );
 
