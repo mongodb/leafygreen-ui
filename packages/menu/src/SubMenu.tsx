@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
-import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
+import { Transition } from 'react-transition-group';
+import Box, { OverrideComponentProps } from '@leafygreen-ui/box';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
-import Box, { OverrideComponentProps } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
@@ -42,7 +42,6 @@ const subMenuStyle = css`
 
 const subMenuOpenStyle = css`
   background-color: transparent;
-
   &:hover {
     background-color: ${uiColors.gray.light2};
   }
@@ -87,7 +86,6 @@ const iconButtonStyle = css`
   margin: auto;
   background-color: ${uiColors.gray.light3};
   transition: background-color 150ms ease-in-out;
-
   ${subMenuContainer.selector}:hover + & {
     background-color: ${uiColors.gray.light2};
   }
@@ -96,7 +94,6 @@ const iconButtonStyle = css`
 const iconButtonFocusedStyle = css`
   ${subMenuContainer.selector}:focus + & {
     background-color: ${uiColors.blue.light3};
-
     &:hover:before {
       background-color: ${uiColors.blue.light2};
     }
@@ -111,7 +108,6 @@ const mainIconStyle = css`
   color: ${uiColors.gray.base};
   margin-right: ${paddingLeft - svgWidth - menuItemPadding}px;
   flex-shrink: 0;
-
   ${subMenuContainer.selector}:hover > & {
     color: ${uiColors.gray.dark1};
   }
@@ -146,7 +142,9 @@ const menuItemBorder = css`
   top: 0;
 `;
 
-interface BaseSubMenuItemProps {
+const subMenuItemHeight = 36;
+
+interface BaseSubMenuProps {
   /**
    * Determines if `<SubMenu />` item appears open
    */
@@ -182,22 +180,20 @@ interface BaseSubMenuItemProps {
   glyph?: React.ReactElement;
 
   onExited?: ExitHandler;
+
+  href?: string;
 }
 
-type SubMenuItemProps<C extends React.ElementType> = OverrideComponentProps<
-  C,
-  BaseSubMenuItemProps
->;
+type SubMenuProps<
+  C extends React.ElementType = 'button'
+> = OverrideComponentProps<C, BaseSubMenuProps>;
 
-const subMenuItemHeight = 36;
-
-// eslint-disable-next-line
+// eslint-disable-next-line react/display-name
 const SubMenu = React.forwardRef(
-  <C extends React.ElementType = 'button'>(
+  (
     {
       title,
       description,
-      href,
       children,
       setOpen,
       onKeyDown,
@@ -209,7 +205,7 @@ const SubMenu = React.forwardRef(
       active = false,
       disabled = false,
       ...rest
-    }: SubMenuItemProps<C>,
+    }: SubMenuProps,
     ref: React.Ref<any>,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -245,10 +241,11 @@ const SubMenu = React.forwardRef(
     return (
       <li role="none" className={liStyle}>
         <Box
-          component={href ? 'a' : 'button'}
+          component={rest.href ? 'a' : 'button'}
+          {...subMenuContainer.prop}
+          {...rest}
           onKeyDown={onKeyDown}
           role="menuitem"
-          href={href}
           aria-haspopup="true"
           ref={ref}
           onClick={onRootClick}
@@ -264,8 +261,6 @@ const SubMenu = React.forwardRef(
             },
             className,
           )}
-          {...subMenuContainer.prop}
-          {...rest}
         >
           {updatedGlyph}
           <div>
@@ -359,9 +354,12 @@ const SubMenu = React.forwardRef(
       </li>
     );
   },
-) as <C extends React.ElementType>(props: SubMenuItemProps<C>) => JSX.Element;
+) as <C extends React.ElementType>(props: SubMenuProps<C>) => JSX.Element;
 
-// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
+// @ts-ignore Property 'displayName' does not exist on type '<C extends ElementType<any>>(props: any) => Element'.ts(2339)
+SubMenu.displayName = 'SubMenu';
+
+// @ts-ignore Property 'propTypes' does not exist on type '<C extends ElementType<any>>(props: any) => Element'
 SubMenu.propTypes = {
   title: PropTypes.string,
   description: PropTypes.element,
