@@ -85,7 +85,7 @@ describe('packages/UserMenu', () => {
       '[data-leafygreen-ui="sub-menu-container"]',
     )[1];
     expect((universityItem as HTMLAnchorElement).href).toBe(
-      'https://university.mongodb.com/',
+      'https://university.mongodb.com/dashboard',
     );
   });
 

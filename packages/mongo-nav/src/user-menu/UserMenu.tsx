@@ -401,7 +401,7 @@ function UserMenu({
           {...sharedProps}
           active={isUniversity}
           disabled={!account}
-          href={hosts.university}
+          href={`${hosts.university}/dashboard`}
           title="University"
           glyph={<UniversityIcon />}
           className={cx(subMenuContainerStyle, {
