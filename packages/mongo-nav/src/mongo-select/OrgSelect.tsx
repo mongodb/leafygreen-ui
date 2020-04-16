@@ -63,6 +63,10 @@ const orgButtonStyle = css`
   padding: 3px 5px;
 `;
 
+const orgStandaloneButtonStyle = css`
+  border-radius: 5px;
+`;
+
 const orgSettingsButtonStyle = css`
   color: ${uiColors.gray.base};
   display: inline-flex;
@@ -100,6 +104,10 @@ const orgTriggerContainerStyle = css`
 
 const orgTriggerRingStyle = css`
   border-radius: 7px 0 0 7px;
+`;
+
+const orgStandaloneTriggerRingStyle = css`
+  border-radius: 7px;
 `;
 
 const orgOptionContainerStyle = css`
@@ -288,20 +296,21 @@ function OrgSelect({
 
   const renderOrganizationOption = (datum: OrganizationInterface) => {
     const { orgId, orgName, planType } = datum;
-    const isActive = orgId ? orgId === current?.orgId : false;
+    const isCurrentOrg = orgId ? orgId === current?.orgId : false;
+    const active = isCurrentOrg && !disabled;
 
     return (
       <MenuItem
         data-testid="org-option"
         key={orgId}
-        active={isActive}
+        active={active}
         className={menuItemContainerStyle}
         onClick={toggleOpen}
         href={constructOrganizationURL(datum)}
       >
         <div className={orgOptionContainerStyle}>
           <span className={nameStyle}>
-            {orgName} {isActive && '(current)'}
+            {orgName} {active && '(current)'}
           </span>
 
           {!isOnPrem && showPlanType && (
@@ -325,7 +334,9 @@ function OrgSelect({
     <>
       <InteractionRingWrapper
         className={orgTriggerContainerStyle}
-        ringClassName={orgTriggerRingStyle}
+        ringClassName={cx(orgTriggerRingStyle, {
+          [orgStandaloneTriggerRingStyle]: disabled,
+        })}
         selector={triggerDataProp.selector}
       >
         <button
@@ -340,6 +351,7 @@ function OrgSelect({
           className={cx(baseButtonStyle, orgButtonStyle, {
             [activeButtonStyle]: open,
             [textLoadingStyle]: loading,
+            [orgStandaloneButtonStyle]: disabled,
           })}
         >
           {!isTablet && (
