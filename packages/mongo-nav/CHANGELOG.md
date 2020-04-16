@@ -1,5 +1,20 @@
 # @leafygreen-ui/mongo-nav
 
+## 1.0.0
+
+### Major Changes
+
+- 39afcfe: Initial release of MongoNav component
+
+### Minor Changes
+
+- 7947b76: Project and Org selects now use extensive serverside filtering when used by a global administrator.
+- b4e6a06: Adds See Product Tour link to OrgNav component
+
+### Patch Changes
+
+- e5ced4a: Style fixes for Org Select. Org Select no longer displays current org labels for org-agnostic use cases.
+
 ## 0.23.0
 
 ### Minor Changes
