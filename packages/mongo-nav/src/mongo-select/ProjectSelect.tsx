@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import debounce from 'lodash/debounce';
 
 // leafygreen-ui
@@ -23,6 +23,7 @@ import {
   MongoNavInterface,
   NavElement,
   ProjectInterface,
+  Mode,
 } from '../types';
 
 // mongo-select
@@ -81,6 +82,12 @@ const projectTriggerRingStyle = css`
   border-radius: 7px;
 `;
 
+const emptyStateStyle = css`
+  font-size: 14px;
+  padding: 4px 8px;
+  margin-bottom: 20px;
+`;
+
 // types
 interface ProjectMongoSelectProps extends BaseMongoSelectProps {
   data?: Array<ProjectInterface>;
@@ -111,8 +118,14 @@ function ProjectSelect({
 }: ProjectMongoSelectProps) {
   const [value, setValue] = useState('');
   const [filteredData, setFilteredData] = useState(data);
+  const [isFetching, setIsFetching] = useState(false);
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
+
+  const isFiltered = value !== '';
+  const isAdminSearch = isFiltered && admin && mode === Mode.Production;
+
+  const renderedData = isFiltered ? filteredData : data;
 
   const toggleOpen = () => {
     setOpen(curr => !curr);
@@ -131,19 +144,23 @@ function ProjectSelect({
     });
   };
 
-  const filterDataAsAdmin = debounce(() => {
-    const mapResponseToProjects = (response: Array<ProjectFilterResponse>) => {
-      return response.map(({ cid: projectId, gn: projectName }) => ({
-        projectId,
-        projectName,
-      }));
-    };
-    fetchProjectsAsAdmin(value)
-      .then(response => response.json())
-      .then(mapResponseToProjects)
-      .then(setFilteredData)
-      .catch(console.error);
-  }, 300);
+  const filterDataAsAdmin = useCallback(
+    debounce((fetchValue: string) => {
+      fetchProjectsAsAdmin(fetchValue)
+        .then(response => response.json())
+        .then((response: Array<ProjectFilterResponse>) => {
+          const data = response.map(({ cid: projectId, gn: projectName }) => ({
+            projectId,
+            projectName,
+          }));
+
+          setFilteredData(data);
+          setIsFetching(false);
+        })
+        .catch(console.error);
+    }, 500),
+    [],
+  );
 
   const filterData = () => {
     const sanitizedValue = value.replace(/\\/g, '\\\\');
@@ -156,38 +173,27 @@ function ProjectSelect({
     setFilteredData(filtered);
   };
 
-  const didMount = useRef(false);
   useEffect(() => {
+    // Skip if we're not filtering
+    if (!isFiltered) {
+      return;
+    }
+
     // defer all behavior to user-provided filtering
     if (onChangeProp) {
       return;
     }
 
-    // clear filtering if the search term is cleared
-    if (value === '') {
-      setFilteredData(data);
-      return;
-    }
-
     // serverside filtering (admin users only)
-    if (admin && mode !== 'dev') {
-      // skip fetch request on initial render
-      if (!didMount.current) {
-        didMount.current = true;
-        return;
-      }
-
-      filterDataAsAdmin();
+    if (isAdminSearch) {
+      setIsFetching(true);
+      filterDataAsAdmin(value);
       return;
     }
 
     // clientside filtering (default)
     filterData();
   }, [value]);
-
-  useEffect(() => {
-    setFilteredData(data);
-  }, [data]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -276,7 +282,15 @@ function ProjectSelect({
             />
           </FocusableMenuItem>
 
-          <ul className={ulStyle}>{filteredData?.map(renderProjectOption)}</ul>
+          <ul className={ulStyle}>
+            {isAdminSearch && isFetching && (
+              <li className={emptyStateStyle}>Searching...</li>
+            )}
+            {isAdminSearch && !isFetching && renderedData.length === 0 && (
+              <li className={emptyStateStyle}>No matches found</li>
+            )}
+            {renderedData?.map(renderProjectOption)}
+          </ul>
 
           <MenuSeparator />
 

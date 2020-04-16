@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import debounce from 'lodash/debounce';
 
 // leafygreen-ui
@@ -29,6 +29,7 @@ import {
   NavElement,
   OrganizationInterface,
   PlanType,
+  Mode,
 } from '../types';
 import {
   iconLoadingStyle,
@@ -192,14 +193,22 @@ function OrgSelect({
 }: OrganizationMongoSelectProps) {
   const [value, setValue] = useState('');
   const [filteredData, setFilteredData] = useState(data);
+  const [isFetching, setIsFetching] = useState(false);
   const [open, setOpen] = useState(false);
   const onElementClick = useOnElementClick();
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const { width: viewportWidth } = useViewportSize();
   const isTablet = viewportWidth < breakpoints.medium;
 
-  const checkPlanType = data?.[0]?.planType;
-  const showPlanType = !data?.every(datum => datum.planType === checkPlanType);
+  const isFiltered = value !== '';
+  const isAdminSearch = isFiltered && admin && mode === Mode.Production;
+
+  const renderedData = isFiltered ? filteredData : data;
+
+  const checkPlanType = renderedData?.[0]?.planType;
+  const showPlanType = !renderedData?.every(
+    datum => datum.planType === checkPlanType,
+  );
 
   const toggleOpen = () => {
     setOpen(curr => !curr);
@@ -218,15 +227,20 @@ function OrgSelect({
     });
   };
 
-  const filterDataAsAdmin = debounce(() => {
-    const mapResponseToOrgs = (response: Array<OrgFilterResponse>) =>
-      response.map(({ groups, ...org }) => org);
-    fetchOrgsAsAdmin(value)
-      .then(response => response.json())
-      .then(mapResponseToOrgs)
-      .then(setFilteredData)
-      .catch(console.error);
-  }, 300);
+  const filterDataAsAdmin = useCallback(
+    debounce((fetchValue: string) => {
+      fetchOrgsAsAdmin(fetchValue)
+        .then(response => response.json())
+        .then((response: Array<OrgFilterResponse>) => {
+          const data = response.map(({ groups, ...org }) => org);
+
+          setFilteredData(data);
+          setIsFetching(false);
+        })
+        .catch(console.error);
+    }, 300),
+    [],
+  );
 
   const filterData = () => {
     const sanitizedValue = value.replace(/\\/g, '\\\\');
@@ -239,38 +253,27 @@ function OrgSelect({
     setFilteredData(filtered);
   };
 
-  const didMount = useRef(false);
   useEffect(() => {
+    // Skip if we're not filtering
+    if (!isFiltered) {
+      return;
+    }
+
     // defer all behavior to user-provided filtering
     if (onChangeProp) {
       return;
     }
 
-    // clear filtering if the search term is cleared
-    if (value === '') {
-      setFilteredData(data);
-      return;
-    }
-
     // serverside filtering (admin users only)
-    if (admin && mode !== 'dev') {
-      // skip fetch request on initial render
-      if (!didMount.current) {
-        didMount.current = true;
-        return;
-      }
-
-      filterDataAsAdmin();
+    if (isAdminSearch) {
+      setIsFetching(true);
+      filterDataAsAdmin(value);
       return;
     }
 
     // clientside filtering (default)
     filterData();
   }, [value]);
-
-  useEffect(() => {
-    setFilteredData(data);
-  }, [data]);
 
   // on change, make sure value actually changes
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -380,7 +383,13 @@ function OrgSelect({
             )}
 
             <ul className={ulStyle}>
-              {filteredData?.map(renderOrganizationOption) ?? (
+              {isAdminSearch && isFetching && (
+                <li className={emptyStateStyle}>Searching...</li>
+              )}
+              {isAdminSearch && !isFetching && renderedData.length === 0 && (
+                <li className={emptyStateStyle}>No matches found</li>
+              )}
+              {renderedData?.map(renderOrganizationOption) ?? (
                 <li className={emptyStateStyle}>
                   You do not belong to any organizations. Create an organization
                   on the{' '}
@@ -392,7 +401,7 @@ function OrgSelect({
               )}
             </ul>
 
-            {filteredData && (
+            {renderedData && (
               <>
                 <MenuSeparator />
                 <MenuItem
