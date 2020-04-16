@@ -39,12 +39,10 @@ https://astexplorer.net/
 **/
 
 module.exports = function template(
-  foo,
+  { template },
   opts,
   { imports, componentName, jsx, exports },
 ) {
-  const { template } = foo;
-
   const plugins = ['jsx'];
 
   if (opts.typescript) {
@@ -90,7 +88,7 @@ module.exports = function template(
 
             // Trim space at beginning of title
             while (generatedTitle.charAt(0) === ' ') {
-            generatedTitle = generatedTitle.substr(1);
+              generatedTitle = generatedTitle.substr(1);
             }
 
             return generatedTitle;
