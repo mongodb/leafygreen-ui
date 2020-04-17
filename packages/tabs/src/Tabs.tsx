@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
+import { useEventListener, useKeyPress } from '@leafygreen-ui/hooks';
 import TabTitle from './TabTitle';
 import omit from 'lodash/omit';
 
@@ -132,36 +133,43 @@ function Tabs({
     setSelected(index);
   }
 
-  function handleKeyDown(e: React.KeyboardEvent) {
-    e.stopPropagation();
+  const enabledIndexLogic: () => [Array<number>, number] = () => {
+    const enabledIndexes: Array<number> = childrenArray.reduce(
+      (acc, child, index) => {
+        if (child.props.disabled) {
+          return acc;
+        }
 
-    const enabledIndexes = childrenArray.reduce((acc, child, index) => {
-      if (child.props.disabled) {
-        return acc;
-      }
+        return [...acc, index];
+      },
+      [] as Array<number>,
+    );
 
-      return [...acc, index];
-    }, [] as Array<number>);
+    return [enabledIndexes, enabledIndexes.indexOf(selected!)];
+  };
 
-    const enabledCurrentIndex = enabledIndexes.indexOf(selected!);
-
-    switch (e.keyCode) {
-      case keyMap.ArrowRight:
-        setSelected(
-          enabledIndexes[(enabledCurrentIndex + 1) % enabledIndexes.length],
-        );
-        break;
-
-      case keyMap.ArrowLeft:
-        setSelected(
-          enabledIndexes[
-            (enabledCurrentIndex - 1 + enabledIndexes.length) %
-              enabledIndexes.length
-          ],
-        );
-        break;
+  const handleArrowKeyPress = e => {
+    if (e.keyCode === keyMap.ArrowRight) {
+      const [enabledIndexes, current] = enabledIndexLogic();
+      setSelected(enabledIndexes[(current + 1) % enabledIndexes.length]);
+    } else if (e.keyCode === keyMap.ArrowLeft) {
+      const [enabledIndexes, current] = enabledIndexLogic();
+      setSelected(
+        enabledIndexes[
+          (current - 1 + enabledIndexes.length) % enabledIndexes.length
+        ],
+      );
     }
-  }
+  };
+
+  const enabled =
+    navigator.platform.indexOf('Mac') > -1
+      ? !useKeyPress(keyMap.Command)
+      : !useKeyPress(keyMap.Control);
+
+  useEventListener('keydown', handleArrowKeyPress, {
+    enabled,
+  });
 
   function calcStyle() {
     if (
@@ -202,13 +210,7 @@ function Tabs({
 
   return (
     <div {...rest} className={className}>
-      <div
-        className={listStyle}
-        role="tablist"
-        onKeyDown={handleKeyDown}
-        ref={tabListRef}
-        tabIndex={0}
-      >
+      <div className={listStyle} role="tablist" ref={tabListRef} tabIndex={0}>
         {tabs.map((tab, index) => {
           const { selected, disabled, ...rest } = tab.props;
 
@@ -230,11 +232,6 @@ function Tabs({
               onClick={
                 !disabled
                   ? (event: React.MouseEvent) => handleChange(event, index)
-                  : undefined
-              }
-              onKeyDown={
-                !disabled
-                  ? (event: React.KeyboardEvent) => handleKeyDown(event)
                   : undefined
               }
               ariaControl={`tab-${index}`}

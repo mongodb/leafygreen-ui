@@ -6,6 +6,7 @@ import {
   useElementNode,
   useViewportSize,
   usePoller,
+  useKeyPress,
 } from './index';
 
 afterAll(cleanup);
@@ -292,5 +293,23 @@ describe('packages/hooks', () => {
       // immediate triggers the pollHandler
       expect(pollHandler).toHaveBeenCalledTimes(2);
     });
+  });
+
+  describe('useKeyPress', () => {
+    test('returns true when XXX', () => {
+      renderHook(() => useKeyPress(81));
+
+      act(() => {
+        document.body.dispatchEvent(
+          new KeyboardEvent('keydown', { bubbles: true, keyCode: 81 }),
+        );
+      });
+
+      expect(useKeyPress(81)).toBe(true);
+    });
+
+    // test('returns false when YYY', () => {
+
+    // })
   });
 });
