@@ -176,8 +176,8 @@ export interface AccountInterface {
 export interface ProjectInterface {
   projectId: string;
   projectName: string;
-  planType: PlanType;
-  orgId: string;
+  planType?: PlanType;
+  orgId?: string;
 }
 
 export interface CurrentProjectInterface extends ProjectInterface {

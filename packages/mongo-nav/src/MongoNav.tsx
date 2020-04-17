@@ -235,6 +235,7 @@ function MongoNav({
           onOrganizationChange={onOrganizationChange}
           admin={admin}
           hosts={hosts}
+          mode={mode}
           currentProjectName={data?.currentProject?.projectName}
           onPremEnabled={onPrem.enabled}
           onPremVersion={onPrem.version}
