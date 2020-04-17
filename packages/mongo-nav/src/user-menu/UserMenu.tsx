@@ -338,7 +338,7 @@ function UserMenu({
             disabled={!account || !isCloud}
             href={hosts.cloud}
             description={<Description isActive={isCloud} product="cloud" />}
-            title="Atlas"
+            title="Cloud"
             glyph={<CloudIcon />}
             className={cx(subMenuContainerStyle, {
               [subMenuActiveContainerStyle]: isCloud,
@@ -392,7 +392,7 @@ function UserMenu({
             href={hosts.cloud}
             description={<Description isActive={false} product="cloud" />}
           >
-            Atlas
+            Cloud
           </MenuItem>
         )}
 
