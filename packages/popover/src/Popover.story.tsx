@@ -41,35 +41,43 @@ const referenceElPositions = {
   `,
 };
 
+const scrollableStyle = css`
+  height: 200vh;
+  padding-top: 50vh;
+`;
+
 function DefaultExample() {
   const [active, setActive] = useState(false);
+  const exampleIsScrollable = boolean('Example page scrolling', false);
 
   return (
-    <button
-      onClick={() => setActive(!active)}
-      className={cx(
-        containerStyle,
-        referenceElPositions[
-          select(
-            'Reference Element Position',
-            ['centered', 'top', 'right', 'bottom', 'left'],
-            'centered',
-          )
-        ],
-      )}
-    >
-      {text('Button Content', 'Popover')}
-      <Popover
-        align={select('Align', Object.values(Align), 'top')}
-        justify={select('justify', Object.values(Justify), 'start')}
-        active={active}
-        usePortal={boolean('usePortal', true)}
-        spacing={number('spacing', 10)}
-        adjustOnMutation={boolean('adjustOnMutation', false)}
+    <div className={cx({ [scrollableStyle]: exampleIsScrollable })}>
+      <button
+        onClick={() => setActive(!active)}
+        className={cx(
+          containerStyle,
+          referenceElPositions[
+            select(
+              'Reference Element Position',
+              ['centered', 'top', 'right', 'bottom', 'left'],
+              'centered',
+            )
+          ],
+        )}
       >
-        <div className={popoverStyle}>Popover content</div>
-      </Popover>
-    </button>
+        {text('Button Content', 'Popover')}
+        <Popover
+          align={select('Align', Object.values(Align), 'top')}
+          justify={select('justify', Object.values(Justify), 'start')}
+          active={active}
+          usePortal={boolean('usePortal', true)}
+          spacing={number('spacing', 10)}
+          adjustOnMutation={boolean('adjustOnMutation', false)}
+        >
+          <div className={popoverStyle}>Popover content</div>
+        </Popover>
+      </button>
+    </div>
   );
 }
 
@@ -95,6 +103,7 @@ function AdvancedExample() {
       >
         {text('Button Content', 'Popover')}
       </button>
+
       <Popover
         align={select('Align', Object.values(Align), 'top')}
         justify={select('justify', Object.values(Justify), 'start')}
