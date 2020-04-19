@@ -241,6 +241,7 @@ function MongoNav({
           onPremVersion={onPrem.version}
           onPremMFA={onPrem.mfa}
           showProjectNav={shouldShowProjectNav}
+          isCloudManager={data?.currentProject?.planType === 'cloud'}
         />
 
         {shouldShowProjectNav && (

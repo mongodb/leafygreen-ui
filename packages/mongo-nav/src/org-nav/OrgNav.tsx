@@ -124,6 +124,7 @@ type OrgNavProps = Pick<
   urls: Required<NonNullable<MongoNavInterface['urls']>>;
   hosts: Required<NonNullable<MongoNavInterface['hosts']>>;
   showProjectNav: NonNullable<MongoNavInterface['showProjectNav']>;
+  isCloudManager?: boolean;
 };
 
 function OrgNav({
@@ -139,7 +140,7 @@ function OrgNav({
   admin,
   hosts,
   currentProjectName = 'None',
-
+  isCloudManager = false,
   onPremEnabled,
   onPremVersion,
   onPremMFA = false,
@@ -383,6 +384,7 @@ function OrgNav({
 
         {!onPremEnabled &&
           !isMobile &&
+          !isCloudManager &&
           // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'.ts(2339)
           window.Appcues && (
             <OrgNavLink
