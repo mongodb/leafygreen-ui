@@ -68,6 +68,10 @@ const versionStyle = css`
 
 const productTourColor = css`
   color: ${uiColors.blue.base};
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const paymentStatusMap: {
