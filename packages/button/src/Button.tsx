@@ -374,6 +374,8 @@ const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
     // https://www.w3.org/TR/css-flexbox-1/#painting
     z-index: 1;
     display: inline-flex;
+    flex-grow: 1;
+    justify-content: center;
     align-items: center;
   `;
 
