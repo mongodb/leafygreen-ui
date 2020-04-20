@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { useEventListener } from '.';
 
+/**
+ * Hook that accepts a keyCode and returns a boolean based on whether or not that key is being pressed.
+ * @param targetKeyCode Represents the keyCode of the key to listen for.
+ */
 export default function useKeyPress(targetKeyCode: number) {
   const [keyPressed, setKeyPressed] = useState(false);
 

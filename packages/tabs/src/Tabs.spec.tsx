@@ -3,6 +3,8 @@ import { render, fireEvent, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { Tabs, Tab } from './index';
 
+afterAll(cleanup);
+
 describe('packages/Tabs', () => {
   describe('when controlled default', () => {
     const tabsClassName = 'tabs-classname';

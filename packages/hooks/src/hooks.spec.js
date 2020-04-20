@@ -6,7 +6,6 @@ import {
   useElementNode,
   useViewportSize,
   usePoller,
-  useKeyPress,
 } from './index';
 
 afterAll(cleanup);
