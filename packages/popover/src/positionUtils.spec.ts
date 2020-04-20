@@ -1,5 +1,9 @@
 import { Align, Justify } from './types';
-import { calculatePosition, getElementPosition } from './positionUtils';
+import {
+  calculatePosition,
+  getElementDocumentPosition,
+  getElementViewportPosition,
+} from './positionUtils';
 
 // These values were explicitly created to test Popover positioning against a clearly defined window size.
 const SPACING = 5;
@@ -80,8 +84,10 @@ describe('positionUtils', () => {
         useRelativePositioning: false,
         align: Align.Top,
         justify: Justify.Start,
-        referenceElPos: refElPos.top,
-        contentElPos: contentElPos,
+        referenceElDocumentPos: refElPos.top,
+        referenceElViewportPos: refElPos.top,
+        contentElDocumentPos: contentElPos,
+        contentElViewportPos: contentElPos,
       });
 
       expect(calcPositionObject.align).toBeTruthy();
@@ -99,8 +105,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.Start,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(align).toBe('bottom');
@@ -121,8 +129,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.Fit,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -144,8 +154,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.Start,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(align).toBe('right');
@@ -166,8 +178,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.Middle,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(align).toBe('right');
@@ -188,8 +202,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.End,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(align).toBe('right');
@@ -210,8 +226,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.Fit,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -233,8 +251,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.Start,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(align).toBe('bottom');
@@ -246,6 +266,7 @@ describe('positionUtils', () => {
             'translate3d(0, -5px, 0) scale(0.8)',
           );
         });
+
         test('Justify.Middle works', () => {
           const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -254,8 +275,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.Middle,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(align).toBe('bottom');
@@ -267,6 +290,7 @@ describe('positionUtils', () => {
             'translate3d(0, -5px, 0) scale(0.8)',
           );
         });
+
         test('Justify.End works', () => {
           const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -275,8 +299,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.End,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(align).toBe('bottom');
@@ -288,6 +314,7 @@ describe('positionUtils', () => {
             'translate3d(0, -5px, 0) scale(0.8)',
           );
         });
+
         test('Justify.Fit works', () => {
           const { justify, positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -296,8 +323,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.Fit,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -319,8 +348,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.Start,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(align).toBe('left');
@@ -332,6 +363,7 @@ describe('positionUtils', () => {
             'translate3d(5px, 0, 0) scale(0.8)',
           );
         });
+
         test('Justify.Center respositions to Justify.Start based on available space', () => {
           const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -340,8 +372,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.Middle,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(align).toBe('left');
@@ -362,8 +396,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.End,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(align).toBe('left');
@@ -384,8 +420,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.Fit,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -407,8 +445,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterVertical,
             justify: Justify.Start,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(align).toBe('bottom');
@@ -429,8 +469,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterVertical,
             justify: Justify.Fit,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -452,8 +494,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterHorizontal,
             justify: Justify.Start,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(align).toBe('center-horizontal');
@@ -463,6 +507,7 @@ describe('positionUtils', () => {
           expect(positionCSS.transformOrigin).toBe('center top');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
+
         test('Justify.Center respositions to Justify.Start based on available space', () => {
           const { align, justify, positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -471,8 +516,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterHorizontal,
             justify: Justify.Middle,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(align).toBe('center-horizontal');
@@ -491,8 +538,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterHorizontal,
             justify: Justify.End,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(align).toBe('center-horizontal');
@@ -511,8 +560,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterHorizontal,
             justify: Justify.Fit,
-            referenceElPos: refElPos.top,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.top,
+            referenceElViewportPos: refElPos.top,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -535,8 +586,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.Start,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -555,8 +608,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.Middle,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -566,6 +621,7 @@ describe('positionUtils', () => {
             'translate3d(0, 5px, 0) scale(0.8)',
           );
         });
+
         test('Justify.End works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -574,8 +630,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.End,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -594,8 +652,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.Fit,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -616,8 +676,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.Start,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -637,8 +699,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.Start,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -648,6 +712,7 @@ describe('positionUtils', () => {
             'translate3d(0, -5px, 0) scale(0.8)',
           );
         });
+
         test('Justify.Middle repositions to Justify.End based on available space', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -656,8 +721,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.Middle,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -667,6 +734,7 @@ describe('positionUtils', () => {
             'translate3d(0, -5px, 0) scale(0.8)',
           );
         });
+
         test('Justify.End works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -675,8 +743,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.End,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -686,6 +756,7 @@ describe('positionUtils', () => {
             'translate3d(0, -5px, 0) scale(0.8)',
           );
         });
+
         test('Justify.Fit works', () => {
           const { justify, positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -694,8 +765,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.Fit,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -716,8 +789,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.Start,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -727,6 +802,7 @@ describe('positionUtils', () => {
             'translate3d(5px, 0, 0) scale(0.8)',
           );
         });
+
         test('Justify.Middle works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -735,8 +811,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.Middle,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -755,8 +833,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.End,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 35);
@@ -775,8 +855,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.Fit,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -797,8 +879,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterVertical,
             justify: Justify.Start,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -815,8 +899,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterVertical,
             justify: Justify.Middle,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -824,6 +910,7 @@ describe('positionUtils', () => {
           expect(positionCSS.transformOrigin).toBe('right center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
+
         test('Justify.End works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -832,8 +919,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterVertical,
             justify: Justify.End,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -850,8 +939,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterVertical,
             justify: Justify.Fit,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -870,8 +961,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterHorizontal,
             justify: Justify.Start,
-            referenceElPos: refElPos.right,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.right,
+            referenceElViewportPos: refElPos.right,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -894,8 +987,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.Start,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 65);
@@ -914,8 +1009,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.Middle,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 65);
@@ -934,8 +1031,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.End,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 65);
@@ -954,8 +1053,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.Fit,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -977,8 +1078,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.Start,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -988,6 +1091,7 @@ describe('positionUtils', () => {
             'translate3d(-5px, 0, 0) scale(0.8)',
           );
         });
+
         test('Justify.Middle repositions to Justify.End based on available space', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -996,8 +1100,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.Middle,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1016,8 +1122,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.End,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1036,8 +1144,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.Fit,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -1058,8 +1168,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.Start,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 65);
@@ -1080,8 +1192,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.Start,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1100,8 +1214,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.Middle,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1120,8 +1236,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.End,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1140,8 +1258,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.Fit,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -1163,8 +1283,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterVertical,
             justify: Justify.Start,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 65);
@@ -1185,8 +1307,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterHorizontal,
             justify: Justify.Start,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1203,8 +1327,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterHorizontal,
             justify: Justify.Middle,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1221,8 +1347,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterHorizontal,
             justify: Justify.End,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 80);
@@ -1239,8 +1367,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterHorizontal,
             justify: Justify.Fit,
-            referenceElPos: refElPos.bottom,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.bottom,
+            referenceElViewportPos: refElPos.bottom,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -1262,8 +1392,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.Start,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -1273,6 +1405,7 @@ describe('positionUtils', () => {
             'translate3d(0, 5px, 0) scale(0.8)',
           );
         });
+
         test('Justify.Middle repositions to Justify.Start based on available space', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -1281,8 +1414,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.Middle,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -1292,6 +1427,7 @@ describe('positionUtils', () => {
             'translate3d(0, 5px, 0) scale(0.8)',
           );
         });
+
         test('Justify.End repositions to Justify.Start based on available space', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -1300,8 +1436,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.End,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -1311,6 +1449,7 @@ describe('positionUtils', () => {
             'translate3d(0, 5px, 0) scale(0.8)',
           );
         });
+
         test('Justify.Fit works', () => {
           const { justify, positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -1319,8 +1458,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.Fit,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -1342,8 +1483,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.Start,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -1353,6 +1496,7 @@ describe('positionUtils', () => {
             'translate3d(-5px, 0, 0) scale(0.8)',
           );
         });
+
         test('Justify.Middle works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -1361,8 +1505,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.Middle,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -1372,6 +1518,7 @@ describe('positionUtils', () => {
             'translate3d(-5px, 0, 0) scale(0.8)',
           );
         });
+
         test('Justify.End works', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -1380,8 +1527,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.End,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 35);
@@ -1391,6 +1540,7 @@ describe('positionUtils', () => {
             'translate3d(-5px, 0, 0) scale(0.8)',
           );
         });
+
         test('Justify.Fit works', () => {
           const { justify, positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -1399,8 +1549,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.Fit,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -1421,8 +1573,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.Start,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -1441,8 +1595,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.Middle,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -1461,8 +1617,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.End,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -1481,8 +1639,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.Fit,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -1504,8 +1664,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.Start,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -1526,8 +1688,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterVertical,
             justify: Justify.Start,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -1535,6 +1699,7 @@ describe('positionUtils', () => {
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
+
         test('Justify.Middle repositions to Justify.Start based on available space', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -1543,8 +1708,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterVertical,
             justify: Justify.Middle,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -1552,6 +1719,7 @@ describe('positionUtils', () => {
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
+
         test('Justify.End repositions to Justify.Start based on available space', () => {
           const { positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -1560,8 +1728,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterVertical,
             justify: Justify.End,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -1569,6 +1739,7 @@ describe('positionUtils', () => {
           expect(positionCSS.transformOrigin).toBe('left center');
           expect(positionCSS.transform).toBe('scale(0.8)');
         });
+
         test('Justify.Fit works', () => {
           const { justify, positionCSS } = calculatePosition({
             spacing: SPACING,
@@ -1577,8 +1748,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterVertical,
             justify: Justify.Fit,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -1598,8 +1771,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterHorizontal,
             justify: Justify.Start,
-            referenceElPos: refElPos.left,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.left,
+            referenceElViewportPos: refElPos.left,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -1622,8 +1797,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.Start,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -1642,8 +1819,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.Middle,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -1662,8 +1841,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.End,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 20);
@@ -1682,8 +1863,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Top,
             justify: Justify.Fit,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -1705,8 +1888,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.Start,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -1725,8 +1910,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.Middle,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -1745,8 +1932,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.End,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 35);
@@ -1765,8 +1954,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Right,
             justify: Justify.Fit,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -1788,8 +1979,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.Start,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -1808,8 +2001,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.Middle,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -1828,8 +2023,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.End,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 60);
@@ -1848,8 +2045,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Bottom,
             justify: Justify.Fit,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -1871,8 +2070,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.Start,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -1891,8 +2092,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.Middle,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -1911,8 +2114,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.End,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 35);
@@ -1931,8 +2136,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.Left,
             justify: Justify.Fit,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -1954,8 +2161,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterVertical,
             justify: Justify.Start,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -1972,8 +2181,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterVertical,
             justify: Justify.Middle,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -1990,8 +2201,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterVertical,
             justify: Justify.End,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -2008,8 +2221,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterVertical,
             justify: Justify.Fit,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -2029,8 +2244,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterHorizontal,
             justify: Justify.Start,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 45);
@@ -2047,8 +2264,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterHorizontal,
             justify: Justify.Middle,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 40);
@@ -2065,8 +2284,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterHorizontal,
             justify: Justify.End,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 35);
@@ -2083,8 +2304,10 @@ describe('positionUtils', () => {
             useRelativePositioning: false,
             align: Align.CenterHorizontal,
             justify: Justify.Fit,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -2106,8 +2329,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.Top,
             justify: Justify.Start,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(positionCSS.bottom).toBe('calc(100% + 5px)');
@@ -2126,8 +2351,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.Top,
             justify: Justify.Middle,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(positionCSS.bottom).toBe('calc(100% + 5px)');
@@ -2146,8 +2373,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.Top,
             justify: Justify.End,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(positionCSS.bottom).toBe('calc(100% + 5px)');
@@ -2166,8 +2395,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.Top,
             justify: Justify.Fit,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -2189,8 +2420,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.Right,
             justify: Justify.Start,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 0);
@@ -2209,8 +2442,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.Right,
             justify: Justify.Middle,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(positionCSS.top).toBe('-5px');
@@ -2229,8 +2464,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.Right,
             justify: Justify.End,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.bottom, 0);
@@ -2249,8 +2486,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.Right,
             justify: Justify.Fit,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -2272,8 +2511,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.Bottom,
             justify: Justify.Start,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(positionCSS.top).toBe('calc(100% + 5px)');
@@ -2292,8 +2533,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.Bottom,
             justify: Justify.Middle,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(positionCSS.top).toBe('calc(100% + 5px)');
@@ -2312,8 +2555,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.Bottom,
             justify: Justify.End,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(positionCSS.top).toBe('calc(100% + 5px)');
@@ -2332,8 +2577,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.Bottom,
             justify: Justify.Fit,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -2355,8 +2602,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.Left,
             justify: Justify.Start,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 0);
@@ -2375,8 +2624,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.Left,
             justify: Justify.Middle,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(positionCSS.top).toBe('-5px');
@@ -2395,8 +2646,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.Left,
             justify: Justify.End,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.bottom, 0);
@@ -2415,8 +2668,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.Left,
             justify: Justify.Fit,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -2438,8 +2693,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.CenterVertical,
             justify: Justify.Start,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(positionCSS.top).toBe('calc(5px - 50%)');
@@ -2456,8 +2713,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.CenterVertical,
             justify: Justify.Middle,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(positionCSS.top).toBe('calc(5px - 50%)');
@@ -2474,8 +2733,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.CenterVertical,
             justify: Justify.End,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(positionCSS.top).toBe('calc(5px - 50%)');
@@ -2492,8 +2753,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.CenterVertical,
             justify: Justify.Fit,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -2513,8 +2776,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.CenterHorizontal,
             justify: Justify.Start,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.top, 0);
@@ -2531,8 +2796,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.CenterHorizontal,
             justify: Justify.Middle,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(positionCSS.top).toBe('-5px');
@@ -2549,8 +2816,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.CenterHorizontal,
             justify: Justify.End,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           checkPixelValue(positionCSS.bottom, 0);
@@ -2567,8 +2836,10 @@ describe('positionUtils', () => {
             useRelativePositioning: true,
             align: Align.CenterHorizontal,
             justify: Justify.Fit,
-            referenceElPos: refElPos.center,
-            contentElPos: contentElPos,
+            referenceElDocumentPos: refElPos.center,
+            referenceElViewportPos: refElPos.center,
+            contentElDocumentPos: contentElPos,
+            contentElViewportPos: contentElPos,
           });
 
           expect(justify).toBe('fit');
@@ -2581,12 +2852,28 @@ describe('positionUtils', () => {
     });
   });
 
-  describe('getElementPosition', () => {
+  describe('getElementDocumentPosition', () => {
     test('given an element, it returns an object with information about its position', () => {
       const div = document.createElement('div');
       document.body.appendChild(div);
 
-      const pos = getElementPosition(div);
+      const pos = getElementDocumentPosition(div);
+
+      expect(pos.top).toBe(0);
+      expect(pos.bottom).toBe(0);
+      expect(pos.left).toBe(0);
+      expect(pos.right).toBe(0);
+      expect(pos.height).toBe(0);
+      expect(pos.width).toBe(0);
+    });
+  });
+
+  describe('getElementViewportPosition', () => {
+    test('given an element, it returns an object with information about its position', () => {
+      const div = document.createElement('div');
+      document.body.appendChild(div);
+
+      const pos = getElementViewportPosition(div);
 
       expect(pos.top).toBe(0);
       expect(pos.bottom).toBe(0);

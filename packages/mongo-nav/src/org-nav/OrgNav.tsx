@@ -5,7 +5,7 @@ import Badge, { Variant } from '@leafygreen-ui/badge';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import UserMenu from '../user-menu';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { LogoMark } from '@leafygreen-ui/logo';
 import { useViewportSize } from '@leafygreen-ui/hooks';
@@ -66,6 +66,14 @@ const versionStyle = css`
   })}
 `;
 
+const productTourColor = css`
+  color: ${uiColors.blue.base};
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 const paymentStatusMap: {
   [K in Partial<Variant>]?: ReadonlyArray<OrgPaymentLabel>;
 } = {
@@ -105,7 +113,7 @@ const userMenuActiveNavItems = [
 
 type OrgNavProps = Pick<
   MongoNavInterface,
-  'activeProduct' | 'onOrganizationChange' | 'activeNav' | 'admin'
+  'activeProduct' | 'onOrganizationChange' | 'activeNav' | 'admin' | 'mode'
 > & {
   account?: AccountInterface;
   current?: CurrentOrganizationInterface;
@@ -128,12 +136,14 @@ function OrgNav({
   activeProduct,
   current,
   data,
+  mode,
   constructOrganizationURL,
   onOrganizationChange,
   urls,
   admin,
   hosts,
   currentProjectName = 'None',
+
   onPremEnabled,
   onPremVersion,
   onPremMFA = false,
@@ -247,12 +257,15 @@ function OrgNav({
       <OrgSelect
         data={data}
         current={current}
+        mode={mode}
         constructOrganizationURL={constructOrganizationURL}
+        hosts={hosts}
         urls={urls.mongoSelect}
         onChange={onOrganizationChange}
         isActive={activeNav === ActiveNavElement.OrgNavOrgSettings}
         loading={!current}
         disabled={disabled}
+        admin={admin}
         isOnPrem={onPremEnabled}
       />
 
@@ -371,6 +384,20 @@ function OrgNav({
             Ops Manager Version
           </Tooltip>
         )}
+
+        {!onPremEnabled &&
+          !isMobile &&
+          // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'.ts(2339)
+          window.Appcues && (
+            <OrgNavLink
+              // @ts-ignore 'Cannot find name Appcues'
+              onClick={() => Appcues.show('-M4PVbE05VI91MJihJGv')} // eslint-disable-line no-undef
+              className={cx(rightLinkMargin, productTourColor)}
+              data-testid="org-nav-see-product-tour"
+            >
+              See Product Tour
+            </OrgNavLink>
+          )}
 
         {!isMobile && (
           <OrgNavLink

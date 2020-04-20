@@ -16,7 +16,11 @@ import {
   useElementNode,
 } from '@leafygreen-ui/hooks';
 import { Align, Justify, PopoverProps } from './types';
-import { calculatePosition, getElementPosition } from './positionUtils';
+import {
+  calculatePosition,
+  getElementViewportPosition,
+  getElementDocumentPosition,
+} from './positionUtils';
 
 const rootPopoverStyle = css`
   transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
@@ -98,25 +102,35 @@ function Popover({
     adjustOnMutation,
   );
 
-  const referenceElPos = useMemo(() => getElementPosition(referenceElement), [
-    referenceElement,
-    viewportSize,
-    lastTimeRefElMutated,
-    active,
-    align,
-    justify,
-    forceUpdateCounter,
-  ]);
+  // We don't memoize these values as they're reliant on scroll positioning
+  const referenceElViewportPos = getElementViewportPosition(referenceElement);
+  const contentElViewportPos = getElementViewportPosition(contentNode);
 
-  const contentElPos = useMemo(() => getElementPosition(contentNode), [
-    contentNode,
-    viewportSize,
-    lastTimeContentElMutated,
-    active,
-    align,
-    justify,
-    forceUpdateCounter,
-  ]);
+  const referenceElDocumentPos = useMemo(
+    () => getElementDocumentPosition(referenceElement),
+    [
+      referenceElement,
+      viewportSize,
+      lastTimeRefElMutated,
+      active,
+      align,
+      justify,
+      forceUpdateCounter,
+    ],
+  );
+
+  const contentElDocumentPos = useMemo(
+    () => getElementDocumentPosition(contentNode),
+    [
+      contentNode,
+      viewportSize,
+      lastTimeContentElMutated,
+      active,
+      align,
+      justify,
+      forceUpdateCounter,
+    ],
+  );
 
   const prevJustifyRef = useRef<Justify>();
   const prevAlignRef = useRef<Align>();
@@ -151,8 +165,10 @@ function Popover({
     spacing,
     align,
     justify,
-    referenceElPos,
-    contentElPos,
+    referenceElViewportPos,
+    referenceElDocumentPos,
+    contentElViewportPos,
+    contentElDocumentPos,
   });
 
   const activeStyle = css`
@@ -173,7 +189,7 @@ function Popover({
       return children({
         align: windowSafeAlign,
         justify: windowSafeJustify,
-        referenceElPos,
+        referenceElPos: referenceElDocumentPos,
       });
     }
 
