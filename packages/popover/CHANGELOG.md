@@ -1,5 +1,11 @@
 # @leafygreen-ui/popover
 
+## 5.0.0
+
+### Major Changes
+
+- 2176b77: Refactors Popover to only use element positions relative to the viewport for calculating viewport collisions, and use element positions relative to the document for calculating the element positioning itself.
+
 ## 4.0.1
 
 ### Patch Changes

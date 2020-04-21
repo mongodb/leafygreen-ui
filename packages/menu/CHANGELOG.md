@@ -1,5 +1,13 @@
 # @leafygreen-ui/menu
 
+## 6.0.8
+
+### Patch Changes
+
+- 0391d01: Fixes style bug when MenuItem is focused and rendered as anchor tag
+- Updated dependencies [2176b77]
+  - @leafygreen-ui/popover@5.0.0
+
 ## 6.0.7
 
 ### Patch Changes

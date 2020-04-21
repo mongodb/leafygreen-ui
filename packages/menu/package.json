@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/menu",
-  "version": "6.0.7",
+  "version": "6.0.8",
   "description": "LeafyGreen UI Kit Menu",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
@@ -19,7 +19,7 @@
     "react-transition-group": "^4.2.1",
     "@leafygreen-ui/hooks": "^2.1.0",
     "@leafygreen-ui/lib": "^4.4.1",
-    "@leafygreen-ui/popover": "^4.0.1",
+    "@leafygreen-ui/popover": "^5.0.0",
     "@leafygreen-ui/palette": "^2.0.1",
     "@leafygreen-ui/icon-button": "^5.0.1",
     "@leafygreen-ui/leafygreen-provider": "^1.1.0"
