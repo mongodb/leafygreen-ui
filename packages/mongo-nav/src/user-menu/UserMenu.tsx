@@ -460,7 +460,7 @@ function UserMenu({
           size="large"
           data-testid="user-menuitem-logout"
         >
-          Logout
+          Log out
         </MenuItem>
       </Menu>
     </div>

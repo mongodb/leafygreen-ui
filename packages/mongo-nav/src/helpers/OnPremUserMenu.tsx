@@ -154,7 +154,7 @@ export default function OnPremUserMenu({
           onClick={onElementClick(NavElement.Logout, () => setOpen(false))}
           data-testid="om-user-menuitem-sign-out"
         >
-          Sign Out
+          Log out
         </MenuItem>
       </Menu>
     </div>
