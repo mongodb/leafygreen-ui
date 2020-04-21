@@ -340,6 +340,57 @@ describe('packages/mongo-nav/src/org-nav', () => {
     });
   });
 
+  describe('the Access Manager dropdown displays correctly', () => {
+    test('when onPrem and currentProject exist', () => {
+      renderComponent({
+        onPremEnabled: true,
+        currentProjectName: 'Test Project',
+      });
+      fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
+      setExpectedElements();
+
+      expect(
+        expectedElements.accessManagerProject?.getAttribute('aria-disabled'),
+      ).toBe('false');
+    });
+
+    test('when onPrem and currentProject does not exist', () => {
+      renderComponent({
+        onPremEnabled: true,
+      });
+      fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
+      setExpectedElements();
+
+      expect(
+        expectedElements.accessManagerProject?.getAttribute('aria-disabled'),
+      ).toBe('true');
+    });
+
+    test('when not onPrem and showProjectNav is true', () => {
+      renderComponent({
+        showProjectNav: true,
+      });
+      fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
+      setExpectedElements();
+
+      expect(
+        expectedElements.accessManagerProject?.getAttribute('aria-disabled'),
+      ).toBe('false');
+    });
+
+    test('when not onPrem and showProjectNav is false', () => {
+      renderComponent({
+        showProjectNav: false,
+      });
+      fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
+      setExpectedElements();
+
+      expect(
+        expectedElements.accessManagerProject?.getAttribute('aria-disabled'),
+      ).toBe('true');
+    });
+  });
+
   describe('when window.Appcues is true', () => {
     let originalWindowAppcues: boolean;
 
