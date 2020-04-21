@@ -344,6 +344,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
     test('when onPrem and currentProject exist, the Project Access Manager link is not disabled and project name is displayed', () => {
       renderComponent({
         onPremEnabled: true,
+        showProjectNav: false,
         currentProjectName: 'Test Project',
       });
       fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
@@ -362,6 +363,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
     test('when onPrem and currentProject does not exist, the Project Access Manager link is disabled and the project name appears as "None"', () => {
       renderComponent({
         onPremEnabled: true,
+        showProjectNav: false,
       });
       fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
       setExpectedElements();
