@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 4.2.2
+
+### Patch Changes
+
+- 7d7e589: Sets text-align property to center
+
 ## 4.2.1
 
 ### Patch Changes

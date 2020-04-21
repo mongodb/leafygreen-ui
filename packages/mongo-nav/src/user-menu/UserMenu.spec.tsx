@@ -99,7 +99,7 @@ describe('packages/UserMenu', () => {
   });
 
   test('onLogout fires when logout is clicked', () => {
-    const logout = getByText('Logout');
+    const logout = getByText('Log out');
 
     fireEvent.click(logout);
 
