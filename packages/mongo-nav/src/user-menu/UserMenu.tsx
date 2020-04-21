@@ -335,7 +335,7 @@ function UserMenu({
             {...subMenuContainer.prop}
             {...sharedProps}
             active={isCloud}
-            disabled={!account || !isCloud}
+            disabled={!account}
             href={hosts.cloud}
             description={<Description isActive={isCloud} product="cloud" />}
             title="Cloud"

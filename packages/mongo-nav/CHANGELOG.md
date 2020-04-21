@@ -1,5 +1,18 @@
 # @leafygreen-ui/mongo-nav
 
+## 1.0.1
+
+### Patch Changes
+
+- b1fa864: Changes "Atlas" to "Cloud" in UserMenu
+- 9951eab: Ensures cursor:pointer when user hovers over See Product Tour
+- 0391d01: Makes Cloud section of UserMenu clickable, even if Cloud is not the active product
+- Updated dependencies [7d7e589]
+- Updated dependencies [0391d01]
+  - @leafygreen-ui/button@4.2.2
+  - @leafygreen-ui/menu@6.0.8
+  - @leafygreen-ui/tooltip@3.2.1
+
 ## 1.0.0
 
 ### Major Changes
