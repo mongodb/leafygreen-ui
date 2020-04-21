@@ -136,21 +136,3 @@ usePoller(onPoll, {
 | `optional.interval`  | `number`   | What interval the onPoll should be called.                           | `30000` |
 | `optional.immediate` | `boolean`  | If we immediately poll, if false we wait till first interval occurs. | `true`  |
 | `optional.enabled`   | `boolean`  | Is polling enabled.                                                  | `true`  |
-
-## useKeyPress
-
-Hook that accepts a keyCode and returns a boolean based on whether or not that key is being pressed.
-
-### Example
-
-```js
-import { useKeyPress } from '@leafygreen-ui/hooks';
-
-const isPressed = useKeyPress(81);
-```
-
-### Properties
-
-| Prop            | Type     | Description                                      | Default |
-| --------------- | -------- | ------------------------------------------------ | ------- |
-| `targetKeyCode` | `number` | Represents the keyCode of the key to listen for. |         |

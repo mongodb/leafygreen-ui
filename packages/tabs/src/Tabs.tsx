@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
-import { useEventListener, useKeyPress } from '@leafygreen-ui/hooks';
+import { useEventListener } from '@leafygreen-ui/hooks';
 import TabTitle from './TabTitle';
+import useKeyPress from './useKeyPress';
 import omit from 'lodash/omit';
 
 const borderHeight = 3;
@@ -162,10 +163,9 @@ function Tabs({
     }
   };
 
-  const enabled =
-    navigator.platform.indexOf('Mac') > -1
-      ? !useKeyPress(keyMap.Command)
-      : !useKeyPress(keyMap.Control);
+  const isMac = navigator.platform.indexOf('Mac') > -1;
+  const keyMapValue = isMac ? keyMap.Command : keyMap.Control;
+  const enabled = !useKeyPress(keyMapValue);
 
   useEventListener('keydown', handleArrowKeyPress, {
     enabled,

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useEventListener } from '.';
+import { useEventListener } from '@leafygreen-ui/hooks';
 
 /**
  * Hook that accepts a keyCode and returns a boolean based on whether or not that key is being pressed.
