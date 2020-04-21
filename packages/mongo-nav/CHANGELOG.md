@@ -1,5 +1,11 @@
 # @leafygreen-ui/mongo-nav
 
+## 1.0.2
+
+### Patch Changes
+
+- be52876: Changes Logout to Log out in UserMenu and OnPremUserMenu
+
 ## 1.0.1
 
 ### Patch Changes
