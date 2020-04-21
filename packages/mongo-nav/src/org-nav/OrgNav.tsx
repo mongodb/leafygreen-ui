@@ -226,12 +226,12 @@ function OrgNav({
     );
   }
 
-  let disableProjectAccess = false;
+  let displayProjectAccess: boolean;
 
   if (onPremEnabled) {
-    disableProjectAccess = currentProjectName === 'None' ? true : false;
+    displayProjectAccess = currentProjectName !== 'None' ? true : false;
   } else {
-    disableProjectAccess = !showProjectNav;
+    displayProjectAccess = showProjectNav;
   }
 
   return (
@@ -328,8 +328,10 @@ function OrgNav({
                     activeNav ===
                     ActiveNavElement.OrgNavDropdownProjectAccessManager
                   }
-                  disabled={disableProjectAccess}
-                  description={showProjectNav ? currentProjectName : 'None'}
+                  disabled={!displayProjectAccess}
+                  description={
+                    displayProjectAccess ? currentProjectName : 'None'
+                  }
                   onClick={onElementClick(
                     NavElement.OrgNavDropdownProjectAccessManager,
                   )}
