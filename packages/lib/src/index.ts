@@ -96,9 +96,6 @@ export const keyMap = {
   Escape: 27,
   Space: 32,
   Tab: 9,
-  Option: 18,
-  Command: 91,
-  Control: 17,
 };
 
 /**

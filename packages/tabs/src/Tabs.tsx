@@ -5,7 +5,6 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import TabTitle from './TabTitle';
-import useKeyPress from './useKeyPress';
 import omit from 'lodash/omit';
 
 const borderHeight = 3;
@@ -149,27 +148,23 @@ function Tabs({
     return [enabledIndexes, enabledIndexes.indexOf(selected!)];
   };
 
-  const handleArrowKeyPress = e => {
-    if (e.keyCode === keyMap.ArrowRight) {
-      const [enabledIndexes, current] = enabledIndexLogic();
-      setSelected(enabledIndexes[(current + 1) % enabledIndexes.length]);
-    } else if (e.keyCode === keyMap.ArrowLeft) {
-      const [enabledIndexes, current] = enabledIndexLogic();
-      setSelected(
-        enabledIndexes[
-          (current - 1 + enabledIndexes.length) % enabledIndexes.length
-        ],
-      );
+  const handleArrowKeyPress = (e: KeyboardEvent) => {
+    if (!(e.metaKey || e.ctrlKey)) {
+      if (e.keyCode === keyMap.ArrowRight) {
+        const [enabledIndexes, current] = enabledIndexLogic();
+        setSelected(enabledIndexes[(current + 1) % enabledIndexes.length]);
+      } else if (e.keyCode === keyMap.ArrowLeft) {
+        const [enabledIndexes, current] = enabledIndexLogic();
+        setSelected(
+          enabledIndexes[
+            (current - 1 + enabledIndexes.length) % enabledIndexes.length
+          ],
+        );
+      }
     }
   };
 
-  const isMac = navigator.platform.indexOf('Mac') > -1;
-  const keyMapValue = isMac ? keyMap.Command : keyMap.Control;
-  const enabled = !useKeyPress(keyMapValue);
-
-  useEventListener('keydown', handleArrowKeyPress, {
-    enabled,
-  });
+  useEventListener('keydown', handleArrowKeyPress);
 
   function calcStyle() {
     if (

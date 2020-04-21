@@ -131,14 +131,11 @@ describe('packages/Tabs', () => {
 
     test('keyboard nav does not work if modifier key is also pressed', () => {
       const activeTabListItem = getByText('Sheep');
-      fireEvent.keyDown(activeTabListItem, {
-        key: 'Control',
-        keyCode: 17,
-      });
 
       fireEvent.keyDown(activeTabListItem, {
         key: 'ArrowRight',
         keyCode: 39,
+        metaKey: true,
       });
 
       const activeTab = getByText('Baa');
