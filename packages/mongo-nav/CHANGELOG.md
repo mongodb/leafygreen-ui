@@ -1,5 +1,11 @@
 # @leafygreen-ui/mongo-nav
 
+## 1.0.3
+
+### Patch Changes
+
+- f377bcf6: Replace Charts logo with redesigned mark"
+
 ## 1.0.2
 
 ### Patch Changes
