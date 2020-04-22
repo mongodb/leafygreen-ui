@@ -1,98 +1,48 @@
+import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
-import { typeIs } from '@leafygreen-ui/lib';
+import { render } from '@testing-library/react';
 import Popover from './Popover';
-import { Align, Justify } from './types';
 
-afterAll(cleanup);
-
-describe('packages/Popover', () => {
-  const { container, unmount } = render(
+function renderPopover(props = {}) {
+  const utils = render(
     <>
-      <button>Trigger Element</button>
-      <Popover justify={Justify.Start} align={Align.Top} active>
-        Content to appear inside of Popover component
+      <button data-testid="button-test-id">Trigger Element</button>
+      <Popover {...props} data-testid="popover-test-id">
+        Popover Content
       </Popover>
     </>,
   );
+  const button = utils.getByTestId('button-test-id');
+  return { ...utils, button };
+}
 
-  test('should show popover when trigger is clicked', () => {
-    const { firstChild } = document.body.children[1];
-
-    if (!typeIs.element(firstChild)) {
-      throw new Error('Could not find element');
-    }
-
-    expect(firstChild.innerHTML).toBe(
-      'Content to appear inside of Popover component',
-    );
+describe('packages/popover', () => {
+  test('displays popover when the "active" prop is set', () => {
+    const { getByTestId } = renderPopover({ active: true });
+    expect(getByTestId('popover-test-id')).toBeInTheDocument();
   });
 
-  test('renders children inside of a portaled component', () => {
-    expect(
-      container.innerHTML.includes('<button>Trigger Element</button>'),
-    ).toBe(true);
-
-    expect(
-      container.innerHTML.includes(
-        'Content to appear inside of Popover component',
-      ),
-    ).toBe(false);
+  test('does not display popover when "active" prop is not set', () => {
+    const { container } = renderPopover();
+    expect(container.innerHTML.includes('popover-test-id')).toBe(false);
   });
 
-  test('does not render children by default when usePortal is true', () => {
-    render(
-      <>
-        <button>Trigger Element</button>
-        <Popover justify={Justify.Start} align={Align.Top}>
-          This content should not appear by default
-        </Popover>
-      </>,
-    );
-
-    expect(
-      document.body.innerHTML.includes(
-        'This content should not appear by default',
-      ),
-    ).toBe(false);
+  test('portals popover content to end of DOM, when "usePortal" is not set', () => {
+    const { container, getByTestId } = renderPopover({ active: true });
+    expect(container).not.toContain(getByTestId('popover-test-id'));
   });
 
-  test('does not render children by default when usePortal is false', () => {
-    const wrapper = render(
-      <>
-        <button>Trigger Element</button>
-        <Popover justify={Justify.Start} align={Align.Top} usePortal={false}>
-          Content to appear inside of Popover component
-        </Popover>
-      </>,
-    );
+  test('does not portal popover content to end of DOM when "usePortal" is false', () => {
+    const { container } = renderPopover({
+      active: true,
+      usePortal: false,
+    });
 
-    expect(
-      wrapper.container.innerHTML.includes(
-        'Content to appear inside of Popover component',
-      ),
-    ).toBe(false);
+    expect(container.innerHTML.includes('popover-test-id')).toBe(true);
   });
 
-  test('does not Portal Popover component, when usePortal is false', () => {
-    const { container } = render(
-      <>
-        <button>Trigger Element</button>
-        <Popover
-          active
-          usePortal={false}
-          justify={Justify.Start}
-          align={Align.Top}
-        >
-          Popover in DOM
-        </Popover>
-      </>,
-    );
-
-    expect(container.innerHTML.includes('Popover in DOM')).toBe(true);
-  });
-
-  test('removes Popover instance on unmount', () => {
+  test('removes Popover instance on unmound', () => {
+    const { container, unmount } = renderPopover();
     unmount();
     expect(container.innerHTML).toBe('');
   });

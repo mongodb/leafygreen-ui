@@ -1,6 +1,5 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
-import { typeIs } from '@leafygreen-ui/lib';
+import { render } from '@testing-library/react';
 import Syntax from './Syntax';
 
 const codeSnippet = 'const greeting = "Hello, world!";';

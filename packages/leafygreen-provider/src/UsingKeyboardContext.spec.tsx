@@ -1,53 +1,56 @@
 import React, { useContext } from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import UsingKeyboardProvider, {
   NavigationKeyCodes,
   UsingKeyboardContext,
   useUsingKeyboardContext,
 } from './UsingKeyboardContext';
 
-afterAll(cleanup);
+const childTestID = 'using-keyboard-provider';
+const buttonTestId = 'test-button';
 
-describe('packages/leafygreen-provider/UsingKeyboardProvider', () => {
-  const childTestID = 'using-keyboard-provider';
-  const buttonTestId = 'test-button';
+function TestContextComponent() {
+  const { usingKeyboard, setUsingKeyboard = () => {} } = useContext(
+    UsingKeyboardContext,
+  );
 
-  function TestContextComponent() {
-    const { usingKeyboard, setUsingKeyboard = () => {} } = useContext(
-      UsingKeyboardContext,
-    );
+  return (
+    <>
+      <div data-testid={childTestID}>
+        {usingKeyboard !== undefined ? usingKeyboard.toString() : ''}
+      </div>
+      <button
+        onClick={() => setUsingKeyboard(true)}
+        data-testid={buttonTestId}
+      />
+    </>
+  );
+}
 
-    return (
-      <>
-        <div data-testid={childTestID}>
-          {usingKeyboard !== undefined ? usingKeyboard.toString() : ''}
-        </div>
-        <button
-          onClick={() => setUsingKeyboard(true)}
-          data-testid={buttonTestId}
-        />
-      </>
-    );
-  }
-
-  const { container, getByTestId } = render(
+function renderProvider() {
+  const utils = render(
     <UsingKeyboardProvider>
       <TestContextComponent />
     </UsingKeyboardProvider>,
   );
+  const testChild = utils.getByTestId(childTestID);
+  return { ...utils, testChild };
+}
 
-  const testChild = getByTestId(childTestID);
-
+describe('packages/leafygreen-provider/UsingKeyboardProvider', () => {
   test('only renders children in the DOM', () => {
+    const { container, testChild } = renderProvider();
     expect(container.firstChild).toBe(testChild);
   });
 
   test('usingKeyboard is initialized as false', () => {
+    const { testChild } = renderProvider();
     expect(testChild.textContent).toBe('false');
   });
 
   Object.values(NavigationKeyCodes).forEach(keyCode => {
     test(`usingKeyboard is true after keydown event with keyCode: "${keyCode}" fires`, () => {
+      const { testChild } = renderProvider();
       fireEvent.keyDown(document, {
         bubbles: true,
         keyCode: keyCode.toString(),
@@ -58,6 +61,8 @@ describe('packages/leafygreen-provider/UsingKeyboardProvider', () => {
   });
 
   test(`usingKeyboard is false after mousedown event fires`, () => {
+    const { testChild } = renderProvider();
+
     fireEvent.mouseDown(document, {
       bubbles: true,
     });
@@ -66,6 +71,8 @@ describe('packages/leafygreen-provider/UsingKeyboardProvider', () => {
   });
 
   test('when passed true, setUsingKeyboard sets usingKeyboard to true', () => {
+    const { testChild, getByTestId } = renderProvider();
+
     // The button's click handler fires setUsingKeyboard(true)
     fireEvent.click(getByTestId(buttonTestId));
 
@@ -73,53 +80,56 @@ describe('packages/leafygreen-provider/UsingKeyboardProvider', () => {
   });
 });
 
-const genId = () => Math.round(Math.random() * 1000000).toString();
+// const genId = () => Math.round(Math.random() * 1000000).toString();
+
+function TestUseUsingKeyboardComponent({
+  id,
+  buttonId,
+}: {
+  id: string;
+  buttonId?: string;
+}) {
+  const { usingKeyboard, setUsingKeyboard } = useUsingKeyboardContext();
+
+  return (
+    <>
+      <div data-testid={id}>{usingKeyboard + ''}</div>
+      <button
+        data-testid={buttonId || ''}
+        onClick={() => setUsingKeyboard(true)}
+      />
+    </>
+  );
+}
+
+function renderUsingKeyboardComponent() {
+  const utils = render(<TestUseUsingKeyboardComponent id={childTestID} />);
+  const child = utils.getByTestId(childTestID);
+  return { ...utils, child };
+}
 
 describe('useUsingKeyboardContext', () => {
-  function TestUseUsingKeyboardComponent({
-    id,
-    buttonId,
-  }: {
-    id: string;
-    buttonId?: string;
-  }) {
-    const { usingKeyboard, setUsingKeyboard } = useUsingKeyboardContext();
-
-    return (
-      <>
-        <div data-testid={id}>{usingKeyboard + ''}</div>
-        <button
-          data-testid={buttonId || ''}
-          onClick={() => setUsingKeyboard(true)}
-        />
-      </>
-    );
-  }
-
   test('when child is not a descendent of UsingKeyboardProvider, usingKeyboard is true', () => {
-    const childTestId = genId();
-    const { getByTestId } = render(
-      <TestUseUsingKeyboardComponent id={childTestId} />,
-    );
+    const { child } = renderUsingKeyboardComponent();
 
-    expect(getByTestId(childTestId).textContent).toBe('true');
+    expect(child.textContent).toBe('true');
   });
 
   describe('when child is a descendent of UsingKeyboardProvider', () => {
     // We use this function in each test to avoid events we fire from causing side-effects in other tests
     function renderTestComponent() {
-      const childTestId = genId();
-      const buttonId = genId();
-
       const renderedComponent = render(
         <UsingKeyboardProvider>
-          <TestUseUsingKeyboardComponent id={childTestId} buttonId={buttonId} />
+          <TestUseUsingKeyboardComponent
+            id={childTestID}
+            buttonId={buttonTestId}
+          />
         </UsingKeyboardProvider>,
       );
 
       return {
-        testChildElement: renderedComponent.getByTestId(childTestId),
-        buttonElement: renderedComponent.getByTestId(buttonId),
+        testChildElement: renderedComponent.getByTestId(childTestID),
+        buttonElement: renderedComponent.getByTestId(buttonTestId),
       };
     }
 
