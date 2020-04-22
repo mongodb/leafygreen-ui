@@ -3,29 +3,29 @@ import { render, cleanup } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
 import Syntax from './Syntax';
 
-afterAll(cleanup);
-
 const codeSnippet = 'const greeting = "Hello, world!";';
 const className = 'test-class';
 
 describe('packages/Syntax', () => {
-  const { container } = render(
-    <Syntax language="none" className={className}>
-      {codeSnippet}
-    </Syntax>,
-  );
-
-  const code = container.firstChild as HTMLElement;
-
-  if (!code || !typeIs.element(code)) {
-    throw new Error('Code element not found');
-  }
-
   test(`renders "${className}" in the code element's classList`, () => {
+    const { container } = render(
+      <Syntax language="none" className={className}>
+        {codeSnippet}
+      </Syntax>,
+    );
+
+    const code = container.firstChild as HTMLElement;
     expect(code.classList.contains(className)).toBe(true);
   });
 
   test("doesn't highlight code when language is 'none'", () => {
+    const { container } = render(
+      <Syntax language="none" className={className}>
+        {codeSnippet}
+      </Syntax>,
+    );
+
+    const code = container.firstChild as HTMLElement;
     // Text nodes in HTMLCollections are ignored since they are not considered "elements",
     // so we check that children is empty here since we expect a text node to be rendered.
     //
@@ -34,12 +34,12 @@ describe('packages/Syntax', () => {
   });
 
   test("highlights code when language is 'javascript'", () => {
-    render(
+    const { container } = render(
       <Syntax className={className} language="javascript">
         {codeSnippet}
       </Syntax>,
-      { container },
     );
+    const code = container.firstChild as HTMLElement;
 
     // We test for more than one node rather than a specific number here and below to ensure
     // we're testing this component rather than the underlying library's implementation.
@@ -47,12 +47,12 @@ describe('packages/Syntax', () => {
   });
 
   test("highlights code when language is 'auto'", () => {
-    render(
+    const { container } = render(
       <Syntax className={className} language="auto">
         {codeSnippet}
       </Syntax>,
-      { container },
     );
+    const code = container.firstChild as HTMLElement;
 
     expect(code.children.length).toBeGreaterThan(1);
   });
