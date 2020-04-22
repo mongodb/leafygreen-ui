@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/mongo-nav",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "LeafyGreen UI Kit Mongo Nav",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
