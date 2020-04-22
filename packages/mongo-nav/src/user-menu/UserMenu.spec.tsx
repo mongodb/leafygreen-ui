@@ -166,7 +166,7 @@ describe('packages/mongo-nav/user-menu', () => {
 
   describe('renders appropriate links to SubMenu Items based on overrides prop', () => {
     test('renders particular url override, when the urls prop is set', () => {
-      const { getByTestId, getByText } = renderUserMenu({
+      const { getByTestId } = renderUserMenu({
         activeProduct: 'university',
       });
 
