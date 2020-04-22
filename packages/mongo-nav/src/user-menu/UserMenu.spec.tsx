@@ -1,43 +1,43 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import {
-  render,
-  fireEvent,
-  cleanup,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { urlFixtures, hostDefaults } from '../data';
 import UserMenu from '.';
 
-afterAll(cleanup);
+const account = {
+  firstName: 'Leafy',
+  lastName: 'Green',
+  email: 'leafy@mongodb.com',
+};
+const onLogout = jest.fn();
+const onProductChange = jest.fn();
 
-describe('packages/UserMenu', () => {
-  const account = {
-    firstName: 'Leafy',
-    lastName: 'Green',
-    email: 'leafy@mongodb.com',
-  };
-  const onLogout = jest.fn();
-  const onProductChange = jest.fn();
-
-  const renderedComponent = render(
+function renderUserMenu(props = {}) {
+  const utils = render(
     <UserMenu
       account={account}
-      activeProduct={'cloud'}
       onLogout={onLogout}
       onProductChange={onProductChange}
       urls={urlFixtures}
       hosts={hostDefaults}
+      {...props}
     />,
   );
 
-  const { getByText, getByTestId, queryByText } = renderedComponent;
-  test('renders closed UserMenu with users name in button by default', () => {
+  return utils;
+}
+
+describe('packages/mongo-nav/user-menu', () => {
+  test('by default, renders closed UserMenu with users name in button', () => {
+    const { getByTestId } = renderUserMenu();
     const trigger = getByTestId('user-menu-trigger');
     expect(trigger).toBeInTheDocument();
   });
 
-  test('renders atlas MenuItems when atlas is the active product', () => {
+  test('when "activeProduct" is set to "cloud, renders Cloud MenuItems', () => {
+    const { getByTestId, getByText } = renderUserMenu({
+      activeProduct: 'cloud',
+    });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
 
@@ -53,7 +53,12 @@ describe('packages/UserMenu', () => {
   });
 
   test('renders university MenuItems when university dropdown is clicked and closes other SubMenus', () => {
-    const userPreferences = getByText('User Preferences');
+    const { getByTestId } = renderUserMenu({
+      activeProduct: 'cloud',
+    });
+    const trigger = getByTestId('user-menu-trigger');
+    fireEvent.click(trigger);
+
     const university = document.querySelectorAll(
       '[data-leafygreen-ui="sub-menu-container"]',
     )[1];
@@ -61,17 +66,22 @@ describe('packages/UserMenu', () => {
     const universityArrowButton = university?.parentNode?.querySelector(
       'button',
     );
+
     fireEvent.click(universityArrowButton as HTMLElement);
 
-    const universityMenuItem = getByText('University Preferences');
-    expect(universityMenuItem).toBeInTheDocument();
-    // eslint-disable-next-line jest/valid-expect-in-promise
-    waitForElementToBeRemoved(() => userPreferences).then(() =>
-      expect(userPreferences).not.toBeVisible(),
+    const universityMenuItem = getByTestId(
+      'user-menuitem-university-preferences',
     );
+    expect(universityMenuItem).toBeInTheDocument();
   });
 
   test('atlas MenuItem links to cloud.mongodb.com', () => {
+    const { getByTestId } = renderUserMenu({
+      activeProduct: 'cloud',
+    });
+    const trigger = getByTestId('user-menu-trigger');
+    fireEvent.click(trigger);
+
     const atlasItem = document.querySelectorAll(
       '[data-leafygreen-ui="sub-menu-container"]',
     )[0];
@@ -81,6 +91,12 @@ describe('packages/UserMenu', () => {
   });
 
   test('university MenuItem links to university.mongodb.com', () => {
+    const { getByTestId } = renderUserMenu({
+      activeProduct: 'cloud',
+    });
+    const trigger = getByTestId('user-menu-trigger');
+    fireEvent.click(trigger);
+
     const universityItem = document.querySelectorAll(
       '[data-leafygreen-ui="sub-menu-container"]',
     )[1];
@@ -90,6 +106,12 @@ describe('packages/UserMenu', () => {
   });
 
   test('support MenuItem links to support.mongodb.com', () => {
+    const { getByTestId } = renderUserMenu({
+      activeProduct: 'cloud',
+    });
+    const trigger = getByTestId('user-menu-trigger');
+    fireEvent.click(trigger);
+
     const supportItem = document.querySelectorAll(
       '[data-leafygreen-ui="sub-menu-container"]',
     )[2];
@@ -99,6 +121,11 @@ describe('packages/UserMenu', () => {
   });
 
   test('onLogout fires when logout is clicked', () => {
+    const { getByText, getByTestId } = renderUserMenu({
+      activeProduct: 'cloud',
+    });
+    const trigger = getByTestId('user-menu-trigger');
+    fireEvent.click(trigger);
     const logout = getByText('Log out');
 
     fireEvent.click(logout);
@@ -106,32 +133,12 @@ describe('packages/UserMenu', () => {
     expect(onLogout).toHaveBeenCalledTimes(1);
   });
 
-  describe('renders appropriate links to SubMenu Items based on overrides prop', () => {
-    test('renders particular url override, when the urls prop is set', () => {
-      const universityItem = document.querySelectorAll(
-        '[data-leafygreen-ui="sub-menu-container"]',
-      )[1];
-
-      fireEvent.click(universityItem);
-
-      const universitySubMenuItem = getByText('University Preferences');
-      expect(
-        (universitySubMenuItem?.parentNode?.parentNode as HTMLAnchorElement)
-          .href,
-      ).toBe('https://university.mongodb.com/override-test');
-    });
-  });
-
   test('renders the account link as a disabled button when set to the empty string', () => {
-    renderedComponent.rerender(
-      <UserMenu
-        account={account}
-        activeProduct="account"
-        urls={urlFixtures}
-        hosts={hostDefaults}
-      />,
-    );
-
+    const { getByText, getByTestId } = renderUserMenu({
+      activeProduct: 'account',
+    });
+    const trigger = getByTestId('user-menu-trigger');
+    fireEvent.click(trigger);
     const accountButton = getByText('Manage your MongoDB Account')
       .parentElement as HTMLButtonElement;
     expect(accountButton.tagName.toLowerCase()).toBe('button');
@@ -140,6 +147,12 @@ describe('packages/UserMenu', () => {
   });
 
   test('does not render atlas MenuItems when a non-cloud product is active', () => {
+    const { queryByText, getByTestId } = renderUserMenu({
+      activeProduct: 'account',
+    });
+    const trigger = getByTestId('user-menu-trigger');
+    fireEvent.click(trigger);
+
     const userPreferences = queryByText('User Preferences');
     const invitations = queryByText('Invitations');
     const organizations = queryByText('Organizations');
@@ -149,5 +162,23 @@ describe('packages/UserMenu', () => {
     expect(invitations).toBeNull();
     expect(organizations).toBeNull();
     expect(mfa).toBeNull();
+  });
+
+  describe('renders appropriate links to SubMenu Items based on overrides prop', () => {
+    test('renders particular url override, when the urls prop is set', () => {
+      const { getByTestId, getByText } = renderUserMenu({
+        activeProduct: 'university',
+      });
+
+      const trigger = getByTestId('user-menu-trigger');
+      fireEvent.click(trigger);
+
+      const universitySubMenuItem = getByTestId(
+        'user-menuitem-university-preferences',
+      );
+      expect((universitySubMenuItem as HTMLAnchorElement).href).toBe(
+        'https://university.mongodb.com/override-test',
+      );
+    });
   });
 });
