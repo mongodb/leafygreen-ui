@@ -5,7 +5,6 @@ import { Tabs, Tab } from './index';
 
 const setSelected = jest.fn();
 const tabsClassName = 'tabs-class-name';
-const tabClassName = 'tab-class-name';
 
 function renderTabs(props = {}, useDefault?: boolean) {
   const utils = render(
