@@ -7,6 +7,10 @@ const buttonText = 'trigger button';
 const tooltipTestId = 'tooltip-test-id';
 const onClick = jest.fn();
 
+interface ButtonTestProps {
+  [key: string]: any;
+}
+
 function renderTooltip(props = {}) {
   const utils = render(
     <>
@@ -143,10 +147,6 @@ describe('packages/tooltip', () => {
   });
 
   describe('when trigger is a class-based component', () => {
-    interface ButtonTestProps {
-      [key: string]: any;
-    }
-
     class Button extends React.Component<ButtonTestProps> {
       render() {
         const { children } = this.props;
