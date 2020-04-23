@@ -133,7 +133,7 @@ function Tabs({
     setSelected(index);
   }
 
-  const enabledIndexLogic: () => [Array<number>, number] = () => {
+  const getEnabledIndexes: () => [Array<number>, number] = () => {
     const enabledIndexes: Array<number> = childrenArray.reduce(
       (acc, child, index) => {
         if (child.props.disabled) {
@@ -151,10 +151,10 @@ function Tabs({
   const handleArrowKeyPress = (e: KeyboardEvent) => {
     if (!(e.metaKey || e.ctrlKey)) {
       if (e.keyCode === keyMap.ArrowRight) {
-        const [enabledIndexes, current] = enabledIndexLogic();
+        const [enabledIndexes, current] = getEnabledIndexes();
         setSelected(enabledIndexes[(current + 1) % enabledIndexes.length]);
       } else if (e.keyCode === keyMap.ArrowLeft) {
-        const [enabledIndexes, current] = enabledIndexLogic();
+        const [enabledIndexes, current] = getEnabledIndexes();
         setSelected(
           enabledIndexes[
             (current - 1 + enabledIndexes.length) % enabledIndexes.length
