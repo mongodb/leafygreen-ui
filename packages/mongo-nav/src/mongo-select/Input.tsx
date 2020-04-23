@@ -66,7 +66,6 @@ const magnifyingGlassStyle = css`
 
 type InputProps = HTMLElementProps<'input'> & {
   onChange: React.ChangeEventHandler;
-  onKeyDown: React.KeyboardEventHandler;
   variant: Variant;
 };
 
@@ -95,7 +94,6 @@ Input.displayName = 'Input';
 
 Input.propTypes = {
   onChange: PropTypes.func.isRequired,
-  onKeyDown: PropTypes.func.isRequired,
 };
 
 export default Input;

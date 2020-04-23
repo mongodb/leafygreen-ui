@@ -28,7 +28,7 @@ import {
 
 // mongo-select
 import Input from './Input';
-import { onKeyDown } from './selectHelpers';
+import { onKeyChange } from './selectHelpers';
 import { BaseMongoSelectProps } from './types';
 import {
   activeButtonStyle,
@@ -126,6 +126,14 @@ function ProjectSelect({
   const isAdminSearch = isFiltered && admin && mode === Mode.Production;
 
   const renderedData = isFiltered ? filteredData : data;
+
+  // Conditionally add this eventListener because Firefox does not respect preventing default onKeyDown
+  // Known issue: https://github.com/downshift-js/downshift/issues/471
+  const addConditionalEventListener = {
+    [navigator.userAgent.indexOf('Firefox') !== -1 ? 'onKeyUp' : 'onKeyDown']: (
+      e: React.KeyboardEvent,
+    ) => onKeyChange(e, setValue),
+  };
 
   const toggleOpen = () => {
     setOpen(curr => !curr);
@@ -250,10 +258,14 @@ function ProjectSelect({
       >
         <Icon
           glyph="Folder"
-          className={cx(iconColorStyle, { [iconLoadingStyle]: loading })}
+          className={cx(iconColorStyle, {
+            [iconLoadingStyle]: loading,
+          })}
         />
         <span
-          className={cx(selectedStyle, { [textLoadingStyle]: loading })}
+          className={cx(selectedStyle, {
+            [textLoadingStyle]: loading,
+          })}
           data-testid="project-select-active-project"
         >
           {current?.projectName ?? ''}
@@ -261,7 +273,9 @@ function ProjectSelect({
         <Icon
           size="small"
           glyph={open ? 'CaretUp' : 'CaretDown'}
-          className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
+          className={cx(caretBaseStyle, {
+            [iconLoadingStyle]: loading,
+          })}
         />
         <Menu
           usePortal={false}
@@ -274,9 +288,9 @@ function ProjectSelect({
         >
           <FocusableMenuItem>
             <Input
+              {...addConditionalEventListener}
               data-testid="project-filter-input"
               onChange={onChange}
-              onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
               variant="project"
               value={value}
             />
@@ -295,7 +309,7 @@ function ProjectSelect({
           <MenuSeparator />
 
           <li
-            onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
+            onKeyDown={(e: React.KeyboardEvent) => onKeyChange(e, setValue)}
             role="none"
             className={projectButtonStyle}
           >

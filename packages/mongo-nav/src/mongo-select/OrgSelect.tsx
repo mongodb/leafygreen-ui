@@ -39,7 +39,7 @@ import {
 
 // mongo-select
 import Input from './Input';
-import { onKeyDown } from './selectHelpers';
+import { onKeyChange } from './selectHelpers';
 import { BaseMongoSelectProps } from './types';
 import {
   activeButtonStyle,
@@ -218,6 +218,14 @@ function OrgSelect({
     datum => datum.planType === checkPlanType,
   );
 
+  // Conditionally add this eventListener because Firefox does not respect preventing default onKeyDown
+  // Known issue: https://github.com/downshift-js/downshift/issues/471
+  const addConditionalEventListener = {
+    [navigator.userAgent.indexOf('Firefox') !== -1 ? 'onKeyUp' : 'onKeyDown']: (
+      e: React.KeyboardEvent,
+    ) => onKeyChange(e, setValue),
+  };
+
   const toggleOpen = () => {
     setOpen(curr => !curr);
     if (!open) {
@@ -358,7 +366,9 @@ function OrgSelect({
             <Icon
               size="small"
               glyph="Building"
-              className={cx(iconColorStyle, { [iconLoadingStyle]: loading })}
+              className={cx(iconColorStyle, {
+                [iconLoadingStyle]: loading,
+              })}
             />
           )}
           <span
@@ -372,7 +382,9 @@ function OrgSelect({
           <Icon
             size="small"
             glyph={open ? 'CaretUp' : 'CaretDown'}
-            className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
+            className={cx(caretBaseStyle, {
+              [iconLoadingStyle]: loading,
+            })}
           />
           <Menu
             usePortal={false}
@@ -385,10 +397,10 @@ function OrgSelect({
             {data && (
               <FocusableMenuItem>
                 <Input
+                  {...addConditionalEventListener}
                   data-testid="org-filter-input"
                   variant="organization"
                   onChange={onChange}
-                  onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
                   value={value}
                 />
               </FocusableMenuItem>
@@ -417,7 +429,9 @@ function OrgSelect({
               <>
                 <MenuSeparator />
                 <MenuItem
-                  onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
+                  onKeyDown={(e: React.KeyboardEvent) =>
+                    onKeyChange(e, setValue)
+                  }
                   href={urls.viewAllOrganizations}
                   data-testid="org-select-view-all-orgs"
                   onClick={onElementClick(
