@@ -119,6 +119,7 @@ type OrgNavProps = Pick<
   current?: CurrentOrganizationInterface;
   data?: Array<OrganizationInterface>;
   currentProjectName?: string;
+  currentProjectId?: string;
   onPremEnabled?: boolean;
   onPremVersion?: string;
   onPremMFA?: boolean;
@@ -143,6 +144,7 @@ function OrgNav({
   admin,
   hosts,
   currentProjectName = 'None',
+  currentProjectId,
   onPremEnabled,
   onPremVersion,
   onPremMFA = false,
@@ -229,7 +231,7 @@ function OrgNav({
   let displayProjectAccess: boolean;
 
   if (onPremEnabled) {
-    displayProjectAccess = currentProjectName !== 'None' ? true : false;
+    displayProjectAccess = !!currentProjectId;
   } else {
     displayProjectAccess = showProjectNav;
   }

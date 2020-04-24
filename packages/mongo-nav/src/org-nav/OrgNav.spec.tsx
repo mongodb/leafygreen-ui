@@ -346,6 +346,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
         onPremEnabled: true,
         showProjectNav: false,
         currentProjectName: 'Test Project',
+        currentProjectId: 'test-project-id',
       });
       fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
       setExpectedElements();
@@ -380,6 +381,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
       renderComponent({
         showProjectNav: true,
         currentProjectName: 'Test Project',
+        currentProjectId: 'test-project-id',
       });
       fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
       setExpectedElements();
