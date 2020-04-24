@@ -134,16 +134,9 @@ function Tabs({
   }
 
   const getEnabledIndexes: () => [Array<number>, number] = () => {
-    const enabledIndexes: Array<number> = childrenArray.reduce(
-      (acc, child, index) => {
-        if (child.props.disabled) {
-          return acc;
-        }
-
-        return [...acc, index];
-      },
-      [] as Array<number>,
-    );
+    const enabledIndexes = childrenArray
+      .filter(child => !child.props.disabled)
+      .map(child => childrenArray.indexOf(child));
 
     return [enabledIndexes, enabledIndexes.indexOf(selected!)];
   };
