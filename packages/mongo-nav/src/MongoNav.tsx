@@ -121,7 +121,7 @@ function MongoNav({
       integrations: `${hosts.cloud}/v2/${currentProjectId}#integrations`,
       alerts: `${hosts.cloud}/v2/${currentProjectId}#alerts`,
       activityFeed: `${hosts.cloud}/v2/${currentProjectId}#activity`,
-      invite: `${hosts.cloud}/v2/${currentProjectId}#access/add`,
+      invite: `${hosts.cloud}/v2/${currentProjectId}#access/invite`,
       realm: `${hosts.realm}/groups/${currentProjectId}/apps`,
       charts: data?.currentProject?.chartsActivated
         ? `${hosts.cloud}/charts/${currentProjectId}`
