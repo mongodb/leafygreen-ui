@@ -28,7 +28,7 @@ import {
 
 // mongo-select
 import Input from './Input';
-import { onKeyDown } from './selectHelpers';
+import { onKeyDown, usePrevious } from './selectHelpers';
 import { BaseMongoSelectProps } from './types';
 import {
   activeButtonStyle,
@@ -120,6 +120,7 @@ function ProjectSelect({
   const [filteredData, setFilteredData] = useState(data);
   const [isFetching, setIsFetching] = useState(false);
   const [open, setOpen] = useState(false);
+  const wasOpen = usePrevious(open);
   const onElementClick = useOnElementClick();
 
   const isFiltered = value !== '';
@@ -198,6 +199,12 @@ function ProjectSelect({
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setValue(value);
+
+    if (open === true && wasOpen !== open) {
+      // Opt out of type-checking as we just want to trigger the onElementClick handler
+      onElementClick(NavElement.ProjectNavProjectSelectSearch)(e as any);
+    }
+
     return onChangeProp?.({
       value,
       setData: setFilteredData,
