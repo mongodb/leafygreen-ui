@@ -98,7 +98,7 @@ export const urlFixtures: Required<URLSInterface> = {
     integrations: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#integrations`,
     alerts: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#alerts`,
     activityFeed: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#activity`,
-    invite: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#access/add`,
+    invite: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#access/invite`,
     realm: `https://stitch.mongodb.com/groups/${dataFixtures.currentProject?.projectId}/apps`,
     charts: `https://cloud.mongodb.com/v2/${dataFixtures.currentProject?.projectId}#charts`,
   },
