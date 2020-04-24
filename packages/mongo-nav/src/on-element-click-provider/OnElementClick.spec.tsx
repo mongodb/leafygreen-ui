@@ -6,14 +6,12 @@ import { NavElement } from '../types';
 
 const defaultElements = {
   [NavElement.OrgNavLeaf]: 'org-nav-leaf',
-  // [NavElement.OrgNavOrgSelectTrigger]: 'org-trigger',
   [NavElement.OrgNavOrgSettings]: 'org-trigger-settings',
   [NavElement.OrgNavAccessManager]: 'org-nav-access-manager',
   [NavElement.OrgNavDropdown]: 'org-nav-dropdown',
   [NavElement.OrgNavSupport]: 'org-nav-support',
   [NavElement.OrgNavBilling]: 'org-nav-billing',
   [NavElement.OrgNavAllClusters]: 'org-nav-all-clusters-link',
-  // [NavElement.ProjectNavProjectSelectTrigger]: 'project-select-trigger',
   [NavElement.ProjectNavProjectDropdown]: 'project-nav-project-menu',
   [NavElement.ProjectNavCloud]: 'project-nav-atlas',
   [NavElement.ProjectNavRealm]: 'project-nav-realm',
