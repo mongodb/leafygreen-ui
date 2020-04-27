@@ -164,7 +164,8 @@ function ProjectSelect({
   );
 
   const filterData = () => {
-    const sanitizedValue = value.replace(/\\/g, '\\\\');
+    const invalid = /[()[\]{}\\]/g;
+    const sanitizedValue = value.replace(invalid, '');
     const search = new RegExp(String(sanitizedValue), 'i');
 
     const filtered = data?.filter(datum => {
@@ -270,63 +271,59 @@ function ProjectSelect({
           glyph={open ? 'CaretUp' : 'CaretDown'}
           className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
         />
-        <Menu
-          usePortal={false}
-          className={menuContainerStyle}
-          justify="start"
-          spacing={0}
-          open={open}
-          setOpen={toggleOpen}
-          data-testid="project-select-project-list"
-        >
-          <FocusableMenuItem>
-            <Input
-              data-testid="project-filter-input"
-              onChange={onChange}
-              onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
-              variant="project"
-              value={value}
-            />
-          </FocusableMenuItem>
-
-          <ul className={ulStyle}>
-            {isAdminSearch && isFetching && (
-              <li className={emptyStateStyle}>Searching...</li>
-            )}
-            {isAdminSearch && !isFetching && renderedData.length === 0 && (
-              <li className={emptyStateStyle}>No matches found</li>
-            )}
-            {renderedData?.map(renderProjectOption)}
-          </ul>
-
-          <MenuSeparator />
-
-          <li
-            onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
-            role="none"
-            className={projectButtonStyle}
-          >
-            <FocusableMenuItem>
-              <Button
-                href={urls.viewAllProjects as string}
-                data-testid="project-select-view-all-projects"
-                onClick={onElementClick(NavElement.ProjectNavViewAllProjects)}
-              >
-                View All Projects
-              </Button>
-            </FocusableMenuItem>
-            <FocusableMenuItem>
-              <Button
-                href={urls.newProject as string}
-                data-testid="project-select-add-new-project"
-                onClick={onElementClick(NavElement.ProjectNavAddProject)}
-              >
-                + New Project
-              </Button>
-            </FocusableMenuItem>
-          </li>
-        </Menu>
       </button>
+      <Menu
+        usePortal={false}
+        className={menuContainerStyle}
+        justify="start"
+        spacing={0}
+        open={open}
+        setOpen={toggleOpen}
+        data-testid="project-select-project-list"
+      >
+        <FocusableMenuItem>
+          <Input
+            data-testid="project-filter-input"
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+            variant="project"
+            value={value}
+          />
+        </FocusableMenuItem>
+
+        <ul className={ulStyle}>
+          {isAdminSearch && isFetching && (
+            <li className={emptyStateStyle}>Searching...</li>
+          )}
+          {isAdminSearch && !isFetching && renderedData.length === 0 && (
+            <li className={emptyStateStyle}>No matches found</li>
+          )}
+          {renderedData?.map(renderProjectOption)}
+        </ul>
+
+        <MenuSeparator />
+
+        <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
+          <FocusableMenuItem>
+            <Button
+              href={urls.viewAllProjects as string}
+              data-testid="project-select-view-all-projects"
+              onClick={onElementClick(NavElement.ProjectNavViewAllProjects)}
+            >
+              View All Projects
+            </Button>
+          </FocusableMenuItem>
+          <FocusableMenuItem>
+            <Button
+              href={urls.newProject as string}
+              data-testid="project-select-add-new-project"
+              onClick={onElementClick(NavElement.ProjectNavAddProject)}
+            >
+              + New Project
+            </Button>
+          </FocusableMenuItem>
+        </li>
+      </Menu>
     </InteractionRingWrapper>
   );
 }
