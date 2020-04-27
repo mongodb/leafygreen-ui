@@ -66,27 +66,31 @@ const navContainerStyle = css`
  * @param props.activeProjectId ID for active project, will cause a POST request to cloud to update current active project.
  * @param props.className Applies a className to the root element
  * @param props.loadData Determines whether or not the component will fetch data from cloud
+ * @param props.activePlatform Determines which platform is active
+ * @param props.alertPollingInterval Defines interval for alert polling
  */
 function MongoNav({
   activeProduct,
   activeNav,
   onOrganizationChange,
   onProjectChange,
+  activeOrgId,
+  activeProjectId,
+  activePlatform,
+  className,
   mode = Mode.Production,
   loadData = true,
   showProjectNav = true,
   admin = false,
-  hosts: hostsProp,
-  urls: urlsProp,
-  constructOrganizationURL: constructOrganizationURLProp,
-  constructProjectURL: constructProjectURLProp,
   onError = () => {},
   onSuccess = () => {},
   onElementClick = (_type: NavElement, _event: React.MouseEvent) => {}, // eslint-disable-line @typescript-eslint/no-unused-vars
   onPrem = { mfa: false, enabled: false, version: '' },
-  activeOrgId,
-  activeProjectId,
-  className,
+  alertPollingInterval = 600e3,
+  hosts: hostsProp,
+  urls: urlsProp,
+  constructOrganizationURL: constructOrganizationURLProp,
+  constructProjectURL: constructProjectURLProp,
   dataFixtures: dataFixturesProp,
   ...rest
 }: MongoNavInterface) {
@@ -241,12 +245,14 @@ function MongoNav({
           onPremVersion={onPrem.version}
           onPremMFA={onPrem.mfa}
           showProjectNav={shouldShowProjectNav}
+          activePlatform={activePlatform}
         />
 
         {shouldShowProjectNav && (
           <ProjectNav
             mode={mode}
             activeProduct={activeProduct}
+            alertPollingInterval={alertPollingInterval}
             activeNav={activeNav}
             admin={admin}
             current={data?.currentProject}
