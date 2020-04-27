@@ -340,6 +340,82 @@ describe('packages/mongo-nav/src/org-nav', () => {
     });
   });
 
+  describe('the Access Manager dropdown displays correctly', () => {
+    describe('when onPrem is true', () => {
+      test('and currentProject exists, the Project Access Manager link is not disabled and project name is displayed', () => {
+        renderComponent({
+          onPremEnabled: true,
+          showProjectNav: false,
+          currentProjectName: 'Test Project',
+          currentProjectId: 'test-project-id',
+        });
+        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
+        setExpectedElements();
+
+        expect(
+          expectedElements.accessManagerProject?.innerHTML.includes(
+            'Test Project',
+          ),
+        ).toBe(true);
+        expect(
+          expectedElements.accessManagerProject?.getAttribute('aria-disabled'),
+        ).toBe('false');
+      });
+
+      test('and currentProject does not exist, the Project Access Manager link is disabled and the project name appears as "None"', () => {
+        renderComponent({
+          onPremEnabled: true,
+          showProjectNav: false,
+        });
+        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
+        setExpectedElements();
+
+        expect(
+          expectedElements.accessManagerProject?.innerHTML.includes('None'),
+        ).toBe(true);
+        expect(
+          expectedElements.accessManagerProject?.getAttribute('aria-disabled'),
+        ).toBe('true');
+      });
+    });
+
+    describe('when onPrem is false', () => {
+      test('and showProjectNav is true, the Project Access Manager link is not disabled and project name is displayed', () => {
+        renderComponent({
+          showProjectNav: true,
+          currentProjectName: 'Test Project',
+          currentProjectId: 'test-project-id',
+        });
+        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
+        setExpectedElements();
+
+        expect(
+          expectedElements.accessManagerProject?.innerHTML.includes(
+            'Test Project',
+          ),
+        ).toBe(true);
+        expect(
+          expectedElements.accessManagerProject?.getAttribute('aria-disabled'),
+        ).toBe('false');
+      });
+
+      test('and showProjectNav is false, the Project Access Manager link is disabled and the project name appears as "None"', () => {
+        renderComponent({
+          showProjectNav: false,
+        });
+        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
+        setExpectedElements();
+
+        expect(
+          expectedElements.accessManagerProject?.innerHTML.includes('None'),
+        ).toBe(true);
+        expect(
+          expectedElements.accessManagerProject?.getAttribute('aria-disabled'),
+        ).toBe('true');
+      });
+    });
+  });
+
   describe('when window.Appcues is true', () => {
     let originalWindowAppcues: boolean;
 
