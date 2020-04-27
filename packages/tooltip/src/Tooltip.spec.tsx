@@ -1,44 +1,50 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, cleanup } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import Tooltip from '.';
 
-afterAll(cleanup);
+const buttonText = 'trigger button';
+const tooltipTestId = 'tooltip-test-id';
+const onClick = jest.fn();
 
 interface ButtonTestProps {
   [key: string]: any;
 }
 
-describe('packages/Tooltip', () => {
-  const buttonText = 'trigger button';
+function renderTooltip(props = {}) {
+  const utils = render(
+    <>
+      <div data-testid="backdrop" />
+      <Tooltip
+        trigger={<button onClick={onClick}>{buttonText}</button>}
+        {...props}
+      >
+        <div data-testid={tooltipTestId}>Tooltip Contents!</div>
+      </Tooltip>
+    </>,
+  );
+  const button = utils.getByText(buttonText);
+  const backdrop = utils.getByTestId('backdrop');
+  return { ...utils, button, backdrop };
+}
 
+describe('packages/tooltip', () => {
   describe('when uncontrolled', () => {
-    const onClick = jest.fn();
-
-    const { getByText, getByTestId } = render(
-      <>
-        <div>backdrop content</div>
-        <Tooltip
-          trigger={<button onClick={onClick}>{buttonText}</button>}
-          triggerEvent="click"
-        >
-          <div data-testid="uncontrolled-tooltip">Uncontrolled tooltip!</div>
-        </Tooltip>
-      </>,
-    );
-
-    const button = getByText(buttonText);
-    const backdrop = getByText('backdrop content');
-
     test(`renders a button to the DOM with ${buttonText}`, () => {
-      expect(button).toBeInTheDocument();
-      expect(button.tagName.toLowerCase()).toBe('button');
+      const { getByText } = renderTooltip();
+      expect(getByText(buttonText)).toBeInTheDocument();
     });
 
-    test('click triggers opening and closing of tooltip', async () => {
+    test('when "triggerEvent" is set to click, clicking trigger opens and closes the tooltip', () => {
+      const { button, getByTestId } = renderTooltip({
+        triggerEvent: 'click',
+      });
+
       fireEvent.click(button);
-      const tooltip = getByTestId('uncontrolled-tooltip');
       expect(onClick).toHaveBeenCalledTimes(1);
+
+      const tooltip = getByTestId(tooltipTestId);
+
       // checking that in the Document, because in the document before opacity hits 1
       expect(tooltip).toBeInTheDocument();
 
@@ -48,8 +54,12 @@ describe('packages/Tooltip', () => {
     });
 
     test('backdrop clicks close the tooltip', () => {
+      const { getByTestId, button, backdrop } = renderTooltip({
+        triggerEvent: 'click',
+      });
+
       fireEvent.click(button);
-      const tooltip = getByTestId('uncontrolled-tooltip');
+      const tooltip = getByTestId(tooltipTestId);
       expect(tooltip).toBeInTheDocument();
 
       fireEvent.click(backdrop);
@@ -57,114 +67,78 @@ describe('packages/Tooltip', () => {
     });
 
     test('escape click closes tooltip', () => {
+      const { getByTestId, button } = renderTooltip({
+        triggerEvent: 'click',
+      });
+
       fireEvent.click(button);
-      const tooltip = getByTestId('uncontrolled-tooltip');
+      const tooltip = getByTestId(tooltipTestId);
       expect(tooltip).toBeInTheDocument();
 
-      fireEvent.keyDown(button, { key: 'Escape', keyCode: 27 });
+      fireEvent.keyDown(button, {
+        key: 'Escape',
+        keyCode: 27,
+      });
       expect(tooltip).not.toBeVisible();
     });
 
-    describe('when shouldClose() prop is passed', () => {
-      test('when shouldClose() returns true', () => {
-        const shouldClose = () => true;
-        const { getByTestId } = render(
-          <>
-            <div data-testid="shouldClose-test-backdrop">backdrop content</div>
-            <Tooltip
-              trigger={
-                <button data-testid="shouldClose-test-trigger">trigger</button>
-              }
-              triggerEvent="click"
-              shouldClose={shouldClose}
-            >
-              <div data-testid="shouldClose-test-tooltip">
-                Uncontrolled tooltip!
-              </div>
-            </Tooltip>
-          </>,
-        );
-
-        const backdrop = getByTestId('shouldClose-test-backdrop');
-        const trigger = getByTestId('shouldClose-test-trigger');
-
-        fireEvent.click(trigger);
-        const tooltip = getByTestId('shouldClose-test-tooltip');
-        expect(tooltip).toBeInTheDocument();
-
-        fireEvent.click(backdrop);
-        expect(tooltip).not.toBeVisible();
+    test('when "shouldClose" prop is returns true', () => {
+      const { getByTestId, backdrop, button } = renderTooltip({
+        triggerEvent: 'click',
+        shouldClose: () => true,
       });
 
-      test('when shoudlClose() returns false', () => {
-        const shouldClose = () => false;
+      fireEvent.click(button);
+      const tooltip = getByTestId(tooltipTestId);
+      expect(tooltip).toBeInTheDocument();
 
-        const { getByTestId } = render(
-          <>
-            <div data-testid="shouldClose-backdrop">backdrop content</div>
-            <Tooltip
-              trigger={
-                <button data-testid="shouldClose-trigger">trigger</button>
-              }
-              triggerEvent="click"
-              shouldClose={shouldClose}
-            >
-              <div data-testid="shouldClose-tooltip">Uncontrolled tooltip!</div>
-            </Tooltip>
-          </>,
-        );
+      fireEvent.click(backdrop);
+      expect(tooltip).not.toBeVisible();
+    });
 
-        const backdrop = getByTestId('shouldClose-backdrop');
-        const trigger = getByTestId('shouldClose-trigger');
-
-        fireEvent.click(trigger);
-        const tooltip = getByTestId('shouldClose-tooltip');
-        expect(tooltip).toBeInTheDocument();
-
-        fireEvent.click(backdrop);
-        expect(tooltip).toBeInTheDocument();
+    test('when "shouldClose" prop is returns false', () => {
+      const { getByTestId, backdrop, button } = renderTooltip({
+        triggerEvent: 'click',
+        shouldClose: () => false,
       });
+
+      fireEvent.click(button);
+      const tooltip = getByTestId(tooltipTestId);
+      expect(tooltip).toBeInTheDocument();
+
+      fireEvent.click(backdrop);
+      expect(tooltip).toBeInTheDocument();
     });
   });
 
   describe('when controlled', () => {
-    const open = true;
     const setOpen = jest.fn();
-    const onClick = jest.fn();
 
-    const Button = ({ children, ...rest }: ButtonTestProps) => {
-      return (
-        <button {...rest} data-testid="controlled-button">
-          controlled button{children}
-        </button>
-      );
-    };
-
-    const { getByTestId } = render(
-      <Tooltip
-        open={open}
-        setOpen={setOpen}
-        trigger={<Button onClick={onClick} />}
-        triggerEvent="click"
-      >
-        <div data-testid="controlled-tooltip">Controlled tooltip!</div>
-      </Tooltip>,
-    );
-
-    const tooltip = getByTestId('controlled-tooltip');
-    const button = getByTestId('controlled-button');
-
-    test('renders initial state based on open prop', () => {
-      expect(tooltip).toBeVisible();
+    test('renders initial state based on "open" prop', () => {
+      const { getByTestId } = renderTooltip({
+        open: true,
+        setOpen,
+      });
+      expect(getByTestId(tooltipTestId)).toBeVisible();
     });
 
-    test('Button components onClick fires when trigger is clicked', () => {
+    test(' onClick fires when trigger is clicked', () => {
+      const { button } = renderTooltip({
+        open: true,
+        setOpen,
+      });
       fireEvent.click(button);
-      expect(onClick).toHaveBeenCalledTimes(1);
+      expect(onClick).toHaveBeenCalled();
     });
 
     test('clicking content inside of tooltip does not force tooltip to close', () => {
+      const { button, getByTestId } = renderTooltip({
+        open: true,
+        setOpen,
+      });
+
       fireEvent.click(button);
+      const tooltip = getByTestId(tooltipTestId);
       expect(tooltip).toBeVisible();
 
       fireEvent.click(tooltip);
@@ -173,7 +147,6 @@ describe('packages/Tooltip', () => {
   });
 
   describe('when trigger is a class-based component', () => {
-    const onClick = jest.fn();
     class Button extends React.Component<ButtonTestProps> {
       render() {
         const { children } = this.props;
@@ -185,58 +158,74 @@ describe('packages/Tooltip', () => {
       }
     }
 
-    const { getByTestId } = render(
-      <Tooltip trigger={<Button onClick={onClick} />} triggerEvent="click">
-        <div data-testid="class-triggered-tooltip">Tooltip!</div>
-      </Tooltip>,
-    );
-
-    const button = getByTestId('class-controlled-trigger');
+    function renderClassTrigger(props = {}) {
+      const utils = render(
+        <>
+          <div data-testid="backdrop" />
+          <Tooltip trigger={<Button onClick={onClick} />} {...props}>
+            <div data-testid={tooltipTestId}>Tooltip Contents!</div>
+          </Tooltip>
+        </>,
+      );
+      const button = utils.getByTestId('class-controlled-trigger');
+      const backdrop = utils.getByTestId('backdrop');
+      return { ...utils, button, backdrop };
+    }
 
     test('renders a button to the DOM', () => {
+      const { button } = renderClassTrigger();
       expect(button).toBeVisible();
     });
 
     test('component triggers opening and closing of tooltip', () => {
+      const { button, getByTestId } = renderClassTrigger({
+        triggerEvent: 'click',
+      });
       fireEvent.click(button);
-      expect(onClick).toHaveBeenCalledTimes(1);
+      expect(onClick).toHaveBeenCalled();
 
-      const tooltip = getByTestId('class-triggered-tooltip');
+      const tooltip = getByTestId(tooltipTestId);
       expect(tooltip).toBeInTheDocument();
-
       fireEvent.click(button);
       expect(tooltip).not.toBeVisible();
     });
   });
 
   describe('when trigger is an inline function', () => {
-    const buttonText = 'tooltrip trigger';
-    const triggerEvent = 'click';
-
-    const { getByTestId } = render(
-      <Tooltip
-        trigger={({ children, ...rest }: ButtonTestProps) => (
-          <button {...rest} data-testid="inline-trigger">
-            {buttonText}
-            {children}
-          </button>
-        )}
-        triggerEvent={triggerEvent}
-      >
-        <div data-testid="functional-trigger">Tooltip!</div>
-      </Tooltip>,
-    );
-
-    const button = getByTestId('inline-trigger');
+    function renderInlineTrigger(props = {}) {
+      const utils = render(
+        <>
+          <div data-testid="backdrop" />
+          <Tooltip
+            trigger={({ children, ...rest }: ButtonTestProps) => (
+              <button {...rest} data-testid="inline-trigger">
+                {buttonText}
+                {children}
+              </button>
+            )}
+            {...props}
+          >
+            <div data-testid={tooltipTestId}>Tooltip Contents!</div>
+          </Tooltip>
+        </>,
+      );
+      const button = utils.getByTestId('inline-trigger');
+      const backdrop = utils.getByTestId('backdrop');
+      return { ...utils, button, backdrop };
+    }
 
     test(`renders a button to the DOM with ${buttonText}`, () => {
+      const { button } = renderInlineTrigger();
       expect(button).toBeInTheDocument();
-      expect(button.tagName.toLowerCase()).toBe('button');
     });
 
-    test(`${triggerEvent} triggers opening and closing of tooltip`, () => {
+    test(`when "triggerEvent" is click, clicking triggers opening and closing of tooltip`, () => {
+      const { button, getByTestId } = renderInlineTrigger({
+        triggerEvent: 'click',
+      });
+
       fireEvent.click(button);
-      const tooltip = getByTestId('functional-trigger');
+      const tooltip = getByTestId(tooltipTestId);
       expect(tooltip).toBeInTheDocument();
 
       fireEvent.click(button);
@@ -257,21 +246,27 @@ describe('packages/Tooltip', () => {
       );
     }
 
-    const { getByTestId } = render(
-      <Tooltip
-        trigger={
-          <Button>
-            <span>trigger</span>
-          </Button>
-        }
-      >
-        <div>Tooltip!</div>
-      </Tooltip>,
-    );
+    function renderNestedTrigger(props = {}) {
+      const utils = render(
+        <Tooltip
+          {...props}
+          trigger={
+            <Button>
+              <span>trigger</span>
+            </Button>
+          }
+        >
+          <div>Tooltip!</div>
+        </Tooltip>,
+      );
+
+      const button = utils.getByTestId('nested-trigger');
+      return { ...utils, button };
+    }
 
     test('renders trigger in document', () => {
-      const trigger = getByTestId('nested-trigger');
-      expect(trigger).toBeInTheDocument();
+      const { button } = renderNestedTrigger();
+      expect(button).toBeInTheDocument();
     });
   });
 });
