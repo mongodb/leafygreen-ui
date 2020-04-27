@@ -178,6 +178,10 @@ function OrgNav({
     OrgPaymentLabel.AdminSuspended,
   ];
 
+  const displayProjectAccess = onPremEnabled
+    ? !!currentProjectId
+    : showProjectNav;
+
   function renderBadgeItem() {
     if (
       disabled ||
@@ -226,14 +230,6 @@ function OrgNav({
         activeNav={activeNav}
       />
     );
-  }
-
-  let displayProjectAccess: boolean;
-
-  if (onPremEnabled) {
-    displayProjectAccess = !!currentProjectId;
-  } else {
-    displayProjectAccess = showProjectNav;
   }
 
   return (
