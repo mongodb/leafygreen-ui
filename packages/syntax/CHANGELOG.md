@@ -1,5 +1,11 @@
 # @leafygreen-ui/syntax
 
+## 2.6.1
+
+### Patch Changes
+
+- 2a03117: Upgrades @testing-library/react to v10 and revises test suites to conform with new standards
+
 ## 2.6.0
 
 ### Minor Changes
