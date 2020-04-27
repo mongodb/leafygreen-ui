@@ -1,108 +1,85 @@
+import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { render, fireEvent, cleanup } from '@testing-library/react';
-import { typeIs } from '@leafygreen-ui/lib';
 import Checkbox from '.';
 
 afterAll(cleanup);
 
-describe('packages/Checkbox', () => {
-  const className = 'test-checkbox-class';
-  const { container } = render(
-    <Checkbox className={className} checked={false} />,
-  );
-  const controlledContainer = container.firstChild;
+const className = 'test-classname';
+const onChange = jest.fn();
+const onClick = jest.fn();
 
-  if (!typeIs.element(controlledContainer)) {
-    throw new Error('Could not find controlled container component');
-  }
+function renderCheckbox(props = {}) {
+  const utils = render(<Checkbox data-testid="checkbox" {...props} />);
+  const checkbox = utils.getByTestId('checkbox');
+  const label = utils.container.querySelector('label');
+  return { ...utils, checkbox, label };
+}
 
-  const controlledCheckbox = controlledContainer.children[0];
-
-  if (!typeIs.input(controlledCheckbox)) {
-    throw new Error('Could not find checkbox input element');
-  }
-
-  test(`renders "${className}" in the Checkbox label's classList`, () => {
-    expect(controlledContainer.classList.contains(className)).toBe(true);
+describe('packages/checkbox', () => {
+  test(`renders ${className} in the Checkbox label's classlist`, () => {
+    const { label } = renderCheckbox({ className });
+    expect(label?.classList.contains(className)).toBe(true);
   });
 
-  test('Checkbox is checked when checked prop is set', () => {
-    expect(controlledCheckbox.checked).toBe(false);
-    expect(controlledCheckbox.getAttribute('aria-checked')).toBe('false');
-
-    render(<Checkbox checked={true} />, { container });
-
-    expect(controlledCheckbox.checked).toBe(true);
-    expect(controlledCheckbox.getAttribute('aria-checked')).toBe('true');
+  test('renders as unchecked by default', () => {
+    const { checkbox } = renderCheckbox();
+    expect((checkbox as HTMLInputElement).checked).toBe(false);
+    expect(checkbox.getAttribute('aria-checked')).toBe('false');
   });
 
-  test('Checkbox is disabled when disabled prop is set', () => {
-    render(<Checkbox disabled={true} checked={false} />, { container });
-
-    expect(controlledCheckbox.disabled).toBe(true);
-    expect(controlledCheckbox.getAttribute('aria-disabled')).toBe('true');
+  test('renders as checked when the prop is set', () => {
+    const { checkbox } = renderCheckbox({ checked: true });
+    expect((checkbox as HTMLInputElement).checked).toBe(true);
+    expect(checkbox.getAttribute('aria-checked')).toBe('true');
   });
 
-  // Test controlled checkbox events and checked state
+  test('renders as disabled when the prop is set', () => {
+    const { checkbox } = renderCheckbox({ disabled: true });
+    expect((checkbox as HTMLInputElement).disabled).toBe(true);
+    expect(checkbox.getAttribute('aria-disabled')).toBe('true');
+  });
+
   describe('when controlled', () => {
-    const controlledOnClick = jest.fn();
-    const controlledOnChange = jest.fn();
-    render(
-      <Checkbox
-        className={className}
-        onClick={controlledOnClick}
-        onChange={controlledOnChange}
-        checked={false}
-      />,
-      { container },
-    );
-    fireEvent.click(controlledContainer);
-
     test('onClick fires once when the label is clicked', () => {
-      expect(controlledOnClick.mock.calls.length).toBe(1);
+      const { label } = renderCheckbox({ onClick, checked: false });
+      fireEvent.click(label!);
+      expect(onClick).toHaveBeenCalledTimes(1);
     });
 
     test('onChange fires once when the label is clicked', () => {
-      expect(controlledOnChange.mock.calls.length).toBe(1);
+      const { label } = renderCheckbox({ onChange, checked: false });
+      fireEvent.click(label!);
+      expect(onChange).toHaveBeenCalledTimes(1);
     });
 
     test('checkbox does not become checked when clicked', () => {
-      expect(controlledCheckbox.checked).toBe(false);
+      const { checkbox } = renderCheckbox({ checked: false });
+      fireEvent.click(checkbox);
+      expect((checkbox as HTMLInputElement).checked).toBe(false);
     });
   });
 
   describe('when uncontrolled', () => {
     const uncontrolledOnClick = jest.fn();
     const uncontrolledOnChange = jest.fn();
-    const uncontrolledContainer = render(
-      <Checkbox
-        onClick={uncontrolledOnClick}
-        onChange={uncontrolledOnChange}
-      />,
-    ).container.firstChild;
-
-    if (!typeIs.element(uncontrolledContainer)) {
-      throw new Error('Could not find uncontrolled container component');
-    }
-
-    const uncontrolledCheckbox = uncontrolledContainer.children[0];
-
-    if (!typeIs.input(uncontrolledCheckbox)) {
-      throw new Error('Could not find checkbox input element');
-    }
-
-    fireEvent.click(uncontrolledContainer);
 
     test('onClick fires once when the label is clicked', () => {
-      expect(uncontrolledOnClick.mock.calls.length).toBe(1);
+      const { label } = renderCheckbox({ onClick: uncontrolledOnClick });
+      fireEvent.click(label!);
+      expect(uncontrolledOnClick).toHaveBeenCalledTimes(1);
     });
 
     test('onChange fires once when the label is clicked', () => {
-      expect(uncontrolledOnChange.mock.calls.length).toBe(1);
+      const { label } = renderCheckbox({ onChange: uncontrolledOnChange });
+      fireEvent.click(label!);
+      expect(uncontrolledOnChange).toHaveBeenCalledTimes(1);
     });
 
     test('checkbox becomes checked when clicked', () => {
-      expect(uncontrolledCheckbox.checked).toBe(true);
+      const { checkbox } = renderCheckbox({});
+      fireEvent.click(checkbox);
+      expect((checkbox as HTMLInputElement).checked).toBe(true);
     });
   });
 });

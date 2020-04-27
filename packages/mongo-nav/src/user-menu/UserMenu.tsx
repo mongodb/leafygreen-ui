@@ -413,7 +413,7 @@ function UserMenu({
         >
           <MenuItem
             href={userMenu.university?.universityPreferences}
-            data-testid="user-menuitem-cloud-mfa"
+            data-testid="user-menuitem-university-preferences"
           >
             University Preferences
           </MenuItem>
