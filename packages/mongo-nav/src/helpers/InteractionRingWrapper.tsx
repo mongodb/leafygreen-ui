@@ -19,7 +19,7 @@ const interactionRing = css`
 interface InteractionRingWrapperProps {
   className?: string;
   ringClassName?: string;
-  children: React.ReactElement;
+  children: React.ReactNode;
   selector: string;
 }
 
@@ -51,19 +51,23 @@ const InteractionRingWrapper = ({
     z-index: 0;
   `;
 
-  const modifiedChildren = React.Children.map(children, child =>
-    React.cloneElement(child, {
-      onFocus: () => setHasFocus(true),
-      onBlur: () => setHasFocus(false),
-      className: cx(
-        child.props.className,
-        css`
-          position: relative;
-          z-index: ${hasFocus ? 2 : 1};
-        `,
-      ),
-    }),
-  );
+  const modifiedChildren = React.Children.map(children, child => {
+    if (!React.isValidElement(child)) {
+      return child;
+    } else {
+      return React.cloneElement(child, {
+        onFocus: () => setHasFocus(true),
+        onBlur: () => setHasFocus(false),
+        className: cx(
+          child.props.className,
+          css`
+            position: relative;
+            z-index: ${hasFocus ? 2 : 1};
+          `,
+        ),
+      });
+    }
+  });
 
   return (
     <div className={cx(defaultPosition, className)}>
