@@ -1,91 +1,68 @@
+import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
-import { render, fireEvent, cleanup } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import IconButton from './IconButton';
 import Icon from '@leafygreen-ui/icon';
 
-afterAll(cleanup);
+const onClick = jest.fn();
+const className = 'test-icon-button-class';
+const iconChild = <Icon glyph="Ellipsis" data-testid="icon-test-id" />;
+const titleText = 'My title';
+
+function renderIconButton(props = {}) {
+  const utils = render(
+    <IconButton
+      {...props}
+      aria-label="Ellipsis"
+      data-testid="icon-button-test"
+    />,
+  );
+  const iconButton = utils.getByTestId('icon-button-test');
+  const icon = utils.getByTestId('icon-test-id');
+  return { ...utils, iconButton, icon };
+}
 
 describe('packages/icon-button', () => {
-  const onClick = jest.fn();
-  const className = 'test-icon-button-class';
-  const testId = 'test-icon-button-component';
-
-  const { getByTestId, container } = render(
-    <IconButton
-      className={className}
-      onClick={onClick}
-      data-testid={testId}
-      aria-label="Ellipsis"
-    >
-      <Icon glyph="Ellipsis" data-testid="icon-test-id" />
-    </IconButton>,
-  );
-
-  const iconButton = getByTestId(testId);
-
   test(`renders ${className} in the classList`, () => {
+    const { iconButton } = renderIconButton({ className, children: iconChild });
     expect(iconButton.classList.contains(className)).toBe(true);
   });
 
-  test('fires the onClick handler once when clicked', () => {
+  test('fires the onClick handler when the IconButton is clicked', () => {
+    const { iconButton } = renderIconButton({ onClick, children: iconChild });
     fireEvent.click(iconButton);
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
   test('renders inside a button tag by default', () => {
+    const { iconButton } = renderIconButton({ children: iconChild });
     expect(iconButton.tagName.toLocaleLowerCase()).toBe('button');
   });
 
-  const renderedIcon = getByTestId('icon-test-id');
-
   test('renders icon as button content', () => {
-    expect(iconButton.contains(renderedIcon)).toBe(true);
+    const { iconButton, icon } = renderIconButton({ children: iconChild });
+    expect(iconButton.contains(icon)).toBe(true);
   });
 
   test("the rendered icon doesn't include a title tag", () => {
-    expect(
-      renderedIcon.getElementsByTagName('title').length === 0,
-    ).toBeTruthy();
+    const { icon } = renderIconButton({ children: iconChild });
+    expect(icon.getElementsByTagName('title').length === 0).toBeTruthy();
   });
 
-  const titleText = 'My title';
+  test('renders inside an anchor tag when the href prop is set', () => {
+    const { iconButton } = renderIconButton({
+      href: 'http://mongodb.design',
+      children: iconChild,
+    });
+    expect(iconButton.tagName.toLowerCase()).toBe('a');
+  });
 
   test(`when '${titleText}' is set directly as the title child icon, the rendered icon includes a title tag with the text content, '${titleText}'`, () => {
-    render(
-      <IconButton
-        className={className}
-        onClick={onClick}
-        data-testid={testId}
-        aria-label="Ellipsis"
-      >
-        <Icon glyph="Ellipsis" data-testid="icon-test-id" title={titleText} />
-      </IconButton>,
-      { container },
+    const iconWithTitle = (
+      <Icon glyph="Ellipsis" data-testid="icon-test-id" title={titleText} />
     );
+    const { icon } = renderIconButton({ children: iconWithTitle });
 
-    expect(renderedIcon.getElementsByTagName('title')[0].textContent).toBe(
-      titleText,
-    );
-  });
-
-  describe('when href prop is supplied', () => {
-    const testId = 'test-icon-button-component-with-href';
-
-    const { getByTestId } = render(
-      <IconButton
-        data-testid={testId}
-        href="mongodb.design"
-        aria-label="Ellipsis"
-        size="large"
-      >
-        <Icon glyph="Ellipsis" size="large" />
-      </IconButton>,
-    );
-
-    const iconButton = getByTestId(testId);
-
-    test('renders inside an a tag when href prop is supplied', () => {
-      expect(iconButton.tagName.toLowerCase()).toBe('a');
-    });
+    expect(icon.getElementsByTagName('title')[0].textContent).toBe(titleText);
   });
 });

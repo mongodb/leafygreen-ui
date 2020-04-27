@@ -1,48 +1,35 @@
+import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
-import { typeIs } from '@leafygreen-ui/lib';
+import { render } from '@testing-library/react';
 import Radio from './Radio';
 
-afterAll(cleanup);
+const className = 'radio-test-class';
 
-describe('packages/Radio', () => {
-  const className = 'radio-test-class';
-  const { container } = render(
-    <Radio disabled value="option-1" className={className}>
-      Radio 1
-    </Radio>,
+function renderRadio(props = {}) {
+  const utils = render(
+    <Radio {...props} data-testid="radio-test-id" value="option-1" />,
   );
+  const radio = utils.getByTestId('radio-test-id');
+  return { ...utils, radio };
+}
 
-  const radio = container.firstChild;
-
-  if (!typeIs.element(radio)) {
-    throw new Error('Could not find controlled container component');
-  }
-
-  const input = radio.firstChild;
-
-  if (!typeIs.input(input)) {
-    throw new Error('Could not find input element');
-  }
-
+describe('packages/radio', () => {
   test(`renders "${className}" in the labels's class list`, () => {
+    const { radio } = renderRadio({ className });
     expect(radio.classList.contains(className)).toBe(true);
   });
 
   test(`renders disabled radio when disabled prop is set`, () => {
-    expect(input.disabled).toBe(true);
-    expect(input.getAttribute('aria-disabled')).toBe('true');
+    const { radio } = renderRadio({ disabled: true });
+
+    expect((radio as HTMLInputElement).disabled).toBe(true);
+    expect(radio.getAttribute('aria-disabled')).toBe('true');
   });
 
   test(`radio is checked when value is set`, () => {
-    render(
-      <Radio value="option-two" checked={true}>
-        Radio 2
-      </Radio>,
-      { container },
-    );
+    const { radio } = renderRadio({ checked: true });
 
-    expect(input.checked).toBe(true);
-    expect(input.getAttribute('aria-checked')).toBe('true');
+    expect((radio as HTMLInputElement).checked).toBe(true);
+    expect(radio.getAttribute('aria-checked')).toBe('true');
   });
 });
