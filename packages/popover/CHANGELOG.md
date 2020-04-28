@@ -1,5 +1,25 @@
 # @leafygreen-ui/popover
 
+## 5.0.1
+
+### Patch Changes
+
+- 2a03117: Upgrades @testing-library/react to v10 and revises test suites to conform with new standards
+
+## 5.0.0
+
+### Major Changes
+
+- 2176b77: Refactors Popover to only use element positions relative to the viewport for calculating viewport collisions, and use element positions relative to the document for calculating the element positioning itself.
+
+## 4.0.1
+
+### Patch Changes
+
+- 75c0693: Upgrades workspace dependencies
+- Updated dependencies [75c0693]
+  - @leafygreen-ui/palette@2.0.1
+
 ## 4.0.0
 
 ### Major Changes

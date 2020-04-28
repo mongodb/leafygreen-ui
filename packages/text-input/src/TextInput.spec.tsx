@@ -1,144 +1,125 @@
-import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
 import TextInput, { State } from './TextInput';
-import { typeIs } from '@leafygreen-ui/lib';
 
-afterAll(cleanup);
+const error = 'This is the error message';
+const validEmail = 'test.email@mongodb.com';
+const invalidEmail = 'invalid.email';
+const defaultProps = {
+  className: 'test-text-input-class',
+  label: 'Test Input Label',
+  description: 'This is the description',
+  placeholder: 'This is some placeholder text',
+  onChange: jest.fn(),
+};
+
+function renderTextInput(props = {}) {
+  const utils = render(<TextInput data-testid="text-input" {...props} />);
+  const textInput = utils.getByTestId('text-input');
+  const label = utils.container.querySelector('label');
+  const description = utils.container.querySelector('p');
+  return { ...utils, textInput, label, description };
+}
 
 describe('packages/text-input', () => {
-  const error = 'This is the error message';
-  const validEmail = 'test.email@mongodb.com';
-  const invalidEmail = 'invalid.email';
-  const props = {
-    className: 'test-text-input-class',
-    label: 'Test Input Label',
-    description: 'This is the description',
-    placeholder: 'This is some placeholder text',
-    onChange: jest.fn(),
-    state: State.None,
-    optional: true,
-  };
-
-  props.onChange.mockReturnValue('none');
-
-  const { getByPlaceholderText, getByText, getByTitle, container } = render(
-    <TextInput {...props} />,
-  );
-
-  const renderedChildren = container.firstChild;
-
-  if (!typeIs.element(renderedChildren)) {
-    throw new Error('TextInput component failed to render');
-  }
-
-  const renderedInputElement = getByPlaceholderText(props.placeholder);
-
-  if (!typeIs.input(renderedInputElement)) {
-    throw new Error('Could not find input element');
-  }
-
-  const optionalText = getByText('Optional');
-
-  test(`renders "${props.label}" as the input's label and "${props.description}" as the description`, () => {
-    expect(renderedChildren.innerHTML).toContain(props.label);
-    expect(renderedChildren.innerHTML).toContain(props.description);
+  test(`renders ${defaultProps.label} as the input label and ${defaultProps.description} as the description`, () => {
+    const { label, description } = renderTextInput(defaultProps);
+    expect(label?.innerHTML).toContain(defaultProps.label);
+    expect(description?.innerHTML).toContain(defaultProps.description);
   });
 
-  test(`"optional" text is present when TextInput is optional and state is None`, () => {
-    expect(optionalText).toBeVisible();
+  test(`renders ${defaultProps.placeholder} as placeholder text`, () => {
+    const { getByPlaceholderText } = renderTextInput(defaultProps);
+    expect(getByPlaceholderText(defaultProps.placeholder)).toBeVisible();
   });
 
-  test(`valid/error icons are not present when state is None`, () => {
-    expect(renderedChildren.innerHTML).not.toContain('Checkmark Icon');
-    expect(renderedChildren.innerHTML).not.toContain('Warning Icon');
+  test(`renders ${defaultProps.className} in the XX classList`, () => {
+    const { container } = renderTextInput(defaultProps);
+    expect(
+      (container?.firstChild as HTMLElement)?.classList.contains(
+        defaultProps.className,
+      ),
+    ).toBe(true);
   });
 
-  test('key presses are reflected in component state and onChange function is called when value changes', () => {
-    expect(renderedInputElement.value).toBe('');
-    fireEvent.change(renderedInputElement, {
-      target: { value: 'a' },
+  test('renders "optional" text when the prop is set to true', () => {
+    const { getByText } = renderTextInput({ optional: true, ...defaultProps });
+    expect(getByText('Optional')).toBeVisible();
+  });
+
+  test('does not render "optional" text when the prop is set to false ', () => {
+    const { container } = renderTextInput({ optional: false, ...defaultProps });
+    expect(container.innerHTML).not.toContain('Optional');
+  });
+
+  describe('when the "state" is "valid"', () => {
+    test('displays checkmark icon when input is valid', () => {
+      const { container, textInput, getByTitle } = renderTextInput({
+        value: validEmail,
+        state: State.Valid,
+        optional: true,
+        ...defaultProps,
+      });
+
+      expect((textInput as HTMLInputElement).value).toBe(validEmail);
+      expect(container.innerHTML).not.toContain('Optional');
+      expect(getByTitle('Checkmark Icon')).toBeInTheDocument();
     });
-    expect(renderedInputElement.value).toBe('a');
-    expect(props.onChange).toHaveBeenCalledTimes(1);
-    expect(props.onChange).toHaveReturnedWith('none');
   });
 
-  test('checkmark icon shows when input is valid', async () => {
-    render(
-      <TextInput
-        label={props.label}
-        description={props.description}
-        state={State.Valid}
-        value={validEmail}
-        optional={true}
-      />,
-      {
-        container: container,
-      },
-    );
+  describe('when the "state" is "error"', () => {
+    test('displays warning icon when input is invalid', () => {
+      const { container, textInput, getByTitle } = renderTextInput({
+        value: invalidEmail,
+        state: State.Error,
+        optional: true,
+        ...defaultProps,
+      });
 
-    expect(renderedInputElement.value).toBe(validEmail);
-    expect(renderedChildren.innerHTML).not.toContain(optionalText);
-    const checkmarkIcon = getByTitle('Checkmark Icon');
-
-    if (!typeIs.element(checkmarkIcon)) {
-      throw new Error('Could not find checkmark icon element');
-    }
-  });
-
-  test('warning icon and error message show when input is invalid', async () => {
-    render(
-      <TextInput
-        label={props.label}
-        description={props.description}
-        state={State.Error}
-        value={invalidEmail}
-        errorMessage={error}
-        optional={true}
-      />,
-      {
-        container: container,
-      },
-    );
-
-    expect(renderedInputElement.value).toBe(invalidEmail);
-    const warningIcon = getByTitle('Warning Icon');
-
-    if (!typeIs.element(warningIcon)) {
-      throw new Error('Could not find warning icon element');
-    }
-    expect(renderedChildren.innerHTML).toContain(error);
-    expect(renderedChildren.innerHTML).not.toContain(optionalText);
-  });
-
-  test('error state still shows when error message is empty', async () => {
-    render(
-      <TextInput
-        label={props.label}
-        description={props.description}
-        state={State.Error}
-        value={invalidEmail}
-        optional={true}
-      />,
-      {
-        container: container,
-      },
-    );
-
-    expect(renderedInputElement.value).toBe(invalidEmail);
-    expect(renderedChildren.innerHTML).not.toContain(optionalText);
-    const warningIcon = getByTitle('Warning Icon');
-
-    if (!typeIs.element(warningIcon)) {
-      throw new Error('Could not find warning icon element');
-    }
-  });
-
-  test(`check that "optional" text is not visible when TextInput is required`, () => {
-    render(<TextInput label={props.label} description={props.description} />, {
-      container: container,
+      expect((textInput as HTMLInputElement).value).toBe(invalidEmail);
+      expect(container.innerHTML).not.toContain('Optional');
+      expect(getByTitle('Warning Icon')).toBeInTheDocument();
     });
-    expect(renderedChildren.innerHTML).not.toContain(optionalText);
+
+    test('displays error message when input is invalid', () => {
+      const { container } = renderTextInput({
+        value: invalidEmail,
+        state: State.Error,
+        optional: true,
+        errorMessage: error,
+        ...defaultProps,
+      });
+      expect(container.innerHTML).toContain(error);
+    });
+  });
+
+  describe('when the "state" is "none"', () => {
+    defaultProps.onChange.mockReturnValue('none');
+
+    test('valid/error icons are not present', () => {
+      const { container } = renderTextInput({
+        state: State.None,
+        ...defaultProps,
+      });
+      expect(container.innerHTML).not.toContain('Checkmark Icon');
+      expect(container.innerHTML).not.toContain('Warning Icon');
+    });
+
+    test('key presses are reflected in component and onChange function is called when value changes', () => {
+      const { textInput } = renderTextInput({
+        state: State.None,
+        ...defaultProps,
+      });
+      expect((textInput as HTMLInputElement).value).toBe('');
+
+      fireEvent.change(textInput, {
+        target: { value: 'a' },
+      });
+
+      expect((textInput as HTMLInputElement).value).toBe('a');
+      expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
+      expect(defaultProps.onChange).toHaveReturnedWith('none');
+    });
   });
 });

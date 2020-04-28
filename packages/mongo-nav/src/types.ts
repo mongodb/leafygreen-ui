@@ -10,11 +10,13 @@ const NavElement = {
   Logout: 'logout',
   OrgNavLeaf: 'leaf',
   OrgNavOrgSelectTrigger: 'orgNavOrgSelectTrigger',
+  OrgNavOrgSelectSearch: 'orgNavOrgSelectSearch',
   OrgNavViewAllOrganizations: 'orgNavViewAllOrganizations',
   OrgNavDropdown: 'orgNavDropdown',
   OrgNavDropdownOrgAccessManager: 'orgNavDropdownOrgAccessManager',
   OrgNavDropdownProjectAccessManager: 'orgNavDropdownProjectAccessManager',
   ProjectNavProjectSelectTrigger: 'projectNavProjectSelectTrigger',
+  ProjectNavProjectSelectSearch: 'projectNavProjectSelectSearch',
   ProjectNavViewAllProjects: 'projectNavViewAllProjects',
   ProjectNavAddProject: 'projectNavAddProject',
   ProjectNavProjectDropdown: 'projectNavProjectDropdown',
@@ -176,8 +178,8 @@ export interface AccountInterface {
 export interface ProjectInterface {
   projectId: string;
   projectName: string;
-  planType: PlanType;
-  orgId: string;
+  planType?: PlanType;
+  orgId?: string;
 }
 
 export interface CurrentProjectInterface extends ProjectInterface {

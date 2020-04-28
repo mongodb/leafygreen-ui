@@ -28,6 +28,7 @@ export const menuItemContainerStyle = css`
 
   &:focus {
     outline: none;
+    text-decoration: none;
   }
 
   &:before {

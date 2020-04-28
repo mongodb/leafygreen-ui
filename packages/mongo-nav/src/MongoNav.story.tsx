@@ -32,6 +32,7 @@ storiesOf('MongoNav', module).add('Default', () => (
           version: '4.4.0',
           enabled: boolean('onPrem enabled', false),
         }}
+        onElementClick={(a, b) => console.log(a, b)}
         loadData={boolean('loadData', true)}
         showProjectNav={boolean('showProjectNav', true)}
         dataFixtures={{

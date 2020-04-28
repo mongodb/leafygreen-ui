@@ -74,6 +74,7 @@ describe('packages/mongo-nav', () => {
       fetchMock.mockResolvedValue(responseObject);
       await renderComponent();
 
+      // @ts-ignore  Type 'Promise<DataInterface>' is not assignable to type 'Promise<void | undefined>'.
       await act(() => responseObject.json());
     });
 
@@ -155,6 +156,7 @@ describe('packages/mongo-nav', () => {
       fetchMock.mockResolvedValue(responseObject);
       await renderComponent({ activeProjectId });
 
+      // @ts-ignore  Type 'Promise<DataInterface>' is not assignable to type 'Promise<void | undefined>'.
       await act(() => responseObject.json());
     });
 
@@ -205,6 +207,7 @@ describe('packages/mongo-nav', () => {
       fetchMock.mockResolvedValue(responseObject);
       await renderComponent({ activeOrgId });
 
+      // @ts-ignore  Type 'Promise<DataInterface>' is not assignable to type 'Promise<void | undefined>'.s
       await act(() => responseObject.json());
     });
 
@@ -249,8 +252,12 @@ describe('packages/mongo-nav', () => {
 
     beforeEach(async () => {
       fetchMock.mockResolvedValue(responseObject);
-      await renderComponent({ activeOrgId, activeProjectId });
+      await renderComponent({
+        activeOrgId,
+        activeProjectId,
+      });
 
+      // @ts-ignore  Type 'Promise<DataInterface>' is not assignable to type 'Promise<void | undefined>'.
       await act(() => responseObject.json());
     });
 

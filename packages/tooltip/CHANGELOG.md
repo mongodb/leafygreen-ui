@@ -1,5 +1,20 @@
 # @leafygreen-ui/tooltip
 
+## 3.2.2
+
+### Patch Changes
+
+- 2a03117: Upgrades @testing-library/react to v10 and revises test suites to conform with new standards
+- Updated dependencies [2a03117]
+  - @leafygreen-ui/popover@5.0.1
+
+## 3.2.1
+
+### Patch Changes
+
+- Updated dependencies [2176b77]
+  - @leafygreen-ui/popover@5.0.0
+
 ## 3.2.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/syntax",
-  "version": "2.5.0",
+  "version": "2.6.1",
   "description": "leafyGreen UI Kit Syntax-highlighting Component",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/lib": "^4.3.0",
-    "@leafygreen-ui/palette": "^2.0.0",
+    "@leafygreen-ui/palette": "^2.0.1",
     "highlight.js": "^9.15.6",
     "highlightjs-graphql": "^1.0.1"
   },

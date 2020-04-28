@@ -68,6 +68,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
     expectedElements.onPremUserMenuSignOut = queryByTestId(
       'om-user-menuitem-sign-out',
     );
+    expectedElements.seeProductTour = queryByTestId('org-nav-see-product-tour');
   };
 
   let onOrganizationChange: jest.Mock;
@@ -183,11 +184,26 @@ describe('packages/mongo-nav/src/org-nav', () => {
     });
   };
 
+  const testForSeeProductTour = (isVisible = true) => {
+    it(`${
+      isVisible ? 'displays' : 'does not display'
+    } the See Product Tour link`, () => {
+      const productTour = expectedElements.seeProductTour;
+
+      if (isVisible) {
+        expect(productTour).toBeInTheDocument();
+      } else {
+        expect(productTour).toBeNull();
+      }
+    });
+  };
+
   describe('when rendered with default props', () => {
     beforeEach(renderComponent);
     testForPaymentStatus(false);
     testForVersion(false);
     testForUserMenu(true);
+    testForSeeProductTour(false);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, linkName !== 'admin'),
@@ -322,5 +338,102 @@ describe('packages/mongo-nav/src/org-nav', () => {
         );
       });
     });
+  });
+
+  describe('the Access Manager dropdown displays correctly', () => {
+    describe('when onPrem is true', () => {
+      test('and currentProject exists, the Project Access Manager link is not disabled and project name is displayed', () => {
+        renderComponent({
+          onPremEnabled: true,
+          showProjectNav: false,
+          currentProjectName: 'Test Project',
+          currentProjectId: 'test-project-id',
+        });
+        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
+        setExpectedElements();
+
+        expect(
+          expectedElements.accessManagerProject?.innerHTML.includes(
+            'Test Project',
+          ),
+        ).toBe(true);
+        expect(
+          expectedElements.accessManagerProject?.getAttribute('aria-disabled'),
+        ).toBe('false');
+      });
+
+      test('and currentProject does not exist, the Project Access Manager link is disabled and the project name appears as "None"', () => {
+        renderComponent({
+          onPremEnabled: true,
+          showProjectNav: false,
+        });
+        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
+        setExpectedElements();
+
+        expect(
+          expectedElements.accessManagerProject?.innerHTML.includes('None'),
+        ).toBe(true);
+        expect(
+          expectedElements.accessManagerProject?.getAttribute('aria-disabled'),
+        ).toBe('true');
+      });
+    });
+
+    describe('when onPrem is false', () => {
+      test('and showProjectNav is true, the Project Access Manager link is not disabled and project name is displayed', () => {
+        renderComponent({
+          showProjectNav: true,
+          currentProjectName: 'Test Project',
+          currentProjectId: 'test-project-id',
+        });
+        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
+        setExpectedElements();
+
+        expect(
+          expectedElements.accessManagerProject?.innerHTML.includes(
+            'Test Project',
+          ),
+        ).toBe(true);
+        expect(
+          expectedElements.accessManagerProject?.getAttribute('aria-disabled'),
+        ).toBe('false');
+      });
+
+      test('and showProjectNav is false, the Project Access Manager link is disabled and the project name appears as "None"', () => {
+        renderComponent({
+          showProjectNav: false,
+        });
+        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
+        setExpectedElements();
+
+        expect(
+          expectedElements.accessManagerProject?.innerHTML.includes('None'),
+        ).toBe(true);
+        expect(
+          expectedElements.accessManagerProject?.getAttribute('aria-disabled'),
+        ).toBe('true');
+      });
+    });
+  });
+
+  describe('when window.Appcues is true', () => {
+    let originalWindowAppcues: boolean;
+
+    beforeEach(() => {
+      // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'
+      originalWindowAppcues = window.Appcues;
+      // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'
+      window.Appcues = true;
+      renderComponent();
+    });
+
+    afterEach(() => {
+      // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'
+      window.Appcues = originalWindowAppcues;
+      jest.restoreAllMocks();
+      cleanup();
+    });
+
+    testForSeeProductTour(true);
   });
 });

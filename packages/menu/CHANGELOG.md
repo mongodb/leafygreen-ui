@@ -1,5 +1,36 @@
 # @leafygreen-ui/menu
 
+## 6.0.9
+
+### Patch Changes
+
+- 2a03117: Upgrades @testing-library/react to v10 and revises test suites to conform with new standards
+- Updated dependencies [2a03117]
+- Updated dependencies [c812eb3]
+  - @leafygreen-ui/icon-button@5.0.2
+  - @leafygreen-ui/leafygreen-provider@1.1.1
+  - @leafygreen-ui/popover@5.0.1
+  - @leafygreen-ui/icon@5.1.0
+
+## 6.0.8
+
+### Patch Changes
+
+- 0391d01: Fixes style bug when MenuItem is focused and rendered as anchor tag
+- Updated dependencies [2176b77]
+  - @leafygreen-ui/popover@5.0.0
+
+## 6.0.7
+
+### Patch Changes
+
+- 75c0693: Upgrades workspace dependencies
+- Updated dependencies [75c0693]
+  - @leafygreen-ui/icon@5.0.3
+  - @leafygreen-ui/palette@2.0.1
+  - @leafygreen-ui/popover@4.0.1
+  - @leafygreen-ui/icon-button@5.0.1
+
 ## 6.0.6
 
 ### Patch Changes

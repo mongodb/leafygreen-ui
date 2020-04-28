@@ -205,8 +205,8 @@ const iconButtonStyles = css`
 
 const alertBadgeStyle = css`
   position: absolute;
-  top: -6px;
-  right: -4px;
+  top: 3px;
+  right: 4px;
   background-color: ${uiColors.red.base};
   width: 14px;
   height: 14px;
@@ -339,7 +339,10 @@ export default function ProjectNav({
         current={current}
         data={data}
         constructProjectURL={constructProjectURL}
+        hosts={hosts}
+        mode={mode}
         urls={urls.mongoSelect}
+        admin={admin}
         onChange={onProjectChange}
         loading={!current}
       />

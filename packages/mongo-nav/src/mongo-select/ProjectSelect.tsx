@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import debounce from 'lodash/debounce';
 
 // leafygreen-ui
 import Icon from '@leafygreen-ui/icon';
@@ -22,11 +23,12 @@ import {
   MongoNavInterface,
   NavElement,
   ProjectInterface,
+  Mode,
 } from '../types';
 
 // mongo-select
 import Input from './Input';
-import { onKeyDown } from './selectHelpers';
+import { onKeyDown, usePrevious } from './selectHelpers';
 import { BaseMongoSelectProps } from './types';
 import {
   activeButtonStyle,
@@ -80,6 +82,12 @@ const projectTriggerRingStyle = css`
   border-radius: 7px;
 `;
 
+const emptyStateStyle = css`
+  font-size: 14px;
+  padding: 4px 8px;
+  margin-bottom: 20px;
+`;
+
 // types
 interface ProjectMongoSelectProps extends BaseMongoSelectProps {
   data?: Array<ProjectInterface>;
@@ -87,23 +95,38 @@ interface ProjectMongoSelectProps extends BaseMongoSelectProps {
   constructProjectURL: NonNullable<MongoNavInterface['constructProjectURL']>;
 }
 
+interface ProjectFilterResponse {
+  cid: string;
+  gn: string;
+}
+
 // data props
 const projectTriggerDataProp = createDataProp('project-trigger');
 
 function ProjectSelect({
   current,
+  mode,
   data = [],
   onChange: onChangeProp,
   constructProjectURL,
+  hosts = {},
   urls = {},
+  admin = false,
   loading = false,
   className,
   ...rest
 }: ProjectMongoSelectProps) {
   const [value, setValue] = useState('');
-  const [consumerFilteredData, setConsumerFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState(data);
+  const [isFetching, setIsFetching] = useState(false);
   const [open, setOpen] = useState(false);
+  const wasOpen = usePrevious(open);
   const onElementClick = useOnElementClick();
+
+  const isFiltered = value !== '';
+  const isAdminSearch = isFiltered && admin && mode === Mode.Production;
+
+  const renderedData = isFiltered ? filteredData : data;
 
   const toggleOpen = () => {
     setOpen(curr => !curr);
@@ -112,25 +135,80 @@ function ProjectSelect({
     }
   };
 
+  const fetchProjectsAsAdmin = (searchTerm = '') => {
+    const queryString = searchTerm ? `?term=${searchTerm}` : '';
+    const endpointURI = `${hosts.cloud}/user/shared/projects/search${queryString}`;
+    return fetch(endpointURI, {
+      credentials: 'include',
+      mode: 'cors',
+      method: 'GET',
+    });
+  };
+
+  const filterDataAsAdmin = useCallback(
+    debounce((fetchValue: string) => {
+      fetchProjectsAsAdmin(fetchValue)
+        .then(response => response.json())
+        .then((response: Array<ProjectFilterResponse>) => {
+          const data = response.map(({ cid: projectId, gn: projectName }) => ({
+            projectId,
+            projectName,
+          }));
+
+          setFilteredData(data);
+          setIsFetching(false);
+        })
+        .catch(console.error);
+    }, 300),
+    [],
+  );
+
   const filterData = () => {
-    const sanitizedValue = value.replace(/\\/g, '\\\\');
+    const invalid = /[()[\]{}\\]/g;
+    const sanitizedValue = value.replace(invalid, '');
     const search = new RegExp(String(sanitizedValue), 'i');
 
     const filtered = data?.filter(datum => {
       return search.test(datum.projectName);
     });
 
-    return filtered;
+    setFilteredData(filtered);
   };
 
-  const renderedData = onChangeProp ? consumerFilteredData : filterData();
+  useEffect(() => {
+    // Skip if we're not filtering
+    if (!isFiltered) {
+      return;
+    }
+
+    // defer all behavior to user-provided filtering
+    if (onChangeProp) {
+      return;
+    }
+
+    // serverside filtering (admin users only)
+    if (isAdminSearch) {
+      setIsFetching(true);
+      filterDataAsAdmin(value);
+      return;
+    }
+
+    // clientside filtering (default)
+    filterData();
+  }, [value]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setValue(value);
+
+    if (open === true && wasOpen !== open) {
+      // Opt out of type-checking as we just want to trigger the onElementClick handler
+      onElementClick(NavElement.ProjectNavProjectSelectSearch)(e as any);
+    }
+
     return onChangeProp?.({
       value,
-      setData: setConsumerFilteredData,
+      setData: setFilteredData,
       event: e,
     });
   };
@@ -193,57 +271,59 @@ function ProjectSelect({
           glyph={open ? 'CaretUp' : 'CaretDown'}
           className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
         />
-        <Menu
-          usePortal={false}
-          className={menuContainerStyle}
-          justify="start"
-          spacing={0}
-          open={open}
-          setOpen={toggleOpen}
-          data-testid="project-select-project-list"
-        >
-          <FocusableMenuItem>
-            <Input
-              data-testid="project-filter-input"
-              onChange={onChange}
-              onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
-              variant="project"
-              value={value}
-            />
-          </FocusableMenuItem>
-
-          <ul className={ulStyle}>
-            {renderedData?.map(datum => renderProjectOption(datum))}
-          </ul>
-
-          <MenuSeparator />
-
-          <li
-            onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
-            role="none"
-            className={projectButtonStyle}
-          >
-            <FocusableMenuItem>
-              <Button
-                href={urls.viewAllProjects as string}
-                data-testid="project-select-view-all-projects"
-                onClick={onElementClick(NavElement.ProjectNavViewAllProjects)}
-              >
-                View All Projects
-              </Button>
-            </FocusableMenuItem>
-            <FocusableMenuItem>
-              <Button
-                href={urls.newProject as string}
-                data-testid="project-select-add-new-project"
-                onClick={onElementClick(NavElement.ProjectNavAddProject)}
-              >
-                + New Project
-              </Button>
-            </FocusableMenuItem>
-          </li>
-        </Menu>
       </button>
+      <Menu
+        usePortal={false}
+        className={menuContainerStyle}
+        justify="start"
+        spacing={0}
+        open={open}
+        setOpen={toggleOpen}
+        data-testid="project-select-project-list"
+      >
+        <FocusableMenuItem>
+          <Input
+            data-testid="project-filter-input"
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+            variant="project"
+            value={value}
+          />
+        </FocusableMenuItem>
+
+        <ul className={ulStyle}>
+          {isAdminSearch && isFetching && (
+            <li className={emptyStateStyle}>Searching...</li>
+          )}
+          {isAdminSearch && !isFetching && renderedData.length === 0 && (
+            <li className={emptyStateStyle}>No matches found</li>
+          )}
+          {renderedData?.map(renderProjectOption)}
+        </ul>
+
+        <MenuSeparator />
+
+        <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
+          <FocusableMenuItem>
+            <Button
+              href={urls.viewAllProjects as string}
+              data-testid="project-select-view-all-projects"
+              onClick={onElementClick(NavElement.ProjectNavViewAllProjects)}
+            >
+              View All Projects
+            </Button>
+          </FocusableMenuItem>
+          <FocusableMenuItem>
+            <Button
+              href={urls.newProject as string}
+              data-testid="project-select-add-new-project"
+              onClick={onElementClick(NavElement.ProjectNavAddProject)}
+            >
+              + New Project
+            </Button>
+          </FocusableMenuItem>
+        </li>
+      </Menu>
     </InteractionRingWrapper>
   );
 }

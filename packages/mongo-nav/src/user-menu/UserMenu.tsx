@@ -335,10 +335,10 @@ function UserMenu({
             {...subMenuContainer.prop}
             {...sharedProps}
             active={isCloud}
-            disabled={!account || !isCloud}
+            disabled={!account}
             href={hosts.cloud}
             description={<Description isActive={isCloud} product="cloud" />}
-            title="Atlas"
+            title="Cloud"
             glyph={<CloudIcon />}
             className={cx(subMenuContainerStyle, {
               [subMenuActiveContainerStyle]: isCloud,
@@ -392,7 +392,7 @@ function UserMenu({
             href={hosts.cloud}
             description={<Description isActive={false} product="cloud" />}
           >
-            Atlas
+            Cloud
           </MenuItem>
         )}
 
@@ -413,7 +413,7 @@ function UserMenu({
         >
           <MenuItem
             href={userMenu.university?.universityPreferences}
-            data-testid="user-menuitem-cloud-mfa"
+            data-testid="user-menuitem-university-preferences"
           >
             University Preferences
           </MenuItem>
@@ -460,7 +460,7 @@ function UserMenu({
           size="large"
           data-testid="user-menuitem-logout"
         >
-          Logout
+          Log out
         </MenuItem>
       </Menu>
     </div>

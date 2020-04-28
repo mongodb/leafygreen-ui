@@ -1,5 +1,84 @@
 # @leafygreen-ui/mongo-nav
 
+## 1.1.0
+
+### Minor Changes
+
+- 571a6a2: Add `NavElement.OrgNavOrgSelectSearch` and `NavElement.ProjectNavProjectSelectSearch` to track when a user first searches in an OrgSelect or ProjectSelect respectively.
+
+### Patch Changes
+
+- 3317104: Fixes bug where spacebar closes OrgSelect and ProjectSelect
+- ba2ecca: Enables ProjectAccessManager in OrgNav Access Manager Dropdown when OnPrem and currentProjectName exists
+- 2a03117: Upgrades @testing-library/react to v10 and revises test suites to conform with new standards
+- 571a6a2: Update url to new project invite url
+- Updated dependencies [2a03117]
+- Updated dependencies [c812eb3]
+  - @leafygreen-ui/button@4.2.3
+  - @leafygreen-ui/icon-button@5.0.2
+  - @leafygreen-ui/leafygreen-provider@1.1.1
+  - @leafygreen-ui/menu@6.0.9
+  - @leafygreen-ui/tooltip@3.2.2
+  - @leafygreen-ui/icon@5.1.0
+
+## 1.0.3
+
+### Patch Changes
+
+- f377bcf6: Replace Charts logo with redesigned mark"
+
+## 1.0.2
+
+### Patch Changes
+
+- be52876: Changes Logout to Log out in UserMenu and OnPremUserMenu
+
+## 1.0.1
+
+### Patch Changes
+
+- b1fa864: Changes "Atlas" to "Cloud" in UserMenu
+- 9951eab: Ensures cursor:pointer when user hovers over See Product Tour
+- 0391d01: Makes Cloud section of UserMenu clickable, even if Cloud is not the active product
+- Updated dependencies [7d7e589]
+- Updated dependencies [0391d01]
+  - @leafygreen-ui/button@4.2.2
+  - @leafygreen-ui/menu@6.0.8
+  - @leafygreen-ui/tooltip@3.2.1
+
+## 1.0.0
+
+### Major Changes
+
+- 39afcfe: Initial release of MongoNav component
+
+### Minor Changes
+
+- 7947b76: Project and Org selects now use extensive serverside filtering when used by a global administrator.
+- b4e6a06: Adds See Product Tour link to OrgNav component
+
+### Patch Changes
+
+- e5ced4a: Style fixes for Org Select. Org Select no longer displays current org labels for org-agnostic use cases.
+
+## 0.23.0
+
+### Minor Changes
+
+- 5245370: Changes leafygreen-provider to a peer dependency to help avoid version conflicts
+
+### Patch Changes
+
+- 81826ca: Fixes bug in styling of alerts badge
+- 75c0693: Upgrades workspace dependencies
+- bbd03b2: Changes Two-Factor Authorization to Authentication
+- Updated dependencies [75c0693]
+  - @leafygreen-ui/button@4.2.1
+  - @leafygreen-ui/icon@5.0.3
+  - @leafygreen-ui/menu@6.0.7
+  - @leafygreen-ui/palette@2.0.1
+  - @leafygreen-ui/icon-button@5.0.1
+
 ## 0.22.0
 
 ### Minor Changes
