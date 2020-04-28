@@ -242,6 +242,7 @@ function MongoNav({
           hosts={hosts}
           mode={mode}
           currentProjectName={data?.currentProject?.projectName}
+          currentProjectId={currentProjectId}
           onPremEnabled={onPrem.enabled}
           onPremVersion={onPrem.version}
           onPremMFA={onPrem.mfa}

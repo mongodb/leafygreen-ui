@@ -126,6 +126,7 @@ type OrgNavProps = Pick<
   current?: CurrentOrganizationInterface;
   data?: Array<OrganizationInterface>;
   currentProjectName?: string;
+  currentProjectId?: string;
   onPremEnabled?: boolean;
   onPremVersion?: string;
   onPremMFA?: boolean;
@@ -151,6 +152,7 @@ function OrgNav({
   hosts,
   currentProjectName = 'None',
   activePlatform,
+  currentProjectId,
   onPremEnabled,
   onPremVersion,
   onPremMFA = false,
@@ -189,6 +191,10 @@ function OrgNav({
     OrgPaymentLabel.Locked,
     OrgPaymentLabel.AdminSuspended,
   ];
+
+  const displayProjectAccess = onPremEnabled
+    ? !!currentProjectId
+    : showProjectNav;
 
   function renderBadgeItem() {
     if (
@@ -334,8 +340,10 @@ function OrgNav({
                     activeNav ===
                     ActiveNavElement.OrgNavDropdownProjectAccessManager
                   }
-                  disabled={!showProjectNav}
-                  description={showProjectNav ? currentProjectName : 'None'}
+                  disabled={!displayProjectAccess}
+                  description={
+                    displayProjectAccess ? currentProjectName : 'None'
+                  }
                   onClick={onElementClick(
                     NavElement.OrgNavDropdownProjectAccessManager,
                   )}
