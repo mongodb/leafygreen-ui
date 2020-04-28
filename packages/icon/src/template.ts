@@ -41,7 +41,7 @@ interface AnyObject {
   [K: string]: any;
 }
 
-export default function template(
+module.exports = function template(
   {
     template,
   }: {
