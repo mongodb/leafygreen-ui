@@ -109,7 +109,7 @@ interface ModalProps {
    *
    * default: `false`
    */
-  open: boolean;
+  open?: boolean;
 
   /**
    * Specifies the size of the Modal.

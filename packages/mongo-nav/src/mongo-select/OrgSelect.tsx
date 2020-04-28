@@ -252,7 +252,8 @@ function OrgSelect({
   );
 
   const filterData = () => {
-    const sanitizedValue = value.replace(/\\/g, '\\\\');
+    const invalid = /[()[\]{}\\]/g;
+    const sanitizedValue = value.replace(invalid, '');
     const search = new RegExp(String(sanitizedValue), 'i');
 
     const filtered = data?.filter(datum => {
@@ -381,64 +382,60 @@ function OrgSelect({
             glyph={open ? 'CaretUp' : 'CaretDown'}
             className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
           />
-          <Menu
-            usePortal={false}
-            className={menuContainerStyle}
-            justify="start"
-            spacing={0}
-            setOpen={toggleOpen}
-            open={open}
-          >
-            {data && (
-              <FocusableMenuItem>
-                <Input
-                  data-testid="org-filter-input"
-                  variant="organization"
-                  onChange={onChange}
-                  onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
-                  value={value}
-                />
-              </FocusableMenuItem>
-            )}
-
-            <ul className={ulStyle}>
-              {isAdminSearch && isFetching && (
-                <li className={emptyStateStyle}>Searching...</li>
-              )}
-              {isAdminSearch && !isFetching && renderedData.length === 0 && (
-                <li className={emptyStateStyle}>No matches found</li>
-              )}
-              {renderedData?.map(renderOrganizationOption) ?? (
-                <li className={emptyStateStyle}>
-                  You do not belong to any organizations. Create an organization
-                  on the{' '}
-                  <a href={urls.viewAllOrganizations} className={linkStyle}>
-                    Organizations
-                  </a>{' '}
-                  page.
-                </li>
-              )}
-            </ul>
-
-            {renderedData && (
-              <>
-                <MenuSeparator />
-                <MenuItem
-                  onKeyDown={(e: React.KeyboardEvent) => onKeyDown(e, setValue)}
-                  href={urls.viewAllOrganizations}
-                  data-testid="org-select-view-all-orgs"
-                  onClick={onElementClick(
-                    NavElement.OrgNavViewAllOrganizations,
-                  )}
-                >
-                  <strong className={viewAllStyle}>
-                    View All Organizations
-                  </strong>
-                </MenuItem>
-              </>
-            )}
-          </Menu>
         </button>
+        <Menu
+          usePortal={false}
+          className={menuContainerStyle}
+          justify="start"
+          spacing={0}
+          setOpen={toggleOpen}
+          open={open}
+        >
+          {data && (
+            <FocusableMenuItem>
+              <Input
+                data-testid="org-filter-input"
+                variant="organization"
+                onChange={onChange}
+                onKeyDown={onKeyDown}
+                value={value}
+              />
+            </FocusableMenuItem>
+          )}
+
+          <ul className={ulStyle}>
+            {isAdminSearch && isFetching && (
+              <li className={emptyStateStyle}>Searching...</li>
+            )}
+            {isAdminSearch && !isFetching && renderedData.length === 0 && (
+              <li className={emptyStateStyle}>No matches found</li>
+            )}
+            {renderedData?.map(renderOrganizationOption) ?? (
+              <li className={emptyStateStyle}>
+                You do not belong to any organizations. Create an organization
+                on the{' '}
+                <a href={urls.viewAllOrganizations} className={linkStyle}>
+                  Organizations
+                </a>{' '}
+                page.
+              </li>
+            )}
+          </ul>
+
+          {renderedData && (
+            <>
+              <MenuSeparator />
+              <MenuItem
+                onKeyDown={onKeyDown}
+                href={urls.viewAllOrganizations}
+                data-testid="org-select-view-all-orgs"
+                onClick={onElementClick(NavElement.OrgNavViewAllOrganizations)}
+              >
+                <strong className={viewAllStyle}>View All Organizations</strong>
+              </MenuItem>
+            </>
+          )}
+        </Menu>
       </InteractionRingWrapper>
 
       {!disabled && (

@@ -1,5 +1,13 @@
 # @leafygreen-ui/icon-button
 
+## 5.0.2
+
+### Patch Changes
+
+- 2a03117: Upgrades @testing-library/react to v10 and revises test suites to conform with new standards
+- Updated dependencies [c812eb3]
+  - @leafygreen-ui/icon@5.1.0
+
 ## 5.0.1
 
 ### Patch Changes

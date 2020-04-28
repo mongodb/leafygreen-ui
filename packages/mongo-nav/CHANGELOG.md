@@ -1,5 +1,26 @@
 # @leafygreen-ui/mongo-nav
 
+## 1.1.0
+
+### Minor Changes
+
+- 571a6a2: Add `NavElement.OrgNavOrgSelectSearch` and `NavElement.ProjectNavProjectSelectSearch` to track when a user first searches in an OrgSelect or ProjectSelect respectively.
+
+### Patch Changes
+
+- 3317104: Fixes bug where spacebar closes OrgSelect and ProjectSelect
+- ba2ecca: Enables ProjectAccessManager in OrgNav Access Manager Dropdown when OnPrem and currentProjectName exists
+- 2a03117: Upgrades @testing-library/react to v10 and revises test suites to conform with new standards
+- 571a6a2: Update url to new project invite url
+- Updated dependencies [2a03117]
+- Updated dependencies [c812eb3]
+  - @leafygreen-ui/button@4.2.3
+  - @leafygreen-ui/icon-button@5.0.2
+  - @leafygreen-ui/leafygreen-provider@1.1.1
+  - @leafygreen-ui/menu@6.0.9
+  - @leafygreen-ui/tooltip@3.2.2
+  - @leafygreen-ui/icon@5.1.0
+
 ## 1.0.3
 
 ### Patch Changes

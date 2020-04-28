@@ -1,5 +1,13 @@
 # @leafygreen-ui/modal
 
+## 3.0.4
+
+### Patch Changes
+
+- 2a03117: Upgrades @testing-library/react to v10 and revises test suites to conform with new standards
+- Updated dependencies [c812eb3]
+  - @leafygreen-ui/icon@5.1.0
+
 ## 3.0.3
 
 ### Patch Changes

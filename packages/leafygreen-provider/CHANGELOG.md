@@ -1,5 +1,11 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 1.1.1
+
+### Patch Changes
+
+- 2a03117: Upgrades @testing-library/react to v10 and revises test suites to conform with new standards
+
 ## 1.1.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-group
 
+## 2.0.1
+
+### Patch Changes
+
+- 2a03117: Upgrades @testing-library/react to v10 and revises test suites to conform with new standards
+
 ## 2.0.0
 
 ### Major Changes
