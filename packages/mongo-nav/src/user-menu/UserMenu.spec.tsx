@@ -8,6 +8,7 @@ const account = {
   firstName: 'Leafy',
   lastName: 'Green',
   email: 'leafy@mongodb.com',
+  admin: false,
 };
 const onLogout = jest.fn();
 const onProductChange = jest.fn();
