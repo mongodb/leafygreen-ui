@@ -381,7 +381,7 @@ describe('packages/mongo-nav', () => {
     });
   });
 
-  describe.only('when dataFixtures prop sets admin as true', () => {
+  describe('when dataFixtures prop sets admin as true', () => {
     beforeEach(() =>
       renderComponent({
         mode: 'dev',
