@@ -13,8 +13,7 @@ import Syntax, {
   Language,
   variantColors,
 } from '@leafygreen-ui/syntax';
-import CheckmarkIcon from '@leafygreen-ui/icon/Checkmark';
-import CopyIcon from '@leafygreen-ui/icon/Copy';
+import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LineNumbers from './LineNumbers';
 import WindowChrome from './WindowChrome';
@@ -401,7 +400,7 @@ function Code({
                 }}
                 data-clipboard-text={content}
               >
-                {copied ? <CheckmarkIcon /> : <CopyIcon />}
+                <Icon glyph={copied ? 'Checkmark' : 'copy'} />
               </IconButton>
             </div>
           )}
@@ -445,7 +444,7 @@ function Code({
               }}
               data-clipboard-text={content}
             >
-              {copied ? <CheckmarkIcon /> : <CopyIcon />}
+              <Icon glyph={copied ? 'Checkmark' : 'copy'} />
             </IconButton>
           </div>
         )}
