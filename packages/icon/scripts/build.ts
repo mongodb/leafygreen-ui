@@ -1,8 +1,12 @@
-import svgr from '@svgr/core';
-import fs from 'fs';
-import template from '../src/template';
-import path from 'path';
-import meow from 'meow';
+const svgr = require('@svgr/core').default;
+// @ts-ignore
+const fs = require('fs');
+// @ts-ignore
+const template = require('../src/template');
+// @ts-ignore
+const path = require('path');
+// @ts-ignore
+const meow = require('meow');
 
 const cli = meow(
   `
@@ -49,12 +53,12 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
       };
     });
   } else {
-    const glyphsDir = path.resolve(__dirname, '../src/glyphs');
+    const glyphsDir: string = path.resolve(__dirname, '../src/glyphs');
 
     svgFiles = fs
       .readdirSync(glyphsDir)
       .filter(filterSvgFiles)
-      .map(fileName => ({
+      .map((fileName: string) => ({
         name: fileName.replace('.svg', ''),
         path: path.resolve(glyphsDir, fileName),
       }));
@@ -101,7 +105,7 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
       },
     )
       .then((moduleCode: string) => {
-        let outputDir = path.resolve(__dirname, '../dist');
+        let outputDir = path.resolve(__dirname, '../dist/testing');
 
         if (flags.outDir) {
           outputDir = path.resolve(process.cwd(), flags.outDir);
