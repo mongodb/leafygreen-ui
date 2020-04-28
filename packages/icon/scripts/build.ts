@@ -1,4 +1,3 @@
-// const svgr = require('@svgr/core').default;
 import svgr from '@svgr/core';
 import fs from 'fs';
 import template from '../src/template';
@@ -102,7 +101,7 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
       },
     )
       .then((moduleCode: string) => {
-        let outputDir = path.resolve(__dirname, '../dist/test');
+        let outputDir = path.resolve(__dirname, '../dist');
 
         if (flags.outDir) {
           outputDir = path.resolve(process.cwd(), flags.outDir);

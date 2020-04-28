@@ -37,11 +37,30 @@ https://astexplorer.net/
   }
 }
 **/
+interface AnyObject {
+  [K: string]: any;
+}
 
-module.exports = function template(
-  { template },
-  opts,
-  { imports, componentName, jsx, exports },
+export default function template(
+  {
+    template,
+  }: {
+    template: {
+      smart: (opts: AnyObject) => AnyObject;
+    } & AnyObject;
+  } & AnyObject,
+  opts: { [K: string]: any },
+  {
+    imports,
+    componentName,
+    jsx,
+    exports,
+  }: {
+    jsx: AnyObject;
+    componentName: string;
+    imports: string;
+    exports: string;
+  } & AnyObject,
 ) {
   const plugins = ['jsx'];
 
@@ -114,4 +133,4 @@ module.exports = function template(
 
     ${exports}
   `;
-};
+}
