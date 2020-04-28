@@ -1,8 +1,9 @@
-const svgr = require('@svgr/core').default;
-const template = require('../src/template');
-const fs = require('fs');
-const path = require('path');
-const meow = require('meow');
+// const svgr = require('@svgr/core').default;
+import svgr from '@svgr/core';
+import fs from 'fs';
+import template from '../src/template';
+import path from 'path';
+import meow from 'meow';
 
 const cli = meow(
   `
@@ -22,12 +23,21 @@ const cli = meow(
   },
 );
 
-function filterSvgFiles(str) {
+interface Flags {
+  outDir?: string;
+}
+
+interface FileObject {
+  name: string;
+  path: string;
+}
+
+function filterSvgFiles(str: string): boolean {
   return str.includes('.svg');
 }
 
-function buildSvgFiles(input, flags) {
-  let svgFiles;
+function buildSvgFiles(input: Array<string>, flags: Flags) {
+  let svgFiles: Array<FileObject>;
 
   if (input && input.length) {
     svgFiles = input.filter(filterSvgFiles).map(filePath => {
@@ -91,7 +101,7 @@ function buildSvgFiles(input, flags) {
         componentName: file.name,
       },
     )
-      .then(moduleCode => {
+      .then((moduleCode: string) => {
         let outputDir = path.resolve(__dirname, '../dist/test');
 
         if (flags.outDir) {
