@@ -231,7 +231,6 @@ function MongoNav({
       <section {...rest} className={cx(navContainerStyle, className)}>
         <OrgNav
           account={data?.account}
-          activeProduct={activeProduct}
           current={data?.currentOrganization}
           data={data?.organizations}
           constructOrganizationURL={constructOrganizationURL}

@@ -22,8 +22,6 @@ import {
   OrgPaymentLabel,
   ActiveNavElement,
   MongoNavInterface,
-  Product,
-  Platform,
 } from '../types';
 
 export const orgNavHeight = 60;
@@ -115,12 +113,7 @@ const userMenuActiveNavItems = [
 
 type OrgNavProps = Pick<
   MongoNavInterface,
-  | 'activeProduct'
-  | 'onOrganizationChange'
-  | 'activeNav'
-  | 'admin'
-  | 'mode'
-  | 'activePlatform'
+  'onOrganizationChange' | 'activeNav' | 'admin' | 'mode' | 'activePlatform'
 > & {
   account?: AccountInterface;
   current?: CurrentOrganizationInterface;
@@ -141,7 +134,6 @@ type OrgNavProps = Pick<
 function OrgNav({
   account,
   activeNav,
-  activeProduct,
   current,
   data,
   mode,
@@ -165,12 +157,6 @@ function OrgNav({
   const { orgNav } = urls;
   const isTablet = viewportWidth < breakpoints.medium;
   const isMobile = viewportWidth < breakpoints.small;
-  const defaultActivePlatform =
-    activeProduct === Product.Charts ||
-    activeProduct === Product.Cloud ||
-    activeProduct === Product.Realm
-      ? Platform.Cloud
-      : undefined;
   const disabled = (userMenuActiveNavItems as Array<string>).includes(
     activeNav as string,
   );
@@ -238,7 +224,7 @@ function OrgNav({
     return (
       <UserMenu
         account={account}
-        activePlatform={activePlatform || defaultActivePlatform}
+        activePlatform={activePlatform}
         urls={urls}
         hosts={hosts}
         activeNav={activeNav}
