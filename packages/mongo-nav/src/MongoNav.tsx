@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import OrgNav from './org-nav';
 import ProjectNav from './project-nav';
@@ -6,7 +6,7 @@ import defaultsDeep from 'lodash/defaultsDeep';
 import OnElementClickProvider from './on-element-click-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { dataFixtures, hostDefaults } from './data';
+import { dataFixtures as defaultDataFixtures, hostDefaults } from './data';
 import {
   Product,
   URLSInterface,
@@ -18,11 +18,103 @@ import {
   MongoNavInterface,
   OrganizationInterface,
   ProjectInterface,
+  HostsInterface,
 } from './types';
 
 const ErrorCodeMap: Record<number, ErrorCode> = {
   401: ErrorCode.NO_AUTHORIZATION,
 } as const;
+
+type UseMongoNavData = Pick<
+  MongoNavInterface,
+  | 'mode'
+  | 'activeOrgId'
+  | 'activeProjectId'
+  | 'loadData'
+  | 'dataFixtures'
+  | 'onSuccess'
+  | 'onError'
+> & {
+  hosts: Required<NonNullable<MongoNavInterface['hosts']>>;
+};
+
+function useMongoNavData({
+  hosts,
+  mode,
+  activeOrgId,
+  activeProjectId,
+  loadData,
+  dataFixtures,
+  onSuccess,
+  onError,
+}: UseMongoNavData): DataInterface | undefined {
+  const [data, setData] = useState<DataInterface | undefined>(undefined);
+
+  const endpointURI = `${hosts.cloud}/user/shared`;
+
+  function fetchProductionData(body?: PostBodyInterface) {
+    const configObject: RequestInit = {
+      credentials: 'include',
+      mode: 'cors',
+      method: 'GET',
+    };
+
+    if (body) {
+      Object.assign(configObject, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    }
+
+    return fetch(endpointURI, configObject);
+  }
+
+  function getDataFixtures() {
+    return new Promise(resolve => {
+      const mergedData = defaultsDeep(dataFixtures, defaultDataFixtures);
+
+      onSuccess?.(mergedData);
+      resolve(mergedData);
+    });
+  }
+
+  function handleResponse(response: Response) {
+    if (!response.ok) {
+      const mappedStatus = ErrorCodeMap[response.status];
+      onError?.(mappedStatus);
+      console.error(mappedStatus);
+    } else {
+      response
+        .json()
+        .then(data => {
+          setData(data);
+          onSuccess?.(data);
+        })
+        .catch(console.error);
+    }
+  }
+
+  useEffect(() => {
+    if (!loadData) {
+      setData(undefined);
+    } else if (mode === Mode.Dev) {
+      getDataFixtures().then(data => setData(data as DataInterface));
+    } else {
+      let body: PostBodyInterface | undefined;
+
+      if (activeProjectId || activeOrgId) {
+        body = { activeProjectId, activeOrgId };
+      }
+
+      fetchProductionData(body).then(handleResponse).catch(console.error);
+    }
+  }, [mode, endpointURI, activeOrgId, activeProjectId, loadData, dataFixtures]);
+
+  return data;
+}
 
 const navContainerStyle = css`
   background-color: ${uiColors.white};
@@ -75,7 +167,7 @@ function MongoNav({
   mode = Mode.Production,
   loadData = true,
   showProjectNav = true,
-  admin = false,
+  admin: adminProp,
   hosts: hostsProp,
   urls: urlsProp,
   constructOrganizationURL: constructOrganizationURLProp,
@@ -87,13 +179,24 @@ function MongoNav({
   activeOrgId,
   activeProjectId,
   className,
-  dataFixtures: dataFixturesProp,
+  dataFixtures,
   ...rest
 }: MongoNavInterface) {
   const shouldShowProjectNav = showProjectNav && !onPrem.enabled;
-  const [data, setData] = React.useState<DataInterface | undefined>(undefined);
-  const hosts = defaultsDeep(hostsProp, hostDefaults);
-  const endpointURI = `${hosts.cloud}/user/shared`;
+  const hosts: Required<HostsInterface> = defaultsDeep(hostsProp, hostDefaults);
+
+  const data = useMongoNavData({
+    hosts,
+    mode,
+    activeOrgId,
+    activeProjectId,
+    loadData,
+    dataFixtures,
+    onSuccess,
+    onError,
+  });
+
+  const admin = (adminProp ?? data?.account?.admin) === true;
 
   const currentOrgId = data?.currentOrganization?.orgId;
   const currentProjectId = data?.currentProject?.projectId;
@@ -148,74 +251,6 @@ function MongoNav({
   const defaultProjectURL = ({ projectId }: ProjectInterface) =>
     `${hosts.cloud}/v2/${projectId}#`;
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
-
-  function fetchProductionData(body?: PostBodyInterface) {
-    const configObject: RequestInit = {
-      credentials: 'include',
-      mode: 'cors',
-      method: 'GET',
-    };
-
-    if (body) {
-      Object.assign(configObject, {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-    }
-
-    return fetch(endpointURI, configObject);
-  }
-
-  function getDataFixtures() {
-    return new Promise(resolve => {
-      const mergedData = defaultsDeep(dataFixturesProp, dataFixtures);
-
-      onSuccess?.(mergedData);
-      resolve(mergedData);
-    });
-  }
-
-  function handleResponse(response: Response) {
-    if (!response.ok) {
-      const mappedStatus = ErrorCodeMap[response.status];
-      onError?.(mappedStatus);
-      console.error(mappedStatus);
-    } else {
-      response
-        .json()
-        .then(data => {
-          setData(data);
-          onSuccess?.(data);
-        })
-        .catch(console.error);
-    }
-  }
-
-  useEffect(() => {
-    if (!loadData) {
-      setData(undefined);
-    } else if (mode === Mode.Dev) {
-      getDataFixtures().then(data => setData(data as DataInterface));
-    } else {
-      let body: PostBodyInterface | undefined;
-
-      if (activeProjectId || activeOrgId) {
-        body = { activeProjectId, activeOrgId };
-      }
-
-      fetchProductionData(body).then(handleResponse).catch(console.error);
-    }
-  }, [
-    mode,
-    endpointURI,
-    activeOrgId,
-    activeProjectId,
-    loadData,
-    dataFixturesProp,
-  ]);
 
   const filteredProjects = data?.projects?.filter(project => {
     return project.orgId === data.currentProject?.orgId;
