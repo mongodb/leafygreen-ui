@@ -400,7 +400,7 @@ function Code({
                 }}
                 data-clipboard-text={content}
               >
-                <Icon glyph={copied ? 'Checkmark' : 'copy'} />
+                <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
               </IconButton>
             </div>
           )}
@@ -444,7 +444,7 @@ function Code({
               }}
               data-clipboard-text={content}
             >
-              <Icon glyph={copied ? 'Checkmark' : 'copy'} />
+              <Icon glyph={copied ? 'Checkmark' : 'Copy'} />
             </IconButton>
           </div>
         )}
