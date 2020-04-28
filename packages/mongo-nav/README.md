@@ -63,9 +63,22 @@ npm install @leafygreen-ui/mongo-nav @leafygreen-ui/leafygreen-provider@1.1.0
 | `onElementClick`           | `(type: 'logout', 'cloud', 'realm', 'charts', event: React.MouseEvent => void)` | Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second. This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally                                                                                         | `() => {}`                                                |
 | `dataFixtures`             | `DataInterface`                                                                 | Allows consumers to control fixture data when in dev mode                                                                                                                                                                                                                                                                                |                                                           |
 | `activePlatform`           | `Platform`                                                                      | Describes what platform is currently active                                                                                                                                                                                                                                                                                              |                                                           |
-| `alertPollingInterval`     | `number`                                                                        | Defines interval for alert polling                                                                                                                                                                                                                                                                                                       | `600e3`                                                   |
+| `alertPollingInterval`     | `number`                                                                        | Defines interval for alert polling                                                                                                                                                                                                                                                                                                       | `600e3 // 10 minutes`                                     |
 
 _Any other properties will be spread on the root element_
+
+### `Platform Values`
+
+`Account`
+`Cloud`
+`Support`
+`University`
+
+### `Product Values`
+
+`Cloud`
+`Realm`
+`Charts`
 
 ### `ActiveNavElement` Values
 

@@ -18,6 +18,7 @@ import {
   MongoNavInterface,
   OrganizationInterface,
   ProjectInterface,
+  Platform,
 } from './types';
 
 const ErrorCodeMap: Record<number, ErrorCode> = {
@@ -76,8 +77,8 @@ function MongoNav({
   onProjectChange,
   activeOrgId,
   activeProjectId,
-  activePlatform,
   className,
+  activePlatform = Platform.Cloud,
   mode = Mode.Production,
   loadData = true,
   showProjectNav = true,
@@ -86,7 +87,7 @@ function MongoNav({
   onSuccess = () => {},
   onElementClick = (_type: NavElement, _event: React.MouseEvent) => {}, // eslint-disable-line @typescript-eslint/no-unused-vars
   onPrem = { mfa: false, enabled: false, version: '' },
-  alertPollingInterval = 600e3,
+  alertPollingInterval = 600e3, // 10 minutes
   hosts: hostsProp,
   urls: urlsProp,
   constructOrganizationURL: constructOrganizationURLProp,

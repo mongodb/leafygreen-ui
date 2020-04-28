@@ -16,15 +16,15 @@ storiesOf('MongoNav', module).add('Default', () => (
     <div className={setStorybookWidth}>
       <MongoNav
         mode="dev"
-        activeProduct={select(
-          'activeProduct',
-          Object.values(Product),
-          Product.Cloud,
-        )}
         activePlatform={select(
           'activePlatform',
           Object.values(Platform),
           Platform.University,
+        )}
+        activeProduct={select(
+          'activeProduct',
+          Object.values(Product),
+          Product.Cloud,
         )}
         activeNav={select(
           'activeNav',
