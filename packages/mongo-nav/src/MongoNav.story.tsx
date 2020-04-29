@@ -4,7 +4,7 @@ import { select, boolean, text } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import MongoNav from '.';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Product, ActiveNavElement } from './types';
+import { Product, Platform, ActiveNavElement } from './types';
 
 const setStorybookWidth = css`
   width: 100%;
@@ -16,6 +16,11 @@ storiesOf('MongoNav', module).add('Default', () => (
     <div className={setStorybookWidth}>
       <MongoNav
         mode="dev"
+        activePlatform={select(
+          'activePlatform',
+          Object.values(Platform),
+          Platform.University,
+        )}
         activeProduct={select(
           'activeProduct',
           Object.values(Product),
