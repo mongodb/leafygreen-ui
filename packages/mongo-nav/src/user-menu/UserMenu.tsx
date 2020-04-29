@@ -322,7 +322,6 @@ function UserMenu({
             <Button
               href={isAccount ? undefined : userMenu.account?.homepage}
               disabled={isAccount}
-              as={isAccount ? 'button' : 'a'}
             >
               Manage your MongoDB Account
             </Button>
