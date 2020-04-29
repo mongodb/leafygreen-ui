@@ -13,6 +13,9 @@
       "path": "../lib"
     },
     {
+      "path": "../hooks"
+    },
+    {
       "path": "../palette"
     }
   ]
