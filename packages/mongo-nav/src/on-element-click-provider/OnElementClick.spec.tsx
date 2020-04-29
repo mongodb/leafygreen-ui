@@ -1,28 +1,17 @@
 import React from 'react';
-import {
-  render,
-  cleanup,
-  fireEvent,
-  act,
-  BoundFunction,
-  GetByBoundAttribute,
-} from '@testing-library/react';
+import { render, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import MongoNav from '../MongoNav';
 import { NavElement } from '../types';
 
-afterAll(cleanup);
-
 const defaultElements = {
   [NavElement.OrgNavLeaf]: 'org-nav-leaf',
-  [NavElement.OrgNavOrgSelectTrigger]: 'org-trigger',
   [NavElement.OrgNavOrgSettings]: 'org-trigger-settings',
   [NavElement.OrgNavAccessManager]: 'org-nav-access-manager',
   [NavElement.OrgNavDropdown]: 'org-nav-dropdown',
   [NavElement.OrgNavSupport]: 'org-nav-support',
   [NavElement.OrgNavBilling]: 'org-nav-billing',
   [NavElement.OrgNavAllClusters]: 'org-nav-all-clusters-link',
-  [NavElement.ProjectNavProjectSelectTrigger]: 'project-select-trigger',
   [NavElement.ProjectNavProjectDropdown]: 'project-nav-project-menu',
   [NavElement.ProjectNavCloud]: 'project-nav-atlas',
   [NavElement.ProjectNavRealm]: 'project-nav-realm',
@@ -31,147 +20,118 @@ const defaultElements = {
   [NavElement.ProjectNavActivityFeed]: 'project-nav-activity-feed',
   [NavElement.ProjectNavAlerts]: 'project-nav-alerts',
   [NavElement.UserMenuTrigger]: 'user-menu-trigger',
-} as const;
+};
+
+const onElementClick = jest.fn();
+const promise = Promise.resolve();
+
+function renderMongoNav() {
+  const utils = render(
+    <MongoNav
+      mode="dev"
+      admin={true}
+      activeProduct="cloud"
+      onElementClick={onElementClick}
+    />,
+  );
+
+  return utils;
+}
+
+function testForCallback(navElement: string, testId: string, trigger?: string) {
+  test(`the onElementClick value is successfully passed to the ${testId}`, async () => {
+    const { getByTestId } = renderMongoNav();
+
+    if (trigger) {
+      await fireEvent.click(getByTestId(trigger));
+    }
+
+    fireEvent.click(getByTestId(testId));
+
+    expect(onElementClick).toHaveBeenCalled();
+    expect(onElementClick).toHaveBeenCalledWith(navElement, expect.anything());
+    await act(() => promise);
+  });
+}
 
 describe('packages/mongo-nav/on-element-click-provider', () => {
-  const onElementClick = jest.fn();
-
-  const testForCallback = (navElement: HTMLElement, type: string) => {
-    fireEvent.click(navElement);
-    expect(onElementClick).toHaveBeenCalled();
-    expect(onElementClick).toHaveBeenCalledWith(type, expect.anything());
-  };
-
-  let getByTestId: BoundFunction<GetByBoundAttribute>;
-  beforeAll(async () => {
-    await act(async () => {
-      const result = render(
-        <MongoNav
-          activeProduct="cloud"
-          mode="dev"
-          admin={true}
-          onOrganizationChange={jest.fn()}
-          onProjectChange={jest.fn()}
-          onElementClick={onElementClick}
-        />,
-      );
-
-      getByTestId = result.getByTestId;
+  describe('by default', () => {
+    Object.keys(defaultElements).map(el => {
+      // @ts-ignore
+      testForCallback(el, defaultElements[el]);
     });
   });
 
-  describe('by default', () => {
-    let el: keyof typeof defaultElements;
+  describe('when the OrgNav Access Manager dropdown is open', () => {
+    testForCallback(
+      NavElement.OrgNavDropdownOrgAccessManager,
+      'org-nav-dropdown-org-access-manager',
+      'org-nav-dropdown',
+    );
 
-    for (el in defaultElements) {
-      // eslint-disable-next-line jest/expect-expect
-      test(`it fires onElementClick callback on ${el}`, () =>
-        testForCallback(getByTestId(defaultElements[el]), el));
-    }
+    testForCallback(
+      NavElement.OrgNavDropdownProjectAccessManager,
+      'org-nav-dropdown-project-access-manager',
+      'org-nav-dropdown',
+    );
+  });
 
-    // eslint-disable-next-line jest/expect-expect
-    test('when OrgSelect is open', async () => {
-      fireEvent.click(getByTestId('org-trigger'));
+  describe('when the ProjectNav dropdown is open', () => {
+    testForCallback(
+      NavElement.ProjectNavProjectSettings,
+      'project-nav-settings',
+      'project-nav-project-menu',
+    );
 
-      const viewOrgs = await getByTestId('org-select-view-all-orgs');
+    testForCallback(
+      NavElement.ProjectNavProjectSupport,
+      'project-nav-support',
+      'project-nav-project-menu',
+    );
 
-      testForCallback(viewOrgs, NavElement.OrgNavViewAllOrganizations);
-    });
+    testForCallback(
+      NavElement.ProjectNavProjectIntegrations,
+      'project-nav-integrations',
+      'project-nav-project-menu',
+    );
+  });
 
-    // eslint-disable-next-line jest/expect-expect
-    test('when OrgNav dropdown is open', async () => {
-      fireEvent.click(getByTestId('org-nav-dropdown'));
+  describe('when the UserMenu is open', () => {
+    testForCallback(
+      NavElement.UserMenuFeedback,
+      'user-menuitem-feedback',
+      'user-menu-trigger',
+    );
 
-      const orgNavOrgAccessManager = await getByTestId(
-        'org-nav-dropdown-org-access-manager',
-      );
-      const orgNavProjectAccesManger = getByTestId(
-        'org-nav-dropdown-project-access-manager',
-      );
+    testForCallback(
+      NavElement.UserMenuCloudMFA,
+      'user-menuitem-cloud-mfa',
+      'user-menu-trigger',
+    );
 
-      testForCallback(
-        orgNavOrgAccessManager,
-        NavElement.OrgNavDropdownOrgAccessManager,
-      );
+    testForCallback(
+      NavElement.UserMenuCloudInvitations,
+      'user-menuitem-cloud-invitations',
+      'user-menu-trigger',
+    );
 
-      testForCallback(
-        orgNavProjectAccesManger,
-        NavElement.OrgNavDropdownProjectAccessManager,
-      );
-    });
+    testForCallback(
+      NavElement.UserMenuCloudOrganizations,
+      'user-menuitem-cloud-organizations',
+      'user-menu-trigger',
+    );
 
-    // eslint-disable-next-line jest/expect-expect
-    test('when ProjectSelect is open', async () => {
-      fireEvent.click(getByTestId('project-select-trigger'));
+    testForCallback(
+      NavElement.UserMenuCloudUserPreferences,
+      'user-menuitem-cloud-user-preferences',
+      'user-menu-trigger',
+    );
 
-      const viewAllProjects = await getByTestId(
-        'project-select-view-all-projects',
-      );
-      const addNewProject = getByTestId('project-select-add-new-project');
-
-      testForCallback(viewAllProjects, NavElement.ProjectNavViewAllProjects);
-
-      testForCallback(addNewProject, NavElement.ProjectNavAddProject);
-    });
-
-    // eslint-disable-next-line jest/expect-expect
-    test('when the Project dropdown is open', async () => {
-      fireEvent.click(getByTestId('project-nav-project-menu'));
-
-      const projectNavSettings = await getByTestId('project-nav-settings');
-      const projectNavSupport = getByTestId('project-nav-support');
-      const projectNavIntegrations = getByTestId('project-nav-integrations');
-
-      testForCallback(projectNavSettings, NavElement.ProjectNavProjectSettings);
-
-      testForCallback(projectNavSupport, NavElement.ProjectNavProjectSupport);
-
-      testForCallback(
-        projectNavIntegrations,
-        NavElement.ProjectNavProjectIntegrations,
-      );
-    });
-
-    // eslint-disable-next-line jest/expect-expect
-    test('when the UserMenu is open', async () => {
-      fireEvent.click(getByTestId('user-menu-trigger'));
-
-      const userMenuFeedback = await getByTestId('user-menuitem-feedback');
-      const userMenuCloudMFA = getByTestId('user-menuitem-cloud-mfa');
-      const userMenuCloudInvitations = getByTestId(
-        'user-menuitem-cloud-invitations',
-      );
-      const userMenuCloudOrganizations = getByTestId(
-        'user-menuitem-cloud-organizations',
-      );
-
-      const userMenuCloudUserPreferences = getByTestId(
-        'user-menuitem-cloud-user-preferences',
-      );
-
-      const userMenuLogout = getByTestId('user-menuitem-logout');
-
-      testForCallback(userMenuFeedback, NavElement.UserMenuFeedback);
-
-      testForCallback(userMenuCloudMFA, NavElement.UserMenuCloudMFA);
-
-      testForCallback(
-        userMenuCloudInvitations,
-        NavElement.UserMenuCloudInvitations,
-      );
-
-      testForCallback(
-        userMenuCloudOrganizations,
-        NavElement.UserMenuCloudOrganizations,
-      );
-
-      testForCallback(
-        userMenuCloudUserPreferences,
-        NavElement.UserMenuCloudUserPreferences,
-      );
-
-      testForCallback(userMenuLogout, NavElement.Logout);
-    });
+    testForCallback(
+      NavElement.Logout,
+      'user-menuitem-logout',
+      'user-menu-trigger',
+    );
   });
 });
 

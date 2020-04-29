@@ -1,5 +1,11 @@
 # @leafygreen-ui/toggle
 
+## 3.0.1
+
+### Patch Changes
+
+- 2a03117: Upgrades @testing-library/react to v10 and revises test suites to conform with new standards
+
 ## 3.0.0
 
 ### Major Changes

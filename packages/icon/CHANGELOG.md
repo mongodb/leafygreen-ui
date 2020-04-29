@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 5.1.0
+
+### Minor Changes
+
+- c812eb3: Updates the Activity Feed icon to be consistent with other icons in the MongoNav
+
 ## 5.0.3
 
 ### Patch Changes
