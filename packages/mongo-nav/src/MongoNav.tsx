@@ -74,7 +74,7 @@ function useMongoNavData({
   }
 
   function getDataFixtures() {
-    return new Promise(resolve => {
+    return new Promise<DataInterface>(resolve => {
       const mergedData = defaultsDeep(dataFixtures, defaultDataFixtures);
 
       onSuccess?.(mergedData);
@@ -102,7 +102,7 @@ function useMongoNavData({
     if (!loadData) {
       setData(undefined);
     } else if (mode === Mode.Dev) {
-      getDataFixtures().then(data => setData(data as DataInterface));
+      getDataFixtures().then(data => setData(data));
     } else {
       let body: PostBodyInterface | undefined;
 
