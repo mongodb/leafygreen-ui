@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
+import { useEventListener } from '@leafygreen-ui/hooks';
 import TabTitle from './TabTitle';
 import omit from 'lodash/omit';
 
@@ -132,36 +133,31 @@ function Tabs({
     setSelected(index);
   }
 
-  function handleKeyDown(e: React.KeyboardEvent) {
-    e.stopPropagation();
+  const getEnabledIndexes: () => [Array<number>, number] = () => {
+    const enabledIndexes = childrenArray
+      .filter(child => !child.props.disabled)
+      .map(child => childrenArray.indexOf(child));
 
-    const enabledIndexes = childrenArray.reduce((acc, child, index) => {
-      if (child.props.disabled) {
-        return acc;
-      }
+    return [enabledIndexes, enabledIndexes.indexOf(selected!)];
+  };
 
-      return [...acc, index];
-    }, [] as Array<number>);
-
-    const enabledCurrentIndex = enabledIndexes.indexOf(selected!);
-
-    switch (e.keyCode) {
-      case keyMap.ArrowRight:
-        setSelected(
-          enabledIndexes[(enabledCurrentIndex + 1) % enabledIndexes.length],
-        );
-        break;
-
-      case keyMap.ArrowLeft:
+  const handleArrowKeyPress = (e: KeyboardEvent) => {
+    if (!(e.metaKey || e.ctrlKey)) {
+      if (e.keyCode === keyMap.ArrowRight) {
+        const [enabledIndexes, current] = getEnabledIndexes();
+        setSelected(enabledIndexes[(current + 1) % enabledIndexes.length]);
+      } else if (e.keyCode === keyMap.ArrowLeft) {
+        const [enabledIndexes, current] = getEnabledIndexes();
         setSelected(
           enabledIndexes[
-            (enabledCurrentIndex - 1 + enabledIndexes.length) %
-              enabledIndexes.length
+            (current - 1 + enabledIndexes.length) % enabledIndexes.length
           ],
         );
-        break;
+      }
     }
-  }
+  };
+
+  useEventListener('keydown', handleArrowKeyPress);
 
   function calcStyle() {
     if (
@@ -202,13 +198,7 @@ function Tabs({
 
   return (
     <div {...rest} className={className}>
-      <div
-        className={listStyle}
-        role="tablist"
-        onKeyDown={handleKeyDown}
-        ref={tabListRef}
-        tabIndex={0}
-      >
+      <div className={listStyle} role="tablist" ref={tabListRef} tabIndex={0}>
         {tabs.map((tab, index) => {
           const { selected, disabled, ...rest } = tab.props;
 
@@ -230,11 +220,6 @@ function Tabs({
               onClick={
                 !disabled
                   ? (event: React.MouseEvent) => handleChange(event, index)
-                  : undefined
-              }
-              onKeyDown={
-                !disabled
-                  ? (event: React.KeyboardEvent) => handleKeyDown(event)
                   : undefined
               }
               ariaControl={`tab-${index}`}
