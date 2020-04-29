@@ -77,7 +77,6 @@ function TabTitle(props: TabTitleProps) {
     className,
     disabled,
     onClick,
-    onKeyDown,
     ariaControl,
     setFocusedState,
     as,
@@ -108,7 +107,6 @@ function TabTitle(props: TabTitleProps) {
       className={cx(listTitle, className)}
       role="tab"
       onClick={onClick}
-      onKeyDown={onKeyDown}
       aria-controls={ariaControl}
       aria-selected={selected}
       aria-disabled={disabled}
@@ -140,7 +138,6 @@ TabTitle.propTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
-  onKeyDown: PropTypes.func,
   ariaControl: PropTypes.string,
   as: PropTypes.string,
 };

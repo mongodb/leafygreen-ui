@@ -23,6 +23,8 @@ Hook to subscribe to changes in a ref
 ### Example
 
 ```js
+import { useElementNode } from '@leafygreen-ui/hooks';
+
 const Example = () => {
   [refNode, setRefNode] = useElementNode();
 
@@ -37,6 +39,8 @@ Hook to create and remove eventListeners
 ### Example
 
 ```js
+import { useEventListener } from '@leafygreen-ui/hooks';
+
 useEventListener('click', handleClick, { enabled });
 ```
 
@@ -58,6 +62,8 @@ Hook that listens for `EscapeKey` press.
 ### Example
 
 ```js
+import { useEscapeKey } from '@leafygreen-ui/hooks';
+
 useEscapeKey(handleEscapeCallback);
 ```
 
@@ -73,6 +79,8 @@ useEscapeKey(handleEscapeCallback);
 ### Example
 
 ```js
+import { useMutationObserver } from '@leafygreen-ui/hooks';
+
 const lastTimeContentElMutated = useMutationObserver(
   target,
   mutationOptions,
@@ -111,6 +119,8 @@ This hooks also makes use of the [Page Visibility API](https://developer.mozilla
 ### Example
 
 ```js
+import { usePoller } from '@leafygreen-ui/hooks';
+
 usePoller(onPoll, {
   interval: 30000,
   immediate: true,
