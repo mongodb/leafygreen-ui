@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import Box, { BoxProps } from '@leafygreen-ui/box';
-import omit from 'lodash/omit';
+import Box, { OverrideComponentCast } from '@leafygreen-ui/box';
 
 const containerStyle = css`
   background-color: white;
@@ -18,16 +17,18 @@ const containerStyle = css`
   }
 `;
 
-function Card<T extends React.ReactNode>(props: BoxProps<T>) {
-  const rest = omit(props as any, ['className']);
+const Card: OverrideComponentCast<{
+  className?: string;
+}> = ({ className, ...rest }: { className?: string }) => {
+  return <Box className={cx(containerStyle, className)} {...rest} />;
+};
 
-  return <Box className={cx(containerStyle, props.className)} {...rest} />;
-}
-
+// @ts-ignore Property 'displayName' does not exist on type 'OverrideComponentCast<{ className?: string | undefined; }>'.ts(2339)
 Card.displayName = 'Card';
 
+// @ts-ignore Property 'propTypes' does not exist on type 'OverrideComponentCast<{ className?: string | undefined; }>'.ts(2339)
 Card.propTypes = {
-  as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  className: PropTypes.string,
 };
 
 export default Card;

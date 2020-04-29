@@ -1,6 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-type InferComponentType<C, H> = H extends string ? 'a' : C;
+type InferComponentType<C, H> = H extends string
+  ? 'a' | React.ComponentType
+  : C;
 
 interface BoxComponentProps<
   C extends React.ElementType = React.ElementType,
@@ -14,7 +17,10 @@ type BoxProps<
   C extends React.ElementType,
   H extends string | undefined
 > = BoxComponentProps<C, H> &
-  Omit<React.ComponentPropsWithRef<C>, keyof BoxComponentProps>;
+  Omit<
+    React.ComponentPropsWithRef<C extends React.ComponentType ? any : C>,
+    keyof BoxComponentProps
+  >;
 
 type BoxType = <
   C extends React.ElementType = 'div',
@@ -36,6 +42,15 @@ export const Box = React.forwardRef(
     return <Component href={href} ref={ref} {...rest} />;
   },
 ) as BoxType;
+
+// @ts-ignore Property 'displayName' does not exist on type 'BoxType'.
+Box.displayName = 'Box';
+
+// @ts-ignore Property 'propTypes' does not exist on type 'BoxType'
+Box.propTypes = {
+  component: PropTypes.elementType,
+  href: PropTypes.string,
+};
 
 export default Box;
 

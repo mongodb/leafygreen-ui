@@ -8,7 +8,6 @@ import Box, {
   OverrideComponentProps,
   OverrideComponentCast,
 } from '@leafygreen-ui/box';
-import { boolean } from '@storybook/addon-knobs';
 
 export const Variant = {
   Default: 'default',
@@ -318,6 +317,7 @@ const Button: OverrideComponentCast<BaseButtonProps> = React.forwardRef(
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
     const commonProps = {
+      ref,
       className: cx(
         baseStyle,
         buttonSizes[size],
@@ -351,18 +351,24 @@ const Button: OverrideComponentCast<BaseButtonProps> = React.forwardRef(
           })
         : glyph;
 
+    const content = (
+      <span className={spanStyle}>
+        {modifiedGlyph}
+        {children}
+      </span>
+    );
+
+    if (rest.href) {
+      return (
+        <Box component="a" {...commonProps} {...rest}>
+          {content}
+        </Box>
+      );
+    }
+
     return (
-      <Box
-        ref={ref}
-        component={rest.href ? 'a' : 'button'}
-        type={!rest.href ? 'button' : undefined}
-        {...rest}
-        {...commonProps}
-      >
-        <span className={spanStyle}>
-          {modifiedGlyph}
-          {children}
-        </span>
+      <Box component="button" type="button" {...commonProps} {...rest}>
+        {content}
       </Box>
     );
   },

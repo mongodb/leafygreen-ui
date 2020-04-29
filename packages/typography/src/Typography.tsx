@@ -1,10 +1,9 @@
 import React from 'react';
-import Box, { BoxProps } from '@leafygreen-ui/box';
+import Box, { OverrideComponentCast } from '@leafygreen-ui/box';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import omit from 'lodash/omit';
 
 const sharedStyles = css`
   display: block;
@@ -133,13 +132,10 @@ const overline = css`
   letter-spacing: 0.4px;
 `;
 
-type OverlineProps<T> = T & BoxProps<T>;
-
-function Overline<T extends React.ReactNode>(props: OverlineProps<T>) {
-  const rest = omit(props as any, ['className']);
-  return (
-    <Box className={cx(sharedStyles, overline, props.className)} {...rest} />
-  );
-}
+const Overline: OverrideComponentCast<{
+  className?: string;
+}> = ({ className, ...rest }: { className?: string }) => {
+  return <Box className={cx(sharedStyles, overline, className)} {...rest} />;
+};
 
 export { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline };
