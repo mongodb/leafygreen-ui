@@ -113,7 +113,7 @@ const userMenuActiveNavItems = [
 
 type OrgNavProps = Pick<
   MongoNavInterface,
-  'activeProduct' | 'onOrganizationChange' | 'activeNav' | 'admin' | 'mode'
+  'onOrganizationChange' | 'activeNav' | 'admin' | 'mode' | 'activePlatform'
 > & {
   account?: AccountInterface;
   current?: CurrentOrganizationInterface;
@@ -134,7 +134,6 @@ type OrgNavProps = Pick<
 function OrgNav({
   account,
   activeNav,
-  activeProduct,
   current,
   data,
   mode,
@@ -144,6 +143,7 @@ function OrgNav({
   admin,
   hosts,
   currentProjectName = 'None',
+  activePlatform,
   currentProjectId,
   onPremEnabled,
   onPremVersion,
@@ -224,7 +224,7 @@ function OrgNav({
     return (
       <UserMenu
         account={account}
-        activeProduct={activeProduct}
+        activePlatform={activePlatform}
         urls={urls}
         hosts={hosts}
         activeNav={activeNav}

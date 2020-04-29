@@ -34,9 +34,9 @@ describe('packages/mongo-nav/user-menu', () => {
     expect(trigger).toBeInTheDocument();
   });
 
-  test('when "activeProduct" is set to "cloud, renders Cloud MenuItems', () => {
+  test('when "activePlatform" is set to "cloud, renders Cloud MenuItems', () => {
     const { getByTestId, getByText } = renderUserMenu({
-      activeProduct: 'cloud',
+      activePlatform: 'cloud',
     });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
@@ -54,7 +54,7 @@ describe('packages/mongo-nav/user-menu', () => {
 
   test('renders university MenuItems when university dropdown is clicked and closes other SubMenus', () => {
     const { getByTestId } = renderUserMenu({
-      activeProduct: 'cloud',
+      activePlatform: 'cloud',
     });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
@@ -77,7 +77,7 @@ describe('packages/mongo-nav/user-menu', () => {
 
   test('atlas MenuItem links to cloud.mongodb.com', () => {
     const { getByTestId } = renderUserMenu({
-      activeProduct: 'cloud',
+      activePlatform: 'cloud',
     });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
@@ -92,7 +92,7 @@ describe('packages/mongo-nav/user-menu', () => {
 
   test('university MenuItem links to university.mongodb.com', () => {
     const { getByTestId } = renderUserMenu({
-      activeProduct: 'cloud',
+      activePlatform: 'cloud',
     });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
@@ -107,7 +107,7 @@ describe('packages/mongo-nav/user-menu', () => {
 
   test('support MenuItem links to support.mongodb.com', () => {
     const { getByTestId } = renderUserMenu({
-      activeProduct: 'cloud',
+      activePlatform: 'cloud',
     });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
@@ -122,7 +122,7 @@ describe('packages/mongo-nav/user-menu', () => {
 
   test('onLogout fires when logout is clicked', () => {
     const { getByText, getByTestId } = renderUserMenu({
-      activeProduct: 'cloud',
+      activePlatform: 'cloud',
     });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
@@ -135,7 +135,7 @@ describe('packages/mongo-nav/user-menu', () => {
 
   test('renders the account link as a disabled button when set to the empty string', () => {
     const { getByText, getByTestId } = renderUserMenu({
-      activeProduct: 'account',
+      activePlatform: 'account',
     });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
@@ -148,7 +148,7 @@ describe('packages/mongo-nav/user-menu', () => {
 
   test('does not render atlas MenuItems when a non-cloud product is active', () => {
     const { queryByText, getByTestId } = renderUserMenu({
-      activeProduct: 'account',
+      activePlatform: 'account',
     });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
@@ -167,7 +167,7 @@ describe('packages/mongo-nav/user-menu', () => {
   describe('renders appropriate links to SubMenu Items based on overrides prop', () => {
     test('renders particular url override, when the urls prop is set', () => {
       const { getByTestId } = renderUserMenu({
-        activeProduct: 'university',
+        activePlatform: 'university',
       });
 
       const trigger = getByTestId('user-menu-trigger');

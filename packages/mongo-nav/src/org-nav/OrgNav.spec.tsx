@@ -88,7 +88,6 @@ describe('packages/mongo-nav/src/org-nav', () => {
         <OrgNav
           account={account}
           activeNav={NavElement.OrgNavOrgSettings}
-          activeProduct="cloud"
           current={currentOrganization}
           data={organizations}
           constructOrganizationURL={constructOrganizationURL}

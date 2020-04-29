@@ -20,9 +20,9 @@ import {
   AccountInterface,
   ActiveNavElement,
   URLSInterface,
-  Product,
   HostsInterface,
   NavElement,
+  Platform,
 } from '../types';
 import { hostDefaults } from '../data';
 import { useOnElementClick } from '../on-element-click-provider';
@@ -102,7 +102,7 @@ const productLinkStyle = css`
   }
 `;
 
-const activeProductLinkStyle = css`
+const activePlatformLinkStyle = css`
   color: ${uiColors.gray.light1};
 `;
 
@@ -142,7 +142,7 @@ function Description({ isActive, product }: DescriptionProps) {
   return (
     <div
       className={cx(productLinkStyle, {
-        [activeProductLinkStyle]: isActive,
+        [activePlatformLinkStyle]: isActive,
       })}
     >
       {`${product}.mongodb.com`}
@@ -157,12 +157,6 @@ interface UserMenuProps {
    * {firstName: 'string', lastName: 'string', email: 'string'}
    */
   account?: AccountInterface;
-
-  /**
-   * MongoDB product that is currently active.
-   * Possible values: ['account', 'charts', 'cloud', 'realm', 'support', 'university']
-   */
-  activeProduct?: Product;
 
   /**
    * Determines what nav item is currently active.
@@ -191,6 +185,12 @@ interface UserMenuProps {
    * Defaults to the production homepages of each product
    */
   hosts?: HostsInterface;
+
+  /**
+   * MongoDB platform that is currently active.
+   * Possible values: ['account', 'cloud',  'support', 'university']
+   */
+  activePlatform?: Platform;
 }
 
 /**
@@ -201,7 +201,7 @@ interface UserMenuProps {
  * ```
 <UserMenu
   account={account}
-  activeProduct="cloud"
+  activePlatform="cloud"
   onLogout={onLogout}
   onProductChange={onProductChange}
   urls={urls}
@@ -210,22 +210,21 @@ interface UserMenuProps {
 ```
  * @param props.account Object that contains information about the active user.
 *   {firstName: 'string', lastName: 'string', email: 'string'}
- * @param props.activeProduct MongoDB product that is currently active.
- *  Possible values: ['account', 'charts', 'cloud', 'realm', 'support', 'university']
  * @param props.activeNav Determines what nav item is currently active.
  * @param props.onLogout Callback fired when a user logs out.
  * @param props.onProductChange Callback invoked after the user clicks a product.
  * @param props.hosts Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<UserMenu />` to work across all environments.
  * @param props.urls Object to enable custom overrides for every `href` used in `<UserMenu />`.
+ * @param props.activePlatform MongoDB platform that is currently active.
  */
 function UserMenu({
   account,
-  activeProduct,
   activeNav,
   onLogout: onLogoutProp,
   onProductChange = () => {},
   urls: urlsProp,
   hosts: hostsProp,
+  activePlatform,
 }: UserMenuProps) {
   const hosts = defaultsDeep(hostsProp, hostDefaults);
   const onElementClick = useOnElementClick();
@@ -270,13 +269,10 @@ function UserMenu({
     ? `${account.firstName ?? ''} ${account.lastName ?? ''}`
     : '';
 
-  const isAccount = activeProduct === Product.Account;
-  const cloudProducts = [Product.Cloud, Product.Realm, Product.Charts];
-  const isCloud = (cloudProducts as Array<string>).includes(
-    activeProduct as string,
-  );
-  const isSupport = activeProduct === Product.Support;
-  const isUniversity = activeProduct === Product.University;
+  const isAccount = activePlatform === Platform.Account;
+  const isCloud = activePlatform === Platform.Cloud;
+  const isSupport = activePlatform === Platform.Support;
+  const isUniversity = activePlatform === Platform.University;
 
   const sharedProps = {
     target: '_blank',
@@ -471,13 +467,11 @@ UserMenu.displayName = 'UserMenu';
 
 UserMenu.propTypes = {
   user: PropTypes.objectOf(PropTypes.string),
-  activeProduct: PropTypes.oneOf([
+  activePlatform: PropTypes.oneOf([
     'account',
     'cloud',
     'support',
     'university',
-    'realm',
-    'charts',
   ]),
   onLogout: PropTypes.func,
   onProductChange: PropTypes.func,

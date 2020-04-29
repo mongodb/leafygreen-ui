@@ -242,7 +242,12 @@ const secondTabName = displayProductName();
 
 type ProjectNavProps = Pick<
   MongoNavInterface,
-  'activeProduct' | 'activeNav' | 'onProjectChange' | 'admin' | 'mode'
+  | 'activeProduct'
+  | 'activeNav'
+  | 'onProjectChange'
+  | 'admin'
+  | 'mode'
+  | 'alertPollingInterval'
 > & {
   current?: CurrentProjectInterface;
   data?: Array<ProjectInterface>;
@@ -266,6 +271,7 @@ export default function ProjectNav({
   onProjectChange,
   hosts,
   mode,
+  alertPollingInterval,
 }: ProjectNavProps) {
   const [open, setOpen] = useState(false);
   const [alerts, setAlerts] = useState(current?.alertsOpen ?? 0);
@@ -302,12 +308,7 @@ export default function ProjectNav({
   }
 
   usePoller(fetchAlertsCount, {
-    interval:
-      activeProduct === Product.Cloud
-        ? // 2 minutes for Atlas
-          120e3
-        : // 10 minutes for non-Atlas
-          600e3,
+    interval: alertPollingInterval,
     enabled: mode === Mode.Production && currentProjectId != null,
   });
 

@@ -39,7 +39,7 @@ npm install @leafygreen-ui/mongo-nav @leafygreen-ui/leafygreen-provider@1.1.0
 
 | Prop                       | Type                                                                            | Description                                                                                                                                                                                                                                                                                                                              | Default                                                   |
 | -------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `activeProduct`            | `'account', 'charts', 'cloud', 'realm', 'support', 'university'`                | Describes what product is currently active                                                                                                                                                                                                                                                                                               |                                                           |
+| `activeProduct`            | `Product`                                                                       | Describes what product is currently active                                                                                                                                                                                                                                                                                               |                                                           |
 | `activeNav`                | `ActiveNavElement` (see below for possible values)                              | Determines what nav item is currently active                                                                                                                                                                                                                                                                                             |                                                           |
 | `admin`                    | `boolean`                                                                       | Describes whether or not user is an `admin`                                                                                                                                                                                                                                                                                              | `false`                                                   |
 | `mode`                     | `production` or `dev`                                                           | Describes what environment the component is being used in, defaults to `production`                                                                                                                                                                                                                                                      | `production`                                              |
@@ -62,8 +62,23 @@ npm install @leafygreen-ui/mongo-nav @leafygreen-ui/leafygreen-provider@1.1.0
 | `loadData`                 | `boolean`                                                                       | Determines whether or not the component will fetch data from cloud                                                                                                                                                                                                                                                                       | `true`                                                    |
 | `onElementClick`           | `(type: 'logout', 'cloud', 'realm', 'charts', event: React.MouseEvent => void)` | Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second. This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally                                                                                         | `() => {}`                                                |
 | `dataFixtures`             | `DataInterface`                                                                 | Allows consumers to control fixture data when in dev mode                                                                                                                                                                                                                                                                                |                                                           |
+| `activePlatform`           | `Platform`                                                                      | Describes what platform is currently active                                                                                                                                                                                                                                                                                              |                                                           |
+| `alertPollingInterval`     | `number`                                                                        | Defines interval for alert polling                                                                                                                                                                                                                                                                                                       | `600e3 // 10 minutes`                                     |
 
 _Any other properties will be spread on the root element_
+
+### `Platform Values`
+
+`Account`
+`Cloud`
+`Support`
+`University`
+
+### `Product Values`
+
+`Cloud`
+`Realm`
+`Charts`
 
 ### `ActiveNavElement` Values
 
