@@ -181,6 +181,7 @@ export interface AccountInterface {
   lastName: string;
   openInvitations?: number;
   username?: string;
+  admin: boolean;
 }
 
 export interface ProjectInterface {
