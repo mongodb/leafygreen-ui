@@ -67,7 +67,7 @@ storiesOf('Buttons', module)
 
     return (
       <Button
-        as={CustomElement}
+        component={CustomElement}
         size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
         variant={select(
           'Variant',

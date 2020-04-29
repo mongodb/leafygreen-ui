@@ -19,6 +19,9 @@
       "path": "../icon"
     },
     {
+      "path": "../box"
+    },
+    {
       "path": "../leafygreen-provider"
     }
   ]
