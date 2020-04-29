@@ -13,6 +13,7 @@ export const dataFixtures = {
     lastName: 'Developer',
     openInvitations: 1,
     username: 'dev+only+mode@example.com',
+    admin: false,
   },
   currentOrganization: {
     orgId: 'fakeOrgId1',

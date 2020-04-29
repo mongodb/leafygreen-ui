@@ -1,5 +1,11 @@
 import React from 'react';
-import { render, fireEvent, cleanup, act } from '@testing-library/react';
+import {
+  render,
+  fireEvent,
+  cleanup,
+  act,
+  waitFor,
+} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import { dataFixtures } from './data';
@@ -137,6 +143,10 @@ describe('packages/mongo-nav', () => {
       expect(expectedElements.userMenu?.innerHTML.includes('DevMode')).toBe(
         true,
       );
+    });
+
+    test('admin UI is not shown', () => {
+      expect(expectedElements.admin).not.toBeInTheDocument();
     });
   });
 
@@ -368,6 +378,26 @@ describe('packages/mongo-nav', () => {
       expect(expectedElements.currentOrg?.innerHTML.includes(newOrgName)).toBe(
         true,
       );
+    });
+  });
+
+  describe('when dataFixtures prop sets admin as true', () => {
+    beforeEach(() =>
+      renderComponent({
+        mode: 'dev',
+        dataFixtures: {
+          account: {
+            admin: true,
+          },
+        },
+      }),
+    );
+
+    test('admin UI is shown', async () => {
+      await waitFor(() => {
+        setExpectedElements();
+        expect(expectedElements.admin).toBeInTheDocument();
+      });
     });
   });
 });
