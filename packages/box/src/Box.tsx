@@ -38,7 +38,7 @@ export const Box = React.forwardRef(
     { component, href, ...rest }: BoxProps<C, H>,
     ref: React.Ref<any>,
   ) => {
-    const Component = component ?? 'div';
+    const Component = component ? component : href ? 'a' : 'div';
     return <Component href={href} ref={ref} {...rest} />;
   },
 ) as BoxType;
