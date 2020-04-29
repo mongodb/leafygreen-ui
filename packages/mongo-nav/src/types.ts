@@ -86,17 +86,25 @@ type ActiveNavElement = typeof ActiveNavElement[keyof typeof ActiveNavElement];
 export { ActiveNavElement };
 
 const Product = {
-  Account: 'account',
   Charts: 'charts',
   Cloud: 'cloud',
   Realm: 'realm',
-  Support: 'support',
-  University: 'university',
 } as const;
 
 type Product = typeof Product[keyof typeof Product];
 
 export { Product };
+
+const Platform = {
+  University: 'university',
+  Support: 'support',
+  Cloud: 'cloud',
+  Account: 'account',
+};
+
+type Platform = typeof Platform[keyof typeof Platform];
+
+export { Platform };
 
 const Mode = {
   Dev: 'dev',
@@ -388,4 +396,14 @@ export interface MongoNavInterface {
    * Control fixtureData when in `dev` mode
    */
   dataFixtures?: RecursivePartial<DataInterface>;
+
+  /**
+   * Describes what platform is currently active.
+   */
+  activePlatform?: Platform;
+
+  /**
+   * Defines interval for alert polling
+   */
+  alertPollingInterval?: number;
 }
