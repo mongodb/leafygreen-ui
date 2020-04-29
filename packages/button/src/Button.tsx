@@ -360,6 +360,8 @@ const Button: OverrideComponentCast<BaseButtonProps> = React.forwardRef(
 
     if (rest.href) {
       return (
+        // we give button a default component based on the `href` prop, if a custom
+        // "component" prop is supplied, it will overwrite this value through {...rest}
         <Box component="a" {...commonProps} {...rest}>
           {content}
         </Box>
@@ -367,6 +369,8 @@ const Button: OverrideComponentCast<BaseButtonProps> = React.forwardRef(
     }
 
     return (
+      // we give button a default component based on the `href` prop, if a custom
+      // "component" prop is supplied, it will overwrite this value through {...rest}
       <Box component="button" type="button" {...commonProps} {...rest}>
         {content}
       </Box>
