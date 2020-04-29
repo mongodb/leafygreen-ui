@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import Box, {
+  OverrideComponentProps,
+  OverrideComponentCast,
+} from '@leafygreen-ui/box';
 import {
   menuItemContainerStyle,
   activeMenuItemContainerStyle,
@@ -92,12 +96,7 @@ const menuItemHeight: Record<Size, string> = {
   `,
 };
 
-interface SharedMenuItemProps {
-  /**
-   * Class name that will be applied to root MenuItem element.
-   */
-  className?: string;
-
+interface BaseMenuItemProps {
   /**
    * Determines whether or not the MenuItem is active.
    */
@@ -121,55 +120,27 @@ interface SharedMenuItemProps {
    * Size of the MenuItem component, can be `default` or `large`
    */
   size?: Size;
-
-  ref?: React.Ref<any>;
 }
 
-interface LinkMenuItemProps extends HTMLElementProps<'a'>, SharedMenuItemProps {
-  href: string;
-}
-
-interface ButtonMenuItemProps
-  extends HTMLElementProps<'button'>,
-    SharedMenuItemProps {
-  href?: null;
-}
-
-type CustomMenuItemProps = SharedMenuItemProps & {
-  as: React.ElementType<any>;
-  [key: string]: any;
-};
-
-type MenuItemProps =
-  | LinkMenuItemProps
-  | ButtonMenuItemProps
-  | CustomMenuItemProps;
-
-function usesCustomElement(props: MenuItemProps): props is CustomMenuItemProps {
-  return (props as any).as != null;
-}
-
-function usesLinkElement(
-  props: LinkMenuItemProps | ButtonMenuItemProps,
-): props is LinkMenuItemProps {
-  return props.href != null;
-}
-
-const MenuItem = React.forwardRef(
-  (props: MenuItemProps, forwardRef: React.Ref<any>) => {
-    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-
-    const {
+// eslint-disable-next-line
+const MenuItem: OverrideComponentCast<BaseMenuItemProps> = React.forwardRef(
+  <
+    C extends React.ElementType = 'button',
+    H extends string | undefined = undefined
+  >(
+    {
       disabled = false,
       active = false,
       size = 'default',
       className,
       children,
       description,
-      href,
       glyph,
       ...rest
-    } = props;
+    }: OverrideComponentProps<C, H, BaseMenuItemProps>,
+    ref: React.Ref<any>,
+  ) => {
+    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
     const updatedGlyph =
       glyph &&
@@ -184,77 +155,86 @@ const MenuItem = React.forwardRef(
         ),
       });
 
-    const anchorProps = href && {
-      target: '_self',
-      rel: '',
-      href,
+    const commonProps = {
+      ...rest,
+      ...menuItemContainer.prop,
+      ref,
+      className: cx(
+        menuItemContainerStyle,
+        menuItemHeight[size],
+        linkStyle,
+        {
+          [activeMenuItemContainerStyle]: active,
+          [disabledMenuItemContainerStyle]: disabled,
+          [focusedMenuItemContainerStyle]: showFocus,
+        },
+        className,
+      ),
+      role: 'menuitem',
+      tabIndex: disabled ? -1 : undefined,
+      // only add a disabled prop if not an anchor
+      ...(!rest.href && { disabled }),
+      'aria-disabled': disabled,
     };
 
-    const renderMenuItem = (Root: React.ElementType<any> = 'button') => (
-      <li role="none">
-        <Root
-          {...anchorProps}
-          {...rest}
-          {...menuItemContainer.prop}
-          className={cx(
-            menuItemContainerStyle,
-            menuItemHeight[size],
-            linkStyle,
-            {
-              [activeMenuItemContainerStyle]: active,
-              [disabledMenuItemContainerStyle]: disabled,
-              [focusedMenuItemContainerStyle]: showFocus,
-            },
-            className,
-          )}
-          role="menuitem"
-          aria-disabled={disabled}
-          ref={forwardRef}
-          tabIndex={disabled ? -1 : undefined}
+    const anchorProps = {
+      target: '_self',
+      rel: '',
+    };
+
+    const content = (
+      <>
+        {updatedGlyph}
+        <div
+          className={css`
+            width: 100%;
+          `}
         >
-          {updatedGlyph}
           <div
-            className={css`
-              width: 100%;
-            `}
+            className={cx(titleTextStyle, {
+              [activeTitleTextStyle]: active,
+              [disabledTextStyle]: disabled,
+              [focusTitleTextStyle]: showFocus,
+            })}
           >
+            {children}
+          </div>
+          {description && (
             <div
-              className={cx(titleTextStyle, {
-                [activeTitleTextStyle]: active,
+              className={cx(descriptionTextStyle, {
+                [activeDescriptionTextStyle]: active,
                 [disabledTextStyle]: disabled,
-                [focusTitleTextStyle]: showFocus,
+                [focusDescriptionTextStyle]: showFocus,
               })}
             >
-              {children}
+              {description}
             </div>
-            {description && (
-              <div
-                className={cx(descriptionTextStyle, {
-                  [activeDescriptionTextStyle]: active,
-                  [disabledTextStyle]: disabled,
-                  [focusDescriptionTextStyle]: showFocus,
-                })}
-              >
-                {description}
-              </div>
-            )}
-          </div>
-        </Root>
-      </li>
+          )}
+        </div>
+      </>
     );
 
-    if (usesCustomElement(props)) {
-      return renderMenuItem(props.as);
+    if (rest.href) {
+      return (
+        <li>
+          <Box component="a" {...anchorProps} {...commonProps}>
+            {content}
+          </Box>
+        </li>
+      );
     }
 
-    if (usesLinkElement(props)) {
-      return renderMenuItem('a');
-    }
-
-    return renderMenuItem();
+    return (
+      <li>
+        <Box component="button" {...commonProps}>
+          {content}
+        </Box>
+      </li>
+    );
   },
 );
 
+// @ts-ignore Property 'displayName' does not exist on type 'OverrideComponentCast<BaseMenuItemProps>'.
 MenuItem.displayName = 'MenuItem';
 
 // @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
