@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tabs",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "leafyGreen UI Kit Tabs",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
