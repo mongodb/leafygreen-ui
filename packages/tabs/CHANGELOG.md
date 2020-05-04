@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 2.1.0
+
+### Minor Changes
+
+- c17a5e1: Changes how keyboard navigation is handled in Tabs componentt. Ensures that navigating browser history is not prevened by component internals
+
 ## 2.0.1
 
 ### Patch Changes
