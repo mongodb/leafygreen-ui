@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { storiesOf } from '@storybook/react';
-import { select } from '@storybook/addon-knobs';
+import { select, boolean } from '@storybook/addon-knobs';
 import Tooltip, { TriggerEvent, Variant, Align, Justify } from '.';
 
 class Button extends React.Component {
@@ -25,6 +25,7 @@ function ControlledTooltip() {
       align={select('Align', Object.values(Align), 'top')}
       justify={select('Justify', Object.values(Justify), 'start')}
       trigger={<Button />}
+      enabled={boolean('Enabled', true)}
       triggerEvent={select(
         'triggerEvent',
         Object.values(TriggerEvent),
@@ -45,11 +46,13 @@ storiesOf('Tooltip', module)
       trigger={({ children, ...rest }: any) => {
         return <button {...rest}>trigger {children}</button>;
       }}
+      data-testid="hello there"
       triggerEvent={select(
         'triggerEvent',
         Object.values(TriggerEvent),
         TriggerEvent.Hover,
       )}
+      enabled={boolean('Enabled', true)}
       variant={select('Variant', Object.values(Variant), 'dark')}
     >
       I am an uncontrolled Tooltip!
