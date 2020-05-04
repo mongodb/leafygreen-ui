@@ -9,8 +9,10 @@ import Popover, {
 import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { transparentize } from 'polished';
 import debounce from 'lodash/debounce';
+import omit from 'lodash/omit';
 import { trianglePosition } from './tooltipUtils';
 
 export const TriggerEvent = {
@@ -81,8 +83,11 @@ interface PopoverFunctionParameters {
   referenceElPos: ElementPosition;
 }
 
+type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'spacing' | 'refEl'>;
+
 interface TooltipProps
-  extends Omit<PopoverProps, 'active' | 'spacing' | 'refEl'> {
+  extends Omit<HTMLElementProps<'div'>, keyof ModifiedPopoverProps>,
+    ModifiedPopoverProps {
   /**
    * A slot for the element used to trigger the `Tooltip`.
    * default: hover
@@ -91,6 +96,7 @@ interface TooltipProps
 
   /**
    * Determines if a `hover` or `click` event will trigger the opening of a `Tooltip`.
+   * default: 'hover'
    */
   triggerEvent?: TriggerEvent;
 
@@ -121,6 +127,12 @@ interface TooltipProps
    *
    */
   shouldClose?: () => boolean;
+
+  /**
+   * Enables Tooltip to trigger based on the event specified by `triggerEvent`.
+   * default: true
+   */
+  enabled?: boolean;
 }
 
 /**
@@ -159,6 +171,7 @@ function Tooltip({
   trigger,
   variant = Variant.Light,
   triggerEvent = TriggerEvent.Hover,
+  enabled = true,
   align = 'top',
   justify = 'start',
   id,
@@ -187,10 +200,10 @@ function Tooltip({
     if (triggerEvent === TriggerEvent.Hover) {
       return {
         onMouseEnter: debounce(() => {
-          setOpen((curr: boolean) => !curr);
+          setOpen(enabled && true);
         }, 35),
         onMouseLeave: debounce(handleClose, 35),
-        onFocus: () => setOpen(true),
+        onFocus: () => setOpen(enabled && true),
         onBlur: handleClose,
       };
     }
@@ -201,7 +214,10 @@ function Tooltip({
           // ensure that we don't close the tooltip when content inside tooltip is clicked
           if (e.target !== tooltipRef.current) {
             triggerProps.onClick();
-            setOpen((curr: boolean) => !curr);
+
+            if (enabled) {
+              setOpen((curr: boolean) => !curr);
+            }
           }
         },
       };
@@ -211,7 +227,7 @@ function Tooltip({
       onClick: (e: MouseEvent) => {
         // ensure that we don't close the tooltip when content inside tooltip is clicked
         if (e.target !== tooltipRef.current) {
-          setOpen((curr: boolean) => !curr);
+          setOpen((curr: boolean) => enabled && !curr);
         }
       },
     };
@@ -237,8 +253,12 @@ function Tooltip({
   };
 
   useEventListener('click', handleBackdropClick, {
-    enabled: open && triggerEvent === 'click',
+    enabled: enabled && open && triggerEvent === 'click',
   });
+
+  // @ts-ignore
+  const testId: string | undefined = rest['data-testid'];
+  const restProps = omit(rest, 'data-testid');
 
   const tooltip = (
     <Popover
@@ -248,7 +268,7 @@ function Tooltip({
       usePortal={usePortal}
       adjustOnMutation={true}
       spacing={12}
-      key="tooltip"
+      data-testid={testId}
     >
       {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
         const triangleStyle = trianglePosition(
@@ -259,10 +279,10 @@ function Tooltip({
 
         return (
           <div
-            {...rest}
+            {...restProps}
             role="tooltip"
             id={tooltipId}
-            className={cx(className, baseStyles, tooltipVariants[variant])}
+            className={cx(baseStyles, tooltipVariants[variant], className)}
             ref={tooltipRef}
           >
             <div className={triangleStyle.containerStyle}>
