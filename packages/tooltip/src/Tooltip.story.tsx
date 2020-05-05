@@ -46,7 +46,6 @@ storiesOf('Tooltip', module)
       trigger={({ children, ...rest }: any) => {
         return <button {...rest}>trigger {children}</button>;
       }}
-      data-testid="hello there"
       triggerEvent={select(
         'triggerEvent',
         Object.values(TriggerEvent),
