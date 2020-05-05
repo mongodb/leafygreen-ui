@@ -286,10 +286,10 @@ const TextInput = React.forwardRef(
         {description && <p className={descriptionStyle}>{description}</p>}
         <div className={inputContainerStyle}>
           <input
+            type="text"
             {...inputSelectorProp.prop}
             {...rest}
             className={cx(inputStyle, getStatefulInputStyles(state, optional))}
-            type="text"
             value={value}
             required={!optional}
             disabled={disabled}
