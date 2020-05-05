@@ -326,7 +326,7 @@ function UserMenu({
         </li>
         <MenuSeparator />
 
-        {isCloud ? (
+        {isCloud || isAccount ? (
           <SubMenu
             {...subMenuContainer.prop}
             {...sharedProps}
