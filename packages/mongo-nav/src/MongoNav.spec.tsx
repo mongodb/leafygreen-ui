@@ -38,6 +38,9 @@ describe('packages/mongo-nav', () => {
     );
     expectedElements.allProjects = queryByTestId('project-select-project-list');
     expectedElements.userMenu = queryByTestId('user-menu-trigger');
+    expectedElements.userMenuCloudItem = queryByTestId(
+      'user-menuitem-cloud-user-preferences',
+    );
     expectedElements.userMenuLogout = queryByTestId('user-menuitem-logout');
     expectedElements.onPremUserMenu = queryByTestId('om-user-menu-trigger');
     expectedElements.onPremLogout = queryByTestId('om-user-menuitem-sign-out');
@@ -294,6 +297,20 @@ describe('packages/mongo-nav', () => {
           newActiveProject.projectName,
         ),
       ).toBe(true);
+    });
+  });
+
+  describe('UserMenu behaves as expected when cloud is the active platform', () => {
+    beforeEach(
+      async () =>
+        await renderComponent({ mode: 'dev', activePlatform: 'cloud' }),
+    );
+
+    test('when the user menu opens, the cloud menu items are displayed', () => {
+      fireEvent.click(expectedElements.userMenu as HTMLElement);
+      setExpectedElements();
+
+      expect(expectedElements.userMenuCloudItem).toBeInTheDocument();
     });
   });
 
