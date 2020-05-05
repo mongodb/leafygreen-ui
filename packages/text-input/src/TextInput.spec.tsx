@@ -34,7 +34,7 @@ describe('packages/text-input', () => {
     expect(getByPlaceholderText(defaultProps.placeholder)).toBeVisible();
   });
 
-  test(`renders ${defaultProps.className} in the XX classList`, () => {
+  test(`renders ${defaultProps.className} in the classList`, () => {
     const { container } = renderTextInput(defaultProps);
     expect(
       (container?.firstChild as HTMLElement)?.classList.contains(
@@ -46,6 +46,16 @@ describe('packages/text-input', () => {
   test('renders "optional" text when the prop is set to true', () => {
     const { getByText } = renderTextInput({ optional: true, ...defaultProps });
     expect(getByText('Optional')).toBeVisible();
+  });
+
+  test('renders type as "text" by default', () => {
+    const { textInput } = renderTextInput();
+    expect(textInput.getAttribute('type')).toBe('text');
+  });
+
+  test('renders type as "password" when the prop is set', () => {
+    const { textInput } = renderTextInput({ type: 'password' });
+    expect(textInput.getAttribute('type')).toBe('password');
   });
 
   test('does not render "optional" text when the prop is set to false ', () => {

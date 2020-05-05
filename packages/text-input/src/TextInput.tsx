@@ -17,6 +17,17 @@ export const State = {
 
 export type State = typeof State[keyof typeof State];
 
+export const TextInputType = {
+  Email: 'email',
+  Password: 'password',
+  Search: 'search',
+  Text: 'text',
+  Url: 'url',
+  Tel: 'tel',
+};
+
+export type TextInputType = typeof TextInputType[keyof typeof TextInputType];
+
 interface TextInputProps extends HTMLElementProps<'input'> {
   /**
    * id associated with the TextInput component.
@@ -74,6 +85,8 @@ interface TextInputProps extends HTMLElementProps<'input'> {
    * className supplied to the TextInput container.
    */
   className?: string;
+
+  type?: TextInputType;
 }
 
 const interactionRing = css`
@@ -253,6 +266,7 @@ const TextInput = React.forwardRef(
       placeholder,
       errorMessage,
       state = State.None,
+      type = TextInputType.Text,
       value: controlledValue,
       className,
       ...rest
@@ -288,8 +302,8 @@ const TextInput = React.forwardRef(
           <input
             {...inputSelectorProp.prop}
             {...rest}
+            type={type}
             className={cx(inputStyle, getStatefulInputStyles(state, optional))}
-            type="text"
             value={value}
             required={!optional}
             disabled={disabled}
