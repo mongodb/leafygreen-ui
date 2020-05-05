@@ -12,7 +12,6 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { transparentize } from 'polished';
 import debounce from 'lodash/debounce';
-import omit from 'lodash/omit';
 import { trianglePosition } from './tooltipUtils';
 
 export const TriggerEvent = {
@@ -256,10 +255,6 @@ function Tooltip({
     enabled: enabled && open && triggerEvent === 'click',
   });
 
-  // @ts-ignore
-  const testId: string | undefined = rest['data-testid'];
-  const restProps = omit(rest, 'data-testid');
-
   const tooltip = (
     <Popover
       active={open}
@@ -268,7 +263,6 @@ function Tooltip({
       usePortal={usePortal}
       adjustOnMutation={true}
       spacing={12}
-      data-testid={testId}
     >
       {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
         const triangleStyle = trianglePosition(
@@ -279,7 +273,7 @@ function Tooltip({
 
         return (
           <div
-            {...restProps}
+            {...rest}
             role="tooltip"
             id={tooltipId}
             className={cx(baseStyles, tooltipVariants[variant], className)}
