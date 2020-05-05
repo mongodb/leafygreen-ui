@@ -240,7 +240,7 @@ function Menu({
   };
 
   useMemo(() => {
-    if (open === false) {
+    if (open === true) {
       hasSetInitialFocus.current = false;
       hasSetInitialOpen.current = false;
     }
