@@ -3,4 +3,4 @@
 ---
 
 Enables Cloud SubMenu when `account` is the `activePlatform`. 
-Makes `admin` prop on the `AccountInterface` optional
+Makes `admin` prop on the `AccountInterface` optional.
