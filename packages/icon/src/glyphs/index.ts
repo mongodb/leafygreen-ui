@@ -42,10 +42,15 @@ import QuestionMarkWithCircle from './QuestionMarkWithCircle.svg';
 import Refresh from './Refresh.svg';
 import Save from './Save.svg';
 import Settings from './Settings.svg';
+import SortAscending from './SortAscending.svg';
+import SortDescending from './SortDescending.svg';
 import Stitch from './Stitch.svg';
 import Support from './Support.svg';
 import Trash from './Trash.svg';
 import University from './University.svg';
+import Unsorted from './Unsorted.svg';
+import UpDownCarets from './UpDownCarets.svg';
+import VerticalEllipsis from './VerticalEllipsis.svg';
 import Warning from './Warning.svg';
 import X from './X.svg';
 import XWithCircle from './XWithCircle.svg';
@@ -91,10 +96,15 @@ const glyphs = {
   Refresh,
   Save,
   Settings,
+  SortAscending,
+  SortDescending,
   Stitch,
   Support,
   Trash,
   University,
+  Unsorted,
+  UpDownCarets,
+  VerticalEllipsis,
   Warning,
   X,
   XWithCircle,
