@@ -177,7 +177,7 @@ _Any other properties will be spread on the root-level element._
 | `className`        | `string`  | Class name that will be applied to the component's header.                                                                                                                                              | `undefined` |
 | `children`         | `node`    | Content that will be rendered inside the root-level element.                                                                                                                                            | `undefined` |
 | `href`             | `string`  | When provided, the component will be rendered as an anchor element.                                                                                                                                     | `undefined` |
-| `as`               | `string`  | When provided, the component will be rendered as the component or html tag indicated by this prop. <br/>Other additional props will be spread on the anchor element.                                    | `undefined` |
+| `as`               | `HTML Tag` or `React Element` | When provided, the component will be rendered as the component or html tag indicated by this prop. <br/>Other additional props will be spread on the anchor element. For example, `Link` or `a` tags can be supplied to replace `button` from being the DOM element that wraps the component.                                   | `undefined` |
 
 _When `href` is set, `href` and any additional props will be spread on the anchor element._
 
