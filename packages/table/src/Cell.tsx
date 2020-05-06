@@ -6,7 +6,7 @@ import { alignLeft, alignRight, commonCellStyles } from './styles';
 type CellProps = React.ComponentPropsWithRef<'td'>;
 
 const Cell = React.forwardRef(
-  ({ children }: CellProps, ref: React.Ref<any>) => {
+  ({ children, className }: CellProps, ref: React.Ref<any>) => {
     const type = typeof children === 'number' ? 'number' : 'string';
 
     return (
@@ -22,6 +22,7 @@ const Cell = React.forwardRef(
             letter-spacing: 0px;
             color: ${uiColors.gray.dark2};
           `,
+          className,
         )}
       >
         {children}

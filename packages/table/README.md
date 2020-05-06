@@ -1,4 +1,3 @@
-
 # Table
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/table.svg)

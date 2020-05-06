@@ -3,6 +3,13 @@ import { storiesOf } from '@storybook/react';
 import Table from '.';
 import { Row, Cell, TableHeader } from '.';
 
+interface DemoDataInterface {
+  name: string;
+  age: number;
+  color: string;
+  location: string;
+}
+
 storiesOf('Table', module).add('Default', () => (
   <Table
     data={[
@@ -24,7 +31,7 @@ storiesOf('Table', module).add('Default', () => (
       'Location',
     ]}
   >
-    {({ datum, rowIndex }) => (
+    {({ datum, rowIndex }: { datum: DemoDataInterface; rowIndex: number }) => (
       <Row key={rowIndex}>
         <Cell>{datum.name}</Cell>
         <Cell>{datum.age}</Cell>
@@ -32,11 +39,19 @@ storiesOf('Table', module).add('Default', () => (
         <Cell>{datum.location}</Cell>
 
         {datum.age > 21 && (
-          <Row expanded={datum.age > 25}>
+          <Row expanded={datum.name === 'Jill'}>
             <Cell>expanded name</Cell>
             <Cell>expanded age</Cell>
             <Cell>expanded color</Cell>
             <Cell>{datum.location}</Cell>
+            {datum.age > 25 && (
+              <Row>
+                <Cell>expanded name</Cell>
+                <Cell>expanded age</Cell>
+                <Cell>expanded color</Cell>
+                <Cell>{datum.location}</Cell>
+              </Row>
+            )}
           </Row>
         )}
       </Row>

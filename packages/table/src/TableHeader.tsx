@@ -1,57 +1,67 @@
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { commonCellStyles } from './styles';
 
-export interface TableHeaderProps extends React.ComponentPropsWithoutRef<'th'> {
+const thStyle = css`
+  width: 190px;
+  border-width: 0px 1px 3px 1px;
+  border-color: ${uiColors.gray.light2};
+  border-style: solid;
+`;
+
+const flexDisplay = css`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const labelStyle = css`
+  display: flex;
+  align-items: center;
+  color: ${uiColors.gray.dark2};
+  padding-right: 4px;
+`;
+
+interface TableHeaderInterface {
   label: string;
-  onClick?: MouseEventHandler;
+  onClick?: (colId: number | undefined) => void;
   index?: number;
+  glyph?: string;
+  isEditable?: boolean;
 }
 
-function TableHeader({ label, onClick, index }: TableHeaderProps) {
+export type TableHeaderProps = Omit<
+  React.ComponentPropsWithoutRef<'th'>,
+  keyof TableHeaderInterface
+> &
+  TableHeaderInterface;
+
+function TableHeader({
+  glyph = 'Unsorted',
+  label,
+  onClick,
+  index,
+  isEditable = false,
+}: TableHeaderProps) {
   return (
-    <th
-      className={cx(
-        css`
-          width: 190px;
-          border-width: 0px 1px 3px 1px;
-          border-color: ${uiColors.gray.light2};
-          border-style: solid;
-        `,
-        commonCellStyles,
-      )}
-    >
-      <div
-        className={css`
-          display: flex;
-          justify-content: space-between;
-        `}
-      >
-        <span
-          className={css`
-            display: flex;
-            align-items: center;
-            color: ${uiColors.gray.dark2};
-            padding-right: 4px;
-          `}
-        >
+    <th className={cx(thStyle, commonCellStyles)}>
+      <div className={flexDisplay}>
+        <span className={labelStyle}>
           {label}
-          <IconButton aria-label="menu">
-            <Icon
-              color={uiColors.gray.base}
-              glyph="Ellipsis"
-              size="small"
-              className={css`
-                transform: rotate(90deg);
-              `}
-            />
-          </IconButton>
+          {isEditable && (
+            <IconButton aria-label="menu">
+              <Icon
+                color={uiColors.gray.base}
+                glyph="VerticalEllipsis"
+                size="small"
+              />
+            </IconButton>
+          )}
         </span>
-        <IconButton aria-label="sort" onClick={() => onClick(index)}>
-          <Icon size="small" glyph="ArrowUp" />
+        <IconButton aria-label="sort" onClick={() => onClick?.(index)}>
+          <Icon size="small" glyph={glyph} />
         </IconButton>
       </div>
     </th>

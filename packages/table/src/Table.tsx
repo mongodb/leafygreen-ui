@@ -1,29 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, ReactElement } from 'react';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { css } from '@leafygreen-ui/emotion';
 import NumRowsProvider from './NumRowsContext';
 import TableHeader, { TableHeaderProps } from './TableHeader';
 
-// TODO:
-// * Columns are sortable
-//   * Change arrow on sort
-//   * Make sure arrow reverts when new col is sorted
-//   * Get proper icons
-// * Rows are expandable
-//   * Add Icon
-//   * Add Functionality
 // * Hover styles
 // * Make sure dates are right aligned
-// * Remove column
 
 const tableStyles = css`
   border-collapse: collapse;
   box-sizing: border-box;
 `;
 
+const SortOrder = {
+  Asc: 'asc',
+  Desc: 'desc',
+};
+
+type SortOrder = keyof typeof SortOrder;
+
+interface SortOrderState {
+  [key: number]: SortOrder;
+}
+
 interface TableProps extends React.ComponentPropsWithoutRef<'table'> {
   data?: Array<any>;
-  columns?: Array<React.ComponentType<TableHeaderProps> | string>;
+  columns?: Array<ReactElement<TableHeaderProps> | string>;
 }
 
 export default function Table({
@@ -32,9 +34,7 @@ export default function Table({
   children,
 }: TableProps) {
   const [rows, setRows] = React.useState<Array<React.ReactElement>>([]);
-  const [sort, setSort] = React.useState<
-    'ascending' | 'descending' | undefined
-  >();
+  const [sort, setSort] = React.useState<SortOrderState>({});
 
   useEffect(() => {
     if (typeof children === 'function') {
@@ -51,22 +51,24 @@ export default function Table({
     sensitivity: 'base',
   });
 
-  const getSortOrder = () => {
-    if (sort === 'descending') {
-      setSort('ascending');
-    } else if (sort === 'ascending' || sort === undefined) {
-      setSort('descending');
+  const sortRows = (colId?: number) => {
+    if (typeof colId !== 'number') {
+      return;
     }
-  };
 
-  const sortRows = (colId: number) => {
-    getSortOrder();
+    if (sort[colId] === SortOrder.Asc || sort[colId] === undefined) {
+      // @ts-ignore
+      setSort({ [colId]: SortOrder.Desc });
+    } else {
+      // @ts-ignore
+      setSort({ [colId]: SortOrder.Asc });
+    }
 
     const sortedRows = rows.sort((a, b) => {
       const aVal = a.props.children[colId].props.children;
       const bVal = b.props.children[colId].props.children;
 
-      if (sort === 'ascending' || sort === undefined) {
+      if (sort[colId] === SortOrder.Asc || sort[colId] === undefined) {
         return alphanumericCollator.compare(aVal, bVal);
       }
 
@@ -79,10 +81,16 @@ export default function Table({
   const renderColumns = () => {
     return columns.map((column, index) => {
       if (isComponentType(column, 'TableHeader')) {
+        const glyph = sort[index]
+          ? sort[index] === SortOrder.Asc
+            ? 'SortAscending'
+            : 'SortDescending'
+          : 'Unsorted';
         return React.cloneElement(column, {
           key: column?.props?.label,
           onClick: sortRows,
           index,
+          glyph,
         });
       }
 

@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import IconButton from '@leafygreen-ui/icon-button';
+import Icon from '@leafygreen-ui/icon';
+import { isComponentType } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useNumRows } from './NumRowsContext';
@@ -23,39 +26,61 @@ const altColor = css`
   }
 `;
 
+const displayFlex = css`
+  display: flex;
+  align-items: center;
+  padding: 2px;
+`;
+
 interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
   expanded?: boolean;
-  setExpanded?: (state: boolean) => boolean;
 }
 
-function Row({ expanded, setExpanded, children }: RowProps) {
-  // const [expandedRows, setExandedRows]
-  let expandedRows = [];
-  let indexes = [];
+function Row({ expanded = false, children }: RowProps) {
+  const [isExpanded, setIsExpanded] = useState(expanded);
+  let hasSeenFirstCell = false;
 
-  const shouldAltRowColor = useNumRows() >= 10;
+  const chevronButton = (
+    <IconButton
+      onClick={() => setIsExpanded(curr => !curr)}
+      aria-label="chevron"
+      className={css`
+        margin-right: 4px;
+      `}
+    >
+      <Icon glyph={isExpanded ? 'ChevronDown' : 'ChevronRight'} size="small" />
+    </IconButton>
+  );
 
-  const renderedChildren = React.Children.map(children, (child, index) => {
-    // console.log(child.props.)
-    if (child?.type?.displayName === 'Cell') {
+  const nestedRows = React.Children.map(children, child => {
+    if (isComponentType(child, 'Row')) {
       return child;
-    } else if (child?.type?.displayName === 'Row') {
-      // should be expandable
-      // apply props to know if expanded
-      // console.log(child);
-      indexes.push(index - 1);
-      expandedRows.push(child);
     }
   });
 
-  console.log(indexes);
+  const renderedChildren = React.Children.map(children, (child, index) => {
+    if (isComponentType(child, 'Cell')) {
+      if (nestedRows && nestedRows.length > 0 && !hasSeenFirstCell) {
+        hasSeenFirstCell = true;
+        return React.cloneElement(child, {
+          children: [chevronButton, ...child?.props.children],
+          className: displayFlex,
+        });
+      }
+
+      return child;
+    }
+  });
+
+  const shouldAltRowColor = useNumRows() >= 10 && !nestedRows;
 
   return (
     <>
       <tr className={cx(rowStyle, { [altColor]: shouldAltRowColor })}>
         {renderedChildren}
       </tr>
-      <>{expandedRows}</>
+
+      {isExpanded && <>{nestedRows}</>}
     </>
   );
 }
