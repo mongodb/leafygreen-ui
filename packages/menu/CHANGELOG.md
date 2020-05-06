@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 6.0.10
+
+### Patch Changes
+
+- a11b521: Fixes issue with SubMenu, such that open is now set by Menu when the Menu itself is open
+
 ## 6.0.9
 
 ### Patch Changes
