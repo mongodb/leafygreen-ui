@@ -37,30 +37,28 @@ https://astexplorer.net/
   }
 }
 **/
-interface AnyObject {
-  [K: string]: any;
+interface FirstArg extends Record<string, any> {
+  template: {
+    smart: (opts: Record<string, any>) => Record<string, any>;
+  } & Record<string, any>
+}
+
+interface ThirdArg extends Record<string, any> {
+  jsx: Record<string, any>;
+  componentName: string;
+  imports: string;
+  exports: string;
 }
 
 module.exports = function template(
-  {
-    template,
-  }: {
-    template: {
-      smart: (opts: AnyObject) => AnyObject;
-    } & AnyObject;
-  } & AnyObject,
-  opts: { [K: string]: any },
+  { template }: FirstArg,
+  opts: Record<string, any>,
   {
     imports,
     componentName,
     jsx,
     exports,
-  }: {
-    jsx: AnyObject;
-    componentName: string;
-    imports: string;
-    exports: string;
-  } & AnyObject,
+  }: ThirdArg,
 ) {
   const plugins = ['jsx'];
 
@@ -78,7 +76,7 @@ module.exports = function template(
         },
         className,
       )}
-      title={getGlyphTitle(glyphName, title)}
+      title={getGlyphTitle('${componentName + ''}', title)}
       height={size}
       width={size}
     />`;
@@ -94,33 +92,33 @@ module.exports = function template(
     import { css, cx } from '@leafygreen-ui/emotion';
 
     function getGlyphTitle(name, title) {
-        if (title === false) {
-            // If title is null, we unset the title entirely, otherwise we generate one.
-            return undefined;
+      if (title === false) {
+        // If title is null, we unset the title entirely, otherwise we generate one.
+        return undefined;
+      }
+
+      if (title == null || title === true) {
+        let generatedTitle = \`\${name.replace(
+          /([A-Z][a-z])/g,
+          ' $1',
+        )} Icon\`;
+
+        // Trim space at beginning of title
+        while (generatedTitle.charAt(0) === ' ') {
+          generatedTitle = generatedTitle.substr(1);
         }
 
-        if (title == null || title === true) {
-            let generatedTitle = \`\${name.replace(
-              /([A-Z][a-z])/g,
-              ' $1',
-            )} Icon\`;
+        return generatedTitle;
+      }
 
-            // Trim space at beginning of title
-            while (generatedTitle.charAt(0) === ' ') {
-              generatedTitle = generatedTitle.substr(1);
-            }
-
-            return generatedTitle;
-        }
-
-        return title;
+      return title;
     }
 
     const ${componentName} = ({ className, size = 16, title, fill, ...props }) => {
-        const fillStyle = css\`
-           color: \${fill};
-        \`;
-        return ${jsx};
+      const fillStyle = css\`
+        color: \${fill};
+      \`;
+      return ${jsx};
     }
 
     ${componentName}.displayName = ${componentName};

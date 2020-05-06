@@ -65,8 +65,10 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
   }
 
   svgFiles.forEach(file => {
+    const fileContent = fs.readFileSync(file.path, { encoding: 'utf8' })
+
     svgr(
-      fs.readFileSync(file.path, { encoding: 'utf8' }),
+      fileContent,
       {
         titleProp: true,
         svgProps: {
@@ -105,7 +107,7 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
       },
     )
       .then((moduleCode: string) => {
-        let outputDir = path.resolve(__dirname, '../dist/testing');
+        let outputDir = path.resolve(__dirname, '../dist');
 
         if (flags.outDir) {
           outputDir = path.resolve(process.cwd(), flags.outDir);
