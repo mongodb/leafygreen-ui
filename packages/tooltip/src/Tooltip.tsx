@@ -199,10 +199,10 @@ function Tooltip({
     if (triggerEvent === TriggerEvent.Hover) {
       return {
         onMouseEnter: debounce(() => {
-          setOpen(enabled && true);
+          setOpen(true);
         }, 35),
         onMouseLeave: debounce(handleClose, 35),
-        onFocus: () => setOpen(enabled && true),
+        onFocus: () => setOpen(true),
         onBlur: handleClose,
       };
     }
@@ -226,7 +226,7 @@ function Tooltip({
       onClick: (e: MouseEvent) => {
         // ensure that we don't close the tooltip when content inside tooltip is clicked
         if (e.target !== tooltipRef.current) {
-          setOpen((curr: boolean) => enabled && !curr);
+          setOpen((curr: boolean) => !curr);
         }
       },
     };
@@ -252,12 +252,12 @@ function Tooltip({
   };
 
   useEventListener('click', handleBackdropClick, {
-    enabled: enabled && open && triggerEvent === 'click',
+    enabled: open && triggerEvent === 'click',
   });
 
   const tooltip = (
     <Popover
-      active={open}
+      active={enabled && open}
       align={align}
       justify={justify}
       usePortal={usePortal}
