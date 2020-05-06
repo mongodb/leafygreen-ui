@@ -1,5 +1,14 @@
 # @leafygreen-ui/mongo-nav
 
+## 1.2.1
+
+### Patch Changes
+
+- 57b41cf: Enables Cloud SubMenu when `account` is the `activePlatform`.
+  Makes `admin` prop on the `AccountInterface` optional.
+- Updated dependencies [a11b521]
+  - @leafygreen-ui/menu@6.0.10
+
 ## 1.2.0
 
 ### Minor Changes
