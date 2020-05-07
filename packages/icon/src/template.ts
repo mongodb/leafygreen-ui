@@ -40,29 +40,31 @@ https://astexplorer.net/
 interface FirstArg extends Record<string, any> {
   template: {
     smart: (opts: Record<string, any>) => Record<string, any>;
-  } & Record<string, any>
+  } & Record<string, any>;
+}
+
+interface SecondArg extends Record<string, any> {
+  state: {
+    componentName: string;
+  } & Record<string, any>;
+  typescript: boolean;
 }
 
 interface ThirdArg extends Record<string, any> {
   jsx: Record<string, any>;
-  componentName: string;
+  componentName: object;
   imports: string;
   exports: string;
 }
 
 module.exports = function template(
   { template }: FirstArg,
-  opts: Record<string, any>,
-  {
-    imports,
-    componentName,
-    jsx,
-    exports,
-  }: ThirdArg,
+  { state: { componentName }, typescript }: SecondArg,
+  { imports, jsx, exports }: ThirdArg,
 ) {
   const plugins = ['jsx'];
 
-  if (opts.typescript) {
+  if (typescript) {
     plugins.push('typescript');
   }
 
@@ -76,7 +78,7 @@ module.exports = function template(
         },
         className,
       )}
-      title={getGlyphTitle('${componentName + ''}', title)}
+      title={getGlyphTitle('${componentName}', title)}
       height={size}
       width={size}
     />`;
@@ -102,7 +104,7 @@ module.exports = function template(
           /([A-Z][a-z])/g,
           ' $1',
         )} Icon\`;
-
+ 
         // Trim space at beginning of title
         while (generatedTitle.charAt(0) === ' ') {
           generatedTitle = generatedTitle.substr(1);
@@ -114,10 +116,17 @@ module.exports = function template(
       return title;
     }
 
-    const ${componentName} = ({ className, size = 16, title, fill, ...props }) => {
+    function generateGlyphTitle() {
+      return '${componentName}' + '-' + Math.floor(Math.random() * 1000000);
+    }
+
+    const ${componentName} = ({ className, size = 16, title, customTitleId,  fill, ...props }) => {
+      const { current: titleId } = React.useMemo(customTitleId || generateGlyphTitle());
+
       const fillStyle = css\`
         color: \${fill};
       \`;
+
       return ${jsx};
     }
 
@@ -131,4 +140,4 @@ module.exports = function template(
 
     ${exports}
   `;
-}
+};
