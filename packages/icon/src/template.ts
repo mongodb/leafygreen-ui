@@ -121,7 +121,7 @@ module.exports = function template(
     }
 
     const ${componentName} = ({ className, size = 16, title, customTitleId,  fill, ...props }) => {
-      const { current: titleId } = React.useMemo(customTitleId || generateGlyphTitle());
+      const { current: titleId } = React.useMemo(() => customTitleId || generateGlyphTitle());
 
       const fillStyle = css\`
         color: \${fill};
