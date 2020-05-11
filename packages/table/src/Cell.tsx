@@ -1,31 +1,34 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import { alignLeft, alignRight, commonCellStyles } from './styles';
+import { commonCellStyles } from './styles';
 
-type CellProps = React.ComponentPropsWithRef<'td'>;
+interface CellProps extends React.ComponentPropsWithRef<'td'> {}
+
+const tdStyles = css`
+  line-height: 16px;
+  letter-spacing: 0px;
+`;
+
+const innerDivStyles = css`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const truncation = css`
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+`;
 
 const Cell = React.forwardRef(
   ({ children, className }: CellProps, ref: React.Ref<any>) => {
-    const type = typeof children === 'number' ? 'number' : 'string';
-
     return (
       <td
         ref={ref}
-        className={cx(
-          type === 'number' ? alignRight : alignLeft,
-          commonCellStyles,
-          css`
-            border-top: 1px solid ${uiColors.gray.light2};
-            border-bottom: 1px solid ${uiColors.gray.light2};
-            line-height: 16px;
-            letter-spacing: 0px;
-            color: ${uiColors.gray.dark2};
-          `,
-          className,
-        )}
+        className={cx(commonCellStyles, tdStyles, truncation, className)}
       >
-        {children}
+        <div className={innerDivStyles}>{children}</div>
       </td>
     );
   },

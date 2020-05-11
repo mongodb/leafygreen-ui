@@ -18,6 +18,7 @@
       "@leafygreen-ui/emotion": "^2.0.1", 
       "@leafygreen-ui/palette": "2.0.1",
       "@leafygreen-ui/icon": "5.1.0", 
-      "@leafygreen-ui/icon-button": "5.0.2"
+      "@leafygreen-ui/icon-button": "5.0.2", 
+      "react-transition-group": "4.3.0"
     }
   }

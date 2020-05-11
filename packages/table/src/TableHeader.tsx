@@ -6,10 +6,18 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { commonCellStyles } from './styles';
 
 const thStyle = css`
-  width: 190px;
+  width: 144px;
   border-width: 0px 1px 3px 1px;
   border-color: ${uiColors.gray.light2};
   border-style: solid;
+`;
+
+const stickyTh = css`
+  top: 0;
+  left: 0;
+  z-index: 2;
+  position: sticky;
+  background-color: blue;
 `;
 
 const flexDisplay = css`
@@ -25,11 +33,13 @@ const labelStyle = css`
 `;
 
 interface TableHeaderInterface {
-  label: string;
+  label: React.ReactElement | string;
   onClick?: (colId: number | undefined) => void;
   index?: number;
   glyph?: string;
   isEditable?: boolean;
+  stickyHeader?: boolean;
+  sortable?: boolean;
 }
 
 export type TableHeaderProps = Omit<
@@ -44,9 +54,19 @@ function TableHeader({
   onClick,
   index,
   isEditable = false,
+  stickyHeader,
+  sortable = true,
+  className,
 }: TableHeaderProps) {
   return (
-    <th className={cx(thStyle, commonCellStyles)}>
+    <th
+      className={cx(
+        thStyle,
+        commonCellStyles,
+        { [stickyTh]: stickyHeader },
+        className,
+      )}
+    >
       <div className={flexDisplay}>
         <span className={labelStyle}>
           {label}
@@ -60,9 +80,11 @@ function TableHeader({
             </IconButton>
           )}
         </span>
-        <IconButton aria-label="sort" onClick={() => onClick?.(index)}>
-          <Icon size="small" glyph={glyph} />
-        </IconButton>
+        {sortable && (
+          <IconButton aria-label="sort" onClick={() => onClick?.(index)}>
+            <Icon size="small" glyph={glyph} />
+          </IconButton>
+        )}
       </div>
     </th>
   );

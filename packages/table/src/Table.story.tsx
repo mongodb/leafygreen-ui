@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { boolean, text, select } from '@storybook/addon-knobs';
 import Table from '.';
 import { Row, Cell, TableHeader } from '.';
 
@@ -12,8 +13,14 @@ interface DemoDataInterface {
 
 storiesOf('Table', module).add('Default', () => (
   <Table
+    selectable={boolean('isSelectable', true)}
     data={[
-      { name: 'Alice', age: 19, color: 'white', location: 'bedford' },
+      {
+        name: 'Alice',
+        age: 19,
+        color: 'white',
+        location: 'bedford',
+      },
       { name: 'Brooke', age: 20, color: 'green', location: 'bedford' },
       { name: 'Charlotte', age: 21, color: 'white', location: 'bedford' },
       { name: 'Donna', age: 22, color: 'green', location: 'bedford' },
@@ -32,7 +39,7 @@ storiesOf('Table', module).add('Default', () => (
     ]}
   >
     {({ datum, rowIndex }: { datum: DemoDataInterface; rowIndex: number }) => (
-      <Row key={rowIndex}>
+      <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
         <Cell>{datum.name}</Cell>
         <Cell>{datum.age}</Cell>
         <Cell>{datum.color}</Cell>
@@ -40,15 +47,16 @@ storiesOf('Table', module).add('Default', () => (
 
         {datum.age > 21 && (
           <Row expanded={datum.name === 'Jill'}>
-            <Cell>expanded name</Cell>
-            <Cell>expanded age</Cell>
-            <Cell>expanded color</Cell>
+            <Cell>expanded name: {datum.name}</Cell>
+            <Cell>expanded age: {datum.age}</Cell>
+            <Cell>expanded color: {datum.color}</Cell>
             <Cell>{datum.location}</Cell>
+
             {datum.age > 25 && (
               <Row>
-                <Cell>expanded name</Cell>
-                <Cell>expanded age</Cell>
-                <Cell>expanded color</Cell>
+                <Cell>expanded name: {datum.name}</Cell>
+                <Cell>expanded age: {datum.age}</Cell>
+                <Cell>expanded color: {datum.color}</Cell>
                 <Cell>{datum.location}</Cell>
               </Row>
             )}

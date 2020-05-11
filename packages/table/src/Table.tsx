@@ -1,11 +1,28 @@
 import React, { useEffect, ReactElement } from 'react';
+import Checkbox from '@leafygreen-ui/checkbox';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { css } from '@leafygreen-ui/emotion';
+import { uiColors } from '@leafygreen-ui/palette';
 import NumRowsProvider from './NumRowsContext';
 import TableHeader, { TableHeaderProps } from './TableHeader';
+import CheckboxCell from './CheckboxCell';
 
-// * Hover styles
 // * Make sure dates are right aligned
+// * Indent on Expanded Row
+// * Be smarter for sort than children.props.children
+// * Fixed header
+
+// * Row selection
+// * pass check all to nested
+// * add middle state to top checkmark
+// * change color of chevron
+
+// * Hover styles fix
+// * Pagination
+// * colspan
+// * rowspan
+// * headerrow
+// * truncation
 
 const tableStyles = css`
   border-collapse: collapse;
@@ -15,26 +32,29 @@ const tableStyles = css`
 const SortOrder = {
   Asc: 'asc',
   Desc: 'desc',
-};
+} as const;
 
 type SortOrder = keyof typeof SortOrder;
 
 interface SortOrderState {
-  [key: number]: SortOrder;
+  [key: number]: SortOrder[keyof SortOrder];
 }
 
 interface TableProps extends React.ComponentPropsWithoutRef<'table'> {
   data?: Array<any>;
   columns?: Array<ReactElement<TableHeaderProps> | string>;
+  selectable?: boolean;
 }
 
 export default function Table({
   columns = [],
   data = [],
   children,
+  selectable,
 }: TableProps) {
   const [rows, setRows] = React.useState<Array<React.ReactElement>>([]);
   const [sort, setSort] = React.useState<SortOrderState>({});
+  const [checkAll, setCheckAll] = React.useState(false);
 
   useEffect(() => {
     if (typeof children === 'function') {
@@ -43,6 +63,8 @@ export default function Table({
       });
 
       setRows(unsortedRows);
+    } else {
+      setRows(children);
     }
   }, [children]);
 
@@ -54,14 +76,6 @@ export default function Table({
   const sortRows = (colId?: number) => {
     if (typeof colId !== 'number') {
       return;
-    }
-
-    if (sort[colId] === SortOrder.Asc || sort[colId] === undefined) {
-      // @ts-ignore
-      setSort({ [colId]: SortOrder.Desc });
-    } else {
-      // @ts-ignore
-      setSort({ [colId]: SortOrder.Asc });
     }
 
     const sortedRows = rows.sort((a, b) => {
@@ -76,16 +90,25 @@ export default function Table({
     });
 
     setRows(sortedRows);
+
+    if (sort[colId] === SortOrder.Asc || sort[colId] === undefined) {
+      setSort({ [colId]: SortOrder.Desc });
+    } else {
+      setSort({ [colId]: SortOrder.Asc });
+    }
   };
 
   const renderColumns = () => {
     return columns.map((column, index) => {
       if (isComponentType(column, 'TableHeader')) {
-        const glyph = sort[index]
-          ? sort[index] === SortOrder.Asc
-            ? 'SortAscending'
-            : 'SortDescending'
-          : 'Unsorted';
+        let glyph = 'Unsorted';
+
+        if (sort[index] === SortOrder.Asc) {
+          glyph = 'SortAscending';
+        } else if (sort[index] === SortOrder.Desc) {
+          glyph = 'SortDescending';
+        }
+
         return React.cloneElement(column, {
           key: column?.props?.label,
           onClick: sortRows,
@@ -114,18 +137,56 @@ export default function Table({
       return null;
     }
 
-    if (typeof children === 'function') {
-      return rows;
+    if (selectable) {
+      return rows.map(row => {
+        const selectCell = <CheckboxCell checked={checkAll} />;
+
+        return React.cloneElement(row, {
+          selectable,
+          children: [
+            selectCell,
+            [
+              ...(row.props?.children instanceof Array
+                ? row.props.children
+                : [row.props.children]),
+            ],
+          ],
+        });
+      });
     }
 
-    return children;
+    return rows;
   };
 
   return (
     <NumRowsProvider numRows={data.length}>
       <table cellSpacing="0" cellPadding="0" className={tableStyles}>
         <thead>
-          <tr>{renderColumns()}</tr>
+          <tr>
+            {selectable && (
+              <th
+                className={css`
+                  width: 40px;
+                  border-width: 0px 1px 3px 1px;
+                  border-color: ${uiColors.gray.light2};
+                  border-style: solid;
+                `}
+              >
+                <div
+                  className={css`
+                    display: flex;
+                    justify-content: center;
+                  `}
+                >
+                  <Checkbox
+                    checked={checkAll}
+                    onChange={() => setCheckAll(curr => !curr)}
+                  />
+                </div>
+              </th>
+            )}
+            {renderColumns()}
+          </tr>
         </thead>
         <tbody>{renderBody()}</tbody>
       </table>
