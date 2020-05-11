@@ -197,7 +197,7 @@ function Modal({
   return (
     <Transition
       in={open}
-      timeout={500}
+      timeout={150}
       mountOnEnter
       unmountOnExit
       nodeRef={nodeRef}
