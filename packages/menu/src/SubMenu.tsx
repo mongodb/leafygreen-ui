@@ -222,7 +222,7 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
   } = props;
 
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-
+  const nodeRef = React.useRef(null);
   const iconButtonRef: React.RefObject<HTMLElement | null> = useRef(null);
 
   const onRootClick = (
@@ -323,9 +323,11 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
         mountOnEnter
         unmountOnExit
         onExited={onExited}
+        nodeRef={nodeRef}
       >
         {(state: string) => (
           <ul
+            ref={nodeRef}
             className={cx(ulStyle, {
               [css`
                 height: ${subMenuItemHeight * numberOfMenuItems}px;

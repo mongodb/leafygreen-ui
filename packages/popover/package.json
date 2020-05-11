@@ -13,7 +13,7 @@
     "access": "public"
   },
   "dependencies": {
-    "react-transition-group": "^4.2.1",
+    "react-transition-group": "^4.4.1",
     "@leafygreen-ui/hooks": "^2.1.0",
     "@leafygreen-ui/lib": "^4.2.0",
     "@leafygreen-ui/portal": "^2.0.0",

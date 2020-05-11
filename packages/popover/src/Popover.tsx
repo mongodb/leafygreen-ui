@@ -197,7 +197,13 @@ function Popover({
   })();
 
   return (
-    <Transition in={active} timeout={{ exit: 150 }} mountOnEnter unmountOnExit>
+    <Transition
+      nodeRef={contentNode}
+      in={active}
+      timeout={{ exit: 150 }}
+      mountOnEnter
+      unmountOnExit
+    >
       {(state: string) => (
         <>
           <div

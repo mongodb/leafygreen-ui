@@ -178,6 +178,7 @@ function Modal({
   ...rest
 }: ModalProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const nodeRef = React.useRef(null);
 
   const handleClose = useCallback(() => {
     if (setOpen && shouldClose()) {
@@ -194,10 +195,17 @@ function Modal({
   useEscapeKey(handleClose, { enabled: open });
 
   return (
-    <Transition in={open} timeout={500} mountOnEnter unmountOnExit>
+    <Transition
+      in={open}
+      timeout={500}
+      mountOnEnter
+      unmountOnExit
+      nodeRef={nodeRef}
+    >
       {(state: string) => (
         <Portal>
           <div
+            ref={nodeRef}
             {...rest}
             // Setting role to 'none', because elements with a click event should have a specific role
             // Here we are just using a div to handle backdrop clicks, so this is the most appropriate value
