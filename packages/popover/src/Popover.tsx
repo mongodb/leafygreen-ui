@@ -196,9 +196,11 @@ function Popover({
     return children;
   })();
 
+  const nodeRef = React.useRef(null);
+
   return (
     <Transition
-      nodeRef={contentNode}
+      nodeRef={nodeRef}
       in={active}
       timeout={{ exit: 150 }}
       mountOnEnter
@@ -213,6 +215,10 @@ function Popover({
             `}
           />
           <Root>
+            {/* Added new static ref to be able to pass a ref to <Transition /> */}
+            {/* Eliminates error message from react-strict-mode: 'findDOMNode is deprecated' */}
+            {/* Existing refs don't work to eliminate the error message, as they are dynamic and passing them to <Transition /> breaks the exit animation */}
+            <span ref={nodeRef} />
             <div
               {...rest}
               ref={setContentNode}
