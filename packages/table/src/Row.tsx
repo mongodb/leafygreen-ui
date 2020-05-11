@@ -71,14 +71,18 @@ interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
   expanded?: boolean;
   disabled?: boolean;
   selectable?: boolean;
+  setIndeterminate?: (boolean: boolean) => void;
+  checked?: boolean;
 }
 
 function Row({
   expanded = false,
   disabled = false,
+  checked = false,
   children,
   className,
   selectable,
+  setIndeterminate,
 }: RowProps) {
   const [isExpanded, setIsExpanded] = useState(expanded);
   let hasSeenFirstCell = false;
@@ -100,7 +104,9 @@ function Row({
 
   const nestedRows = React.Children.map(children, child => {
     if (isComponentType(child, 'Row')) {
-      const selectCell = <CheckboxCell />;
+      const selectCell = (
+        <CheckboxCell checked={checked} setIndeterminate={setIndeterminate} />
+      );
 
       return React.cloneElement(child, {
         selectable,
@@ -129,7 +135,9 @@ function Row({
       }
 
       if (isComponentType(child, 'CheckboxCell')) {
-        return child;
+        return React.cloneElement(child, {
+          setIndeterminate,
+        });
       }
 
       if (nestedRows && nestedRows.length > 0 && !hasSeenFirstCell) {

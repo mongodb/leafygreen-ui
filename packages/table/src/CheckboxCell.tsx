@@ -5,6 +5,7 @@ import { css } from '@leafygreen-ui/emotion';
 interface CheckboxCellProps extends React.ComponentPropsWithoutRef<'td'> {
   checked?: boolean;
   disabled?: boolean;
+  setIndeterminate?: (boolean: boolean) => void;
 }
 
 function CheckboxCell({
@@ -12,6 +13,7 @@ function CheckboxCell({
   checked: checkedProp,
   className,
   disabled,
+  setIndeterminate = () => {},
 }: CheckboxCellProps) {
   const [checked, setChecked] = React.useState(disabled ? false : checkedProp);
 
@@ -34,7 +36,13 @@ function CheckboxCell({
       >
         <Checkbox
           checked={checked}
-          onChange={() => setChecked(curr => !curr)}
+          onChange={() => {
+            if (checked) {
+              setIndeterminate(true);
+            }
+
+            setChecked(curr => !curr);
+          }}
           disabled={disabled}
         />
         {children}

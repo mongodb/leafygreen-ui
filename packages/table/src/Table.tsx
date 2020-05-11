@@ -11,11 +11,11 @@ import CheckboxCell from './CheckboxCell';
 // * Indent on Expanded Row
 // * Be smarter for sort than children.props.children
 // * Fixed header
+// * Create common props
 
 // * Row selection
 // * pass check all to nested
-// * add middle state to top checkmark
-// * change color of chevron
+// * reset to false when none are true
 
 // * Hover styles fix
 // * Pagination
@@ -55,6 +55,7 @@ export default function Table({
   const [rows, setRows] = React.useState<Array<React.ReactElement>>([]);
   const [sort, setSort] = React.useState<SortOrderState>({});
   const [checkAll, setCheckAll] = React.useState(false);
+  const [indeterminate, setIndeterminate] = React.useState(false);
 
   useEffect(() => {
     if (typeof children === 'function') {
@@ -143,6 +144,8 @@ export default function Table({
 
         return React.cloneElement(row, {
           selectable,
+          setIndeterminate,
+          checked: checkAll,
           children: [
             selectCell,
             [
@@ -157,6 +160,8 @@ export default function Table({
 
     return rows;
   };
+
+  console.log(checkAll);
 
   return (
     <NumRowsProvider numRows={data.length}>
@@ -180,7 +185,14 @@ export default function Table({
                 >
                   <Checkbox
                     checked={checkAll}
-                    onChange={() => setCheckAll(curr => !curr)}
+                    indeterminate={indeterminate}
+                    onChange={() => {
+                      if (!checkAll) {
+                        setIndeterminate(false);
+                      }
+
+                      setCheckAll(curr => !curr);
+                    }}
                   />
                 </div>
               </th>
