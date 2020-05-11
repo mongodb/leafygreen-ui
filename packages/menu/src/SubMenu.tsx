@@ -381,7 +381,8 @@ SubMenu.displayName = 'SubMenu';
 // @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 SubMenu.propTypes = {
   title: PropTypes.string,
-  description: PropTypes.element,
+  // @ts-ignore
+  description: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   // @ts-ignore
   href: PropTypes.string,
   children: PropTypes.node,
