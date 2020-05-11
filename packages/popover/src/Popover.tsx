@@ -74,6 +74,13 @@ function Popover({
   const [contentNode, setContentNode] = useElementNode();
   const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
 
+  // To remove StrictMode warnings produced by react-transition-group we need
+  // to pass in a useRef object to the <Transition> component.
+  // To do so we're shadowing the contentNode onto this nodeRef as
+  // <Transition> only accepts useRef objects.
+  const contentNodeRef = React.useRef(contentNode);
+  contentNodeRef.current = contentNode;
+
   let referenceElement: HTMLElement | null = null;
 
   if (refEl && refEl.current) {
@@ -196,11 +203,9 @@ function Popover({
     return children;
   })();
 
-  const nodeRef = React.useRef(null);
-
   return (
     <Transition
-      nodeRef={nodeRef}
+      nodeRef={contentNodeRef}
       in={active}
       timeout={{ exit: 150 }}
       mountOnEnter
@@ -215,10 +220,6 @@ function Popover({
             `}
           />
           <Root>
-            {/* Added new static ref to be able to pass a ref to <Transition /> */}
-            {/* Eliminates error message from react-strict-mode: 'findDOMNode is deprecated' */}
-            {/* Existing refs don't work to eliminate the error message, as they are dynamic and passing them to <Transition /> breaks the exit animation */}
-            <span ref={nodeRef} />
             <div
               {...rest}
               ref={setContentNode}
