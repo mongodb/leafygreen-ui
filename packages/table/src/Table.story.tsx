@@ -101,7 +101,7 @@ storiesOf('Table', module)
         <HeaderRow key="1">
           <TableHeader colSpan={3} label="Ice Cream Shoppe" sortable={false} />
         </HeaderRow>,
-        <HeaderRow key="2">
+        <HeaderRow key="2" selectable>
           <TableHeader label="Flavor" stickyColumn />
           <TableHeader label="Price" />
         </HeaderRow>,

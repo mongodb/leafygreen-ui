@@ -6,7 +6,7 @@ import { isComponentType } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import CheckboxCell from './CheckboxCell';
-import { SharedRowProps, coerceArray } from './utils';
+import { coerceArray } from './utils';
 import { useTableContext } from './Context';
 
 const rowStyle = css`
@@ -83,28 +83,18 @@ const transitionStyles = {
   `,
 };
 
-interface RowProps
-  extends React.ComponentPropsWithoutRef<'tr'>,
-    SharedRowProps {
+interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
   expanded?: boolean;
   disabled?: boolean;
 }
 
 const Row = React.forwardRef(
   (
-    {
-      expanded = false,
-      disabled = false,
-      checked = false,
-      children,
-      className,
-      selectable,
-      setIndeterminate,
-    }: RowProps,
+    { expanded = false, disabled = false, children, className }: RowProps,
     ref: React.Ref<any>,
   ) => {
     const { state, dispatch } = useTableContext();
-    const { data, stickyColumns } = state;
+    const { data, stickyColumns, selectable, mainCheckState } = state;
 
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nodeRef = React.useRef(null);
@@ -128,11 +118,10 @@ const Row = React.forwardRef(
 
     const nestedRows = React.Children.map(children, child => {
       if (isComponentType(child, 'Row')) {
-        const selectCell = <CheckboxCell checked={checked} />;
+        const selectCell = <CheckboxCell checked={mainCheckState} />;
 
         return React.cloneElement(child, {
           selectable,
-          setIndeterminate,
           children: [selectCell, ...coerceArray(child.props.children)],
           ref: nodeRef,
         });
@@ -151,7 +140,7 @@ const Row = React.forwardRef(
           });
         }
 
-        return React.cloneElement(child, { setIndeterminate });
+        return child;
       }
 
       if (isComponentType(child, 'Cell')) {

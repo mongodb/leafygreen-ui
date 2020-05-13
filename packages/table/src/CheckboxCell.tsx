@@ -13,7 +13,6 @@ function CheckboxCell({
   checked: checkedProp,
   className,
   disabled,
-  setIndeterminate = () => {},
 }: CheckboxCellProps) {
   const [checked, setChecked] = React.useState(disabled ? false : checkedProp);
 
@@ -36,13 +35,7 @@ function CheckboxCell({
       >
         <Checkbox
           checked={checked}
-          onChange={() => {
-            if (checked) {
-              setIndeterminate(true);
-            }
-
-            setChecked(curr => !curr);
-          }}
+          onChange={() => setChecked(curr => !curr)}
           disabled={disabled}
         />
         {children}

@@ -5,7 +5,7 @@ import TableProvider from './Context';
 import HeaderRow, { HeaderRowProps } from './HeaderRow';
 import TableHeader, { TableHeaderProps } from './TableHeader';
 import CheckboxCell from './CheckboxCell';
-import { coerceArray } from './utils';
+import { State, coerceArray } from './utils';
 import { reducer } from './useReducer';
 
 // * Make sure dates are right aligned
@@ -16,8 +16,8 @@ import { reducer } from './useReducer';
 // * style rowspan
 
 // * Set up proper typings for useReducer
-// * Sticky Header
-// * Sticky Row
+// * Keep track of checkmark states
+// * Make sure if you set on second header row, the first header row is not impacted
 
 const tableStyles = css`
   border-collapse: collapse;
@@ -38,28 +38,16 @@ export default function Table({
   selectable: selectableProp = false,
   children,
 }: TableProps) {
-  const initialState = {
-    sort: { columnId: null, direction: 'asc', key: null },
+  const initialState: State = {
+    sort: { columnId: undefined, direction: 'asc', key: undefined },
     data,
     stickyColumns: [],
     selectable: selectableProp,
+    mainCheckState: false,
   };
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const [selectable, setSelectable] = React.useState(selectableProp);
-  const [checkAll, setCheckAll] = React.useState(false);
-  const [indeterminate, setIndeterminate] = React.useState(false);
-
   let usingHeaderRow = React.useMemo(() => false, [children]);
-
-  const sharedHeaderRowProps = {
-    checked: checkAll,
-    setCheckAll,
-    indeterminate,
-    setIndeterminate,
-    setSelectable,
-  };
-
   let rows: Array<React.ReactElement>;
 
   if (typeof children === 'function') {
@@ -92,7 +80,6 @@ export default function Table({
         const renderedChildren = coerceArray(children);
 
         return React.cloneElement(child, {
-          ...sharedHeaderRowProps,
           children: renderHeader(renderedChildren),
         });
       }
@@ -136,9 +123,7 @@ export default function Table({
     return usingHeaderRow ? (
       cols
     ) : (
-      <HeaderRow selectable={selectable} {...sharedHeaderRowProps}>
-        {cols}
-      </HeaderRow>
+      <HeaderRow selectable={state.selectable}>{cols}</HeaderRow>
     );
   };
 
@@ -147,14 +132,11 @@ export default function Table({
       return null;
     }
 
-    if (selectable) {
+    if (state.selectable) {
       return rows.map(row => {
-        const selectCell = <CheckboxCell checked={checkAll} />;
+        const selectCell = <CheckboxCell checked={state.mainCheckState} />;
 
         return React.cloneElement(row, {
-          selectable,
-          setIndeterminate,
-          checked: checkAll,
           children: [selectCell, [...coerceArray(row.props.children)]],
         });
       });

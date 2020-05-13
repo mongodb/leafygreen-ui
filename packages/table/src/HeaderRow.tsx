@@ -1,8 +1,8 @@
-import React, { SetStateAction } from 'react';
+import React from 'react';
 import Checkbox from '@leafygreen-ui/checkbox';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { SharedRowProps } from './utils';
+import { useTableContext } from './Context';
 
 const thStyles = css`
   width: 40px;
@@ -20,37 +20,36 @@ const stickyHeader = css`
   position: sticky;
 `;
 
-export interface HeaderRowProps
-  extends React.ComponentPropsWithoutRef<'tr'>,
-    SharedRowProps {
+export interface HeaderRowProps extends React.ComponentPropsWithoutRef<'tr'> {
   sticky?: boolean;
   indeterminate?: boolean;
-  setCheckAll?: React.Dispatch<SetStateAction<boolean>>;
-  setSelectable?: React.Dispatch<SetStateAction<boolean>>;
+  selectable?: boolean;
 }
 
 function HeaderRow({
   sticky = false,
-  selectable = false,
-  setCheckAll = () => false,
-  setIndeterminate = () => {},
-  setSelectable = () => {},
-  children,
-  checked,
+  selectable: selectableProp = false,
   indeterminate,
+  children,
   className,
   ...rest
 }: HeaderRowProps) {
+  const { state, dispatch } = useTableContext();
+  const { selectable, mainCheckState } = state;
+
   React.useEffect(() => {
-    setSelectable(selectable);
-  }, [selectable]);
+    if (selectableProp) {
+      dispatch({
+        type: 'IS_SELECTABLE_TABLE',
+        payload: selectableProp,
+      });
+    }
+  }, [selectableProp]);
 
   const handleChange = () => {
-    if (!checked) {
-      setIndeterminate(false);
-    }
-
-    setCheckAll(curr => !curr);
+    dispatch({
+      type: 'SWITCH_CHECKMARK',
+    });
   };
 
   return (
@@ -59,7 +58,7 @@ function HeaderRow({
         <th className={thStyles}>
           <div className={innerDivStyles}>
             <Checkbox
-              checked={checked}
+              checked={mainCheckState}
               indeterminate={indeterminate}
               onChange={handleChange}
             />

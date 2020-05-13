@@ -1,11 +1,16 @@
 import React, { createContext, useContext, useMemo } from 'react';
+import { State } from './utils';
 
 // interface TableStateInterface {
 //   sort?: {};
 //   data?: {};
 // }
 
-const TableContext = createContext({});
+interface ContextInterface {
+  state?: State;
+  dispatch?: React.Dispatch<any>;
+}
+const TableContext = createContext<ContextInterface>({});
 
 export function useTableContext() {
   return useContext(TableContext);

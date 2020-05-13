@@ -1,9 +1,15 @@
-import React, { SetStateAction } from 'react';
+interface Sort {
+  columnId?: number;
+  direction: 'asc' | 'desc';
+  key?: string;
+}
 
-export interface SharedRowProps {
-  selectable?: boolean;
-  setIndeterminate?: React.Dispatch<SetStateAction<boolean>>;
-  checked?: boolean;
+export interface State {
+  sort: Sort;
+  data: Array<any>;
+  stickyColumns: Array<number>;
+  selectable: boolean;
+  mainCheckState: boolean;
 }
 
 export const coerceArray = (arg: any) => {
