@@ -1,136 +1,145 @@
-import React, { useEffect, ReactElement } from 'react';
-import Checkbox from '@leafygreen-ui/checkbox';
+import React, { useReducer, ReactElement } from 'react';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { css } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import NumRowsProvider from './NumRowsContext';
+import TableProvider from './Context';
+import HeaderRow, { HeaderRowProps } from './HeaderRow';
 import TableHeader, { TableHeaderProps } from './TableHeader';
 import CheckboxCell from './CheckboxCell';
+import { coerceArray } from './utils';
+import { reducer } from './useReducer';
 
 // * Make sure dates are right aligned
 // * Indent on Expanded Row
-// * Be smarter for sort than children.props.children
-// * Fixed header
-// * Create common props
 
-// * Row selection
-// * pass check all to nested
-// * reset to false when none are true
+// * fix border bottom when rows are nested
 
-// * Hover styles fix
-// * Pagination
-// * colspan
-// * rowspan
-// * headerrow
-// * truncation
+// * style rowspan
+
+// * Set up proper typings for useReducer
+// * Sticky Header
+// * Sticky Row
 
 const tableStyles = css`
   border-collapse: collapse;
   box-sizing: border-box;
 `;
 
-const SortOrder = {
-  Asc: 'asc',
-  Desc: 'desc',
-} as const;
-
-type SortOrder = keyof typeof SortOrder;
-
-interface SortOrderState {
-  [key: number]: SortOrder[keyof SortOrder];
-}
-
 interface TableProps extends React.ComponentPropsWithoutRef<'table'> {
   data?: Array<any>;
-  columns?: Array<ReactElement<TableHeaderProps> | string>;
+  columns?:
+    | Array<ReactElement<HeaderRowProps>>
+    | Array<ReactElement<TableHeaderProps> | string>;
   selectable?: boolean;
 }
 
 export default function Table({
   columns = [],
   data = [],
+  selectable: selectableProp = false,
   children,
-  selectable,
 }: TableProps) {
-  const [rows, setRows] = React.useState<Array<React.ReactElement>>([]);
-  const [sort, setSort] = React.useState<SortOrderState>({});
+  const initialState = {
+    sort: { columnId: null, direction: 'asc', key: null },
+    data,
+    stickyColumns: [],
+    selectable: selectableProp,
+  };
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const [selectable, setSelectable] = React.useState(selectableProp);
   const [checkAll, setCheckAll] = React.useState(false);
   const [indeterminate, setIndeterminate] = React.useState(false);
 
-  useEffect(() => {
-    if (typeof children === 'function') {
-      const unsortedRows = data.map((datum, index) => {
-        return children({ datum, index });
-      });
+  let usingHeaderRow = React.useMemo(() => false, [children]);
 
-      setRows(unsortedRows);
-    } else {
-      setRows(children);
-    }
-  }, [children]);
-
-  const alphanumericCollator = new Intl.Collator(undefined, {
-    numeric: true,
-    sensitivity: 'base',
-  });
-
-  const sortRows = (colId?: number) => {
-    if (typeof colId !== 'number') {
-      return;
-    }
-
-    const sortedRows = rows.sort((a, b) => {
-      const aVal = a.props.children[colId].props.children;
-      const bVal = b.props.children[colId].props.children;
-
-      if (sort[colId] === SortOrder.Asc || sort[colId] === undefined) {
-        return alphanumericCollator.compare(aVal, bVal);
-      }
-
-      return alphanumericCollator.compare(bVal, aVal);
-    });
-
-    setRows(sortedRows);
-
-    if (sort[colId] === SortOrder.Asc || sort[colId] === undefined) {
-      setSort({ [colId]: SortOrder.Desc });
-    } else {
-      setSort({ [colId]: SortOrder.Asc });
-    }
+  const sharedHeaderRowProps = {
+    checked: checkAll,
+    setCheckAll,
+    indeterminate,
+    setIndeterminate,
+    setSelectable,
   };
 
-  const renderColumns = () => {
-    return columns.map((column, index) => {
-      if (isComponentType(column, 'TableHeader')) {
+  let rows: Array<React.ReactElement>;
+
+  if (typeof children === 'function') {
+    const unsortedRows = data.map((datum, index) => {
+      return children({ datum, index });
+    });
+
+    rows = unsortedRows;
+  } else {
+    rows = coerceArray(children);
+  }
+
+  const sortRows = (columnId: number, key: string) => {
+    dispatch({
+      type: 'SORT',
+      payload: {
+        columnId,
+        key,
+        data,
+      },
+    });
+  };
+
+  const renderHeader = (array: Array<any>): React.ReactNode => {
+    const cols = array.map((child, index) => {
+      if (isComponentType(child, 'HeaderRow')) {
+        usingHeaderRow = true;
+
+        const { children } = child?.props;
+        const renderedChildren = coerceArray(children);
+
+        return React.cloneElement(child, {
+          ...sharedHeaderRowProps,
+          children: renderHeader(renderedChildren),
+        });
+      }
+
+      if (isComponentType(child, 'TableHeader')) {
+        const { label, accessor: accessorProp } = child.props;
+
         let glyph = 'Unsorted';
 
-        if (sort[index] === SortOrder.Asc) {
-          glyph = 'SortAscending';
-        } else if (sort[index] === SortOrder.Desc) {
-          glyph = 'SortDescending';
+        const accessor = accessorProp || label?.toLowerCase();
+
+        if (state?.sort?.key?.toLowerCase() === accessor) {
+          glyph =
+            state?.sort?.direction == 'asc'
+              ? 'SortAscending'
+              : 'SortDescending';
         }
 
-        return React.cloneElement(column, {
-          key: column?.props?.label,
+        return React.cloneElement(child, {
+          key: label,
           onClick: sortRows,
           index,
           glyph,
         });
       }
 
-      if (typeof column === 'string') {
+      if (typeof child === 'string') {
         return (
           <TableHeader
-            label={column}
-            key={column}
+            label={child}
+            key={child}
             index={index}
             onClick={sortRows}
           />
         );
       }
 
-      return column;
+      return child;
     });
+
+    return usingHeaderRow ? (
+      cols
+    ) : (
+      <HeaderRow selectable={selectable} {...sharedHeaderRowProps}>
+        {cols}
+      </HeaderRow>
+    );
   };
 
   const renderBody = () => {
@@ -146,14 +155,7 @@ export default function Table({
           selectable,
           setIndeterminate,
           checked: checkAll,
-          children: [
-            selectCell,
-            [
-              ...(row.props?.children instanceof Array
-                ? row.props.children
-                : [row.props.children]),
-            ],
-          ],
+          children: [selectCell, [...coerceArray(row.props.children)]],
         });
       });
     }
@@ -161,47 +163,12 @@ export default function Table({
     return rows;
   };
 
-  console.log(checkAll);
-
   return (
-    <NumRowsProvider numRows={data.length}>
+    <TableProvider state={state} dispatch={dispatch}>
       <table cellSpacing="0" cellPadding="0" className={tableStyles}>
-        <thead>
-          <tr>
-            {selectable && (
-              <th
-                className={css`
-                  width: 40px;
-                  border-width: 0px 1px 3px 1px;
-                  border-color: ${uiColors.gray.light2};
-                  border-style: solid;
-                `}
-              >
-                <div
-                  className={css`
-                    display: flex;
-                    justify-content: center;
-                  `}
-                >
-                  <Checkbox
-                    checked={checkAll}
-                    indeterminate={indeterminate}
-                    onChange={() => {
-                      if (!checkAll) {
-                        setIndeterminate(false);
-                      }
-
-                      setCheckAll(curr => !curr);
-                    }}
-                  />
-                </div>
-              </th>
-            )}
-            {renderColumns()}
-          </tr>
-        </thead>
+        <thead>{renderHeader(columns)}</thead>
         <tbody>{renderBody()}</tbody>
       </table>
-    </NumRowsProvider>
+    </TableProvider>
   );
 }

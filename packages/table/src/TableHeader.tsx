@@ -4,6 +4,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { commonCellStyles } from './styles';
+import { useTableContext } from './Context';
 
 const thStyle = css`
   width: 144px;
@@ -17,7 +18,6 @@ const stickyTh = css`
   left: 0;
   z-index: 2;
   position: sticky;
-  background-color: blue;
 `;
 
 const flexDisplay = css`
@@ -34,12 +34,13 @@ const labelStyle = css`
 
 interface TableHeaderInterface {
   label: React.ReactElement | string;
-  onClick?: (colId: number | undefined) => void;
+  onClick?: (colId: number | undefined, key: string) => void;
   index?: number;
   glyph?: string;
   isEditable?: boolean;
-  stickyHeader?: boolean;
+  stickyColumn?: boolean;
   sortable?: boolean;
+  accessor?: string;
 }
 
 export type TableHeaderProps = Omit<
@@ -50,20 +51,35 @@ export type TableHeaderProps = Omit<
 
 function TableHeader({
   glyph = 'Unsorted',
+  isEditable = false,
+  sortable = true,
   label,
   onClick,
   index,
-  isEditable = false,
-  stickyHeader,
-  sortable = true,
+  stickyColumn,
   className,
+  accessor: accessorProp,
+  ...rest
 }: TableHeaderProps) {
+  const { state, dispatch } = useTableContext();
+  const accessor = accessorProp ?? label.toString?.()?.toLowerCase();
+
+  React.useEffect(() => {
+    if (stickyColumn) {
+      dispatch({
+        type: 'ADD_STICKY_COLUMN',
+        payload: state.selectable ? index + 1 : index,
+      });
+    }
+  }, [stickyColumn]);
+
   return (
     <th
+      {...rest}
       className={cx(
         thStyle,
         commonCellStyles,
-        { [stickyTh]: stickyHeader },
+        { [stickyTh]: stickyColumn },
         className,
       )}
     >
@@ -81,8 +97,11 @@ function TableHeader({
           )}
         </span>
         {sortable && (
-          <IconButton aria-label="sort" onClick={() => onClick?.(index)}>
-            <Icon size="small" glyph={glyph} />
+          <IconButton
+            aria-label="sort"
+            onClick={() => onClick?.(index, accessor)}
+          >
+            <Icon size="small" glyph={glyph} title="sorted icon" />
           </IconButton>
         )}
       </div>

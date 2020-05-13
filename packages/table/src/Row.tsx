@@ -5,8 +5,9 @@ import Icon from '@leafygreen-ui/icon';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { useNumRows } from './NumRowsContext';
 import CheckboxCell from './CheckboxCell';
+import { SharedRowProps, coerceArray } from './utils';
+import { useTableContext } from './Context';
 
 const rowStyle = css`
   cursor: pointer;
@@ -36,6 +37,10 @@ const altColor = css`
   }
 `;
 
+const stickyCell = css`
+  position: sticky;
+`;
+
 const disabledStyle = css`
   background-color: ${uiColors.gray.light2};
   color: ${uiColors.gray.base};
@@ -53,8 +58,19 @@ const displayFlex = css`
   padding: 2px;
 `;
 
+const truncation = css`
+  max-width: 100px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+`;
+
 const transitionStyles = {
   default: css`
+    & > td {
+      padding: 0px;
+    }
+
     & > td > div {
       max-height: 0;
     }
@@ -67,133 +83,148 @@ const transitionStyles = {
   `,
 };
 
-interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
+interface RowProps
+  extends React.ComponentPropsWithoutRef<'tr'>,
+    SharedRowProps {
   expanded?: boolean;
   disabled?: boolean;
-  selectable?: boolean;
-  setIndeterminate?: (boolean: boolean) => void;
-  checked?: boolean;
 }
 
-function Row({
-  expanded = false,
-  disabled = false,
-  checked = false,
-  children,
-  className,
-  selectable,
-  setIndeterminate,
-}: RowProps) {
-  const [isExpanded, setIsExpanded] = useState(expanded);
-  let hasSeenFirstCell = false;
+const Row = React.forwardRef(
+  (
+    {
+      expanded = false,
+      disabled = false,
+      checked = false,
+      children,
+      className,
+      selectable,
+      setIndeterminate,
+    }: RowProps,
+    ref: React.Ref<any>,
+  ) => {
+    const { state, dispatch } = useTableContext();
+    const { data, stickyColumns } = state;
 
-  const chevronButton = (
-    <IconButton
-      onClick={() => setIsExpanded(curr => !curr)}
-      aria-label="chevron"
-      className={css`
-        margin-right: 4px;
-      `}
-    >
-      <Icon
-        glyph={isExpanded ? 'ChevronDown' : 'ChevronRight'}
-        color={uiColors.gray.dark2}
-      />
-    </IconButton>
-  );
+    const [isExpanded, setIsExpanded] = useState(expanded);
+    const nodeRef = React.useRef(null);
+    let hasSeenFirstCell = false;
 
-  const nestedRows = React.Children.map(children, child => {
-    if (isComponentType(child, 'Row')) {
-      const selectCell = (
-        <CheckboxCell checked={checked} setIndeterminate={setIndeterminate} />
-      );
+    const chevronButton = (
+      <IconButton
+        onClick={() => setIsExpanded(curr => !curr)}
+        aria-label="chevron"
+        className={css`
+          margin-right: 4px;
+        `}
+      >
+        <Icon
+          aria-label="chevron"
+          glyph={isExpanded ? 'ChevronDown' : 'ChevronRight'}
+          color={uiColors.gray.dark2}
+        />
+      </IconButton>
+    );
 
-      return React.cloneElement(child, {
-        selectable,
-        children: [
-          selectCell,
-          [
-            ...(child.props?.children instanceof Array
-              ? child.props.children
-              : [child.props.children]),
-          ],
-        ],
-      });
-    }
-  });
+    const nestedRows = React.Children.map(children, child => {
+      if (isComponentType(child, 'Row')) {
+        const selectCell = <CheckboxCell checked={checked} />;
 
-  const renderedChildren = React.Children.map(children, child => {
-    if (
-      isComponentType(child, 'Cell') ||
-      isComponentType(child, 'CheckboxCell')
-    ) {
-      if (disabled) {
         return React.cloneElement(child, {
-          className: disabledCell,
-          disabled,
+          selectable,
+          setIndeterminate,
+          children: [selectCell, ...coerceArray(child.props.children)],
+          ref: nodeRef,
         });
       }
+    });
+
+    const renderedChildren = React.Children.map(children, (child, index) => {
+      const isSticky = stickyColumns.indexOf(index) !== -1;
+      const stickyStyle = { [stickyCell]: isSticky };
 
       if (isComponentType(child, 'CheckboxCell')) {
-        return React.cloneElement(child, {
-          setIndeterminate,
-        });
+        if (disabled) {
+          return React.cloneElement(child, {
+            className: disabledCell,
+            disabled,
+          });
+        }
+
+        return React.cloneElement(child, { setIndeterminate });
       }
 
-      if (nestedRows && nestedRows.length > 0 && !hasSeenFirstCell) {
-        hasSeenFirstCell = true;
+      if (isComponentType(child, 'Cell')) {
+        const { className, children } = child.props;
 
-        const rowChildren = [
-          ...(child.props?.children instanceof Array
-            ? child.props.children
-            : [child.props.children]),
-        ];
+        if (disabled) {
+          return React.cloneElement(child, {
+            className: disabledCell,
+            disabled,
+          });
+        }
+
+        if (nestedRows && nestedRows.length > 0 && !hasSeenFirstCell) {
+          hasSeenFirstCell = true;
+          const rowChildren = coerceArray(children);
+
+          return React.cloneElement(child, {
+            children: (
+              <>
+                {chevronButton}
+                <span className={truncation}>{rowChildren}</span>
+              </>
+            ),
+            className: cx(displayFlex, stickyStyle, className),
+            key: children,
+          });
+        }
 
         return React.cloneElement(child, {
-          children: [chevronButton, ...rowChildren],
-          className: displayFlex,
-          key: child.props.children,
+          children: <span className={truncation}>{child.props.children}</span>,
+          className: cx(stickyStyle, className),
         });
       }
+    });
 
-      return child;
-    }
-  });
+    const shouldAltRowColor = data.length >= 10 && !nestedRows;
 
-  const shouldAltRowColor = useNumRows() >= 10 && !nestedRows;
+    return (
+      <>
+        <tr
+          className={cx(
+            rowStyle,
+            {
+              [altColor]: shouldAltRowColor,
+              [disabledStyle]: disabled,
+            },
+            className,
+          )}
+          aria-disabled={disabled}
+        >
+          {renderedChildren}
+        </tr>
 
-  return (
-    <>
-      <tr
-        className={cx(
-          rowStyle,
-          { [altColor]: shouldAltRowColor, [disabledStyle]: disabled },
-          className,
-        )}
-        aria-disabled={disabled}
-      >
-        {renderedChildren}
-      </tr>
-
-      <Transition in={isExpanded} timeout={150} mountOnEnter unmountOnExit>
-        {(state: string) => {
-          const props = {
-            className: cx(transitionStyles.default, {
-              [transitionStyles.entered]: ['entering', 'entered'].includes(
-                state,
-              ),
-            }),
-          };
-          return (
-            <>
-              {nestedRows?.map(element => React.cloneElement(element, props))}
-            </>
-          );
-        }}
-      </Transition>
-    </>
-  );
-}
+        <Transition in={isExpanded} timeout={150} nodeRef={ref}>
+          {(state: string) => {
+            const props = {
+              className: cx(transitionStyles.default, {
+                [transitionStyles.entered]: ['entering', 'entered'].includes(
+                  state,
+                ),
+              }),
+            };
+            return (
+              <>
+                {nestedRows?.map(element => React.cloneElement(element, props))}
+              </>
+            );
+          }}
+        </Transition>
+      </>
+    );
+  },
+);
 
 Row.displayName = 'Row';
 

@@ -7,6 +7,7 @@ interface CellProps extends React.ComponentPropsWithRef<'td'> {}
 const tdStyles = css`
   line-height: 16px;
   letter-spacing: 0px;
+  position: relative;
 `;
 
 const innerDivStyles = css`
@@ -15,18 +16,13 @@ const innerDivStyles = css`
   align-items: center;
 `;
 
-const truncation = css`
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-`;
-
 const Cell = React.forwardRef(
-  ({ children, className }: CellProps, ref: React.Ref<any>) => {
+  ({ children, className, ...rest }: CellProps, ref: React.Ref<any>) => {
     return (
       <td
         ref={ref}
-        className={cx(commonCellStyles, tdStyles, truncation, className)}
+        className={cx(commonCellStyles, tdStyles, className)}
+        {...rest}
       >
         <div className={innerDivStyles}>{children}</div>
       </td>
