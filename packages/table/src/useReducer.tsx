@@ -1,4 +1,3 @@
-import { Reducer } from 'react';
 import { State } from './utils';
 
 const alphanumericCollator = new Intl.Collator(undefined, {
@@ -27,12 +26,6 @@ const sortFunction = ({
   });
 };
 
-// type Action =
-//   | { type: 'IS_SELECTABLE_TABLE' }
-//   | { type: 'SWITCH_CHECKMARK' }
-//   | { type: 'ADD_STICKY_COLUMN' }
-//   | { type: 'SORT' };
-
 const Types = {
   SelectableTable: 'SELECTABLE_TABLE',
   ToggleMainChecked: 'TOGGLE_MAIN_CHECKED',
@@ -41,6 +34,8 @@ const Types = {
 } as const;
 
 type Types = typeof Types[keyof typeof Types];
+
+export { Types };
 
 interface ActionPayload {
   [Types.SelectableTable]: boolean;

@@ -6,7 +6,7 @@ import HeaderRow, { HeaderRowProps } from './HeaderRow';
 import TableHeader, { TableHeaderProps } from './TableHeader';
 import CheckboxCell from './CheckboxCell';
 import { State, coerceArray } from './utils';
-import { reducer } from './useReducer';
+import { Types, reducer } from './useReducer';
 
 // * Make sure dates are right aligned
 // * Indent on Expanded Row
@@ -15,7 +15,6 @@ import { reducer } from './useReducer';
 
 // * style rowspan
 
-// * Set up proper typings for useReducer
 // * Keep track of checkmark states
 // * Make sure if you set on second header row, the first header row is not impacted
 
@@ -62,7 +61,7 @@ export default function Table({
 
   const sortRows = (columnId: number, key: string) => {
     dispatch({
-      type: 'SORT',
+      type: Types.SortTableData,
       payload: {
         columnId,
         key,

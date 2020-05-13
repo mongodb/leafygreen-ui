@@ -5,6 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { commonCellStyles } from './styles';
 import { useTableContext } from './Context';
+import { Types } from './useReducer';
 
 const thStyle = css`
   width: 144px;
@@ -65,9 +66,9 @@ function TableHeader({
   const accessor = accessorProp ?? label.toString?.()?.toLowerCase();
 
   React.useEffect(() => {
-    if (stickyColumn) {
+    if (stickyColumn && index) {
       dispatch({
-        type: 'ADD_STICKY_COLUMN',
+        type: Types.AddStickyColumnIndex,
         payload: state.selectable ? index + 1 : index,
       });
     }

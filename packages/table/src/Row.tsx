@@ -93,7 +93,7 @@ const Row = React.forwardRef(
     { expanded = false, disabled = false, children, className }: RowProps,
     ref: React.Ref<any>,
   ) => {
-    const { state, dispatch } = useTableContext();
+    const { state } = useTableContext();
     const { data, stickyColumns, selectable, mainCheckState } = state;
 
     const [isExpanded, setIsExpanded] = useState(expanded);

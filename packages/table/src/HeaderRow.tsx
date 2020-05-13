@@ -3,6 +3,7 @@ import Checkbox from '@leafygreen-ui/checkbox';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useTableContext } from './Context';
+import { Types } from './useReducer';
 
 const thStyles = css`
   width: 40px;
@@ -40,7 +41,7 @@ function HeaderRow({
   React.useEffect(() => {
     if (selectableProp) {
       dispatch({
-        type: 'IS_SELECTABLE_TABLE',
+        type: Types.SelectableTable,
         payload: selectableProp,
       });
     }
@@ -48,7 +49,7 @@ function HeaderRow({
 
   const handleChange = () => {
     dispatch({
-      type: 'SWITCH_CHECKMARK',
+      type: Types.ToggleMainChecked,
     });
   };
 

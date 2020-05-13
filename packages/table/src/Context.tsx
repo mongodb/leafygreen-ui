@@ -7,10 +7,13 @@ import { State } from './utils';
 // }
 
 interface ContextInterface {
-  state?: State;
-  dispatch?: React.Dispatch<any>;
+  state: State;
+  dispatch: React.Dispatch<any>;
 }
-const TableContext = createContext<ContextInterface>({});
+const TableContext = createContext<ContextInterface>({
+  state: {},
+  dispatch: () => {},
+});
 
 export function useTableContext() {
   return useContext(TableContext);

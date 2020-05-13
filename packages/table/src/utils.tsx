@@ -5,11 +5,11 @@ interface Sort {
 }
 
 export interface State {
-  sort: Sort;
-  data: Array<any>;
-  stickyColumns: Array<number>;
-  selectable: boolean;
-  mainCheckState: boolean;
+  sort?: Sort;
+  data?: Array<any>;
+  stickyColumns?: Array<number>;
+  selectable?: boolean;
+  mainCheckState?: boolean;
 }
 
 export const coerceArray = (arg: any) => {
