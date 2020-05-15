@@ -89,7 +89,7 @@ storiesOf('Table', module)
           price: '$6.00',
         },
         {
-          flavor: 'Mint Chocolate Chip',
+          // flavor: 'Mint Chocolate Chip',
           price: '$5.00',
         },
         {
@@ -99,17 +99,19 @@ storiesOf('Table', module)
       ]}
       columns={[
         <HeaderRow key="1">
-          <TableHeader colSpan={3} label="Ice Cream Shoppe" sortable={false} />
+          <TableHeader colSpan={2} label="Ice Cream Shoppe" sortable={false} />
         </HeaderRow>,
-        <HeaderRow key="2" selectable>
+        <HeaderRow key="2">
           <TableHeader label="Flavor" stickyColumn />
           <TableHeader label="Price" />
         </HeaderRow>,
       ]}
     >
       {({ datum, rowIndex }) => (
-        <Row key={datum.flavor} disabled={datum.flavor === 'Charlotte'}>
-          <Cell>{datum.flavor}</Cell>
+        <Row key={datum.flavor}>
+          <Cell rowSpan={datum.flavor === 'Funfetti' ? 2 : 1}>
+            {datum.flavor}
+          </Cell>
           <Cell>{datum.price}</Cell>
         </Row>
       )}

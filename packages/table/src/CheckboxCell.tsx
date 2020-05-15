@@ -1,28 +1,58 @@
 import React from 'react';
 import Checkbox from '@leafygreen-ui/checkbox';
 import { css } from '@leafygreen-ui/emotion';
+import { useTableContext, Types } from './table-context';
 
 interface CheckboxCellProps extends React.ComponentPropsWithoutRef<'td'> {
   checked?: boolean;
   disabled?: boolean;
   setIndeterminate?: (boolean: boolean) => void;
+  index?: number;
 }
 
 function CheckboxCell({
   children,
-  checked: checkedProp,
   className,
   disabled,
+  index,
 }: CheckboxCellProps) {
-  const [checked, setChecked] = React.useState(disabled ? false : checkedProp);
+  const {
+    state: { mainCheckState },
+    dispatch,
+  } = useTableContext();
+  const [checked, setChecked] = React.useState(mainCheckState);
+
+  const handleChange = () => {
+    setChecked(curr => !curr);
+
+    if (typeof index === 'number') {
+      dispatch({
+        type: Types.ToggleIndividualChecked,
+        payload: { index, checked: !checked },
+      });
+    }
+  };
 
   React.useEffect(() => {
-    if (disabled) {
-      setChecked(false);
-    } else {
-      setChecked(checkedProp);
+    if (typeof index === 'number') {
+      if (disabled) {
+        setChecked(false);
+        dispatch({
+          type: Types.ToggleIndividualChecked,
+          payload: { index, checked: false },
+        });
+      } else {
+        setChecked(mainCheckState);
+        dispatch({
+          type: Types.ToggleIndividualChecked,
+          payload: {
+            index,
+            checked: mainCheckState,
+          },
+        });
+      }
     }
-  }, [checkedProp, disabled]);
+  }, [disabled, mainCheckState]);
 
   return (
     <td className={className}>
@@ -35,7 +65,7 @@ function CheckboxCell({
       >
         <Checkbox
           checked={checked}
-          onChange={() => setChecked(curr => !curr)}
+          onChange={handleChange}
           disabled={disabled}
         />
         {children}

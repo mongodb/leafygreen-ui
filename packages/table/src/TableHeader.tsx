@@ -4,8 +4,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { commonCellStyles } from './styles';
-import { useTableContext } from './Context';
-import { Types } from './useReducer';
+import { useTableContext, Types } from './table-context';
 
 const thStyle = css`
   width: 144px;
@@ -35,7 +34,7 @@ const labelStyle = css`
 
 interface TableHeaderInterface {
   label: React.ReactElement | string;
-  onClick?: (colId: number | undefined, key: string) => void;
+  onClick?: (colId: number, key: string) => void;
   index?: number;
   glyph?: string;
   isEditable?: boolean;
@@ -62,14 +61,23 @@ function TableHeader({
   accessor: accessorProp,
   ...rest
 }: TableHeaderProps) {
-  const { state, dispatch } = useTableContext();
+  const {
+    state: { selectable },
+    dispatch,
+  } = useTableContext();
   const accessor = accessorProp ?? label.toString?.()?.toLowerCase();
+
+  const handleClick = () => {
+    if (typeof index === 'number') {
+      return onClick?.(index, accessor);
+    }
+  };
 
   React.useEffect(() => {
     if (stickyColumn && index) {
       dispatch({
         type: Types.AddStickyColumnIndex,
-        payload: state.selectable ? index + 1 : index,
+        payload: selectable ? index + 1 : index,
       });
     }
   }, [stickyColumn]);
@@ -98,10 +106,7 @@ function TableHeader({
           )}
         </span>
         {sortable && (
-          <IconButton
-            aria-label="sort"
-            onClick={() => onClick?.(index, accessor)}
-          >
+          <IconButton aria-label="sort" onClick={handleClick}>
             <Icon size="small" glyph={glyph} title="sorted icon" />
           </IconButton>
         )}

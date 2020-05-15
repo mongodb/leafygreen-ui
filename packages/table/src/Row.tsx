@@ -6,8 +6,7 @@ import { isComponentType } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import CheckboxCell from './CheckboxCell';
-import { coerceArray } from './utils';
-import { useTableContext } from './Context';
+import { useTableContext } from './table-context';
 
 const rowStyle = css`
   cursor: pointer;
@@ -93,8 +92,9 @@ const Row = React.forwardRef(
     { expanded = false, disabled = false, children, className }: RowProps,
     ref: React.Ref<any>,
   ) => {
-    const { state } = useTableContext();
-    const { data, stickyColumns, selectable, mainCheckState } = state;
+    const {
+      state: { data, stickyColumns, selectable },
+    } = useTableContext();
 
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nodeRef = React.useRef(null);
@@ -116,20 +116,20 @@ const Row = React.forwardRef(
       </IconButton>
     );
 
-    const nestedRows = React.Children.map(children, child => {
+    const nestedRows = React.Children.map(children, (child, index) => {
       if (isComponentType(child, 'Row')) {
-        const selectCell = <CheckboxCell checked={mainCheckState} />;
+        const selectCell = <CheckboxCell index={index} />;
 
         return React.cloneElement(child, {
           selectable,
-          children: [selectCell, ...coerceArray(child.props.children)],
+          children: [selectCell, ...Array.from(child.props.children)],
           ref: nodeRef,
         });
       }
     });
 
     const renderedChildren = React.Children.map(children, (child, index) => {
-      const isSticky = stickyColumns.indexOf(index) !== -1;
+      const isSticky = stickyColumns?.indexOf(index) !== -1;
       const stickyStyle = { [stickyCell]: isSticky };
 
       if (isComponentType(child, 'CheckboxCell')) {
@@ -155,7 +155,8 @@ const Row = React.forwardRef(
 
         if (nestedRows && nestedRows.length > 0 && !hasSeenFirstCell) {
           hasSeenFirstCell = true;
-          const rowChildren = coerceArray(children);
+
+          const rowChildren = Array.from(children);
 
           return React.cloneElement(child, {
             children: (
@@ -169,14 +170,18 @@ const Row = React.forwardRef(
           });
         }
 
+        if (!children) {
+          return;
+        }
+
         return React.cloneElement(child, {
-          children: <span className={truncation}>{child.props.children}</span>,
+          children: <span className={truncation}>{children}</span>,
           className: cx(stickyStyle, className),
         });
       }
     });
 
-    const shouldAltRowColor = data.length >= 10 && !nestedRows;
+    const shouldAltRowColor = data && data.length >= 10 && !nestedRows;
 
     return (
       <>

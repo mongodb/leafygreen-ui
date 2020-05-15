@@ -1,21 +1,25 @@
-interface Sort {
-  columnId?: number;
+const alphanumericCollator = new Intl.Collator(undefined, {
+  numeric: true,
+  sensitivity: 'base',
+});
+
+export const sortFunction = ({
+  data,
+  key,
+  direction,
+}: {
+  data: Array<any>;
+  key: string;
   direction: 'asc' | 'desc';
-  key?: string;
-}
+}) => {
+  return data.sort((a, b) => {
+    const aVal = a[key];
+    const bVal = b[key];
 
-export interface State {
-  sort?: Sort;
-  data?: Array<any>;
-  stickyColumns?: Array<number>;
-  selectable?: boolean;
-  mainCheckState?: boolean;
-}
+    if (direction !== 'desc') {
+      return alphanumericCollator.compare(aVal, bVal);
+    }
 
-export const coerceArray = (arg: any) => {
-  if (Array.isArray(arg)) {
-    return [...arg];
-  } else {
-    return [arg];
-  }
+    return alphanumericCollator.compare(bVal, aVal);
+  });
 };

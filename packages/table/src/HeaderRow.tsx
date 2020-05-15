@@ -2,8 +2,7 @@ import React from 'react';
 import Checkbox from '@leafygreen-ui/checkbox';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { useTableContext } from './Context';
-import { Types } from './useReducer';
+import { useTableContext, Types } from './table-context';
 
 const thStyles = css`
   width: 40px;
@@ -30,13 +29,14 @@ export interface HeaderRowProps extends React.ComponentPropsWithoutRef<'tr'> {
 function HeaderRow({
   sticky = false,
   selectable: selectableProp = false,
-  indeterminate,
   children,
   className,
   ...rest
 }: HeaderRowProps) {
-  const { state, dispatch } = useTableContext();
-  const { selectable, mainCheckState } = state;
+  const {
+    state: { selectable, mainCheckState, mainIndeterminate },
+    dispatch,
+  } = useTableContext();
 
   React.useEffect(() => {
     if (selectableProp) {
@@ -60,7 +60,7 @@ function HeaderRow({
           <div className={innerDivStyles}>
             <Checkbox
               checked={mainCheckState}
-              indeterminate={indeterminate}
+              indeterminate={mainIndeterminate}
               onChange={handleChange}
             />
           </div>

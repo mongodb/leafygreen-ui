@@ -1,12 +1,10 @@
 import React, { useReducer, ReactElement } from 'react';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { css } from '@leafygreen-ui/emotion';
-import TableProvider from './Context';
 import HeaderRow, { HeaderRowProps } from './HeaderRow';
 import TableHeader, { TableHeaderProps } from './TableHeader';
 import CheckboxCell from './CheckboxCell';
-import { State, coerceArray } from './utils';
-import { Types, reducer } from './useReducer';
+import { State, Types, TableProvider, reducer } from './table-context';
 
 // * Make sure dates are right aligned
 // * Indent on Expanded Row
@@ -15,7 +13,7 @@ import { Types, reducer } from './useReducer';
 
 // * style rowspan
 
-// * Keep track of checkmark states
+// * Fix keeping track of checkmark states when disabled row
 // * Make sure if you set on second header row, the first header row is not impacted
 
 const tableStyles = css`
@@ -38,13 +36,72 @@ export default function Table({
   children,
 }: TableProps) {
   const initialState: State = {
-    sort: { columnId: undefined, direction: 'asc', key: undefined },
+    sort: {
+      columnId: undefined,
+      direction: 'asc',
+      key: undefined,
+    },
     data,
     stickyColumns: [],
     selectable: selectableProp,
     mainCheckState: false,
+    mainIndeterminate: false,
   };
+
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  React.useEffect(() => {
+    const rowCheckedState: {
+      [n in number]: undefined | boolean;
+    } = {};
+
+    rows.forEach((datum, index) => {
+      if (datum.props.disabled) {
+        return;
+      }
+      rowCheckedState[index] = undefined;
+    });
+
+    if (rowCheckedState) {
+      dispatch({
+        type: Types.SetRowCheckedState,
+        payload: rowCheckedState,
+      });
+    }
+  }, [data]);
+
+  React.useEffect(() => {
+    if (state.rowCheckedState) {
+      const boolArray = Object.values(state.rowCheckedState);
+      const checkSame = boolArray.every(val => val === boolArray[0]);
+
+      if (!checkSame) {
+        dispatch({
+          type: Types.ToggleMainIndeterminate,
+          payload: true,
+        });
+      }
+
+      if (checkSame) {
+        dispatch({
+          type: Types.ToggleMainIndeterminate,
+          payload: false,
+        });
+
+        if (boolArray[0]) {
+          dispatch({
+            type: Types.ToggleMainChecked,
+            payload: true,
+          });
+        } else {
+          dispatch({
+            type: Types.ToggleMainChecked,
+            payload: false,
+          });
+        }
+      }
+    }
+  }, [state.data, state.rowCheckedState]);
 
   let usingHeaderRow = React.useMemo(() => false, [children]);
   let rows: Array<React.ReactElement>;
@@ -55,8 +112,6 @@ export default function Table({
     });
 
     rows = unsortedRows;
-  } else {
-    rows = coerceArray(children);
   }
 
   const sortRows = (columnId: number, key: string) => {
@@ -76,7 +131,10 @@ export default function Table({
         usingHeaderRow = true;
 
         const { children } = child?.props;
-        const renderedChildren = coerceArray(children);
+
+        const renderedChildren = Array.isArray(children)
+          ? [...children]
+          : [children];
 
         return React.cloneElement(child, {
           children: renderHeader(renderedChildren),
@@ -132,11 +190,11 @@ export default function Table({
     }
 
     if (state.selectable) {
-      return rows.map(row => {
-        const selectCell = <CheckboxCell checked={state.mainCheckState} />;
+      return rows.map((row, index) => {
+        const selectCell = <CheckboxCell index={index} />;
 
         return React.cloneElement(row, {
-          children: [selectCell, [...coerceArray(row.props.children)]],
+          children: [selectCell, [...Array.from(row.props.children)]],
         });
       });
     }
