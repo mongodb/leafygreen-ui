@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo } from 'react';
-import { sortFunction, updateCheckedState } from './utils';
+import { sortFunction } from './utils';
 
 // type Action
 const Types = {
@@ -56,7 +56,7 @@ interface Sort {
   key?: string;
 }
 
-interface State {
+export interface State {
   sort?: Sort;
   data?: Array<any>;
   stickyColumns?: Array<number>;
@@ -170,4 +170,4 @@ function useTableContext() {
   return useContext(TableContext);
 }
 
-export { TableProvider, useTableContext, reducer, Types, State };
+export { TableProvider, useTableContext, reducer, Types };
