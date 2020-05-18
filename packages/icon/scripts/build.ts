@@ -2,16 +2,16 @@ const svgr = require('@svgr/core').default;
 // @ts-ignore
 const fs = require('fs');
 // @ts-ignore
-const template = require('../src/template');
-// @ts-ignore
 const path = require('path');
 // @ts-ignore
 const meow = require('meow');
+// @ts-ignore
+const template = require('../src/template');
 
 const cli = meow(
   `
 	Usage
-		$ node ./build.js <filename(s)>
+		$ ts-node ./build.js <filename(s)>
 
 	Options
 		--outDir, -o  Output directory for built SVG components
@@ -54,7 +54,7 @@ declare module '@leafygreen-ui/icon/dist/${glyphName}' {
 function buildDefinitionFiles(input: Array<string>, flags: Flags) {
   let svgFileNames: Array<string>;
 
-  if (input && input.length) {
+  if (input?.length) {
     svgFileNames = input.filter(filterSvgFiles).map(filePath => {
       const splitPath = filePath.split('/');
 
@@ -89,10 +89,9 @@ function buildDefinitionFiles(input: Array<string>, flags: Flags) {
 function buildSvgFiles(input: Array<string>, flags: Flags) {
   let svgFiles: Array<FileObject>;
 
-  if (input && input.length) {
+  if (input?.length) {
     svgFiles = input.filter(filterSvgFiles).map(filePath => {
-      const splitPath = filePath.split('/');
-      const fileName = splitPath[splitPath.length - 1].replace('.svg', '');
+      const fileName: string = path.basename(filePath);
 
       return {
         name: fileName,
@@ -169,7 +168,7 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
           moduleCode,
         );
       })
-      .catch(console.error);
+      .catch(() => process.exit(1));
   });
 }
 

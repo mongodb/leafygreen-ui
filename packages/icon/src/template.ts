@@ -1,66 +1,29 @@
-/**
-usage:
-cd packages/icon
-
-# for entire folder
-yarn svgr --template src/template.js -d dist/test src/glyphs
-
-# for one file while developing
-yarn svgr --template src/template.js -d dist/test src/glyphs/ActivityFeed.svg
-
-I have these tabs open atm:
-https://react-svgr.com/docs/custom-templates/
-https://github.com/gregberge/svgr/blob/master/packages/babel-plugin-transform-svg-component/src/index.js#L28
-https://babeljs.io/docs/en/babel-template#template-literal-usage
-https://astexplorer.net/
-*/
-
-/**
- function createGlyphComponent(glyphName, Glyph) {
-  function GlyphComponent({ className, size = 16, title, fill, ...props }) {
-
-
-    return (
-      <Glyph
-        className={cx(
-          {
-            [fillStyle]: fill != null,
-          },
-          className,
-        )}
-        title={getGlyphTitle(glyphName, title)}
-        height={size}
-        width={size}
-        {...props}
-      />
-    );
-  }
-}
-**/
-interface FirstArg extends Record<string, any> {
+interface BabelAPI extends Record<string, any> {
   template: {
     smart: (opts: Record<string, any>) => Record<string, any>;
   } & Record<string, any>;
 }
 
-interface SecondArg extends Record<string, any> {
+interface SVGROptions extends Record<string, any> {
   state: {
     componentName: string;
   } & Record<string, any>;
   typescript: boolean;
 }
 
-interface ThirdArg extends Record<string, any> {
+interface ASTParts extends Record<string, any> {
   jsx: Record<string, any>;
   componentName: object;
   imports: string;
   exports: string;
+  interfaces: string;
+  props: string;
 }
 
 module.exports = function template(
-  { template }: FirstArg,
-  { state: { componentName }, typescript }: SecondArg,
-  { imports, jsx, exports }: ThirdArg,
+  { template }: BabelAPI,
+  { state: { componentName }, typescript }: SVGROptions,
+  { imports, jsx, exports }: ASTParts,
 ) {
   const plugins = ['jsx'];
 
@@ -121,7 +84,7 @@ module.exports = function template(
     }
 
     const ${componentName} = ({ className, size = 16, title, customTitleId,  fill, ...props }) => {
-      const { current: titleId } = React.useMemo(() => customTitleId || generateGlyphTitle());
+      const { current: titleId } = React.useMemo(() => customTitleId || generateGlyphTitle(), [customTitleId]);
 
       const fillStyle = css\`
         color: \${fill};
