@@ -109,7 +109,7 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
   svgFiles.forEach(file => {
     const fileContent = fs.readFileSync(file.path, { encoding: 'utf8' });
 
-    svgr(
+    const moduleCode = svgr.sync(
       fileContent,
       {
         titleProp: true,
@@ -147,24 +147,19 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
       {
         componentName: file.name,
       },
-    )
-      .then((moduleCode: string) => {
-        let outputDir = path.resolve(__dirname, '..', 'dist');
+    );
 
-        if (flags.outDir) {
-          outputDir = path.resolve(process.cwd(), flags.outDir);
-        }
+    let outputDir = path.resolve(__dirname, '..', 'dist');
 
-        if (!fs.existsSync(outputDir)) {
-          fs.mkdirSync(outputDir, { recursive: true });
-        }
+    if (flags.outDir) {
+      outputDir = path.resolve(process.cwd(), flags.outDir);
+    }
 
-        fs.writeFileSync(
-          path.resolve(outputDir, `${file.name}.js`),
-          moduleCode,
-        );
-      })
-      .catch(() => process.exit(1));
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
+
+    fs.writeFileSync(path.resolve(outputDir, `${file.name}.js`), moduleCode);
   });
 }
 
