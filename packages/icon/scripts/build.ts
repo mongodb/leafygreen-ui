@@ -55,24 +55,22 @@ function buildDefinitionFiles(input: Array<string>, flags: Flags) {
   let svgFileNames: Array<string>;
 
   if (input?.length) {
-    svgFileNames = input.filter(filterSvgFiles).map(filePath => {
-      const splitPath = filePath.split('/');
-
-      return splitPath[splitPath.length - 1].replace('.svg', '');
-    });
+    svgFileNames = input
+      .filter(filterSvgFiles)
+      .map((fileName: string) => path.basename(fileName, '.svg'));
   } else {
-    const glyphsDir: string = path.resolve(__dirname, '../src/glyphs');
+    const glyphsDir: string = path.resolve(__dirname, '..', 'src', 'glyphs');
 
     svgFileNames = fs
       .readdirSync(glyphsDir)
       .filter(filterSvgFiles)
-      .map((fileName: string) => fileName.replace('.svg', ''));
+      .map((fileName: string) => path.basename(fileName, '.svg'));
   }
 
   svgFileNames.forEach(name => {
     const fileContent = generateModuleDefinition(name);
 
-    let outputDir = path.resolve(__dirname, '../dist');
+    let outputDir = path.resolve(__dirname, '..', 'dist');
 
     if (flags.outDir) {
       outputDir = path.resolve(process.cwd(), flags.outDir);
@@ -91,15 +89,13 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
 
   if (input?.length) {
     svgFiles = input.filter(filterSvgFiles).map(filePath => {
-      const fileName: string = path.basename(filePath);
-
       return {
-        name: fileName,
+        name: path.basename(filePath, '.svg'),
         path: path.resolve(process.cwd(), filePath),
       };
     });
   } else {
-    const glyphsDir: string = path.resolve(__dirname, '../src/glyphs');
+    const glyphsDir: string = path.resolve(__dirname, '..', 'src', 'glyphs');
 
     svgFiles = fs
       .readdirSync(glyphsDir)
@@ -153,7 +149,7 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
       },
     )
       .then((moduleCode: string) => {
-        let outputDir = path.resolve(__dirname, '../dist');
+        let outputDir = path.resolve(__dirname, '..', 'dist');
 
         if (flags.outDir) {
           outputDir = path.resolve(process.cwd(), flags.outDir);
