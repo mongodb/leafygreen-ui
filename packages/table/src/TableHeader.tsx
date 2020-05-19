@@ -38,7 +38,6 @@ interface TableHeaderInterface {
   onClick?: (colId: number, key: string) => void;
   index?: number;
   glyph?: string;
-  isEditable?: boolean;
   stickyColumn?: boolean;
   sortable?: boolean;
   accessor?: string;
@@ -53,7 +52,6 @@ export type TableHeaderProps = Omit<
 
 function TableHeader({
   glyph = 'Unsorted',
-  isEditable = false,
   sortable = false,
   stickyColumn = false,
   label,
@@ -106,18 +104,7 @@ function TableHeader({
       )}
     >
       <div className={flexDisplay}>
-        <span className={labelStyle}>
-          {label}
-          {isEditable && (
-            <IconButton aria-label="menu">
-              <Icon
-                color={uiColors.gray.base}
-                glyph="VerticalEllipsis"
-                size="small"
-              />
-            </IconButton>
-          )}
-        </span>
+        <span className={labelStyle}>{label}</span>
         {sortable && (
           <IconButton aria-label="sort" onClick={handleClick}>
             <Icon size="small" glyph={glyph} title="sorted icon" />

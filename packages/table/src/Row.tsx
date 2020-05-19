@@ -6,7 +6,7 @@ import { isComponentType } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import CheckboxCell from './CheckboxCell';
-import { useTableContext } from './table-context';
+import { useTableContext, Types } from './table-context';
 import { DataType } from './utils';
 
 const rowStyle = css`
@@ -19,7 +19,9 @@ const rowStyle = css`
     overflow: hidden;
     transition: all 150ms ease-in-out;
   }
+`;
 
+const rowHoverStyle = css`
   &:hover {
     background-color: #ffffff;
     box-shadow: 0 1px 3px 0 #b8c4c2;
@@ -127,13 +129,19 @@ const Row = React.forwardRef(
     ref: React.Ref<any>,
   ) => {
     const {
-      state: { data, columnInfo, selectable },
+      state: { data, columnInfo, selectable, hasNestedRows, hasRowSpan },
+      dispatch,
     } = useTableContext();
 
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nodeRef = React.useRef(null);
-    const hasNestedRows = React.useRef(false);
     let hasSeenFirstCell = false;
+
+    // Depending on network speed, will noticeably render columns with incorrect
+    // alignment, would rather wait for proper information before rendering
+    if (!columnInfo) {
+      return null;
+    }
 
     const chevronButton = (
       <IconButton
@@ -153,7 +161,13 @@ const Row = React.forwardRef(
 
     const nestedRows = React.Children.map(children, (child, index) => {
       if (isComponentType(child, 'Row')) {
-        hasNestedRows.current = true;
+        if (!hasNestedRows) {
+          dispatch({
+            type: Types.SetHasNestedRows,
+            payload: true,
+          });
+        }
+
         const selectCell = <CheckboxCell index={index} />;
 
         return React.cloneElement(child, {
@@ -181,7 +195,16 @@ const Row = React.forwardRef(
       }
 
       if (isComponentType(child, 'Cell')) {
-        const { className, children } = child.props;
+        const { className, children, rowSpan } = child.props;
+
+        if (rowSpan > 1) {
+          if (!hasRowSpan) {
+            dispatch({
+              type: Types.SetHasRowSpan,
+              payload: true,
+            });
+          }
+        }
 
         if (disabled) {
           return React.cloneElement(child, {
@@ -218,24 +241,12 @@ const Row = React.forwardRef(
       }
     });
 
-    const shouldAltRowColor =
-      data && data.length >= 10 && !hasNestedRows.current;
-    // const shouldAltRowColor = React.useMemo(
-    //   () => data && data.length >= 10 && nestedRows !== [],
-    //   [data],
-    // );
-
-    // React.useEffect(() => {
-    //   console.log(data && data.length);
-    //   console.log(hasNestedRows.current);
-    // }, []);
-
-    console.log(hasNestedRows.current);
+    const shouldAltRowColor = data && data.length >= 10 && !hasNestedRows;
 
     const alignmentStyles: Array<string> = [];
 
     for (const key in columnInfo) {
-      alignmentStyles.push(styleColumn(key, columnInfo[key].dataType));
+      alignmentStyles.push(styleColumn(key, columnInfo?.[key].dataType));
     }
 
     return (
@@ -252,6 +263,7 @@ const Row = React.forwardRef(
             {
               [altColor]: shouldAltRowColor,
               [disabledStyle]: disabled,
+              [rowHoverStyle]: !hasRowSpan,
             },
             className,
           )}

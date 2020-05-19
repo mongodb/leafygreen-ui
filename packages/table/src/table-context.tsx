@@ -10,6 +10,8 @@ const Types = {
   SortTableData: 'SORT_TABLE_DATA',
   ToggleIndividualChecked: 'TOGGLE_INDIVIDUAL_CHECKED',
   SetRowCheckedState: 'SET_ROW_CHECKED_STATE',
+  SetHasNestedRows: 'SET_HAS_NESTED_ROWS',
+  SetHasRowSpan: 'SET_HAS_ROW_SPAN',
 } as const;
 
 type Types = typeof Types[keyof typeof Types];
@@ -23,6 +25,8 @@ interface ActionPayload {
     dataType?: DataType;
     index: number;
   };
+  [Types.SetHasRowSpan]: boolean;
+  [Types.SetHasNestedRows]: boolean;
   [Types.SortTableData]: {
     columnId: number;
     key: string;
@@ -70,6 +74,8 @@ export interface State {
   headerCheckState?: boolean;
   headerIndeterminate?: boolean;
   rowCheckedState?: Record<number, boolean | undefined>;
+  hasNestedRows?: boolean;
+  hasRowSpan?: boolean;
 }
 
 // interface ProviderProps
@@ -105,6 +111,18 @@ function updateRowCheckedState(
 // reducer
 function reducer(state: State, action: Action): State {
   switch (action.type) {
+    case Types.SetHasRowSpan:
+      return {
+        ...state,
+        hasRowSpan: action.payload,
+      };
+
+    case Types.SetHasNestedRows:
+      return {
+        ...state,
+        hasNestedRows: action.payload,
+      };
+
     case Types.SetRowCheckedState:
       return {
         ...state,

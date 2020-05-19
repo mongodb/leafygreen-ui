@@ -45,9 +45,17 @@ function HeaderRow({
     });
   };
 
+  let checkColSpan = true;
+
+  React.Children.forEach(children, child => {
+    if (child?.props?.colSpan) {
+      checkColSpan = false;
+    }
+  });
+
   return (
     <tr {...rest} className={cx({ [stickyHeader]: sticky }, className)}>
-      {selectable && (
+      {selectable && checkColSpan && (
         <th className={thStyles}>
           <div className={innerDivStyles}>
             <Checkbox

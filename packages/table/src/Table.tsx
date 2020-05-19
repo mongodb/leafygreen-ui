@@ -6,17 +6,7 @@ import TableHeader, { TableHeaderProps } from './TableHeader';
 import CheckboxCell from './CheckboxCell';
 import { State, Types, TableProvider, reducer } from './table-context';
 
-// * Fix alt row coloring
-
-// * style rowspan  -- maybe don't allow sort if you have rowspan
-//   * fix hover
-//   * not clickable
-
 // * Clean TS
-
-// * Make sure if you set on second header row, the first header row is not impacted
-//   * Get rid of prop on header row
-//   * If table is selectable, check header row for colspan, add select if no colspan
 
 const tableStyles = css`
   border-collapse: collapse;
@@ -36,6 +26,7 @@ export default function Table({
   data = [],
   selectable: selectableProp = false,
   children,
+  ...rest
 }: TableProps) {
   const initialState: State = {
     sort: {
@@ -196,7 +187,7 @@ export default function Table({
 
   return (
     <TableProvider state={state} dispatch={dispatch}>
-      <table cellSpacing="0" cellPadding="0" className={tableStyles}>
+      <table cellSpacing="0" cellPadding="0" className={tableStyles} {...rest}>
         <thead>{renderHeader(columns)}</thead>
         <tbody>{renderBody()}</tbody>
       </table>

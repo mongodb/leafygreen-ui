@@ -4,6 +4,7 @@ import { boolean } from '@storybook/addon-knobs';
 import Table from '.';
 import { Row, Cell, TableHeader, HeaderRow } from '.';
 import { DataType } from './utils';
+import { defaultData, multiRowData } from './storybookdata';
 
 interface DemoDataInterface {
   name: string;
@@ -16,23 +17,7 @@ storiesOf('Table', module)
   .add('Default', () => (
     <Table
       selectable={boolean('isSelectable', true)}
-      data={[
-        {
-          name: 'Alice',
-          age: 19,
-          color: 'white',
-          location: 'bedford',
-        },
-        { name: 'Brooke', age: 20, color: 'green', location: 'bedford' },
-        { name: 'Charlotte', age: 21, color: 'white', location: 'bedford' },
-        { name: 'Donna', age: 22, color: 'green', location: 'bedford' },
-        { name: 'Emma', age: 23, color: 'white', location: 'bedford' },
-        { name: 'Georgia', age: 24, color: 'white', location: 'bedford' },
-        { name: 'Frannie', age: 25, color: 'green', location: 'bedford' },
-        { name: 'Iman', age: 26, color: 'white', location: 'bedford' },
-        { name: 'Hannah', age: 27, color: 'green', location: 'bedford' },
-        { name: 'Jill', age: 28, color: 'green', location: 'bedford' },
-      ]}
+      data={defaultData}
       columns={[
         <TableHeader
           dataType={DataType.String}
@@ -57,13 +42,7 @@ storiesOf('Table', module)
         'Location',
       ]}
     >
-      {({
-        datum,
-        rowIndex,
-      }: {
-        datum: DemoDataInterface;
-        rowIndex: number;
-      }) => (
+      {({ datum }: { datum: DemoDataInterface; rowIndex: number }) => (
         <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
           <Cell>{datum.name}</Cell>
           <Cell>{datum.age}</Cell>
@@ -93,57 +72,10 @@ storiesOf('Table', module)
   ))
   .add('Multi-row Header', () => (
     <Table
-      selectable
-      data={[
-        {
-          flavor: 'Chocolate',
-          price: '$8.00',
-        },
-        {
-          flavor: 'Vanilla',
-          price: '$4.00',
-        },
-        {
-          flavor: 'Funfetti',
-          price: '$6.00',
-        },
-        {
-          flavor: 'Mint Chocolate Chip',
-          price: '$5.00',
-        },
-        {
-          flavor: 'Mint Choc1olate Chip',
-          price: '$5.00',
-        },
-        {
-          flavor: 'Mint Cho2colate Chip',
-          price: '$5.00',
-        },
-        {
-          flavor: 'Mint Choco3late Chip',
-          price: '$5.00',
-        },
-        {
-          flavor: 'Mint Choco4late Chip',
-          price: '$5.00',
-        },
-        {
-          flavor: 'Mint Choco5late Chip',
-          price: '$5.00',
-        },
-        {
-          flavor: 'Mint Choco6late Chip',
-          price: '$5.00',
-        },
-
-        {
-          flavor: 'Strawberry',
-          price: '$3.00',
-        },
-      ]}
+      data={multiRowData}
       columns={[
         <HeaderRow key="1">
-          <TableHeader colSpan={2} label="Ice Cream Shoppe" sortable={false} />
+          <TableHeader colSpan={3} label="Ice Cream Shoppe" sortable={false} />
         </HeaderRow>,
         <HeaderRow key="2">
           <TableHeader label="Flavor" stickyColumn />
@@ -151,10 +83,28 @@ storiesOf('Table', module)
         </HeaderRow>,
       ]}
     >
-      {({ datum, rowIndex }) => (
+      {({ datum }) => (
         <Row key={datum.flavor}>
-          <Cell>{datum.flavor}</Cell>
+          <Cell rowSpan={datum.flavor === 'Funfetti' ? 2 : 1}>
+            {datum.flavor}
+          </Cell>
           <Cell>{datum.price}</Cell>
+        </Row>
+      )}
+    </Table>
+  ))
+  .add('No nested Rows', () => (
+    <Table
+      selectable={boolean('isSelectable', true)}
+      data={defaultData}
+      columns={['Name', 'Age', 'Color', 'Location']}
+    >
+      {({ datum }: { datum: DemoDataInterface; rowIndex: number }) => (
+        <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
+          <Cell>{datum.name}</Cell>
+          <Cell>{datum.age}</Cell>
+          <Cell>{datum.color}</Cell>
+          <Cell>{datum.location}</Cell>
         </Row>
       )}
     </Table>
