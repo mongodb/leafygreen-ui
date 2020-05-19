@@ -40,10 +40,15 @@ function getAllPackages(dir) {
 
 function getDirectGlyphImports() {
   const glyphsDir = path.resolve(__dirname, './packages/icon/src/glyphs');
-  return fs.readdirSync(glyphsDir).filter(path => /.svg/.test(path)).map(fileName => `@leafygreen-ui/icon/dist/${path.basename(fileName, '.svg')}`)
+  return fs
+    .readdirSync(glyphsDir)
+    .filter(path => /.svg/.test(path))
+    .map(
+      fileName => `@leafygreen-ui/icon/dist/${path.basename(fileName, '.svg')}`,
+    );
 }
 
-console.log(getDirectGlyphImports())
+console.log(getDirectGlyphImports());
 
 // Base Webpack configuration, used by all other configurations for common settings
 function generateConfigFunc(target = 'web') {
