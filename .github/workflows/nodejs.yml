@@ -25,7 +25,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: yarn install
-      - run: yarn pre-build
       - run: yarn build
       - name: tests
         run: yarn test --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
@@ -52,6 +51,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: yarn install
+      - run: yarn build
 
       - name: prettier
         run: yarn prettier:check
