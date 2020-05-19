@@ -38,6 +38,10 @@ const altColor = css`
   }
 `;
 
+const iconButtonMargin = css`
+  margin-right: 4px;
+`;
+
 const stickyCell = css`
   position: sticky;
 `;
@@ -111,6 +115,14 @@ function styleColumn(index: string, dataType: DataType) {
   `;
 }
 
+function getIndentLevelStyle(indentLevel: number) {
+  return css`
+    & > td:nth-child(2) {
+      padding-left: ${8 + indentLevel * 16}px;
+    }
+  `;
+}
+
 interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
   expanded?: boolean;
   disabled?: boolean;
@@ -147,9 +159,7 @@ const Row = React.forwardRef(
       <IconButton
         onClick={() => setIsExpanded(curr => !curr)}
         aria-label="chevron"
-        className={css`
-          margin-right: 4px;
-        `}
+        className={iconButtonMargin}
       >
         <Icon
           aria-label="chevron"
@@ -246,7 +256,7 @@ const Row = React.forwardRef(
     const alignmentStyles: Array<string> = [];
 
     for (const key in columnInfo) {
-      alignmentStyles.push(styleColumn(key, columnInfo?.[key].dataType));
+      alignmentStyles.push(styleColumn(key, columnInfo?.[key]?.dataType));
     }
 
     return (
@@ -254,11 +264,7 @@ const Row = React.forwardRef(
         <tr
           className={cx(
             rowStyle,
-            css`
-              & > td:nth-child(2) {
-                padding-left: ${8 + indentLevel * 16}px;
-              }
-            `,
+            getIndentLevelStyle(indentLevel),
             [...alignmentStyles],
             {
               [altColor]: shouldAltRowColor,

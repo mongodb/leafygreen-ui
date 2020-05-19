@@ -48,7 +48,7 @@ function HeaderRow({
   let checkColSpan = true;
 
   React.Children.forEach(children, child => {
-    if (child?.props?.colSpan) {
+    if ((child as React.ReactElement)?.props?.colSpan) {
       checkColSpan = false;
     }
   });
