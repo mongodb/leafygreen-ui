@@ -6,15 +6,17 @@ import TableHeader, { TableHeaderProps } from './TableHeader';
 import CheckboxCell from './CheckboxCell';
 import { State, Types, TableProvider, reducer } from './table-context';
 
-// * Make sure dates are right aligned
-// * Indent on Expanded Row
+// * Fix alt row coloring
 
-// * fix border bottom when rows are nested
+// * style rowspan  -- maybe don't allow sort if you have rowspan
+//   * fix hover
+//   * not clickable
 
-// * style rowspan
+// * Clean TS
 
-// * Fix keeping track of checkmark states when disabled row
 // * Make sure if you set on second header row, the first header row is not impacted
+//   * Get rid of prop on header row
+//   * If table is selectable, check header row for colspan, add select if no colspan
 
 const tableStyles = css`
   border-collapse: collapse;
@@ -37,19 +39,17 @@ export default function Table({
 }: TableProps) {
   const initialState: State = {
     sort: {
-      columnId: undefined,
       direction: 'asc',
-      key: undefined,
     },
     data,
-    stickyColumns: [],
     selectable: selectableProp,
-    mainCheckState: false,
-    mainIndeterminate: false,
+    headerCheckState: false,
+    headerIndeterminate: false,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // Make rowCheckedState into an Array
   React.useEffect(() => {
     const rowCheckedState: {
       [n in number]: undefined | boolean;
@@ -75,30 +75,28 @@ export default function Table({
       const boolArray = Object.values(state.rowCheckedState);
       const checkSame = boolArray.every(val => val === boolArray[0]);
 
-      if (!checkSame) {
-        dispatch({
-          type: Types.ToggleMainIndeterminate,
-          payload: true,
-        });
-      }
-
       if (checkSame) {
         dispatch({
-          type: Types.ToggleMainIndeterminate,
+          type: Types.ToggleHeaderIndeterminate,
           payload: false,
         });
 
         if (boolArray[0]) {
           dispatch({
-            type: Types.ToggleMainChecked,
+            type: Types.ToggleHeaderCheckedState,
             payload: true,
           });
         } else {
           dispatch({
-            type: Types.ToggleMainChecked,
+            type: Types.ToggleHeaderCheckedState,
             payload: false,
           });
         }
+      } else {
+        dispatch({
+          type: Types.ToggleHeaderIndeterminate,
+          payload: true,
+        });
       }
     }
   }, [state.data, state.rowCheckedState]);
@@ -107,11 +105,7 @@ export default function Table({
   let rows: Array<React.ReactElement>;
 
   if (typeof children === 'function') {
-    const unsortedRows = data.map((datum, index) => {
-      return children({ datum, index });
-    });
-
-    rows = unsortedRows;
+    rows = data.map((datum, index) => children({ datum, index }));
   }
 
   const sortRows = (columnId: number, key: string) => {
@@ -133,7 +127,7 @@ export default function Table({
         const { children } = child?.props;
 
         const renderedChildren = Array.isArray(children)
-          ? [...children]
+          ? children
           : [children];
 
         return React.cloneElement(child, {
@@ -148,15 +142,16 @@ export default function Table({
 
         const accessor = accessorProp || label?.toLowerCase();
 
-        if (state?.sort?.key?.toLowerCase() === accessor) {
+        if (state.sort?.key?.toLowerCase() === accessor) {
           glyph =
-            state?.sort?.direction == 'asc'
+            state.sort?.direction === 'asc'
               ? 'SortAscending'
               : 'SortDescending';
         }
 
         return React.cloneElement(child, {
-          key: label,
+          // safe until columns need to be reordered
+          key: index,
           onClick: sortRows,
           index,
           glyph,
@@ -166,8 +161,9 @@ export default function Table({
       if (typeof child === 'string') {
         return (
           <TableHeader
+            // safe until columns need to be reordered
+            key={index}
             label={child}
-            key={child}
             index={index}
             onClick={sortRows}
           />
@@ -177,11 +173,7 @@ export default function Table({
       return child;
     });
 
-    return usingHeaderRow ? (
-      cols
-    ) : (
-      <HeaderRow selectable={state.selectable}>{cols}</HeaderRow>
-    );
+    return usingHeaderRow ? cols : <HeaderRow>{cols}</HeaderRow>;
   };
 
   const renderBody = () => {

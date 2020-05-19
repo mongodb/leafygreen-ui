@@ -35,6 +35,7 @@ const baseIconButtonStyle = css`
   color: ${uiColors.gray.base};
   position: relative;
   cursor: pointer;
+  flex-shrink: 0;
 
   // Set background to fully-transparent white for cross-browser compatability with Safari
   //

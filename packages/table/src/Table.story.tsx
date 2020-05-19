@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { boolean } from '@storybook/addon-knobs';
 import Table from '.';
 import { Row, Cell, TableHeader, HeaderRow } from '.';
+import { DataType } from './utils';
 
 interface DemoDataInterface {
   name: string;
@@ -33,9 +34,26 @@ storiesOf('Table', module)
         { name: 'Jill', age: 28, color: 'green', location: 'bedford' },
       ]}
       columns={[
-        <TableHeader label="Name" key="name" stickyColumn />,
-        <TableHeader label="Age" key="age" />,
-        <TableHeader label="Favorite Color" key="color" accessor="color" />,
+        <TableHeader
+          dataType={DataType.String}
+          sortable
+          label="Name"
+          key="name"
+          stickyColumn
+        />,
+        <TableHeader
+          dataType={DataType.NominalNumber}
+          sortable
+          label="Age"
+          key="age"
+        />,
+        <TableHeader
+          dataType={DataType.String}
+          sortable
+          label="Favorite Color"
+          key="color"
+          accessor="color"
+        />,
         'Location',
       ]}
     >
@@ -75,6 +93,7 @@ storiesOf('Table', module)
   ))
   .add('Multi-row Header', () => (
     <Table
+      selectable
       data={[
         {
           flavor: 'Chocolate',
@@ -89,9 +108,34 @@ storiesOf('Table', module)
           price: '$6.00',
         },
         {
-          // flavor: 'Mint Chocolate Chip',
+          flavor: 'Mint Chocolate Chip',
           price: '$5.00',
         },
+        {
+          flavor: 'Mint Choc1olate Chip',
+          price: '$5.00',
+        },
+        {
+          flavor: 'Mint Cho2colate Chip',
+          price: '$5.00',
+        },
+        {
+          flavor: 'Mint Choco3late Chip',
+          price: '$5.00',
+        },
+        {
+          flavor: 'Mint Choco4late Chip',
+          price: '$5.00',
+        },
+        {
+          flavor: 'Mint Choco5late Chip',
+          price: '$5.00',
+        },
+        {
+          flavor: 'Mint Choco6late Chip',
+          price: '$5.00',
+        },
+
         {
           flavor: 'Strawberry',
           price: '$3.00',
@@ -109,9 +153,7 @@ storiesOf('Table', module)
     >
       {({ datum, rowIndex }) => (
         <Row key={datum.flavor}>
-          <Cell rowSpan={datum.flavor === 'Funfetti' ? 2 : 1}>
-            {datum.flavor}
-          </Cell>
+          <Cell>{datum.flavor}</Cell>
           <Cell>{datum.price}</Cell>
         </Row>
       )}

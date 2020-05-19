@@ -17,10 +17,10 @@ function CheckboxCell({
   index,
 }: CheckboxCellProps) {
   const {
-    state: { mainCheckState },
+    state: { headerCheckState },
     dispatch,
   } = useTableContext();
-  const [checked, setChecked] = React.useState(mainCheckState);
+  const [checked, setChecked] = React.useState(headerCheckState);
 
   const handleChange = () => {
     setChecked(curr => !curr);
@@ -37,22 +37,18 @@ function CheckboxCell({
     if (typeof index === 'number') {
       if (disabled) {
         setChecked(false);
-        dispatch({
-          type: Types.ToggleIndividualChecked,
-          payload: { index, checked: false },
-        });
       } else {
-        setChecked(mainCheckState);
+        setChecked(headerCheckState);
         dispatch({
           type: Types.ToggleIndividualChecked,
           payload: {
             index,
-            checked: mainCheckState,
+            checked: headerCheckState,
           },
         });
       }
     }
-  }, [disabled, mainCheckState]);
+  }, [disabled, headerCheckState]);
 
   return (
     <td className={className}>

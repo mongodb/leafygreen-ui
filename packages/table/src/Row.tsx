@@ -7,17 +7,17 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import CheckboxCell from './CheckboxCell';
 import { useTableContext } from './table-context';
+import { DataType } from './utils';
 
 const rowStyle = css`
   cursor: pointer;
-  border-top: 1px solid ${uiColors.gray.light2};
   border-bottom: 1px solid ${uiColors.gray.light2};
   color: ${uiColors.gray.dark2};
 
   & > td > div {
     height: 40px;
     overflow: hidden;
-    transition: all 500ms ease-in-out;
+    transition: all 150ms ease-in-out;
   }
 
   &:hover {
@@ -27,7 +27,7 @@ const rowStyle = css`
 `;
 
 const altColor = css`
-  &:nth-child(even) {
+  &:nth-of-type(even) {
     background-color: ${uiColors.gray.light3};
 
     &:hover {
@@ -66,8 +66,12 @@ const truncation = css`
 
 const transitionStyles = {
   default: css`
+    transition: border 150ms ease-in-out;
+    border-bottom-color: transparent;
+
     & > td {
-      padding: 0px;
+      padding-top: 0px;
+      padding-bottom: 0px;
     }
 
     & > td > div {
@@ -76,28 +80,59 @@ const transitionStyles = {
   `,
 
   entered: css`
+    border-bottom-color: ${uiColors.gray.light2};
+
     & > td > div {
       max-height: 40px;
     }
   `,
 };
 
+const styleMap = {
+  left: [DataType.String, DataType.Weight, DataType.ZipCode, DataType.Date],
+  right: [DataType.NominalNumber, DataType.Quantity],
+};
+
+function styleColumn(index: string, dataType: DataType) {
+  let justify = '';
+
+  if (styleMap.left.includes(dataType)) {
+    justify = 'flex-start';
+  } else if (styleMap.right.includes(dataType)) {
+    justify = 'flex-end';
+  }
+
+  return css`
+    & td:nth-child(${index}) > div {
+      justify-content: ${justify};
+    }
+  `;
+}
+
 interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
   expanded?: boolean;
   disabled?: boolean;
+  indentLevel?: number;
 }
 
 const Row = React.forwardRef(
   (
-    { expanded = false, disabled = false, children, className }: RowProps,
+    {
+      expanded = false,
+      disabled = false,
+      children,
+      className,
+      indentLevel = 0,
+    }: RowProps,
     ref: React.Ref<any>,
   ) => {
     const {
-      state: { data, stickyColumns, selectable },
+      state: { data, columnInfo, selectable },
     } = useTableContext();
 
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nodeRef = React.useRef(null);
+    const hasNestedRows = React.useRef(false);
     let hasSeenFirstCell = false;
 
     const chevronButton = (
@@ -118,9 +153,11 @@ const Row = React.forwardRef(
 
     const nestedRows = React.Children.map(children, (child, index) => {
       if (isComponentType(child, 'Row')) {
+        hasNestedRows.current = true;
         const selectCell = <CheckboxCell index={index} />;
 
         return React.cloneElement(child, {
+          indentLevel: indentLevel + 1,
           selectable,
           children: [selectCell, ...Array.from(child.props.children)],
           ref: nodeRef,
@@ -129,7 +166,7 @@ const Row = React.forwardRef(
     });
 
     const renderedChildren = React.Children.map(children, (child, index) => {
-      const isSticky = stickyColumns?.indexOf(index) !== -1;
+      const isSticky = columnInfo?.[index]?.sticky;
       const stickyStyle = { [stickyCell]: isSticky };
 
       if (isComponentType(child, 'CheckboxCell')) {
@@ -181,13 +218,37 @@ const Row = React.forwardRef(
       }
     });
 
-    const shouldAltRowColor = data && data.length >= 10 && !nestedRows;
+    const shouldAltRowColor =
+      data && data.length >= 10 && !hasNestedRows.current;
+    // const shouldAltRowColor = React.useMemo(
+    //   () => data && data.length >= 10 && nestedRows !== [],
+    //   [data],
+    // );
+
+    // React.useEffect(() => {
+    //   console.log(data && data.length);
+    //   console.log(hasNestedRows.current);
+    // }, []);
+
+    console.log(hasNestedRows.current);
+
+    const alignmentStyles: Array<string> = [];
+
+    for (const key in columnInfo) {
+      alignmentStyles.push(styleColumn(key, columnInfo[key].dataType));
+    }
 
     return (
       <>
         <tr
           className={cx(
             rowStyle,
+            css`
+              & > td:nth-child(2) {
+                padding-left: ${8 + indentLevel * 16}px;
+              }
+            `,
+            [...alignmentStyles],
             {
               [altColor]: shouldAltRowColor,
               [disabledStyle]: disabled,

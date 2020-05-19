@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useMemo } from 'react';
-import { sortFunction } from './utils';
+import { sortFunction, DataType } from './utils';
 
 // type Action
 const Types = {
   SelectableTable: 'SELECTABLE_TABLE',
-  ToggleMainChecked: 'TOGGLE_MAIN_CHECKED',
-  ToggleMainIndeterminate: 'TOGGLE_MAIN_INDETERMINATE',
-  AddStickyColumnIndex: 'ADD_STICKY_COLUMN_INDEX',
+  ToggleHeaderCheckedState: 'TOGGLE_HEADER_CHECKED',
+  ToggleHeaderIndeterminate: 'TOGGLE_HEADER_INDETERMINATE',
+  SetColumnInfo: 'SET_COLUMN_INFO',
   SortTableData: 'SORT_TABLE_DATA',
   ToggleIndividualChecked: 'TOGGLE_INDIVIDUAL_CHECKED',
   SetRowCheckedState: 'SET_ROW_CHECKED_STATE',
@@ -16,9 +16,13 @@ type Types = typeof Types[keyof typeof Types];
 
 interface ActionPayload {
   [Types.SelectableTable]: boolean;
-  [Types.ToggleMainChecked]: boolean;
-  [Types.ToggleMainIndeterminate]: boolean;
-  [Types.AddStickyColumnIndex]: number;
+  [Types.ToggleHeaderCheckedState]: boolean | undefined;
+  [Types.ToggleHeaderIndeterminate]: boolean;
+  [Types.SetColumnInfo]: {
+    sticky?: boolean;
+    dataType?: DataType;
+    index: number;
+  };
   [Types.SortTableData]: {
     columnId: number;
     key: string;
@@ -33,7 +37,7 @@ interface ActionPayload {
   };
 }
 
-type ActionMap<A extends { [key: string]: any }> = {
+type ActionMap<A extends Record<string, any>> = {
   [Key in keyof A]: A[Key] extends undefined
     ? {
         type: Key;
@@ -59,11 +63,13 @@ interface Sort {
 export interface State {
   sort?: Sort;
   data?: Array<any>;
-  stickyColumns?: Array<number>;
+  columnInfo?: {
+    [k in number]: { sticky?: boolean; dataType?: DataType };
+  };
   selectable?: boolean;
-  mainCheckState?: boolean;
-  mainIndeterminate?: boolean;
-  rowCheckedState?: { [k in number]: undefined | boolean };
+  headerCheckState?: boolean;
+  headerIndeterminate?: boolean;
+  rowCheckedState?: Record<number, boolean | undefined>;
 }
 
 // interface ProviderProps
@@ -88,7 +94,7 @@ const TableContext = createContext<ContextInterface>({
 function updateRowCheckedState(
   index: number,
   checked: boolean | undefined,
-  rowCheckedState: { [k in number]: boolean | undefined } | undefined,
+  rowCheckedState: Record<number, boolean | undefined> | undefined,
 ) {
   return {
     ...rowCheckedState,
@@ -104,6 +110,7 @@ function reducer(state: State, action: Action): State {
         ...state,
         rowCheckedState: action.payload,
       };
+
     case Types.ToggleIndividualChecked:
       return {
         ...state,
@@ -113,42 +120,54 @@ function reducer(state: State, action: Action): State {
           state.rowCheckedState,
         ),
       };
+
     case Types.SelectableTable:
       return {
         ...state,
         selectable: action.payload,
       };
-    case Types.ToggleMainChecked:
+
+    case Types.ToggleHeaderCheckedState:
       return {
         ...state,
-        mainCheckState: action.payload ?? !state.mainCheckState,
+        headerCheckState: action.payload ?? !state.headerCheckState,
       };
-    case Types.ToggleMainIndeterminate:
+
+    case Types.ToggleHeaderIndeterminate:
       return {
         ...state,
-        mainIndeterminate: action.payload,
+        headerIndeterminate: action.payload,
       };
-    case Types.AddStickyColumnIndex:
+
+    case Types.SetColumnInfo:
       return {
         ...state,
-        stickyColumns: [...state?.stickyColumns, action.payload],
+        columnInfo: {
+          ...state.columnInfo,
+          [action.payload.index]: {
+            sticky: action.payload.sticky,
+            dataType: action.payload.dataType,
+          },
+        },
       };
+
     case Types.SortTableData:
       return {
         ...state,
         sort: {
           columnId: action.payload.columnId,
-          direction: state?.sort?.direction === 'desc' ? 'asc' : 'desc',
+          direction: state.sort?.direction === 'desc' ? 'asc' : 'desc',
           key: action.payload.key,
         },
         data: sortFunction({
           data: action.payload.data,
-          direction: state?.sort?.direction === 'desc' ? 'asc' : 'desc',
+          direction: state.sort?.direction === 'desc' ? 'asc' : 'desc',
           key: action.payload.key,
         }),
       };
+
     default:
-      return state;
+      return { ...state };
   }
 }
 

@@ -5,6 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { commonCellStyles } from './styles';
 import { useTableContext, Types } from './table-context';
+import { DataType } from './utils';
 
 const thStyle = css`
   width: 144px;
@@ -41,6 +42,7 @@ interface TableHeaderInterface {
   stickyColumn?: boolean;
   sortable?: boolean;
   accessor?: string;
+  dataType?: DataType;
 }
 
 export type TableHeaderProps = Omit<
@@ -52,12 +54,13 @@ export type TableHeaderProps = Omit<
 function TableHeader({
   glyph = 'Unsorted',
   isEditable = false,
-  sortable = true,
+  sortable = false,
+  stickyColumn = false,
   label,
   onClick,
   index,
-  stickyColumn,
   className,
+  dataType,
   accessor: accessorProp,
   ...rest
 }: TableHeaderProps) {
@@ -65,7 +68,13 @@ function TableHeader({
     state: { selectable },
     dispatch,
   } = useTableContext();
-  const accessor = accessorProp ?? label.toString?.()?.toLowerCase();
+
+  // need a smarter default
+  const accessor = accessorProp
+    ? accessorProp
+    : typeof label === 'string'
+    ? (label as string).toLowerCase()
+    : 'test_string';
 
   const handleClick = () => {
     if (typeof index === 'number') {
@@ -74,13 +83,17 @@ function TableHeader({
   };
 
   React.useEffect(() => {
-    if (stickyColumn && index) {
+    if (typeof index === 'number') {
       dispatch({
-        type: Types.AddStickyColumnIndex,
-        payload: selectable ? index + 1 : index,
+        type: Types.SetColumnInfo,
+        payload: {
+          index: selectable ? index + 2 : index + 1,
+          sticky: stickyColumn,
+          dataType,
+        },
       });
     }
-  }, [stickyColumn]);
+  }, [stickyColumn, dataType]);
 
   return (
     <th

@@ -28,28 +28,20 @@ export interface HeaderRowProps extends React.ComponentPropsWithoutRef<'tr'> {
 
 function HeaderRow({
   sticky = false,
-  selectable: selectableProp = false,
   children,
   className,
   ...rest
 }: HeaderRowProps) {
   const {
-    state: { selectable, mainCheckState, mainIndeterminate },
+    state: { selectable, headerCheckState, headerIndeterminate },
     dispatch,
   } = useTableContext();
 
-  React.useEffect(() => {
-    if (selectableProp) {
-      dispatch({
-        type: Types.SelectableTable,
-        payload: selectableProp,
-      });
-    }
-  }, [selectableProp]);
-
   const handleChange = () => {
     dispatch({
-      type: Types.ToggleMainChecked,
+      type: Types.ToggleHeaderCheckedState,
+      // investigate not passing a payload
+      payload: undefined,
     });
   };
 
@@ -59,8 +51,8 @@ function HeaderRow({
         <th className={thStyles}>
           <div className={innerDivStyles}>
             <Checkbox
-              checked={mainCheckState}
-              indeterminate={mainIndeterminate}
+              checked={headerCheckState}
+              indeterminate={headerIndeterminate}
               onChange={handleChange}
             />
           </div>

@@ -23,3 +23,16 @@ export const sortFunction = ({
     return alphanumericCollator.compare(bVal, aVal);
   });
 };
+
+const DataType = {
+  NominalNumber: 'nominalNumber',
+  Quantity: 'quantity',
+  Weight: 'weight',
+  ZipCode: 'zipCode',
+  String: 'string',
+  Date: 'date',
+} as const;
+
+type DataType = typeof DataType[keyof typeof DataType];
+
+export { DataType };
