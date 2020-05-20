@@ -313,6 +313,7 @@ function OrgNav({
                   active={activeNav === ActiveNavElement.OrgNavAccessManager}
                   onClick={onElementClick(
                     NavElement.OrgNavDropdownOrgAccessManager,
+                    () => setAccessManagerOpen(false),
                   )}
                 >
                   Organization Access
@@ -332,6 +333,7 @@ function OrgNav({
                   }
                   onClick={onElementClick(
                     NavElement.OrgNavDropdownProjectAccessManager,
+                    () => setAccessManagerOpen(false),
                   )}
                 >
                   Project Access
