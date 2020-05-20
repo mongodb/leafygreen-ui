@@ -36,7 +36,6 @@ const baseBannerStyles = css`
     top: 0;
     bottom: 0;
     left: 0px;
-    transition: background-color 150ms ease-in-out;
     border-radius: 6px 0px 0px 6px;
   }
 `;
