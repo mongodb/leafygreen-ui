@@ -136,7 +136,7 @@ describe('packages/mongo-nav/user-menu', () => {
 
   test('renders the account link as a disabled button when set to the empty string', () => {
     const { getByTestId } = renderUserMenu({
-      activeProduct: 'account',
+      activePlatform: 'account',
     });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
