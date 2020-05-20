@@ -7,6 +7,7 @@ import CheckboxCell from './CheckboxCell';
 import { State, Types, TableProvider, reducer } from './table-context';
 
 // * Clean TS
+// * Add nodeRef to Row
 
 const tableStyles = css`
   border-collapse: collapse;
@@ -40,7 +41,6 @@ export default function Table({
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // Make rowCheckedState into an Array
   React.useEffect(() => {
     const rowCheckedState: {
       [n in number]: undefined | boolean;

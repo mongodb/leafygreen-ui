@@ -2,8 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean } from '@storybook/addon-knobs';
 import Table from '.';
-import { Row, Cell, TableHeader, HeaderRow } from '.';
-import { DataType } from './utils';
+import { Row, Cell, TableHeader, HeaderRow, DataType } from '.';
 import { defaultData, multiRowData } from './storybookdata';
 
 interface DemoDataInterface {

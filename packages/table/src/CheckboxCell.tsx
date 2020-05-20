@@ -3,10 +3,15 @@ import Checkbox from '@leafygreen-ui/checkbox';
 import { css } from '@leafygreen-ui/emotion';
 import { useTableContext, Types } from './table-context';
 
+const flexStyles = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 interface CheckboxCellProps extends React.ComponentPropsWithoutRef<'td'> {
   checked?: boolean;
   disabled?: boolean;
-  setIndeterminate?: (boolean: boolean) => void;
   index?: number;
 }
 
@@ -52,13 +57,7 @@ function CheckboxCell({
 
   return (
     <td className={className}>
-      <div
-        className={css`
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        `}
-      >
+      <div className={flexStyles}>
         <Checkbox
           checked={checked}
           onChange={handleChange}

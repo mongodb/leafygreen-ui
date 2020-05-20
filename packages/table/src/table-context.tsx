@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useMemo } from 'react';
-import { sortFunction, DataType } from './utils';
 
 // type Action
 const Types = {
@@ -64,6 +63,17 @@ interface Sort {
   key?: string;
 }
 
+const DataType = {
+  NominalNumber: 'nominalNumber',
+  Quantity: 'quantity',
+  Weight: 'weight',
+  ZipCode: 'zipCode',
+  String: 'string',
+  Date: 'date',
+} as const;
+
+type DataType = typeof DataType[keyof typeof DataType];
+
 export interface State {
   sort?: Sort;
   data?: Array<any>;
@@ -96,17 +106,6 @@ const TableContext = createContext<ContextInterface>({
   state: {},
   dispatch: () => {},
 });
-
-function updateRowCheckedState(
-  index: number,
-  checked: boolean | undefined,
-  rowCheckedState: Record<number, boolean | undefined> | undefined,
-) {
-  return {
-    ...rowCheckedState,
-    [index]: checked,
-  };
-}
 
 // reducer
 function reducer(state: State, action: Action): State {
@@ -207,4 +206,42 @@ function useTableContext() {
   return useContext(TableContext);
 }
 
-export { TableProvider, useTableContext, reducer, Types };
+export { TableProvider, useTableContext, reducer, Types, DataType };
+
+// helper functions
+const alphanumericCollator = new Intl.Collator(undefined, {
+  numeric: true,
+  sensitivity: 'base',
+});
+
+export const sortFunction = ({
+  data,
+  key,
+  direction,
+}: {
+  data: Array<any>;
+  key: string;
+  direction: 'asc' | 'desc';
+}) => {
+  return data.sort((a, b) => {
+    const aVal = a[key];
+    const bVal = b[key];
+
+    if (direction !== 'desc') {
+      return alphanumericCollator.compare(aVal, bVal);
+    }
+
+    return alphanumericCollator.compare(bVal, aVal);
+  });
+};
+
+function updateRowCheckedState(
+  index: number,
+  checked: boolean | undefined,
+  rowCheckedState: Record<number, boolean | undefined> | undefined,
+) {
+  return {
+    ...rowCheckedState,
+    [index]: checked,
+  };
+}

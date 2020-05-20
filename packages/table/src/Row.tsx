@@ -6,8 +6,7 @@ import { isComponentType } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import CheckboxCell from './CheckboxCell';
-import { useTableContext, Types } from './table-context';
-import { DataType } from './utils';
+import { useTableContext, Types, DataType } from './table-context';
 
 const rowStyle = css`
   cursor: pointer;

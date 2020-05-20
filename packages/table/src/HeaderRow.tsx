@@ -49,6 +49,10 @@ function HeaderRow({
 
   React.Children.forEach(children, child => {
     if ((child as React.ReactElement)?.props?.colSpan) {
+      // if there is a colspan on a header row, we skip
+      // adding a checkbox to the selectable table
+      // so that tables can have multiple header rows
+      // without multiple checkboxes
       checkColSpan = false;
     }
   });
