@@ -291,11 +291,11 @@ const SubMenu: OverrideComponentCast<SubMenuProps> = React.forwardRef(
     );
 
     const renderBox = rest.href ? (
-      <Box component="a" {...sharedBoxProps}>
+      <Box as="a" {...sharedBoxProps}>
         {boxContent}
       </Box>
     ) : (
-      <Box component="button" {...sharedBoxProps}>
+      <Box as="button" {...sharedBoxProps}>
         {boxContent}
       </Box>
     );

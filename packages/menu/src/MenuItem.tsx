@@ -217,7 +217,7 @@ const MenuItem: OverrideComponentCast<BaseMenuItemProps> = React.forwardRef(
     if (rest.href) {
       return (
         <li>
-          <Box component="a" {...anchorProps} {...commonProps}>
+          <Box as="a" {...anchorProps} {...commonProps}>
             {content}
           </Box>
         </li>
@@ -226,7 +226,7 @@ const MenuItem: OverrideComponentCast<BaseMenuItemProps> = React.forwardRef(
 
     return (
       <li>
-        <Box component="button" {...commonProps}>
+        <Box as="button" {...commonProps}>
           {content}
         </Box>
       </li>

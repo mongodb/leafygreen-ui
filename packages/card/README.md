@@ -23,7 +23,7 @@ import Card from '@leafygreen-ui/card';
 
 <Card
   className='card-styles'
-  component='div'
+  as='div'
 >
   This is my card component
 </Card>

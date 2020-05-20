@@ -25,12 +25,12 @@ describe('packages/box', () => {
 
   const sharedProps = { name: 'testName' };
   const anchorProps: {
-    component: 'a';
+    as: 'a';
     href: string;
     target: string;
     name: string;
   } = {
-    component: 'a',
+    as: 'a',
     href: 'https://cloud.mongodb.com',
     target: '_blank',
     ...sharedProps,
@@ -111,7 +111,7 @@ describe('packages/box', () => {
     beforeEach(() => {
       const { getByTestId } = render(
         <Box
-          component={LinkWrapper}
+          as={LinkWrapper}
           href="https://cloud.mongodb.com"
           target="_blank"
           data-testid="custom-component"

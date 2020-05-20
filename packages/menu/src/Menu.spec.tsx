@@ -112,8 +112,8 @@ describe('packages/menu/menu-item', () => {
     expect((menuItem as HTMLAnchorElement).rel).toBe('help');
   });
 
-  test('renders as `div` tag when the component prop is set', () => {
-    const { menuItem } = renderMenuItem({ component: 'div' });
+  test('renders as `div` tag when the "as" prop is set', () => {
+    const { menuItem } = renderMenuItem({ as: 'div' });
     expect(menuItem.tagName.toLowerCase()).toBe('div');
   });
 });

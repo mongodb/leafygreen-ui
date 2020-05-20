@@ -13,7 +13,7 @@ const containerStyle = css`
 `;
 
 storiesOf('Card', module).add('Default', () => (
-  <Card component="div" className={containerStyle}>
+  <Card as="div" className={containerStyle}>
     This is a card component
   </Card>
 ));

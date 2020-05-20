@@ -360,18 +360,18 @@ const Button: OverrideComponentCast<BaseButtonProps> = React.forwardRef(
 
     if (rest.href) {
       return (
-        // we give button a default component based on the `href` prop, if a custom
-        // "component" prop is supplied, it will overwrite this value through {...rest}
-        <Box component="a" {...commonProps} {...rest}>
+        // we give button a default "as" value based on the `href` prop, if a custom
+        // "as" prop is supplied, it will overwrite this value through {...rest}
+        <Box as="a" {...commonProps} {...rest}>
           {content}
         </Box>
       );
     }
 
     return (
-      // we give button a default component based on the `href` prop, if a custom
-      // "component" prop is supplied, it will overwrite this value through {...rest}
-      <Box component="button" type="button" {...commonProps} {...rest}>
+      // we give button a default "as" value based on the `href` prop, if a custom
+      // "as" prop is supplied, it will overwrite this value through {...rest}
+      <Box as="button" type="button" {...commonProps} {...rest}>
         {content}
       </Box>
     );
@@ -389,7 +389,7 @@ Button.propTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
   // @ts-ignore
-  component: PropTypes.oneOfType([
+  as: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.elementType,
     PropTypes.func,

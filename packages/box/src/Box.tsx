@@ -10,7 +10,7 @@ interface BoxComponentProps<
   H extends string | undefined = undefined
 > {
   href?: H;
-  component?: InferComponentType<C, H>;
+  as?: InferComponentType<C, H>;
 }
 
 type BoxProps<
@@ -35,10 +35,11 @@ export const Box = React.forwardRef(
     C extends React.ElementType = 'div',
     H extends string | undefined = undefined
   >(
-    { component, href, ...rest }: BoxProps<C, H>,
+    { as, href, ...rest }: BoxProps<C, H>,
     ref: React.Ref<any>,
   ) => {
-    const Component = component ? component : href ? 'a' : 'div';
+    const Component = as ? as : href ? 'a' : 'div';
+    console.log(as);
     return <Component href={href} ref={ref} {...rest} />;
   },
 ) as BoxType;
@@ -48,7 +49,7 @@ Box.displayName = 'Box';
 
 // @ts-ignore Property 'propTypes' does not exist on type 'BoxType'
 Box.propTypes = {
-  component: PropTypes.elementType,
+  as: PropTypes.elementType,
   href: PropTypes.string,
 };
 

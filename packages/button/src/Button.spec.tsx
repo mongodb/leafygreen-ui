@@ -71,7 +71,7 @@ describe('packages/button', () => {
   });
 
   test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
-    const { button } = renderButton({ component: 'div' });
+    const { button } = renderButton({ as: 'div' });
     expect(button.tagName.toLowerCase()).toBe('div');
   });
 
