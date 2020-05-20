@@ -134,17 +134,16 @@ describe('packages/mongo-nav/user-menu', () => {
   });
 
   test('renders the account link as a disabled button when set to the empty string', () => {
-    const { getByText, getByTestId } = renderUserMenu({
+    const { getByTestId } = renderUserMenu({
       activeProduct: 'account',
     });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
     const accountButton = getByTestId('user-menu-account-button');
 
-    console.log(accountButton);
-    // expect(accountButton.tagName.toLowerCase()).toBe('button');
-    // expect(accountButton.disabled).toBe(true);
-    // expect(accountButton.getAttribute('aria-disabled')).toBe('true');
+    expect(accountButton.tagName.toLowerCase()).toBe('button');
+    expect((accountButton as HTMLButtonElement).disabled).toBe(true);
+    expect(accountButton.getAttribute('aria-disabled')).toBe('true');
   });
 
   test('does not render atlas MenuItems when a non-cloud product is active', () => {

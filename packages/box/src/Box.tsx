@@ -39,7 +39,7 @@ export const Box = React.forwardRef(
     ref: React.Ref<any>,
   ) => {
     const Component = as ? as : href ? 'a' : 'div';
-    console.log(as);
+
     return <Component href={href} ref={ref} {...rest} />;
   },
 ) as BoxType;
