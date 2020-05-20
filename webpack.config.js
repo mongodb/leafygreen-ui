@@ -31,11 +31,24 @@ const hljsSupportedLanguages = [
 
 function getAllPackages(dir) {
   const dirList = fs.readdirSync(dir);
+
   return dirList.map(function (subDir) {
     subDir = path.resolve(dir, subDir);
     const json = require(`${subDir}/package.json`);
+
     return json.name;
   });
+}
+
+function getDirectGlyphImports() {
+  const glyphsDir = path.resolve(__dirname, './packages/icon/src/glyphs');
+
+  return fs
+    .readdirSync(glyphsDir)
+    .filter(path => /.svg/.test(path))
+    .map(
+      fileName => `@leafygreen-ui/icon/dist/${path.basename(fileName, '.svg')}`,
+    );
 }
 
 // Base Webpack configuration, used by all other configurations for common settings
@@ -67,6 +80,7 @@ function generateConfigFunc(target = 'web') {
             'react-transition-group',
             '@testing-library/react',
             ...getAllPackages('../../packages'),
+            ...getDirectGlyphImports(),
           ]
         : [],
 

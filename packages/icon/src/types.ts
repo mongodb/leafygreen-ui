@@ -9,6 +9,7 @@ export namespace SVGR {
 export namespace LGGlyph {
   export interface ComponentProps extends SVGR.ComponentProps {
     size?: number;
+    titleId?: string;
   }
 
   export type Component = React.ComponentType<ComponentProps>;
