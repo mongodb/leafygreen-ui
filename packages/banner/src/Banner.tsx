@@ -24,7 +24,10 @@ const baseBannerStyles = css`
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 20px;
-  padding-right: 20px;
+  padding-right: 12px;
+  border-top: 1px;
+  border-right: 1px;
+  border-bottom: 1px;
   border-radius: 6px;
   font-size: 14px;
   line-height: 16px;
@@ -57,7 +60,8 @@ const textStyle = css`
 const bannerVariantStyles: Record<Variant, string> = {
   [Variant.Info]: css`
     color: ${uiColors.blue.dark2};
-    background-color: ${uiColors.blue.light2};
+    border-color: ${uiColors.blue.light2};
+    background-color: ${uiColors.blue.light3};
 
     &:before {
       background-color: ${uiColors.blue.base};
@@ -66,7 +70,8 @@ const bannerVariantStyles: Record<Variant, string> = {
 
   [Variant.Warning]: css`
     color: ${uiColors.yellow.dark2};
-    background-color: ${uiColors.yellow.light2};
+    border-color: ${uiColors.yellow.light2};
+    background-color: ${uiColors.yellow.light3};
 
     &:before {
       background-color: ${uiColors.yellow.base};
@@ -74,7 +79,8 @@ const bannerVariantStyles: Record<Variant, string> = {
   `,
   [Variant.Danger]: css`
     color: ${uiColors.red.dark2};
-    background-color: ${uiColors.red.light2};
+    border-color: ${uiColors.red.light2};
+    background-color: ${uiColors.red.light3};
 
     &:before {
       background-color: ${uiColors.red.base};
@@ -83,6 +89,7 @@ const bannerVariantStyles: Record<Variant, string> = {
 
   [Variant.Success]: css`
     color: ${uiColors.green.dark2};
+    border-color: ${uiColors.green.light2};
     background-color: ${uiColors.green.light2};
 
     &:before {
@@ -91,12 +98,12 @@ const bannerVariantStyles: Record<Variant, string> = {
   `,
 } as const;
 
-const bannerVariantIcons: Record<Variant, string> = {
-  [Variant.Info]: 'Edit',
-  [Variant.Warning]: 'InfoWithCircle',
-  [Variant.Danger]: 'Warning',
-  [Variant.Success]: 'Checkmark',
-} as const;
+const bannerVariantIcons: Record<Variant, { glyph: string; color: string }> = {
+  [Variant.Info]: { glyph: 'Edit', color: uiColors.blue.base },
+  [Variant.Warning]: { glyph: 'InfoWithCircle', color: uiColors.yellow.dark2 },
+  [Variant.Danger]: { glyph: 'Warning', color: uiColors.red.base },
+  [Variant.Success]: { glyph: 'Checkmark', color: uiColors.green.base },
+};
 
 interface BannerProps extends React.ComponentPropsWithoutRef<'div'> {
   /**
@@ -151,7 +158,15 @@ export default function Banner({
   const renderIcon = image ? (
     image
   ) : (
-    <Icon glyph={bannerVariantIcons[variant]} className={flexShrinkSettings} />
+    <Icon
+      glyph={bannerVariantIcons[variant].glyph}
+      className={cx(
+        flexShrinkSettings,
+        css`
+          color: ${bannerVariantIcons[variant].color};
+        `,
+      )}
+    />
   );
 
   return (
@@ -166,7 +181,13 @@ export default function Banner({
         <Icon
           glyph="X"
           onClick={onClose}
-          className={cx(flexShrinkSettings, cursorPointer)}
+          className={cx(
+            flexShrinkSettings,
+            cursorPointer,
+            css`
+              color: ${bannerVariantIcons[variant].color};
+            `,
+          )}
         />
       )}
     </div>
