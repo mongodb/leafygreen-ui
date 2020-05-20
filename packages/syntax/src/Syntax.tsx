@@ -8,12 +8,24 @@ import { injectGlobalStyles } from './globalStyles';
 
 let syntaxHighlightingInitialized = false;
 
+type FilteredSupportedLanguagesEnum = Omit<typeof SupportedLanguages, 'Csharp'>;
+type FilteredSupportedLanguages = FilteredSupportedLanguagesEnum[keyof FilteredSupportedLanguagesEnum];
+
+function filterSupportedLanguages(
+  language: SupportedLanguages,
+): language is FilteredSupportedLanguages {
+  return language !== 'csharp';
+}
+
 function initializeSyntaxHighlighting() {
   syntaxHighlightingInitialized = true;
 
   injectGlobalStyles();
 
-  const SupportedLanguagesList = Object.values(SupportedLanguages);
+  // We filter out 'csharp' here because it's redundant with 'cs'
+  const SupportedLanguagesList = Object.values(SupportedLanguages).filter(
+    filterSupportedLanguages,
+  );
 
   SupportedLanguagesList.forEach(language => {
     if (language === 'graphql') {

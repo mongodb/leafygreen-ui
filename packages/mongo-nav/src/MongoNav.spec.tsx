@@ -1,5 +1,11 @@
 import React from 'react';
-import { render, fireEvent, cleanup, act } from '@testing-library/react';
+import {
+  render,
+  fireEvent,
+  cleanup,
+  act,
+  waitFor,
+} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import { dataFixtures } from './data';
@@ -32,6 +38,9 @@ describe('packages/mongo-nav', () => {
     );
     expectedElements.allProjects = queryByTestId('project-select-project-list');
     expectedElements.userMenu = queryByTestId('user-menu-trigger');
+    expectedElements.userMenuCloudItem = queryByTestId(
+      'user-menuitem-cloud-user-preferences',
+    );
     expectedElements.userMenuLogout = queryByTestId('user-menuitem-logout');
     expectedElements.onPremUserMenu = queryByTestId('om-user-menu-trigger');
     expectedElements.onPremLogout = queryByTestId('om-user-menuitem-sign-out');
@@ -137,6 +146,10 @@ describe('packages/mongo-nav', () => {
       expect(expectedElements.userMenu?.innerHTML.includes('DevMode')).toBe(
         true,
       );
+    });
+
+    test('admin UI is not shown', () => {
+      expect(expectedElements.admin).not.toBeInTheDocument();
     });
   });
 
@@ -287,6 +300,20 @@ describe('packages/mongo-nav', () => {
     });
   });
 
+  describe('UserMenu behaves as expected when cloud is the active platform', () => {
+    beforeEach(
+      async () =>
+        await renderComponent({ mode: 'dev', activePlatform: 'cloud' }),
+    );
+
+    test('when the user menu opens, the cloud menu items are displayed', () => {
+      fireEvent.click(expectedElements.userMenu as HTMLElement);
+      setExpectedElements();
+
+      expect(expectedElements.userMenuCloudItem).toBeInTheDocument();
+    });
+  });
+
   describe('when user passes host override', () => {
     const cloudHost = 'https://cloud-dev.mongodb.com';
     beforeEach(
@@ -368,6 +395,26 @@ describe('packages/mongo-nav', () => {
       expect(expectedElements.currentOrg?.innerHTML.includes(newOrgName)).toBe(
         true,
       );
+    });
+  });
+
+  describe('when dataFixtures prop sets admin as true', () => {
+    beforeEach(() =>
+      renderComponent({
+        mode: 'dev',
+        dataFixtures: {
+          account: {
+            admin: true,
+          },
+        },
+      }),
+    );
+
+    test('admin UI is shown', async () => {
+      await waitFor(() => {
+        setExpectedElements();
+        expect(expectedElements.admin).toBeInTheDocument();
+      });
     });
   });
 });

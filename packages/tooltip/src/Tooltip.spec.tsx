@@ -1,11 +1,20 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent } from '@testing-library/react';
+import {
+  render,
+  fireEvent,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import Tooltip from '.';
 
 const buttonText = 'trigger button';
 const tooltipTestId = 'tooltip-test-id';
 const onClick = jest.fn();
+
+function waitForTimeout(timeout = 500) {
+  return new Promise(res => setTimeout(res, timeout));
+}
 
 interface ButtonTestProps {
   [key: string]: any;
@@ -17,14 +26,17 @@ function renderTooltip(props = {}) {
       <div data-testid="backdrop" />
       <Tooltip
         trigger={<button onClick={onClick}>{buttonText}</button>}
+        data-testid={tooltipTestId}
         {...props}
       >
-        <div data-testid={tooltipTestId}>Tooltip Contents!</div>
+        <div>Tooltip Contents!</div>
       </Tooltip>
     </>,
   );
+
   const button = utils.getByText(buttonText);
   const backdrop = utils.getByTestId('backdrop');
+
   return { ...utils, button, backdrop };
 }
 
@@ -51,6 +63,102 @@ describe('packages/tooltip', () => {
       // checking for visibility, because opacity changes before tooltip transitions out of the DOM
       fireEvent.click(button);
       expect(tooltip).not.toBeVisible();
+    });
+
+    test('when "triggerEvent" is set to "hover", hovering on and off the trigger opens and closes the tooltip', async () => {
+      const { getByTestId, queryByTestId, button } = renderTooltip({
+        triggerEvent: 'hover',
+      });
+
+      fireEvent.mouseEnter(button);
+
+      await waitFor(() => getByTestId(tooltipTestId), { timeout: 500 });
+
+      expect(getByTestId(tooltipTestId)).toBeInTheDocument();
+
+      fireEvent.mouseLeave(button);
+
+      await waitForElementToBeRemoved(getByTestId(tooltipTestId), {
+        timeout: 500,
+      });
+
+      expect(queryByTestId(tooltipTestId)).not.toBeInTheDocument();
+    });
+
+    const fireEventMap = {
+      hover: {
+        on: fireEvent.mouseEnter,
+        off: fireEvent.mouseLeave,
+      },
+      click: {
+        on: fireEvent.click,
+        off: fireEvent.click,
+      },
+    };
+
+    async function testTriggerEventWhenDisabled(
+      triggerEvent: 'hover' | 'click',
+    ) {
+      test(`when triggerEvent is "${triggerEvent}"`, async () => {
+        const { queryByTestId, button } = renderTooltip({
+          triggerEvent,
+          enabled: false,
+        });
+
+        fireEventMap[triggerEvent].on(button);
+
+        // Wait for 200ms to allow the component to animate out and remove the element from the DOM
+        await waitForTimeout(200);
+
+        expect(queryByTestId(tooltipTestId)).not.toBeInTheDocument();
+
+        fireEventMap[triggerEvent].off(button);
+
+        // Same as above. The following test is largely here to ensure we don't somehow end up in a strange state where the element becomes visible once the mouse leaves.
+        await waitForTimeout(200);
+
+        expect(queryByTestId(tooltipTestId)).not.toBeInTheDocument();
+      });
+    }
+
+    describe('tooltip does not open when enabled is "false"', () => {
+      testTriggerEventWhenDisabled('hover');
+      testTriggerEventWhenDisabled('click');
+    });
+
+    test('tooltip closes when enabled is set to "false"', async () => {
+      const { queryByTestId, getByTestId, button, container } = renderTooltip({
+        triggerEvent: 'click',
+        enabled: true,
+      });
+
+      fireEvent.click(button);
+
+      await waitFor(() => getByTestId(tooltipTestId), { timeout: 500 });
+
+      expect(getByTestId(tooltipTestId)).toBeInTheDocument();
+
+      render(
+        <>
+          <div data-testid="backdrop" />
+
+          <Tooltip
+            trigger={<button onClick={onClick}>{buttonText}</button>}
+            data-testid={tooltipTestId}
+            triggerEvent="click"
+            enabled={false}
+          >
+            <div>Tooltip Contents!</div>
+          </Tooltip>
+        </>,
+        { container },
+      );
+
+      await waitForElementToBeRemoved(getByTestId(tooltipTestId), {
+        timeout: 500,
+      });
+
+      expect(queryByTestId(tooltipTestId)).not.toBeInTheDocument();
     });
 
     test('backdrop clicks close the tooltip', () => {
@@ -119,6 +227,7 @@ describe('packages/tooltip', () => {
         open: true,
         setOpen,
       });
+
       expect(getByTestId(tooltipTestId)).toBeVisible();
     });
 
@@ -127,6 +236,7 @@ describe('packages/tooltip', () => {
         open: true,
         setOpen,
       });
+
       fireEvent.click(button);
       expect(onClick).toHaveBeenCalled();
     });
@@ -138,6 +248,7 @@ describe('packages/tooltip', () => {
       });
 
       fireEvent.click(button);
+
       const tooltip = getByTestId(tooltipTestId);
       expect(tooltip).toBeVisible();
 

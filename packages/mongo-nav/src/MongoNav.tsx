@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import OrgNav from './org-nav';
 import ProjectNav from './project-nav';
@@ -6,7 +6,7 @@ import defaultsDeep from 'lodash/defaultsDeep';
 import OnElementClickProvider from './on-element-click-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { dataFixtures, hostDefaults } from './data';
+import { dataFixtures as defaultDataFixtures, hostDefaults } from './data';
 import {
   Product,
   URLSInterface,
@@ -18,11 +18,104 @@ import {
   MongoNavInterface,
   OrganizationInterface,
   ProjectInterface,
+  HostsInterface,
+  Platform,
 } from './types';
 
 const ErrorCodeMap: Record<number, ErrorCode> = {
   401: ErrorCode.NO_AUTHORIZATION,
 } as const;
+
+type UseMongoNavData = Pick<
+  MongoNavInterface,
+  | 'mode'
+  | 'activeOrgId'
+  | 'activeProjectId'
+  | 'loadData'
+  | 'dataFixtures'
+  | 'onSuccess'
+  | 'onError'
+> & {
+  hosts: Required<NonNullable<MongoNavInterface['hosts']>>;
+};
+
+function useMongoNavData({
+  hosts,
+  mode,
+  activeOrgId,
+  activeProjectId,
+  loadData,
+  dataFixtures,
+  onSuccess,
+  onError,
+}: UseMongoNavData): DataInterface | undefined {
+  const [data, setData] = useState<DataInterface | undefined>(undefined);
+
+  const endpointURI = `${hosts.cloud}/user/shared`;
+
+  function fetchProductionData(body?: PostBodyInterface) {
+    const configObject: RequestInit = {
+      credentials: 'include',
+      mode: 'cors',
+      method: 'GET',
+    };
+
+    if (body) {
+      Object.assign(configObject, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    }
+
+    return fetch(endpointURI, configObject);
+  }
+
+  function getDataFixtures() {
+    return new Promise<DataInterface>(resolve => {
+      const mergedData = defaultsDeep(dataFixtures, defaultDataFixtures);
+
+      onSuccess?.(mergedData);
+      resolve(mergedData);
+    });
+  }
+
+  function handleResponse(response: Response) {
+    if (!response.ok) {
+      const mappedStatus = ErrorCodeMap[response.status];
+      onError?.(mappedStatus);
+      console.error(mappedStatus);
+    } else {
+      response
+        .json()
+        .then(data => {
+          setData(data);
+          onSuccess?.(data);
+        })
+        .catch(console.error);
+    }
+  }
+
+  useEffect(() => {
+    if (!loadData) {
+      setData(undefined);
+    } else if (mode === Mode.Dev) {
+      getDataFixtures().then(data => setData(data));
+    } else {
+      let body: PostBodyInterface | undefined;
+
+      if (activeProjectId || activeOrgId) {
+        body = { activeProjectId, activeOrgId };
+      }
+
+      fetchProductionData(body).then(handleResponse).catch(console.error);
+    }
+  }, [mode, endpointURI, activeOrgId, activeProjectId, loadData, dataFixtures]);
+
+  return data;
+}
 
 const navContainerStyle = css`
   background-color: ${uiColors.white};
@@ -66,34 +159,49 @@ const navContainerStyle = css`
  * @param props.activeProjectId ID for active project, will cause a POST request to cloud to update current active project.
  * @param props.className Applies a className to the root element
  * @param props.loadData Determines whether or not the component will fetch data from cloud
+ * @param props.activePlatform Determines which platform is active
+ * @param props.alertPollingInterval Defines interval for alert polling
  */
 function MongoNav({
   activeProduct,
   activeNav,
   onOrganizationChange,
   onProjectChange,
+  activeOrgId,
+  activeProjectId,
+  className,
+  activePlatform = Platform.Cloud,
   mode = Mode.Production,
   loadData = true,
   showProjectNav = true,
-  admin = false,
-  hosts: hostsProp,
-  urls: urlsProp,
-  constructOrganizationURL: constructOrganizationURLProp,
-  constructProjectURL: constructProjectURLProp,
+  admin: adminProp,
   onError = () => {},
   onSuccess = () => {},
   onElementClick = (_type: NavElement, _event: React.MouseEvent) => {}, // eslint-disable-line @typescript-eslint/no-unused-vars
   onPrem = { mfa: false, enabled: false, version: '' },
-  activeOrgId,
-  activeProjectId,
-  className,
-  dataFixtures: dataFixturesProp,
+  alertPollingInterval = 600e3, // 10 minutes
+  hosts: hostsProp,
+  urls: urlsProp,
+  constructOrganizationURL: constructOrganizationURLProp,
+  constructProjectURL: constructProjectURLProp,
+  dataFixtures,
   ...rest
 }: MongoNavInterface) {
   const shouldShowProjectNav = showProjectNav && !onPrem.enabled;
-  const [data, setData] = React.useState<DataInterface | undefined>(undefined);
-  const hosts = defaultsDeep(hostsProp, hostDefaults);
-  const endpointURI = `${hosts.cloud}/user/shared`;
+  const hosts: Required<HostsInterface> = defaultsDeep(hostsProp, hostDefaults);
+
+  const data = useMongoNavData({
+    hosts,
+    mode,
+    activeOrgId,
+    activeProjectId,
+    loadData,
+    dataFixtures,
+    onSuccess,
+    onError,
+  });
+
+  const admin = (adminProp ?? data?.account?.admin) === true;
 
   const currentOrgId = data?.currentOrganization?.orgId;
   const currentProjectId = data?.currentProject?.projectId;
@@ -149,74 +257,6 @@ function MongoNav({
     `${hosts.cloud}/v2/${projectId}#`;
   const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
-  function fetchProductionData(body?: PostBodyInterface) {
-    const configObject: RequestInit = {
-      credentials: 'include',
-      mode: 'cors',
-      method: 'GET',
-    };
-
-    if (body) {
-      Object.assign(configObject, {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-    }
-
-    return fetch(endpointURI, configObject);
-  }
-
-  function getDataFixtures() {
-    return new Promise(resolve => {
-      const mergedData = defaultsDeep(dataFixturesProp, dataFixtures);
-
-      onSuccess?.(mergedData);
-      resolve(mergedData);
-    });
-  }
-
-  function handleResponse(response: Response) {
-    if (!response.ok) {
-      const mappedStatus = ErrorCodeMap[response.status];
-      onError?.(mappedStatus);
-      console.error(mappedStatus);
-    } else {
-      response
-        .json()
-        .then(data => {
-          setData(data);
-          onSuccess?.(data);
-        })
-        .catch(console.error);
-    }
-  }
-
-  useEffect(() => {
-    if (!loadData) {
-      setData(undefined);
-    } else if (mode === Mode.Dev) {
-      getDataFixtures().then(data => setData(data as DataInterface));
-    } else {
-      let body: PostBodyInterface | undefined;
-
-      if (activeProjectId || activeOrgId) {
-        body = { activeProjectId, activeOrgId };
-      }
-
-      fetchProductionData(body).then(handleResponse).catch(console.error);
-    }
-  }, [
-    mode,
-    endpointURI,
-    activeOrgId,
-    activeProjectId,
-    loadData,
-    dataFixturesProp,
-  ]);
-
   const filteredProjects = data?.projects?.filter(project => {
     return project.orgId === data.currentProject?.orgId;
   });
@@ -226,7 +266,6 @@ function MongoNav({
       <section {...rest} className={cx(navContainerStyle, className)}>
         <OrgNav
           account={data?.account}
-          activeProduct={activeProduct}
           current={data?.currentOrganization}
           data={data?.organizations}
           constructOrganizationURL={constructOrganizationURL}
@@ -242,12 +281,14 @@ function MongoNav({
           onPremVersion={onPrem.version}
           onPremMFA={onPrem.mfa}
           showProjectNav={shouldShowProjectNav}
+          activePlatform={activePlatform}
         />
 
         {shouldShowProjectNav && (
           <ProjectNav
             mode={mode}
             activeProduct={activeProduct}
+            alertPollingInterval={alertPollingInterval}
             activeNav={activeNav}
             admin={admin}
             current={data?.currentProject}

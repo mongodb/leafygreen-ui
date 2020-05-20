@@ -74,6 +74,13 @@ function Popover({
   const [contentNode, setContentNode] = useElementNode();
   const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
 
+  // To remove StrictMode warnings produced by react-transition-group we need
+  // to pass in a useRef object to the <Transition> component.
+  // To do so we're shadowing the contentNode onto this nodeRef as
+  // <Transition> only accepts useRef objects.
+  const contentNodeRef = React.useRef(contentNode);
+  contentNodeRef.current = contentNode;
+
   let referenceElement: HTMLElement | null = null;
 
   if (refEl && refEl.current) {
@@ -197,7 +204,13 @@ function Popover({
   })();
 
   return (
-    <Transition in={active} timeout={{ exit: 150 }} mountOnEnter unmountOnExit>
+    <Transition
+      nodeRef={contentNodeRef}
+      in={active}
+      timeout={{ exit: 150 }}
+      mountOnEnter
+      unmountOnExit
+    >
       {(state: string) => (
         <>
           <div

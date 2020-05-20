@@ -1,5 +1,11 @@
 # @leafygreen-ui/syntax
 
+## 2.7.0
+
+### Minor Changes
+
+- e4d7ca4: Support 'csharp' in the language prop as a valid alternative to 'cs' for C# highlighting
+
 ## 2.6.1
 
 ### Patch Changes

@@ -1,5 +1,24 @@
 # @leafygreen-ui/mongo-nav
 
+## 1.2.1
+
+### Patch Changes
+
+- 57b41cf: Enables Cloud SubMenu when `account` is the `activePlatform`.
+  Makes `admin` prop on the `AccountInterface` optional.
+- Updated dependencies [a11b521]
+  - @leafygreen-ui/menu@6.0.10
+
+## 1.2.0
+
+### Minor Changes
+
+- 7453299: Move MongoNav data fetching into its own hook.
+
+  Add support for using the `admin` value from the API endpoint. Should just work without any changes needed by component consumers.
+
+- 6cc5d5e: Adds `alertPollingInterval` and `activePlatform` props to MongoNav
+
 ## 1.1.0
 
 ### Minor Changes

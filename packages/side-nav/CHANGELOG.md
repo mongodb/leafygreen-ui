@@ -1,5 +1,12 @@
 # @leafygreen-ui/side-nav
 
+## 2.0.10
+
+### Patch Changes
+
+- Updated dependencies [a11b521]
+  - @leafygreen-ui/menu@6.0.10
+
 ## 2.0.9
 
 ### Patch Changes

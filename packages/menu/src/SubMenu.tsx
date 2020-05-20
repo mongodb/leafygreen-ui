@@ -216,7 +216,7 @@ const SubMenu: OverrideComponentCast<SubMenuProps> = React.forwardRef(
     ref: React.Ref<any>,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-
+    const nodeRef = React.useRef(null);
     const iconButtonRef: React.RefObject<HTMLElement | null> = useRef(null);
 
     const onRootClick = (
@@ -336,9 +336,11 @@ const SubMenu: OverrideComponentCast<SubMenuProps> = React.forwardRef(
           mountOnEnter
           unmountOnExit
           onExited={onExited}
+          nodeRef={nodeRef}
         >
           {(state: string) => (
             <ul
+              ref={nodeRef}
               className={cx(ulStyle, {
                 [css`
                   height: ${subMenuItemHeight * numberOfMenuItems}px;
@@ -388,7 +390,8 @@ SubMenu.displayName = 'SubMenu';
 // @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 SubMenu.propTypes = {
   title: PropTypes.string,
-  description: PropTypes.element,
+  // @ts-ignore
+  description: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   // @ts-ignore
   href: PropTypes.string,
   children: PropTypes.node,

@@ -150,6 +150,19 @@ describe('packages/tab', () => {
       const activeTab = getByText('Test Content 2');
       expect(activeTab).toBeVisible();
     });
+
+    test('keyboard nav does not work if modifier key is also pressed', () => {
+      const { getByText } = renderTabs({ setSelected }, true);
+      const activeTabListItem = getByText('Name A');
+      fireEvent.keyDown(activeTabListItem, {
+        key: 'ArrowRight',
+        keyCode: 39,
+        metaKey: true,
+      });
+
+      const activeTab = getByText('Test Content 1');
+      expect(activeTab).toBeVisible();
+    });
   });
 });
 

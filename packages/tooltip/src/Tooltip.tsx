@@ -9,6 +9,7 @@ import Popover, {
 import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { transparentize } from 'polished';
 import debounce from 'lodash/debounce';
 import { trianglePosition } from './tooltipUtils';
@@ -81,8 +82,11 @@ interface PopoverFunctionParameters {
   referenceElPos: ElementPosition;
 }
 
+type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'spacing' | 'refEl'>;
+
 interface TooltipProps
-  extends Omit<PopoverProps, 'active' | 'spacing' | 'refEl'> {
+  extends Omit<HTMLElementProps<'div'>, keyof ModifiedPopoverProps>,
+    ModifiedPopoverProps {
   /**
    * A slot for the element used to trigger the `Tooltip`.
    * default: hover
@@ -91,6 +95,7 @@ interface TooltipProps
 
   /**
    * Determines if a `hover` or `click` event will trigger the opening of a `Tooltip`.
+   * default: 'hover'
    */
   triggerEvent?: TriggerEvent;
 
@@ -121,6 +126,12 @@ interface TooltipProps
    *
    */
   shouldClose?: () => boolean;
+
+  /**
+   * Enables Tooltip to trigger based on the event specified by `triggerEvent`.
+   * default: true
+   */
+  enabled?: boolean;
 }
 
 /**
@@ -159,6 +170,7 @@ function Tooltip({
   trigger,
   variant = Variant.Light,
   triggerEvent = TriggerEvent.Hover,
+  enabled = true,
   align = 'top',
   justify = 'start',
   id,
@@ -187,7 +199,7 @@ function Tooltip({
     if (triggerEvent === TriggerEvent.Hover) {
       return {
         onMouseEnter: debounce(() => {
-          setOpen((curr: boolean) => !curr);
+          setOpen(true);
         }, 35),
         onMouseLeave: debounce(handleClose, 35),
         onFocus: () => setOpen(true),
@@ -242,13 +254,12 @@ function Tooltip({
 
   const tooltip = (
     <Popover
-      active={open}
+      active={enabled && open}
       align={align}
       justify={justify}
       usePortal={usePortal}
       adjustOnMutation={true}
       spacing={12}
-      key="tooltip"
     >
       {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
         const triangleStyle = trianglePosition(
@@ -262,7 +273,7 @@ function Tooltip({
             {...rest}
             role="tooltip"
             id={tooltipId}
-            className={cx(className, baseStyles, tooltipVariants[variant])}
+            className={cx(baseStyles, tooltipVariants[variant], className)}
             ref={tooltipRef}
           >
             <div className={triangleStyle.containerStyle}>
