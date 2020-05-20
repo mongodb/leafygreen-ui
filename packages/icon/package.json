@@ -6,6 +6,7 @@
   "main": "./dist/index.node.js",
   "types": "./dist/index.d.ts",
   "scripts": {
+    "pre-build": "ts-node ./scripts/build.ts --files",
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
   },
   "license": "Apache-2.0",

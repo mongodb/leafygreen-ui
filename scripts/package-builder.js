@@ -69,6 +69,7 @@ const tsConfig = `
   "extends": "../../package.tsconfig.json",
   "compilerOptions": {
     "declarationDir": "dist",
+    "outDir": "dist",
     "rootDir": "src"
   },
   "include": ["src/**/*"],
