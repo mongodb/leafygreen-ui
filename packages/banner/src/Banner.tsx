@@ -90,7 +90,7 @@ const bannerVariantStyles: Record<Variant, string> = {
   [Variant.Success]: css`
     color: ${uiColors.green.dark2};
     border-color: ${uiColors.green.light2};
-    background-color: ${uiColors.green.light2};
+    background-color: ${uiColors.green.light3};
 
     &:before {
       background-color: ${uiColors.green.base};
