@@ -120,6 +120,7 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
         jsx: {
           babelConfig: {
             plugins: [
+              '@babel/plugin-transform-react-jsx',
               [
                 // This plugin lets us transform the JSX output to change instances of
                 // #000000 and #000 (the fill for our SVG glyphs) to use `this.props.fill` instead.
