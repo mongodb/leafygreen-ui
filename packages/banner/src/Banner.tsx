@@ -138,7 +138,7 @@ const getTextStyle = (image: boolean, dismissible: boolean) => {
     styleObj.marginLeft = '28px';
 
     if (dismissible) {
-      styleObj.marginRight = '20px';
+      styleObj.marginRight = '32px';
     } else {
       styleObj.marginRight = '10px';
     }
@@ -202,14 +202,14 @@ export default function Banner({
   className,
   ...rest
 }: BannerProps) {
-  const Icon = map[variant].icon;
+  const { icon: Icon, color } = map[variant];
 
   const renderIcon = image ? (
     React.cloneElement(image, {
       className: renderedImageStyles,
     })
   ) : (
-    <Icon fill={map[variant].color} className={leftIconStyles} />
+    <Icon fill={color} className={leftIconStyles} />
   );
 
   return (
@@ -219,15 +219,11 @@ export default function Banner({
       {...rest}
     >
       {renderIcon}
-      <span className={getTextStyle(image ? true : false, dismissible)}>
+      <span className={getTextStyle(image != null, dismissible)}>
         {children}
       </span>
       {dismissible && (
-        <XIcon
-          fill={map[variant].color}
-          onClick={onClose}
-          className={rightIconStyles}
-        />
+        <XIcon fill={color} onClick={onClose} className={rightIconStyles} />
       )}
     </div>
   );
