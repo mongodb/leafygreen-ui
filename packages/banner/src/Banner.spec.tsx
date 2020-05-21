@@ -32,7 +32,7 @@ describe('packages/banner', () => {
 
     test('renders banner with "info" variant by default', () => {
       renderBanner();
-      const infoIcon = screen.getByTitle('Edit Icon');
+      const infoIcon = screen.getByTitle('Glyphs / Info With Circle');
       expect(infoIcon).toBeInTheDocument();
     });
 
@@ -45,7 +45,7 @@ describe('packages/banner', () => {
   describe('when the "variant" prop is set', () => {
     test('and the value is "warning"', () => {
       renderBanner({ variant: Variant.Warning });
-      const icon = screen.getByTitle('Info With Circle Icon');
+      const icon = screen.getByTitle('Glyphs / Question Mark With Circle');
       expect(icon).toBeInTheDocument();
     });
 
@@ -57,7 +57,7 @@ describe('packages/banner', () => {
 
     test('and the value is "success"', () => {
       renderBanner({ variant: Variant.Success });
-      const icon = screen.getByTitle('Checkmark Icon');
+      const icon = screen.getByTitle('Glyphs / Checkmark With Circle');
       expect(icon).toBeInTheDocument();
     });
   });
@@ -83,7 +83,9 @@ describe('packages/banner', () => {
         image: <Icon glyph="VerticalEllipsis" />,
       });
 
-      expect(banner.innerHTML.includes('Edit Icon')).not.toBe(true);
+      expect(banner.innerHTML.includes('Glyphs / Info With Circle')).not.toBe(
+        true,
+      );
       const image = screen.getByTitle('Vertical Ellipsis Icon');
       expect(image).toBeInTheDocument();
     });

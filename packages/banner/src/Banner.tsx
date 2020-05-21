@@ -1,9 +1,8 @@
 import React from 'react';
-// import Icon from '@leafygreen-ui/icon';
-import EditIcon from '@leafygreen-ui/icon/dist/Edit';
+import QuestionMarkWithCircleIcon from '@leafygreen-ui/icon/dist/QuestionMarkWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
+import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -22,20 +21,16 @@ export { Variant };
 const baseBannerStyles = css`
   position: relative;
   display: flex;
-  flex-grow: 1;
-  align-items: flex-start;
-  justify-content: space-between;
   min-height: 40px;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 20px;
   padding-right: 12px;
-  border-top: 1px;
-  border-right: 1px;
-  border-bottom: 1px;
+  border-width: 1px 1px 1px 0px;
+  border-style: solid;
   border-radius: 6px;
   font-size: 14px;
-  line-height: 16px;
+  line-height: 20px;
 
   &:before {
     content: '';
@@ -48,18 +43,23 @@ const baseBannerStyles = css`
   }
 `;
 
-const flexShrinkSettings = css`
+const alignItemsCenter = css`
+  align-items: center;
+`;
+
+const leftIconStyles = css`
   flex-shrink: 0;
+  position: absolute;
+  top: 12px;
+  left: 20px;
 `;
 
-const cursorPointer = css`
+const rightIconStyles = css`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  flex-shrink: 0;
   cursor: pointer;
-`;
-
-const textStyle = css`
-  margin-left: 16px;
-  margin-right: 10px;
-  flex-grow: 1;
 `;
 
 const bannerVariantStyles: Record<Variant, string> = {
@@ -104,16 +104,54 @@ const bannerVariantStyles: Record<Variant, string> = {
 } as const;
 
 const map = {
-  [Variant.Info]: { color: uiColors.blue.base, icon: EditIcon },
-  [Variant.Warning]: { color: uiColors.yellow.dark2, icon: InfoWithCircleIcon },
+  [Variant.Info]: { color: uiColors.blue.base, icon: InfoWithCircleIcon },
+  [Variant.Warning]: {
+    color: uiColors.yellow.dark2,
+    icon: QuestionMarkWithCircleIcon,
+  },
   [Variant.Danger]: { color: uiColors.red.base, icon: WarningIcon },
-  [Variant.Success]: { color: uiColors.green.base, icon: CheckmarkIcon },
+  [Variant.Success]: {
+    color: uiColors.green.base,
+    icon: CheckmarkWithCircleIcon,
+  },
 };
 
 const getDefaultIcon = (variant: Variant) => {
   const Icon = map[variant].icon;
 
-  return <Icon fill={map[variant].color} className={flexShrinkSettings} />;
+  return <Icon fill={map[variant].color} className={leftIconStyles} />;
+};
+
+const getTextStyle = (image: boolean, dismissible: boolean) => {
+  const styleObj: {
+    marginLeft: string | undefined;
+    marginRight: string | undefined;
+  } = {
+    marginLeft: undefined,
+    marginRight: undefined,
+  };
+
+  if (image) {
+    styleObj.marginLeft = '10px';
+
+    if (dismissible) {
+      styleObj.marginRight = '10px';
+    }
+  } else {
+    styleObj.marginLeft = '28px';
+
+    if (dismissible) {
+      styleObj.marginRight = '20px';
+    } else {
+      styleObj.marginRight = '10px';
+    }
+  }
+
+  return css`
+    flex-grow: 1;
+    margin-left: ${styleObj.marginLeft};
+    margin-right: ${styleObj.marginRight};
+  `;
 };
 
 interface BannerProps extends React.ComponentPropsWithoutRef<'div'> {
@@ -166,21 +204,37 @@ export default function Banner({
   className,
   ...rest
 }: BannerProps) {
-  const renderIcon = image ?? getDefaultIcon(variant);
+  const withImage = image ? true : false;
+  const renderedImage =
+    image &&
+    React.cloneElement(image, {
+      className: css`
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+      `,
+    });
+
+  const renderIcon = withImage ? renderedImage : getDefaultIcon(variant);
 
   return (
     <div
       role="alert"
-      className={cx(baseBannerStyles, bannerVariantStyles[variant], className)}
+      className={cx(
+        baseBannerStyles,
+        bannerVariantStyles[variant],
+        { [alignItemsCenter]: withImage },
+        className,
+      )}
       {...rest}
     >
       {renderIcon}
-      <span className={textStyle}>{children}</span>
+      <span className={getTextStyle(withImage, dismissible)}>{children}</span>
       {dismissible && (
         <XIcon
           fill={map[variant].color}
           onClick={onClose}
-          className={cx(flexShrinkSettings, cursorPointer)}
+          className={rightIconStyles}
         />
       )}
     </div>
