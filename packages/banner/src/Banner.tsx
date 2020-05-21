@@ -122,12 +122,6 @@ const map = {
   },
 };
 
-const getDefaultIcon = (variant: Variant) => {
-  const Icon = map[variant].icon;
-
-  return <Icon fill={map[variant].color} className={leftIconStyles} />;
-};
-
 const getTextStyle = (image: boolean, dismissible: boolean) => {
   const styleObj: {
     marginLeft: string | undefined;
@@ -211,13 +205,18 @@ export default function Banner({
   ...rest
 }: BannerProps) {
   const withImage = image ? true : false;
+  const Icon = map[variant].icon;
   const renderedImage =
     image &&
     React.cloneElement(image, {
       className: renderedImageStyles,
     });
 
-  const renderIcon = withImage ? renderedImage : getDefaultIcon(variant);
+  const renderIcon = withImage ? (
+    renderedImage
+  ) : (
+    <Icon fill={map[variant].color} className={leftIconStyles} />
+  );
 
   return (
     <div
