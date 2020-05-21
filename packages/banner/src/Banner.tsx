@@ -1,5 +1,5 @@
 import React from 'react';
-import QuestionMarkWithCircleIcon from '@leafygreen-ui/icon/dist/QuestionMarkWithCircle';
+import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
@@ -62,6 +62,12 @@ const rightIconStyles = css`
   cursor: pointer;
 `;
 
+const renderedImageStyles = css`
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+`;
+
 const bannerVariantStyles: Record<Variant, string> = {
   [Variant.Info]: css`
     color: ${uiColors.blue.dark2};
@@ -107,7 +113,7 @@ const map = {
   [Variant.Info]: { color: uiColors.blue.base, icon: InfoWithCircleIcon },
   [Variant.Warning]: {
     color: uiColors.yellow.dark2,
-    icon: QuestionMarkWithCircleIcon,
+    icon: ImportantWithCircleIcon,
   },
   [Variant.Danger]: { color: uiColors.red.base, icon: WarningIcon },
   [Variant.Success]: {
@@ -208,11 +214,7 @@ export default function Banner({
   const renderedImage =
     image &&
     React.cloneElement(image, {
-      className: css`
-        width: 32px;
-        height: 32px;
-        flex-shrink: 0;
-      `,
+      className: renderedImageStyles,
     });
 
   const renderIcon = withImage ? renderedImage : getDefaultIcon(variant);

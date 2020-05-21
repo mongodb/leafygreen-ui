@@ -45,7 +45,7 @@ describe('packages/banner', () => {
   describe('when the "variant" prop is set', () => {
     test('and the value is "warning"', () => {
       renderBanner({ variant: Variant.Warning });
-      const icon = screen.getByTitle('Glyphs / Question Mark With Circle');
+      const icon = screen.getByTitle('Important With Circle');
       expect(icon).toBeInTheDocument();
     });
 
