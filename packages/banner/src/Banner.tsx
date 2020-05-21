@@ -22,7 +22,7 @@ const baseBannerStyles = css`
   position: relative;
   display: flex;
   min-height: 40px;
-  padding: 10px 12px 10px 20px;
+  padding: 9px 12px 9px 20px;
   border-width: 1px;
   border-style: solid;
   border-radius: 6px;
@@ -59,6 +59,7 @@ const renderedImageStyles = css`
   width: 32px;
   height: 32px;
   flex-shrink: 0;
+  border: 1px solid red;
 `;
 
 const bannerVariantStyles: Record<Variant, string> = {
@@ -120,6 +121,8 @@ const map = {
 };
 
 const getTextStyle = (image: boolean, dismissible: boolean) => {
+  const defaultIconSize = 16;
+
   const styleObj: {
     marginLeft: string | undefined;
     marginRight: string | undefined;
@@ -129,18 +132,16 @@ const getTextStyle = (image: boolean, dismissible: boolean) => {
   };
 
   if (image) {
-    styleObj.marginLeft = '10px';
-
+    styleObj.marginLeft = '15px';
+    styleObj.marginRight = '4px';
     if (dismissible) {
-      styleObj.marginRight = '20px';
+      styleObj.marginRight = `${defaultIconSize + 4}px`;
     }
   } else {
-    styleObj.marginLeft = '28px';
-
+    styleObj.marginLeft = `${defaultIconSize + 15}px`;
+    styleObj.marginRight = '10px';
     if (dismissible) {
-      styleObj.marginRight = '32px';
-    } else {
-      styleObj.marginRight = '10px';
+      styleObj.marginRight = `${defaultIconSize + 16}px`;
     }
   }
 
