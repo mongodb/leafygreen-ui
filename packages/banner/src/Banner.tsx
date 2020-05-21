@@ -56,10 +56,13 @@ const rightIconStyles = css`
 `;
 
 const renderedImageStyles = css`
+  // this margin is set to control text alignment with the base of the renderedImage
+  margin-top: 3px;
+  margin-bottom: 3px;
+
   width: 32px;
   height: 32px;
   flex-shrink: 0;
-  border: 1px solid red;
 `;
 
 const bannerVariantStyles: Record<Variant, string> = {
@@ -135,7 +138,7 @@ const getTextStyle = (image: boolean, dismissible: boolean) => {
     styleObj.marginLeft = '15px';
     styleObj.marginRight = '4px';
     if (dismissible) {
-      styleObj.marginRight = `${defaultIconSize + 4}px`;
+      styleObj.marginRight = `${defaultIconSize + 12}px`;
     }
   } else {
     styleObj.marginLeft = `${defaultIconSize + 15}px`;
