@@ -22,11 +22,8 @@ const baseBannerStyles = css`
   position: relative;
   display: flex;
   min-height: 40px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 20px;
-  padding-right: 12px;
-  border-width: 1px 1px 1px 0px;
+  padding: 10px 12px 10px 20px;
+  border-width: 1px;
   border-style: solid;
   border-radius: 6px;
   font-size: 14px;
@@ -41,10 +38,6 @@ const baseBannerStyles = css`
     left: 0px;
     border-radius: 6px 0px 0px 6px;
   }
-`;
-
-const alignItemsCenter = css`
-  align-items: center;
 `;
 
 const leftIconStyles = css`
@@ -72,6 +65,7 @@ const bannerVariantStyles: Record<Variant, string> = {
   [Variant.Info]: css`
     color: ${uiColors.blue.dark2};
     border-color: ${uiColors.blue.light2};
+    border-left-color: ${uiColors.blue.base};
     background-color: ${uiColors.blue.light3};
 
     &:before {
@@ -82,6 +76,7 @@ const bannerVariantStyles: Record<Variant, string> = {
   [Variant.Warning]: css`
     color: ${uiColors.yellow.dark2};
     border-color: ${uiColors.yellow.light2};
+    border-left-color: ${uiColors.yellow.base};
     background-color: ${uiColors.yellow.light3};
 
     &:before {
@@ -91,6 +86,7 @@ const bannerVariantStyles: Record<Variant, string> = {
   [Variant.Danger]: css`
     color: ${uiColors.red.dark2};
     border-color: ${uiColors.red.light2};
+    border-left-color: ${uiColors.red.base};
     background-color: ${uiColors.red.light3};
 
     &:before {
@@ -101,6 +97,7 @@ const bannerVariantStyles: Record<Variant, string> = {
   [Variant.Success]: css`
     color: ${uiColors.green.dark2};
     border-color: ${uiColors.green.light2};
+    border-left-color: ${uiColors.green.base};
     background-color: ${uiColors.green.light3};
 
     &:before {
@@ -135,7 +132,7 @@ const getTextStyle = (image: boolean, dismissible: boolean) => {
     styleObj.marginLeft = '10px';
 
     if (dismissible) {
-      styleObj.marginRight = '10px';
+      styleObj.marginRight = '20px';
     }
   } else {
     styleObj.marginLeft = '28px';
@@ -148,6 +145,7 @@ const getTextStyle = (image: boolean, dismissible: boolean) => {
   }
 
   return css`
+    align-self: center;
     flex-grow: 1;
     margin-left: ${styleObj.marginLeft};
     margin-right: ${styleObj.marginRight};
@@ -204,16 +202,12 @@ export default function Banner({
   className,
   ...rest
 }: BannerProps) {
-  const withImage = image ? true : false;
   const Icon = map[variant].icon;
-  const renderedImage =
-    image &&
+
+  const renderIcon = image ? (
     React.cloneElement(image, {
       className: renderedImageStyles,
-    });
-
-  const renderIcon = withImage ? (
-    renderedImage
+    })
   ) : (
     <Icon fill={map[variant].color} className={leftIconStyles} />
   );
@@ -221,16 +215,13 @@ export default function Banner({
   return (
     <div
       role="alert"
-      className={cx(
-        baseBannerStyles,
-        bannerVariantStyles[variant],
-        { [alignItemsCenter]: withImage },
-        className,
-      )}
+      className={cx(baseBannerStyles, bannerVariantStyles[variant], className)}
       {...rest}
     >
       {renderIcon}
-      <span className={getTextStyle(withImage, dismissible)}>{children}</span>
+      <span className={getTextStyle(image ? true : false, dismissible)}>
+        {children}
+      </span>
       {dismissible && (
         <XIcon
           fill={map[variant].color}

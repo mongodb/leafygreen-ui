@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, text, select } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
-import BuildingIcon from '@leafygreen-ui/icon/dist/Building';
+import MenuIcon from '@leafygreen-ui/icon/dist/Menu';
 import Banner, { Variant } from '.';
 
 const margin = css`
@@ -30,7 +30,7 @@ storiesOf('Banner', module)
         <Banner
           variant={select('variant', Object.values(Variant), 'info')}
           dismissible={boolean('dismissible', false)}
-          image={<BuildingIcon />}
+          image={<MenuIcon />}
         >
           {text(
             'Children',
