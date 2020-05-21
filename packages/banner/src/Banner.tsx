@@ -1,5 +1,10 @@
 import React from 'react';
-import Icon from '@leafygreen-ui/icon';
+// import Icon from '@leafygreen-ui/icon';
+import EditIcon from '@leafygreen-ui/icon/dist/Edit';
+import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
+import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
+import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
+import XIcon from '@leafygreen-ui/icon/dist/X';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 
@@ -98,11 +103,17 @@ const bannerVariantStyles: Record<Variant, string> = {
   `,
 } as const;
 
-const bannerVariantIcons: Record<Variant, { glyph: string; color: string }> = {
-  [Variant.Info]: { glyph: 'Edit', color: uiColors.blue.base },
-  [Variant.Warning]: { glyph: 'InfoWithCircle', color: uiColors.yellow.dark2 },
-  [Variant.Danger]: { glyph: 'Warning', color: uiColors.red.base },
-  [Variant.Success]: { glyph: 'Checkmark', color: uiColors.green.base },
+const map = {
+  [Variant.Info]: { color: uiColors.blue.base, icon: EditIcon },
+  [Variant.Warning]: { color: uiColors.yellow.dark2, icon: InfoWithCircleIcon },
+  [Variant.Danger]: { color: uiColors.red.base, icon: WarningIcon },
+  [Variant.Success]: { color: uiColors.green.base, icon: CheckmarkIcon },
+};
+
+const getDefaultIcon = (variant: Variant) => {
+  const Icon = map[variant].icon;
+
+  return <Icon fill={map[variant].color} className={flexShrinkSettings} />;
 };
 
 interface BannerProps extends React.ComponentPropsWithoutRef<'div'> {
@@ -119,11 +130,11 @@ interface BannerProps extends React.ComponentPropsWithoutRef<'div'> {
   image?: React.ReactElement;
 
   /**
-   * Determines whether or not the Banner is dismissable
+   * Determines whether or not the Banner is dismissible
    *
    * Default: `false`
    */
-  dismissable?: boolean;
+  dismissible?: boolean;
 
   /**
    * Callback fired when dismiss button is clicked
@@ -143,31 +154,19 @@ interface BannerProps extends React.ComponentPropsWithoutRef<'div'> {
 ```
  * @param props.variant Sets the variant for the Banner.
  * @param props.image Illustration that will replace default Icon when the prop is supplied.
- * @param props.dismissable Determines whether or not the Banner is dismissable.
+ * @param props.dismissible Determines whether or not the Banner is dismissible.
  * @param props.onClose Callback fired when dismiss button is clicked.
  */
 export default function Banner({
   variant = Variant.Info,
-  dismissable = false,
+  dismissible = false,
   onClose = () => {},
   image,
   children,
   className,
   ...rest
 }: BannerProps) {
-  const renderIcon = image ? (
-    image
-  ) : (
-    <Icon
-      glyph={bannerVariantIcons[variant].glyph}
-      className={cx(
-        flexShrinkSettings,
-        css`
-          color: ${bannerVariantIcons[variant].color};
-        `,
-      )}
-    />
-  );
+  const renderIcon = image ?? getDefaultIcon(variant);
 
   return (
     <div
@@ -177,17 +176,11 @@ export default function Banner({
     >
       {renderIcon}
       <span className={textStyle}>{children}</span>
-      {dismissable && (
-        <Icon
-          glyph="X"
+      {dismissible && (
+        <XIcon
+          fill={map[variant].color}
           onClick={onClose}
-          className={cx(
-            flexShrinkSettings,
-            cursorPointer,
-            css`
-              color: ${bannerVariantIcons[variant].color};
-            `,
-          )}
+          className={cx(flexShrinkSettings, cursorPointer)}
         />
       )}
     </div>

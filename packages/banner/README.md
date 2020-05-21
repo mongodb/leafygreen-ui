@@ -49,6 +49,6 @@ npm install @leafygreen-ui/banner
 | Prop          | Type                                   | Description                                                           | Default    |
 | ------------- | -------------------------------------- | --------------------------------------------------------------------- | ---------- |
 | `variant`     | `info`, `warning`, `danger`, `success` | Sets the variant for the Banner                                       | `info`     |
-| `dismissable` | `boolean`                              | Determines whether or not the Banner is dismissable                   | `false`    |
+| `dismissible` | `boolean`                              | Determines whether or not the Banner is dismissible                   | `false`    |
 | `onClose`     | `React.MouseEventHandler`              | Callback fired when dismiss button is clicked                         | `() => {}` |
 | `image`       | `React.ReactElement`                   | Illustration that will replace default Icon when the prop is supplied |            |

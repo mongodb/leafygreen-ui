@@ -13,7 +13,7 @@ storiesOf('Banner', module).add('Default', () => (
   <div className={margin}>
     <Banner
       variant={select('variant', Object.values(Variant), 'info')}
-      dismissable={boolean('dismissable', false)}
+      dismissible={boolean('dismissible', false)}
     >
       {text(
         'Children',

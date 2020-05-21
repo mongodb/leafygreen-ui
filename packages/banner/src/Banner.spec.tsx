@@ -36,7 +36,7 @@ describe('packages/banner', () => {
       expect(infoIcon).toBeInTheDocument();
     });
 
-    test('does not render the banner as dismissable by default', () => {
+    test('does not render the banner as dismissible by default', () => {
       const { banner } = renderBanner();
       expect(banner.innerHTML.includes('X Icon')).not.toBe(true);
     });
@@ -62,15 +62,15 @@ describe('packages/banner', () => {
     });
   });
 
-  describe('when the "dismissable" prop is set', () => {
+  describe('when the "dismissible" prop is set', () => {
     test('the X icon is present', () => {
-      renderBanner({ dismissable: true });
+      renderBanner({ dismissible: true });
       const xButton = screen.getByTitle('X Icon');
       expect(xButton).toBeInTheDocument();
     });
 
     test('onClose fires when the dismiss button is clicked', () => {
-      renderBanner({ dismissable: true, onClose });
+      renderBanner({ dismissible: true, onClose });
       const xButton = screen.getByTitle('X Icon');
       fireEvent.click(xButton);
       expect(onClose).toHaveBeenCalledTimes(1);
