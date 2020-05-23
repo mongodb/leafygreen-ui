@@ -48,5 +48,5 @@ If this is a relatively large or complex change, kick off the discussion by expl
 
 Consider putting screenshots of your addition / change here if there are visual changes, and a gif if motion is a major component of it.
 
-Alternatively, if this is a very minor, and self-explanitory change, feel free to remove this section.
+Alternatively, if this is a very minor, and self-explanatory change, feel free to remove this section.
 -->
