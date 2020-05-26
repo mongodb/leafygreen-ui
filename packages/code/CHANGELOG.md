@@ -1,5 +1,16 @@
 # @leafygreen-ui/code
 
+## 3.4.4
+
+### Patch Changes
+
+- cf6167e: Build and consume individual glyph components
+- Updated dependencies [2fc4ef9]
+- Updated dependencies [e857861]
+- Updated dependencies [cf6167e]
+  - @leafygreen-ui/icon@5.2.0
+  - @leafygreen-ui/icon-button@5.0.3
+
 ## 3.4.3
 
 ### Patch Changes
