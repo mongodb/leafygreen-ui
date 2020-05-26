@@ -1,5 +1,11 @@
 # @leafygreen-ui/popover
 
+## 5.0.2
+
+### Patch Changes
+
+- 05779a1: Upgrades `react-transition-group` to 4.4.1 which removes all React `StrictMode` warnings, making these components `StrictMode` safe.
+
 ## 5.0.1
 
 ### Patch Changes
