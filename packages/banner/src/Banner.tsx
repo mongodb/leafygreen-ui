@@ -56,10 +56,6 @@ const bannerVariantStyles: Record<Variant, string> = {
     border-color: ${uiColors.blue.light2};
     border-left-color: ${uiColors.blue.base};
     background-color: ${uiColors.blue.light3};
-
-    &:before {
-      background-color: ${uiColors.blue.base};
-    }
   `,
 
   [Variant.Warning]: css`
