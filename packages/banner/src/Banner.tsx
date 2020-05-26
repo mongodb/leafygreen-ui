@@ -32,15 +32,11 @@ const baseBannerStyles = css`
   line-height: 20px;
 `;
 
-const leftIconStyles = css`
+const flexShrink = css`
   flex-shrink: 0;
 `;
 
-const rightIconStyles = css`
-  position: absolute;
-  top: ${defaultBorderSpacing}px;
-  right: ${defaultBorderSpacing}px;
-  flex-shrink: 0;
+const cursorPointer = css`
   cursor: pointer;
 `;
 
@@ -191,7 +187,7 @@ export default function Banner({
       className: renderedImageStyles,
     })
   ) : (
-    <Icon fill={color} className={leftIconStyles} />
+    <Icon fill={color} className={flexShrink} />
   );
 
   return (
@@ -205,7 +201,11 @@ export default function Banner({
         {children}
       </span>
       {dismissible && (
-        <XIcon fill={color} onClick={onClose} className={rightIconStyles} />
+        <XIcon
+          fill={color}
+          onClick={onClose}
+          className={cx(flexShrink, cursorPointer)}
+        />
       )}
     </div>
   );
