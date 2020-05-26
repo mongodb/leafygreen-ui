@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- 2fc4ef9: Adds ImportantWithCircle glyph to Icon library
+- 2fc4ef9: Adds "ImportantWithCircle" glyph to Icon library
 - e857861: Adds "Unsorted", "UpDownCarets", "VerticalEllipsis", "SortAscending", and "SortDescending" glyphs to Icon
 - cf6167e: Build and consume individual glyph components
 
@@ -12,7 +12,7 @@
 
 ### Minor Changes
 
-- c812eb3: Updates the Activity Feed icon to be consistent with other icons in the MongoNav
+- c812eb3: Updates the "ActivityFeed" icon to be consistent with other icons in the MongoNav
 
 ## 5.0.3
 
@@ -45,19 +45,19 @@
 
 ### Minor Changes
 
-- e1568c6: Updates the visual weight of the InviteUser glyph.
+- e1568c6: Updates the visual weight of the "InviteUser" glyph.
 
 ## 4.2.0
 
 ### Minor Changes
 
-- a2948f6: Adds University glyph
+- a2948f6: Adds "University" glyph
 
 ## 4.1.0
 
 ### Minor Changes
 
-- 71327dd: Adds ActivityFeed, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Folder, InviteUser, and Megaphone icons
+- 71327dd: Adds "ActivityFeed", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Folder", "InviteUser", and "Megaphone" icons
 
 ## 4.0.0
 
