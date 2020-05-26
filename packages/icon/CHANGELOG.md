@@ -1,5 +1,13 @@
 # @leafygreen-ui/icon
 
+## 5.2.0
+
+### Minor Changes
+
+- 2fc4ef9: Adds ImportantWithCircle glyph to Icon library
+- e857861: Adds "Unsorted", "UpDownCarets", "VerticalEllipsis", "SortAscending", and "SortDescending" glyphs to Icon
+- cf6167e: Build and consume individual glyph components
+
 ## 5.1.0
 
 ### Minor Changes
