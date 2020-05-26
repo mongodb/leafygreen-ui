@@ -18,39 +18,28 @@ type Variant = typeof Variant[keyof typeof Variant];
 
 export { Variant };
 
+const defaultBorderSpacing = 12;
+
 const baseBannerStyles = css`
   position: relative;
   display: flex;
   min-height: 40px;
   padding: 9px 12px 9px 20px;
-  border-width: 1px;
+  border-width: 1px 1px 1px 4px;
   border-style: solid;
   border-radius: 6px;
   font-size: 14px;
   line-height: 20px;
-
-  &:before {
-    content: '';
-    position: absolute;
-    width: 4px;
-    top: 0;
-    bottom: 0;
-    left: 0px;
-    border-radius: 6px 0px 0px 6px;
-  }
 `;
 
 const leftIconStyles = css`
   flex-shrink: 0;
-  position: absolute;
-  top: 12px;
-  left: 20px;
 `;
 
 const rightIconStyles = css`
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: ${defaultBorderSpacing}px;
+  right: ${defaultBorderSpacing}px;
   flex-shrink: 0;
   cursor: pointer;
 `;
@@ -82,20 +71,13 @@ const bannerVariantStyles: Record<Variant, string> = {
     border-color: ${uiColors.yellow.light2};
     border-left-color: ${uiColors.yellow.base};
     background-color: ${uiColors.yellow.light3};
-
-    &:before {
-      background-color: ${uiColors.yellow.base};
-    }
   `,
+
   [Variant.Danger]: css`
     color: ${uiColors.red.dark2};
     border-color: ${uiColors.red.light2};
     border-left-color: ${uiColors.red.base};
     background-color: ${uiColors.red.light3};
-
-    &:before {
-      background-color: ${uiColors.red.base};
-    }
   `,
 
   [Variant.Success]: css`
@@ -103,10 +85,6 @@ const bannerVariantStyles: Record<Variant, string> = {
     border-color: ${uiColors.green.light2};
     border-left-color: ${uiColors.green.base};
     background-color: ${uiColors.green.light3};
-
-    &:before {
-      background-color: ${uiColors.green.base};
-    }
   `,
 } as const;
 
@@ -127,8 +105,8 @@ const getTextStyle = (image: boolean, dismissible: boolean) => {
   const defaultIconSize = 16;
 
   const styleObj: {
-    marginLeft: string | undefined;
-    marginRight: string | undefined;
+    marginLeft?: string;
+    marginRight?: string;
   } = {
     marginLeft: undefined,
     marginRight: undefined,
@@ -138,10 +116,10 @@ const getTextStyle = (image: boolean, dismissible: boolean) => {
     styleObj.marginLeft = '15px';
     styleObj.marginRight = '4px';
     if (dismissible) {
-      styleObj.marginRight = `${defaultIconSize + 12}px`;
+      styleObj.marginRight = `${defaultIconSize + defaultBorderSpacing}px`;
     }
   } else {
-    styleObj.marginLeft = `${defaultIconSize + 15}px`;
+    styleObj.marginLeft = `${15}px`;
     styleObj.marginRight = '10px';
     if (dismissible) {
       styleObj.marginRight = `${defaultIconSize + 16}px`;
