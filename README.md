@@ -5,6 +5,7 @@ A set of CSS styles and React components built with design in mind.
 ## Package Table of Contents
 
 - [Badge](https://github.com/mongodb/leafygreen-ui/tree/master/packages/badge)
+- [Banner](https://github.com/mongodb/leafygreen-ui/tree/master/packages/banner)
 - [Box](https://github.com/mongodb/leafygreen-ui/tree/master/packages/box)
 - [Button](https://github.com/mongodb/leafygreen-ui/tree/master/packages/button)
 - [Card](https://github.com/mongodb/leafygreen-ui/tree/master/packages/card)
