@@ -47,6 +47,7 @@ const baseBannerStyles = css`
     left: 4px;
     top: -1px;
     bottom: -1px;
+    width: 2px;
     border-top: 1px solid;
     border-bottom: 1px solid;
     border-radius: 0.5px 0px 0px 0.5px;
