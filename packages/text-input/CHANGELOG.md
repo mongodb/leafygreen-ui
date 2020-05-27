@@ -1,5 +1,18 @@
 # @leafygreen-ui/text-input
 
+## 1.1.0
+
+### Minor Changes
+
+- 2c956d1: Allows consumer to set `type` attribute on input component
+
+### Patch Changes
+
+- Updated dependencies [2fc4ef9]
+- Updated dependencies [e857861]
+- Updated dependencies [cf6167e]
+  - @leafygreen-ui/icon@5.2.0
+
 ## 1.0.4
 
 ### Patch Changes
