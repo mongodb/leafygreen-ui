@@ -58,7 +58,7 @@ const packageJSON = `
     "publishConfig": {
       "access": "public"
     },
-    "devDependencies": {
+    "dependencies": {
       "@leafygreen-ui/lib": "^4.0.0"
     }
   }
