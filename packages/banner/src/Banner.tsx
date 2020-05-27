@@ -214,7 +214,7 @@ export default function Banner({
       className={cx(
         flexShrink,
         css`
-          margin-top: 2px;
+          margin-top: 1px;
         `,
       )}
     />
