@@ -30,6 +30,16 @@ const baseBannerStyles = css`
   border-radius: 6px;
   font-size: 14px;
   line-height: 20px;
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 4px;
+    top: 0;
+    bottom: 0;
+    left: 0px;
+    border-radius: 6px 0px 0px 6px;
+  }
 `;
 
 const flexShrink = css`
@@ -56,6 +66,10 @@ const bannerVariantStyles: Record<Variant, string> = {
     border-color: ${uiColors.blue.light2};
     border-left-color: ${uiColors.blue.base};
     background-color: ${uiColors.blue.light3};
+
+    &:before {
+      background-color: ${uiColors.blue.base};
+    }
   `,
 
   [Variant.Warning]: css`
@@ -63,6 +77,10 @@ const bannerVariantStyles: Record<Variant, string> = {
     border-color: ${uiColors.yellow.light2};
     border-left-color: ${uiColors.yellow.base};
     background-color: ${uiColors.yellow.light3};
+
+    &:before {
+      background-color: ${uiColors.yellow.base};
+    }
   `,
 
   [Variant.Danger]: css`
@@ -70,6 +88,10 @@ const bannerVariantStyles: Record<Variant, string> = {
     border-color: ${uiColors.red.light2};
     border-left-color: ${uiColors.red.base};
     background-color: ${uiColors.red.light3};
+
+    &:before {
+      background-color: ${uiColors.red.base};
+    }
   `,
 
   [Variant.Success]: css`
@@ -77,6 +99,10 @@ const bannerVariantStyles: Record<Variant, string> = {
     border-color: ${uiColors.green.light2};
     border-left-color: ${uiColors.green.base};
     background-color: ${uiColors.green.light3};
+
+    &:before {
+      background-color: ${uiColors.green.base};
+    }
   `,
 } as const;
 
