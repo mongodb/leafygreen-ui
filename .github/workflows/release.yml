@@ -26,10 +26,10 @@ jobs:
       - name: Build packages
         run: yarn build
 
-      - name: Run Prettier
-        run: yarn format
-
       - name: Create Release Pull Request
         uses: changesets/action@master
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: Run Prettier
+        run: yarn format
