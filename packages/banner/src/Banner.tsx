@@ -209,7 +209,15 @@ export default function Banner({
       className: renderedImageStyles,
     })
   ) : (
-    <Icon fill={color} className={flexShrink} />
+    <Icon
+      fill={color}
+      className={cx(
+        flexShrink,
+        css`
+          margin-top: 2px;
+        `,
+      )}
+    />
   );
 
   return (
