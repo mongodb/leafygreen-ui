@@ -121,7 +121,9 @@ Make sure that the PR includes the changes made by running this command.
 
 ## Publishing
 
-1.  Build the compiled version of every UI package. This creates the dist/ folder with the transpiled code ready for distribution.
+1. Merge the automatically generated `Version Packages` PR that will contain appropriate version bumps and changelog documentation.
+
+2. Build the compiled version of every UI package. This creates the dist/ folder with the transpiled code ready for distribution.
 
 ```
 # To transpile and concatenate all files
@@ -130,17 +132,7 @@ yarn build
 yarn ts
 ```
 
-2. Create a new branch. This is where package version updates will be pushed from.
-
-3. Generate a changeset for each package.
-
-```
-yarn changeset version
-```
-
-4. Make sure changes made from this command are merged back into master before releasing.
-
-5. Publish all packages to NPM using changesets. This can be done from master.
+3. Publish all packages to NPM using changesets. This can be done from master.
 
 ```
 yarn release
