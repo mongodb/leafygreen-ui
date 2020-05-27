@@ -34,11 +34,22 @@ const baseBannerStyles = css`
   &:before {
     content: '';
     position: absolute;
-    width: 4px;
-    top: 0;
-    bottom: 0;
+    width: 6px;
+    top: -1px;
+    bottom: -1px;
     left: 0px;
     border-radius: 6px 0px 0px 6px;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: -1px;
+    bottom: -1px;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-radius: 0.5px 0px 0px 0.5px;
   }
 `;
 
@@ -70,6 +81,11 @@ const bannerVariantStyles: Record<Variant, string> = {
     &:before {
       background-color: ${uiColors.blue.base};
     }
+
+    &:after {
+      border-color: ${uiColors.blue.light2};
+      background-color: ${uiColors.blue.light3};
+    }
   `,
 
   [Variant.Warning]: css`
@@ -80,6 +96,11 @@ const bannerVariantStyles: Record<Variant, string> = {
 
     &:before {
       background-color: ${uiColors.yellow.base};
+    }
+
+    &:after {
+      border-color: ${uiColors.yellow.light2};
+      background-color: ${uiColors.yellow.light3};
     }
   `,
 
@@ -92,6 +113,11 @@ const bannerVariantStyles: Record<Variant, string> = {
     &:before {
       background-color: ${uiColors.red.base};
     }
+
+    &:after {
+      border-color: ${uiColors.red.light2};
+      background-color: ${uiColors.red.light3};
+    }
   `,
 
   [Variant.Success]: css`
@@ -102,6 +128,11 @@ const bannerVariantStyles: Record<Variant, string> = {
 
     &:before {
       background-color: ${uiColors.green.base};
+    }
+
+    &:after {
+      border-color: ${uiColors.green.light2};
+      background-color: ${uiColors.green.light3};
     }
   `,
 } as const;
