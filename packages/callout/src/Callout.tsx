@@ -70,7 +70,7 @@ const headerLabel = {
 
 const headerIcon: Record<Variant, keyof typeof glyphs> = {
   [Variant.Note]: 'Edit',
-  [Variant.Tip]: 'Edit', // Need "Lightbulb",
+  [Variant.Tip]: 'Bulb',
   [Variant.Important]: 'InfoWithCircle',
   [Variant.Warning]: 'Warning',
 };
