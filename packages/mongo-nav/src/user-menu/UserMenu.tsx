@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import defaultsDeep from 'lodash/defaultsDeep';
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
-import Icon from '@leafygreen-ui/icon';
+import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
+import { Size } from '@leafygreen-ui/icon';
 import { LogoMark } from '@leafygreen-ui/logo';
 import {
   Menu,
@@ -146,7 +147,7 @@ function Description({ isActive, product }: DescriptionProps) {
       })}
     >
       {`${product}.mongodb.com`}
-      <Icon size="small" glyph="ArrowRight" className={productLinkIconStyle} />
+      <ArrowRightIcon size={Size.Small} className={productLinkIconStyle} />
     </div>
   );
 }

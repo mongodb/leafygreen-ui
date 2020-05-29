@@ -2,7 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import debounce from 'lodash/debounce';
 
 // leafygreen-ui
-import Icon from '@leafygreen-ui/icon';
+import FolderIcon from '@leafygreen-ui/icon/dist/Folder';
+import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
+import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
+import { Size } from '@leafygreen-ui/icon';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { createDataProp } from '@leafygreen-ui/lib';
@@ -256,8 +259,7 @@ function ProjectSelect({
         disabled={loading}
         aria-disabled={loading}
       >
-        <Icon
-          glyph="Folder"
+        <FolderIcon
           className={cx(iconColorStyle, { [iconLoadingStyle]: loading })}
         />
         <span
@@ -266,11 +268,18 @@ function ProjectSelect({
         >
           {current?.projectName ?? ''}
         </span>
-        <Icon
-          size="small"
-          glyph={open ? 'CaretUp' : 'CaretDown'}
-          className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
-        />
+
+        {open ? (
+          <CaretUpIcon
+            size={Size.Small}
+            className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
+          />
+        ) : (
+          <CaretDownIcon
+            size={Size.Small}
+            className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
+          />
+        )}
       </button>
       <Menu
         usePortal={false}

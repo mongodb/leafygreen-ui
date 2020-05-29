@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
+import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
+import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp, HTMLElementProps } from '@leafygreen-ui/lib';
@@ -314,11 +315,11 @@ const TextInput = React.forwardRef(
           />
           <div {...iconSelectorProp.prop} className={inputIconStyle}>
             {state === State.Valid && (
-              <Icon glyph="Checkmark" className={validIconStyle} />
+              <CheckmarkIcon className={validIconStyle} />
             )}
 
             {state === State.Error && (
-              <Icon glyph="Warning" className={errorIconStyle} />
+              <WarningIcon className={errorIconStyle} />
             )}
 
             {state === State.None && optional && (

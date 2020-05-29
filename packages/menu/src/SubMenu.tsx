@@ -2,7 +2,8 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
-import Icon from '@leafygreen-ui/icon';
+import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
+import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
@@ -251,6 +252,10 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
       ),
     });
 
+  const caretIconStyles = cx(open ? openIconStyle : closedIconStyle, {
+    [focusedIconStyle]: showFocus,
+  });
+
   const renderedSubMenuItem = (Root: React.ElementType<any> = 'button') => (
     <li role="none" className={liStyle}>
       <Root
@@ -307,12 +312,11 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
           }
         }}
       >
-        <Icon
-          glyph={open ? 'CaretUp' : 'CaretDown'}
-          className={cx(open ? openIconStyle : closedIconStyle, {
-            [focusedIconStyle]: showFocus,
-          })}
-        />
+        {open ? (
+          <CaretUpIcon className={caretIconStyles} />
+        ) : (
+          <CaretDownIcon className={caretIconStyles} />
+        )}
       </IconButton>
       <Transition
         in={open}

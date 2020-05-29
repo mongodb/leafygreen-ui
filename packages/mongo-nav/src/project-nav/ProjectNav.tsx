@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import Tooltip from '@leafygreen-ui/tooltip';
 import IconButton from '@leafygreen-ui/icon-button';
-import Icon from '@leafygreen-ui/icon';
+import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
+import InviteUserIcon from '@leafygreen-ui/icon/dist/InviteUser';
+import ActivityFeedIcon from '@leafygreen-ui/icon/dist/ActivityFeed';
+import BellIcon from '@leafygreen-ui/icon/dist/Bell';
+import { Size } from '@leafygreen-ui/icon';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -361,7 +365,7 @@ export default function ProjectNav({
             data-testid="project-nav-project-menu"
             onClick={onElementClick(ProjectNavProjectDropdown)}
           >
-            <Icon glyph="Ellipsis" className={menuIconStyle} />
+            <EllipsisIcon className={menuIconStyle} />
           </IconButton>
         }
       >
@@ -501,7 +505,7 @@ export default function ProjectNav({
                 data-testid="project-nav-invite"
                 onClick={onElementClick(ProjectNavInvite)}
               >
-                <Icon glyph="InviteUser" size="large" />
+                <InviteUserIcon size={Size.Large} />
               </IconButton>
             }
           >
@@ -526,7 +530,7 @@ export default function ProjectNav({
                 data-testid="project-nav-activity-feed"
                 onClick={onElementClick(ProjectNavActivityFeed)}
               >
-                <Icon glyph="ActivityFeed" size="large" />
+                <ActivityFeedIcon size={Size.Large} />
               </IconButton>
             }
           >
@@ -558,7 +562,7 @@ export default function ProjectNav({
                   </div>
                 )}
 
-                <Icon glyph="Bell" size="large" />
+                <BellIcon size={Size.Large} />
               </IconButton>
             }
           >

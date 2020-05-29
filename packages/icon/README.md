@@ -20,6 +20,8 @@ npm install @leafygreen-ui/icon
 
 ```js
 import Icon from '@leafygreen-ui/icon';
+// if only one Icon is needed, rather than the entire package. Import as such:
+// import PlusIcon from '@leafygreen-ui/icon/dist/Plus'
 
 const SomeComponent = () => <Icon glyph="Plus" fill="#FF0000" />;
 ```

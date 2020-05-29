@@ -4,7 +4,8 @@ import { Transition } from 'react-transition-group';
 import { transparentize } from 'polished';
 import facepaint from 'facepaint';
 import Portal from '@leafygreen-ui/portal';
-import Icon, { Size } from '@leafygreen-ui/icon';
+import XIcon from '@leafygreen-ui/icon/dist/X';
+import { Size } from '@leafygreen-ui/icon';
 import { useEscapeKey } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -229,8 +230,7 @@ function Modal({
                   contentClassName,
                 )}
               >
-                <Icon
-                  glyph="X"
+                <XIcon
                   fill={uiColors.gray.dark1}
                   size={Size.Large}
                   onClick={handleClose}

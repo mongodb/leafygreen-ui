@@ -2,7 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 import debounce from 'lodash/debounce';
 
 // leafygreen-ui
-import Icon from '@leafygreen-ui/icon';
+import BuildingIcon from '@leafygreen-ui/icon/dist/Building';
+import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
+import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
+import SettingsIcon from '@leafygreen-ui/icon/dist/Settings';
+import { Size } from '@leafygreen-ui/icon';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
@@ -363,9 +367,8 @@ function OrgSelect({
           })}
         >
           {!isTablet && (
-            <Icon
-              size="small"
-              glyph="Building"
+            <BuildingIcon
+              size={Size.Small}
               className={cx(iconColorStyle, { [iconLoadingStyle]: loading })}
             />
           )}
@@ -377,11 +380,17 @@ function OrgSelect({
           >
             {disabled ? 'All Organizations' : current?.orgName ?? ''}
           </span>
-          <Icon
-            size="small"
-            glyph={open ? 'CaretUp' : 'CaretDown'}
-            className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
-          />
+          {open ? (
+            <CaretUpIcon
+              size={Size.Small}
+              className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
+            />
+          ) : (
+            <CaretDownIcon
+              size={Size.Small}
+              className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
+            />
+          )}
         </button>
         <Menu
           usePortal={false}
@@ -452,8 +461,7 @@ function OrgSelect({
             [removePointerEvents]: loading,
           })}
         >
-          <Icon
-            glyph="Settings"
+          <SettingsIcon
             className={cx({
               [activeIconStyle]: isActive,
               [iconLoadingStyle]: loading,
