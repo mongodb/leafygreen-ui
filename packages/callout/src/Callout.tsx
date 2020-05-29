@@ -110,6 +110,7 @@ interface CustomCalloutProps {
   headerLabel: string;
   title?: string;
   children: string;
+  className?: string;
 }
 
 interface CalloutProps
@@ -123,6 +124,7 @@ function CustomCallout({
   headerLabel,
   title,
   children: contents,
+  className,
 }: CustomCalloutProps) {
   const header = (
     <div
@@ -156,6 +158,7 @@ function CustomCallout({
             background-color: ${colorSet.foreground};
           }
         `,
+        className,
       )}
     >
       <div>
@@ -179,15 +182,22 @@ CustomCallout.propTypes = {
   headerLabel: PropTypes.string.isRequired,
   title: PropTypes.string,
   children: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
-function Callout({ variant, title, children: contents }: CalloutProps) {
+function Callout({
+  variant,
+  title,
+  children: contents,
+  className,
+}: CalloutProps) {
   return (
     <CustomCallout
       colorSet={colorSets[variant]}
       headerIcon={headerIcon[variant]}
       headerLabel={headerLabel[variant]}
       title={title}
+      className={className}
     >
       {contents}
     </CustomCallout>
@@ -198,6 +208,7 @@ Callout.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)).isRequired,
   title: PropTypes.string,
   children: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 export default Callout;
