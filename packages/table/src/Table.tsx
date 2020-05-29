@@ -1,10 +1,10 @@
 import React, { useReducer, ReactElement } from 'react';
-import { isComponentType } from '@leafygreen-ui/lib';
-import { css } from '@leafygreen-ui/emotion';
-import HeaderRow, { HeaderRowProps } from './HeaderRow';
-import TableHeader, { TableHeaderProps } from './TableHeader';
+import { cx, css } from '@leafygreen-ui/emotion';
+import { HeaderRowProps } from './HeaderRow';
+import { TableHeaderProps } from './TableHeader';
 import CheckboxCell from './CheckboxCell';
 import { State, Types, TableProvider, reducer } from './table-context';
+import TableHead from './TableHead';
 
 // * Clean TS
 // * Add nodeRef to Row
@@ -14,12 +14,17 @@ const tableStyles = css`
   box-sizing: border-box;
 `;
 
-interface TableProps extends React.ComponentPropsWithoutRef<'table'> {
+interface ChildrenArgInterface {
+  datum: any;
+  index: number;
+}
+export interface TableProps extends React.ComponentPropsWithoutRef<'table'> {
   data: Array<any>;
   columns:
     | Array<ReactElement<HeaderRowProps>>
     | Array<ReactElement<TableHeaderProps> | string>;
   selectable?: boolean;
+  children: (ChildArgObject: ChildrenArgInterface) => React.ReactElement;
 }
 
 export default function Table({
@@ -27,6 +32,7 @@ export default function Table({
   data = [],
   selectable: selectableProp = false,
   children,
+  className,
   ...rest
 }: TableProps) {
   const initialState: State = {
@@ -39,8 +45,11 @@ export default function Table({
     headerIndeterminate: false,
   };
 
-  let rows: Array<React.ReactElement>;
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const rows: Array<React.ReactElement> = data.map((datum, index) =>
+    children({ datum, index }),
+  );
 
   React.useEffect(() => {
     const rowCheckedState: {
@@ -93,79 +102,9 @@ export default function Table({
     }
   }, [state.data, state.rowCheckedState]);
 
-  let usingHeaderRow = React.useMemo(() => false, [children]);
-
-  if (typeof children === 'function') {
-    rows = data.map((datum, index) => children({ datum, index }));
-  }
-
-  const sortRows = (columnId: number, key: string) => {
-    dispatch({
-      type: Types.SortTableData,
-      payload: {
-        columnId,
-        key,
-        data,
-      },
-    });
-  };
-
-  const renderHeader = (array: Array<any>): React.ReactNode => {
-    const cols = array.map((child, index) => {
-      if (isComponentType(child, 'HeaderRow')) {
-        usingHeaderRow = true;
-
-        const { children } = child?.props;
-
-        const renderedChildren = Array.isArray(children)
-          ? children
-          : [children];
-
-        return React.cloneElement(child, {
-          children: renderHeader(renderedChildren),
-        });
-      }
-
-      if (isComponentType(child, 'TableHeader')) {
-        const { label, accessor: accessorProp } = child.props;
-
-        let glyph = 'Unsorted';
-
-        const accessor = accessorProp || label?.toLowerCase();
-
-        if (state.sort?.key?.toLowerCase() === accessor) {
-          glyph =
-            state.sort?.direction === 'asc'
-              ? 'SortAscending'
-              : 'SortDescending';
-        }
-
-        return React.cloneElement(child, {
-          // safe until columns need to be reordered
-          key: index,
-          onClick: sortRows,
-          index,
-          glyph,
-        });
-      }
-
-      if (typeof child === 'string') {
-        return (
-          <TableHeader
-            // safe until columns need to be reordered
-            key={index}
-            label={child}
-            index={index}
-            onClick={sortRows}
-          />
-        );
-      }
-
-      return child;
-    });
-
-    return usingHeaderRow ? cols : <HeaderRow>{cols}</HeaderRow>;
-  };
+  // if (typeof children === 'function') {
+  // rows = data.map((datum, index) => children({ datum, index }));
+  // }
 
   const renderBody = () => {
     if (!children) {
@@ -177,7 +116,10 @@ export default function Table({
         const selectCell = <CheckboxCell index={index} />;
 
         return React.cloneElement(row, {
-          children: [selectCell, [...React.Children(row.props.children)]],
+          children: [
+            selectCell,
+            [...React.Children.toArray(row.props.children)],
+          ],
         });
       });
     }
@@ -187,8 +129,13 @@ export default function Table({
 
   return (
     <TableProvider state={state} dispatch={dispatch}>
-      <table cellSpacing="0" cellPadding="0" className={tableStyles} {...rest}>
-        <thead>{renderHeader(columns)}</thead>
+      <table
+        cellSpacing="0"
+        cellPadding="0"
+        className={cx(tableStyles, className)}
+        {...rest}
+      >
+        <TableHead data={data} columns={columns} />
         <tbody>{renderBody()}</tbody>
       </table>
     </TableProvider>

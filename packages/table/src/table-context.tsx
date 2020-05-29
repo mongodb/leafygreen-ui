@@ -76,7 +76,7 @@ type DataType = typeof DataType[keyof typeof DataType];
 
 export interface State {
   sort?: Sort;
-  data: Array<unknown>;
+  data?: Array<any>;
   columnInfo?: {
     [k in number]: { sticky?: boolean; dataType?: DataType };
   };

@@ -182,7 +182,10 @@ const Row = React.forwardRef(
         return React.cloneElement(child, {
           indentLevel: indentLevel + 1,
           selectable,
-          children: [selectCell, ...Array.from(child.props.children)],
+          children: [
+            selectCell,
+            ...React.Children.toArray(child.props.children),
+          ],
           ref: nodeRef,
         });
       }

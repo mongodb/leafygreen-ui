@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean } from '@storybook/addon-knobs';
-import Table from '.';
-import { Row, Cell, TableHeader, HeaderRow, DataType } from '.';
-import { defaultData, multiRowData } from './storybookdata';
+import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
+import { defaultData, multiRowData } from './fixtures';
 
 interface DemoDataInterface {
   name: string;
