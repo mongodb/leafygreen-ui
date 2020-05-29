@@ -1,5 +1,16 @@
 # @leafygreen-ui/code
 
+## 3.4.4
+
+### Patch Changes
+
+- cf6167e: Build and consume individual glyph components
+- Updated dependencies [2fc4ef9]
+- Updated dependencies [e857861]
+- Updated dependencies [cf6167e]
+  - @leafygreen-ui/icon@5.2.0
+  - @leafygreen-ui/icon-button@5.0.3
+
 ## 3.4.3
 
 ### Patch Changes
@@ -15,9 +26,6 @@
 
 ### Patch Changes
 
-- 5aafd72: IconButton now accepts `aria-label` instead of `ariaLabel`
-  When an Icon is a child of IconButton, the Icon's title will be unset unless explicitly set on Icon, and its size will be inherited from IconButton unless its explicitly set.
-  Previously, IconButton required that `ariaLabel` exists as a prop to IconButton. Now IconButton is more flexible, and requires that one of `aria-label` or `aria-labelledby` are set.- Updated dependencies [5aafd72]
 - Updated dependencies [5aafd72]
   - @leafygreen-ui/icon-button@5.0.0
   - @leafygreen-ui/icon@5.0.2
