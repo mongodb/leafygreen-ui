@@ -29,7 +29,7 @@ interface ActionPayload {
   [Types.SortTableData]: {
     columnId: number;
     key: string;
-    data: Array<any>;
+    data: Array<unknown>;
   };
   [Types.ToggleIndividualChecked]: {
     index: number;
@@ -76,7 +76,7 @@ type DataType = typeof DataType[keyof typeof DataType];
 
 export interface State {
   sort?: Sort;
-  data?: Array<any>;
+  data: Array<unknown>;
   columnInfo?: {
     [k in number]: { sticky?: boolean; dataType?: DataType };
   };
@@ -131,11 +131,10 @@ function reducer(state: State, action: Action): State {
     case Types.ToggleIndividualChecked:
       return {
         ...state,
-        rowCheckedState: updateRowCheckedState(
-          action.payload.index,
-          action.payload.checked,
-          state.rowCheckedState,
-        ),
+        rowCheckedState: {
+          ...state.rowCheckedState,
+          [action.payload.index]: action.payload.checked,
+        },
       };
 
     case Types.SelectableTable:
@@ -234,14 +233,3 @@ export const sortFunction = ({
     return alphanumericCollator.compare(bVal, aVal);
   });
 };
-
-function updateRowCheckedState(
-  index: number,
-  checked: boolean | undefined,
-  rowCheckedState: Record<number, boolean | undefined> | undefined,
-) {
-  return {
-    ...rowCheckedState,
-    [index]: checked,
-  };
-}

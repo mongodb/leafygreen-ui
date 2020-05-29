@@ -15,8 +15,8 @@ const tableStyles = css`
 `;
 
 interface TableProps extends React.ComponentPropsWithoutRef<'table'> {
-  data?: Array<any>;
-  columns?:
+  data: Array<any>;
+  columns:
     | Array<ReactElement<HeaderRowProps>>
     | Array<ReactElement<TableHeaderProps> | string>;
   selectable?: boolean;
@@ -39,6 +39,7 @@ export default function Table({
     headerIndeterminate: false,
   };
 
+  let rows: Array<React.ReactElement>;
   const [state, dispatch] = useReducer(reducer, initialState);
 
   React.useEffect(() => {
@@ -93,7 +94,6 @@ export default function Table({
   }, [state.data, state.rowCheckedState]);
 
   let usingHeaderRow = React.useMemo(() => false, [children]);
-  let rows: Array<React.ReactElement>;
 
   if (typeof children === 'function') {
     rows = data.map((datum, index) => children({ datum, index }));
@@ -177,7 +177,7 @@ export default function Table({
         const selectCell = <CheckboxCell index={index} />;
 
         return React.cloneElement(row, {
-          children: [selectCell, [...Array.from(row.props.children)]],
+          children: [selectCell, [...React.Children(row.props.children)]],
         });
       });
     }
