@@ -58,7 +58,11 @@ function HeaderRow({
   });
 
   return (
-    <tr {...rest} className={cx({ [stickyHeader]: sticky }, className)}>
+    <tr
+      {...rest}
+      className={cx({ [stickyHeader]: sticky }, className)}
+      data-testid="leafygreen-ui-header-row"
+    >
       {selectable && checkColSpan && (
         <th className={thStyles}>
           <div className={innerDivStyles}>
