@@ -95,7 +95,7 @@ describe('packages/table', () => {
       expect(sortableIcons).toStrictEqual([]);
     });
 
-    test('then the "sortable" prop is passed to a column, a sort icon is rendered', () => {
+    test('when the "sortable" prop is passed to a column, a sort icon is rendered', () => {
       renderTable({
         table: {
           columns: [
@@ -110,8 +110,18 @@ describe('packages/table', () => {
       const sortableIcons = screen.getAllByTitle('sorted icon');
       expect(sortableIcons.length).toBe(1);
     });
+
+    test('it renders the correct number of "th" elements based on the "columns" prop', () => {
+      renderTable();
+      const tableHeaderRow = Array.from(screen.getAllByRole('row')[0].children);
+      expect(tableHeaderRow.length).toBe(4);
+      tableHeaderRow.map(tableHeader => {
+        expect(tableHeader.tagName.toLowerCase()).toBe('th');
+      });
+    });
   });
-  // describe('packages/table/table-header', () => {});
+
+  describe('packages/table/table-header', () => {});
   // describe('pacakges/table/row', () => {});
   // describe('packages/table/cell', () => {});
   // test('condition', () => {});

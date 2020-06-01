@@ -60,7 +60,6 @@ function TableHeader({
   className,
   dataType,
   accessor: accessorProp,
-  key,
   ...rest
 }: TableHeaderProps) {
   const {
@@ -68,7 +67,7 @@ function TableHeader({
     dispatch,
   } = useTableContext();
 
-  let accessor: string = key?.toString() || label.toString().toLowerCase();
+  let accessor: string = label.toString().toLowerCase();
 
   if (accessorProp) {
     if (typeof accessorProp === 'function') {
