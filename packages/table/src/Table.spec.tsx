@@ -10,10 +10,10 @@ interface Props {
 }
 
 const defaultColumns = [
-  <TableHeader key="name" label="name" />,
-  <TableHeader key="age" label="age" />,
-  <TableHeader key="color" label="color" />,
-  'location',
+  <TableHeader key="name" label="Name" />,
+  <TableHeader key="age" label="Age" />,
+  <TableHeader key="color" label="Color" />,
+  'Location',
 ];
 
 function renderTable(props: Props = {}) {
@@ -39,6 +39,9 @@ function renderTable(props: Props = {}) {
 }
 
 describe('packages/table', () => {
+  // TODO: Test sorting
+  // TODO: Test selectable
+  // TODO: Test className
   describe('packages/table/table-head', () => {
     test('it renders "thead" tags', () => {
       renderTable();
@@ -121,8 +124,38 @@ describe('packages/table', () => {
     });
   });
 
-  describe('packages/table/table-header', () => {});
-  // describe('pacakges/table/row', () => {});
-  // describe('packages/table/cell', () => {});
-  // test('condition', () => {});
+  describe('packages/table/table-header', () => {
+    test('it renders "label" as content inside of "th" tags', () => {
+      renderTable();
+      const tableHeaderRow = Array.from(screen.getAllByRole('row')[0].children);
+      const firstColumn = tableHeaderRow[0];
+      expect(firstColumn.tagName.toLowerCase()).toBe('th');
+      expect(firstColumn.innerHTML).toContain('Name');
+    });
+  });
+
+  describe('packages/table/header-row', () => {
+    test('it renders a CheckboxCell in the HeaderRow when the "selectable" prop is set', () => {
+      renderTable({ table: { selectable: true } });
+      const tableHeaderRow = Array.from(screen.getAllByRole('row')[0].children);
+      const firstColumn = tableHeaderRow[0];
+      expect(firstColumn.innerHTML).toContain('type="checkbox"');
+    });
+  });
+
+  // describe('packages/table/row', () => {});
+
+  describe('packages/table/cell', () => {
+    test('it renders a "td" tag', () => {
+      renderTable();
+      const cell = screen.getAllByRole('cell');
+      expect(cell[0].tagName.toLowerCase()).toBe('td');
+    });
+
+    test('it renders its children as its contents', () => {
+      renderTable();
+      const cell = screen.getAllByRole('cell');
+      expect(cell[0].innerHTML).toContain('Alice');
+    });
+  });
 });
