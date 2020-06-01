@@ -1,12 +1,13 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import { render, screen, fireEvent, getByText } from '@testing-library/react';
 import { Table, TableHeader, HeaderRow, Row, Cell } from '.';
 import { defaultData } from './fixtures';
+import Checkbox from '@leafygreen-ui/checkbox';
 
 interface Props {
   table?: any;
   row?: any;
-  cell?: any;
 }
 
 const defaultColumns = [
@@ -25,11 +26,20 @@ function renderTable(props: Props = {}) {
       {...props.table}
     >
       {({ datum }: { datum; index }) => (
-        <Row key={datum.name}>
+        <Row key={datum.name} {...props.row}>
           <Cell>{datum.name}</Cell>
           <Cell>{datum.age}</Cell>
           <Cell>{datum.color}</Cell>
           <Cell>{datum.location}</Cell>
+
+          {datum.age > 25 && (
+            <Row data-testid="expandable-row">
+              <Cell>hidden: {datum.name}</Cell>
+              <Cell>expanded age: {datum.age}</Cell>
+              <Cell>expanded color: {datum.color}</Cell>
+              <Cell>{datum.location}</Cell>
+            </Row>
+          )}
         </Row>
       )}
     </Table>,
@@ -143,7 +153,41 @@ describe('packages/table', () => {
     });
   });
 
-  // describe('packages/table/row', () => {});
+  describe('packages/table/row', () => {
+    test('it renders a table row', () => {
+      renderTable();
+      const row = screen.getAllByRole('row')[1];
+      expect(row.tagName.toLowerCase()).toBe('tr');
+    });
+
+    test('it renders a row as disabled when the prop is set', () => {
+      renderTable({
+        row: { disabled: true },
+      });
+      const disabledRow = screen.getAllByRole('row')[1];
+      expect(disabledRow.getAttribute('aria-disabled')).toBe('true');
+    });
+
+    test('it renders an expandable icon, when the row is expandable', () => {
+      renderTable();
+      const expandableCell = screen.getByText('Iman').parentNode;
+      const chevron = screen.getAllByRole('button')[0];
+      expect(expandableCell.contains(chevron)).toBe(true);
+    });
+
+    // test('the expandable icon reveals a hidden row when clicked', () => {
+    //   renderTable();
+
+    //   const shouldBeHidden = screen.queryAllByTestId('expandable-row');
+    //   expect(shouldBeHidden[0]).not.toBeVisible();
+
+    //   const chevron = screen.getAllByRole('button')[0];
+    //   fireEvent.click(chevron);
+
+    //   const revealedRow = screen.getAllByTestId('expandable-row')[0];
+    //   expect(revealedRow).toBeVisible();
+    // });
+  });
 
   describe('packages/table/cell', () => {
     test('it renders a "td" tag', () => {

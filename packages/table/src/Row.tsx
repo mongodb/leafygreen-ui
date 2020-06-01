@@ -136,6 +136,7 @@ const Row = React.forwardRef(
       children,
       className,
       indentLevel = 0,
+      ...rest
     }: RowProps,
     ref: React.Ref<any>,
   ) => {
@@ -276,6 +277,7 @@ const Row = React.forwardRef(
             className,
           )}
           aria-disabled={disabled}
+          {...rest}
         >
           {renderedChildren}
         </tr>
