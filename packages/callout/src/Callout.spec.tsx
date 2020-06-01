@@ -1,13 +1,12 @@
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { render, RenderOptions, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Callout, {
   colorSets,
   headerIcons,
   headerLabels,
   CustomCallout,
-  CustomCalloutProps,
   Variant,
 } from './Callout';
 
@@ -18,17 +17,11 @@ const colorSet = colorSets[Variant.Note];
 const headerIcon = headerIcons[Variant.Note];
 const headerLabel = headerLabels[Variant.Note];
 
-function renderCustomCallout(
-  props: Partial<CustomCalloutProps> = {},
-  options?: RenderOptions,
-) {
-  const defaultProps = {
-    children,
-    colorSet,
-    headerLabel,
-  };
-  return render(<CustomCallout {...defaultProps} {...props} />, options);
-}
+const defaultProps = {
+  children,
+  colorSet,
+  headerLabel,
+};
 
 describe('packages/callout', () => {
   describe('Callout component', () => {
@@ -57,36 +50,36 @@ describe('packages/callout', () => {
   });
 
   describe('CustomCallout component', () => {
-    test(`renders class name in classList: "${className}"`, async () => {
-      const { container } = renderCustomCallout({});
+    test(`renders class name in classList: "${className}"`, () => {
+      const { container, rerender } = render(
+        <CustomCallout {...defaultProps} />,
+      );
       expect(container.firstChild).not.toHaveClass(className);
 
-      renderCustomCallout({ className }, { container });
+      rerender(<CustomCallout {...defaultProps} className={className} />);
       expect(container.firstChild).toHaveClass(className);
     });
 
-    test(`renders header icon: "${headerIcon}"`, async () => {
-      const { container } = renderCustomCallout();
-      expect(document.getElementsByTagName('svg')).toHaveLength(0);
+    test(`renders header icon: "${headerIcon.type.displayName}"`, () => {
+      const { rerender } = render(<CustomCallout {...defaultProps} />);
+      expect(screen.queryByTitle('Edit Icon')).toBeNull();
 
-      renderCustomCallout({ headerIcon }, { container });
-      const svgElement = screen.getByTitle('Edit Icon').parentElement;
-      expect(svgElement).toBeInstanceOf(SVGElement);
-      expect(svgElement).toBeVisible();
+      rerender(<CustomCallout {...defaultProps} headerIcon={headerIcon} />);
+      expect(screen.getByTitle('Edit Icon')).toBeVisible();
     });
 
     test(`renders header label: "${headerLabel}"`, () => {
-      renderCustomCallout({ headerLabel });
+      render(<CustomCallout {...defaultProps} headerLabel={headerLabel} />);
       expect(screen.getByText(headerLabel)).toBeVisible();
     });
 
     test(`renders contents: "${children}"`, () => {
-      renderCustomCallout({ children });
-      expect(screen.getByText(children)).toBeVisible();
+      render(<CustomCallout {...defaultProps} />);
+      expect(screen.getByText(defaultProps.children)).toBeVisible();
     });
 
     test(`renders title: "${title}"`, () => {
-      renderCustomCallout({ title });
+      render(<CustomCallout {...defaultProps} title={title} />);
       expect(screen.getByText(title)).toBeVisible();
     });
   });

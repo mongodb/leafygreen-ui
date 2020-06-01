@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import Icon, { glyphs } from '@leafygreen-ui/icon';
+import BulbIcon from '@leafygreen-ui/icon/dist/Bulb';
+import EditIcon from '@leafygreen-ui/icon/dist/Edit';
+import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
+import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
+import { LGGlyph } from '@leafygreen-ui/icon/dist/types';
 
 export const Variant = {
   Note: 'note',
@@ -15,39 +19,42 @@ export type Variant = typeof Variant[keyof typeof Variant];
 
 const baseStyle = css`
   border-radius: 6px;
-  box-shadow: 0px 2px 5px 0 ${uiColors.gray.light2};
-  display: flex;
+  box-shadow: 0px 2px 5px 0 ${uiColors.gray.dark1};
   overflow: hidden;
-  width: 700px;
+  position: relative;
 
-  &:before {
+  &:after {
     content: '';
-    position: relative;
-    width: 6px;
+    position: absolute;
+    width: 4px;
     left: 0px;
+    top: -1px;
+    bottom: -1px;
     border-radius: 6px 0px 0px 6px;
   }
 `;
 
 const headerStyle = css`
-  display: flex;
   font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
   font-size: 12px;
   font-weight: bold;
   letter-spacing: 0.8px;
   line-height: 16px;
   padding: 12px 24px 12px 52px;
+  position: relative;
   text-transform: uppercase;
+  width: 100%;
 `;
 
 const headerIconStyle = css`
-  margin-left: -32px;
+  left: 20px;
   position: absolute;
 `;
 
 const titleStyle = css`
   font-weight: bold;
-  margin: 8px 0;
+  margin-bottom: 8px;
+  margin-top: 8px;
 `;
 
 const bodyStyle = css`
@@ -66,14 +73,14 @@ export const headerLabels = {
   [Variant.Tip]: 'Tip',
   [Variant.Important]: 'Important',
   [Variant.Warning]: 'Warning',
-};
+} as const;
 
-export const headerIcons: Record<Variant, keyof typeof glyphs> = {
-  [Variant.Note]: 'Edit',
-  [Variant.Tip]: 'Bulb',
-  [Variant.Important]: 'InfoWithCircle',
-  [Variant.Warning]: 'Warning',
-};
+export const headerIcons = {
+  [Variant.Note]: <EditIcon />,
+  [Variant.Tip]: <BulbIcon />,
+  [Variant.Important]: <InfoWithCircleIcon />,
+  [Variant.Warning]: <WarningIcon />,
+} as const;
 
 export const colorSets: Record<Variant, ColorSet> = {
   [Variant.Note]: {
@@ -106,7 +113,7 @@ interface ColorSet {
 
 export interface CustomCalloutProps {
   colorSet: ColorSet;
-  headerIcon?: keyof typeof glyphs;
+  headerIcon?: React.ReactElement<LGGlyph.ComponentProps>;
   headerLabel: string;
   title?: string;
   children: string;
@@ -126,6 +133,13 @@ function CustomCallout({
   children: contents,
   className,
 }: CustomCalloutProps) {
+  headerIcon =
+    headerIcon &&
+    React.cloneElement(headerIcon, {
+      fill: colorSet.foreground,
+      className: headerIconStyle,
+    });
+
   const header = (
     <div
       className={cx(
@@ -136,54 +150,34 @@ function CustomCallout({
         `,
       )}
     >
-      {headerIcon && (
-        <Icon
-          glyph={headerIcon}
-          fill={colorSet.foreground}
-          className={cx(headerIconStyle)}
-        />
-      )}
-      <div>{headerLabel}</div>
+      {headerIcon}
+      {headerLabel}
     </div>
   );
 
   return (
     <div
+      role="note"
       className={cx(
         baseStyle,
         css`
           color: ${colorSet.text};
 
-          &:before {
+          &:after {
             background-color: ${colorSet.foreground};
           }
         `,
         className,
       )}
     >
-      <div>
-        {header}
-        <div className={cx(bodyStyle)}>
-          {title && <div className={cx(titleStyle)}>{title}</div>}
-          <div className={cx(bodyTextStyle)}>{contents}</div>
-        </div>
+      {header}
+      <div className={bodyStyle}>
+        {title && <div className={titleStyle}>{title}</div>}
+        <div className={bodyTextStyle}>{contents}</div>
       </div>
     </div>
   );
 }
-
-CustomCallout.propTypes = {
-  colorSet: PropTypes.shape({
-    foreground: PropTypes.string.isRequired,
-    background: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-  }).isRequired,
-  headerIcon: PropTypes.oneOf(Object.keys(glyphs)),
-  headerLabel: PropTypes.string.isRequired,
-  title: PropTypes.string,
-  children: PropTypes.string.isRequired,
-  className: PropTypes.string,
-};
 
 function Callout({
   variant,
