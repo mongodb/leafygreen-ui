@@ -61,21 +61,21 @@ const bodyTextStyle = css`
   line-height: 20px;
 `;
 
-const headerLabel = {
+export const headerLabels = {
   [Variant.Note]: 'Note',
   [Variant.Tip]: 'Tip',
   [Variant.Important]: 'Important',
   [Variant.Warning]: 'Warning',
 };
 
-const headerIcon: Record<Variant, keyof typeof glyphs> = {
+export const headerIcons: Record<Variant, keyof typeof glyphs> = {
   [Variant.Note]: 'Edit',
   [Variant.Tip]: 'Bulb',
   [Variant.Important]: 'InfoWithCircle',
   [Variant.Warning]: 'Warning',
 };
 
-const colorSets: Record<Variant, ColorSet> = {
+export const colorSets: Record<Variant, ColorSet> = {
   [Variant.Note]: {
     background: uiColors.blue.light3,
     foreground: uiColors.blue.dark2,
@@ -104,7 +104,7 @@ interface ColorSet {
   text: string;
 }
 
-interface CustomCalloutProps {
+export interface CustomCalloutProps {
   colorSet: ColorSet;
   headerIcon?: keyof typeof glyphs;
   headerLabel: string;
@@ -178,7 +178,7 @@ CustomCallout.propTypes = {
     background: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
   }).isRequired,
-  headerIcon: PropTypes.oneOf(Object.keys(glyphs)).isRequired,
+  headerIcon: PropTypes.oneOf(Object.keys(glyphs)),
   headerLabel: PropTypes.string.isRequired,
   title: PropTypes.string,
   children: PropTypes.string.isRequired,
@@ -194,8 +194,8 @@ function Callout({
   return (
     <CustomCallout
       colorSet={colorSets[variant]}
-      headerIcon={headerIcon[variant]}
-      headerLabel={headerLabel[variant]}
+      headerIcon={headerIcons[variant]}
+      headerLabel={headerLabels[variant]}
       title={title}
       className={className}
     >
@@ -212,3 +212,4 @@ Callout.propTypes = {
 };
 
 export default Callout;
+export { CustomCallout };
