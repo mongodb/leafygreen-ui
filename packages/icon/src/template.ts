@@ -93,7 +93,7 @@ module.exports = function template(
       return ${jsx};
     }
 
-    ${componentName}.displayName = ${componentName};
+    ${componentName}.displayName = '${componentName}';
 
     ${componentName}.propTypes = {
         fill: PropTypes.string,
