@@ -14,7 +14,7 @@ const tableStyles = css`
   box-sizing: border-box;
 `;
 
-interface ChildrenArgInterface {
+interface TableRowInterface {
   datum: any;
   index?: number;
 }
@@ -25,7 +25,7 @@ export interface TableProps extends React.ComponentPropsWithoutRef<'table'> {
     | Array<ReactElement<TableHeaderProps> | string>
     | React.ReactFragment;
   selectable?: boolean;
-  children: (ChildArgObject: ChildrenArgInterface) => JSX.Element;
+  children: (TableRowArgs: TableRowInterface) => JSX.Element;
 }
 
 export default function Table({
