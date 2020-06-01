@@ -99,7 +99,7 @@ storiesOf('Table', module)
         <>
           <TableHeader label="Name" />
           <TableHeader label="Age" />
-          <TableHeader label="Color" accessor="color" sortable />
+          <TableHeader label="Color" accessor={() => 'color'} sortable />
           Location
         </>
       }

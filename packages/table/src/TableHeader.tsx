@@ -40,7 +40,7 @@ interface TableHeaderInterface {
   glyph?: 'SortAscending' | 'SortDescending' | 'Unsorted';
   stickyColumn?: boolean;
   sortable?: boolean;
-  accessor?: string;
+  accessor?: Function | string;
   dataType?: DataType;
 }
 
@@ -60,6 +60,7 @@ function TableHeader({
   className,
   dataType,
   accessor: accessorProp,
+  key,
   ...rest
 }: TableHeaderProps) {
   const {
@@ -67,12 +68,15 @@ function TableHeader({
     dispatch,
   } = useTableContext();
 
-  // need a smarter default
-  const accessor = accessorProp
-    ? accessorProp
-    : typeof label === 'string'
-    ? (label as string).toLowerCase()
-    : 'test_string';
+  let accessor: string = key?.toString() || label.toString().toLowerCase();
+
+  if (accessorProp) {
+    if (typeof accessorProp === 'function') {
+      accessor = accessorProp();
+    } else {
+      accessor = accessorProp;
+    }
+  }
 
   const handleClick = () => {
     if (typeof index === 'number') {
