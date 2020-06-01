@@ -37,7 +37,7 @@ interface TableHeaderInterface {
   label: React.ReactElement | string;
   onClick?: (colId: number, key: string) => void;
   index?: number;
-  glyph?: string;
+  glyph?: 'SortAscending' | 'SortDescending' | 'Unsorted';
   stickyColumn?: boolean;
   sortable?: boolean;
   accessor?: string;

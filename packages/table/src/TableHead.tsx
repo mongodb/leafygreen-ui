@@ -73,13 +73,19 @@ const TableHead = ({ columns = [], data }: TableHeaderProps) => {
     });
   }
 
+  const columnArray: Array<React.ReactElement> =
+    // @ts-ignore Property 'type' does not exist on type '{}'.ts(2339)
+    columns.type === React.Fragment
+      ? React.Children.toArray((columns as React.ReactElement).props.children)
+      : (columns as Array<any>);
+
   if (usingHeaderRow.current) {
-    return <thead>{createCols(columns)}</thead>;
+    return <thead>{createCols(columnArray)}</thead>;
   }
 
   return (
     <thead>
-      <HeaderRow>{createCols(columns)}</HeaderRow>
+      <HeaderRow>{createCols(columnArray)}</HeaderRow>
     </thead>
   );
 };

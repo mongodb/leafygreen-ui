@@ -16,15 +16,16 @@ const tableStyles = css`
 
 interface ChildrenArgInterface {
   datum: any;
-  index: number;
+  index?: number;
 }
 export interface TableProps extends React.ComponentPropsWithoutRef<'table'> {
   data: Array<any>;
   columns:
     | Array<ReactElement<HeaderRowProps>>
-    | Array<ReactElement<TableHeaderProps> | string>;
+    | Array<ReactElement<TableHeaderProps> | string>
+    | React.ReactFragment;
   selectable?: boolean;
-  children: (ChildArgObject: ChildrenArgInterface) => React.ReactElement;
+  children: (ChildArgObject: ChildrenArgInterface) => JSX.Element;
 }
 
 export default function Table({

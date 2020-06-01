@@ -40,7 +40,7 @@ storiesOf('Table', module)
         'Location',
       ]}
     >
-      {({ datum }: { datum: DemoDataInterface; rowIndex: number }) => (
+      {({ datum }: { datum: DemoDataInterface; index: number }) => (
         <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
           <Cell>{datum.name}</Cell>
           <Cell>{datum.age}</Cell>
@@ -95,9 +95,16 @@ storiesOf('Table', module)
     <Table
       selectable={boolean('isSelectable', true)}
       data={defaultData}
-      columns={['Name', 'Age', 'Color', 'Location']}
+      columns={
+        <>
+          <TableHeader label="Name" />
+          <TableHeader label="Age" />
+          <TableHeader label="Color" accessor="color" sortable />
+          Location
+        </>
+      }
     >
-      {({ datum }: { datum: DemoDataInterface; rowIndex: number }) => (
+      {({ datum }: { datum: DemoDataInterface; index: number }) => (
         <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
           <Cell>{datum.name}</Cell>
           <Cell>{datum.age}</Cell>
