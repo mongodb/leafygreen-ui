@@ -9,6 +9,15 @@
   "references": [
     {
       "path": "../lib"
+    },
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../icon"
     }
   ]
 }
