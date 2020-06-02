@@ -157,6 +157,10 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
         // The root directory this runs in doesn't contain a babel configuration. This sets it to look for the nearest configuration in a parent directory.
         rootMode: 'upward',
         filename: file.name,
+        generatorOpts: {
+          minify: true,
+          compact: true,
+        },
       },
     );
 
