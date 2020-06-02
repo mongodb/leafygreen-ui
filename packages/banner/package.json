@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/banner",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "leafyGreen UI Kit Banner",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
