@@ -263,7 +263,7 @@ function Code({
   children = '',
   className,
   multiline = true,
-  language = Language.Auto,
+  language,
   variant = Variant.Light,
   showLineNumbers = false,
   showWindowChrome = false,
@@ -337,7 +337,7 @@ function Code({
   );
 
   const renderedSyntaxComponent = (
-    <Syntax variant={variant} language={language}>
+    <Syntax showLineNumbers={showLineNumbers} variant={variant} language={language}>
       {content}
     </Syntax>
   );
