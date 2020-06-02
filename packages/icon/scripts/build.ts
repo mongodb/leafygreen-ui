@@ -112,7 +112,7 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
     const fileContent = fs.readFileSync(file.path, { encoding: 'utf8' });
 
     // We transform the output SVGR code to be ES5 compatible.
-    const {code: moduleCode} = transformSync(
+    const { code: moduleCode } = transformSync(
       svgr.sync(
         fileContent,
         {
@@ -157,19 +157,20 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
         // The root directory this runs in doesn't contain a babel configuration. This sets it to look for the nearest configuration in a parent directory.
         rootMode: 'upward',
         filename: file.name,
-      });
+      },
+    );
 
-      let outputDir = path.resolve(__dirname, '..', 'dist');
+    let outputDir = path.resolve(__dirname, '..', 'dist');
 
-      if (flags.outDir) {
-        outputDir = path.resolve(process.cwd(), flags.outDir);
-      }
+    if (flags.outDir) {
+      outputDir = path.resolve(process.cwd(), flags.outDir);
+    }
 
-      if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir, { recursive: true });
-      }
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
 
-      fs.writeFileSync(path.resolve(outputDir, `${file.name}.js`), moduleCode);
+    fs.writeFileSync(path.resolve(outputDir, `${file.name}.js`), moduleCode);
   });
 }
 
