@@ -141,7 +141,7 @@ const Row = React.forwardRef(
     ref: React.Ref<any>,
   ) => {
     const {
-      state: { data, columnInfo, selectable, hasNestedRows, hasRowSpan },
+      state: { data, columnInfo, hasNestedRows, hasRowSpan },
       dispatch,
     } = useTableContext();
 
@@ -182,7 +182,6 @@ const Row = React.forwardRef(
 
         return React.cloneElement(child, {
           indentLevel: indentLevel + 1,
-          selectable,
           children: [
             selectCell,
             ...React.Children.toArray(child.props.children),
@@ -285,6 +284,9 @@ const Row = React.forwardRef(
         <Transition in={isExpanded} timeout={150} nodeRef={ref}>
           {(state: string) => {
             const props = {
+              ['data-testid']: isExpanded
+                ? 'nested-row-is-expanded'
+                : 'nested-row-is-hidden',
               className: cx(transitionStyles.default, {
                 [transitionStyles.entered]: ['entering', 'entered'].includes(
                   state,

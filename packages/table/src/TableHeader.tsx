@@ -110,7 +110,7 @@ function TableHeader({
         <span className={labelStyle}>{label}</span>
         {sortable && (
           <IconButton aria-label="sort" onClick={handleClick}>
-            <Icon size="small" glyph={glyph} title="sorted icon" />
+            <Icon size="small" glyph={glyph} />
           </IconButton>
         )}
       </div>

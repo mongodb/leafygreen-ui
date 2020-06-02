@@ -34,7 +34,7 @@ function renderTable(props: Props = {}) {
           <Cell>{datum.location}</Cell>
 
           {datum.age > 25 && (
-            <Row data-testid="expandable-row">
+            <Row>
               <Cell>hidden: {datum.name}</Cell>
               <Cell>expanded age: {datum.age}</Cell>
               <Cell>expanded color: {datum.color}</Cell>
@@ -69,13 +69,18 @@ describe('packages/table', () => {
         ],
       },
     });
-    const firstRow = screen.getAllByRole('row')[1];
-    expect(firstRow.children[0].innerHTML).toContain('Alice');
 
-    const sortButton = screen.getByTitle('sorted icon');
+    expect(screen.getAllByRole('row')[1].innerHTML).toContain('Alice');
+
+    const sortButton = screen.getAllByRole('button')[0];
+
     fireEvent.click(sortButton);
 
     expect(screen.getAllByRole('row')[1].innerHTML).toContain('Jill');
+
+    fireEvent.click(sortButton);
+
+    expect(screen.getAllByRole('row')[1].innerHTML).toContain('Alice');
   });
 
   test('it adds a checkbox to every row, when the "selectable" prop is set', () => {
@@ -146,7 +151,7 @@ describe('packages/table', () => {
       expect(sortableIcons).toStrictEqual([]);
     });
 
-    test('when the "sortable" prop is passed to a column, a sort icon is rendered', () => {
+    test('when the "sortable" prop is passed to a column, an icon is rendered', () => {
       renderTable({
         table: {
           columns: [
@@ -158,8 +163,8 @@ describe('packages/table', () => {
         },
       });
 
-      const sortableIcons = screen.getAllByTitle('sorted icon');
-      expect(sortableIcons.length).toBe(1);
+      const sortButton = screen.getAllByRole('button', { name: 'sort' });
+      expect(sortButton.length).toBe(1);
     });
 
     test('it renders the correct number of "th" elements based on the "columns" prop', () => {
@@ -208,23 +213,22 @@ describe('packages/table', () => {
 
     test('it renders an expandable icon, when the row is expandable', () => {
       renderTable();
-      const expandableCell = screen.getByText('Iman').parentNode;
-      const chevron = screen.getAllByRole('button')[0];
-      expect(expandableCell.contains(chevron)).toBe(true);
+      const chevrons = screen.getAllByRole('button', { name: 'chevron' });
+      expect(chevrons.length).toBe(3);
     });
 
-    // test('the expandable icon reveals a hidden row when clicked', () => {
-    //   renderTable();
+    test('the expandable icon reveals a hidden row when clicked', () => {
+      renderTable();
 
-    //   const shouldBeHidden = screen.queryAllByTestId('expandable-row');
-    //   expect(shouldBeHidden[0]).not.toBeVisible();
+      const hiddenRows = screen.queryAllByTestId('nested-row-is-hidden');
+      expect(hiddenRows.length).toBe(3);
 
-    //   const chevron = screen.getAllByRole('button')[0];
-    //   fireEvent.click(chevron);
+      const chevron = screen.getAllByRole('button', { name: 'chevron' })[0];
+      fireEvent.click(chevron);
 
-    //   const revealedRow = screen.getAllByTestId('expandable-row')[0];
-    //   expect(revealedRow).toBeVisible();
-    // });
+      const revealedRow = screen.getAllByTestId('nested-row-is-expanded');
+      expect(revealedRow.length).toBe(1);
+    });
   });
 
   describe('packages/table/cell', () => {
