@@ -1,14 +1,15 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen, fireEvent, getByText } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Table, TableHeader, HeaderRow, Row, Cell } from '.';
 import { defaultData } from './fixtures';
-import Checkbox from '@leafygreen-ui/checkbox';
 
 interface Props {
   table?: any;
   row?: any;
 }
+
+const className = 'test-className';
 
 const defaultColumns = [
   <TableHeader key="name" label="Name" />,
@@ -50,8 +51,19 @@ function renderTable(props: Props = {}) {
 
 describe('packages/table', () => {
   // TODO: Test sorting
-  // TODO: Test selectable
-  // TODO: Test className
+
+  test('it adds a checkbox to every row, when the "selectable" prop is set', () => {
+    renderTable({ table: { selectable: true } });
+    const rows = screen.getAllByRole('row');
+    const checkboxes = screen.getAllByRole('checkbox');
+    expect(rows.length).toEqual(checkboxes.length);
+  });
+
+  test('it adds a className to the Tables classlist when one is supplied', () => {
+    const { table } = renderTable({ table: { className } });
+    expect(table.classList.contains(className)).toBe(true);
+  });
+
   describe('packages/table/table-head', () => {
     test('it renders "thead" tags', () => {
       renderTable();
