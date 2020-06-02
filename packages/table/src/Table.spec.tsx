@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import { Table, TableHeader, HeaderRow, Row, Cell } from '.';
 import { defaultData } from './fixtures';
 
@@ -50,7 +50,33 @@ function renderTable(props: Props = {}) {
 }
 
 describe('packages/table', () => {
+  afterEach(cleanup);
   // TODO: Test sorting
+  test('by default, it renders unsorted table data, based on "data" prop', () => {
+    renderTable();
+    const firstRow = screen.getAllByRole('row')[1];
+    expect(firstRow.children[0].innerHTML).toContain('Alice');
+  });
+
+  test('it sorts the data by column when the "sortable" prop is set, and the icon is clicked', () => {
+    renderTable({
+      table: {
+        columns: [
+          <TableHeader key="name" label="Name" sortable />,
+          'Age',
+          'Color',
+          'Location',
+        ],
+      },
+    });
+    const firstRow = screen.getAllByRole('row')[1];
+    expect(firstRow.children[0].innerHTML).toContain('Alice');
+
+    const sortButton = screen.getByTitle('sorted icon');
+    fireEvent.click(sortButton);
+
+    expect(screen.getAllByRole('row')[1].innerHTML).toContain('Jill');
+  });
 
   test('it adds a checkbox to every row, when the "selectable" prop is set', () => {
     renderTable({ table: { selectable: true } });
