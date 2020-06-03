@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Modal from './Modal';
 
@@ -57,6 +57,12 @@ describe('packages/modal', () => {
 
       window.dispatchEvent(new MouseEvent('click', { bubbles: true }));
       expect(container.innerHTML).toBe('');
+    });
+
+    test('when "closeOnBackdropClick" is false', () => {
+      renderModal({ closeOnBackdropClick: false, open: true });
+      window.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      expect(screen.getByText(modalContent)).toBeInTheDocument();
     });
   });
 
