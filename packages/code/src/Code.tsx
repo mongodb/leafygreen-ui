@@ -16,7 +16,6 @@ import Syntax, {
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
-import LineNumbers from './LineNumbers';
 import WindowChrome from './WindowChrome';
 import debounce from 'lodash/debounce';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -73,10 +72,6 @@ const codeWrapperStyle = css`
   margin: 0;
   position: relative;
   flex-grow: 1;
-`;
-
-const codeWrapperStyleWithLineNumbers = css`
-  padding-left: ${whiteSpace * 3.5}px;
 `;
 
 const codeWrapperStyleWithWindowChrome = css`
@@ -323,7 +318,6 @@ function Code({
     codeWrapperStyle,
     getWrapperVariantStyle(variant),
     {
-      [codeWrapperStyleWithLineNumbers]: multiline && showLineNumbers,
       [codeWrapperStyleWithWindowChrome]: showWindowChrome,
     },
     className,
@@ -427,10 +421,6 @@ function Code({
           }}
           ref={scrollableMultiLine}
         >
-          {showLineNumbers && (
-            <LineNumbers variant={variant} lineCount={lineCount} />
-          )}
-
           {renderedSyntaxComponent}
         </pre>
 

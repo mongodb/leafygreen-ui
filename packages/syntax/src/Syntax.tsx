@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { cx, css } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 // Import from core so we can register the appropriate languages ourselves
 import hljs from 'highlight.js/lib/core';
 import hljsDefineGraphQL from 'highlightjs-graphql';
-import { Variant, Language } from './types';
+import CodeWrapper from './CodeWrapper'
+import { Variant, Language, SyntaxProps } from './types';
 import { SupportedLanguages, languageParsers } from './languages';
 import { injectGlobalStyles } from './globalStyles';
 import renderingPlugin from './renderingPlugin';
@@ -47,66 +48,24 @@ function initializeSyntaxHighlighting() {
   hljs.addPlugin(renderingPlugin);
 }
 
-export interface SyntaxProps {
-  /**
-   * The children to render inside Code. This is usually going to be a formatted code block or line.
-   */
-  children: string;
-
-  /**
-   * An additional CSS class applied to the root element
-   */
-  className?: string;
-
-  /**
-   * The language to highlight the syntax of.
-   */
-  language: Language;
-
-  /**
-   * The variant for the syntax-highlighted block.
-   *
-   * default: `'light'`
-   */
-  variant?: Variant;
-
-  /**
-   * Shows line numbers. This is specifically used for the Code component implementation.
-   *
-   * default: `'false'`
-   */
-
-  showLineNumbers?: boolean;
-}
-
 function Syntax({
   children,
   language,
-  className,
   variant = Variant.Light,
   showLineNumbers = false,
   ...rest
-}: SyntaxProps & React.HTMLAttributes<HTMLElement>) {
+}: SyntaxProps) {
   if (!syntaxHighlightingInitialized) {
     initializeSyntaxHighlighting();
   }
 
-  const codeClassName = cx(
-    `lg-highlight-hljs-${variant}`,
-    css`
-      color: inherit;
-      font-size: 13px;
-      line-height: 24px;
-    `,
-    language,
-    className,
-  );
+  const codeWrapperSharedProps = { language, variant, ...rest };
 
   if (language === Language.None) {
     return (
-      <code {...rest} className={codeClassName}>
+      <CodeWrapper {...codeWrapperSharedProps}>
         {children}
-      </code>
+      </CodeWrapper>
     );
   }
 
@@ -117,18 +76,18 @@ function Syntax({
 
   if (showLineNumbers) {
     return (
-      <code {...rest} className={codeClassName}>
-        <table>
+      <CodeWrapper {...codeWrapperSharedProps}>
+        <table className={css`border-spacing: 0;`}>
           <tbody>{highlightedContent.reactWithNumbers}</tbody>
         </table>
-      </code>
+      </CodeWrapper>
     );
   }
 
   return (
-    <code {...rest} className={codeClassName}>
+    <CodeWrapper {...codeWrapperSharedProps}>
       {highlightedContent.react}
-    </code>
+    </CodeWrapper>
   );
 }
 

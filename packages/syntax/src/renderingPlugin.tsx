@@ -1,5 +1,8 @@
 import React from 'react';
-import { css } from '@leafygreen-ui/emotion'
+import { css, cx } from '@leafygreen-ui/emotion';
+import { uiColors } from '@leafygreen-ui/palette';
+import { useVariant } from './CodeWrapper';
+import { Variant } from './types';
 
 interface TokenProps {
   kind?: string;
@@ -15,21 +18,21 @@ type TreeItem =
   | undefined
   | string
   | Array<string | TokenObject>
-	| TokenObject;
+  | TokenObject;
 
 function isArray(item: any): item is Array<any> {
-	return item instanceof Array;
+  return item instanceof Array;
 }
 
 function isObject(item: any): item is object {
-	return typeof item === 'object';
+  return typeof item === 'object';
 }
 
 function isString(item: any): item is string {
-	return typeof item === 'string';
+  return typeof item === 'string';
 }
 
-function processToken(token: TreeItem, index: number): React.ReactNode {
+function processToken(token: TreeItem, index?: number): React.ReactNode {
   if (token == null) {
     return null;
   }
@@ -43,8 +46,51 @@ function processToken(token: TreeItem, index: number): React.ReactNode {
   }
 
   if (isObject(token)) {
-    return <Token key={index} kind={token.kind}>{processToken(token.children)}</Token>;
+    return (
+      <Token key={index} kind={token.kind}>
+        {processToken(token.children)}
+      </Token>
+    );
   }
+}
+
+const cellStyle = css`
+  user-select: none;
+  border-spacing: 0;
+  padding: 0;
+`;
+
+interface LineTableRowProps {
+  lineNumber: number;
+  children: React.ReactNode;
+}
+
+function LineTableRow({ lineNumber, children }: LineTableRowProps) {
+  const variant = useVariant();
+
+  let numberColor: string = uiColors.gray.light1
+
+  if (variant === Variant.Dark) {
+    numberColor = uiColors.gray.dark1;
+  }
+
+  const numberCellStyle = css`
+    padding-right: 24px;
+    color: ${numberColor};
+  `
+  return (
+    <tr>
+      <td
+        className={cx(
+          cellStyle,
+          numberCellStyle,
+        )}
+      >
+        {lineNumber}
+      </td>
+      <td className={cellStyle}>{children}</td>
+    </tr>
+  );
 }
 
 function renderTokenTreeToReact(
@@ -100,17 +146,16 @@ function renderTokenTreeToReact(
 
     if (numbered) {
       return (
-        <tr key={index}>
-          <td className={css`user-select: none;`}>{index + 1}</td>
-          <td>{content}</td>
-        </tr>
+        <LineTableRow key={index} lineNumber={index + 1}>
+          {content}
+        </LineTableRow>
       );
     }
 
     return (
       <>
-        {content}
-        <br />
+        <span key={index}>{content}</span>
+        <br key={`br-${index}`} />
       </>
     );
   });
