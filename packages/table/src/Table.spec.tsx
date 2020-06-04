@@ -26,7 +26,7 @@ function renderTable(props: Props = {}) {
       columns={defaultColumns}
       {...props.table}
     >
-      {({ datum }: { datum; index }) => (
+      {({ datum }) => (
         <Row key={datum.name} {...props.row}>
           <Cell>{datum.name}</Cell>
           <Cell>{datum.age}</Cell>
@@ -51,14 +51,16 @@ function renderTable(props: Props = {}) {
 
 describe('packages/table', () => {
   afterEach(cleanup);
-  // TODO: Test sorting
+  // Test accessor prop is a string, and a function
+  // Test table header as a string and a jsx element explicitly
+
   test('by default, it renders unsorted table data, based on "data" prop', () => {
     renderTable();
     const firstRow = screen.getAllByRole('row')[1];
     expect(firstRow.children[0].innerHTML).toContain('Alice');
   });
 
-  test('it sorts the data by column when the "sortable" prop is set, and the icon is clicked', () => {
+  test('it renders the data in descending order when the "sortable" prop is set, and the icon is clicked', () => {
     renderTable({
       table: {
         columns: [
@@ -127,7 +129,7 @@ describe('packages/table', () => {
       expect(headerRow[0].tagName.toLowerCase()).toBe('tr');
     });
 
-    test('it also formats columns that are passed in as a React.Fragment', () => {
+    test('it formats columns that are passed in as a React.Fragment', () => {
       renderTable({
         table: {
           columns: (
