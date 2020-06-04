@@ -1,5 +1,11 @@
 # @leafygreen-ui/mongo-nav
 
+## 1.3.0
+
+### Minor Changes
+
+- daeaca2: Uses a function to determine whether host url should be "stitch.mongodb.com" or "realm.mongodb.com"
+
 ## 1.2.2
 
 ### Patch Changes
