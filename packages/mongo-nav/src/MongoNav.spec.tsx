@@ -419,8 +419,9 @@ describe('packages/mongo-nav', () => {
   });
 
   describe('when the date is before MongoDB World', () => {
+    const preDate = new Date('June 1, 2020 0:00:00');
     test('getProductHost function returns stitch', () => {
-      expect(getProductHost()).toBe('stitch');
+      expect(getProductHost(preDate)).toBe('stitch');
     });
   });
 
