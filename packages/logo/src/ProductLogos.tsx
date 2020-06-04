@@ -345,7 +345,7 @@ export function RealmLogo({
         className={css`
           fill: ${!knockout
             ? size <= 10
-              ? '#EF8C9B'
+              ? '#ef8c9b'
               : 'url(#realm-path-0001)'
             : 'currentColor'};
         `}
@@ -357,7 +357,7 @@ export function RealmLogo({
         className={css`
           fill: ${!knockout
             ? size <= 10
-              ? 'B2458D'
+              ? '#b2458d'
               : 'url(#realm-path-0002)'
             : 'currentColor'};
         `}
@@ -368,7 +368,7 @@ export function RealmLogo({
         className={css`
           fill: ${!knockout
             ? size <= 10
-              ? '#6E60F7'
+              ? '#6e60f7'
               : '#6e60f2'
             : 'currentColor'};
         `}
@@ -380,7 +380,7 @@ export function RealmLogo({
         className={css`
           fill: ${!knockout
             ? size <= 10
-              ? '#F9D2C3'
+              ? '#f9d2c3'
               : 'url(#realm-path-0003)'
             : 'currentColor'};
         `}
@@ -422,7 +422,11 @@ export function ChartsLogo({
 
       <path
         className={css`
-          fill: ${!knockout ? 'url(#charts-logo-gradient)' : 'currentColor'};
+          fill: ${!knockout
+            ? size <= 10
+              ? '#2F9FC5'
+              : 'url(#charts-logo-gradient)'
+            : 'currentColor'};
         `}
         d="M9.7495308,9.9141502c-0.226757-0.0123043-0.437871-0.1191797-0.5820112-0.2946091L6.2850585,6.111299
 		l-5.7055078,6.0680566c0.161543,0.4275875,0.3550781,0.83918,0.577002,1.2328854
@@ -432,7 +436,11 @@ export function ChartsLogo({
       />
       <path
         className={css`
-          fill: ${!knockout ? '#2F9FC5' : 'currentColor'};
+          fill: ${!knockout
+            ? size <= 10
+              ? '#78cfdd'
+              : '#78cfdd'
+            : 'currentColor'};
         `}
         d="M5.735918,4.3303709C5.8953514,4.1607423,6.1177149,4.0687208,6.353086,4.075664
 		c0.2327342,0.0078225,0.4508786,0.1154003,0.598711,0.2953124l2.9063668,3.537334l5.4454393-5.3298192
@@ -441,7 +449,11 @@ export function ChartsLogo({
       />
       <path
         className={css`
-          fill: ${!knockout ? '#1A567E' : 'currentColor'};
+          fill: ${!knockout
+            ? size <= 10
+              ? '#1A567E'
+              : '#1A567E'
+            : 'currentColor'};
         `}
         d="M2.3222461,15.0332079C3.9692285,16.8549614,6.3507128,18,9,18
 		c2.640234,0,5.014863-1.1368656,6.6612301-2.9478073C11.025176,15.0413818,6.1676807,15.0334721,2.3222461,15.0332079z"
