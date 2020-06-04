@@ -7,6 +7,8 @@ const path = require('path');
 const meow = require('meow');
 // @ts-ignore
 const template = require('../src/template');
+// @ts-ignore
+const { transformSync } = require('@babel/core');
 
 const cli = meow(
   `
@@ -109,44 +111,56 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
   svgFiles.forEach(file => {
     const fileContent = fs.readFileSync(file.path, { encoding: 'utf8' });
 
-    const moduleCode = svgr.sync(
-      fileContent,
-      {
-        titleProp: true,
-        svgProps: {
-          role: 'img',
-          viewBox: '0 0 16 16',
-        },
-        jsx: {
-          babelConfig: {
-            plugins: [
-              '@babel/plugin-transform-react-jsx',
-              [
-                // This plugin lets us transform the JSX output to change instances of
-                // #000000 and #000 (the fill for our SVG glyphs) to use `this.props.fill` instead.
-                '@svgr/babel-plugin-replace-jsx-attribute-value',
-                {
-                  values: [
-                    {
-                      value: '#000',
-                      newValue: "'currentColor'",
-                      literal: true,
-                    },
-                    {
-                      value: '#000000',
-                      newValue: "'currentColor'",
-                      literal: true,
-                    },
-                  ],
-                },
-              ],
-            ],
+    // We transform the output SVGR code to be ES5 compatible.
+    const { code: moduleCode } = transformSync(
+      svgr.sync(
+        fileContent,
+        {
+          titleProp: true,
+          svgProps: {
+            role: 'img',
+            viewBox: '0 0 16 16',
           },
+          jsx: {
+            babelConfig: {
+              plugins: [
+                '@babel/plugin-transform-react-jsx',
+                [
+                  // This plugin lets us transform the JSX output to change instances of
+                  // #000000 and #000 (the fill for our SVG glyphs) to use `this.props.fill` instead.
+                  '@svgr/babel-plugin-replace-jsx-attribute-value',
+                  {
+                    values: [
+                      {
+                        value: '#000',
+                        newValue: "'currentColor'",
+                        literal: true,
+                      },
+                      {
+                        value: '#000000',
+                        newValue: "'currentColor'",
+                        literal: true,
+                      },
+                    ],
+                  },
+                ],
+              ],
+            },
+          },
+          template,
         },
-        template,
-      },
+        {
+          componentName: file.name,
+        },
+      ),
       {
-        componentName: file.name,
+        // The root directory this runs in doesn't contain a babel configuration. This sets it to look for the nearest configuration in a parent directory.
+        rootMode: 'upward',
+        filename: file.name,
+        generatorOpts: {
+          minify: true,
+          compact: true,
+        },
       },
     );
 
