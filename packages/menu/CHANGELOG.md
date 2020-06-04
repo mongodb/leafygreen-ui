@@ -1,5 +1,13 @@
 # @leafygreen-ui/menu
 
+## 6.0.12
+
+### Patch Changes
+
+- Updated dependencies [6fc022e]
+  - @leafygreen-ui/icon@6.0.0
+  - @leafygreen-ui/icon-button@5.0.4
+
 ## 6.0.11
 
 ### Patch Changes
