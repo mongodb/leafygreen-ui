@@ -93,6 +93,7 @@ function Body({ children, className, weight = 'regular' }: BodyProps) {
 
 const code = css`
   font-family: 'Source Code Pro', monospace;
+  display: inline-block;
 `;
 
 type InlineCodeProps = HTMLElementProps<'code'>;
