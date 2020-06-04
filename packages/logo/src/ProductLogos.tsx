@@ -69,50 +69,50 @@ export function CloudManagerLogo({
       </defs>
       <path
         className={css`
-          fill: ${size <= 10
-            ? '#00804b'
-            : !knockout
-            ? 'url(#cloud-manager-linear-gradient)'
+          fill: ${!knockout
+            ? size <= 10
+              ? '#00804b'
+              : 'url(#cloud-manager-linear-gradient)'
             : 'currentColor'};
         `}
         d="M5.74,17.39h.73a2.38,2.38,0,0,0,0-4.75H.77A9,9,0,0,0,5.74,17.39Z"
       />
       <path
         className={css`
-          fill: ${size <= 10
-            ? '#03aa4f'
-            : !knockout
-            ? 'url(#cloud-manager-linear-gradient-2)'
+          fill: ${!knockout
+            ? size <= 10
+              ? '#03aa4f'
+              : 'url(#cloud-manager-linear-gradient-2)'
             : 'currentColor'};
         `}
         d="M2.84,9a3.6,3.6,0,0,1,.9-2.38H.32a9,9,0,0,0,0,4.76H3.73A3.64,3.64,0,0,1,2.84,9Z"
       />
       <path
         className={css`
-          fill: ${size <= 10
-            ? '#00804b'
-            : !knockout
-            ? 'url(#cloud-manager-linear-gradient-3)'
+          fill: ${!knockout
+            ? size <= 10
+              ? '#00804b'
+              : 'url(#cloud-manager-linear-gradient-3)'
             : 'currentColor'};
         `}
         d="M10.1,15a3.63,3.63,0,0,1-1.55,3H9a9,9,0,0,0,8.23-5.36h-8A3.58,3.58,0,0,1,10.1,15Z"
       />
       <path
         className={css`
-          fill: ${size <= 10
-            ? '#007dab'
-            : !knockout
-            ? '#007dab'
+          fill: ${!knockout
+            ? size <= 10
+              ? '#007dab'
+              : '#007dab'
             : 'currentColor'};
         `}
         d="M9,0A9,9,0,0,0,.77,5.36H17.23A9,9,0,0,0,9,0Z"
       />
       <path
         className={css`
-          fill: ${size <= 10
-            ? '#03aa4f'
-            : !knockout
-            ? 'url(#cloud-manager-linear-gradient-4)'
+          fill: ${!knockout
+            ? size <= 10
+              ? '#03aa4f'
+              : 'url(#cloud-manager-linear-gradient-4)'
             : 'currentColor'};
         `}
         d="M4.1,9a2.39,2.39,0,0,0,2.38,2.38h11.2a9,9,0,0,0,0-4.76H6.48A2.39,2.39,0,0,0,4.1,9Z"
@@ -207,10 +207,10 @@ export function AtlasLogo({
       </defs>
       <path
         className={css`
-          fill: ${size <= 10
-            ? '#03aa4f'
-            : !knockout
-            ? 'url(#atlas-path-0001)'
+          fill: ${!knockout
+            ? size <= 10
+              ? '#03aa4f'
+              : 'url(#atlas-path-0001)'
             : 'currentColor'};
         `}
         d="M12,11c2-1.4,4.2-1.7,6-1.7c0-0.1,0-0.3,0-0.4c0-1.7-0.5-3.3-1.3-4.7c-1.3,0.1-2.6,0.5-4,1.4
@@ -219,10 +219,10 @@ export function AtlasLogo({
 
       <path
         className={css`
-          fill: ${size <= 10
-            ? '#03aa4f'
-            : !knockout
-            ? 'url(#atlas-path-0002)'
+          fill: ${!knockout
+            ? size <= 10
+              ? '#03aa4f'
+              : 'url(#atlas-path-0002)'
             : 'currentColor'};
         `}
         d="M6,11c1,0.7,1.8,1.5,2.4,2.3V9.5C7.9,8.4,7,6.8,5.3,5.7C4,4.8,2.6,4.4,1.3,4.3
@@ -231,10 +231,10 @@ export function AtlasLogo({
 
       <path
         className={css`
-          fill: ${size <= 10
-            ? '#00804b'
-            : !knockout
-            ? 'url(#atlas-path-0003)'
+          fill: ${!knockout
+            ? size <= 10
+              ? '#00804b'
+              : 'url(#atlas-path-0003)'
             : 'currentColor'};
         `}
         d="M12.7,12.1c-1.7,1.1-2.6,2.7-3.1,3.8V18c4.1-0.3,7.5-3.4,8.2-7.3C16.3,10.6,14.4,10.9,12.7,12.1z
@@ -243,30 +243,30 @@ export function AtlasLogo({
 
       <path
         className={css`
-          fill: ${size <= 10
-            ? '#00804b'
-            : !knockout
-            ? 'url(#atlas-path-4)'
+          fill: ${!knockout
+            ? size <= 10
+              ? '#00804b'
+              : 'url(#atlas-path-4)'
             : 'currentColor'};
         `}
         d="M8.4,15.9c-0.5-1.1-1.4-2.7-3.1-3.8c-1.7-1.2-3.6-1.5-5.1-1.4c0.8,4,4.1,7,8.2,7.3V15.9z"
       />
       <path
         className={css`
-          fill: ${size <= 10
-            ? '#80dba5'
-            : !knockout
-            ? '#00804b'
+          fill: ${!knockout
+            ? size <= 10
+              ? '#80dba5'
+              : '#00804b'
             : 'currentColor'};
         `}
         d="M6,4.7C7,5.4,7.8,6.2,8.4,7V0C5.9,0.2,3.7,1.3,2.2,3.2C3.4,3.3,4.8,3.8,6,4.7z"
       />
       <path
         className={css`
-          fill: ${size <= 10
-            ? '#80dba5'
-            : !knockout
-            ? '#00804b'
+          fill: ${!knockout
+            ? size <= 10
+              ? '#80dba5'
+              : '#00804b'
             : 'currentColor'};
         `}
         d="M15.8,3.2c-1.5-1.8-3.7-3-6.2-3.1v7C10.2,6.2,11,5.4,12,4.7C13.2,3.8,14.6,3.3,15.8,3.2z"
@@ -343,7 +343,11 @@ export function RealmLogo({
 
       <path
         className={css`
-          fill: ${!knockout ? 'url(#realm-path-0001)' : 'currentColor'};
+          fill: ${!knockout
+            ? size <= 10
+              ? '#EF8C9B'
+              : 'url(#realm-path-0001)'
+            : 'currentColor'};
         `}
         d="M7.8,11.1l0.8,0.3c1.7,0.7,3.5,1.1,5.3,1c1.3-0.1,2.6-0.5,3.8-1.1C17.9,10.6,18,9.8,18,9V8.7
 			C14.4,7.8,10.6,8.7,7.8,11.1z"
@@ -351,14 +355,22 @@ export function RealmLogo({
 
       <path
         className={css`
-          fill: ${!knockout ? 'url(#realm-path-0002)' : 'currentColor'};
+          fill: ${!knockout
+            ? size <= 10
+              ? 'B2458D'
+              : 'url(#realm-path-0002)'
+            : 'currentColor'};
         `}
         d="M17,13c-1,0.4-2,0.6-3.1,0.7c-2,0.1-4-0.3-5.8-1.1c-1.8-0.8-3.8-1.1-5.8-0.9c-0.6,0.1-1.2,0.3-1.7,0.5
 			c1.8,4.6,7,6.9,11.6,5.1C14.3,16.6,16,15,17,13z"
       />
       <path
         className={css`
-          fill: ${!knockout ? '#6e60f2' : 'currentColor'};
+          fill: ${!knockout
+            ? size <= 10
+              ? '#6E60F7'
+              : '#6e60f2'
+            : 'currentColor'};
         `}
         d="M4.4,5.3c2.4,0,4.6,1,6.3,2.6c2.3-0.9,4.7-1.1,7.1-0.6c-0.9-4.9-5.6-8.1-10.5-7.2c-3.3,0.6-5.9,3-6.9,6.1
 			C1.7,5.7,3,5.3,4.4,5.3z"
@@ -366,7 +378,11 @@ export function RealmLogo({
 
       <path
         className={css`
-          fill: ${!knockout ? 'url(#realm-path-0003)' : 'currentColor'};
+          fill: ${!knockout
+            ? size <= 10
+              ? '#F9D2C3'
+              : 'url(#realm-path-0003)'
+            : 'currentColor'};
         `}
         d="M0.1,7.9C0,8.3,0,8.6,0,9c0,0.7,0.1,1.3,0.2,2c0.6-0.3,1.2-0.4,1.9-0.6c1.4-0.3,2.9-0.2,4.3,0.2
 			c0.9-0.9,1.9-1.6,3-2.1c-1.4-1.2-3.2-1.9-5-1.9C2.9,6.6,1.4,7.1,0.1,7.9z"
