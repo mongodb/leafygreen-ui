@@ -64,6 +64,14 @@ describe('packages/modal', () => {
       window.dispatchEvent(new MouseEvent('click', { bubbles: true }));
       expect(screen.getByText(modalContent)).toBeInTheDocument();
     });
+    test('when the "closeOnBackdropClick" is true', () => {
+      const { container } = renderModal({
+        closeOnBackdropClick: true,
+        open: true,
+      });
+      window.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      expect(container.innerHTML).toBe('');
+    });
   });
 
   describe('when "open" prop is false', () => {
