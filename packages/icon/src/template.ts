@@ -65,11 +65,7 @@ module.exports = function template(
     }
 
     function getSize(size) {
-      if (typeof size === 'number') {
-        return size;
-      }
-
-      return sizeMap[size];
+      return typeof size === 'number' ? size : sizeMap[size]
     };
 
     function getGlyphTitle(name, title) {

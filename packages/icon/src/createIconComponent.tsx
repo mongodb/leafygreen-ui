@@ -11,13 +11,6 @@ export const Size = {
 
 export type Size = typeof Size[keyof typeof Size];
 
-export const sizeMap: Record<Size, number> = {
-  small: 14,
-  default: 16,
-  large: 20,
-  xlarge: 24,
-} as const;
-
 // We omit size here because we map string values for size to numbers in this component.
 export interface IconProps extends Omit<LGGlyph.ComponentProps, 'size'> {
   glyph: string;
@@ -32,12 +25,7 @@ export default function createIconComponent<
   const Icon = ({ glyph, size = Size.Default, ...rest }: IconProps) => {
     const SVGComponent = glyphs[glyph];
 
-    return (
-      <SVGComponent
-        {...rest}
-        size={typeof size === 'number' ? size : sizeMap[size]}
-      />
-    );
+    return <SVGComponent {...rest} size={size} />;
   };
 
   Icon.displayName = 'Icon';
@@ -45,7 +33,7 @@ export default function createIconComponent<
   Icon.propTypes = {
     glyph: PropTypes.oneOf(Object.keys(glyphs)).isRequired,
     size: PropTypes.oneOfType([
-      PropTypes.oneOf(Object.keys(sizeMap)),
+      PropTypes.oneOf(Object.values(Size)),
       PropTypes.number,
     ]),
   } as any;
