@@ -11,18 +11,18 @@ export const Size = {
 
 export type Size = typeof Size[keyof typeof Size];
 
-// We omit size here because we map string values for size to numbers in this component.
-export interface IconProps extends Omit<LGGlyph.ComponentProps, 'size'> {
-  glyph: string;
-  size?: Size | number;
-}
-
-const sizeMap: Record<Size, number> = {
+export const sizeMap: Record<Size, number> = {
   small: 14,
   default: 16,
   large: 20,
   xlarge: 24,
 } as const;
+
+// We omit size here because we map string values for size to numbers in this component.
+export interface IconProps extends Omit<LGGlyph.ComponentProps, 'size'> {
+  glyph: string;
+  size?: Size | number;
+}
 
 type GlyphObject = Record<string, LGGlyph.Component>;
 

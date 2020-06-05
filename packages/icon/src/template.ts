@@ -7,6 +7,7 @@ interface BabelAPI extends Record<string, any> {
 interface SVGROptions extends Record<string, any> {
   state: {
     componentName: string;
+    size: Size | number;
   } & Record<string, any>;
   typescript: boolean;
 }
@@ -22,7 +23,7 @@ interface ASTParts extends Record<string, any> {
 
 module.exports = function template(
   { template }: BabelAPI,
-  { state: { componentName }, typescript }: SVGROptions,
+  { state: { componentName, size }, typescript }: SVGROptions,
   { imports, jsx, exports }: ASTParts,
 ) {
   const plugins = ['jsx'];
@@ -42,8 +43,8 @@ module.exports = function template(
         className,
       )}
       title={getGlyphTitle('${componentName}', title)}
-      height={size}
-      width={size}
+      height={getSize(size)}
+      width={getSize(size)}
     />`;
 
   // Augment the `<svg attributes />` so we can customize it with the values above.
@@ -55,6 +56,21 @@ module.exports = function template(
     ${imports}
     import PropTypes from 'prop-types';
     import { css, cx } from '@leafygreen-ui/emotion';
+
+    const sizeMap = {
+      small: 14,
+      default: 16,
+      large: 20,
+      xlarge: 24,
+    }
+
+    function getSize(size) {
+      if (typeof size === 'number') {
+        return size;
+      }
+
+      return sizeMap[size];
+    };
 
     function getGlyphTitle(name, title) {
       if (title === false) {
@@ -97,7 +113,7 @@ module.exports = function template(
 
     ${componentName}.propTypes = {
         fill: PropTypes.string,
-        size: PropTypes.number,
+        size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         className: PropTypes.string,
     };
 

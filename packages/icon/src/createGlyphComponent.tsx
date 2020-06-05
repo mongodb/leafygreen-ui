@@ -3,6 +3,27 @@ import PropTypes from 'prop-types';
 import { SVGR, LGGlyph } from './types';
 import { css, cx } from '@leafygreen-ui/emotion';
 
+export const Size = {
+  Small: 'small',
+  Default: 'default',
+  Large: 'large',
+  XLarge: 'xlarge',
+} as const;
+
+export type Size = typeof Size[keyof typeof Size];
+
+export const sizeMap: Record<Size, number> = {
+  small: 14,
+  default: 16,
+  large: 20,
+  xlarge: 24,
+} as const;
+
+// We omit size here because we map string values for size to numbers in this component.
+export interface GlyphProps extends Omit<LGGlyph.ComponentProps, 'size'> {
+  size?: Size | number;
+}
+
 export function getGlyphTitle(name: string, title?: string | boolean | null) {
   if (title === false) {
     // If title is null, we unset the title entirely, otherwise we generate one.
@@ -29,14 +50,16 @@ export default function createGlyphComponent(
 ): LGGlyph.Component {
   function GlyphComponent({
     className,
-    size = 16,
+    size = Size.Default,
     title,
     fill,
     ...rest
-  }: LGGlyph.ComponentProps) {
+  }: GlyphProps) {
     const fillStyle = css`
       color: ${fill};
     `;
+
+    console.log('here', size, typeof size);
 
     return (
       <Glyph
@@ -47,8 +70,8 @@ export default function createGlyphComponent(
           className,
         )}
         title={getGlyphTitle(glyphName, title)}
-        height={size}
-        width={size}
+        height={typeof size === 'number' ? size : sizeMap[size]}
+        width={typeof size === 'number' ? size : sizeMap[size]}
         {...rest}
       />
     );
