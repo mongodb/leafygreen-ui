@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 6.0.0
+
+### Major Changes
+
+- 6fc022e: Transpiles icons imported individually from dist to use commonjs.
+
 ## 5.2.0
 
 ### Minor Changes
