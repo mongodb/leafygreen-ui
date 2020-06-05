@@ -58,6 +58,10 @@ const projectNavAnchorOverrides = css`
   a:link {
     color: ${uiColors.gray.dark2};
   }
+
+  a:focus {
+    outline: none;
+  }
 `;
 
 const navContainerStyle = css`
