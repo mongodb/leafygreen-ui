@@ -62,7 +62,7 @@ describe('packages/modal', () => {
     test('when "closeOnBackdropClick" is false', () => {
       renderModal({ closeOnBackdropClick: false, open: true });
       window.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-      expect(screen.getByText(modalContent)).toBeInTheDocument();
+      expect(screen.getByTestId('modal-test-id')).toBeInTheDocument();
     });
     test('when the "closeOnBackdropClick" is true', () => {
       const { container } = renderModal({
