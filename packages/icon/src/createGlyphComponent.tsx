@@ -59,8 +59,6 @@ export default function createGlyphComponent(
       color: ${fill};
     `;
 
-    console.log('here', size, typeof size);
-
     return (
       <Glyph
         className={cx(
