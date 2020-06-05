@@ -79,7 +79,7 @@ describe('packages/Icon/createGlyphComponent createGlyphComponent()', () => {
   });
 
   test('The function returned by createGlyphComponent has the displayName: "MyGlyph"', () => {
-    expect(GlyphComponent.displayName).toBe('MyGlyph');
+    expect(GlyphComponent.displayName).toBe('GlyphMyGlyph');
   });
 
   const { container } = render(<GlyphComponent />);
