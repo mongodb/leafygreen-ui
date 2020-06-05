@@ -23,7 +23,7 @@ interface ASTParts extends Record<string, any> {
 
 module.exports = function template(
   { template }: BabelAPI,
-  { state: { componentName, size }, typescript }: SVGROptions,
+  { state: { componentName }, typescript }: SVGROptions,
   { imports, jsx, exports }: ASTParts,
 ) {
   const plugins = ['jsx'];
