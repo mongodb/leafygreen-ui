@@ -150,7 +150,7 @@ describe('packages/Icon/createIconComponent', () => {
   });
 });
 
-describe('Generated icons', () => {
+describe('Generated glyphs', () => {
   test('Edit icon has displayName: "Edit"', () => {
     expect(EditIcon.displayName).toBe('Edit');
   });
