@@ -240,6 +240,21 @@ function usesLinkElement(
   return props.href != null;
 }
 
+function isComponentGlyph<T extends React.ReactElement>(
+  child: React.ReactNode,
+): child is T {
+  if (
+    child != null &&
+    typeof child === 'object' &&
+    'type' in child &&
+    (child.type as any).displayName?.slice(0, 5) === 'Glyph'
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
 /**
  * # IconButton
  *
@@ -282,7 +297,11 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
   }
 
   const processedChildren = React.Children.map(children, child => {
-    if (isComponentType(child, 'Icon')) {
+    if (!child) {
+      return null;
+    }
+
+    if (isComponentType(child, 'Icon') || isComponentGlyph(child)) {
       const { size: childSize, title }: IconProps = child.props;
 
       const newChildProps: Partial<IconProps> = {

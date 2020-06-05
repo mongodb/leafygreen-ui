@@ -44,10 +44,10 @@ describe('packages/icon-button', () => {
     expect(iconButton.contains(icon)).toBe(true);
   });
 
-  // test("the rendered icon doesn't include a title tag", () => {
-  //   const { icon } = renderIconButton({ children: iconChild });
-  //   expect(icon.getElementsByTagName('title').length === 0).toBeTruthy();
-  // });
+  test("the rendered icon doesn't include a title tag", () => {
+    const { icon } = renderIconButton({ children: iconChild });
+    expect(icon.getElementsByTagName('title').length === 0).toBeTruthy();
+  });
 
   test('renders inside an anchor tag when the href prop is set', () => {
     const { iconButton } = renderIconButton({

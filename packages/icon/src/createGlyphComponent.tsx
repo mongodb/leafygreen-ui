@@ -75,7 +75,7 @@ export default function createGlyphComponent(
     );
   }
 
-  GlyphComponent.displayName = glyphName;
+  GlyphComponent.displayName = `Glyph${glyphName}`;
 
   GlyphComponent.propTypes = {
     fill: PropTypes.string,
