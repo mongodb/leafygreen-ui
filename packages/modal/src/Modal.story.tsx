@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { select } from '@storybook/addon-knobs';
+import { select, boolean } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import Modal, { ModalSize } from '.';
 
@@ -18,6 +18,7 @@ function Default() {
         open={open}
         setOpen={setOpen}
         size={select('size', Object.values(ModalSize), ModalSize.Default)}
+        closeOnBackdropClick={boolean('closeOnBackdropClick', true)}
       >
         Modal Content goes here.
       </Modal>
