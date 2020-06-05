@@ -7,7 +7,6 @@ import { uiColors } from '@leafygreen-ui/palette';
 import omit from 'lodash/omit';
 
 const sharedStyles = css`
-  display: block;
   margin: unset;
   font-family: Akzidenz, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: ${uiColors.gray.dark2};
@@ -108,7 +107,7 @@ function InlineCode({ children, className }: InlineCodeProps) {
 }
 
 const disclaimer = css`
-  display: inline-block;
+  display: block;
   font-size: 12px;
   line-height: 20px;
   letter-spacing: 0.2px;
