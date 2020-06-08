@@ -259,9 +259,7 @@ export default function Banner({
       {...rest}
     >
       {renderIcon}
-      <span className={getTextStyle(image != null, dismissible)}>
-        {children}
-      </span>
+      <div className={getTextStyle(image != null, dismissible)}>{children}</div>
       {dismissible && (
         <XIcon
           fill={color}
