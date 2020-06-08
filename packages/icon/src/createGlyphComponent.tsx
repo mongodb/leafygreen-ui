@@ -54,10 +54,12 @@ export default function createGlyphComponent(
     title,
     fill,
     ...rest
-  }: GlyphProps) {
+  }: LGGlyph.ComponentProps) {
     const fillStyle = css`
       color: ${fill};
     `;
+
+    const renderedSize = typeof size === 'number' ? size : sizeMap[size];
 
     return (
       <Glyph
@@ -68,8 +70,8 @@ export default function createGlyphComponent(
           className,
         )}
         title={getGlyphTitle(glyphName, title)}
-        height={typeof size === 'number' ? size : sizeMap[size]}
-        width={typeof size === 'number' ? size : sizeMap[size]}
+        height={renderedSize}
+        width={renderedSize}
         {...rest}
       />
     );

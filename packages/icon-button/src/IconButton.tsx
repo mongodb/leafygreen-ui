@@ -243,16 +243,12 @@ function usesLinkElement(
 function isComponentGlyph<T extends React.ReactElement>(
   child: React.ReactNode,
 ): child is T {
-  if (
+  return (
     child != null &&
     typeof child === 'object' &&
     'type' in child &&
     (child.type as any).displayName?.slice(0, 5) === 'Glyph'
-  ) {
-    return true;
-  }
-
-  return false;
+  );
 }
 
 /**
@@ -301,6 +297,9 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
       return null;
     }
 
+    // Check to see if child is a LeafyGreen Icon or a LeafyGreen Glyph
+    // If so, we unset the title and rely on the aria-label prop to give
+    // information about the rendered content.
     if (isComponentType(child, 'Icon') || isComponentGlyph(child)) {
       const { size: childSize, title }: IconProps = child.props;
 

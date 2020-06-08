@@ -5,7 +5,6 @@ import debounce from 'lodash/debounce';
 import FolderIcon from '@leafygreen-ui/icon/dist/Folder';
 import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
-import { Size } from '@leafygreen-ui/icon';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { createDataProp } from '@leafygreen-ui/lib';
@@ -233,6 +232,8 @@ function ProjectSelect({
     );
   };
 
+  const CurrentIcon = open ? CaretUpIcon : CaretDownIcon;
+
   return (
     <InteractionRingWrapper
       selector={projectTriggerDataProp.selector}
@@ -269,17 +270,10 @@ function ProjectSelect({
           {current?.projectName ?? ''}
         </span>
 
-        {open ? (
-          <CaretUpIcon
-            size={Size.Small}
-            className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
-          />
-        ) : (
-          <CaretDownIcon
-            size={Size.Small}
-            className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
-          />
-        )}
+        <CurrentIcon
+          size="small"
+          className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
+        />
       </button>
       <Menu
         usePortal={false}

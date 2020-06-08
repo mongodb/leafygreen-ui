@@ -6,7 +6,6 @@ import BuildingIcon from '@leafygreen-ui/icon/dist/Building';
 import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import SettingsIcon from '@leafygreen-ui/icon/dist/Settings';
-import { Size } from '@leafygreen-ui/icon';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
@@ -368,7 +367,7 @@ function OrgSelect({
         >
           {!isTablet && (
             <BuildingIcon
-              size={Size.Small}
+              size="small"
               className={cx(iconColorStyle, { [iconLoadingStyle]: loading })}
             />
           )}
@@ -382,12 +381,12 @@ function OrgSelect({
           </span>
           {open ? (
             <CaretUpIcon
-              size={Size.Small}
+              size="small"
               className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
             />
           ) : (
             <CaretDownIcon
-              size={Size.Small}
+              size="small"
               className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
             />
           )}
