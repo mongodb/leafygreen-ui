@@ -1,5 +1,4 @@
 import React, {
-  useMemo,
   useRef,
   useEffect,
   useLayoutEffect,
@@ -20,48 +19,6 @@ import WindowChrome from './WindowChrome';
 import debounce from 'lodash/debounce';
 import { uiColors } from '@leafygreen-ui/palette';
 import ClipboardJS from 'clipboard';
-
-function stringFragmentIsBlank(str: string): str is '' | ' ' {
-  return str === '' || str === ' ';
-}
-
-interface ProcessedCodeSnippet {
-  /**
-   * A processed string where any line breaks at the beginning or end
-   * of the string are trimmed.
-   */
-  content: string;
-
-  /**
-   * A count of the number of separate lines in a given string.
-   */
-  lineCount: number;
-}
-
-function useProcessedCodeSnippet(snippet: string): ProcessedCodeSnippet {
-  return useMemo(() => {
-    const splitString = snippet.split(/\r|\n/);
-
-    // If first line is blank, remove the first line.
-    // This is likely to be common when someone assigns a template literal
-    // string to a variable, and doesn't add an '\' escape character after
-    // breaking to a new line before the first line of code.
-    while (stringFragmentIsBlank(splitString[0])) {
-      splitString.shift();
-    }
-
-    // If the last line is blank, remove the last line of code.
-    // This is a similar issue to the one above.
-    while (stringFragmentIsBlank(splitString[splitString.length - 1])) {
-      splitString.pop();
-    }
-
-    return {
-      content: splitString.join('\n'),
-      lineCount: splitString.length,
-    };
-  }, [snippet]);
-}
 
 const whiteSpace = 12;
 
@@ -92,7 +49,7 @@ const singleLineCopyStyle = css`
 `;
 
 function getWrapperVariantStyle(variant: Variant): string {
-  const colors = variantColors[variant] ?? variantColors[Variant.Light];
+  const colors = variantColors[variant];
 
   return css`
     border-color: ${colors[1]};
@@ -102,7 +59,7 @@ function getWrapperVariantStyle(variant: Variant): string {
 }
 
 function getSidebarVariantStyle(variant: Variant): string {
-  const colors = variantColors[variant] ?? variantColors[Variant.Light];
+  const colors = variantColors[variant];
 
   switch (variant) {
     case Variant.Light:
@@ -130,14 +87,18 @@ function getCopyButtonStyle(variant: Variant, copied: boolean): string {
       css`
         color: ${uiColors.white};
         background-color: ${uiColors.green.base};
+
         &:focus {
           color: ${uiColors.white};
+
           &:before {
             background-color: ${uiColors.green.base};
           }
         }
+
         &:hover {
           color: ${uiColors.white};
+
           &:before {
             background-color: ${uiColors.green.base};
           }
@@ -238,6 +199,30 @@ type DetailedElementProps<T> = React.DetailedHTMLProps<
   T
 >;
 
+interface CodeOuterWrapperProps extends Pick<CodeProps, 'chromeTitle' | 'variant' | 'showWindowChrome'> {
+  children: React.ReactNode;
+}
+
+function CodeOuterWrapper({ children, chromeTitle, variant = Variant.Light, showWindowChrome }: CodeOuterWrapperProps) {
+  const wrapperStyle = css`
+    border: 1px solid ${variantColors[variant][1]};
+    border-radius: 4px;
+    overflow: hidden;
+  `;
+
+  return (
+    <div className={wrapperStyle}>
+      {showWindowChrome && (
+        <WindowChrome chromeTitle={chromeTitle} variant={variant} />
+      )}
+
+      <div className={css`display: flex;`}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 /**
  * # Code
  *
@@ -308,12 +293,6 @@ function Code({
     }
   }, []);
 
-  const wrapperStyle = css`
-    border: 1px solid ${variantColors[variant][1]};
-    border-radius: 4px;
-    overflow: hidden;
-  `;
-
   const wrapperClassName = cx(
     codeWrapperStyle,
     getWrapperVariantStyle(variant),
@@ -324,15 +303,13 @@ function Code({
     getScrollShadowStyle(scrollState, variant),
   );
 
-  const { content, lineCount } = useProcessedCodeSnippet(children);
-
-  const renderedWindowChrome = showWindowChrome && (
-    <WindowChrome chromeTitle={chromeTitle} variant={variant} />
-  );
-
   const renderedSyntaxComponent = (
-    <Syntax showLineNumbers={showLineNumbers} variant={variant} language={language}>
-      {content}
+    <Syntax
+      showLineNumbers={showLineNumbers}
+      variant={variant}
+      language={language}
+    >
+      {children}
     </Syntax>
   );
 
@@ -356,91 +333,63 @@ function Code({
 
   const debounceScroll = debounce(handleScroll, 50, { leading: true });
 
+  const copyBar = showCopyBar && (
+    <div
+      className={cx(
+        copyStyle,
+        {[singleLineCopyStyle]: !multiline},
+        getSidebarVariantStyle(variant),
+      )}
+    >
+      <IconButton
+        variant={variant}
+        aria-label="Copy"
+        className={cx(getCopyButtonStyle(variant, copied), 'copy-btn')}
+        onClick={() => setCopied(true)}
+        data-clipboard-text={children}
+      >
+        {copied ? <CheckmarkIcon /> : <CopyIcon />}
+      </IconButton>
+    </div>
+  )
+
+  const onScroll: React.UIEventHandler<HTMLDivElement | HTMLPreElement> = e => {
+    e.persist();
+    debounceScroll(e);
+  }
+
+  const commonWrapperProps = { chromeTitle, variant, showWindowChrome } as const;
+
   if (!multiline) {
     return (
-      <div className={wrapperStyle}>
-        {renderedWindowChrome}
-
+      <CodeOuterWrapper {...commonWrapperProps}>
         <div
-          className={css`
-            display: flex;
-          `}
+          {...(rest as DetailedElementProps<HTMLDivElement>)}
+          className={wrapperClassName}
+          onScroll={onScroll}
+          ref={scrollableSingleLine}
         >
-          <div
-            {...(rest as DetailedElementProps<HTMLDivElement>)}
-            className={wrapperClassName}
-            onScroll={e => {
-              e.persist();
-              debounceScroll(e);
-            }}
-            ref={scrollableSingleLine}
-          >
-            {renderedSyntaxComponent}
-          </div>
-
-          {showCopyBar && (
-            <div
-              className={cx(
-                copyStyle,
-                singleLineCopyStyle,
-                getSidebarVariantStyle(variant),
-              )}
-            >
-              <IconButton
-                variant={variant}
-                aria-label="Copy"
-                className={cx(getCopyButtonStyle(variant, copied), 'copy-btn')}
-                onClick={() => {
-                  setCopied(true);
-                }}
-                data-clipboard-text={content}
-              >
-                {copied ? <CheckmarkIcon /> : <CopyIcon />}
-              </IconButton>
-            </div>
-          )}
+          {renderedSyntaxComponent}
         </div>
-      </div>
+
+        {copyBar}
+      </CodeOuterWrapper>
     );
   }
 
   return (
-    <div className={wrapperStyle}>
-      {renderedWindowChrome}
-      <div
-        className={css`
-          display: flex;
-        `}
+    <CodeOuterWrapper {...commonWrapperProps}>
+      <pre
+        {...(rest as DetailedElementProps<HTMLPreElement>)}
+        className={wrapperClassName}
+        onScroll={onScroll}
+        ref={scrollableMultiLine}
       >
-        <pre
-          {...(rest as DetailedElementProps<HTMLPreElement>)}
-          className={wrapperClassName}
-          onScroll={e => {
-            e.persist();
-            debounceScroll(e);
-          }}
-          ref={scrollableMultiLine}
-        >
-          {renderedSyntaxComponent}
-        </pre>
+        {renderedSyntaxComponent}
+      </pre>
 
-        {showCopyBar && (
-          <div className={cx(copyStyle, getSidebarVariantStyle(variant))}>
-            <IconButton
-              variant={variant}
-              aria-label="Copy"
-              className={cx(getCopyButtonStyle(variant, copied), 'copy-btn')}
-              onClick={() => {
-                setCopied(true);
-              }}
-              data-clipboard-text={content}
-            >
-              {copied ? <CheckmarkIcon /> : <CopyIcon />}
-            </IconButton>
-          </div>
-        )}
-      </div>
-    </div>
+      {copyBar}
+    </CodeOuterWrapper>
   );
 }
 
