@@ -34,7 +34,7 @@ export interface StageProps {
   /**
    * The DOM node to use as the root node for the intersectionObserver. Defaults to window when null or undefined.
    **/
-  intersectionNode?: Element;
+  intersectionNode: HTMLElement | null;
 
   /**
    * Alter the rendered size of the component. Inherited from the parent Pipeline component.
