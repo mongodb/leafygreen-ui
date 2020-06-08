@@ -1,5 +1,11 @@
 # @leafygreen-ui/typography
 
+## 2.0.0
+
+### Major Changes
+
+- 6d1de4a: Removes `display:inline-block` from Body and Small components.
+
 ## 1.0.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/modal
 
+## 3.1.0
+
+### Minor Changes
+
+- dc075c7: Adds `closeOnBackdropClick` prop to handle Modal closing when the backdrop is clicked
+
 ## 3.0.6
 
 ### Patch Changes
