@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { number, select, boolean } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { Variant } from './types';
+import { Variant } from './utils';
 import {
   Logo,
   LogoMark,

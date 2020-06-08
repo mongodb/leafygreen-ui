@@ -99,13 +99,13 @@ describe('packages/logo', () => {
   });
 
   describe('product logos', () => {
-    describe('by default renders monochrome product logo with a size of 18px', () => {
+    describe('by default renders monochrome product logo with a height of 18', () => {
       Object.keys(map).forEach(product => {
         test(`for the ${product} logo`, () => {
           renderProductLogo(product);
           const logo = screen.getByTestId('logo-test-id');
           expect(logo).toBeInTheDocument();
-          expect(logo.getAttribute('height')).toBe('18px');
+          expect(logo.getAttribute('height')).toBe('18');
         });
       });
     });
