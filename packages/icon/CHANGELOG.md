@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 6.0.1
+
+### Patch Changes
+
+- e83e4ed: Fixes displayName property of generated glyphs
+
 ## 6.0.0
 
 ### Major Changes
