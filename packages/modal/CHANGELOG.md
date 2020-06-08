@@ -1,5 +1,28 @@
 # @leafygreen-ui/modal
 
+## 3.1.0
+
+### Minor Changes
+
+- dc075c7: Adds `closeOnBackdropClick` prop to handle Modal closing when the backdrop is clicked
+
+## 3.0.6
+
+### Patch Changes
+
+- Updated dependencies [6fc022e]
+  - @leafygreen-ui/icon@6.0.0
+
+## 3.0.5
+
+### Patch Changes
+
+- 05779a1: Upgrades `react-transition-group` to 4.4.1 which removes all React `StrictMode` warnings, making these components `StrictMode` safe.
+- Updated dependencies [2fc4ef9]
+- Updated dependencies [e857861]
+- Updated dependencies [cf6167e]
+  - @leafygreen-ui/icon@5.2.0
+
 ## 3.0.4
 
 ### Patch Changes

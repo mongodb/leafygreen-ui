@@ -5,21 +5,16 @@ type InferComponentType<C, H> = H extends string
   ? 'a' | React.ComponentType
   : C;
 
-interface BoxComponentProps<
-  C extends React.ElementType = React.ElementType,
-  H extends string | undefined = undefined
-> {
+export type BoxProps<
+  C extends React.ElementType,
+  H extends string | undefined,
+  P extends Record<string, any> = {}
+> = P & {
   href?: H;
   as?: InferComponentType<C, H>;
-}
-
-type BoxProps<
-  C extends React.ElementType,
-  H extends string | undefined
-> = BoxComponentProps<C, H> &
-  Omit<
+} & Omit<
     React.ComponentPropsWithRef<C extends React.ComponentType ? any : C>,
-    keyof BoxComponentProps
+    'href' | 'as'
   >;
 
 type BoxType = <
@@ -55,15 +50,9 @@ Box.propTypes = {
 
 export default Box;
 
-export type OverrideComponentProps<
-  C extends React.ElementType,
-  H extends string | undefined,
-  P
-> = P & BoxProps<C, H>;
-
 export type OverrideComponentCast<P> = <
   C extends React.ElementType = 'div',
   H extends string | undefined = undefined
 >(
-  props: OverrideComponentProps<InferComponentType<C, H>, H, P>,
+  props: BoxProps<InferComponentType<C, H>, H, P>,
 ) => JSX.Element | null;

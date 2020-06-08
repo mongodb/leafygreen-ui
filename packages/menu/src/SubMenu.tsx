@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
-import Box, {
-  OverrideComponentProps,
-  OverrideComponentCast,
-} from '@leafygreen-ui/box';
+import Box, { BoxProps, OverrideComponentCast } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
@@ -212,7 +209,7 @@ const SubMenu: OverrideComponentCast<SubMenuProps> = React.forwardRef(
       active = false,
       disabled = false,
       ...rest
-    }: OverrideComponentProps<C, H, SubMenuProps>,
+    }: BoxProps<C, H, SubMenuProps>,
     ref: React.Ref<any>,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();

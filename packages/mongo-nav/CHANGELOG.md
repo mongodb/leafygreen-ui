@@ -1,5 +1,34 @@
 # @leafygreen-ui/mongo-nav
 
+## 1.3.1
+
+### Patch Changes
+
+- Updated dependencies [6fc022e]
+  - @leafygreen-ui/icon@6.0.0
+  - @leafygreen-ui/button@4.2.4
+  - @leafygreen-ui/icon-button@5.0.4
+  - @leafygreen-ui/menu@6.0.12
+
+## 1.3.0
+
+### Minor Changes
+
+- daeaca2: Uses a function to determine whether host url should be "stitch.mongodb.com" or "realm.mongodb.com"
+
+## 1.2.2
+
+### Patch Changes
+
+- 5d044ec: Closes Access Manager dropdown in `OrgNav` when one of the MenuItems is clicked
+- Updated dependencies [2fc4ef9]
+- Updated dependencies [05779a1]
+- Updated dependencies [e857861]
+- Updated dependencies [cf6167e]
+  - @leafygreen-ui/icon@5.2.0
+  - @leafygreen-ui/menu@6.0.11
+  - @leafygreen-ui/icon-button@5.0.3
+
 ## 1.2.1
 
 ### Patch Changes

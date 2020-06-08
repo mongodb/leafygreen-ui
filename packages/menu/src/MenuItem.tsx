@@ -4,10 +4,7 @@ import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import Box, {
-  OverrideComponentProps,
-  OverrideComponentCast,
-} from '@leafygreen-ui/box';
+import Box, { BoxProps, OverrideComponentCast } from '@leafygreen-ui/box';
 import {
   menuItemContainerStyle,
   activeMenuItemContainerStyle,
@@ -137,7 +134,7 @@ const MenuItem: OverrideComponentCast<BaseMenuItemProps> = React.forwardRef(
       description,
       glyph,
       ...rest
-    }: OverrideComponentProps<C, H, BaseMenuItemProps>,
+    }: BoxProps<C, H, BaseMenuItemProps>,
     ref: React.Ref<any>,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();

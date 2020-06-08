@@ -6,21 +6,18 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 
 const sharedStyles = css`
-  display: block;
   margin: unset;
   font-family: Akzidenz, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: ${uiColors.gray.dark2};
 `;
 
 const typeScale1 = css`
-  display: inline-block;
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0px;
 `;
 
 const typeScale2 = css`
-  display: inline-block;
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0px;
@@ -94,6 +91,7 @@ function Body({ children, className, weight = 'regular' }: BodyProps) {
 
 const code = css`
   font-family: 'Source Code Pro', monospace;
+  display: inline-block;
 `;
 
 type InlineCodeProps = HTMLElementProps<'code'>;
@@ -108,7 +106,7 @@ function InlineCode({ children, className }: InlineCodeProps) {
 }
 
 const disclaimer = css`
-  display: inline-block;
+  display: block;
   font-size: 12px;
   line-height: 20px;
   letter-spacing: 0.2px;

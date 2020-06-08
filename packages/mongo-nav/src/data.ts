@@ -114,11 +114,21 @@ export const urlFixtures: Required<URLSInterface> = {
   },
 };
 
+export function getProductHost(today = new Date(Date.now())) {
+  const mdbLiveDate = new Date('June 8, 2020 0:00:00');
+
+  if (today < mdbLiveDate) {
+    return 'stitch';
+  }
+
+  return 'realm';
+}
+
 export const hostDefaults: Required<HostsInterface> = {
   account: 'https://account.mongodb.com',
   cloud: 'https://cloud.mongodb.com',
   charts: 'https://charts.mongodb.com',
-  realm: 'https://stitch.mongodb.com',
+  realm: `https://${getProductHost()}.mongodb.com`,
   support: 'https://support.mongodb.com',
   university: 'https://university.mongodb.com',
 };

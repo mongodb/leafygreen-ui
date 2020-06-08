@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, cleanup } from '@testing-library/react';
-import Box from '.';
+import Box, { BoxProps } from '.';
 
 interface LinkWrapperProps {
   href?: string;
@@ -24,12 +24,10 @@ describe('packages/box', () => {
   }
 
   const sharedProps = { name: 'testName' };
-  const anchorProps: {
-    as: 'a';
-    href: string;
-    target: string;
-    name: string;
-  } = {
+  const anchorProps: BoxProps<
+    React.ElementType<'a'>,
+    'https://cloud.mongodb.com'
+  > = {
     as: 'a',
     href: 'https://cloud.mongodb.com',
     target: '_blank',

@@ -58,7 +58,7 @@ const packageJSON = `
     "publishConfig": {
       "access": "public"
     },
-    "devDependencies": {
+    "dependencies": {
       "@leafygreen-ui/lib": "^4.0.0"
     }
   }
@@ -120,8 +120,7 @@ export default function ${PACKAGE_UC}({}) {
 `;
 
 const index = `
-import ${PACKAGE_UC} from './${PACKAGE_UC}';
-export default ${PACKAGE_UC};
+export { default } from './${PACKAGE_UC}';
 `;
 
 const storybook = `
@@ -137,10 +136,9 @@ storiesOf('${PACKAGE_UC}', module)
 
 const spec = `
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import ${PACKAGE_UC} from '.';
-
-afterAll(cleanup);
 
 describe('packages/${PACKAGE_LC}', () => {
   test('condition', () => {

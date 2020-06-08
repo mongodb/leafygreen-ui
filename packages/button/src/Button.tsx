@@ -4,10 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { transparentize } from 'polished';
-import Box, {
-  OverrideComponentProps,
-  OverrideComponentCast,
-} from '@leafygreen-ui/box';
+import Box, { BoxProps, OverrideComponentCast } from '@leafygreen-ui/box';
 
 export const Variant = {
   Default: 'default',
@@ -311,7 +308,7 @@ const Button: OverrideComponentCast<BaseButtonProps> = React.forwardRef(
       size = Size.Normal,
       glyph,
       ...rest
-    }: OverrideComponentProps<C, H, BaseButtonProps>,
+    }: BoxProps<C, H, BaseButtonProps>,
     ref: React.Ref<any>,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
