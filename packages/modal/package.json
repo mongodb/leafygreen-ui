@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/modal",
-  "version": "3.0.6",
+  "version": "3.1.0",
   "description": "LeafyGreen UI Kit Modal",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
