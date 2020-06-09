@@ -222,13 +222,19 @@ describe('packages/table', () => {
     test('the expandable icon reveals a hidden row when clicked', () => {
       renderTable();
 
-      const hiddenRows = screen.queryAllByTestId('nested-row-is-hidden');
+      const hiddenRows = screen
+        .getAllByRole('row')
+        .filter(row => row.getAttribute('aria-expanded') === 'false');
+
       expect(hiddenRows.length).toBe(3);
 
       const chevron = screen.getAllByRole('button', { name: 'chevron' })[0];
       fireEvent.click(chevron);
 
-      const revealedRow = screen.getAllByTestId('nested-row-is-expanded');
+      const revealedRow = screen
+        .getAllByRole('row')
+        .filter(row => row.getAttribute('aria-expanded') === 'true');
+
       expect(revealedRow.length).toBe(1);
     });
   });

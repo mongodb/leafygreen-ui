@@ -255,11 +255,9 @@ const Row = React.forwardRef(
 
     const shouldAltRowColor = data && data.length >= 10 && !hasNestedRows;
 
-    const alignmentStyles: Array<string> = [];
-
-    for (const key in columnInfo) {
-      alignmentStyles.push(styleColumn(key, columnInfo?.[key]?.dataType));
-    }
+    const alignmentStyles = Object.entries(
+      columnInfo,
+    ).map(([key, { dataType }]) => styleColumn(key, dataType!));
 
     return (
       <>
@@ -284,9 +282,7 @@ const Row = React.forwardRef(
         <Transition in={isExpanded} timeout={150} nodeRef={ref}>
           {(state: string) => {
             const props = {
-              ['data-testid']: isExpanded
-                ? 'nested-row-is-expanded'
-                : 'nested-row-is-hidden',
+              ['aria-expanded']: isExpanded ? 'true' : 'false',
               className: cx(transitionStyles.default, {
                 [transitionStyles.entered]: ['entering', 'entered'].includes(
                   state,

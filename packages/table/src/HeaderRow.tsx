@@ -6,7 +6,7 @@ import { useTableContext, Types } from './table-context';
 
 const thStyles = css`
   width: 40px;
-  border-width: 0px 1px 3px 1px;
+  border-width: 0 1px 3px 1px;
   border-color: ${uiColors.gray.light2};
   border-style: solid;
 `;
@@ -45,15 +45,19 @@ function HeaderRow({
     });
   };
 
-  let checkColSpan = true;
+  let checkColSpan = false;
 
   React.Children.forEach(children, child => {
-    if ((child as React.ReactElement)?.props?.colSpan) {
+    if (!child) {
+      return null;
+    }
+
+    if ((child as React.ReactElement).props?.colSpan) {
       // if there is a colspan on a header row, we skip
       // adding a checkbox to the selectable table
       // so that tables can have multiple header rows
       // without multiple checkboxes
-      checkColSpan = false;
+      checkColSpan = true;
     }
   });
 
@@ -63,7 +67,7 @@ function HeaderRow({
       className={cx({ [stickyHeader]: sticky }, className)}
       data-testid="leafygreen-ui-header-row"
     >
-      {selectable && checkColSpan && (
+      {selectable && !checkColSpan && (
         <th className={thStyles}>
           <div className={innerDivStyles}>
             <Checkbox
