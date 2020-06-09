@@ -34,8 +34,8 @@ function getAllPackages(dir) {
 
   return dirList
     .map(subDir => `${path.resolve(dir, subDir)}/package.json`)
-    .filter(packageJson => fs.existsSync(packageJson))
-    .map(packageJson => require(packageJson).name);
+    .filter(packageJsonPath => fs.existsSync(packageJsonPath))
+    .map(packageJsonPath => require(packageJsonPath).name);
 }
 
 function getDirectGlyphImports() {
