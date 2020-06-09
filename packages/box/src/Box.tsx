@@ -1,27 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-type InferComponentType<C, H> = H extends string
-  ? 'a' | React.ComponentType
-  : C;
+// type InferComponentType<Component, Href> = Href extends string
+//   ? 'a' | React.ComponentType
+//   : Component;
+
+type InferComponentType<Component, Href> = Component extends React.ElementType
+  ? React.ElementType
+  : Href extends string
+  ? 'a'
+  : Component;
 
 export type BoxProps<
-  C extends React.ElementType,
-  H extends string | undefined,
-  P extends Record<string, any> = {}
-> = P & {
-  href?: H;
-  as?: InferComponentType<C, H>;
+  Component extends React.ElementType,
+  Href extends string | undefined,
+  Props extends Record<string, any> = {}
+> = Props & {
+  href?: Href;
+  as?: InferComponentType<Component, Href>;
 } & Omit<
-    React.ComponentPropsWithRef<C extends React.ComponentType ? any : C>,
+    React.ComponentPropsWithRef<
+      Component extends React.ComponentType ? any : Component
+    >,
     'href' | 'as'
   >;
 
 type BoxType = <
-  C extends React.ElementType = 'div',
-  H extends string | undefined = undefined
+  Component extends React.ElementType = 'div',
+  Href extends string | undefined = undefined
 >(
-  props: BoxProps<InferComponentType<C, H>, H>,
+  props: BoxProps<InferComponentType<Component, Href>, Href>,
 ) => JSX.Element;
 
 // eslint-disable-next-line
