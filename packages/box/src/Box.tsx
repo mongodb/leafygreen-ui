@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// type InferComponentType<Component, Href> = Href extends string
-//   ? 'a' | React.ComponentType
-//   : Component;
-
 type InferComponentType<Component, Href> = Component extends React.ElementType
   ? React.ElementType
   : Href extends string
