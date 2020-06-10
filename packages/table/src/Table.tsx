@@ -57,29 +57,8 @@ export default function Table({
   );
 
   React.useEffect(() => {
-    const rowCheckedState: {
-      [n in number]: undefined | boolean;
-    } = {};
-
-    rows.forEach((datum, index) => {
-      if (datum.props.disabled) {
-        return;
-      }
-      rowCheckedState[index] = undefined;
-    });
-
-    if (rowCheckedState) {
-      dispatch({
-        type: Types.SetRowCheckedState,
-        payload: rowCheckedState,
-      });
-    }
-  }, []);
-
-  React.useEffect(() => {
     if (state.rowCheckedState) {
       const boolArray = Object.values(state.rowCheckedState);
-      console.log(boolArray);
       const checkSame = boolArray.every(val => val === boolArray[0]);
 
       if (checkSame) {

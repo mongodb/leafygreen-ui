@@ -35,9 +35,7 @@ interface ActionPayload {
     index: number;
     checked?: boolean;
   };
-  [Types.SetRowCheckedState]: {
-    [k in number]?: boolean | undefined;
-  };
+  [Types.SetRowCheckedState]: Array<boolean | undefined>;
 }
 
 type ActionMap<A extends Record<string, any>> = {
