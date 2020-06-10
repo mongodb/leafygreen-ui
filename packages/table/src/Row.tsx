@@ -172,6 +172,7 @@ const Row = React.forwardRef(
         if (
           isComponentType(child, 'Cell') &&
           child.props.rowSpan > 1 &&
+          !hasRowSpan &&
           !hasDispatchedHasRowSpan
         ) {
           dispatch({

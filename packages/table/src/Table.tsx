@@ -2,10 +2,8 @@ import React, { useReducer, ReactElement } from 'react';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { HeaderRowProps } from './HeaderRow';
 import { TableHeaderProps } from './TableHeader';
-import CheckboxCell from './CheckboxCell';
 import { State, Types, TableProvider, reducer } from './table-context';
 import TableHead from './TableHead';
-import { isComponentType } from '@leafygreen-ui/lib/src';
 
 // * Clean TS
 // * Add nodeRef to Row
@@ -52,10 +50,6 @@ export default function Table({
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const rows: Array<React.ReactElement> = data.map((datum, index) =>
-    children({ datum, index }),
-  );
-
   React.useEffect(() => {
     if (state.rowCheckedState) {
       const boolArray = Object.values(state.rowCheckedState);
@@ -74,6 +68,10 @@ export default function Table({
       }
     }
   }, [state.rowCheckedState]);
+
+  const rows: Array<React.ReactElement> = data.map((datum, index) =>
+    children({ datum, index }),
+  );
 
   const renderBody = () => {
     if (!children) {
