@@ -5,9 +5,12 @@ import { TableHeaderProps } from './TableHeader';
 import CheckboxCell from './CheckboxCell';
 import { State, Types, TableProvider, reducer } from './table-context';
 import TableHead from './TableHead';
+import { isComponentType } from '@leafygreen-ui/lib/src';
 
 // * Clean TS
 // * Add nodeRef to Row
+// * Fix sticky
+// * Add more selectable tests
 
 const tableStyles = css`
   border-collapse: collapse;
@@ -44,6 +47,7 @@ export default function Table({
     selectable: selectableProp,
     headerCheckState: false,
     headerIndeterminate: false,
+    hasNestedRows: false,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -70,30 +74,19 @@ export default function Table({
         payload: rowCheckedState,
       });
     }
-  }, [data]);
+  }, []);
 
   React.useEffect(() => {
     if (state.rowCheckedState) {
       const boolArray = Object.values(state.rowCheckedState);
+      console.log(boolArray);
       const checkSame = boolArray.every(val => val === boolArray[0]);
 
       if (checkSame) {
         dispatch({
-          type: Types.ToggleHeaderIndeterminate,
-          payload: false,
+          type: Types.ToggleHeaderCheckedState,
+          payload: boolArray[0] ? true : false,
         });
-
-        if (boolArray[0]) {
-          dispatch({
-            type: Types.ToggleHeaderCheckedState,
-            payload: true,
-          });
-        } else {
-          dispatch({
-            type: Types.ToggleHeaderCheckedState,
-            payload: false,
-          });
-        }
       } else {
         dispatch({
           type: Types.ToggleHeaderIndeterminate,
@@ -101,28 +94,11 @@ export default function Table({
         });
       }
     }
-  }, [state.data, state.rowCheckedState]);
-
-  // if (typeof children === 'function') {
-  // rows = data.map((datum, index) => children({ datum, index }));
-  // }
+  }, [state.rowCheckedState]);
 
   const renderBody = () => {
     if (!children) {
       return null;
-    }
-
-    if (state.selectable) {
-      return rows.map((row, index) => {
-        const selectCell = <CheckboxCell index={index} />;
-
-        return React.cloneElement(row, {
-          children: [
-            selectCell,
-            [...React.Children.toArray(row.props.children)],
-          ],
-        });
-      });
     }
 
     return rows;

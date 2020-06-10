@@ -141,13 +141,48 @@ const Row = React.forwardRef(
     ref: React.Ref<any>,
   ) => {
     const {
-      state: { data, columnInfo, hasNestedRows, hasRowSpan },
+      state: { data, columnInfo, hasNestedRows, hasRowSpan, selectable },
       dispatch,
     } = useTableContext();
+
+    const indexRef = React.useRef(Math.floor(Math.random() * 1000000 + 1));
 
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nodeRef = React.useRef(null);
     let hasSeenFirstCell = false;
+
+    React.useEffect(() => {
+      let hasDispatchedHasNestedRows = false;
+      let hasDispatchedHasRowSpan = false;
+
+      React.Children.forEach(children, child => {
+        if (
+          isComponentType(child, 'Row') &&
+          !hasDispatchedHasNestedRows &&
+          !hasNestedRows
+        ) {
+          dispatch({
+            type: Types.SetHasNestedRows,
+            payload: true,
+          });
+
+          hasDispatchedHasNestedRows = true;
+        }
+
+        if (
+          isComponentType(child, 'Cell') &&
+          child.props.rowSpan > 1 &&
+          !hasDispatchedHasRowSpan
+        ) {
+          dispatch({
+            type: Types.SetHasRowSpan,
+            payload: true,
+          });
+
+          hasDispatchedHasRowSpan = true;
+        }
+      });
+    }, [children]);
 
     // Depending on network speed, will noticeably render columns with incorrect
     // alignment, would rather wait for proper information before rendering
@@ -169,23 +204,10 @@ const Row = React.forwardRef(
       </IconButton>
     );
 
-    const nestedRows = React.Children.map(children, (child, index) => {
+    const nestedRows = React.Children.map(children, child => {
       if (isComponentType(child, 'Row')) {
-        if (!hasNestedRows) {
-          dispatch({
-            type: Types.SetHasNestedRows,
-            payload: true,
-          });
-        }
-
-        const selectCell = <CheckboxCell index={index} />;
-
         return React.cloneElement(child, {
           indentLevel: indentLevel + 1,
-          children: [
-            selectCell,
-            ...React.Children.toArray(child.props.children),
-          ],
           ref: nodeRef,
         });
       }
@@ -201,55 +223,44 @@ const Row = React.forwardRef(
             className: disabledCell,
             disabled,
           });
+        } else {
+          return child;
         }
-
-        return child;
-      }
-
-      if (isComponentType(child, 'Cell')) {
-        const { className, children, rowSpan } = child.props;
-
-        if (rowSpan > 1) {
-          if (!hasRowSpan) {
-            dispatch({
-              type: Types.SetHasRowSpan,
-              payload: true,
-            });
-          }
-        }
+      } else if (isComponentType(child, 'Cell')) {
+        const { className, children } = child.props;
 
         if (disabled) {
           return React.cloneElement(child, {
             className: disabledCell,
             disabled,
           });
-        }
+        } else {
+          if (nestedRows && nestedRows.length > 0 && !hasSeenFirstCell) {
+            hasSeenFirstCell = true;
 
-        if (nestedRows && nestedRows.length > 0 && !hasSeenFirstCell) {
-          hasSeenFirstCell = true;
+            const rowChildren = Array.from(children);
 
-          const rowChildren = Array.from(children);
+            return React.cloneElement(child, {
+              children: (
+                <>
+                  {chevronButton}
+                  <span className={truncation}>{rowChildren}</span>
+                </>
+              ),
+              className: cx(displayFlex, stickyStyle, className),
+              key: children,
+            });
+          }
+
+          if (!children) {
+            return;
+          }
 
           return React.cloneElement(child, {
-            children: (
-              <>
-                {chevronButton}
-                <span className={truncation}>{rowChildren}</span>
-              </>
-            ),
-            className: cx(displayFlex, stickyStyle, className),
-            key: children,
+            children: <span className={truncation}>{children}</span>,
+            className: cx(stickyStyle, className),
           });
         }
-
-        if (!children) {
-          return;
-        }
-
-        return React.cloneElement(child, {
-          children: <span className={truncation}>{children}</span>,
-          className: cx(stickyStyle, className),
-        });
       }
     });
 
@@ -276,6 +287,7 @@ const Row = React.forwardRef(
           aria-disabled={disabled}
           {...rest}
         >
+          {selectable && <CheckboxCell index={indexRef.current} />}
           {renderedChildren}
         </tr>
 

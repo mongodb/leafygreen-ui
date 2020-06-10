@@ -123,6 +123,7 @@ function reducer(state: State, action: Action): State {
       };
 
     case Types.SetRowCheckedState:
+      console.log('ayo', action);
       return {
         ...state,
         rowCheckedState: action.payload,
@@ -147,6 +148,7 @@ function reducer(state: State, action: Action): State {
       return {
         ...state,
         headerCheckState: action.payload ?? !state.headerCheckState,
+        headerIndeterminate: false,
       };
 
     case Types.ToggleHeaderIndeterminate:
