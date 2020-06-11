@@ -56,5 +56,5 @@ export type OverrideComponentCast<P> = <
   C extends React.ElementType = 'div',
   H extends string | undefined = undefined
 >(
-  props: BoxProps<InferComponentType<C, H>, H, P>,
+  props: BoxProps<C, H, P>,
 ) => JSX.Element | null;
