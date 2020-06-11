@@ -58,7 +58,3 @@ export type OverrideComponentCast<P> = <
 >(
   props: BoxProps<C, H, P>,
 ) => JSX.Element | null;
-
-const App = () => {
-  return <Box as="a" />;
-};
