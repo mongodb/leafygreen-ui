@@ -124,7 +124,7 @@ describe('packages/Portal', () => {
       expect(logError).toHaveBeenCalledTimes(1);
       expect(logError).toHaveBeenCalledWith(
         'Changing the Portal container or className is not supported behavior and \
-        may cause unintended side effects. Instead, create a new Portal instance',
+may cause unintended side effects. Instead, create a new Portal instance.',
       );
       logError.mockRestore();
     });
@@ -147,7 +147,7 @@ describe('packages/Portal', () => {
       expect(logError).toHaveBeenCalledTimes(1);
       expect(logError).toHaveBeenCalledWith(
         'Changing the Portal container or className is not supported behavior and \
-        may cause unintended side effects. Instead, create a new Portal instance',
+may cause unintended side effects. Instead, create a new Portal instance.',
       );
       logError.mockRestore();
     });

@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 
@@ -8,10 +8,6 @@ type PortalProps = {
   | { container: HTMLElement; className?: never }
   | { container?: never; className?: string }
 );
-
-interface PortalState {
-  container: HTMLElement;
-}
 
 function createPortalContainer(className?: string): HTMLElement {
   const el = document.createElement('div');
@@ -24,47 +20,48 @@ function createPortalContainer(className?: string): HTMLElement {
   return el;
 }
 
-export default class Portal extends Component<PortalProps, PortalState> {
-  static displayName = 'Portal';
+function Portal(props: PortalProps) {
+  const [container] = useState(
+    props.container ?? createPortalContainer(props.className),
+  );
 
-  static propTypes = {
-    children: PropTypes.node,
-    className: PropTypes.string,
-    container: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
-  };
+  const prevPropsRef = useRef(props);
 
-  constructor(props: PortalProps) {
-    super(props);
-    this.state = {
-      container: props.container ?? createPortalContainer(props.className),
-    };
-  }
+  useEffect(() => {
+    const prevProps = prevPropsRef.current;
+    prevPropsRef.current = props;
 
-  shouldComponentUpdate(nextProps: PortalProps) {
     if (
-      this.props.container !== nextProps.container ||
-      this.props.className !== nextProps.className
+      prevProps.container !== props.container ||
+      prevProps.className !== props.className
     ) {
       // Sending consumer console error to control how this component is used
-      // and prevent unintended side-effects
       // eslint-disable-next-line no-console
       console.error(
         'Changing the Portal container or className is not supported behavior and \
-        may cause unintended side effects. Instead, create a new Portal instance',
+may cause unintended side effects. Instead, create a new Portal instance.',
       );
-      return false;
     }
+  });
 
-    return true;
-  }
+  useEffect(
+    () => () => {
+      if (!props.container) {
+        container.remove();
+      }
+    },
+    [],
+  );
 
-  componentWillUnmount() {
-    if (!this.props.container) {
-      this.state.container.remove();
-    }
-  }
-
-  render() {
-    return createPortal(this.props.children, this.state.container);
-  }
+  return createPortal(props.children, container);
 }
+
+Portal.displayName = 'Portal';
+
+Portal.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+  container: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
+};
+
+export default Portal;
