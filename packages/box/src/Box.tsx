@@ -23,7 +23,7 @@ type BoxType = <
   Component extends React.ElementType = 'div',
   Href extends string | undefined = undefined
 >(
-  props: BoxProps<InferComponentType<Component, Href>, Href>,
+  props: BoxProps<Component, Href>,
 ) => JSX.Element | null;
 
 // eslint-disable-next-line

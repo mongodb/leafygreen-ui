@@ -129,6 +129,18 @@ describe('packages/box', () => {
       expect(child).toBeInTheDocument();
     });
   });
-});
 
-// TODO: ADD "type tests" that test that type errors occur if there are missing or invalid props.
+  describe('types work as expected', () => {
+    // eslint-disable-next-line jest/expect-expect
+    test('does not allow specifying "target", without "as" or "href"', () => {
+      // @ts-expect-error
+      render(<Box target="_blank" />);
+    });
+
+    // eslint-disable-next-line jest/expect-expect
+    test('does not allow specifying "target", when "as" is set to "div" ', () => {
+      // @ts-expect-error
+      render(<Box target="_blank" as="div" />);
+    });
+  });
+});
