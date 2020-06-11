@@ -48,17 +48,17 @@ describe('packages/popover', () => {
       portalClassName: 'test-classname',
     });
 
-    expect(getByTestId('popover-test-id').parentElement.className).toBe(
+    expect(getByTestId('popover-test-id').parentElement?.className).toBe(
       'test-classname',
     );
   });
 
   // eslint-disable-next-line jest/expect-expect
   test('does not allow specifying "portalClassName", when "usePortal" is false', () => {
-    // @ts-expect-error
     renderPopover({
       active: true,
       usePortal: false,
+      // @ts-expect-error
       portalClassName: 'test-classname',
     });
   });
