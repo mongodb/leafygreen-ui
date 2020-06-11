@@ -5,10 +5,10 @@ import { TableHeaderProps } from './TableHeader';
 import { State, Types, TableProvider, reducer } from './table-context';
 import TableHead from './TableHead';
 
-// * Clean TS
+// * Clean TS all around
 // * Add nodeRef to Row
 // * Fix sticky
-// * Add more selectable tests
+// * fix row appearing as children of row
 
 const tableStyles = css`
   border-collapse: collapse;
@@ -69,9 +69,8 @@ export default function Table({
     }
   }, [state.rowCheckedState]);
 
-  const rows: Array<React.ReactElement> = data.map((datum, index) =>
-    children({ datum, index }),
-  );
+  const rows: Array<React.ReactElement> | undefined =
+    state.data && state.data.map((datum, index) => children({ datum, index }));
 
   const renderBody = () => {
     if (!children) {
