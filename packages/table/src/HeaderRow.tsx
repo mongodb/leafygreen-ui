@@ -40,7 +40,6 @@ function HeaderRow({
   const handleChange = () => {
     dispatch({
       type: Types.ToggleHeaderCheckedState,
-      // investigate not passing a payload
       payload: undefined,
     });
   };

@@ -8,7 +8,7 @@ import TableHead from './TableHead';
 // * Clean TS all around
 // * Add nodeRef to Row
 // * Fix sticky
-// * fix row appearing as children of row
+// * fix row appearing as children of row -- not seeing this!
 
 const tableStyles = css`
   border-collapse: collapse;
@@ -69,8 +69,9 @@ export default function Table({
     }
   }, [state.rowCheckedState]);
 
-  const rows: Array<React.ReactElement> | undefined =
-    state.data && state.data.map((datum, index) => children({ datum, index }));
+  const rows:
+    | Array<React.ReactElement>
+    | undefined = state.data?.map((datum, index) => children({ datum, index }));
 
   const renderBody = () => {
     if (!children) {

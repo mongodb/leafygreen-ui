@@ -288,7 +288,13 @@ const Row = React.forwardRef(
           aria-disabled={disabled}
           {...rest}
         >
-          {selectable && <CheckboxCell index={indexRef.current} />}
+          {selectable && (
+            <CheckboxCell
+              index={indexRef.current}
+              className={cx({ [disabledCell]: disabled })}
+              disabled={disabled}
+            />
+          )}
           {renderedChildren}
         </tr>
 
