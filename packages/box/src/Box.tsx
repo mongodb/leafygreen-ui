@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 type InferComponentType<Component, Href> = Href extends string
-  ? 'a' | React.ComponentType | Component
-  : Component;
+  ? 'a' | Component
+  : Component | React.ElementType;
 
 export type BoxProps<
   Component extends React.ElementType,
@@ -58,3 +58,7 @@ export type OverrideComponentCast<P> = <
 >(
   props: BoxProps<C, H, P>,
 ) => JSX.Element | null;
+
+const App = () => {
+  return <Box as="a" />;
+};

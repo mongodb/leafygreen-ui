@@ -134,13 +134,13 @@ describe('packages/box', () => {
     // eslint-disable-next-line jest/expect-expect
     test('does not allow specifying "target", without "as" or "href"', () => {
       // @ts-expect-error
-      render(<Box target="_blank" />);
+      <Box target="_blank" />;
     });
 
     // eslint-disable-next-line jest/expect-expect
     test('does not allow specifying "target", when "as" is set to "div" ', () => {
       // @ts-expect-error
-      render(<Box target="_blank" as="div" />);
+      <Box target="_blank" as="div" />;
     });
   });
 });

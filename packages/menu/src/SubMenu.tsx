@@ -191,10 +191,7 @@ interface SubMenuProps {
 }
 
 const SubMenu: OverrideComponentCast<SubMenuProps> = React.forwardRef(
-  <
-    C extends React.ElementType = 'button',
-    H extends string | undefined = undefined
-  >(
+  <C extends React.ElementType, H extends string | undefined = undefined>(
     {
       title,
       description,
@@ -208,6 +205,7 @@ const SubMenu: OverrideComponentCast<SubMenuProps> = React.forwardRef(
       open = false,
       active = false,
       disabled = false,
+      href,
       ...rest
     }: BoxProps<C, H, SubMenuProps>,
     ref: React.Ref<any>,
@@ -287,8 +285,8 @@ const SubMenu: OverrideComponentCast<SubMenuProps> = React.forwardRef(
       </>
     );
 
-    const renderBox = rest.href ? (
-      <Box as="a" {...sharedBoxProps}>
+    const renderBox = href ? (
+      <Box as="a" href={href} {...sharedBoxProps}>
         {boxContent}
       </Box>
     ) : (
