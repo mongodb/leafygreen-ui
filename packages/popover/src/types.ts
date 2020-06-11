@@ -55,7 +55,7 @@ interface ChildrenFunctionParameters {
   referenceElPos: ElementPosition;
 }
 
-export interface PopoverProps {
+export type PopoverProps = {
   /**
    * Content that will appear inside of the popover component.
    */
@@ -95,14 +95,6 @@ export interface PopoverProps {
   refEl?: React.RefObject<HTMLElement>;
 
   /**
-   * Specifies that the popover content will appear portaled to the end of the DOM,
-   * rather than in the DOM tree.
-   *
-   * default: `true`
-   */
-  usePortal?: boolean;
-
-  /**
    * Specifies the amount of spacing (in pixels) between the trigger element and the Popover content.
    *
    * default: `10`
@@ -115,4 +107,25 @@ export interface PopoverProps {
    * default: false
    */
   adjustOnMutation?: boolean;
-}
+} & (
+  | {
+      /**
+       * Specifies that the popover content will appear portaled to the end of the DOM,
+       * rather than in the DOM tree.
+       *
+       * default: `true`
+       */
+      usePortal?: true;
+
+      /**
+       * If using a portal, specifies a class name to apply to the root element of the portal.
+       *
+       * default: undefined
+       */
+      portalClassName?: string;
+    }
+  | {
+      usePortal: false;
+      portalClassName?: never;
+    }
+);

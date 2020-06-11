@@ -2,8 +2,9 @@ import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { render } from '@testing-library/react';
 import Popover from './Popover';
+import { PopoverProps } from './types';
 
-function renderPopover(props = {}) {
+function renderPopover(props: Partial<PopoverProps> = {}) {
   const utils = render(
     <>
       <button data-testid="button-test-id">Trigger Element</button>
@@ -41,7 +42,28 @@ describe('packages/popover', () => {
     expect(container.innerHTML.includes('popover-test-id')).toBe(true);
   });
 
-  test('removes Popover instance on unmound', () => {
+  test('applies "portalClassName" to root of portal', () => {
+    const { getByTestId } = renderPopover({
+      active: true,
+      portalClassName: 'test-classname',
+    });
+
+    expect(getByTestId('popover-test-id').parentElement.className).toBe(
+      'test-classname',
+    );
+  });
+
+  // eslint-disable-next-line jest/expect-expect
+  test('does not allow specifying "portalClassName", when "usePortal" is false', () => {
+    // @ts-expect-error
+    renderPopover({
+      active: true,
+      usePortal: false,
+      portalClassName: 'test-classname',
+    });
+  });
+
+  test('removes Popover instance on unmount', () => {
     const { container, unmount } = renderPopover();
     unmount();
     expect(container.innerHTML).toBe('');
