@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 type InferComponentType<Component, Href> = Href extends string
-  ? 'a' | React.ComponentType
+  ? 'a' | React.ComponentType | Component
   : Component;
 
 export type BoxProps<
@@ -26,6 +26,7 @@ type BoxType = <
   props: BoxProps<InferComponentType<Component, Href>, Href>,
 ) => JSX.Element | null;
 
+// eslint-disable-next-line
 const Box = React.forwardRef(
   <
     C extends React.ElementType = 'div',
@@ -39,8 +40,6 @@ const Box = React.forwardRef(
     return <Component href={href} ref={ref} {...rest} />;
   },
 ) as BoxType;
-
-// const Box: BoxType = React.forwardRef(InnerBox);
 
 // @ts-ignore Property 'displayName' does not exist on type 'BoxType'.
 Box.displayName = 'Box';
@@ -59,15 +58,3 @@ export type OverrideComponentCast<P> = <
 >(
   props: BoxProps<InferComponentType<C, H>, H, P>,
 ) => JSX.Element | null;
-
-const App = () => {
-  return <Box target="blank" />;
-};
-
-const TestApp = () => {
-  return <Box href="testlink" rel="noopener" />;
-};
-
-const TestApp2 = () => {
-  return <Box target="blank" as="a" />;
-};
