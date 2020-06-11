@@ -295,7 +295,7 @@ export default class Checkbox extends PureComponent<
           disabled={disabled}
           checked={checked}
           aria-disabled={disabled}
-          aria-checked={checked}
+          aria-checked={indeterminate ? 'mixed' : checked}
           aria-labelledby={labelId}
           onClick={this.onClick}
           onChange={this.onChange}

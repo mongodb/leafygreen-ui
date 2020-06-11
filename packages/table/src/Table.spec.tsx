@@ -85,11 +85,55 @@ describe('packages/table', () => {
     expect(screen.getAllByRole('row')[1].innerHTML).toContain('Alice');
   });
 
-  test('it adds a checkbox to every row, when the "selectable" prop is set', () => {
-    renderTable({ table: { selectable: true } });
-    const rows = screen.getAllByRole('row');
-    const checkboxes = screen.getAllByRole('checkbox');
-    expect(rows.length).toEqual(checkboxes.length);
+  describe('when the table is selectable', () => {
+    test('it adds a checkbox to every row', () => {
+      renderTable({ table: { selectable: true } });
+      const rows = screen.getAllByRole('row');
+      const checkboxes = screen.getAllByRole('checkbox');
+      expect(rows.length).toEqual(checkboxes.length);
+    });
+
+    test('it checks each checkmark when the master checkmark is checked', () => {
+      renderTable({ table: { selectable: true } });
+      const checkboxes = screen.getAllByRole('checkbox');
+      checkboxes.forEach(checkbox => {
+        expect(checkbox.getAttribute('aria-checked')).toBe('false');
+      });
+      const masterCheckbox = checkboxes[0];
+
+      fireEvent.click(masterCheckbox);
+
+      checkboxes.forEach(checkbox => {
+        expect(checkbox.getAttribute('aria-checked')).toBe('true');
+      });
+    });
+
+    test('it unchecks each checkmark when the master checkmark is unchecked', () => {
+      renderTable({ table: { selectable: true } });
+      const checkboxes = screen.getAllByRole('checkbox');
+      const masterCheckbox = checkboxes[0];
+
+      fireEvent.click(masterCheckbox);
+      checkboxes.forEach(checkbox => {
+        expect(checkbox.getAttribute('aria-checked')).toBe('true');
+      });
+      fireEvent.click(masterCheckbox);
+      checkboxes.forEach(checkbox => {
+        expect(checkbox.getAttribute('aria-checked')).toBe('false');
+      });
+    });
+
+    test('the master checkmark appears as indeterminate when one checkmark is checked', () => {
+      renderTable({ table: { selectable: true } });
+
+      const checkboxes = screen.getAllByRole('checkbox');
+      const masterCheckbox = checkboxes[0];
+      const innerCheckbox = checkboxes[1];
+
+      fireEvent.click(innerCheckbox);
+      expect(innerCheckbox.getAttribute('aria-checked')).toBe('true');
+      expect(masterCheckbox.getAttribute('aria-checked')).toBe('mixed');
+    });
   });
 
   test('it adds a className to the Tables classlist when one is supplied', () => {
