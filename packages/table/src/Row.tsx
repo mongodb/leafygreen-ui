@@ -271,6 +271,8 @@ const Row = React.forwardRef(
       columnInfo,
     ).map(([key, { dataType }]) => styleColumn(key, dataType!));
 
+    console.log(ref, nodeRef, nestedRows.length);
+
     return (
       <>
         <tr
@@ -286,6 +288,7 @@ const Row = React.forwardRef(
             className,
           )}
           aria-disabled={disabled}
+          ref={ref}
           {...rest}
         >
           {selectable && (

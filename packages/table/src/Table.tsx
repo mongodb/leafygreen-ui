@@ -5,7 +5,6 @@ import { TableHeaderProps } from './TableHeader';
 import { State, Types, TableProvider, reducer } from './table-context';
 import TableHead from './TableHead';
 
-// * Clean TS all around
 // * Add nodeRef to Row
 // * Fix sticky
 // * fix row appearing as children of row -- not seeing this!

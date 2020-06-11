@@ -20,6 +20,6 @@
       "@leafygreen-ui/icon": "^5.1.0", 
       "@leafygreen-ui/icon-button": "^5.0.2", 
       "@leafygreen-ui/checkbox": "^4.0.1",
-      "react-transition-group": "^4.3.0"
+      "react-transition-group": "^4.4.1"
     }
   }
