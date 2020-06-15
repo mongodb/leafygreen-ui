@@ -118,7 +118,7 @@ export const hostDefaults: Required<HostsInterface> = {
   account: 'https://account.mongodb.com',
   cloud: 'https://cloud.mongodb.com',
   charts: 'https://charts.mongodb.com',
-  realm: 'https://stitch.mongodb.com',
+  realm: `https://realm.mongodb.com`,
   support: 'https://support.mongodb.com',
   university: 'https://university.mongodb.com',
 };

@@ -7,6 +7,7 @@ import { typeIs } from '@leafygreen-ui/lib';
 import { SVGR } from './types';
 import { createIconComponent, glyphs } from '.';
 import createGlyphComponent, { getGlyphTitle } from './createGlyphComponent';
+import EditIcon from '@leafygreen-ui/icon/dist/Edit';
 
 afterAll(cleanup);
 
@@ -146,5 +147,11 @@ describe('packages/Icon/createIconComponent', () => {
 
     expect(glyph.nodeName.toLowerCase()).toBe('div');
     expect(glyph.textContent).toBe(text);
+  });
+});
+
+describe('Generated glyphs', () => {
+  test('Edit icon has displayName: "Edit"', () => {
+    expect(EditIcon.displayName).toBe('Edit');
   });
 });

@@ -1,5 +1,11 @@
 # @leafygreen-ui/side-nav
 
+## 2.0.12
+
+### Patch Changes
+
+- @leafygreen-ui/menu@6.0.12
+
 ## 2.0.11
 
 ### Patch Changes

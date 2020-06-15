@@ -151,7 +151,7 @@ const Pipeline = forwardRef(
      * so we should display the counter.
      */
     const handleCounterDisplay = () => {
-      const result = isElementOverflowed(pipelineNode);
+      const result = isElementOverflowed(pipelineNode!);
       setHasHiddenStages(result);
     };
 
@@ -162,7 +162,9 @@ const Pipeline = forwardRef(
      * mutation observer.
      */
     const setLastVisibleStage = () => {
-      const allStages = Array.from<HTMLElement>(pipelineNode.childNodes);
+      const allStages = Array.from(
+        pipelineNode!.children as HTMLCollectionOf<HTMLElement>,
+      );
 
       // Remove previously added last visible stage classNames
       allStages.forEach(element => {
