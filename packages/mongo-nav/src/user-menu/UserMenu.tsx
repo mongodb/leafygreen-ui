@@ -4,7 +4,6 @@ import defaultsDeep from 'lodash/defaultsDeep';
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
-import { Size } from '@leafygreen-ui/icon';
 import { LogoMark } from '@leafygreen-ui/logo';
 import {
   Menu,
@@ -147,7 +146,7 @@ function Description({ isActive, product }: DescriptionProps) {
       })}
     >
       {`${product}.mongodb.com`}
-      <ArrowRightIcon size={Size.Small} className={productLinkIconStyle} />
+      <ArrowRightIcon size="small" className={productLinkIconStyle} />
     </div>
   );
 }

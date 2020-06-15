@@ -7,7 +7,6 @@ interface BabelAPI extends Record<string, any> {
 interface SVGROptions extends Record<string, any> {
   state: {
     componentName: string;
-    size: 'small' | 'default' | 'large' | 'xlarge' | number;
   } & Record<string, any>;
   typescript: boolean;
 }

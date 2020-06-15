@@ -341,6 +341,8 @@ function OrgSelect({
     );
   };
 
+  const caretIconStyle = cx(caretBaseStyle, { [iconLoadingStyle]: loading });
+
   return (
     <>
       <InteractionRingWrapper
@@ -380,15 +382,9 @@ function OrgSelect({
             {disabled ? 'All Organizations' : current?.orgName ?? ''}
           </span>
           {open ? (
-            <CaretUpIcon
-              size="small"
-              className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
-            />
+            <CaretUpIcon size="small" className={caretIconStyle} />
           ) : (
-            <CaretDownIcon
-              size="small"
-              className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
-            />
+            <CaretDownIcon size="small" className={caretIconStyle} />
           )}
         </button>
         <Menu

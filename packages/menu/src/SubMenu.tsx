@@ -252,7 +252,9 @@ const SubMenu = React.forwardRef((props: SubMenuProps, ref) => {
       ),
     });
 
-  const caretIconStyles = cx(open ? openIconStyle : closedIconStyle, {
+  const openCloseiconStyle = open ? openIconStyle : closedIconStyle;
+
+  const caretIconStyles = cx(openCloseiconStyle, {
     [focusedIconStyle]: showFocus,
   });
 

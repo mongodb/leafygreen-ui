@@ -19,11 +19,6 @@ export const sizeMap: Record<Size, number> = {
   xlarge: 24,
 } as const;
 
-// We omit size here because we map string values for size to numbers in this component.
-export interface GlyphProps extends Omit<LGGlyph.ComponentProps, 'size'> {
-  size?: Size | number;
-}
-
 export function getGlyphTitle(name: string, title?: string | boolean | null) {
   if (title === false) {
     // If title is null, we unset the title entirely, otherwise we generate one.
@@ -81,10 +76,12 @@ export default function createGlyphComponent(
 
   GlyphComponent.propTypes = {
     fill: PropTypes.string,
-    size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    size: PropTypes.oneOfType([
+      PropTypes.oneOf(Object.values(Size)),
+      PropTypes.number,
+    ]),
     className: PropTypes.string,
   };
 
-  // @ts-ignore
   return GlyphComponent;
 }
