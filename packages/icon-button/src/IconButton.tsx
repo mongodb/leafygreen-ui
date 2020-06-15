@@ -3,6 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
 import { HTMLElementProps, Either, isComponentType } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
+import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 
 const Variant = {
   Light: 'light',
@@ -240,9 +241,9 @@ function usesLinkElement(
   return props.href != null;
 }
 
-function isComponentGlyph<T extends React.ReactElement>(
+function isComponentGlyph(
   child: React.ReactNode,
-): child is T {
+): child is React.ReactElement<LGGlyph.ComponentProps> {
   return (
     child != null &&
     typeof child === 'object' &&
