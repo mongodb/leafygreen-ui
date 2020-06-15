@@ -1,5 +1,11 @@
 # @leafygreen-ui/pipeline
 
+## 1.0.2
+
+### Patch Changes
+
+- e3d7bea: Tweak interface of `StageProps.intersectionNode`
+
 ## 1.0.1
 
 ### Patch Changes
