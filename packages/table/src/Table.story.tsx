@@ -4,13 +4,6 @@ import { boolean } from '@storybook/addon-knobs';
 import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
 import { defaultData, multiRowData } from './fixtures';
 
-interface DemoDataInterface {
-  name: string;
-  age: number;
-  color: string;
-  location: string;
-}
-
 storiesOf('Table', module)
   .add('Default', () => (
     <Table
