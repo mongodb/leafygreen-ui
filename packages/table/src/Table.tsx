@@ -30,19 +30,6 @@ export interface TableProps<Shape>
   children: (TableRowArgs: TableRowInterface<Shape>) => JSX.Element;
 }
 
-// type TableProps<Shape> = Shape extends infer U
-//   ? U
-//   : Shape &
-//       React.ComponentPropsWithoutRef<'table'> & {
-//         data: Array<Shape>;
-//         columns:
-//           | Array<ReactElement<HeaderRowProps>>
-//           | Array<ReactElement<TableHeaderProps> | string>
-//           | React.ReactFragment;
-//         selectable?: boolean;
-//         children: (TableRowArgs: TableRowInterface<Shape>) => JSX.Element;
-//       };
-
 export default function Table<Shape>({
   columns = [],
   data = [],

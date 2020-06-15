@@ -39,7 +39,7 @@ storiesOf('Table', module)
         'Location',
       ]}
     >
-      {({ datum }: { datum: DemoDataInterface; index: number }) => (
+      {({ datum }) => (
         <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
           <Cell>{datum.name}</Cell>
           <Cell>{datum.age}</Cell>
@@ -108,7 +108,7 @@ storiesOf('Table', module)
         </>
       }
     >
-      {({ datum }: { datum: DemoDataInterface; index: number }) => (
+      {({ datum }) => (
         <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
           <Cell>{datum.name}</Cell>
           <Cell>{datum.age}</Cell>
