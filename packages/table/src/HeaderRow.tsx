@@ -16,22 +16,12 @@ const innerDivStyles = css`
   justify-content: center;
 `;
 
-const stickyHeader = css`
-  position: sticky;
-`;
-
 export interface HeaderRowProps extends React.ComponentPropsWithoutRef<'tr'> {
-  sticky?: boolean;
   indeterminate?: boolean;
   selectable?: boolean;
 }
 
-function HeaderRow({
-  sticky = false,
-  children,
-  className,
-  ...rest
-}: HeaderRowProps) {
+function HeaderRow({ children, className, ...rest }: HeaderRowProps) {
   const {
     state: { selectable, headerCheckState, headerIndeterminate },
     dispatch,
@@ -61,11 +51,7 @@ function HeaderRow({
   });
 
   return (
-    <tr
-      {...rest}
-      className={cx({ [stickyHeader]: sticky }, className)}
-      data-testid="leafygreen-ui-header-row"
-    >
+    <tr {...rest} className={className} data-testid="leafygreen-ui-header-row">
       {selectable && !checkColSpan && (
         <th className={thStyles}>
           <div className={innerDivStyles}>

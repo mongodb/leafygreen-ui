@@ -22,7 +22,6 @@ storiesOf('Table', module)
           sortable
           label="Name"
           key="name"
-          stickyColumn
         />,
         <TableHeader
           dataType={DataType.NominalNumber}
@@ -76,7 +75,7 @@ storiesOf('Table', module)
           <TableHeader colSpan={3} label="Ice Cream Shoppe" sortable={false} />
         </HeaderRow>,
         <HeaderRow key="2">
-          <TableHeader label="Flavor" stickyColumn />
+          <TableHeader label="Flavor" />
           <TableHeader label="Price" />
         </HeaderRow>,
       ]}

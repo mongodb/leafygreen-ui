@@ -6,7 +6,6 @@ import { State, Types, TableProvider, reducer } from './table-context';
 import TableHead from './TableHead';
 
 // * Add nodeRef to Row
-// * Fix sticky
 // * fix row appearing as children of row -- not seeing this!
 
 const tableStyles = css`

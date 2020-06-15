@@ -41,10 +41,6 @@ const iconButtonMargin = css`
   margin-right: 4px;
 `;
 
-const stickyCell = css`
-  position: sticky;
-`;
-
 const disabledStyle = css`
   background-color: ${uiColors.gray.light2};
   color: ${uiColors.gray.base};
@@ -215,9 +211,6 @@ const Row = React.forwardRef(
     });
 
     const renderedChildren = React.Children.map(children, (child, index) => {
-      const isSticky = columnInfo?.[index]?.sticky;
-      const stickyStyle = { [stickyCell]: isSticky };
-
       if (isComponentType(child, 'CheckboxCell')) {
         if (disabled) {
           return React.cloneElement(child, {
@@ -248,7 +241,7 @@ const Row = React.forwardRef(
                   <span className={truncation}>{rowChildren}</span>
                 </>
               ),
-              className: cx(displayFlex, stickyStyle, className),
+              className: cx(displayFlex, className),
               key: children,
             });
           }
@@ -259,7 +252,6 @@ const Row = React.forwardRef(
 
           return React.cloneElement(child, {
             children: <span className={truncation}>{children}</span>,
-            className: cx(stickyStyle, className),
           });
         }
       }
@@ -270,8 +262,6 @@ const Row = React.forwardRef(
     const alignmentStyles = Object.entries(
       columnInfo,
     ).map(([key, { dataType }]) => styleColumn(key, dataType!));
-
-    console.log(ref, nodeRef, nestedRows.length);
 
     return (
       <>

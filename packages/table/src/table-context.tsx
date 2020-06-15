@@ -20,7 +20,6 @@ interface ActionPayload {
   [Types.ToggleHeaderCheckedState]: boolean | undefined;
   [Types.ToggleHeaderIndeterminate]: boolean;
   [Types.SetColumnInfo]: {
-    sticky?: boolean;
     dataType?: DataType;
     index: number;
   };
@@ -76,7 +75,7 @@ export interface State {
   sort?: Sort;
   data?: Array<any>;
   columnInfo?: {
-    [k in number]: { sticky?: boolean; dataType?: DataType };
+    [k in number]: { dataType?: DataType };
   };
   selectable?: boolean;
   headerCheckState?: boolean;
@@ -161,7 +160,6 @@ function reducer(state: State, action: Action): State {
         columnInfo: {
           ...state.columnInfo,
           [action.payload.index]: {
-            sticky: action.payload.sticky,
             dataType: action.payload.dataType,
           },
         },

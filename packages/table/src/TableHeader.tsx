@@ -14,13 +14,6 @@ const thStyle = css`
   border-style: solid;
 `;
 
-const stickyTh = css`
-  top: 0;
-  left: 0;
-  z-index: 2;
-  position: sticky;
-`;
-
 const flexDisplay = css`
   display: flex;
   justify-content: space-between;
@@ -38,7 +31,6 @@ interface TableHeaderInterface {
   onClick?: (colId: number, key: string) => void;
   index?: number;
   glyph?: 'SortAscending' | 'SortDescending' | 'Unsorted';
-  stickyColumn?: boolean;
   sortable?: boolean;
   accessor?: Function | string;
   dataType?: DataType;
@@ -53,7 +45,6 @@ export type TableHeaderProps = Omit<
 function TableHeader({
   glyph = 'Unsorted',
   sortable = false,
-  stickyColumn = false,
   label,
   onClick,
   index,
@@ -89,23 +80,14 @@ function TableHeader({
         type: Types.SetColumnInfo,
         payload: {
           index: selectable ? index + 2 : index + 1,
-          sticky: stickyColumn,
           dataType,
         },
       });
     }
-  }, [stickyColumn, dataType]);
+  }, [dataType]);
 
   return (
-    <th
-      {...rest}
-      className={cx(
-        thStyle,
-        commonCellStyles,
-        { [stickyTh]: stickyColumn },
-        className,
-      )}
-    >
+    <th {...rest} className={cx(thStyle, commonCellStyles, className)}>
       <div className={flexDisplay}>
         <span className={labelStyle}>{label}</span>
         {sortable && (
