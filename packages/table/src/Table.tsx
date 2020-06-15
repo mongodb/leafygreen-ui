@@ -5,7 +5,6 @@ import { TableHeaderProps } from './TableHeader';
 import { State, Types, TableProvider, reducer } from './table-context';
 import TableHead from './TableHead';
 
-// * Add nodeRef to Row
 // * fix row appearing as children of row -- not seeing this!
 
 const tableStyles = css`
@@ -13,28 +12,45 @@ const tableStyles = css`
   box-sizing: border-box;
 `;
 
-interface TableRowInterface {
-  datum: any;
+type DataShape<Shape> = Shape extends infer U ? U : Shape;
+
+interface TableRowInterface<Shape> {
+  datum: DataShape<Shape>;
   index?: number;
 }
-export interface TableProps extends React.ComponentPropsWithoutRef<'table'> {
-  data: Array<any>;
+
+export interface TableProps<Shape>
+  extends React.ComponentPropsWithoutRef<'table'> {
+  data: Array<DataShape<Shape>>;
   columns:
     | Array<ReactElement<HeaderRowProps>>
     | Array<ReactElement<TableHeaderProps> | string>
     | React.ReactFragment;
   selectable?: boolean;
-  children: (TableRowArgs: TableRowInterface) => JSX.Element;
+  children: (TableRowArgs: TableRowInterface<Shape>) => JSX.Element;
 }
 
-export default function Table({
+// type TableProps<Shape> = Shape extends infer U
+//   ? U
+//   : Shape &
+//       React.ComponentPropsWithoutRef<'table'> & {
+//         data: Array<Shape>;
+//         columns:
+//           | Array<ReactElement<HeaderRowProps>>
+//           | Array<ReactElement<TableHeaderProps> | string>
+//           | React.ReactFragment;
+//         selectable?: boolean;
+//         children: (TableRowArgs: TableRowInterface<Shape>) => JSX.Element;
+//       };
+
+export default function Table<Shape>({
   columns = [],
   data = [],
   selectable: selectableProp = false,
   children,
   className,
   ...rest
-}: TableProps) {
+}: TableProps<Shape>) {
   const initialState: State = {
     sort: {
       direction: 'asc',

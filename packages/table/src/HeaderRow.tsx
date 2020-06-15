@@ -1,7 +1,7 @@
 import React from 'react';
 import Checkbox from '@leafygreen-ui/checkbox';
 import { uiColors } from '@leafygreen-ui/palette';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import { useTableContext, Types } from './table-context';
 
 const thStyles = css`

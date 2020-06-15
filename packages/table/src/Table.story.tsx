@@ -72,11 +72,16 @@ storiesOf('Table', module)
       data={multiRowData}
       columns={[
         <HeaderRow key="1">
-          <TableHeader colSpan={3} label="Ice Cream Shoppe" sortable={false} />
+          <TableHeader
+            key="icecreamshoppe"
+            colSpan={3}
+            label="Ice Cream Shoppe"
+            sortable={false}
+          />
         </HeaderRow>,
         <HeaderRow key="2">
-          <TableHeader label="Flavor" />
-          <TableHeader label="Price" />
+          <TableHeader key="flavor" label="Flavor" />
+          <TableHeader key="price" label="Price" />
         </HeaderRow>,
       ]}
     >

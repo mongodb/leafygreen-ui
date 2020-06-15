@@ -210,7 +210,7 @@ const Row = React.forwardRef(
       }
     });
 
-    const renderedChildren = React.Children.map(children, (child, index) => {
+    const renderedChildren = React.Children.map(children, child => {
       if (isComponentType(child, 'CheckboxCell')) {
         if (disabled) {
           return React.cloneElement(child, {
@@ -291,9 +291,10 @@ const Row = React.forwardRef(
           {renderedChildren}
         </tr>
 
-        <Transition in={isExpanded} timeout={150} nodeRef={ref}>
+        <Transition in={isExpanded} timeout={150} nodeRef={nodeRef}>
           {(state: string) => {
             const props = {
+              ref: nodeRef,
               ['aria-expanded']: isExpanded ? 'true' : 'false',
               className: cx(transitionStyles.default, {
                 [transitionStyles.entered]: ['entering', 'entered'].includes(
