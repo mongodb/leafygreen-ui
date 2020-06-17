@@ -2,8 +2,9 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
-import Icon from '@leafygreen-ui/icon';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
+import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
@@ -308,6 +309,12 @@ const SubMenu: ExtendableBox<SubMenuProps> = React.forwardRef(
         </Box>
       );
 
+    const openCloseiconStyle = open ? openIconStyle : closedIconStyle;
+
+    const caretIconStyles = cx(openCloseiconStyle, {
+      [focusedIconStyle]: showFocus,
+    });
+
     return (
       <li role="none" className={liStyle}>
         {renderBox}
@@ -328,13 +335,13 @@ const SubMenu: ExtendableBox<SubMenuProps> = React.forwardRef(
             }
           }}
         >
-          <Icon
-            glyph={open ? 'CaretUp' : 'CaretDown'}
-            className={cx(open ? openIconStyle : closedIconStyle, {
-              [focusedIconStyle]: showFocus,
-            })}
-          />
+          {open ? (
+            <CaretUpIcon className={caretIconStyles} />
+          ) : (
+            <CaretDownIcon className={caretIconStyles} />
+          )}
         </IconButton>
+
         <Transition
           in={open}
           timeout={{

@@ -3,6 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
 import { HTMLElementProps, Either, isComponentType } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
+import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 
 const Variant = {
   Light: 'light',
@@ -240,6 +241,17 @@ function usesLinkElement(
   return props.href != null;
 }
 
+function isComponentGlyph(
+  child: React.ReactNode,
+): child is React.ReactElement<LGGlyph.ComponentProps> {
+  return (
+    child != null &&
+    typeof child === 'object' &&
+    'type' in child &&
+    (child.type as any).isGlyph === true
+  );
+}
+
 /**
  * # IconButton
  *
@@ -282,7 +294,14 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
   }
 
   const processedChildren = React.Children.map(children, child => {
-    if (isComponentType(child, 'Icon')) {
+    if (!child) {
+      return null;
+    }
+
+    // Check to see if child is a LeafyGreen Icon or a LeafyGreen Glyph
+    // If so, we unset the title and rely on the aria-label prop to give
+    // information about the rendered content.
+    if (isComponentType(child, 'Icon') || isComponentGlyph(child)) {
       const { size: childSize, title }: IconProps = child.props;
 
       const newChildProps: Partial<IconProps> = {
