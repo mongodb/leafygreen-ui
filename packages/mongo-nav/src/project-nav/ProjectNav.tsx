@@ -370,7 +370,7 @@ export default function ProjectNav({
         }
       >
         <MenuItem
-          href={projectNav.settings}
+          href={projectNav.settings!}
           data-testid="project-nav-settings"
           active={activeNav === ActiveNavElement.ProjectNavProjectSettings}
           onClick={onElementClick(ProjectNavProjectSettings, () =>
@@ -381,7 +381,7 @@ export default function ProjectNav({
         </MenuItem>
 
         <MenuItem
-          href={projectNav.support}
+          href={projectNav.support!}
           data-testid="project-nav-support"
           active={activeNav === ActiveNavElement.ProjectNavProjectSupport}
           onClick={onElementClick(ProjectNavProjectSupport, () =>
@@ -391,7 +391,7 @@ export default function ProjectNav({
           Project Support
         </MenuItem>
         <MenuItem
-          href={projectNav.integrations}
+          href={projectNav.integrations!}
           data-testid="project-nav-integrations"
           active={activeNav === ActiveNavElement.ProjectNavProjectIntegrations}
           onClick={onElementClick(ProjectNavProjectIntegrations, () =>

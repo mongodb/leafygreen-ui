@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, cleanup } from '@testing-library/react';
-import Box from '.';
+import Box, { ExtendableBox, BoxProps } from '.';
 
 interface LinkWrapperProps {
   href?: string;
@@ -15,6 +15,13 @@ const TestComponent = (props: { test: number }) => {
 
 const TestAnchorLike = (props: React.AnchorHTMLAttributes<any>) => {
   return <a {...props} />; //eslint-disable-line jsx-a11y/anchor-has-content
+};
+
+const TestExtendableBox: ExtendableBox<{ test: number }> = (
+  props: BoxProps & { test: number },
+) => {
+  // @ts-ignore
+  return <Box {...props} />;
 };
 
 describe('packages/box', () => {
@@ -164,6 +171,40 @@ describe('packages/box', () => {
     test('expects required props to exist when as is a React Component with required props', () => {
       // @ts-expect-error
       <Box as={TestComponent} />;
+    });
+  });
+
+  describe('packages/box/ExtendableBox', () => {
+    describe('the types work as expected', () => {
+      // eslint-disable-next-line jest/expect-expect
+      test('does not allow specifying "target", without "as" or "href"', () => {
+        // @ts-expect-error
+        <TestExtendableBox target="_blank" />;
+      });
+
+      // eslint-disable-next-line jest/expect-expect
+      test('does not allow specifying "href", when "as" is set to "div" ', () => {
+        // @ts-expect-error
+        <TestExtendableBox as="div" href="string" />;
+      });
+
+      // eslint-disable-next-line jest/expect-expect
+      test('does not allow props that do not exist on the "as" element', () => {
+        // @ts-expect-error
+        <TestExtendableBox as="div" x="" />;
+      });
+
+      // eslint-disable-next-line jest/expect-expect
+      test('expects "href" to be a string when as is an anchor component wrapper', () => {
+        // @ts-expect-error
+        <TestExtendableBox as={TestAnchorLike} href={1} />;
+      });
+
+      // eslint-disable-next-line jest/expect-expect
+      test('expects required props to exist when as is a React Component with required props', () => {
+        // @ts-expect-error
+        <TestExtendableBox as={TestComponent} />;
+      });
     });
   });
 });

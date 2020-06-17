@@ -178,7 +178,6 @@ const MenuItem: ExtendableBox<BaseMenuItemProps> = React.forwardRef(
       role: 'menuitem',
       tabIndex: disabled ? -1 : undefined,
       // only add a disabled prop if not an anchor
-
       ...(rest.href !== undefined && { disabled }),
       'aria-disabled': disabled,
     };
@@ -256,8 +255,3 @@ MenuItem.propTypes = {
 };
 
 export default MenuItem;
-
-{
-  /* <MenuItem target="_blank" />;
-<MenuItem href="target" target="target" />; */
-}

@@ -306,6 +306,7 @@ function OrgNav({
                 usePortal={false}
               >
                 <MenuItem
+                  as={orgNav.accessManager ? 'a' : 'button'}
                   href={orgNav.accessManager}
                   data-testid="org-nav-dropdown-org-access-manager"
                   description={current.orgName}
@@ -320,6 +321,11 @@ function OrgNav({
                 </MenuItem>
 
                 <MenuItem
+                  as={
+                    currentProjectName && urls.projectNav.accessManager
+                      ? 'a'
+                      : 'button'
+                  }
                   href={currentProjectName && urls.projectNav.accessManager}
                   data-testid="org-nav-dropdown-project-access-manager"
                   size="large"

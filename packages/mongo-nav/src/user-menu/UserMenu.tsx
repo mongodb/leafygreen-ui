@@ -316,6 +316,7 @@ function UserMenu({
 
           <FocusableMenuItem>
             <Button
+              as={isAccount ? 'button' : 'a'}
               href={isAccount ? undefined : userMenu.account?.homepage}
               disabled={isAccount}
               data-testid="user-menu-account-button"
@@ -341,6 +342,7 @@ function UserMenu({
             })}
           >
             <MenuItem
+              as={userMenu.cloud?.userPreferences ? 'a' : 'button'}
               href={userMenu.cloud?.userPreferences}
               active={
                 activeNav === ActiveNavElement.UserMenuCloudUserPreferences
@@ -351,6 +353,7 @@ function UserMenu({
               User Preferences
             </MenuItem>
             <MenuItem
+              as={userMenu.cloud?.invitations ? 'a' : 'button'}
               href={userMenu.cloud?.invitations}
               active={activeNav === ActiveNavElement.UserMenuCloudInvitations}
               data-testid="user-menuitem-cloud-invitations"
@@ -364,6 +367,7 @@ function UserMenu({
               </span>
             </MenuItem>
             <MenuItem
+              as={userMenu.cloud?.organizations ? 'a' : 'button'}
               href={userMenu.cloud?.organizations}
               active={activeNav === ActiveNavElement.UserMenuCloudOrganizations}
               data-testid="user-menuitem-cloud-organizations"
@@ -372,6 +376,7 @@ function UserMenu({
               Organizations
             </MenuItem>
             <MenuItem
+              as={userMenu.cloud?.mfa ? 'a' : 'button'}
               href={userMenu.cloud?.mfa}
               active={activeNav === ActiveNavElement.UserMenuCloudMFA}
               data-testid="user-menuitem-cloud-mfa"
@@ -383,9 +388,9 @@ function UserMenu({
         ) : (
           <MenuItem
             {...menuItemContainer.prop}
+            href={hosts.cloud}
             size="large"
             glyph={<CloudIcon />}
-            href={hosts.cloud}
             description={<Description isActive={false} product="cloud" />}
           >
             Cloud
@@ -408,6 +413,7 @@ function UserMenu({
           }
         >
           <MenuItem
+            as={userMenu.university?.universityPreferences ? 'a' : 'button'}
             href={userMenu.university?.universityPreferences}
             data-testid="user-menuitem-university-preferences"
           >
@@ -429,6 +435,7 @@ function UserMenu({
           })}
         >
           <MenuItem
+            as={userMenu.support?.userPreferences ? 'a' : 'button'}
             href={userMenu.support?.userPreferences}
             data-testid="user-menuitem-support-user-preferences"
           >
@@ -453,6 +460,7 @@ function UserMenu({
         <MenuItem
           onClick={onLogout}
           href={userMenu.logout}
+          as={userMenu.logout ? 'a' : 'button'}
           size="large"
           data-testid="user-menuitem-logout"
         >

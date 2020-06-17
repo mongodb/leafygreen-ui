@@ -295,6 +295,7 @@ interface BaseButtonProps {
   glyph?: React.ReactElement;
   className?: string;
   children: React.ReactNode;
+  href?: string;
 }
 
 const Button: ExtendableBox<BaseButtonProps> = React.forwardRef(
@@ -307,7 +308,7 @@ const Button: ExtendableBox<BaseButtonProps> = React.forwardRef(
       size = Size.Normal,
       glyph,
       ...rest
-    }: BaseButtonProps & BoxProps,
+    }: BaseButtonProps,
     ref: React.Ref<any>,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -323,7 +324,6 @@ const Button: ExtendableBox<BaseButtonProps> = React.forwardRef(
         className,
       ),
       // only add a disabled prop if not an anchor
-      // @ts-ignore
       ...(rest.href !== undefined && { disabled }),
       'aria-disabled': disabled,
     };
@@ -355,12 +355,10 @@ const Button: ExtendableBox<BaseButtonProps> = React.forwardRef(
       </span>
     );
 
-    // @ts-ignore
     if (rest.href !== undefined) {
       return (
         // we give button a default "as" value based on the `href` prop, if a custom
         // "as" prop is supplied, it will overwrite this value through {...rest}
-        // @ts-expect-error
         <Box as="a" {...commonProps} {...rest}>
           {content}
         </Box>
@@ -370,7 +368,6 @@ const Button: ExtendableBox<BaseButtonProps> = React.forwardRef(
     return (
       // we give button a default "as" value based on the `href` prop, if a custom
       // "as" prop is supplied, it will overwrite this value through {...rest}
-      // @ts-expect-error
       <Box as="button" type="button" {...commonProps} {...rest}>
         {content}
       </Box>

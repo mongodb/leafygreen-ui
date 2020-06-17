@@ -87,7 +87,7 @@ export default function OnPremUserMenu({
 
       <Menu open={open} setOpen={setOpen} usePortal={false}>
         <MenuItem
-          href={urls.onPrem.profile}
+          href={urls.onPrem.profile as string}
           active={activeNav === ActiveNavElement.UserMenuOnPremProfile}
           data-testid="om-user-menuitem-profile"
           onClick={() => setOpen(false)}
@@ -97,7 +97,7 @@ export default function OnPremUserMenu({
 
         {mfa && (
           <MenuItem
-            href={urls.onPrem.mfa}
+            href={urls.onPrem.mfa!}
             active={activeNav === ActiveNavElement.UserMenuOnPremTwoFactorAuth}
             data-testid="om-user-menuitem-mfa"
             onClick={() => setOpen(false)}
@@ -107,7 +107,7 @@ export default function OnPremUserMenu({
         )}
 
         <MenuItem
-          href={urls.onPrem.personalization}
+          href={urls.onPrem.personalization!}
           active={activeNav === ActiveNavElement.UserMenuOnPremPersonalization}
           data-testid="om-user-menuitem-personalization"
           onClick={() => setOpen(false)}
@@ -116,7 +116,7 @@ export default function OnPremUserMenu({
         </MenuItem>
 
         <MenuItem
-          href={urls.onPrem.invitations}
+          href={urls.onPrem.invitations!}
           active={activeNav === ActiveNavElement.UserMenuOnPremInvitations}
           data-testid="om-user-menuitem-invitations"
           onClick={() => setOpen(false)}
@@ -125,7 +125,7 @@ export default function OnPremUserMenu({
         </MenuItem>
 
         <MenuItem
-          href={urls.onPrem.organizations}
+          href={urls.onPrem.organizations!}
           active={activeNav === ActiveNavElement.UserMenuOnPremOrganizations}
           data-testid="om-user-menuitem-organizations"
           onClick={() => setOpen(false)}
@@ -134,7 +134,7 @@ export default function OnPremUserMenu({
         </MenuItem>
 
         <MenuItem
-          href={urls.onPrem.publicApiAccess}
+          href={urls.onPrem.publicApiAccess!}
           active={activeNav === ActiveNavElement.UserMenuOnPremPublicApiAccess}
           data-testid="om-user-menuitem-public-api-access"
           onClick={() => setOpen(false)}
@@ -143,7 +143,7 @@ export default function OnPremUserMenu({
         </MenuItem>
 
         <MenuItem
-          href={urls.onPrem.featureRequest}
+          href={urls.onPrem.featureRequest!}
           data-testid="om-user-menuitem-feature-request"
           onClick={() => setOpen(false)}
         >

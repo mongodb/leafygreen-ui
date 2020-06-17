@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
-import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
+import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
@@ -201,6 +201,8 @@ interface SubMenuProps {
   onClick?: React.MouseEventHandler;
 
   onExited?: ExitHandler;
+
+  href?: string;
 }
 
 const SubMenu: ExtendableBox<SubMenuProps> = React.forwardRef(
@@ -218,7 +220,7 @@ const SubMenu: ExtendableBox<SubMenuProps> = React.forwardRef(
       active = false,
       disabled = false,
       ...rest
-    }: SubMenuProps & BoxProps,
+    }: SubMenuProps,
     ref: React.Ref<any>,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -296,14 +298,11 @@ const SubMenu: ExtendableBox<SubMenuProps> = React.forwardRef(
     );
 
     const renderBox =
-      // @ts-ignore
       rest.href !== undefined ? (
-        // @ts-expect-error
         <Box as="a" {...sharedBoxProps}>
           {boxContent}
         </Box>
       ) : (
-        // @ts-expect-error
         <Box as="button" {...sharedBoxProps}>
           {boxContent}
         </Box>
