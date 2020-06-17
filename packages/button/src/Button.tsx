@@ -4,7 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { transparentize } from 'polished';
-import Box, { BoxProps, OverrideComponentCast } from '@leafygreen-ui/box';
+import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 
 export const Variant = {
   Default: 'default',
@@ -293,13 +293,12 @@ interface BaseButtonProps {
   variant?: Variant;
   size?: Size;
   glyph?: React.ReactElement;
+  className?: string;
+  children: React.ReactNode;
 }
 
-const Button: OverrideComponentCast<BaseButtonProps> = React.forwardRef(
-  <
-    C extends React.ElementType = 'button',
-    H extends string | undefined = undefined
-  >(
+const Button: ExtendableBox<BaseButtonProps> = React.forwardRef(
+  (
     {
       className,
       children,
@@ -308,7 +307,7 @@ const Button: OverrideComponentCast<BaseButtonProps> = React.forwardRef(
       size = Size.Normal,
       glyph,
       ...rest
-    }: BoxProps<C, H, BaseButtonProps>,
+    }: BaseButtonProps & BoxProps,
     ref: React.Ref<any>,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -324,7 +323,8 @@ const Button: OverrideComponentCast<BaseButtonProps> = React.forwardRef(
         className,
       ),
       // only add a disabled prop if not an anchor
-      ...(!rest.href && { disabled }),
+      // @ts-ignore
+      ...(rest.href !== undefined && { disabled }),
       'aria-disabled': disabled,
     };
 
@@ -355,11 +355,13 @@ const Button: OverrideComponentCast<BaseButtonProps> = React.forwardRef(
       </span>
     );
 
-    if (rest.href) {
+    // @ts-ignore
+    if (rest.href !== undefined) {
       return (
         // we give button a default "as" value based on the `href` prop, if a custom
         // "as" prop is supplied, it will overwrite this value through {...rest}
-        <Box href={rest.href} {...commonProps} {...rest}>
+        // @ts-expect-error
+        <Box as="a" {...commonProps} {...rest}>
           {content}
         </Box>
       );
@@ -368,6 +370,7 @@ const Button: OverrideComponentCast<BaseButtonProps> = React.forwardRef(
     return (
       // we give button a default "as" value based on the `href` prop, if a custom
       // "as" prop is supplied, it will overwrite this value through {...rest}
+      // @ts-expect-error
       <Box as="button" type="button" {...commonProps} {...rest}>
         {content}
       </Box>

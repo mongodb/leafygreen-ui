@@ -1,13 +1,21 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, cleanup } from '@testing-library/react';
-import Box, { BoxProps } from '.';
+import Box from '.';
 
 interface LinkWrapperProps {
   href?: string;
   target?: string;
   children?: React.ReactNode;
 }
+
+const TestComponent = (props: { test: number }) => {
+  return <div>{props.test}</div>;
+};
+
+const TestAnchorLike = (props: React.AnchorHTMLAttributes<any>) => {
+  return <a {...props} />; //eslint-disable-line jsx-a11y/anchor-has-content
+};
 
 describe('packages/box', () => {
   const linkWrapperFn = jest.fn();
@@ -24,10 +32,7 @@ describe('packages/box', () => {
   }
 
   const sharedProps = { name: 'testName' };
-  const anchorProps: BoxProps<
-    React.ElementType<'a'>,
-    'https://cloud.mongodb.com'
-  > = {
+  const anchorProps: React.ComponentPropsWithRef<'a'> & { as: 'a' } = {
     as: 'a',
     href: 'https://cloud.mongodb.com',
     target: '_blank',
@@ -138,9 +143,27 @@ describe('packages/box', () => {
     });
 
     // eslint-disable-next-line jest/expect-expect
-    test('does not allow specifying "target", when "as" is set to "div" ', () => {
+    test('does not allow specifying "href", when "as" is set to "div" ', () => {
       // @ts-expect-error
-      <Box target="_blank" as="div" />;
+      <Box as="div" href="string" />;
+    });
+
+    // eslint-disable-next-line jest/expect-expect
+    test('does not allow props that do not exist on the "as" element', () => {
+      // @ts-expect-error
+      <Box as="div" x="" />;
+    });
+
+    // eslint-disable-next-line jest/expect-expect
+    test('expects "href" to be a string when as is an anchor component wrapper', () => {
+      // @ts-expect-error
+      <Box as={TestAnchorLike} href={1} />;
+    });
+
+    // eslint-disable-next-line jest/expect-expect
+    test('expects required props to exist when as is a React Component with required props', () => {
+      // @ts-expect-error
+      <Box as={TestComponent} />;
     });
   });
 });

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
-import Box, { BoxProps, OverrideComponentCast } from '@leafygreen-ui/box';
+import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
@@ -182,32 +182,43 @@ interface SubMenuProps {
    * Determines if `<SubMenu />` item appears active
    */
   active?: boolean;
+
   /**
    * Slot to pass in an Icon rendered to the left of `SubMenu` text.
    */
   glyph?: React.ReactElement;
 
+  /**
+   * Main text rendered in `SubMenu`.
+   */
+  title?: string;
+
+  /**
+   * Content rendered inside of `SubMenu`.
+   */
+  children?: React.ReactNode;
+
+  onClick?: React.MouseEventHandler;
+
   onExited?: ExitHandler;
 }
 
-const SubMenu: OverrideComponentCast<SubMenuProps> = React.forwardRef(
-  <C extends React.ElementType, H extends string | undefined = undefined>(
+const SubMenu: ExtendableBox<SubMenuProps> = React.forwardRef(
+  (
     {
       title,
-      description,
       children,
-      setOpen,
-      onKeyDown,
-      className,
       onClick,
+      description,
+      setOpen,
+      className,
       glyph,
       onExited = () => {},
       open = false,
       active = false,
       disabled = false,
-      href,
       ...rest
-    }: BoxProps<C, H, SubMenuProps>,
+    }: SubMenuProps & BoxProps,
     ref: React.Ref<any>,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -243,7 +254,6 @@ const SubMenu: OverrideComponentCast<SubMenuProps> = React.forwardRef(
     const sharedBoxProps = {
       ...subMenuContainer.prop,
       ...rest,
-      onKeyDown,
       ref,
       onClick: onRootClick,
       role: 'menuitem',
@@ -285,15 +295,19 @@ const SubMenu: OverrideComponentCast<SubMenuProps> = React.forwardRef(
       </>
     );
 
-    const renderBox = href ? (
-      <Box as="a" href={href} {...sharedBoxProps}>
-        {boxContent}
-      </Box>
-    ) : (
-      <Box as="button" {...sharedBoxProps}>
-        {boxContent}
-      </Box>
-    );
+    const renderBox =
+      // @ts-ignore
+      rest.href !== undefined ? (
+        // @ts-expect-error
+        <Box as="a" {...sharedBoxProps}>
+          {boxContent}
+        </Box>
+      ) : (
+        // @ts-expect-error
+        <Box as="button" {...sharedBoxProps}>
+          {boxContent}
+        </Box>
+      );
 
     return (
       <li role="none" className={liStyle}>

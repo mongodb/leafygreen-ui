@@ -1,3 +1,2 @@
-import Box, { BoxProps, OverrideComponentCast } from './Box';
-export { BoxProps, OverrideComponentCast };
-export default Box;
+export { BoxProps, ExtendableBox } from './Box';
+export { default } from './Box';

@@ -4,7 +4,7 @@ import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import Box, { BoxProps, OverrideComponentCast } from '@leafygreen-ui/box';
+import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import {
   menuItemContainerStyle,
   activeMenuItemContainerStyle,
@@ -117,14 +117,22 @@ interface BaseMenuItemProps {
    * Size of the MenuItem component, can be `default` or `large`
    */
   size?: Size;
+
+  /**
+   * className applied to  `li` element
+   */
+  className?: string;
+
+  /**
+   * Content to appear inside of `<MenuItem />` component
+   */
+  children?: React.ReactNode;
+
+  href?: string;
 }
 
-// eslint-disable-next-line
-const MenuItem: OverrideComponentCast<BaseMenuItemProps> = React.forwardRef(
-  <
-    C extends React.ElementType = 'button',
-    H extends string | undefined = undefined
-  >(
+const MenuItem: ExtendableBox<BaseMenuItemProps> = React.forwardRef(
+  (
     {
       disabled = false,
       active = false,
@@ -134,7 +142,7 @@ const MenuItem: OverrideComponentCast<BaseMenuItemProps> = React.forwardRef(
       description,
       glyph,
       ...rest
-    }: BoxProps<C, H, BaseMenuItemProps>,
+    }: BaseMenuItemProps,
     ref: React.Ref<any>,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -170,7 +178,8 @@ const MenuItem: OverrideComponentCast<BaseMenuItemProps> = React.forwardRef(
       role: 'menuitem',
       tabIndex: disabled ? -1 : undefined,
       // only add a disabled prop if not an anchor
-      ...(!rest.href && { disabled }),
+
+      ...(rest.href !== undefined && { disabled }),
       'aria-disabled': disabled,
     };
 
@@ -211,7 +220,7 @@ const MenuItem: OverrideComponentCast<BaseMenuItemProps> = React.forwardRef(
       </>
     );
 
-    if (rest.href) {
+    if (rest.href !== undefined) {
       return (
         <li>
           <Box as="a" {...anchorProps} {...commonProps}>
@@ -247,3 +256,8 @@ MenuItem.propTypes = {
 };
 
 export default MenuItem;
+
+{
+  /* <MenuItem target="_blank" />;
+<MenuItem href="target" target="target" />; */
+}

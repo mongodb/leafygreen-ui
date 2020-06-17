@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import Box, { OverrideComponentCast } from '@leafygreen-ui/box';
+import Box, { ExtendableBox } from '@leafygreen-ui/box';
 
 const containerStyle = css`
   background-color: white;
@@ -17,16 +17,18 @@ const containerStyle = css`
   }
 `;
 
-const Card: OverrideComponentCast<{
+interface CardProps {
   className?: string;
-}> = ({ className, ...rest }: { className?: string }) => {
+}
+
+const Card: ExtendableBox<CardProps> = ({ className, ...rest }: CardProps) => {
   return <Box className={cx(containerStyle, className)} {...rest} />;
 };
 
-// @ts-ignore Property 'displayName' does not exist on type 'OverrideComponentCast<{ className?: string | undefined; }>'.ts(2339)
+// @ts-ignore
 Card.displayName = 'Card';
 
-// @ts-ignore Property 'propTypes' does not exist on type 'OverrideComponentCast<{ className?: string | undefined; }>'.ts(2339)
+// @ts-ignore
 Card.propTypes = {
   className: PropTypes.string,
 };

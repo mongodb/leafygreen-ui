@@ -1,5 +1,5 @@
 import React from 'react';
-import Box, { OverrideComponentCast } from '@leafygreen-ui/box';
+import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -130,7 +130,7 @@ const overline = css`
   letter-spacing: 0.4px;
 `;
 
-const Overline: OverrideComponentCast<{
+const Overline: ExtendableBox<{
   className?: string;
 }> = ({ className, ...rest }: { className?: string }) => {
   return <Box className={cx(sharedStyles, overline, className)} {...rest} />;

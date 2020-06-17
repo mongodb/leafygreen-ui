@@ -1,60 +1,62 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-type InferComponentType<Component, Href> = Href extends string
-  ? 'a' | Component
-  : Component | React.ElementType;
+type BoxDivDefault = {
+  as?: never;
+  href?: never;
+} & React.ComponentPropsWithRef<'div'>;
 
-export type BoxProps<
-  Component extends React.ElementType,
-  Href extends string | undefined,
-  Props extends Record<string, any> = {}
-> = Props & {
-  href?: Href;
-  as?: InferComponentType<Component, Href>;
-} & Omit<
-    React.ComponentPropsWithRef<
-      Component extends React.ComponentType ? any : Component
-    >,
-    'href' | 'as'
-  >;
+type BoxAnchorDefault = {
+  as?: never;
+  href: string;
+} & React.ComponentPropsWithRef<'a'>;
 
-type BoxType = <
-  Component extends React.ElementType = 'div',
-  Href extends string | undefined = undefined
->(
-  props: BoxProps<Component, Href>,
-) => JSX.Element | null;
+type BoxIntrinsic<
+  TElement extends keyof JSX.IntrinsicElements = keyof JSX.IntrinsicElements
+> = {
+  as: TElement;
+} & React.ComponentPropsWithRef<TElement>;
 
-// eslint-disable-next-line
-const Box = React.forwardRef(
-  <
-    C extends React.ElementType = 'div',
-    H extends string | undefined = undefined
-  >(
-    { as, href, ...rest }: BoxProps<C, H>,
-    ref: React.Ref<any>,
-  ) => {
-    const Component = as ? as : href ? 'a' : 'div';
+type BoxComponent<TProps = {}> = {
+  as: React.ComponentType<TProps>;
+} & React.PropsWithRef<TProps>;
 
-    return <Component href={href} ref={ref} {...rest} />;
-  },
-) as BoxType;
+export type BoxProps =
+  | BoxAnchorDefault
+  | BoxIntrinsic
+  | BoxComponent
+  | BoxDivDefault;
 
-// @ts-ignore Property 'displayName' does not exist on type 'BoxType'.
-Box.displayName = 'Box';
+function InlineBox(props: BoxDivDefault): JSX.Element;
+function InlineBox(props: BoxAnchorDefault): JSX.Element;
+function InlineBox<TElement extends keyof JSX.IntrinsicElements>(
+  props: BoxIntrinsic<TElement>,
+): JSX.Element;
+function InlineBox<TProps>(props: BoxComponent<TProps>): JSX.Element;
 
-// @ts-ignore Property 'propTypes' does not exist on type 'BoxType'
-Box.propTypes = {
-  as: PropTypes.elementType,
-  href: PropTypes.string,
-};
+function InlineBox(props: BoxProps) {
+  if (props.as !== undefined) {
+    const { as: Component, ...rest } = props;
+    // @ts-expect-error
+    return <Component {...rest} />;
+  }
+
+  if (props.href !== undefined) {
+    return <a {...props} />; //eslint-disable-line jsx-a11y/anchor-has-content
+  }
+
+  return <div {...props} />;
+}
+
+// @ts-expect-error
+const Box = React.forwardRef(Box) as typeof InlineBox;
 
 export default Box;
 
-export type OverrideComponentCast<P> = <
-  C extends React.ElementType = 'div',
-  H extends string | undefined = undefined
->(
-  props: BoxProps<C, H, P>,
-) => JSX.Element | null;
+export interface ExtendableBox<Props> {
+  (props: BoxDivDefault & Props): JSX.Element | null;
+  (props: BoxAnchorDefault & Props): JSX.Element | null;
+  <TElement extends keyof JSX.IntrinsicElements>(
+    props: BoxIntrinsic<TElement> & Props,
+  ): JSX.Element | null;
+  <TProps>(props: BoxComponent<TProps> & Props): JSX.Element | null;
+}
