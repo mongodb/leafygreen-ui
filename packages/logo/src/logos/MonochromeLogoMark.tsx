@@ -1,5 +1,5 @@
 import React from 'react';
-import { SVGLogoProps } from '../types';
+import { SVGLogoProps } from '../utils';
 
 export default function MonochromeLogoMark({
   fill,

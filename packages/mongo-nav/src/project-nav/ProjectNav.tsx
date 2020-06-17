@@ -236,18 +236,6 @@ const tooltipStyles = css`
   text-align: center;
 `;
 
-export function displayProductName(today = new Date(Date.now())) {
-  const mdbLiveDate = new Date('June 8, 2020 0:00:00');
-
-  if (today < mdbLiveDate) {
-    return 'Stitch';
-  }
-
-  return 'Realm';
-}
-
-const secondTabName = displayProductName();
-
 type ProjectNavProps = Pick<
   MongoNavInterface,
   | 'activeProduct'
@@ -462,7 +450,7 @@ export default function ProjectNav({
                     className={iconStyle}
                   />
                 )}
-                {secondTabName}
+                Realm
               </a>
             </li>
 
