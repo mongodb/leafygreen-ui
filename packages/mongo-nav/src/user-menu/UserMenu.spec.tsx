@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import { urlFixtures, hostDefaults } from '../data';
 import UserMenu from '.';
 
@@ -54,26 +54,20 @@ describe('packages/mongo-nav/user-menu', () => {
   });
 
   test('renders university MenuItems when university dropdown is clicked and closes other SubMenus', () => {
-    const { getByTestId } = renderUserMenu({
+    const { getByTestId, getAllByRole, findByTestId } = renderUserMenu({
       activePlatform: 'cloud',
     });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
 
-    const university = document.querySelectorAll(
-      '[data-leafygreen-ui="sub-menu-container"]',
-    )[1];
+    const universityTrigger = getAllByRole('button', {
+      name: 'Open Sub-menu',
+    })[1];
+    fireEvent.click(universityTrigger);
 
-    const universityArrowButton = university?.parentNode?.querySelector(
-      'button',
-    );
+    const universityItem = findByTestId('user-menuitem-university-preferences');
 
-    fireEvent.click(universityArrowButton as HTMLElement);
-
-    const universityMenuItem = getByTestId(
-      'user-menuitem-university-preferences',
-    );
-    expect(universityMenuItem).toBeInTheDocument();
+    expect(universityItem).toBeInTheDocument();
   });
 
   test('atlas MenuItem links to cloud.mongodb.com', () => {

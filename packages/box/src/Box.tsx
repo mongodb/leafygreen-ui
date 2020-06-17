@@ -26,29 +26,37 @@ export type BoxProps =
   | BoxComponent
   | BoxDivDefault;
 
-function InlineBox(props: BoxDivDefault): JSX.Element;
-function InlineBox(props: BoxAnchorDefault): JSX.Element;
+function InlineBox(props: BoxDivDefault, ref: React.Ref<any>): JSX.Element;
+function InlineBox(props: BoxAnchorDefault, ref: React.Ref<any>): JSX.Element;
 function InlineBox<TElement extends keyof JSX.IntrinsicElements>(
   props: BoxIntrinsic<TElement>,
+  ref: React.Ref<any>,
 ): JSX.Element;
-function InlineBox<TProps>(props: BoxComponent<TProps>): JSX.Element;
+function InlineBox<TProps>(
+  props: BoxComponent<TProps>,
+  ref: React.Ref<any>,
+): JSX.Element;
 
-function InlineBox(props: BoxProps) {
+function InlineBox(props: BoxProps, ref: React.Ref<any>) {
   if (props.as !== undefined) {
     const { as: Component, ...rest } = props;
     // @ts-expect-error
-    return <Component {...rest} />;
+    return <Component {...rest} ref={ref} />;
   }
 
   if (props.href !== undefined) {
-    return <a {...props} />; //eslint-disable-line jsx-a11y/anchor-has-content
+    return <a {...props} ref={ref} />; //eslint-disable-line jsx-a11y/anchor-has-content
   }
 
-  return <div {...props} />;
+  return <div {...props} ref={ref} />;
 }
 
+InlineBox.displayName = 'InlineBox';
+
 // @ts-expect-error
-const Box = React.forwardRef(Box) as typeof InlineBox;
+const Box = React.forwardRef(InlineBox) as typeof InlineBox;
+
+Box.displayName = 'Box';
 
 export default Box;
 

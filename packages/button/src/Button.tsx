@@ -324,7 +324,7 @@ const Button: ExtendableBox<BaseButtonProps> = React.forwardRef(
         className,
       ),
       // only add a disabled prop if not an anchor
-      ...(rest.href !== undefined && { disabled }),
+      ...(rest.href === undefined && { disabled }),
       'aria-disabled': disabled,
     };
 
