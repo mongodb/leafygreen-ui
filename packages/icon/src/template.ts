@@ -102,6 +102,8 @@ module.exports = function template(
 
     ${componentName}.displayName = 'Glyph' + '${componentName}';
 
+    ${componentName}.isGlyph = 'true';
+
     ${componentName}.propTypes = {
         fill: PropTypes.string,
         size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

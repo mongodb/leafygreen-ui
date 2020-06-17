@@ -22,10 +22,10 @@ type GlyphObject = Record<string, LGGlyph.Component>;
 export default function createIconComponent<
   G extends GlyphObject = GlyphObject
 >(glyphs: G) {
-  const Icon = ({ glyph, size = Size.Default, ...rest }: IconProps) => {
+  const Icon = ({ glyph, ...rest }: IconProps) => {
     const SVGComponent = glyphs[glyph];
 
-    return <SVGComponent {...rest} size={size} />;
+    return <SVGComponent {...rest} />;
   };
 
   Icon.displayName = 'Icon';

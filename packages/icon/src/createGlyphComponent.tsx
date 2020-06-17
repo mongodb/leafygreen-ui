@@ -10,9 +10,9 @@ export const Size = {
   XLarge: 'xlarge',
 } as const;
 
-export type Size = typeof Size[keyof typeof Size];
+type Size = typeof Size[keyof typeof Size];
 
-export const sizeMap: Record<Size, number> = {
+const sizeMap: Record<Size, number> = {
   small: 14,
   default: 16,
   large: 20,
@@ -73,6 +73,8 @@ export default function createGlyphComponent(
   }
 
   GlyphComponent.displayName = `Glyph${glyphName}`;
+
+  GlyphComponent.isGlyph = 'true';
 
   GlyphComponent.propTypes = {
     fill: PropTypes.string,
