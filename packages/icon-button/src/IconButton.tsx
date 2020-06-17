@@ -248,7 +248,7 @@ function isComponentGlyph(
     child != null &&
     typeof child === 'object' &&
     'type' in child &&
-    (child.type as any).isGlyph === 'true'
+    (child.type as any).isGlyph === true
   );
 }
 

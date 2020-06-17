@@ -100,9 +100,9 @@ module.exports = function template(
       return ${jsx};
     }
 
-    ${componentName}.displayName = 'Glyph' + '${componentName}';
+    ${componentName}.displayName = '${componentName}';
 
-    ${componentName}.isGlyph = 'true';
+    ${componentName}.isGlyph = true;
 
     ${componentName}.propTypes = {
         fill: PropTypes.string,

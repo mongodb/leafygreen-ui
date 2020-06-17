@@ -79,5 +79,3 @@ const myGlyphs = {
 
 const MyIconComponent = createIconComponent(myGlyphs);
 ```
-
-**Note:** All LeafyGreen Glyph components have a displayName prefixed with `Glyph`.
