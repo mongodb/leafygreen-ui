@@ -72,7 +72,7 @@ export default function createGlyphComponent(
     );
   }
 
-  GlyphComponent.displayName = `Glyph${glyphName}`;
+  GlyphComponent.displayName = glyphName;
 
   GlyphComponent.isGlyph = true;
 
