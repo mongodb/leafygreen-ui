@@ -4,7 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { transparentize } from 'polished';
-import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
+import Box, { ExtendableBox } from '@leafygreen-ui/box';
 
 export const Variant = {
   Default: 'default',
