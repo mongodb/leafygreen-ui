@@ -5,7 +5,6 @@ import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import InviteUserIcon from '@leafygreen-ui/icon/dist/InviteUser';
 import ActivityFeedIcon from '@leafygreen-ui/icon/dist/ActivityFeed';
 import BellIcon from '@leafygreen-ui/icon/dist/Bell';
-import { Size } from '@leafygreen-ui/icon';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -497,7 +496,7 @@ export default function ProjectNav({
                 data-testid="project-nav-invite"
                 onClick={onElementClick(ProjectNavInvite)}
               >
-                <InviteUserIcon size={Size.Large} />
+                <InviteUserIcon size="large" />
               </IconButton>
             }
           >
@@ -522,7 +521,7 @@ export default function ProjectNav({
                 data-testid="project-nav-activity-feed"
                 onClick={onElementClick(ProjectNavActivityFeed)}
               >
-                <ActivityFeedIcon size={Size.Large} />
+                <ActivityFeedIcon size="large" />
               </IconButton>
             }
           >
@@ -554,7 +553,7 @@ export default function ProjectNav({
                   </div>
                 )}
 
-                <BellIcon size={Size.Large} />
+                <BellIcon size="large" />
               </IconButton>
             }
           >

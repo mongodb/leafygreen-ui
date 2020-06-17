@@ -5,7 +5,6 @@ import { transparentize } from 'polished';
 import facepaint from 'facepaint';
 import Portal from '@leafygreen-ui/portal';
 import XIcon from '@leafygreen-ui/icon/dist/X';
-import { Size } from '@leafygreen-ui/icon';
 import { useEscapeKey } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -238,7 +237,7 @@ function Modal({
               >
                 <XIcon
                   fill={uiColors.gray.dark1}
-                  size={Size.Large}
+                  size="large"
                   onClick={handleClose}
                   className={closeButton}
                   data-dismiss="modal"
