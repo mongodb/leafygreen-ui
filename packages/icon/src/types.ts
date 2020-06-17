@@ -8,7 +8,7 @@ export namespace SVGR {
 
 export namespace LGGlyph {
   export interface ComponentProps extends SVGR.ComponentProps {
-    size?: number;
+    size?: number | 'small' | 'default' | 'large' | 'xlarge';
     titleId?: string;
   }
 

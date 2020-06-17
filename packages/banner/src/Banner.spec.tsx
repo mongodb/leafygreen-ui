@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Icon from '@leafygreen-ui/icon';
+import VerticalEllipsisIcon from '@leafygreen-ui/icon/dist/VerticalEllipsis';
 import Banner, { Variant } from '.';
 
 const className = 'test-classname';
@@ -80,7 +80,7 @@ describe('packages/banner', () => {
   describe('when the "image" prop is set', () => {
     test('the default icon does not appear', () => {
       const { banner } = renderBanner({
-        image: <Icon glyph="VerticalEllipsis" />,
+        image: <VerticalEllipsisIcon />,
       });
 
       expect(banner.innerHTML.includes('Glyphs / Info With Circle')).not.toBe(
