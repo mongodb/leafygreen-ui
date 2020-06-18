@@ -295,64 +295,6 @@ export interface URLSDefaults {
   onPrem: Required<OnPremURLS>;
 }
 
-// type Test = Required<UserMenuURLs>
-
-// export interface URLSInterface {
-//   userMenu?: {
-//     cloud?: {
-//       userPreferences: string;
-//       organizations: string;
-//       invitations: string;
-//       mfa: string;
-//     };
-//     university?: {
-//       universityPreferences: string;
-//     };
-//     support?: {
-//       userPreferences: string;
-//     };
-//     account?: {
-//       homepage?: string;
-//     };
-//     logout?: string;
-//   };
-//   mongoSelect?: {
-//     viewAllProjects?: string;
-//     viewAllOrganizations?: string;
-//     newProject?: string;
-//     orgSettings?: string;
-//   };
-//   orgNav?: {
-//     leaf?: string;
-//     settings?: string;
-//     accessManager?: string;
-//     support?: string;
-//     billing?: string;
-//     allClusters?: string;
-//     admin?: string;
-//   };
-//   projectNav?: {
-//     settings?: string;
-//     accessManager?: string;
-//     support?: string;
-//     integrations?: string;
-//     alerts?: string;
-//     activityFeed?: string;
-//     invite?: string;
-//     realm?: string;
-//     charts?: string;
-//   };
-//   onPrem?: {
-//     profile?: string;
-//     mfa?: string;
-//     personalization?: string;
-//     invitations?: string;
-//     organizations?: string;
-//     publicApiAccess?: string;
-//     featureRequest?: string;
-//   };
-// }
-
 export interface HostsInterface {
   account?: string;
   charts?: string;
