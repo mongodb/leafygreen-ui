@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 type BoxDivDefault = {
   as?: never;
@@ -57,6 +58,16 @@ InlineBox.displayName = 'InlineBox';
 const Box = React.forwardRef(InlineBox) as typeof InlineBox;
 
 Box.displayName = 'Box';
+
+// @ts-ignore
+Box.propTypes = {
+  as: PropTypes.oneOfType([
+    PropTypes.elementType,
+    PropTypes.element,
+    PropTypes.func,
+  ]),
+  href: PropTypes.string,
+};
 
 export default Box;
 
