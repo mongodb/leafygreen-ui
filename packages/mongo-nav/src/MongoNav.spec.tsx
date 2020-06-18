@@ -7,7 +7,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
-import { dataFixtures, getProductHost } from './data';
+import { dataFixtures } from './data';
 import MongoNav from './MongoNav';
 
 // types
@@ -414,30 +414,6 @@ describe('packages/mongo-nav', () => {
         setExpectedElements();
         expect(expectedElements.admin).toBeInTheDocument();
       });
-    });
-  });
-
-  describe('when the date is before MongoDB World', () => {
-    const preDate = new Date('June 1, 2020 0:00:00');
-    test('getProductHost function returns stitch', () => {
-      expect(getProductHost(preDate)).toBe('stitch');
-    });
-  });
-
-  describe('when the date is the day of MongoDB World', () => {
-    const mdbworld = new Date('June 8, 2020 0:00:00');
-
-    test('getProductHost function returns realm', () => {
-      const productName = getProductHost(mdbworld);
-      expect(productName).toBe('realm');
-    });
-  });
-
-  describe('when the date is after MongoDB World', () => {
-    const testDate = new Date('June 15, 2020 0:00:00');
-    test('getProductHost function returns realm', () => {
-      const productName = getProductHost(testDate);
-      expect(productName).toBe('realm');
     });
   });
 });

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/logo",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "LeafyGreen UI Kit Logos",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",

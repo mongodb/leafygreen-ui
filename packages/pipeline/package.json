@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/pipeline",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "LeafyGreen UI Kit Pipeline",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
