@@ -233,6 +233,8 @@ function OrgNav({
     );
   }
 
+  const AccessManagerIcon = accessManagerOpen ? CaretUpIcon : CaretDownIcon;
+
   return (
     <nav
       className={navContainer}
@@ -280,26 +282,19 @@ function OrgNav({
       {!disabled && !isMobile && (
         <>
           <OrgNavLink
-            href={current && orgNav.accessManager}
             isActive={activeNav === ActiveNavElement.OrgNavAccessManager}
             loading={!current}
             data-testid="org-nav-access-manager"
-            onClick={onElementClick(NavElement.OrgNavAccessManager)}
-          >
-            Access Manager
-          </OrgNavLink>
-
-          <IconButton
-            aria-label="Dropdown"
-            active={accessManagerOpen}
-            disabled={!current}
-            data-testid="org-nav-dropdown"
-            onClick={onElementClick(NavElement.OrgNavDropdown, () =>
+            onClick={onElementClick(NavElement.OrgNavAccessManager, () =>
               setAccessManagerOpen(curr => !curr),
             )}
           >
-            {accessManagerOpen ? <CaretUpIcon /> : <CaretDownIcon />}
-
+            Access Manager
+            <AccessManagerIcon
+              className={css`
+                margin-left: 8px;
+              `}
+            />
             {current && (
               <Menu
                 open={accessManagerOpen}
@@ -341,7 +336,7 @@ function OrgNav({
                 </MenuItem>
               </Menu>
             )}
-          </IconButton>
+          </OrgNavLink>
 
           <OrgNavLink
             href={current && orgNav.support}
