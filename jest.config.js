@@ -51,4 +51,8 @@ module.exports = {
   transformIgnorePatterns: ['/node_modules/(?!(react-children-utilities)/)'],
 
   setupFiles: ['<rootDir>/scripts/jestSetup.js'],
+
+  setupFilesAfterEnv: [
+    '<rootDir>/node_modules/@testing-library/jest-dom/extend-expect.js',
+  ],
 };
