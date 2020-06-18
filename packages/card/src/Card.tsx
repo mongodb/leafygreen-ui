@@ -25,12 +25,12 @@ const Card: ExtendableBox<CardProps> = ({ className, ...rest }: CardProps) => {
   return <Box className={cx(containerStyle, className)} {...rest} />;
 };
 
-// @ts-ignore
-Card.displayName = 'Card';
+Object.assign(Card, { displayName: 'Card' });
 
-// @ts-ignore
-Card.propTypes = {
-  className: PropTypes.string,
-};
+Object.assign(Card, {
+  propTypes: {
+    className: PropTypes.string,
+  },
+});
 
 export default Card;
