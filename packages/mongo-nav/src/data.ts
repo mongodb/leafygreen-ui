@@ -1,6 +1,6 @@
 import {
   DataInterface,
-  URLSInterface,
+  URLSDefaults,
   HostsInterface,
   OrganizationInterface,
   ProjectInterface,
@@ -58,7 +58,7 @@ export const dataFixtures = {
   ],
 } as DataInterface;
 
-export const urlFixtures: Required<URLSInterface> = {
+export const urlFixtures: Required<URLSDefaults> = {
   userMenu: {
     cloud: {
       userPreferences: `https://cloud.mongodb.com/v2#/preferences/personalization`,

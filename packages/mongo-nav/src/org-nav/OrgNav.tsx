@@ -16,6 +16,7 @@ import { breakpoints, mq } from '../breakpoints';
 import { OrgSelect } from '../mongo-select';
 import { useOnElementClick } from '../on-element-click-provider';
 import {
+  URLSDefaults,
   AccountInterface,
   OrganizationInterface,
   NavElement,
@@ -127,7 +128,7 @@ type OrgNavProps = Pick<
   constructOrganizationURL: NonNullable<
     MongoNavInterface['constructOrganizationURL']
   >;
-  urls: Required<NonNullable<MongoNavInterface['urls']>>;
+  urls: URLSDefaults;
   hosts: Required<NonNullable<MongoNavInterface['hosts']>>;
   showProjectNav: NonNullable<MongoNavInterface['showProjectNav']>;
 };

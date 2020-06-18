@@ -9,7 +9,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { dataFixtures as defaultDataFixtures, hostDefaults } from './data';
 import {
   Product,
-  URLSInterface,
+  URLSDefaults,
   NavElement,
   Mode,
   DataInterface,
@@ -206,7 +206,7 @@ function MongoNav({
   const currentOrgId = data?.currentOrganization?.orgId;
   const currentProjectId = data?.currentProject?.projectId;
 
-  const defaultURLS: Required<Omit<URLSInterface, 'userMenu'>> = {
+  const defaultURLS: Required<Omit<URLSDefaults, 'userMenu'>> = {
     mongoSelect: {
       viewAllProjects: `${hosts.cloud}/v2#/org/${currentOrgId}/projects`,
       viewAllOrganizations: `${hosts.cloud}/v2#/preferences/organizations`,
@@ -246,7 +246,7 @@ function MongoNav({
     },
   };
 
-  const urls: Required<URLSInterface> = defaultsDeep(urlsProp, defaultURLS);
+  const urls: Required<URLSDefaults> = defaultsDeep(urlsProp, defaultURLS);
 
   const defaultOrgURL = ({ orgId }: OrganizationInterface) =>
     `${hosts.cloud}/v2#/org/${orgId}/projects`;
