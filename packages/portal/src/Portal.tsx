@@ -25,6 +25,7 @@ function Portal(props: PortalProps) {
     props.container ?? createPortalContainer(props.className),
   );
 
+  // TODO(PD-702): Investigate using `usePrevious` hook from mongo-nav
   const prevPropsRef = useRef(props);
 
   useEffect(() => {
