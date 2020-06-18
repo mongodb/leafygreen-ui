@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { urlFixtures, hostDefaults } from '../data';
 import UserMenu from '.';
 
@@ -54,7 +54,7 @@ describe('packages/mongo-nav/user-menu', () => {
   });
 
   test('renders university MenuItems when university dropdown is clicked and closes other SubMenus', () => {
-    const { getByTestId, getAllByRole, findByTestId } = renderUserMenu({
+    const { getByText, getByTestId, getAllByRole } = renderUserMenu({
       activePlatform: 'cloud',
     });
     const trigger = getByTestId('user-menu-trigger');
@@ -62,10 +62,10 @@ describe('packages/mongo-nav/user-menu', () => {
 
     const universityTrigger = getAllByRole('button', {
       name: 'Open Sub-menu',
-    })[1];
+    })[0];
     fireEvent.click(universityTrigger);
 
-    const universityItem = findByTestId('user-menuitem-university-preferences');
+    const universityItem = getByText('University Preferences');
 
     expect(universityItem).toBeInTheDocument();
   });
