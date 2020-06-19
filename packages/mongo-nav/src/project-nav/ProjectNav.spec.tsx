@@ -1,5 +1,4 @@
 import React from 'react';
-import '@testing-library/jest-dom/extend-expect';
 import { render, cleanup, act } from '@testing-library/react';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import {
@@ -8,7 +7,7 @@ import {
   hostDefaults,
   constructProjectURL,
 } from '../data';
-import ProjectNav, { displayProductName } from './ProjectNav';
+import ProjectNav from './ProjectNav';
 import { startCase } from 'lodash';
 import { Mode } from '../types';
 
@@ -262,31 +261,5 @@ describe('packages/mongo-nav/src/project-nav', () => {
     beforeEach(() => renderComponent({ admin: true, current: currentProject }));
 
     testForProjectStatusBadge(true);
-  });
-
-  describe('when the date is before MongoDB World', () => {
-    const testDate = new Date('May 4, 2020 0:00:00');
-
-    test('Stitch is displayed in the ProjectNav', () => {
-      const productName = displayProductName(testDate);
-      expect(productName).toBe('Stitch');
-    });
-  });
-
-  describe('when the date is the day of MongoDB World', () => {
-    const mdbworld = new Date('June 8, 2020 0:00:00');
-
-    test('Realm is displayed in the ProjectNav', () => {
-      const productName = displayProductName(mdbworld);
-      expect(productName).toBe('Realm');
-    });
-  });
-
-  describe('when the date is after MongoDB World', () => {
-    const testDate = new Date('June 15, 2020 0:00:00');
-    test('Realm is displayed in the ProjectNav', () => {
-      const productName = displayProductName(testDate);
-      expect(productName).toBe('Realm');
-    });
   });
 });

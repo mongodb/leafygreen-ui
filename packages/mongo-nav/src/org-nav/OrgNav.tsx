@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import Tooltip from '@leafygreen-ui/tooltip';
 import Badge, { Variant } from '@leafygreen-ui/badge';
 import IconButton from '@leafygreen-ui/icon-button';
-import Icon from '@leafygreen-ui/icon';
+import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
+import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import UserMenu from '../user-menu';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -297,7 +298,7 @@ function OrgNav({
               setAccessManagerOpen(curr => !curr),
             )}
           >
-            <Icon glyph={accessManagerOpen ? 'CaretUp' : 'CaretDown'} />
+            {accessManagerOpen ? <CaretUpIcon /> : <CaretDownIcon />}
 
             {current && (
               <Menu

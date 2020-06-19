@@ -42,8 +42,8 @@ module.exports = function template(
         className,
       )}
       title={getGlyphTitle('${componentName}', title)}
-      height={size}
-      width={size}
+      height={typeof size === 'number' ? size : sizeMap[size]}
+      width={typeof size === 'number' ? size : sizeMap[size]}
     />`;
 
   // Augment the `<svg attributes />` so we can customize it with the values above.
@@ -55,6 +55,13 @@ module.exports = function template(
     ${imports}
     import PropTypes from 'prop-types';
     import { css, cx } from '@leafygreen-ui/emotion';
+
+    const sizeMap = {
+      small: 14,
+      default: 16,
+      large: 20,
+      xlarge: 24,
+    }
 
     function getGlyphTitle(name, title) {
       if (title === false) {
@@ -95,9 +102,11 @@ module.exports = function template(
 
     ${componentName}.displayName = '${componentName}';
 
+    ${componentName}.isGlyph = true;
+
     ${componentName}.propTypes = {
         fill: PropTypes.string,
-        size: PropTypes.number,
+        size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         className: PropTypes.string,
     };
 
