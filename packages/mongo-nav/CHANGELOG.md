@@ -1,5 +1,24 @@
 # @leafygreen-ui/mongo-nav
 
+## 1.3.3
+
+### Patch Changes
+
+- 3f68a51: Adds `onLogout` prop to `OnPremUserMenu`.
+- 1d86d56: Imports Glyphs directly, rather than importing the entire Icon package, when Glyph components are used
+- Updated dependencies [1d86d56]
+- Updated dependencies [1d86d56]
+- Updated dependencies [1d86d56]
+  - @leafygreen-ui/icon@6.1.0
+  - @leafygreen-ui/menu@6.0.13
+  - @leafygreen-ui/icon-button@6.0.0
+
+## 1.3.2
+
+### Patch Changes
+
+- f699208: Removes logic used to determine whether to display Stitch or Realm
+
 ## 1.3.1
 
 ### Patch Changes

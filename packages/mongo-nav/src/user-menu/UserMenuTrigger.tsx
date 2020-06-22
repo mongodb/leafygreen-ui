@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
-import Icon from '@leafygreen-ui/icon';
+import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
+import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -141,11 +142,11 @@ export default function UserMenuTrigger({
           {displayName}
         </span>
 
-        <Icon
-          {...iconDataProp.prop}
-          glyph={open ? 'CaretUp' : 'CaretDown'}
-          className={open ? openIconStyle : closedIconStyle}
-        />
+        {open ? (
+          <CaretUpIcon {...iconDataProp.prop} className={openIconStyle} />
+        ) : (
+          <CaretDownIcon {...iconDataProp.prop} className={closedIconStyle} />
+        )}
         {children}
       </button>
     </InteractionRingWrapper>

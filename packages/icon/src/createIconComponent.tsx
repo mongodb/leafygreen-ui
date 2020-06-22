@@ -17,27 +17,15 @@ export interface IconProps extends Omit<LGGlyph.ComponentProps, 'size'> {
   size?: Size | number;
 }
 
-const sizeMap: Record<Size, number> = {
-  small: 14,
-  default: 16,
-  large: 20,
-  xlarge: 24,
-} as const;
-
 type GlyphObject = Record<string, LGGlyph.Component>;
 
 export default function createIconComponent<
   G extends GlyphObject = GlyphObject
 >(glyphs: G) {
-  const Icon = ({ glyph, size = Size.Default, ...rest }: IconProps) => {
+  const Icon = ({ glyph, ...rest }: IconProps) => {
     const SVGComponent = glyphs[glyph];
 
-    return (
-      <SVGComponent
-        {...rest}
-        size={typeof size === 'number' ? size : sizeMap[size]}
-      />
-    );
+    return <SVGComponent {...rest} />;
   };
 
   Icon.displayName = 'Icon';
@@ -45,7 +33,7 @@ export default function createIconComponent<
   Icon.propTypes = {
     glyph: PropTypes.oneOf(Object.keys(glyphs)).isRequired,
     size: PropTypes.oneOfType([
-      PropTypes.oneOf(Object.keys(sizeMap)),
+      PropTypes.oneOf(Object.values(Size)),
       PropTypes.number,
     ]),
   } as any;

@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
-import { LogoProps, Variant } from './types';
+import { LogoProps, Variant } from './utils';
 import MonochromeLogoMark from './logos/MonochromeLogoMark';
 import RGBLogoMark from './logos/RGBLogoMark';
 
