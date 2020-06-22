@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import BulbIcon from '@leafygreen-ui/icon/dist/Bulb';
-import ImportantWithCircle from '@leafygreen-ui/icon/dist/ImportantWithCircle';
+import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { LGGlyph } from '@leafygreen-ui/icon/dist/types';
@@ -78,7 +78,7 @@ export const headerLabels = {
 export const headerIcons = {
   [Variant.Note]: <InfoWithCircleIcon />,
   [Variant.Tip]: <BulbIcon />,
-  [Variant.Important]: <ImportantWithCircle />,
+  [Variant.Important]: <ImportantWithCircleIcon />,
   [Variant.Warning]: <WarningIcon />,
 } as const;
 
