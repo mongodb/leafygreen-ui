@@ -31,7 +31,7 @@ interface OnPremUserMenuProps {
    * Object that supplies URL overrides to UserMenu component.
    * Shape: { userMenu:{ cloud: { userPreferences, organizations, invitations, mfa }, university: { universityPreferences }, support: { userPreferences }, account: { homepage } }}
    */
-  urls: Required<URLSInterface>;
+  urls: URLSInterface;
 
   /**
    * Whether or not multifactor authentication is permitted in the current enivronment.
@@ -42,6 +42,11 @@ interface OnPremUserMenuProps {
    * Determines what nav item is currently active.
    */
   activeNav?: NavElement;
+
+  /**
+   * Callback invoked after the user clicks log out.
+   */
+  onLogout?: React.MouseEventHandler;
 }
 
 /**
@@ -57,6 +62,7 @@ interface OnPremUserMenuProps {
   urls={urls}
   mfa={false}
   activeNav={UserMenuOnPremProfile}
+  onLogout={onLogout}
 />
 ```
  * @param props.name The current user's first and last name, or username if unavailable.
@@ -65,6 +71,7 @@ interface OnPremUserMenuProps {
  * @param props.urls Object that supplies URL overrides to UserMenu component.
  * @param props.mfa Whether or not multifactor authentication is permitted in the current enivronment.
  * @param props.activeNav Determines what nav item is currently active.
+ * @param props.onLogout Callback fired when a user logs out.
  */
 export default function OnPremUserMenu({
   name,
@@ -73,8 +80,17 @@ export default function OnPremUserMenu({
   urls,
   mfa,
   activeNav,
+  onLogout: onLogoutProp,
 }: OnPremUserMenuProps) {
   const onElementClick = useOnElementClick();
+
+  const onLogout = (e: React.MouseEvent) => {
+    if (onLogoutProp) {
+      return onLogoutProp(e);
+    } else {
+      return onElementClick(NavElement.Logout)(e);
+    }
+  };
 
   return (
     <div className={onPremMenuWrapper}>
@@ -151,7 +167,7 @@ export default function OnPremUserMenu({
         </MenuItem>
 
         <MenuItem
-          onClick={onElementClick(NavElement.Logout, () => setOpen(false))}
+          onClick={onLogout}
           data-testid="om-user-menuitem-sign-out"
         >
           Log out
