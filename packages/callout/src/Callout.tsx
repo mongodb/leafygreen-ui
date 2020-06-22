@@ -19,7 +19,7 @@ export type Variant = typeof Variant[keyof typeof Variant];
 
 const baseStyle = css`
   border-radius: 6px;
-  box-shadow: 0px 2px 5px 0 ${uiColors.gray.dark1};
+  box-shadow: 0px 2px 5px 0 ${uiColors.gray.base};
   overflow: hidden;
   position: relative;
 
@@ -84,31 +84,51 @@ export const headerIcons = {
 
 export const colorSets: Record<Variant, ColorSet> = {
   [Variant.Note]: {
-    background: uiColors.blue.light3,
-    foreground: uiColors.blue.dark2,
+    header: {
+      background: uiColors.blue.light3,
+      text: uiColors.blue.dark2,
+    },
     text: uiColors.blue.dark3,
+    bar: uiColors.blue.base,
+    icon: uiColors.blue.base,
   },
   [Variant.Tip]: {
-    background: '#F3F2FC', // purple light3
-    foreground: '#5A59C6', // purple dark2
+    header: {
+      background: '#F3F2FC', // purple light3
+      text: '#5A59C6', // purple base
+    },
     text: '#2C3A64', // purple dark3
+    bar: '#5A59C6', // purple base
+    icon: '#5A59C6', // purple base
   },
   [Variant.Important]: {
-    background: uiColors.yellow.light3,
-    foreground: uiColors.yellow.dark2,
+    header: {
+      background: uiColors.yellow.light3,
+      text: uiColors.yellow.dark2,
+    },
     text: uiColors.yellow.dark3,
+    bar: uiColors.yellow.base,
+    icon: uiColors.yellow.dark2,
   },
   [Variant.Warning]: {
-    background: uiColors.red.light3,
-    foreground: uiColors.red.dark2,
+    header: {
+      background: uiColors.red.light3,
+      text: uiColors.red.dark2,
+    },
     text: uiColors.red.dark3,
+    bar: uiColors.red.base,
+    icon: uiColors.red.base,
   },
 };
 
 interface ColorSet {
-  background: string;
-  foreground: string;
+  header: {
+    background: string;
+    text: string;
+  };
   text: string;
+  bar: string;
+  icon: string;
 }
 
 export interface CustomCalloutProps {
@@ -136,7 +156,7 @@ function CustomCallout({
   headerIcon =
     headerIcon &&
     React.cloneElement(headerIcon, {
-      fill: colorSet.foreground,
+      fill: colorSet.icon,
       className: headerIconStyle,
     });
 
@@ -145,8 +165,8 @@ function CustomCallout({
       className={cx(
         headerStyle,
         css`
-          background-color: ${colorSet.background};
-          color: ${colorSet.foreground};
+          background-color: ${colorSet.header.background};
+          color: ${colorSet.header.text};
         `,
       )}
     >
@@ -164,7 +184,7 @@ function CustomCallout({
           color: ${colorSet.text};
 
           &:after {
-            background-color: ${colorSet.foreground};
+            background-color: ${colorSet.bar};
           }
         `,
         className,
