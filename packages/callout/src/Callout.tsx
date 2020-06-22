@@ -53,7 +53,8 @@ const headerIconStyle = css`
 
 const titleStyle = css`
   font-weight: bold;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  line-height: 1;
 `;
 
 const bodyStyle = css`
