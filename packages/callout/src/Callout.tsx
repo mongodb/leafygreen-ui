@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import BulbIcon from '@leafygreen-ui/icon/dist/Bulb';
-import EditIcon from '@leafygreen-ui/icon/dist/Edit';
+import ImportantWithCircle from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { LGGlyph } from '@leafygreen-ui/icon/dist/types';
@@ -19,7 +19,7 @@ export type Variant = typeof Variant[keyof typeof Variant];
 
 const baseStyle = css`
   border-radius: 6px;
-  box-shadow: 0px 2px 5px 0 ${uiColors.gray.base};
+  box-shadow: 0px 2px 5px 0 rgba(33, 49, 60, 0.1);
   overflow: hidden;
   position: relative;
 
@@ -60,7 +60,7 @@ const titleStyle = css`
 const bodyStyle = css`
   display: flex;
   flex-direction: column;
-  padding: 16px 24px 20px 52px;
+  padding: 10px 24px 18px 52px;
 `;
 
 const bodyTextStyle = css`
@@ -76,9 +76,9 @@ export const headerLabels = {
 } as const;
 
 export const headerIcons = {
-  [Variant.Note]: <EditIcon />,
+  [Variant.Note]: <InfoWithCircleIcon />,
   [Variant.Tip]: <BulbIcon />,
-  [Variant.Important]: <InfoWithCircleIcon />,
+  [Variant.Important]: <ImportantWithCircle />,
   [Variant.Warning]: <WarningIcon />,
 } as const;
 
