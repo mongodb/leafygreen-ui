@@ -4,7 +4,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { commonCellStyles } from './styles';
-import { useTableContext, Types } from './table-context';
+import { useTableContext, Types } from './TableContext';
 import { DataType } from './utils';
 
 const thStyle = css`
@@ -92,7 +92,15 @@ function TableHeader({
         <span className={labelStyle}>{label}</span>
         {sortable && (
           <IconButton aria-label="sort" onClick={handleClick}>
-            <Icon size="small" glyph={glyph} />
+            <Icon
+              size="small"
+              glyph={glyph}
+              className={cx({
+                [css`
+                  color: ${uiColors.blue.base};
+                `]: glyph === 'SortAscending' || glyph === 'SortDescending',
+              })}
+            />
           </IconButton>
         )}
       </div>

@@ -6,7 +6,7 @@ import { isComponentType } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import CheckboxCell from './CheckboxCell';
-import { useTableContext, Types, DataType } from './table-context';
+import { useTableContext, Types, DataType } from './TableContext';
 
 const rowStyle = css`
   cursor: pointer;
@@ -45,6 +45,7 @@ const disabledStyle = css`
   background-color: ${uiColors.gray.light2};
   color: ${uiColors.gray.base};
   pointer-events: none;
+  cursor: not-allowed;
   border-bottom: 1px solid ${uiColors.gray.light1};
 `;
 
@@ -91,7 +92,7 @@ const transitionStyles = {
 
 const styleMap = {
   left: [DataType.String, DataType.Weight, DataType.ZipCode, DataType.Date],
-  right: [DataType.NominalNumber, DataType.Quantity],
+  right: [DataType.Number, DataType.Quantity],
 };
 
 function styleColumn(index: string, dataType: DataType) {

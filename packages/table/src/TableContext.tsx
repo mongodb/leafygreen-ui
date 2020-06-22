@@ -15,6 +15,8 @@ const Types = {
 
 type Types = typeof Types[keyof typeof Types];
 
+export { Types };
+
 interface ActionPayload {
   [Types.SelectableTable]: boolean;
   [Types.ToggleHeaderCheckedState]: boolean | undefined;
@@ -61,7 +63,7 @@ interface Sort {
 }
 
 const DataType = {
-  NominalNumber: 'nominalNumber',
+  Number: 'Number',
   Quantity: 'quantity',
   Weight: 'weight',
   ZipCode: 'zipCode',
@@ -70,6 +72,8 @@ const DataType = {
 } as const;
 
 type DataType = typeof DataType[keyof typeof DataType];
+
+export { DataType };
 
 export interface State {
   sort?: Sort;
@@ -105,7 +109,7 @@ const TableContext = createContext<ContextInterface>({
 });
 
 // reducer
-function reducer(state: State, action: Action): State {
+export function reducer(state: State, action: Action): State {
   switch (action.type) {
     case Types.SetHasRowSpan:
       return {
@@ -186,7 +190,11 @@ function reducer(state: State, action: Action): State {
 }
 
 // Provider
-function TableProvider({ children, state, dispatch }: TableProviderInterface) {
+export function TableProvider({
+  children,
+  state,
+  dispatch,
+}: TableProviderInterface) {
   const contextValue = useMemo(() => {
     return { state, dispatch };
   }, [state, dispatch]);
@@ -199,11 +207,9 @@ function TableProvider({ children, state, dispatch }: TableProviderInterface) {
 }
 
 // useTableContext
-function useTableContext() {
+export function useTableContext() {
   return useContext(TableContext);
 }
-
-export { TableProvider, useTableContext, reducer, Types, DataType };
 
 // helper functions
 const alphanumericCollator = new Intl.Collator(undefined, {

@@ -3,7 +3,7 @@ import HeaderRow from './HeaderRow';
 import TableHeader from './TableHeader';
 import { TableProps } from './Table';
 import { isComponentType } from '@leafygreen-ui/lib';
-import { Types, useTableContext } from './table-context';
+import { Types, useTableContext } from './TableContext';
 
 type TableHeaderProps = Pick<TableProps, 'data' | 'columns'>;
 

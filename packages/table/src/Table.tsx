@@ -1,8 +1,8 @@
-import React, { useReducer, ReactElement } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { HeaderRowProps } from './HeaderRow';
 import { TableHeaderProps } from './TableHeader';
-import { State, Types, TableProvider, reducer } from './table-context';
+import { State, Types, TableProvider, reducer } from './TableContext';
 import TableHead from './TableHead';
 
 // * fix row appearing as children of row -- not seeing this!
@@ -14,7 +14,7 @@ const tableStyles = css`
 
 type DataShape<Shape> = Shape extends infer U ? U : Shape;
 
-interface TableRowInterface<Shape> {
+interface TableRowInterface<Shape = {}> {
   datum: DataShape<Shape>;
   index?: number;
 }
@@ -23,8 +23,7 @@ export interface TableProps<Shape>
   extends React.ComponentPropsWithoutRef<'table'> {
   data: Array<DataShape<Shape>>;
   columns:
-    | Array<ReactElement<HeaderRowProps>>
-    | Array<ReactElement<TableHeaderProps> | string>
+    | Array<React.ReactElement<HeaderRowProps | TableHeaderProps> | string>
     | React.ReactFragment;
   selectable?: boolean;
   children: (TableRowArgs: TableRowInterface<Shape>) => JSX.Element;
@@ -51,7 +50,7 @@ export default function Table<Shape>({
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (state.rowCheckedState) {
       const boolArray = Object.values(state.rowCheckedState);
       const checkSame = boolArray.every(val => val === boolArray[0]);
@@ -74,14 +73,6 @@ export default function Table<Shape>({
     | Array<React.ReactElement>
     | undefined = state.data?.map((datum, index) => children({ datum, index }));
 
-  const renderBody = () => {
-    if (!children) {
-      return null;
-    }
-
-    return rows;
-  };
-
   return (
     <TableProvider state={state} dispatch={dispatch}>
       <table
@@ -91,7 +82,7 @@ export default function Table<Shape>({
         {...rest}
       >
         <TableHead data={data} columns={columns} />
-        <tbody>{renderBody()}</tbody>
+        <tbody>{!children ? null : rows}</tbody>
       </table>
     </TableProvider>
   );

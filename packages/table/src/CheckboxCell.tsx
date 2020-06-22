@@ -1,7 +1,7 @@
 import React from 'react';
 import Checkbox from '@leafygreen-ui/checkbox';
 import { css } from '@leafygreen-ui/emotion';
-import { useTableContext, Types } from './table-context';
+import { useTableContext, Types } from './TableContext';
 
 const flexStyles = css`
   display: flex;

@@ -1600,6 +1600,13 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@leafygreen-ui/icon@^5.1.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/icon/-/icon-5.2.0.tgz#58208e1db0385558e190fa15b5f8c73004b46824"
+  integrity sha512-cDVOxEbwAyepIi7xsHa8uU6rp24BlMXjyDcQTIZkAunJV11C41D5TyDl/6fD5wtIP8gbg351cBbogOEdjVqoSA==
+  dependencies:
+    "@leafygreen-ui/lib" "^4.4.1"
+
 "@lerna/add@3.20.0":
   version "3.20.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.20.0.tgz#bea7edf36fc93fb72ec34cb9ba854c48d4abf309"

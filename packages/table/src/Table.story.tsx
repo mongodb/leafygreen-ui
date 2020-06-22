@@ -9,28 +9,30 @@ storiesOf('Table', module)
     <Table
       selectable={boolean('isSelectable', true)}
       data={defaultData}
-      columns={[
-        <TableHeader
-          dataType={DataType.String}
-          sortable
-          label="Name"
-          key="name"
-        />,
-        <TableHeader
-          dataType={DataType.NominalNumber}
-          sortable
-          label="Age"
-          key="age"
-        />,
-        <TableHeader
-          dataType={DataType.String}
-          sortable
-          label="Favorite Color"
-          key="color"
-          accessor="color"
-        />,
-        'Location',
-      ]}
+      columns={
+        <>
+          <TableHeader
+            dataType={DataType.String}
+            sortable
+            label="Name"
+            key="name"
+          />
+          <TableHeader
+            dataType={DataType.Number}
+            sortable
+            label="Age"
+            key="age"
+          />
+          <TableHeader
+            dataType={DataType.String}
+            sortable
+            label="Favorite Color"
+            key="color"
+            accessor="color"
+          />
+          Location
+        </>
+      }
     >
       {({ datum }) => (
         <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
