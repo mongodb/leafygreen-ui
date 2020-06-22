@@ -54,13 +54,12 @@ const headerIconStyle = css`
 const titleStyle = css`
   font-weight: bold;
   margin-bottom: 8px;
-  margin-top: 8px;
 `;
 
 const bodyStyle = css`
   display: flex;
   flex-direction: column;
-  padding: 10px 24px 18px 52px;
+  padding: 16px 24px 16px 52px;
 `;
 
 const bodyTextStyle = css`
