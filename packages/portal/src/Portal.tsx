@@ -1,13 +1,11 @@
+import type { OneOf } from '@leafygreen-ui/lib';
 import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 
 type PortalProps = {
   children?: React.ReactNode;
-} & (
-  | { container: HTMLElement; className?: never }
-  | { container?: never; className?: string }
-);
+} & OneOf<{ container: HTMLElement }, { className?: string }>;
 
 function createPortalContainer(className?: string): HTMLElement {
   const el = document.createElement('div');
