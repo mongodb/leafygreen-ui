@@ -50,6 +50,15 @@ export default function Table<Shape>({
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  console.log(selectableProp);
+
+  useEffect(() => {
+    dispatch({
+      type: Types.SelectableTable,
+      payload: selectableProp,
+    });
+  }, [selectableProp]);
+
   useEffect(() => {
     if (state.rowCheckedState) {
       const boolArray = Object.values(state.rowCheckedState);
