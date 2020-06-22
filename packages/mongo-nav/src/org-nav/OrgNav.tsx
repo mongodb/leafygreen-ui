@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '@leafygreen-ui/tooltip';
 import Badge, { Variant } from '@leafygreen-ui/badge';
-import IconButton from '@leafygreen-ui/icon-button';
 import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import UserMenu from '../user-menu';
@@ -288,12 +287,20 @@ function OrgNav({
             onClick={onElementClick(NavElement.OrgNavAccessManager, () =>
               setAccessManagerOpen(curr => !curr),
             )}
+            withIcon={true}
           >
             Access Manager
             <AccessManagerIcon
-              className={css`
-                margin-left: 8px;
-              `}
+              className={cx(
+                css`
+                  margin-left: 8px;
+                `,
+                {
+                  [css`
+                    color: ${uiColors.gray.dark1};
+                  `]: !accessManagerOpen,
+                },
+              )}
             />
             {current && (
               <Menu

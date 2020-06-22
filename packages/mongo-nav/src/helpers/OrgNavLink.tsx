@@ -1,7 +1,6 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { textLoadingStyle, anchorOverrides } from '../styles';
 
@@ -68,12 +67,29 @@ const navItemFocusStyle = css`
   }
 `;
 
-interface OrgNavLinkProps extends HTMLElementProps<'a'> {
+const displayFlex = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const resetButtonStyles = css`
+  border: none;
+  background-color: transparent;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+interface OrgNavLinkProps {
   isActive?: boolean;
   href?: string;
   children?: React.ReactNode;
   className?: string;
   loading?: boolean;
+  withIcon?: boolean;
+  onClick?: React.MouseEventHandler;
 }
 
 function OrgNavLink({
@@ -82,15 +98,19 @@ function OrgNavLink({
   href,
   children,
   className,
+  withIcon,
   ...rest
 }: OrgNavLinkProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
+  const Component = href ? 'a' : 'button';
+
   return (
-    <a
+    <Component
       href={href}
       aria-disabled={loading}
       className={cx(
+        resetButtonStyles,
         anchorOverrides,
         orgNavAnchorOverrides,
         linkText,
@@ -108,11 +128,14 @@ function OrgNavLink({
           css`
             position: relative;
           `,
+          {
+            [displayFlex]: withIcon,
+          },
         )}
       >
         {children}
       </span>
-    </a>
+    </Component>
   );
 }
 

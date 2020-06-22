@@ -24,13 +24,12 @@ interface LinkNameToUrls {
 // data
 const { account, currentOrganization, organizations } = dataFixtures;
 const {
-  orgNav: { accessManager, support, billing, allClusters, admin },
+  orgNav: { support, billing, allClusters, admin },
 } = urlFixtures;
 
 // this avoids having to explicitly type orgNav with nullable fields
 // and then extend it to allow string indexes
 const linkNamesToUrls: LinkNameToUrls = {
-  accessManager,
   support,
   billing,
   allClusters,
@@ -50,7 +49,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
     const { queryByTestId = () => null } = queries;
     expectedElements.paymentStatus = queryByTestId('org-nav-payment-status');
     expectedElements.accessManager = queryByTestId('org-nav-access-manager');
-    expectedElements.accessManagerDropdown = queryByTestId('org-nav-dropdown');
+    // expectedElements.accessManagerDropdown = queryByTestId('org-nav-dropdown');
     expectedElements.accessManagerOrg = queryByTestId(
       'org-nav-dropdown-org-access-manager',
     );
@@ -252,7 +251,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
     );
 
     it('shows project access as disabled', () => {
-      fireEvent.click(expectedElements.accessManagerDropdown!);
+      fireEvent.click(expectedElements.accessManager!);
       setExpectedElements();
 
       expect(expectedElements.accessManagerProject).toBeInTheDocument();
@@ -348,7 +347,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
           currentProjectName: 'Test Project',
           currentProjectId: 'test-project-id',
         });
-        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
+        fireEvent.click(expectedElements.accessManager as HTMLElement);
         setExpectedElements();
 
         expect(
@@ -366,7 +365,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
           onPremEnabled: true,
           showProjectNav: false,
         });
-        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
+        fireEvent.click(expectedElements.accessManager as HTMLElement);
         setExpectedElements();
 
         expect(
@@ -385,7 +384,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
           currentProjectName: 'Test Project',
           currentProjectId: 'test-project-id',
         });
-        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
+        fireEvent.click(expectedElements.accessManager as HTMLElement);
         setExpectedElements();
 
         expect(
@@ -402,7 +401,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
         renderComponent({
           showProjectNav: false,
         });
-        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
+        fireEvent.click(expectedElements.accessManager as HTMLElement);
         setExpectedElements();
 
         expect(
