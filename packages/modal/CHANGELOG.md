@@ -1,5 +1,13 @@
 # @leafygreen-ui/modal
 
+## 3.1.1
+
+### Patch Changes
+
+- 1d86d56: Imports Glyphs directly, rather than importing the entire Icon package, when Glyph components are used
+- Updated dependencies [1d86d56]
+  - @leafygreen-ui/icon@6.1.0
+
 ## 3.1.0
 
 ### Minor Changes
