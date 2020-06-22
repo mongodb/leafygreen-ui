@@ -59,7 +59,7 @@ const titleStyle = css`
 const bodyStyle = css`
   display: flex;
   flex-direction: column;
-  padding: 16px 24px 16px 52px;
+  padding: 18px 24px 18px 52px;
 `;
 
 const bodyTextStyle = css`
