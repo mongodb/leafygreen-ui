@@ -28,10 +28,10 @@ interface OnPremUserMenuProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
   /**
-   * Object that supplies URL overrides to UserMenu component.
-   * Shape: { userMenu:{ cloud: { userPreferences, organizations, invitations, mfa }, university: { universityPreferences }, support: { userPreferences }, account: { homepage } }}
+   * Object that supplies URL overrides to OnPremUserMenu component.
+   * Shape: { onPrem: { profile, mfa, personalization, invitations, organizations, publicApiAccess, featureRequest }}
    */
-  urls: URLSInterface;
+  urls: Pick<Required<URLSInterface>, 'onPrem'>;
 
   /**
    * Whether or not multifactor authentication is permitted in the current enivronment.
