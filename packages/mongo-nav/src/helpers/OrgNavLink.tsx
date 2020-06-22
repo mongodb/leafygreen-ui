@@ -103,7 +103,7 @@ function OrgNavLink({
 }: OrgNavLinkProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
-  const Component = href ? 'a' : 'button';
+  const Component = withIcon ? 'a' : 'button';
 
   return (
     <Component

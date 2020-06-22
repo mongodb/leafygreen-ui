@@ -6,7 +6,6 @@ import {
   act,
   waitFor,
 } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import { dataFixtures } from './data';
 import MongoNav from './MongoNav';
@@ -98,6 +97,7 @@ describe('packages/mongo-nav', () => {
     });
 
     test('current orgId is set based on data returned from fetch', () => {
+      console.log(expectedElements.billing);
       expect((expectedElements.billing as HTMLAnchorElement).href).toBe(
         `https://cloud.mongodb.com/v2#/org/${
           dataFixtures!.currentOrganization?.orgId

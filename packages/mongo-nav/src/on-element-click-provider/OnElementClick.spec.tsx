@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
 import MongoNav from '../MongoNav';
 import { NavElement } from '../types';
 
