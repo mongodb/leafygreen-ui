@@ -166,10 +166,7 @@ export default function OnPremUserMenu({
           Feature Request
         </MenuItem>
 
-        <MenuItem
-          onClick={onLogout}
-          data-testid="om-user-menuitem-sign-out"
-        >
+        <MenuItem onClick={onLogout} data-testid="om-user-menuitem-sign-out">
           Log out
         </MenuItem>
       </Menu>
