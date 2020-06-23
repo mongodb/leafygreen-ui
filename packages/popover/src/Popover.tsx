@@ -188,6 +188,7 @@ function Popover({
   `;
 
   const Root = usePortal ? Portal : Fragment;
+  const rootProps = usePortal ? { className: portalClassName } : {};
 
   const renderedChildren = (() => {
     if (!children) {
@@ -221,7 +222,7 @@ function Popover({
               display: none;
             `}
           />
-          <Root className={usePortal ? portalClassName : undefined}>
+          <Root {...rootProps}>
             <div
               {...rest}
               ref={setContentNode}
