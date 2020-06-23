@@ -30,7 +30,7 @@ const linkText = css`
       transform: scale(0.8, 1);
       transition: 150ms ease-in-out;
       height: 3px;
-      border-radius: 50px;
+      border-radius: 200px;
     }
   }
 
@@ -46,12 +46,6 @@ const linkText = css`
 const activeLink = css`
   font-weight: bold;
   color: ${uiColors.green.base};
-
-  &:hover {
-    span:after {
-      background-color: ${uiColors.green.light2};
-    }
-  }
 `;
 
 const navItemFocusStyle = css`
@@ -76,6 +70,7 @@ const displayFlex = css`
 const resetButtonStyles = css`
   border: none;
   background-color: transparent;
+  cursor: pointer;
 
   &:focus {
     outline: none;
