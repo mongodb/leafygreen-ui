@@ -79,3 +79,5 @@ const myGlyphs = {
 
 const MyIconComponent = createIconComponent(myGlyphs);
 ```
+
+**Note:** Glyph has a static property, `isGlyph`, that enables checking whether or not a component is a LeafyGreen glyph.

@@ -3,7 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import Icon from '@leafygreen-ui/icon';
+import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
+import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import IconButton, { Variant, Size } from './IconButton';
 
 const containerStyle = css`
@@ -41,7 +42,7 @@ storiesOf('IconButton', module)
     return (
       <div className={getContainerStyle(commonProps.variant)}>
         <IconButton {...commonProps}>
-          <Icon glyph="Cloud" />
+          <CloudIcon />
         </IconButton>
       </div>
     );
@@ -52,7 +53,7 @@ storiesOf('IconButton', module)
     return (
       <div className={getContainerStyle(commonProps.variant)}>
         <IconButton {...commonProps} href="https://mongodb.design">
-          <Icon glyph="Ellipsis" />
+          <EllipsisIcon />
         </IconButton>
       </div>
     );

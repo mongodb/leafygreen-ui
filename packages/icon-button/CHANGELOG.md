@@ -1,5 +1,16 @@
 # @leafygreen-ui/icon-button
 
+## 6.0.0
+
+### Major Changes
+
+- 1d86d56: Uses new `isGlyph` property from Glyph component to determine if IconButton child is a Glyph
+
+### Patch Changes
+
+- Updated dependencies [1d86d56]
+  - @leafygreen-ui/icon@6.1.0
+
 ## 5.0.5
 
 ### Patch Changes

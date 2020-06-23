@@ -1,13 +1,11 @@
+import type { OneOf } from '@leafygreen-ui/lib';
 import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 
 type PortalProps = {
   children?: React.ReactNode;
-} & (
-  | { container: HTMLElement; className?: never }
-  | { container?: never; className?: string }
-);
+} & OneOf<{ container: HTMLElement }, { className?: string }>;
 
 function createPortalContainer(className?: string): HTMLElement {
   const el = document.createElement('div');
@@ -25,22 +23,24 @@ function Portal(props: PortalProps) {
     props.container ?? createPortalContainer(props.className),
   );
 
+  // TODO(PD-702): Investigate using `usePrevious` hook from mongo-nav
   const prevPropsRef = useRef(props);
 
   useEffect(() => {
     const prevProps = prevPropsRef.current;
     prevPropsRef.current = props;
 
-    if (
-      prevProps.container !== props.container ||
-      prevProps.className !== props.className
-    ) {
+    if (prevProps.container !== props.container) {
       // Sending consumer console error to control how this component is used
       // eslint-disable-next-line no-console
       console.error(
-        'Changing the Portal container or className is not supported behavior and \
-may cause unintended side effects. Instead, create a new Portal instance.',
+        'Changing the Portal container is not supported behavior and may cause unintended side effects. Instead, create a new Portal instance.',
       );
+      return;
+    }
+
+    if (prevProps.className !== props.className) {
+      container.className = props.className ?? '';
     }
   });
 

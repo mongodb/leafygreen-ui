@@ -1,4 +1,6 @@
 import { uiColors } from '@leafygreen-ui/palette';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { css } from '@leafygreen-ui/emotion';
 
 /**
  * Options to determine color of Logo and LogoMark components
@@ -50,3 +52,31 @@ export interface SVGLogoProps {
   fill: Fill;
   className: string;
 }
+
+export type ProductLogoProps = HTMLElementProps<'svg'> & {
+  knockout?: boolean;
+  size?: number;
+};
+
+export const getColor = (
+  knockout: boolean,
+  size: number,
+  flat: string,
+  gradient: string,
+) => {
+  let fill;
+
+  if (!knockout) {
+    if (size <= 10) {
+      fill = flat;
+    } else {
+      fill = gradient;
+    }
+  } else {
+    fill = 'currentColor';
+  }
+
+  return css`
+    fill: ${fill};
+  `;
+};

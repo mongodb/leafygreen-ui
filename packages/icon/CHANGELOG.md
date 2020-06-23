@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 6.1.0
+
+### Minor Changes
+
+- 1d86d56: Adds static property `isGlyph` to Glyph components, and ensures that Glyph components can receive size values consistent with Icon sizes, rather than just a numeric value.
+
 ## 6.0.1
 
 ### Patch Changes

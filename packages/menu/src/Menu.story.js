@@ -4,7 +4,8 @@ import { select, boolean, number } from '@storybook/addon-knobs';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Menu, MenuSeparator, SubMenu, MenuItem } from '.';
 import { Align, Justify } from '@leafygreen-ui/popover';
-import Icon from '@leafygreen-ui/icon';
+import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
+import LaptopIcon from '@leafygreen-ui/icon/dist/Laptop';
 
 function Uncontrolled() {
   return (
@@ -18,7 +19,7 @@ function Uncontrolled() {
         <MenuItem
           active
           size={select('Size', ['default', 'large'], 'default')}
-          glyph={<Icon glyph="Cloud" />}
+          glyph={<CloudIcon />}
         >
           Active Menu Item
         </MenuItem>
@@ -52,7 +53,7 @@ function Controlled() {
         >
           <MenuItem
             size={select('Size', ['default', 'large'], 'large')}
-            glyph={<Icon glyph="Laptop" size="xlarge" />}
+            glyph={<LaptopIcon size="xlarge" />}
           >
             Active Menu Item
           </MenuItem>
@@ -80,7 +81,7 @@ function SubMenuExample() {
         <SubMenu
           title="Menu Item 1"
           description="https://google.com"
-          glyph={<Icon glyph="Cloud" size="xlarge" />}
+          glyph={<CloudIcon size="xlarge" />}
           active={true}
         >
           <MenuItem>SubMenu Item 1</MenuItem>
@@ -89,7 +90,7 @@ function SubMenuExample() {
         <SubMenu
           title="Menu Item 2"
           description="https://google.com"
-          glyph={<Icon glyph="Laptop" size="xlarge" />}
+          glyph={<LaptopIcon size="xlarge" />}
         >
           <MenuItem>Support 1</MenuItem>
         </SubMenu>
