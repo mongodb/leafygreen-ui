@@ -6,7 +6,6 @@ import BulbIcon from '@leafygreen-ui/icon/dist/Bulb';
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import { LGGlyph } from '@leafygreen-ui/icon/dist/types';
 
 export const Variant = {
   Note: 'note',
@@ -76,10 +75,10 @@ export const headerLabels = {
 } as const;
 
 export const headerIcons = {
-  [Variant.Note]: <InfoWithCircleIcon />,
-  [Variant.Tip]: <BulbIcon />,
-  [Variant.Important]: <ImportantWithCircleIcon />,
-  [Variant.Warning]: <WarningIcon />,
+  [Variant.Note]: InfoWithCircleIcon,
+  [Variant.Tip]: BulbIcon,
+  [Variant.Important]: ImportantWithCircleIcon,
+  [Variant.Warning]: WarningIcon,
 } as const;
 
 export const colorSets: Record<Variant, ColorSet> = {
@@ -131,34 +130,21 @@ interface ColorSet {
   icon: string;
 }
 
-export interface CustomCalloutProps {
-  colorSet: ColorSet;
-  headerIcon?: React.ReactElement<LGGlyph.ComponentProps>;
-  headerLabel: string;
+interface CalloutProps {
   title?: string;
   children: string;
   className?: string;
-}
-
-interface CalloutProps
-  extends Omit<CustomCalloutProps, 'colorSet' | 'headerLabel' | 'headerIcon'> {
   variant: Variant;
 }
 
-function CustomCallout({
-  colorSet,
-  headerIcon,
-  headerLabel,
+function Callout({
+  variant,
   title,
   children: contents,
   className,
-}: CustomCalloutProps) {
-  headerIcon =
-    headerIcon &&
-    React.cloneElement(headerIcon, {
-      fill: colorSet.icon,
-      className: headerIconStyle,
-    });
+}: CalloutProps) {
+  const colorSet = colorSets[variant];
+  const Icon = headerIcons[variant];
 
   const header = (
     <div
@@ -170,8 +156,8 @@ function CustomCallout({
         `,
       )}
     >
-      {headerIcon}
-      {headerLabel}
+      <Icon fill={colorSet.icon} className={headerIconStyle} />
+      {headerLabels[variant]}
     </div>
   );
 
@@ -199,25 +185,6 @@ function CustomCallout({
   );
 }
 
-function Callout({
-  variant,
-  title,
-  children: contents,
-  className,
-}: CalloutProps) {
-  return (
-    <CustomCallout
-      colorSet={colorSets[variant]}
-      headerIcon={headerIcons[variant]}
-      headerLabel={headerLabels[variant]}
-      title={title}
-      className={className}
-    >
-      {contents}
-    </CustomCallout>
-  );
-}
-
 Callout.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)).isRequired,
   title: PropTypes.string,
@@ -226,4 +193,3 @@ Callout.propTypes = {
 };
 
 export default Callout;
-export { CustomCallout };
