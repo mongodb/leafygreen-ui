@@ -31,7 +31,7 @@ interface OnPremUserMenuProps {
    * Object that supplies URL overrides to OnPremUserMenu component.
    * Shape: { onPrem: { profile, mfa, personalization, invitations, organizations, publicApiAccess, featureRequest }}
    */
-  urls: Pick<Required<URLSInterface>, 'onPrem'>;
+  urls: Pick<Required<URLSDefaults>, 'onPrem'>;
 
   /**
    * Whether or not multifactor authentication is permitted in the current enivronment.
