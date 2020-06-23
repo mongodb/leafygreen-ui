@@ -91,7 +91,13 @@ function TableHeader({
       <div className={flexDisplay}>
         <span className={labelStyle}>{label}</span>
         {sortable && (
-          <IconButton aria-label="sort" onClick={handleClick}>
+          <IconButton
+            aria-label="sort"
+            onClick={handleClick}
+            className={css`
+              margin-bottom: 2px;
+            `}
+          >
             <Icon
               size="small"
               glyph={glyph}
