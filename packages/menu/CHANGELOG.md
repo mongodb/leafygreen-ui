@@ -1,5 +1,15 @@
 # @leafygreen-ui/menu
 
+## 6.0.13
+
+### Patch Changes
+
+- 1d86d56: Imports Glyphs directly, rather than importing the entire Icon package, when Glyph components are used
+- Updated dependencies [1d86d56]
+- Updated dependencies [1d86d56]
+  - @leafygreen-ui/icon@6.1.0
+  - @leafygreen-ui/icon-button@6.0.0
+
 ## 6.0.12
 
 ### Patch Changes

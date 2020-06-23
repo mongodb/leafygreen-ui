@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 2.1.0
+
+### Minor Changes
+
+- 9ddfb51: Adds Product Logos to logo package
+
 ## 2.0.0
 
 ### Major Changes

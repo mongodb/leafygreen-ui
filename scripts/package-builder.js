@@ -137,7 +137,6 @@ storiesOf('${PACKAGE_UC}', module)
 const spec = `
 import React from 'react';
 import { render } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
 import ${PACKAGE_UC} from '.';
 
 describe('packages/${PACKAGE_LC}', () => {

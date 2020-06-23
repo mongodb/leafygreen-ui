@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import Tooltip from '@leafygreen-ui/tooltip';
 import IconButton from '@leafygreen-ui/icon-button';
-import Icon from '@leafygreen-ui/icon';
+import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
+import InviteUserIcon from '@leafygreen-ui/icon/dist/InviteUser';
+import ActivityFeedIcon from '@leafygreen-ui/icon/dist/ActivityFeed';
+import BellIcon from '@leafygreen-ui/icon/dist/Bell';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -232,18 +235,6 @@ const tooltipStyles = css`
   text-align: center;
 `;
 
-export function displayProductName(today = new Date(Date.now())) {
-  const mdbLiveDate = new Date('June 8, 2020 0:00:00');
-
-  if (today < mdbLiveDate) {
-    return 'Stitch';
-  }
-
-  return 'Realm';
-}
-
-const secondTabName = displayProductName();
-
 type ProjectNavProps = Pick<
   MongoNavInterface,
   | 'activeProduct'
@@ -365,7 +356,7 @@ export default function ProjectNav({
             data-testid="project-nav-project-menu"
             onClick={onElementClick(ProjectNavProjectDropdown)}
           >
-            <Icon glyph="Ellipsis" className={menuIconStyle} />
+            <EllipsisIcon className={menuIconStyle} />
           </IconButton>
         }
       >
@@ -458,7 +449,7 @@ export default function ProjectNav({
                     className={iconStyle}
                   />
                 )}
-                {secondTabName}
+                Realm
               </a>
             </li>
 
@@ -505,7 +496,7 @@ export default function ProjectNav({
                 data-testid="project-nav-invite"
                 onClick={onElementClick(ProjectNavInvite)}
               >
-                <Icon glyph="InviteUser" size="large" />
+                <InviteUserIcon size="large" />
               </IconButton>
             }
           >
@@ -530,7 +521,7 @@ export default function ProjectNav({
                 data-testid="project-nav-activity-feed"
                 onClick={onElementClick(ProjectNavActivityFeed)}
               >
-                <Icon glyph="ActivityFeed" size="large" />
+                <ActivityFeedIcon size="large" />
               </IconButton>
             }
           >
@@ -562,7 +553,7 @@ export default function ProjectNav({
                   </div>
                 )}
 
-                <Icon glyph="Bell" size="large" />
+                <BellIcon size="large" />
               </IconButton>
             }
           >
