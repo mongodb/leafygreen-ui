@@ -2,7 +2,7 @@ import { RecursivePartial } from '@leafygreen-ui/lib';
 
 const NavElement = {
   OrgNavOrgSettings: 'orgNavOrgSettings',
-  OrgNavAccessManager: 'orgNavAccessManager',
+  OrgNavAccessManagerDropdown: 'orgNavAccessManagerDropdown',
   OrgNavSupport: 'orgNavSupport',
   OrgNavBilling: 'orgNavBilling',
   OrgNavAdmin: 'orgNavAdmin',
@@ -12,7 +12,6 @@ const NavElement = {
   OrgNavOrgSelectTrigger: 'orgNavOrgSelectTrigger',
   OrgNavOrgSelectSearch: 'orgNavOrgSelectSearch',
   OrgNavViewAllOrganizations: 'orgNavViewAllOrganizations',
-  OrgNavDropdown: 'orgNavDropdown',
   OrgNavDropdownOrgAccessManager: 'orgNavDropdownOrgAccessManager',
   OrgNavDropdownProjectAccessManager: 'orgNavDropdownProjectAccessManager',
   ProjectNavProjectSelectTrigger: 'projectNavProjectSelectTrigger',
@@ -53,7 +52,7 @@ export { NavElement };
 
 const ActiveNavElement = {
   OrgNavOrgSettings: NavElement.OrgNavOrgSettings,
-  OrgNavAccessManager: NavElement.OrgNavAccessManager,
+  OrgNavAccessManagerDropdown: NavElement.OrgNavAccessManagerDropdown,
   OrgNavSupport: NavElement.OrgNavSupport,
   OrgNavBilling: NavElement.OrgNavBilling,
   OrgNavAdmin: NavElement.OrgNavAdmin,
