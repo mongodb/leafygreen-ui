@@ -30,16 +30,17 @@ function Portal(props: PortalProps) {
     const prevProps = prevPropsRef.current;
     prevPropsRef.current = props;
 
-    if (
-      prevProps.container !== props.container ||
-      prevProps.className !== props.className
-    ) {
+    if (prevProps.container !== props.container) {
       // Sending consumer console error to control how this component is used
       // eslint-disable-next-line no-console
       console.error(
-        'Changing the Portal container or className is not supported behavior and \
-may cause unintended side effects. Instead, create a new Portal instance.',
+        'Changing the Portal container is not supported behavior and may cause unintended side effects. Instead, create a new Portal instance.',
       );
+      return;
+    }
+
+    if (prevProps.className !== props.className) {
+      container.className = props.className ?? '';
     }
   });
 
