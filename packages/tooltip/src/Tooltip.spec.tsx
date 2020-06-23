@@ -7,6 +7,7 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import Tooltip, { TooltipProps } from './Tooltip';
+import { OneOf } from '@leafygreen-ui/lib';
 
 const buttonText = 'trigger button';
 const tooltipTestId = 'tooltip-test-id';
@@ -20,7 +21,13 @@ interface ButtonTestProps {
   [key: string]: any;
 }
 
-function renderTooltip(props: Partial<TooltipProps> = {}) {
+function renderTooltip(
+  props: Omit<TooltipProps, 'children' | 'trigger'> &
+    OneOf<
+      { usePortal?: true; portalClassName?: string },
+      { usePortal: false }
+    > = {},
+) {
   const utils = render(
     <>
       <div data-testid="backdrop" />
