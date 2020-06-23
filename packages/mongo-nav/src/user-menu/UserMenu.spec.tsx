@@ -133,10 +133,12 @@ describe('packages/mongo-nav/user-menu', () => {
     });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
-    const accountButton = getByTestId('user-menu-account-button');
+    const accountButton = getByTestId(
+      'user-menu-account-button',
+    ) as HTMLButtonElement;
 
     expect(accountButton.tagName.toLowerCase()).toBe('button');
-    expect((accountButton as HTMLButtonElement).disabled).toBe(true);
+    expect(accountButton.disabled).toBe(true);
     expect(accountButton.getAttribute('aria-disabled')).toBe('true');
   });
 
