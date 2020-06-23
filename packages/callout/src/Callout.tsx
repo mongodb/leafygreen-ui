@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import BulbIcon from '@leafygreen-ui/icon/dist/Bulb';
@@ -18,7 +19,7 @@ export type Variant = typeof Variant[keyof typeof Variant];
 
 const baseStyle = css`
   border-radius: 6px;
-  box-shadow: 0px 2px 5px 0 rgba(33, 49, 60, 0.1);
+  box-shadow: 0px 2px 5px 0 ${transparentize(0.9, uiColors.gray.dark3)};
   overflow: hidden;
   position: relative;
 
