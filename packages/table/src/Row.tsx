@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
@@ -123,6 +123,7 @@ interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
   expanded?: boolean;
   disabled?: boolean;
   indentLevel?: number;
+  isParentExpanded?: boolean;
 }
 
 const Row = React.forwardRef(
@@ -133,6 +134,7 @@ const Row = React.forwardRef(
       children,
       className,
       indentLevel = 0,
+      isParentExpanded = true,
       ...rest
     }: RowProps,
     ref: React.Ref<any>,
@@ -148,7 +150,7 @@ const Row = React.forwardRef(
     const nodeRef = React.useRef(null);
     let hasSeenFirstCell = false;
 
-    React.useEffect(() => {
+    useEffect(() => {
       let hasDispatchedHasNestedRows = false;
       let hasDispatchedHasRowSpan = false;
 
@@ -205,6 +207,7 @@ const Row = React.forwardRef(
     const nestedRows = React.Children.map(children, child => {
       if (isComponentType(child, 'Row')) {
         return React.cloneElement(child, {
+          isParentExpanded: isExpanded,
           indentLevel: indentLevel + 1,
           ref: nodeRef,
         });
@@ -292,7 +295,11 @@ const Row = React.forwardRef(
           {renderedChildren}
         </tr>
 
-        <Transition in={isExpanded} timeout={150} nodeRef={nodeRef}>
+        <Transition
+          in={isExpanded && isParentExpanded}
+          timeout={150}
+          nodeRef={nodeRef}
+        >
           {(state: string) => {
             const props = {
               ref: nodeRef,
