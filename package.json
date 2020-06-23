@@ -40,11 +40,6 @@
     "release": "yarn changeset publish --public",
     "release:site": "gh-pages --dist storybook/public"
   },
-  "husky": {
-    "hooks": {
-      "pre-push": "yarn lint"
-    }
-  },
   "devDependencies": {
     "@babel/core": "7.9.0",
     "@babel/plugin-proposal-class-properties": "7.8.3",
@@ -103,7 +98,6 @@
     "eslint-plugin-react-hooks": "^3.0.0",
     "file-loader": "^6.0.0",
     "gh-pages": "^2.2.0",
-    "husky": "^4.2.3",
     "jest": "^26.0.1",
     "jest-junit": "^10.0.0",
     "lerna": "3.20.2",
