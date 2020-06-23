@@ -287,7 +287,7 @@ function OrgNav({
             onClick={onElementClick(NavElement.OrgNavAccessManager, () =>
               setAccessManagerOpen(curr => !curr),
             )}
-            withIcon={true}
+            isAccessManager={true}
           >
             Access Manager
             <AccessManagerIcon

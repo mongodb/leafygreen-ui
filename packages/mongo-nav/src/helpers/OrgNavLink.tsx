@@ -88,7 +88,7 @@ interface OrgNavLinkProps {
   children?: React.ReactNode;
   className?: string;
   loading?: boolean;
-  withIcon?: boolean;
+  isAccessManager?: boolean;
   onClick?: React.MouseEventHandler;
 }
 
@@ -98,12 +98,12 @@ function OrgNavLink({
   href,
   children,
   className,
-  withIcon,
+  isAccessManager,
   ...rest
 }: OrgNavLinkProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
-  const Component = withIcon ? 'a' : 'button';
+  const Component = isAccessManager ? 'button' : 'a';
 
   return (
     <Component
@@ -129,7 +129,7 @@ function OrgNavLink({
             position: relative;
           `,
           {
-            [displayFlex]: withIcon,
+            [displayFlex]: isAccessManager,
           },
         )}
       >
