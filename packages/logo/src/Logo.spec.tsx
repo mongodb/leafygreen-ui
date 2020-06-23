@@ -1,9 +1,31 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import { Logo, LogoMark } from '.';
+import { render, screen } from '@testing-library/react';
 
-afterAll(cleanup);
+import {
+  Logo,
+  LogoMark,
+  CloudManagerLogo,
+  AtlasLogo,
+  RealmLogo,
+  ChartsLogo,
+} from '.';
+
+const map = {
+  cloudManager: { title: 'Cloud Manager Logo', icon: CloudManagerLogo },
+  atlas: { title: 'Atlas Logo', icon: AtlasLogo },
+  realm: { title: 'Realm Logo', icon: RealmLogo },
+  charts: { title: 'Charts Logo', icon: ChartsLogo },
+};
+
+const renderProductLogo = (product, props = {}) => {
+  const Logo = map[product].icon;
+  render(
+    <div key={product}>
+      <Logo {...props} data-testid="logo-test-id" />
+      <div>{product}</div>
+    </div>,
+  );
+};
 
 describe('packages/logo', () => {
   describe('logomark component', () => {
@@ -73,6 +95,19 @@ describe('packages/logo', () => {
       const logo = getByTestId(testId);
 
       expect(logo).toBeInTheDocument();
+    });
+  });
+
+  describe('product logos', () => {
+    describe('by default renders monochrome product logo with a height of 18', () => {
+      Object.keys(map).forEach(product => {
+        test(`for the ${product} logo`, () => {
+          renderProductLogo(product);
+          const logo = screen.getByTestId('logo-test-id');
+          expect(logo).toBeInTheDocument();
+          expect(logo.getAttribute('height')).toBe('18');
+        });
+      });
     });
   });
 });

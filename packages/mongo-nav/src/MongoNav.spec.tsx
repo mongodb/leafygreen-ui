@@ -6,7 +6,6 @@ import {
   act,
   waitFor,
 } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import { dataFixtures } from './data';
 import MongoNav from './MongoNav';
