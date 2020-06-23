@@ -50,8 +50,6 @@ export default function Table<Shape>({
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  console.log(selectableProp);
-
   useEffect(() => {
     dispatch({
       type: Types.SelectableTable,
@@ -80,7 +78,7 @@ export default function Table<Shape>({
 
   const rows:
     | Array<React.ReactElement>
-    | undefined = state.data?.map((datum, index) => children({ datum, index }));
+    | undefined = state.data.map((datum, index) => children({ datum, index }));
 
   return (
     <TableProvider state={state} dispatch={dispatch}>

@@ -77,7 +77,7 @@ export { DataType };
 
 export interface State {
   sort?: Sort;
-  data?: Array<any>;
+  data: Array<any>;
   columnInfo?: {
     [k in number]: { dataType?: DataType };
   };

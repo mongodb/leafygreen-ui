@@ -20,20 +20,20 @@ const rowStyle = css`
   }
 `;
 
-const rowHoverStyle = css`
-  &:hover {
-    background-color: #ffffff;
-    box-shadow: 0 1px 3px 0 #b8c4c2;
-  }
-`;
+// const rowHoverStyle = css`
+//   &:hover {
+//     background-color: #ffffff;
+//     box-shadow: 0 1px 3px 0 #b8c4c2;
+//   }
+// `;
 
 const altColor = css`
   &:nth-of-type(even) {
     background-color: ${uiColors.gray.light3};
 
-    &:hover {
-      border: 1px solid #e7eeec;
-    }
+    // &:hover {
+    //   border: 1px solid #e7eeec;
+    // }
   }
 `;
 
@@ -274,7 +274,7 @@ const Row = React.forwardRef(
             {
               [altColor]: shouldAltRowColor,
               [disabledStyle]: disabled,
-              [rowHoverStyle]: !hasRowSpan,
+              // [rowHoverStyle]: !hasRowSpan,
             },
             className,
           )}
