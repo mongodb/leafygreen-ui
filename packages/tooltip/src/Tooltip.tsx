@@ -277,10 +277,9 @@ function Tooltip({
     enabled: open && triggerEvent === 'click',
   });
 
-  const portalProps = { usePortal, portalClassName } as Pick<
-    PopoverProps,
-    'usePortal' | 'className'
-  >;
+  const portalProps = usePortal
+    ? { usePortal, portalClassName }
+    : { usePortal };
 
   const tooltip = (
     <Popover
