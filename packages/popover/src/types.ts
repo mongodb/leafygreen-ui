@@ -1,3 +1,4 @@
+import type { OneOf } from '@leafygreen-ui/lib';
 import React from 'react';
 
 /**
@@ -107,25 +108,24 @@ export type PopoverProps = {
    * default: false
    */
   adjustOnMutation?: boolean;
-} & (
-  | {
-      /**
-       * Specifies that the popover content will appear portaled to the end of the DOM,
-       * rather than in the DOM tree.
-       *
-       * default: `true`
-       */
-      usePortal?: true;
+} & OneOf<
+  {
+    /**
+     * Specifies that the popover content will appear portaled to the end of the DOM,
+     * rather than in the DOM tree.
+     *
+     * default: `true`
+     */
+    usePortal?: true;
 
-      /**
-       * If using a portal, specifies a class name to apply to the root element of the portal.
-       *
-       * default: undefined
-       */
-      portalClassName?: string;
-    }
-  | {
-      usePortal: false;
-      portalClassName?: never;
-    }
-);
+    /**
+     * If using a portal, specifies a class name to apply to the root element of the portal.
+     *
+     * default: undefined
+     */
+    portalClassName?: string;
+  },
+  {
+    usePortal: false;
+  }
+>;
