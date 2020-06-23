@@ -62,10 +62,10 @@ describe('packages/callout', () => {
 
     test(`renders header icon: "${headerIcon.type.displayName}"`, () => {
       const { rerender } = render(<CustomCallout {...defaultProps} />);
-      expect(screen.queryByTitle('Edit Icon')).toBeNull();
+      expect(screen.queryByTitle('Info With Circle Icon')).toBeNull();
 
       rerender(<CustomCallout {...defaultProps} headerIcon={headerIcon} />);
-      expect(screen.getByTitle('Edit Icon')).toBeVisible();
+      expect(screen.getByTitle('Info With Circle Icon')).toBeVisible();
     });
 
     test(`renders header label: "${headerLabel}"`, () => {
