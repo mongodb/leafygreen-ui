@@ -12,7 +12,6 @@ const NavElement = {
   OrgNavOrgSelectTrigger: 'orgNavOrgSelectTrigger',
   OrgNavOrgSelectSearch: 'orgNavOrgSelectSearch',
   OrgNavViewAllOrganizations: 'orgNavViewAllOrganizations',
-  // OrgNavDropdown: 'orgNavDropdown',
   OrgNavDropdownOrgAccessManager: 'orgNavDropdownOrgAccessManager',
   OrgNavDropdownProjectAccessManager: 'orgNavDropdownProjectAccessManager',
   ProjectNavProjectSelectTrigger: 'projectNavProjectSelectTrigger',

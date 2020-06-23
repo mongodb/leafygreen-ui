@@ -48,7 +48,6 @@ describe('packages/mongo-nav/src/org-nav', () => {
     const { queryByTestId = () => null } = queries;
     expectedElements.paymentStatus = queryByTestId('org-nav-payment-status');
     expectedElements.accessManager = queryByTestId('org-nav-access-manager');
-    // expectedElements.accessManagerDropdown = queryByTestId('org-nav-dropdown');
     expectedElements.accessManagerOrg = queryByTestId(
       'org-nav-dropdown-org-access-manager',
     );

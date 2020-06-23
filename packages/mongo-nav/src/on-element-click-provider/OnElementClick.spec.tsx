@@ -7,7 +7,6 @@ const defaultElements = {
   [NavElement.OrgNavLeaf]: 'org-nav-leaf',
   [NavElement.OrgNavOrgSettings]: 'org-trigger-settings',
   [NavElement.OrgNavAccessManager]: 'org-nav-access-manager',
-  // [NavElement.OrgNavDropdown]: 'org-nav-dropdown',
   [NavElement.OrgNavSupport]: 'org-nav-support',
   [NavElement.OrgNavBilling]: 'org-nav-billing',
   [NavElement.OrgNavAllClusters]: 'org-nav-all-clusters-link',
