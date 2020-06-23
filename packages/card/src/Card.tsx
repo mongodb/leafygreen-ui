@@ -21,7 +21,7 @@ interface CardProps {
   className?: string;
 }
 
-const Card: ExtendableBox<CardProps> = ({ className, ...rest }: CardProps) => {
+const Card: ExtendableBox<{}> = ({ className, ...rest }: CardProps) => {
   return <Box className={cx(containerStyle, className)} {...rest} />;
 };
 

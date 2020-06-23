@@ -289,7 +289,7 @@ export interface URLSProp {
 
 export interface URLSDefaults {
   userMenu: UserMenuURLS;
-  mongoSelect: MongoSelectURLS;
+  mongoSelect: Required<MongoSelectURLS>;
   orgNav: OrgNavURLS;
   projectNav: ProjectNavURLS;
   onPrem: Required<OnPremURLS>;

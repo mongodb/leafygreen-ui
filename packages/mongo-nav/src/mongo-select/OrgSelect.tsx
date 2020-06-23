@@ -193,7 +193,7 @@ function OrgSelect({
   mode,
   hosts = {},
   data = [],
-  urls = {},
+  urls,
   onChange: onChangeProp,
   constructOrganizationURL,
   admin = false,
@@ -431,7 +431,7 @@ function OrgSelect({
               <MenuSeparator />
               <MenuItem
                 onKeyDown={onKeyDown}
-                href={urls.viewAllOrganizations!}
+                href={urls.viewAllOrganizations}
                 data-testid="org-select-view-all-orgs"
                 onClick={onElementClick(NavElement.OrgNavViewAllOrganizations)}
               >
