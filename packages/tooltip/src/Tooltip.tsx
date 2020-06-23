@@ -1,3 +1,4 @@
+import type { OneOf } from '@leafygreen-ui/lib';
 import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Popover, {
@@ -134,28 +135,27 @@ export type TooltipProps = Omit<
      * default: true
      */
     enabled?: boolean;
-  } & (
-    | {
-        /**
-         * Specifies that the popover content will appear portaled to the end of the DOM,
-         * rather than in the DOM tree.
-         *
-         * default: `true`
-         */
-        usePortal?: true;
+  } & OneOf<
+    {
+      /**
+       * Specifies that the popover content will appear portaled to the end of the DOM,
+       * rather than in the DOM tree.
+       *
+       * default: `true`
+       */
+      usePortal?: true;
 
-        /**
-         * If using a portal, specifies a class name to apply to the root element of the portal.
-         *
-         * default: undefined
-         */
-        portalClassName?: string;
-      }
-    | {
-        usePortal: false;
-        portalClassName?: never;
-      }
-  );
+      /**
+       * If using a portal, specifies a class name to apply to the root element of the portal.
+       *
+       * default: undefined
+       */
+      portalClassName?: string;
+    },
+    {
+      usePortal: false;
+    }
+  >;
 
 /**
  * # Tooltip
