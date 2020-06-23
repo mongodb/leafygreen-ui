@@ -281,13 +281,16 @@ function OrgNav({
       {!disabled && !isMobile && (
         <>
           <OrgNavLink
-            isActive={activeNav === ActiveNavElement.OrgNavAccessManager}
+            isActive={
+              activeNav === ActiveNavElement.OrgNavAccessManagerDropdown
+            }
             loading={!current}
-            data-testid="org-nav-access-manager"
-            onClick={onElementClick(NavElement.OrgNavAccessManager, () =>
-              setAccessManagerOpen(curr => !curr),
+            data-testid="org-nav-access-manager-dropdown"
+            onClick={onElementClick(
+              NavElement.OrgNavAccessManagerDropdown,
+              () => setAccessManagerOpen(curr => !curr),
             )}
-            isAccessManager={true}
+            isButton={true}
           >
             Access Manager
             <AccessManagerIcon
@@ -313,7 +316,9 @@ function OrgNav({
                   data-testid="org-nav-dropdown-org-access-manager"
                   description={current.orgName}
                   size="large"
-                  active={activeNav === ActiveNavElement.OrgNavAccessManager}
+                  active={
+                    activeNav === ActiveNavElement.OrgNavAccessManagerDropdown
+                  }
                   onClick={onElementClick(
                     NavElement.OrgNavDropdownOrgAccessManager,
                     () => setAccessManagerOpen(false),

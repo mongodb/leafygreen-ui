@@ -84,7 +84,7 @@ _Any other properties will be spread on the root element_
 
 #### Org Nav Elements
 
-`OrgNavAccessManager`
+`OrgNavAccessManagerDropdown`
 `OrgNavAdmin`
 `OrgNavAllClusters`
 `OrgNavBilling`

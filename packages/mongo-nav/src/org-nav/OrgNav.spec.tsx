@@ -47,7 +47,9 @@ describe('packages/mongo-nav/src/org-nav', () => {
   const setExpectedElements = () => {
     const { queryByTestId = () => null } = queries;
     expectedElements.paymentStatus = queryByTestId('org-nav-payment-status');
-    expectedElements.accessManager = queryByTestId('org-nav-access-manager');
+    expectedElements.accessManagerDropdown = queryByTestId(
+      'org-nav-access-manager-dropdown',
+    );
     expectedElements.accessManagerOrg = queryByTestId(
       'org-nav-dropdown-org-access-manager',
     );
@@ -249,7 +251,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
     );
 
     it('shows project access as disabled', () => {
-      fireEvent.click(expectedElements.accessManager!);
+      fireEvent.click(expectedElements.accessManagerDropdown!);
       setExpectedElements();
 
       expect(expectedElements.accessManagerProject).toBeInTheDocument();
@@ -345,7 +347,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
           currentProjectName: 'Test Project',
           currentProjectId: 'test-project-id',
         });
-        fireEvent.click(expectedElements.accessManager as HTMLElement);
+        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
         setExpectedElements();
 
         expect(
@@ -363,7 +365,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
           onPremEnabled: true,
           showProjectNav: false,
         });
-        fireEvent.click(expectedElements.accessManager as HTMLElement);
+        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
         setExpectedElements();
 
         expect(
@@ -382,7 +384,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
           currentProjectName: 'Test Project',
           currentProjectId: 'test-project-id',
         });
-        fireEvent.click(expectedElements.accessManager as HTMLElement);
+        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
         setExpectedElements();
 
         expect(
@@ -399,7 +401,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
         renderComponent({
           showProjectNav: false,
         });
-        fireEvent.click(expectedElements.accessManager as HTMLElement);
+        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
         setExpectedElements();
 
         expect(
