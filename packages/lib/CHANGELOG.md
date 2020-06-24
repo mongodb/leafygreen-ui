@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 4.5.0
+
+### Minor Changes
+
+- 1c797b3: Adds `OneOf` type helper
+
 ## 4.4.1
 
 ### Patch Changes

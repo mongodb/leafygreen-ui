@@ -1,7 +1,6 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { textLoadingStyle, anchorOverrides } from '../styles';
 
@@ -31,7 +30,7 @@ const linkText = css`
       transform: scale(0.8, 1);
       transition: 150ms ease-in-out;
       height: 3px;
-      border-radius: 50px;
+      border-radius: 200px;
     }
   }
 
@@ -47,12 +46,6 @@ const linkText = css`
 const activeLink = css`
   font-weight: bold;
   color: ${uiColors.green.base};
-
-  &:hover {
-    span:after {
-      background-color: ${uiColors.green.light2};
-    }
-  }
 `;
 
 const navItemFocusStyle = css`
@@ -68,12 +61,30 @@ const navItemFocusStyle = css`
   }
 `;
 
-interface OrgNavLinkProps extends HTMLElementProps<'a'> {
+const displayFlex = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const resetButtonStyles = css`
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+interface OrgNavLinkProps {
   isActive?: boolean;
   href?: string;
   children?: React.ReactNode;
   className?: string;
   loading?: boolean;
+  isButton?: boolean;
+  onClick?: React.MouseEventHandler;
 }
 
 function OrgNavLink({
@@ -82,15 +93,19 @@ function OrgNavLink({
   href,
   children,
   className,
+  isButton,
   ...rest
 }: OrgNavLinkProps) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
+  const Component = isButton ? 'button' : 'a';
+
   return (
-    <a
+    <Component
       href={href}
       aria-disabled={loading}
       className={cx(
+        resetButtonStyles,
         anchorOverrides,
         orgNavAnchorOverrides,
         linkText,
@@ -108,11 +123,14 @@ function OrgNavLink({
           css`
             position: relative;
           `,
+          {
+            [displayFlex]: isButton,
+          },
         )}
       >
         {children}
       </span>
-    </a>
+    </Component>
   );
 }
 

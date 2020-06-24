@@ -3,18 +3,12 @@ import { render, cleanup } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
 import Portal from '.';
 
-afterAll(cleanup);
+afterEach(async () => {
+  await cleanup();
+  document.body.innerHTML = '';
+});
 
 describe('packages/Portal', () => {
-  const { container } = render(
-    <div>
-      Existing content on the DOM
-      <Portal>
-        <div>Content portaled to the end of the DOM</div>
-      </Portal>
-    </div>,
-  );
-
   function getByIdOrThrow(id: string) {
     const el = document.getElementById(id);
 
@@ -26,6 +20,15 @@ describe('packages/Portal', () => {
   }
 
   test(`appends portal content to document body`, () => {
+    render(
+      <div>
+        Existing content on the DOM
+        <Portal>
+          <div>Content portaled to the end of the DOM</div>
+        </Portal>
+      </div>,
+    );
+
     const { firstChild, lastChild } = document.body;
 
     if (!typeIs.element(firstChild)) {
@@ -46,16 +49,23 @@ describe('packages/Portal', () => {
   });
 
   test(`appends portal content to custom container`, () => {
+    const { container } = render(
+      <div>
+        Existing content on the DOM
+        <Portal>
+          <div>Content portaled to the end of the DOM</div>
+        </Portal>
+      </div>,
+    );
+
     const div = document.createElement('div');
     div.id = 'custom-container';
     document.body.appendChild(div);
 
     render(
-      <div>
-        <Portal container={getByIdOrThrow('custom-container')}>
-          Portaled to a custom node
-        </Portal>
-      </div>,
+      <Portal container={getByIdOrThrow('custom-container')}>
+        Portaled to a custom node
+      </Portal>,
       { container },
     );
 
@@ -64,28 +74,93 @@ describe('packages/Portal', () => {
     );
   });
 
-  test('does not move Portaled content when the container props is changed, and logs an error to the console', () => {
+  test('portal forwards className to default container', () => {
     const { rerender } = render(
-      <div>
-        <Portal>Moving Portaled Content</Portal>
-      </div>,
+      <Portal className="test-classname">
+        <div>Content portaled to the end of the DOM</div>
+      </Portal>,
     );
 
-    rerender(
-      <div>
-        <Portal container={getByIdOrThrow('custom-container')}>
-          Moving Portaled Content
-        </Portal>
-      </div>,
-    );
-
-    const lastChild = document.body.lastChild;
+    const { lastChild } = document.body;
 
     if (!typeIs.element(lastChild)) {
       throw new Error('Could not find lastChild element');
     }
 
-    expect(lastChild.innerHTML).toBe('Moving Portaled Content');
+    expect(lastChild.outerHTML).toBe(
+      `<div class="test-classname"><div>Content portaled to the end of the DOM</div></div>`,
+    );
+
+    rerender(
+      <Portal className="test-classname-updated">
+        <div>Content portaled to the end of the DOM</div>
+      </Portal>,
+    );
+
+    expect(lastChild.outerHTML).toBe(
+      `<div class="test-classname-updated"><div>Content portaled to the end of the DOM</div></div>`,
+    );
+  });
+
+  // eslint-disable-next-line jest/expect-expect
+  test('container and className props cannot both be provided', () => {
+    const div = document.createElement('div');
+    div.id = 'custom-container';
+    document.body.appendChild(div);
+
+    // @ts-expect-error
+    <Portal
+      container={getByIdOrThrow('custom-container')}
+      className="test-classname"
+    >
+      <div>Content portaled to the end of the DOM</div>
+    </Portal>;
+  });
+
+  test('does not move Portaled content and logs an error to the console when the container props is changed', () => {
+    const { rerender, unmount } = render(
+      <Portal>Moving Portaled Content</Portal>,
+    );
+
+    const initialContainer = document.body.lastChild;
+
+    if (!typeIs.element(initialContainer)) {
+      throw new Error('Could not find initialContainer element');
+    }
+
+    expect(initialContainer.innerHTML).toBe('Moving Portaled Content');
+
+    const logError = jest.spyOn(console, 'error').mockImplementation();
+
+    const div = document.createElement('div');
+    div.id = 'custom-container';
+    document.body.appendChild(div);
+
+    rerender(
+      <Portal container={getByIdOrThrow('custom-container')}>
+        Moving Portaled Content
+      </Portal>,
+    );
+
+    const customContainer = document.body.lastChild;
+    expect(customContainer).toBe(getByIdOrThrow('custom-container'));
+
+    if (!typeIs.element(customContainer)) {
+      throw new Error('Could not find customContainer element');
+    }
+
+    expect(customContainer.innerHTML).toBe('');
+    expect(initialContainer.innerHTML).toBe('Moving Portaled Content');
+
+    expect(logError).toHaveBeenCalledTimes(1);
+    expect(logError).toHaveBeenCalledWith(
+      'Changing the Portal container is not supported behavior and may cause unintended side effects. Instead, create a new Portal instance.',
+    );
+    logError.mockRestore();
+
+    unmount();
+    expect(initialContainer).not.toBeInTheDocument();
+    expect(customContainer).toBeInTheDocument();
   });
 
   test(`removes portal content from custom container`, () => {
@@ -101,11 +176,7 @@ describe('packages/Portal', () => {
   });
 
   test('cleans up default container', () => {
-    const { container, unmount } = render(
-      <div>
-        <Portal>Portaled</Portal>
-      </div>,
-    );
+    const { container, unmount } = render(<Portal>Portaled</Portal>);
     unmount();
     expect(container.innerHTML).toBe('');
   });
