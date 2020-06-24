@@ -147,21 +147,6 @@ function Callout({
   const colorSet = colorSets[variant];
   const Icon = headerIcons[variant];
 
-  const header = (
-    <div
-      className={cx(
-        headerStyle,
-        css`
-          background-color: ${colorSet.header.background};
-          color: ${colorSet.header.text};
-        `,
-      )}
-    >
-      <Icon fill={colorSet.icon} className={headerIconStyle} />
-      {headerLabels[variant]}
-    </div>
-  );
-
   return (
     <div
       role="note"
@@ -177,7 +162,18 @@ function Callout({
         className,
       )}
     >
-      {header}
+      <div
+        className={cx(
+          headerStyle,
+          css`
+            background-color: ${colorSet.header.background};
+            color: ${colorSet.header.text};
+          `,
+        )}
+      >
+        <Icon fill={colorSet.icon} className={headerIconStyle} />
+        {headerLabels[variant]}
+      </div>
       <div className={bodyStyle}>
         {title && <div className={titleStyle}>{title}</div>}
         <div className={bodyTextStyle}>{contents}</div>
