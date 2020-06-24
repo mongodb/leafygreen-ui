@@ -1,3 +1,4 @@
+import type { OneOf } from '@leafygreen-ui/lib';
 import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Popover, {
@@ -84,55 +85,77 @@ interface PopoverFunctionParameters {
 
 type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'spacing' | 'refEl'>;
 
-interface TooltipProps
-  extends Omit<HTMLElementProps<'div'>, keyof ModifiedPopoverProps>,
-    ModifiedPopoverProps {
-  /**
-   * A slot for the element used to trigger the `Tooltip`.
-   * default: hover
-   */
-  trigger: React.ReactElement | Function;
+export type TooltipProps = Omit<
+  HTMLElementProps<'div'>,
+  keyof ModifiedPopoverProps
+> &
+  ModifiedPopoverProps & {
+    /**
+     * A slot for the element used to trigger the `Tooltip`.
+     * default: hover
+     */
+    trigger: React.ReactElement | Function;
 
-  /**
-   * Determines if a `hover` or `click` event will trigger the opening of a `Tooltip`.
-   * default: 'hover'
-   */
-  triggerEvent?: TriggerEvent;
+    /**
+     * Determines if a `hover` or `click` event will trigger the opening of a `Tooltip`.
+     * default: 'hover'
+     */
+    triggerEvent?: TriggerEvent;
 
-  /**
-   * Controls component and determines the open state of the `Tooltip`
-   * default: `false`
-   */
-  open?: boolean;
+    /**
+     * Controls component and determines the open state of the `Tooltip`
+     * default: `false`
+     */
+    open?: boolean;
 
-  /**
-   * Callback to change the open state of the `Tooltip`.
-   */
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+    /**
+     * Callback to change the open state of the `Tooltip`.
+     */
+    setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 
-  /**
-   * Whether the `Tooltip` will be `light` or `dark`.
-   * default: light
-   */
-  variant?: Variant;
+    /**
+     * Whether the `Tooltip` will be `light` or `dark`.
+     * default: light
+     */
+    variant?: Variant;
 
-  /**
-   * id given to `Tooltip` content.
-   */
-  id?: string;
+    /**
+     * id given to `Tooltip` content.
+     */
+    id?: string;
 
-  /**
-   * Callback to determine whether or not `Tooltip` should close when user tries to close it.
-   *
-   */
-  shouldClose?: () => boolean;
+    /**
+     * Callback to determine whether or not `Tooltip` should close when user tries to close it.
+     *
+     */
+    shouldClose?: () => boolean;
 
-  /**
-   * Enables Tooltip to trigger based on the event specified by `triggerEvent`.
-   * default: true
-   */
-  enabled?: boolean;
-}
+    /**
+     * Enables Tooltip to trigger based on the event specified by `triggerEvent`.
+     * default: true
+     */
+    enabled?: boolean;
+  } & OneOf<
+    {
+      /**
+       * Specifies that the popover content will appear portaled to the end of the DOM,
+       * rather than in the DOM tree.
+       *
+       * default: `true`
+       */
+      usePortal?: true;
+
+      /**
+       * If using a portal, specifies a class name to apply to the root element of the portal.
+       *
+       * default: undefined
+       */
+      portalClassName?: string;
+    },
+    {
+      usePortal: false;
+    }
+  >;
 
 /**
  * # Tooltip
@@ -161,6 +184,7 @@ interface TooltipProps
  * @param props.triggerEvent Whether the Tooltip should be triggered by a `click` or `hover`.
  * @param props.id id given to Tooltip content.
  * @param props.usePortal Determines whether or not Tooltip will be Portaled
+ * @param props.portalClassName Classname applied to root element of the portal.
  */
 function Tooltip({
   open: controlledOpen,
@@ -176,6 +200,7 @@ function Tooltip({
   id,
   shouldClose,
   usePortal = true,
+  portalClassName,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
@@ -252,14 +277,19 @@ function Tooltip({
     enabled: open && triggerEvent === 'click',
   });
 
+  const portalProps = usePortal
+    ? { usePortal, portalClassName }
+    : { usePortal };
+
   const tooltip = (
     <Popover
+      key="tooltip"
       active={enabled && open}
       align={align}
       justify={justify}
-      usePortal={usePortal}
       adjustOnMutation={true}
       spacing={12}
+      {...portalProps}
     >
       {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
         const triangleStyle = trianglePosition(
@@ -332,6 +362,8 @@ Tooltip.propTypes = {
   setOpen: PropTypes.func,
   id: PropTypes.string,
   shouldClose: PropTypes.func,
+  usePortal: PropTypes.bool,
+  portalClassName: PropTypes.string,
 };
 
 export default Tooltip;
