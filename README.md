@@ -8,6 +8,7 @@ A set of CSS styles and React components built with design in mind.
 - [Banner](https://github.com/mongodb/leafygreen-ui/tree/master/packages/banner)
 - [Box](https://github.com/mongodb/leafygreen-ui/tree/master/packages/box)
 - [Button](https://github.com/mongodb/leafygreen-ui/tree/master/packages/button)
+- [Callout](https://github.com/mongodb/leafygreen-ui/tree/master/packages/callout)
 - [Card](https://github.com/mongodb/leafygreen-ui/tree/master/packages/card)
 - [Checkbox](https://github.com/mongodb/leafygreen-ui/tree/master/packages/checkbox)
 - [Code](https://github.com/mongodb/leafygreen-ui/tree/master/packages/code)

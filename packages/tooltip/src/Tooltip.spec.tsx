@@ -1,11 +1,13 @@
 import React from 'react';
 import {
+  act,
   render,
   fireEvent,
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import Tooltip from '.';
+import Tooltip, { TooltipProps } from './Tooltip';
+import { OneOf } from '@leafygreen-ui/lib';
 
 const buttonText = 'trigger button';
 const tooltipTestId = 'tooltip-test-id';
@@ -19,7 +21,13 @@ interface ButtonTestProps {
   [key: string]: any;
 }
 
-function renderTooltip(props = {}) {
+function renderTooltip(
+  props: Omit<TooltipProps, 'children' | 'trigger'> &
+    OneOf<
+      { usePortal?: true; portalClassName?: string },
+      { usePortal: false }
+    > = {},
+) {
   const utils = render(
     <>
       <div data-testid="backdrop" />
@@ -104,17 +112,19 @@ describe('packages/tooltip', () => {
           enabled: false,
         });
 
-        fireEventMap[triggerEvent].on(button);
-
-        // Wait for 200ms to allow the component to animate out and remove the element from the DOM
-        await waitForTimeout(200);
+        // Wait for 200ms to ensure enough time in case the element erroneously appears
+        await act(async () => {
+          fireEventMap[triggerEvent].on(button);
+          await waitForTimeout(200);
+        });
 
         expect(queryByTestId(tooltipTestId)).not.toBeInTheDocument();
 
-        fireEventMap[triggerEvent].off(button);
-
-        // Same as above. The following test is largely here to ensure we don't somehow end up in a strange state where the element becomes visible once the mouse leaves.
-        await waitForTimeout(200);
+        // The following test is largely here to ensure we don't somehow end up in a strange state where the element becomes visible once the mouse leaves.
+        await act(async () => {
+          fireEventMap[triggerEvent].off(button);
+          await waitForTimeout(200);
+        });
 
         expect(queryByTestId(tooltipTestId)).not.toBeInTheDocument();
       });
@@ -377,6 +387,43 @@ describe('packages/tooltip', () => {
     test('renders trigger in document', () => {
       const { button } = renderNestedTrigger();
       expect(button).toBeInTheDocument();
+    });
+  });
+
+  test('portals popover content to end of DOM, when "usePortal" is not set', () => {
+    const { container, getByTestId } = renderTooltip({
+      open: true,
+    });
+    expect(container).not.toContain(getByTestId(tooltipTestId));
+  });
+
+  test('does not portal popover content to end of DOM when "usePortal" is false', () => {
+    const { container } = renderTooltip({
+      open: true,
+      usePortal: false,
+    });
+
+    expect(container.innerHTML.includes(tooltipTestId)).toBe(true);
+  });
+
+  test('applies "portalClassName" to root of portal', () => {
+    const { getByTestId } = renderTooltip({
+      open: true,
+      portalClassName: 'test-classname',
+    });
+
+    expect(
+      getByTestId(tooltipTestId).parentElement?.parentElement?.className,
+    ).toBe('test-classname');
+  });
+
+  // eslint-disable-next-line jest/expect-expect
+  test('does not allow specifying "portalClassName", when "usePortal" is false', () => {
+    // @ts-expect-error
+    renderTooltip({
+      open: true,
+      usePortal: false,
+      portalClassName: 'test-classname',
     });
   });
 });
