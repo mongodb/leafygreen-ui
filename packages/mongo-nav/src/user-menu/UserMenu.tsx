@@ -262,8 +262,7 @@ function UserMenu({
 
   const urls: Required<URLSDefaults> = defaultsDeep(urlsProp, defaultURLs);
   const userMenu = urls.userMenu ?? {};
-  const cloudUrls: Partial<UserMenuURLS['userMenu']['cloud']> =
-    userMenu.cloud ?? {};
+  const cloudUrls: Partial<UserMenuURLS['userMenu']['cloud']> = userMenu.cloud;
 
   const [open, setOpen] = useState(false);
 
