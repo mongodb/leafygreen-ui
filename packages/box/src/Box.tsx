@@ -59,7 +59,7 @@ const Box = React.forwardRef(InlineBox) as typeof InlineBox;
 
 Box.displayName = 'Box';
 
-// @ts-ignore
+// @ts-expect-error
 Box.propTypes = {
   as: PropTypes.oneOfType([
     PropTypes.elementType,

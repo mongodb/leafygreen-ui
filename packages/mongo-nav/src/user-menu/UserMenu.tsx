@@ -19,7 +19,7 @@ import UserMenuTrigger from './UserMenuTrigger';
 import {
   AccountInterface,
   ActiveNavElement,
-  URLSDefaults,
+  URLS,
   HostsInterface,
   NavElement,
   Platform,
@@ -177,7 +177,7 @@ interface UserMenuProps {
    * Object that supplies URL overrides to UserMenu component.
    * Shape: { userMenu:{ cloud: { userPreferences, organizations, invitations, mfa }, university: { universityPreferences }, support: { userPreferences }, account: { homepage } }}
    */
-  urls?: URLSDefaults;
+  urls?: URLS;
 
   /**
    * Object that supplies host overrides to UserMenu component.
@@ -237,9 +237,7 @@ function UserMenu({
     }
   };
 
-  type UserMenuURLS = Pick<URLSDefaults, 'userMenu'>;
-
-  const defaultURLs: UserMenuURLS = {
+  const defaultURLs = {
     userMenu: {
       cloud: {
         userPreferences: `${hosts.cloud}/v2#/preferences/personalization`,
@@ -260,9 +258,9 @@ function UserMenu({
     },
   };
 
-  const urls: Required<URLSDefaults> = defaultsDeep(urlsProp, defaultURLs);
-  const userMenu = urls.userMenu ?? {};
-  const cloudUrls: Partial<UserMenuURLS['userMenu']['cloud']> = userMenu.cloud;
+  const urls: typeof defaultURLs = defaultsDeep(urlsProp, defaultURLs);
+  const userMenu = urls.userMenu;
+  const cloudUrls = userMenu.cloud;
 
   const [open, setOpen] = useState(false);
 
@@ -318,7 +316,7 @@ function UserMenu({
           <FocusableMenuItem>
             <Button
               as={isAccount ? 'button' : 'a'}
-              href={isAccount ? undefined : userMenu.account?.homepage}
+              href={isAccount ? undefined : userMenu.account.homepage}
               disabled={isAccount}
               data-testid="user-menu-account-button"
             >
@@ -343,8 +341,8 @@ function UserMenu({
             })}
           >
             <MenuItem
-              as={cloudUrls?.userPreferences ? 'a' : 'button'}
-              href={cloudUrls?.userPreferences}
+              as={cloudUrls.userPreferences ? 'a' : 'button'}
+              href={cloudUrls.userPreferences}
               active={
                 activeNav === ActiveNavElement.UserMenuCloudUserPreferences
               }
@@ -354,8 +352,8 @@ function UserMenu({
               User Preferences
             </MenuItem>
             <MenuItem
-              as={cloudUrls?.invitations ? 'a' : 'button'}
-              href={cloudUrls?.invitations}
+              as={cloudUrls.invitations ? 'a' : 'button'}
+              href={cloudUrls.invitations}
               active={activeNav === ActiveNavElement.UserMenuCloudInvitations}
               data-testid="user-menuitem-cloud-invitations"
               onClick={onElementClick(NavElement.UserMenuCloudInvitations)}
@@ -368,8 +366,8 @@ function UserMenu({
               </span>
             </MenuItem>
             <MenuItem
-              as={cloudUrls?.organizations ? 'a' : 'button'}
-              href={cloudUrls?.organizations}
+              as={cloudUrls.organizations ? 'a' : 'button'}
+              href={cloudUrls.organizations}
               active={activeNav === ActiveNavElement.UserMenuCloudOrganizations}
               data-testid="user-menuitem-cloud-organizations"
               onClick={onElementClick(NavElement.UserMenuCloudOrganizations)}
@@ -377,8 +375,8 @@ function UserMenu({
               Organizations
             </MenuItem>
             <MenuItem
-              as={cloudUrls?.mfa ? 'a' : 'button'}
-              href={cloudUrls?.mfa}
+              as={cloudUrls.mfa ? 'a' : 'button'}
+              href={cloudUrls.mfa}
               active={activeNav === ActiveNavElement.UserMenuCloudMFA}
               data-testid="user-menuitem-cloud-mfa"
               onClick={onElementClick(NavElement.UserMenuCloudMFA)}
@@ -414,8 +412,8 @@ function UserMenu({
           }
         >
           <MenuItem
-            as={userMenu.university?.universityPreferences ? 'a' : 'button'}
-            href={userMenu.university?.universityPreferences}
+            as={userMenu.university.universityPreferences ? 'a' : 'button'}
+            href={userMenu.university.universityPreferences}
             data-testid="user-menuitem-university-preferences"
           >
             University Preferences
@@ -436,8 +434,8 @@ function UserMenu({
           })}
         >
           <MenuItem
-            as={userMenu.support?.userPreferences ? 'a' : 'button'}
-            href={userMenu.support?.userPreferences}
+            as={userMenu.support.userPreferences ? 'a' : 'button'}
+            href={userMenu.support.userPreferences}
             data-testid="user-menuitem-support-user-preferences"
           >
             User Preferences

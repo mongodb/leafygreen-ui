@@ -1,7 +1,7 @@
 import { MouseEventHandler, ReactNode } from 'react';
-import { MongoNavInterface, URLSDefaults, OnChangeInterface } from '../types';
+import { MongoNavInterface, URLS, OnChangeInterface } from '../types';
 
-export type MongoSelectUrls = NonNullable<URLSDefaults['mongoSelect']>;
+export type MongoSelectUrls = NonNullable<URLS['mongoSelect']>;
 
 export type BaseMongoSelectProps = Pick<
   MongoNavInterface,

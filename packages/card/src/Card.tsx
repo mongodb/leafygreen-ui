@@ -25,10 +25,10 @@ const Card: ExtendableBox<{}> = ({ className, ...rest }: CardProps) => {
   return <Box className={cx(containerStyle, className)} {...rest} />;
 };
 
-// @ts-ignore
+// @ts-expect-error
 Card.displayName = 'Card';
 
-// @ts-ignore
+// @ts-expect-error
 Card.propTypes = {
   className: PropTypes.string,
 };

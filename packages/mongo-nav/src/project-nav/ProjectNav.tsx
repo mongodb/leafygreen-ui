@@ -25,7 +25,7 @@ import {
   Mode,
   MongoNavInterface,
   ProjectStatus,
-  URLSDefaults,
+  URLS,
 } from '../types';
 import {
   AtlasIcon,
@@ -252,7 +252,7 @@ type ProjectNavProps = Pick<
   onPremMFA?: boolean;
   alerts?: number;
   constructProjectURL: NonNullable<MongoNavInterface['constructProjectURL']>;
-  urls: Required<URLSDefaults>;
+  urls: Required<URLS>;
   hosts: Required<NonNullable<MongoNavInterface['hosts']>>;
 };
 

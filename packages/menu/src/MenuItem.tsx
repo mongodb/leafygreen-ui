@@ -239,10 +239,10 @@ const MenuItem: ExtendableBox<BaseMenuItemProps> = React.forwardRef(
   },
 );
 
-// @ts-ignore Property 'displayName' does not exist on type 'OverrideComponentCast<BaseMenuItemProps>'.
+// @ts-expect-error Property 'displayName' does not exist on type 'OverrideComponentCast<BaseMenuItemProps>'.
 MenuItem.displayName = 'MenuItem';
 
-// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
+// @ts-expect-error: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 MenuItem.propTypes = {
   href: PropTypes.string,
   onClick: PropTypes.func,

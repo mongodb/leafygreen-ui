@@ -286,7 +286,7 @@ export interface URLSProp {
   onPrem?: OnPremURLS;
 }
 
-export interface URLSDefaults {
+export interface URLS {
   userMenu: UserMenuURLS;
   mongoSelect: Required<MongoSelectURLS>;
   orgNav: OrgNavURLS;

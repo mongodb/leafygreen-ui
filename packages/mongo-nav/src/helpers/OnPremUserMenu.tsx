@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import { css } from '@leafygreen-ui/emotion';
-import { URLSDefaults, NavElement, ActiveNavElement } from '../types';
+import { URLS, NavElement, ActiveNavElement } from '../types';
 import { UserMenuTrigger } from '../user-menu';
 import { useOnElementClick } from '../on-element-click-provider';
 
@@ -31,7 +31,7 @@ interface OnPremUserMenuProps {
    * Object that supplies URL overrides to OnPremUserMenu component.
    * Shape: { onPrem: { profile, mfa, personalization, invitations, organizations, publicApiAccess, featureRequest }}
    */
-  urls: Pick<Required<URLSDefaults>, 'onPrem'>;
+  urls: Pick<URLS, 'onPrem'>;
 
   /**
    * Whether or not multifactor authentication is permitted in the current enivronment.
