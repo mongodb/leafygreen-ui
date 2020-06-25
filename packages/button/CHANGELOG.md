@@ -1,5 +1,15 @@
 # @leafygreen-ui/button
 
+## 4.2.5
+
+### Patch Changes
+
+- eba8391: Component now extends `Box` in order to enforce stronger typings
+- Updated dependencies [eba8391]
+- Updated dependencies [eba8391]
+  - @leafygreen-ui/box@2.0.0
+  - @leafygreen-ui/icon@6.1.1
+
 ## 4.2.4
 
 ### Patch Changes
