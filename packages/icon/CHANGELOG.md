@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 6.1.1
+
+### Patch Changes
+
+- eba8391: Props are now spread on Glyph components
+
 ## 6.1.0
 
 ### Minor Changes
