@@ -1,7 +1,8 @@
 # Logo
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/logo.svg)
-[View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/logo--logo)
+
+#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/logo--logo)
 
 ## Installation
 

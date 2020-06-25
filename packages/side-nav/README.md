@@ -1,7 +1,8 @@
 # Side Nav
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/side-nav.svg)
-[View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/sidenav--default)
+
+#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/sidenav--default)
 
 ## Installation
 

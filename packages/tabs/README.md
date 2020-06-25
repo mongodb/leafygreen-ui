@@ -1,7 +1,8 @@
 # Tabs
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/tabs.svg)
-[View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/tabs--uncontrolled)
+
+#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/tabs--uncontrolled)
 
 ## Installation
 

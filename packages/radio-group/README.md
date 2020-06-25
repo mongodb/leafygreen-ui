@@ -1,7 +1,8 @@
 # RadioGroup
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/radio-group.svg)
-[View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/radiogroup--uncontrolled)
+
+#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/radiogroup--uncontrolled)
 
 ## Installation
 
