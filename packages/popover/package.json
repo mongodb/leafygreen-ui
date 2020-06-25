@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/popover",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "description": "LeafyGreen UI Kit Popover",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
