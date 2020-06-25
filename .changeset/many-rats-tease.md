@@ -3,4 +3,4 @@
 '@leafygreen-ui/typography': major
 ---
 
-Renames "component" prop to "as"
+Renames `component` prop to `as`

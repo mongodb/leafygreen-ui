@@ -252,7 +252,7 @@ type ProjectNavProps = Pick<
   onPremMFA?: boolean;
   alerts?: number;
   constructProjectURL: NonNullable<MongoNavInterface['constructProjectURL']>;
-  urls: Required<URLS>;
+  urls: URLS;
   hosts: Required<NonNullable<MongoNavInterface['hosts']>>;
 };
 

@@ -246,7 +246,7 @@ function MongoNav({
     },
   };
 
-  const urls: Required<URLS> = defaultsDeep(urlsProp, defaultURLS);
+  const urls: URLS = defaultsDeep(urlsProp, defaultURLS);
 
   const defaultOrgURL = ({ orgId }: OrganizationInterface) =>
     `${hosts.cloud}/v2#/org/${orgId}/projects`;
