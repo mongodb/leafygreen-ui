@@ -108,11 +108,11 @@ const projectTriggerDataProp = createDataProp('project-trigger');
 function ProjectSelect({
   current,
   mode,
+  urls,
   data = [],
   onChange: onChangeProp,
   constructProjectURL,
   hosts = {},
-  urls = {},
   admin = false,
   loading = false,
   className,

@@ -44,6 +44,7 @@ module.exports = function template(
       title={getGlyphTitle('${componentName}', title)}
       height={typeof size === 'number' ? size : sizeMap[size]}
       width={typeof size === 'number' ? size : sizeMap[size]}
+      {...props}
     />`;
 
   // Augment the `<svg attributes />` so we can customize it with the values above.

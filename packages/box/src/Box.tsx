@@ -1,68 +1,81 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-import omit from 'lodash/omit';
 
-type DivProps<T> = HTMLElementProps<'div'> & T;
+type BoxDivDefault = {
+  as?: never;
+  href?: never;
+} & React.ComponentPropsWithRef<'div'>;
 
-type AnchorProps<T> = HTMLElementProps<'a'> &
-  T & {
-    href: string;
-  };
+type BoxAnchorDefault = {
+  as?: never;
+  href: string;
+} & React.ComponentPropsWithRef<'a'>;
 
-type CustomElementProps<T> = T & {
-  component: React.ElementType<any>;
-  [key: string]: any;
-};
+type BoxIntrinsic<
+  TElement extends keyof JSX.IntrinsicElements = keyof JSX.IntrinsicElements
+> = {
+  as: TElement;
+} & React.ComponentPropsWithRef<TElement>;
 
-export type BoxProps<T> = DivProps<T> | AnchorProps<T> | CustomElementProps<T>;
+type BoxComponent<TProps = {}> = {
+  as: React.ComponentType<TProps>;
+} & React.PropsWithRef<TProps>;
 
-function isCustomElement<T>(
-  props: BoxProps<T>,
-): props is CustomElementProps<T> {
-  return (props as any).component != null;
+export type BoxProps =
+  | BoxAnchorDefault
+  | BoxIntrinsic
+  | BoxComponent
+  | BoxDivDefault;
+
+function InlineBox(props: BoxDivDefault, ref: React.Ref<any>): JSX.Element;
+function InlineBox(props: BoxAnchorDefault, ref: React.Ref<any>): JSX.Element;
+function InlineBox<TElement extends keyof JSX.IntrinsicElements>(
+  props: BoxIntrinsic<TElement>,
+  ref: React.Ref<any>,
+): JSX.Element;
+function InlineBox<TProps>(
+  props: BoxComponent<TProps>,
+  ref: React.Ref<any>,
+): JSX.Element;
+
+function InlineBox(props: BoxProps, ref: React.Ref<any>) {
+  if (props.as !== undefined) {
+    const { as: Component, ...rest } = props;
+    // @ts-expect-error
+    return <Component {...rest} ref={ref} />;
+  }
+
+  if (props.href !== undefined) {
+    return <a {...props} ref={ref} />; //eslint-disable-line jsx-a11y/anchor-has-content
+  }
+
+  return <div {...props} ref={ref} />;
 }
 
-function isAnchorElement<T>(props: BoxProps<T>): props is AnchorProps<T> {
-  return (props as any).href != null;
-}
+InlineBox.displayName = 'InlineBox';
 
-/**
- * # Box
- *
- * Box component
- *
- * ```
-<Box href="https://mongodb.design">Anchors Away!</Box>
-```
- * @param props.children Content to be rendered in an HTML element, or provided as a prop to the rendered component.
- * @param props.href When provided, `<Box />` will render an anchor tag with this `href` value.
- * @param props.component The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props.
- */
-
-const Box = React.forwardRef(
-  <T extends React.ReactNode>(props: BoxProps<T>, ref: React.Ref<any>) => {
-    const rest = omit(props as any, ['component']);
-    let Box: React.ElementType<any> = 'div';
-
-    if (isCustomElement<T>(props)) {
-      Box = props.component;
-    } else if (isAnchorElement<T>(props)) {
-      Box = 'a';
-    }
-
-    return <Box {...rest} ref={ref} />;
-  },
-);
+// @ts-expect-error
+const Box = React.forwardRef(InlineBox) as typeof InlineBox;
 
 Box.displayName = 'Box';
 
-// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
+// @ts-expect-error
 Box.propTypes = {
-  children: PropTypes.node,
+  as: PropTypes.oneOfType([
+    PropTypes.elementType,
+    PropTypes.element,
+    PropTypes.func,
+  ]),
   href: PropTypes.string,
-  // @ts-ignore
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 };
 
 export default Box;
+
+export interface ExtendableBox<Props> {
+  (props: BoxDivDefault & Props): JSX.Element | null;
+  (props: BoxAnchorDefault & Props): JSX.Element | null;
+  <TElement extends keyof JSX.IntrinsicElements>(
+    props: BoxIntrinsic<TElement> & Props,
+  ): JSX.Element | null;
+  <TProps>(props: BoxComponent<TProps> & Props): JSX.Element | null;
+}

@@ -83,6 +83,7 @@ function SubMenuExample() {
           description="https://google.com"
           glyph={<CloudIcon size="xlarge" />}
           active={true}
+          href="http://mongodb.design"
         >
           <MenuItem>SubMenu Item 1</MenuItem>
           <MenuItem>SubMenu Item 2</MenuItem>

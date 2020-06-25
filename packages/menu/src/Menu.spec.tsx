@@ -30,7 +30,7 @@ function renderMenuItem(props = {}) {
 function renderSubMenuItem(props = {}) {
   const utils = render(
     <Menu open={true} setOpen={jest.fn()}>
-      <SubMenu title="First SubMenu" {...props}>
+      <SubMenu title="First SubMenu" data-testid="sub-menu-a" {...props}>
         <MenuItem data-testid="sub-menu-item-a">SubMenu Item One</MenuItem>
       </SubMenu>
       <SubMenu title="Second SubMenu" data-testid="sub-menu-b">
@@ -90,6 +90,11 @@ describe('packages/menu/menu-item', () => {
     expect(menuItem.classList.contains(className)).toBe(true);
   });
 
+  test('renders MenuItem inside button tag by default', () => {
+    const { menuItem } = renderMenuItem();
+    expect(menuItem.tagName.toLowerCase()).toBe('button');
+  });
+
   test('renders inside of an `a` instead of a `button` tag, when `href` prop is supplied', () => {
     const { menuItem } = renderMenuItem({ href: 'https://mongodb.design' });
     expect(menuItem.tagName.toLowerCase()).toBe('a');
@@ -106,7 +111,7 @@ describe('packages/menu/menu-item', () => {
     expect((menuItem as HTMLAnchorElement).rel).toBe('help');
   });
 
-  test('renders as `div` tag when the as prop is set', () => {
+  test('renders as `div` tag when the "as" prop is set', () => {
     const { menuItem } = renderMenuItem({ as: 'div' });
     expect(menuItem.tagName.toLowerCase()).toBe('div');
   });
@@ -133,5 +138,17 @@ describe('packages/menu/sub-menu', () => {
     const { subMenu } = renderSubMenuItem({ onClick });
     fireEvent.click(subMenu);
     expect(onClick).toHaveBeenCalled();
+  });
+
+  test('renders as a button by default', () => {
+    const { getByTestId } = renderSubMenuItem();
+    const subMenu = getByTestId('sub-menu-a');
+    expect(subMenu.tagName.toLowerCase()).toBe('button');
+  });
+
+  test('renders inside an anchor tag when the href prop is set', () => {
+    const { getByTestId } = renderSubMenuItem({ href: 'string' });
+    const subMenu = getByTestId('sub-menu-a');
+    expect(subMenu.tagName.toLowerCase()).toBe('a');
   });
 });
