@@ -1,5 +1,11 @@
 # @leafygreen-ui/popover
 
+## 5.1.0
+
+### Minor Changes
+
+- 06fbf05: Popover allows setting a portalClassName prop
+
 ## 5.0.2
 
 ### Patch Changes

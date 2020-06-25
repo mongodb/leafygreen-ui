@@ -1,5 +1,16 @@
 # @leafygreen-ui/tooltip
 
+## 3.3.0
+
+### Minor Changes
+
+- 12bc8c3: Tooltip allows setting a portalClassName prop
+
+### Patch Changes
+
+- Updated dependencies [06fbf05]
+  - @leafygreen-ui/popover@5.1.0
+
 ## 3.2.2
 
 ### Patch Changes

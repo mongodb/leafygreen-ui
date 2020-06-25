@@ -1,5 +1,16 @@
 # @leafygreen-ui/mongo-nav
 
+## 2.0.0
+
+### Major Changes
+
+- c6e6643: Removes `href` from Access Manager in OrgNav, and now is used as as a button to control the Access Manager dropdown menu. In order to make this change, the OrgNavAccessManager and OrgNavDropdown NavElement types have been combined to OrgNavAccessManagerDropdown.
+
+### Patch Changes
+
+- Updated dependencies [12bc8c3]
+  - @leafygreen-ui/tooltip@3.3.0
+
 ## 1.3.3
 
 ### Patch Changes
