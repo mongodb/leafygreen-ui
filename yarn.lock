@@ -1600,6 +1600,16 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@leafygreen-ui/typography@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/typography/-/typography-1.0.1.tgz#732c6e22587b1ca5d4db142b53871510b7d61faa"
+  integrity sha512-v6d+6pk61cqL1SQowQEgk82JQyf43P0U9+QuCtKJwTngmetqhrv7nf96PAAG91ko2vXI+liF8y6PforkM8b10w==
+  dependencies:
+    "@leafygreen-ui/box" "^1.1.0"
+    "@leafygreen-ui/leafygreen-provider" "^1.1.0"
+    "@leafygreen-ui/lib" "^4.0.0"
+    "@leafygreen-ui/palette" "^2.0.0"
+
 "@lerna/add@3.20.0":
   version "3.20.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.20.0.tgz#bea7edf36fc93fb72ec34cb9ba854c48d4abf309"
@@ -11573,6 +11583,13 @@ polished@^3.3.1, polished@^3.5.1:
   integrity sha512-GVbvskpBiDV5TknurGL6OyFfLHsCknxbU8w5iMppT8rW0tLEoQHrIRfrPNPqGXNj3HGhkjRvhmg59Fy7HSnCAw==
   dependencies:
     "@babel/runtime" "^7.8.7"
+
+polished@^3.6.5:
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/polished/-/polished-3.6.5.tgz#dbefdde64c675935ec55119fe2a2ab627ca82e9c"
+  integrity sha512-VwhC9MlhW7O5dg/z7k32dabcAFW1VI2+7fSe8cE/kXcfL7mVdoa5UxciYGW2sJU78ldDLT6+ROEKIZKFNTnUXQ==
+  dependencies:
+    "@babel/runtime" "^7.9.2"
 
 popper.js@^1.14.4, popper.js@^1.14.7:
   version "1.16.1"
