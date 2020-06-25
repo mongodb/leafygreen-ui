@@ -1,3 +1,2 @@
-import Box, { BoxProps } from './Box';
-export { BoxProps };
-export default Box;
+export { BoxProps, ExtendableBox } from './Box';
+export { default } from './Box';

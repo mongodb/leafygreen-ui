@@ -2,4 +2,4 @@
 '@leafygreen-ui/popover': minor
 ---
 
-Popover allows setting a portalClassName prop
+Popover allows setting a `portalClassName` prop

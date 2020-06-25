@@ -18,8 +18,6 @@ storiesOf('Box', module)
     );
 
     return (
-      <Box component={CustomBox}>
-        {text('Children', 'I am a custom element')}
-      </Box>
+      <Box as={CustomBox}>{text('Children', 'I am a custom element')}</Box>
     );
   });

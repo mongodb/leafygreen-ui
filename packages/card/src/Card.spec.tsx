@@ -32,7 +32,7 @@ describe('packages/Card', () => {
   test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
     const newCardId = 'newCardID';
     const { getByTestId } = render(
-      <Card data-testid={newCardId} component="section">
+      <Card data-testid={newCardId} as="section">
         Card!
       </Card>,
     );
