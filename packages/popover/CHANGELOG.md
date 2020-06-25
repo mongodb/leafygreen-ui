@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- 06fbf05: Popover allows setting a portalClassName prop
+- 06fbf05: Popover allows setting a `portalClassName` prop
 
 ## 5.0.2
 

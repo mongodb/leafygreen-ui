@@ -1,5 +1,16 @@
 # @leafygreen-ui/typography
 
+## 3.0.0
+
+### Major Changes
+
+- eba8391: Renames `component` prop to `as`
+
+### Patch Changes
+
+- Updated dependencies [eba8391]
+  - @leafygreen-ui/box@2.0.0
+
 ## 2.0.0
 
 ### Major Changes

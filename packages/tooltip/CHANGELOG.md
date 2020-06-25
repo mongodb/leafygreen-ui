@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- 12bc8c3: Tooltip allows setting a portalClassName prop
+- 12bc8c3: Tooltip allows setting a `portalClassName` prop
 
 ### Patch Changes
 

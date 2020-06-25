@@ -1,5 +1,18 @@
 # @leafygreen-ui/box
 
+## 2.0.0
+
+### Major Changes
+
+- eba8391: Box component now accepts `as` prop instead of `component` and exports generic `ExtendableBox` as helper type for components wrapping Box.
+
+  ```js
+  Example Usage:
+  function Example<ExtendableBox<ExampleProps>>(props: ExampleProps) {
+    return <div>Example Component</div>
+  }
+  ```
+
 ## 1.1.1
 
 ### Patch Changes

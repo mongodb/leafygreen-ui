@@ -15,6 +15,7 @@ import { breakpoints, mq } from '../breakpoints';
 import { OrgSelect } from '../mongo-select';
 import { useOnElementClick } from '../on-element-click-provider';
 import {
+  URLS,
   AccountInterface,
   OrganizationInterface,
   NavElement,
@@ -126,7 +127,7 @@ type OrgNavProps = Pick<
   constructOrganizationURL: NonNullable<
     MongoNavInterface['constructOrganizationURL']
   >;
-  urls: Required<NonNullable<MongoNavInterface['urls']>>;
+  urls: URLS;
   hosts: Required<NonNullable<MongoNavInterface['hosts']>>;
   showProjectNav: NonNullable<MongoNavInterface['showProjectNav']>;
 };
@@ -312,6 +313,7 @@ function OrgNav({
                 usePortal={false}
               >
                 <MenuItem
+                  as={orgNav.accessManager ? 'a' : 'button'}
                   href={orgNav.accessManager}
                   data-testid="org-nav-dropdown-org-access-manager"
                   description={current.orgName}
@@ -328,6 +330,11 @@ function OrgNav({
                 </MenuItem>
 
                 <MenuItem
+                  as={
+                    currentProjectName && urls.projectNav.accessManager
+                      ? 'a'
+                      : 'button'
+                  }
                   href={currentProjectName && urls.projectNav.accessManager}
                   data-testid="org-nav-dropdown-project-access-manager"
                   size="large"

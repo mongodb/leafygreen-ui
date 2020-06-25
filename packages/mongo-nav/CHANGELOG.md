@@ -8,8 +8,15 @@
 
 ### Patch Changes
 
+- eba8391: Enhances internal typings
 - Updated dependencies [12bc8c3]
+- Updated dependencies [eba8391]
+- Updated dependencies [eba8391]
   - @leafygreen-ui/tooltip@3.3.0
+  - @leafygreen-ui/button@4.2.5
+  - @leafygreen-ui/menu@6.0.14
+  - @leafygreen-ui/icon@6.1.1
+  - @leafygreen-ui/icon-button@6.0.1
 
 ## 1.3.3
 

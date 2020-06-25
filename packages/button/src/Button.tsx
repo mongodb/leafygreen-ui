@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { transparentize } from 'polished';
-import omit from 'lodash/omit';
+import Box, { ExtendableBox } from '@leafygreen-ui/box';
 
 export const Variant = {
   Default: 'default',
@@ -289,131 +288,95 @@ const disabledStyle = css`
   pointer-events: none;
 `;
 
-interface SharedButtonProps {
+interface BaseButtonProps {
+  disabled?: boolean;
   variant?: Variant;
   size?: Size;
-  className?: string;
-  children?: React.ReactNode;
-  disabled?: boolean;
   glyph?: React.ReactElement;
+  className?: string;
+  children: React.ReactNode;
+  href?: string;
 }
 
-interface LinkButtonProps extends HTMLElementProps<'a'>, SharedButtonProps {
-  href: string;
-}
-
-interface ButtonButtonProps
-  extends HTMLElementProps<'button'>,
-    SharedButtonProps {
-  href?: null;
-}
-
-type CustomElementButtonProps = SharedButtonProps & {
-  as: React.ElementType<any>;
-  [key: string]: any;
-};
-
-type ButtonProps =
-  | LinkButtonProps
-  | ButtonButtonProps
-  | CustomElementButtonProps;
-
-function usesCustomElement(
-  props: ButtonProps,
-): props is CustomElementButtonProps {
-  return (props as any).as != null;
-}
-
-function usesLinkElement(
-  props: LinkButtonProps | ButtonButtonProps,
-): props is LinkButtonProps {
-  return props.href != null;
-}
-
-const Button = React.forwardRef((props: ButtonProps, forwardRef) => {
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-
-  const {
-    className = '',
-    children = null,
-    disabled = false,
-    variant = Variant.Default,
-    size = Size.Normal,
-    glyph,
-  } = props;
-
-  const commonProps = {
-    className: cx(
-      baseStyle,
-      buttonSizes[size],
-      buttonVariants[variant],
-      { [disabledStyle]: disabled },
-      { [focusStyle]: showFocus },
+const Button: ExtendableBox<BaseButtonProps> = React.forwardRef(
+  (
+    {
       className,
-    ),
-    // only add a disabled prop if not an anchor
-    ...(!usesLinkElement(props) && { disabled }),
-    'aria-disabled': disabled,
-  };
+      children,
+      disabled = false,
+      variant = Variant.Default,
+      size = Size.Normal,
+      glyph,
+      ...rest
+    }: BaseButtonProps,
+    ref: React.Ref<any>,
+  ) => {
+    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
-  const rest = omit(props, [
-    'as',
-    'className',
-    'disabled',
-    'size',
-    'variant',
-    'children',
-    'glyph',
-  ]);
+    const commonProps = {
+      ref,
+      className: cx(
+        baseStyle,
+        buttonSizes[size],
+        buttonVariants[variant],
+        { [disabledStyle]: disabled },
+        { [focusStyle]: showFocus },
+        className,
+      ),
+      // only add a disabled prop if not an anchor
+      ...(rest.href == null && { disabled }),
+      'aria-disabled': disabled,
+    };
 
-  const spanStyle = css`
-    // Usually for this to take effect, you would need the element to be
-    /* ￿positioned￿. Due to an obscure part of CSS spec, flex children */
-    // respect z-index without the position property being set.
-    //
-    // https://www.w3.org/TR/css-flexbox-1/#painting
-    z-index: 1;
-    display: inline-flex;
-    flex-grow: 1;
-    justify-content: center;
-    align-items: center;
-  `;
+    const spanStyle = css`
+      // Usually for this to take effect, you would need the element to be
+      /* ￿positioned￿. Due to an obscure part of CSS spec, flex children */
+      // respect z-index without the position property being set.
+      //
+      // https://www.w3.org/TR/css-flexbox-1/#painting
+      z-index: 1;
+      display: inline-flex;
+      flex-grow: 1;
+      justify-content: center;
+      align-items: center;
+    `;
 
-  const modifiedGlyph =
-    glyph && children
-      ? React.cloneElement(glyph, {
-          className: cx({ [glyphMargins[size]]: glyph != null }),
-        })
-      : glyph;
+    const modifiedGlyph =
+      glyph && children
+        ? React.cloneElement(glyph, {
+            className: cx({ [glyphMargins[size]]: glyph != null }),
+          })
+        : glyph;
 
-  const renderButton = (Root: React.ElementType<any> = 'button') => (
-    <Root
-      ref={forwardRef}
-      type={Root === 'button' ? 'button' : undefined}
-      {...(rest as HTMLElementProps<any>)}
-      {...commonProps}
-    >
+    const content = (
       <span className={spanStyle}>
         {modifiedGlyph}
         {children}
       </span>
-    </Root>
-  );
+    );
 
-  if (usesCustomElement(props)) {
-    return renderButton(props.as);
-  }
+    if (rest.href !== undefined) {
+      return (
+        <Box as="a" {...commonProps} {...rest}>
+          {content}
+        </Box>
+      );
+    }
 
-  if (usesLinkElement(props)) {
-    return renderButton('a');
-  }
+    return (
+      // we give button a default "as" value based on the `href` prop, if a custom
+      // "as" prop is supplied, it will overwrite this value through {...rest}
+      <Box as="button" type="button" {...commonProps} {...rest}>
+        {content}
+      </Box>
+    );
+  },
+);
 
-  return renderButton();
-});
-
+// @ts-expect-error: Property 'displayName' does not exist on type 'OverrideComponentCast<BaseButtonProps>'.ts(2339)
 Button.displayName = 'Button';
 
-// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
+// @ts-expect-error: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 Button.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)),
   size: PropTypes.oneOf(Object.values(Size)),

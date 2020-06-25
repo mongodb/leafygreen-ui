@@ -193,7 +193,7 @@ function OrgSelect({
   mode,
   hosts = {},
   data = [],
-  urls = {},
+  urls,
   onChange: onChangeProp,
   constructOrganizationURL,
   admin = false,
