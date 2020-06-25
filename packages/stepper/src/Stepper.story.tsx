@@ -1,0 +1,50 @@
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { number } from '@storybook/addon-knobs';
+import Stepper, { Step } from '.';
+import { times } from 'lodash';
+import { addons } from '@storybook/addons';
+import { CHANGE } from '@storybook/addon-knobs';
+
+const channel = addons.getChannel();
+
+storiesOf('Stepper', module)
+  .add('Default', () => (
+    <div style={{ width: 1000 }}>
+      <Stepper currentStep={number('Step', 1, { min: 1, max: 7 })}>
+        <Step>Overview</Step>
+        <Step>Configuration</Step>
+        <Step>Update</Step>
+        <Step>Install</Step>
+        <Step>Billing</Step>
+        <Step>Address</Step>
+        <Step>Confirmation</Step>
+      </Stepper>
+    </div>
+  ))
+  .add('Many', () => {
+    let currentStep = number('Step', 1, { min: 1 });
+    const numSteps = number('Number of steps', 7, { min: 1 });
+
+    // Can't dynamically change the max, so we manually enforce it
+    if (currentStep > numSteps) {
+      channel.emit(CHANGE, {
+        name: 'Step',
+        value: numSteps,
+      });
+      currentStep = numSteps;
+    }
+
+    return (
+      <div style={{ width: 1000 }}>
+        <Stepper
+          currentStep={currentStep}
+          maxDisplayed={number('Max displayed', 5, { min: 3 })}
+        >
+          {times(numSteps, count => (
+            <Step key={count}>Step {count + 1}</Step>
+          ))}
+        </Stepper>
+      </div>
+    );
+  });
