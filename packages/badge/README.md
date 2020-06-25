@@ -1,6 +1,7 @@
 # Badge
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/badge.svg)
+[View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/badge--default)
 
 ## Installation
 

@@ -1,6 +1,7 @@
 # Pipeline
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/pipeline.svg)
+[View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/pipeline--default)
 
 ## Installation
 

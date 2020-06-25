@@ -85,6 +85,7 @@ const readMe = `
 # ${PACKAGE_HUMANREADABLE}
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/${PACKAGE_LC}.svg)
+https://mongodb.github.io/leafygreen-ui/?path=/story/${PACKAGE_LC}--default
 
 ## Installation
 

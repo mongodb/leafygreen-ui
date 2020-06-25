@@ -1,6 +1,7 @@
 # Banner
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/banner.svg)
+[View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/banner--default)
 
 ## Installation
 

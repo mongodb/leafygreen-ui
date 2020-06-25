@@ -1,6 +1,7 @@
 # Box
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/box.svg)
+[View On Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/box--default)
 
 ## Overview
 

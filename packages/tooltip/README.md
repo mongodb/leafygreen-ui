@@ -1,6 +1,7 @@
 # Tooltip
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/tooltip.svg)
+[View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/tooltip--uncontrolled)
 
 ## Installation
 

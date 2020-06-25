@@ -1,6 +1,7 @@
 # Modal
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/modal.svg)
+[View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/modal--default)
 
 ## Installation
 

@@ -1,6 +1,7 @@
 # Checkbox
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/checkbox.svg)
+[View On Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/checkbox--default)
 
 ## Installation
 
