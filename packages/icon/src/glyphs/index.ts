@@ -9,6 +9,7 @@ import ArrowRight from './ArrowRight.svg';
 import ArrowUp from './ArrowUp.svg';
 import Copy from './Copy.svg';
 import Bell from './Bell.svg';
+import Bulb from './Bulb.svg';
 import Building from './Building.svg';
 import CaretUp from './CaretUp.svg';
 import CaretDown from './CaretDown.svg';
@@ -65,6 +66,7 @@ const glyphs = {
   Copy,
   Bell,
   Building,
+  Bulb,
   CaretUp,
   CaretDown,
   CaretRight,
