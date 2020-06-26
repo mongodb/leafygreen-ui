@@ -20,20 +20,9 @@ const rowStyle = css`
   }
 `;
 
-// const rowHoverStyle = css`
-//   &:hover {
-//     background-color: #ffffff;
-//     box-shadow: 0 1px 3px 0 #b8c4c2;
-//   }
-// `;
-
 const altColor = css`
   &:nth-of-type(even) {
     background-color: ${uiColors.gray.light3};
-
-    // &:hover {
-    //   border: 1px solid #e7eeec;
-    // }
   }
 `;
 
@@ -205,9 +194,10 @@ const Row = React.forwardRef(
     const nestedRows = React.Children.map(children, child => {
       if (isComponentType(child, 'Row')) {
         return React.cloneElement(child, {
+          ref: nodeRef,
+          ['aria-expanded']: isExpanded ? 'true' : 'false',
           isParentExpanded: isExpanded,
           indentLevel: indentLevel + 1,
-          ref: nodeRef,
         });
       }
     });
@@ -234,13 +224,11 @@ const Row = React.forwardRef(
           if (nestedRows && nestedRows.length > 0 && !hasSeenFirstCell) {
             hasSeenFirstCell = true;
 
-            const rowChildren = Array.from(children);
-
             return React.cloneElement(child, {
               children: (
                 <>
                   {chevronButton}
-                  <span className={truncation}>{rowChildren}</span>
+                  <span className={truncation}>{children}</span>
                 </>
               ),
               className: cx(displayFlex, className),
@@ -275,7 +263,6 @@ const Row = React.forwardRef(
             {
               [altColor]: shouldAltRowColor,
               [disabledStyle]: disabled,
-              // [rowHoverStyle]: !hasRowSpan,
             },
             className,
           )}
@@ -299,18 +286,18 @@ const Row = React.forwardRef(
           nodeRef={nodeRef}
         >
           {(state: string) => {
-            const props = {
-              ref: nodeRef,
-              ['aria-expanded']: isExpanded ? 'true' : 'false',
-              className: cx(transitionStyles.default, {
-                [transitionStyles.entered]: ['entering', 'entered'].includes(
-                  state,
-                ),
-              }),
-            };
             return (
               <>
-                {nestedRows?.map(element => React.cloneElement(element, props))}
+                {nestedRows?.map(element =>
+                  React.cloneElement(element, {
+                    className: cx(transitionStyles.default, {
+                      [transitionStyles.entered]: [
+                        'entering',
+                        'entered',
+                      ].includes(state),
+                    }),
+                  }),
+                )}
               </>
             );
           }}
