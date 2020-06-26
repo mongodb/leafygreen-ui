@@ -134,7 +134,7 @@ export default class Radio extends PureComponent<
           id={id}
           name={name}
           type="radio"
-          className={cx(inputStyle, className)}
+          className={inputStyle}
           onChange={onChange}
           value={value}
           checked={checked}
