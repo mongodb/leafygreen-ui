@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import TextInput, { State } from './TextInput';
 
 const error = 'This is the error message';
@@ -129,6 +129,14 @@ describe('packages/text-input', () => {
       expect((textInput as HTMLInputElement).value).toBe('a');
       expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
       expect(defaultProps.onChange).toHaveReturnedWith('none');
+    });
+  });
+
+  describe('when no label is supplied', () => {
+    test('no label tag renders to the DOM', () => {
+      renderTextInput();
+
+      expect(screen.queryByRole('label')).not.toBeInTheDocument();
     });
   });
 });

@@ -295,9 +295,11 @@ const TextInput = React.forwardRef(
 
     return (
       <div className={cx(textInputStyle, className)}>
-        <label htmlFor={id} className={labelStyle}>
-          {label}
-        </label>
+        {label && (
+          <label htmlFor={id} className={labelStyle}>
+            {label}
+          </label>
+        )}
         {description && <p className={descriptionStyle}>{description}</p>}
         <div className={inputContainerStyle}>
           <input
