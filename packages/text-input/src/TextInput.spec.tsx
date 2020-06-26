@@ -139,4 +139,12 @@ describe('packages/text-input', () => {
       expect(screen.queryByRole('label')).not.toBeInTheDocument();
     });
   });
+
+  describe('types behave as expected', () => {
+    // eslint-disable-next-line jest/expect-expect
+    test('TextInput throws error when neither aria-labelledby or label is supplied', () => {
+      // @ts-expect-error
+      <TextInput />;
+    });
+  });
 });

@@ -5,7 +5,7 @@ import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { createDataProp, HTMLElementProps } from '@leafygreen-ui/lib';
+import { createDataProp, HTMLElementProps, Either } from '@leafygreen-ui/lib';
 
 const inputSelectorProp = createDataProp('input-selector');
 const iconSelectorProp = createDataProp('icon-selector');
@@ -29,7 +29,7 @@ export const TextInputType = {
 
 export type TextInputType = typeof TextInputType[keyof typeof TextInputType];
 
-interface TextInputProps extends HTMLElementProps<'input'> {
+interface BaseTextInputProps extends HTMLElementProps<'input'> {
   /**
    * id associated with the TextInput component.
    */
@@ -89,6 +89,9 @@ interface TextInputProps extends HTMLElementProps<'input'> {
 
   type?: TextInputType;
 }
+
+type AriaLabels = 'label' | 'aria-labelledby';
+type TextInputProps = Either<BaseTextInputProps, AriaLabels>;
 
 const interactionRing = css`
   transition: all 150ms ease-in-out;
@@ -258,16 +261,17 @@ function getStatefulInputStyles(state: State, optional: boolean) {
 const TextInput = React.forwardRef(
   (
     {
-      id: propsId,
       label,
       description,
-      optional = false,
-      disabled = false,
       onChange,
       placeholder,
       errorMessage,
+      optional = false,
+      disabled = false,
       state = State.None,
       type = TextInputType.Text,
+      id: propsId,
+      'aria-labelledby': ariaLabelledBy,
       value: controlledValue,
       className,
       ...rest
@@ -293,6 +297,12 @@ const TextInput = React.forwardRef(
       }
     }
 
+    if (!label && !ariaLabelledBy) {
+      console.error(
+        'For screen-reader accessibility, label or aria-labelledby must be provided to IconButton.',
+      );
+    }
+
     return (
       <div className={cx(textInputStyle, className)}>
         {label && (
@@ -305,6 +315,7 @@ const TextInput = React.forwardRef(
           <input
             {...inputSelectorProp.prop}
             {...rest}
+            aria-labelledBy={ariaLabelledBy}
             type={type}
             className={cx(inputStyle, getStatefulInputStyles(state, optional))}
             value={value}
