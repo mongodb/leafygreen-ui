@@ -67,6 +67,10 @@ const modalContentStyle = css`
   pointer-events: all;
   transform: translate3d(0, -16px, 0);
   opacity: 0;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const visibleModalContentStyle = css`
