@@ -5,11 +5,6 @@ import { TableHeaderProps } from './TableHeader';
 import { State, Types, TableProvider, reducer } from './TableContext';
 import TableHead from './TableHead';
 
-// * fix row appearing as children of row -- not seeing this!
-// * Nested checkboxes:
-//   * Checks children rows when parent becomes checked
-//   * Something that updates the parent row when the children become unchecked
-
 const tableStyles = css`
   border-collapse: collapse;
   box-sizing: border-box;
@@ -79,8 +74,6 @@ export default function Table<Shape>({
     }
   }, [state.rowCheckedState]);
 
-  console.log(state.data);
-
   const rows:
     | Array<React.ReactElement>
     | undefined = state.data.map((datum, index) => children({ datum, index }));
@@ -99,5 +92,3 @@ export default function Table<Shape>({
     </TableProvider>
   );
 }
-
-// { id: { checked: true/false, children: [], }}

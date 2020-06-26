@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '@leafygreen-ui/tooltip';
 import Badge, { Variant } from '@leafygreen-ui/badge';
-import IconButton from '@leafygreen-ui/icon-button';
 import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import UserMenu from '../user-menu';
@@ -16,6 +15,7 @@ import { breakpoints, mq } from '../breakpoints';
 import { OrgSelect } from '../mongo-select';
 import { useOnElementClick } from '../on-element-click-provider';
 import {
+  URLS,
   AccountInterface,
   OrganizationInterface,
   NavElement,
@@ -127,7 +127,7 @@ type OrgNavProps = Pick<
   constructOrganizationURL: NonNullable<
     MongoNavInterface['constructOrganizationURL']
   >;
-  urls: Required<NonNullable<MongoNavInterface['urls']>>;
+  urls: URLS;
   hosts: Required<NonNullable<MongoNavInterface['hosts']>>;
   showProjectNav: NonNullable<MongoNavInterface['showProjectNav']>;
 };
@@ -233,6 +233,8 @@ function OrgNav({
     );
   }
 
+  const AccessManagerIcon = accessManagerOpen ? CaretUpIcon : CaretDownIcon;
+
   return (
     <nav
       className={navContainer}
@@ -280,26 +282,30 @@ function OrgNav({
       {!disabled && !isMobile && (
         <>
           <OrgNavLink
-            href={current && orgNav.accessManager}
-            isActive={activeNav === ActiveNavElement.OrgNavAccessManager}
+            isActive={
+              activeNav === ActiveNavElement.OrgNavAccessManagerDropdown
+            }
             loading={!current}
-            data-testid="org-nav-access-manager"
-            onClick={onElementClick(NavElement.OrgNavAccessManager)}
+            data-testid="org-nav-access-manager-dropdown"
+            onClick={onElementClick(
+              NavElement.OrgNavAccessManagerDropdown,
+              () => setAccessManagerOpen(curr => !curr),
+            )}
+            isButton={true}
           >
             Access Manager
-          </OrgNavLink>
-
-          <IconButton
-            aria-label="Dropdown"
-            active={accessManagerOpen}
-            disabled={!current}
-            data-testid="org-nav-dropdown"
-            onClick={onElementClick(NavElement.OrgNavDropdown, () =>
-              setAccessManagerOpen(curr => !curr),
-            )}
-          >
-            {accessManagerOpen ? <CaretUpIcon /> : <CaretDownIcon />}
-
+            <AccessManagerIcon
+              className={cx(
+                css`
+                  margin-left: 8px;
+                `,
+                {
+                  [css`
+                    color: ${uiColors.gray.dark1};
+                  `]: !accessManagerOpen,
+                },
+              )}
+            />
             {current && (
               <Menu
                 open={accessManagerOpen}
@@ -307,11 +313,14 @@ function OrgNav({
                 usePortal={false}
               >
                 <MenuItem
+                  as={orgNav.accessManager ? 'a' : 'button'}
                   href={orgNav.accessManager}
                   data-testid="org-nav-dropdown-org-access-manager"
                   description={current.orgName}
                   size="large"
-                  active={activeNav === ActiveNavElement.OrgNavAccessManager}
+                  active={
+                    activeNav === ActiveNavElement.OrgNavAccessManagerDropdown
+                  }
                   onClick={onElementClick(
                     NavElement.OrgNavDropdownOrgAccessManager,
                     () => setAccessManagerOpen(false),
@@ -321,6 +330,11 @@ function OrgNav({
                 </MenuItem>
 
                 <MenuItem
+                  as={
+                    currentProjectName && urls.projectNav.accessManager
+                      ? 'a'
+                      : 'button'
+                  }
                   href={currentProjectName && urls.projectNav.accessManager}
                   data-testid="org-nav-dropdown-project-access-manager"
                   size="large"
@@ -341,7 +355,7 @@ function OrgNav({
                 </MenuItem>
               </Menu>
             )}
-          </IconButton>
+          </OrgNavLink>
 
           <OrgNavLink
             href={current && orgNav.support}

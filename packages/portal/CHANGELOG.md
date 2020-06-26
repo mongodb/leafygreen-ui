@@ -1,5 +1,16 @@
 # @leafygreen-ui/portal
 
+## 2.1.0
+
+### Minor Changes
+
+- 1c797b3: Portal allows setting a className prop for the containing element
+
+### Patch Changes
+
+- Updated dependencies [1c797b3]
+  - @leafygreen-ui/lib@4.5.0
+
 ## 2.0.1
 
 ### Patch Changes

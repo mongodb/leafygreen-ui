@@ -44,7 +44,6 @@ const iconButtonMargin = css`
 const disabledStyle = css`
   background-color: ${uiColors.gray.light2};
   color: ${uiColors.gray.base};
-  pointer-events: none;
   cursor: not-allowed;
   border-bottom: 1px solid ${uiColors.gray.light1};
 `;
@@ -56,7 +55,6 @@ const disabledCell = css`
 const displayFlex = css`
   display: flex;
   align-items: center;
-  padding: 2px;
 `;
 
 const truncation = css`

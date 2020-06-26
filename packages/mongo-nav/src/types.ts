@@ -2,7 +2,7 @@ import { RecursivePartial } from '@leafygreen-ui/lib';
 
 const NavElement = {
   OrgNavOrgSettings: 'orgNavOrgSettings',
-  OrgNavAccessManager: 'orgNavAccessManager',
+  OrgNavAccessManagerDropdown: 'orgNavAccessManagerDropdown',
   OrgNavSupport: 'orgNavSupport',
   OrgNavBilling: 'orgNavBilling',
   OrgNavAdmin: 'orgNavAdmin',
@@ -12,7 +12,6 @@ const NavElement = {
   OrgNavOrgSelectTrigger: 'orgNavOrgSelectTrigger',
   OrgNavOrgSelectSearch: 'orgNavOrgSelectSearch',
   OrgNavViewAllOrganizations: 'orgNavViewAllOrganizations',
-  OrgNavDropdown: 'orgNavDropdown',
   OrgNavDropdownOrgAccessManager: 'orgNavDropdownOrgAccessManager',
   OrgNavDropdownProjectAccessManager: 'orgNavDropdownProjectAccessManager',
   ProjectNavProjectSelectTrigger: 'projectNavProjectSelectTrigger',
@@ -53,7 +52,7 @@ export { NavElement };
 
 const ActiveNavElement = {
   OrgNavOrgSettings: NavElement.OrgNavOrgSettings,
-  OrgNavAccessManager: NavElement.OrgNavAccessManager,
+  OrgNavAccessManagerDropdown: NavElement.OrgNavAccessManagerDropdown,
   OrgNavSupport: NavElement.OrgNavSupport,
   OrgNavBilling: NavElement.OrgNavBilling,
   OrgNavAdmin: NavElement.OrgNavAdmin,
@@ -221,60 +220,78 @@ export interface OnPremInterface {
   enabled?: boolean;
 }
 
-export interface URLSInterface {
-  userMenu?: {
-    cloud?: {
-      userPreferences: string;
-      organizations: string;
-      invitations: string;
-      mfa: string;
-    };
-    university?: {
-      universityPreferences: string;
-    };
-    support?: {
-      userPreferences: string;
-    };
-    account?: {
-      homepage?: string;
-    };
-    logout?: string;
+interface UserMenuURLS {
+  cloud?: {
+    userPreferences: string;
+    organizations: string;
+    invitations: string;
+    mfa: string;
   };
-  mongoSelect?: {
-    viewAllProjects?: string;
-    viewAllOrganizations?: string;
-    newProject?: string;
-    orgSettings?: string;
+  university?: {
+    universityPreferences: string;
   };
-  orgNav?: {
-    leaf?: string;
-    settings?: string;
-    accessManager?: string;
-    support?: string;
-    billing?: string;
-    allClusters?: string;
-    admin?: string;
+  support?: {
+    userPreferences: string;
   };
-  projectNav?: {
-    settings?: string;
-    accessManager?: string;
-    support?: string;
-    integrations?: string;
-    alerts?: string;
-    activityFeed?: string;
-    invite?: string;
-    realm?: string;
-    charts?: string;
+  account?: {
+    homepage?: string;
   };
-  onPrem?: {
-    profile?: string;
-    mfa?: string;
-    personalization?: string;
-    invitations?: string;
-    organizations?: string;
-    publicApiAccess?: string;
-    featureRequest?: string;
-  };
+  logout?: string;
+}
+
+interface MongoSelectURLS {
+  viewAllProjects?: string;
+  viewAllOrganizations?: string;
+  newProject?: string;
+  orgSettings?: string;
+}
+
+interface OrgNavURLS {
+  leaf?: string;
+  settings?: string;
+  accessManager?: string;
+  support?: string;
+  billing?: string;
+  allClusters?: string;
+  admin?: string;
+}
+
+interface ProjectNavURLS {
+  settings?: string;
+  accessManager?: string;
+  support?: string;
+  integrations?: string;
+  alerts?: string;
+  activityFeed?: string;
+  invite?: string;
+  realm?: string;
+  charts?: string;
+}
+
+interface OnPremURLS {
+  profile?: string;
+  mfa?: string;
+  personalization?: string;
+  invitations?: string;
+  organizations?: string;
+  publicApiAccess?: string;
+  featureRequest?: string;
+}
+
+export interface URLSProp {
+  userMenu?: UserMenuURLS;
+  mongoSelect?: MongoSelectURLS;
+  orgNav?: OrgNavURLS;
+  projectNav?: ProjectNavURLS;
+  onPrem?: OnPremURLS;
+}
+
+export interface URLS {
+  userMenu: UserMenuURLS;
+  mongoSelect: Required<MongoSelectURLS>;
+  orgNav: OrgNavURLS;
+  projectNav: ProjectNavURLS;
+  onPrem: Required<OnPremURLS>;
 }
 
 export interface HostsInterface {
@@ -341,7 +358,7 @@ export interface MongoNavInterface {
   /**
    * Object to enable custom overrides for every `href` used in `<MongoNav />`.
    */
-  urls?: URLSInterface;
+  urls?: URLSProp;
 
   /**
    * Describes what environment the component is being used in.

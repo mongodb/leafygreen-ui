@@ -2,6 +2,8 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/menu.svg)
 
+#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/menu--controlled)
+
 ## Installation
 
 ### Yarn
@@ -129,7 +131,7 @@ Self-closing component that provides a way to group `MenuItems` in a `Menu` comp
 | `active`      | `boolean`            | Determines if the `<MenuItem />` is `active`                                                     | `false`                                                |
 | `disabled`    | `boolean`            | Determines if the `<MenuItem />` is `disabled`                                                   | `false`                                                |
 | `description` | `React.ReactElement` | Content to appear below main text of the `<MenuItem />`                                          |                                                        |
-| `as`          | `React.ReactElement` | `HTMLElement`                                                                                    | Determines what the `<MenuItem />` will be rendered as |  |
+| `as`          | `React.ElementType`  | `HTMLElement`                                                                                    | Determines what the `<MenuItem />` will be rendered as |  |
 | `size`        | `default` or `large` | Size of the `<MenuItem />` component                                                             | `default`                                              |
 | `glyph`       | `React.ReactElement` | Slot to pass in an Icon rendered to the left of `<MenuItem />` text.                             |                                                        |
 
