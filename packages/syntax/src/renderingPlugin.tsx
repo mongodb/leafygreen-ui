@@ -60,6 +60,7 @@ const cellStyle = css`
   user-select: none;
   border-spacing: 0;
   padding: 0;
+  vertical-align: top;
 `;
 
 interface LineTableRowProps {
@@ -85,7 +86,7 @@ function LineTableRow({ lineNumber, children }: LineTableRowProps) {
   );
 }
 
-function treeToLines(child: Array<string | TokenObject>): Array<Array<TreeItem>> {
+function treeToLines(children: Array<string | TokenObject>): Array<Array<TreeItem>> {
   const lines: Array<Array<TreeItem>> = [];
   let currentLineIndex = 0;
 
@@ -94,72 +95,78 @@ function treeToLines(child: Array<string | TokenObject>): Array<Array<TreeItem>>
     lines[currentLineIndex] = [];
   }
 
-  if (isString(child)) {
-    // If the current element is a string that includes a line break, we need to handle it differently
-    if (child.includes('\n')) {
-      child.split('').forEach(fragment => {
-        if (fragment === '\n') {
-          // If the fragment is a new line character, we create a new line
-          currentLineIndex++;
-          lines[currentLineIndex] = [];
-        } else {
-          const currentIndexInLine = lines[currentLineIndex].length - 1;
-
-          if (isString(lines[currentLineIndex][currentIndexInLine])) {
-            // If the last element in the line is a string, we append this string to it
-            lines[currentLineIndex][currentIndexInLine] += fragment;
+  children.forEach(child => {
+    if (isString(child)) {
+      // If the current element is a string that includes a line break, we need to handle it differently
+      if (child.includes('\n')) {
+        child.split('').forEach(fragment => {
+          if (fragment === '\n') {
+            // If the fragment is a new line character, we create a new line
+            currentLineIndex++;
+            lines[currentLineIndex] = [];
           } else {
-            // Otherwise, we push the string fragment on its own
-            lines[currentLineIndex].push(fragment);
+            const currentIndexInLine = lines[currentLineIndex].length - 1;
+
+            if (isString(lines[currentLineIndex][currentIndexInLine])) {
+              // If the last element in the line is a string, we append this string to it
+              lines[currentLineIndex][currentIndexInLine] += fragment;
+            } else {
+              // Otherwise, we push the string fragment on its own
+              lines[currentLineIndex].push(fragment);
+            }
           }
-        }
-      });
-    } else {
-      // We don't need to do anything special in the case where the string doesn't contain a line break
+        });
+      } else {
+        // We don't need to do anything special in the case where the string doesn't contain a line break
+        lines[currentLineIndex].push(child);
+      }
+    }
+
+    // Line breaks aren't a part of token objects, so we can assume those objects go on the current line
+    if (isObject(child)) {
       lines[currentLineIndex].push(child);
     }
+  })
+
+  // Strip empty lines from the beginning of code blocks
+  while (lines[0].length === 0) {
+    lines.shift()
   }
 
-  // Line breaks aren't a part of token objects, so we can assume those objects go on the current line
-  if (isObject(child)) {
-    lines[currentLineIndex].push(child);
+  // Strip empty lines from the end of code blocks
+  while (lines[lines.length - 1].length === 0) {
+    lines.pop()
   }
 
   return lines
 }
 
-function renderTokenTreeToReact(
-  { rootNode }: TokenTreeEmitter,
-  numbered = false,
-) {
-  const lines = treeToLines(rootNode.children);
+function renderLineAsTableRow(line: Array<TreeItem>, index: number) {
+  return (
+    <LineTableRow key={index} lineNumber={index + 1}>
+      {line.map(processToken)}
+    </LineTableRow>
+  )
+}
 
-  console.log(lines) // Returns Array with only one element - the desired array
+function renderLineAsFragment(line: Array<TreeItem>) {
+  return (
+    <>
+      <span>{line.map(processToken)}</span>
 
-  return lines.map((line, index) => {
-    const content = line.map(processToken);
-
-    if (numbered) {
-      return (
-        <LineTableRow key={index} lineNumber={index + 1}>
-          {content}
-        </LineTableRow>
-      );
-    }
-
-    return (
-      <>
-        <span key={index}>{content}</span>
-        <br key={`br-${index}`} />
-      </>
-    );
-  });
+      {/* We use a new line character here instead of <br /> so that text will not break outside of a <pre /> tag */}
+      {'\n'}
+    </>
+  )
 }
 
 const plugin: HighlightPluginEventCallbacks = {
   'after:highlight': function (result) {
-    result.react = renderTokenTreeToReact(result.emitter);
-    result.reactWithNumbers = renderTokenTreeToReact(result.emitter, true);
+    const { rootNode } = result.emitter
+    const lines = treeToLines(rootNode.children)
+
+    result.react = lines.map(renderLineAsFragment);
+    result.reactWithNumbers = lines.map(renderLineAsTableRow);
   },
 };
 
