@@ -1,7 +1,7 @@
 ---
 '@leafygreen-ui/button': major
 '@leafygreen-ui/menu': major
-'@leafygreen-ui/mongo-nav': minor
+'@leafygreen-ui/mongo-nav': patch
 '@leafygreen-ui/radio-box-group': major
 '@leafygreen-ui/side-nav': major
 '@leafygreen-ui/text-input': major
