@@ -4,7 +4,7 @@ import { css } from '@leafygreen-ui/emotion';
 // Import from core so we can register the appropriate languages ourselves
 import hljs from 'highlight.js/lib/core';
 import hljsDefineGraphQL from 'highlightjs-graphql';
-import CodeWrapper from './CodeWrapper'
+import CodeWrapper from './CodeWrapper';
 import { Variant, Language, SyntaxProps } from './types';
 import { SupportedLanguages, languageParsers } from './languages';
 import { injectGlobalStyles } from './globalStyles';
@@ -62,11 +62,7 @@ function Syntax({
   const codeWrapperSharedProps = { language, variant, ...rest };
 
   if (language === Language.None) {
-    return (
-      <CodeWrapper {...codeWrapperSharedProps}>
-        {children}
-      </CodeWrapper>
-    );
+    return <CodeWrapper {...codeWrapperSharedProps}>{children}</CodeWrapper>;
   }
 
   const highlightedContent = useMemo(() => hljs.highlight(language, children), [
@@ -77,7 +73,11 @@ function Syntax({
   if (showLineNumbers) {
     return (
       <CodeWrapper {...codeWrapperSharedProps}>
-        <table className={css`border-spacing: 0;`}>
+        <table
+          className={css`
+            border-spacing: 0;
+          `}
+        >
           <tbody>{highlightedContent.reactWithNumbers}</tbody>
         </table>
       </CodeWrapper>

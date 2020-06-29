@@ -86,7 +86,9 @@ function LineTableRow({ lineNumber, children }: LineTableRowProps) {
   );
 }
 
-function treeToLines(children: Array<string | TokenObject>): Array<Array<TreeItem>> {
+function treeToLines(
+  children: Array<string | TokenObject>,
+): Array<Array<TreeItem>> {
   const lines: Array<Array<TreeItem>> = [];
   let currentLineIndex = 0;
 
@@ -126,19 +128,19 @@ function treeToLines(children: Array<string | TokenObject>): Array<Array<TreeIte
     if (isObject(child)) {
       lines[currentLineIndex].push(child);
     }
-  })
+  });
 
   // Strip empty lines from the beginning of code blocks
   while (lines[0].length === 0) {
-    lines.shift()
+    lines.shift();
   }
 
   // Strip empty lines from the end of code blocks
   while (lines[lines.length - 1].length === 0) {
-    lines.pop()
+    lines.pop();
   }
 
-  return lines
+  return lines;
 }
 
 function renderLineAsTableRow(line: Array<TreeItem>, index: number) {
@@ -146,7 +148,7 @@ function renderLineAsTableRow(line: Array<TreeItem>, index: number) {
     <LineTableRow key={index} lineNumber={index + 1}>
       {line.map(processToken)}
     </LineTableRow>
-  )
+  );
 }
 
 function renderLineAsFragment(line: Array<TreeItem>) {
@@ -157,13 +159,13 @@ function renderLineAsFragment(line: Array<TreeItem>) {
       {/* We use a new line character here instead of <br /> so that text will not break outside of a <pre /> tag */}
       {'\n'}
     </>
-  )
+  );
 }
 
 const plugin: HighlightPluginEventCallbacks = {
   'after:highlight': function (result) {
-    const { rootNode } = result.emitter
-    const lines = treeToLines(rootNode.children)
+    const { rootNode } = result.emitter;
+    const lines = treeToLines(rootNode.children);
 
     result.react = lines.map(renderLineAsFragment);
     result.reactWithNumbers = lines.map(renderLineAsTableRow);

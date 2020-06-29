@@ -8,16 +8,16 @@ interface RootNode {
 }
 
 interface LanguageDefinition {
-	aliases?: Array<string>;
-	keywords?: string | Record<string, string>;
-	disableAutodetect?: boolean;
-	illegal?: string;
-	contains?: Array<any>;
-	exports?: {
-		preprocessor: any;
-		strings: any; // Maybe Array<string>
-		keywords: any; // Probably the same as keywords above
-	}
+  aliases?: Array<string>;
+  keywords?: string | Record<string, string>;
+  disableAutodetect?: boolean;
+  illegal?: string;
+  contains?: Array<any>;
+  exports?: {
+    preprocessor: any;
+    strings: any; // Maybe Array<string>
+    keywords: any; // Probably the same as keywords above
+  };
 }
 
 declare class TokenTree {
@@ -142,61 +142,64 @@ declare module 'highlight.js/lib/core' {
      *
      * The function uses language detection by default but you can specify the language in the class attribute of the DOM node. See the class reference for all available language names and aliases.
      */
-		function highlightBlock(block: HTMLElement): HighlightResult;
+    function highlightBlock(block: HTMLElement): HighlightResult;
 
-		/**
-		 * Configures global options.
-		 */
-		function configure(options: Partial<HighlightConfiguration>): void;
+    /**
+     * Configures global options.
+     */
+    function configure(options: Partial<HighlightConfiguration>): void;
 
-		/**
-		 * Applies highlighting to all `<pre><code>...</code></pre>` blocks on a page.
-		 */
-		function initHighlighting(): void;
+    /**
+     * Applies highlighting to all `<pre><code>...</code></pre>` blocks on a page.
+     */
+    function initHighlighting(): void;
 
-		/**
-		 * Attaches highlighting to the page load event.
-		 */
-		function initHighlightingOnLoad(): void;
+    /**
+     * Attaches highlighting to the page load event.
+     */
+    function initHighlightingOnLoad(): void;
 
-		/**
-		 * Adds new language to the library under the specified name.
-		 */
-		function registerLanguage(languageName: string, languageDefinition: LanguageDefinition): void;
+    /**
+     * Adds new language to the library under the specified name.
+     */
+    function registerLanguage(
+      languageName: string,
+      languageDefinition: LanguageDefinition,
+    ): void;
 
-		/**
-		 * Adds new language alias or aliases to the library for the specified language name defined under languageName key.
-		 */
-		function registerAliases(alias: string | Array<string>): void;
+    /**
+     * Adds new language alias or aliases to the library for the specified language name defined under languageName key.
+     */
+    function registerAliases(alias: string | Array<string>): void;
 
-		/**
-		 * Returns the languages names list.
-		 */
-		function listLanguages(): Array<string>;
+    /**
+     * Returns the languages names list.
+     */
+    function listLanguages(): Array<string>;
 
-		/**
-		 * Looks up a language by name or alias.
-		 */
-		function getLanguage(name: string): LanguageDefinition | undefined;
+    /**
+     * Looks up a language by name or alias.
+     */
+    function getLanguage(name: string): LanguageDefinition | undefined;
 
-		/**
-		 * Looks up a language by name or alias.
-		 *
-		 * This should be used when one language definition depends on another. Using this function (vs getLanguage) will provide better error messaging when a required language is missing.
+    /**
+     * Looks up a language by name or alias.
+     *
+     * This should be used when one language definition depends on another. Using this function (vs getLanguage) will provide better error messaging when a required language is missing.
      *
      * Returns the language object if found, raises a hard error otherwise.
-		 */
-		function requireLanguage(name: string): LanguageDefinition;
+     */
+    function requireLanguage(name: string): LanguageDefinition;
 
-		/**
-		 * Enables debug/development mode. This mode purposely makes Highlight.js more fragile! It should only be used for testing and local development (of languages or the library itself). By default “Safe Mode” is used, providing the most reliable experience for production usage.
-		 *
-		 * For example, if a new version suddenly had a serious bug (or breaking change) that affected only a single language:
-		 *
-		 * In Safe Mode: All other languages would continue to highlight just fine. The broken language would appear as a code block, but without any highlighting (as if it were plaintext).
+    /**
+     * Enables debug/development mode. This mode purposely makes Highlight.js more fragile! It should only be used for testing and local development (of languages or the library itself). By default “Safe Mode” is used, providing the most reliable experience for production usage.
+     *
+     * For example, if a new version suddenly had a serious bug (or breaking change) that affected only a single language:
+     *
+     * In Safe Mode: All other languages would continue to highlight just fine. The broken language would appear as a code block, but without any highlighting (as if it were plaintext).
      * In Debug Mode: All highlighting would stop when an error was encountered and a JavaScript error would be thrown.
-		 */
-		function debugMode(): void;
+     */
+    function debugMode(): void;
 
     /**
      * Adds a plugin to the instance of highlight.js.

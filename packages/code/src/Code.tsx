@@ -1,9 +1,4 @@
-import React, {
-  useRef,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from 'react';
+import React, { useRef, useEffect, useLayoutEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Syntax, {
@@ -199,11 +194,17 @@ type DetailedElementProps<T> = React.DetailedHTMLProps<
   T
 >;
 
-interface CodeOuterWrapperProps extends Pick<CodeProps, 'chromeTitle' | 'variant' | 'showWindowChrome'> {
+interface CodeOuterWrapperProps
+  extends Pick<CodeProps, 'chromeTitle' | 'variant' | 'showWindowChrome'> {
   children: React.ReactNode;
 }
 
-function CodeOuterWrapper({ children, chromeTitle, variant = Variant.Light, showWindowChrome }: CodeOuterWrapperProps) {
+function CodeOuterWrapper({
+  children,
+  chromeTitle,
+  variant = Variant.Light,
+  showWindowChrome,
+}: CodeOuterWrapperProps) {
   const wrapperStyle = css`
     border: 1px solid ${variantColors[variant][1]};
     border-radius: 4px;
@@ -216,7 +217,11 @@ function CodeOuterWrapper({ children, chromeTitle, variant = Variant.Light, show
         <WindowChrome chromeTitle={chromeTitle} variant={variant} />
       )}
 
-      <div className={css`display: flex;`}>
+      <div
+        className={css`
+          display: flex;
+        `}
+      >
         {children}
       </div>
     </div>
@@ -337,7 +342,7 @@ function Code({
     <div
       className={cx(
         copyStyle,
-        {[singleLineCopyStyle]: !multiline},
+        { [singleLineCopyStyle]: !multiline },
         getSidebarVariantStyle(variant),
       )}
     >
@@ -351,14 +356,18 @@ function Code({
         {copied ? <CheckmarkIcon /> : <CopyIcon />}
       </IconButton>
     </div>
-  )
+  );
 
   const onScroll: React.UIEventHandler<HTMLDivElement | HTMLPreElement> = e => {
     e.persist();
     debounceScroll(e);
-  }
+  };
 
-  const commonWrapperProps = { chromeTitle, variant, showWindowChrome } as const;
+  const commonWrapperProps = {
+    chromeTitle,
+    variant,
+    showWindowChrome,
+  } as const;
 
   if (!multiline) {
     return (
