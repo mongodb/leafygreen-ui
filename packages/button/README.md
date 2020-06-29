@@ -2,6 +2,8 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/button.svg)
 
+#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/buttons--default)
+
 ## Installation
 
 ### Yarn
@@ -50,8 +52,8 @@ import Button from '@leafygreen-ui/button';
 | `className` | `string`                                                 | Adds a className to the class attribute.                                                                                                              | `''`        |
 | `value`     | `string`                                                 | Sets the HTML `value` attribute.                                                                                                                      |             |
 | `disabled`  | `boolean`                                                | Disabled the button                                                                                                                                   | `false`     |
-| `as`        | `HTML Tag` or `React Element`                            | Determines the root element. For example, `Link` or `a` tags can be supplied to replace `button` from being the DOM element that wraps the component. | `button`    |
-| `href`      | `string`                                                 | If a href is supplied it willl change the `as` value, such that the component renders inside of an `a` tag instead of inside of a `button` tag.       |             |
+| `as`        | `React.ElementType`                                      | Determines the root element. For example, `Link` or `a` tags can be supplied to replace `button` from being the DOM element that wraps the component. | `button`    |
+| `href`      | `string`                                                 | If a href is supplied it will change the `as` value, such that the component renders inside of an `a` tag instead of inside of a `button` tag.        |             |
 
 _Any other properties will be spread on the input element._
 

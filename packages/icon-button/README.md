@@ -2,6 +2,8 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/icon-button.svg)
 
+#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/iconbutton--default)
+
 ## Installation
 
 ### Yarn
@@ -19,10 +21,11 @@ npm install @leafygreen-ui/icon-button
 ## Example
 
 ```js
+import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import IconButton from '@leafygreen-ui/icon-button';
 
 <IconButton variant="light" aria-label="Some Menu">
-  <Icon glyph="Ellipsis" />
+  <EllipsisIcon />
 </IconButton>;
 ```
 

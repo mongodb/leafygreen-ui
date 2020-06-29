@@ -2,6 +2,8 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/mongo-nav.svg)
 
+#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/mongonav--default)
+
 ## Installation
 
 ### Yarn
@@ -84,7 +86,7 @@ _Any other properties will be spread on the root element_
 
 #### Org Nav Elements
 
-`OrgNavAccessManager`
+`OrgNavAccessManagerDropdown`
 `OrgNavAdmin`
 `OrgNavAllClusters`
 `OrgNavBilling`

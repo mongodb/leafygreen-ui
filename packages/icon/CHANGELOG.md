@@ -1,5 +1,29 @@
 # @leafygreen-ui/icon
 
+## 6.1.1
+
+### Patch Changes
+
+- eba8391: Props are now spread on Glyph components
+
+## 6.1.0
+
+### Minor Changes
+
+- 1d86d56: Adds static property `isGlyph` to Glyph components, and ensures that Glyph components can receive size values consistent with Icon sizes, rather than just a numeric value.
+
+## 6.0.1
+
+### Patch Changes
+
+- e83e4ed: Fixes displayName property of generated glyphs
+
+## 6.0.0
+
+### Major Changes
+
+- 6fc022e: Transpiles icons imported individually from dist to use commonjs.
+
 ## 5.2.0
 
 ### Minor Changes

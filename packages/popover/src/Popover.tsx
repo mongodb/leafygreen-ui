@@ -56,6 +56,7 @@ const mutationOptions = {
  * @param props.justify Justification of Popover component relative to another element: `start`, `middle`, `end`, `fit`.
  * @param props.refEl Reference element that Popover component should be positioned against.
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
+ * @param props.portalClassName Classname applied to root element of the portal.
  * @param props.adjustOnMutation Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
  */
 function Popover({
@@ -67,6 +68,7 @@ function Popover({
   adjustOnMutation = false,
   children,
   className,
+  portalClassName,
   refEl,
   ...rest
 }: PopoverProps) {
@@ -186,6 +188,7 @@ function Popover({
   `;
 
   const Root = usePortal ? Portal : Fragment;
+  const rootProps = usePortal ? { className: portalClassName } : {};
 
   const renderedChildren = (() => {
     if (!children) {
@@ -219,7 +222,7 @@ function Popover({
               display: none;
             `}
           />
-          <Root>
+          <Root {...rootProps}>
             <div
               {...rest}
               ref={setContentNode}
@@ -249,6 +252,7 @@ Popover.propTypes = {
   justify: PropTypes.oneOf(Object.values(Justify)),
   refEl: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   usePortal: PropTypes.bool,
+  portalClassName: PropTypes.string,
   spacing: PropTypes.number,
   adjustOnMutation: PropTypes.bool,
 };

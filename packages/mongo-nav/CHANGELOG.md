@@ -1,5 +1,58 @@
 # @leafygreen-ui/mongo-nav
 
+## 2.0.0
+
+### Major Changes
+
+- c6e6643: Removes `href` from Access Manager in OrgNav, and now is used as as a button to control the Access Manager dropdown menu. In order to make this change, the OrgNavAccessManager and OrgNavDropdown NavElement types have been combined to OrgNavAccessManagerDropdown.
+
+### Patch Changes
+
+- eba8391: Enhances internal typings
+- Updated dependencies [12bc8c3]
+- Updated dependencies [eba8391]
+- Updated dependencies [eba8391]
+  - @leafygreen-ui/tooltip@3.3.0
+  - @leafygreen-ui/button@4.2.5
+  - @leafygreen-ui/menu@6.0.14
+  - @leafygreen-ui/icon@6.1.1
+  - @leafygreen-ui/icon-button@6.0.1
+
+## 1.3.3
+
+### Patch Changes
+
+- 3f68a51: Adds `onLogout` prop to `OnPremUserMenu`.
+- 1d86d56: Imports Glyphs directly, rather than importing the entire Icon package, when Glyph components are used
+- Updated dependencies [1d86d56]
+- Updated dependencies [1d86d56]
+- Updated dependencies [1d86d56]
+  - @leafygreen-ui/icon@6.1.0
+  - @leafygreen-ui/menu@6.0.13
+  - @leafygreen-ui/icon-button@6.0.0
+
+## 1.3.2
+
+### Patch Changes
+
+- f699208: Removes logic used to determine whether to display Stitch or Realm
+
+## 1.3.1
+
+### Patch Changes
+
+- Updated dependencies [6fc022e]
+  - @leafygreen-ui/icon@6.0.0
+  - @leafygreen-ui/button@4.2.4
+  - @leafygreen-ui/icon-button@5.0.4
+  - @leafygreen-ui/menu@6.0.12
+
+## 1.3.0
+
+### Minor Changes
+
+- daeaca2: Uses a function to determine whether host url should be "stitch.mongodb.com" or "realm.mongodb.com"
+
 ## 1.2.2
 
 ### Patch Changes

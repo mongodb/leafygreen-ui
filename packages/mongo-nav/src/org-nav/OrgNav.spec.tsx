@@ -1,5 +1,4 @@
 import React from 'react';
-import '@testing-library/jest-dom/extend-expect';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
 import {
@@ -24,13 +23,12 @@ interface LinkNameToUrls {
 // data
 const { account, currentOrganization, organizations } = dataFixtures;
 const {
-  orgNav: { accessManager, support, billing, allClusters, admin },
+  orgNav: { support, billing, allClusters, admin },
 } = urlFixtures;
 
 // this avoids having to explicitly type orgNav with nullable fields
 // and then extend it to allow string indexes
 const linkNamesToUrls: LinkNameToUrls = {
-  accessManager,
   support,
   billing,
   allClusters,
@@ -49,8 +47,9 @@ describe('packages/mongo-nav/src/org-nav', () => {
   const setExpectedElements = () => {
     const { queryByTestId = () => null } = queries;
     expectedElements.paymentStatus = queryByTestId('org-nav-payment-status');
-    expectedElements.accessManager = queryByTestId('org-nav-access-manager');
-    expectedElements.accessManagerDropdown = queryByTestId('org-nav-dropdown');
+    expectedElements.accessManagerDropdown = queryByTestId(
+      'org-nav-access-manager-dropdown',
+    );
     expectedElements.accessManagerOrg = queryByTestId(
       'org-nav-dropdown-org-access-manager',
     );

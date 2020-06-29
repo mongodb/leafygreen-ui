@@ -4,7 +4,7 @@ import { Transition } from 'react-transition-group';
 import { transparentize } from 'polished';
 import facepaint from 'facepaint';
 import Portal from '@leafygreen-ui/portal';
-import Icon, { Size } from '@leafygreen-ui/icon';
+import XIcon from '@leafygreen-ui/icon/dist/X';
 import { useEscapeKey } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -67,6 +67,10 @@ const modalContentStyle = css`
   pointer-events: all;
   transform: translate3d(0, -16px, 0);
   opacity: 0;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const visibleModalContentStyle = css`
@@ -106,8 +110,7 @@ interface ModalProps {
 
   /**
    * Determines the open state of the modal
-   *
-   * default: `false`
+   * @default: `false`
    */
   open?: boolean;
 
@@ -129,6 +132,12 @@ interface ModalProps {
    *
    */
   shouldClose?: () => boolean;
+
+  /**
+   * Determines whether or not a Modal should close when a user clicks outside the modal.
+   * @default: `true`
+   */
+  closeOnBackdropClick?: boolean;
 
   /**
    * className applied to root div.
@@ -164,7 +173,7 @@ interface ModalProps {
  * @param props.shouldClose Callback to determine whether or not Modal should close when user tries to close it.
  * @param props.className className applied to container div.
  * @param props.contentClassName className applied to overlay div.
- *
+ * @param props.closeOnBackdropClick Determines whether or not a Modal should close when a user clicks outside the modal.
  *
  */
 function Modal({
@@ -172,6 +181,7 @@ function Modal({
   size = ModalSize.Default,
   setOpen = () => {},
   shouldClose = () => true,
+  closeOnBackdropClick = true,
   children,
   className,
   contentClassName,
@@ -187,7 +197,7 @@ function Modal({
   }, [setOpen, shouldClose]);
 
   const handleBackdropClick = (e: React.SyntheticEvent) => {
-    if (scrollContainerRef.current && e.target === scrollContainerRef.current) {
+    if (closeOnBackdropClick && e.target === scrollContainerRef?.current) {
       handleClose();
     }
   };
@@ -229,10 +239,9 @@ function Modal({
                   contentClassName,
                 )}
               >
-                <Icon
-                  glyph="X"
+                <XIcon
                   fill={uiColors.gray.dark1}
-                  size={Size.Large}
+                  size="large"
                   onClick={handleClose}
                   className={closeButton}
                   data-dismiss="modal"

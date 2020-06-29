@@ -50,6 +50,13 @@ export type Either<T, Keys extends keyof T = keyof T> = Omit<T, Keys> &
     [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
   }[Keys];
 
+/**
+ * Helper that constructs mutually exclusive record types. Refer to tests for usage.
+ */
+export type OneOf<T1, T2> =
+  | (T1 & Partial<Record<Exclude<keyof T2, keyof T1>, never>>)
+  | (T2 & Partial<Record<Exclude<keyof T1, keyof T2>, never>>);
+
 /** Helper type to check if element is a specific React Component  */
 export function isComponentType<T = React.ReactElement>(
   element: React.ReactNode,

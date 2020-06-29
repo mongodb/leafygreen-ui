@@ -2,6 +2,8 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/icon.svg)
 
+#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/icons--icon)
+
 ## Installation
 
 ### Yarn
@@ -79,3 +81,5 @@ const myGlyphs = {
 
 const MyIconComponent = createIconComponent(myGlyphs);
 ```
+
+**Note:** Glyph has a static property, `isGlyph`, that enables checking whether or not a component is a LeafyGreen glyph.

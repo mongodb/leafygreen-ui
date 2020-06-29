@@ -1,6 +1,6 @@
 import {
   DataInterface,
-  URLSInterface,
+  URLS,
   HostsInterface,
   OrganizationInterface,
   ProjectInterface,
@@ -58,7 +58,7 @@ export const dataFixtures = {
   ],
 } as DataInterface;
 
-export const urlFixtures: Required<URLSInterface> = {
+export const urlFixtures: URLS = {
   userMenu: {
     cloud: {
       userPreferences: `https://cloud.mongodb.com/v2#/preferences/personalization`,
@@ -118,7 +118,7 @@ export const hostDefaults: Required<HostsInterface> = {
   account: 'https://account.mongodb.com',
   cloud: 'https://cloud.mongodb.com',
   charts: 'https://charts.mongodb.com',
-  realm: 'https://stitch.mongodb.com',
+  realm: `https://realm.mongodb.com`,
   support: 'https://support.mongodb.com',
   university: 'https://university.mongodb.com',
 };

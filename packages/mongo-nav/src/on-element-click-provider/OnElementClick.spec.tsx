@@ -1,14 +1,12 @@
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
 import MongoNav from '../MongoNav';
 import { NavElement } from '../types';
 
 const defaultElements = {
   [NavElement.OrgNavLeaf]: 'org-nav-leaf',
   [NavElement.OrgNavOrgSettings]: 'org-trigger-settings',
-  [NavElement.OrgNavAccessManager]: 'org-nav-access-manager',
-  [NavElement.OrgNavDropdown]: 'org-nav-dropdown',
+  [NavElement.OrgNavAccessManagerDropdown]: 'org-nav-access-manager-dropdown',
   [NavElement.OrgNavSupport]: 'org-nav-support',
   [NavElement.OrgNavBilling]: 'org-nav-billing',
   [NavElement.OrgNavAllClusters]: 'org-nav-all-clusters-link',
@@ -66,13 +64,13 @@ describe('packages/mongo-nav/on-element-click-provider', () => {
     testForCallback(
       NavElement.OrgNavDropdownOrgAccessManager,
       'org-nav-dropdown-org-access-manager',
-      'org-nav-dropdown',
+      'org-nav-access-manager-dropdown',
     );
 
     testForCallback(
       NavElement.OrgNavDropdownProjectAccessManager,
       'org-nav-dropdown-project-access-manager',
-      'org-nav-dropdown',
+      'org-nav-access-manager-dropdown',
     );
   });
 

@@ -2,6 +2,8 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/box.svg)
 
+#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/box--default)
+
 ## Overview
 
 `Box` is a polymorphic component that renders a given component depending on the provided props.
@@ -41,10 +43,10 @@ import Box from '@leafygreen-ui/box';
 
 ## Properties
 
-| Prop        | Type                                  | Description                                                                                                                         | Default |
-| ----------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `component` | `HTMLElement` or `React.ReactElement` | The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `div`   |
-| `href`      | `string`                              | When provided, `<Box />` will render an anchor tag with this `href` value.                                                          |         |
-| `children`  | `React.ReactElement`                  | Content to be rendered in an HTML element, or provided as a prop to the rendered component                                          |         |
+| Prop       | Type                                  | Description                                                                                                                         | Default |
+| ---------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `as`       | `HTMLElement` or `React.ReactElement` | The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `div`   |
+| `href`     | `string`                              | When provided, `<Box />` will render an anchor tag with this `href` value.                                                          |         |
+| `children` | `React.ReactElement`                  | Content to be rendered in an HTML element, or provided as a prop to the rendered component                                          |         |
 
 _Any other properties will be spread on the rendered HTML element or component._

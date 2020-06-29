@@ -1,5 +1,36 @@
 # @leafygreen-ui/menu
 
+## 6.0.14
+
+### Patch Changes
+
+- eba8391: Component now extends `Box` in order to enforce stronger typings
+- Updated dependencies [06fbf05]
+- Updated dependencies [eba8391]
+- Updated dependencies [eba8391]
+  - @leafygreen-ui/popover@5.1.0
+  - @leafygreen-ui/box@2.0.0
+  - @leafygreen-ui/icon@6.1.1
+  - @leafygreen-ui/icon-button@6.0.1
+
+## 6.0.13
+
+### Patch Changes
+
+- 1d86d56: Imports Glyphs directly, rather than importing the entire Icon package, when Glyph components are used
+- Updated dependencies [1d86d56]
+- Updated dependencies [1d86d56]
+  - @leafygreen-ui/icon@6.1.0
+  - @leafygreen-ui/icon-button@6.0.0
+
+## 6.0.12
+
+### Patch Changes
+
+- Updated dependencies [6fc022e]
+  - @leafygreen-ui/icon@6.0.0
+  - @leafygreen-ui/icon-button@5.0.4
+
 ## 6.0.11
 
 ### Patch Changes

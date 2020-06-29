@@ -4,7 +4,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
 import RGBLogo from './logos/RGBLogo';
 import MonochromeLogo from './logos/MonochromeLogo';
-import { LogoProps, Variant } from './types';
+import { LogoProps, Variant } from './utils';
 
 /**
  * # Logo

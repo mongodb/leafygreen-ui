@@ -32,12 +32,10 @@ const hljsSupportedLanguages = [
 function getAllPackages(dir) {
   const dirList = fs.readdirSync(dir);
 
-  return dirList.map(function (subDir) {
-    subDir = path.resolve(dir, subDir);
-    const json = require(`${subDir}/package.json`);
-
-    return json.name;
-  });
+  return dirList
+    .map(subDir => `${path.resolve(dir, subDir)}/package.json`)
+    .filter(packageJsonPath => fs.existsSync(packageJsonPath))
+    .map(packageJsonPath => require(packageJsonPath).name);
 }
 
 function getDirectGlyphImports() {

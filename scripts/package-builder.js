@@ -58,7 +58,7 @@ const packageJSON = `
     "publishConfig": {
       "access": "public"
     },
-    "devDependencies": {
+    "dependencies": {
       "@leafygreen-ui/lib": "^4.0.0"
     }
   }
@@ -85,6 +85,7 @@ const readMe = `
 # ${PACKAGE_HUMANREADABLE}
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/${PACKAGE_LC}.svg)
+#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/${PACKAGE_LC}--default)
 
 ## Installation
 
@@ -137,7 +138,6 @@ storiesOf('${PACKAGE_UC}', module)
 const spec = `
 import React from 'react';
 import { render } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
 import ${PACKAGE_UC} from '.';
 
 describe('packages/${PACKAGE_LC}', () => {

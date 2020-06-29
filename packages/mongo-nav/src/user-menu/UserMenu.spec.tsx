@@ -1,5 +1,4 @@
 import React from 'react';
-import '@testing-library/jest-dom/extend-expect';
 import { render, fireEvent } from '@testing-library/react';
 import { urlFixtures, hostDefaults } from '../data';
 import UserMenu from '.';
@@ -54,26 +53,20 @@ describe('packages/mongo-nav/user-menu', () => {
   });
 
   test('renders university MenuItems when university dropdown is clicked and closes other SubMenus', () => {
-    const { getByTestId } = renderUserMenu({
+    const { getByText, getByTestId, getAllByRole } = renderUserMenu({
       activePlatform: 'cloud',
     });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
 
-    const university = document.querySelectorAll(
-      '[data-leafygreen-ui="sub-menu-container"]',
-    )[1];
+    const universityTrigger = getAllByRole('button', {
+      name: 'Open Sub-menu',
+    })[0];
+    fireEvent.click(universityTrigger);
 
-    const universityArrowButton = university?.parentNode?.querySelector(
-      'button',
-    );
+    const universityItem = getByText('University Preferences');
 
-    fireEvent.click(universityArrowButton as HTMLElement);
-
-    const universityMenuItem = getByTestId(
-      'user-menuitem-university-preferences',
-    );
-    expect(universityMenuItem).toBeInTheDocument();
+    expect(universityItem).toBeInTheDocument();
   });
 
   test('atlas MenuItem links to cloud.mongodb.com', () => {
@@ -135,13 +128,15 @@ describe('packages/mongo-nav/user-menu', () => {
   });
 
   test('renders the account link as a disabled button when set to the empty string', () => {
-    const { getByText, getByTestId } = renderUserMenu({
+    const { getByTestId } = renderUserMenu({
       activePlatform: 'account',
     });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
-    const accountButton = getByText('Manage your MongoDB Account')
-      .parentElement as HTMLButtonElement;
+    const accountButton = getByTestId(
+      'user-menu-account-button',
+    ) as HTMLButtonElement;
+
     expect(accountButton.tagName.toLowerCase()).toBe('button');
     expect(accountButton.disabled).toBe(true);
     expect(accountButton.getAttribute('aria-disabled')).toBe('true');

@@ -1,5 +1,20 @@
 # @leafygreen-ui/text-input
 
+## 1.1.2
+
+### Patch Changes
+
+- 1d86d56: Imports Glyphs directly, rather than importing the entire Icon package, when Glyph components are used
+- Updated dependencies [1d86d56]
+  - @leafygreen-ui/icon@6.1.0
+
+## 1.1.1
+
+### Patch Changes
+
+- Updated dependencies [6fc022e]
+  - @leafygreen-ui/icon@6.0.0
+
 ## 1.1.0
 
 ### Minor Changes

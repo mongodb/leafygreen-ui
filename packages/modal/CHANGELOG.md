@@ -1,5 +1,26 @@
 # @leafygreen-ui/modal
 
+## 3.1.1
+
+### Patch Changes
+
+- 1d86d56: Imports Glyphs directly, rather than importing the entire Icon package, when Glyph components are used
+- Updated dependencies [1d86d56]
+  - @leafygreen-ui/icon@6.1.0
+
+## 3.1.0
+
+### Minor Changes
+
+- dc075c7: Adds `closeOnBackdropClick` prop to handle Modal closing when the backdrop is clicked
+
+## 3.0.6
+
+### Patch Changes
+
+- Updated dependencies [6fc022e]
+  - @leafygreen-ui/icon@6.0.0
+
 ## 3.0.5
 
 ### Patch Changes

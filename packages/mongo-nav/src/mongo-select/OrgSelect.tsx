@@ -2,7 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import debounce from 'lodash/debounce';
 
 // leafygreen-ui
-import Icon from '@leafygreen-ui/icon';
+import BuildingIcon from '@leafygreen-ui/icon/dist/Building';
+import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
+import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
+import SettingsIcon from '@leafygreen-ui/icon/dist/Settings';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
@@ -190,7 +193,7 @@ function OrgSelect({
   mode,
   hosts = {},
   data = [],
-  urls = {},
+  urls,
   onChange: onChangeProp,
   constructOrganizationURL,
   admin = false,
@@ -338,6 +341,8 @@ function OrgSelect({
     );
   };
 
+  const caretIconStyle = cx(caretBaseStyle, { [iconLoadingStyle]: loading });
+
   return (
     <>
       <InteractionRingWrapper
@@ -363,9 +368,8 @@ function OrgSelect({
           })}
         >
           {!isTablet && (
-            <Icon
+            <BuildingIcon
               size="small"
-              glyph="Building"
               className={cx(iconColorStyle, { [iconLoadingStyle]: loading })}
             />
           )}
@@ -377,11 +381,11 @@ function OrgSelect({
           >
             {disabled ? 'All Organizations' : current?.orgName ?? ''}
           </span>
-          <Icon
-            size="small"
-            glyph={open ? 'CaretUp' : 'CaretDown'}
-            className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
-          />
+          {open ? (
+            <CaretUpIcon size="small" className={caretIconStyle} />
+          ) : (
+            <CaretDownIcon size="small" className={caretIconStyle} />
+          )}
         </button>
         <Menu
           usePortal={false}
@@ -452,8 +456,7 @@ function OrgSelect({
             [removePointerEvents]: loading,
           })}
         >
-          <Icon
-            glyph="Settings"
+          <SettingsIcon
             className={cx({
               [activeIconStyle]: isActive,
               [iconLoadingStyle]: loading,

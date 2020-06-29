@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { render } from '@testing-library/react';
 import Radio from './Radio';
@@ -16,7 +15,8 @@ function renderRadio(props = {}) {
 describe('packages/radio', () => {
   test(`renders "${className}" in the labels's class list`, () => {
     const { radio } = renderRadio({ className });
-    expect(radio.classList.contains(className)).toBe(true);
+    const label = radio.parentNode;
+    expect(label.classList.contains(className)).toBe(true);
   });
 
   test(`renders disabled radio when disabled prop is set`, () => {

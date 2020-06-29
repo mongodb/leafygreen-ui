@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
-import Icon from '@leafygreen-ui/icon';
+import MagnifyingGlassIcon from '@leafygreen-ui/icon/dist/MagnifyingGlass';
 import { Variant } from '../types';
 
 const focusRing = createDataProp('focus-ring');
@@ -86,7 +86,7 @@ const Input = React.forwardRef(({ variant, ...rest }: InputProps, ref) => {
         aria-label={placeholder}
       />
       <div className={interactionRing} />
-      <Icon glyph="MagnifyingGlass" className={magnifyingGlassStyle} />
+      <MagnifyingGlassIcon className={magnifyingGlassStyle} />
     </li>
   );
 });

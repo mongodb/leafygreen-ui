@@ -2,6 +2,8 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/radio-group.svg)
 
+#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/radiogroup--uncontrolled)
+
 ## Installation
 
 ### Yarn
@@ -89,7 +91,7 @@ _Any other properties will be spread on the root element._
 <label class="leafygreen-ui-11wfvmq my-radio">
   <input
     type="radio"
-    class="leafygreen-ui-i6tne my-radio"
+    class="leafygreen-ui-i6tne"
     aria-checked="false"
     disabled="true"
     aria-disabled="true"
