@@ -11,7 +11,10 @@ const channel = addons.getChannel();
 storiesOf('Stepper', module)
   .add('Default', () => (
     <div style={{ width: 1000 }}>
-      <Stepper currentStep={number('Step', 1, { min: 1, max: 7 })}>
+      <Stepper
+        currentStep={number('Step', 0, { min: 0, max: 6 })}
+        maxDisplayedSteps={5}
+      >
         <Step>Overview</Step>
         <Step>Configuration</Step>
         <Step>Update</Step>
@@ -23,23 +26,23 @@ storiesOf('Stepper', module)
     </div>
   ))
   .add('Many', () => {
-    let currentStep = number('Step', 1, { min: 1 });
+    let currentStep = number('Step', 0, { min: 0 });
     const numSteps = number('Number of steps', 7, { min: 1 });
 
     // Can't dynamically change the max, so we manually enforce it
-    if (currentStep > numSteps) {
+    if (currentStep + 1 > numSteps) {
       channel.emit(CHANGE, {
         name: 'Step',
-        value: numSteps,
+        value: numSteps - 1,
       });
-      currentStep = numSteps;
+      currentStep = numSteps - 1;
     }
 
     return (
       <div style={{ width: 1000 }}>
         <Stepper
           currentStep={currentStep}
-          maxDisplayed={number('Max displayed', 5, { min: 3 })}
+          maxDisplayedSteps={number('Max displayed', 5, { min: 1 })}
         >
           {times(numSteps, count => (
             <Step key={count}>Step {count + 1}</Step>
