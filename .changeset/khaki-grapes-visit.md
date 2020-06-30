@@ -8,4 +8,4 @@
 '@leafygreen-ui/typography': major
 ---
 
-Makes @leafygreen-ui/leafygreen-provider a peer dependency to ensure that components use hooks from the same version of the provider as what'ss installed.
+Makes `@leafygreen-ui/leafygreen-provider` a peer dependency to ensure that components use hooks from the same version of the provider as what's installed.
