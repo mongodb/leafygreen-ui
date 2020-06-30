@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 5.0.0
+
+### Major Changes
+
+- 1d24966: Makes `@leafygreen-ui/leafygreen-provider` a peer dependency to ensure that components use hooks from the same version of the provider as what's installed.
+
 ## 4.2.5
 
 ### Patch Changes
