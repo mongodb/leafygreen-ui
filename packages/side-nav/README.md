@@ -18,6 +18,12 @@ yarn add @leafygreen-ui/side-nav
 npm install @leafygreen-ui/side-nav
 ```
 
+## Peer Dependencies
+
+| Package                              | Version  |
+| ------------------------------------ | -------- |
+| `@leafygreen-ui/leafygreen-provider` | `^1.1.0` |
+
 ## Example
 
 ```js

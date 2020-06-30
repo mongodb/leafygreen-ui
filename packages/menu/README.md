@@ -18,6 +18,12 @@ yarn add @leafygreen-ui/menu
 npm install @leafygreen-ui/menu
 ```
 
+## Peer Dependencies
+
+| Package                              | Version  |
+| ------------------------------------ | -------- |
+| `@leafygreen-ui/leafygreen-provider` | `^1.1.0` |
+
 ## Example
 
 ```js
