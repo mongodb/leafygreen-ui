@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-group
 
+## 3.0.0
+
+### Major Changes
+
+- 823b057: Radio components no longer add className to both label and input element. Instead, the className is only applied to the label element.
+
 ## 2.0.1
 
 ### Patch Changes

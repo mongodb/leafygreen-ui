@@ -1,5 +1,16 @@
 # @leafygreen-ui/side-nav
 
+## 3.0.0
+
+### Major Changes
+
+- 1d24966: Makes `@leafygreen-ui/leafygreen-provider` a peer dependency to ensure that components use hooks from the same version of the provider as what's installed.
+
+### Patch Changes
+
+- Updated dependencies [1d24966]
+  - @leafygreen-ui/menu@7.0.0
+
 ## 2.0.14
 
 ### Patch Changes

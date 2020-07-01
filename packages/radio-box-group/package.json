@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/radio-box-group",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "leafyGreen UI Kit RadioBoxGroup",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
