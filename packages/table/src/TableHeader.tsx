@@ -1,5 +1,7 @@
 import React from 'react';
-import Icon from '@leafygreen-ui/icon';
+import SortAscendingIcon from '@leafygreen-ui/icon/dist/SortAscending';
+import SortDescendingIcon from '@leafygreen-ui/icon/dist/SortDescending';
+import UnsortedIcon from '@leafygreen-ui/icon/dist/Unsorted';
 import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -25,6 +27,12 @@ const labelStyle = css`
   color: ${uiColors.gray.dark2};
   padding-right: 4px;
 `;
+
+const glyphMap = {
+  Unsorted: UnsortedIcon,
+  SortAscending: SortAscendingIcon,
+  SortDescending: SortDescendingIcon,
+};
 
 interface TableHeaderInterface {
   label: React.ReactElement | string;
@@ -57,6 +65,8 @@ function TableHeader({
     state: { selectable },
     dispatch,
   } = useTableContext();
+
+  const Glyph = glyphMap[glyph];
 
   let accessor: string = label.toString().toLowerCase();
 
@@ -98,9 +108,9 @@ function TableHeader({
               margin-bottom: 2px;
             `}
           >
-            <Icon
+            <Glyph
               size="small"
-              glyph={glyph}
+              title={`${glyph}-${index}`}
               className={cx({
                 [css`
                   color: ${uiColors.blue.base};

@@ -284,6 +284,7 @@ export default class Checkbox extends PureComponent<
         })}
         style={style}
         htmlFor={checkboxId}
+        id={labelId}
       >
         <input
           {...rest}
@@ -294,6 +295,7 @@ export default class Checkbox extends PureComponent<
           name={name}
           disabled={disabled}
           checked={checked}
+          aria-label="checkbox"
           aria-disabled={disabled}
           aria-checked={indeterminate ? 'mixed' : checked}
           aria-labelledby={labelId}
@@ -320,7 +322,6 @@ export default class Checkbox extends PureComponent<
               [disabledTextStyle]: disabled,
               [boldTextStyle]: bold,
             })}
-            id={labelId}
           >
             {label}
           </span>
