@@ -298,7 +298,7 @@ interface BaseButtonProps {
   href?: string;
 }
 
-const Button: ExtendableBox<BaseButtonProps> = React.forwardRef(
+const Button: ExtendableBox<BaseButtonProps, 'button'> = React.forwardRef(
   (
     {
       className,
@@ -394,3 +394,19 @@ Button.propTypes = {
 };
 
 export default Button;
+
+<Button name="cancel" onClick={() => console.log('i')}>
+  this is my button
+</Button>;
+
+{
+  /* <Button /> */
+}
+
+<Button as="div" href="href">
+  hi
+</Button>;
+
+{
+  /* <Box href="string" as="div" />; */
+}
