@@ -18,6 +18,12 @@ yarn add @leafygreen-ui/text-input
 npm install @leafygreen-ui/text-input
 ```
 
+## Peer Dependencies
+
+| Package                              | Version  |
+| ------------------------------------ | -------- |
+| `@leafygreen-ui/leafygreen-provider` | `^1.1.0` |
+
 ## Example
 
 ```Javascript

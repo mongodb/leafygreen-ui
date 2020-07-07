@@ -18,6 +18,12 @@ yarn add @leafygreen-ui/typography
 npm install @leafygreen-ui/typography
 ```
 
+## Peer Dependencies
+
+| Package                              | Version  |
+| ------------------------------------ | -------- |
+| `@leafygreen-ui/leafygreen-provider` | `^1.1.0` |
+
 # H1
 
 ## Example
