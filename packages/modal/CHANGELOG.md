@@ -1,5 +1,11 @@
 # @leafygreen-ui/modal
 
+## 3.1.2
+
+### Patch Changes
+
+- 6b3308d: Hides focus state on dialogue container
+
 ## 3.1.1
 
 ### Patch Changes
