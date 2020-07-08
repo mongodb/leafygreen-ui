@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/box",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "leafyGreen UI Kit Box",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
