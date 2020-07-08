@@ -6,4 +6,5 @@ export {
   InlineCode,
   Disclaimer,
   Overline,
+  Link,
 } from './Typography';

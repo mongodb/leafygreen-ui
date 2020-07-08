@@ -1,7 +1,16 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { select } from '@storybook/addon-knobs';
-import { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline } from '.';
+import { select, boolean } from '@storybook/addon-knobs';
+import {
+  H1,
+  H2,
+  Subtitle,
+  Body,
+  InlineCode,
+  Disclaimer,
+  Overline,
+  Link,
+} from '.';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { css } from '@leafygreen-ui/emotion';
 
@@ -24,6 +33,7 @@ storiesOf('Typography', module).add('Default', () => (
       <InlineCode className={displayBlock}>InlineCode</InlineCode>
       <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
       <Overline>Overline</Overline>
+      <Link href="http://mongodb.design">MongoDB.design</Link>
     </div>
   </LeafygreenProvider>
 ));
