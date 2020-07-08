@@ -298,7 +298,7 @@ interface BaseButtonProps {
   href?: string;
 }
 
-const Button: ExtendableBox<BaseButtonProps> = React.forwardRef(
+const Button: ExtendableBox<BaseButtonProps, 'button'> = React.forwardRef(
   (
     {
       className,
