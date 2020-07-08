@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/button",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "leafyGreen UI Kit Button",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
@@ -15,7 +15,7 @@
   "dependencies": {
     "@leafygreen-ui/lib": "^4.4.1",
     "@leafygreen-ui/palette": "^2.0.1",
-    "@leafygreen-ui/box": "^2.0.0",
+    "@leafygreen-ui/box": "^2.1.0",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
