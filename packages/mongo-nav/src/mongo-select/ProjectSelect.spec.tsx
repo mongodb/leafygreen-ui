@@ -1,22 +1,9 @@
 import React from 'react';
-import { waitFor } from '@testing-library/dom';
+import { waitForElementToBeRemoved } from '@testing-library/dom';
 import { render, fireEvent, cleanup, act } from '@testing-library/react';
-import {
-  nullableElement,
-  nullableElementArray,
-  Queries,
-} from 'packages/lib/src/testHelpers';
+import type { RenderResult } from '@testing-library/react';
 import ProjectSelect from './ProjectSelect';
 import { dataFixtures, urlFixtures, constructProjectURL } from '../data';
-import { CurrentProjectInterface } from '../types';
-
-// types
-interface ExpectedElements {
-  projectTrigger?: nullableElement;
-  projectTriggerText?: nullableElement;
-  projectInput?: nullableElement;
-  projectResults?: nullableElementArray;
-}
 
 // data
 const { currentProject, projects } = dataFixtures;
@@ -24,27 +11,9 @@ const { currentProject, projects } = dataFixtures;
 const mongoSelectUrls = urlFixtures.mongoSelect;
 
 describe('packages/mongo-select/ProjectSelect', () => {
-  const queries: Queries = {};
-  const expectedElements: ExpectedElements = {};
-
-  const setQueries = ({ queryByTestId, queryAllByTestId }: Queries) => {
-    Object.assign(queries, { queryByTestId, queryAllByTestId });
-    setExpectedElements();
-  };
-
-  const setExpectedElements = () => {
-    const {
-      queryByTestId = () => null,
-      queryAllByTestId = () => null,
-    } = queries;
-
-    expectedElements.projectTrigger = queryByTestId('project-select-trigger');
-    expectedElements.projectTriggerText = queryByTestId(
-      'project-select-active-project',
-    );
-    expectedElements.projectInput = queryByTestId('project-filter-input');
-    expectedElements.projectResults = queryAllByTestId('project-option');
-  };
+  let getByTestId: RenderResult['getByTestId'];
+  let queryByTestId: RenderResult['queryByTestId'];
+  let queryAllByTestId: RenderResult['queryAllByTestId'];
 
   afterEach(() => {
     jest.restoreAllMocks();
@@ -53,72 +22,66 @@ describe('packages/mongo-select/ProjectSelect', () => {
 
   describe('ProjectSelect', () => {
     const renderComponent = (props = {}) => {
-      setQueries(
-        render(
-          <ProjectSelect
-            urls={mongoSelectUrls}
-            data={projects}
-            current={currentProject as CurrentProjectInterface}
-            constructProjectURL={constructProjectURL}
-            {...props}
-          />,
-        ),
-      );
+      ({ getByTestId, queryByTestId, queryAllByTestId } = render(
+        <ProjectSelect
+          urls={mongoSelectUrls}
+          data={projects}
+          current={currentProject!}
+          constructProjectURL={constructProjectURL}
+          {...props}
+        />,
+      ));
     };
 
     describe('when rendered with default props', () => {
       beforeEach(renderComponent);
 
       it('displays the project select trigger with the current project name', () => {
-        const { projectTriggerText } = expectedElements;
-        expect(projectTriggerText).toBeInTheDocument();
-        expect(projectTriggerText?.textContent).toEqual('Demo Project 1');
+        expect(
+          getByTestId('project-select-active-project').textContent,
+        ).toEqual('Demo Project 1');
       });
 
       describe('when clicking the current project trigger', () => {
         beforeEach(() => {
-          const { projectTrigger } = expectedElements;
-          fireEvent.click(projectTrigger as Element);
-          setExpectedElements();
+          fireEvent.click(getByTestId('project-select-trigger'));
         });
 
         it('displays a placeholder without an existing value', () => {
-          const { projectInput } = expectedElements;
-          expect(projectInput).toBeInTheDocument();
-          expect(projectInput?.getAttribute('placeholder')).toContain(
-            'Search for a Project...',
-          );
+          expect(
+            getByTestId('project-filter-input').getAttribute('placeholder'),
+          ).toContain('Search for a Project...');
         });
 
         it('displays two projects', () => {
-          const { projectResults } = expectedElements;
-          expect(projectResults?.length).toEqual(2);
+          const projectResults = queryAllByTestId('project-option');
+          expect(projectResults.length).toEqual(2);
         });
 
         it('displays the correct names of each project', () => {
-          const { projectResults } = expectedElements;
-          expect(projectResults?.[0]?.textContent).toContain('Demo Project');
-          expect(projectResults?.[1]?.textContent).toContain('Demo Project 2');
+          const projectResults = queryAllByTestId('project-option');
+          expect(projectResults[0].textContent).toContain('Demo Project');
+          expect(projectResults[1].textContent).toContain('Demo Project 2');
         });
 
         it('displays the correct link to projects of each result', () => {
-          const { projectResults } = expectedElements;
-          expect((projectResults?.[0] as HTMLAnchorElement).href).toBe(
+          const projectResults = queryAllByTestId('project-option');
+          expect((projectResults[0] as HTMLAnchorElement).href).toBe(
             'https://cloud.mongodb.com/v2#/fakeProjectId1',
           );
-          expect((projectResults?.[1] as HTMLAnchorElement).href).toBe(
+          expect((projectResults[1] as HTMLAnchorElement).href).toBe(
             'https://cloud.mongodb.com/v2#/fakeProjectId2',
           );
         });
 
         it('indicates the current project', () => {
-          const { projectResults } = expectedElements;
-          const currentProjectName = currentProject?.projectName;
-          const currentResult = projectResults?.filter(result =>
-            result?.textContent?.includes('(current)'),
+          const projectResults = queryAllByTestId('project-option');
+          const currentProjectName = currentProject!.projectName;
+          const currentResult = projectResults.filter(result =>
+            result.textContent!.includes('(current)'),
           );
-          expect(currentResult?.length).toEqual(1);
-          expect(currentResult?.[0]?.textContent).toEqual(
+          expect(currentResult.length).toEqual(1);
+          expect(currentResult[0].textContent).toEqual(
             `${currentProjectName} (current)`,
           );
         });
@@ -129,32 +92,27 @@ describe('packages/mongo-select/ProjectSelect', () => {
       beforeEach(renderComponent);
 
       beforeEach(() => {
-        fireEvent.click(expectedElements.projectTrigger as HTMLElement);
-        setExpectedElements();
+        fireEvent.click(getByTestId('project-select-trigger'));
       });
 
       it('displays one project when only one matches the search', () => {
-        const input = expectedElements!.projectInput;
+        const input = getByTestId('project-filter-input');
 
-        fireEvent.change(input as HTMLElement, {
+        fireEvent.change(input, {
           target: { value: '1' },
         });
 
-        act(setExpectedElements);
-
-        expect(expectedElements!.projectResults!.length).toBe(1);
+        expect(queryAllByTestId('project-option').length).toBe(1);
       });
 
       it('displays no projects when none matches the search', () => {
-        const input = expectedElements!.projectInput;
+        const input = getByTestId('project-filter-input');
 
-        fireEvent.change(input as HTMLElement, {
+        fireEvent.change(input, {
           target: { value: 'xx' },
         });
 
-        act(setExpectedElements);
-
-        expect(expectedElements!.projectResults!.length).toBe(0);
+        expect(queryAllByTestId('project-option').length).toBe(0);
       });
 
       it('when closing the menu the filter value is reset', async () => {
@@ -169,16 +127,13 @@ describe('packages/mongo-select/ProjectSelect', () => {
 
         // Need to wait for the UI to update as clicking on the orgTrigger so rapidly causes
         // React to coalesce the events
-        await waitFor(() => {
-          setExpectedElements();
-          expect(expectedElements!.projectInput).not.toBeInTheDocument();
-        });
+        await waitForElementToBeRemoved(() =>
+          queryByTestId('project-filter-input'),
+        );
 
-        fireEvent.click(expectedElements.projectTrigger as Element);
-        setExpectedElements();
+        fireEvent.click(getByTestId('project-select-trigger'));
 
-        expect(expectedElements!.projectInput).toBeInTheDocument();
-        expect(expectedElements!.projectInput!.innerHTML).toEqual('');
+        expect(getByTestId('project-filter-input').innerHTML).toEqual('');
       });
     });
 
@@ -187,19 +142,16 @@ describe('packages/mongo-select/ProjectSelect', () => {
       beforeEach(() => renderComponent({ onChange }));
 
       it('it does not filter the projects and calls the onChange callback', () => {
-        fireEvent.click(expectedElements.projectTrigger as HTMLElement);
-        setExpectedElements();
+        fireEvent.click(getByTestId('project-select-trigger'));
 
-        const input = expectedElements!.projectInput;
+        const input = getByTestId('project-filter-input');
 
-        fireEvent.change(input as HTMLElement, {
+        fireEvent.change(input, {
           target: { value: '1' },
         });
 
-        act(setExpectedElements);
-
         expect(onChange).toHaveBeenCalledTimes(1);
-        expect(expectedElements!.projectResults!.length).toBe(2);
+        expect(queryAllByTestId('project-option').length).toBe(2);
       });
     });
   });

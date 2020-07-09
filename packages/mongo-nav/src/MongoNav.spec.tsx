@@ -1,52 +1,13 @@
 import React from 'react';
-import {
-  render,
-  fireEvent,
-  cleanup,
-  act,
-  waitFor,
-} from '@testing-library/react';
-import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
+import { render, fireEvent, cleanup, act } from '@testing-library/react';
+import type { RenderResult } from '@testing-library/react';
 import { dataFixtures } from './data';
 import MongoNav from './MongoNav';
 
-// types
-interface ExpectedElements {
-  [key: string]: nullableElement;
-}
-
 describe('packages/mongo-nav', () => {
-  const queries: Queries = {};
-  const expectedElements: ExpectedElements = {};
-
-  const setQueries = ({ queryByTestId }: Queries) => {
-    Object.assign(queries, { queryByTestId });
-    setExpectedElements();
-  };
-
-  const setExpectedElements = () => {
-    const { queryByTestId = () => null } = queries;
-    expectedElements.orgNav = queryByTestId('organization-nav');
-    expectedElements.projectNav = queryByTestId('project-nav');
-    expectedElements.admin = queryByTestId('org-nav-admin-link');
-    expectedElements.billing = queryByTestId('org-nav-billing');
-    expectedElements.activityFeed = queryByTestId('project-nav-activity-feed');
-    expectedElements.currentOrg = queryByTestId('org-select-active-org');
-    expectedElements.currentProject = queryByTestId(
-      'project-select-active-project',
-    );
-    expectedElements.allProjects = queryByTestId('project-select-project-list');
-    expectedElements.userMenu = queryByTestId('user-menu-trigger');
-    expectedElements.userMenuCloudItem = queryByTestId(
-      'user-menuitem-cloud-user-preferences',
-    );
-    expectedElements.userMenuLogout = queryByTestId('user-menuitem-logout');
-    expectedElements.onPremUserMenu = queryByTestId('om-user-menu-trigger');
-    expectedElements.onPremLogout = queryByTestId('om-user-menuitem-sign-out');
-    expectedElements.atlas = queryByTestId('project-nav-atlas');
-    expectedElements.realm = queryByTestId('project-nav-realm');
-    expectedElements.charts = queryByTestId('project-nav-charts');
-  };
+  let queryByTestId: RenderResult['queryByTestId'];
+  let getByTestId: RenderResult['getByTestId'];
+  let findByTestId: RenderResult['findByTestId'];
 
   let fetchMock: jest.Mock;
   let originalFetch: (
@@ -68,7 +29,9 @@ describe('packages/mongo-nav', () => {
 
   const renderComponent = async (props = {}) => {
     await act(async () => {
-      setQueries(render(<MongoNav activeProduct="cloud" {...props} />));
+      ({ findByTestId, getByTestId, queryByTestId } = render(
+        <MongoNav activeProduct="cloud" {...props} />,
+      ));
     });
   };
 
@@ -82,8 +45,9 @@ describe('packages/mongo-nav', () => {
       fetchMock.mockResolvedValue(responseObject);
       await renderComponent();
 
-      // @ts-ignore  Type 'Promise<DataInterface>' is not assignable to type 'Promise<void | undefined>'.
-      await act(() => responseObject.json());
+      act(() => {
+        responseObject.json();
+      });
     });
 
     test('fetch is called', () => {
@@ -92,49 +56,50 @@ describe('packages/mongo-nav', () => {
     });
 
     test('the organization and project navs are rendered', () => {
-      expect(expectedElements.orgNav).toBeInTheDocument();
-      expect(expectedElements.projectNav).toBeInTheDocument();
+      expect(queryByTestId('organization-nav')).not.toBeNull();
+      expect(queryByTestId('project-nav')).not.toBeNull();
     });
 
     test('current orgId is set based on data returned from fetch', () => {
-      expect((expectedElements.billing as HTMLAnchorElement).href).toBe(
+      expect((getByTestId('org-nav-billing') as HTMLAnchorElement).href).toBe(
         `https://cloud.mongodb.com/v2#/org/${
-          dataFixtures!.currentOrganization?.orgId
+          dataFixtures!.currentOrganization!.orgId
         }/billing/overview`,
       );
     });
 
     test('current orgName is displayed inside the OrgSelect based on data returned from fetch', () => {
       expect(
-        expectedElements.currentOrg?.innerHTML.includes(
-          dataFixtures!.currentOrganization?.orgName as string,
+        getByTestId('org-select-active-org').innerHTML.includes(
+          dataFixtures!.currentOrganization!.orgName,
         ),
       ).toBe(true);
     });
 
     test('current projectId is set based on data returned from fetch', () => {
-      expect((expectedElements.activityFeed as HTMLAnchorElement).href).toBe(
+      expect(
+        (getByTestId('project-nav-activity-feed') as HTMLAnchorElement).href,
+      ).toBe(
         `https://cloud.mongodb.com/v2/${
-          dataFixtures!.currentProject?.projectId
+          dataFixtures!.currentProject!.projectId
         }#activity`,
       );
     });
 
     test('current projectName is displayed inside the ProjectSelect based on data returned from fetch', () => {
       expect(
-        expectedElements.currentProject?.innerHTML.includes(
-          dataFixtures!.currentProject?.projectName as string,
+        getByTestId('project-select-active-project').innerHTML.includes(
+          dataFixtures!.currentProject!.projectName,
         ),
       ).toBe(true);
     });
 
     test('projects displayed in ProjectSelect are only shown if they have the same orgId as the current project', () => {
-      const currentProject = expectedElements.currentProject;
-      fireEvent.click(currentProject as HTMLElement);
-      setExpectedElements();
+      const currentProject = getByTestId('project-select-active-project');
+      fireEvent.click(currentProject);
 
-      const projectList = expectedElements!.allProjects;
-      const projectOptions = projectList!.querySelectorAll(
+      const projectList = getByTestId('project-select-project-list');
+      const projectOptions = projectList.querySelectorAll(
         '[data-testid="project-option"]',
       );
       expect(projectOptions[0].innerHTML.includes('Demo Project 1')).toBe(true);
@@ -142,13 +107,13 @@ describe('packages/mongo-nav', () => {
     });
 
     test('user is set based on data returned from fetch', () => {
-      expect(expectedElements.userMenu?.innerHTML.includes('DevMode')).toBe(
-        true,
-      );
+      expect(
+        getByTestId('user-menu-trigger').innerHTML.includes('DevMode'),
+      ).toBe(true);
     });
 
     test('admin UI is not shown', () => {
-      expect(expectedElements.admin).not.toBeInTheDocument();
+      expect(queryByTestId('org-nav-admin-link')).toBeNull();
     });
   });
 
@@ -168,8 +133,9 @@ describe('packages/mongo-nav', () => {
       fetchMock.mockResolvedValue(responseObject);
       await renderComponent({ activeProjectId });
 
-      // @ts-ignore  Type 'Promise<DataInterface>' is not assignable to type 'Promise<void | undefined>'.
-      await act(() => responseObject.json());
+      act(() => {
+        responseObject.json();
+      });
     });
 
     test('fetch is called', () => {
@@ -178,25 +144,26 @@ describe('packages/mongo-nav', () => {
     });
 
     test('the organization and project navs are rendered', () => {
-      expect(expectedElements.orgNav).toBeInTheDocument();
-      expect(expectedElements.projectNav).toBeInTheDocument();
+      expect(queryByTestId('project-nav')).not.toBeNull();
     });
 
     test('current orgId is set based on the new activeProjectId', () => {
-      expect((expectedElements.billing as HTMLAnchorElement).href).toBe(
+      expect((getByTestId('org-nav-billing') as HTMLAnchorElement).href).toBe(
         `https://cloud.mongodb.com/v2#/org/${newActiveProject.orgId}/billing/overview`,
       );
     });
 
     test('current projectId is set based on the new activeProjectId', () => {
-      expect((expectedElements.activityFeed as HTMLAnchorElement).href).toBe(
+      expect(
+        (getByTestId('project-nav-activity-feed') as HTMLAnchorElement).href,
+      ).toBe(
         `https://cloud.mongodb.com/v2/${newActiveProject.projectId}#activity`,
       );
     });
 
     test('current projectName is displayed inside the ProjectSelect based on the new activeProjectId', () => {
       expect(
-        expectedElements.currentProject?.innerHTML.includes(
+        getByTestId('project-select-active-project').innerHTML.includes(
           newActiveProject.projectName,
         ),
       ).toBe(true);
@@ -219,8 +186,9 @@ describe('packages/mongo-nav', () => {
       fetchMock.mockResolvedValue(responseObject);
       await renderComponent({ activeOrgId });
 
-      // @ts-ignore  Type 'Promise<DataInterface>' is not assignable to type 'Promise<void | undefined>'.s
-      await act(() => responseObject.json());
+      act(() => {
+        responseObject.json();
+      });
     });
 
     test('fetch is called', () => {
@@ -229,19 +197,21 @@ describe('packages/mongo-nav', () => {
     });
 
     test('the organization and project navs are rendered', () => {
-      expect(expectedElements.orgNav).toBeInTheDocument();
-      expect(expectedElements.projectNav).toBeInTheDocument();
+      expect(queryByTestId('organization-nav')).not.toBeNull();
+      expect(queryByTestId('project-nav')).not.toBeNull();
     });
 
     test('current orgId is set based on the new activeOrgId', () => {
-      expect((expectedElements.billing as HTMLAnchorElement).href).toBe(
+      expect((getByTestId('org-nav-billing') as HTMLAnchorElement).href).toBe(
         `https://cloud.mongodb.com/v2#/org/${newActiveOrg.orgId}/billing/overview`,
       );
     });
 
     test('current orgName is displayed inside the OrgSelect based on the new activeOrgId', () => {
       expect(
-        expectedElements.currentOrg?.innerHTML.includes(newActiveOrg.orgName),
+        getByTestId('org-select-active-org').innerHTML.includes(
+          newActiveOrg.orgName,
+        ),
       ).toBe(true);
     });
   });
@@ -269,8 +239,9 @@ describe('packages/mongo-nav', () => {
         activeProjectId,
       });
 
-      // @ts-ignore  Type 'Promise<DataInterface>' is not assignable to type 'Promise<void | undefined>'.
-      await act(() => responseObject.json());
+      act(() => {
+        responseObject.json();
+      });
     });
 
     test('fetch is called', () => {
@@ -279,20 +250,22 @@ describe('packages/mongo-nav', () => {
     });
 
     test('current orgId is set based on the new activeProjectId', () => {
-      expect((expectedElements.billing as HTMLAnchorElement).href).toBe(
+      expect((getByTestId('org-nav-billing') as HTMLAnchorElement).href).toBe(
         `https://cloud.mongodb.com/v2#/org/${newActiveProject.orgId}/billing/overview`,
       );
     });
 
     test('current projectId is set based on the new activeProjectId', () => {
-      expect((expectedElements.activityFeed as HTMLAnchorElement).href).toBe(
+      expect(
+        (getByTestId('project-nav-activity-feed') as HTMLAnchorElement).href,
+      ).toBe(
         `https://cloud.mongodb.com/v2/${newActiveProject.projectId}#activity`,
       );
     });
 
     test('current projectName is displayed inside the ProjectSelect based on the new activeProjectId', () => {
       expect(
-        expectedElements.currentProject?.innerHTML.includes(
+        getByTestId('project-select-active-project').innerHTML.includes(
           newActiveProject.projectName,
         ),
       ).toBe(true);
@@ -306,10 +279,11 @@ describe('packages/mongo-nav', () => {
     );
 
     test('when the user menu opens, the cloud menu items are displayed', () => {
-      fireEvent.click(expectedElements.userMenu as HTMLElement);
-      setExpectedElements();
+      fireEvent.click(getByTestId('user-menu-trigger'));
 
-      expect(expectedElements.userMenuCloudItem).toBeInTheDocument();
+      expect(
+        queryByTestId('user-menuitem-cloud-user-preferences'),
+      ).not.toBeNull();
     });
   });
 
@@ -321,8 +295,10 @@ describe('packages/mongo-nav', () => {
     );
 
     test('link is properly constructured based on host override prop', () => {
-      expect((expectedElements.billing as HTMLAnchorElement).href).toBe(
-        `${cloudHost}/v2#/org/${dataFixtures.currentOrganization?.orgId}/billing/overview`,
+      expect((getByTestId('org-nav-billing') as HTMLAnchorElement).href).toBe(
+        `${cloudHost}/v2#/org/${
+          dataFixtures.currentOrganization!.orgId
+        }/billing/overview`,
       );
     });
   });
@@ -338,9 +314,9 @@ describe('packages/mongo-nav', () => {
     );
 
     test('link is properly constructured based on host override prop', () => {
-      expect((expectedElements.activityFeed as HTMLAnchorElement).href).toBe(
-        activityFeedHref,
-      );
+      expect(
+        (getByTestId('project-nav-activity-feed') as HTMLAnchorElement).href,
+      ).toBe(activityFeedHref);
     });
   });
 
@@ -354,14 +330,14 @@ describe('packages/mongo-nav', () => {
     );
 
     test('the user name is not displayed', () => {
-      expect(expectedElements.userMenu?.innerHTML.includes('DevMode')).toBe(
-        false,
-      );
+      expect(
+        getByTestId('user-menu-trigger').innerHTML.includes('DevMode'),
+      ).toBe(false);
     });
 
     test('the current project name is not displayed', () => {
       expect(
-        expectedElements.currentProject?.innerHTML.includes(
+        getByTestId('project-select-active-project').innerHTML.includes(
           dataFixtures!.currentProject!.projectName,
         ),
       ).toBe(false);
@@ -369,7 +345,7 @@ describe('packages/mongo-nav', () => {
 
     test('the current organization name is not displayed', () => {
       expect(
-        expectedElements.currentOrg?.innerHTML.includes(
+        getByTestId('org-select-active-org').innerHTML.includes(
           dataFixtures!.currentOrganization!.orgName,
         ),
       ).toBe(false);
@@ -391,9 +367,9 @@ describe('packages/mongo-nav', () => {
     );
 
     test('prop data overrides default data', () => {
-      expect(expectedElements.currentOrg?.innerHTML.includes(newOrgName)).toBe(
-        true,
-      );
+      expect(
+        getByTestId('org-select-active-org').innerHTML.includes(newOrgName),
+      ).toBe(true);
     });
   });
 
@@ -410,10 +386,7 @@ describe('packages/mongo-nav', () => {
     );
 
     test('admin UI is shown', async () => {
-      await waitFor(() => {
-        setExpectedElements();
-        expect(expectedElements.admin).toBeInTheDocument();
-      });
+      expect(await findByTestId('org-nav-admin-link')).not.toBeNull();
     });
   });
 });

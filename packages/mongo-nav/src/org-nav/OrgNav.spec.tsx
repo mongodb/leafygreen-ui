@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
-import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
+import type { RenderResult } from '@testing-library/react';
 import {
   dataFixtures,
   urlFixtures,
@@ -11,15 +11,6 @@ import OrgNav from './OrgNav';
 import { startCase } from 'lodash';
 import { NavElement, ActiveNavElement } from '../types';
 
-// types
-interface ExpectedElements {
-  [key: string]: nullableElement;
-}
-
-interface LinkNameToUrls {
-  [key: string]: string | null | undefined;
-}
-
 // data
 const { account, currentOrganization, organizations } = dataFixtures;
 const {
@@ -28,47 +19,23 @@ const {
 
 // this avoids having to explicitly type orgNav with nullable fields
 // and then extend it to allow string indexes
-const linkNamesToUrls: LinkNameToUrls = {
+const linkNamesToUrls: Record<string, string | undefined> = {
   support,
   billing,
   allClusters,
   admin,
 };
 
+const linkNamesToTestIds: Record<string, string> = {
+  allClusters: 'org-nav-all-clusters-link',
+  admin: 'org-nav-admin-link',
+  support: 'org-nav-support',
+  billing: 'org-nav-billing',
+};
+
 describe('packages/mongo-nav/src/org-nav', () => {
-  const queries: Queries = {};
-  const expectedElements: ExpectedElements = {};
-
-  const setQueries = ({ queryByTestId }: Queries) => {
-    Object.assign(queries, { queryByTestId });
-    setExpectedElements();
-  };
-
-  const setExpectedElements = () => {
-    const { queryByTestId = () => null } = queries;
-    expectedElements.paymentStatus = queryByTestId('org-nav-payment-status');
-    expectedElements.accessManagerDropdown = queryByTestId(
-      'org-nav-access-manager-dropdown',
-    );
-    expectedElements.accessManagerOrg = queryByTestId(
-      'org-nav-dropdown-org-access-manager',
-    );
-    expectedElements.accessManagerProject = queryByTestId(
-      'org-nav-dropdown-project-access-manager',
-    );
-    expectedElements.support = queryByTestId('org-nav-support');
-    expectedElements.billing = queryByTestId('org-nav-billing');
-    expectedElements.allClusters = queryByTestId('org-nav-all-clusters-link');
-    expectedElements.admin = queryByTestId('org-nav-admin-link');
-    expectedElements.version = queryByTestId('org-nav-on-prem-version');
-    expectedElements.userMenu = queryByTestId('user-menu-trigger');
-    expectedElements.onPremUserMenu = queryByTestId('om-user-menu-trigger');
-    expectedElements.onPremUserMenuMFA = queryByTestId('om-user-menuitem-mfa');
-    expectedElements.onPremUserMenuSignOut = queryByTestId(
-      'om-user-menuitem-sign-out',
-    );
-    expectedElements.seeProductTour = queryByTestId('org-nav-see-product-tour');
-  };
+  let getByTestId: RenderResult['getByTestId'];
+  let queryByTestId: RenderResult['queryByTestId'];
 
   let onOrganizationChange: jest.Mock;
 
@@ -82,31 +49,29 @@ describe('packages/mongo-nav/src/org-nav', () => {
   });
 
   const renderComponent = (props = {}) => {
-    setQueries(
-      render(
-        <OrgNav
-          account={account}
-          activeNav={NavElement.OrgNavOrgSettings}
-          current={currentOrganization}
-          data={organizations}
-          constructOrganizationURL={constructOrganizationURL}
-          onOrganizationChange={onOrganizationChange}
-          urls={urlFixtures}
-          admin={false}
-          hosts={hostDefaults}
-          showProjectNav={true}
-          {...props}
-        />,
-      ),
-    );
+    ({ getByTestId, queryByTestId } = render(
+      <OrgNav
+        account={account}
+        activeNav={NavElement.OrgNavOrgSettings}
+        current={currentOrganization}
+        data={organizations}
+        constructOrganizationURL={constructOrganizationURL}
+        onOrganizationChange={onOrganizationChange}
+        urls={urlFixtures}
+        admin={false}
+        hosts={hostDefaults}
+        showProjectNav={true}
+        {...props}
+      />,
+    ));
   };
 
   const testForVersion = (isVisible = true) => {
     it(`${isVisible ? 'displays' : 'does not display'} the version`, () => {
-      const version = expectedElements['version'];
+      const version = queryByTestId('org-nav-on-prem-version');
 
       if (isVisible) {
-        expect(version).toBeInTheDocument();
+        expect(version).not.toBeNull();
       } else {
         expect(version).toBeNull();
       }
@@ -117,11 +82,11 @@ describe('packages/mongo-nav/src/org-nav', () => {
     it(`${
       isVisible ? 'displays' : 'does not display'
     } the payment status badge`, () => {
-      const badge = expectedElements['paymentStatus'];
+      const badge = queryByTestId('org-nav-payment-status');
 
       if (isVisible) {
-        expect(badge).toBeInTheDocument();
-        expect(badge?.textContent).toEqual(currentOrganization?.paymentStatus);
+        expect(badge).not.toBeNull();
+        expect(badge!.textContent).toEqual(currentOrganization!.paymentStatus);
       } else {
         expect(badge).toBeNull();
       }
@@ -132,14 +97,14 @@ describe('packages/mongo-nav/src/org-nav', () => {
     it(`${isVisible ? 'displays' : 'does not display'} the UserMenu and ${
       isVisible ? 'does not display' : 'displays'
     } the onPrem User Menu`, () => {
-      const userMenu = expectedElements['userMenu'];
-      const onPremUserMenu = expectedElements['onPremUserMenu'];
+      const userMenu = queryByTestId('user-menu-trigger');
+      const onPremUserMenu = queryByTestId('om-user-menu-trigger');
 
       if (isVisible) {
-        expect(userMenu).toBeInTheDocument();
+        expect(userMenu).not.toBeNull();
         expect(onPremUserMenu).toBeNull();
       } else {
-        expect(onPremUserMenu).toBeInTheDocument();
+        expect(onPremUserMenu).not.toBeNull();
         expect(userMenu).toBeNull();
       }
     });
@@ -147,14 +112,13 @@ describe('packages/mongo-nav/src/org-nav', () => {
 
   const testForMFA = (isVisible = true) => {
     it(`${isVisible ? 'displays' : 'does not display'} the MFA option`, () => {
-      const onPremUserMenu = expectedElements['onPremUserMenu'];
-      fireEvent.click(onPremUserMenu as Element);
-      setExpectedElements();
+      const onPremUserMenu = getByTestId('om-user-menu-trigger');
+      fireEvent.click(onPremUserMenu);
 
-      const onPremUserMenuMFA = expectedElements['onPremUserMenuMFA'];
+      const onPremUserMenuMFA = queryByTestId('om-user-menuitem-mfa');
 
       if (isVisible) {
-        expect(onPremUserMenuMFA).toBeInTheDocument();
+        expect(onPremUserMenuMFA).not.toBeNull();
         expect((onPremUserMenuMFA as HTMLAnchorElement).href).toBe(
           'https://cloud.mongodb.com/v2#/account/2fa',
         );
@@ -168,12 +132,12 @@ describe('packages/mongo-nav/src/org-nav', () => {
     it(`${isVisible ? 'displays' : 'does not display'} the ${startCase(
       linkName,
     )} nav`, () => {
-      const navLink = expectedElements[linkName];
+      const navLink = queryByTestId(linkNamesToTestIds[linkName]);
 
       if (isVisible) {
-        expect(navLink).toBeInTheDocument();
+        expect(navLink).not.toBeNull();
 
-        expect((navLink as HTMLAnchorElement)?.href).toEqual(
+        expect((navLink as HTMLAnchorElement).href).toEqual(
           linkNamesToUrls[linkName],
         );
       } else {
@@ -186,10 +150,10 @@ describe('packages/mongo-nav/src/org-nav', () => {
     it(`${
       isVisible ? 'displays' : 'does not display'
     } the See Product Tour link`, () => {
-      const productTour = expectedElements.seeProductTour;
+      const productTour = queryByTestId('org-nav-see-product-tour');
 
       if (isVisible) {
-        expect(productTour).toBeInTheDocument();
+        expect(productTour).not.toBeNull();
       } else {
         expect(productTour).toBeNull();
       }
@@ -251,15 +215,13 @@ describe('packages/mongo-nav/src/org-nav', () => {
     );
 
     it('shows project access as disabled', () => {
-      fireEvent.click(expectedElements.accessManagerDropdown!);
-      setExpectedElements();
+      fireEvent.click(getByTestId('org-nav-access-manager-dropdown')!);
 
-      expect(expectedElements.accessManagerProject).toBeInTheDocument();
-      expect(expectedElements.accessManagerProject).toHaveAttribute(
-        'aria-disabled',
-        'true',
+      const accessManagerProject = getByTestId(
+        'org-nav-dropdown-project-access-manager',
       );
-      expect(expectedElements.accessManagerProject).toContainHTML('None');
+      expect(accessManagerProject).toHaveAttribute('aria-disabled', 'true');
+      expect(accessManagerProject).toContainHTML('None');
     });
   });
 
@@ -277,7 +239,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
     testForMFA(false);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
-      testForNavLink(linkName, ['billing', 'admin'].indexOf(linkName) === -1),
+      testForNavLink(linkName, !['billing', 'admin'].includes(linkName)),
     );
   });
 
@@ -347,17 +309,17 @@ describe('packages/mongo-nav/src/org-nav', () => {
           currentProjectName: 'Test Project',
           currentProjectId: 'test-project-id',
         });
-        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
-        setExpectedElements();
+        fireEvent.click(getByTestId('org-nav-access-manager-dropdown'));
 
-        expect(
-          expectedElements.accessManagerProject?.innerHTML.includes(
-            'Test Project',
-          ),
-        ).toBe(true);
-        expect(
-          expectedElements.accessManagerProject?.getAttribute('aria-disabled'),
-        ).toBe('false');
+        const accessManagerProject = getByTestId(
+          'org-nav-dropdown-project-access-manager',
+        );
+        expect(accessManagerProject.innerHTML.includes('Test Project')).toBe(
+          true,
+        );
+        expect(accessManagerProject.getAttribute('aria-disabled')).toBe(
+          'false',
+        );
       });
 
       test('and currentProject does not exist, the Project Access Manager link is disabled and the project name appears as "None"', () => {
@@ -365,15 +327,13 @@ describe('packages/mongo-nav/src/org-nav', () => {
           onPremEnabled: true,
           showProjectNav: false,
         });
-        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
-        setExpectedElements();
+        fireEvent.click(getByTestId('org-nav-access-manager-dropdown'));
 
-        expect(
-          expectedElements.accessManagerProject?.innerHTML.includes('None'),
-        ).toBe(true);
-        expect(
-          expectedElements.accessManagerProject?.getAttribute('aria-disabled'),
-        ).toBe('true');
+        const accessManagerProject = getByTestId(
+          'org-nav-dropdown-project-access-manager',
+        );
+        expect(accessManagerProject.innerHTML.includes('None')).toBe(true);
+        expect(accessManagerProject.getAttribute('aria-disabled')).toBe('true');
       });
     });
 
@@ -384,32 +344,30 @@ describe('packages/mongo-nav/src/org-nav', () => {
           currentProjectName: 'Test Project',
           currentProjectId: 'test-project-id',
         });
-        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
-        setExpectedElements();
+        fireEvent.click(getByTestId('org-nav-access-manager-dropdown'));
 
-        expect(
-          expectedElements.accessManagerProject?.innerHTML.includes(
-            'Test Project',
-          ),
-        ).toBe(true);
-        expect(
-          expectedElements.accessManagerProject?.getAttribute('aria-disabled'),
-        ).toBe('false');
+        const accessManagerProject = getByTestId(
+          'org-nav-dropdown-project-access-manager',
+        );
+        expect(accessManagerProject.innerHTML.includes('Test Project')).toBe(
+          true,
+        );
+        expect(accessManagerProject.getAttribute('aria-disabled')).toBe(
+          'false',
+        );
       });
 
       test('and showProjectNav is false, the Project Access Manager link is disabled and the project name appears as "None"', () => {
         renderComponent({
           showProjectNav: false,
         });
-        fireEvent.click(expectedElements.accessManagerDropdown as HTMLElement);
-        setExpectedElements();
+        fireEvent.click(getByTestId('org-nav-access-manager-dropdown'));
 
-        expect(
-          expectedElements.accessManagerProject?.innerHTML.includes('None'),
-        ).toBe(true);
-        expect(
-          expectedElements.accessManagerProject?.getAttribute('aria-disabled'),
-        ).toBe('true');
+        const accessManagerProject = getByTestId(
+          'org-nav-dropdown-project-access-manager',
+        );
+        expect(accessManagerProject.innerHTML.includes('None')).toBe(true);
+        expect(accessManagerProject.getAttribute('aria-disabled')).toBe('true');
       });
     });
   });
