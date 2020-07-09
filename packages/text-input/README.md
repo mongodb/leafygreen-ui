@@ -78,6 +78,8 @@ return (
 | `className`    | `string`                                            | Adds a className to the class attribute.                                                                                  | `''`    |
 | `type`         | `email`, `password`, `search`, `text`, `url`, `tel` | Sets type for TextInput                                                                                                   | `text`  |
 
-};
+### Special Case: Aria Labels
+
+Either `label` or `aria-labelledby` must be provided a string, or there will be a console error. This is to ensure that screenreaders have a description for what the Text Input does.
 
 _Any other properties will be spread on the `input` element._

@@ -1,5 +1,13 @@
 # @leafygreen-ui/button
 
+## 5.0.1
+
+### Patch Changes
+
+- 0593116: Uses enhanced `ExtendableBox` type to set smarter default `as` component in `MenuItem` and `SubMenu`
+- Updated dependencies [0593116]
+  - @leafygreen-ui/box@2.1.0
+
 ## 5.0.0
 
 ### Major Changes
