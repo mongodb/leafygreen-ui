@@ -74,9 +74,9 @@ export default function Table<Shape>({
     }
   }, [state.rowCheckedState]);
 
-  const rows:
-    | Array<React.ReactElement>
-    | undefined = state.data.map((datum, index) => children({ datum, index }));
+  const rows: Array<React.ReactElement> = state.data.map((datum, index) =>
+    children({ datum, index }),
+  );
 
   return (
     <TableProvider state={state} dispatch={dispatch}>
@@ -87,7 +87,7 @@ export default function Table<Shape>({
         {...rest}
       >
         <TableHead data={data} columns={columns} />
-        <tbody>{!children ? null : rows}</tbody>
+        <tbody>{rows}</tbody>
       </table>
     </TableProvider>
   );

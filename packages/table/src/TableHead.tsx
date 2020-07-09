@@ -44,7 +44,7 @@ const TableHead = ({ columns = [], data }: TableHeaderProps) => {
 
         const accessor = accessorProp || label?.toLowerCase();
 
-        if (sort && sort.key?.toLowerCase() === accessor) {
+        if (sort?.key?.toLowerCase() === accessor) {
           glyph = sort.direction === 'asc' ? 'SortAscending' : 'SortDescending';
         }
 

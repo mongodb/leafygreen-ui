@@ -9,7 +9,6 @@ import CheckboxCell from './CheckboxCell';
 import { useTableContext, Types, DataType } from './TableContext';
 
 const rowStyle = css`
-  cursor: pointer;
   border-bottom: 1px solid ${uiColors.gray.light2};
   color: ${uiColors.gray.dark2};
 
@@ -106,6 +105,10 @@ function getIndentLevelStyle(indentLevel: number) {
   `;
 }
 
+function generateIndexRef() {
+  return Math.floor(Math.random() * 1000000 + 1);
+}
+
 interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
   expanded?: boolean;
   disabled?: boolean;
@@ -131,7 +134,7 @@ const Row = React.forwardRef(
       dispatch,
     } = useTableContext();
 
-    const indexRef = React.useRef(Math.floor(Math.random() * 1000000 + 1));
+    const indexRef = React.useRef(generateIndexRef());
 
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nodeRef = React.useRef(null);
@@ -202,47 +205,54 @@ const Row = React.forwardRef(
       }
     });
 
-    const renderedChildren = React.Children.map(children, child => {
+    const renderedChildren = [];
+
+    React.Children.forEach(children, child => {
       if (isComponentType(child, 'CheckboxCell')) {
         if (disabled) {
-          return React.cloneElement(child, {
-            className: disabledCell,
-            disabled,
-          });
+          renderedChildren.push(
+            React.cloneElement(child, {
+              className: disabledCell,
+              disabled,
+            }),
+          );
         } else {
-          return child;
+          renderedChildren.push(child);
         }
       } else if (isComponentType(child, 'Cell')) {
         const { className, children } = child.props;
 
         if (disabled) {
-          return React.cloneElement(child, {
-            className: disabledCell,
-            disabled,
-          });
+          renderedChildren.push(
+            React.cloneElement(child, {
+              className: disabledCell,
+              disabled,
+            }),
+          );
         } else {
           if (nestedRows && nestedRows.length > 0 && !hasSeenFirstCell) {
             hasSeenFirstCell = true;
 
-            return React.cloneElement(child, {
-              children: (
-                <>
-                  {chevronButton}
-                  <span className={truncation}>{children}</span>
-                </>
-              ),
-              className: cx(displayFlex, className),
-              key: children,
-            });
-          }
-
-          if (!children) {
+            renderedChildren.push(
+              React.cloneElement(child, {
+                children: (
+                  <>
+                    {chevronButton}
+                    <span className={truncation}>{children}</span>
+                  </>
+                ),
+                className: cx(displayFlex, className),
+                key: children,
+              }),
+            );
             return;
           }
 
-          return React.cloneElement(child, {
-            children: <span className={truncation}>{children}</span>,
-          });
+          renderedChildren.push(
+            React.cloneElement(child, {
+              children: <span className={truncation}>{children}</span>,
+            }),
+          );
         }
       }
     });
@@ -268,10 +278,12 @@ const Row = React.forwardRef(
           )}
           aria-disabled={disabled}
           ref={ref}
+          key={indexRef.current}
           {...rest}
         >
           {selectable && (
             <CheckboxCell
+              key={indexRef.current}
               index={indexRef.current}
               className={cx({ [disabledCell]: disabled })}
               disabled={disabled}
@@ -280,28 +292,30 @@ const Row = React.forwardRef(
           {renderedChildren}
         </tr>
 
-        <Transition
-          in={isExpanded && isParentExpanded}
-          timeout={150}
-          nodeRef={nodeRef}
-        >
-          {(state: string) => {
-            return (
-              <>
-                {nestedRows?.map(element =>
-                  React.cloneElement(element, {
-                    className: cx(transitionStyles.default, {
-                      [transitionStyles.entered]: [
-                        'entering',
-                        'entered',
-                      ].includes(state),
+        {nestedRows && (
+          <Transition
+            in={isExpanded && isParentExpanded}
+            timeout={150}
+            nodeRef={nodeRef}
+          >
+            {(state: string) => {
+              return (
+                <>
+                  {nestedRows?.map(element =>
+                    React.cloneElement(element, {
+                      className: cx(transitionStyles.default, {
+                        [transitionStyles.entered]: [
+                          'entering',
+                          'entered',
+                        ].includes(state),
+                      }),
                     }),
-                  }),
-                )}
-              </>
-            );
-          }}
-        </Transition>
+                  )}
+                </>
+              );
+            }}
+          </Transition>
+        )}
       </>
     );
   },

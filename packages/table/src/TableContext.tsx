@@ -7,7 +7,6 @@ const Types = {
   SetColumnInfo: 'SET_COLUMN_INFO',
   SortTableData: 'SORT_TABLE_DATA',
   ToggleIndividualChecked: 'TOGGLE_INDIVIDUAL_CHECKED',
-  SetRowCheckedState: 'SET_ROW_CHECKED_STATE',
   SetHasNestedRows: 'SET_HAS_NESTED_ROWS',
   SetHasRowSpan: 'SET_HAS_ROW_SPAN',
 } as const;
@@ -35,7 +34,6 @@ interface ActionPayload {
     index: number;
     checked?: boolean;
   };
-  [Types.SetRowCheckedState]: Array<boolean | undefined>;
 }
 
 type ActionMap<A extends Record<string, any>> = {
@@ -81,7 +79,7 @@ export interface State {
   selectable?: boolean;
   headerCheckState?: boolean;
   headerIndeterminate?: boolean;
-  rowCheckedState?: Record<number, boolean | undefined>;
+  rowCheckedState?: Record<number, boolean>;
   hasNestedRows?: boolean;
   hasRowSpan?: boolean;
 }
@@ -114,12 +112,6 @@ export function reducer(state: State, action: Action): State {
       return {
         ...state,
         hasNestedRows: action.payload,
-      };
-
-    case Types.SetRowCheckedState:
-      return {
-        ...state,
-        rowCheckedState: action.payload,
       };
 
     case Types.ToggleIndividualChecked:
