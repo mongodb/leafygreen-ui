@@ -121,6 +121,15 @@ export function reducer(state: State, action: Action): State {
           ...state.rowCheckedState,
           [action.payload.index]: action.payload.checked,
         },
+        headerCheckState:
+          setHeaderCheckedState({
+            ...state.rowCheckedState,
+            [action.payload.index]: action.payload.checked,
+          })?.headerCheckedState ?? state.headerCheckState,
+        headerIndeterminate: setHeaderCheckedState({
+          ...state.rowCheckedState,
+          [action.payload.index]: action.payload.checked,
+        })?.headerIndeterminateState,
       };
 
     case Types.SelectableTable:
@@ -192,6 +201,24 @@ export function TableProvider({
 export function useTableContext() {
   return useContext(TableContext);
 }
+
+const setHeaderCheckedState = obj => {
+  if (obj) {
+    const boolArray = Object.values(obj);
+    const checkSame = boolArray.every(val => val === boolArray[0]);
+
+    if (checkSame) {
+      return {
+        headerCheckedState: boolArray[0],
+        headerIndeterminateState: undefined,
+      };
+    } else {
+      return {
+        headerIndeterminateState: true,
+      };
+    }
+  }
+};
 
 const alphanumericCollator = new Intl.Collator(undefined, {
   numeric: true,

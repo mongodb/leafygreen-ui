@@ -55,25 +55,6 @@ export default function Table<Shape>({
     });
   }, [selectableProp]);
 
-  useEffect(() => {
-    if (state.rowCheckedState) {
-      const boolArray = Object.values(state.rowCheckedState);
-      const checkSame = boolArray.every(val => val === boolArray[0]);
-
-      if (checkSame) {
-        dispatch({
-          type: Types.ToggleHeaderCheckedState,
-          payload: boolArray[0] ? true : false,
-        });
-      } else {
-        dispatch({
-          type: Types.ToggleHeaderIndeterminate,
-          payload: true,
-        });
-      }
-    }
-  }, [state.rowCheckedState]);
-
   const rows: Array<React.ReactElement> = state.data.map((datum, index) =>
     children({ datum, index }),
   );
