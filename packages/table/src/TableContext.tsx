@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useMemo } from 'react';
 
-// type Action
 const Types = {
   SelectableTable: 'SELECTABLE_TABLE',
   ToggleHeaderCheckedState: 'TOGGLE_HEADER_CHECKED',
@@ -52,10 +51,8 @@ type ActionMap<A extends Record<string, any>> = {
 
 type Action = ActionMap<ActionPayload>[keyof ActionMap<ActionPayload>];
 
-// type Dispatch
 type Dispatch = (action: Action) => void;
 
-// type State
 interface Sort {
   columnId?: number;
   direction: 'asc' | 'desc';
@@ -89,26 +86,22 @@ export interface State {
   hasRowSpan?: boolean;
 }
 
-// interface ProviderProps
 interface TableProviderInterface {
   children: React.ReactNode;
   state: State;
   dispatch: Dispatch;
 }
 
-// interface Context
 interface ContextInterface {
   state: State;
   dispatch: Dispatch;
 }
 
-// createContext
 const TableContext = createContext<ContextInterface>({
   state: {},
   dispatch: () => {},
 });
 
-// reducer
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
     case Types.SetHasRowSpan:
@@ -124,7 +117,6 @@ export function reducer(state: State, action: Action): State {
       };
 
     case Types.SetRowCheckedState:
-      console.log('ayo', action);
       return {
         ...state,
         rowCheckedState: action.payload,
@@ -189,7 +181,6 @@ export function reducer(state: State, action: Action): State {
   }
 }
 
-// Provider
 export function TableProvider({
   children,
   state,
@@ -206,12 +197,10 @@ export function TableProvider({
   );
 }
 
-// useTableContext
 export function useTableContext() {
   return useContext(TableContext);
 }
 
-// helper functions
 const alphanumericCollator = new Intl.Collator(undefined, {
   numeric: true,
   sensitivity: 'base',
