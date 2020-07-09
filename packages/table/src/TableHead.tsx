@@ -5,6 +5,26 @@ import { TableProps } from './Table';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { Types, useTableContext } from './TableContext';
 
+function normalizeAccessor(accessor) {
+  let accessorFn = accessor;
+
+  if (typeof accessor === 'string') {
+    if (accessor.includes('.')) {
+      const accessorArr = accessor.split('.');
+
+      accessorFn = data => {
+        return accessorArr.reduce((obj, access) => {
+          return obj[access];
+        }, data);
+      };
+    } else {
+      accessorFn = data => data[accessor];
+    }
+  }
+
+  return accessorFn;
+}
+
 type TableHeaderProps = Pick<TableProps, 'data' | 'columns'>;
 
 const TableHead = ({ columns = [], data }: TableHeaderProps) => {
@@ -38,13 +58,15 @@ const TableHead = ({ columns = [], data }: TableHeaderProps) => {
       }
 
       if (isComponentType(child, 'TableHeader')) {
-        const { label, accessor: accessorProp } = child.props;
+        const { label, accessor } = child.props;
+        const normalizedAccessor =
+          normalizeAccessor(accessor)?.() ?? label?.toLowerCase();
+
+        console.log(normalizedAccessor);
 
         let glyph = 'Unsorted';
 
-        const accessor = accessorProp || label?.toLowerCase();
-
-        if (sort?.key?.toLowerCase() === accessor) {
+        if (sort?.key?.toLowerCase() === normalizedAccessor) {
           glyph = sort.direction === 'asc' ? 'SortAscending' : 'SortDescending';
         }
 
@@ -54,6 +76,7 @@ const TableHead = ({ columns = [], data }: TableHeaderProps) => {
           onClick: sortRows,
           index,
           glyph,
+          accessor: normalizedAccessor,
         });
       }
 

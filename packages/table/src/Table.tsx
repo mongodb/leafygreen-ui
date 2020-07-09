@@ -55,10 +55,6 @@ export default function Table<Shape>({
     });
   }, [selectableProp]);
 
-  const rows: Array<React.ReactElement> = state.data.map((datum, index) =>
-    children({ datum, index }),
-  );
-
   return (
     <TableProvider state={state} dispatch={dispatch}>
       <table
@@ -68,7 +64,9 @@ export default function Table<Shape>({
         {...rest}
       >
         <TableHead data={data} columns={columns} />
-        <tbody>{rows}</tbody>
+        <tbody>
+          {state.data.map((datum, index) => children({ datum, index }))}
+        </tbody>
       </table>
     </TableProvider>
   );

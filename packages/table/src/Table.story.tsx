@@ -28,7 +28,7 @@ storiesOf('Table', module)
             sortable
             label="Favorite Color"
             key="color"
-            accessor="color"
+            accessor={() => 'color'}
           />
           Location
         </>
@@ -38,7 +38,7 @@ storiesOf('Table', module)
         <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
           <Cell>{datum.name}</Cell>
           <Cell>{datum.age}</Cell>
-          <Cell>{datum.color}</Cell>
+          <Cell>{datum.color?.primary ?? datum.color}</Cell>
           <Cell>{datum.location}</Cell>
 
           {datum.age > 21 && (
@@ -107,7 +107,7 @@ storiesOf('Table', module)
         <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
           <Cell>{datum.name}</Cell>
           <Cell>{datum.age}</Cell>
-          <Cell>{datum.color}</Cell>
+          <Cell>{datum.color.primary ?? datum.color}</Cell>
           <Cell>{datum.location}</Cell>
         </Row>
       )}

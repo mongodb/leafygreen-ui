@@ -1,5 +1,10 @@
 export const defaultData = [
-  { name: 'Alice', age: 19, color: 'white', location: 'bedford' },
+  {
+    name: 'Alice',
+    age: 19,
+    color: { primary: 'blue', secondary: 'white' },
+    location: 'bedford',
+  },
   { name: 'Brooke', age: 20, color: 'green', location: 'bedford' },
   { name: 'Charlotte', age: 21, color: 'white', location: 'bedford' },
   { name: 'Donna', age: 22, color: 'green', location: 'bedford' },
