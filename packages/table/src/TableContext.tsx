@@ -27,7 +27,7 @@ interface ActionPayload {
   [Types.SetHasNestedRows]: boolean;
   [Types.SortTableData]: {
     columnId: number;
-    key: string;
+    accessorValue: () => string;
     data: Array<unknown>;
   };
   [Types.ToggleIndividualChecked]: {
@@ -54,7 +54,7 @@ type Dispatch = (action: Action) => void;
 interface Sort {
   columnId?: number;
   direction: 'asc' | 'desc';
-  key?: string;
+  accessorValue?: () => string;
 }
 
 const DataType = {
@@ -168,12 +168,12 @@ export function reducer(state: State, action: Action): State {
         sort: {
           columnId: action.payload.columnId,
           direction: state.sort?.direction === 'desc' ? 'asc' : 'desc',
-          key: action.payload.key,
+          accessorValue: action.payload.accessorValue,
         },
         data: sortFunction({
           data: action.payload.data,
           direction: state.sort?.direction === 'desc' ? 'asc' : 'desc',
-          key: action.payload.key,
+          accessorValue: action.payload.accessorValue,
         }),
       };
 
@@ -227,16 +227,16 @@ const alphanumericCollator = new Intl.Collator(undefined, {
 
 export const sortFunction = ({
   data,
-  key,
+  accessorValue,
   direction,
 }: {
   data: Array<any>;
-  key: string;
+  accessorValue: () => string;
   direction: 'asc' | 'desc';
 }) => {
   return data.sort((a, b) => {
-    const aVal = a[key];
-    const bVal = b[key];
+    const aVal = accessorValue(a);
+    const bVal = accessorValue(b);
 
     if (direction !== 'desc') {
       return alphanumericCollator.compare(aVal, bVal);

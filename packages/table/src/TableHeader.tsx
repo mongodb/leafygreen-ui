@@ -29,18 +29,17 @@ const labelStyle = css`
 `;
 
 const glyphMap = {
-  Unsorted: UnsortedIcon,
-  SortAscending: SortAscendingIcon,
-  SortDescending: SortDescendingIcon,
+  unsorted: UnsortedIcon,
+  asc: SortAscendingIcon,
+  desc: SortDescendingIcon,
 };
 
 interface TableHeaderInterface {
   label: React.ReactElement | string;
-  onClick?: (colId: number, key: string) => void;
+  onClick?: (colId: number, accessorValue: () => string) => void;
   index?: number;
-  glyph?: 'SortAscending' | 'SortDescending' | 'Unsorted';
   sortable?: boolean;
-  accessor?: Function | string;
+  accessor?: (data: any) => any;
   dataType?: DataType;
 }
 
@@ -51,7 +50,6 @@ export type TableHeaderProps = Omit<
   TableHeaderInterface;
 
 function TableHeader({
-  glyph = 'Unsorted',
   sortable = false,
   label,
   onClick,
@@ -62,15 +60,19 @@ function TableHeader({
   ...rest
 }: TableHeaderProps) {
   const {
-    state: { selectable },
+    state: { selectable, sort },
     dispatch,
   } = useTableContext();
 
+  const glyph =
+    typeof sort?.columnId === 'number' && sort.columnId === index
+      ? sort?.direction
+      : 'unsorted';
   const Glyph = glyphMap[glyph];
 
   const handleClick = () => {
     if (typeof index === 'number') {
-      return onClick?.(index, accessor);
+      return onClick?.(index, accessor!);
     }
   };
 

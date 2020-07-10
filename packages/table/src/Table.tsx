@@ -5,6 +5,10 @@ import { TableHeaderProps } from './TableHeader';
 import { State, Types, TableProvider, reducer } from './TableContext';
 import TableHead from './TableHead';
 
+// Rename, reconfigure sort
+// Fix Row double map
+// Figure out how to test sort == still unclear on desired behavior
+
 const tableStyles = css`
   border-collapse: collapse;
   box-sizing: border-box;

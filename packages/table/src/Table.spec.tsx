@@ -260,7 +260,7 @@ describe('packages/table', () => {
     test('it renders an expandable icon, when the row is expandable', () => {
       renderTable();
       const chevrons = screen.getAllByRole('button', { name: 'chevron' });
-      expect(chevrons.length).toBe(3);
+      expect(chevrons.length).toBe(4);
     });
 
     test('the expandable icon reveals a hidden row when clicked', () => {
@@ -270,7 +270,7 @@ describe('packages/table', () => {
         .getAllByRole('row')
         .filter(row => row.getAttribute('aria-expanded') === 'false');
 
-      expect(hiddenRows.length).toBe(3);
+      expect(hiddenRows.length).toBe(4);
 
       const chevron = screen.getAllByRole('button', { name: 'chevron' })[0];
       fireEvent.click(chevron);

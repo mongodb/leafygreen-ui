@@ -248,6 +248,10 @@ const Row = React.forwardRef(
             return;
           }
 
+          if (!children) {
+            return null;
+          }
+
           renderedChildren.push(
             React.cloneElement(child, {
               children: <span className={truncation}>{children}</span>,
