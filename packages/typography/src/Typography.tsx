@@ -220,10 +220,10 @@ type LinkProps = JSX.IntrinsicElements['a'] & {
 
 const Link = ({
   href,
-  target: targetProp,
   children,
-  showArrow,
   className,
+  target: targetProp,
+  showArrow = false,
   ...rest
 }: LinkProps) => {
   if (!href) {
