@@ -98,7 +98,7 @@
 
 ### Major Changes
 
-- f6b6b7a: No longer renders Children of Poopover to the DOM when the Popover is closed
+- f6b6b7a: No longer renders Children of Popover to the DOM when the Popover is closed
 
 ### Patch Changes
 
