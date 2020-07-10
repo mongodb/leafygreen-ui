@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes, { string } from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
@@ -214,7 +215,7 @@ const arrowRightIcon = css`
   }
 `;
 
-type LinkProps = JSX.IntrinsicElements['a'] & {
+export type LinkProps = JSX.IntrinsicElements['a'] & {
   canShowArrow?: boolean;
   href: string;
 };
@@ -228,9 +229,6 @@ const Link = ({
   ...rest
 }: LinkProps) => {
   if (!href) {
-    console.error(
-      'Link components are wrapped anchor tags. Please provide a destination URL through the `href` prop or consider using another component.',
-    );
     return null;
   }
 
@@ -270,6 +268,12 @@ const Link = ({
       {icon}
     </a>
   );
+};
+
+Link.displayName = 'Link';
+
+Link.propTypes = {
+  href: PropTypes.string.isRequired,
 };
 
 export { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline, Link };

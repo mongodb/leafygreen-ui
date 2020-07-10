@@ -1,27 +1,13 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Link } from '.';
+import { Link, LinkProps } from './Typography';
 
-const renderLink = (props = {}) => {
+const renderLink = (props: LinkProps) => {
   render(<Link {...props}>Link</Link>);
 };
 
 describe('packages/typography', () => {
   describe('Link', () => {
-    describe('when no href is supplied', () => {
-      test('a warning is logged to the console', () => {
-        const logError = jest.spyOn(console, 'error').mockImplementation();
-
-        renderLink();
-
-        expect(logError).toHaveBeenCalledTimes(1);
-        expect(logError).toHaveBeenCalledWith(
-          'Link components are wrapped anchor tags. Please provide a destination URL through the `href` prop or consider using another component.',
-        );
-        logError.mockRestore();
-      });
-    });
-
     describe('when the current host is different from the destination URL host', () => {
       test('and the "canShowArrow" prop specified', () => {
         renderLink({ href: 'http://mongodb.design', canShowArrow: true });
