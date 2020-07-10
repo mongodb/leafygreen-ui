@@ -33,7 +33,19 @@ storiesOf('Typography', module).add('Default', () => (
       <InlineCode className={displayBlock}>InlineCode</InlineCode>
       <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
       <Overline>Overline</Overline>
-      <Link href="http://mongodb.design">MongoDB.design</Link>
+      <Link
+        href={select(
+          'href',
+          [
+            'http://localohst:9001',
+            'https://mongodb.github.io/leafygreen-ui/?path=/story/*',
+          ],
+          'http://localhost:9001',
+        )}
+        showArrow={boolean('show arrow', false)}
+      >
+        Link
+      </Link>
     </div>
   </LeafygreenProvider>
 ));
