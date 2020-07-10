@@ -227,7 +227,7 @@ const Link = ({
   ...rest
 }: LinkProps) => {
   if (!href) {
-    console.warn(
+    console.error(
       'Link components are wrapped anchor tags. Please provide a destination URL through the `href` prop or consider using another component.',
     );
     return null;
@@ -238,8 +238,17 @@ const Link = ({
 
   const hrefHostname = new URL(href).hostname;
   const currentHostname = window.location.hostname;
-  const target =
-    targetProp || hrefHostname === currentHostname ? '_self' : '_blank';
+  let target;
+
+  if (targetProp) {
+    target = targetProp;
+  } else {
+    if (hrefHostname === currentHostname) {
+      target = '_self';
+    } else {
+      target = '_blank';
+    }
+  }
 
   const icon =
     target === '_blank' ? (
