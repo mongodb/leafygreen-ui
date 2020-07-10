@@ -36,7 +36,7 @@ const glyphMap = {
 
 interface TableHeaderInterface {
   label: React.ReactElement | string;
-  onClick?: (colId: number, accessorValue: () => string) => void;
+  onClick?: (colId: number, accessorValue: (data: any) => string) => void;
   index?: number;
   sortable?: boolean;
   accessor?: (data: any) => any;
@@ -106,7 +106,7 @@ function TableHeader({
               className={cx({
                 [css`
                   color: ${uiColors.blue.base};
-                `]: glyph === 'SortAscending' || glyph === 'SortDescending',
+                `]: glyph === 'asc' || glyph === 'desc',
               })}
             />
           </IconButton>

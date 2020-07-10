@@ -205,7 +205,7 @@ const Row = React.forwardRef(
       }
     });
 
-    const renderedChildren = [];
+    const renderedChildren: Array<React.ReactNode> = [];
 
     React.Children.forEach(children, child => {
       if (isComponentType(child, 'CheckboxCell')) {

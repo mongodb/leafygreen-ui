@@ -12,22 +12,22 @@ function normalizeAccessor(accessor: string | Function) {
     if (accessor.includes('.')) {
       const accessorArr = accessor.split('.');
 
-      accessorFn = data => {
+      accessorFn = (data: any) => {
         return accessorArr.reduce((obj, access) => {
           return obj[access];
         }, data);
       };
     } else {
-      accessorFn = data => data[accessor];
+      accessorFn = (data: any) => data[accessor];
     }
   }
 
   return accessorFn;
 }
 
-type TableHeaderProps = Pick<TableProps, 'data' | 'columns'>;
+type TableHeaderProps<Shape> = Pick<TableProps<Shape>, 'data' | 'columns'>;
 
-const TableHead = ({ columns = [], data }: TableHeaderProps) => {
+function TableHead<Shape>({ columns = [], data }: TableHeaderProps<Shape>) {
   const { dispatch } = useTableContext();
   const usingHeaderRow = React.useRef(false);
 
@@ -100,6 +100,6 @@ const TableHead = ({ columns = [], data }: TableHeaderProps) => {
       <HeaderRow>{createCols(columnArray)}</HeaderRow>
     </thead>
   );
-};
+}
 
 export default TableHead;
