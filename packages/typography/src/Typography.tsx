@@ -137,7 +137,7 @@ const Overline: ExtendableBox<{
   return <Box className={cx(sharedStyles, overline, className)} {...rest} />;
 };
 
-const OpenInNewTab = (props: JSX.IntrinsicElement['svg']) => {
+const OpenInNewTab = (props: JSX.IntrinsicElements['svg']) => {
   return (
     <svg
       width="16px"
