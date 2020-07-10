@@ -214,6 +214,7 @@ const Row = React.forwardRef(
             React.cloneElement(child, {
               className: disabledCell,
               disabled,
+              key: `${indexRef.current}-${child.props.children}`,
             }),
           );
         } else {
@@ -226,6 +227,7 @@ const Row = React.forwardRef(
           renderedChildren.push(
             React.cloneElement(child, {
               className: disabledCell,
+              key: `${indexRef.current}-${child.props.children}`,
               disabled,
             }),
           );
@@ -242,7 +244,7 @@ const Row = React.forwardRef(
                   </>
                 ),
                 className: cx(displayFlex, className),
-                key: children,
+                key: `${indexRef.current}-${children}`,
               }),
             );
             return;
@@ -255,6 +257,7 @@ const Row = React.forwardRef(
           renderedChildren.push(
             React.cloneElement(child, {
               children: <span className={truncation}>{children}</span>,
+              key: `${indexRef.current}-${children}`,
             }),
           );
         }
@@ -287,7 +290,6 @@ const Row = React.forwardRef(
         >
           {selectable && (
             <CheckboxCell
-              key={indexRef.current}
               index={indexRef.current}
               className={cx({ [disabledCell]: disabled })}
               disabled={disabled}
