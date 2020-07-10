@@ -33,9 +33,6 @@ storiesOf('Typography', module).add('Default', () => (
       <InlineCode className={displayBlock}>InlineCode</InlineCode>
       <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
       <Overline>Overline</Overline>
-      BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB<br></br> I went searchingggggggggg on{' '}
-      <Link href="http://mongodb.design">Google</Link> but did not find any
-      results
       <Link
         href={select(
           'href',
@@ -49,7 +46,6 @@ storiesOf('Typography', module).add('Default', () => (
       >
         Link
       </Link>
-      LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
     </div>
   </LeafygreenProvider>
 ));
