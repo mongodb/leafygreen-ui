@@ -9,15 +9,15 @@ const renderLink = (props: LinkProps) => {
 describe('packages/typography', () => {
   describe('Link', () => {
     describe('when the current host is different from the destination URL host', () => {
-      test('and the "canShowArrow" prop specified', () => {
-        renderLink({ href: 'http://mongodb.design', canShowArrow: true });
+      test('and the "canShowArrow" prop is set to hover', () => {
+        renderLink({ href: 'http://mongodb.design', canShowArrow: 'hover' });
         const openInNewTab = screen.getByTitle('Open in New Tab');
         const rightArrow = screen.queryByTitle('Glyphs / Arrow / Right');
         expect(openInNewTab).toBeInTheDocument();
         expect(rightArrow).not.toBeInTheDocument();
       });
 
-      test('and the "canShowArrow" prop is not specified', () => {
+      test('and the "canShowArrow" prop is not set', () => {
         renderLink({ href: 'http://mongodb.design' });
         const openInNewTab = screen.getByTitle('Open in New Tab');
         expect(openInNewTab).toBeInTheDocument();
@@ -25,13 +25,26 @@ describe('packages/typography', () => {
     });
 
     describe('when the current host is the same as the destination URL host', () => {
-      test('and the "canShowArrow" prop is specified', () => {
-        renderLink({ href: 'http://localhost:9001', canShowArrow: true });
+      test('and the "canShowArrow" prop is set to "hover"', () => {
+        renderLink({ href: 'http://localhost:9001', canShowArrow: 'hover' });
         const anchor = screen.getByText('Link');
         const openInNewTab = screen.queryByTitle('Open in New Tab');
-        const rightArrow = screen.getByTitle('Glyphs / Arrow / Right');
+        const rightArrow = screen.queryByTitle('Glyphs / Arrow / Right');
+        expect(rightArrow).not.toBeVisible();
 
         fireEvent.mouseEnter(anchor);
+        expect(rightArrow).toBeInTheDocument();
+        expect(openInNewTab).not.toBeInTheDocument();
+      });
+
+      test('and the "canShowArrow" prop is set to "permanent"', () => {
+        renderLink({
+          href: 'http://localhost:9001',
+          canShowArrow: 'permanent',
+        });
+
+        const openInNewTab = screen.queryByTitle('Open in New Tab');
+        const rightArrow = screen.getByTitle('Glyphs / Arrow / Right');
         expect(rightArrow).toBeInTheDocument();
         expect(openInNewTab).not.toBeInTheDocument();
       });

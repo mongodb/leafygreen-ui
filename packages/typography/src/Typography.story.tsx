@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { select, boolean } from '@storybook/addon-knobs';
+import { select } from '@storybook/addon-knobs';
 import {
   H1,
   H2,
@@ -33,6 +33,9 @@ storiesOf('Typography', module).add('Default', () => (
       <InlineCode className={displayBlock}>InlineCode</InlineCode>
       <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
       <Overline>Overline</Overline>
+      BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB<br></br> I went searchingggggggggg on{' '}
+      <Link href="http://mongodb.design">Google</Link> but did not find any
+      results
       <Link
         href={select(
           'href',
@@ -42,10 +45,11 @@ storiesOf('Typography', module).add('Default', () => (
           ],
           'http://localhost:9001',
         )}
-        canShowArrow={boolean('show arrow', false)}
+        canShowArrow={select('canShowArrow', ['hover', 'permanent'], 'hover')}
       >
         Link
       </Link>
+      LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
     </div>
   </LeafygreenProvider>
 ));

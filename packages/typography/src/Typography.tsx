@@ -172,7 +172,7 @@ const linkStyles = css`
     &:after {
       content: '';
       position: absolute;
-      top: calc(100% + 2px);
+      top: calc(100% + 1px);
       left: 0;
       right: 0;
       opacity: 0;
@@ -202,7 +202,11 @@ const linkStyles = css`
   }
 `;
 
-const arrowRightIcon = css`
+const arrowRightIconPermanent = css`
+  transform: translate3d(3px, 0, 0);
+`;
+
+const arrowRightIconHover = css`
   height: 10px;
   width: 10px;
   opacity: 0;
@@ -215,8 +219,14 @@ const arrowRightIcon = css`
   }
 `;
 
+const openInNewTabStyles = css`
+  margin-bottom: -1px;
+  margin-left: -1px;
+  margin-right: -2px;
+`;
+
 export type LinkProps = JSX.IntrinsicElements['a'] & {
-  canShowArrow?: boolean;
+  canShowArrow?: 'hover' | 'permanent';
   href: string;
 };
 
@@ -225,7 +235,7 @@ const Link = ({
   children,
   className,
   target: targetProp,
-  canShowArrow = false,
+  canShowArrow,
   ...rest
 }: LinkProps) => {
   if (!href) {
@@ -251,9 +261,15 @@ const Link = ({
 
   const icon =
     target === '_blank' ? (
-      <OpenInNewTab />
+      <OpenInNewTab className={openInNewTabStyles} />
     ) : canShowArrow ? (
-      <ArrowRightIcon size={10} className={arrowRightIcon} />
+      <ArrowRightIcon
+        size={10}
+        className={cx({
+          [arrowRightIconHover]: canShowArrow === 'hover',
+          [arrowRightIconPermanent]: canShowArrow === 'permanent',
+        })}
+      />
     ) : null;
 
   return (
