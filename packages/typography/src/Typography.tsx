@@ -205,17 +205,18 @@ const arrowRightIcon = css`
   height: 10px;
   width: 10px;
   opacity: 0;
-  transform: translate3d(-3px, 0, 0px);
+  transform: translate3d(-3px, 0, 0);
   transition: all 100ms ease-in;
-  ${anchorDataProp.selector}:hover &,
+
   ${anchorDataProp.selector}:hover & {
     opacity: 1;
-    transform: translate3d(3px, 0, 0px);
+    transform: translate3d(3px, 0, 0);
   }
 `;
 
 type LinkProps = JSX.IntrinsicElements['a'] & {
-  showArrow?: boolean;
+  canShowArrow?: boolean;
+  href: string;
 };
 
 const Link = ({
@@ -223,7 +224,7 @@ const Link = ({
   children,
   className,
   target: targetProp,
-  showArrow = false,
+  canShowArrow = false,
   ...rest
 }: LinkProps) => {
   if (!href) {
@@ -253,7 +254,7 @@ const Link = ({
   const icon =
     target === '_blank' ? (
       <OpenInNewTab />
-    ) : showArrow ? (
+    ) : canShowArrow ? (
       <ArrowRightIcon size={10} className={arrowRightIcon} />
     ) : null;
 

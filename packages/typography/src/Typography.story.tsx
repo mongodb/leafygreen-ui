@@ -37,12 +37,12 @@ storiesOf('Typography', module).add('Default', () => (
         href={select(
           'href',
           [
-            'http://localohst:9001',
+            'http://localhost:9001',
             'https://mongodb.github.io/leafygreen-ui/?path=/story/*',
           ],
           'http://localhost:9001',
         )}
-        showArrow={boolean('show arrow', false)}
+        canShowArrow={boolean('show arrow', false)}
       >
         Link
       </Link>

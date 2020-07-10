@@ -23,15 +23,15 @@ describe('packages/typography', () => {
     });
 
     describe('when the current host is different from the destination URL host', () => {
-      test('and the "showArrow" prop specified', () => {
-        renderLink({ href: 'http://mongodb.design', showArrow: true });
+      test('and the "canShowArrow" prop specified', () => {
+        renderLink({ href: 'http://mongodb.design', canShowArrow: true });
         const openInNewTab = screen.getByTitle('Open in New Tab');
         const rightArrow = screen.queryByTitle('Glyphs / Arrow / Right');
         expect(openInNewTab).toBeInTheDocument();
         expect(rightArrow).not.toBeInTheDocument();
       });
 
-      test('and the "showArrow" prop is not specified', () => {
+      test('and the "canShowArrow" prop is not specified', () => {
         renderLink({ href: 'http://mongodb.design' });
         const openInNewTab = screen.getByTitle('Open in New Tab');
         expect(openInNewTab).toBeInTheDocument();
@@ -39,8 +39,8 @@ describe('packages/typography', () => {
     });
 
     describe('when the current host is the same as the destination URL host', () => {
-      test('and the "showArrow" prop is specified', () => {
-        renderLink({ href: 'http://localhost:9001', showArrow: true });
+      test('and the "canShowArrow" prop is specified', () => {
+        renderLink({ href: 'http://localhost:9001', canShowArrow: true });
         const anchor = screen.getByText('Link');
         const openInNewTab = screen.queryByTitle('Open in New Tab');
         const rightArrow = screen.getByTitle('Glyphs / Arrow / Right');
@@ -50,7 +50,7 @@ describe('packages/typography', () => {
         expect(openInNewTab).not.toBeInTheDocument();
       });
 
-      test('and the "showArrow" prop is not specified', () => {
+      test('and the "canShowArrow" prop is not specified', () => {
         renderLink({ href: 'http://localhost:9001' });
         const anchor = screen.getByText('Link');
         const openInNewTab = screen.queryByTitle('Open in New Tab');
@@ -66,6 +66,14 @@ describe('packages/typography', () => {
         const openInNewTab = screen.getByTitle('Open in New Tab');
         expect(openInNewTab).toBeInTheDocument();
       });
+    });
+  });
+
+  describe('types behave as expected', () => {
+    // eslint-disable-next-line jest/expect-expect
+    test('errors when no "href" prop is passed', () => {
+      // @ts-expect-error
+      render(<Link />);
     });
   });
 });

@@ -98,8 +98,8 @@ All props extend the HTMLElementProps of their root tag, however `<Body />` and 
 
 ## Link
 
-| Prop        | Type      | Description                                        | Default |
-| ----------- | --------- | -------------------------------------------------- | ------- |
-| `showArrow` | `boolean` | Displays a right arrow when hovering on anchor tag | `false` |
+| Prop           | Type      | Description                                        | Default |
+| -------------- | --------- | -------------------------------------------------- | ------- |
+| `canShowArrow` | `boolean` | Displays a right arrow when hovering on anchor tag | `false` |
 
 _Note:_ If the current host name is different from the host of the destination URL, we will add provide the "\_blank" value for the `target` prop. When the target is set to open in a new tab, we render an icon as a visual affordance.
