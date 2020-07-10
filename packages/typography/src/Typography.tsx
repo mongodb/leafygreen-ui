@@ -225,8 +225,15 @@ const openInNewTabStyles = css`
   margin-right: -2px;
 `;
 
+const CanShowArrow = {
+  Hover: 'hover',
+  Permanent: 'permanent',
+} as const;
+
+type CanShowArrow = typeof CanShowArrow[keyof typeof CanShowArrow];
+
 export type LinkProps = JSX.IntrinsicElements['a'] & {
-  canShowArrow?: 'hover' | 'permanent';
+  canShowArrow?: CanShowArrow;
   href: string;
 };
 
@@ -266,8 +273,8 @@ const Link = ({
       <ArrowRightIcon
         size={10}
         className={cx({
-          [arrowRightIconHover]: canShowArrow === 'hover',
-          [arrowRightIconPermanent]: canShowArrow === 'permanent',
+          [arrowRightIconHover]: canShowArrow === CanShowArrow.Hover,
+          [arrowRightIconPermanent]: canShowArrow === CanShowArrow.Permanent,
         })}
       />
     ) : null;
@@ -290,6 +297,7 @@ Link.displayName = 'Link';
 
 Link.propTypes = {
   href: PropTypes.string.isRequired,
+  canShowArrow: PropTypes.oneOf(['hover', 'permanent']),
 };
 
 export { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline, Link };
