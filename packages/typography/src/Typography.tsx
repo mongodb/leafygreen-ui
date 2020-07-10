@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes, { string } from 'prop-types';
+import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
