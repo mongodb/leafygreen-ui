@@ -31,6 +31,7 @@ export const SupportedLanguages = {
   Yaml: 'yaml',
   Json: 'json',
   Graphql: 'graphql',
+  Diff: 'diff',
 } as const;
 
 export type SupportedLanguages = typeof SupportedLanguages[keyof typeof SupportedLanguages];
