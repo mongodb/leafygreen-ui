@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { number } from '@storybook/addon-knobs';
-import Stepper, { Step } from '.';
+import { Step, Stepper } from '.';
 import { times } from 'lodash';
 import { addons } from '@storybook/addons';
 import { CHANGE } from '@storybook/addon-knobs';
