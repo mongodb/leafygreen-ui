@@ -27,6 +27,7 @@ const hljsSupportedLanguages = [
   'sql',
   'yaml',
   'json',
+  'diff',
 ];
 
 function getAllPackages(dir) {

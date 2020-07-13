@@ -84,10 +84,6 @@ const getStyles = (variant: Variant): string => `
       color: ${variantColors[variant][10]};
     }
   
-    .lg-highlight-addition {
-      color: ${variantColors[variant][4]};
-    }
-  
     .lg-highlight-variable,
     .lg-highlight-deletion,
     .lg-highlight-symbol,
@@ -105,6 +101,7 @@ const getStyles = (variant: Variant): string => `
     }
   
     .lg-highlight-string,
+    .lg-highlight-addition,
     .lg-highlight-title {
       color: ${variantColors[variant][7]};
     }
