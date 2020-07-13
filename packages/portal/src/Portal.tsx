@@ -25,9 +25,9 @@ function Portal(props: PortalProps) {
     if (!container) {
       setContainer(
         // Render needs to be idempotent, meaning it can't have side-effects.
-        // In dev mode, React will call render more than once to exercise this,
-        // which will result in multiple DOM elements being created if the
-        // container element is created directly in render.
+        // In stict mode, React will call render more than once to exercise,
+        // this which will result in multiple DOM elements being created if
+        // the container element is created directly in render.
         // https://github.com/facebook/react/issues/15074#issuecomment-471197572
         createPortalContainer(props.className),
       );
