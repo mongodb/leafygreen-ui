@@ -178,6 +178,7 @@ describe('packages/Portal', () => {
 
   test('cleans up default container', () => {
     let unmountChild: () => void;
+
     const Wrapper = ({ children }: { children: React.ReactNode }) => {
       const [shouldRenderChildren, setShouldRenderChildren] = useState(true);
       unmountChild = () => setShouldRenderChildren(false);
