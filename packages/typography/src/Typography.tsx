@@ -166,39 +166,26 @@ const linkStyles = css`
   color: ${uiColors.blue.base};
   cursor: pointer;
 
-  span {
-    position: relative;
-
-    &:after {
-      content: '';
-      position: absolute;
-      top: calc(100% + 1px);
-      left: 0;
-      right: 0;
-      opacity: 0;
-      transform: scale(0.8, 1);
-      transition: 150ms ease-in-out;
-      height: 3px;
-      border-radius: 50px;
-    }
-  }
-
-  &:hover {
-    span:after {
-      opacity: 1;
-      transform: scale(1);
-      background-color: ${uiColors.gray.light2};
-    }
-  }
-
   &:focus {
     outline: none;
+  }
+`;
 
-    span:after {
-      opacity: 1;
-      transform: scale(1);
-      background-color: #9dd0e7;
-    }
+const underline = css`
+  background-repeat: repeat-x;
+  background-position: 0 1em;
+  background-size: 3px 3px;
+
+  ${anchorDataProp.selector}:hover & {
+    background-image: linear-gradient(
+      to right,
+      ${uiColors.gray.light2} 100%,
+      ${uiColors.gray.light2} 0
+    );
+  }
+
+  ${anchorDataProp.selector}:focus & {
+    background-image: linear-gradient(to right, #9dd0e7 100%, #9dd0e7 0);
   }
 `;
 
@@ -287,7 +274,7 @@ const Link = ({
       {...anchorDataProp.prop}
       {...rest}
     >
-      <span>{children}</span>
+      <span className={underline}>{children}</span>
       {icon}
     </a>
   );
