@@ -1,5 +1,11 @@
 # @leafygreen-ui/portal
 
+## 2.1.1
+
+### Patch Changes
+
+- 01e6777: Fix extra DOM elements being created in development mode
+
 ## 2.1.0
 
 ### Minor Changes
