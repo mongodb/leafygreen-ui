@@ -194,66 +194,46 @@ const Row = React.forwardRef(
       </IconButton>
     );
 
-    const nestedRows = React.Children.map(children, child => {
-      if (isComponentType(child, 'Row')) {
-        return React.cloneElement(child, {
-          ref: nodeRef,
-          ['aria-expanded']: isExpanded ? 'true' : 'false',
-          isParentExpanded: isExpanded,
-          indentLevel: indentLevel + 1,
-        });
-      }
-    });
+    const disabledProps = {
+      className: disabledCell,
+      disabled,
+    };
 
     const renderedChildren: Array<React.ReactNode> = [];
+    const nestedRows: Array<React.ReactNode> = [];
+    let firstCellIndex: number | undefined;
 
-    React.Children.forEach(children, child => {
-      if (isComponentType(child, 'CheckboxCell')) {
+    React.Children.forEach(children, (child, index) => {
+      const { children } = child.props;
+
+      if (isComponentType(child, 'Row')) {
+        nestedRows.push(
+          React.cloneElement(child, {
+            ref: nodeRef,
+            ['aria-expanded']: isExpanded ? 'true' : 'false',
+            isParentExpanded: isExpanded,
+            indentLevel: indentLevel + 1,
+          }),
+        );
+      } else if (isComponentType(child, 'CheckboxCell')) {
         if (disabled) {
-          renderedChildren.push(
-            React.cloneElement(child, {
-              className: disabledCell,
-              disabled,
-              key: `${indexRef.current}-${child.props.children}`,
-            }),
-          );
+          renderedChildren.push(React.cloneElement(child, disabledProps));
         } else {
           renderedChildren.push(child);
         }
       } else if (isComponentType(child, 'Cell')) {
-        const { className, children } = child.props;
+        if (!hasSeenFirstCell) {
+          hasSeenFirstCell = true;
+          firstCellIndex = index;
+        }
+
+        if (!children) {
+          return null;
+        }
 
         if (disabled) {
-          renderedChildren.push(
-            React.cloneElement(child, {
-              className: disabledCell,
-              key: `${indexRef.current}-${child.props.children}`,
-              disabled,
-            }),
-          );
+          renderedChildren.push(React.cloneElement(child, disabledProps));
         } else {
-          if (nestedRows && nestedRows.length > 0 && !hasSeenFirstCell) {
-            hasSeenFirstCell = true;
-
-            renderedChildren.push(
-              React.cloneElement(child, {
-                children: (
-                  <>
-                    {chevronButton}
-                    <span className={truncation}>{children}</span>
-                  </>
-                ),
-                className: cx(displayFlex, className),
-                key: `${indexRef.current}-${children}`,
-              }),
-            );
-            return;
-          }
-
-          if (!children) {
-            return null;
-          }
-
           renderedChildren.push(
             React.cloneElement(child, {
               children: <span className={truncation}>{children}</span>,
@@ -263,6 +243,23 @@ const Row = React.forwardRef(
         }
       }
     });
+
+    if (nestedRows && nestedRows.length > 0) {
+      renderedChildren[firstCellIndex] = React.cloneElement(
+        renderedChildren[firstCellIndex],
+        {
+          children: (
+            <>
+              {chevronButton}
+              <span className={truncation}>
+                {renderedChildren[firstCellIndex].props.children}
+              </span>
+            </>
+          ),
+          className: cx(displayFlex, className),
+        },
+      );
+    }
 
     const shouldAltRowColor = data && data.length >= 10 && !hasNestedRows;
 

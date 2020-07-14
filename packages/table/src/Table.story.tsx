@@ -16,7 +16,7 @@ storiesOf('Table', module)
             sortable
             label="Name"
             key="name"
-            // accessor="name"
+            accessor="name"
           />
           <TableHeader
             dataType={DataType.Number}
@@ -100,7 +100,11 @@ storiesOf('Table', module)
         <>
           <TableHeader label="Name" />
           <TableHeader label="Age" />
-          <TableHeader label="Color" accessor={() => 'color'} sortable />
+          <TableHeader
+            label="Color"
+            accessor={datum => datum.color.primary ?? datum.color}
+            sortable
+          />
           Location
         </>
       }
