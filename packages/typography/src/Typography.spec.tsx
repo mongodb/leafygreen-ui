@@ -68,6 +68,14 @@ describe('packages/typography', () => {
     });
   });
 
+  describe('when the "as" prop is supplied', () => {
+    test('it renders the correct tag to the DOM', () => {
+      renderLink({ href: 'http://localhost:9001', as: 'div' });
+      const div = screen.getByText('Link').parentNode;
+      expect(div.tagName.toLowerCase()).toBe('div');
+    });
+  });
+
   describe('types behave as expected', () => {
     // eslint-disable-next-line jest/expect-expect
     test('errors when no "href" prop is passed', () => {

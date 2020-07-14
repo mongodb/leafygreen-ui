@@ -224,7 +224,7 @@ export type LinkProps = JSX.IntrinsicElements['a'] & {
   href: string;
 };
 
-const Link = ({
+const Link: ExtendableBox<LinkProps, 'a'> = ({
   href,
   children,
   className,
@@ -267,7 +267,8 @@ const Link = ({
     ) : null;
 
   return (
-    <a
+    <Box
+      as="a"
       href={href}
       target={target}
       className={cx(linkStyles, fontSize, className)}
@@ -276,7 +277,7 @@ const Link = ({
     >
       <span className={underline}>{children}</span>
       {icon}
-    </a>
+    </Box>
   );
 };
 
