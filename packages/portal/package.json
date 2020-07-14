@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/portal",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "LeafyGreen UI Kit Portal",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
