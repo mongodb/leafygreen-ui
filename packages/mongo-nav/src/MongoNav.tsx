@@ -73,15 +73,6 @@ function useMongoNavData({
     return fetch(endpointURI, configObject);
   }
 
-  function getDataFixtures() {
-    return new Promise<DataInterface>(resolve => {
-      const mergedData = defaultsDeep(dataFixtures, defaultDataFixtures);
-
-      onSuccess?.(mergedData);
-      resolve(mergedData);
-    });
-  }
-
   function handleResponse(response: Response) {
     if (!response.ok) {
       const mappedStatus = ErrorCodeMap[response.status];
@@ -102,7 +93,10 @@ function useMongoNavData({
     if (!loadData) {
       setData(undefined);
     } else if (mode === Mode.Dev) {
-      getDataFixtures().then(data => setData(data));
+      const mergedData = defaultsDeep(dataFixtures, defaultDataFixtures);
+
+      onSuccess?.(mergedData);
+      setData(mergedData);
     } else {
       let body: PostBodyInterface | undefined;
 
@@ -177,7 +171,7 @@ function MongoNav({
   admin: adminProp,
   onError = () => {},
   onSuccess = () => {},
-  onElementClick = (_type: NavElement, _event: React.MouseEvent) => {}, // eslint-disable-line @typescript-eslint/no-unused-vars
+  onElementClick = () => {},
   onPrem = { mfa: false, enabled: false, version: '' },
   alertPollingInterval = 600e3, // 10 minutes
   hosts: hostsProp,
