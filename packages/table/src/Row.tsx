@@ -194,9 +194,12 @@ const Row = React.forwardRef(
       </IconButton>
     );
 
-    const disabledProps = {
-      className: disabledCell,
-      disabled,
+    const getDisabledProps = children => {
+      return {
+        disabled,
+        className: disabledCell,
+        key: `${indexRef.current}-${children}`,
+      };
     };
 
     const renderedChildren: Array<React.ReactNode> = [];
@@ -204,8 +207,6 @@ const Row = React.forwardRef(
     let firstCellIndex: number | undefined;
 
     React.Children.forEach(children, (child, index) => {
-      const { children } = child.props;
-
       if (isComponentType(child, 'Row')) {
         nestedRows.push(
           React.cloneElement(child, {
@@ -217,7 +218,9 @@ const Row = React.forwardRef(
         );
       } else if (isComponentType(child, 'CheckboxCell')) {
         if (disabled) {
-          renderedChildren.push(React.cloneElement(child, disabledProps));
+          renderedChildren.push(
+            React.cloneElement(child, getDisabledProps(child.props.children)),
+          );
         } else {
           renderedChildren.push(child);
         }
@@ -232,12 +235,16 @@ const Row = React.forwardRef(
         }
 
         if (disabled) {
-          renderedChildren.push(React.cloneElement(child, disabledProps));
+          renderedChildren.push(
+            React.cloneElement(child, getDisabledProps(child.props.children)),
+          );
         } else {
           renderedChildren.push(
             React.cloneElement(child, {
-              children: <span className={truncation}>{children}</span>,
-              key: `${indexRef.current}-${children}`,
+              children: (
+                <span className={truncation}>{child.props.children}</span>
+              ),
+              key: `${indexRef.current}-${child.props.children}`,
             }),
           );
         }
@@ -257,6 +264,7 @@ const Row = React.forwardRef(
             </>
           ),
           className: cx(displayFlex, className),
+          key: `${indexRef.current}-${renderedChildren[firstCellIndex].props.children}`,
         },
       );
     }
