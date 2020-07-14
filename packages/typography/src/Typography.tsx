@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
@@ -219,10 +218,9 @@ const CanShowArrow = {
 
 type CanShowArrow = typeof CanShowArrow[keyof typeof CanShowArrow];
 
-export type LinkProps = JSX.IntrinsicElements['a'] & {
+export interface LinkProps extends HTMLElementProps<'a'> {
   canShowArrow?: CanShowArrow;
-  href: string;
-};
+}
 
 const Link: ExtendableBox<LinkProps, 'a'> = ({
   href,
@@ -268,7 +266,6 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
 
   return (
     <Box
-      as="a"
       href={href}
       target={target}
       className={cx(linkStyles, fontSize, className)}
@@ -279,13 +276,6 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
       {icon}
     </Box>
   );
-};
-
-Link.displayName = 'Link';
-
-Link.propTypes = {
-  href: PropTypes.string.isRequired,
-  canShowArrow: PropTypes.oneOf(['hover', 'permanent']),
 };
 
 export { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline, Link };

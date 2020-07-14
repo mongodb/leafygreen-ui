@@ -25,6 +25,13 @@ describe('packages/typography', () => {
     });
 
     describe('when the current host is the same as the destination URL host', () => {
+      describe('by default', () => {
+        test('it renders the correct tag to the DOM', () => {
+          renderLink({ href: 'http://localhost:9001' });
+          const anchor = screen.getByText('Link').parentNode;
+          expect((anchor as HTMLElement).tagName.toLowerCase()).toBe('a');
+        });
+      });
       test('and the "canShowArrow" prop is set to "hover"', () => {
         renderLink({ href: 'http://localhost:9001', canShowArrow: 'hover' });
         const anchor = screen.getByText('Link');
