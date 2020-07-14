@@ -241,7 +241,7 @@ interface CodeProps extends SyntaxProps {
    * Callback fired when Code is copied
    *
    */
-  onCopy: React.MouseEventHandler;
+  onCopy?: Function;
 }
 
 type DetailedElementProps<T> = React.DetailedHTMLProps<
@@ -351,9 +351,9 @@ function Code({
     </Syntax>
   );
 
-  function handleClick(event: React.MouseEvent) {
+  function handleClick() {
     if (onCopy) {
-      onCopy(event);
+      onCopy();
     }
 
     setCopied(true);
