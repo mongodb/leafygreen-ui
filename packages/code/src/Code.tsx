@@ -236,6 +236,12 @@ interface CodeProps extends SyntaxProps {
    * default: `true`
    */
   copyable?: boolean;
+
+  /**
+   * Callback fired when Code is copied
+   *
+   */
+  onCopy: React.MouseEventHandler;
 }
 
 type DetailedElementProps<T> = React.DetailedHTMLProps<
@@ -258,6 +264,8 @@ type DetailedElementProps<T> = React.DetailedHTMLProps<
  * @param props.lang The language used for syntax highlighing. Default: `auto`
  * @param props.variant Determines if the code block is rendered with a dark or light background. Default: 'light'
  * @param props.showLineNumbers When true, shows line numbers in preformatted code blocks. Default: `false`
+ * @param props.copyable When true, allows the code block to be copied to the user's clipboard. Default: `true`
+ * @param props.onCopy Callback fired when Code is copied
  */
 function Code({
   children = '',
@@ -269,6 +277,7 @@ function Code({
   showWindowChrome = false,
   chromeTitle = '',
   copyable = true,
+  onCopy,
   ...rest
 }: CodeProps) {
   const scrollableMultiLine = useRef<HTMLPreElement>(null);
@@ -342,6 +351,14 @@ function Code({
     </Syntax>
   );
 
+  function handleClick(event: React.MouseEvent) {
+    if (onCopy) {
+      onCopy(event);
+    }
+
+    setCopied(true);
+  }
+
   function handleScroll(e: React.UIEvent) {
     const { scrollWidth, clientWidth: elementWidth } = e.target as HTMLElement;
     const isScrollable = scrollWidth > elementWidth;
@@ -396,9 +413,7 @@ function Code({
                 variant={variant}
                 aria-label="Copy"
                 className={cx(getCopyButtonStyle(variant, copied), 'copy-btn')}
-                onClick={() => {
-                  setCopied(true);
-                }}
+                onClick={handleClick}
                 data-clipboard-text={content}
               >
                 {copied ? <CheckmarkIcon /> : <CopyIcon />}
@@ -440,9 +455,7 @@ function Code({
               variant={variant}
               aria-label="Copy"
               className={cx(getCopyButtonStyle(variant, copied), 'copy-btn')}
-              onClick={() => {
-                setCopied(true);
-              }}
+              onClick={handleClick}
               data-clipboard-text={content}
             >
               {copied ? <CheckmarkIcon /> : <CopyIcon />}
