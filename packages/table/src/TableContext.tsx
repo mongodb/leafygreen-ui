@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useMemo } from 'react';
+import { bool } from 'prop-types';
 
 const Types = {
   SelectableTable: 'SELECTABLE_TABLE',
@@ -246,10 +247,13 @@ export function useTableContext() {
 
 const setHeaderCheckedStateOnRowChecked = (
   { headerCheckState }: State,
-  newrowState: State['rowState'],
+  newRowState: State['rowState'],
 ): State['headerCheckState'] => {
+  console.log('here');
+
   if (headerCheckState.indeterminate) {
-    const boolArray = Object.values(newrowState);
+    const boolArray = Object.values(newRowState);
+
     const checkSame = boolArray.every(
       val => val.checked === boolArray[0].checked,
     );

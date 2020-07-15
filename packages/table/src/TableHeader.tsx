@@ -38,8 +38,7 @@ interface TableHeaderInterface {
   label: React.ReactElement | string;
   onClick?: (colId: number, accessorValue: (data: any) => string) => void;
   index?: number;
-  sortable?: boolean;
-  accessor?: (data: any) => any;
+  sortBy?: (data: any) => string | string;
   dataType?: DataType;
 }
 
@@ -50,13 +49,12 @@ export type TableHeaderProps = Omit<
   TableHeaderInterface;
 
 function TableHeader({
-  sortable = false,
   label,
   onClick,
   index,
   className,
   dataType,
-  accessor,
+  sortBy,
   ...rest
 }: TableHeaderProps) {
   const {
@@ -72,7 +70,7 @@ function TableHeader({
 
   const handleClick = () => {
     if (typeof index === 'number') {
-      return onClick?.(index, accessor!);
+      return onClick?.(index, sortBy!);
     }
   };
 
@@ -92,7 +90,7 @@ function TableHeader({
     <th {...rest} className={cx(thStyle, commonCellStyles, className)}>
       <div className={flexDisplay}>
         <span className={labelStyle}>{label}</span>
-        {sortable && (
+        {sortBy != null && (
           <IconButton
             aria-label="sort"
             onClick={handleClick}

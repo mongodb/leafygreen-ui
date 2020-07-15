@@ -41,8 +41,10 @@ export default function Table<Shape>({
     },
     data,
     selectable: selectableProp,
-    headerCheckState: false,
-    headerIndeterminate: false,
+    headerCheckState: {
+      checked: false,
+      indeterminate: false,
+    },
     hasNestedRows: false,
     rowState: {},
   };

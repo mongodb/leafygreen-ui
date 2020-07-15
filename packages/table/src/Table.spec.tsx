@@ -51,7 +51,7 @@ function renderTable(props: Props = {}) {
 
 describe('packages/table', () => {
   afterEach(cleanup);
-  // Test accessor prop is a string, and a function
+  // Test sortBy prop is a string, and a function
   // Test table header as a string and a jsx element explicitly
 
   test('by default, it renders unsorted table data, based on "data" prop', () => {

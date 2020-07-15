@@ -267,7 +267,7 @@ const Row = React.forwardRef(
       }
     });
 
-    if (nestedRows && nestedRows.length > 0 && firstCellIndex) {
+    if (nestedRows && nestedRows.length > 0) {
       renderedChildren[firstCellIndex] = React.cloneElement(
         renderedChildren[firstCellIndex],
         {

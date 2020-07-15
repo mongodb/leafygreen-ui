@@ -15,24 +15,21 @@ storiesOf('Table', module)
         <>
           <TableHeader
             dataType={DataType.String}
-            sortable
             label="Name"
             key="name"
-            accessor="name"
+            sortBy="name"
           />
           <TableHeader
             dataType={DataType.Number}
-            sortable
             label="Age"
             key="age"
-            accessor={data => data.age.first ?? data.age}
+            sortBy={data => data.age.first ?? data.age}
           />
           <TableHeader
             dataType={DataType.String}
-            sortable
             label="Favorite Color"
             key="color"
-            accessor={data => data.color.primary ?? data.color}
+            sortBy={data => data.color.primary ?? data.color}
           />
           Location
         </>
@@ -112,7 +109,7 @@ storiesOf('Table', module)
       }
     >
       {({ datum }) => (
-        <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
+        <Row key={datum.name}>
           <Cell>{datum.name}</Cell>
           <Cell>{datum.age}</Cell>
           <Cell>{datum.color.primary ?? datum.color}</Cell>

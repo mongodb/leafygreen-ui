@@ -31,7 +31,10 @@ function TableHead<Shape>({ columns = [], data }: TableHeaderProps<Shape>) {
   const { dispatch } = useTableContext();
   const usingHeaderRow = React.useRef(false);
 
-  const sortRows = (columnId: number, accessorValue: () => string) => {
+  const sortRows = (
+    columnId: number,
+    accessorValue: (data?: any) => string,
+  ) => {
     dispatch({
       type: Types.SortTableData,
       payload: {
@@ -55,9 +58,9 @@ function TableHead<Shape>({ columns = [], data }: TableHeaderProps<Shape>) {
       }
 
       if (isComponentType(child, 'TableHeader')) {
-        const { label, accessor } = child.props;
+        const { label, sortBy } = child.props;
         const normalizedAccessor = normalizeAccessor(
-          accessor ?? label?.toLowerCase(),
+          sortBy ?? label?.toLowerCase(),
         );
 
         return React.cloneElement(child, {
@@ -65,7 +68,7 @@ function TableHead<Shape>({ columns = [], data }: TableHeaderProps<Shape>) {
           key: index,
           onClick: sortRows,
           index,
-          accessor: normalizedAccessor,
+          sortBy: normalizedAccessor,
         });
       }
 
