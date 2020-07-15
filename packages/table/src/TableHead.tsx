@@ -58,10 +58,8 @@ function TableHead<Shape>({ columns = [], data }: TableHeaderProps<Shape>) {
       }
 
       if (isComponentType(child, 'TableHeader')) {
-        const { label, sortBy } = child.props;
-        const normalizedAccessor = normalizeAccessor(
-          sortBy ?? label?.toLowerCase(),
-        );
+        const { sortBy } = child.props;
+        const normalizedAccessor = sortBy && normalizeAccessor(sortBy);
 
         return React.cloneElement(child, {
           // safe until columns need to be reordered

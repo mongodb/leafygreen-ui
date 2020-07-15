@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useMemo } from 'react';
-import { bool } from 'prop-types';
 
 const Types = {
   SelectableTable: 'SELECTABLE_TABLE',

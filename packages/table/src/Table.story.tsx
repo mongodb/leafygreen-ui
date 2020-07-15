@@ -72,7 +72,6 @@ storiesOf('Table', module)
             key="icecreamshoppe"
             colSpan={3}
             label="Ice Cream Shoppe"
-            sortable={false}
           />
         </HeaderRow>,
         <HeaderRow key="2">
@@ -101,8 +100,7 @@ storiesOf('Table', module)
           <TableHeader label="Age" />
           <TableHeader
             label="Color"
-            accessor={datum => datum.color.primary ?? datum.color}
-            sortable
+            sortBy={datum => datum.color.primary ?? datum.color}
           />
           Location
         </>
