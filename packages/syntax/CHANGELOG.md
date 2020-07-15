@@ -1,5 +1,11 @@
 # @leafygreen-ui/syntax
 
+## 2.8.0
+
+### Minor Changes
+
+- f558fef: Added syntax highlighting support for diffs
+
 ## 2.7.0
 
 ### Minor Changes

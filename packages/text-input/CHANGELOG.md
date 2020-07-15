@@ -1,5 +1,17 @@
 # @leafygreen-ui/text-input
 
+## 3.0.1
+
+### Patch Changes
+
+- 5496ff4: Fix bug in input HTML such that aria-labelledby is correctly-cased
+
+## 3.0.0
+
+### Major Changes
+
+- 89318bd: Conditionally renders label tag, such that when no `label` prop is supplied the tag is not on the DOM. If no `label` is provided `aria-labelledby` prop must be supplied.
+
 ## 2.0.0
 
 ### Major Changes
