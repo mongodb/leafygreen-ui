@@ -315,7 +315,7 @@ const TextInput = React.forwardRef(
           <input
             {...inputSelectorProp.prop}
             {...rest}
-            aria-labelledBy={ariaLabelledBy}
+            aria-labelledby={ariaLabelledBy}
             type={type}
             className={cx(inputStyle, getStatefulInputStyles(state, optional))}
             value={value}
