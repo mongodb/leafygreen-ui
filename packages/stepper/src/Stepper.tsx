@@ -94,13 +94,13 @@ export type StepElements = StepElement | Array<StepElement>;
 interface StepperProps {
   children: StepElements;
   currentStep: number;
-  maxDisplayedSteps: number;
+  maxDisplayedSteps?: number;
 }
 
 export function Stepper({
   children,
   currentStep,
-  maxDisplayedSteps,
+  maxDisplayedSteps = Array.isArray(children) ? children.length : 1,
 }: StepperProps) {
   const [visibleLayer, setVisibleLayer] = useState<
     'previous' | 'next' | 'current'
@@ -215,6 +215,8 @@ Stepper.displayName = 'Stepper';
 
 Stepper.propTypes = {
   children: PropTypes.node.isRequired,
+  currentStep: PropTypes.number.isRequired,
+  maxDisplayedSteps: PropTypes.number,
 };
 
 export const Step = function Step({
