@@ -44,6 +44,7 @@ export default function Table<Shape>({
     headerCheckState: false,
     headerIndeterminate: false,
     hasNestedRows: false,
+    rowCheckedState: {},
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);

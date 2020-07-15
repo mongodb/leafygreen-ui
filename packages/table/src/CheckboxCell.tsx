@@ -1,7 +1,6 @@
 import React from 'react';
 import Checkbox from '@leafygreen-ui/checkbox';
 import { css } from '@leafygreen-ui/emotion';
-import { useTableContext, Types } from './TableContext';
 
 const flexStyles = css`
   display: flex;
@@ -9,60 +8,25 @@ const flexStyles = css`
   align-items: center;
 `;
 
-interface CheckboxCellProps extends React.ComponentPropsWithoutRef<'td'> {
-  checked?: boolean;
+interface CheckboxCellProps {
+  checked: boolean;
+  onChange?: React.ChangeEventHandler;
   disabled?: boolean;
-  index?: number;
+  className?: string;
+  children?: React.ReactNode;
 }
 
 function CheckboxCell({
   children,
   className,
-  disabled,
-  index,
+  disabled = false,
+  checked = false,
+  onChange,
 }: CheckboxCellProps) {
-  const {
-    state: { headerCheckState },
-    dispatch,
-  } = useTableContext();
-  const [checked, setChecked] = React.useState(headerCheckState);
-
-  const handleChange = () => {
-    setChecked(curr => !curr);
-
-    if (typeof index === 'number') {
-      dispatch({
-        type: Types.ToggleIndividualChecked,
-        payload: { index, checked: !checked },
-      });
-    }
-  };
-
-  React.useEffect(() => {
-    if (typeof index === 'number') {
-      if (disabled) {
-        setChecked(false);
-      } else {
-        setChecked(headerCheckState);
-        dispatch({
-          type: Types.ToggleIndividualChecked,
-          payload: {
-            index,
-            checked: headerCheckState,
-          },
-        });
-      }
-    }
-  }, [disabled, headerCheckState]);
-
   return (
     <td className={className}>
       <div className={flexStyles}>
-        <Checkbox
-          checked={checked}
-          onChange={handleChange}
-          disabled={disabled}
-        />
+        <Checkbox checked={checked} onChange={onChange} disabled={disabled} />
         {children}
       </div>
     </td>

@@ -23,14 +23,13 @@ export interface HeaderRowProps extends React.ComponentPropsWithoutRef<'tr'> {
 
 function HeaderRow({ children, className, ...rest }: HeaderRowProps) {
   const {
-    state: { selectable, headerCheckState, headerIndeterminate },
+    state: { selectable, headerCheckState },
     dispatch,
   } = useTableContext();
 
   const handleChange = () => {
     dispatch({
       type: Types.ToggleHeaderCheckedState,
-      payload: undefined,
     });
   };
 
@@ -56,8 +55,8 @@ function HeaderRow({ children, className, ...rest }: HeaderRowProps) {
         <th className={thStyles}>
           <div className={innerDivStyles}>
             <Checkbox
-              checked={headerCheckState}
-              indeterminate={headerIndeterminate}
+              checked={headerCheckState.checked}
+              indeterminate={headerCheckState.indeterminate}
               onChange={handleChange}
             />
           </div>

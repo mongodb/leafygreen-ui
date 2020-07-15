@@ -130,7 +130,14 @@ const Row = React.forwardRef(
     ref: React.Ref<any>,
   ) => {
     const {
-      state: { data, columnInfo, hasNestedRows, hasRowSpan, selectable },
+      state: {
+        data,
+        columnInfo,
+        hasNestedRows,
+        hasRowSpan,
+        selectable,
+        rowCheckedState,
+      },
       dispatch,
     } = useTableContext();
 
@@ -139,6 +146,17 @@ const Row = React.forwardRef(
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nodeRef = React.useRef(null);
     let hasSeenFirstCell = false;
+
+    useEffect(() => {
+      dispatch({
+        type: Types.RegisterRow,
+        payload: {
+          index: indexRef.current,
+          checked: false,
+          disabled: disabled,
+        },
+      });
+    }, []);
 
     useEffect(() => {
       let hasDispatchedHasNestedRows = false;
@@ -194,12 +212,18 @@ const Row = React.forwardRef(
       </IconButton>
     );
 
-    const getDisabledProps = children => {
-      return {
-        disabled,
-        className: disabledCell,
-        key: `${indexRef.current}-${children}`,
-      };
+    const checkboxProps = {
+      onChange: () =>
+        dispatch({
+          type: Types.ToggleIndividualChecked,
+          payload: {
+            index: indexRef.current,
+            checked: !rowCheckedState[indexRef.current].checked,
+          },
+        }),
+      disabled,
+      className: disabled ? disabledCell : '',
+      checked: rowCheckedState[indexRef.current]?.checked || false,
     };
 
     const renderedChildren: Array<React.ReactNode> = [];
@@ -216,14 +240,6 @@ const Row = React.forwardRef(
             indentLevel: indentLevel + 1,
           }),
         );
-      } else if (isComponentType(child, 'CheckboxCell')) {
-        if (disabled) {
-          renderedChildren.push(
-            React.cloneElement(child, getDisabledProps(child.props.children)),
-          );
-        } else {
-          renderedChildren.push(child);
-        }
       } else if (isComponentType(child, 'Cell')) {
         if (!hasSeenFirstCell) {
           hasSeenFirstCell = true;
@@ -236,7 +252,11 @@ const Row = React.forwardRef(
 
         if (disabled) {
           renderedChildren.push(
-            React.cloneElement(child, getDisabledProps(child.props.children)),
+            React.cloneElement(child, {
+              disabled,
+              className: disabled ? disabledCell : '',
+              key: `${indexRef.current}-${children}`,
+            }),
           );
         } else {
           renderedChildren.push(
@@ -293,13 +313,7 @@ const Row = React.forwardRef(
           key={indexRef.current}
           {...rest}
         >
-          {selectable && (
-            <CheckboxCell
-              index={indexRef.current}
-              className={cx({ [disabledCell]: disabled })}
-              disabled={disabled}
-            />
-          )}
+          {selectable && <CheckboxCell {...checkboxProps} />}
           {renderedChildren}
         </tr>
 

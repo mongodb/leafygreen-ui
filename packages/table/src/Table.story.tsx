@@ -4,6 +4,8 @@ import { boolean } from '@storybook/addon-knobs';
 import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
 import { defaultData, multiRowData } from './fixtures';
 
+// Combine sortable and accessor
+
 storiesOf('Table', module)
   .add('Default', () => (
     <Table

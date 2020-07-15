@@ -3,12 +3,12 @@ import React, { createContext, useContext, useMemo } from 'react';
 const Types = {
   SelectableTable: 'SELECTABLE_TABLE',
   ToggleHeaderCheckedState: 'TOGGLE_HEADER_CHECKED',
-  ToggleHeaderIndeterminate: 'TOGGLE_HEADER_INDETERMINATE',
   SetColumnInfo: 'SET_COLUMN_INFO',
   SortTableData: 'SORT_TABLE_DATA',
   ToggleIndividualChecked: 'TOGGLE_INDIVIDUAL_CHECKED',
   SetHasNestedRows: 'SET_HAS_NESTED_ROWS',
   SetHasRowSpan: 'SET_HAS_ROW_SPAN',
+  RegisterRow: 'REGISTER_ROW',
 } as const;
 
 type Types = typeof Types[keyof typeof Types];
@@ -17,8 +17,16 @@ export { Types };
 
 interface ActionPayload {
   [Types.SelectableTable]: boolean;
-  [Types.ToggleHeaderCheckedState]: boolean | undefined;
-  [Types.ToggleHeaderIndeterminate]: boolean;
+  [Types.ToggleHeaderCheckedState]: undefined;
+  [Types.ToggleIndividualChecked]: {
+    index: number;
+    checked: boolean;
+  };
+  [Types.RegisterRow]: {
+    index: number;
+    checked?: boolean;
+    disabled?: boolean;
+  };
   [Types.SetColumnInfo]: {
     dataType?: DataType;
     index: number;
@@ -29,10 +37,6 @@ interface ActionPayload {
     columnId: number;
     accessorValue: () => string;
     data: Array<unknown>;
-  };
-  [Types.ToggleIndividualChecked]: {
-    index: number;
-    checked?: boolean;
   };
 }
 
@@ -77,9 +81,11 @@ export interface State {
     [k in number]: { dataType?: DataType };
   };
   selectable?: boolean;
-  headerCheckState?: boolean;
-  headerIndeterminate?: boolean;
-  rowCheckedState?: Record<number, boolean>;
+  headerCheckState: {
+    checked: boolean;
+    indeterminate: boolean;
+  };
+  rowCheckedState: Record<number, { checked: boolean; disabled: boolean }>;
   hasNestedRows?: boolean;
   hasRowSpan?: boolean;
 }
@@ -96,7 +102,11 @@ interface ContextInterface {
 }
 
 const TableContext = createContext<ContextInterface>({
-  state: {},
+  state: {
+    data: [],
+    rowCheckedState: {},
+    headerCheckState: { checked: false, indeterminate: false },
+  },
   dispatch: () => {},
 });
 
@@ -114,41 +124,54 @@ export function reducer(state: State, action: Action): State {
         hasNestedRows: action.payload,
       };
 
-    case Types.ToggleIndividualChecked:
-      return {
-        ...state,
+    case Types.RegisterRow:
+      return Object.assign({}, state, {
         rowCheckedState: {
           ...state.rowCheckedState,
-          [action.payload.index]: action.payload.checked,
+          [action.payload.index]: {
+            disabled: action.payload.disabled,
+            checked: action.payload.checked,
+          },
         },
-        headerCheckState:
-          setHeaderCheckedState({
-            ...state.rowCheckedState,
-            [action.payload.index]: action.payload.checked,
-          })?.headerCheckedState ?? state.headerCheckState,
-        headerIndeterminate: setHeaderCheckedState({
-          ...state.rowCheckedState,
-          [action.payload.index]: action.payload.checked,
-        })?.headerIndeterminateState,
+      });
+
+    case Types.ToggleIndividualChecked:
+      const rowCheckedState = {
+        ...state.rowCheckedState,
+        [action.payload.index]: {
+          ...state.rowCheckedState[action.payload.index],
+          checked: state.rowCheckedState[action.payload.index].disabled
+            ? false
+            : action.payload.checked,
+        },
+      };
+
+      return {
+        ...state,
+        rowCheckedState,
+        headerCheckState: setHeaderCheckedStateOnRowChecked(
+          state,
+          rowCheckedState,
+        ),
+      };
+
+    case Types.ToggleHeaderCheckedState:
+      return {
+        ...state,
+        headerCheckState: {
+          indeterminate: false,
+          checked: !state.headerCheckState.checked,
+        },
+        rowCheckedState: setEveryRowCheckedState(
+          state.rowCheckedState,
+          !state.headerCheckState.checked,
+        ),
       };
 
     case Types.SelectableTable:
       return {
         ...state,
         selectable: action.payload,
-      };
-
-    case Types.ToggleHeaderCheckedState:
-      return {
-        ...state,
-        headerCheckState: action.payload ?? !state.headerCheckState,
-        headerIndeterminate: false,
-      };
-
-    case Types.ToggleHeaderIndeterminate:
-      return {
-        ...state,
-        headerIndeterminate: action.payload,
       };
 
     case Types.SetColumnInfo:
@@ -202,22 +225,42 @@ export function useTableContext() {
   return useContext(TableContext);
 }
 
-const setHeaderCheckedState = obj => {
-  if (obj) {
-    const boolArray = Object.values(obj);
-    const checkSame = boolArray.every(val => val === boolArray[0]);
+const setHeaderCheckedStateOnRowChecked = (
+  { headerCheckState }: State,
+  newRowCheckedState: State['rowCheckedState'],
+): State['headerCheckState'] => {
+  if (headerCheckState.indeterminate) {
+    const boolArray = Object.values(newRowCheckedState);
+    const checkSame = boolArray.every(
+      val => val.checked === boolArray[0].checked,
+    );
 
-    if (checkSame) {
-      return {
-        headerCheckedState: boolArray[0],
-        headerIndeterminateState: undefined,
-      };
-    } else {
-      return {
-        headerIndeterminateState: true,
-      };
-    }
+    return {
+      indeterminate: !checkSame,
+      checked: boolArray[0].checked,
+    };
   }
+
+  return {
+    checked: !headerCheckState.checked,
+    indeterminate: true,
+  };
+};
+
+const setEveryRowCheckedState = (
+  currentRowState: State['rowCheckedState'],
+  newCheckedState: boolean,
+) => {
+  const updatedRowState: State['rowCheckedState'] = currentRowState;
+  let key: any;
+
+  for (key in currentRowState) {
+    updatedRowState[key].checked = updatedRowState[key].disabled
+      ? false
+      : newCheckedState;
+  }
+
+  return updatedRowState;
 };
 
 const alphanumericCollator = new Intl.Collator(undefined, {
