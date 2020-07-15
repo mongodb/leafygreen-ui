@@ -136,7 +136,7 @@ const Row = React.forwardRef(
         hasNestedRows,
         hasRowSpan,
         selectable,
-        rowCheckedState,
+        rowState,
       },
       dispatch,
     } = useTableContext();
@@ -157,6 +157,16 @@ const Row = React.forwardRef(
         },
       });
     }, []);
+
+    useEffect(() => {
+      dispatch({
+        type: Types.RegisterRow,
+        payload: {
+          index: indexRef.current,
+          disabled,
+        },
+      });
+    }, [disabled]);
 
     useEffect(() => {
       let hasDispatchedHasNestedRows = false;
@@ -212,22 +222,8 @@ const Row = React.forwardRef(
       </IconButton>
     );
 
-    const checkboxProps = {
-      onChange: () =>
-        dispatch({
-          type: Types.ToggleIndividualChecked,
-          payload: {
-            index: indexRef.current,
-            checked: !rowCheckedState[indexRef.current].checked,
-          },
-        }),
-      disabled,
-      className: disabled ? disabledCell : '',
-      checked: rowCheckedState[indexRef.current]?.checked || false,
-    };
-
-    const renderedChildren: Array<React.ReactNode> = [];
-    const nestedRows: Array<React.ReactNode> = [];
+    const renderedChildren: Array<React.ReactElement> = [];
+    const nestedRows: Array<React.ReactElement> = [];
     let firstCellIndex: number | undefined;
 
     React.Children.forEach(children, (child, index) => {
@@ -246,7 +242,7 @@ const Row = React.forwardRef(
           firstCellIndex = index;
         }
 
-        if (!children) {
+        if (!child.props.children) {
           return null;
         }
 
@@ -255,7 +251,7 @@ const Row = React.forwardRef(
             React.cloneElement(child, {
               disabled,
               className: disabled ? disabledCell : '',
-              key: `${indexRef.current}-${children}`,
+              key: `${indexRef.current}-${child.props.children}`,
             }),
           );
         } else {
@@ -271,7 +267,7 @@ const Row = React.forwardRef(
       }
     });
 
-    if (nestedRows && nestedRows.length > 0) {
+    if (nestedRows && nestedRows.length > 0 && firstCellIndex) {
       renderedChildren[firstCellIndex] = React.cloneElement(
         renderedChildren[firstCellIndex],
         {
@@ -294,6 +290,20 @@ const Row = React.forwardRef(
     const alignmentStyles = Object.entries(
       columnInfo,
     ).map(([key, { dataType }]) => styleColumn(key, dataType!));
+
+    const checkboxProps = {
+      onChange: () =>
+        dispatch({
+          type: Types.ToggleIndividualChecked,
+          payload: {
+            index: indexRef.current,
+            checked: !rowState[indexRef.current].checked,
+          },
+        }),
+      disabled,
+      className: disabled ? disabledCell : '',
+      checked: rowState[indexRef.current]?.checked || false,
+    };
 
     return (
       <>

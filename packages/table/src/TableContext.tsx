@@ -6,6 +6,7 @@ const Types = {
   SetColumnInfo: 'SET_COLUMN_INFO',
   SortTableData: 'SORT_TABLE_DATA',
   ToggleIndividualChecked: 'TOGGLE_INDIVIDUAL_CHECKED',
+  ToggleIndividualDisabled: 'TOGGLE_INDIVIDUAL_DISABLED',
   SetHasNestedRows: 'SET_HAS_NESTED_ROWS',
   SetHasRowSpan: 'SET_HAS_ROW_SPAN',
   RegisterRow: 'REGISTER_ROW',
@@ -21,6 +22,10 @@ interface ActionPayload {
   [Types.ToggleIndividualChecked]: {
     index: number;
     checked: boolean;
+  };
+  [Types.ToggleIndividualDisabled]: {
+    index: number;
+    disabled: boolean;
   };
   [Types.RegisterRow]: {
     index: number;
@@ -85,7 +90,7 @@ export interface State {
     checked: boolean;
     indeterminate: boolean;
   };
-  rowCheckedState: Record<number, { checked: boolean; disabled: boolean }>;
+  rowState: Record<number, { checked: boolean; disabled: boolean }>;
   hasNestedRows?: boolean;
   hasRowSpan?: boolean;
 }
@@ -104,13 +109,16 @@ interface ContextInterface {
 const TableContext = createContext<ContextInterface>({
   state: {
     data: [],
-    rowCheckedState: {},
+    rowState: {},
     headerCheckState: { checked: false, indeterminate: false },
   },
   dispatch: () => {},
 });
 
 export function reducer(state: State, action: Action): State {
+  let rowState;
+  // const currentRow = state.rowState[action?.payload.index]
+
   switch (action.type) {
     case Types.SetHasRowSpan:
       return {
@@ -126,8 +134,8 @@ export function reducer(state: State, action: Action): State {
 
     case Types.RegisterRow:
       return Object.assign({}, state, {
-        rowCheckedState: {
-          ...state.rowCheckedState,
+        rowState: {
+          ...state.rowState,
           [action.payload.index]: {
             disabled: action.payload.disabled,
             checked: action.payload.checked,
@@ -135,12 +143,26 @@ export function reducer(state: State, action: Action): State {
         },
       });
 
-    case Types.ToggleIndividualChecked:
-      const rowCheckedState = {
-        ...state.rowCheckedState,
+    case Types.ToggleIndividualDisabled:
+      rowState = {
+        ...state.rowState,
         [action.payload.index]: {
-          ...state.rowCheckedState[action.payload.index],
-          checked: state.rowCheckedState[action.payload.index].disabled
+          ...state.rowState[action.payload.index],
+          disabled: action.payload.disabled,
+        },
+      };
+
+      return {
+        ...state,
+        rowState,
+      };
+
+    case Types.ToggleIndividualChecked:
+      rowState = {
+        ...state.rowState,
+        [action.payload.index]: {
+          ...state.rowState[action.payload.index],
+          checked: state.rowState[action.payload.index].disabled
             ? false
             : action.payload.checked,
         },
@@ -148,11 +170,8 @@ export function reducer(state: State, action: Action): State {
 
       return {
         ...state,
-        rowCheckedState,
-        headerCheckState: setHeaderCheckedStateOnRowChecked(
-          state,
-          rowCheckedState,
-        ),
+        rowState,
+        headerCheckState: setHeaderCheckedStateOnRowChecked(state, rowState),
       };
 
     case Types.ToggleHeaderCheckedState:
@@ -162,8 +181,8 @@ export function reducer(state: State, action: Action): State {
           indeterminate: false,
           checked: !state.headerCheckState.checked,
         },
-        rowCheckedState: setEveryRowCheckedState(
-          state.rowCheckedState,
+        rowState: setEveryrowState(
+          state.rowState,
           !state.headerCheckState.checked,
         ),
       };
@@ -227,10 +246,10 @@ export function useTableContext() {
 
 const setHeaderCheckedStateOnRowChecked = (
   { headerCheckState }: State,
-  newRowCheckedState: State['rowCheckedState'],
+  newrowState: State['rowState'],
 ): State['headerCheckState'] => {
   if (headerCheckState.indeterminate) {
-    const boolArray = Object.values(newRowCheckedState);
+    const boolArray = Object.values(newrowState);
     const checkSame = boolArray.every(
       val => val.checked === boolArray[0].checked,
     );
@@ -247,11 +266,11 @@ const setHeaderCheckedStateOnRowChecked = (
   };
 };
 
-const setEveryRowCheckedState = (
-  currentRowState: State['rowCheckedState'],
+const setEveryrowState = (
+  currentRowState: State['rowState'],
   newCheckedState: boolean,
 ) => {
-  const updatedRowState: State['rowCheckedState'] = currentRowState;
+  const updatedRowState: State['rowState'] = currentRowState;
   let key: any;
 
   for (key in currentRowState) {
@@ -274,7 +293,7 @@ export const sortFunction = ({
   direction,
 }: {
   data: Array<any>;
-  accessorValue: () => string;
+  accessorValue: (data: any) => string;
   direction: 'asc' | 'desc';
 }) => {
   return data.sort((a, b) => {
