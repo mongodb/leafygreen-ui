@@ -37,7 +37,7 @@ const underline = css`
   }
 `;
 
-const arrowRightIconPermanent = css`
+const arrowRightIconPersist = css`
   transform: translate3d(3px, 0, 0);
 `;
 
@@ -83,7 +83,7 @@ const OpenInNewTab = (props: JSX.IntrinsicElements['svg']) => {
 
 const ArrowAppearance = {
   Hover: 'hover',
-  Permanent: 'permanent',
+  Persist: 'persist',
   None: 'none',
 } as const;
 
@@ -130,8 +130,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
         size={10}
         className={cx({
           [arrowRightIconHover]: arrowAppearance === ArrowAppearance.Hover,
-          [arrowRightIconPermanent]:
-            arrowAppearance === ArrowAppearance.Permanent,
+          [arrowRightIconPersist]: arrowAppearance === ArrowAppearance.Persist,
         })}
       />
     ) : null;

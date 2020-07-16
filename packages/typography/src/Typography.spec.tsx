@@ -44,10 +44,10 @@ describe('packages/typography', () => {
         expect(openInNewTab).not.toBeInTheDocument();
       });
 
-      test('and the "arrowAppearance" prop is set to "permanent"', () => {
+      test('and the "arrowAppearance" prop is set to "persist"', () => {
         renderLink({
           href: 'http://localhost:9001',
-          arrowAppearance: 'permanent',
+          arrowAppearance: 'persist',
         });
 
         const openInNewTab = screen.queryByTitle('Open in New Tab');

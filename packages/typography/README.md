@@ -98,8 +98,8 @@ All props extend the HTMLElementProps of their root tag, however `<Body />` and 
 
 ## Link
 
-| Prop              | Type                             | Description                                                                                                                                                                                | Default |
-| ----------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
-| `arrowAppearance` | `'hover' | 'permanent' | 'none'` | Displays a right arrow adjacent to the anchor tag. When set to `permanent` the arrow will always be present. When set to `hover`, the arrow will only appear when hovering over the arrow. | `none`  |
+| Prop              | Type                           | Description                                                                                                                                                                              | Default |
+| ----------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `arrowAppearance` | `'hover' | 'persist' | 'none'` | Displays a right arrow adjacent to the anchor tag. When set to `persist` the arrow will always be present. When set to `hover`, the arrow will only appear when hovering over the arrow. | `none`  |
 
 _Note:_ If the current host name is different from the host of the destination URL, we will add provide the "\_blank" value for the `target` prop. When the target is set to open in a new tab, we render an icon as a visual affordance.
