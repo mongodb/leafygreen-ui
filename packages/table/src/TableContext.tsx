@@ -29,8 +29,8 @@ interface ActionPayload {
   };
   [Types.RegisterRow]: {
     index: number;
-    checked?: boolean;
-    disabled?: boolean;
+    checked: boolean;
+    disabled: boolean;
   };
   [Types.SetColumnInfo]: {
     dataType?: DataType;
@@ -117,7 +117,6 @@ const TableContext = createContext<ContextInterface>({
 
 export function reducer(state: State, action: Action): State {
   let rowState;
-  // const currentRow = state.rowState[action?.payload.index]
 
   switch (action.type) {
     case Types.SetHasRowSpan:
@@ -133,15 +132,18 @@ export function reducer(state: State, action: Action): State {
       };
 
     case Types.RegisterRow:
-      return Object.assign({}, state, {
-        rowState: {
-          ...state.rowState,
-          [action.payload.index]: {
-            disabled: action.payload.disabled,
-            checked: action.payload.checked,
-          },
+      rowState = {
+        ...state.rowState,
+        [action.payload.index]: {
+          disabled: action.payload.disabled,
+          checked: action.payload.checked,
         },
-      });
+      };
+
+      return {
+        ...state,
+        rowState,
+      };
 
     case Types.ToggleIndividualDisabled:
       rowState = {
