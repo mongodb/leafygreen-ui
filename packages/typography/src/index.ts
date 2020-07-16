@@ -9,4 +9,4 @@ export {
 } from './Typography';
 export { Link } from './Link';
 
-export declare const __TARGET__: 'web' | 'node' = __TARGET__;
+export declare const __TARGET__: 'web' | 'node';
