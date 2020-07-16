@@ -64,7 +64,7 @@ describe('packages/table', () => {
     renderTable({
       table: {
         columns: [
-          <TableHeader key="name" label="Name" sortable />,
+          <TableHeader key="name" label="Name" sortBy="name" />,
           'Age',
           'Color',
           'Location',
@@ -201,7 +201,7 @@ describe('packages/table', () => {
       renderTable({
         table: {
           columns: [
-            <TableHeader key="name" label="Name" sortable />,
+            <TableHeader key="name" label="Name" sortBy={() => 'name'} />,
             'Age',
             'Color',
             'Location',
