@@ -1,5 +1,12 @@
 # @leafygreen-ui/mongo-nav
 
+## 2.0.2
+
+### Patch Changes
+
+- Updated dependencies [7cc28cb]
+  - @leafygreen-ui/badge@4.0.0
+
 ## 2.0.1
 
 ### Patch Changes
