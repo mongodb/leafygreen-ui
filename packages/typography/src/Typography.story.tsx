@@ -42,7 +42,11 @@ storiesOf('Typography', module).add('Default', () => (
           ],
           'http://localhost:9001',
         )}
-        canShowArrow={select('canShowArrow', ['hover', 'permanent'], 'hover')}
+        arrowAppearance={select(
+          'arrowAppearance',
+          ['hover', 'persistant' | 'none'],
+          'hover',
+        )}
       >
         Link
       </Link>

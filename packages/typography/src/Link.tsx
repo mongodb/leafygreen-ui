@@ -6,6 +6,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { typeScale1, typeScale2 } from './styles';
+import { __TARGET__ } from '.';
 
 const anchorDataProp = createDataProp('anchor-container');
 
@@ -81,6 +82,16 @@ const OpenInNewTab = (props: JSX.IntrinsicElements['svg']) => {
   );
 };
 
+// declare const __TARGET__: 'web' | 'node';
+
+function isServer() {
+  if (__TARGET__ === 'node') {
+    return true;
+  }
+
+  return false;
+}
+
 const ArrowAppearance = {
   Hover: 'hover',
   Persist: 'persist',
@@ -109,7 +120,8 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
   const fontSize = size === 16 ? typeScale2 : typeScale1;
 
   const hrefHostname = useMemo(() => new URL(href).hostname, [href]);
-  const currentHostname = window.location.hostname || '';
+  const currentHostname = isServer() ? '' : window.location.hostname;
+
   let target;
 
   if (targetProp) {
