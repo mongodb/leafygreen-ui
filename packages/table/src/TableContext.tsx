@@ -250,10 +250,10 @@ const setHeaderCheckedStateOnRowChecked = (
   { headerCheckState }: State,
   newRowState: State['rowState'],
 ): State['headerCheckState'] => {
-  console.log('here');
-
   if (headerCheckState.indeterminate) {
-    const boolArray = Object.values(newRowState);
+    const boolArray = Object.values(newRowState).filter(
+      newRowObjects => !newRowObjects.disabled,
+    );
 
     const checkSame = boolArray.every(
       val => val.checked === boolArray[0].checked,

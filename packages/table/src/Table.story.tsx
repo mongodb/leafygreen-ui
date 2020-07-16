@@ -105,7 +105,7 @@ storiesOf('Table', module)
       }
     >
       {({ datum }) => (
-        <Row key={datum.name}>
+        <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
           <Cell>{datum.name}</Cell>
           <Cell>{datum.age}</Cell>
           <Cell>{datum.color.primary ?? datum.color}</Cell>
