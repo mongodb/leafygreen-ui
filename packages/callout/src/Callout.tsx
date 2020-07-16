@@ -133,7 +133,7 @@ interface ColorSet {
 
 interface CalloutProps {
   title?: string;
-  children: string;
+  children: React.ReactNode;
   className?: string;
   variant: Variant;
 }
@@ -185,7 +185,7 @@ function Callout({
 Callout.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)).isRequired,
   title: PropTypes.string,
-  children: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };
 

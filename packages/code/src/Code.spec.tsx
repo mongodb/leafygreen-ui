@@ -1,12 +1,11 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
 import Code from './Code';
 
-afterAll(cleanup);
-
 const codeSnippet = 'const greeting = "Hello, world!";';
 const className = 'test-class';
+const onCopy = jest.fn();
 
 describe('packages/Syntax', () => {
   describe('when multiline is true', () => {
@@ -62,6 +61,19 @@ describe('packages/Syntax', () => {
 
     test(`renders "${className}" in the root element's classList`, () => {
       expect(codeRoot.classList.contains(className)).toBe(true);
+    });
+  });
+
+  describe('when copyable is true', () => {
+    test('onCopy callback is fired when code is copied', () => {
+      render(
+        <Code onCopy={onCopy} copyable={true}>
+          {codeSnippet}
+        </Code>,
+      );
+      const copyIcon = screen.getByRole('button');
+      fireEvent.click(copyIcon);
+      expect(onCopy).toBeCalledTimes(1);
     });
   });
 });

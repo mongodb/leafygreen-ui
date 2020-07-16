@@ -71,8 +71,11 @@ Box.propTypes = {
 
 export default Box;
 
-export interface ExtendableBox<Props> {
-  (props: BoxDivDefault & Props): JSX.Element | null;
+export interface ExtendableBox<
+  Props,
+  Default extends React.ElementType = 'div'
+> {
+  (props: React.ComponentPropsWithRef<Default> & Props): JSX.Element | null;
   (props: BoxAnchorDefault & Props): JSX.Element | null;
   <TElement extends keyof JSX.IntrinsicElements>(
     props: BoxIntrinsic<TElement> & Props,
