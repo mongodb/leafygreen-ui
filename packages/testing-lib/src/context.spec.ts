@@ -156,7 +156,7 @@ describe('Context', () => {
 
       // It would be nice if we were able to return a rejected promise
       // instead of throwing, but we have no way of knowing whether we
-      // should do so without being able to call `exit`.
+      // should do so without being able to call the operation.
       let exception: unknown;
 
       try {
