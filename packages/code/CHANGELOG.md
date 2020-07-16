@@ -1,5 +1,11 @@
 # @leafygreen-ui/code
 
+## 3.5.0
+
+### Minor Changes
+
+- 6233a34: Adds `onCopy` callback, invoked when copy button is clicked
+
 ## 3.4.6
 
 ### Patch Changes

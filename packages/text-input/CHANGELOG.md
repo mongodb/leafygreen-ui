@@ -1,5 +1,11 @@
 # @leafygreen-ui/text-input
 
+## 3.0.1
+
+### Patch Changes
+
+- 5496ff4: Fix bug in input HTML such that aria-labelledby is correctly-cased
+
 ## 3.0.0
 
 ### Major Changes

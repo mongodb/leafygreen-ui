@@ -1,5 +1,11 @@
 # @leafygreen-ui/callout
 
+## 1.1.0
+
+### Minor Changes
+
+- f956b57: Allow Callout component to accept children other than `string`
+
 ## 1.0.1
 
 ### Patch Changes
