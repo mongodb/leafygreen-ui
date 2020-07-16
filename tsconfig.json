@@ -78,6 +78,9 @@
       "path": "./packages/syntax"
     },
     {
+      "path": "./packages/testing-lib"
+    },
+    {
       "path": "./packages/text-input"
     },
     {
