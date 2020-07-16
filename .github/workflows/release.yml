@@ -3,7 +3,7 @@ name: Version
 on:
   push:
     branches:
-      - test/brooke
+      - master
 
 jobs:
   release:
