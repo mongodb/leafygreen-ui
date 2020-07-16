@@ -1,8 +1,8 @@
 import * as Context from './context';
-import { within } from './context';
+import { EnterException, ExitException, within } from './context';
 
 describe('Context', () => {
-  describe('still calls `exit` when error is thrown', () => {
+  describe('still calls `exit` when operation throws exception', () => {
     test('with sync `enter` and `exit`', () => {
       const context = {
         [Context.enter]: jest.fn(),
@@ -21,7 +21,7 @@ describe('Context', () => {
 
     test('with async `enter`', async () => {
       const context = {
-        [Context.enter]: jest.fn(() => Promise.resolve()),
+        [Context.enter]: jest.fn(async () => {}),
         [Context.exit]: jest.fn(),
       };
 
@@ -37,15 +37,15 @@ describe('Context', () => {
     test('with async `exit`', async () => {
       const context = {
         [Context.enter]: jest.fn(),
-        [Context.exit]: jest.fn(() => Promise.resolve()),
+        [Context.exit]: jest.fn(async () => {}),
       };
 
-      const result = within(context, () => {
+      const promise = within(context, () => {
         throw Error('expected error');
       });
 
       expect(context[Context.enter]).toHaveBeenCalledTimes(1);
-      await expect(result).rejects.toThrowError('expected error');
+      await expect(promise).rejects.toThrowError('expected error');
       expect(context[Context.exit]).toHaveBeenCalledTimes(1);
     });
 
@@ -55,15 +55,340 @@ describe('Context', () => {
         [Context.exit]: jest.fn(),
       };
 
-      const result = within(context, async () => {
+      const promise = within(context, async () => {
         throw Error('expected error');
       });
 
       expect(context[Context.enter]).toHaveBeenCalledTimes(1);
-      await expect(result).rejects.toThrowError('expected error');
+      await expect(promise).rejects.toThrowError('expected error');
       expect(context[Context.exit]).toHaveBeenCalledTimes(1);
     });
   });
+
+  /* eslint-disable jest/no-try-expect */
+  describe('operation and `exit` not called if `enter` throws exception', () => {
+    test('with sync `enter` and `exit`', () => {
+      const context = {
+        [Context.enter]: () => {
+          throw Error('expected error');
+        },
+        [Context.exit]: jest.fn(),
+      };
+      const operation = jest.fn();
+
+      let exception: unknown;
+
+      try {
+        within(context, operation);
+        throw Error('unreachable');
+      } catch (error) {
+        expect(error).toBeInstanceOf(EnterException);
+        ({ exception } = error);
+      }
+
+      expect(exception).toEqual(Error('expected error'));
+      expect(operation).not.toHaveBeenCalled();
+      expect(context[Context.exit]).not.toHaveBeenCalled();
+    });
+
+    test('with async `enter`', async () => {
+      const context = {
+        [Context.enter]: jest.fn(async () => {
+          throw Error('expected error');
+        }),
+        [Context.exit]: jest.fn(),
+      };
+      const operation = jest.fn();
+
+      const promise = within(context, operation);
+      expect(context[Context.enter]).toHaveBeenCalledTimes(1);
+
+      let exception: unknown;
+
+      try {
+        await promise;
+        throw Error('unreachable');
+      } catch (error) {
+        expect(error).toBeInstanceOf(EnterException);
+        ({ exception } = error);
+      }
+
+      expect(exception).toEqual(Error('expected error'));
+      expect(operation).not.toHaveBeenCalled();
+      expect(context[Context.exit]).not.toHaveBeenCalled();
+    });
+
+    test('with async `exit`', () => {
+      const context = {
+        [Context.enter]: () => {
+          throw Error('expected error');
+        },
+        [Context.exit]: jest.fn(async () => {}),
+      };
+      const operation = jest.fn();
+
+      // It would be nice if we were able to return a rejected promise
+      // instead of throwing, but we have no way of knowing whether we
+      // should do so without being able to call `exit`.
+      let exception: unknown;
+
+      try {
+        within(context, operation);
+        throw Error('unreachable');
+      } catch (error) {
+        expect(error).toBeInstanceOf(EnterException);
+        ({ exception } = error);
+      }
+
+      expect(exception).toEqual(Error('expected error'));
+      expect(operation).not.toHaveBeenCalled();
+      expect(context[Context.exit]).not.toHaveBeenCalled();
+    });
+
+    test('with async operation', async () => {
+      const context = {
+        [Context.enter]: () => {
+          throw Error('expected error');
+        },
+        [Context.exit]: jest.fn(),
+      };
+      const operation = jest.fn(async () => {});
+
+      // It would be nice if we were able to return a rejected promise
+      // instead of throwing, but we have no way of knowing whether we
+      // should do so without being able to call `exit`.
+      let exception: unknown;
+
+      try {
+        within(context, operation);
+        throw Error('unreachable');
+      } catch (error) {
+        expect(error).toBeInstanceOf(EnterException);
+        ({ exception } = error);
+      }
+
+      expect(exception).toEqual(Error('expected error'));
+      expect(operation).not.toHaveBeenCalled();
+      expect(context[Context.exit]).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('when `exit` throws exception', () => {
+    test('with sync `enter` and `exit`', () => {
+      const context = {
+        [Context.enter]: jest.fn(),
+        [Context.exit]: () => {
+          throw Error('expected error');
+        },
+      };
+
+      let exception: unknown;
+      let result: ExitException<number>['result'];
+
+      try {
+        within(context, () => 1);
+        throw Error('unreachable');
+      } catch (error) {
+        expect(error).toBeInstanceOf(ExitException);
+        ({ exception, result } = error);
+      }
+
+      expect(context[Context.enter]).toHaveBeenCalledTimes(1);
+      expect(exception).toEqual(Error('expected error'));
+      expect(result).toEqual({ value: 1 });
+    });
+
+    test('with async `enter`', async () => {
+      const context = {
+        [Context.enter]: jest.fn(async () => {}),
+        [Context.exit]: () => {
+          throw Error('expected error');
+        },
+      };
+
+      const promise = within(context, () => 1);
+      expect(context[Context.enter]).toHaveBeenCalledTimes(1);
+
+      let exception: unknown;
+      let result: ExitException<number>['result'];
+
+      try {
+        await promise;
+        throw Error('unreachable');
+      } catch (error) {
+        expect(error).toBeInstanceOf(ExitException);
+        ({ exception, result } = error);
+      }
+
+      expect(exception).toEqual(Error('expected error'));
+      expect(result).toEqual({ value: 1 });
+    });
+
+    test('with async `exit`', async () => {
+      const context = {
+        [Context.enter]: jest.fn(),
+        [Context.exit]: async () => {
+          throw Error('expected error');
+        },
+      };
+
+      const promise = within(context, () => 1);
+      expect(context[Context.enter]).toHaveBeenCalledTimes(1);
+
+      let exception: unknown;
+      let result: ExitException<number>['result'];
+
+      try {
+        await promise;
+        throw Error('unreachable');
+      } catch (error) {
+        expect(error).toBeInstanceOf(ExitException);
+        ({ exception, result } = error);
+      }
+
+      expect(exception).toEqual(Error('expected error'));
+      expect(result).toEqual({ value: 1 });
+    });
+
+    test('with async operation', async () => {
+      const context = {
+        [Context.enter]: jest.fn(),
+        [Context.exit]: () => {
+          throw Error('expected error');
+        },
+      };
+
+      const promise = within(context, async () => 1);
+      expect(context[Context.enter]).toHaveBeenCalledTimes(1);
+
+      let exception: unknown;
+      let result: ExitException<number>['result'];
+
+      try {
+        await promise;
+        throw Error('unreachable');
+      } catch (error) {
+        expect(error).toBeInstanceOf(ExitException);
+        ({ exception, result } = error);
+      }
+
+      expect(exception).toEqual(Error('expected error'));
+      expect(result).toEqual({ value: 1 });
+    });
+  });
+
+  describe('when operation and `exit` throws exception', () => {
+    test('with sync `enter` and `exit`', () => {
+      const context = {
+        [Context.enter]: jest.fn(),
+        [Context.exit]: () => {
+          throw Error('expected error');
+        },
+      };
+
+      let exception: unknown;
+      let result: ExitException<number>['result'];
+
+      try {
+        within(context, () => {
+          throw Error('operation error');
+        });
+        throw Error('unreachable');
+      } catch (error) {
+        expect(error).toBeInstanceOf(ExitException);
+        ({ exception, result } = error);
+      }
+
+      expect(context[Context.enter]).toHaveBeenCalledTimes(1);
+      expect(exception).toEqual(Error('expected error'));
+      expect(result).toEqual({ exception: Error('operation error') });
+    });
+
+    test('with async `enter`', async () => {
+      const context = {
+        [Context.enter]: jest.fn(async () => {}),
+        [Context.exit]: () => {
+          throw Error('expected error');
+        },
+      };
+
+      const promise = within(context, () => {
+        throw Error('operation error');
+      });
+      expect(context[Context.enter]).toHaveBeenCalledTimes(1);
+
+      let exception: unknown;
+      let result: ExitException<number>['result'];
+
+      try {
+        await promise;
+        throw Error('unreachable');
+      } catch (error) {
+        expect(error).toBeInstanceOf(ExitException);
+        ({ exception, result } = error);
+      }
+
+      expect(exception).toEqual(Error('expected error'));
+      expect(result).toEqual({ exception: Error('operation error') });
+    });
+
+    test('with async `exit`', async () => {
+      const context = {
+        [Context.enter]: jest.fn(),
+        [Context.exit]: async () => {
+          throw Error('expected error');
+        },
+      };
+
+      const promise = within(context, () => {
+        throw Error('operation error');
+      });
+      expect(context[Context.enter]).toHaveBeenCalledTimes(1);
+
+      let exception: unknown;
+      let result: ExitException<number>['result'];
+
+      try {
+        await promise;
+        throw Error('unreachable');
+      } catch (error) {
+        expect(error).toBeInstanceOf(ExitException);
+        ({ exception, result } = error);
+      }
+
+      expect(exception).toEqual(Error('expected error'));
+      expect(result).toEqual({ exception: Error('operation error') });
+    });
+
+    test('with async operation', async () => {
+      const context = {
+        [Context.enter]: jest.fn(),
+        [Context.exit]: () => {
+          throw Error('expected error');
+        },
+      };
+
+      const promise = within(context, async () => {
+        throw Error('operation error');
+      });
+      expect(context[Context.enter]).toHaveBeenCalledTimes(1);
+
+      let exception: unknown;
+      let result: ExitException<number>['result'];
+
+      try {
+        await promise;
+        throw Error('unreachable');
+      } catch (error) {
+        expect(error).toBeInstanceOf(ExitException);
+        ({ exception, result } = error);
+      }
+
+      expect(exception).toEqual(Error('expected error'));
+      expect(result).toEqual({ exception: Error('operation error') });
+    });
+  });
+  /* eslint-enable jest/no-try-expect */
 
   describe('types', () => {
     let isNumber: number;
@@ -145,7 +470,7 @@ describe('Context', () => {
       await expect(isPromise).resolves.toEqual(1);
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests
+    /* eslint-disable jest/expect-expect, jest/no-disabled-tests */
     test.skip('Missing `enter`', () => {
       within(
         // @ts-expect-error
@@ -189,9 +514,7 @@ describe('Context', () => {
       );
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests
     describe.skip('Context handle types', () => {
-      // eslint-disable-next-line jest/expect-expect
       test('are consistent', () => {
         within({ [Context.enter]: () => 'hello' }, (handle: string) => handle);
         within(
@@ -214,7 +537,6 @@ describe('Context', () => {
         );
       });
 
-      // eslint-disable-next-line jest/expect-expect
       test('error when `enter` and `exit` disagree', () => {
         within(
           {
@@ -253,7 +575,6 @@ describe('Context', () => {
         );
       });
 
-      // eslint-disable-next-line jest/expect-expect
       test('error when `enter` and provided function disagree', () => {
         within(
           {
@@ -294,5 +615,6 @@ describe('Context', () => {
         );
       });
     });
+    /* eslint-enable jest/expect-expect, jest/no-disabled-tests */
   });
 });

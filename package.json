@@ -57,7 +57,7 @@
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@leafygreen-ui/lib": "^4.4.1",
-    "@leafygreen-ui/testing-lib": "^0.0.0",
+    "@leafygreen-ui/testing-lib": "*",
     "@storybook/addon-a11y": "^5.3.18",
     "@storybook/addon-knobs": "^5.3.18",
     "@storybook/react": "^5.3.18",
