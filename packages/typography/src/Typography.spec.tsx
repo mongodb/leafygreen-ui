@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Link, LinkProps } from './Typography';
+import { Link, LinkProps } from './Link';
 
 const renderLink = (props: LinkProps) => {
   render(<Link {...props}>Link</Link>);
@@ -9,15 +9,15 @@ const renderLink = (props: LinkProps) => {
 describe('packages/typography', () => {
   describe('Link', () => {
     describe('when the current host is different from the destination URL host', () => {
-      test('and the "canShowArrow" prop is set to hover', () => {
-        renderLink({ href: 'http://mongodb.design', canShowArrow: 'hover' });
+      test('and the "arrowAppearance" prop is set to hover', () => {
+        renderLink({ href: 'http://mongodb.design', arrowAppearance: 'hover' });
         const openInNewTab = screen.getByTitle('Open in New Tab');
         const rightArrow = screen.queryByTitle('Glyphs / Arrow / Right');
         expect(openInNewTab).toBeInTheDocument();
         expect(rightArrow).not.toBeInTheDocument();
       });
 
-      test('and the "canShowArrow" prop is not set', () => {
+      test('and the "arrowAppearance" prop is not set', () => {
         renderLink({ href: 'http://mongodb.design' });
         const openInNewTab = screen.getByTitle('Open in New Tab');
         expect(openInNewTab).toBeInTheDocument();
@@ -32,8 +32,8 @@ describe('packages/typography', () => {
           expect((anchor as HTMLElement).tagName.toLowerCase()).toBe('a');
         });
       });
-      test('and the "canShowArrow" prop is set to "hover"', () => {
-        renderLink({ href: 'http://localhost:9001', canShowArrow: 'hover' });
+      test('and the "arrowAppearance" prop is set to "hover"', () => {
+        renderLink({ href: 'http://localhost:9001', arrowAppearance: 'hover' });
         const anchor = screen.getByText('Link');
         const openInNewTab = screen.queryByTitle('Open in New Tab');
         const rightArrow = screen.queryByTitle('Glyphs / Arrow / Right');
@@ -44,10 +44,10 @@ describe('packages/typography', () => {
         expect(openInNewTab).not.toBeInTheDocument();
       });
 
-      test('and the "canShowArrow" prop is set to "permanent"', () => {
+      test('and the "arrowAppearance" prop is set to "permanent"', () => {
         renderLink({
           href: 'http://localhost:9001',
-          canShowArrow: 'permanent',
+          arrowAppearance: 'permanent',
         });
 
         const openInNewTab = screen.queryByTitle('Open in New Tab');
@@ -56,7 +56,7 @@ describe('packages/typography', () => {
         expect(openInNewTab).not.toBeInTheDocument();
       });
 
-      test('and the "canShowArrow" prop is not specified', () => {
+      test('and the "arrowAppearance" prop is not specified', () => {
         renderLink({ href: 'http://localhost:9001' });
         const anchor = screen.getByText('Link');
         const openInNewTab = screen.queryByTitle('Open in New Tab');
