@@ -37,15 +37,15 @@ jobs:
           ref: changeset-release/master
 
       - name: Run prettier
-        run: yarn prettier
+        run: |
+          yarn
+          yarn format
+          git status
 
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Add changes" -a
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          git commit -m "Automated publish with prettier" || exit 0
+          git pull --rebase publisher @changeset-release/master
+          git push publisher @changeset-release/master
