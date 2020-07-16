@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/callout",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "leafyGreen UI Kit Callout",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
