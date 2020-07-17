@@ -9,7 +9,7 @@ import CheckboxCell from './CheckboxCell';
 import { useTableContext, Types, DataType } from './TableContext';
 
 const rowStyle = css`
-  border-bottom: 1px solid ${uiColors.gray.light2};
+  border-top: 1px solid ${uiColors.gray.light2};
   color: ${uiColors.gray.dark2};
 
   & > td > div {
@@ -33,11 +33,8 @@ const disabledStyle = css`
   background-color: ${uiColors.gray.light2};
   color: ${uiColors.gray.base};
   cursor: not-allowed;
-  border-bottom: 1px solid ${uiColors.gray.light1};
-`;
-
-const disabledCell = css`
   border-top: 1px solid ${uiColors.gray.light1};
+  border-bottom: 1px solid ${uiColors.gray.light1};
 `;
 
 const displayFlex = css`
@@ -55,7 +52,7 @@ const truncation = css`
 const transitionStyles = {
   default: css`
     transition: border 150ms ease-in-out;
-    border-bottom-color: transparent;
+    border-top-color: transparent;
 
     & > td {
       padding-top: 0px;
@@ -68,7 +65,7 @@ const transitionStyles = {
   `,
 
   entered: css`
-    border-bottom-color: ${uiColors.gray.light2};
+    border-top-color: ${uiColors.gray.light2};
 
     & > td > div {
       max-height: 40px;
@@ -143,9 +140,14 @@ const Row = React.forwardRef(
 
     const indexRef = React.useRef(generateIndexRef());
 
+    console.log(rowState);
+    console.log(rowState[indexRef?.current]);
+
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nodeRef = React.useRef(null);
     let hasSeenFirstCell = false;
+
+    let isNeighborDisabled;
 
     useEffect(() => {
       dispatch({
@@ -250,7 +252,6 @@ const Row = React.forwardRef(
           renderedChildren.push(
             React.cloneElement(child, {
               disabled,
-              className: disabled ? disabledCell : '',
               key: `${indexRef.current}-${child.props.children}`,
             }),
           );
@@ -301,7 +302,6 @@ const Row = React.forwardRef(
           },
         }),
       disabled,
-      className: disabled ? disabledCell : '',
       checked: rowState[indexRef.current]?.checked || false,
     };
 

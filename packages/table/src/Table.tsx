@@ -1,16 +1,17 @@
 import React, { useReducer, useEffect } from 'react';
 import { cx, css } from '@leafygreen-ui/emotion';
+import { uiColors } from '@leafygreen-ui/palette';
 import { HeaderRowProps } from './HeaderRow';
 import { TableHeaderProps } from './TableHeader';
 import { State, Types, TableProvider, reducer } from './TableContext';
 import TableHead from './TableHead';
 
 // Add tests for nested data structures to prove that sortBy prop works as expected
-// Disabled causing extra border ??
 
 const tableStyles = css`
   border-collapse: collapse;
   box-sizing: border-box;
+  border-bottom: 1px solid ${uiColors.gray.light2};
 `;
 
 type DataShape<Shape> = Shape extends infer U ? U : Shape;
