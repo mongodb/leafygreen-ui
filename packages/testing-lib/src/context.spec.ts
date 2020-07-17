@@ -531,6 +531,7 @@ describe('Context', () => {
         within(
           {
             [Context.enter]: () => 'hello',
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             [Context.exit]: (handle: string) => {},
           },
           (handle: string) => handle,
@@ -538,6 +539,7 @@ describe('Context', () => {
         within(
           {
             [Context.enter]: () => 'hello',
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             [Context.exit]: async (handle: string) => {},
           },
           (handle: string) => handle,
@@ -610,6 +612,7 @@ describe('Context', () => {
         within(
           {
             [Context.enter]: () => 'hello',
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             [Context.exit]: (handle: string) => {},
           },
           // @ts-expect-error
@@ -619,6 +622,7 @@ describe('Context', () => {
         within(
           {
             [Context.enter]: () => 'hello',
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             [Context.exit]: (handle: string) => {},
           },
           // @ts-expect-error

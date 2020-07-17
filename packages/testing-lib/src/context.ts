@@ -37,6 +37,24 @@ export interface Context<THandle> {
   [exit]?: (handle: THandle) => MaybePromise<void>;
 }
 
+type ContextResult<
+  TEnterResult extends MaybePromise<any>,
+  TFnResult extends MaybePromise<any>,
+  TExitResult extends MaybePromise<void>
+> = TFnResult extends PromiseLike<any>
+  ? TFnResult
+  : TEnterResult extends PromiseLike<any>
+  ? PromiseLike<TFnResult>
+  : TExitResult extends PromiseLike<any>
+  ? PromiseLike<TFnResult>
+  : TFnResult;
+
+type MaybePromise<T> = T | PromiseLike<T>;
+
+type Resolve<T extends MaybePromise<any>> = T extends MaybePromise<infer U>
+  ? U
+  : T;
+
 function isPromiseLike<T>(obj: MaybePromise<T>): obj is PromiseLike<T> {
   return (
     (typeof obj === 'object' || typeof obj === 'function') &&
@@ -46,7 +64,7 @@ function isPromiseLike<T>(obj: MaybePromise<T>): obj is PromiseLike<T> {
 }
 
 function handleMaybeAsyncException<
-  TArgs extends any[],
+  TArgs extends Array<any>,
   TResolvedResult,
   TOnExceptionReturn
 >(
@@ -86,24 +104,6 @@ function asyncCompose<
     return outerFn(value as Resolve<TResolvedResult>);
   };
 }
-
-type ContextResult<
-  TEnterResult extends MaybePromise<any>,
-  TFnResult extends MaybePromise<any>,
-  TExitResult extends MaybePromise<void>
-> = TFnResult extends PromiseLike<any>
-  ? TFnResult
-  : TEnterResult extends PromiseLike<any>
-  ? PromiseLike<TFnResult>
-  : TExitResult extends PromiseLike<any>
-  ? PromiseLike<TFnResult>
-  : TFnResult;
-
-type MaybePromise<T> = T | PromiseLike<T>;
-
-type Resolve<T extends MaybePromise<any>> = T extends MaybePromise<infer U>
-  ? U
-  : T;
 
 export function within<
   TEnterResult extends MaybePromise<any>,
