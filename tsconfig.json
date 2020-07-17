@@ -75,6 +75,9 @@
       "path": "./packages/side-nav"
     },
     {
+      "path": "./packages/stepper"
+    },
+    {
       "path": "./packages/syntax"
     },
     {
