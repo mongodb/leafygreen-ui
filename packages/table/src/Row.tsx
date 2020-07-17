@@ -140,9 +140,6 @@ const Row = React.forwardRef(
 
     const indexRef = React.useRef(generateIndexRef());
 
-    console.log(rowState);
-    console.log(rowState[indexRef?.current]);
-
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nodeRef = React.useRef(null);
     let hasSeenFirstCell = false;

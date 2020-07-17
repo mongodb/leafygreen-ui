@@ -266,7 +266,7 @@ const setHeaderCheckedStateOnRowChecked = (
   }
 
   return {
-    checked: !headerCheckState.checked,
+    checked: false,
     indeterminate: true,
   };
 };
