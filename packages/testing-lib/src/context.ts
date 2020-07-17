@@ -98,7 +98,7 @@ function asyncCompose<
     const value = innerFn(...args);
 
     if (isPromiseLike(value)) {
-      return value.then(result => outerFn(result as Resolve<TResolvedResult>));
+      return value.then(outerFn as (arg: TResolvedResult) => TOuterResult);
     }
 
     return outerFn(value as Resolve<TResolvedResult>);
