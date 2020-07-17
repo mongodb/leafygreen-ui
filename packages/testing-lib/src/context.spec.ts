@@ -516,22 +516,29 @@ describe('Context', () => {
 
     describe.skip('Context handle types', () => {
       test('are consistent', () => {
-        within({ [Context.enter]: () => 'hello' }, (handle: string) => handle);
         within(
-          { [Context.enter]: async () => 'hello' },
+          {
+            [Context.enter]: () => 'hello',
+          },
           (handle: string) => handle,
         );
         within(
           {
-            [Context.enter]: () => 'hello',
-            [Context.exit]: (handle: string) => handle,
+            [Context.enter]: async () => 'hello',
           },
           (handle: string) => handle,
         );
         within(
           {
             [Context.enter]: () => 'hello',
-            [Context.exit]: async (handle: string) => handle,
+            [Context.exit]: (handle: string) => {},
+          },
+          (handle: string) => handle,
+        );
+        within(
+          {
+            [Context.enter]: () => 'hello',
+            [Context.exit]: async (handle: string) => {},
           },
           (handle: string) => handle,
         );
@@ -585,13 +592,17 @@ describe('Context', () => {
         );
 
         within(
-          { [Context.enter]: async () => {} },
+          {
+            [Context.enter]: async () => {},
+          },
           // @ts-expect-error
           (handle: string) => handle,
         );
 
         within(
-          { [Context.enter]: () => true },
+          {
+            [Context.enter]: () => true,
+          },
           // @ts-expect-error
           (handle: string) => handle,
         );
@@ -599,7 +610,7 @@ describe('Context', () => {
         within(
           {
             [Context.enter]: () => 'hello',
-            [Context.exit]: (handle: string) => handle,
+            [Context.exit]: (handle: string) => {},
           },
           // @ts-expect-error
           (handle: number) => handle,
@@ -608,7 +619,7 @@ describe('Context', () => {
         within(
           {
             [Context.enter]: () => 'hello',
-            [Context.exit]: (handle: string) => handle,
+            [Context.exit]: (handle: string) => {},
           },
           // @ts-expect-error
           async (handle: number) => handle,
