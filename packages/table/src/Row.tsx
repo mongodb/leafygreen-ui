@@ -147,8 +147,6 @@ const Row = React.forwardRef(
     const nodeRef = React.useRef(null);
     let hasSeenFirstCell = false;
 
-    let isNeighborDisabled;
-
     useEffect(() => {
       dispatch({
         type: Types.RegisterRow,
