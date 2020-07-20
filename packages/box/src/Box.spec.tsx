@@ -149,7 +149,8 @@ describe('packages/box', () => {
     });
   });
 
-  describe('types work as expected', () => {
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('types work as expected', () => {
     // eslint-disable-next-line jest/expect-expect
     test('does not allow specifying "target", without "as" or "href"', () => {
       // @ts-expect-error
@@ -182,7 +183,8 @@ describe('packages/box', () => {
   });
 
   describe('packages/box/ExtendableBox', () => {
-    describe('the types work as expected', () => {
+    // eslint-disable-next-line jest/no-disabled-tests
+    describe.skip('the types work as expected', () => {
       // eslint-disable-next-line jest/expect-expect
       test('does not allow specifying "target", without "as" or "href"', () => {
         // @ts-expect-error

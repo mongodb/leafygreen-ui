@@ -1,8 +1,14 @@
 import { transparentize } from 'polished';
 import { css } from '@leafygreen-ui/emotion';
+import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 
 const stepperHeight = 46;
+
+export const dataProps = {
+  stepBoxTop: createDataProp('step-box-top'),
+  stepBoxBottom: createDataProp('step-box-bottom'),
+};
 
 export const layerStyle = css`
   display: flex;
@@ -111,7 +117,7 @@ export const stepStyle = css`
   z-index: 2;
 
   &:first-of-type {
-    .${stepBoxTopStyle}, .${stepBoxBottomStyle} {
+    ${dataProps.stepBoxTop.selector}, ${dataProps.stepBoxBottom.selector} {
       &:before {
         transform: none;
       }
@@ -119,7 +125,7 @@ export const stepStyle = css`
   }
 
   &:last-of-type {
-    .${stepBoxTopStyle}, .${stepBoxBottomStyle} {
+    ${dataProps.stepBoxTop.selector}, ${dataProps.stepBoxBottom.selector} {
       &:before,
       &:after {
         transform: none;
@@ -133,11 +139,11 @@ export const currentStepStyle = css`
   z-index: 3;
 
   &:last-of-type:not(:first-of-type) {
-    .${stepBoxTopStyle}:before {
+    ${dataProps.stepBoxTop.selector}:before {
       transform: skewX(${Math.atan(2 / 3)}rad);
     }
 
-    .${stepBoxBottomStyle}:before {
+    ${dataProps.stepBoxBottom.selector}:before {
       transform: skewX(-${Math.atan(2 / 3)}rad);
     }
   }
@@ -151,7 +157,7 @@ export const upcomingStepStyle = css`
     z-index: 0;
   }
 
-  .${stepBoxTopStyle}, .${stepBoxBottomStyle} {
+  ${dataProps.stepBoxTop.selector}, ${dataProps.stepBoxBottom.selector} {
     & > *,
     &:before,
     &:after {

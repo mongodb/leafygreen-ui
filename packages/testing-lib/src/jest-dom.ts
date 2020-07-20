@@ -1,20 +1,26 @@
-import { spyContext } from './jest';
+import { spyContext, SpyHandle } from './jest';
 import { within } from './context';
 
 const realConsoleError = console.error;
 
-export function silenceNavigationErrors<TResult>(fn: () => TResult): TResult {
+const errorMatcher = /Error: Not implemented: navigation/;
+
+export function silenceNavigationErrors<TResult>(
+  fn: (waitForNavigation: () => Promise<void>) => TResult,
+): TResult {
   return within(
     spyContext(console, 'error'),
-    (resource: jest.SpiedFunction<typeof console.error>) => {
-      resource.mockImplementation(
-        (...args: Parameters<typeof console.error>) => {
-          if (!/Error: Not implemented: navigation/.test(args[0])) {
-            realConsoleError(...args);
-          }
-        },
+    (spy: SpyHandle<typeof console, 'error'>) => {
+      spy.mockImplementation((...args: Parameters<typeof console.error>) => {
+        if (!errorMatcher.test(args[0])) {
+          realConsoleError(...args);
+        }
+      });
+      return fn(() =>
+        spy.waitForCall(([msg]: Parameters<typeof console.error>) =>
+          errorMatcher.test(msg),
+        ),
       );
-      return fn();
     },
   );
 }
