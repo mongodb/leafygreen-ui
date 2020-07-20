@@ -1,6 +1,7 @@
 import React from 'react';
 import { waitFor } from '@testing-library/dom';
 import { render, fireEvent, cleanup, act } from '@testing-library/react';
+import { JestDOM } from '@leafygreen-ui/testing-lib';
 import {
   nullableElement,
   nullableElementArray,
@@ -137,9 +138,13 @@ describe('packages/mongo-select/OrgSelect', () => {
         });
 
         describe('when clicking an org', () => {
-          beforeEach(() => {
+          beforeEach(async () => {
             const { orgResults } = expectedElements;
-            fireEvent.click(orgResults?.[0] as Element);
+            await JestDOM.silenceNavigationErrors(async waitForNavigation => {
+              fireEvent.click(orgResults?.[0] as Element);
+
+              await waitForNavigation();
+            });
           });
 
           it('closes the menu', async () => {

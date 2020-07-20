@@ -9,7 +9,7 @@ afterAll(cleanup);
 const className = 'test-radio-box-class';
 
 const { container } = render(
-  <RadioBox value="radio-1" className={className} checked={true}>
+  <RadioBox value="radio-1" className={className} checked readOnly>
     Input 1
   </RadioBox>,
 );

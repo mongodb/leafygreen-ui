@@ -26,6 +26,9 @@
       "path": "../icon"
     },
     {
+      "path": "../testing-lib"
+    },
+    {
       "path": "../tooltip"
     },
     {
