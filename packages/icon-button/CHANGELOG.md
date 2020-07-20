@@ -1,5 +1,16 @@
 # @leafygreen-ui/icon-button
 
+## 6.1.0
+
+### Minor Changes
+
+- 27f8ea1: Adds `aria-label` to LeafyGreen icons and glyphs
+
+### Patch Changes
+
+- Updated dependencies [27f8ea1]
+  - @leafygreen-ui/icon@6.1.2
+
 ## 6.0.1
 
 ### Patch Changes
