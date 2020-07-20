@@ -1,5 +1,13 @@
 # @leafygreen-ui/icon
 
+## 6.1.2
+
+### Patch Changes
+
+- 27f8ea1: Removes duplicate `id` tag in copy glyph
+- Updated dependencies [083eec3]
+  - @leafygreen-ui/lib@4.5.1
+
 ## 6.1.1
 
 ### Patch Changes
