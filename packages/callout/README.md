@@ -69,6 +69,6 @@ npm install @leafygreen-ui/callout
 | Prop        | Type                                  | Description                                       | Default |
 | ----------- | ------------------------------------- | ------------------------------------------------- | ------- |
 | `variant`   | `note`, `tip`, `important`, `warning` | Sets the variant for the Callout                  |         |
-| `children`  | `string`                              | The text to display within the Callout            |         |
+| `children`  | `node`                                | The contents to display within the Callout        |         |
 | `title`     | `string`                              | Optional title text to display above Callout text |         |
 | `className` | `string`                              | Adds a className to the outermost element         |         |

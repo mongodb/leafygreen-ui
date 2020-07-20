@@ -75,7 +75,13 @@
       "path": "./packages/side-nav"
     },
     {
+      "path": "./packages/stepper"
+    },
+    {
       "path": "./packages/syntax"
+    },
+    {
+      "path": "./packages/testing-lib"
     },
     {
       "path": "./packages/text-input"
