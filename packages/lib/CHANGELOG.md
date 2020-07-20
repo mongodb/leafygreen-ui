@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 4.5.1
+
+### Patch Changes
+
+- 083eec3: Restore TS <3.8 compatibility that was broken from using the `import type` syntax.
+
 ## 4.5.0
 
 ### Minor Changes

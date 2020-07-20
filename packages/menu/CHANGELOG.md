@@ -1,5 +1,19 @@
 # @leafygreen-ui/menu
 
+## 7.0.2
+
+### Patch Changes
+
+- 083eec3: Remove usage of `Element` in Node target builds that was preventing rendering the component in SSR contexts.
+- Updated dependencies [083eec3]
+- Updated dependencies [083eec3]
+- Updated dependencies [27f8ea1]
+- Updated dependencies [27f8ea1]
+  - @leafygreen-ui/popover@5.1.1
+  - @leafygreen-ui/lib@4.5.1
+  - @leafygreen-ui/icon@6.1.2
+  - @leafygreen-ui/icon-button@6.1.0
+
 ## 7.0.1
 
 ### Patch Changes
