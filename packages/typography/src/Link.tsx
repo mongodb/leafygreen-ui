@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
+import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -60,27 +61,6 @@ const openInNewTabStyles = css`
   margin-right: -2px;
 `;
 
-const OpenInNewTab = (props: JSX.IntrinsicElements['svg']) => {
-  return (
-    <svg
-      width="16px"
-      height="16px"
-      viewBox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-      {...props}
-    >
-      <title>Open in New Tab</title>
-      <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-        <path
-          d="M9.29411765,3 L10.7727647,4.47864706 L6.42788235,8.82352941 L7.17647059,9.57211765 L11.5218824,5.22776471 L13,6.70588235 L13,3 L9.29411765,3 Z M4,4.58823529 L4,12 L11.4122941,12 L11.4122941,7.76470588 L10.3529412,7.76470588 L10.3529412,10.9411765 L5.05882353,10.9411765 L5.05882353,5.64705882 L8.23529412,5.64705882 L8.23529412,4.58823529 L4,4.58823529 Z"
-          fill="#007CAD"
-        />
-      </g>
-    </svg>
-  );
-};
-
 declare const __TARGET__: 'web' | 'node';
 
 function isServer() {
@@ -130,7 +110,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
   }
 
   if (target === '_blank') {
-    icon = <OpenInNewTab className={openInNewTabStyles} />;
+    icon = <OpenNewTabIcon className={openInNewTabStyles} />;
   } else if (arrowAppearance !== ArrowAppearance.None) {
     icon = (
       <ArrowRightIcon
