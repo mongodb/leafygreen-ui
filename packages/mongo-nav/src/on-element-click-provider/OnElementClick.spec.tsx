@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, fireEvent, act } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
+import { JestDOM } from '@leafygreen-ui/testing-lib';
 import MongoNav from '../MongoNav';
 import { NavElement } from '../types';
 
@@ -21,7 +22,6 @@ const defaultElements = {
 };
 
 const onElementClick = jest.fn();
-const promise = Promise.resolve();
 
 function renderMongoNav() {
   const utils = render(
@@ -36,100 +36,121 @@ function renderMongoNav() {
   return utils;
 }
 
-function testForCallback(navElement: string, testId: string, trigger?: string) {
+function testForCallback({
+  navElement,
+  testId,
+  trigger,
+  shouldNavigate = true,
+}: {
+  navElement: string;
+  testId: string;
+  trigger?: string;
+  shouldNavigate?: boolean;
+}) {
   test(`the onElementClick value is successfully passed to the ${testId}`, async () => {
-    const { getByTestId } = renderMongoNav();
+    const { getByTestId, findByTestId } = renderMongoNav();
 
     if (trigger) {
-      await fireEvent.click(getByTestId(trigger));
+      fireEvent.click(getByTestId(trigger));
     }
 
-    fireEvent.click(getByTestId(testId));
+    await JestDOM.silenceNavigationErrors(async waitForNavigation => {
+      fireEvent.click(await findByTestId(testId));
+
+      if (shouldNavigate) {
+        await waitForNavigation();
+      }
+    });
 
     expect(onElementClick).toHaveBeenCalled();
     expect(onElementClick).toHaveBeenCalledWith(navElement, expect.anything());
-    await act(() => promise);
   });
 }
 
 describe('packages/mongo-nav/on-element-click-provider', () => {
   describe('by default', () => {
     Object.keys(defaultElements).map(el => {
-      // @ts-ignore
-      testForCallback(el, defaultElements[el]);
+      testForCallback({
+        navElement: el,
+        testId: defaultElements[el as keyof typeof defaultElements],
+        shouldNavigate: !['-dropdown', '-menu', 'menu-trigger'].some(suffix =>
+          defaultElements[el].endsWith(suffix),
+        ),
+      });
     });
   });
 
   describe('when the OrgNav Access Manager dropdown is open', () => {
-    testForCallback(
-      NavElement.OrgNavDropdownOrgAccessManager,
-      'org-nav-dropdown-org-access-manager',
-      'org-nav-access-manager-dropdown',
-    );
+    testForCallback({
+      navElement: NavElement.OrgNavDropdownOrgAccessManager,
+      testId: 'org-nav-dropdown-org-access-manager',
+      trigger: 'org-nav-access-manager-dropdown',
+    });
 
-    testForCallback(
-      NavElement.OrgNavDropdownProjectAccessManager,
-      'org-nav-dropdown-project-access-manager',
-      'org-nav-access-manager-dropdown',
-    );
+    testForCallback({
+      navElement: NavElement.OrgNavDropdownProjectAccessManager,
+      testId: 'org-nav-dropdown-project-access-manager',
+      trigger: 'org-nav-access-manager-dropdown',
+    });
   });
 
   describe('when the ProjectNav dropdown is open', () => {
-    testForCallback(
-      NavElement.ProjectNavProjectSettings,
-      'project-nav-settings',
-      'project-nav-project-menu',
-    );
+    testForCallback({
+      navElement: NavElement.ProjectNavProjectSettings,
+      testId: 'project-nav-settings',
+      trigger: 'project-nav-project-menu',
+    });
 
-    testForCallback(
-      NavElement.ProjectNavProjectSupport,
-      'project-nav-support',
-      'project-nav-project-menu',
-    );
+    testForCallback({
+      navElement: NavElement.ProjectNavProjectSupport,
+      testId: 'project-nav-support',
+      trigger: 'project-nav-project-menu',
+    });
 
-    testForCallback(
-      NavElement.ProjectNavProjectIntegrations,
-      'project-nav-integrations',
-      'project-nav-project-menu',
-    );
+    testForCallback({
+      navElement: NavElement.ProjectNavProjectIntegrations,
+      testId: 'project-nav-integrations',
+      trigger: 'project-nav-project-menu',
+    });
   });
 
   describe('when the UserMenu is open', () => {
-    testForCallback(
-      NavElement.UserMenuFeedback,
-      'user-menuitem-feedback',
-      'user-menu-trigger',
-    );
+    testForCallback({
+      navElement: NavElement.UserMenuFeedback,
+      testId: 'user-menuitem-feedback',
+      trigger: 'user-menu-trigger',
+      shouldNavigate: false,
+    });
 
-    testForCallback(
-      NavElement.UserMenuCloudMFA,
-      'user-menuitem-cloud-mfa',
-      'user-menu-trigger',
-    );
+    testForCallback({
+      navElement: NavElement.UserMenuCloudMFA,
+      testId: 'user-menuitem-cloud-mfa',
+      trigger: 'user-menu-trigger',
+    });
 
-    testForCallback(
-      NavElement.UserMenuCloudInvitations,
-      'user-menuitem-cloud-invitations',
-      'user-menu-trigger',
-    );
+    testForCallback({
+      navElement: NavElement.UserMenuCloudInvitations,
+      testId: 'user-menuitem-cloud-invitations',
+      trigger: 'user-menu-trigger',
+    });
 
-    testForCallback(
-      NavElement.UserMenuCloudOrganizations,
-      'user-menuitem-cloud-organizations',
-      'user-menu-trigger',
-    );
+    testForCallback({
+      navElement: NavElement.UserMenuCloudOrganizations,
+      testId: 'user-menuitem-cloud-organizations',
+      trigger: 'user-menu-trigger',
+    });
 
-    testForCallback(
-      NavElement.UserMenuCloudUserPreferences,
-      'user-menuitem-cloud-user-preferences',
-      'user-menu-trigger',
-    );
+    testForCallback({
+      navElement: NavElement.UserMenuCloudUserPreferences,
+      testId: 'user-menuitem-cloud-user-preferences',
+      trigger: 'user-menu-trigger',
+    });
 
-    testForCallback(
-      NavElement.Logout,
-      'user-menuitem-logout',
-      'user-menu-trigger',
-    );
+    testForCallback({
+      navElement: NavElement.Logout,
+      testId: 'user-menuitem-logout',
+      trigger: 'user-menu-trigger',
+    });
   });
 });
 
