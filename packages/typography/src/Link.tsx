@@ -82,14 +82,8 @@ const OpenInNewTab = (props: JSX.IntrinsicElements['svg']) => {
   );
 };
 
-// declare const __TARGET__: 'web' | 'node';
-
 function isServer() {
-  if (__TARGET__ === 'node') {
-    return true;
-  }
-
-  return false;
+  return __TARGET__ === 'node';
 }
 
 const ArrowAppearance = {
