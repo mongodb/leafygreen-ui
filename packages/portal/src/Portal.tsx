@@ -1,4 +1,4 @@
-import type { OneOf } from '@leafygreen-ui/lib';
+import { OneOf } from '@leafygreen-ui/lib';
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';

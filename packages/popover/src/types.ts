@@ -1,4 +1,4 @@
-import type { OneOf } from '@leafygreen-ui/lib';
+import { OneOf } from '@leafygreen-ui/lib';
 import React from 'react';
 
 /**
