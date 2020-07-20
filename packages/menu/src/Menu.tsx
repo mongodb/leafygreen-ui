@@ -388,12 +388,18 @@ function Menu({
 
 Menu.displayName = 'Menu';
 
+// __TARGET__ is a global variable that indicates the webpack build target.
+//
+// We're typing this here because doing it globally was proving problematic.
+// We should solve for this if we need to use __TARGET__ elsewhere.
+declare const __TARGET__: 'web' | 'node';
+
 Menu.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   align: PropTypes.oneOf(Object.values(Align)),
   justify: PropTypes.oneOf(Object.values(Justify)),
-  refEl: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  refEl: PropTypes.shape({ current: __TARGET__ === 'web' ? PropTypes.instanceOf(Element) : PropTypes.any }),
   usePortal: PropTypes.bool,
   trigger: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   open: PropTypes.bool,
