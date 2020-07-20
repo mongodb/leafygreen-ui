@@ -1,5 +1,13 @@
 # @leafygreen-ui/portal
 
+## 2.1.2
+
+### Patch Changes
+
+- 083eec3: Restore TS <3.8 compatibility that was broken from using the `import type` syntax.
+- Updated dependencies [083eec3]
+  - @leafygreen-ui/lib@4.5.1
+
 ## 2.1.1
 
 ### Patch Changes

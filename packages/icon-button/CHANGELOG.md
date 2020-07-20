@@ -8,7 +8,9 @@
 
 ### Patch Changes
 
+- Updated dependencies [083eec3]
 - Updated dependencies [27f8ea1]
+  - @leafygreen-ui/lib@4.5.1
   - @leafygreen-ui/icon@6.1.2
 
 ## 6.0.1
