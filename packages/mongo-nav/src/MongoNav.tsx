@@ -20,6 +20,7 @@ import {
   ProjectInterface,
   HostsInterface,
   Platform,
+  Environment,
 } from './types';
 
 const ErrorCodeMap: Record<number, ErrorCode> = {
@@ -170,16 +171,17 @@ function MongoNav({
   activeOrgId,
   activeProjectId,
   className,
+  environment = Environment.Commercial,
   activePlatform = Platform.Cloud,
   mode = Mode.Production,
   loadData = true,
   showProjectNav = true,
-  admin: adminProp,
   onError = () => {},
   onSuccess = () => {},
   onElementClick = (_type: NavElement, _event: React.MouseEvent) => {}, // eslint-disable-line @typescript-eslint/no-unused-vars
   onPrem = { mfa: false, enabled: false, version: '' },
   alertPollingInterval = 600e3, // 10 minutes
+  admin: adminProp,
   hosts: hostsProp,
   urls: urlsProp,
   constructOrganizationURL: constructOrganizationURLProp,
@@ -282,6 +284,7 @@ function MongoNav({
           onPremMFA={onPrem.mfa}
           showProjectNav={shouldShowProjectNav}
           activePlatform={activePlatform}
+          environment={environment}
         />
 
         {shouldShowProjectNav && (
@@ -297,6 +300,7 @@ function MongoNav({
             urls={urls}
             onProjectChange={onProjectChange}
             hosts={hosts}
+            environment={environment}
           />
         )}
       </section>

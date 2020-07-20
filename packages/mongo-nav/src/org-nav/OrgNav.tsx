@@ -114,7 +114,12 @@ const userMenuActiveNavItems = [
 
 type OrgNavProps = Pick<
   MongoNavInterface,
-  'onOrganizationChange' | 'activeNav' | 'admin' | 'mode' | 'activePlatform'
+  | 'onOrganizationChange'
+  | 'activeNav'
+  | 'admin'
+  | 'mode'
+  | 'activePlatform'
+  | 'environment'
 > & {
   account?: AccountInterface;
   current?: CurrentOrganizationInterface;
@@ -150,6 +155,7 @@ function OrgNav({
   onPremVersion,
   onPremMFA = false,
   showProjectNav,
+  environment,
 }: OrgNavProps) {
   const [accessManagerOpen, setAccessManagerOpen] = useState(false);
   const [onPremMenuOpen, setOnPremMenuOpen] = useState(false);
@@ -229,6 +235,7 @@ function OrgNav({
         urls={urls}
         hosts={hosts}
         activeNav={activeNav}
+        environment={environment}
       />
     );
   }

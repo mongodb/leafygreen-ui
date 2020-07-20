@@ -23,6 +23,7 @@ import {
   HostsInterface,
   NavElement,
   Platform,
+  Environment,
 } from '../types';
 import { hostDefaults } from '../data';
 import { useOnElementClick } from '../on-element-click-provider';
@@ -136,16 +137,23 @@ const descriptionStyle = css`
 interface DescriptionProps {
   isActive: boolean;
   product: 'cloud' | 'university' | 'support';
+  isGovernment?: boolean;
 }
 
-function Description({ isActive, product }: DescriptionProps) {
+function Description({
+  isActive,
+  product,
+  isGovernment = false,
+}: DescriptionProps) {
   return (
     <div
       className={cx(productLinkStyle, {
         [activePlatformLinkStyle]: isActive,
       })}
     >
-      {`${product}.mongodb.com`}
+      {isGovernment && product === 'cloud'
+        ? 'cloud.mongodbgov.com'
+        : `${product}.mongodb.com`}
       <ArrowRightIcon size="small" className={productLinkIconStyle} />
     </div>
   );
@@ -191,6 +199,11 @@ interface UserMenuProps {
    * Possible values: ['account', 'cloud',  'support', 'university']
    */
   activePlatform?: Platform;
+
+  /**
+   * Describes the environment that the consumer is in: `commercial` or `government`
+   */
+  environment?: Environment;
 }
 
 /**
@@ -208,23 +221,25 @@ interface UserMenuProps {
   hosts={hosts}
 />
 ```
- * @param props.account Object that contains information about the active user.
+* @param props.account Object that contains information about the active user.
 *   {firstName: 'string', lastName: 'string', email: 'string'}
- * @param props.activeNav Determines what nav item is currently active.
- * @param props.onLogout Callback fired when a user logs out.
- * @param props.onProductChange Callback invoked after the user clicks a product.
- * @param props.hosts Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<UserMenu />` to work across all environments.
- * @param props.urls Object to enable custom overrides for every `href` used in `<UserMenu />`.
- * @param props.activePlatform MongoDB platform that is currently active.
- */
+* @param props.activeNav Determines what nav item is currently active.
+* @param props.onLogout Callback fired when a user logs out.
+* @param props.onProductChange Callback invoked after the user clicks a product.
+* @param props.hosts Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<UserMenu />` to work across all environments.
+* @param props.urls Object to enable custom overrides for every `href` used in `<UserMenu />`.
+* @param props.activePlatform MongoDB platform that is currently active.
+* @param props.environment Describes the environment that the consumer is in: `commercial` or `government`
+*/
 function UserMenu({
   account,
   activeNav,
+  activePlatform,
   onLogout: onLogoutProp,
-  onProductChange = () => {},
   urls: urlsProp,
   hosts: hostsProp,
-  activePlatform,
+  onProductChange = () => {},
+  environment = Environment.Commercial,
 }: UserMenuProps) {
   const hosts = defaultsDeep(hostsProp, hostDefaults);
   const onElementClick = useOnElementClick();
@@ -272,6 +287,9 @@ function UserMenu({
   const isCloud = activePlatform === Platform.Cloud;
   const isSupport = activePlatform === Platform.Support;
   const isUniversity = activePlatform === Platform.University;
+  const isGovernment = environment === Environment.Government;
+
+  console.log(isGovernment);
 
   const sharedProps = {
     target: '_blank',
@@ -332,9 +350,15 @@ function UserMenu({
             {...sharedProps}
             active={isCloud}
             disabled={!account}
-            href={hosts.cloud}
-            description={<Description isActive={isCloud} product="cloud" />}
-            title="Cloud"
+            href={isGovernment ? 'https://cloud.mongodbgov.com' : hosts.cloud}
+            description={
+              <Description
+                isActive={isCloud}
+                product="cloud"
+                isGovernment={isGovernment}
+              />
+            }
+            title={isGovernment ? 'Cloud for Government' : 'Cloud'}
             glyph={<CloudIcon />}
             className={cx(subMenuContainerStyle, {
               [subMenuActiveContainerStyle]: isCloud,
@@ -387,12 +411,18 @@ function UserMenu({
         ) : (
           <MenuItem
             {...menuItemContainer.prop}
-            href={hosts.cloud}
+            href={isGovernment ? 'https://cloud.mongodbgov.com' : hosts.cloud}
             size="large"
             glyph={<CloudIcon />}
-            description={<Description isActive={false} product="cloud" />}
+            description={
+              <Description
+                isActive={false}
+                product="cloud"
+                isGovernment={isGovernment}
+              />
+            }
           >
-            Cloud
+            {isGovernment ? 'Cloud for Government' : 'Cloud'}
           </MenuItem>
         )}
 
@@ -451,7 +481,7 @@ function UserMenu({
           data-testid="user-menuitem-feedback"
           onClick={onElementClick(NavElement.UserMenuFeedback)}
         >
-          Give us feedback
+          {isGovernment ? 'Feature Requests' : 'Give us feedback'}
         </MenuItem>
 
         <MenuSeparator />

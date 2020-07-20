@@ -141,6 +141,15 @@ type ErrorCode = typeof ErrorCode[keyof typeof ErrorCode];
 
 export { ErrorCode };
 
+const Environment = {
+  Commercial: 'commercial',
+  Government: 'government',
+};
+
+type Environment = typeof Environment[keyof typeof Environment];
+
+export { Environment };
+
 export interface PostBodyInterface {
   activeProjectId?: string;
   activeOrgId?: string;
@@ -423,4 +432,9 @@ export interface MongoNavInterface {
    * Defines interval for alert polling
    */
   alertPollingInterval?: number;
+
+  /**
+   * Describes the environment that the consumer is in: `commercial` or `government`
+   */
+  environment?: Environment;
 }
