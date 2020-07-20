@@ -3,17 +3,14 @@ import Checkbox from '@leafygreen-ui/checkbox';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
 import { useTableContext, Types } from './TableContext';
+import Cell from './Cell';
+import Centered from './Centered';
 
 const thStyles = css`
   width: 40px;
   border-width: 0 1px 3px 1px;
   border-color: ${uiColors.gray.light2};
   border-style: solid;
-`;
-
-const innerDivStyles = css`
-  display: flex;
-  justify-content: center;
 `;
 
 export interface HeaderRowProps extends React.ComponentPropsWithoutRef<'tr'> {
@@ -53,13 +50,15 @@ function HeaderRow({ children, className, ...rest }: HeaderRowProps) {
     <tr {...rest} className={className} data-testid="leafygreen-ui-header-row">
       {selectable && !checkColSpan && (
         <th className={thStyles}>
-          <div className={innerDivStyles}>
-            <Checkbox
-              checked={headerCheckState.checked}
-              indeterminate={headerCheckState.indeterminate}
-              onChange={handleChange}
-            />
-          </div>
+          <Cell>
+            <Centered horizontal vertical>
+              <Checkbox
+                checked={headerCheckState.checked}
+                indeterminate={headerCheckState.indeterminate}
+                onChange={handleChange}
+              />
+            </Centered>
+          </Cell>
         </th>
       )}
       {children}

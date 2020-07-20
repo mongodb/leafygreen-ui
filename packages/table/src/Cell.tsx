@@ -22,7 +22,7 @@ const Cell = React.forwardRef(
         className={cx(commonCellStyles, tdStyles, className)}
         {...rest}
       >
-        <div className={cx(innerDivStyles)}>{children}</div>
+        <div className={innerDivStyles}>{children}</div>
       </td>
     );
   },

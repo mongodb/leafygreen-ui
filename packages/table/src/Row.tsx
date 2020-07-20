@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Transition } from 'react-transition-group';
+import Checkbox from '@leafygreen-ui/checkbox';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import CheckboxCell from './CheckboxCell';
 import { useTableContext, Types, DataType } from './TableContext';
+import Cell from './Cell';
+import Centered from './Centered';
 
 const rowStyle = css`
   border-top: 1px solid ${uiColors.gray.light2};
@@ -318,7 +320,13 @@ const Row = React.forwardRef(
           key={indexRef.current}
           {...rest}
         >
-          {selectable && <CheckboxCell {...checkboxProps} />}
+          {selectable && (
+            <Cell>
+              <Centered horizontal vertical>
+                <Checkbox {...checkboxProps} />
+              </Centered>
+            </Cell>
+          )}
           {renderedChildren}
         </tr>
 
