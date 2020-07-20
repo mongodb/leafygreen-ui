@@ -31,6 +31,8 @@ module.exports = {
       '<rootDir>/__mocks__/fileMock.js',
   },
 
+  modulePathIgnorePatterns: ['npm-cache', '.npm'],
+
   // The test environment that will be used for testing
   testEnvironment: 'node',
 
