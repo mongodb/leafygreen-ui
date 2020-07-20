@@ -1,5 +1,15 @@
 # @leafygreen-ui/popover
 
+## 5.1.1
+
+### Patch Changes
+
+- 083eec3: Restore TS <3.8 compatibility that was broken from using the `import type` syntax.
+- 083eec3: Remove usage of `Element` in Node target builds that was preventing rendering the component in SSR contexts.
+- Updated dependencies [083eec3]
+  - @leafygreen-ui/portal@2.1.2
+  - @leafygreen-ui/lib@4.5.1
+
 ## 5.1.0
 
 ### Minor Changes
