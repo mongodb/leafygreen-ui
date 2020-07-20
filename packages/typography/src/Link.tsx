@@ -89,14 +89,10 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
   hideExternalIcon = false,
   ...rest
 }: LinkProps) => {
-  if (!href) {
-    return null;
-  }
-
   const size = useBaseFontSize();
   const fontSize = size === 16 ? typeScale2 : typeScale1;
 
-  const hrefHostname = useMemo(() => new URL(href).hostname, [href]);
+  const hrefHostname = useMemo(() => href && new URL(href).hostname, [href]);
   const currentHostname = isServer() ? '' : window.location.hostname;
 
   let target, icon;
@@ -127,7 +123,8 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
 
   return (
     <Box
-      href={href}
+      as={href ? 'a' : 'span'}
+      href={href && href}
       target={target}
       className={cx(linkStyles, fontSize, className)}
       {...anchorDataProp.prop}
