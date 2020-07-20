@@ -77,6 +77,7 @@ type ArrowAppearance = typeof ArrowAppearance[keyof typeof ArrowAppearance];
 
 export interface LinkProps extends HTMLElementProps<'a'> {
   arrowAppearance?: ArrowAppearance;
+  hideExternalIcon?: boolean;
 }
 
 const Link: ExtendableBox<LinkProps, 'a'> = ({
@@ -85,6 +86,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
   className,
   target: targetProp,
   arrowAppearance = ArrowAppearance.None,
+  hideExternalIcon = false,
   ...rest
 }: LinkProps) => {
   if (!href) {
@@ -109,7 +111,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
     }
   }
 
-  if (target === '_blank') {
+  if (target === '_blank' && !hideExternalIcon) {
     icon = <OpenNewTabIcon className={openInNewTabStyles} />;
   } else if (arrowAppearance !== ArrowAppearance.None) {
     icon = (

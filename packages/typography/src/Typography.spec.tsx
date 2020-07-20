@@ -24,6 +24,12 @@ describe('packages/typography', () => {
         expect(openInNewTab).toBeInTheDocument();
         expect(rightArrow).not.toBeInTheDocument();
       });
+
+      test('and the "hideExternalIcon" prop is set', () => {
+        renderLink({ hideExternalIcon: true });
+        const openInNewTab = screen.queryByTitle('Open in New Tab');
+        expect(openInNewTab).not.toBeInTheDocument();
+      });
     });
 
     describe('when the current host is the same as the destination URL host', () => {
