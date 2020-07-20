@@ -25,7 +25,7 @@ storiesOf('Typography', module).add('Default', () => (
       <H2>Heading 2</H2>
       <Subtitle>Subtitle</Subtitle>
       <Body
-        weight={select('weight', ['medium', 'regular'], 'regular')}
+        weight={select('select Body weight', ['medium', 'regular'], 'regular')}
         className={displayBlock}
       >
         Body
@@ -35,7 +35,7 @@ storiesOf('Typography', module).add('Default', () => (
       <Overline>Overline</Overline>
       <Link
         href={select(
-          'href',
+          'select Link href',
           [
             'http://localhost:9001',
             'https://mongodb.github.io/leafygreen-ui/?path=/story/*',
@@ -43,8 +43,8 @@ storiesOf('Typography', module).add('Default', () => (
           'http://localhost:9001',
         )}
         arrowAppearance={select(
-          'arrowAppearance',
-          ['hover', 'persistant' | 'none'],
+          'select Link arrowAppearance',
+          ['hover', 'persistant', 'none'],
           'hover',
         )}
       >

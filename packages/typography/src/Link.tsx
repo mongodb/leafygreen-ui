@@ -6,7 +6,6 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { typeScale1, typeScale2 } from './styles';
-import { __TARGET__ } from '.';
 
 const anchorDataProp = createDataProp('anchor-container');
 
@@ -81,6 +80,8 @@ const OpenInNewTab = (props: JSX.IntrinsicElements['svg']) => {
     </svg>
   );
 };
+
+declare const __TARGET__: 'web' | 'node';
 
 function isServer() {
   return __TARGET__ === 'node';

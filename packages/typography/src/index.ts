@@ -8,5 +8,3 @@ export {
   Overline,
 } from './Typography';
 export { Link } from './Link';
-
-export declare const __TARGET__: 'web' | 'node';
