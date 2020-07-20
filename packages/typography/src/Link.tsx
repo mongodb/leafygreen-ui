@@ -117,7 +117,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
   const hrefHostname = useMemo(() => new URL(href).hostname, [href]);
   const currentHostname = isServer() ? '' : window.location.hostname;
 
-  let target;
+  let target, icon;
 
   if (targetProp) {
     target = targetProp;
@@ -129,10 +129,10 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
     }
   }
 
-  const icon =
-    target === '_blank' ? (
-      <OpenInNewTab className={openInNewTabStyles} />
-    ) : arrowAppearance !== ArrowAppearance.None ? (
+  if (target === '_blank') {
+    icon = <OpenInNewTab className={openInNewTabStyles} />;
+  } else if (arrowAppearance !== ArrowAppearance.None) {
+    icon = (
       <ArrowRightIcon
         size={10}
         className={cx({
@@ -140,7 +140,8 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
           [arrowRightIconPersist]: arrowAppearance === ArrowAppearance.Persist,
         })}
       />
-    ) : null;
+    );
+  }
 
   return (
     <Box
