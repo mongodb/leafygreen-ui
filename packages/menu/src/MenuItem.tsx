@@ -257,7 +257,10 @@ MenuItem.propTypes = {
   disabled: PropTypes.bool,
   active: PropTypes.bool,
   children: PropTypes.node,
-  refEl: PropTypes.shape({ current: __TARGET__ === 'web' ? PropTypes.instanceOf(Element) : PropTypes.any }),
+  refEl: PropTypes.shape({
+    current:
+      __TARGET__ === 'web' ? PropTypes.instanceOf(Element) : PropTypes.any,
+  }),
 };
 
 export default MenuItem;

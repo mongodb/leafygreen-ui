@@ -244,7 +244,6 @@ function Popover({
 
 Popover.displayName = 'Popover';
 
-
 // __TARGET__ is a global variable that indicates the webpack build target.
 //
 // We're typing this here because doing it globally was proving problematic.
@@ -257,7 +256,10 @@ Popover.propTypes = {
   className: PropTypes.string,
   align: PropTypes.oneOf(Object.values(Align)),
   justify: PropTypes.oneOf(Object.values(Justify)),
-  refEl: PropTypes.shape({ current: __TARGET__ === 'web' ? PropTypes.instanceOf(Element) : PropTypes.any }),
+  refEl: PropTypes.shape({
+    current:
+      __TARGET__ === 'web' ? PropTypes.instanceOf(Element) : PropTypes.any,
+  }),
   usePortal: PropTypes.bool,
   portalClassName: PropTypes.string,
   spacing: PropTypes.number,

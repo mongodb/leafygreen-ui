@@ -16,4 +16,4 @@ global.IntersectionObserver = class {
   disconnect() {}
 };
 
-global.__TARGET__ = 'web'
+global.__TARGET__ = 'web';

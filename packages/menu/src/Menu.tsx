@@ -399,7 +399,10 @@ Menu.propTypes = {
   className: PropTypes.string,
   align: PropTypes.oneOf(Object.values(Align)),
   justify: PropTypes.oneOf(Object.values(Justify)),
-  refEl: PropTypes.shape({ current: __TARGET__ === 'web' ? PropTypes.instanceOf(Element) : PropTypes.any }),
+  refEl: PropTypes.shape({
+    current:
+      __TARGET__ === 'web' ? PropTypes.instanceOf(Element) : PropTypes.any,
+  }),
   usePortal: PropTypes.bool,
   trigger: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   open: PropTypes.bool,
