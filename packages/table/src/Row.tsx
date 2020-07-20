@@ -105,7 +105,7 @@ function getIndentLevelStyle(indentLevel: number) {
 }
 
 function generateIndexRef() {
-  return Math.floor(Math.random() * 1000000 + 1);
+  return Math.random().toString(36).substring(2);
 }
 
 interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
@@ -168,37 +168,41 @@ const Row = React.forwardRef(
     }, [disabled]);
 
     useEffect(() => {
-      let hasDispatchedHasNestedRows = false;
-      let hasDispatchedHasRowSpan = false;
+      let shouldDispatchHasNestedRows = false;
+      let shouldDispatchHasRowSpan = false;
 
       React.Children.forEach(children, child => {
         if (
           isComponentType(child, 'Row') &&
-          !hasDispatchedHasNestedRows &&
+          !shouldDispatchHasNestedRows &&
           !hasNestedRows
         ) {
-          dispatch({
-            type: Types.SetHasNestedRows,
-            payload: true,
-          });
-
-          hasDispatchedHasNestedRows = true;
+          shouldDispatchHasNestedRows = true;
         }
 
         if (
           isComponentType(child, 'Cell') &&
           child.props.rowSpan > 1 &&
           !hasRowSpan &&
-          !hasDispatchedHasRowSpan
+          !shouldDispatchHasRowSpan
         ) {
-          dispatch({
-            type: Types.SetHasRowSpan,
-            payload: true,
-          });
-
-          hasDispatchedHasRowSpan = true;
+          shouldDispatchHasRowSpan = true;
         }
       });
+
+      if (shouldDispatchHasNestedRows) {
+        dispatch({
+          type: Types.SetHasNestedRows,
+          payload: true,
+        });
+      }
+
+      if (shouldDispatchHasRowSpan) {
+        dispatch({
+          type: Types.SetHasRowSpan,
+          payload: true,
+        });
+      }
     }, [children]);
 
     // Depending on network speed, will noticeably render columns with incorrect
@@ -299,7 +303,7 @@ const Row = React.forwardRef(
           },
         }),
       disabled,
-      checked: rowState[indexRef.current]?.checked || false,
+      checked: !!rowState[indexRef.current]?.checked,
     };
 
     return (

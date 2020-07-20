@@ -20,16 +20,16 @@ interface ActionPayload {
   [Types.SelectableTable]: boolean;
   [Types.ToggleHeaderCheckedState]: undefined;
   [Types.ToggleIndividualChecked]: {
-    index: number;
+    index: string;
     checked: boolean;
   };
   [Types.ToggleIndividualDisabled]: {
-    index: number;
+    index: string;
     disabled: boolean;
   };
   [Types.RegisterRow]: {
-    index: number;
-    checked: boolean;
+    index: string;
+    checked?: boolean;
     disabled: boolean;
   };
   [Types.SetColumnInfo]: {
@@ -82,15 +82,13 @@ export { DataType };
 export interface State {
   sort?: Sort;
   data: Array<any>;
-  columnInfo?: {
-    [k in number]: { dataType?: DataType };
-  };
+  columnInfo?: Record<number, { dataType?: DataType }>;
   selectable?: boolean;
   headerCheckState: {
     checked: boolean;
     indeterminate: boolean;
   };
-  rowState: Record<number, { checked: boolean; disabled: boolean }>;
+  rowState: Record<string, { checked: boolean; disabled: boolean }>;
   hasNestedRows?: boolean;
   hasRowSpan?: boolean;
 }

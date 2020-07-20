@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Table, TableHeader, HeaderRow, Row, Cell } from '.';
 import { defaultData } from './fixtures';
 
@@ -50,7 +50,6 @@ function renderTable(props: Props = {}) {
 }
 
 describe('packages/table', () => {
-  afterEach(cleanup);
   // Test sortBy prop is a string, and a function
   // Test table header as a string and a jsx element explicitly
 
