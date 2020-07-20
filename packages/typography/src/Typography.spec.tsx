@@ -20,7 +20,9 @@ describe('packages/typography', () => {
       test('and the "arrowAppearance" prop is not set', () => {
         renderLink({ href: 'http://mongodb.design' });
         const openInNewTab = screen.getByTitle('Open in New Tab');
+        const rightArrow = screen.queryByTitle('Glyphs / Arrow / Right');
         expect(openInNewTab).toBeInTheDocument();
+        expect(rightArrow).not.toBeInTheDocument();
       });
     });
 
@@ -32,6 +34,7 @@ describe('packages/typography', () => {
           expect((anchor as HTMLElement).tagName.toLowerCase()).toBe('a');
         });
       });
+
       test('and the "arrowAppearance" prop is set to "hover"', () => {
         renderLink({ href: 'http://localhost:9001', arrowAppearance: 'hover' });
         const anchor = screen.getByText('Link');
