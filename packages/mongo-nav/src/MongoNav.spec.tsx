@@ -6,7 +6,6 @@ import {
   render,
   RenderResult,
 } from '@testing-library/react';
-import {} from '@testing-library/react';
 import { dataFixtures } from './data';
 import MongoNav from './MongoNav';
 
