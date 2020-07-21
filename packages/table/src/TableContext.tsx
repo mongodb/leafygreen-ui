@@ -134,7 +134,10 @@ export function reducer(state: State, action: Action): State {
         ...state.rowState,
         [action.payload.index]: {
           disabled: action.payload.disabled,
-          checked: action.payload.checked,
+          checked:
+            action.payload.checked != null
+              ? action.payload.checked
+              : state.rowState[action.payload.index].checked,
         },
       };
 
@@ -252,6 +255,8 @@ const setHeaderCheckedStateOnRowChecked = (
     const boolArray = Object.values(newRowState).filter(
       newRowObjects => !newRowObjects.disabled,
     );
+
+    console.log('here', boolArray);
 
     const checkSame = boolArray.every(
       val => val.checked === boolArray[0].checked,

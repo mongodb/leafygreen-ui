@@ -111,6 +111,7 @@ interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
   expanded?: boolean;
   disabled?: boolean;
   indentLevel?: number;
+  isParentExpanded?: boolean;
 }
 
 const Row = React.forwardRef(
@@ -119,6 +120,7 @@ const Row = React.forwardRef(
       expanded = false,
       disabled = false,
       indentLevel = 0,
+      isParentExpanded = true,
       children,
       className,
       ...rest
@@ -230,8 +232,8 @@ const Row = React.forwardRef(
       if (isComponentType(child, 'Row')) {
         nestedRows.push(
           React.cloneElement(child, {
-            isExpanded,
             ref: nodeRef,
+            isParentExpanded: isExpanded,
             ['aria-expanded']: isExpanded ? 'true' : 'false',
             indentLevel: indentLevel + 1,
           }),
@@ -338,7 +340,11 @@ const Row = React.forwardRef(
         </tr>
 
         {nestedRows && (
-          <Transition in={isExpanded} timeout={150} nodeRef={nodeRef}>
+          <Transition
+            in={isExpanded && isParentExpanded}
+            timeout={150}
+            nodeRef={nodeRef}
+          >
             {(state: string) => {
               return (
                 <>
