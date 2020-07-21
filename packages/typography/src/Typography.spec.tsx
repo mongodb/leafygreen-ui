@@ -102,6 +102,14 @@ describe('packages/typography', () => {
     });
   });
 
+  describe('when no "href" prop is passed and the "as" prop is not supplied', () => {
+    test('it renders the Link inside of "span" tags', () => {
+      renderLink({});
+      const span = screen.getByText('Link').parentNode;
+      expect(span.tagName.toLowerCase()).toBe('span');
+    });
+  });
+
   describe('when the "as" prop is supplied', () => {
     test('it renders the correct tag to the DOM', () => {
       renderLink({
