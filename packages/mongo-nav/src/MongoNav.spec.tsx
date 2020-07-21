@@ -56,8 +56,8 @@ describe('packages/mongo-nav', () => {
     });
 
     test('the organization and project navs are rendered', () => {
-      expect(queryByTestId('organization-nav')).not.toBeNull();
-      expect(queryByTestId('project-nav')).not.toBeNull();
+      expect(queryByTestId('organization-nav')).toBeVisible();
+      expect(queryByTestId('project-nav')).toBeVisible();
     });
 
     test('current orgId is set based on data returned from fetch', () => {
@@ -144,7 +144,7 @@ describe('packages/mongo-nav', () => {
     });
 
     test('the organization and project navs are rendered', () => {
-      expect(queryByTestId('project-nav')).not.toBeNull();
+      expect(queryByTestId('project-nav')).toBeVisible();
     });
 
     test('current orgId is set based on the new activeProjectId', () => {
@@ -197,8 +197,8 @@ describe('packages/mongo-nav', () => {
     });
 
     test('the organization and project navs are rendered', () => {
-      expect(queryByTestId('organization-nav')).not.toBeNull();
-      expect(queryByTestId('project-nav')).not.toBeNull();
+      expect(queryByTestId('organization-nav')).toBeVisible();
+      expect(queryByTestId('project-nav')).toBeVisible();
     });
 
     test('current orgId is set based on the new activeOrgId', () => {
@@ -283,7 +283,7 @@ describe('packages/mongo-nav', () => {
 
       expect(
         queryByTestId('user-menuitem-cloud-user-preferences'),
-      ).not.toBeNull();
+      ).toBeInTheDocument();
     });
   });
 
@@ -386,7 +386,7 @@ describe('packages/mongo-nav', () => {
     );
 
     test('admin UI is shown', async () => {
-      expect(await findByTestId('org-nav-admin-link')).not.toBeNull();
+      expect(await findByTestId('org-nav-admin-link')).toBeVisible();
     });
   });
 });

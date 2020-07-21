@@ -94,13 +94,13 @@ describe('packages/mongo-nav/src/project-nav', () => {
       const navLink = queryByTestId(linkNamesToTestIds[linkName]);
 
       if (isVisible) {
-        expect(navLink).not.toBeNull();
+        expect(navLink).toBeVisible();
 
         expect((navLink as HTMLAnchorElement).href).toEqual(
           linkNamesToUrls[linkName],
         );
       } else {
-        expect(navLink).toBeNull();
+        expect(navLink).not.toBeVisible();
       }
     });
   };
@@ -112,7 +112,7 @@ describe('packages/mongo-nav/src/project-nav', () => {
       const foundProduct = queryByTestId(productToTestId[product]);
 
       if (isVisible) {
-        expect(foundProduct).not.toBeNull();
+        expect(foundProduct).toBeVisible();
       } else {
         expect(foundProduct).toBeNull();
       }
@@ -126,7 +126,7 @@ describe('packages/mongo-nav/src/project-nav', () => {
       const statusBadge = queryByTestId('project-nav-project-status-badge');
 
       if (isVisible) {
-        expect(statusBadge).not.toBeNull();
+        expect(statusBadge).toBeVisible();
         expect(statusBadge!.innerHTML).toContain('ACTIVE');
       } else {
         expect(statusBadge).toBeNull();

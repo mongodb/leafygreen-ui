@@ -71,7 +71,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
       const version = queryByTestId('org-nav-on-prem-version');
 
       if (isVisible) {
-        expect(version).not.toBeNull();
+        expect(version).toBeVisible();
       } else {
         expect(version).toBeNull();
       }
@@ -85,7 +85,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
       const badge = queryByTestId('org-nav-payment-status');
 
       if (isVisible) {
-        expect(badge).not.toBeNull();
+        expect(badge).toBeVisible();
         expect(badge!.textContent).toEqual(currentOrganization!.paymentStatus);
       } else {
         expect(badge).toBeNull();
@@ -101,10 +101,10 @@ describe('packages/mongo-nav/src/org-nav', () => {
       const onPremUserMenu = queryByTestId('om-user-menu-trigger');
 
       if (isVisible) {
-        expect(userMenu).not.toBeNull();
+        expect(userMenu).toBeVisible();
         expect(onPremUserMenu).toBeNull();
       } else {
-        expect(onPremUserMenu).not.toBeNull();
+        expect(onPremUserMenu).toBeVisible();
         expect(userMenu).toBeNull();
       }
     });
@@ -118,7 +118,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
       const onPremUserMenuMFA = queryByTestId('om-user-menuitem-mfa');
 
       if (isVisible) {
-        expect(onPremUserMenuMFA).not.toBeNull();
+        expect(onPremUserMenuMFA).toBeInTheDocument();
         expect((onPremUserMenuMFA as HTMLAnchorElement).href).toBe(
           'https://cloud.mongodb.com/v2#/account/2fa',
         );
@@ -135,7 +135,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
       const navLink = queryByTestId(linkNamesToTestIds[linkName]);
 
       if (isVisible) {
-        expect(navLink).not.toBeNull();
+        expect(navLink).toBeVisible();
 
         expect((navLink as HTMLAnchorElement).href).toEqual(
           linkNamesToUrls[linkName],
@@ -153,7 +153,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
       const productTour = queryByTestId('org-nav-see-product-tour');
 
       if (isVisible) {
-        expect(productTour).not.toBeNull();
+        expect(productTour).toBeVisible();
       } else {
         expect(productTour).toBeNull();
       }
