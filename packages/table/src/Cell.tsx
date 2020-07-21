@@ -1,6 +1,9 @@
 import React from 'react';
+import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { commonCellStyles } from './styles';
+
+export const tdInnerDiv = createDataProp('td-inner-div');
 
 interface CellProps extends React.ComponentPropsWithRef<'td'> {}
 
@@ -22,7 +25,9 @@ const Cell = React.forwardRef(
         className={cx(commonCellStyles, tdStyles, className)}
         {...rest}
       >
-        <div className={innerDivStyles}>{children}</div>
+        <div className={innerDivStyles} {...tdInnerDiv.prop}>
+          {children}
+        </div>
       </td>
     );
   },

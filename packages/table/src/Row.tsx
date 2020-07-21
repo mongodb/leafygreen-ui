@@ -7,13 +7,13 @@ import { isComponentType } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useTableContext, Types, DataType } from './TableContext';
-import Cell from './Cell';
+import Cell, { tdInnerDiv } from './Cell';
 
 const rowStyle = css`
   border-top: 1px solid ${uiColors.gray.light2};
   color: ${uiColors.gray.dark2};
 
-  & > td > div {
+  & > td > ${tdInnerDiv.selector} {
     height: 40px;
     overflow: hidden;
     transition: all 150ms ease-in-out;
@@ -60,7 +60,7 @@ const transitionStyles = {
       padding-bottom: 0px;
     }
 
-    & > td > div {
+    & > td > ${tdInnerDiv.selector} {
       max-height: 0;
     }
   `,
@@ -68,7 +68,7 @@ const transitionStyles = {
   entered: css`
     border-top-color: ${uiColors.gray.light2};
 
-    & > td > div {
+    & > td > ${tdInnerDiv.selector} {
       max-height: 40px;
     }
   `,
@@ -111,7 +111,6 @@ interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
   expanded?: boolean;
   disabled?: boolean;
   indentLevel?: number;
-  isParentExpanded?: boolean;
 }
 
 const Row = React.forwardRef(
@@ -119,10 +118,9 @@ const Row = React.forwardRef(
     {
       expanded = false,
       disabled = false,
+      indentLevel = 0,
       children,
       className,
-      indentLevel = 0,
-      isParentExpanded = true,
       ...rest
     }: RowProps,
     ref: React.Ref<any>,
@@ -232,9 +230,9 @@ const Row = React.forwardRef(
       if (isComponentType(child, 'Row')) {
         nestedRows.push(
           React.cloneElement(child, {
+            isExpanded,
             ref: nodeRef,
             ['aria-expanded']: isExpanded ? 'true' : 'false',
-            isParentExpanded: isExpanded,
             indentLevel: indentLevel + 1,
           }),
         );
@@ -340,11 +338,7 @@ const Row = React.forwardRef(
         </tr>
 
         {nestedRows && (
-          <Transition
-            in={isExpanded && isParentExpanded}
-            timeout={150}
-            nodeRef={nodeRef}
-          >
+          <Transition in={isExpanded} timeout={150} nodeRef={nodeRef}>
             {(state: string) => {
               return (
                 <>

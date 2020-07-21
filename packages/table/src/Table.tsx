@@ -14,16 +14,14 @@ const tableStyles = css`
   border-bottom: 1px solid ${uiColors.gray.light2};
 `;
 
-type DataShape<Shape> = Shape extends infer U ? U : Shape;
-
 interface TableRowInterface<Shape = {}> {
-  datum: DataShape<Shape>;
+  datum: Shape;
   index?: number;
 }
 
 export interface TableProps<Shape>
   extends React.ComponentPropsWithoutRef<'table'> {
-  data: Array<DataShape<Shape>>;
+  data: Array<Shape>;
   columns:
     | Array<React.ReactElement<HeaderRowProps | TableHeaderProps> | string>
     | React.ReactFragment;
