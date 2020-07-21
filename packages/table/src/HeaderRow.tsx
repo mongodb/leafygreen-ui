@@ -51,7 +51,7 @@ function HeaderRow({ children, className, ...rest }: HeaderRowProps) {
       {selectable && !checkColSpan && (
         <th className={thStyles}>
           <Cell>
-            <Centered horizontal vertical>
+            <Centered>
               <Checkbox
                 checked={headerCheckState.checked}
                 indeterminate={headerCheckState.indeterminate}

@@ -326,7 +326,7 @@ const Row = React.forwardRef(
         >
           {selectable && (
             <Cell>
-              <Centered horizontal vertical>
+              <Centered>
                 <Checkbox {...checkboxProps} />
               </Centered>
             </Cell>

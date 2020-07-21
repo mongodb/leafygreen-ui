@@ -22,8 +22,8 @@ interface CenteredProps {
 
 function Centered({
   children,
-  horizontal = false,
-  vertical = false,
+  horizontal = true,
+  vertical = true,
 }: CenteredProps) {
   return (
     <div
