@@ -3,7 +3,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 
-const stepperHeight = 46;
+const stepperHeight = 48;
 
 export const dataProps = {
   stepBoxTop: createDataProp('step-box-top'),
@@ -13,6 +13,7 @@ export const dataProps = {
 export const layerStyle = css`
   display: flex;
   position: absolute;
+  left: 0;
   height: 100%;
   width: 100%;
   transition: opacity 700ms, visibility 700ms;
@@ -36,7 +37,7 @@ const stepBoxHalfStyle = css`
   display: inline-block;
 
   height: 50%;
-  width: calc(100% - ${stepperHeight / 3}px);
+  width: 100%;
 
   & > *,
   &:before,
@@ -100,16 +101,20 @@ export const stepBoxBottomStyle = css`
 `;
 
 export const stepStyle = css`
+  flex: 1;
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  width: 100%;
+  height: calc(100% + 2px);
+  min-width: 0; // https://css-tricks.com/flexbox-truncated-text/
   margin-left: -${stepperHeight / 3 + 1}px;
+  margin-top: -1px;
+  margin-bottom: -1px;
+  padding-left: ${16 + stepperHeight / 3}px;
+  padding-right: 16px;
 
   color: ${uiColors.gray.dark3};
-
   font-family: Akzidenz, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: bold;
@@ -117,6 +122,9 @@ export const stepStyle = css`
   z-index: 2;
 
   &:first-of-type {
+    margin-left: 0;
+    padding-left: 16px;
+
     ${dataProps.stepBoxTop.selector}, ${dataProps.stepBoxBottom.selector} {
       &:before {
         transform: none;
@@ -125,8 +133,9 @@ export const stepStyle = css`
   }
 
   &:last-of-type {
+    padding-left: calc(${16 + (2 * stepperHeight) / 3}px);
+
     ${dataProps.stepBoxTop.selector}, ${dataProps.stepBoxBottom.selector} {
-      &:before,
       &:after {
         transform: none;
       }
@@ -134,8 +143,16 @@ export const stepStyle = css`
   }
 `;
 
+export const stepTextStyle = css`
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+`;
+
 export const currentStepStyle = css`
-  filter: drop-shadow(0px 4px 4px ${transparentize(0.7, uiColors.black)});
+  filter: drop-shadow(0px 4px 4px ${transparentize(0.75, uiColors.black)});
   z-index: 3;
 
   &:last-of-type:not(:first-of-type) {
@@ -179,7 +196,7 @@ export const slideInAnimationStyle = css`
 `;
 
 export const slideOutAnimationStyle = css`
-  left: -30px;
+  left: ${(-2 * stepperHeight) / 3}px;
   transition: left 700ms;
 `;
 
@@ -187,6 +204,11 @@ export const containerStyle = css`
   position: relative;
   height: ${stepperHeight}px;
   width: 100%;
+
+  background: ${uiColors.gray.light3};
+  border-bottom: 1px solid;
+  border-top: 1px solid;
+  border-color: ${uiColors.gray.light2};
 `;
 
 export const stepLabelStyle = css`
@@ -227,3 +249,5 @@ export const upcomingStepLabelStyle = css`
 `;
 
 export const stepLabelTextStyle = css('padding: 0 8px;');
+
+export const previewStyle = css('cursor: pointer');

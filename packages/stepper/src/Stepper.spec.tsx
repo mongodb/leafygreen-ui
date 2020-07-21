@@ -61,11 +61,12 @@ function assertVisibleSteps({
 
   allSteps.forEach(step => {
     const visibleStepElement = onlyElement(
-      screen.queryAllByText(step).filter(isVisible),
+      screen.queryAllByLabelText(step).filter(isVisible),
     );
 
     if (expectedSteps.includes(step)) {
       expect(visibleStepElement).not.toBeNull();
+      expect(visibleStepElement).toHaveTextContent(step);
 
       if (allSteps[currentStep] === step) {
         expect(visibleStepElement).toHaveAttribute('aria-current', 'step');
