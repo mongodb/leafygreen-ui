@@ -5,7 +5,7 @@ import { TableProps } from './Table';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { Types, useTableContext } from './TableContext';
 
-function normalizeAccessor(accessor: string | Function) {
+export function normalizeAccessor(accessor: string | Function) {
   let accessorFn = accessor;
 
   if (typeof accessor === 'string') {

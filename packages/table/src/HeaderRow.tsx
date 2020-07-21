@@ -4,7 +4,6 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
 import { useTableContext, Types } from './TableContext';
 import Cell from './Cell';
-import Centered from './Centered';
 
 const thStyles = css`
   width: 40px;
@@ -51,13 +50,19 @@ function HeaderRow({ children, className, ...rest }: HeaderRowProps) {
       {selectable && !checkColSpan && (
         <th className={thStyles}>
           <Cell>
-            <Centered>
+            <div
+              className={css`
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              `}
+            >
               <Checkbox
                 checked={headerCheckState.checked}
                 indeterminate={headerCheckState.indeterminate}
                 onChange={handleChange}
               />
-            </Centered>
+            </div>
           </Cell>
         </th>
       )}

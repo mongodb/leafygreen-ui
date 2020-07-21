@@ -2,6 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Table, TableHeader, HeaderRow, Row, Cell } from '.';
+import { normalizeAccessor } from './TableHead';
 import { defaultData } from './fixtures';
 
 interface Props {
@@ -141,20 +142,31 @@ describe('packages/table', () => {
   });
 
   describe('packages/table/table-head', () => {
+    describe('the normalizeAccessor function works as expected', () => {
+      test('it accesses the data correctly when passed a string', () => {
+        const normalizedAccessor = normalizeAccessor('test');
+        expect(normalizedAccessor({ test: 'hi' })).toBe('hi');
+      });
+      test('it accesses the data correctly when passed a function', () => {
+        const normalizedAccessor = normalizeAccessor(data => data.test);
+        expect(normalizedAccessor({ test: 'hi' })).toBe('hi');
+      });
+    });
+
     test('it renders "thead" tags', () => {
       renderTable();
       const tableHead = screen.getAllByRole('rowgroup')[0];
       expect(tableHead.tagName.toLowerCase()).toBe('thead');
     });
 
-    test('it creates a header row when one is not supplied', () => {
+    test('it creates a HeaderRow when one is not supplied', () => {
       renderTable();
       const headerRow = screen.getAllByTestId('leafygreen-ui-header-row');
       expect(headerRow.length).toBe(1);
       expect(headerRow[0].tagName.toLowerCase()).toBe('tr');
     });
 
-    test('it renders one header row when it is supplied', () => {
+    test('it renders one HeaderRow when it is supplied', () => {
       renderTable({
         table: {
           columns: [
@@ -233,11 +245,35 @@ describe('packages/table', () => {
   });
 
   describe('packages/table/header-row', () => {
-    test('it renders a CheckboxCell in the HeaderRow when the "selectable" prop is set', () => {
-      renderTable({ table: { selectable: true } });
-      const tableHeaderRow = Array.from(screen.getAllByRole('row')[0].children);
-      const firstColumn = tableHeaderRow[0];
-      expect(firstColumn.innerHTML).toContain('type="checkbox"');
+    describe('when the "selectable" prop is set', () => {
+      test('it renders a Checkbox in the HeaderRow', () => {
+        renderTable({ table: { selectable: true } });
+        const tableHeaderRow = Array.from(
+          screen.getAllByRole('row')[0].children,
+        );
+        const firstColumn = tableHeaderRow[0];
+        expect(firstColumn.innerHTML).toContain('type="checkbox"');
+      });
+
+      describe('and the HeaderRow contains a TableHeader with a colSpan', () => {
+        test('it does not render a Checkbox in the HeaderRow', () => {
+          renderTable({
+            table: {
+              selectable: true,
+              columns: [
+                <HeaderRow key="header-row">
+                  <TableHeader key="name" label="name" />,
+                  <TableHeader key="age" label="age" />,
+                  <TableHeader key="color" label="color" colSpan={2} />,
+                </HeaderRow>,
+              ],
+            },
+          });
+
+          const headerRow = screen.getByTestId('leafygreen-ui-header-row');
+          expect(headerRow.innerHTML).not.toContain('checkbox');
+        });
+      });
     });
   });
 

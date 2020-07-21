@@ -8,7 +8,6 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useTableContext, Types, DataType } from './TableContext';
 import Cell from './Cell';
-import Centered from './Centered';
 
 const rowStyle = css`
   border-top: 1px solid ${uiColors.gray.light2};
@@ -78,7 +77,7 @@ const transitionStyles = {
 const styleMap = {
   left: [DataType.String, DataType.Weight, DataType.ZipCode, DataType.Date],
   right: [DataType.Number, DataType.Quantity],
-};
+} as const;
 
 function styleColumn(index: string, dataType: DataType) {
   let justify = '';
@@ -326,9 +325,15 @@ const Row = React.forwardRef(
         >
           {selectable && (
             <Cell>
-              <Centered>
+              <div
+                className={css`
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                `}
+              >
                 <Checkbox {...checkboxProps} />
-              </Centered>
+              </div>
             </Cell>
           )}
           {renderedChildren}
