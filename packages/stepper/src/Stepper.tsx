@@ -8,6 +8,7 @@ import {
   containerStyle,
   currentStepLabelStyle,
   currentStepStyle,
+  dataProps,
   hiddenLayerStyle,
   layerStyle,
   slideInAnimationStyle,
@@ -69,10 +70,10 @@ function InternalStep({
       )}
       {children}
       <div className={stepBoxStyle}>
-        <span className={stepBoxTopStyle}>
+        <span className={stepBoxTopStyle} {...dataProps.stepBoxTop.prop}>
           <div />
         </span>
-        <span className={stepBoxBottomStyle}>
+        <span className={stepBoxBottomStyle} {...dataProps.stepBoxBottom.prop}>
           <div />
         </span>
       </div>
