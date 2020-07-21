@@ -1,7 +1,12 @@
 import React from 'react';
 import { waitForElementToBeRemoved } from '@testing-library/dom';
-import { render, fireEvent, cleanup, act } from '@testing-library/react';
-import type { RenderResult } from '@testing-library/react';
+import {
+  act,
+  cleanup,
+  fireEvent,
+  render,
+  RenderResult,
+} from '@testing-library/react';
 import ProjectSelect from './ProjectSelect';
 import { dataFixtures, urlFixtures, constructProjectURL } from '../data';
 

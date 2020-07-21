@@ -1,6 +1,5 @@
 import React from 'react';
-import { render, cleanup, act } from '@testing-library/react';
-import type { RenderResult } from '@testing-library/react';
+import { act, cleanup, render, RenderResult } from '@testing-library/react';
 import {
   dataFixtures,
   urlFixtures,

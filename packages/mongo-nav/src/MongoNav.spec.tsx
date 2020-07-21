@@ -1,6 +1,12 @@
 import React from 'react';
-import { render, fireEvent, cleanup, act } from '@testing-library/react';
-import type { RenderResult } from '@testing-library/react';
+import {
+  act,
+  cleanup,
+  fireEvent,
+  render,
+  RenderResult,
+} from '@testing-library/react';
+import {} from '@testing-library/react';
 import { dataFixtures } from './data';
 import MongoNav from './MongoNav';
 
