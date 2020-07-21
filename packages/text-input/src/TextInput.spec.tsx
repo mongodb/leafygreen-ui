@@ -14,7 +14,13 @@ const defaultProps = {
 };
 
 function renderTextInput(props = {}) {
-  const utils = render(<TextInput data-testid="text-input" {...props} />);
+  const utils = render(
+    <TextInput
+      data-testid="text-input"
+      label={defaultProps.label}
+      {...props}
+    />,
+  );
   const textInput = utils.getByTestId('text-input');
   const label = utils.container.querySelector('label');
   const description = utils.container.querySelector('p');
@@ -140,11 +146,12 @@ describe('packages/text-input', () => {
     });
   });
 
-  describe('types behave as expected', () => {
-    // eslint-disable-next-line jest/expect-expect
+  /* eslint-disable jest/expect-expect, jest/no-disabled-tests */
+  describe.skip('types behave as expected', () => {
     test('TextInput throws error when neither aria-labelledby or label is supplied', () => {
       // @ts-expect-error
       <TextInput />;
     });
   });
+  /* eslint-enable jest/expect-expect, jest/no-disabled-tests */
 });

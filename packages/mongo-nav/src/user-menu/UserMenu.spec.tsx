@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
+import { JestDOM } from '@leafygreen-ui/testing-lib';
 import { urlFixtures, hostDefaults } from '../data';
 import UserMenu from '.';
 
@@ -114,7 +115,7 @@ describe('packages/mongo-nav/user-menu', () => {
     );
   });
 
-  test('onLogout fires when logout is clicked', () => {
+  test('onLogout fires when logout is clicked', async () => {
     const { getByText, getByTestId } = renderUserMenu({
       activePlatform: 'cloud',
     });
@@ -122,7 +123,11 @@ describe('packages/mongo-nav/user-menu', () => {
     fireEvent.click(trigger);
     const logout = getByText('Log out');
 
-    fireEvent.click(logout);
+    await JestDOM.silenceNavigationErrors(async waitForNavigation => {
+      fireEvent.click(logout);
+
+      await waitForNavigation();
+    });
 
     expect(onLogout).toHaveBeenCalledTimes(1);
   });
