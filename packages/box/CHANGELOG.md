@@ -1,5 +1,11 @@
 # @leafygreen-ui/box
 
+## 2.1.0
+
+### Minor Changes
+
+- 0593116: Updates `ExtendableBox` type such that a consumer can pass a default value for `as` rather than assuming that the default case is a `div`. This fixes bugs in Button and Menu components.
+
 ## 2.0.0
 
 ### Major Changes

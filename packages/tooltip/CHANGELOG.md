@@ -1,5 +1,15 @@
 # @leafygreen-ui/tooltip
 
+## 3.3.1
+
+### Patch Changes
+
+- 083eec3: Restore TS <3.8 compatibility that was broken from using the `import type` syntax.
+- Updated dependencies [083eec3]
+- Updated dependencies [083eec3]
+  - @leafygreen-ui/popover@5.1.1
+  - @leafygreen-ui/lib@4.5.1
+
 ## 3.3.0
 
 ### Minor Changes
@@ -98,7 +108,7 @@
 
 ### Major Changes
 
-- f6b6b7a: No longer renders Children of Poopover to the DOM when the Popover is closed
+- f6b6b7a: No longer renders Children of Popover to the DOM when the Popover is closed
 
 ### Patch Changes
 

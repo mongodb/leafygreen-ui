@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import TextInput, { State } from './TextInput';
 
 const error = 'This is the error message';
@@ -14,7 +14,13 @@ const defaultProps = {
 };
 
 function renderTextInput(props = {}) {
-  const utils = render(<TextInput data-testid="text-input" {...props} />);
+  const utils = render(
+    <TextInput
+      data-testid="text-input"
+      label={defaultProps.label}
+      {...props}
+    />,
+  );
   const textInput = utils.getByTestId('text-input');
   const label = utils.container.querySelector('label');
   const description = utils.container.querySelector('p');
@@ -131,4 +137,21 @@ describe('packages/text-input', () => {
       expect(defaultProps.onChange).toHaveReturnedWith('none');
     });
   });
+
+  describe('when no label is supplied', () => {
+    test('no label tag renders to the DOM', () => {
+      renderTextInput();
+
+      expect(screen.queryByRole('label')).not.toBeInTheDocument();
+    });
+  });
+
+  /* eslint-disable jest/expect-expect, jest/no-disabled-tests */
+  describe.skip('types behave as expected', () => {
+    test('TextInput throws error when neither aria-labelledby or label is supplied', () => {
+      // @ts-expect-error
+      <TextInput />;
+    });
+  });
+  /* eslint-enable jest/expect-expect, jest/no-disabled-tests */
 });

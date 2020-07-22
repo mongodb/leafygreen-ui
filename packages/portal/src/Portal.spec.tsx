@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { render, cleanup } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
 import Portal from '.';
+import { act } from 'react-dom/test-utils';
 
 afterEach(async () => {
   await cleanup();
@@ -176,8 +177,26 @@ describe('packages/Portal', () => {
   });
 
   test('cleans up default container', () => {
-    const { container, unmount } = render(<Portal>Portaled</Portal>);
-    unmount();
-    expect(container.innerHTML).toBe('');
+    let unmountChild: () => void;
+
+    const Wrapper = ({ children }: { children: React.ReactNode }) => {
+      const [shouldRenderChildren, setShouldRenderChildren] = useState(true);
+      unmountChild = () => setShouldRenderChildren(false);
+
+      // Enable strict mode so we can detect side effects
+      // https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects
+      return (
+        <React.StrictMode>{shouldRenderChildren && children}</React.StrictMode>
+      );
+    };
+
+    render(
+      <Wrapper>
+        <Portal>Portaled</Portal>
+      </Wrapper>,
+    );
+
+    act(() => unmountChild());
+    expect(document.body.innerHTML).toBe('<div></div>');
   });
 });

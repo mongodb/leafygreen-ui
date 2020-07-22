@@ -1,5 +1,33 @@
 # @leafygreen-ui/menu
 
+## 7.0.2
+
+### Patch Changes
+
+- 083eec3: Remove usage of `Element` in Node target builds that was preventing rendering the component in SSR contexts.
+- Updated dependencies [083eec3]
+- Updated dependencies [083eec3]
+- Updated dependencies [27f8ea1]
+- Updated dependencies [27f8ea1]
+  - @leafygreen-ui/popover@5.1.1
+  - @leafygreen-ui/lib@4.5.1
+  - @leafygreen-ui/icon@6.1.2
+  - @leafygreen-ui/icon-button@6.1.0
+
+## 7.0.1
+
+### Patch Changes
+
+- 0593116: Uses enhanced `ExtendableBox` type to set smarter default `as` component in `MenuItem` and `SubMenu`
+- Updated dependencies [0593116]
+  - @leafygreen-ui/box@2.1.0
+
+## 7.0.0
+
+### Major Changes
+
+- 1d24966: Makes `@leafygreen-ui/leafygreen-provider` a peer dependency to ensure that components use hooks from the same version of the provider as what's installed.
+
 ## 6.0.14
 
 ### Patch Changes

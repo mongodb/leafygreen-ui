@@ -21,7 +21,7 @@ storiesOf('Portal', module).add('Default', () => (
   <Portal container={getRoot()}>
     <div className={portalChildrenStyle}>
       Portals transport their children to a <code>div</code> that is appended to
-      the end of the <code>documet.body</code> to or a <code>node</code> that
+      the end of the <code>document.body</code> to or a <code>node</code> that
       can be specified with a <code>container</code> prop.
     </div>
   </Portal>

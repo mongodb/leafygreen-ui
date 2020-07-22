@@ -1,4 +1,4 @@
-import type { OneOf } from './index';
+import { OneOf } from './index';
 
 describe('packages/lib', () => {
   describe('OneOf', () => {

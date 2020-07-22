@@ -187,6 +187,12 @@ interface CodeProps extends SyntaxProps {
    * default: `true`
    */
   copyable?: boolean;
+
+  /**
+   * Callback fired when Code is copied
+   *
+   */
+  onCopy?: Function;
 }
 
 type DetailedElementProps<T> = React.DetailedHTMLProps<
@@ -243,6 +249,8 @@ function CodeOuterWrapper({
  * @param props.lang The language used for syntax highlighing. Default: `auto`
  * @param props.variant Determines if the code block is rendered with a dark or light background. Default: 'light'
  * @param props.showLineNumbers When true, shows line numbers in preformatted code blocks. Default: `false`
+ * @param props.copyable When true, allows the code block to be copied to the user's clipboard. Default: `true`
+ * @param props.onCopy Callback fired when Code is copied
  */
 function Code({
   children = '',
@@ -254,6 +262,7 @@ function Code({
   showWindowChrome = false,
   chromeTitle = '',
   copyable = true,
+  onCopy,
   ...rest
 }: CodeProps) {
   const scrollableMultiLine = useRef<HTMLPreElement>(null);
@@ -317,6 +326,14 @@ function Code({
       {children}
     </Syntax>
   );
+
+  function handleClick() {
+    if (onCopy) {
+      onCopy();
+    }
+
+    setCopied(true);
+  }
 
   function handleScroll(e: React.UIEvent) {
     const { scrollWidth, clientWidth: elementWidth } = e.target as HTMLElement;

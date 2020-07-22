@@ -1,5 +1,14 @@
 # @leafygreen-ui/mongo-nav
 
+## 2.0.1
+
+### Patch Changes
+
+- 1d24966: Makes `@leafygreen-ui/leafygreen-provider` a peer dependency to ensure that components use hooks from the same version of the provider as what's installed.
+- Updated dependencies [1d24966]
+  - @leafygreen-ui/button@5.0.0
+  - @leafygreen-ui/menu@7.0.0
+
 ## 2.0.0
 
 ### Major Changes

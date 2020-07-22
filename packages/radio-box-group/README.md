@@ -18,6 +18,12 @@ yarn add @leafygreen-ui/radio-box-group
 npm install @leafygreen-ui/radio-box-group
 ```
 
+## Peer Dependencies
+
+| Package                              | Version  |
+| ------------------------------------ | -------- |
+| `@leafygreen-ui/leafygreen-provider` | `^1.1.0` |
+
 ## Example
 
 ```js

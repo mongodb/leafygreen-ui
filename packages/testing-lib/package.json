@@ -1,0 +1,16 @@
+{
+  "name": "@leafygreen-ui/testing-lib",
+  "version": "0.1.0",
+  "description": "leafyGreen UI Kit Internal Testing Library",
+  "browser": "./dist/index.web.js",
+  "main": "./dist/index.node.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
+  },
+  "keywords": [],
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "restricted"
+  }
+}
