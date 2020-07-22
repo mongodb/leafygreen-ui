@@ -250,4 +250,4 @@ export const upcomingStepLabelStyle = css`
 
 export const stepLabelTextStyle = css('padding: 0 8px;');
 
-export const previewStyle = css('cursor: pointer');
+export const previewStyle = css('cursor: pointer;');
