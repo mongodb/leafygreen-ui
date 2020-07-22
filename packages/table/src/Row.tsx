@@ -236,6 +236,7 @@ const Row = React.forwardRef(
             isParentExpanded: isExpanded,
             ['aria-expanded']: isExpanded ? 'true' : 'false',
             indentLevel: indentLevel + 1,
+            key: `${indexRef.current}-${indentLevel + 1}`,
           }),
         );
       } else if (isComponentType(child, 'Cell')) {

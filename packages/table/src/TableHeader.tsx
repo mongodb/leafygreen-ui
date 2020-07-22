@@ -62,7 +62,14 @@ function TableHeader({
     dispatch,
   } = useTableContext();
 
-  const glyph = sort?.direction ?? 'unsorted';
+  let glyph;
+
+  if (sort?.columnId === index) {
+    glyph = sort?.direction ?? 'unsorted';
+  } else {
+    glyph = 'unsorted';
+  }
+
   const Glyph = glyphMap[glyph];
 
   const handleClick = () => {

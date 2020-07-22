@@ -62,7 +62,7 @@ type Dispatch = (action: Action) => void;
 
 interface Sort {
   columnId?: number;
-  direction: 'asc' | 'desc';
+  direction?: 'asc' | 'desc';
   accessorValue?: () => string;
 }
 

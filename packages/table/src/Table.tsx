@@ -39,7 +39,7 @@ export default function Table<Shape>({
 }: TableProps<Shape>) {
   const initialState: State = {
     sort: {
-      direction: 'asc',
+      direction: undefined,
     },
     data,
     selectable: selectableProp,

@@ -49,21 +49,19 @@ function HeaderRow({ children, className, ...rest }: HeaderRowProps) {
     <tr {...rest} className={className} data-testid="leafygreen-ui-header-row">
       {selectable && !checkColSpan && (
         <th className={thStyles}>
-          <Cell>
-            <div
-              className={css`
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              `}
-            >
-              <Checkbox
-                checked={headerCheckState.checked}
-                indeterminate={headerCheckState.indeterminate}
-                onChange={handleChange}
-              />
-            </div>
-          </Cell>
+          <div
+            className={css`
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            `}
+          >
+            <Checkbox
+              checked={headerCheckState.checked}
+              indeterminate={headerCheckState.indeterminate}
+              onChange={handleChange}
+            />
+          </div>
         </th>
       )}
       {children}
