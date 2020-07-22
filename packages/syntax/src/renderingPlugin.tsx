@@ -23,15 +23,15 @@ type TreeItem =
   | TokenObject;
 
 function isArray(item: any): item is Array<any> {
-  return item instanceof Array;
+  return item != null && item instanceof Array;
 }
 
 function isObject(item: any): item is object {
-  return typeof item === 'object';
+  return item != null && typeof item === 'object' && !(item instanceof Array);
 }
 
 function isString(item: any): item is string {
-  return typeof item === 'string';
+  return item != null && typeof item === 'string';
 }
 
 export function processToken(token: TreeItem, index?: number): React.ReactNode {
@@ -88,7 +88,7 @@ export function LineTableRow({ lineNumber, children }: LineTableRowProps) {
   );
 }
 
-function treeToLines(
+export function treeToLines(
   children: Array<string | TokenObject>,
 ): Array<Array<TreeItem>> {
   const lines: Array<Array<TreeItem>> = [];

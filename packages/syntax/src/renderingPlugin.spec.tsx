@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
-import { processToken, LineTableRow } from './renderingPlugin';
+import { processToken, LineTableRow, treeToLines } from './renderingPlugin';
 
 describe('processToken()', () => {
   test('when passed `null`, it retuns `null`', () => {
@@ -97,6 +97,99 @@ describe('LineTableRow', () => {
   });
 });
 
-describe('treeToLines', () => {
-  // placeholder
+interface TokenObject {
+  kind: string;
+  children: Array<string | TokenObject>;
+}
+
+const sampleChildren: Array<string | TokenObject> = [
+  // Line break at the beginning should be stripped.
+  '\n',
+  {
+    kind: 'function',
+    children: [
+      { kind: 'keyword', children: ['function'] },
+      ' ',
+      { kind: 'title', children: ['greeting'] },
+      '(',
+      { kind: 'params', children: ['entity'] },
+      ') ',
+    ],
+  },
+  '{',
+  '\n  ',
+  { kind: 'keyword', children: ['return'] },
+  ' ',
+  {
+    kind: 'string',
+    children: ['`Hello, ', { kind: 'subst', children: ['${entity}'] }, '!`'],
+  },
+  ';\n',
+  '}',
+  '\n\n',
+  { kind: 'built_in', children: ['console'] },
+  '.log',
+  '(',
+  'greeting',
+  '(',
+  { kind: 'string', children: ["'World'"] },
+  '))',
+  // Line break at the end should be stripped.
+  ';\n',
+];
+
+describe('treeToLines()', () => {
+  function validateLine(line: any) {
+    function isNonArrayObject(obj: any) {
+      if (obj instanceof Array) {
+        return false;
+      }
+
+      return typeof obj === 'object';
+    }
+
+    expect(line).toBeInstanceOf(Array);
+
+    line.forEach((el: any) => {
+      if (typeof el === 'string') {
+        expect(typeof el).toBe('string');
+      } else if (isNonArrayObject(el)) {
+        expect(el).toHaveProperty('kind');
+        expect(el).toHaveProperty('children');
+
+        el.children.forEach((child: any) => {
+          expect(
+            typeof child === 'string' || isNonArrayObject(child),
+          ).toBeTruthy();
+        });
+      } else {
+        throw new TypeError(
+          "element in array was not of types: 'object' | 'string'",
+        );
+      }
+    });
+  }
+
+  // eslint-disable-next-line jest/expect-expect
+  test('when passed a valid set of children, returns a valid Array', () => {
+    treeToLines(sampleChildren).forEach(validateLine);
+  });
+
+  // eslint-disable-next-line jest/expect-expect
+  test('when passed an invalid set of children, returns a valid Array', () => {
+    console.log(treeToLines([...sampleChildren, null, 0]));
+    treeToLines([...sampleChildren, null, 0]).forEach(validateLine);
+  });
+
+  test('strips empty line breaks from beginning of result', () => {
+    const lines = treeToLines(sampleChildren);
+
+    expect(lines[0]).not.toHaveLength(0);
+  });
+
+  test('strips empty line breaks from end of result', () => {
+    const lines = treeToLines(sampleChildren);
+
+    expect(lines[lines.length - 1]).not.toHaveLength(0);
+  });
 });

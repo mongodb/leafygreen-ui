@@ -42,6 +42,5 @@ export interface SyntaxProps extends React.HTMLAttributes<HTMLElement> {
    *
    * default: `'false'`
    */
-
   showLineNumbers?: boolean;
 }
