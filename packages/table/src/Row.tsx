@@ -331,6 +331,7 @@ const Row = React.forwardRef(
                   display: flex;
                   justify-content: center;
                   align-items: center;
+                  flex-grow: 1;
                 `}
               >
                 <Checkbox {...checkboxProps} />

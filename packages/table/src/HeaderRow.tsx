@@ -51,6 +51,7 @@ function HeaderRow({ children, className, ...rest }: HeaderRowProps) {
         <th className={thStyles}>
           <div
             className={css`
+              flex-grow: 1;
               display: flex;
               justify-content: center;
               align-items: center;
