@@ -4,4 +4,4 @@
 '@leafygreen-ui/menu': patch
 ---
 
-Ensures that if `null` is passed as the value to the `href` prop, it will be treated as not existing
+Ensures that only props that are of type `string` are recognized as being passed  to the `href` prop.

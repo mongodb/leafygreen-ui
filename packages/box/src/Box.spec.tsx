@@ -121,6 +121,16 @@ describe('packages/box', () => {
     });
   });
 
+  describe('when value supplied to "href" prop is not a string', () => {
+    test('it renders as a div', () => {
+      const { getByTestId } = render(
+        <Box href={2} data-testid="invalid-href-prop" />,
+      );
+      const box = getByTestId('invalid-href-prop');
+      expect(box.tagName.toLowerCase()).toBe('div');
+    });
+  });
+
   describe('when rendered as a custom component', () => {
     let box: HTMLElement;
     let child: HTMLElement;

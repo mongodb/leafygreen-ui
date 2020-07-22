@@ -45,7 +45,7 @@ function InlineBox(props: BoxProps, ref: React.Ref<any>) {
     return <Component {...rest} ref={ref} />;
   }
 
-  if (props.href != null) {
+  if (typeof props.href === 'string') {
     return <a {...props} ref={ref} />; //eslint-disable-line jsx-a11y/anchor-has-content
   }
 

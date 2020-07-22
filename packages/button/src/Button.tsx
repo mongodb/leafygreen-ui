@@ -324,7 +324,7 @@ const Button: ExtendableBox<BaseButtonProps, 'button'> = React.forwardRef(
         className,
       ),
       // only add a disabled prop if not an anchor
-      ...(rest.href == null && { disabled }),
+      ...(typeof rest.href !== 'string' && { disabled }),
       'aria-disabled': disabled,
     };
 
@@ -355,7 +355,7 @@ const Button: ExtendableBox<BaseButtonProps, 'button'> = React.forwardRef(
       </span>
     );
 
-    if (rest.href != null) {
+    if (typeof rest.href === 'string') {
       return (
         <Box as="a" {...commonProps} {...rest}>
           {content}
