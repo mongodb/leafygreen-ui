@@ -34,7 +34,7 @@ function isString(item: any): item is string {
   return typeof item === 'string';
 }
 
-function processToken(token: TreeItem, index?: number): React.ReactNode {
+export function processToken(token: TreeItem, index?: number): React.ReactNode {
   if (token == null) {
     return null;
   }
@@ -54,6 +54,8 @@ function processToken(token: TreeItem, index?: number): React.ReactNode {
       </Token>
     );
   }
+
+  return token;
 }
 
 const cellStyle = css`
@@ -68,7 +70,7 @@ interface LineTableRowProps {
   children: React.ReactNode;
 }
 
-function LineTableRow({ lineNumber, children }: LineTableRowProps) {
+export function LineTableRow({ lineNumber, children }: LineTableRowProps) {
   const variant = useVariant();
   const numberColor =
     uiColors.gray[variant === Variant.Dark ? 'dark1' : 'light1'];
