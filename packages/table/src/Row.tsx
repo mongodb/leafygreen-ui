@@ -80,7 +80,7 @@ const styleMap = {
 } as const;
 
 function styleColumn(index: string, dataType: DataType) {
-  let justify = '';
+  let justify = 'flex-end';
 
   if (styleMap.left.includes(dataType)) {
     justify = 'flex-start';

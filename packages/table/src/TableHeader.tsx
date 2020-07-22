@@ -62,10 +62,7 @@ function TableHeader({
     dispatch,
   } = useTableContext();
 
-  const glyph =
-    typeof sort?.columnId === 'number' && sort.columnId === index
-      ? sort?.direction
-      : 'unsorted';
+  const glyph = sort?.direction ?? 'unsorted';
   const Glyph = glyphMap[glyph];
 
   const handleClick = () => {
@@ -79,6 +76,7 @@ function TableHeader({
       dispatch({
         type: Types.SetColumnInfo,
         payload: {
+          // Offsetting 0-indexed columns
           index: selectable ? index + 2 : index + 1,
           dataType,
         },
