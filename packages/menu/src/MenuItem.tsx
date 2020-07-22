@@ -178,7 +178,7 @@ const MenuItem: ExtendableBox<BaseMenuItemProps, 'button'> = React.forwardRef(
       role: 'menuitem',
       tabIndex: disabled ? -1 : undefined,
       // only add a disabled prop if not an anchor
-      ...(rest.href !== undefined && { disabled }),
+      ...(rest.href != null && { disabled }),
       'aria-disabled': disabled,
     };
 
@@ -219,7 +219,7 @@ const MenuItem: ExtendableBox<BaseMenuItemProps, 'button'> = React.forwardRef(
       </>
     );
 
-    if (rest.href !== undefined) {
+    if (rest.href != null) {
       return (
         <li>
           <Box as="a" {...anchorProps} {...commonProps}>

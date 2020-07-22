@@ -355,7 +355,7 @@ const Button: ExtendableBox<BaseButtonProps, 'button'> = React.forwardRef(
       </span>
     );
 
-    if (rest.href !== undefined) {
+    if (rest.href != null) {
       return (
         <Box as="a" {...commonProps} {...rest}>
           {content}

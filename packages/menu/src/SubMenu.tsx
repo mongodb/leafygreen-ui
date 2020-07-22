@@ -299,7 +299,7 @@ const SubMenu: ExtendableBox<SubMenuProps, 'button'> = React.forwardRef(
     );
 
     const renderBox =
-      rest.href !== undefined ? (
+      rest.href != null ? (
         <Box as="a" {...sharedBoxProps}>
           {boxContent}
         </Box>

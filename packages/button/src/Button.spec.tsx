@@ -61,6 +61,11 @@ describe('packages/button', () => {
     expect(button.tagName.toLowerCase()).toBe('a');
   });
 
+  test(`renders component inside of button tag when "href" prop is set to null`, () => {
+    const { button } = renderButton({ href: null });
+    expect(button.tagName.toLowerCase()).toBe('button');
+  });
+
   test(`does not renders the disabled attributes when disabled is set and it's an anchor`, () => {
     const { button } = renderButton({
       href: 'http://mongodb.design',
