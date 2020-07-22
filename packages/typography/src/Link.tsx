@@ -43,8 +43,6 @@ const arrowRightIconPersist = css`
 `;
 
 const arrowRightIconHover = css`
-  height: 10px;
-  width: 10px;
   opacity: 0;
   transform: translate3d(-3px, 0, 0);
   transition: all 100ms ease-in;
@@ -74,6 +72,8 @@ const ArrowAppearance = {
 } as const;
 
 type ArrowAppearance = typeof ArrowAppearance[keyof typeof ArrowAppearance];
+
+export { ArrowAppearance };
 
 export interface LinkProps extends HTMLElementProps<'a'> {
   arrowAppearance?: ArrowAppearance;

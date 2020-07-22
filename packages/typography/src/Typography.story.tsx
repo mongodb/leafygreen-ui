@@ -1,16 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { select } from '@storybook/addon-knobs';
-import {
-  H1,
-  H2,
-  Subtitle,
-  Body,
-  InlineCode,
-  Disclaimer,
-  Overline,
-  Link,
-} from '.';
+import { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline } from '.';
+import { Link, ArrowAppearance } from './Link';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { css } from '@leafygreen-ui/emotion';
 
@@ -44,8 +36,8 @@ storiesOf('Typography', module).add('Default', () => (
         )}
         arrowAppearance={select(
           'select Link arrowAppearance',
-          ['hover', 'persistant', 'none'],
-          'hover',
+          Object.values(ArrowAppearance),
+          ArrowAppearance.Hover,
         )}
       >
         Link
