@@ -154,7 +154,7 @@ function getScrollShadowStyle(
   return '';
 }
 
-interface CodeProps extends SyntaxProps {
+interface CodeProps extends Omit<SyntaxProps, 'onCopy'> {
   /**
    * Shows line numbers in preformatted code blocks.
    *
@@ -367,7 +367,7 @@ function Code({
         variant={variant}
         aria-label="Copy"
         className={cx(getCopyButtonStyle(variant, copied), 'copy-btn')}
-        onClick={() => setCopied(true)}
+        onClick={handleClick}
         data-clipboard-text={children}
       >
         {copied ? <CheckmarkIcon /> : <CopyIcon />}
