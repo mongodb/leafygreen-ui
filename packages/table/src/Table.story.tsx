@@ -53,6 +53,15 @@ storiesOf('Table', module)
                   <Cell>expanded age: {datum.age.second ?? datum.age}</Cell>
                   <Cell>expanded color: {datum.color}</Cell>
                   <Cell>{datum.location}</Cell>
+
+                  {datum.name === 'Jill' && (
+                    <Row>
+                      <Cell>1</Cell>
+                      <Cell>1</Cell>
+                      <Cell>1</Cell>
+                      <Cell>1</Cell>
+                    </Row>
+                  )}
                 </Row>
               )}
             </Row>

@@ -121,6 +121,7 @@ const Row = React.forwardRef(
       disabled = false,
       indentLevel = 0,
       isParentExpanded = true,
+      highestAncestorExpanded: highestAncestorExpandedProp,
       children,
       className,
       ...rest
@@ -204,11 +205,21 @@ const Row = React.forwardRef(
       }
     }, [children]);
 
+    const highestAncestorExpanded = React.useMemo(() => {
+      if (indentLevel === 0) {
+        return isExpanded;
+      }
+
+      return highestAncestorExpandedProp;
+    }, [isExpanded, highestAncestorExpandedProp]);
+
     // Depending on network speed, will noticeably render columns with incorrect
     // alignment, would rather wait for proper information before rendering
     if (!columnInfo) {
       return null;
     }
+
+    console.log(children[0].props.children, highestAncestorExpandedProp);
 
     const chevronButton = (
       <IconButton
@@ -233,10 +244,11 @@ const Row = React.forwardRef(
         nestedRows.push(
           React.cloneElement(child, {
             ref: nodeRef,
+            highestAncestorExpanded,
             isParentExpanded: isExpanded,
             ['aria-expanded']: isExpanded ? 'true' : 'false',
             indentLevel: indentLevel + 1,
-            key: `${indexRef.current}-${indentLevel + 1}`,
+            key: `${indexRef.current}-${indentLevel}-${child.props.children[0]}`,
           }),
         );
       } else if (isComponentType(child, 'Cell')) {
@@ -343,7 +355,7 @@ const Row = React.forwardRef(
 
         {nestedRows && (
           <Transition
-            in={isExpanded && isParentExpanded}
+            in={isExpanded && isParentExpanded && highestAncestorExpanded}
             timeout={150}
             nodeRef={nodeRef}
           >
