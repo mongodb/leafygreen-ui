@@ -1,5 +1,13 @@
 # @leafygreen-ui/button
 
+## 5.0.2
+
+### Patch Changes
+
+- e8f5376: Ensures that only props that are of type `string` are recognized as being passed to the `href` prop.
+- Updated dependencies [e8f5376]
+  - @leafygreen-ui/box@2.1.1
+
 ## 5.0.1
 
 ### Patch Changes
