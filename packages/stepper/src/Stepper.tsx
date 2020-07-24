@@ -11,6 +11,7 @@ import {
   dataProps,
   hiddenLayerStyle,
   layerStyle,
+  previewStyle,
   slideInAnimationStyle,
   slideOutAnimationStyle,
   stepBoxBottomStyle,
@@ -19,6 +20,7 @@ import {
   stepLabelStyle,
   stepLabelTextStyle,
   stepStyle,
+  stepTextStyle,
   upcomingStepLabelStyle,
   upcomingStepStyle,
 } from './styles';
@@ -29,12 +31,14 @@ type InternalStepProps = JSX.IntrinsicElements['div'] & {
   children: React.ReactNode;
   state: StepCompletionState;
   stepLabel?: string;
+  isPreview: boolean;
 };
 
 function InternalStep({
   children,
   state,
   stepLabel,
+  isPreview,
   className,
   ...containerProps
 }: InternalStepProps) {
@@ -43,14 +47,11 @@ function InternalStep({
   const isCompleted = state === 'completed';
   return (
     <div
-      className={cx(
-        stepStyle,
-        {
-          [currentStepStyle]: isCurrent,
-          [upcomingStepStyle]: isUpcoming,
-        },
-        className,
-      )}
+      className={`${cx(stepStyle, {
+        [currentStepStyle]: isCurrent,
+        [upcomingStepStyle]: isUpcoming,
+        [previewStyle]: isPreview,
+      })} ${className}`}
       {...containerProps}
     >
       {stepLabel && (
@@ -59,6 +60,7 @@ function InternalStep({
             [currentStepLabelStyle]: isCurrent,
             [completedStepLabelStyle]: isCompleted,
             [upcomingStepLabelStyle]: isUpcoming,
+            [previewStyle]: isPreview,
           })}
         >
           {isCompleted ? (
@@ -68,7 +70,9 @@ function InternalStep({
           )}
         </div>
       )}
-      {children}
+      <div className={cx(stepTextStyle, { [previewStyle]: isPreview })}>
+        {children}
+      </div>
       <div className={stepBoxStyle}>
         <span className={stepBoxTopStyle} {...dataProps.stepBoxTop.prop}>
           <div />
@@ -128,6 +132,7 @@ export function Stepper({
       stepLabel: (index + 1).toString(),
       state,
       children: child,
+      isPreview: false,
     };
   });
 
@@ -160,7 +165,7 @@ export function Stepper({
         numSteps,
         maxDisplayedSteps,
       }),
-    });
+    }).map(step => ({ ...step, isPreview: true }));
   }
 
   if (rangeEnd < numSteps - 1) {
@@ -177,7 +182,7 @@ export function Stepper({
         numSteps,
         maxDisplayedSteps,
       }),
-    });
+    }).map(step => ({ ...step, isPreview: true }));
   }
 
   Object.entries(layerToLayerSteps).forEach(([layer, layerSteps]) => {
@@ -261,6 +266,7 @@ function getStepRange(
       stepLabel: `+${rangeStart}`,
       state: rangeStart > currentStep + 1 ? 'upcoming' : 'completed',
       children: <EllipsisIcon />,
+      isPreview: true,
     });
   }
 
@@ -275,6 +281,7 @@ function getStepRange(
       stepLabel: `+${allSteps.length - rangeEnd}`,
       state: 'upcoming',
       children: <EllipsisIcon />,
+      isPreview: true,
     });
   }
 

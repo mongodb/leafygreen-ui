@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import { Menu, MenuSeparator, MenuItem, SubMenu } from '.';
 
 const menuTestId = 'menu-test-id';
@@ -59,7 +59,7 @@ describe('packages/menu', () => {
     const uncontrolledSetOpen = jest.fn();
     const trigger = <button>trigger</button>;
 
-    test('and "setOpen" is provided, but "open" prop is not set', () => {
+    test('and "setOpen" is provided, but "open" prop is not set', async () => {
       const { getByText } = renderMenu({
         setOpen: uncontrolledSetOpen,
         trigger,
@@ -69,7 +69,7 @@ describe('packages/menu', () => {
       fireEvent.click(button);
 
       const menuItem = getByText('Item B');
-      expect(menuItem).toBeInTheDocument();
+      await act(() => waitFor(() => expect(menuItem).toBeVisible()));
 
       fireEvent.click(button);
 
