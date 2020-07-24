@@ -1,6 +1,10 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
-import type { RenderResult } from '@testing-library/react';
+import {
+  fireEvent,
+  render,
+  RenderResult,
+  screen,
+} from '@testing-library/react';
 import { Step, Stepper } from '.';
 
 function isVisible(element: HTMLElement): boolean {
@@ -54,7 +58,7 @@ function assertVisibleSteps({
   );
 
   if (expectedSteps.includes('Previous steps')) {
-    expect(visiblePreviousStepsElement).not.toBeNull();
+    expect(visiblePreviousStepsElement).toBeVisible();
   } else {
     expect(visiblePreviousStepsElement).toBeNull();
   }
@@ -65,7 +69,7 @@ function assertVisibleSteps({
     );
 
     if (expectedSteps.includes(step)) {
-      expect(visibleStepElement).not.toBeNull();
+      expect(visibleStepElement).toBeVisible();
 
       if (allSteps[currentStep] === step) {
         expect(visibleStepElement).toHaveAttribute('aria-current', 'step');
@@ -82,7 +86,7 @@ function assertVisibleSteps({
   );
 
   if (expectedSteps.includes('Next steps')) {
-    expect(visibleNextStepsElement).not.toBeNull();
+    expect(visibleNextStepsElement).toBeVisible();
   } else {
     expect(visibleNextStepsElement).toBeNull();
   }

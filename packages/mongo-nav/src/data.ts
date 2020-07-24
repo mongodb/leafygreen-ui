@@ -6,7 +6,7 @@ import {
   ProjectInterface,
 } from './types';
 
-export const dataFixtures = {
+export const dataFixtures: DataInterface = {
   account: {
     email: 'dev+only+mode@example.com',
     firstName: 'DevMode',
@@ -56,7 +56,7 @@ export const dataFixtures = {
       projectName: 'Demo Project 2',
     },
   ],
-} as DataInterface;
+};
 
 export const urlFixtures: URLS = {
   userMenu: {
