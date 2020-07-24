@@ -6,7 +6,9 @@
 
 - e8f5376: Ensures that only props that are of type `string` are recognized as being passed to the `href` prop.
 - Updated dependencies [e8f5376]
+- Updated dependencies [4873650]
   - @leafygreen-ui/box@2.1.1
+  - @leafygreen-ui/icon@6.2.0
 
 ## 5.0.1
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { select } from '@storybook/addon-knobs';
 import { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline } from '.';
+import { Link, ArrowAppearance } from './Link';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { css } from '@leafygreen-ui/emotion';
 
@@ -16,7 +17,7 @@ storiesOf('Typography', module).add('Default', () => (
       <H2>Heading 2</H2>
       <Subtitle>Subtitle</Subtitle>
       <Body
-        weight={select('weight', ['medium', 'regular'], 'regular')}
+        weight={select('select Body weight', ['medium', 'regular'], 'regular')}
         className={displayBlock}
       >
         Body
@@ -24,6 +25,23 @@ storiesOf('Typography', module).add('Default', () => (
       <InlineCode className={displayBlock}>InlineCode</InlineCode>
       <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
       <Overline>Overline</Overline>
+      <Link
+        href={select(
+          'select Link href',
+          [
+            'http://localhost:9001',
+            'https://mongodb.github.io/leafygreen-ui/?path=/story/*',
+          ],
+          'http://localhost:9001',
+        )}
+        arrowAppearance={select(
+          'select Link arrowAppearance',
+          Object.values(ArrowAppearance),
+          ArrowAppearance.Hover,
+        )}
+      >
+        Link
+      </Link>
     </div>
   </LeafygreenProvider>
 ));
