@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Transition } from 'react-transition-group';
 import Checkbox from '@leafygreen-ui/checkbox';
 import IconButton from '@leafygreen-ui/icon-button';
