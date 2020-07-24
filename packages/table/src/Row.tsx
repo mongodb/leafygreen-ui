@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Transition } from 'react-transition-group';
 import Checkbox from '@leafygreen-ui/checkbox';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -111,7 +111,7 @@ interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
   expanded?: boolean;
   disabled?: boolean;
   indentLevel?: number;
-  isParentExpanded?: boolean;
+  isAnyAncestorCollapsed?: boolean;
 }
 
 const Row = React.forwardRef(
@@ -120,8 +120,7 @@ const Row = React.forwardRef(
       expanded = false,
       disabled = false,
       indentLevel = 0,
-      isParentExpanded = true,
-      highestAncestorExpanded: highestAncestorExpandedProp,
+      isAnyAncestorCollapsed: isAnyAncestorCollapsedProp,
       children,
       className,
       ...rest
@@ -140,10 +139,10 @@ const Row = React.forwardRef(
       dispatch,
     } = useTableContext();
 
-    const indexRef = React.useRef(generateIndexRef());
+    const indexRef = useRef(generateIndexRef());
 
     const [isExpanded, setIsExpanded] = useState(expanded);
-    const nodeRef = React.useRef(null);
+    const nodeRef = useRef(null);
     let hasSeenFirstCell = false;
 
     useEffect(() => {
@@ -205,21 +204,11 @@ const Row = React.forwardRef(
       }
     }, [children]);
 
-    const highestAncestorExpanded = React.useMemo(() => {
-      if (indentLevel === 0) {
-        return isExpanded;
-      }
-
-      return highestAncestorExpandedProp;
-    }, [isExpanded, highestAncestorExpandedProp]);
-
     // Depending on network speed, will noticeably render columns with incorrect
     // alignment, would rather wait for proper information before rendering
     if (!columnInfo) {
       return null;
     }
-
-    console.log(children[0].props.children, highestAncestorExpandedProp);
 
     const chevronButton = (
       <IconButton
@@ -244,11 +233,10 @@ const Row = React.forwardRef(
         nestedRows.push(
           React.cloneElement(child, {
             ref: nodeRef,
-            highestAncestorExpanded,
-            isParentExpanded: isExpanded,
+            isAnyAncestorCollapsed: isAnyAncestorCollapsedProp || !isExpanded,
             ['aria-expanded']: isExpanded ? 'true' : 'false',
             indentLevel: indentLevel + 1,
-            key: `${indexRef.current}-${indentLevel}-${child.props.children[0]}`,
+            key: `${indexRef.current}-${indentLevel}-${index}`,
           }),
         );
       } else if (isComponentType(child, 'Cell')) {
@@ -265,7 +253,7 @@ const Row = React.forwardRef(
           renderedChildren.push(
             React.cloneElement(child, {
               disabled,
-              key: `${indexRef.current}-${child.props.children}`,
+              key: `${indexRef.current}-${index}`,
             }),
           );
         } else {
@@ -274,7 +262,7 @@ const Row = React.forwardRef(
               children: (
                 <span className={truncation}>{child.props.children}</span>
               ),
-              key: `${indexRef.current}-${child.props.children}`,
+              key: `${indexRef.current}-${index}`,
             }),
           );
         }
@@ -355,7 +343,7 @@ const Row = React.forwardRef(
 
         {nestedRows && (
           <Transition
-            in={isExpanded && isParentExpanded && highestAncestorExpanded}
+            in={isExpanded && !isAnyAncestorCollapsedProp}
             timeout={150}
             nodeRef={nodeRef}
           >
