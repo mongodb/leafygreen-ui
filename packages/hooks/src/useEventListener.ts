@@ -24,7 +24,7 @@ export default function useEventListener<Type extends keyof DocumentEventMap>(
     options,
     enabled = true,
     dependencies = [enabled, type],
-    element = document,
+    element,
   }: UseEventOptions = {},
 ) {
   const memoizedEventCallback: React.MutableRefObject<(
@@ -44,10 +44,18 @@ export default function useEventListener<Type extends keyof DocumentEventMap>(
       memoizedEventCallback.current(e);
 
     // NOTE(JeT): I'm pretty sure there should be a way to avoid this type assertion, but I couldn't figure it out.
-    element.addEventListener(type, callback as EventListener, options);
+    (element ?? document).addEventListener(
+      type,
+      callback as EventListener,
+      options,
+    );
 
     return () => {
-      element.removeEventListener(type, callback as EventListener, options);
+      (element ?? document).removeEventListener(
+        type,
+        callback as EventListener,
+        options,
+      );
     };
   }, dependencies);
 }

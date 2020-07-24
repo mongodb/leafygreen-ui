@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { colors } from '@leafygreen-ui/theme';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Variant from './Variant';
@@ -110,7 +111,9 @@ export default class RadioGroup extends PureComponent<
     value: null,
   };
 
-  defaultName = `radio-group-${Math.floor(Math.random() * 1000000)}`;
+  private static idAllocator = new IdAllocator();
+
+  defaultName = `radio-box-group-${RadioGroup.idAllocator.generate()}`;
 
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { onChange, value } = this.props;

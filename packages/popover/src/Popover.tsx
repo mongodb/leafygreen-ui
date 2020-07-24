@@ -165,20 +165,45 @@ function Popover({
     }
   });
 
+  const [position, setPosition] = useState<ReturnType<
+    typeof calculatePosition
+  > | null>(null);
+
+  useLayoutEffect(() => {
+    setPosition(
+      calculatePosition({
+        useRelativePositioning: !usePortal,
+        spacing,
+        align,
+        justify,
+        referenceElViewportPos,
+        referenceElDocumentPos,
+        contentElViewportPos,
+        contentElDocumentPos,
+      }),
+    );
+  }, [
+    viewportSize,
+    referenceElement,
+    lastTimeRefElMutated,
+    contentNode,
+    lastTimeContentElMutated,
+    usePortal,
+    spacing,
+    align,
+    justify,
+    forceUpdateCounter,
+  ]);
+
+  if (!position) {
+    return null;
+  }
+
   const {
     align: windowSafeAlign,
     justify: windowSafeJustify,
     positionCSS,
-  } = calculatePosition({
-    useRelativePositioning: !usePortal,
-    spacing,
-    align,
-    justify,
-    referenceElViewportPos,
-    referenceElDocumentPos,
-    contentElViewportPos,
-    contentElDocumentPos,
-  });
+  } = position;
 
   const activeStyle = css`
     transform: translate3d(0, 0, 0) scale(1);
@@ -244,12 +269,6 @@ function Popover({
 
 Popover.displayName = 'Popover';
 
-// __TARGET__ is a global variable that indicates the webpack build target.
-//
-// We're typing this here because doing it globally was proving problematic.
-// We should solve for this if we need to use __TARGET__ elsewhere.
-declare const __TARGET__: 'web' | 'node';
-
 Popover.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   active: PropTypes.bool,
@@ -258,7 +277,9 @@ Popover.propTypes = {
   justify: PropTypes.oneOf(Object.values(Justify)),
   refEl: PropTypes.shape({
     current:
-      __TARGET__ === 'web' ? PropTypes.instanceOf(Element) : PropTypes.any,
+      typeof window !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
   }),
   usePortal: PropTypes.bool,
   portalClassName: PropTypes.string,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '@leafygreen-ui/tooltip';
 import Badge, { Variant } from '@leafygreen-ui/badge';
@@ -153,11 +153,26 @@ function OrgNav({
 }: OrgNavProps) {
   const [accessManagerOpen, setAccessManagerOpen] = useState(false);
   const [onPremMenuOpen, setOnPremMenuOpen] = useState(false);
-  const { width: viewportWidth } = useViewportSize();
   const onElementClick = useOnElementClick();
-  const { orgNav } = urls;
-  const isTablet = viewportWidth < breakpoints.medium;
-  const isMobile = viewportWidth < breakpoints.small;
+  const viewportSize = useViewportSize();
+  const [showProductTour, setShowProductTour] = useState(false);
+
+  const isTablet = viewportSize
+    ? viewportSize.width < breakpoints.medium
+    : false;
+  const isMobile = viewportSize
+    ? viewportSize.width < breakpoints.small
+    : false;
+
+  useEffect(() => {
+    setShowProductTour(
+      !onPremEnabled &&
+        !isMobile &&
+        // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'.ts(2339)
+        window.Appcues,
+    );
+  }, [onPremEnabled, isMobile]);
+
   const disabled = (userMenuActiveNavItems as Array<string>).includes(
     activeNav as string,
   );
@@ -234,6 +249,7 @@ function OrgNav({
   }
 
   const AccessManagerIcon = accessManagerOpen ? CaretUpIcon : CaretDownIcon;
+  const { orgNav } = urls;
 
   return (
     <nav
@@ -409,19 +425,16 @@ function OrgNav({
           </Tooltip>
         )}
 
-        {!onPremEnabled &&
-          !isMobile &&
-          // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'.ts(2339)
-          window.Appcues && (
-            <OrgNavLink
-              // @ts-ignore 'Cannot find name Appcues'
-              onClick={() => Appcues.show('-M4PVbE05VI91MJihJGv')} // eslint-disable-line no-undef
-              className={cx(rightLinkMargin, productTourColor)}
-              data-testid="org-nav-see-product-tour"
-            >
-              See Product Tour
-            </OrgNavLink>
-          )}
+        {showProductTour && (
+          <OrgNavLink
+            // @ts-ignore 'Cannot find name Appcues'
+            onClick={() => Appcues.show('-M4PVbE05VI91MJihJGv')} // eslint-disable-line no-undef
+            className={cx(rightLinkMargin, productTourColor)}
+            data-testid="org-nav-see-product-tour"
+          >
+            See Product Tour
+          </OrgNavLink>
+        )}
 
         {!isMobile && (
           <OrgNavLink

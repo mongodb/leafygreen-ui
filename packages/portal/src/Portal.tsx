@@ -19,29 +19,31 @@ function createPortalContainer(className?: string): HTMLElement {
 }
 
 function Portal(props: PortalProps) {
-  const [container, setContainer] = useState(props.container);
+  // Make container initially undefined so that the portal is not created
+  // or rendered on initial render. This allows server-side rendering since:
+  //  - ReactDOMServer cannot render portals
+  //  - A component's initial hydrated render should match the server render
+  const [container, setContainer] = useState<HTMLElement | undefined>();
 
   useEffect(() => {
-    if (!container) {
-      setContainer(
+    if (props.container) {
+      setContainer(props.container);
+    } else {
+      const defaultContainer =
         // Render needs to be idempotent, meaning it can't have side-effects.
-        // In stict mode, React will call render more than once to exercise,
+        // In strict mode, React will call render more than once to exercise,
         // this which will result in multiple DOM elements being created if
         // the container element is created directly in render.
         // https://github.com/facebook/react/issues/15074#issuecomment-471197572
-        createPortalContainer(props.className),
-      );
-    }
-  }, []);
+        createPortalContainer(props.className);
 
-  useEffect(
-    () => () => {
-      if (!props.container && container) {
-        container.remove();
-      }
-    },
-    [container],
-  );
+      setContainer(defaultContainer);
+
+      return () => {
+        defaultContainer.remove();
+      };
+    }
+  }, [props.container]);
 
   // TODO(PD-702): Investigate using `usePrevious` hook from mongo-nav
   const prevPropsRef = useRef(props);
@@ -50,16 +52,11 @@ function Portal(props: PortalProps) {
     const prevProps = prevPropsRef.current;
     prevPropsRef.current = props;
 
-    if (prevProps.container !== props.container) {
-      // Sending consumer console error to control how this component is used
-      // eslint-disable-next-line no-console
-      console.error(
-        'Changing the Portal container is not supported behavior and may cause unintended side effects. Instead, create a new Portal instance.',
-      );
-      return;
-    }
-
-    if (prevProps.className !== props.className && container) {
+    if (
+      prevProps.className !== props.className &&
+      !props.container &&
+      container
+    ) {
       container.className = props.className ?? '';
     }
   });

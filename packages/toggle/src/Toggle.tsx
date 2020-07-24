@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp, IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 
@@ -430,7 +430,10 @@ export default class Toggle extends PureComponent<
   };
 
   state: ToggleState = { checked: false };
-  checkboxId = `toggle-${Math.floor(Math.random() * 10000000)}`;
+
+  private static idAllocator = new IdAllocator();
+
+  checkboxId = `toggle-${Toggle.idAllocator.generate()}`;
 
   onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { onChange, checked } = this.props;

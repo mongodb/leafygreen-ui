@@ -273,21 +273,8 @@ export default function ProjectNav({
   const [alerts, setAlerts] = useState(current?.alertsOpen ?? 0);
 
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const { width: viewportWidth } = useViewportSize();
   const onElementClick = useOnElementClick();
-  const { projectNav } = urls;
-  const isMobile = viewportWidth < breakpoints.small;
-  const isCloudManager = current?.planType === PlanType.Cloud;
-  const isLoading = !!current;
-
-  const isProjectInvite =
-    activeNav === ActiveNavElement.ProjectNavInvite && isLoading;
-  const isActivityFeed =
-    activeNav === ActiveNavElement.ProjectNavActivityFeed && isLoading;
-  const isProjectAlerts =
-    activeNav === ActiveNavElement.ProjectNavAlerts && isLoading;
-
-  const currentProjectId = current?.projectId;
+  const viewportSize = useViewportSize();
 
   function fetchAlertsCount() {
     return fetch(
@@ -303,10 +290,26 @@ export default function ProjectNav({
       .catch(console.error);
   }
 
+  const isCloudManager = current?.planType === PlanType.Cloud;
+  const isLoading = !!current;
+  const currentProjectId = current?.projectId;
+
   usePoller(fetchAlertsCount, {
     interval: alertPollingInterval,
     enabled: mode === Mode.Production && currentProjectId != null,
   });
+
+  const { projectNav } = urls;
+  const isMobile = viewportSize
+    ? viewportSize.width < breakpoints.small
+    : false;
+
+  const isProjectInvite =
+    activeNav === ActiveNavElement.ProjectNavInvite && isLoading;
+  const isActivityFeed =
+    activeNav === ActiveNavElement.ProjectNavActivityFeed && isLoading;
+  const isProjectAlerts =
+    activeNav === ActiveNavElement.ProjectNavAlerts && isLoading;
 
   const sharedTooltipProps = {
     variant: 'dark',

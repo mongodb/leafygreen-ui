@@ -1,5 +1,5 @@
 import { OneOf } from '@leafygreen-ui/lib';
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Popover, {
   PopoverProps,
@@ -10,7 +10,7 @@ import Popover, {
 import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { HTMLElementProps, IdAllocator } from '@leafygreen-ui/lib';
 import { transparentize } from 'polished';
 import debounce from 'lodash/debounce';
 import { trianglePosition } from './tooltipUtils';
@@ -157,6 +157,8 @@ export type TooltipProps = Omit<
     }
   >;
 
+const idAllocator = new IdAllocator();
+
 /**
  * # Tooltip
  *
@@ -212,10 +214,8 @@ function Tooltip({
 
   const tooltipRef = useRef<HTMLDivElement>(null);
 
-  const tooltipId = useMemo(
-    () => id || `tooltip-${Math.floor(Math.random() * Math.floor(10))}`,
-    [id],
-  );
+  const tooltipId =
+    id ?? tooltipRef.current?.id ?? `tooltip-${idAllocator.generate()}`;
 
   const createTriggerProps = (
     triggerEvent: TriggerEvent,
