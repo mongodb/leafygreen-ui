@@ -31,11 +31,8 @@ declare class TokenTree {
   closeNode(): void;
   closeAllNodes(): void;
   toJSON(): string;
-  walk<T extends any>(builder: T): T;
-  static _walk<T extends any>(
-    builder: T,
-    node: string | Array<TokenObject | string>,
-  ): T;
+  walk<T>(builder: T): T;
+  static _walk<T>(builder: T, node: string | Array<TokenObject | string>): T;
   static _collapse(node: string | Array<TokenObject | string>): void;
 }
 
@@ -55,8 +52,8 @@ interface HighlightResult {
   isTransformed: boolean;
   valueWithLineNumbers: string;
   emitter: TokenTreeEmitter;
-  react: React.ReactNode;
-  reactWithNumbers: React.ReactNode;
+  react: Array<React.ReactNode>;
+  reactWithNumbers: Array<React.ReactNode>;
   relevance: number;
   language: string;
   illegal: boolean;

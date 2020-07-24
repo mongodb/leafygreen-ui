@@ -1,8 +1,6 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import { useVariant } from './CodeWrapper';
-import { Variant } from './types';
+import { createDataProp } from '@leafygreen-ui/lib';
 
 interface TokenProps {
   kind?: string;
@@ -34,7 +32,10 @@ function isString(item: any): item is string {
   return item != null && typeof item === 'string';
 }
 
-export function processToken(token: TreeItem, index?: number): React.ReactNode {
+export function processToken(
+  token: TreeItem,
+  key?: number | string,
+): React.ReactNode {
   if (token == null) {
     return null;
   }
@@ -44,12 +45,12 @@ export function processToken(token: TreeItem, index?: number): React.ReactNode {
   }
 
   if (isArray(token)) {
-    return token.map(processToken);
+    return token.map((t, i) => processToken(t, `${key}-${i}`));
   }
 
   if (isObject(token)) {
     return (
-      <Token key={index} kind={token.kind}>
+      <Token key={key} kind={token.kind}>
         {processToken(token.children)}
       </Token>
     );
@@ -65,24 +66,26 @@ const cellStyle = css`
   vertical-align: top;
 `;
 
+export const numberCellDataProp = createDataProp('code-number-cell');
+
 interface LineTableRowProps {
   lineNumber: number;
   children: React.ReactNode;
 }
 
 export function LineTableRow({ lineNumber, children }: LineTableRowProps) {
-  const variant = useVariant();
-  const numberColor =
-    uiColors.gray[variant === Variant.Dark ? 'dark1' : 'light1'];
-
   const numberCellStyle = css`
     padding-right: 24px;
-    color: ${numberColor};
   `;
 
   return (
     <tr>
-      <td className={cx(cellStyle, numberCellStyle)}>{lineNumber}</td>
+      <td
+        {...numberCellDataProp.prop}
+        className={cx(cellStyle, numberCellStyle)}
+      >
+        {lineNumber}
+      </td>
       <td className={cellStyle}>{children}</td>
     </tr>
   );
@@ -169,8 +172,13 @@ const plugin: HighlightPluginEventCallbacks = {
     const { rootNode } = result.emitter;
     const lines = treeToLines(rootNode.children);
 
-    result.react = lines.map(renderLineAsFragment);
-    result.reactWithNumbers = lines.map(renderLineAsTableRow);
+    result.react = [];
+    result.reactWithNumbers = [];
+
+    lines.forEach((line, index) => {
+      result.react.push(renderLineAsFragment(line));
+      result.reactWithNumbers.push(renderLineAsTableRow(line, index));
+    });
   },
 };
 

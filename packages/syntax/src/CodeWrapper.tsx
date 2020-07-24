@@ -1,12 +1,8 @@
-import React, { createContext, useContext } from 'react';
+import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Variant, SyntaxProps } from './types';
-
-const VariantContext = createContext<Variant>(Variant.Light);
-
-export function useVariant() {
-  return useContext(VariantContext);
-}
+import { numberCellDataProp } from './renderingPlugin';
+import { uiColors } from '@leafygreen-ui/palette';
 
 interface CodeWrapperProps
   extends Omit<SyntaxProps, 'showLineNumbers' | 'children'> {
@@ -20,22 +16,29 @@ export default function CodeWrapper({
   variant = Variant.Light,
   ...rest
 }: CodeWrapperProps) {
+  const numberColor =
+    uiColors.gray[variant === Variant.Dark ? 'dark1' : 'light1'];
+
+  const codeStyles = css`
+    color: inherit;
+    font-size: 13px;
+    line-height: 24px;
+
+    & ${numberCellDataProp.selector} {
+      color: ${numberColor};
+    }
+  `;
+
   const codeClassName = cx(
     `lg-highlight-hljs-${variant}`,
-    css`
-      color: inherit;
-      font-size: 13px;
-      line-height: 24px;
-    `,
+    codeStyles,
     language,
     className,
   );
 
   return (
-    <VariantContext.Provider value={variant}>
-      <code {...rest} className={codeClassName}>
-        {children}
-      </code>
-    </VariantContext.Provider>
+    <code {...rest} className={codeClassName}>
+      {children}
+    </code>
   );
 }
