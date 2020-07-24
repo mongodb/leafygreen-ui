@@ -7,3 +7,4 @@ export {
   Disclaimer,
   Overline,
 } from './Typography';
+export { Link } from './Link';

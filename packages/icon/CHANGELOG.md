@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 6.2.0
+
+### Minor Changes
+
+- 4873650: Adds `OpenNewTab` glyph to library
+
 ## 6.1.2
 
 ### Patch Changes
