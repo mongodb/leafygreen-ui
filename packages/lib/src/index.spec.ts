@@ -43,11 +43,11 @@ describe('packages/lib', () => {
       const barMissingSameBad: Test = { bar: 'bar', barOnly: 'barOnly' };
       // @ts-expect-error
       const barMissingBarOnlyBad: Test = { bar: 'bar', same: 'same' };
-      // @ts-expect-error
       const barWithFooOnlyBad: Test = {
         bar: 'bar',
         same: 'same',
         barOnly: 'barOnly',
+        // @ts-expect-error
         fooOnly: '42',
       };
     });
