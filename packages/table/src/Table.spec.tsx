@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 import { Table, TableHeader, HeaderRow, Row, Cell } from '.';
 import { normalizeAccessor } from './TableHead';
 import { defaultData } from './fixtures';
@@ -51,13 +51,11 @@ function renderTable(props: Props = {}) {
 }
 
 describe('packages/table', () => {
-  // Test sortBy prop is a string, and a function
-  // Test table header as a string and a jsx element explicitly
-
   test('by default, it renders unsorted table data, based on "data" prop', () => {
     renderTable();
     const firstRow = screen.getAllByRole('row')[1];
-    expect(firstRow.children[0].innerHTML).toContain('Alice');
+    const alice = within(firstRow).getByText('Alice');
+    expect(alice).toBeVisible();
   });
 
   test('it renders the data in descending order when the "sortable" prop is set, and the icon is clicked', () => {

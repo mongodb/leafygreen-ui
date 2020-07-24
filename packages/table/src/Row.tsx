@@ -76,7 +76,7 @@ const transitionStyles = {
 
 const styleMap = {
   left: [DataType.String, DataType.Weight, DataType.ZipCode, DataType.Date],
-  right: [DataType.Number, DataType.Quantity],
+  right: [DataType.Number],
 } as const;
 
 function styleColumn(index: string, dataType: DataType) {

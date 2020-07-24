@@ -67,8 +67,7 @@ interface Sort {
 }
 
 const DataType = {
-  Number: 'Number',
-  Quantity: 'quantity',
+  Number: 'number',
   Weight: 'weight',
   ZipCode: 'zipCode',
   String: 'string',
@@ -184,7 +183,7 @@ export function reducer(state: State, action: Action): State {
           indeterminate: false,
           checked: !state.headerCheckState.checked,
         },
-        rowState: setEveryrowState(
+        rowState: setEveryRowState(
           state.rowState,
           !state.headerCheckState.checked,
         ),
@@ -274,7 +273,7 @@ const setHeaderCheckedStateOnRowChecked = (
   };
 };
 
-const setEveryrowState = (
+const setEveryRowState = (
   currentRowState: State['rowState'],
   newCheckedState: boolean,
 ) => {
@@ -300,8 +299,8 @@ export const sortFunction = ({
   accessorValue,
   direction,
 }: {
-  data: Array<any>;
-  accessorValue: (data: any) => string;
+  data: Array<T>;
+  accessorValue: (data: T) => string;
   direction: 'asc' | 'desc';
 }) => {
   return data.sort((a, b) => {

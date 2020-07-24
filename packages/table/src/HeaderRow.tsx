@@ -11,12 +11,11 @@ const thStyles = css`
   border-style: solid;
 `;
 
-export interface HeaderRowProps extends React.ComponentPropsWithoutRef<'tr'> {
-  indeterminate?: boolean;
-  selectable?: boolean;
-}
-
-function HeaderRow({ children, className, ...rest }: HeaderRowProps) {
+function HeaderRow({
+  children,
+  className,
+  ...rest
+}: React.ComponentPropsWithoutRef<'tr'>) {
   const {
     state: { selectable, headerCheckState },
     dispatch,
