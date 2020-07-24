@@ -29,7 +29,7 @@ storiesOf('MongoNav', module).add('Default', () => (
         activeNav={select(
           'activeNav',
           Object.values(ActiveNavElement),
-          'orgNavAccessManager',
+          ActiveNavElement.OrgNavAccessManagerDropdown,
         )}
         admin={boolean('admin', true)}
         onPrem={{
