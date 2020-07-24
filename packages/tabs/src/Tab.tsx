@@ -13,6 +13,11 @@ export interface TabProps {
   children?: React.ReactNode;
 
   /**
+   * Boolean that determines if the Tab is disabled.
+   */
+  disabled?: boolean;
+
+  /**
    * If Tabs component is uncontrolled, this determines what Tab will be selected on first render.
    */
   default?: boolean;
