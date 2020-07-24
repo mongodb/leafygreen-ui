@@ -1,6 +1,5 @@
 import React from 'react';
-import { render, cleanup, act } from '@testing-library/react';
-import { nullableElement, Queries } from 'packages/lib/src/testHelpers';
+import { act, cleanup, render, RenderResult } from '@testing-library/react';
 import {
   dataFixtures,
   urlFixtures,
@@ -11,23 +10,12 @@ import ProjectNav from './ProjectNav';
 import { startCase } from 'lodash';
 import { Mode } from '../types';
 
-// types
-interface ExpectedElements {
-  [key: string]: nullableElement;
-}
-
-interface LinkNameToUrls {
-  [key: string]: string | null | undefined;
-}
-
-const Products = {
-  CloudManager: 'cloudManager',
-  Atlas: 'atlas',
-  Realm: 'realm',
-  Charts: 'charts',
+const productToTestId: Record<string, string> = {
+  realm: 'project-nav-realm',
+  charts: 'project-nav-charts',
+  atlas: 'project-nav-atlas',
+  cloudManager: 'project-nav-cloud-manager',
 };
-
-type Products = typeof Products[keyof typeof Products];
 
 // data
 const { currentProject, projects } = dataFixtures;
@@ -37,35 +25,21 @@ const {
 
 // this avoids having to explicitly type orgNav with nullable fields
 // and then extend it to allow string indexes
-const linkNamesToUrls: LinkNameToUrls = {
+const linkNamesToUrls: Record<string, string | undefined> = {
   alerts,
   activityFeed,
   invite,
 };
 
+const linkNamesToTestIds: Record<string, string> = {
+  alerts: 'project-nav-alerts',
+  activityFeed: 'project-nav-activity-feed',
+  invite: 'project-nav-invite',
+};
+
 describe('packages/mongo-nav/src/project-nav', () => {
-  const queries: Queries = {};
-  const expectedElements: ExpectedElements = {};
-
-  const setQueries = ({ queryByTestId }: Queries) => {
-    Object.assign(queries, { queryByTestId });
-    setExpectedElements();
-  };
-
-  const setExpectedElements = () => {
-    const { queryByTestId = () => null } = queries;
-    expectedElements.projectStatusBadge = queryByTestId(
-      'project-nav-project-status-badge',
-    );
-    expectedElements.atlas = queryByTestId('project-nav-atlas');
-    expectedElements.cloudManager = queryByTestId('project-nav-cloud-manager');
-    expectedElements.realm = queryByTestId('project-nav-realm');
-    expectedElements.charts = queryByTestId('project-nav-charts');
-    expectedElements.alerts = queryByTestId('project-nav-alerts');
-    expectedElements.alertsBadge = queryByTestId('project-nav-alerts-badge');
-    expectedElements.activityFeed = queryByTestId('project-nav-activity-feed');
-    expectedElements.invite = queryByTestId('project-nav-invite');
-  };
+  let getByTestId: RenderResult['getByTestId'];
+  let queryByTestId: RenderResult['queryByTestId'];
 
   let onProjectChange: jest.Mock;
 
@@ -97,20 +71,18 @@ describe('packages/mongo-nav/src/project-nav', () => {
 
   const renderComponent = async (props = {}) => {
     await act(async () => {
-      setQueries(
-        render(
-          <ProjectNav
-            data={projects}
-            constructProjectURL={constructProjectURL}
-            urls={urlFixtures}
-            activeProduct="cloud"
-            hosts={hostDefaults}
-            onProjectChange={onProjectChange}
-            mode={Mode.Production}
-            {...props}
-          />,
-        ),
-      );
+      ({ getByTestId, queryByTestId } = render(
+        <ProjectNav
+          data={projects}
+          constructProjectURL={constructProjectURL}
+          urls={urlFixtures}
+          activeProduct="cloud"
+          hosts={hostDefaults}
+          onProjectChange={onProjectChange}
+          mode={Mode.Production}
+          {...props}
+        />,
+      ));
     });
   };
 
@@ -118,28 +90,28 @@ describe('packages/mongo-nav/src/project-nav', () => {
     it(`${isVisible ? 'displays' : 'does not display'} the ${startCase(
       linkName,
     )} iconButton`, () => {
-      const navLink = expectedElements[linkName];
+      const navLink = queryByTestId(linkNamesToTestIds[linkName]);
 
       if (isVisible) {
-        expect(navLink).toBeInTheDocument();
+        expect(navLink).toBeVisible();
 
-        expect((navLink as HTMLAnchorElement)?.href).toEqual(
+        expect((navLink as HTMLAnchorElement).href).toEqual(
           linkNamesToUrls[linkName],
         );
       } else {
-        expect(navLink).toBeNull();
+        expect(navLink).not.toBeVisible();
       }
     });
   };
 
-  const testForVisibleProducts = (product: Products, isVisible: boolean) => {
+  const testForVisibleProducts = (product: string, isVisible: boolean) => {
     it(`${
       isVisible ? 'displays' : 'does not display'
     } the ${product} in the nav`, () => {
-      const foundProduct = expectedElements[product];
+      const foundProduct = queryByTestId(productToTestId[product]);
 
       if (isVisible) {
-        expect(foundProduct).toBeInTheDocument();
+        expect(foundProduct).toBeVisible();
       } else {
         expect(foundProduct).toBeNull();
       }
@@ -150,13 +122,13 @@ describe('packages/mongo-nav/src/project-nav', () => {
     it(`${
       isVisible ? 'displays' : 'does not display'
     } the project status badge in the nav`, () => {
-      const statusBadge = expectedElements.projectStatusBadge;
+      const statusBadge = queryByTestId('project-nav-project-status-badge');
 
       if (isVisible) {
-        expect(statusBadge).toBeInTheDocument();
-        expect((statusBadge as Element).innerHTML).toContain('ACTIVE');
+        expect(statusBadge).toBeVisible();
+        expect(statusBadge!.innerHTML).toContain('ACTIVE');
       } else {
-        expect(statusBadge).not.toBeInTheDocument();
+        expect(statusBadge).toBeNull();
       }
     });
   };
@@ -167,7 +139,7 @@ describe('packages/mongo-nav/src/project-nav', () => {
       await renderComponent({ current: currentProject });
     });
 
-    Object.values(Products).forEach(product =>
+    Object.keys(productToTestId).forEach(product =>
       testForVisibleProducts(product, product !== 'cloudManager'),
     );
 
@@ -178,13 +150,13 @@ describe('packages/mongo-nav/src/project-nav', () => {
     testForProjectStatusBadge(false);
 
     it('atlas tab shows the correct link', () => {
-      expect(expectedElements!.atlas!.getAttribute('href')).toEqual(
+      expect(getByTestId('project-nav-atlas').getAttribute('href')).toEqual(
         'https://cloud.mongodb.com/v2/fakeProjectId1#',
       );
     });
 
     it('does not show alerts badge', () => {
-      expect(expectedElements.alertsBadge).not.toBeInTheDocument();
+      expect(queryByTestId('project-nav-alerts-badge')).toBeNull();
     });
   });
 
@@ -195,7 +167,7 @@ describe('packages/mongo-nav/src/project-nav', () => {
       await renderComponent({ current: cloudManagerProject });
     });
 
-    Object.values(Products).forEach(product =>
+    Object.keys(productToTestId).forEach(product =>
       testForVisibleProducts(product, product === 'cloudManager'),
     );
 
@@ -221,10 +193,9 @@ describe('packages/mongo-nav/src/project-nav', () => {
       });
 
       it('displays expected alerts badge', () => {
-        const alertsBadge = expectedElements.alertsBadge;
-
-        expect(alertsBadge).toBeInTheDocument();
-        expect((alertsBadge as Element).innerHTML).toContain('2');
+        expect(getByTestId('project-nav-alerts-badge').innerHTML).toContain(
+          '2',
+        );
       });
     });
 
@@ -239,10 +210,9 @@ describe('packages/mongo-nav/src/project-nav', () => {
       });
 
       it('displays value from currentProject', () => {
-        const alertsBadge = expectedElements.alertsBadge;
-
-        expect(alertsBadge).toBeInTheDocument();
-        expect((alertsBadge as Element).innerHTML).toContain('1');
+        expect(getByTestId('project-nav-alerts-badge').innerHTML).toContain(
+          '1',
+        );
       });
     });
   });
@@ -251,7 +221,7 @@ describe('packages/mongo-nav/src/project-nav', () => {
     beforeEach(() => renderComponent());
 
     test('atlas tab shows the correct link', () => {
-      expect(expectedElements!.atlas!.getAttribute('href')).toEqual(
+      expect(getByTestId('project-nav-atlas').getAttribute('href')).toEqual(
         'https://cloud.mongodb.com',
       );
     });

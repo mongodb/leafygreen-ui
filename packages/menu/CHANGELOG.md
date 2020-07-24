@@ -1,5 +1,16 @@
 # @leafygreen-ui/menu
 
+## 7.0.3
+
+### Patch Changes
+
+- e8f5376: Ensures that only props that are of type `string` are recognized as being passed to the `href` prop.
+- Updated dependencies [e8f5376]
+- Updated dependencies [4873650]
+  - @leafygreen-ui/box@2.1.1
+  - @leafygreen-ui/icon@6.2.0
+  - @leafygreen-ui/icon-button@6.1.1
+
 ## 7.0.2
 
 ### Patch Changes

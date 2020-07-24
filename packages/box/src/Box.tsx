@@ -39,13 +39,13 @@ function InlineBox<TProps>(
 ): JSX.Element;
 
 function InlineBox(props: BoxProps, ref: React.Ref<any>) {
-  if (props.as !== undefined) {
+  if (props.as != null) {
     const { as: Component, ...rest } = props;
     // @ts-expect-error
     return <Component {...rest} ref={ref} />;
   }
 
-  if (props.href !== undefined) {
+  if (props.href != null) {
     return <a {...props} ref={ref} />; //eslint-disable-line jsx-a11y/anchor-has-content
   }
 

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/typography",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "leafyGreen UI Kit Typography",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",
@@ -15,7 +15,8 @@
   "dependencies": {
     "@leafygreen-ui/lib": "^4.0.0",
     "@leafygreen-ui/palette": "^2.0.0",
-    "@leafygreen-ui/box": "^2.0.0"
+    "@leafygreen-ui/box": "^2.1.1",
+    "@leafygreen-ui/icon": "^6.2.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^1.1.0"

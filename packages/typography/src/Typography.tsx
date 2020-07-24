@@ -4,23 +4,12 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { typeScale1, typeScale2 } from './styles';
 
 const sharedStyles = css`
   margin: unset;
   font-family: Akzidenz, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: ${uiColors.gray.dark2};
-`;
-
-const typeScale1 = css`
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0px;
-`;
-
-const typeScale2 = css`
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0px;
 `;
 
 const h1 = css`
