@@ -1,24 +1,16 @@
 import React from 'react';
-import { waitFor } from '@testing-library/dom';
-import { render, fireEvent, cleanup, act } from '@testing-library/react';
-import { JestDOM } from '@leafygreen-ui/testing-lib';
+import { waitForElementToBeRemoved } from '@testing-library/dom';
 import {
-  nullableElement,
-  nullableElementArray,
-  Queries,
-} from 'packages/lib/src/testHelpers';
+  act,
+  cleanup,
+  fireEvent,
+  render,
+  RenderResult,
+} from '@testing-library/react';
+import { JestDOM } from '@leafygreen-ui/testing-lib';
 import OrgSelect from './OrgSelect';
 import { dataFixtures, urlFixtures, constructOrganizationURL } from '../data';
 import { OnChangeInterface } from '../types';
-
-// types
-interface ExpectedElements {
-  orgTrigger?: nullableElement;
-  orgTriggerText?: nullableElement;
-  orgInput?: nullableElement;
-  orgSettingsIcon?: nullableElement;
-  orgResults?: nullableElementArray;
-}
 
 // data
 const { currentOrganization, organizations } = dataFixtures;
@@ -26,26 +18,9 @@ const { currentOrganization, organizations } = dataFixtures;
 const mongoSelectUrls = urlFixtures.mongoSelect;
 
 describe('packages/mongo-select/OrgSelect', () => {
-  const queries: Queries = {};
-  const expectedElements: ExpectedElements = {};
-
-  const setQueries = ({ queryByTestId, queryAllByTestId }: Queries) => {
-    Object.assign(queries, { queryByTestId, queryAllByTestId });
-    setExpectedElements();
-  };
-
-  const setExpectedElements = () => {
-    const {
-      queryByTestId = () => null,
-      queryAllByTestId = () => null,
-    } = queries;
-
-    expectedElements.orgTrigger = queryByTestId('org-trigger');
-    expectedElements.orgTriggerText = queryByTestId('org-select-active-org');
-    expectedElements.orgInput = queryByTestId('org-filter-input');
-    expectedElements.orgSettingsIcon = queryByTestId('org-trigger-settings');
-    expectedElements.orgResults = queryAllByTestId('org-option');
-  };
+  let getByTestId: RenderResult['getByTestId'];
+  let queryByTestId: RenderResult['queryByTestId'];
+  let queryAllByTestId: RenderResult['queryAllByTestId'];
 
   afterEach(() => {
     jest.restoreAllMocks();
@@ -54,104 +29,95 @@ describe('packages/mongo-select/OrgSelect', () => {
 
   describe('OrgSelect', () => {
     const renderComponent = (props = {}) => {
-      setQueries(
-        render(
-          <OrgSelect
-            current={currentOrganization}
-            data={organizations}
-            constructOrganizationURL={constructOrganizationURL}
-            urls={mongoSelectUrls}
-            {...props}
-          />,
-        ),
-      );
+      ({ getByTestId, queryByTestId, queryAllByTestId } = render(
+        <OrgSelect
+          current={currentOrganization}
+          data={organizations}
+          constructOrganizationURL={constructOrganizationURL}
+          urls={mongoSelectUrls}
+          {...props}
+        />,
+      ));
     };
 
     describe('when rendered with default props', () => {
       beforeEach(renderComponent);
 
       it('displays the org select trigger with the current org name', () => {
-        const { orgTriggerText } = expectedElements;
+        const orgTriggerText = getByTestId('org-select-active-org');
         expect(orgTriggerText).toBeVisible();
-        expect(orgTriggerText?.textContent).toEqual('Demo Organization');
+        expect(orgTriggerText.textContent).toEqual('Demo Organization');
       });
 
       describe('when clicking the current organization trigger', () => {
         beforeEach(() => {
-          const { orgTrigger } = expectedElements;
-          fireEvent.click(orgTrigger as Element);
-          setExpectedElements();
+          fireEvent.click(getByTestId('org-trigger'));
         });
 
         it('displays a search input with a placeholder', () => {
-          const { orgInput } = expectedElements;
-          expect(orgInput).toBeInTheDocument();
-          expect(orgInput?.getAttribute('placeholder')).toContain(
-            'Search for an Organization...',
-          );
+          expect(
+            getByTestId('org-filter-input').getAttribute('placeholder'),
+          ).toContain('Search for an Organization...');
         });
 
         it('displays two organization results', () => {
-          const { orgResults } = expectedElements;
-          expect(orgResults?.length).toEqual(2);
+          expect(queryAllByTestId('org-option').length).toEqual(2);
         });
 
         it('displays the correct names of each result', () => {
-          const { orgResults } = expectedElements;
-          expect(orgResults?.[0]?.textContent).toContain('Demo Organization');
-          expect(orgResults?.[1]?.textContent).toContain('Demo Organization 2');
+          const orgResults = queryAllByTestId('org-option');
+          expect(orgResults[0].textContent).toContain('Demo Organization');
+          expect(orgResults[1].textContent).toContain('Demo Organization 2');
         });
 
         it('displays the correct org type of each result', () => {
-          const { orgResults } = expectedElements;
-          expect(orgResults?.[0]?.textContent).toContain('Atlas');
-          expect(orgResults?.[1]?.textContent).toContain('Cloud Manager');
+          const orgResults = queryAllByTestId('org-option');
+          expect(orgResults[0].textContent).toContain('Atlas');
+          expect(orgResults[1].textContent).toContain('Cloud Manager');
         });
 
         it('displays the correct link to projects of each result', () => {
-          const { orgResults } = expectedElements;
-          expect((orgResults?.[0] as HTMLAnchorElement).href).toBe(
+          const orgResults = queryAllByTestId('org-option');
+          expect((orgResults[0] as HTMLAnchorElement).href).toBe(
             'https://cloud.mongodb.com/v2#/org/fakeOrgId1/projects',
           );
-          expect((orgResults?.[1] as HTMLAnchorElement).href).toBe(
+          expect((orgResults[1] as HTMLAnchorElement).href).toBe(
             'https://cloud.mongodb.com/v2#/org/fakeOrgId2/projects',
           );
         });
 
         it('renders the logo associated with the planType', () => {
-          const { orgResults } = expectedElements;
-          expect((orgResults?.[0] as HTMLAnchorElement).innerHTML).toContain(
-            'svg',
-          );
+          const orgResults = queryAllByTestId('org-option');
+          expect(orgResults[0].innerHTML).toContain('svg');
         });
 
         it('indicates the current organization', () => {
-          const { orgResults } = expectedElements;
-          const currentOrgName = currentOrganization?.orgName;
-          const currentResult = orgResults?.filter(result =>
-            result?.textContent?.includes('(current)'),
+          const orgResults = queryAllByTestId('org-option');
+          const currentOrgName = currentOrganization!.orgName;
+          const currentResult = orgResults.filter(result =>
+            result.textContent?.includes('(current)'),
           );
-          expect(currentResult?.length).toEqual(1);
-          expect(currentResult?.[0]?.textContent).toContain(
+          expect(currentResult.length).toEqual(1);
+          expect(currentResult[0].textContent).toContain(
             `${currentOrgName} (current)`,
           );
         });
 
         describe('when clicking an org', () => {
           beforeEach(async () => {
-            const { orgResults } = expectedElements;
+            const orgResults = queryAllByTestId('org-option');
             await JestDOM.silenceNavigationErrors(async waitForNavigation => {
-              fireEvent.click(orgResults?.[0] as Element);
+              fireEvent.click(orgResults[0]);
 
               await waitForNavigation();
             });
           });
 
+          // eslint-disable-next-line jest/expect-expect
           it('closes the menu', async () => {
-            await waitFor(() => {
-              setExpectedElements();
-              expect(expectedElements!.orgInput).not.toBeInTheDocument();
-            });
+            await waitForElementToBeRemoved(() =>
+              queryByTestId('org-filter-input'),
+            );
           });
         });
       });
@@ -161,13 +127,12 @@ describe('packages/mongo-select/OrgSelect', () => {
       beforeEach(() => renderComponent({ disabled: true }));
 
       it('displays the current org as "All Organizations"', () => {
-        const { orgTrigger } = expectedElements;
-        expect(orgTrigger?.textContent).toContain('All Organizations');
+        const orgTrigger = getByTestId('org-trigger');
+        expect(orgTrigger.textContent).toContain('All Organizations');
       });
 
       it('does not display an org settings icon', () => {
-        const { orgSettingsIcon } = expectedElements;
-        expect(orgSettingsIcon).toBeNull();
+        expect(queryByTestId('org-trigger-settings')).toBeNull();
       });
     });
 
@@ -175,34 +140,29 @@ describe('packages/mongo-select/OrgSelect', () => {
       beforeEach(renderComponent);
 
       beforeEach(() => {
-        fireEvent.click(expectedElements.orgTrigger as HTMLElement);
-        setExpectedElements();
+        fireEvent.click(getByTestId('org-trigger'));
       });
 
       it('displays one organization when only one matches the search', () => {
-        const input = expectedElements!.orgInput;
+        const input = getByTestId('org-filter-input');
 
-        expect(input!.innerHTML).toEqual('');
+        expect(input.innerHTML).toEqual('');
 
-        fireEvent.change(input as HTMLElement, {
+        fireEvent.change(input, {
           target: { value: '2' },
         });
 
-        act(setExpectedElements);
-
-        expect(expectedElements!.orgResults!.length).toBe(1);
+        expect(queryAllByTestId('org-option').length).toBe(1);
       });
 
       it('displays no organizations when none matches the search', () => {
-        const input = expectedElements!.orgInput;
+        const input = getByTestId('org-filter-input');
 
-        fireEvent.change(input as HTMLElement, {
+        fireEvent.change(input, {
           target: { value: 'xx' },
         });
 
-        act(setExpectedElements);
-
-        expect(expectedElements!.orgResults!.length).toBe(0);
+        expect(queryAllByTestId('org-option').length).toBe(0);
       });
 
       it('when closing the menu the filter value is reset', async () => {
@@ -217,16 +177,13 @@ describe('packages/mongo-select/OrgSelect', () => {
 
         // Need to wait for the UI to update as clicking on the orgTrigger so rapidly causes
         // React to coalesce the events
-        await waitFor(() => {
-          setExpectedElements();
-          expect(expectedElements!.orgInput).not.toBeInTheDocument();
-        });
+        await waitForElementToBeRemoved(() =>
+          queryByTestId('org-filter-input'),
+        );
 
-        fireEvent.click(expectedElements.orgTrigger as Element);
-        setExpectedElements();
+        fireEvent.click(getByTestId('org-trigger'));
 
-        expect(expectedElements!.orgInput).toBeInTheDocument();
-        expect(expectedElements!.orgInput!.innerHTML).toEqual('');
+        expect(getByTestId('org-filter-input').innerHTML).toEqual('');
       });
     });
 
@@ -249,15 +206,12 @@ describe('packages/mongo-select/OrgSelect', () => {
       );
 
       beforeEach(() => {
-        fireEvent.click(expectedElements.orgTrigger as HTMLElement);
-        setExpectedElements();
+        fireEvent.click(getByTestId('org-trigger'));
       });
 
       it('does not render the logo associated with the planType', () => {
-        const { orgResults } = expectedElements;
-        expect((orgResults?.[0] as HTMLAnchorElement).innerHTML).not.toContain(
-          'svg',
-        );
+        const orgResults = queryAllByTestId('org-option');
+        expect(orgResults[0].innerHTML).not.toContain('svg');
       });
     });
 
@@ -275,21 +229,16 @@ describe('packages/mongo-select/OrgSelect', () => {
       beforeEach(() => renderComponent({ onChange }));
 
       it('it filters the organizations based on the onChange callback', () => {
-        fireEvent.click(expectedElements.orgTrigger as HTMLElement);
-        setExpectedElements();
+        fireEvent.click(getByTestId('org-trigger'));
 
-        const input = expectedElements!.orgInput;
+        const input = getByTestId('org-filter-input');
 
-        fireEvent.change(input as HTMLElement, {
+        fireEvent.change(input, {
           target: { value: '2' },
         });
 
-        act(setExpectedElements);
-
-        expect(expectedElements!.orgResults!.length).toBe(1);
-        expect(
-          expectedElements!.orgResults?.[0].innerHTML.includes('Test SetData'),
-        ).toBe(true);
+        const orgResult = getByTestId('org-option');
+        expect(orgResult.innerHTML.includes('Test SetData')).toBe(true);
       });
     });
   });
