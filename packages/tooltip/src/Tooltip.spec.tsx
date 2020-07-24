@@ -183,14 +183,14 @@ describe('packages/tooltip', () => {
       expect(tooltip).not.toBeVisible();
     });
 
-    test('escape click closes tooltip', () => {
+    test('escape click closes tooltip', async () => {
       const { getByTestId, button } = renderTooltip({
         triggerEvent: 'click',
       });
 
       fireEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
-      expect(tooltip).toBeInTheDocument();
+      await act(() => waitFor(() => expect(tooltip).toBeVisible()));
 
       fireEvent.keyDown(button, {
         key: 'Escape',
@@ -199,7 +199,7 @@ describe('packages/tooltip', () => {
       expect(tooltip).not.toBeVisible();
     });
 
-    test('when "shouldClose" prop is returns true', () => {
+    test('when "shouldClose" prop is returns true', async () => {
       const { getByTestId, backdrop, button } = renderTooltip({
         triggerEvent: 'click',
         shouldClose: () => true,
@@ -207,13 +207,13 @@ describe('packages/tooltip', () => {
 
       fireEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
-      expect(tooltip).toBeInTheDocument();
+      await act(() => waitFor(() => expect(tooltip).toBeVisible()));
 
       fireEvent.click(backdrop);
       expect(tooltip).not.toBeVisible();
     });
 
-    test('when "shouldClose" prop is returns false', () => {
+    test('when "shouldClose" prop is returns false', async () => {
       const { getByTestId, backdrop, button } = renderTooltip({
         triggerEvent: 'click',
         shouldClose: () => false,
@@ -221,10 +221,10 @@ describe('packages/tooltip', () => {
 
       fireEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
-      expect(tooltip).toBeInTheDocument();
+      await act(() => waitFor(() => expect(tooltip).toBeVisible()));
 
       fireEvent.click(backdrop);
-      expect(tooltip).toBeInTheDocument();
+      expect(tooltip).toBeVisible();
     });
   });
 
