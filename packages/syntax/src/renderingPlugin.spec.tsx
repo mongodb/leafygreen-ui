@@ -56,17 +56,21 @@ describe('LineTableRow', () => {
 
   function renderLineTableRow(): RenderResult {
     return render(
-      <LineTableRow lineNumber={lineNumber}>{content}</LineTableRow>,
+      <table>
+        <tbody data-testid="tbody">
+          <LineTableRow lineNumber={lineNumber}>{content}</LineTableRow>
+        </tbody>
+      </table>,
     );
   }
 
   test('renders a single table row as the root node', () => {
-    const { container } = renderLineTableRow();
+    const { getByTestId } = renderLineTableRow();
 
-    // This component must return a <tr> as the root node.
-    // We use container.children here rather than a selector like getAllByRole('row')
-    // to be sure that we're selecting the root node.
-    const rows = container.children;
+    // The component must return a single <tr> as the root node.
+    // We render a table and tbody tag as parents of the element to avoid a console error,
+    // then get the children of that tbody tag to test that the tr element is the only child.
+    const rows = getByTestId('tbody').children;
 
     expect(rows.length).toBe(1);
     expect(rows[0]).toBeInTheDocument();
@@ -177,7 +181,6 @@ describe('treeToLines()', () => {
 
   // eslint-disable-next-line jest/expect-expect
   test('when passed an invalid set of children, returns a valid Array', () => {
-    console.log(treeToLines([...sampleChildren, null, 0]));
     treeToLines([...sampleChildren, null, 0]).forEach(validateLine);
   });
 

@@ -32,10 +32,7 @@ function isString(item: any): item is string {
   return item != null && typeof item === 'string';
 }
 
-export function processToken(
-  token: TreeItem,
-  key?: number | string,
-): React.ReactNode {
+export function processToken(token: TreeItem, key?: number): React.ReactNode {
   if (token == null) {
     return null;
   }
@@ -45,7 +42,7 @@ export function processToken(
   }
 
   if (isArray(token)) {
-    return token.map((t, i) => processToken(t, `${key}-${i}`));
+    return token.map(processToken);
   }
 
   if (isObject(token)) {
@@ -148,15 +145,24 @@ export function treeToLines(
   return lines;
 }
 
-function renderLineAsTableRow(line: Array<TreeItem>, index: number) {
+interface TableRowLineProps {
+  lineNumber: number;
+  line: Array<TreeItem>;
+}
+
+function TableRowLine({ lineNumber, line }: TableRowLineProps) {
   return (
-    <LineTableRow key={index} lineNumber={index + 1}>
+    <LineTableRow lineNumber={lineNumber}>
       {line.map(processToken)}
     </LineTableRow>
   );
 }
 
-function renderLineAsFragment(line: Array<TreeItem>) {
+interface TableRowFragmentProps {
+  line: Array<TreeItem>;
+}
+
+function TableRowFragment({ line }: TableRowFragmentProps) {
   return (
     <>
       <span>{line.map(processToken)}</span>
@@ -176,8 +182,10 @@ const plugin: HighlightPluginEventCallbacks = {
     result.reactWithNumbers = [];
 
     lines.forEach((line, index) => {
-      result.react.push(renderLineAsFragment(line));
-      result.reactWithNumbers.push(renderLineAsTableRow(line, index));
+      result.react.push(<TableRowFragment key={index} line={line} />);
+      result.reactWithNumbers.push(
+        <TableRowLine key={index} lineNumber={index + 1} line={line} />,
+      );
     });
   },
 };
