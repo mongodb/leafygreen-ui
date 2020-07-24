@@ -1,7 +1,6 @@
 import * as typeIs from './typeIs';
-import * as testHelpers from './testHelpers';
 
-export { typeIs, testHelpers };
+export { typeIs };
 
 /** Helper type to extract an HTML element's valid props */
 export type HTMLElementProps<
