@@ -27,7 +27,7 @@ import CreditCard from './CreditCard.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
 import Folder from './Folder.svg';
-import GovBuilding from './GovBuilding.svg';
+import GovernmentBuilding from './GovernmentBuilding.svg';
 import ImportantWithCircle from './ImportantWithCircle.svg';
 import InfoWithCircle from './InfoWithCircle.svg';
 import InviteUser from './InviteUser.svg';
@@ -85,7 +85,7 @@ const glyphs = {
   Edit,
   Ellipsis,
   Folder,
-  GovBuilding,
+  GovernmentBuilding,
   ImportantWithCircle,
   InfoWithCircle,
   InviteUser,

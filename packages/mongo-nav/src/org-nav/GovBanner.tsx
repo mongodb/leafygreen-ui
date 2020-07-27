@@ -1,5 +1,5 @@
 import React from 'react';
-import GovBuildingIcon from '@leafygreen-ui/icon/dist/GovBuilding';
+import GovernmentBuildingIcon from '@leafygreen-ui/icon/dist/GovernmentBuilding';
 import Tooltip from '@leafygreen-ui/tooltip';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -69,7 +69,7 @@ const iconColor = css`
 `;
 
 const bannerMargin = css`
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   margin-right: 2px;
 `;
 
@@ -113,7 +113,7 @@ function FullWidthGovBanner({ isTablet = false }: { isTablet?: boolean }) {
               [tabletTooltipContainer]: isTablet,
             })}
           >
-            <GovBuildingIcon
+            <GovernmentBuildingIcon
               size="small"
               className={cx(iconColor, bannerMargin)}
             />
@@ -135,7 +135,7 @@ function MobileGovTooltip() {
       {...sharedTooltipProps}
       trigger={
         <div className={mobileContainer}>
-          <GovBuildingIcon className={cx(iconColor, mobileMargin)} />
+          <GovernmentBuildingIcon className={cx(iconColor, mobileMargin)} />
         </div>
       }
       justify="end"
