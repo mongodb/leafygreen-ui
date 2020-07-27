@@ -1,28 +1,32 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { cx, css } from '@leafygreen-ui/emotion';
-import hljs from 'highlight.js/lib/highlight';
+import { css } from '@leafygreen-ui/emotion';
+// Import from core so we can register the appropriate languages ourselves
+import hljs from 'highlight.js/lib/core';
 import hljsDefineGraphQL from 'highlightjs-graphql';
-import { Variant, SupportedLanguages, Language } from './types';
+import CodeWrapper from './CodeWrapper';
+import { Variant, Language, SyntaxProps } from './types';
+import { SupportedLanguages, languageParsers } from './languages';
 import { injectGlobalStyles } from './globalStyles';
+import renderingPlugin from './renderingPlugin';
 
-let syntaxHighlightingInitialized = false;
-
-type FilteredSupportedLanguagesEnum = Omit<typeof SupportedLanguages, 'Csharp'>;
+type FilteredSupportedLanguagesEnum = Omit<typeof SupportedLanguages, 'Cs'>;
 type FilteredSupportedLanguages = FilteredSupportedLanguagesEnum[keyof FilteredSupportedLanguagesEnum];
 
 function filterSupportedLanguages(
   language: SupportedLanguages,
 ): language is FilteredSupportedLanguages {
-  return language !== 'csharp';
+  return language !== 'cs';
 }
+
+let syntaxHighlightingInitialized = false;
 
 function initializeSyntaxHighlighting() {
   syntaxHighlightingInitialized = true;
 
   injectGlobalStyles();
 
-  // We filter out 'csharp' here because it's redundant with 'cs'
+  // We filter out 'cs' here because it's redundant with 'csharp'
   const SupportedLanguagesList = Object.values(SupportedLanguages).filter(
     filterSupportedLanguages,
   );
@@ -31,10 +35,7 @@ function initializeSyntaxHighlighting() {
     if (language === 'graphql') {
       hljsDefineGraphQL(hljs);
     } else {
-      hljs.registerLanguage(
-        language,
-        require(`highlight.js/lib/languages/${language}`),
-      );
+      hljs.registerLanguage(language, languageParsers[language]);
     }
   });
 
@@ -43,82 +44,50 @@ function initializeSyntaxHighlighting() {
     classPrefix: 'lg-highlight-',
     tabReplace: '  ',
   });
-}
 
-export interface SyntaxProps {
-  /**
-   * The children to render inside Code. This is usually going to be a formatted code block or line.
-   */
-  children: string;
-
-  /**
-   * An additional CSS class applied to the root element
-   */
-  className?: string;
-
-  /**
-   * The language used for syntax highlighting.
-   *
-   * default: `'auto'`
-   */
-  language?: Language;
-
-  /**
-   * The variant for the syntax-highlighted block.
-   *
-   * default: `'light'`
-   */
-  variant?: Variant;
+  hljs.addPlugin(renderingPlugin);
 }
 
 function Syntax({
   children,
-  language = Language.Auto,
-  className,
+  language,
   variant = Variant.Light,
+  showLineNumbers = false,
   ...rest
-}: SyntaxProps & React.HTMLAttributes<HTMLElement>) {
+}: SyntaxProps) {
   if (!syntaxHighlightingInitialized) {
     initializeSyntaxHighlighting();
   }
 
-  const codeClassName = cx(
-    `lg-highlight-hljs-${variant}`,
-    css`
-      color: inherit;
-      font-size: 13px;
-      line-height: 24px;
-    `,
-    {
-      [language]: language !== Language.Auto,
-    },
-    className,
-  );
+  const codeWrapperSharedProps = { language, variant, ...rest };
 
   if (language === Language.None) {
+    return <CodeWrapper {...codeWrapperSharedProps}>{children}</CodeWrapper>;
+  }
+
+  const highlightedContent = useMemo(() => hljs.highlight(language, children), [
+    language,
+    children,
+  ]);
+
+  if (showLineNumbers) {
     return (
-      <code {...rest} className={codeClassName}>
-        {children}
-      </code>
+      <CodeWrapper {...codeWrapperSharedProps}>
+        <table
+          className={css`
+            border-spacing: 0;
+          `}
+        >
+          <tbody>{highlightedContent.reactWithNumbers}</tbody>
+        </table>
+      </CodeWrapper>
     );
   }
 
-  const highlightedContent: string = useMemo(() => {
-    if (language === Language.Auto) {
-      return hljs.highlightAuto(children).value;
-    }
-
-    return hljs.highlight(language, children).value;
-  }, [language, children]);
-
-  // We use dangerouslySetInnerHTML here because the other Highlight.js API mutates the DOM
-  // after rendering, and limits the flexibility to explicitly specify a language.
   return (
-    <code
-      {...rest}
-      className={codeClassName}
-      dangerouslySetInnerHTML={{ __html: highlightedContent }}
-    />
+    <CodeWrapper {...codeWrapperSharedProps}>
+      {highlightedContent.react}
+    </CodeWrapper>
   );
 }
 
