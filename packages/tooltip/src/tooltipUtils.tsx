@@ -10,12 +10,8 @@ export function trianglePosition(
     return '';
   }
 
-  const borderOffset = 'calc(100% - 1px)';
-
   const containerSize = 15;
   const notchSize = 8;
-  const containerOffsetX = (triggerRect.width - containerSize) / 2;
-  const containerOffsetY = (triggerRect.height - containerSize) / 2;
   const notchOverlap = -notchSize / 2;
 
   type Styles = 'left' | 'right' | 'top' | 'bottom' | 'margin';
@@ -29,16 +25,16 @@ export function trianglePosition(
       notchStyleObj.right = '0px';
 
       if (align === 'top') {
-        containerStyleObj.top = `${borderOffset}`;
+        containerStyleObj.bottom = `-${containerSize}px`;
         notchStyleObj.top = `${notchOverlap}px`;
       } else {
-        containerStyleObj.bottom = `${borderOffset}`;
+        containerStyleObj.top = `-${containerSize}px`;
         notchStyleObj.bottom = `${notchOverlap}px`;
       }
 
       switch (justify) {
         case Justify.Start:
-          containerStyleObj.left = `${containerOffsetX}px`;
+          containerStyleObj.left = `${containerSize}px`;
           break;
 
         case Justify.Middle:
@@ -48,7 +44,7 @@ export function trianglePosition(
           break;
 
         case Justify.End:
-          containerStyleObj.right = `${containerOffsetX}px`;
+          containerStyleObj.left = `calc(100% - ${notchSize + containerSize}px)`;
           break;
       }
 
@@ -63,15 +59,15 @@ export function trianglePosition(
         notchStyleObj.left = `${notchOverlap}px`;
 
         // right align is .8px off, factoring that in here to correct offset
-        containerStyleObj.left = `calc(100% - 1.8px)`;
+        containerStyleObj.right = `-${containerSize}px`;
       } else {
         notchStyleObj.right = `${notchOverlap}px`;
-        containerStyleObj.right = `${borderOffset}`;
+        containerStyleObj.left = `-${containerSize}px`;
       }
 
       switch (justify) {
         case Justify.Start:
-          containerStyleObj.top = `${containerOffsetY}px`;
+          containerStyleObj.top = `${notchSize}px`;
           break;
 
         case Justify.Middle:
@@ -81,7 +77,7 @@ export function trianglePosition(
           break;
 
         case Justify.End:
-          containerStyleObj.bottom = `${containerOffsetY}px`;
+          containerStyleObj.top = `calc(100% - ${notchSize + containerSize}px)`;
           break;
       }
 
