@@ -66,7 +66,16 @@ const tooltipWidth = css`
 
 const iconColor = css`
   color: ${uiColors.blue.base};
+`;
+
+const bannerMargin = css`
   margin-bottom: 4px;
+  margin-right: 2px;
+`;
+
+const mobileMargin = css`
+  margin-bottom: 4px;
+  margin-top: 4px;
 `;
 
 const bodyStyle = css`
@@ -104,7 +113,10 @@ function FullWidthGovBanner({ isTablet = false }: { isTablet?: boolean }) {
               [tabletTooltipContainer]: isTablet,
             })}
           >
-            <GovBuildingIcon size="small" className={iconColor} />
+            <GovBuildingIcon
+              size="small"
+              className={cx(iconColor, bannerMargin)}
+            />
             <Body className={bodyStyle}>MongoDB Cloud for Government</Body>
           </div>
         }
@@ -123,7 +135,7 @@ function MobileGovTooltip() {
       {...sharedTooltipProps}
       trigger={
         <div className={mobileContainer}>
-          <GovBuildingIcon className={iconColor} />
+          <GovBuildingIcon className={cx(iconColor, mobileMargin)} />
         </div>
       }
       justify="end"
