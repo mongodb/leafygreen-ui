@@ -431,9 +431,16 @@ export default class Toggle extends PureComponent<
 
   state: ToggleState = { checked: false };
 
-  private static idAllocator = new IdAllocator();
+  private static idAllocator = new IdAllocator('toggle');
+  private _defaultCheckboxId?: string;
 
-  checkboxId = `toggle-${Toggle.idAllocator.generate()}`;
+  private get defaultCheckboxId() {
+    if (!this._defaultCheckboxId) {
+      this._defaultCheckboxId = `toggle-${Toggle.idAllocator.generate()}`;
+    }
+
+    return this._defaultCheckboxId;
+  }
 
   onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { onChange, checked } = this.props;
@@ -446,8 +453,9 @@ export default class Toggle extends PureComponent<
       this.setState({ checked: e.target.checked });
     }
   };
+
   render() {
-    const checkboxId = this.props.id || this.checkboxId;
+    const checkboxId = this.props.id ?? this.defaultCheckboxId;
     const {
       name = checkboxId,
       checked = this.state.checked,

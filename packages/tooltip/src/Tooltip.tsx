@@ -1,5 +1,5 @@
 import { OneOf } from '@leafygreen-ui/lib';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Popover, {
   PopoverProps,
@@ -157,7 +157,7 @@ export type TooltipProps = Omit<
     }
   >;
 
-const idAllocator = new IdAllocator();
+const idAllocator = new IdAllocator('tooltip');
 
 /**
  * # Tooltip
@@ -214,8 +214,10 @@ function Tooltip({
 
   const tooltipRef = useRef<HTMLDivElement>(null);
 
-  const tooltipId =
-    id ?? tooltipRef.current?.id ?? `tooltip-${idAllocator.generate()}`;
+  const tooltipId = useMemo(
+    () => id ?? tooltipRef.current?.id ?? idAllocator.generate(),
+    [id ?? tooltipRef.current?.id],
+  );
 
   const createTriggerProps = (
     triggerEvent: TriggerEvent,

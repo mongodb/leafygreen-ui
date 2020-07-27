@@ -98,9 +98,16 @@ export default class RadioBoxGroup extends PureComponent<
     value: '',
   };
 
-  private static idAllocator = new IdAllocator();
+  private static idAllocator = new IdAllocator('radio-box-group');
+  private _defaultName?: string;
 
-  defaultName = `radio-box-group-${RadioBoxGroup.idAllocator.generate()}`;
+  private get defaultName(): string {
+    if (!this._defaultName) {
+      this._defaultName = RadioBoxGroup.idAllocator.generate();
+    }
+
+    return this._defaultName;
+  }
 
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { onChange, value } = this.props;

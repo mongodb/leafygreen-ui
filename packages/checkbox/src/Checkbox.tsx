@@ -171,7 +171,16 @@ export default class Checkbox extends PureComponent<CheckboxProps> {
     }
   }
 
-  private static idAllocator = new IdAllocator();
+  private static idAllocator = new IdAllocator('checkbox');
+  private _defaultCheckboxId?: string;
+
+  private get defaultCheckboxId(): string {
+    if (!this._defaultCheckboxId) {
+      this._defaultCheckboxId = Checkbox.idAllocator.generate();
+    }
+
+    return this._defaultCheckboxId;
+  }
 
   inputRef = React.createRef<HTMLInputElement>();
 
@@ -205,8 +214,7 @@ export default class Checkbox extends PureComponent<CheckboxProps> {
   };
 
   render() {
-    const checkboxId =
-      this.props.id || `checkbox-${Checkbox.idAllocator.generate()}`;
+    const checkboxId = this.props.id || this.defaultCheckboxId;
     const labelId = `${checkboxId}-label`;
 
     const {

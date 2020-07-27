@@ -145,12 +145,12 @@ export class IdAllocator {
 
   private value = 0;
 
-  constructor() {
+  constructor(private prefix: string) {
     IdAllocator.registry.push(this);
   }
 
-  generate(): number {
-    return this.value++;
+  generate(): string {
+    return `${this.prefix}-${this.value++}`;
   }
 
   /* The following are only for testing!! */
