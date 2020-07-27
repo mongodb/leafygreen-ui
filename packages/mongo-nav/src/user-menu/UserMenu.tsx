@@ -348,7 +348,7 @@ function UserMenu({
             {...sharedProps}
             active={isCloud}
             disabled={!account}
-            href={isGovernment ? 'https://cloud.mongodbgov.com' : hosts.cloud}
+            href={isGovernment ? `${hosts.cloud}.mongodbgov.com` : hosts.cloud}
             description={
               <Description
                 isActive={isCloud}
