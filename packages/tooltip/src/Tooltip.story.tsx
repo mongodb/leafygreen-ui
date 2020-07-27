@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
-import {css} from '@leafygreen-ui/emotion';
 import Tooltip, { TriggerEvent, Variant, Align, Justify } from '.';
 import Button from '@leafygreen-ui/button';
 
-
-function ControlledTooltip() { 
+function ControlledTooltip() {
   const [open, setOpen] = useState(false);
 
   return (
@@ -34,7 +32,7 @@ storiesOf('Tooltip', module)
     <Tooltip
       align={select('Align', Object.values(Align), 'top')}
       justify={select('justify', Object.values(Justify), 'start')}
-      trigger={<Button className={css`width: 600px; height: 600px;`}>Trigger</Button>}
+      trigger={<Button>Trigger</Button>}
       triggerEvent={select(
         'triggerEvent',
         Object.values(TriggerEvent),

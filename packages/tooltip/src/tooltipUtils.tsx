@@ -44,7 +44,9 @@ export function trianglePosition(
           break;
 
         case Justify.End:
-          containerStyleObj.left = `calc(100% - ${notchSize + containerSize}px)`;
+          containerStyleObj.left = `calc(100% - ${
+            notchSize + containerSize
+          }px)`;
           break;
       }
 
