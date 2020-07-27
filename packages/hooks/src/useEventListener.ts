@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 
 export interface UseEventOptions {
-  options?: AddEventListenerOptions;
+  options?: Omit<AddEventListenerOptions, 'once'>;
   dependencies?: Array<any>;
-  enabled?: boolean;
+  enabled?: boolean | 'once';
   element?: Document | HTMLElement;
 }
 
@@ -44,7 +44,10 @@ export default function useEventListener<Type extends keyof DocumentEventMap>(
       memoizedEventCallback.current(e);
 
     // NOTE(JeT): I'm pretty sure there should be a way to avoid this type assertion, but I couldn't figure it out.
-    element.addEventListener(type, callback as EventListener, options);
+    element.addEventListener(type, callback as EventListener, {
+      ...options,
+      once: enabled === 'once',
+    });
 
     return () => {
       element.removeEventListener(type, callback as EventListener, options);
