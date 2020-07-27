@@ -40,17 +40,34 @@ export default function useEventListener<Type extends keyof DocumentEventMap>(
       return;
     }
 
+    // @ts-expect-error Handle this in case non-TypeScript users pass in the wrong value
+    if (enabled === 'false') {
+      console.error(
+        'The string "false" was received for property `enabled`. A boolean value was expected.',
+      );
+      return;
+    }
+
     const callback = (e: DocumentEventMap[Type]) =>
       memoizedEventCallback.current(e);
 
-    // NOTE(JeT): I'm pretty sure there should be a way to avoid this type assertion, but I couldn't figure it out.
-    element.addEventListener(type, callback as EventListener, {
+    const eventListenerOptions = {
       ...options,
       once: enabled === 'once',
-    });
+    };
+    // NOTE(JeT): I'm pretty sure there should be a way to avoid this type assertion, but I couldn't figure it out.
+    element.addEventListener(
+      type,
+      callback as EventListener,
+      eventListenerOptions,
+    );
 
     return () => {
-      element.removeEventListener(type, callback as EventListener, options);
+      element.removeEventListener(
+        type,
+        callback as EventListener,
+        eventListenerOptions,
+      );
     };
   }, dependencies);
 }
