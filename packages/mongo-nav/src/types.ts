@@ -300,7 +300,7 @@ export interface URLSProp {
 
 export interface URLS {
   userMenu: UserMenuURLS;
-  mongoSelect: Required<OrgSelectURLS | ProjectSelectURLS>;
+  mongoSelect: Required<OrgSelectURLS & ProjectSelectURLS>;
   orgNav: OrgNavURLS;
   projectNav: ProjectNavURLS;
   onPrem: Required<OnPremURLS>;
