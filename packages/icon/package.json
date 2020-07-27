@@ -2,8 +2,7 @@
   "name": "@leafygreen-ui/icon",
   "version": "6.2.0",
   "description": "LeafyGreen UI Kit Icons",
-  "browser": "./dist/index.web.js",
-  "main": "./dist/index.node.js",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "pre-build": "ts-node ./scripts/build.ts --files",

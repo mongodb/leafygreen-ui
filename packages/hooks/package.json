@@ -2,8 +2,7 @@
   "name": "@leafygreen-ui/hooks",
   "version": "2.1.0",
   "description": "LeafyGreen UI Kit Custom Hooks",
-  "browser": "./dist/index.web.js",
-  "main": "./dist/index.node.js",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
