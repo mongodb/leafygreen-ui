@@ -254,15 +254,6 @@ interface MongoSelectURLS {
   newProject?: string;
   orgSettings?: string;
 }
-// interface OrgSelectURLS {
-//   viewAllProjects?: string;
-//   viewAllOrganizations?: string;
-// }
-
-// interface ProjectSelectURLS {
-//   newProject?: string;
-//   orgSettings?: string;
-// }
 
 interface OrgNavURLS {
   leaf?: string;
