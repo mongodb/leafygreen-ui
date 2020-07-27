@@ -248,15 +248,21 @@ interface UserMenuURLS {
   logout?: string;
 }
 
-interface OrgSelectURLS {
+interface MongoSelectURLS {
   viewAllProjects?: string;
   viewAllOrganizations?: string;
-}
-
-interface ProjectSelectURLS {
   newProject?: string;
   orgSettings?: string;
 }
+// interface OrgSelectURLS {
+//   viewAllProjects?: string;
+//   viewAllOrganizations?: string;
+// }
+
+// interface ProjectSelectURLS {
+//   newProject?: string;
+//   orgSettings?: string;
+// }
 
 interface OrgNavURLS {
   leaf?: string;
@@ -292,7 +298,7 @@ interface OnPremURLS {
 
 export interface URLSProp {
   userMenu?: UserMenuURLS;
-  mongoSelect?: OrgSelectURLS | ProjectSelectURLS;
+  mongoSelect?: MongoSelectURLS;
   orgNav?: OrgNavURLS;
   projectNav?: ProjectNavURLS;
   onPrem?: OnPremURLS;
@@ -300,7 +306,7 @@ export interface URLSProp {
 
 export interface URLS {
   userMenu: UserMenuURLS;
-  mongoSelect: Required<OrgSelectURLS & ProjectSelectURLS>;
+  mongoSelect: MongoSelectURLS;
   orgNav: OrgNavURLS;
   projectNav: ProjectNavURLS;
   onPrem: Required<OnPremURLS>;

@@ -26,6 +26,7 @@ import {
   NavElement,
   ProjectInterface,
   Mode,
+  URLS,
 } from '../types';
 
 // mongo-select
@@ -95,6 +96,7 @@ interface ProjectMongoSelectProps extends BaseMongoSelectProps {
   data?: Array<ProjectInterface>;
   current?: CurrentProjectInterface;
   constructProjectURL: NonNullable<MongoNavInterface['constructProjectURL']>;
+  urls: Partial<URLS['mongoSelect']>;
 }
 
 interface ProjectFilterResponse {
