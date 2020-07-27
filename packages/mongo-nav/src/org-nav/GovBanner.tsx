@@ -5,7 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Body } from '@leafygreen-ui/typography';
 
-const desktopContainer = css`
+const bannerContainer = css`
   margin-bottom: 10px;
   position: relative;
   z-index: 2;
@@ -15,16 +15,7 @@ const desktopContainer = css`
   background-color: #edf5fa;
   align-items: flex-start;
   justify-content: center;
-`;
-
-const tabletContainer = css`
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-grow: 1;
-  align-items: flex-start;
-  justify-content: center;
-  height: 0;
+  cursor: pointer;
 `;
 
 const mobileContainer = css`
@@ -39,25 +30,24 @@ const mobileContainer = css`
   cursor: pointer;
 `;
 
-const sharedBannerContainerStyles = css`
+const sharedTooltipContainerStyles = css`
   background-color: #edf5fa;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   position: relative;
+  border-radius: 0 0 100px 100px;
 `;
 
 const desktopTooltipContainer = css`
   height: 34px;
   width: 205px;
-  border-radius: 0 0 17px 17px;
 `;
 
 const tabletTooltipContainer = css`
   height: 20px;
   width: 200px;
-  border-radius: 0 0 15px 15px;
 `;
 
 const tooltipWidth = css`
@@ -97,18 +87,12 @@ const sharedTooltipProps = {
 
 function FullWidthGovBanner({ isTablet = false }: { isTablet?: boolean }) {
   return (
-    <div
-      data-testid="org-nav-fedramp-banner"
-      className={cx({
-        [tabletContainer]: isTablet,
-        [desktopContainer]: !isTablet,
-      })}
-    >
+    <div data-testid="org-nav-fedramp-banner" className={bannerContainer}>
       <Tooltip
         {...sharedTooltipProps}
         trigger={
           <div
-            className={cx(sharedBannerContainerStyles, {
+            className={cx(sharedTooltipContainerStyles, {
               [desktopTooltipContainer]: !isTablet,
               [tabletTooltipContainer]: isTablet,
             })}
