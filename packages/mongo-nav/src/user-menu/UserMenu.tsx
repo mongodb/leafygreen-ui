@@ -289,8 +289,6 @@ function UserMenu({
   const isUniversity = activePlatform === Platform.University;
   const isGovernment = environment === Environment.Government;
 
-  console.log(isGovernment);
-
   const sharedProps = {
     target: '_blank',
     rel: 'noopener noreferrer',
