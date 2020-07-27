@@ -174,6 +174,10 @@ describe('packages/mongo-nav/src/org-nav', () => {
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, linkName !== 'admin'),
     );
+
+    test('it does not render the FedRAMP banner', () => {
+      expect(queryByTestId('org-nav-fedramp-banner')).toBeNull();
+    });
   });
 
   describe('when rendered as an admin without an active preferences nav', () => {
@@ -373,6 +377,13 @@ describe('packages/mongo-nav/src/org-nav', () => {
         expect(accessManagerProject.innerHTML.includes('None')).toBe(true);
         expect(accessManagerProject.getAttribute('aria-disabled')).toBe('true');
       });
+    });
+  });
+
+  describe('when environment is "government"', () => {
+    test('it renders a FedRAMP banner in the org nav', () => {
+      renderComponent({ environment: 'government' });
+      expect(getByTestId('org-nav-fedramp-banner')).toBeVisible();
     });
   });
 

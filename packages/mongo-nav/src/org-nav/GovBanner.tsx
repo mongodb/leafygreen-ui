@@ -89,6 +89,7 @@ const sharedTooltipProps = {
 function FullWidthGovBanner({ isTablet = false }: { isTablet?: boolean }) {
   return (
     <div
+      data-testid="org-nav-fedramp-banner"
       className={cx({
         [tabletContainer]: isTablet,
         [desktopContainer]: !isTablet,
