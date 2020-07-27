@@ -40,7 +40,7 @@ module.exports = {
   testPathIgnorePatterns: ['/node_modules/'],
 
   // The regexp pattern Jest uses to detect test files
-  testRegex: '.spec.[jt]sx?',
+  testRegex: '.spec.[jt]sx?$',
 
   // A map from regular expressions to paths to transformers
   transform: {

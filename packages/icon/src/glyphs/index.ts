@@ -37,6 +37,7 @@ import MagnifyingGlass from './MagnifyingGlass.svg';
 import Megaphone from './Megaphone.svg';
 import Menu from './Menu.svg';
 import NotAllowed from './NotAllowed.svg';
+import OpenNewTab from './OpenNewTab.svg';
 import Person from './Person.svg';
 import PersonWithLock from './PersonWithLock.svg';
 import Plus from './Plus.svg';
@@ -94,6 +95,7 @@ const glyphs = {
   Megaphone,
   Menu,
   NotAllowed,
+  OpenNewTab,
   Person,
   PersonWithLock,
   Plus,

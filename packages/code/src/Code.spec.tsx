@@ -10,7 +10,9 @@ const onCopy = jest.fn();
 describe('packages/Syntax', () => {
   describe('when multiline is true', () => {
     const { container } = render(
-      <Code className={className}>{codeSnippet}</Code>,
+      <Code className={className} language="javascript">
+        {codeSnippet}
+      </Code>,
     );
 
     const codeContainer = (container.firstChild as HTMLElement).lastChild;
@@ -38,7 +40,7 @@ describe('packages/Syntax', () => {
     const {
       container: { firstChild: containerRoot },
     } = render(
-      <Code className={className} multiline={false}>
+      <Code className={className} multiline={false} language="javascript">
         {codeSnippet}
       </Code>,
     );
@@ -67,7 +69,7 @@ describe('packages/Syntax', () => {
   describe('when copyable is true', () => {
     test('onCopy callback is fired when code is copied', () => {
       render(
-        <Code onCopy={onCopy} copyable={true}>
+        <Code onCopy={onCopy} copyable={true} language="javascript">
           {codeSnippet}
         </Code>,
       );

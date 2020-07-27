@@ -37,6 +37,7 @@ import { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline } from '@leafy
 <InlineCode>Code</InlineCode>
 <Disclaimer>Disclaimer</Disclaimer>
 <Overline>Overline</Overline>
+<Link href="http://mongodb.design">MongoDB.design</Link>
 ```
 
 **Output HTML**
@@ -49,6 +50,23 @@ import { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline } from '@leafy
 <code class="leafygreen-ui-18bk0d8">Code</code>
 <small class="leafygreen-ui-1cggyhz">Disclaimer</small>
 <div class="leafygreen-ui-vezyzr">Overline</div>
+<a
+  href="http://mongodb.design"
+  target="_blank"
+  class="leafygreen-ui-1toaa4e"
+  data-leafygreen-ui="anchor-container"
+>
+  <span>MongoDB.design</span>
+  <svg
+    width="16px"
+    height="16px"
+    viewBox="0 0 16 16"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+  >
+    <title>Open in New Tab</title>
+  </svg>
+</a>
 ```
 
 ## Properties
@@ -64,6 +82,7 @@ All props extend the HTMLElementProps of their root tag, however `<Body />` and 
 | `InlineCode` | `code`  |
 | `Disclaimer` | `small` |
 | `Overline`   | `p`     |
+| `Link`       | `a`     |
 
 ## Body
 
@@ -76,3 +95,12 @@ All props extend the HTMLElementProps of their root tag, however `<Body />` and 
 | Prop        | Type                                  | Description                                                                                                                         | Default |
 | ----------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `component` | `HTMLElement` or `React.ReactElement` | The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `p`     |
+
+## Link
+
+| Prop               | Type                           | Description                                                                                                                                                                              | Default |
+| ------------------ | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `arrowAppearance`  | `'hover' | 'persist' | 'none'` | Displays a right arrow adjacent to the anchor tag. When set to `persist` the arrow will always be present. When set to `hover`, the arrow will only appear when hovering over the arrow. | `none`  |
+| `hideExternalIcon` | `boolean`                      | Hides the external icon when the current host name is different from the host of the destination URL                                                                                     | `false` |
+
+_Note:_ If the current host name is different from the host of the destination URL, we will provide the "\_blank" value for the `target` prop. When the target is set to open in a new tab, we render an icon as a visual affordance.

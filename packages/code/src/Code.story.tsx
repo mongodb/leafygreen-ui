@@ -31,7 +31,11 @@ storiesOf('Code', module).add(
           copyable={boolean('Copyable', true)}
           chromeTitle={text('Chrome label', 'directory/fileName.js')}
           variant={select('Variant', Object.values(Variant), Variant.Light)}
-          language={select('Language', Object.values(Language), Language.Auto)}
+          language={select(
+            'Language',
+            Object.values(Language),
+            Language.JavaScript,
+          )}
         >
           {text('Code snippet', jsSnippet)}
         </Code>

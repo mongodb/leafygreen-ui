@@ -11,7 +11,7 @@ const buttonClass = css`
   }
 `;
 
-storiesOf('Buttons', module)
+storiesOf('Button', module)
   .add('Default', () => (
     <Button
       size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}
