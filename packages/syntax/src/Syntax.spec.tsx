@@ -42,17 +42,6 @@ describe('packages/Syntax', () => {
 
     // We test for more than one node rather than a specific number here and below to ensure
     // we're testing this component rather than the underlying library's implementation.
-    expect(code.children.length).toBeGreaterThan(1);
-  });
-
-  test("highlights code when language is 'auto'", () => {
-    const { container } = render(
-      <Syntax className={className} language="auto">
-        {codeSnippet}
-      </Syntax>,
-    );
-    const code = container.firstChild as HTMLElement;
-
-    expect(code.children.length).toBeGreaterThan(1);
+    expect(code.children[0].children.length).toBeGreaterThan(1);
   });
 });
