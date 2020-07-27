@@ -36,14 +36,14 @@ export default function useEventListener<Type extends keyof DocumentEventMap>(
   }, [eventCallback]);
 
   useEffect(() => {
-    if (!enabled) {
+    if (enabled === false) {
       return;
     }
 
-    // @ts-expect-error Handle this in case non-TypeScript users pass in the wrong value
-    if (enabled === 'false') {
+    // Handle this in case non-TypeScript users pass in the wrong value
+    if (enabled !== 'once' && enabled !== true) {
       console.error(
-        'The string "false" was received for property `enabled`. A boolean value was expected.',
+        `Received value of type ${typeof enabled} for property \`enabled\`. Expected a boolean.`,
       );
       return;
     }
