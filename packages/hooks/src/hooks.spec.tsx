@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
 import { act, renderHook } from '@testing-library/react-hooks';
-import { render, cleanup } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import {
   useEventListener,
   useElementNode,
   useViewportSize,
   usePoller,
 } from './index';
-
-afterAll(cleanup);
 
 describe('packages/hooks', () => {
   describe('useEventListener', () => {
@@ -117,53 +115,58 @@ describe('packages/hooks', () => {
     });
   });
 
-  describe('useViewportSize', () => {
-    const { result, rerender } = renderHook(() => useViewportSize());
-    const debounceTimeoutLength = 100;
-    const initialWidth = 200;
+  test('useViewportSize responds to updates in window size', async () => {
+    const { result, waitForNextUpdate } = renderHook(() => useViewportSize());
+
+    const mutableWindow: { -readonly [K in keyof Window]: Window[K] } = window;
+    const initialHeight = 360;
+    const initialWidth = 480;
+
+    mutableWindow.innerHeight = initialHeight;
+    mutableWindow.innerWidth = initialWidth;
+
+    window.dispatchEvent(new Event('resize'));
+    await act(waitForNextUpdate);
+
+    expect(result.current.height).toBe(initialHeight);
+    expect(result.current.width).toBe(initialWidth);
+
+    const updateHeight = 768;
     const updateWidth = 1024;
 
-    test('responds to updates in window width', () => {
-      act(() => {
-        window.width = initialWidth;
-        window.dispatchEvent(new Event('resize'));
-        rerender();
-      });
-      setTimeout(() => {
-        expect(result.current.width).toBe(initialWidth);
+    mutableWindow.innerHeight = updateHeight;
+    mutableWindow.innerWidth = updateWidth;
 
-        act(() => {
-          window.width = updateWidth;
-          window.dispatchEvent(new Event('resize'));
-          rerender();
-        });
+    window.dispatchEvent(new Event('resize'));
+    await act(waitForNextUpdate);
 
-        setTimeout(() => {
-          expect(result.current.width).toBe(updateWidth);
-        }, debounceTimeoutLength * 2);
-      }, debounceTimeoutLength);
-    });
+    expect(result.current.height).toBe(updateHeight);
+    expect(result.current.width).toBe(updateWidth);
   });
 
   describe('usePoller', () => {
-    let visibilityState = 'visible';
+    const mutableDocument: {
+      -readonly [K in keyof Document]: Document[K];
+    } = document;
 
-    beforeAll(() => {
+    beforeEach(() => {
       jest.useFakeTimers();
+      let { visibilityState } = document;
 
-      Object.defineProperty(document, 'visibilityState', {
+      Object.defineProperty(mutableDocument, 'visibilityState', {
         configurable: true,
         get() {
           return visibilityState;
         },
-        set(bool) {
-          visibilityState = Boolean(bool);
+        set(state) {
+          visibilityState = state;
         },
       });
     });
 
-    afterAll(() => {
-      visibilityState = 'visible';
+    afterEach(() => {
+      delete mutableDocument.visibilityState;
+      jest.useRealTimers();
     });
 
     test('used with default values', async () => {
@@ -275,8 +278,8 @@ describe('packages/hooks', () => {
 
       expect(pollHandler).toHaveBeenCalledTimes(1);
 
+      mutableDocument.visibilityState = 'hidden';
       act(() => {
-        visibilityState = 'hidden';
         document.dispatchEvent(new Event('visibilitychange'));
       });
 
@@ -284,8 +287,8 @@ describe('packages/hooks', () => {
 
       expect(pollHandler).toHaveBeenCalledTimes(1);
 
+      mutableDocument.visibilityState = 'visible';
       act(() => {
-        visibilityState = 'visible';
         document.dispatchEvent(new Event('visibilitychange'));
       });
 
