@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import debounce from 'lodash/debounce';
+import React, { useState, useEffect } from 'react';
 
 // leafygreen-ui
 import FolderIcon from '@leafygreen-ui/icon/dist/Folder';
@@ -139,19 +138,47 @@ function ProjectSelect({
     }
   };
 
-  const fetchProjectsAsAdmin = (searchTerm = '') => {
-    const queryString = searchTerm ? `?term=${searchTerm}` : '';
-    const endpointURI = `${hosts.cloud}/user/shared/projects/search${queryString}`;
-    return fetch(endpointURI, {
-      credentials: 'include',
-      mode: 'cors',
-      method: 'GET',
-    });
-  };
+  const hasOnChangeProp = !!onChangeProp;
 
-  const filterDataAsAdmin = useCallback(
-    debounce((fetchValue: string) => {
-      fetchProjectsAsAdmin(fetchValue)
+  useEffect(() => {
+    const filterData = () => {
+      const normalizedValue = value.toLowerCase();
+      const filtered = data?.filter(
+        datum =>
+          datum.projectName.toLowerCase().indexOf(normalizedValue) !== -1,
+      );
+
+      setFilteredData(filtered);
+    };
+
+    // Skip if we're not filtering
+    if (!isFiltered) {
+      return;
+    }
+
+    // defer all behavior to user-provided filtering
+    if (hasOnChangeProp) {
+      return;
+    }
+
+    // serverside filtering (admin users only)
+    if (isAdminSearch) {
+      setIsFetching(true);
+
+      const controller = new AbortController();
+
+      const fetchProjectsAsAdmin = (searchTerm = '') => {
+        const queryString = searchTerm ? `?term=${searchTerm}` : '';
+        const endpointURI = `${hosts.cloud}/user/shared/projects/search${queryString}`;
+        return fetch(endpointURI, {
+          credentials: 'include',
+          mode: 'cors',
+          method: 'GET',
+          signal: controller.signal,
+        });
+      };
+
+      fetchProjectsAsAdmin(value)
         .then(response => response.json())
         .then((response: Array<ProjectFilterResponse>) => {
           const data = response.map(({ cid: projectId, gn: projectName }) => ({
@@ -163,40 +190,15 @@ function ProjectSelect({
           setIsFetching(false);
         })
         .catch(console.error);
-    }, 300),
-    [],
-  );
 
-  const filterData = () => {
-    const normalizedValue = value.toLowerCase();
-    const filtered = data?.filter(
-      datum => datum.projectName.toLowerCase().indexOf(normalizedValue) !== -1,
-    );
-
-    setFilteredData(filtered);
-  };
-
-  useEffect(() => {
-    // Skip if we're not filtering
-    if (!isFiltered) {
-      return;
-    }
-
-    // defer all behavior to user-provided filtering
-    if (onChangeProp) {
-      return;
-    }
-
-    // serverside filtering (admin users only)
-    if (isAdminSearch) {
-      setIsFetching(true);
-      filterDataAsAdmin(value);
-      return;
+      return () => {
+        controller.abort();
+      };
     }
 
     // clientside filtering (default)
     filterData();
-  }, [value]);
+  }, [isFiltered, hasOnChangeProp, isAdminSearch, hosts.cloud, data, value]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

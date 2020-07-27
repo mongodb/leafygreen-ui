@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useImperativeHandle } from 'react';
+import React, { useEffect, useState, useImperativeHandle, useRef } from 'react';
 import PropTypes from 'prop-types';
 import OrgNav from './org-nav';
 import ProjectNav from './project-nav';
 import defaultsDeep from 'lodash/defaultsDeep';
 import OnElementClickProvider from './on-element-click-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useObjectDependency } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { dataFixtures as defaultDataFixtures, hostDefaults } from './data';
 import {
@@ -55,69 +56,76 @@ function useMongoNavData({
   const [data, setData] = useState<DataInterface | undefined>(undefined);
 
   const endpointURI = `${hosts.cloud}/user/shared`;
+  const body: PostBodyInterface | null = useObjectDependency(
+    activeProjectId || activeOrgId ? { activeProjectId, activeOrgId } : null,
+  );
 
-  function fetchProductionData(body?: PostBodyInterface) {
-    const configObject: RequestInit = {
-      credentials: 'include',
-      mode: 'cors',
-      method: 'GET',
-    };
+  const mergedData = useObjectDependency(
+    mode === Mode.Dev ? defaultsDeep(dataFixtures, defaultDataFixtures) : null,
+  );
 
-    if (body) {
-      Object.assign(configObject, {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-    }
-
-    return fetch(endpointURI, configObject);
-  }
-
-  function handleResponse(response: Response) {
-    if (!response.ok) {
-      const mappedStatus = ErrorCodeMap[response.status];
-      onError?.(mappedStatus);
-      console.error(mappedStatus);
-    } else {
-      response
-        .json()
-        .then(data => {
-          setData(data);
-          onSuccess?.(data);
-        })
-        .catch(console.error);
-    }
-  }
+  const handlerRef = useRef({ onSuccess, onError });
+  handlerRef.current = { onSuccess, onError };
 
   useEffect(() => {
     if (!loadData) {
       setData(undefined);
-    } else if (mode === Mode.Dev) {
-      const mergedData = defaultsDeep(dataFixtures, defaultDataFixtures);
-
-      onSuccess?.(mergedData);
+    } else if (mergedData) {
       setData(mergedData);
+      handlerRef.current.onSuccess?.(mergedData);
     } else {
-      let body: PostBodyInterface | undefined;
+      const handleResponse = (response: Response) => {
+        if (!response.ok) {
+          const mappedStatus = ErrorCodeMap[response.status];
+          handlerRef.current.onError?.(mappedStatus);
+          console.error(mappedStatus);
+        } else {
+          response
+            .json()
+            .then(data => {
+              setData(data);
+              handlerRef.current.onSuccess?.(data);
+            })
+            .catch(console.error);
+        }
+      };
 
-      if (activeProjectId || activeOrgId) {
-        body = { activeProjectId, activeOrgId };
-      }
+      const controller = new AbortController();
 
-      fetchProductionData(body).then(handleResponse).catch(console.error);
+      const fetchProductionData = () => {
+        const configObject: RequestInit = {
+          credentials: 'include',
+          mode: 'cors',
+          method: 'GET',
+          signal: controller.signal,
+        };
+
+        if (body) {
+          Object.assign(configObject, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+        }
+
+        return fetch(endpointURI, configObject);
+      };
+
+      fetchProductionData()
+        .then(handleResponse)
+        .catch(error => {
+          if (error?.name !== 'AbortError') {
+            console.error(error);
+          }
+        });
+
+      return () => {
+        controller.abort();
+      };
     }
-  }, [
-    mode,
-    endpointURI,
-    activeOrgId,
-    activeProjectId,
-    loadData,
-    dataFixtures,
-    reload,
-  ]);
+  }, [mergedData, endpointURI, body, loadData, reload]);
 
   return data;
 }
