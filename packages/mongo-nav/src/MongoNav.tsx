@@ -184,7 +184,10 @@ function MongoNav({
   ...rest
 }: MongoNavInterface) {
   const shouldShowProjectNav = showProjectNav && !onPrem.enabled;
-  const hosts: Required<HostsInterface> = defaultsDeep(hostsProp, hostDefaults);
+  const hosts: Required<HostsInterface> = defaultsDeep(
+    hostsProp,
+    hostDefaults(environment === Environment.Government),
+  );
 
   const data = useMongoNavData({
     hosts,

@@ -241,7 +241,10 @@ function UserMenu({
   onProductChange = () => {},
   environment = Environment.Commercial,
 }: UserMenuProps) {
-  const hosts = defaultsDeep(hostsProp, hostDefaults);
+  const hosts = defaultsDeep(
+    hostsProp,
+    hostDefaults(environment === Environment.Government),
+  );
   const onElementClick = useOnElementClick();
 
   const onLogout = (e: React.MouseEvent) => {
@@ -348,7 +351,7 @@ function UserMenu({
             {...sharedProps}
             active={isCloud}
             disabled={!account}
-            href={isGovernment ? `${hosts.cloud}.mongodbgov.com` : hosts.cloud}
+            href={hosts.cloud}
             description={
               <Description
                 isActive={isCloud}
@@ -409,7 +412,7 @@ function UserMenu({
         ) : (
           <MenuItem
             {...menuItemContainer.prop}
-            href={isGovernment ? 'https://cloud.mongodbgov.com' : hosts.cloud}
+            href={hosts.cloud}
             size="large"
             glyph={<CloudIcon />}
             description={

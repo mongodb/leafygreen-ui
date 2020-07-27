@@ -114,13 +114,19 @@ export const urlFixtures: URLS = {
   },
 };
 
-export const hostDefaults: Required<HostsInterface> = {
-  account: 'https://account.mongodb.com',
-  cloud: 'https://cloud.mongodb.com',
-  charts: 'https://charts.mongodb.com',
-  realm: `https://realm.mongodb.com`,
-  support: 'https://support.mongodb.com',
-  university: 'https://university.mongodb.com',
+export const hostDefaults = (
+  isGovernment = false,
+): Required<HostsInterface> => {
+  return {
+    account: 'https://account.mongodb.com',
+    cloud: isGovernment
+      ? 'https://cloud.mongodbgov.com'
+      : 'https://cloud.mongodb.com',
+    charts: 'https://charts.mongodb.com',
+    realm: `https://realm.mongodb.com`,
+    support: 'https://support.mongodb.com',
+    university: 'https://university.mongodb.com',
+  };
 };
 
 export const constructOrganizationURL = ({ orgId }: OrganizationInterface) =>

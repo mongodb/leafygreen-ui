@@ -272,6 +272,8 @@ export default function ProjectNav({
   alertPollingInterval,
   environment,
 }: ProjectNavProps) {
+  // console.log(hosts);
+
   const [open, setOpen] = useState(false);
   const [alerts, setAlerts] = useState(current?.alertsOpen ?? 0);
 

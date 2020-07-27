@@ -83,7 +83,7 @@ describe('packages/mongo-nav/src/project-nav', () => {
           constructProjectURL={constructProjectURL}
           urls={urlFixtures}
           activeProduct="cloud"
-          hosts={hostDefaults}
+          hosts={hostDefaults(false)}
           onProjectChange={onProjectChange}
           mode={Mode.Production}
           {...props}
