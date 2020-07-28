@@ -19,7 +19,10 @@ import { trianglePosition } from './tooltipUtils';
  * Converts any type to an array of that type if it isn't already an array,
  * or an empty array for nullish values.
  * */
-function toArray<T>(item: T): Array<any> | Array<T> {
+function toArray(item: null | undefined): [];
+function toArray<T>(item: Array<T>): Array<T>;
+function toArray<T>(item: T): Array<T>;
+function toArray<T>(item: T) {
   if (item == null) {
     return [];
   }
