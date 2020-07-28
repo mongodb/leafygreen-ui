@@ -1,27 +1,27 @@
 import React, { createContext, useContext, useMemo, useReducer } from 'react';
 
-const Types = {
+const RowTypes = {
   ToggleHeaderCheckedState: 'TOGGLE_HEADER_CHECKED',
   ToggleIndividualChecked: 'TOGGLE_INDIVIDUAL_CHECKED',
   ToggleIndividualDisabled: 'TOGGLE_INDIVIDUAL_DISABLED',
   RegisterRow: 'REGISTER_ROW',
 } as const;
 
-type Types = typeof Types[keyof typeof Types];
+type RowTypes = typeof RowTypes[keyof typeof RowTypes];
 
-export { Types };
+export { RowTypes };
 
 interface ActionPayload {
-  [Types.ToggleHeaderCheckedState]: undefined;
-  [Types.ToggleIndividualChecked]: {
+  [RowTypes.ToggleHeaderCheckedState]: undefined;
+  [RowTypes.ToggleIndividualChecked]: {
     index: string;
     checked: boolean;
   };
-  [Types.ToggleIndividualDisabled]: {
+  [RowTypes.ToggleIndividualDisabled]: {
     index: string;
     disabled: boolean;
   };
-  [Types.RegisterRow]: {
+  [RowTypes.RegisterRow]: {
     index: string;
     checked?: boolean;
     disabled: boolean;
@@ -72,7 +72,7 @@ export function reducer(state: State, action: Action): State {
   let rowState;
 
   switch (action.type) {
-    case Types.RegisterRow:
+    case RowTypes.RegisterRow:
       rowState = {
         ...state.rowState,
         [action.payload.index]: {
@@ -89,7 +89,7 @@ export function reducer(state: State, action: Action): State {
         rowState,
       };
 
-    case Types.ToggleIndividualDisabled:
+    case RowTypes.ToggleIndividualDisabled:
       rowState = {
         ...state.rowState,
         [action.payload.index]: {
@@ -103,7 +103,7 @@ export function reducer(state: State, action: Action): State {
         rowState,
       };
 
-    case Types.ToggleIndividualChecked:
+    case RowTypes.ToggleIndividualChecked:
       rowState = {
         ...state.rowState,
         [action.payload.index]: {
@@ -120,7 +120,7 @@ export function reducer(state: State, action: Action): State {
         headerCheckState: setHeaderCheckedStateOnRowChecked(state, rowState),
       };
 
-    case Types.ToggleHeaderCheckedState:
+    case RowTypes.ToggleHeaderCheckedState:
       return {
         ...state,
         headerCheckState: {
@@ -171,8 +171,6 @@ const setHeaderCheckedStateOnRowChecked = (
     const boolArray = Object.values(newRowState).filter(
       newRowObjects => !newRowObjects.disabled,
     );
-
-    console.log('here', boolArray);
 
     const checkSame = boolArray.every(
       val => val.checked === boolArray[0].checked,

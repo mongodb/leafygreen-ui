@@ -3,8 +3,10 @@ import { cx, css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { HeaderRowProps } from './HeaderRow';
 import { TableHeaderProps } from './TableHeader';
-import { TableProvider, useTableContext } from './TableContext';
+import { TableProvider } from './TableContext';
+import { RowProvider } from './RowContext';
 import TableHead from './TableHead';
+import TableBody from './TableBody';
 
 // Add tests for nested data structures to prove that sortBy prop works as expected
 
@@ -29,18 +31,6 @@ export interface TableProps<Shape>
   children: (TableRowArgs: TableRowInterface<Shape>) => JSX.Element;
 }
 
-type TableBodyProps<Shape> = Pick<TableProps<Shape>, 'children'>;
-
-function TableBody<Shape>({ children }: TableBodyProps<Shape>) {
-  const {
-    state: { data },
-  } = useTableContext();
-
-  return (
-    <tbody>{data.map((datum, index) => children({ datum, index }))}</tbody>
-  );
-}
-
 export default function Table<Shape>({
   columns = [],
   data: dataProp = [],
@@ -51,15 +41,17 @@ export default function Table<Shape>({
 }: TableProps<Shape>) {
   return (
     <TableProvider data={dataProp} selectable={selectableProp}>
-      <table
-        cellSpacing="0"
-        cellPadding="0"
-        className={cx(tableStyles, className)}
-        {...rest}
-      >
-        <TableHead columns={columns} />
-        <TableBody>{children}</TableBody>
-      </table>
+      <RowProvider>
+        <table
+          cellSpacing="0"
+          cellPadding="0"
+          className={cx(tableStyles, className)}
+          {...rest}
+        >
+          <TableHead columns={columns} />
+          <TableBody>{children}</TableBody>
+        </table>
+      </RowProvider>
     </TableProvider>
   );
 }

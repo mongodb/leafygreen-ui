@@ -6,7 +6,8 @@ import Icon from '@leafygreen-ui/icon';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { useTableContext, Types, DataType } from './TableContext';
+import { useTableContext, TableTypes, DataType } from './TableContext';
+import { useRowContext, RowTypes } from './RowContext';
 import Cell, { tdInnerDiv } from './Cell';
 
 const rowStyle = css`
@@ -74,6 +75,13 @@ const transitionStyles = {
   `,
 };
 
+const checkBoxCellStyles = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+`;
+
 const styleMap = {
   left: [DataType.String, DataType.Weight, DataType.ZipCode, DataType.Date],
   right: [DataType.Number],
@@ -128,16 +136,14 @@ const Row = React.forwardRef(
     ref: React.Ref<any>,
   ) => {
     const {
-      state: {
-        data,
-        columnInfo,
-        hasNestedRows,
-        hasRowSpan,
-        selectable,
-        rowState,
-      },
-      dispatch,
+      state: { data, columnInfo, hasNestedRows, hasRowSpan, selectable },
+      dispatch: tableDispatch,
     } = useTableContext();
+
+    const {
+      state: { rowState },
+      dispatch: rowDispatch,
+    } = useRowContext();
 
     const indexRef = useRef(generateIndexRef());
 
@@ -146,8 +152,8 @@ const Row = React.forwardRef(
     let hasSeenFirstCell = false;
 
     useEffect(() => {
-      dispatch({
-        type: Types.RegisterRow,
+      rowDispatch({
+        type: RowTypes.RegisterRow,
         payload: {
           index: indexRef.current,
           checked: false,
@@ -157,8 +163,8 @@ const Row = React.forwardRef(
     }, []);
 
     useEffect(() => {
-      dispatch({
-        type: Types.RegisterRow,
+      rowDispatch({
+        type: RowTypes.RegisterRow,
         payload: {
           index: indexRef.current,
           disabled,
@@ -190,15 +196,15 @@ const Row = React.forwardRef(
       });
 
       if (shouldDispatchHasNestedRows) {
-        dispatch({
-          type: Types.SetHasNestedRows,
+        tableDispatch({
+          type: TableTypes.SetHasNestedRows,
           payload: true,
         });
       }
 
       if (shouldDispatchHasRowSpan) {
-        dispatch({
-          type: Types.SetHasRowSpan,
+        tableDispatch({
+          type: TableTypes.SetHasRowSpan,
           payload: true,
         });
       }
@@ -293,78 +299,79 @@ const Row = React.forwardRef(
       columnInfo,
     ).map(([key, { dataType }]) => styleColumn(key, dataType!));
 
+    const rowClassName = cx(
+      rowStyle,
+      getIndentLevelStyle(indentLevel),
+      [...alignmentStyles],
+      {
+        [altColor]: shouldAltRowColor,
+        [disabledStyle]: disabled,
+      },
+      className,
+    );
+
+    const onChange = () => {
+      rowDispatch({
+        type: RowTypes.ToggleIndividualChecked,
+        payload: {
+          index: indexRef.current,
+          checked: !rowState[indexRef.current].checked,
+        },
+      });
+    };
+
     const checkboxProps = {
-      onChange: () =>
-        dispatch({
-          type: Types.ToggleIndividualChecked,
-          payload: {
-            index: indexRef.current,
-            checked: !rowState[indexRef.current].checked,
-          },
-        }),
+      onChange,
       disabled,
       checked: !!rowState[indexRef.current]?.checked,
     };
 
+    const checkBoxCell = selectable && (
+      <Cell>
+        <div className={checkBoxCellStyles}>
+          <Checkbox {...checkboxProps} />
+        </div>
+      </Cell>
+    );
+
+    const renderNestedRows = nestedRows && nestedRows.length > 0 && (
+      <Transition
+        in={isExpanded && !isAnyAncestorCollapsedProp}
+        timeout={150}
+        nodeRef={nodeRef}
+      >
+        {(state: string) => {
+          return (
+            <>
+              {nestedRows?.map(element =>
+                React.cloneElement(element, {
+                  className: cx(transitionStyles.default, {
+                    [transitionStyles.entered]: [
+                      'entering',
+                      'entered',
+                    ].includes(state),
+                  }),
+                }),
+              )}
+            </>
+          );
+        }}
+      </Transition>
+    );
+
     return (
       <>
         <tr
-          className={cx(
-            rowStyle,
-            getIndentLevelStyle(indentLevel),
-            [...alignmentStyles],
-            {
-              [altColor]: shouldAltRowColor,
-              [disabledStyle]: disabled,
-            },
-            className,
-          )}
+          className={rowClassName}
           aria-disabled={disabled}
           ref={ref}
           key={indexRef.current}
           {...rest}
         >
-          {selectable && (
-            <Cell>
-              <div
-                className={css`
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  flex-grow: 1;
-                `}
-              >
-                <Checkbox {...checkboxProps} />
-              </div>
-            </Cell>
-          )}
+          {checkBoxCell}
           {renderedChildren}
         </tr>
-
-        {nestedRows && (
-          <Transition
-            in={isExpanded && !isAnyAncestorCollapsedProp}
-            timeout={150}
-            nodeRef={nodeRef}
-          >
-            {(state: string) => {
-              return (
-                <>
-                  {nestedRows?.map(element =>
-                    React.cloneElement(element, {
-                      className: cx(transitionStyles.default, {
-                        [transitionStyles.entered]: [
-                          'entering',
-                          'entered',
-                        ].includes(state),
-                      }),
-                    }),
-                  )}
-                </>
-              );
-            }}
-          </Transition>
-        )}
+        {renderNestedRows}
       </>
     );
   },

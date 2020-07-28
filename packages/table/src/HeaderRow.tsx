@@ -2,7 +2,8 @@ import React from 'react';
 import Checkbox from '@leafygreen-ui/checkbox';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
-import { useTableContext, Types } from './TableContext';
+import { useTableContext } from './TableContext';
+import { useRowContext, RowTypes } from './RowContext';
 
 const thStyles = css`
   width: 40px;
@@ -17,13 +18,17 @@ function HeaderRow({
   ...rest
 }: React.ComponentPropsWithoutRef<'tr'>) {
   const {
-    state: { selectable, headerCheckState },
-    dispatch,
+    state: { selectable },
   } = useTableContext();
 
+  const {
+    state: { headerCheckState },
+    dispatch: rowDispatch,
+  } = useRowContext();
+
   const handleChange = () => {
-    dispatch({
-      type: Types.ToggleHeaderCheckedState,
+    rowDispatch({
+      type: RowTypes.ToggleHeaderCheckedState,
     });
   };
 

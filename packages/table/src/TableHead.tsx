@@ -3,7 +3,7 @@ import HeaderRow from './HeaderRow';
 import TableHeader from './TableHeader';
 import { TableProps } from './Table';
 import { isComponentType } from '@leafygreen-ui/lib';
-import { Types, useTableContext } from './TableContext';
+import { TableTypes, useTableContext } from './TableContext';
 
 export function normalizeAccessor(accessor: string | Function) {
   let accessorFn = accessor;
@@ -39,7 +39,7 @@ function TableHead<Shape>({ columns = [] }: TableHeaderProps<Shape>) {
     accessorValue: (data?: any) => string,
   ) => {
     dispatch({
-      type: Types.SortTableData,
+      type: TableTypes.SortTableData,
       payload: {
         columnId,
         accessorValue,

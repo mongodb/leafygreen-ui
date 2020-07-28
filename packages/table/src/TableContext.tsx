@@ -6,45 +6,27 @@ import React, {
   useEffect,
 } from 'react';
 
-const Types = {
+const TableTypes = {
   SelectableTable: 'SELECTABLE_TABLE',
-  ToggleHeaderCheckedState: 'TOGGLE_HEADER_CHECKED',
   SetColumnInfo: 'SET_COLUMN_INFO',
   SortTableData: 'SORT_TABLE_DATA',
-  ToggleIndividualChecked: 'TOGGLE_INDIVIDUAL_CHECKED',
-  ToggleIndividualDisabled: 'TOGGLE_INDIVIDUAL_DISABLED',
   SetHasNestedRows: 'SET_HAS_NESTED_ROWS',
   SetHasRowSpan: 'SET_HAS_ROW_SPAN',
-  RegisterRow: 'REGISTER_ROW',
 } as const;
 
-type Types = typeof Types[keyof typeof Types];
+type TableTypes = typeof TableTypes[keyof typeof TableTypes];
 
-export { Types };
+export { TableTypes };
 
 interface ActionPayload {
-  [Types.SelectableTable]: boolean;
-  [Types.ToggleHeaderCheckedState]: undefined;
-  [Types.ToggleIndividualChecked]: {
-    index: string;
-    checked: boolean;
-  };
-  [Types.ToggleIndividualDisabled]: {
-    index: string;
-    disabled: boolean;
-  };
-  [Types.RegisterRow]: {
-    index: string;
-    checked?: boolean;
-    disabled: boolean;
-  };
-  [Types.SetColumnInfo]: {
+  [TableTypes.SelectableTable]: boolean;
+  [TableTypes.SetColumnInfo]: {
     dataType?: DataType;
     index: number;
   };
-  [Types.SetHasRowSpan]: boolean;
-  [Types.SetHasNestedRows]: boolean;
-  [Types.SortTableData]: {
+  [TableTypes.SetHasRowSpan]: boolean;
+  [TableTypes.SetHasNestedRows]: boolean;
+  [TableTypes.SortTableData]: {
     columnId: number;
     accessorValue: () => string;
     data: Array<unknown>;
@@ -89,11 +71,6 @@ export interface State {
   data: Array<any>;
   columnInfo?: Record<number, { dataType?: DataType }>;
   selectable?: boolean;
-  headerCheckState: {
-    checked: boolean;
-    indeterminate: boolean;
-  };
-  rowState: Record<string, { checked: boolean; disabled: boolean }>;
   hasNestedRows?: boolean;
   hasRowSpan?: boolean;
 }
@@ -112,96 +89,31 @@ interface ContextInterface {
 const TableContext = createContext<ContextInterface>({
   state: {
     data: [],
-    rowState: {},
-    headerCheckState: { checked: false, indeterminate: false },
   },
   dispatch: () => {},
 });
 
 export function reducer(state: State, action: Action): State {
-  let rowState;
-
   switch (action.type) {
-    case Types.SetHasRowSpan:
+    case TableTypes.SetHasRowSpan:
       return {
         ...state,
         hasRowSpan: action.payload,
       };
 
-    case Types.SetHasNestedRows:
+    case TableTypes.SetHasNestedRows:
       return {
         ...state,
         hasNestedRows: action.payload,
       };
 
-    case Types.RegisterRow:
-      rowState = {
-        ...state.rowState,
-        [action.payload.index]: {
-          disabled: action.payload.disabled,
-          checked:
-            action.payload.checked != null
-              ? action.payload.checked
-              : state.rowState[action.payload.index].checked,
-        },
-      };
-
-      return {
-        ...state,
-        rowState,
-      };
-
-    case Types.ToggleIndividualDisabled:
-      rowState = {
-        ...state.rowState,
-        [action.payload.index]: {
-          ...state.rowState[action.payload.index],
-          disabled: action.payload.disabled,
-        },
-      };
-
-      return {
-        ...state,
-        rowState,
-      };
-
-    case Types.ToggleIndividualChecked:
-      rowState = {
-        ...state.rowState,
-        [action.payload.index]: {
-          ...state.rowState[action.payload.index],
-          checked: state.rowState[action.payload.index].disabled
-            ? false
-            : action.payload.checked,
-        },
-      };
-
-      return {
-        ...state,
-        rowState,
-        headerCheckState: setHeaderCheckedStateOnRowChecked(state, rowState),
-      };
-
-    case Types.ToggleHeaderCheckedState:
-      return {
-        ...state,
-        headerCheckState: {
-          indeterminate: false,
-          checked: !state.headerCheckState.checked,
-        },
-        rowState: setEveryRowState(
-          state.rowState,
-          !state.headerCheckState.checked,
-        ),
-      };
-
-    case Types.SelectableTable:
+    case TableTypes.SelectableTable:
       return {
         ...state,
         selectable: action.payload,
       };
 
-    case Types.SetColumnInfo:
+    case TableTypes.SetColumnInfo:
       return {
         ...state,
         columnInfo: {
@@ -212,7 +124,7 @@ export function reducer(state: State, action: Action): State {
         },
       };
 
-    case Types.SortTableData:
+    case TableTypes.SortTableData:
       return {
         ...state,
         sort: {
@@ -243,19 +155,14 @@ export function TableProvider({
     },
     data,
     selectable,
-    headerCheckState: {
-      checked: false,
-      indeterminate: false,
-    },
     hasNestedRows: false,
-    rowState: {},
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     dispatch({
-      type: Types.SelectableTable,
+      type: TableTypes.SelectableTable,
       payload: selectable,
     });
   }, [selectable]);
@@ -274,49 +181,6 @@ export function TableProvider({
 export function useTableContext() {
   return useContext(TableContext);
 }
-
-const setHeaderCheckedStateOnRowChecked = (
-  { headerCheckState }: State,
-  newRowState: State['rowState'],
-): State['headerCheckState'] => {
-  if (headerCheckState.indeterminate) {
-    const boolArray = Object.values(newRowState).filter(
-      newRowObjects => !newRowObjects.disabled,
-    );
-
-    console.log('here', boolArray);
-
-    const checkSame = boolArray.every(
-      val => val.checked === boolArray[0].checked,
-    );
-
-    return {
-      indeterminate: !checkSame,
-      checked: boolArray[0].checked,
-    };
-  }
-
-  return {
-    checked: false,
-    indeterminate: true,
-  };
-};
-
-const setEveryRowState = (
-  currentRowState: State['rowState'],
-  newCheckedState: boolean,
-) => {
-  const updatedRowState: State['rowState'] = currentRowState;
-  let key: any;
-
-  for (key in currentRowState) {
-    updatedRowState[key].checked = updatedRowState[key].disabled
-      ? false
-      : newCheckedState;
-  }
-
-  return updatedRowState;
-};
 
 const alphanumericCollator = new Intl.Collator(undefined, {
   numeric: true,
