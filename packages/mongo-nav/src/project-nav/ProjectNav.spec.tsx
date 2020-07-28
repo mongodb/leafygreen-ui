@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  act,
-  cleanup,
-  render,
-  RenderResult,
-  queryByText,
-} from '@testing-library/react';
+import { act, cleanup, render, RenderResult } from '@testing-library/react';
 import {
   dataFixtures,
   urlFixtures,
@@ -83,7 +77,8 @@ describe('packages/mongo-nav/src/project-nav', () => {
           constructProjectURL={constructProjectURL}
           urls={urlFixtures}
           activeProduct="cloud"
-          hosts={hostDefaults(false)}
+          environment="commercial"
+          hosts={hostDefaults()}
           onProjectChange={onProjectChange}
           mode={Mode.Production}
           {...props}
