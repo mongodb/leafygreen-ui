@@ -13,6 +13,7 @@ describe('packages/mongo-nav', () => {
   let queryByTestId: RenderResult['queryByTestId'];
   let getByTestId: RenderResult['getByTestId'];
   let findByTestId: RenderResult['findByTestId'];
+  let getByText: RenderResult['getByText'];
 
   let fetchMock: jest.Mock;
   let originalFetch: (
@@ -34,7 +35,7 @@ describe('packages/mongo-nav', () => {
 
   const renderComponent = async (props = {}) => {
     await act(async () => {
-      ({ findByTestId, getByTestId, queryByTestId } = render(
+      ({ findByTestId, getByTestId, queryByTestId, getByText } = render(
         <MongoNav activeProduct="cloud" {...props} />,
       ));
     });
@@ -392,6 +393,39 @@ describe('packages/mongo-nav', () => {
 
     test('admin UI is shown', async () => {
       expect(await findByTestId('org-nav-admin-link')).toBeVisible();
+    });
+  });
+
+  describe('when the environment is set to "government"', () => {
+    describe('cloud links default to cloud.mongodbgov.com', () => {
+      beforeEach(
+        async () =>
+          await renderComponent({
+            mode: 'dev',
+            environment: 'government',
+          }),
+      );
+      test('in the org nav', () => {
+        const support = getByTestId('org-nav-support') as HTMLAnchorElement;
+        expect(support.href).toBe(
+          'https://cloud.mongodbgov.com/v2#/org/fakeOrgId1/support',
+        );
+      });
+
+      test('in the project nav', () => {
+        const support = getByTestId('project-nav-atlas') as HTMLAnchorElement;
+        expect(support.href).toBe(
+          'https://cloud.mongodbgov.com/v2/fakeProjectId1#',
+        );
+      });
+      test('in the user menu', () => {
+        const userMenuTrigger = getByTestId('user-menu-trigger');
+        fireEvent.click(userMenuTrigger);
+
+        const cloudForGovernment = getByText('Cloud for Government').parentNode
+          .parentNode as HTMLAnchorElement;
+        expect(cloudForGovernment.href).toBe('https://cloud.mongodbgov.com/');
+      });
     });
   });
 });

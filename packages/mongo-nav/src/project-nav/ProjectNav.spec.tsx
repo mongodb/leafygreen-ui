@@ -77,7 +77,8 @@ describe('packages/mongo-nav/src/project-nav', () => {
           constructProjectURL={constructProjectURL}
           urls={urlFixtures}
           activeProduct="cloud"
-          hosts={hostDefaults}
+          environment="commercial"
+          hosts={hostDefaults()}
           onProjectChange={onProjectChange}
           mode={Mode.Production}
           {...props}
@@ -174,6 +175,15 @@ describe('packages/mongo-nav/src/project-nav', () => {
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, true),
     );
+  });
+
+  describe('when the environment is "government"', () => {
+    test('Atlas is the only product tab displayed', () => {
+      renderComponent({ environment: 'government' });
+      expect(getByTestId('project-nav-atlas')).toBeVisible();
+      expect(queryByTestId('project-nav-charts')).toBeNull();
+      expect(queryByTestId('project-nav-realm')).toBeNull();
+    });
   });
 
   describe('alerts polling behavior', () => {
