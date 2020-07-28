@@ -25,10 +25,13 @@ export function normalizeAccessor(accessor: string | Function) {
   return accessorFn;
 }
 
-type TableHeaderProps<Shape> = Pick<TableProps<Shape>, 'data' | 'columns'>;
+type TableHeaderProps<Shape> = Pick<TableProps<Shape>, 'columns'>;
 
-function TableHead<Shape>({ columns = [], data }: TableHeaderProps<Shape>) {
-  const { dispatch } = useTableContext();
+function TableHead<Shape>({ columns = [] }: TableHeaderProps<Shape>) {
+  const {
+    state: { data },
+    dispatch,
+  } = useTableContext();
   const usingHeaderRow = React.useRef(false);
 
   const sortRows = (

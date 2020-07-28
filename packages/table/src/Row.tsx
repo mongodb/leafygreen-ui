@@ -372,4 +372,4 @@ const Row = React.forwardRef(
 
 Row.displayName = 'Row';
 
-export default Row;
+export default React.memo(Row);

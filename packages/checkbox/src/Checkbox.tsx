@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -131,7 +131,7 @@ interface CheckboxProps {
   bold: boolean;
 }
 
-export default class Checkbox extends PureComponent<
+export default class Checkbox extends Component<
   CheckboxProps & React.InputHTMLAttributes<HTMLInputElement>
 > {
   static displayName = 'Checkbox';
