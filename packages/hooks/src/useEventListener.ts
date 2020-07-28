@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 
 export interface UseEventOptions {
-  options?: AddEventListenerOptions;
+  options?: Omit<AddEventListenerOptions, 'once'>;
   dependencies?: Array<any>;
-  enabled?: boolean;
+  enabled?: boolean | 'once';
   element?: Document | HTMLElement;
 }
 
@@ -36,18 +36,38 @@ export default function useEventListener<Type extends keyof DocumentEventMap>(
   }, [eventCallback]);
 
   useEffect(() => {
-    if (!enabled) {
+    if (enabled === false) {
+      return;
+    }
+
+    // Handle this in case non-TypeScript users pass in the wrong value
+    if (enabled !== 'once' && enabled !== true) {
+      console.error(
+        `Received value of type ${typeof enabled} for property \`enabled\`. Expected a boolean.`,
+      );
       return;
     }
 
     const callback = (e: DocumentEventMap[Type]) =>
       memoizedEventCallback.current(e);
 
+    const eventListenerOptions = {
+      ...options,
+      once: enabled === 'once',
+    };
     // NOTE(JeT): I'm pretty sure there should be a way to avoid this type assertion, but I couldn't figure it out.
-    element.addEventListener(type, callback as EventListener, options);
+    element.addEventListener(
+      type,
+      callback as EventListener,
+      eventListenerOptions,
+    );
 
     return () => {
-      element.removeEventListener(type, callback as EventListener, options);
+      element.removeEventListener(
+        type,
+        callback as EventListener,
+        eventListenerOptions,
+      );
     };
   }, dependencies);
 }
