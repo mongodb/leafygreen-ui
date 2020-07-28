@@ -59,8 +59,6 @@ export function trianglePosition(
 
       if (align === 'left') {
         notchStyleObj.left = `${notchOverlap}px`;
-
-        // right align is .8px off, factoring that in here to correct offset
         containerStyleObj.right = `-${containerSize}px`;
       } else {
         notchStyleObj.right = `${notchOverlap}px`;
