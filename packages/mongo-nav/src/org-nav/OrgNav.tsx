@@ -69,14 +69,6 @@ const versionStyle = css`
   })}
 `;
 
-const productTourColor = css`
-  color: ${uiColors.blue.base};
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
 const paymentStatusMap: {
   [K in Partial<Variant>]?: ReadonlyArray<OrgPaymentLabel>;
 } = {
@@ -422,20 +414,6 @@ function OrgNav({
               Ops Manager Version
             </Tooltip>
           )}
-
-          {!onPremEnabled &&
-            !isMobile &&
-            // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'.ts(2339)
-            window.Appcues && (
-              <OrgNavLink
-                // @ts-ignore 'Cannot find name Appcues'
-                onClick={() => Appcues.show('-M4PVbE05VI91MJihJGv')} // eslint-disable-line no-undef
-                className={cx(rightLinkMargin, productTourColor)}
-                data-testid="org-nav-see-product-tour"
-              >
-                See Product Tour
-              </OrgNavLink>
-            )}
 
           {!isMobile && (
             <OrgNavLink
