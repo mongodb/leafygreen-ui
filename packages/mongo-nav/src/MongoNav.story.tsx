@@ -4,7 +4,13 @@ import { select, boolean, text } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import MongoNav from '.';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Product, Platform, ActiveNavElement, Mode } from './types';
+import {
+  Product,
+  Platform,
+  ActiveNavElement,
+  Mode,
+  Environment,
+} from './types';
 
 const setStorybookWidth = css`
   width: 100%;
@@ -40,6 +46,11 @@ storiesOf('MongoNav', module).add('Default', () => (
         onElementClick={(a, b) => console.log(a, b)}
         loadData={boolean('loadData', true)}
         showProjectNav={boolean('showProjectNav', true)}
+        environment={select(
+          'environment',
+          Object.values(Environment),
+          Environment.Commercial,
+        )}
         dataFixtures={{
           currentOrganization: {
             orgName: text(

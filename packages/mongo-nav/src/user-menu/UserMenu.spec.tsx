@@ -182,4 +182,29 @@ describe('packages/mongo-nav/user-menu', () => {
       );
     });
   });
+
+  describe('when the environment is set to "government"', () => {
+    test('it renders "Cloud for Government" as the title of Cloud SubMenu', () => {
+      const { getByTestId, getByText } = renderUserMenu({
+        activePlatform: 'cloud',
+        environment: 'government',
+      });
+
+      const trigger = getByTestId('user-menu-trigger');
+      fireEvent.click(trigger);
+
+      expect(getByText('Cloud for Government')).toBeInTheDocument();
+    });
+
+    test('it renders "cloud.mongodbgov.com" as description for Cloud SubMenu', () => {
+      const { getByTestId, getByText } = renderUserMenu({
+        activePlatform: 'cloud',
+        environment: 'government',
+      });
+
+      const trigger = getByTestId('user-menu-trigger');
+      fireEvent.click(trigger);
+      expect(getByText('cloud.mongodbgov.com')).toBeInTheDocument();
+    });
+  });
 });
