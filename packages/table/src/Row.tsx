@@ -80,7 +80,7 @@ const styleMap = {
 } as const;
 
 function styleColumn(index: string, dataType: DataType) {
-  let justify = 'flex-end';
+  let justify = 'flex-start';
 
   if (styleMap.left.includes(dataType)) {
     justify = 'flex-start';
@@ -113,6 +113,22 @@ interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
   indentLevel?: number;
   isAnyAncestorCollapsed?: boolean;
 }
+
+const RowWrapper = React.memo(({ children }) => {
+  const prevChildren = useRef();
+
+  useEffect(() => {
+    prevChildren.current = children;
+  });
+
+  if (prevChildren.current != children) {
+    return children;
+  }
+
+  return null;
+});
+
+RowWrapper.displayName = 'RowWrapper';
 
 const Row = React.forwardRef(
   (
@@ -176,12 +192,6 @@ const Row = React.forwardRef(
       }
     }, [children]);
 
-    // Depending on network speed, will noticeably render columns with incorrect
-    // alignment, would rather wait for proper information before rendering
-    if (!columnInfo) {
-      return null;
-    }
-
     const chevronButton = (
       <IconButton
         onClick={() => setIsExpanded(curr => !curr)}
@@ -200,46 +210,51 @@ const Row = React.forwardRef(
     const nestedRows: Array<React.ReactElement> = [];
     let firstCellIndex: number | undefined;
 
-    React.Children.forEach(children, (child, index) => {
-      if (isComponentType(child, 'Row')) {
-        nestedRows.push(
-          React.cloneElement(child, {
-            ref: nodeRef,
-            isAnyAncestorCollapsed: isAnyAncestorCollapsedProp || !isExpanded,
-            ['aria-expanded']: isExpanded ? 'true' : 'false',
-            indentLevel: indentLevel + 1,
-            key: `${indexRef.current}-${indentLevel}-${index}`,
-          }),
-        );
-      } else if (isComponentType(child, 'Cell')) {
-        if (!hasSeenFirstCell) {
-          hasSeenFirstCell = true;
-          firstCellIndex = index;
-        }
+    React.useMemo(
+      () =>
+        React.Children.forEach(children, (child, index) => {
+          if (isComponentType(child, 'Row')) {
+            nestedRows.push(
+              React.cloneElement(child, {
+                ref: nodeRef,
+                isAnyAncestorCollapsed:
+                  isAnyAncestorCollapsedProp || !isExpanded,
+                ['aria-expanded']: isExpanded ? 'true' : 'false',
+                indentLevel: indentLevel + 1,
+                key: `${indexRef.current}-${indentLevel}-${index}`,
+              }),
+            );
+          } else if (isComponentType(child, 'Cell')) {
+            if (!hasSeenFirstCell) {
+              hasSeenFirstCell = true;
+              firstCellIndex = index;
+            }
 
-        if (!child.props.children) {
-          return null;
-        }
+            if (!child.props.children) {
+              return null;
+            }
 
-        if (disabled) {
-          renderedChildren.push(
-            React.cloneElement(child, {
-              disabled,
-              key: `${indexRef.current}-${index}`,
-            }),
-          );
-        } else {
-          renderedChildren.push(
-            React.cloneElement(child, {
-              children: (
-                <span className={truncation}>{child.props.children}</span>
-              ),
-              key: `${indexRef.current}-${index}`,
-            }),
-          );
-        }
-      }
-    });
+            if (disabled) {
+              renderedChildren.push(
+                React.cloneElement(child, {
+                  disabled,
+                  key: `${indexRef.current}-${index}`,
+                }),
+              );
+            } else {
+              renderedChildren.push(
+                React.cloneElement(child, {
+                  children: (
+                    <span className={truncation}>{child.props.children}</span>
+                  ),
+                  key: `${indexRef.current}-${index}`,
+                }),
+              );
+            }
+          }
+        }),
+      [isAnyAncestorCollapsedProp, isExpanded, disabled, nestedRows],
+    );
 
     if (nestedRows && nestedRows.length > 0) {
       renderedChildren[firstCellIndex] = React.cloneElement(
@@ -259,6 +274,42 @@ const Row = React.forwardRef(
       );
     }
 
+    const renderNestedRows = React.useMemo(
+      () =>
+        nestedRows &&
+        nestedRows.length > 0 && (
+          <Transition
+            in={isExpanded && !isAnyAncestorCollapsedProp}
+            timeout={150}
+            nodeRef={nodeRef}
+          >
+            {(state: string) => {
+              return (
+                <>
+                  {nestedRows?.map(element =>
+                    React.cloneElement(element, {
+                      className: cx(transitionStyles.default, {
+                        [transitionStyles.entered]: [
+                          'entering',
+                          'entered',
+                        ].includes(state),
+                      }),
+                    }),
+                  )}
+                </>
+              );
+            }}
+          </Transition>
+        ),
+      [isExpanded, isAnyAncestorCollapsedProp],
+    );
+
+    // Depending on network speed, will noticeably render columns with incorrect
+    // alignment, would rather wait for proper information before rendering
+    if (!columnInfo) {
+      return null;
+    }
+
     const shouldAltRowColor = data && data.length >= 10 && !hasNestedRows;
 
     const alignmentStyles = Object.entries(
@@ -276,33 +327,8 @@ const Row = React.forwardRef(
       className,
     );
 
-    const renderNestedRows = nestedRows && nestedRows.length > 0 && (
-      <Transition
-        in={isExpanded && !isAnyAncestorCollapsedProp}
-        timeout={150}
-        nodeRef={nodeRef}
-      >
-        {(state: string) => {
-          return (
-            <>
-              {nestedRows?.map(element =>
-                React.cloneElement(element, {
-                  className: cx(transitionStyles.default, {
-                    [transitionStyles.entered]: [
-                      'entering',
-                      'entered',
-                    ].includes(state),
-                  }),
-                }),
-              )}
-            </>
-          );
-        }}
-      </Transition>
-    );
-
     return (
-      <>
+      <RowWrapper>
         <tr
           className={rowClassName}
           aria-disabled={disabled}
@@ -316,7 +342,7 @@ const Row = React.forwardRef(
           {renderedChildren}
         </tr>
         {renderNestedRows}
-      </>
+      </RowWrapper>
     );
   },
 );

@@ -11,7 +11,7 @@ const checkBoxCellStyles = css`
   flex-grow: 1;
 `;
 
-export default function CheckboxCell({
+function CheckboxCell({
   index,
   disabled,
 }: {
@@ -68,3 +68,5 @@ export default function CheckboxCell({
     </Cell>
   );
 }
+
+export default CheckboxCell;
