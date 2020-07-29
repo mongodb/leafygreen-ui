@@ -257,9 +257,9 @@ function OrgSelect({
   );
 
   const filterData = () => {
-    const normalizedString = value.toLowerCase();
+    const normalizedValue = value.toLowerCase();
     const filtered = data?.filter(
-      datum => datum.orgName.toLowerCase().indexOf(normalizedString) !== -1,
+      datum => datum.orgName.toLowerCase().indexOf(normalizedValue) !== -1,
     );
 
     setFilteredData(filtered);
