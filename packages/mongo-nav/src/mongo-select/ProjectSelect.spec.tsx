@@ -160,4 +160,15 @@ describe('packages/mongo-select/ProjectSelect', () => {
       });
     });
   });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('types work as expected', () => {
+    // eslint-disable-next-line jest/expect-expect
+    test('does not error when only ProjectSelect values are passed to url prop', () => {
+      <ProjectSelect
+        constructProjectURL={() => 'string'}
+        urls={{ viewAllProjects: 'string', newProject: 'string' }}
+      />;
+    });
+  });
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { select, text } from '@storybook/addon-knobs';
+import { select, text, boolean } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import Syntax from '.';
 import { Language, Variant } from './types';
@@ -25,8 +25,9 @@ storiesOf('Syntax', module).add(
       `}
     >
       <Syntax
+        showLineNumbers={boolean('Show line numbers', false)}
         variant={select('variant', Object.values(Variant), Variant.Light)}
-        language={select('language', Language, Language.Auto)}
+        language={select('language', Language, Language.JavaScript)}
       >
         {text('Code snippet', jsSnippet)}
       </Syntax>

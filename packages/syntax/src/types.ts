@@ -1,3 +1,5 @@
+import { SupportedLanguages } from './languages';
+
 export const Variant = {
   Light: 'light',
   Dark: 'dark',
@@ -5,41 +7,40 @@ export const Variant = {
 
 export type Variant = typeof Variant[keyof typeof Variant];
 
-// When adding additional language support, be sure to also add
-// the language in webpack.config.js
-export const SupportedLanguages = {
-  JavaScript: 'javascript',
-  TypeScript: 'typescript',
-  Cs: 'cs', // C#
-  Csharp: 'csharp',
-  Cpp: 'cpp', // C++
-  Go: 'go',
-  Ini: 'ini',
-  Java: 'java',
-  Perl: 'perl',
-  Php: 'php',
-  Python: 'python',
-  Ruby: 'ruby',
-  Rust: 'rust',
-  Scala: 'scala',
-  Swift: 'swift',
-  Kotlin: 'kotlin',
-  ObjectiveC: 'objectivec',
-  Bash: 'bash',
-  Shell: 'shell',
-  Sql: 'sql',
-  Yaml: 'yaml',
-  Json: 'json',
-  Graphql: 'graphql',
-  Diff: 'diff',
-} as const;
-
-export type SupportedLanguages = typeof SupportedLanguages[keyof typeof SupportedLanguages];
-
 export const Language = {
   ...SupportedLanguages,
-  Auto: 'auto',
   None: 'none',
 } as const;
 
 export type Language = typeof Language[keyof typeof Language];
+
+export interface SyntaxProps extends React.HTMLAttributes<HTMLElement> {
+  /**
+   * The children to render inside Code. This is usually going to be a formatted code block or line.
+   */
+  children: string;
+
+  /**
+   * An additional CSS class applied to the root element
+   */
+  className?: string;
+
+  /**
+   * The language to highlight the syntax of.
+   */
+  language: Language;
+
+  /**
+   * The variant for the syntax-highlighted block.
+   *
+   * default: `'light'`
+   */
+  variant?: Variant;
+
+  /**
+   * Shows line numbers. This is specifically used for the Code component implementation.
+   *
+   * default: `'false'`
+   */
+  showLineNumbers?: boolean;
+}

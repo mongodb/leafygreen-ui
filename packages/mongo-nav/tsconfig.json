@@ -39,6 +39,9 @@
     },
     {
       "path": "../icon-button"
+    },
+    {
+      "path": "../typography"
     }
   ]
 }
