@@ -150,26 +150,11 @@ describe('packages/mongo-nav/src/org-nav', () => {
     });
   };
 
-  const testForSeeProductTour = (isVisible = true) => {
-    it(`${
-      isVisible ? 'displays' : 'does not display'
-    } the See Product Tour link`, () => {
-      const productTour = queryByTestId('org-nav-see-product-tour');
-
-      if (isVisible) {
-        expect(productTour).toBeVisible();
-      } else {
-        expect(productTour).toBeNull();
-      }
-    });
-  };
-
   describe('when rendered with default props', () => {
     beforeEach(renderComponent);
     testForPaymentStatus(false);
     testForVersion(false);
     testForUserMenu(true);
-    testForSeeProductTour(false);
 
     Object.keys(linkNamesToUrls).forEach(linkName =>
       testForNavLink(linkName, linkName !== 'admin'),
@@ -385,26 +370,5 @@ describe('packages/mongo-nav/src/org-nav', () => {
       renderComponent({ environment: 'government' });
       expect(getByTestId('org-nav-fedramp-banner')).toBeVisible();
     });
-  });
-
-  describe('when window.Appcues is true', () => {
-    let originalWindowAppcues: boolean;
-
-    beforeEach(() => {
-      // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'
-      originalWindowAppcues = window.Appcues;
-      // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'
-      window.Appcues = true;
-      renderComponent();
-    });
-
-    afterEach(() => {
-      // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'
-      window.Appcues = originalWindowAppcues;
-      jest.restoreAllMocks();
-      cleanup();
-    });
-
-    testForSeeProductTour(true);
   });
 });
