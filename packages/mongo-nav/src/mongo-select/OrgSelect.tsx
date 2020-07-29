@@ -33,6 +33,7 @@ import {
   OrganizationInterface,
   PlanType,
   Mode,
+  URLS,
 } from '../types';
 import {
   iconLoadingStyle,
@@ -172,6 +173,7 @@ interface OrganizationMongoSelectProps extends BaseMongoSelectProps {
   isOnPrem?: boolean;
   isActive?: boolean;
   disabled?: boolean;
+  urls: Partial<URLS['mongoSelect']>;
 }
 
 const formattedPlanTypes: Record<PlanType, string> = {

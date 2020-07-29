@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '@leafygreen-ui/tooltip';
 import Badge, { Variant } from '@leafygreen-ui/badge';
@@ -23,7 +23,9 @@ import {
   OrgPaymentLabel,
   ActiveNavElement,
   MongoNavInterface,
+  Environment,
 } from '../types';
+import { FullWidthGovBanner, MobileGovTooltip } from './GovBanner';
 
 export const orgNavHeight = 60;
 
@@ -67,14 +69,6 @@ const versionStyle = css`
   })}
 `;
 
-const productTourColor = css`
-  color: ${uiColors.blue.base};
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
 const paymentStatusMap: {
   [K in Partial<Variant>]?: ReadonlyArray<OrgPaymentLabel>;
 } = {
@@ -114,7 +108,12 @@ const userMenuActiveNavItems = [
 
 type OrgNavProps = Pick<
   MongoNavInterface,
-  'onOrganizationChange' | 'activeNav' | 'admin' | 'mode' | 'activePlatform'
+  | 'onOrganizationChange'
+  | 'activeNav'
+  | 'admin'
+  | 'mode'
+  | 'activePlatform'
+  | 'environment'
 > & {
   account?: AccountInterface;
   current?: CurrentOrganizationInterface;
@@ -150,28 +149,20 @@ function OrgNav({
   onPremVersion,
   onPremMFA = false,
   showProjectNav,
+  environment,
 }: OrgNavProps) {
   const [accessManagerOpen, setAccessManagerOpen] = useState(false);
   const [onPremMenuOpen, setOnPremMenuOpen] = useState(false);
   const onElementClick = useOnElementClick();
   const viewportSize = useViewportSize();
-  const [showProductTour, setShowProductTour] = useState(false);
 
+  const isGovernment = environment === Environment.Government;
   const isTablet = viewportSize
     ? viewportSize.width < breakpoints.medium
     : false;
   const isMobile = viewportSize
     ? viewportSize.width < breakpoints.small
     : false;
-
-  useEffect(() => {
-    setShowProductTour(
-      !onPremEnabled &&
-        !isMobile &&
-        // @ts-ignore Property 'Appcues' does not exist on type 'Window & typeof globalThis'.ts(2339)
-        window.Appcues,
-    );
-  }, [onPremEnabled, isMobile]);
 
   const disabled = (userMenuActiveNavItems as Array<string>).includes(
     activeNav as string,
@@ -244,6 +235,7 @@ function OrgNav({
         urls={urls}
         hosts={hosts}
         activeNav={activeNav}
+        environment={environment}
       />
     );
   }
@@ -252,216 +244,210 @@ function OrgNav({
   const { orgNav } = urls;
 
   return (
-    <nav
-      className={navContainer}
-      aria-label="organization navigation"
-      data-testid="organization-nav"
-    >
-      <Tooltip
-        align="bottom"
-        justify="start"
-        variant="dark"
-        className={css`
-          width: 150px;
-        `}
-        usePortal={false}
-        trigger={
-          <a
-            href={orgNav.leaf}
-            onClick={onElementClick(NavElement.OrgNavLeaf)}
-            data-testid="org-nav-leaf"
-          >
-            <LogoMark height={30} />
-          </a>
-        }
+    <>
+      {!isMobile && isGovernment && <FullWidthGovBanner isTablet={isTablet} />}
+      <nav
+        className={navContainer}
+        aria-label="organization navigation"
+        data-testid="organization-nav"
       >
-        View the Organization Home
-      </Tooltip>
-
-      <OrgSelect
-        data={data}
-        current={current}
-        mode={mode}
-        constructOrganizationURL={constructOrganizationURL}
-        hosts={hosts}
-        urls={urls.mongoSelect}
-        onChange={onOrganizationChange}
-        isActive={activeNav === ActiveNavElement.OrgNavOrgSettings}
-        loading={!current}
-        disabled={disabled}
-        admin={admin}
-        isOnPrem={onPremEnabled}
-      />
-
-      {renderBadgeItem()}
-
-      {!disabled && !isMobile && (
-        <>
-          <OrgNavLink
-            isActive={
-              activeNav === ActiveNavElement.OrgNavAccessManagerDropdown
-            }
-            loading={!current}
-            data-testid="org-nav-access-manager-dropdown"
-            onClick={onElementClick(
-              NavElement.OrgNavAccessManagerDropdown,
-              () => setAccessManagerOpen(curr => !curr),
-            )}
-            isButton={true}
-          >
-            Access Manager
-            <AccessManagerIcon
-              className={cx(
-                css`
-                  margin-left: 8px;
-                `,
-                {
-                  [css`
-                    color: ${uiColors.gray.dark1};
-                  `]: !accessManagerOpen,
-                },
-              )}
-            />
-            {current && (
-              <Menu
-                open={accessManagerOpen}
-                setOpen={setAccessManagerOpen}
-                usePortal={false}
-              >
-                <MenuItem
-                  as={orgNav.accessManager ? 'a' : 'button'}
-                  href={orgNav.accessManager}
-                  data-testid="org-nav-dropdown-org-access-manager"
-                  description={current.orgName}
-                  size="large"
-                  active={
-                    activeNav === ActiveNavElement.OrgNavAccessManagerDropdown
-                  }
-                  onClick={onElementClick(
-                    NavElement.OrgNavDropdownOrgAccessManager,
-                    () => setAccessManagerOpen(false),
-                  )}
-                >
-                  Organization Access
-                </MenuItem>
-
-                <MenuItem
-                  as={
-                    currentProjectName && urls.projectNav.accessManager
-                      ? 'a'
-                      : 'button'
-                  }
-                  href={currentProjectName && urls.projectNav.accessManager}
-                  data-testid="org-nav-dropdown-project-access-manager"
-                  size="large"
-                  active={
-                    activeNav ===
-                    ActiveNavElement.OrgNavDropdownProjectAccessManager
-                  }
-                  disabled={!displayProjectAccess}
-                  description={
-                    displayProjectAccess ? currentProjectName : 'None'
-                  }
-                  onClick={onElementClick(
-                    NavElement.OrgNavDropdownProjectAccessManager,
-                    () => setAccessManagerOpen(false),
-                  )}
-                >
-                  Project Access
-                </MenuItem>
-              </Menu>
-            )}
-          </OrgNavLink>
-
-          <OrgNavLink
-            href={current && orgNav.support}
-            isActive={activeNav === ActiveNavElement.OrgNavSupport}
-            loading={!current}
-            className={supportContainer}
-            data-testid="org-nav-support"
-            onClick={onElementClick(NavElement.OrgNavSupport)}
-          >
-            Support
-          </OrgNavLink>
-
-          {!onPremEnabled && (
-            <OrgNavLink
-              href={current && orgNav.billing}
-              isActive={activeNav === ActiveNavElement.OrgNavBilling}
-              loading={!current}
-              data-testid="org-nav-billing"
-              onClick={onElementClick(NavElement.OrgNavBilling)}
+        <Tooltip
+          align="bottom"
+          justify="start"
+          variant="dark"
+          className={css`
+            width: 150px;
+          `}
+          usePortal={false}
+          trigger={
+            <a
+              href={orgNav.leaf}
+              onClick={onElementClick(NavElement.OrgNavLeaf)}
+              data-testid="org-nav-leaf"
             >
-              Billing
+              <LogoMark height={30} />
+            </a>
+          }
+        >
+          View the Organization Home
+        </Tooltip>
+
+        {isMobile && isGovernment && <MobileGovTooltip />}
+
+        <OrgSelect
+          data={data}
+          current={current}
+          mode={mode}
+          constructOrganizationURL={constructOrganizationURL}
+          hosts={hosts}
+          urls={urls.mongoSelect}
+          onChange={onOrganizationChange}
+          isActive={activeNav === ActiveNavElement.OrgNavOrgSettings}
+          loading={!current}
+          disabled={disabled}
+          admin={admin}
+          isOnPrem={onPremEnabled}
+        />
+
+        {renderBadgeItem()}
+
+        {!disabled && !isMobile && (
+          <>
+            <OrgNavLink
+              isActive={
+                activeNav === ActiveNavElement.OrgNavAccessManagerDropdown
+              }
+              loading={!current}
+              data-testid="org-nav-access-manager-dropdown"
+              onClick={onElementClick(
+                NavElement.OrgNavAccessManagerDropdown,
+                () => setAccessManagerOpen(curr => !curr),
+              )}
+              isButton={true}
+            >
+              Access Manager
+              <AccessManagerIcon
+                className={cx(
+                  css`
+                    margin-left: 8px;
+                  `,
+                  {
+                    [css`
+                      color: ${uiColors.gray.dark1};
+                    `]: !accessManagerOpen,
+                  },
+                )}
+              />
+              {current && (
+                <Menu
+                  open={accessManagerOpen}
+                  setOpen={setAccessManagerOpen}
+                  usePortal={false}
+                >
+                  <MenuItem
+                    as={orgNav.accessManager ? 'a' : 'button'}
+                    href={orgNav.accessManager}
+                    data-testid="org-nav-dropdown-org-access-manager"
+                    description={current.orgName}
+                    size="large"
+                    active={
+                      activeNav === ActiveNavElement.OrgNavAccessManagerDropdown
+                    }
+                    onClick={onElementClick(
+                      NavElement.OrgNavDropdownOrgAccessManager,
+                      () => setAccessManagerOpen(false),
+                    )}
+                  >
+                    Organization Access
+                  </MenuItem>
+
+                  <MenuItem
+                    as={
+                      currentProjectName && urls.projectNav.accessManager
+                        ? 'a'
+                        : 'button'
+                    }
+                    href={currentProjectName && urls.projectNav.accessManager}
+                    data-testid="org-nav-dropdown-project-access-manager"
+                    size="large"
+                    active={
+                      activeNav ===
+                      ActiveNavElement.OrgNavDropdownProjectAccessManager
+                    }
+                    disabled={!displayProjectAccess}
+                    description={
+                      displayProjectAccess ? currentProjectName : 'None'
+                    }
+                    onClick={onElementClick(
+                      NavElement.OrgNavDropdownProjectAccessManager,
+                      () => setAccessManagerOpen(false),
+                    )}
+                  >
+                    Project Access
+                  </MenuItem>
+                </Menu>
+              )}
+            </OrgNavLink>
+
+            <OrgNavLink
+              href={current && orgNav.support}
+              isActive={activeNav === ActiveNavElement.OrgNavSupport}
+              loading={!current}
+              className={supportContainer}
+              data-testid="org-nav-support"
+              onClick={onElementClick(NavElement.OrgNavSupport)}
+            >
+              Support
+            </OrgNavLink>
+
+            {!onPremEnabled && (
+              <OrgNavLink
+                href={current && orgNav.billing}
+                isActive={activeNav === ActiveNavElement.OrgNavBilling}
+                loading={!current}
+                data-testid="org-nav-billing"
+                onClick={onElementClick(NavElement.OrgNavBilling)}
+              >
+                Billing
+              </OrgNavLink>
+            )}
+          </>
+        )}
+
+        <div
+          className={css`
+            margin-left: auto;
+          `}
+        >
+          {onPremEnabled && onPremVersion && (
+            <Tooltip
+              usePortal={false}
+              variant="dark"
+              align="bottom"
+              justify="middle"
+              className={css`
+                width: 165px;
+              `}
+              trigger={
+                <span
+                  className={versionStyle}
+                  data-testid="org-nav-on-prem-version"
+                >
+                  {onPremVersion}
+                </span>
+              }
+            >
+              Ops Manager Version
+            </Tooltip>
+          )}
+
+          {!isMobile && (
+            <OrgNavLink
+              href={orgNav.allClusters}
+              isActive={activeNav === ActiveNavElement.OrgNavAllClusters}
+              className={rightLinkMargin}
+              data-testid="org-nav-all-clusters-link"
+              onClick={onElementClick(NavElement.OrgNavAllClusters)}
+            >
+              All Clusters
             </OrgNavLink>
           )}
-        </>
-      )}
 
-      <div
-        className={css`
-          margin-left: auto;
-        `}
-      >
-        {onPremEnabled && onPremVersion && (
-          <Tooltip
-            usePortal={false}
-            variant="dark"
-            align="bottom"
-            justify="middle"
-            className={css`
-              width: 165px;
-            `}
-            trigger={
-              <span
-                className={versionStyle}
-                data-testid="org-nav-on-prem-version"
-              >
-                {onPremVersion}
-              </span>
-            }
-          >
-            Ops Manager Version
-          </Tooltip>
-        )}
+          {!isTablet && admin && (
+            <OrgNavLink
+              href={orgNav.admin}
+              isActive={activeNav === ActiveNavElement.OrgNavAdmin}
+              className={rightLinkMargin}
+              data-testid="org-nav-admin-link"
+            >
+              Admin
+            </OrgNavLink>
+          )}
+        </div>
 
-        {showProductTour && (
-          <OrgNavLink
-            // @ts-ignore 'Cannot find name Appcues'
-            onClick={() => Appcues.show('-M4PVbE05VI91MJihJGv')} // eslint-disable-line no-undef
-            className={cx(rightLinkMargin, productTourColor)}
-            data-testid="org-nav-see-product-tour"
-          >
-            See Product Tour
-          </OrgNavLink>
-        )}
-
-        {!isMobile && (
-          <OrgNavLink
-            href={orgNav.allClusters}
-            isActive={activeNav === ActiveNavElement.OrgNavAllClusters}
-            className={rightLinkMargin}
-            data-testid="org-nav-all-clusters-link"
-            onClick={onElementClick(NavElement.OrgNavAllClusters)}
-          >
-            All Clusters
-          </OrgNavLink>
-        )}
-
-        {!isTablet && admin && (
-          <OrgNavLink
-            href={orgNav.admin}
-            isActive={activeNav === ActiveNavElement.OrgNavAdmin}
-            className={rightLinkMargin}
-            data-testid="org-nav-admin-link"
-          >
-            Admin
-          </OrgNavLink>
-        )}
-      </div>
-
-      {renderUserMenu()}
-    </nav>
+        {renderUserMenu()}
+      </nav>
+    </>
   );
 }
 

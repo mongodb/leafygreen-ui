@@ -26,6 +26,7 @@ import {
   MongoNavInterface,
   ProjectStatus,
   URLS,
+  Environment,
 } from '../types';
 import {
   AtlasIcon,
@@ -243,6 +244,7 @@ type ProjectNavProps = Pick<
   | 'onProjectChange'
   | 'admin'
   | 'mode'
+  | 'environment'
   | 'alertPollingInterval'
 > & {
   current?: CurrentProjectInterface;
@@ -268,6 +270,7 @@ export default function ProjectNav({
   hosts,
   mode,
   alertPollingInterval,
+  environment = Environment.Commercial,
 }: ProjectNavProps) {
   const [open, setOpen] = useState(false);
   const [alerts, setAlerts] = useState(current?.alertsOpen ?? 0);
@@ -304,6 +307,7 @@ export default function ProjectNav({
     ? viewportSize.width < breakpoints.small
     : false;
 
+  const isGovernment = environment === Environment.Government;
   const isProjectInvite =
     activeNav === ActiveNavElement.ProjectNavInvite && isLoading;
   const isActivityFeed =
@@ -435,7 +439,7 @@ export default function ProjectNav({
           </a>
         </li>
 
-        {!isCloudManager && (
+        {!isGovernment && !isCloudManager && (
           <>
             <li role="none" className={productTabStyle}>
               <a
