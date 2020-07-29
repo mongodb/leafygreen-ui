@@ -176,7 +176,6 @@ const buttonVariants: { readonly [K in Variant]: string } = {
 const buttonSizes: Record<Size, string> = {
   [Size.XSmall]: css`
     height: 22px;
-    padding: 0 8px;
     font-size: 11px;
     text-transform: uppercase;
     font-weight: bold;
@@ -184,18 +183,34 @@ const buttonSizes: Record<Size, string> = {
 
   [Size.Small]: css`
     height: 25px;
-    padding: 0 10px;
     font-size: 14px;
   `,
+
   [Size.Normal]: css`
     height: 32px;
-    padding: 0 12px;
     font-size: 14px;
   `,
 
   [Size.Large]: css`
     height: 45px;
     font-size: 16px;
+  `,
+} as const;
+
+const spanSizes: Record<Size, string> = {
+  [Size.XSmall]: css`
+    padding: 0 8px;
+  `,
+
+  [Size.Small]: css`
+    padding: 0 10px;
+  `,
+
+  [Size.Normal]: css`
+    padding: 0 12px;
+  `,
+
+  [Size.Large]: css`
     padding: 0 20px;
   `,
 } as const;
@@ -238,7 +253,7 @@ const baseStyle = css`
   box-sizing: border-box;
   cursor: pointer;
   display: inline-flex;
-  align-items: center;
+  align-items: stretch;
   font-family: Akzidenz, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: normal;
   text-decoration: none;
@@ -246,6 +261,7 @@ const baseStyle = css`
   transition: all 120ms ease;
   user-select: none;
   overflow: hidden;
+  padding: 0;
 
   &:hover {
     text-decoration: none;
@@ -349,7 +365,7 @@ const Button: ExtendableBox<BaseButtonProps, 'button'> = React.forwardRef(
         : glyph;
 
     const content = (
-      <span className={spanStyle}>
+      <span className={cx(spanStyle, spanSizes[size])}>
         {modifiedGlyph}
         {children}
       </span>

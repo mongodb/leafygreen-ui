@@ -1,19 +1,8 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
 import Tooltip, { TriggerEvent, Variant, Align, Justify } from '.';
-
-class Button extends React.Component {
-  static propTypes = {
-    children: PropTypes.node,
-  };
-
-  render() {
-    const { children } = this.props;
-    return <button {...this.props}>trigger {children}</button>;
-  }
-}
+import Button from '@leafygreen-ui/button';
 
 function ControlledTooltip() {
   const [open, setOpen] = useState(false);
@@ -24,7 +13,7 @@ function ControlledTooltip() {
       setOpen={setOpen}
       align={select('Align', Object.values(Align), 'top')}
       justify={select('Justify', Object.values(Justify), 'start')}
-      trigger={<Button />}
+      trigger={<Button>Trigger</Button>}
       enabled={boolean('Enabled', true)}
       triggerEvent={select(
         'triggerEvent',
@@ -43,9 +32,7 @@ storiesOf('Tooltip', module)
     <Tooltip
       align={select('Align', Object.values(Align), 'top')}
       justify={select('justify', Object.values(Justify), 'start')}
-      trigger={({ children, ...rest }: any) => {
-        return <button {...rest}>trigger {children}</button>;
-      }}
+      trigger={<Button>Trigger</Button>}
       triggerEvent={select(
         'triggerEvent',
         Object.values(TriggerEvent),
