@@ -168,13 +168,10 @@ function ProjectSelect({
   );
 
   const filterData = () => {
-    const invalid = /[()[\]{}\\]/g;
-    const sanitizedValue = value.replace(invalid, '');
-    const search = new RegExp(String(sanitizedValue), 'i');
-
-    const filtered = data?.filter(datum => {
-      return search.test(datum.projectName);
-    });
+    const filtered = data?.filter(
+      datum =>
+        datum.projectName.toLowerCase().indexOf(value.toLowerCase()) !== -1,
+    );
 
     setFilteredData(filtered);
   };
