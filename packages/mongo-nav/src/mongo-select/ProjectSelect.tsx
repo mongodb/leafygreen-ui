@@ -168,9 +168,9 @@ function ProjectSelect({
   );
 
   const filterData = () => {
+    const normalizedString = value.toLowerCase();
     const filtered = data?.filter(
-      datum =>
-        datum.projectName.toLowerCase().indexOf(value.toLowerCase()) !== -1,
+      datum => datum.projectName.toLowerCase().indexOf(normalizedString) !== -1,
     );
 
     setFilteredData(filtered);
