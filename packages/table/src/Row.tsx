@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Transition } from 'react-transition-group';
-import Checkbox from '@leafygreen-ui/checkbox';
 import IconButton from '@leafygreen-ui/icon-button';
 import Icon from '@leafygreen-ui/icon';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import CheckboxCell from './CheckboxCell';
 import { useTableContext, TableTypes, DataType } from './TableContext';
-import { useRowContext, RowTypes } from './RowContext';
-import Cell, { tdInnerDiv } from './Cell';
+import { tdInnerDiv } from './Cell';
 
 const rowStyle = css`
   border-top: 1px solid ${uiColors.gray.light2};
@@ -75,13 +74,6 @@ const transitionStyles = {
   `,
 };
 
-const checkBoxCellStyles = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-`;
-
 const styleMap = {
   left: [DataType.String, DataType.Weight, DataType.ZipCode, DataType.Date],
   right: [DataType.Number],
@@ -140,37 +132,11 @@ const Row = React.forwardRef(
       dispatch: tableDispatch,
     } = useTableContext();
 
-    const {
-      state: { rowState },
-      dispatch: rowDispatch,
-    } = useRowContext();
-
     const indexRef = useRef(generateIndexRef());
 
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nodeRef = useRef(null);
     let hasSeenFirstCell = false;
-
-    useEffect(() => {
-      rowDispatch({
-        type: RowTypes.RegisterRow,
-        payload: {
-          index: indexRef.current,
-          checked: false,
-          disabled: disabled,
-        },
-      });
-    }, []);
-
-    useEffect(() => {
-      rowDispatch({
-        type: RowTypes.RegisterRow,
-        payload: {
-          index: indexRef.current,
-          disabled,
-        },
-      });
-    }, [disabled]);
 
     useEffect(() => {
       let shouldDispatchHasNestedRows = false;
@@ -310,30 +276,6 @@ const Row = React.forwardRef(
       className,
     );
 
-    const onChange = () => {
-      rowDispatch({
-        type: RowTypes.ToggleIndividualChecked,
-        payload: {
-          index: indexRef.current,
-          checked: !rowState[indexRef.current].checked,
-        },
-      });
-    };
-
-    const checkboxProps = {
-      onChange,
-      disabled,
-      checked: !!rowState[indexRef.current]?.checked,
-    };
-
-    const checkBoxCell = selectable && (
-      <Cell>
-        <div className={checkBoxCellStyles}>
-          <Checkbox {...checkboxProps} />
-        </div>
-      </Cell>
-    );
-
     const renderNestedRows = nestedRows && nestedRows.length > 0 && (
       <Transition
         in={isExpanded && !isAnyAncestorCollapsedProp}
@@ -368,7 +310,9 @@ const Row = React.forwardRef(
           key={indexRef.current}
           {...rest}
         >
-          {checkBoxCell}
+          {selectable && (
+            <CheckboxCell disabled={disabled} index={indexRef.current} />
+          )}
           {renderedChildren}
         </tr>
         {renderNestedRows}
