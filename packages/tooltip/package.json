@@ -11,6 +11,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "devDependencies": {
+    "@leafygreen-ui/button": "^5.0.2"
+  },
   "dependencies": {
     "@leafygreen-ui/popover": "^5.1.1",
     "@leafygreen-ui/lib": "^4.5.1",

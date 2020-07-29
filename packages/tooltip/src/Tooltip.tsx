@@ -10,10 +10,29 @@ import Popover, {
 import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { HTMLElementProps, IdAllocator } from '@leafygreen-ui/lib';
+import { HTMLElementProps, IdAllocator, typeIs } from '@leafygreen-ui/lib';
 import { transparentize } from 'polished';
 import debounce from 'lodash/debounce';
 import { trianglePosition } from './tooltipUtils';
+
+/**
+ * Converts any type to an array of that type if it isn't already an array,
+ * or an empty array for nullish values.
+ * */
+function toArray(item: null | undefined): [];
+function toArray<T>(item: Array<T>): Array<T>;
+function toArray<T>(item: T): Array<T>;
+function toArray<T>(item: T) {
+  if (item == null) {
+    return [];
+  }
+
+  if (typeIs.array(item)) {
+    return item;
+  }
+
+  return [item];
+}
 
 export const TriggerEvent = {
   Hover: 'hover',
@@ -336,14 +355,7 @@ function Tooltip({
       ...createTriggerProps(triggerEvent, trigger.props),
       className: cx(trigger.props.className, positionRelative),
       'aria-describedby': tooltipId,
-      children: triggerChildren
-        ? [
-            ...(triggerChildren instanceof Array
-              ? triggerChildren
-              : [triggerChildren]),
-            tooltip,
-          ]
-        : tooltip,
+      children: [...toArray(triggerChildren), tooltip],
     });
   }
 
