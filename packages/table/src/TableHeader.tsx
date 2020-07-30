@@ -89,7 +89,7 @@ function TableHeader({
         },
       });
     }
-  }, [dataType]);
+  }, [dispatch, index, selectable, dataType]);
 
   return (
     <th {...rest} className={cx(thStyle, commonCellStyles, className)}>

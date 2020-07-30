@@ -32,7 +32,7 @@ function CheckboxCell({
         disabled: disabled,
       },
     });
-  }, []);
+  }, [disabled, index, rowDispatch]);
 
   useEffect(() => {
     rowDispatch({
@@ -42,7 +42,7 @@ function CheckboxCell({
         disabled,
       },
     });
-  }, [disabled]);
+  }, [disabled, index, rowDispatch]);
 
   const onChange = () => {
     rowDispatch({

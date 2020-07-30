@@ -12,11 +12,8 @@ const thStyles = css`
   border-style: solid;
 `;
 
-function HeaderRow({
-  children,
-  className,
-  ...rest
-}: React.ComponentPropsWithoutRef<'tr'>) {
+export type HeaderRowProps = React.ComponentPropsWithoutRef<'tr'>;
+function HeaderRow({ children, className, ...rest }: HeaderRowProps) {
   const {
     state: { selectable },
   } = useTableContext();

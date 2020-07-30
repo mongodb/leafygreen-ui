@@ -7,7 +7,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import CheckboxCell from './CheckboxCell';
 import { useTableContext, TableTypes, DataType } from './TableContext';
-import Cell, { tdInnerDiv } from './Cell';
+import { tdInnerDiv } from './Cell';
 
 const rowStyle = css`
   border-top: 1px solid ${uiColors.gray.light2};
@@ -80,7 +80,7 @@ const styleMap = {
 } as const;
 
 function styleColumn(index: string, dataType: DataType) {
-  let justify = 'flex-start';
+  let justify;
 
   if (styleMap.left.includes(dataType)) {
     justify = 'flex-start';
@@ -95,9 +95,9 @@ function styleColumn(index: string, dataType: DataType) {
   `;
 }
 
-function getIndentLevelStyle(indentLevel: number) {
+function getIndentLevelStyle(indentLevel: number, selectable = false) {
   return css`
-    & > td:nth-child(2) {
+    & > td:nth-child(${selectable ? 2 : 1}) {
       padding-left: ${8 + indentLevel * 16}px;
     }
   `;
@@ -112,24 +112,7 @@ interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
   disabled?: boolean;
   indentLevel?: number;
   isAnyAncestorCollapsed?: boolean;
-  children?: React.ReactNode;
 }
-
-const RowWrapper = React.memo(({ children }) => {
-  const prevChildren = useRef();
-
-  useEffect(() => {
-    prevChildren.current = children;
-  });
-
-  if (prevChildren.current != children) {
-    return children;
-  }
-
-  return null;
-});
-
-RowWrapper.displayName = 'RowWrapper';
 
 const Row = React.forwardRef(
   (
@@ -191,6 +174,7 @@ const Row = React.forwardRef(
       }
     }, [children, hasNestedRows, hasRowSpan, tableDispatch]);
 
+    // Iterating over children twice because generated memoized values have different dependants
     const renderedChildren = React.useMemo(() => {
       const chevronButton = (
         <IconButton
@@ -205,7 +189,7 @@ const Row = React.forwardRef(
           />
         </IconButton>
       );
-      const renderedChildren = [];
+      const renderedChildren: Array<React.ReactElement> = [];
       let hasSeenRow = false;
 
       React.Children.forEach(children, (child, index) => {
@@ -224,7 +208,10 @@ const Row = React.forwardRef(
             }),
           );
         } else {
-          if (isComponentType(child, 'Row')) {
+          if (
+            isComponentType(child, 'Row') ||
+            child?.type?.type.displayName === 'Row'
+          ) {
             hasSeenRow = true;
           }
         }
@@ -248,9 +235,10 @@ const Row = React.forwardRef(
       return renderedChildren;
     }, [children, disabled, className, isExpanded]);
 
+    // Iterating over children twice because generated memoized values have different dependants
     const nestedRows = React.useMemo(() => {
       let hasSeenFirstCell = false;
-      const nestedRows = [];
+      const nestedRows: Array<React.ReactElement> = [];
 
       React.Children.forEach(children, (child, index) => {
         if (isComponentType(child, 'Cell') && !hasSeenFirstCell) {
@@ -262,7 +250,6 @@ const Row = React.forwardRef(
             React.cloneElement(child, {
               ref: nodeRef,
               isAnyAncestorCollapsed: isAnyAncestorCollapsedProp || !isExpanded,
-              ['aria-expanded']: isExpanded ? 'true' : 'false',
               indentLevel: indentLevel + 1,
               key: `${indexRef.current}-${indentLevel}-${index}`,
             }),
@@ -287,7 +274,7 @@ const Row = React.forwardRef(
 
     const rowClassName = cx(
       rowStyle,
-      getIndentLevelStyle(indentLevel),
+      getIndentLevelStyle(indentLevel, selectable),
       [...alignmentStyles],
       {
         [altColor]: shouldAltRowColor,
@@ -296,6 +283,15 @@ const Row = React.forwardRef(
       className,
     );
 
+    const ariaExpanded =
+      nestedRows.length > 0
+        ? {
+            ['aria-expanded']: isExpanded,
+          }
+        : undefined;
+
+    console.log(ariaExpanded, isExpanded);
+
     return (
       <>
         <tr
@@ -303,6 +299,7 @@ const Row = React.forwardRef(
           aria-disabled={disabled}
           ref={ref}
           key={indexRef.current}
+          {...ariaExpanded}
           {...rest}
         >
           {selectable && (

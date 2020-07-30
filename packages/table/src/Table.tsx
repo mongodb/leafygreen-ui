@@ -8,7 +8,7 @@ import { RowProvider } from './RowContext';
 import TableHead from './TableHead';
 import TableBody from './TableBody';
 
-// Add tests for nested data structures to prove that sortBy prop works as expected
+// Play with typings all around
 
 const tableStyles = css`
   border-collapse: collapse;
