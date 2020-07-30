@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean } from '@storybook/addon-knobs';
 import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
-import { defaultData, multiRowData } from './fixtures';
+import { defaultData, testHeavierDataSet, multiRowData } from './fixtures';
 
 if (process.env.NODE_ENV === 'development') {
   const whyDidYouRender = require('@welldone-software/why-did-you-render');
@@ -15,7 +15,7 @@ storiesOf('Table', module)
   .add('Default', () => (
     <Table
       selectable={boolean('isSelectable', true)}
-      data={defaultData}
+      data={testHeavierDataSet}
       columns={
         <>
           <TableHeader

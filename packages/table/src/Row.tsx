@@ -208,10 +208,7 @@ const Row = React.forwardRef(
             }),
           );
         } else {
-          if (
-            isComponentType(child, 'Row') ||
-            child?.type?.type.displayName === 'Row'
-          ) {
+          if (isComponentType(child, 'Row')) {
             hasSeenRow = true;
           }
         }
@@ -233,7 +230,7 @@ const Row = React.forwardRef(
       }
 
       return renderedChildren;
-    }, [children, disabled, className, isExpanded]);
+    }, [children, disabled, className, isExpanded, setIsExpanded]);
 
     // Iterating over children twice because generated memoized values have different dependants
     const nestedRows = React.useMemo(() => {
@@ -290,8 +287,6 @@ const Row = React.forwardRef(
           }
         : undefined;
 
-    console.log(ariaExpanded, isExpanded);
-
     return (
       <>
         <tr
@@ -299,7 +294,8 @@ const Row = React.forwardRef(
           aria-disabled={disabled}
           ref={ref}
           key={indexRef.current}
-          {...ariaExpanded}
+          // {...ariaExpanded}
+          aria-expanded={isExpanded}
           {...rest}
         >
           {selectable && (
@@ -338,4 +334,4 @@ const Row = React.forwardRef(
 
 Row.displayName = 'Row';
 
-export default React.memo(Row);
+export default Row;
