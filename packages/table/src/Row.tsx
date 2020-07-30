@@ -7,7 +7,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import CheckboxCell from './CheckboxCell';
 import { useTableContext, TableTypes, DataType } from './TableContext';
-import { tdInnerDiv } from './Cell';
+import Cell, { tdInnerDiv } from './Cell';
 
 const rowStyle = css`
   border-top: 1px solid ${uiColors.gray.light2};
@@ -112,6 +112,7 @@ interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
   disabled?: boolean;
   indentLevel?: number;
   isAnyAncestorCollapsed?: boolean;
+  children?: React.ReactNode;
 }
 
 const RowWrapper = React.memo(({ children }) => {
@@ -149,10 +150,8 @@ const Row = React.forwardRef(
     } = useTableContext();
 
     const indexRef = useRef(generateIndexRef());
-
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nodeRef = useRef(null);
-    let hasSeenFirstCell = false;
 
     useEffect(() => {
       let shouldDispatchHasNestedRows = false;
@@ -190,119 +189,89 @@ const Row = React.forwardRef(
           payload: true,
         });
       }
-    }, [children]);
+    }, [children, hasNestedRows, hasRowSpan, tableDispatch]);
 
-    const chevronButton = (
-      <IconButton
-        onClick={() => setIsExpanded(curr => !curr)}
-        aria-label="chevron"
-        className={iconButtonMargin}
-      >
-        <Icon
+    const renderedChildren = React.useMemo(() => {
+      const chevronButton = (
+        <IconButton
+          onClick={() => setIsExpanded(curr => !curr)}
           aria-label="chevron"
-          glyph={isExpanded ? 'ChevronDown' : 'ChevronRight'}
-          color={uiColors.gray.dark2}
-        />
-      </IconButton>
-    );
+          className={iconButtonMargin}
+        >
+          <Icon
+            aria-label="chevron"
+            glyph={isExpanded ? 'ChevronDown' : 'ChevronRight'}
+            color={uiColors.gray.dark2}
+          />
+        </IconButton>
+      );
+      const renderedChildren = [];
+      let hasSeenRow = false;
 
-    const renderedChildren: Array<React.ReactElement> = [];
-    const nestedRows: Array<React.ReactElement> = [];
-    let firstCellIndex: number | undefined;
-
-    React.useMemo(
-      () =>
-        React.Children.forEach(children, (child, index) => {
-          if (isComponentType(child, 'Row')) {
-            nestedRows.push(
-              React.cloneElement(child, {
-                ref: nodeRef,
-                isAnyAncestorCollapsed:
-                  isAnyAncestorCollapsedProp || !isExpanded,
-                ['aria-expanded']: isExpanded ? 'true' : 'false',
-                indentLevel: indentLevel + 1,
-                key: `${indexRef.current}-${indentLevel}-${index}`,
-              }),
-            );
-          } else if (isComponentType(child, 'Cell')) {
-            if (!hasSeenFirstCell) {
-              hasSeenFirstCell = true;
-              firstCellIndex = index;
-            }
-
-            if (!child.props.children) {
-              return null;
-            }
-
-            if (disabled) {
-              renderedChildren.push(
-                React.cloneElement(child, {
-                  disabled,
-                  key: `${indexRef.current}-${index}`,
-                }),
-              );
-            } else {
-              renderedChildren.push(
-                React.cloneElement(child, {
-                  children: (
-                    <span className={truncation}>{child.props.children}</span>
-                  ),
-                  key: `${indexRef.current}-${index}`,
-                }),
-              );
-            }
+      React.Children.forEach(children, (child, index) => {
+        if (isComponentType(child, 'Cell')) {
+          if (!child.props.children) {
+            return null;
           }
-        }),
-      [isAnyAncestorCollapsedProp, isExpanded, disabled, nestedRows],
-    );
 
-    if (nestedRows && nestedRows.length > 0) {
-      renderedChildren[firstCellIndex] = React.cloneElement(
-        renderedChildren[firstCellIndex],
-        {
+          renderedChildren.push(
+            React.cloneElement(child, {
+              children: (
+                <span className={truncation}>{child.props.children}</span>
+              ),
+              key: `${indexRef.current}-${index}`,
+              disabled: child.props.disabled || disabled,
+            }),
+          );
+        } else {
+          if (isComponentType(child, 'Row')) {
+            hasSeenRow = true;
+          }
+        }
+      });
+
+      if (hasSeenRow) {
+        renderedChildren[0] = React.cloneElement(renderedChildren[0], {
           children: (
             <>
               {chevronButton}
               <span className={truncation}>
-                {renderedChildren[firstCellIndex].props.children}
+                {renderedChildren[0].props.children}
               </span>
             </>
           ),
           className: cx(displayFlex, className),
-          key: `${indexRef.current}-${renderedChildren[firstCellIndex].props.children}`,
-        },
-      );
-    }
+          key: `${indexRef.current}-${renderedChildren[0].props.children}`,
+        });
+      }
 
-    const renderNestedRows = React.useMemo(
-      () =>
-        nestedRows &&
-        nestedRows.length > 0 && (
-          <Transition
-            in={isExpanded && !isAnyAncestorCollapsedProp}
-            timeout={150}
-            nodeRef={nodeRef}
-          >
-            {(state: string) => {
-              return (
-                <>
-                  {nestedRows?.map(element =>
-                    React.cloneElement(element, {
-                      className: cx(transitionStyles.default, {
-                        [transitionStyles.entered]: [
-                          'entering',
-                          'entered',
-                        ].includes(state),
-                      }),
-                    }),
-                  )}
-                </>
-              );
-            }}
-          </Transition>
-        ),
-      [isExpanded, isAnyAncestorCollapsedProp],
-    );
+      return renderedChildren;
+    }, [children, disabled, className, isExpanded]);
+
+    const nestedRows = React.useMemo(() => {
+      let hasSeenFirstCell = false;
+      const nestedRows = [];
+
+      React.Children.forEach(children, (child, index) => {
+        if (isComponentType(child, 'Cell') && !hasSeenFirstCell) {
+          hasSeenFirstCell = true;
+        }
+
+        if (child != null && isComponentType(child, 'Row')) {
+          nestedRows.push(
+            React.cloneElement(child, {
+              ref: nodeRef,
+              isAnyAncestorCollapsed: isAnyAncestorCollapsedProp || !isExpanded,
+              ['aria-expanded']: isExpanded ? 'true' : 'false',
+              indentLevel: indentLevel + 1,
+              key: `${indexRef.current}-${indentLevel}-${index}`,
+            }),
+          );
+        }
+      });
+
+      return nestedRows;
+    }, [isAnyAncestorCollapsedProp, isExpanded, indentLevel, children]);
 
     // Depending on network speed, will noticeably render columns with incorrect
     // alignment, would rather wait for proper information before rendering
@@ -328,7 +297,7 @@ const Row = React.forwardRef(
     );
 
     return (
-      <RowWrapper>
+      <>
         <tr
           className={rowClassName}
           aria-disabled={disabled}
@@ -341,8 +310,31 @@ const Row = React.forwardRef(
           )}
           {renderedChildren}
         </tr>
-        {renderNestedRows}
-      </RowWrapper>
+        {nestedRows && nestedRows.length > 0 && (
+          <Transition
+            in={isExpanded && !isAnyAncestorCollapsedProp}
+            timeout={150}
+            nodeRef={nodeRef}
+          >
+            {(state: string) => {
+              return (
+                <>
+                  {nestedRows?.map(element =>
+                    React.cloneElement(element, {
+                      className: cx(transitionStyles.default, {
+                        [transitionStyles.entered]: [
+                          'entering',
+                          'entered',
+                        ].includes(state),
+                      }),
+                    }),
+                  )}
+                </>
+              );
+            }}
+          </Transition>
+        )}
+      </>
     );
   },
 );

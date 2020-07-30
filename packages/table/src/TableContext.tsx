@@ -196,8 +196,6 @@ export const sortFunction = ({
   accessorValue: (data: T) => string;
   direction: 'asc' | 'desc';
 }) => {
-  console.log('here', data, accessorValue);
-
   return data.sort((a, b) => {
     const aVal = accessorValue(a);
     const bVal = accessorValue(b);
