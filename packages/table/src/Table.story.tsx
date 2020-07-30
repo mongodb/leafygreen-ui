@@ -4,13 +4,6 @@ import { boolean } from '@storybook/addon-knobs';
 import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
 import { defaultData, testHeavierDataSet, multiRowData } from './fixtures';
 
-if (process.env.NODE_ENV === 'development') {
-  const whyDidYouRender = require('@welldone-software/why-did-you-render');
-  whyDidYouRender(React, {
-    trackAllPureComponents: true,
-  });
-}
-
 storiesOf('Table', module)
   .add('Default', () => (
     <Table
