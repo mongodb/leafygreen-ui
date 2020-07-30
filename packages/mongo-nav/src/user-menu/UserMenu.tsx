@@ -399,15 +399,17 @@ function UserMenu({
             >
               Organizations
             </MenuItem>
-            <MenuItem
-              as={cloudUrls.mfa ? 'a' : 'button'}
-              href={cloudUrls.mfa}
-              active={activeNav === ActiveNavElement.UserMenuCloudMFA}
-              data-testid="user-menuitem-cloud-mfa"
-              onClick={onElementClick(NavElement.UserMenuCloudMFA)}
-            >
-              Two-Factor Authentication
-            </MenuItem>
+            {!isGovernment && (
+              <MenuItem
+                as={cloudUrls.mfa ? 'a' : 'button'}
+                href={cloudUrls.mfa}
+                active={activeNav === ActiveNavElement.UserMenuCloudMFA}
+                data-testid="user-menuitem-cloud-mfa"
+                onClick={onElementClick(NavElement.UserMenuCloudMFA)}
+              >
+                Two-Factor Authentication
+              </MenuItem>
+            )}
           </SubMenu>
         ) : (
           <MenuItem
