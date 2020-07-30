@@ -20,7 +20,7 @@ function renderUserMenu(props = {}) {
       onLogout={onLogout}
       onProductChange={onProductChange}
       urls={urlFixtures}
-      hosts={hostDefaults}
+      hosts={hostDefaults()}
       {...props}
     />,
   );
@@ -205,6 +205,17 @@ describe('packages/mongo-nav/user-menu', () => {
       const trigger = getByTestId('user-menu-trigger');
       fireEvent.click(trigger);
       expect(getByText('cloud.mongodbgov.com')).toBeInTheDocument();
+    });
+
+    test('mfa menu item does not appear', () => {
+      const { queryByText, getByTestId } = renderUserMenu({
+        activePlatform: 'cloud',
+        environment: 'government',
+      });
+
+      const trigger = getByTestId('user-menu-trigger');
+      fireEvent.click(trigger);
+      expect(queryByText('Two-Factor Authentication')).not.toBeInTheDocument();
     });
   });
 });
