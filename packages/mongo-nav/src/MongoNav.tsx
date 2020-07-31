@@ -201,7 +201,7 @@ function MongoNav(
   useImperativeHandle(ref, () => ({
     reloadData: () => {
       console.log('inside the exposed property');
-      setReload(true);
+      setReload(curr => !curr);
     },
   }));
 
