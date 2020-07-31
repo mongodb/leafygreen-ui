@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/lib",
-  "version": "4.5.1",
+  "version": "5.0.0",
   "description": "leafyGreen UI Kit Internal Library",
   "browser": "./dist/index.web.js",
   "main": "./dist/index.node.js",

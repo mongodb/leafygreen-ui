@@ -1,5 +1,18 @@
 # @leafygreen-ui/pipeline
 
+## 1.0.3
+
+### Patch Changes
+
+- Updated dependencies [2eba736]
+- Updated dependencies [1aa26ee]
+- Updated dependencies [a571361]
+- Updated dependencies [a571361]
+- Updated dependencies [d739511]
+  - @leafygreen-ui/lib@5.0.0
+  - @leafygreen-ui/tooltip@3.3.2
+  - @leafygreen-ui/hooks@3.0.0
+
 ## 1.0.2
 
 ### Patch Changes
