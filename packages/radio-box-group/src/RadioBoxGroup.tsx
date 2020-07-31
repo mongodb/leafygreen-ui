@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import RadioBox, { RadioBoxProps } from './RadioBox';
 import Size from './Size';
+import { IdAllocator } from '@leafygreen-ui/lib';
 
 const baseGroupStyle = css`
   display: flex;
 `;
 
-interface RadioBoxGroupProps {
+interface RadioBoxGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Content that will appear inside of RadioBoxGroup component.
    */
@@ -74,7 +75,7 @@ function isRadioBoxElement(
  * @param props.size Determines size of RadioBox components ['default', 'compact', 'full'].
  */
 export default class RadioBoxGroup extends PureComponent<
-  RadioBoxGroupProps & React.HTMLAttributes<HTMLDivElement>,
+  RadioBoxGroupProps,
   RadioBoxGroupState
 > {
   static displayName = 'RadioBoxGroup';
@@ -97,7 +98,16 @@ export default class RadioBoxGroup extends PureComponent<
     value: '',
   };
 
-  defaultName = `radio-box-group-${Math.floor(Math.random() * 1000000)}`;
+  private static idAllocator = new IdAllocator('radio-box-group');
+  private _defaultName?: string;
+
+  private get defaultName(): string {
+    if (!this._defaultName) {
+      this._defaultName = RadioBoxGroup.idAllocator.generate();
+    }
+
+    return this._defaultName;
+  }
 
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { onChange, value } = this.props;
