@@ -6,8 +6,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { commonCellStyles } from './styles';
-import { useTableContext, TableTypes } from './TableContext';
-import { DataType } from './utils';
+import { useTableContext, TableTypes, DataType } from './TableContext';
 
 const thStyle = css`
   width: 144px;
@@ -28,11 +27,15 @@ const labelStyle = css`
   padding-right: 4px;
 `;
 
+const glyphColor = css`
+  color: ${uiColors.blue.base};
+`;
+
 const glyphMap = {
   unsorted: UnsortedIcon,
   asc: SortAscendingIcon,
   desc: SortDescendingIcon,
-};
+} as const;
 
 export function normalizeAccessor(accessor: string | Function) {
   let accessorFn = accessor;
@@ -51,7 +54,7 @@ export function normalizeAccessor(accessor: string | Function) {
     }
   }
 
-  return accessorFn;
+  return accessorFn as (data: string) => string;
 }
 
 interface TableHeaderInterface {
@@ -82,9 +85,22 @@ function TableHeader({
     dispatch,
   } = useTableContext();
 
+  React.useEffect(() => {
+    if (typeof index === 'number') {
+      dispatch({
+        type: TableTypes.RegisterColumn,
+        payload: {
+          // Offsetting 0-indexed columns
+          index: selectable ? index + 2 : index + 1,
+          dataType,
+        },
+      });
+    }
+  }, [dispatch, index, selectable, dataType]);
+
   const normalizedAccessor = sortBy && normalizeAccessor(sortBy);
 
-  let glyph;
+  let glyph: 'unsorted' | 'asc' | 'desc';
 
   if (sort?.columnId === index) {
     glyph = sort?.direction ?? 'unsorted';
@@ -95,52 +111,41 @@ function TableHeader({
   const Glyph = glyphMap[glyph];
 
   const sortRows = () => {
-    dispatch({
-      type: TableTypes.SortTableData,
-      payload: {
-        columnId: index,
-        accessorValue: normalizedAccessor,
-        data,
-      },
-    });
-  };
-
-  React.useEffect(() => {
-    if (typeof index === 'number') {
+    if (typeof index === 'number' && normalizedAccessor) {
       dispatch({
-        type: TableTypes.SetColumnInfo,
+        type: TableTypes.SortTableData,
         payload: {
-          // Offsetting 0-indexed columns
-          index: selectable ? index + 2 : index + 1,
-          dataType,
+          columnId: index,
+          accessorValue: normalizedAccessor,
+          data,
         },
       });
     }
-  }, [dispatch, index, selectable, dataType]);
+  };
+
+  const sortButton = (
+    <IconButton
+      aria-label="sort"
+      onClick={sortRows}
+      className={css`
+        margin-bottom: 2px;
+      `}
+    >
+      <Glyph
+        size="small"
+        title={`${glyph}-${index}`}
+        className={cx({
+          [glyphColor]: glyph === 'asc' || glyph === 'desc',
+        })}
+      />
+    </IconButton>
+  );
 
   return (
     <th {...rest} className={cx(thStyle, commonCellStyles, className)}>
       <div className={flexDisplay}>
         <span className={labelStyle}>{label}</span>
-        {sortBy != null && (
-          <IconButton
-            aria-label="sort"
-            onClick={sortRows}
-            className={css`
-              margin-bottom: 2px;
-            `}
-          >
-            <Glyph
-              size="small"
-              title={`${glyph}-${index}`}
-              className={cx({
-                [css`
-                  color: ${uiColors.blue.base};
-                `]: glyph === 'asc' || glyph === 'desc',
-              })}
-            />
-          </IconButton>
-        )}
+        {sortBy != null && sortButton}
       </div>
     </th>
   );

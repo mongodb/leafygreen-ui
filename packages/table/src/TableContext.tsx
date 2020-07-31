@@ -8,7 +8,7 @@ import React, {
 
 const TableTypes = {
   SelectableTable: 'SELECTABLE_TABLE',
-  SetColumnInfo: 'SET_COLUMN_INFO',
+  RegisterColumn: 'REGISTER_COLUMN_INFO',
   SortTableData: 'SORT_TABLE_DATA',
   SetHasNestedRows: 'SET_HAS_NESTED_ROWS',
   SetHasRowSpan: 'SET_HAS_ROW_SPAN',
@@ -20,7 +20,7 @@ export { TableTypes };
 
 interface ActionPayload {
   [TableTypes.SelectableTable]: boolean;
-  [TableTypes.SetColumnInfo]: {
+  [TableTypes.RegisterColumn]: {
     dataType?: DataType;
     index: number;
   };
@@ -28,7 +28,7 @@ interface ActionPayload {
   [TableTypes.SetHasNestedRows]: boolean;
   [TableTypes.SortTableData]: {
     columnId: number;
-    accessorValue: () => string;
+    accessorValue: (data: any) => string;
     data: Array<unknown>;
   };
 }
@@ -113,7 +113,7 @@ export function reducer(state: State, action: Action): State {
         selectable: action.payload,
       };
 
-    case TableTypes.SetColumnInfo:
+    case TableTypes.RegisterColumn:
       return {
         ...state,
         columnInfo: {

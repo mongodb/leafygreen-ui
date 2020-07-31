@@ -15,6 +15,11 @@ function TableHead<Shape>({ columns = [] }: TableHeaderProps<Shape>) {
 
   function createCols(array: Array<React.ReactNode>): React.ReactNode {
     return array.map((child, index) => {
+      const tableHeaderCommonProps = {
+        key: index,
+        index,
+      };
+
       if (isComponentType(child, 'HeaderRow')) {
         usingHeaderRow.current = true;
 
@@ -26,14 +31,11 @@ function TableHead<Shape>({ columns = [] }: TableHeaderProps<Shape>) {
       }
 
       if (isComponentType(child, 'TableHeader')) {
-        return React.cloneElement(child, {
-          key: index,
-          index,
-        });
+        return React.cloneElement(child, tableHeaderCommonProps);
       }
 
       if (typeof child === 'string') {
-        return <TableHeader key={index} label={child} index={index} />;
+        return <TableHeader {...tableHeaderCommonProps} label={child} />;
       }
 
       return child;

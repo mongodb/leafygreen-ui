@@ -294,8 +294,7 @@ const Row = React.forwardRef(
           aria-disabled={disabled}
           ref={ref}
           key={indexRef.current}
-          // {...ariaExpanded}
-          aria-expanded={isExpanded}
+          {...ariaExpanded}
           {...rest}
         >
           {selectable && (
