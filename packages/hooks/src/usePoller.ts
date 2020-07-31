@@ -4,17 +4,15 @@ import useEventListener from './useEventListener';
 function useVisibilityChange() {
   const isVisibilityStateVisible = () => document.visibilityState === 'visible';
 
-  const [isVisible, setIsVisible] = useState(isVisibilityStateVisible);
+  const [isVisible, setIsVisible] = useState(true);
 
-  useEventListener(
-    'visibilitychange',
-    () => {
-      setIsVisible(isVisibilityStateVisible);
-    },
-    {
-      element: document,
-    },
-  );
+  useEffect(() => {
+    setIsVisible(isVisibilityStateVisible);
+  }, []);
+
+  useEventListener('visibilitychange', () => {
+    setIsVisible(isVisibilityStateVisible);
+  });
 
   return isVisible;
 }
