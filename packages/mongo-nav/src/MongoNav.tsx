@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import OrgNav from './org-nav';
 import ProjectNav from './project-nav';
@@ -38,6 +38,7 @@ type UseMongoNavData = Pick<
   | 'onError'
 > & {
   hosts: Required<NonNullable<MongoNavInterface['hosts']>>;
+  reload: boolean;
 };
 
 function useMongoNavData({
@@ -49,6 +50,7 @@ function useMongoNavData({
   dataFixtures,
   onSuccess,
   onError,
+  reload,
 }: UseMongoNavData): DataInterface | undefined {
   const [data, setData] = useState<DataInterface | undefined>(undefined);
 
@@ -107,7 +109,15 @@ function useMongoNavData({
 
       fetchProductionData(body).then(handleResponse).catch(console.error);
     }
-  }, [mode, endpointURI, activeOrgId, activeProjectId, loadData, dataFixtures]);
+  }, [
+    mode,
+    endpointURI,
+    activeOrgId,
+    activeProjectId,
+    loadData,
+    dataFixtures,
+    reload,
+  ]);
 
   return data;
 }
@@ -157,32 +167,44 @@ const navContainerStyle = css`
  * @param props.activePlatform Determines which platform is active
  * @param props.alertPollingInterval Defines interval for alert polling
  */
-function MongoNav({
-  activeProduct,
-  activeNav,
-  onOrganizationChange,
-  onProjectChange,
-  activeOrgId,
-  activeProjectId,
-  className,
-  environment = Environment.Commercial,
-  activePlatform = Platform.Cloud,
-  mode = Mode.Production,
-  loadData = true,
-  showProjectNav = true,
-  onError = () => {},
-  onSuccess = () => {},
-  onElementClick = () => {},
-  onPrem = { mfa: false, enabled: false, version: '' },
-  alertPollingInterval = 600e3, // 10 minutes
-  admin: adminProp,
-  hosts: hostsProp,
-  urls: urlsProp,
-  constructOrganizationURL: constructOrganizationURLProp,
-  constructProjectURL: constructProjectURLProp,
-  dataFixtures,
-  ...rest
-}: MongoNavInterface) {
+function MongoNav(
+  {
+    activeProduct,
+    activeNav,
+    onOrganizationChange,
+    onProjectChange,
+    activeOrgId,
+    activeProjectId,
+    className,
+    environment = Environment.Commercial,
+    activePlatform = Platform.Cloud,
+    mode = Mode.Production,
+    loadData = true,
+    showProjectNav = true,
+    onError = () => {},
+    onSuccess = () => {},
+    onElementClick = () => {},
+    onPrem = { mfa: false, enabled: false, version: '' },
+    alertPollingInterval = 600e3, // 10 minutes
+    admin: adminProp,
+    hosts: hostsProp,
+    urls: urlsProp,
+    constructOrganizationURL: constructOrganizationURLProp,
+    constructProjectURL: constructProjectURLProp,
+    dataFixtures,
+    ...rest
+  }: MongoNavInterface,
+  ref: React.Ref<any>,
+) {
+  const [reload, setReload] = useState(false);
+
+  useImperativeHandle(ref, () => ({
+    reloadData: () => {
+      console.log('inside the exposed property');
+      setReload(true);
+    },
+  }));
+
   const shouldShowProjectNav = showProjectNav && !onPrem.enabled;
   const hosts: Required<HostsInterface> = defaultsDeep(
     hostsProp,
@@ -198,6 +220,7 @@ function MongoNav({
     dataFixtures,
     onSuccess,
     onError,
+    reload,
   });
 
   const admin = (adminProp ?? data?.account?.admin) === true;
@@ -262,7 +285,11 @@ function MongoNav({
 
   return (
     <OnElementClickProvider onElementClick={onElementClick}>
-      <section {...rest} className={cx(navContainerStyle, className)}>
+      <section
+        className={cx(navContainerStyle, className)}
+        // ref={buttonRef}
+        {...rest}
+      >
         <OrgNav
           account={data?.account}
           current={data?.currentOrganization}
@@ -331,4 +358,5 @@ MongoNav.propTypes = {
   activeProjectId: PropTypes.string,
 };
 
-export default MongoNav;
+// @ts-expect-error
+export default React.forwardRef(MongoNav);
