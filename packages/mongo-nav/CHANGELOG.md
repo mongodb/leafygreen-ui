@@ -1,5 +1,36 @@
 # @leafygreen-ui/mongo-nav
 
+## 2.1.0
+
+### Minor Changes
+
+- d2136a0: Adds support for FedRAMP users
+
+### Patch Changes
+
+- d2136a0: Fixes types for `OrgSelect` and `ProjectSelect` components
+- 525496c: Ensures MFA MenuItem is not displayed in UserMenu when environment is set to "government"
+- a8fdc67: Fix non-admin search for project and organization
+- 89c2cc7: Removes `See Product Tour` link from OrgNav
+- Updated dependencies [a571361]
+- Updated dependencies [2eba736]
+- Updated dependencies [1aa26ee]
+- Updated dependencies [d2136a0]
+- Updated dependencies [a571361]
+- Updated dependencies [a571361]
+- Updated dependencies [d739511]
+  - @leafygreen-ui/button@6.0.0
+  - @leafygreen-ui/lib@5.0.0
+  - @leafygreen-ui/icon@6.3.0
+  - @leafygreen-ui/tooltip@3.3.2
+  - @leafygreen-ui/hooks@3.0.0
+  - @leafygreen-ui/badge@3.0.1
+  - @leafygreen-ui/icon-button@6.1.2
+  - @leafygreen-ui/leafygreen-provider@1.1.2
+  - @leafygreen-ui/logo@2.1.1
+  - @leafygreen-ui/menu@7.0.4
+  - @leafygreen-ui/typography@4.1.1
+
 ## 2.0.1
 
 ### Patch Changes
