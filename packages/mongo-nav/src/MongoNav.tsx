@@ -285,11 +285,7 @@ function MongoNav(
 
   return (
     <OnElementClickProvider onElementClick={onElementClick}>
-      <section
-        className={cx(navContainerStyle, className)}
-        // ref={buttonRef}
-        {...rest}
-      >
+      <section className={cx(navContainerStyle, className)} {...rest}>
         <OrgNav
           account={data?.account}
           current={data?.currentOrganization}
