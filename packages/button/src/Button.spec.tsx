@@ -15,28 +15,38 @@ function renderButton(props = {}) {
 
 describe('packages/button', () => {
   test(`renders "${className}" in the button's classList`, () => {
-    const { button } = renderButton({ className });
+    const { button } = renderButton({
+      className,
+    });
     expect(button.classList.contains(className)).toBe(true);
   });
 
   test(`renders "${child}" as the button's textContent`, () => {
-    const { button } = renderButton({ children: child });
+    const { button } = renderButton({
+      children: child,
+    });
     expect(button.textContent).toBe(child);
   });
 
   test(`renders "${title}" as the button title`, () => {
-    const { button } = renderButton({ title });
+    const { button } = renderButton({
+      title,
+    });
     expect(button.title).toBe(title);
   });
 
   test('fires the onClick handler once when clicked', () => {
-    const { button } = renderButton({ onClick });
+    const { button } = renderButton({
+      onClick,
+    });
     fireEvent.click(button);
     expect(onClick.mock.calls.length).toBe(1);
   });
 
   test(`renders the disabled and aria-disabled attributes when disabled is set`, () => {
-    const { button } = renderButton({ disabled: true });
+    const { button } = renderButton({
+      disabled: true,
+    });
     expect((button as HTMLButtonElement).disabled).toBe(true);
     expect(button.getAttribute('aria-disabled')).toBe('true');
   });
@@ -52,17 +62,23 @@ describe('packages/button', () => {
   });
 
   test(`renders a button with the given type when one is set`, () => {
-    const { button } = renderButton({ type: 'submit' });
+    const { button } = renderButton({
+      type: 'submit',
+    });
     expect((button as HTMLButtonElement).type).toBe('submit');
   });
 
   test(`renders component inside of a tag when "href" prop is set`, () => {
-    const { button } = renderButton({ href: 'http://mongodb.design' });
+    const { button } = renderButton({
+      href: 'http://mongodb.design',
+    });
     expect(button.tagName.toLowerCase()).toBe('a');
   });
 
   test(`renders component inside of button tag when "href" prop is set to null`, () => {
-    const { button } = renderButton({ href: null });
+    const { button } = renderButton({
+      href: null,
+    });
     expect(button.tagName.toLowerCase()).toBe('button');
   });
 
@@ -76,12 +92,24 @@ describe('packages/button', () => {
   });
 
   test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
-    const { button } = renderButton({ as: 'div' });
+    const { button } = renderButton({
+      as: 'div',
+    });
     expect(button.tagName.toLowerCase()).toBe('div');
   });
 
   test(`renders a button with an arbitrary element passed in glyph prop`, () => {
-    const { button } = renderButton({ glyph: <svg /> });
+    const { button } = renderButton({
+      glyph: <svg />,
+    });
     expect(button.innerHTML).toContain('svg');
+  });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('types behave as expected', () => {
+    // eslint-disable-next-line jest/expect-expect
+    test('does not throw an error when no children are passed to the component', () => {
+      <Button onClick={() => {}} />;
+    });
   });
 });
