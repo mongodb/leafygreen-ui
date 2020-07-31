@@ -165,20 +165,45 @@ function Popover({
     }
   });
 
+  const [position, setPosition] = useState<ReturnType<
+    typeof calculatePosition
+  > | null>(null);
+
+  useLayoutEffect(() => {
+    setPosition(
+      calculatePosition({
+        useRelativePositioning: !usePortal,
+        spacing,
+        align,
+        justify,
+        referenceElViewportPos,
+        referenceElDocumentPos,
+        contentElViewportPos,
+        contentElDocumentPos,
+      }),
+    );
+  }, [
+    viewportSize,
+    referenceElement,
+    lastTimeRefElMutated,
+    contentNode,
+    lastTimeContentElMutated,
+    usePortal,
+    spacing,
+    align,
+    justify,
+    forceUpdateCounter,
+  ]);
+
+  if (!position) {
+    return null;
+  }
+
   const {
     align: windowSafeAlign,
     justify: windowSafeJustify,
     positionCSS,
-  } = calculatePosition({
-    useRelativePositioning: !usePortal,
-    spacing,
-    align,
-    justify,
-    referenceElViewportPos,
-    referenceElDocumentPos,
-    contentElViewportPos,
-    contentElDocumentPos,
-  });
+  } = position;
 
   const activeStyle = css`
     transform: translate3d(0, 0, 0) scale(1);
