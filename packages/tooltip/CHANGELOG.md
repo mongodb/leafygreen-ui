@@ -1,5 +1,20 @@
 # @leafygreen-ui/tooltip
 
+## 3.3.2
+
+### Patch Changes
+
+- a571361: Fixes issue where the tooltip notch would pe positioned incorrectly when tooltips are used with a large trigger.
+- Updated dependencies [a571361]
+- Updated dependencies [2eba736]
+- Updated dependencies [1aa26ee]
+- Updated dependencies [a571361]
+- Updated dependencies [d739511]
+  - @leafygreen-ui/button@6.0.0
+  - @leafygreen-ui/lib@5.0.0
+  - @leafygreen-ui/hooks@3.0.0
+  - @leafygreen-ui/popover@5.1.2
+
 ## 3.3.1
 
 ### Patch Changes

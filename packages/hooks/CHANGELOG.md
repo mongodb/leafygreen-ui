@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 3.0.0
+
+### Major Changes
+
+- d739511: The `once` option to `useEventListener` has been merged together with the `enabled` option.
+
 ## 2.1.0
 
 ### Minor Changes
