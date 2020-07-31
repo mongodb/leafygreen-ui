@@ -3,9 +3,6 @@ name: Node.js CI
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-  push:
-    branches:
-      - changeset-release/master
 
 jobs:
   tests:
