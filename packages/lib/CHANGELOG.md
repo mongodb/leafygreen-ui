@@ -1,5 +1,19 @@
 # @leafygreen-ui/lib
 
+## 5.0.0
+
+### Major Changes
+
+- 1aa26ee: Remove unnecessary testHelpers types
+
+### Minor Changes
+
+- a571361: Adds typeIs.array type guard method
+
+### Patch Changes
+
+- 2eba736: Remove testing library dependency
+
 ## 4.5.1
 
 ### Patch Changes
