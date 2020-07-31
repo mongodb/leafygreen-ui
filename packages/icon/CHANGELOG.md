@@ -1,5 +1,18 @@
 # @leafygreen-ui/icon
 
+## 6.3.0
+
+### Minor Changes
+
+- d2136a0: Adds `GovernmentBuilding` icon to library
+
+### Patch Changes
+
+- Updated dependencies [2eba736]
+- Updated dependencies [1aa26ee]
+- Updated dependencies [a571361]
+  - @leafygreen-ui/lib@5.0.0
+
 ## 6.2.0
 
 ### Minor Changes
