@@ -1,5 +1,28 @@
 # @leafygreen-ui/code
 
+## 4.0.0
+
+### Major Changes
+
+- 7373e7b: Updates Syntax component to use the Highlight.js plugin API to render syntax.
+
+  This helps in a couple ways:
+
+  - Lets us remove the only instance of `dangerouslySetInnerHTML` within LeafyGreen UI by rendering syntax highlighting through React directly.
+  - Allows us to render the component's content as a Table. This allows us to fix an alignment issue between line numbers and wrapped text, as well as opens the door for future features.
+
+### Patch Changes
+
+- Updated dependencies [2eba736]
+- Updated dependencies [1aa26ee]
+- Updated dependencies [d2136a0]
+- Updated dependencies [a571361]
+- Updated dependencies [7373e7b]
+  - @leafygreen-ui/lib@5.0.0
+  - @leafygreen-ui/icon@6.3.0
+  - @leafygreen-ui/syntax@3.0.0
+  - @leafygreen-ui/icon-button@6.1.2
+
 ## 3.5.0
 
 ### Minor Changes

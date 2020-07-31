@@ -1,5 +1,22 @@
 # @leafygreen-ui/button
 
+## 6.0.0
+
+### Major Changes
+
+- a571361: Updates Button CSS padding and flex properties for the span that wraps children.
+
+### Patch Changes
+
+- Updated dependencies [2eba736]
+- Updated dependencies [1aa26ee]
+- Updated dependencies [d2136a0]
+- Updated dependencies [a571361]
+  - @leafygreen-ui/lib@5.0.0
+  - @leafygreen-ui/icon@6.3.0
+  - @leafygreen-ui/box@2.1.2
+  - @leafygreen-ui/leafygreen-provider@1.1.2
+
 ## 5.0.2
 
 ### Patch Changes
