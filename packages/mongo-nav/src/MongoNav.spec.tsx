@@ -6,6 +6,7 @@ import {
   render,
   RenderResult,
 } from '@testing-library/react';
+import { JestDOM } from '@leafygreen-ui/testing-lib';
 import { dataFixtures } from './data';
 import MongoNav from './MongoNav';
 
@@ -120,6 +121,52 @@ describe('packages/mongo-nav', () => {
 
     test('admin UI is not shown', () => {
       expect(queryByTestId('org-nav-admin-link')).toBeNull();
+    });
+  });
+
+  describe('reloadData API is exposed to consumer through ref passed to MongoNav', () => {
+    let ref: React.RefObject<any>;
+
+    const MongoNavWrapper = () => {
+      ref = React.useRef();
+
+      return <MongoNav ref={ref} />;
+    };
+
+    const renderWrapperComponent = async () => {
+      await act(async () => {
+        render(<MongoNavWrapper />);
+      });
+    };
+
+    const responseObject = {
+      ok: true,
+      json: () => Promise.resolve(dataFixtures),
+    };
+
+    beforeEach(async () => {
+      fetchMock.mockResolvedValue(responseObject);
+
+      await renderWrapperComponent();
+
+      act(() => {
+        responseObject.json();
+      });
+    });
+
+    test('the RefObject contains a "reload" key', () => {
+      expect(Object.keys(ref.current)[0]).toBe('reloadData');
+    });
+
+    test('when the reloadData function is called, MongoNav refetches data', () => {
+      // twice, once for main data and once for alerts polling
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+
+      act(() => {
+        ref.current.reloadData();
+      });
+
+      expect(fetchMock).toHaveBeenCalledTimes(3);
     });
   });
 

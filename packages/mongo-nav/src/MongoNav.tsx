@@ -10,7 +10,6 @@ import { dataFixtures as defaultDataFixtures, hostDefaults } from './data';
 import {
   Product,
   URLS,
-  NavElement,
   Mode,
   DataInterface,
   ErrorCode,
@@ -21,6 +20,7 @@ import {
   HostsInterface,
   Platform,
   Environment,
+  ActiveNavElement,
 } from './types';
 
 const ErrorCodeMap: Record<number, ErrorCode> = {
@@ -197,12 +197,11 @@ const MongoNav = React.forwardRef(
     }: MongoNavInterface,
     ref: React.Ref<any>,
   ) => {
-    const [reload, setReload] = useState(false);
+    const [reload, setReloadToggle] = useState(false);
 
     useImperativeHandle(ref, () => ({
       reloadData: () => {
-        console.log('inside the exposed property');
-        setReload(curr => !curr);
+        setReloadToggle(curr => !curr);
       },
     }));
 
@@ -334,7 +333,7 @@ MongoNav.displayName = 'MongoNav';
 
 MongoNav.propTypes = {
   activeProduct: PropTypes.oneOf(Object.values(Product)),
-  activeNav: PropTypes.oneOf(Object.values(NavElement)),
+  activeNav: PropTypes.oneOf(Object.values(ActiveNavElement)),
   hosts: PropTypes.objectOf(PropTypes.string),
   onOrganizationChange: PropTypes.func,
   onProjectChange: PropTypes.func,
@@ -346,11 +345,13 @@ MongoNav.propTypes = {
   mode: PropTypes.oneOf(Object.values(Mode)),
   onSuccess: PropTypes.func,
   onError: PropTypes.func,
+  // @ts-expect-error
   onPrem: PropTypes.shape({
     mfa: PropTypes.bool,
     enabled: PropTypes.bool,
     version: PropTypes.string,
   }),
+
   onElementClick: PropTypes.func,
   activeOrgId: PropTypes.string,
   activeProjectId: PropTypes.string,
