@@ -94,7 +94,7 @@ function TableHeader({
 
   const Glyph = glyphMap[glyph];
 
-  const handleClick = () => {
+  const sortRows = () => {
     dispatch({
       type: TableTypes.SortTableData,
       payload: {
@@ -125,7 +125,7 @@ function TableHeader({
         {sortBy != null && (
           <IconButton
             aria-label="sort"
-            onClick={handleClick}
+            onClick={sortRows}
             className={css`
               margin-bottom: 2px;
             `}

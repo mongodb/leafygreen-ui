@@ -12,6 +12,13 @@ const thStyles = css`
   border-style: solid;
 `;
 
+const checkboxWrapperStyle = css`
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export type HeaderRowProps = React.ComponentPropsWithoutRef<'tr'>;
 function HeaderRow({ children, className, ...rest }: HeaderRowProps) {
   const {
@@ -45,23 +52,20 @@ function HeaderRow({ children, className, ...rest }: HeaderRowProps) {
     }
   });
 
+  const shouldRenderCheckbox = selectable && !checkColSpan;
+
+  const checkboxProps = {
+    checked: headerCheckState.checked,
+    indeterminate: headerCheckState.indeterminate,
+    onChange: handleChange,
+  };
+
   return (
     <tr {...rest} className={className} data-testid="leafygreen-ui-header-row">
-      {selectable && !checkColSpan && (
+      {shouldRenderCheckbox && (
         <th className={thStyles}>
-          <div
-            className={css`
-              flex-grow: 1;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            `}
-          >
-            <Checkbox
-              checked={headerCheckState.checked}
-              indeterminate={headerCheckState.indeterminate}
-              onChange={handleChange}
-            />
+          <div className={checkboxWrapperStyle}>
+            <Checkbox {...checkboxProps} />
           </div>
         </th>
       )}
