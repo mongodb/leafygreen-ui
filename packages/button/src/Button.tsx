@@ -310,7 +310,7 @@ interface BaseButtonProps {
   size?: Size;
   glyph?: React.ReactElement;
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   href?: string;
 }
 
