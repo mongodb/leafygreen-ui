@@ -1,4 +1,4 @@
-const spacers = {
+export const spacing = {
   1: '4px',
   2: '8px',
   3: '16px',
@@ -7,5 +7,3 @@ const spacers = {
   6: '64px',
   7: '88px',
 };
-
-export { spacers };

@@ -1,6 +1,1 @@
-import { spacers } from './Spacing';
-import './spacing.less';
-
-export const tokens = {
-  ...spacers,
-};
+export { spacing } from './Spacing';

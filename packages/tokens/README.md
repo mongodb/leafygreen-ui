@@ -1,8 +1,6 @@
-
 # Tokens
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/tokens.svg)
-#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/tokens--default)
 
 ## Installation
 
@@ -18,12 +16,28 @@ yarn add @leafygreen-ui/tokens
 npm install @leafygreen-ui/tokens
 ```
 
-## Example
+### Usage
 
-**Output HTML**
+```shell
+npm install @leafygreen-ui/tokens
+```
 
-## Properties
+## Spacing
 
-| Prop | Type | Description | Default |
-| ---- | ---- | ----------- | ------- |
+```js
+import { spacing } from '@leafygreen-ui/tokens';
 
+/**
+ * const spacing = {
+ *  1: '4px',
+ *  2: '8px',
+ *  3: '16px',
+ *  4: '24px',
+ *  5: '32px',
+ *  6: '64px',
+ *  7: '88px',
+ * };
+ */
+
+const example = () => <span style={{ margin: spacing[1] }}>Hello World</span>;
+```
