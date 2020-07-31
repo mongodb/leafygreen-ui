@@ -2,4 +2,4 @@
 '@leafygreen-ui/button': patch
 ---
 
-Ensures that `children` is not a required prop on component
+Fix type signature to not have `children` be a required prop
