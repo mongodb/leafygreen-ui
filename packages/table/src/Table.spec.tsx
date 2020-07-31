@@ -2,7 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen, fireEvent, within } from '@testing-library/react';
 import { Table, TableHeader, HeaderRow, Row, Cell } from '.';
-import { normalizeAccessor } from './TableHead';
+import { normalizeAccessor } from './TableHeader';
 import { defaultData } from './fixtures';
 
 interface Props {
@@ -140,17 +140,6 @@ describe('packages/table', () => {
   });
 
   describe('packages/table/table-head', () => {
-    describe('the normalizeAccessor function works as expected', () => {
-      test('it accesses the data correctly when passed a string', () => {
-        const normalizedAccessor = normalizeAccessor('test');
-        expect(normalizedAccessor({ test: 'hi' })).toBe('hi');
-      });
-      test('it accesses the data correctly when passed a function', () => {
-        const normalizedAccessor = normalizeAccessor(data => data.test);
-        expect(normalizedAccessor({ test: 'hi' })).toBe('hi');
-      });
-    });
-
     test('it renders "thead" tags', () => {
       renderTable();
       const tableHead = screen.getAllByRole('rowgroup')[0];
@@ -233,6 +222,17 @@ describe('packages/table', () => {
   });
 
   describe('packages/table/table-header', () => {
+    describe('the normalizeAccessor function works as expected', () => {
+      test('it accesses the data correctly when passed a string', () => {
+        const normalizedAccessor = normalizeAccessor('test');
+        expect(normalizedAccessor({ test: 'hi' })).toBe('hi');
+      });
+      test('it accesses the data correctly when passed a function', () => {
+        const normalizedAccessor = normalizeAccessor(data => data.test);
+        expect(normalizedAccessor({ test: 'hi' })).toBe('hi');
+      });
+    });
+
     test('it renders "label" as content inside of "th" tags', () => {
       renderTable();
       const tableHeaderRow = Array.from(screen.getAllByRole('row')[0].children);

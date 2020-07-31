@@ -34,6 +34,26 @@ const glyphMap = {
   desc: SortDescendingIcon,
 };
 
+export function normalizeAccessor(accessor: string | Function) {
+  let accessorFn = accessor;
+
+  if (typeof accessor === 'string') {
+    if (accessor.includes('.')) {
+      const accessorArr = accessor.split('.');
+
+      accessorFn = (data: any) => {
+        return accessorArr.reduce((obj, access) => {
+          return obj[access];
+        }, data);
+      };
+    } else {
+      accessorFn = (data: any) => data[accessor];
+    }
+  }
+
+  return accessorFn;
+}
+
 interface TableHeaderInterface {
   label: React.ReactElement | string;
   onClick?: (colId: number, accessorValue: (data: any) => string) => void;
@@ -58,9 +78,11 @@ function TableHeader({
   ...rest
 }: TableHeaderProps) {
   const {
-    state: { selectable, sort },
+    state: { selectable, sort, data },
     dispatch,
   } = useTableContext();
+
+  const normalizedAccessor = sortBy && normalizeAccessor(sortBy);
 
   let glyph;
 
@@ -73,9 +95,14 @@ function TableHeader({
   const Glyph = glyphMap[glyph];
 
   const handleClick = () => {
-    if (typeof index === 'number') {
-      return onClick?.(index, sortBy!);
-    }
+    dispatch({
+      type: TableTypes.SortTableData,
+      payload: {
+        columnId: index,
+        accessorValue: normalizedAccessor,
+        data,
+      },
+    });
   };
 
   React.useEffect(() => {

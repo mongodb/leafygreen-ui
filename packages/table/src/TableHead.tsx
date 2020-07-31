@@ -3,50 +3,14 @@ import HeaderRow from './HeaderRow';
 import TableHeader from './TableHeader';
 import { TableProps } from './Table';
 import { isComponentType } from '@leafygreen-ui/lib';
-import { TableTypes, useTableContext } from './TableContext';
-
-export function normalizeAccessor(accessor: string | Function) {
-  let accessorFn = accessor;
-
-  if (typeof accessor === 'string') {
-    if (accessor.includes('.')) {
-      const accessorArr = accessor.split('.');
-
-      accessorFn = (data: any) => {
-        return accessorArr.reduce((obj, access) => {
-          return obj[access];
-        }, data);
-      };
-    } else {
-      accessorFn = (data: any) => data[accessor];
-    }
-  }
-
-  return accessorFn;
-}
+import { useTableContext } from './TableContext';
 
 type TableHeaderProps<Shape> = Pick<TableProps<Shape>, 'columns'>;
 
 function TableHead<Shape>({ columns = [] }: TableHeaderProps<Shape>) {
-  const {
-    state: { data },
-    dispatch,
-  } = useTableContext();
   const usingHeaderRow = React.useRef(false);
 
-  const sortRows = (
-    columnId: number,
-    accessorValue: (data?: any) => string,
-  ) => {
-    dispatch({
-      type: TableTypes.SortTableData,
-      payload: {
-        columnId,
-        accessorValue,
-        data,
-      },
-    });
-  };
+  const { state } = useTableContext();
 
   function createCols(array: Array<React.ReactNode>): React.ReactNode {
     return array.map((child, index) => {
@@ -61,28 +25,14 @@ function TableHead<Shape>({ columns = [] }: TableHeaderProps<Shape>) {
       }
 
       if (isComponentType(child, 'TableHeader')) {
-        const { sortBy } = child.props;
-        const normalizedAccessor = sortBy && normalizeAccessor(sortBy);
-
         return React.cloneElement(child, {
-          // safe until columns need to be reordered
           key: index,
-          onClick: sortRows,
           index,
-          sortBy: normalizedAccessor,
         });
       }
 
       if (typeof child === 'string') {
-        return (
-          <TableHeader
-            // safe until columns need to be reordered
-            key={index}
-            label={child}
-            index={index}
-            onClick={sortRows}
-          />
-        );
+        return <TableHeader key={index} label={child} index={index} />;
       }
 
       return child;
