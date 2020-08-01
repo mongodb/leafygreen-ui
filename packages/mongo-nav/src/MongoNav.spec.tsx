@@ -6,7 +6,6 @@ import {
   render,
   RenderResult,
 } from '@testing-library/react';
-import { JestDOM } from '@leafygreen-ui/testing-lib';
 import { dataFixtures } from './data';
 import MongoNav from './MongoNav';
 
