@@ -154,16 +154,22 @@ describe('packages/mongo-nav', () => {
       });
     });
 
+    afterEach(() => {
+      window.fetch = originalFetch;
+      jest.restoreAllMocks();
+      cleanup();
+    });
+
     test('the RefObject contains a "reload" key', () => {
       expect(Object.keys(ref.current)[0]).toBe('reloadData');
     });
 
-    test('when the reloadData function is called, MongoNav refetches data', () => {
+    test('when the reloadData function is called, MongoNav refetches data', async () => {
       // twice, once for main data and once for alerts polling
       expect(fetchMock).toHaveBeenCalledTimes(2);
 
-      act(() => {
-        ref.current.reloadData();
+      await act(async () => {
+        await ref.current.reloadData();
       });
 
       expect(fetchMock).toHaveBeenCalledTimes(3);
