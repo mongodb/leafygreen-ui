@@ -69,6 +69,30 @@ npm install @leafygreen-ui/mongo-nav @leafygreen-ui/leafygreen-provider@1.1.0
 
 _Any other properties will be spread on the root element_
 
+## Imperative API Handle
+
+We have customized the ref instance value that is exposed to components wrapping `MongoNav`, such that the instance's current property contains a `reloadData` key. Invoking `reloadData` triggers a refetch of data from MongoNav.
+
+## Example
+
+```js
+const mongoNavRef = React.useRef(null);
+
+if (shouldReloadData) {
+  mongooNavRef.current.reloadData();
+}
+
+<MongoNav
+  ref={mongoNavRef}
+  mode="dev"
+  activeProduct="cloud"
+  activeNav="accessManager"
+  onOrganizationChange={onOrganizationChange}
+  onProjectChange={onProjectChange}
+  admin={true}
+/>;
+```
+
 ### `Platform Values`
 
 `Account`
