@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { select, boolean, text } from '@storybook/addon-knobs';
+import { select, boolean, text, button } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import MongoNav from '.';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -20,9 +20,15 @@ const setStorybookWidth = css`
 storiesOf('MongoNav', module).add('Default', () => {
   const mongoNavRef = React.useRef(null);
 
-  setTimeout(() => {
-    mongoNavRef.current.reloadData();
-  }, 5000);
+  const [triggerDataReload, setTriggerDataReload] = React.useState(false);
+
+  button('trigger dataReload', () => setTriggerDataReload(curr => !curr));
+
+  React.useEffect(() => {
+    if (triggerDataReload) {
+      mongoNavRef.current.reloadData();
+    }
+  }, [triggerDataReload]);
 
   return (
     <LeafygreenProvider>
