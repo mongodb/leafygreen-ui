@@ -90,6 +90,7 @@ function FullWidthGovBanner({ isTablet = false }: { isTablet?: boolean }) {
     <div data-testid="org-nav-fedramp-banner" className={bannerContainer}>
       <Tooltip
         {...sharedTooltipProps}
+        usePortal={false}
         trigger={
           <div
             className={cx(sharedTooltipContainerStyles, {
@@ -122,6 +123,7 @@ function MobileGovTooltip() {
           <GovernmentBuildingIcon className={cx(iconColor, mobileMargin)} />
         </div>
       }
+      usePortal={false}
       justify="end"
       triggerEvent="click"
     >
