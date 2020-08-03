@@ -8,4 +8,4 @@
 '@leafygreen-ui/tooltip': patch
 ---
 
-Make id generation deterministic using new IdAllocator class
+Make id generation deterministic using new IdAllocator class. This improves the SSR compatibility of these components. 
