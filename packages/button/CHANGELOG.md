@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 6.0.1
+
+### Patch Changes
+
+- f6e84ec: Fix type signature to not have `children` be a required prop
+
 ## 6.0.0
 
 ### Major Changes
