@@ -138,7 +138,7 @@ describe('packages/mongo-nav', () => {
       });
     };
 
-    const responseObject = {
+    let responseObject = {
       ok: true,
       json: () => Promise.resolve(dataFixtures),
     };
@@ -157,6 +157,11 @@ describe('packages/mongo-nav', () => {
       window.fetch = originalFetch;
       jest.restoreAllMocks();
       cleanup();
+
+      responseObject = {
+        ok: true,
+        json: () => Promise.resolve({}),
+      };
     });
 
     test('the RefObject contains a "reload" key', () => {
@@ -165,13 +170,13 @@ describe('packages/mongo-nav', () => {
 
     test('when the reloadData function is called, MongoNav refetches data', async () => {
       // twice, once for main data and once for alerts polling
-      expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(fetchMock).toHaveBeenCalledTimes(1);
 
       await act(async () => {
         await ref.current.reloadData();
       });
 
-      expect(fetchMock).toHaveBeenCalledTimes(3);
+      expect(fetchMock).toHaveBeenCalledTimes(2);
     });
   });
 
