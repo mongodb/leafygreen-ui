@@ -78,9 +78,9 @@ We have customized the ref instance value that is exposed to components wrapping
 ```js
 const mongoNavRef = React.useRef(null);
 
-if (shouldReloadData) {
+const onClick = () => {
   mongooNavRef.current.reloadData();
-}
+};
 
 <MongoNav
   ref={mongoNavRef}
