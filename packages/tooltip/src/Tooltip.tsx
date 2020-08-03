@@ -176,7 +176,7 @@ export type TooltipProps = Omit<
     }
   >;
 
-const idAllocator = new IdAllocator('tooltip');
+const idAllocator = IdAllocator.create('tooltip');
 
 /**
  * # Tooltip

@@ -243,7 +243,7 @@ function getStatefulInputStyles(state: State, optional: boolean) {
   }
 }
 
-const idAllocator = new IdAllocator('text-input');
+const idAllocator = IdAllocator.create('text-input');
 
 /**
  * # TextInput

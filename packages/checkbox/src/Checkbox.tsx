@@ -171,7 +171,7 @@ export default class Checkbox extends PureComponent<CheckboxProps> {
     }
   }
 
-  private static idAllocator = new IdAllocator('checkbox');
+  private static idAllocator = IdAllocator.create('checkbox');
   private _defaultCheckboxId?: string;
 
   private get defaultCheckboxId(): string {

@@ -98,7 +98,7 @@ export default class RadioBoxGroup extends PureComponent<
     value: '',
   };
 
-  private static idAllocator = new IdAllocator('radio-box-group');
+  private static idAllocator = IdAllocator.create('radio-box-group');
   private _defaultName?: string;
 
   private get defaultName(): string {

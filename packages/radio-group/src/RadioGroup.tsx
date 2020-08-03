@@ -111,7 +111,7 @@ export default class RadioGroup extends PureComponent<
     value: null,
   };
 
-  private static idAllocator = new IdAllocator('radio-group');
+  private static idAllocator = IdAllocator.create('radio-group');
   private _defaultName?: string;
 
   private get defaultName(): string {

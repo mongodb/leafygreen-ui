@@ -431,7 +431,7 @@ export default class Toggle extends PureComponent<
 
   state: ToggleState = { checked: false };
 
-  private static idAllocator = new IdAllocator('toggle');
+  private static idAllocator = IdAllocator.create('toggle');
   private _defaultCheckboxId?: string;
 
   private get defaultCheckboxId() {
