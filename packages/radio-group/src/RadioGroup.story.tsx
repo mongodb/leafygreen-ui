@@ -19,12 +19,16 @@ function ControlledRadioGroup() {
         value={activeRadio}
         variant={Variant.Light}
         className={css`
+          padding: 40px;
           background-color: ${colors.gray[1]};
         `}
       >
         <Radio value="test1">{text('Radio Content', 'Option 1')}</Radio>
         <Radio value="test2">Option 2</Radio>
         <Radio value="test3">Option 3</Radio>
+        <Radio value="test4" disabled checked={true}>
+          Option 4
+        </Radio>
       </RadioGroup>
     </div>
   );
