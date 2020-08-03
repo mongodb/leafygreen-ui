@@ -32,20 +32,9 @@ describe('packages/Portal', () => {
 
     const { firstChild, lastChild } = document.body;
 
-    if (!typeIs.element(firstChild)) {
-      throw new Error('Could not find firstChild element');
-    }
-
-    if (!typeIs.element(lastChild)) {
-      throw new Error('Could not find lastChild element');
-    }
-
-    expect(firstChild.outerHTML).toBe(
-      '<div><div>Existing content on the DOM</div></div>',
-    );
-
-    expect(lastChild.outerHTML).toBe(
-      '<div><div>Content portaled to the end of the DOM</div></div>',
+    expect(firstChild.textContent).toBe('Existing content on the DOM');
+    expect(lastChild.textContent).toBe(
+      'Content portaled to the end of the DOM',
     );
   });
 
@@ -75,14 +64,14 @@ describe('packages/Portal', () => {
     );
   });
 
-  test('portal forwards className to default container', () => {
+  test('portal forwards className to default container', async () => {
     const { rerender } = render(
       <Portal className="test-classname">
         <div>Content portaled to the end of the DOM</div>
       </Portal>,
     );
 
-    const { lastChild } = document.body;
+    let { lastChild } = document.body;
 
     if (!typeIs.element(lastChild)) {
       throw new Error('Could not find lastChild element');
@@ -97,6 +86,11 @@ describe('packages/Portal', () => {
         <div>Content portaled to the end of the DOM</div>
       </Portal>,
     );
+
+    ({ lastChild } = document.body);
+    if (!typeIs.element(lastChild)) {
+      throw new Error('Could not find lastChild element');
+    }
 
     expect(lastChild.outerHTML).toBe(
       `<div class="test-classname-updated"><div>Content portaled to the end of the DOM</div></div>`,
@@ -118,7 +112,7 @@ describe('packages/Portal', () => {
     </Portal>;
   });
 
-  test('does not move Portaled content and logs an error to the console when the container props is changed', () => {
+  test('can move from default to custom portal', async () => {
     const { rerender, unmount } = render(
       <Portal>Moving Portaled Content</Portal>,
     );
@@ -131,40 +125,25 @@ describe('packages/Portal', () => {
 
     expect(initialContainer.innerHTML).toBe('Moving Portaled Content');
 
-    const logError = jest.spyOn(console, 'error').mockImplementation();
-
-    const div = document.createElement('div');
-    div.id = 'custom-container';
-    document.body.appendChild(div);
+    const customContainer = document.createElement('div');
+    customContainer.id = 'custom-container';
+    document.body.appendChild(customContainer);
 
     rerender(
-      <Portal container={getByIdOrThrow('custom-container')}>
-        Moving Portaled Content
-      </Portal>,
+      <Portal container={customContainer}>Moving Portaled Content</Portal>,
     );
 
-    const customContainer = document.body.lastChild;
-    expect(customContainer).toBe(getByIdOrThrow('custom-container'));
-
-    if (!typeIs.element(customContainer)) {
-      throw new Error('Could not find customContainer element');
-    }
-
-    expect(customContainer.innerHTML).toBe('');
-    expect(initialContainer.innerHTML).toBe('Moving Portaled Content');
-
-    expect(logError).toHaveBeenCalledTimes(1);
-    expect(logError).toHaveBeenCalledWith(
-      'Changing the Portal container is not supported behavior and may cause unintended side effects. Instead, create a new Portal instance.',
-    );
-    logError.mockRestore();
+    expect(document.body.lastChild).toBe(customContainer);
+    expect(customContainer.innerHTML).toBe('Moving Portaled Content');
+    expect(initialContainer).not.toBeInTheDocument();
 
     unmount();
-    expect(initialContainer).not.toBeInTheDocument();
-    expect(customContainer).toBeInTheDocument();
+
+    expect(document.body.lastChild).toBeInTheDocument();
+    expect(customContainer.innerHTML).toBe('');
   });
 
-  test(`removes portal content from custom container`, () => {
+  test(`removes portal content from custom container`, async () => {
     const div = document.createElement('div');
     div.id = 'custom-container';
     document.body.appendChild(div);
@@ -172,8 +151,13 @@ describe('packages/Portal', () => {
     const { container, unmount } = render(
       <Portal container={getByIdOrThrow('custom-container')}>Portaled</Portal>,
     );
+
+    expect(container.innerHTML).toBe('');
+    expect(div.innerHTML).toBe('Portaled');
+
     unmount();
     expect(container.innerHTML).toBe('');
+    expect(div.innerHTML).toBe('');
   });
 
   test('cleans up default container', () => {
