@@ -211,8 +211,7 @@ function OrgSelect({
   const wasOpen = usePrevious(open);
   const onElementClick = useOnElementClick();
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const { width: viewportWidth } = useViewportSize();
-  const isTablet = viewportWidth < breakpoints.medium;
+  const viewportSize = useViewportSize();
 
   const isFiltered = value !== '';
   const isAdminSearch = isFiltered && admin && mode === Mode.Production;
@@ -303,6 +302,10 @@ function OrgSelect({
       event: e,
     });
   };
+
+  const isTablet = viewportSize
+    ? viewportSize.width < breakpoints.medium
+    : false;
 
   const renderOrganizationOption = (datum: OrganizationInterface) => {
     const { orgId, orgName, planType } = datum;
