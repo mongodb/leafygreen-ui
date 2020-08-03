@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
@@ -59,12 +59,6 @@ const openInNewTabStyles = css`
   margin-right: -2px;
 `;
 
-declare const __TARGET__: 'web' | 'node';
-
-function isServer() {
-  return __TARGET__ === 'node';
-}
-
 const ArrowAppearance = {
   Hover: 'hover',
   Persist: 'persist',
@@ -89,11 +83,15 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
   hideExternalIcon = false,
   ...rest
 }: LinkProps) => {
+  const [currentHostname, setCurrentHostname] = useState('');
+  const hrefHostname = useMemo(() => href && new URL(href).hostname, [href]);
+
   const size = useBaseFontSize();
   const fontSize = size === 16 ? typeScale2 : typeScale1;
 
-  const hrefHostname = useMemo(() => href && new URL(href).hostname, [href]);
-  const currentHostname = isServer() ? '' : window.location.hostname;
+  useEffect(() => {
+    setCurrentHostname(window.location.hostname);
+  }, []);
 
   let target, icon;
 

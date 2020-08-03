@@ -242,12 +242,6 @@ const MenuItem: ExtendableBox<BaseMenuItemProps, 'button'> = React.forwardRef(
 // @ts-expect-error Property 'displayName' does not exist on type 'OverrideComponentCast<BaseMenuItemProps>'.
 MenuItem.displayName = 'MenuItem';
 
-// __TARGET__ is a global variable that indicates the webpack build target.
-//
-// We're typing this here because doing it globally was proving problematic.
-// We should solve for this if we need to use __TARGET__ elsewhere.
-declare const __TARGET__: 'web' | 'node';
-
 // @ts-expect-error: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 MenuItem.propTypes = {
   href: PropTypes.string,
@@ -259,7 +253,9 @@ MenuItem.propTypes = {
   children: PropTypes.node,
   refEl: PropTypes.shape({
     current:
-      __TARGET__ === 'web' ? PropTypes.instanceOf(Element) : PropTypes.any,
+      typeof window !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
   }),
 };
 
