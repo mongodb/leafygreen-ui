@@ -207,11 +207,11 @@ function Radio({
   className,
   onChange,
   value,
-  checked,
   disabled,
   id,
   name,
   size,
+  checked,
   variant = Variant.Light,
   ...rest
 }: RadioProps) {

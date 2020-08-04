@@ -71,16 +71,16 @@ function RadioGroup({
 }: RadioGroupProps) {
   const isControlled = controlledValue != null;
 
-  let defaultChecked;
+  let defaultChecked = '';
 
   !isControlled &&
     React.Children.forEach(children, child => {
-      if (child.props.default) {
-        defaultChecked = child.props.value;
+      if (child?.props?.default) {
+        defaultChecked = child?.props?.value;
       }
     });
 
-  const [uncontrolledValue, setUncontrolledValue] = React.useState(
+  const [uncontrolledValue, setUncontrolledValue] = React.useState<string>(
     defaultChecked,
   );
 
