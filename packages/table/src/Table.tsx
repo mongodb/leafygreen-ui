@@ -4,11 +4,8 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { HeaderRowProps } from './HeaderRow';
 import { TableHeaderProps } from './TableHeader';
 import { TableProvider } from './TableContext';
-import { RowProvider } from './RowContext';
 import TableHead from './TableHead';
 import TableBody from './TableBody';
-
-// Play with typings all around
 
 const tableStyles = css`
   border-collapse: collapse;
@@ -34,24 +31,22 @@ export interface TableProps<Shape>
 export default function Table<Shape>({
   columns = [],
   data: dataProp = [],
-  selectable: selectableProp = false,
+
   children,
   className,
   ...rest
 }: TableProps<Shape>) {
   return (
-    <TableProvider data={dataProp} selectable={selectableProp}>
-      <RowProvider>
-        <table
-          cellSpacing="0"
-          cellPadding="0"
-          className={cx(tableStyles, className)}
-          {...rest}
-        >
-          <TableHead columns={columns} />
-          <TableBody>{children}</TableBody>
-        </table>
-      </RowProvider>
+    <TableProvider data={dataProp}>
+      <table
+        cellSpacing="0"
+        cellPadding="0"
+        className={cx(tableStyles, className)}
+        {...rest}
+      >
+        <TableHead columns={columns} />
+        <TableBody>{children}</TableBody>
+      </table>
     </TableProvider>
   );
 }

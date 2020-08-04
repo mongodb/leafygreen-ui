@@ -81,7 +81,7 @@ function TableHeader({
   ...rest
 }: TableHeaderProps) {
   const {
-    state: { selectable, sort, data },
+    state: { sort, data },
     dispatch,
   } = useTableContext();
 
@@ -90,13 +90,13 @@ function TableHeader({
       dispatch({
         type: TableTypes.RegisterColumn,
         payload: {
-          // Offsetting 0-indexed columns
-          index: selectable ? index + 2 : index + 1,
+          // Offsetting 0-index
+          index: index + 1,
           dataType,
         },
       });
     }
-  }, [dispatch, index, selectable, dataType]);
+  }, [dispatch, index, dataType]);
 
   const normalizedAccessor = sortBy && normalizeAccessor(sortBy);
 

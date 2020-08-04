@@ -1,13 +1,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { boolean } from '@storybook/addon-knobs';
 import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
 import { defaultData, testHeavierDataSet, multiRowData } from './fixtures';
 
 storiesOf('Table', module)
   .add('Default', () => (
     <Table
-      selectable={boolean('isSelectable', true)}
       data={testHeavierDataSet}
       columns={
         <>
@@ -99,7 +97,6 @@ storiesOf('Table', module)
   ))
   .add('No nested Rows', () => (
     <Table
-      selectable={boolean('isSelectable', true)}
       data={defaultData}
       columns={
         <>

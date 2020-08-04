@@ -83,57 +83,6 @@ describe('packages/table', () => {
     expect(screen.getAllByRole('row')[1].innerHTML).toContain('Alice');
   });
 
-  describe('when the table is selectable', () => {
-    test('it adds a checkbox to every row', () => {
-      renderTable({ table: { selectable: true } });
-      const rows = screen.getAllByRole('row');
-      const checkboxes = screen.getAllByRole('checkbox');
-      expect(rows.length).toEqual(checkboxes.length);
-    });
-
-    test('it checks each checkmark when the master checkmark is checked', () => {
-      renderTable({ table: { selectable: true } });
-      const checkboxes = screen.getAllByRole('checkbox');
-      checkboxes.forEach(checkbox => {
-        expect(checkbox.getAttribute('aria-checked')).toBe('false');
-      });
-      const masterCheckbox = checkboxes[0];
-
-      fireEvent.click(masterCheckbox);
-
-      checkboxes.forEach(checkbox => {
-        expect(checkbox.getAttribute('aria-checked')).toBe('true');
-      });
-    });
-
-    test('it unchecks each checkmark when the master checkmark is unchecked', () => {
-      renderTable({ table: { selectable: true } });
-      const checkboxes = screen.getAllByRole('checkbox');
-      const masterCheckbox = checkboxes[0];
-
-      fireEvent.click(masterCheckbox);
-      checkboxes.forEach(checkbox => {
-        expect(checkbox.getAttribute('aria-checked')).toBe('true');
-      });
-      fireEvent.click(masterCheckbox);
-      checkboxes.forEach(checkbox => {
-        expect(checkbox.getAttribute('aria-checked')).toBe('false');
-      });
-    });
-
-    test('the master checkmark appears as indeterminate when one checkmark is checked', () => {
-      renderTable({ table: { selectable: true } });
-
-      const checkboxes = screen.getAllByRole('checkbox');
-      const masterCheckbox = checkboxes[0];
-      const innerCheckbox = checkboxes[1];
-
-      fireEvent.click(innerCheckbox);
-      expect(innerCheckbox.getAttribute('aria-checked')).toBe('true');
-      expect(masterCheckbox.getAttribute('aria-checked')).toBe('mixed');
-    });
-  });
-
   test('it adds a className to the Tables classlist when one is supplied', () => {
     const { table } = renderTable({ table: { className } });
     expect(table.classList.contains(className)).toBe(true);
@@ -239,39 +188,6 @@ describe('packages/table', () => {
       const firstColumn = tableHeaderRow[0];
       expect(firstColumn.tagName.toLowerCase()).toBe('th');
       expect(firstColumn.innerHTML).toContain('Name');
-    });
-  });
-
-  describe('packages/table/header-row', () => {
-    describe('when the "selectable" prop is set', () => {
-      test('it renders a Checkbox in the HeaderRow', () => {
-        renderTable({ table: { selectable: true } });
-        const tableHeaderRow = Array.from(
-          screen.getAllByRole('row')[0].children,
-        );
-        const firstColumn = tableHeaderRow[0];
-        expect(firstColumn.innerHTML).toContain('type="checkbox"');
-      });
-
-      describe('and the HeaderRow contains a TableHeader with a colSpan', () => {
-        test('it does not render a Checkbox in the HeaderRow', () => {
-          renderTable({
-            table: {
-              selectable: true,
-              columns: [
-                <HeaderRow key="header-row">
-                  <TableHeader key="name" label="name" />,
-                  <TableHeader key="age" label="age" />,
-                  <TableHeader key="color" label="color" colSpan={2} />,
-                </HeaderRow>,
-              ],
-            },
-          });
-
-          const headerRow = screen.getByTestId('leafygreen-ui-header-row');
-          expect(headerRow.innerHTML).not.toContain('checkbox');
-        });
-      });
     });
   });
 

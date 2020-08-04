@@ -297,9 +297,6 @@ const Row = React.forwardRef(
           {...ariaExpanded}
           {...rest}
         >
-          {selectable && (
-            <CheckboxCell disabled={disabled} index={indexRef.current} />
-          )}
           {renderedChildren}
         </tr>
         {nestedRows && nestedRows.length > 0 && (
