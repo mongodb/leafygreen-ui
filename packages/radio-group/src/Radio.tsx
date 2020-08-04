@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { RadioGroupProps } from './RadioGroup';
 import Variant from './Variant';
 
 const styledDiv = createDataProp('styled-div');
@@ -179,43 +180,11 @@ const getDivHeight = size => {
   `;
 };
 
-interface RadioProps extends React.ComponentPropsWithoutRef<'input'> {
-  checked?: boolean;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  name?: string;
-  variant?: Variant;
-  size?: 'small' | 'default';
-
-  /**
-   * Boolean that determines if the Radio is disabled.
-   */
-  disabled?: boolean;
-
-  /**
-   * className supplied to Radio container.
-   */
-  className?: string;
-
-  /**
-   * Used to determine what Radio is checked.
-   */
-  value: string | number;
-
-  /**
-   * Id for Radio and respective label.
-   */
-  id?: string;
-
-  /**
-   * If RadioGroup is uncontrolled, the default property makes this Radio checked on the initial render.
-   */
-  default?: boolean;
-
-  /**
-   * Content that will appear inside of the Radio component's label.
-   */
-  children?: React.ReactNode;
-}
+type RadioProps = React.ComponentPropsWithoutRef<'input'> &
+  Pick<RadioGroupProps, 'variant' | 'size'> & {
+    default?: boolean;
+    id?: string | number;
+  };
 
 /**
  * # Radio

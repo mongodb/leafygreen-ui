@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { isComponentType } from '@leafygreen-ui/lib';
 import Variant from './Variant';
 
-interface RadioGroupProps {
+export interface RadioGroupProps {
   /**
    * Determines if the component will appear in default or light mode.
    */
@@ -34,6 +34,10 @@ interface RadioGroupProps {
    */
   value?: string | number | null;
 
+  /**
+   * Determines the size of the Radio components Can be 'small' or 'default.
+   * @default default
+   */
   size?: 'default' | 'small';
 }
 
@@ -54,6 +58,7 @@ interface RadioGroupProps {
  * @param props.className classname applied to RadioGroup container.
  * @param props.name Name passed to each Radio belonging to the RadioGroup.
  * @param props.variant Variant to determine if component will appear `default` or `light`.
+ * @param props.size Determines the size of the Radio components Can be 'small' or 'default.
  */
 function RadioGroup({
   variant = Variant.Default,
