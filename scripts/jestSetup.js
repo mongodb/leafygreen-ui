@@ -16,8 +16,6 @@ global.IntersectionObserver = class {
   disconnect() {}
 };
 
-global.__TARGET__ = 'web';
-
 const React = require('react');
 const ReactDOM = require('react-dom');
 
