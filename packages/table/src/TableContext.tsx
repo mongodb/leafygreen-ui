@@ -43,7 +43,7 @@ type Dispatch = (action: Action) => void;
 interface Sort {
   columnId?: number;
   direction?: 'asc' | 'desc';
-  accessorValue?: () => string;
+  accessorValue?: (data: any) => string;
 }
 
 const DataType = {

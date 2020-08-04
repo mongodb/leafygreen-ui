@@ -100,11 +100,12 @@ storiesOf('Table', module)
       data={defaultData}
       columns={
         <>
-          <TableHeader label="Name" />
-          <TableHeader label="Age" />
+          <TableHeader label="Name" dataType="string" />
+          <TableHeader label="Age" dataType="number" />
           <TableHeader
             label="Color"
             sortBy={datum => datum.color.primary ?? datum.color}
+            dataType="string"
           />
           Location
         </>

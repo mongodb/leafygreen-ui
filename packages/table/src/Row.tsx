@@ -73,18 +73,13 @@ const transitionStyles = {
   `,
 };
 
-const styleMap = {
-  left: [DataType.String, DataType.Weight, DataType.ZipCode, DataType.Date],
-  right: [DataType.Number],
-} as const;
-
 function styleColumn(index: string, dataType: DataType) {
   let justify;
 
-  if (styleMap.left.includes(dataType)) {
-    justify = 'flex-start';
-  } else if (styleMap.right.includes(dataType)) {
+  if (dataType === DataType.Number) {
     justify = 'flex-end';
+  } else {
+    justify = 'flex-start';
   }
 
   return css`
@@ -94,9 +89,9 @@ function styleColumn(index: string, dataType: DataType) {
   `;
 }
 
-function getIndentLevelStyle(indentLevel: number, selectable = false) {
+function getIndentLevelStyle(indentLevel: number) {
   return css`
-    & > td:nth-child(${selectable ? 2 : 1}) {
+    & > td:nth-child(1) {
       padding-left: ${8 + indentLevel * 16}px;
     }
   `;
@@ -127,7 +122,7 @@ const Row = React.forwardRef(
     ref: React.Ref<any>,
   ) => {
     const {
-      state: { data, columnInfo, hasNestedRows, hasRowSpan, selectable },
+      state: { data, columnInfo, hasNestedRows, hasRowSpan },
       dispatch: tableDispatch,
     } = useTableContext();
 
@@ -270,7 +265,7 @@ const Row = React.forwardRef(
 
     const rowClassName = cx(
       rowStyle,
-      getIndentLevelStyle(indentLevel, selectable),
+      getIndentLevelStyle(indentLevel),
       [...alignmentStyles],
       {
         [altColor]: shouldAltRowColor,
