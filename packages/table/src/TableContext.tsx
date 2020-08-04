@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useMemo,
-  useReducer,
-  useEffect,
-} from 'react';
+import React, { createContext, useContext, useMemo, useReducer } from 'react';
 
 const TableTypes = {
   RegisterColumn: 'REGISTER_COLUMN_INFO',

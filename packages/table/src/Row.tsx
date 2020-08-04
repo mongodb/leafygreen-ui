@@ -5,7 +5,6 @@ import Icon from '@leafygreen-ui/icon';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import CheckboxCell from './CheckboxCell';
 import { useTableContext, TableTypes, DataType } from './TableContext';
 import { tdInnerDiv } from './Cell';
 

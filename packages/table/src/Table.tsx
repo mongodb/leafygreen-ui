@@ -24,14 +24,12 @@ export interface TableProps<Shape>
   columns:
     | Array<React.ReactElement<HeaderRowProps | TableHeaderProps> | string>
     | React.ReactFragment;
-  selectable?: boolean;
   children: (TableRowArgs: TableRowInterface<Shape>) => JSX.Element;
 }
 
 export default function Table<Shape>({
   columns = [],
   data: dataProp = [],
-
   children,
   className,
   ...rest
