@@ -4,7 +4,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { RadioGroupProps } from './RadioGroup';
-import Variant from './Variant';
+import { Variant, Size } from './types';
 
 const styledDiv = createDataProp('styled-div');
 
@@ -165,7 +165,7 @@ const divStyle = css`
   }
 `;
 
-const getDivHeight = size => {
+const getDivHeight = (size: Size) => {
   const radioSize = size === 'small' ? 14 : 20;
   const innerSize = size === 'small' ? 4 : 8;
 
@@ -180,7 +180,7 @@ const getDivHeight = size => {
   `;
 };
 
-type RadioProps = React.ComponentPropsWithoutRef<'input'> &
+type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
   Pick<RadioGroupProps, 'variant' | 'size'> & {
     default?: boolean;
     id?: string | number;
@@ -210,9 +210,9 @@ function Radio({
   disabled,
   id,
   name,
-  size,
-  checked,
-  variant = Variant.Light,
+  checked = false,
+  size = Size.Default,
+  variant = Variant.Default,
   ...rest
 }: RadioProps) {
   return (
@@ -260,6 +260,7 @@ Radio.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   variant: PropTypes.oneOf(['default', 'light']),
+  size: PropTypes.oneOf(['small', 'default']),
   default: PropTypes.bool,
 };
 

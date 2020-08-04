@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { isComponentType } from '@leafygreen-ui/lib';
-import Variant from './Variant';
+import { Variant, Size } from './types';
 
 export interface RadioGroupProps {
   /**
@@ -38,7 +38,7 @@ export interface RadioGroupProps {
    * Determines the size of the Radio components Can be 'small' or 'default.
    * @default default
    */
-  size?: 'default' | 'small';
+  size?: Size;
 }
 
 /**
@@ -62,10 +62,10 @@ export interface RadioGroupProps {
  */
 function RadioGroup({
   variant = Variant.Default,
+  size = Size.Default,
   className,
   onChange,
   children,
-  size = 'default',
   value: controlledValue,
   name: nameProp,
 }: RadioGroupProps) {
@@ -75,6 +75,10 @@ function RadioGroup({
 
   !isControlled &&
     React.Children.forEach(children, child => {
+      if (!React.isValidElement(child)) {
+        return null;
+      }
+
       if (child?.props?.default) {
         defaultChecked = child?.props?.value;
       }
@@ -124,6 +128,7 @@ function RadioGroup({
 
 RadioGroup.propTypes = {
   variant: PropTypes.oneOf(['default', 'light']),
+  size: PropTypes.oneOf(['small', 'default']),
   className: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
