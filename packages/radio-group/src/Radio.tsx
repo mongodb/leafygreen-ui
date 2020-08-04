@@ -5,11 +5,6 @@ import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Variant from './Variant';
 
-// Disabled + Selected
-// Sizes
-// Functionality QA and bug addressing
-// Check that tests are still passing
-
 const styledDiv = createDataProp('styled-div');
 
 const labelVariantStyle = {
@@ -40,8 +35,7 @@ const labelStyle = css`
   display: flex;
   align-items: center;
   font-size: 14px;
-  line-height: 16px;
-  height: 20px;
+  line-height: 20px;
   margin-top: 8px;
 `;
 
@@ -66,8 +60,8 @@ const inputVariantStyle = {
     }
 
     &:disabled + ${styledDiv.selector} {
-      background-color: ${uiColors.gray.light2};
       border-color: ${uiColors.gray.light1};
+      background-color: ${uiColors.gray.light2};
     }
   `,
 
@@ -89,14 +83,29 @@ const inputVariantStyle = {
       border: 3px solid ${uiColors.blue.base};
     }
 
-    &:disabled&:not(checked) + ${styledDiv.selector} {
-      background-color: rgba(255, 255, 255, 0.15);
-      border-color: ${uiColors.gray.base};
-    }
-
-    &:disabled:checked + ${styledDiv.selector} {
-      background-color: rgba(255, 255, 255, 0.15);
+    &:disabled + ${styledDiv.selector} {
+      background-color: ${uiColors.gray.dark1};
       border-color: rgba(255, 255, 255, 0.15);
+    }
+  `,
+};
+
+const disabledChecked = {
+  [Variant.Default]: css`
+    &:disabled + ${styledDiv.selector} {
+      background-color: ${uiColors.gray.light1};
+      border-color: ${uiColors.gray.light1};
+
+      &:after {
+        background-color: ${uiColors.gray.light2};
+        transform: scale(1);
+      }
+    }
+  `,
+
+  [Variant.Light]: css`
+    &:disabled + ${styledDiv.selector} {
+      border-color: ${uiColors.gray.dark1};
 
       &:after {
         background-color: rgba(255, 255, 255, 0.3);
@@ -131,8 +140,6 @@ const divStyle = css`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 20px;
-  width: 20px;
   border-radius: 100px;
   margin-right: 8px;
 
@@ -152,18 +159,32 @@ const divStyle = css`
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
       border-color 0.15s ease-in-out;
     background-color: white;
-    height: 8px;
-    width: 8px;
     border-radius: 50px;
     transform: scale(0);
   }
 `;
+
+const getDivHeight = size => {
+  const radioSize = size === 'small' ? 14 : 20;
+  const innerSize = size === 'small' ? 4 : 8;
+
+  return css`
+    height: ${radioSize}px;
+    width: ${radioSize}px;
+
+    &:after {
+      width: ${innerSize}px;
+      height: ${innerSize}px;
+    }
+  `;
+};
 
 interface RadioProps extends React.ComponentPropsWithoutRef<'input'> {
   checked?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   name?: string;
   variant?: Variant;
+  size?: 'small' | 'default';
 
   /**
    * Boolean that determines if the Radio is disabled.
@@ -210,6 +231,7 @@ interface RadioProps extends React.ComponentPropsWithoutRef<'input'> {
  * @param props.id Id for Radio and respective label.
  * @param props.default If RadioGroup is uncontrolled, the default property makes this Radio checked on the initial render.
  * @param props.className className supplied to Radio container.
+ * @param props.size Size of Radio buttons.
  */
 function Radio({
   children,
@@ -220,6 +242,7 @@ function Radio({
   disabled,
   id,
   name,
+  size,
   variant = Variant.Light,
   ...rest
 }: RadioProps) {
@@ -238,7 +261,9 @@ function Radio({
         id={id}
         name={name}
         type="radio"
-        className={cx(inputStyle, inputVariantStyle[variant])}
+        className={cx(inputStyle, inputVariantStyle[variant], {
+          [disabledChecked[variant]]: disabled && checked,
+        })}
         onChange={onChange}
         value={value}
         aria-checked={checked}
@@ -246,7 +271,7 @@ function Radio({
         aria-disabled={disabled}
       />
       <div
-        className={cx(divStyle, divVariantStyle[variant])}
+        className={cx(divStyle, divVariantStyle[variant], getDivHeight(size))}
         {...styledDiv.prop}
       ></div>
       {children}

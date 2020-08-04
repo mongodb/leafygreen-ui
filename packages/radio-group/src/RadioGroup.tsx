@@ -33,6 +33,8 @@ interface RadioGroupProps {
    * Determines what radio will be checked on default. Component will be controlled if this prop is used.
    */
   value?: string | number | null;
+
+  size?: 'default' | 'small';
 }
 
 /**
@@ -58,6 +60,7 @@ function RadioGroup({
   className,
   onChange,
   children,
+  size = 'default',
   value: controlledValue,
   name: nameProp,
 }: RadioGroupProps) {
@@ -94,7 +97,7 @@ function RadioGroup({
     }
 
     const checked = isControlled
-      ? child.props.value === controlledValue
+      ? child.props.value === controlledValue || child.props.checked
       : child.props.value === uncontrolledValue;
 
     return React.cloneElement(child, {
@@ -103,6 +106,7 @@ function RadioGroup({
       checked,
       variant,
       name,
+      size,
     });
   });
 

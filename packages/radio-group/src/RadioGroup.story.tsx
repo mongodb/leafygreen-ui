@@ -12,9 +12,22 @@ function ControlledRadioGroup() {
     setActiveRadio((e.target as HTMLInputElement).value);
   };
 
+  const variant = select('variant', Object.values(Variant), Variant.Default);
+
   return (
     <div>
-      <RadioGroup onChange={changeHandler} value={activeRadio}>
+      <RadioGroup
+        size={select('size', ['default', 'small'], 'default')}
+        variant={variant}
+        onChange={changeHandler}
+        value={activeRadio}
+        className={css`
+          background-color: ${variant === Variant.Default
+            ? 'white'
+            : uiColors.gray.dark2};
+          padding: 20px;
+        `}
+      >
         <Radio value="test1">{text('Radio Content', 'Option 1')}</Radio>
         <Radio value="test2">Option 2</Radio>
         <Radio value="test3">Option 3</Radio>
@@ -32,11 +45,12 @@ storiesOf('RadioGroup', module)
 
     return (
       <RadioGroup
+        size={select('size', ['default', 'small'], 'default')}
         name="radio-group-default"
         variant={variant}
         className={css`
           background-color: ${variant === Variant.Default
-            ? uiColors.gray.light2
+            ? 'white'
             : uiColors.gray.dark2};
           padding: 20px;
         `}
