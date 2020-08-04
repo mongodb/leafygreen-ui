@@ -7,7 +7,6 @@ import Variant from './Variant';
 
 // Disabled + Selected
 // Sizes
-// Add PropTypes
 // Functionality QA and bug addressing
 // Check that tests are still passing
 
@@ -224,7 +223,6 @@ function Radio({
   variant = Variant.Light,
   ...rest
 }: RadioProps) {
-  console.log(disabled, checked);
   return (
     <label
       htmlFor={id}
@@ -243,7 +241,6 @@ function Radio({
         className={cx(inputStyle, inputVariantStyle[variant])}
         onChange={onChange}
         value={value}
-        checked={checked}
         aria-checked={checked}
         disabled={disabled}
         aria-disabled={disabled}
@@ -258,5 +255,18 @@ function Radio({
 }
 
 Radio.displayName = 'Radio';
+
+Radio.propTypes = {
+  checked: PropTypes.bool,
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+  children: PropTypes.node,
+  onChange: PropTypes.func,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  variant: PropTypes.oneOf(['default', 'light']),
+  default: PropTypes.bool,
+};
 
 export default Radio;

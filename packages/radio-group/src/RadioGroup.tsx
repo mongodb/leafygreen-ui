@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { isComponentType } from '@leafygreen-ui/lib';
-import { css, cx } from '@leafygreen-ui/emotion';
 import Variant from './Variant';
 
 interface RadioGroupProps {
@@ -36,10 +35,6 @@ interface RadioGroupProps {
   value?: string | number | null;
 }
 
-interface RadioGroupState {
-  value: string | number | null;
-}
-
 /**
  * # RadioGroup
  *
@@ -58,7 +53,7 @@ interface RadioGroupState {
  * @param props.name Name passed to each Radio belonging to the RadioGroup.
  * @param props.variant Variant to determine if component will appear `default` or `light`.
  */
-export default function RadioGroup({
+function RadioGroup({
   variant = Variant.Default,
   className,
   onChange,
@@ -66,12 +61,24 @@ export default function RadioGroup({
   value: controlledValue,
   name: nameProp,
 }: RadioGroupProps) {
-  const [uncontrolledValue, setUncontrolledValue] = React.useState(null);
   const isControlled = controlledValue != null;
+
+  let defaultChecked;
+
+  !isControlled &&
+    React.Children.forEach(children, child => {
+      if (child.props.default) {
+        defaultChecked = child.props.value;
+      }
+    });
+
+  const [uncontrolledValue, setUncontrolledValue] = React.useState(
+    defaultChecked,
+  );
 
   const name = nameProp || `radio-group-${Math.floor(Math.random() * 1000000)}`;
 
-  const handleChange = (e: React.ChangeEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
       onChange(e);
     }
@@ -86,13 +93,9 @@ export default function RadioGroup({
       return child;
     }
 
-    const checked = !isControlled
-      ? child.props.value === uncontrolledValue
-      : child.props.checked;
-    // const checked =
-    //   controlledValue === child.props.value || uncontrolledValue
-    //     ? uncontrolledValue === child.props.value
-    //     : child.props.default;
+    const checked = isControlled
+      ? child.props.value === controlledValue
+      : child.props.value === uncontrolledValue;
 
     return React.cloneElement(child, {
       onChange: handleChange,
@@ -109,3 +112,16 @@ export default function RadioGroup({
     </div>
   );
 }
+
+RadioGroup.propTypes = {
+  variant: PropTypes.oneOf(['default', 'light']),
+  className: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onChange: PropTypes.func,
+  children: PropTypes.node,
+  name: PropTypes.string,
+};
+
+RadioGroup.displayName = 'RadioGroup';
+
+export default RadioGroup;
