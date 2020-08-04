@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 
 const TableTypes = {
-  SelectableTable: 'SELECTABLE_TABLE',
   RegisterColumn: 'REGISTER_COLUMN_INFO',
   SortTableData: 'SORT_TABLE_DATA',
   SetHasNestedRows: 'SET_HAS_NESTED_ROWS',
@@ -19,7 +18,6 @@ type TableTypes = typeof TableTypes[keyof typeof TableTypes];
 export { TableTypes };
 
 interface ActionPayload {
-  [TableTypes.SelectableTable]: boolean;
   [TableTypes.RegisterColumn]: {
     dataType?: DataType;
     index: number;
@@ -70,7 +68,6 @@ export interface State {
   sort?: Sort;
   data: Array<any>;
   columnInfo?: Record<number, { dataType?: DataType }>;
-  selectable?: boolean;
   hasNestedRows?: boolean;
   hasRowSpan?: boolean;
 }
@@ -78,7 +75,6 @@ export interface State {
 interface TableProviderInterface {
   children: React.ReactNode;
   data: Array<any>;
-  selectable: boolean;
 }
 
 interface ContextInterface {
@@ -105,12 +101,6 @@ export function reducer(state: State, action: Action): State {
       return {
         ...state,
         hasNestedRows: action.payload,
-      };
-
-    case TableTypes.SelectableTable:
-      return {
-        ...state,
-        selectable: action.payload,
       };
 
     case TableTypes.RegisterColumn:
@@ -144,28 +134,16 @@ export function reducer(state: State, action: Action): State {
   }
 }
 
-export function TableProvider({
-  children,
-  selectable,
-  data,
-}: TableProviderInterface) {
+export function TableProvider({ children, data }: TableProviderInterface) {
   const initialState: State = {
     sort: {
       direction: undefined,
     },
     data,
-    selectable,
     hasNestedRows: false,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  useEffect(() => {
-    dispatch({
-      type: TableTypes.SelectableTable,
-      payload: selectable,
-    });
-  }, [selectable]);
 
   const contextValue = useMemo(() => {
     return { state, dispatch };
