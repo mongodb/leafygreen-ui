@@ -6,6 +6,8 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { RadioGroupProps } from './RadioGroup';
 import { Variant, Size } from './types';
 
+// Remove hover from disabled radios
+
 const styledDiv = createDataProp('styled-div');
 
 const labelVariantStyle = {
@@ -16,7 +18,6 @@ const labelVariantStyle = {
 
     disabled: css`
       color ${uiColors.gray.base};
-      pointer-events: none;
     `,
   },
 
@@ -27,7 +28,6 @@ const labelVariantStyle = {
 
     disabled: css`
       color: ${uiColors.gray.light1};
-      pointer-events: none;
     `,
   },
 };
@@ -37,7 +37,6 @@ const labelStyle = css`
   align-items: center;
   font-size: 14px;
   line-height: 20px;
-  margin-top: 8px;
 `;
 
 // Note colors are not in our palette
@@ -85,7 +84,7 @@ const inputVariantStyle = {
     }
 
     &:disabled + ${styledDiv.selector} {
-      background-color: ${uiColors.gray.dark1};
+      background-color: ${uiColors.gray.dark2};
       border-color: rgba(255, 255, 255, 0.15);
     }
   `,
@@ -106,7 +105,7 @@ const disabledChecked = {
 
   [Variant.Light]: css`
     &:disabled + ${styledDiv.selector} {
-      border-color: ${uiColors.gray.dark1};
+      border-color: ${uiColors.gray.dark2};
 
       &:after {
         background-color: rgba(255, 255, 255, 0.3);
@@ -120,6 +119,10 @@ const inputStyle = css`
   height: 0;
   width: 0;
   opacity: 0;
+
+  &:disabled + ${styledDiv.selector}:after {
+    box-shadow: none;
+  }
 `;
 
 const divVariantStyle = {
@@ -142,21 +145,25 @@ const divStyle = css`
   align-items: center;
   justify-content: center;
   border-radius: 100px;
-  margin-right: 8px;
+  margin-right: 6px;
 
   &:before {
     content: '';
     position: absolute;
     border-radius: 100px;
-    top: -4px;
-    bottom: -4px;
-    left: -4px;
-    right: -4px;
+    top: -5px;
+    bottom: -5px;
+    left: -5px;
+    right: -5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &:after {
     content: '';
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0 -1px 0 0 #f1f1f1, 0 1px 0 0 rgba(0, 0, 0, 0.08),
+      0 1px 1px 0 rgba(6, 22, 33, 0.22);
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
       border-color 0.15s ease-in-out;
     background-color: white;
@@ -166,7 +173,7 @@ const divStyle = css`
 `;
 
 const getDivHeight = (size: Size) => {
-  const radioSize = size === 'small' ? 14 : 20;
+  const radioSize = size === 'small' ? 10 : 16;
   const innerSize = size === 'small' ? 4 : 8;
 
   return css`
@@ -243,7 +250,13 @@ function Radio({
         className={cx(divStyle, divVariantStyle[variant], getDivHeight(size))}
         {...styledDiv.prop}
       ></div>
-      {children}
+      <div
+        className={css`
+          margin-top: 2px;
+        `}
+      >
+        {children}
+      </div>
     </label>
   );
 }

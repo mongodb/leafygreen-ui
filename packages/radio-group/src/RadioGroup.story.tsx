@@ -24,7 +24,7 @@ function ControlledRadioGroup() {
         className={css`
           background-color: ${variant === Variant.Default
             ? 'white'
-            : uiColors.gray.dark2};
+            : uiColors.gray.dark3};
           padding: 20px;
         `}
       >
@@ -51,17 +51,17 @@ storiesOf('RadioGroup', module)
         className={css`
           background-color: ${variant === Variant.Default
             ? 'white'
-            : uiColors.gray.dark2};
+            : uiColors.gray.dark3};
           padding: 20px;
         `}
       >
-        <Radio value="1">Option One</Radio>
-        <Radio value="2">{text('Label text', 'Option Two')}</Radio>
+        <Radio value="1">Radio Input Copy</Radio>
+        <Radio value="2">{text('Label text', 'Radio Input Copy')}</Radio>
         <Radio default value="3">
-          Option Three
+          Radio Input Copy
         </Radio>
         <Radio disabled={boolean('Disabled', true)} value="option-4">
-          Disabled Option
+          Taj Mahal
         </Radio>
       </RadioGroup>
     );
