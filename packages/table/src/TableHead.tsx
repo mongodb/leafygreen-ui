@@ -11,7 +11,8 @@ function TableHead<Shape>({ columns = [] }: TableHeaderProps<Shape>) {
   const usingHeaderRow = React.useRef(false);
 
   // Breaks tables with a colSpan when we don't subscribe to state here, trying to figure out why
-  const { state } = useTableContext();
+  // @ts-expect-error
+  const { state } = useTableContext(); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   function createCols(array: Array<React.ReactNode>): React.ReactNode {
     return array.map((child, index) => {

@@ -11,7 +11,7 @@ type TableTypes = typeof TableTypes[keyof typeof TableTypes];
 
 export { TableTypes };
 
-interface ActionPayload {
+interface ActionPayload<T = {}> {
   [TableTypes.RegisterColumn]: {
     dataType?: DataType;
     index: number;
@@ -21,7 +21,7 @@ interface ActionPayload {
   [TableTypes.SortTableData]: {
     columnId: number;
     accessorValue: (data: any) => string;
-    data: Array<unknown>;
+    data: Array<T>;
   };
 }
 
@@ -159,7 +159,7 @@ const alphanumericCollator = new Intl.Collator(undefined, {
   sensitivity: 'base',
 });
 
-export const sortFunction = ({
+export const sortFunction = <T extends {}>({
   data,
   accessorValue,
   direction,
