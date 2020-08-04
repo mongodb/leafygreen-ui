@@ -51,6 +51,10 @@ import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 | `columns`  | `ColumnInterface`                  | Columns in the Table                           |         |
 | `children` | `(datum, string) => {JSX.Element}` | Rows of the table                              |         |
 
+### ColumnInterface
+
+Columns can receive a `React.Fragment` or `<HeaderRow />` containing `<TableHeader />` components, `string` labels, or a mix of the two. Alternatively, columns can receive an Array of `<TableHeader>` components or strings.
+
 _Any property that can be passed to a `table` element will be spread on the root_
 
 ## HeaderRow Properties
@@ -63,11 +67,11 @@ _Any property that can be passed to a `tr` element will be spread on the root_
 
 ## TableHeader Properties
 
-| Prop       | Type                             | Description                                                                        | Default |
-| ---------- | -------------------------------- | ---------------------------------------------------------------------------------- | ------- |
-| `label`    | `string`                         | Content that will be rendered inside of the `th` tags                              |         |
-| `sortBy`   | `(data: any) => string | string` | String or function that provides information about how the column should be sorted |         |
-| `dataType` | DataType                         | Describes the type of data in the column                                           |         |
+| Prop       | Type                                                      | Description                                                                        | Default |
+| ---------- | --------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------- |
+| `label`    | `string`                                                  | Content that will be rendered inside of the `th` tags                              |         |
+| `sortBy`   | `(data: any) => string | string`                          | String or function that provides information about how the column should be sorted |         |
+| `dataType` | `'number'`, `'weight'`, `'zipCode'`, `'string'`, `'date'` | Describes the type of data in the column                                           |         |
 
 _Any property that can be passed to a `th` element will be spread on the root_
 

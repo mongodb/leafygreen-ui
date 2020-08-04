@@ -1,7 +1,7 @@
 
   {
     "name": "@leafygreen-ui/table",
-    "version": "0.9.0",
+    "version": "0.0.0",
     "description": "leafyGreen UI Kit Table",
     "browser": "./dist/index.web.js",
     "main": "./dist/index.node.js",
@@ -19,7 +19,6 @@
       "@leafygreen-ui/palette": "2.0.1",
       "@leafygreen-ui/icon": "^6.1.1", 
       "@leafygreen-ui/icon-button": "^6.0.1", 
-      "@leafygreen-ui/checkbox": "^4.0.1",
       "react-transition-group": "^4.4.1"
     }
   }
