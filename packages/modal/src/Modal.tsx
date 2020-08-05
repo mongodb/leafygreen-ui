@@ -48,16 +48,21 @@ const visibleBackdrop = css`
 
 const scrollContainer = css`
   position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
+  min-height: 100%;
+  width: 100%;
+
+  padding: ${defaultSpacing}px;
   overflow-y: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const modalContentStyle = css`
   transition: all 150ms ease-in-out;
-  margin: ${defaultSpacing}px auto;
+  margin: auto;
+  max-height: calc(100% - ${defaultSpacing}px);
   padding: 36px;
   color: ${uiColors.gray.dark3};
   background-color: ${uiColors.white};
