@@ -28,11 +28,17 @@ function ControlledRadioGroup() {
           padding: 20px;
         `}
       >
-        <Radio value="test1">{text('Radio Content', 'Option 1')}</Radio>
-        <Radio value="test2">Option 2</Radio>
-        <Radio value="test3">Option 3</Radio>
+        <Radio value="test1">{text('Radio Content', 'Selection 1')}</Radio>
+        <Radio value="test2">
+          Selection 2Selection 2Selection 2Selection 2Selection 2Selection 2
+          Selection 2 Selection 2 Selection 2 Selection 2 Selection 2 Selection
+          2 Selection 2 Selection 2 Selection 2 Selection 2 Selection 2
+          Selection 2 Selection 2 Selection 2 Selection 2 Selection 2 Selection
+          2
+        </Radio>
+        <Radio value="test3">Selection 3</Radio>
         <Radio value="test4" disabled checked={true}>
-          Option 4
+          Selection 4
         </Radio>
       </RadioGroup>
     </div>
@@ -60,7 +66,7 @@ storiesOf('RadioGroup', module)
         <Radio default value="3">
           Radio Input Copy
         </Radio>
-        <Radio disabled={boolean('Disabled', true)} value="option-4">
+        <Radio disabled={boolean('Disabled', true)} value="Selection-4">
           Taj Mahal
         </Radio>
       </RadioGroup>

@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { isComponentType } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Variant, Size } from './types';
 
 export interface RadioGroupProps {
   /**
    * Determines if the component will appear in default or light mode.
    */
-  variant: Variant;
+  variant?: Variant;
 
   /**
    * className supplied to RadioGroup container.
@@ -120,7 +121,16 @@ function RadioGroup({
   });
 
   return (
-    <div className={className} role="group" aria-label={name}>
+    <div
+      className={cx(
+        css`
+          width: 700px;
+        `,
+        className,
+      )}
+      role="group"
+      aria-label={name}
+    >
       {renderedChildren}
     </div>
   );

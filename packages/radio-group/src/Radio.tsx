@@ -6,9 +6,19 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { RadioGroupProps } from './RadioGroup';
 import { Variant, Size } from './types';
 
-// Remove hover from disabled radios
-
 const styledDiv = createDataProp('styled-div');
+
+const containerMargin = css`
+  margin-top: 8px;
+`;
+
+const smallOffset = css`
+  margin-top: -2px;
+`;
+
+const defaultOffset = css`
+  margin-top: 2px;
+`;
 
 const labelVariantStyle = {
   [Variant.Default]: {
@@ -34,7 +44,7 @@ const labelVariantStyle = {
 
 const labelStyle = css`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   font-size: 14px;
   line-height: 20px;
 `;
@@ -120,8 +130,16 @@ const inputStyle = css`
   width: 0;
   opacity: 0;
 
-  &:disabled + ${styledDiv.selector}:after {
-    box-shadow: none;
+  &:disabled:hover + ${styledDiv.selector}:before {
+    border: none;
+  }
+
+  &:disabled + ${styledDiv.selector} {
+    cursor: not-allowed;
+
+    :after {
+      box-shadow: none;
+    }
   }
 `;
 
@@ -144,8 +162,9 @@ const divStyle = css`
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
   border-radius: 100px;
-  margin-right: 6px;
+  margin-right: 8px;
 
   &:before {
     content: '';
@@ -173,7 +192,7 @@ const divStyle = css`
 `;
 
 const getDivHeight = (size: Size) => {
-  const radioSize = size === 'small' ? 10 : 16;
+  const radioSize = size === 'small' ? 14 : 20;
   const innerSize = size === 'small' ? 4 : 8;
 
   return css`
@@ -223,41 +242,44 @@ function Radio({
   ...rest
 }: RadioProps) {
   return (
-    <label
-      htmlFor={id}
-      className={cx(
-        labelStyle,
-        labelVariantStyle[variant].base,
-        { [labelVariantStyle[variant].disabled]: disabled },
-        className,
-      )}
-    >
-      <input
-        {...rest}
-        id={id}
-        name={name}
-        type="radio"
-        className={cx(inputStyle, inputVariantStyle[variant], {
-          [disabledChecked[variant]]: disabled && checked,
-        })}
-        onChange={onChange}
-        value={value}
-        aria-checked={checked}
-        disabled={disabled}
-        aria-disabled={disabled}
-      />
-      <div
-        className={cx(divStyle, divVariantStyle[variant], getDivHeight(size))}
-        {...styledDiv.prop}
-      ></div>
-      <div
-        className={css`
-          margin-top: 2px;
-        `}
+    <div className={containerMargin}>
+      <label
+        htmlFor={id}
+        className={cx(
+          labelStyle,
+          labelVariantStyle[variant].base,
+          { [labelVariantStyle[variant].disabled]: disabled },
+          className,
+        )}
       >
-        {children}
-      </div>
-    </label>
+        <input
+          {...rest}
+          id={id}
+          name={name}
+          type="radio"
+          onChange={onChange}
+          value={value}
+          aria-checked={checked}
+          disabled={disabled}
+          aria-disabled={disabled}
+          className={cx(inputStyle, inputVariantStyle[variant], {
+            [disabledChecked[variant]]: disabled && checked,
+          })}
+        />
+        <div
+          {...styledDiv.prop}
+          className={cx(divStyle, divVariantStyle[variant], getDivHeight(size))}
+        ></div>
+        <div
+          className={cx({
+            [smallOffset]: size === Size.Small,
+            [defaultOffset]: size === Size.Default,
+          })}
+        >
+          {children}
+        </div>
+      </label>
+    </div>
   );
 }
 
