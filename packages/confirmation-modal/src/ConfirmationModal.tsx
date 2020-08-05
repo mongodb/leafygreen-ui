@@ -149,6 +149,7 @@ ConfirmationModal.propTypes = {
   className: PropTypes.string,
   primaryActionProps: actionPropType,
   secondaryActionProps: actionPropType,
+  requireTextEntryConfirmation: PropTypes.bool,
 };
 
 export default ConfirmationModal;
