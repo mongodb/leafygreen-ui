@@ -88,8 +88,10 @@ const ConfirmationModal = ({
     setPrimaryActionEnabled(!requireTextEntryConfirmation);
 
     let textEntryConfirmation = null;
+
     if (requireTextEntryConfirmation) {
       const requiredText = primaryActionLabel.toLowerCase();
+
       const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPrimaryActionEnabled(event.target.value === requiredText);
       };
@@ -99,11 +101,13 @@ const ConfirmationModal = ({
             label={`Type "${requiredText}" to confirm your action`}
             className={textEntryInputStyle}
             onChange={onInputChange}
+            // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
           ></TextInput>
         </div>
       );
     }
+
     return textEntryConfirmation;
   }, [primaryActionLabel, requireTextEntryConfirmation]);
 
