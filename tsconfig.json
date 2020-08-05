@@ -48,6 +48,9 @@
       "path": "./packages/logo"
     },
     {
+      "path": "./packages/marketing-modal"
+    },
+    {
       "path": "./packages/menu"
     },
     {

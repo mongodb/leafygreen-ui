@@ -20,6 +20,7 @@ A set of CSS styles and React components built with design in mind.
 - [LeafyGreen Provider](https://github.com/mongodb/leafygreen-ui/tree/master/packages/leafygreen-provider)
 - [Lib](https://github.com/mongodb/leafygreen-ui/tree/master/packages/lib)
 - [Logo](https://github.com/mongodb/leafygreen-ui/tree/master/packages/logo)
+- [Marketing Modal](https://github.com/mongodb/leafygreen-ui/tree/master/packages/marketing-modal)
 - [Menu](https://github.com/mongodb/leafygreen-ui/tree/master/packages/menu)
 - [Modal](https://github.com/mongodb/leafygreen-ui/tree/master/packages/modal)
 - [MongoMenu](https://github.com/mongodb/leafygreen-ui/tree/master/packages/mongo-menu)
