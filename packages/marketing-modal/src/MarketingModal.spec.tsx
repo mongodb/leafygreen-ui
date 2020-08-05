@@ -8,7 +8,7 @@ function renderModal(
   return render(
     <MarketingModal
       title="Title text"
-      cover={<img src="" aria-label="Cover image" />}
+      cover={<img alt="" src="" aria-label="Cover image" />}
       primaryActionProps={{
         label: 'Primary action',
       }}
