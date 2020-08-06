@@ -53,8 +53,12 @@ const subtitle = css`
 
 type SubtitleProps = HTMLElementProps<'h6'>;
 
-function Subtitle({ children, className }: SubtitleProps) {
-  return <h6 className={cx(sharedStyles, subtitle, className)}>{children}</h6>;
+function Subtitle({ children, className, ...rest }: SubtitleProps) {
+  return (
+    <h6 {...rest} className={cx(sharedStyles, subtitle, className)}>
+      {children}
+    </h6>
+  );
 }
 
 type BodyProps = HTMLElementProps<'p'> & {
@@ -65,7 +69,7 @@ type BodyProps = HTMLElementProps<'p'> & {
   weight?: 'regular' | 'medium';
 };
 
-function Body({ children, className, weight = 'regular' }: BodyProps) {
+function Body({ children, className, weight = 'regular', ...rest }: BodyProps) {
   const size = useBaseFontSize();
   const body = size === 16 ? typeScale2 : typeScale1;
 
@@ -74,7 +78,9 @@ function Body({ children, className, weight = 'regular' }: BodyProps) {
   `;
 
   return (
-    <p className={cx(sharedStyles, body, fontWeight, className)}>{children}</p>
+    <p {...rest} className={cx(sharedStyles, body, fontWeight, className)}>
+      {children}
+    </p>
   );
 }
 
@@ -85,12 +91,14 @@ const code = css`
 
 type InlineCodeProps = HTMLElementProps<'code'>;
 
-function InlineCode({ children, className }: InlineCodeProps) {
+function InlineCode({ children, className, ...rest }: InlineCodeProps) {
   const size = useBaseFontSize();
   const body = size === 16 ? typeScale2 : typeScale1;
 
   return (
-    <code className={cx(sharedStyles, code, body, className)}>{children}</code>
+    <code {...rest} className={cx(sharedStyles, code, body, className)}>
+      {children}
+    </code>
   );
 }
 
@@ -103,9 +111,9 @@ const disclaimer = css`
 
 type DisclaimerProps = HTMLElementProps<'small'>;
 
-function Disclaimer({ children, className }: DisclaimerProps) {
+function Disclaimer({ children, className, ...rest }: DisclaimerProps) {
   return (
-    <small className={cx(sharedStyles, disclaimer, className)}>
+    <small {...rest} className={cx(sharedStyles, disclaimer, className)}>
       {children}
     </small>
   );
