@@ -37,7 +37,7 @@ describe('packages/banner', () => {
 
     test('does not render the banner as dismissible by default', () => {
       const { banner } = renderBanner();
-      expect(banner.innerHTML.includes('X')).not.toBe(true);
+      expect(banner.innerHTML.includes('X Icon')).not.toBe(true);
     });
   });
 

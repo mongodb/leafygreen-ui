@@ -117,8 +117,8 @@ describe('packages/text-input', () => {
         state: State.None,
         ...defaultProps,
       });
-      expect(container.innerHTML).not.toContain('Checkmark');
-      expect(container.innerHTML).not.toContain('Warning');
+      expect(container.innerHTML).not.toContain('Checkmark Icon');
+      expect(container.innerHTML).not.toContain('Warning Icon');
     });
 
     test('key presses are reflected in component and onChange function is called when value changes', () => {
