@@ -21,9 +21,12 @@ describe('packages/callout', () => {
     describe(`for variant ${variant}`, () => {
       test(`renders icon "${icon.displayName}" and label "${label}" in header"`, () => {
         render(<Callout {...defaultProps} variant={variant} />);
-        expect(
-          screen.getByTitle(getGlyphTitle(icon.displayName)),
-        ).toBeVisible();
+
+        const glyph = screen.getByTitle(getGlyphTitle(icon.displayName))
+          .parentElement;
+        expect(glyph).toBeInstanceOf(SVGSVGElement);
+        expect(glyph).toBeVisible();
+
         expect(screen.getByText(label)).toBeVisible();
       });
     });

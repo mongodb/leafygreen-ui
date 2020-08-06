@@ -22,7 +22,7 @@ const sizeMap: Record<Size, number> = {
 export function getGlyphTitle(name: string, title?: string | boolean | null) {
   if (title === false) {
     // If title is null, we unset the title entirely, otherwise we generate one.
-    return undefined;
+    return null;
   }
 
   if (title == null || title === true) {

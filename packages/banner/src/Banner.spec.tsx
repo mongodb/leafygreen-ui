@@ -31,20 +31,20 @@ describe('packages/banner', () => {
 
     test('renders banner with "info" variant by default', () => {
       renderBanner();
-      const infoIcon = screen.getByTitle('Glyphs / Info With Circle');
+      const infoIcon = screen.getByTitle('Info With Circle Icon');
       expect(infoIcon).toBeInTheDocument();
     });
 
     test('does not render the banner as dismissible by default', () => {
       const { banner } = renderBanner();
-      expect(banner.innerHTML.includes('X Icon')).not.toBe(true);
+      expect(banner.innerHTML.includes('X')).not.toBe(true);
     });
   });
 
   describe('when the "variant" prop is set', () => {
     test('and the value is "warning"', () => {
       renderBanner({ variant: Variant.Warning });
-      const icon = screen.getByTitle('Important With Circle');
+      const icon = screen.getByTitle('Important With Circle Icon');
       expect(icon).toBeInTheDocument();
     });
 
@@ -56,7 +56,7 @@ describe('packages/banner', () => {
 
     test('and the value is "success"', () => {
       renderBanner({ variant: Variant.Success });
-      const icon = screen.getByTitle('Glyphs / Checkmark With Circle');
+      const icon = screen.getByTitle('Checkmark With Circle Icon');
       expect(icon).toBeInTheDocument();
     });
   });
@@ -82,9 +82,7 @@ describe('packages/banner', () => {
         image: <VerticalEllipsisIcon />,
       });
 
-      expect(banner.innerHTML.includes('Glyphs / Info With Circle')).not.toBe(
-        true,
-      );
+      expect(banner.innerHTML.includes('Info With Circle')).not.toBe(true);
       const image = screen.getByTitle('Vertical Ellipsis Icon');
       expect(image).toBeInTheDocument();
     });
