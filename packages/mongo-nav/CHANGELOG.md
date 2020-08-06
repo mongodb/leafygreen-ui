@@ -1,5 +1,27 @@
 # @leafygreen-ui/mongo-nav
 
+## 3.1.1
+
+### Patch Changes
+
+- f9fa56e: Updates copy in GovBanner
+
+## 3.1.0
+
+### Minor Changes
+
+- fa55b3d: Make some hooks and MongoNav support server-side rendering
+
+### Patch Changes
+
+- Updated dependencies [458f0c3]
+- Updated dependencies [fa55b3d]
+  - @leafygreen-ui/typography@4.2.0
+  - @leafygreen-ui/hooks@4.0.0
+  - @leafygreen-ui/leafygreen-provider@1.1.3
+  - @leafygreen-ui/menu@7.0.5
+  - @leafygreen-ui/tooltip@3.3.3
+
 ## 3.0.0
 
 ### Major Changes

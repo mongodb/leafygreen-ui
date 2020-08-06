@@ -1,5 +1,14 @@
 # @leafygreen-ui/menu
 
+## 7.0.5
+
+### Patch Changes
+
+- Updated dependencies [fa55b3d]
+  - @leafygreen-ui/hooks@4.0.0
+  - @leafygreen-ui/leafygreen-provider@1.1.3
+  - @leafygreen-ui/popover@5.1.3
+
 ## 7.0.4
 
 ### Patch Changes

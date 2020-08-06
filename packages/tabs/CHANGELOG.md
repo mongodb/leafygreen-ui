@@ -1,5 +1,12 @@
 # @leafygreen-ui/tabs
 
+## 2.1.2
+
+### Patch Changes
+
+- Updated dependencies [fa55b3d]
+  - @leafygreen-ui/hooks@4.0.0
+
 ## 2.1.1
 
 ### Patch Changes
