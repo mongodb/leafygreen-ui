@@ -1,11 +1,18 @@
-import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import React, { useState } from 'react';
+import {
+  fireEvent,
+  render,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import ConfirmationModal from '.';
 
-function renderModal(
-  props: Partial<React.ComponentProps<typeof ConfirmationModal>> = {},
-) {
-  return render(
+const WrappedModal = ({
+  open: initialOpen,
+  ...props
+}: Partial<React.ComponentProps<typeof ConfirmationModal>>) => {
+  const [open, setOpen] = useState(initialOpen);
+
+  return (
     <ConfirmationModal
       title="Title text"
       primaryActionProps={{
@@ -14,11 +21,19 @@ function renderModal(
       secondaryActionProps={{
         label: 'Secondary action',
       }}
+      open={open}
+      setOpen={setOpen}
       {...props}
     >
       {props.children ?? 'Content text'}
-    </ConfirmationModal>,
+    </ConfirmationModal>
   );
+};
+
+function renderModal(
+  props: Partial<React.ComponentProps<typeof ConfirmationModal>> = {},
+) {
+  return render(<WrappedModal {...props} />);
 }
 
 describe('packages/confirmation-modal', () => {
@@ -69,6 +84,36 @@ describe('packages/confirmation-modal', () => {
 
     fireEvent.click(button);
     expect(clickSpy).toHaveBeenCalledTimes(1);
+  });
+
+  describe('closes when', () => {
+    test('backdrop is clicked', async () => {
+      const { getByRole } = renderModal({ open: true });
+      const modal = getByRole('dialog');
+
+      fireEvent.click(modal.parentElement);
+
+      await waitForElementToBeRemoved(modal);
+    });
+
+    test('escape key is pressed', async () => {
+      const { getByRole } = renderModal({ open: true });
+      const modal = getByRole('dialog');
+
+      fireEvent.keyDown(document, { key: 'Escape', keyCode: 27 });
+
+      await waitForElementToBeRemoved(modal);
+    });
+
+    test('x icon is clicked', async () => {
+      const { getByTitle, getByRole } = renderModal({ open: true });
+      const modal = getByRole('dialog');
+
+      const x = getByTitle('close modal');
+      fireEvent.click(x);
+
+      await waitForElementToBeRemoved(modal);
+    });
   });
 
   describe('requiring text confirmation', () => {

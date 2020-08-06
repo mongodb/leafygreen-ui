@@ -57,6 +57,7 @@ interface ConfirmationModalProps {
   title: string;
   children: React.ReactNode;
   open?: boolean;
+  setOpen?: (open: boolean) => void;
   className?: string;
   primaryActionProps: ActionProps;
   secondaryActionProps: ActionProps;
@@ -145,6 +146,7 @@ const actionPropType = PropTypes.shape({
 ConfirmationModal.propTypes = {
   title: PropTypes.string.isRequired,
   open: PropTypes.bool,
+  setOpen: PropTypes.func,
   children: PropTypes.node,
   className: PropTypes.string,
   primaryActionProps: actionPropType,

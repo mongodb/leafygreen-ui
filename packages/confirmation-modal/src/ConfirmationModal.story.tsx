@@ -17,6 +17,7 @@ function Confirm() {
       <button onClick={() => setOpen(!open)}>Open Modal</button>
       <ConfirmationModal
         open={open}
+        setOpen={setOpen}
         title="Confirm Title Here"
         primaryActionProps={{
           label: primaryActionLabel,
@@ -51,6 +52,7 @@ function Cancel() {
       <button onClick={() => setOpen(!open)}>Open Modal</button>
       <ConfirmationModal
         open={open}
+        setOpen={setOpen}
         title="Delete Title Here"
         primaryActionProps={{
           label: primaryActionLabel,
