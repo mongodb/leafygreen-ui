@@ -1,5 +1,11 @@
 # @leafygreen-ui/portal
 
+## 2.2.0
+
+### Minor Changes
+
+- 95b4949: Make SSR compatible and support changing container prop
+
 ## 2.1.3
 
 ### Patch Changes
