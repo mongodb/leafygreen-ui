@@ -19,6 +19,7 @@ function Default() {
       <button onClick={() => setOpen(!open)}>Open Modal</button>
       <MarketingModal
         open={open}
+        setOpen={setOpen}
         title="Introducing New Feature!"
         cover={
           coverStyle === 'default' ? (

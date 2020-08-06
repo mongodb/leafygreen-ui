@@ -29,6 +29,7 @@ function Example() {
       <button onClick={() => setOpen(!open)}>Open Modal</button>
       <MarketingModal
         open={open}
+        setOpen={setOpen}
         title="Introducing New Feature!"
         cover={
           <img alt="" src="examples/DataLake.png" width={275} height={220} />
@@ -98,15 +99,17 @@ function Example() {
 
 ## Properties
 
-| Prop                   | Type                           | Description                                                              | Default |
-| ---------------------- | ------------------------------ | ------------------------------------------------------------------------ | ------- |
-| `open`                 | `boolean`                      | Determines open state of `Modal` component                               | `false` |
-| `title`                | `string`                       | Title text to display above the main content text.                       |         |
-| `cover`                | `JSX.IntrinsicElements['img']` | Image element to be used as the cover image of the modal.                |         |
-| `children`             | `node`                         | Children that will be rendered inside `<ConfirmationModal />` component. |         |
-| `primaryActionProps`   | `ActionProps`                  | Properties to pass to the primary action button. See below.              |         |
-| `secondaryActionProps` | `ActionProps`                  | Properties to pass to the secondary action button. See below.            |         |
-| `className`            | `string`                       | Style to be applied to the container's root node.                        |         |
+| Prop                   | Type                           | Description                                                                                                                                 | Default     |
+| ---------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `open`                 | `boolean`                      | Determines open state of `Modal` component                                                                                                  | `false`     |
+| `setOpen`              | `function`                     | Callback to set open state of Modal component. `setOpen` accepts a boolean value, which will determine the open state of `Modal` component. | `() => {}`  |
+| `title`                | `string`                       | Title text to display above the main content text.                                                                                          |             |
+| `cover`                | `JSX.IntrinsicElements['img']` | Image element to be used as the cover image of the modal.                                                                                   |             |
+| `coverStyle`           | `'default'`, `'cover'`         | Determines how the `cover` image should be displayed in the modal.                                                                          | `'default'` |
+| `children`             | `node`                         | Children that will be rendered inside `<ConfirmationModal />` component.                                                                    |             |
+| `primaryActionProps`   | `ActionProps`                  | Properties to pass to the primary action button. See below.                                                                                 |             |
+| `secondaryActionProps` | `ActionProps`                  | Properties to pass to the secondary action button. See below.                                                                               |             |
+| `className`            | `string`                       | Style to be applied to the container's root node.                                                                                           |             |
 
 ## ActionProps
 

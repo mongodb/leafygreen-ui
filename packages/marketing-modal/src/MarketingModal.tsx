@@ -76,6 +76,7 @@ interface MarketingModalProps {
   coverStyle?: 'default' | 'cover';
   children: React.ReactNode;
   open?: boolean;
+  setOpen: (open: boolean) => void;
   className?: string;
   primaryActionProps: ActionProps;
   secondaryActionProps: ActionProps;
