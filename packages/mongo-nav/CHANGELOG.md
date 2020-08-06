@@ -1,5 +1,11 @@
 # @leafygreen-ui/mongo-nav
 
+## 3.1.1
+
+### Patch Changes
+
+- f9fa56e: Updates copy in GovBanner
+
 ## 3.1.0
 
 ### Minor Changes
