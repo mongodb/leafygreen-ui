@@ -170,10 +170,13 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
       outputDir = path.resolve(process.cwd(), flags.outDir);
     }
 
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir, { recursive: true });
+    const glyphDir = path.resolve(outputDir, 'glyphs');
+
+    if (!fs.existsSync(glyphDir)) {
+      fs.mkdirSync(glyphDir, { recursive: true });
     }
 
+    fs.copyFileSync(file.path, path.resolve(glyphDir, `${file.name}.svg`));
     fs.writeFileSync(path.resolve(outputDir, `${file.name}.js`), moduleCode);
   });
 }
