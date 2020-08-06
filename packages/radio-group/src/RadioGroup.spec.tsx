@@ -2,11 +2,9 @@ import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { RadioGroup, Radio } from '.';
 
-const onChange = jest.fn();
-
 const renderControlledRadioGroup = props => {
   render(
-    <RadioGroup value="input-1" onChange={onChange} {...props}>
+    <RadioGroup value="input-1" {...props}>
       <Radio value="input-1">Input 1</Radio>
       <Radio value="input-2">Input 2</Radio>
       <Radio value="input-3">Input 3</Radio>
@@ -36,6 +34,15 @@ const renderRadio = props => {
 
 describe('packages/radio-group', () => {
   describe('when the RadioGroup is controlled', () => {
+    let onChange;
+
+    beforeEach(() => {
+      onChange = jest.fn();
+    });
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
     test('initial value set by RadioGroup when prop provided', () => {
       renderControlledRadioGroup();
       const firstInput = screen.getAllByRole('radio')[0];
@@ -43,7 +50,7 @@ describe('packages/radio-group', () => {
     });
 
     test('onChange fires once when the label is clicked', () => {
-      renderControlledRadioGroup();
+      renderControlledRadioGroup({ onChange });
       const secondInput = screen.getAllByRole('radio')[1];
       fireEvent.click(secondInput);
       expect(onChange).toHaveBeenCalledTimes(1);
@@ -61,6 +68,16 @@ describe('packages/radio-group', () => {
   });
 
   describe('when the RadioGroup is uncontrolled', () => {
+    let onChange;
+
+    beforeEach(() => {
+      onChange = jest.fn();
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
     test('renders the className to the RadioGroup container when the prop is set', () => {
       const className = 'test-className';
       renderUncontrolledRadioGroup({ className });
@@ -82,10 +99,10 @@ describe('packages/radio-group', () => {
     });
 
     test('onChange fires once when the label is clicked', () => {
-      renderUncontrolledRadioGroup();
+      renderUncontrolledRadioGroup({ onChange });
       const secondInput = screen.getAllByRole('radio')[1];
       fireEvent.click(secondInput);
-      expect(onChange).toHaveBeenCalled();
+      expect(onChange).toHaveBeenCalledTimes(1);
     });
 
     test('Radio becomes checked when clicked', () => {
