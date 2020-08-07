@@ -75,8 +75,7 @@ const bodyStyle = css`
 
 const tooltipContent = (
   <div className={tooltipWidth}>
-    You are currently in the MongoDB Cloud for Government environment that is
-    FedRAMP authorized.
+    You are currently logged into the MongoDB Cloud for Government environment.
   </div>
 );
 

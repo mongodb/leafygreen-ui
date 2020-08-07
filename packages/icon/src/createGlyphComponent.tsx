@@ -22,18 +22,11 @@ const sizeMap: Record<Size, number> = {
 export function getGlyphTitle(name: string, title?: string | boolean | null) {
   if (title === false) {
     // If title is null, we unset the title entirely, otherwise we generate one.
-    return undefined;
+    return null;
   }
 
   if (title == null || title === true) {
-    let generatedTitle = `${name.replace(/([A-Z][a-z])/g, ' $1')} Icon`;
-
-    // Trim space at beginning of title
-    while (generatedTitle.charAt(0) === ' ') {
-      generatedTitle = generatedTitle.substr(1);
-    }
-
-    return generatedTitle;
+    return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
   }
 
   return title;

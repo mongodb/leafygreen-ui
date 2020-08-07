@@ -99,8 +99,8 @@ describe('packages/Icon/createGlyphComponent createGlyphComponent()', () => {
 describe('packages/Icon/createGlyphComponent getGlyphTitle()', () => {
   const glyphName = 'MyCustomGlyph';
 
-  test('When the title is "false", getGlyphTitle returns "undefined"', () => {
-    expect(getGlyphTitle(glyphName, false)).toBeUndefined();
+  test('When the title is "false", getGlyphTitle returns `null`', () => {
+    expect(getGlyphTitle(glyphName, false)).toBeNull();
   });
 
   const generatedTitle = 'My Custom Glyph Icon';
