@@ -105,8 +105,11 @@ export default function UserMenuTrigger({
 }: UserMenuTriggerProps) {
   const onElementClick = useOnElementClick();
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const { width: viewportWidth } = useViewportSize();
-  const isTablet = viewportWidth < breakpoints.medium;
+  const viewportSize = useViewportSize();
+
+  const isTablet = viewportSize
+    ? viewportSize.width < breakpoints.medium
+    : false;
 
   // Show first initial on tablets and smaller, otherwise use the full name passed in
   const displayName = isTablet ? name.split('')[0] : name;

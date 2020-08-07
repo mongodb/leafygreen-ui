@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import OrgNav from './org-nav';
 import ProjectNav from './project-nav';
@@ -10,7 +10,6 @@ import { dataFixtures as defaultDataFixtures, hostDefaults } from './data';
 import {
   Product,
   URLS,
-  NavElement,
   Mode,
   DataInterface,
   ErrorCode,
@@ -21,6 +20,7 @@ import {
   HostsInterface,
   Platform,
   Environment,
+  ActiveNavElement,
 } from './types';
 
 const ErrorCodeMap: Record<number, ErrorCode> = {
@@ -38,6 +38,7 @@ type UseMongoNavData = Pick<
   | 'onError'
 > & {
   hosts: Required<NonNullable<MongoNavInterface['hosts']>>;
+  reload: boolean;
 };
 
 function useMongoNavData({
@@ -49,6 +50,7 @@ function useMongoNavData({
   dataFixtures,
   onSuccess,
   onError,
+  reload,
 }: UseMongoNavData): DataInterface | undefined {
   const [data, setData] = useState<DataInterface | undefined>(undefined);
 
@@ -107,7 +109,15 @@ function useMongoNavData({
 
       fetchProductionData(body).then(handleResponse).catch(console.error);
     }
-  }, [mode, endpointURI, activeOrgId, activeProjectId, loadData, dataFixtures]);
+  }, [
+    mode,
+    endpointURI,
+    activeOrgId,
+    activeProjectId,
+    loadData,
+    dataFixtures,
+    reload,
+  ]);
 
   return data;
 }
@@ -157,159 +167,173 @@ const navContainerStyle = css`
  * @param props.activePlatform Determines which platform is active
  * @param props.alertPollingInterval Defines interval for alert polling
  */
-function MongoNav({
-  activeProduct,
-  activeNav,
-  onOrganizationChange,
-  onProjectChange,
-  activeOrgId,
-  activeProjectId,
-  className,
-  environment = Environment.Commercial,
-  activePlatform = Platform.Cloud,
-  mode = Mode.Production,
-  loadData = true,
-  showProjectNav = true,
-  onError = () => {},
-  onSuccess = () => {},
-  onElementClick = () => {},
-  onPrem = { mfa: false, enabled: false, version: '' },
-  alertPollingInterval = 600e3, // 10 minutes
-  admin: adminProp,
-  hosts: hostsProp,
-  urls: urlsProp,
-  constructOrganizationURL: constructOrganizationURLProp,
-  constructProjectURL: constructProjectURLProp,
-  dataFixtures,
-  ...rest
-}: MongoNavInterface) {
-  const shouldShowProjectNav = showProjectNav && !onPrem.enabled;
-  const hosts: Required<HostsInterface> = defaultsDeep(
-    hostsProp,
-    hostDefaults(environment === Environment.Government),
-  );
+const MongoNav = React.forwardRef(
+  (
+    {
+      activeProduct,
+      activeNav,
+      onOrganizationChange,
+      onProjectChange,
+      activeOrgId,
+      activeProjectId,
+      className,
+      environment = Environment.Commercial,
+      activePlatform = Platform.Cloud,
+      mode = Mode.Production,
+      loadData = true,
+      showProjectNav = true,
+      onError = () => {},
+      onSuccess = () => {},
+      onElementClick = () => {},
+      onPrem = { mfa: false, enabled: false, version: '' },
+      alertPollingInterval = 600e3, // 10 minutes
+      admin: adminProp,
+      hosts: hostsProp,
+      urls: urlsProp,
+      constructOrganizationURL: constructOrganizationURLProp,
+      constructProjectURL: constructProjectURLProp,
+      dataFixtures,
+      ...rest
+    }: MongoNavInterface,
+    ref: React.Ref<any>,
+  ) => {
+    const [reload, setReloadToggle] = useState(false);
 
-  const data = useMongoNavData({
-    hosts,
-    mode,
-    activeOrgId,
-    activeProjectId,
-    loadData,
-    dataFixtures,
-    onSuccess,
-    onError,
-  });
+    useImperativeHandle(ref, () => ({
+      reloadData: () => {
+        setReloadToggle(curr => !curr);
+      },
+    }));
 
-  const admin = (adminProp ?? data?.account?.admin) === true;
+    const shouldShowProjectNav = showProjectNav && !onPrem.enabled;
+    const hosts: Required<HostsInterface> = defaultsDeep(
+      hostsProp,
+      hostDefaults(environment === Environment.Government),
+    );
 
-  const currentOrgId = data?.currentOrganization?.orgId;
-  const currentProjectId = data?.currentProject?.projectId;
+    const data = useMongoNavData({
+      hosts,
+      mode,
+      activeOrgId,
+      activeProjectId,
+      loadData,
+      dataFixtures,
+      onSuccess,
+      onError,
+      reload,
+    });
 
-  const defaultURLS: Omit<URLS, 'userMenu'> = {
-    mongoSelect: {
-      viewAllProjects: `${hosts.cloud}/v2#/org/${currentOrgId}/projects`,
-      viewAllOrganizations: `${hosts.cloud}/v2#/preferences/organizations`,
-      newProject: `${hosts.cloud}/v2#/org/${currentOrgId}/projects/create`,
-      orgSettings: `${hosts.cloud}/v2#/org/${currentOrgId}/settings/general`,
-    },
-    orgNav: {
-      leaf: currentOrgId ? `${hosts.cloud}/v2#/org/${currentOrgId}/` : `/`,
-      settings: `${hosts.cloud}/v2#/org/${currentOrgId}/settings/general`,
-      accessManager: `${hosts.cloud}/v2#/org/${currentOrgId}/access/users`,
-      support: `${hosts.cloud}/v2#/org/${currentOrgId}/support`,
-      billing: `${hosts.cloud}/v2#/org/${currentOrgId}/billing/overview`,
-      allClusters: `${hosts.cloud}/v2#/clusters`,
-      admin: `${hosts.cloud}/v2/admin#general/overview/servers`,
-    },
-    projectNav: {
-      settings: `${hosts.cloud}/v2/${currentProjectId}#settings/groupSettings`,
-      accessManager: `${hosts.cloud}/v2/${currentProjectId}#access`,
-      support: `${hosts.cloud}/v2/${currentProjectId}#info/support`,
-      integrations: `${hosts.cloud}/v2/${currentProjectId}#integrations`,
-      alerts: `${hosts.cloud}/v2/${currentProjectId}#alerts`,
-      activityFeed: `${hosts.cloud}/v2/${currentProjectId}#activity`,
-      invite: `${hosts.cloud}/v2/${currentProjectId}#access/invite`,
-      realm: `${hosts.realm}/groups/${currentProjectId}/apps`,
-      charts: data?.currentProject?.chartsActivated
-        ? `${hosts.cloud}/charts/${currentProjectId}`
-        : `${hosts.cloud}/v2/${currentProjectId}#charts`,
-    },
-    onPrem: {
-      profile: `${hosts.cloud}/v2#/account/profile`,
-      mfa: `${hosts.cloud}/v2#/account/2fa`,
-      personalization: `${hosts.cloud}/v2#/account/personalization`,
-      invitations: `${hosts.cloud}/v2#/account/invitations`,
-      organizations: `${hosts.cloud}/v2#/account/organizations`,
-      publicApiAccess: `${hosts.cloud}/v2#/account/publicApi`,
-      featureRequest: 'https://feedback.mongodb.com',
-    },
-  };
+    const admin = (adminProp ?? data?.account?.admin) === true;
 
-  const urls: URLS = defaultsDeep(urlsProp, defaultURLS);
+    const currentOrgId = data?.currentOrganization?.orgId;
+    const currentProjectId = data?.currentProject?.projectId;
 
-  const defaultOrgURL = ({ orgId }: OrganizationInterface) =>
-    `${hosts.cloud}/v2#/org/${orgId}/projects`;
-  const constructOrganizationURL =
-    constructOrganizationURLProp ?? defaultOrgURL;
+    const defaultURLS: Omit<URLS, 'userMenu'> = {
+      mongoSelect: {
+        viewAllProjects: `${hosts.cloud}/v2#/org/${currentOrgId}/projects`,
+        viewAllOrganizations: `${hosts.cloud}/v2#/preferences/organizations`,
+        newProject: `${hosts.cloud}/v2#/org/${currentOrgId}/projects/create`,
+        orgSettings: `${hosts.cloud}/v2#/org/${currentOrgId}/settings/general`,
+      },
+      orgNav: {
+        leaf: currentOrgId ? `${hosts.cloud}/v2#/org/${currentOrgId}/` : `/`,
+        settings: `${hosts.cloud}/v2#/org/${currentOrgId}/settings/general`,
+        accessManager: `${hosts.cloud}/v2#/org/${currentOrgId}/access/users`,
+        support: `${hosts.cloud}/v2#/org/${currentOrgId}/support`,
+        billing: `${hosts.cloud}/v2#/org/${currentOrgId}/billing/overview`,
+        allClusters: `${hosts.cloud}/v2#/clusters`,
+        admin: `${hosts.cloud}/v2/admin#general/overview/servers`,
+      },
+      projectNav: {
+        settings: `${hosts.cloud}/v2/${currentProjectId}#settings/groupSettings`,
+        accessManager: `${hosts.cloud}/v2/${currentProjectId}#access`,
+        support: `${hosts.cloud}/v2/${currentProjectId}#info/support`,
+        integrations: `${hosts.cloud}/v2/${currentProjectId}#integrations`,
+        alerts: `${hosts.cloud}/v2/${currentProjectId}#alerts`,
+        activityFeed: `${hosts.cloud}/v2/${currentProjectId}#activity`,
+        invite: `${hosts.cloud}/v2/${currentProjectId}#access/invite`,
+        realm: `${hosts.realm}/groups/${currentProjectId}/apps`,
+        charts: data?.currentProject?.chartsActivated
+          ? `${hosts.cloud}/charts/${currentProjectId}`
+          : `${hosts.cloud}/v2/${currentProjectId}#charts`,
+      },
+      onPrem: {
+        profile: `${hosts.cloud}/v2#/account/profile`,
+        mfa: `${hosts.cloud}/v2#/account/2fa`,
+        personalization: `${hosts.cloud}/v2#/account/personalization`,
+        invitations: `${hosts.cloud}/v2#/account/invitations`,
+        organizations: `${hosts.cloud}/v2#/account/organizations`,
+        publicApiAccess: `${hosts.cloud}/v2#/account/publicApi`,
+        featureRequest: 'https://feedback.mongodb.com',
+      },
+    };
 
-  const defaultProjectURL = ({ projectId }: ProjectInterface) =>
-    `${hosts.cloud}/v2/${projectId}#`;
-  const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
+    const urls: URLS = defaultsDeep(urlsProp, defaultURLS);
 
-  const filteredProjects = data?.projects?.filter(project => {
-    return project.orgId === data.currentProject?.orgId;
-  });
+    const defaultOrgURL = ({ orgId }: OrganizationInterface) =>
+      `${hosts.cloud}/v2#/org/${orgId}/projects`;
+    const constructOrganizationURL =
+      constructOrganizationURLProp ?? defaultOrgURL;
 
-  return (
-    <OnElementClickProvider onElementClick={onElementClick}>
-      <section {...rest} className={cx(navContainerStyle, className)}>
-        <OrgNav
-          account={data?.account}
-          current={data?.currentOrganization}
-          data={data?.organizations}
-          constructOrganizationURL={constructOrganizationURL}
-          urls={urls}
-          activeNav={activeNav}
-          onOrganizationChange={onOrganizationChange}
-          admin={admin}
-          hosts={hosts}
-          mode={mode}
-          currentProjectName={data?.currentProject?.projectName}
-          currentProjectId={currentProjectId}
-          onPremEnabled={onPrem.enabled}
-          onPremVersion={onPrem.version}
-          onPremMFA={onPrem.mfa}
-          showProjectNav={shouldShowProjectNav}
-          activePlatform={activePlatform}
-          environment={environment}
-        />
+    const defaultProjectURL = ({ projectId }: ProjectInterface) =>
+      `${hosts.cloud}/v2/${projectId}#`;
+    const constructProjectURL = constructProjectURLProp ?? defaultProjectURL;
 
-        {shouldShowProjectNav && (
-          <ProjectNav
-            mode={mode}
-            activeProduct={activeProduct}
-            alertPollingInterval={alertPollingInterval}
-            activeNav={activeNav}
-            admin={admin}
-            current={data?.currentProject}
-            data={filteredProjects}
-            constructProjectURL={constructProjectURL}
+    const filteredProjects = data?.projects?.filter(project => {
+      return project.orgId === data.currentProject?.orgId;
+    });
+
+    return (
+      <OnElementClickProvider onElementClick={onElementClick}>
+        <section className={cx(navContainerStyle, className)} {...rest}>
+          <OrgNav
+            account={data?.account}
+            current={data?.currentOrganization}
+            data={data?.organizations}
+            constructOrganizationURL={constructOrganizationURL}
             urls={urls}
-            onProjectChange={onProjectChange}
+            activeNav={activeNav}
+            onOrganizationChange={onOrganizationChange}
+            admin={admin}
             hosts={hosts}
+            mode={mode}
+            currentProjectName={data?.currentProject?.projectName}
+            currentProjectId={currentProjectId}
+            onPremEnabled={onPrem.enabled}
+            onPremVersion={onPrem.version}
+            onPremMFA={onPrem.mfa}
+            showProjectNav={shouldShowProjectNav}
+            activePlatform={activePlatform}
             environment={environment}
           />
-        )}
-      </section>
-    </OnElementClickProvider>
-  );
-}
+
+          {shouldShowProjectNav && (
+            <ProjectNav
+              mode={mode}
+              activeProduct={activeProduct}
+              alertPollingInterval={alertPollingInterval}
+              activeNav={activeNav}
+              admin={admin}
+              current={data?.currentProject}
+              data={filteredProjects}
+              constructProjectURL={constructProjectURL}
+              urls={urls}
+              onProjectChange={onProjectChange}
+              hosts={hosts}
+              environment={environment}
+            />
+          )}
+        </section>
+      </OnElementClickProvider>
+    );
+  },
+);
 
 MongoNav.displayName = 'MongoNav';
 
 MongoNav.propTypes = {
   activeProduct: PropTypes.oneOf(Object.values(Product)),
-  activeNav: PropTypes.oneOf(Object.values(NavElement)),
+  activeNav: PropTypes.oneOf(Object.values(ActiveNavElement)),
   hosts: PropTypes.objectOf(PropTypes.string),
   onOrganizationChange: PropTypes.func,
   onProjectChange: PropTypes.func,
@@ -321,11 +345,13 @@ MongoNav.propTypes = {
   mode: PropTypes.oneOf(Object.values(Mode)),
   onSuccess: PropTypes.func,
   onError: PropTypes.func,
+  // @ts-expect-error
   onPrem: PropTypes.shape({
     mfa: PropTypes.bool,
     enabled: PropTypes.bool,
     version: PropTypes.string,
   }),
+
   onElementClick: PropTypes.func,
   activeOrgId: PropTypes.string,
   activeProjectId: PropTypes.string,

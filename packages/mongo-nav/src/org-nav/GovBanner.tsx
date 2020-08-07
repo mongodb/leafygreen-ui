@@ -75,8 +75,7 @@ const bodyStyle = css`
 
 const tooltipContent = (
   <div className={tooltipWidth}>
-    You are currently in the MongoDB Cloud for Government environment that is
-    FedRAMP authorized.
+    You are currently logged into the MongoDB Cloud for Government environment.
   </div>
 );
 
@@ -90,6 +89,7 @@ function FullWidthGovBanner({ isTablet = false }: { isTablet?: boolean }) {
     <div data-testid="org-nav-fedramp-banner" className={bannerContainer}>
       <Tooltip
         {...sharedTooltipProps}
+        usePortal={false}
         trigger={
           <div
             className={cx(sharedTooltipContainerStyles, {
@@ -122,6 +122,7 @@ function MobileGovTooltip() {
           <GovernmentBuildingIcon className={cx(iconColor, mobileMargin)} />
         </div>
       }
+      usePortal={false}
       justify="end"
       triggerEvent="click"
     >

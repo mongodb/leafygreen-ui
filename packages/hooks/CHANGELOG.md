@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 4.0.0
+
+### Major Changes
+
+- fa55b3d: Make some hooks and MongoNav support server-side rendering
+
 ## 3.0.0
 
 ### Major Changes

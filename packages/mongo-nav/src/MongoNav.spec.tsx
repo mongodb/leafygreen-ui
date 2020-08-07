@@ -123,6 +123,63 @@ describe('packages/mongo-nav', () => {
     });
   });
 
+  describe('reloadData API is exposed to consumer through ref passed to MongoNav', () => {
+    let ref: React.RefObject<any>;
+
+    const MongoNavWrapper = () => {
+      ref = React.useRef();
+
+      return <MongoNav ref={ref} />;
+    };
+
+    const renderWrapperComponent = async () => {
+      await act(async () => {
+        render(<MongoNavWrapper />);
+      });
+    };
+
+    let responseObject = {
+      ok: true,
+      json: () => Promise.resolve(dataFixtures),
+    };
+
+    beforeEach(async () => {
+      fetchMock.mockResolvedValue(responseObject);
+
+      await renderWrapperComponent();
+
+      act(() => {
+        responseObject.json();
+      });
+    });
+
+    afterEach(() => {
+      window.fetch = originalFetch;
+      jest.restoreAllMocks();
+      cleanup();
+
+      responseObject = {
+        ok: true,
+        json: () => Promise.resolve({}),
+      };
+    });
+
+    test('the RefObject contains a "reload" key', () => {
+      expect(Object.keys(ref.current)[0]).toBe('reloadData');
+    });
+
+    test('when the reloadData function is called, MongoNav refetches data', async () => {
+      // twice, once for main data and once for alerts polling
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+
+      await act(async () => {
+        await ref.current.reloadData();
+      });
+
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+    });
+  });
+
   describe('when activeProjectId is supplied', () => {
     const newActiveProject = dataFixtures.projects[0];
     const activeProjectId = newActiveProject.projectId;

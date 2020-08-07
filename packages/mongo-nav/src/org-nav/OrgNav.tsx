@@ -153,12 +153,17 @@ function OrgNav({
 }: OrgNavProps) {
   const [accessManagerOpen, setAccessManagerOpen] = useState(false);
   const [onPremMenuOpen, setOnPremMenuOpen] = useState(false);
-  const { width: viewportWidth } = useViewportSize();
   const onElementClick = useOnElementClick();
-  const { orgNav } = urls;
+  const viewportSize = useViewportSize();
+
   const isGovernment = environment === Environment.Government;
-  const isTablet = viewportWidth < breakpoints.medium;
-  const isMobile = viewportWidth < breakpoints.small;
+  const isTablet = viewportSize
+    ? viewportSize.width < breakpoints.medium
+    : false;
+  const isMobile = viewportSize
+    ? viewportSize.width < breakpoints.small
+    : false;
+
   const disabled = (userMenuActiveNavItems as Array<string>).includes(
     activeNav as string,
   );
@@ -236,6 +241,7 @@ function OrgNav({
   }
 
   const AccessManagerIcon = accessManagerOpen ? CaretUpIcon : CaretDownIcon;
+  const { orgNav } = urls;
 
   return (
     <>

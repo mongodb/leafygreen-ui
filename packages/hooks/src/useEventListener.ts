@@ -24,7 +24,7 @@ export default function useEventListener<Type extends keyof DocumentEventMap>(
     options,
     enabled = true,
     dependencies = [enabled, type],
-    element = document,
+    element,
   }: UseEventOptions = {},
 ) {
   const memoizedEventCallback: React.MutableRefObject<(
@@ -56,14 +56,14 @@ export default function useEventListener<Type extends keyof DocumentEventMap>(
       once: enabled === 'once',
     };
     // NOTE(JeT): I'm pretty sure there should be a way to avoid this type assertion, but I couldn't figure it out.
-    element.addEventListener(
+    (element ?? document).addEventListener(
       type,
       callback as EventListener,
       eventListenerOptions,
     );
 
     return () => {
-      element.removeEventListener(
+      (element ?? document).removeEventListener(
         type,
         callback as EventListener,
         eventListenerOptions,
