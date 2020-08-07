@@ -1,5 +1,13 @@
 # @leafygreen-ui/tooltip
 
+## 3.3.3
+
+### Patch Changes
+
+- Updated dependencies [fa55b3d]
+  - @leafygreen-ui/hooks@4.0.0
+  - @leafygreen-ui/popover@5.1.3
+
 ## 3.3.2
 
 ### Patch Changes

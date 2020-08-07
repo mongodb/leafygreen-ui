@@ -1,5 +1,14 @@
 # @leafygreen-ui/popover
 
+## 5.1.3
+
+### Patch Changes
+
+- Updated dependencies [fa55b3d]
+- Updated dependencies [95b4949]
+  - @leafygreen-ui/hooks@4.0.0
+  - @leafygreen-ui/portal@2.2.0
+
 ## 5.1.2
 
 ### Patch Changes
