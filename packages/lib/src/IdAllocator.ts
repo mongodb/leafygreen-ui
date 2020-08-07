@@ -20,6 +20,12 @@ export default class IdAllocator {
 
   /* The following are only for testing!! */
 
+  /**
+   * Stores the current state of all instances into an object
+   * that can be used with the `restore` method to return all
+   * of the instances back to the previous point in time.
+   * @returns snapshot
+   */
   static snapshot(): Record<string, number> {
     const snapshot: Record<string, number> = {};
     this.registry.forEach(allocator => {
@@ -28,6 +34,12 @@ export default class IdAllocator {
     return snapshot;
   }
 
+  /**
+   * @param snapshot If provided, all instances will be reset
+   * to the state they were in when the snapshot was created.
+   * Otherwise, all instances will be reset to being as if
+   * they were just created.
+   */
   static restore(snapshot?: Record<string, number>) {
     this.registry.forEach(allocator => {
       if (!snapshot || !(allocator.prefix in snapshot)) {
