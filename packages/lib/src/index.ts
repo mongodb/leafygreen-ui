@@ -1,6 +1,7 @@
+import IdAllocator from './IdAllocator';
 import * as typeIs from './typeIs';
 
-export { typeIs };
+export { IdAllocator, typeIs };
 
 /** Helper type to extract an HTML element's valid props */
 export type HTMLElementProps<
