@@ -190,7 +190,7 @@ const divSize = {
     &:after {
       width: 4px;
       height: 4px;
-      transition: transform 0.3s cubic-bezier(0.16, 1.54, 0, 1.31),
+      transition: transform 0.2s cubic-bezier(0.16, 1.54, 0, 1.31),
         border-color 0.15s ease-in-out;
     }
   `,
@@ -198,7 +198,7 @@ const divSize = {
     &:after {
       width: 8px;
       height: 8px;
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
         border-color 0.15s ease-in-out;
     }
   `,
