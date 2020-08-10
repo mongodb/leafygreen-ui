@@ -14,16 +14,20 @@ const defaultProps = {
 
 describe('packages/callout', () => {
   for (const key of Object.keys(Variant)) {
-    const variant = Variant[key];
+    const variant = Variant[key as keyof typeof Variant];
     const icon = headerIcons[variant];
     const label = headerLabels[variant];
 
     describe(`for variant ${variant}`, () => {
       test(`renders icon "${icon.displayName}" and label "${label}" in header"`, () => {
         render(<Callout {...defaultProps} variant={variant} />);
-        expect(
-          screen.getByTitle(getGlyphTitle(icon.displayName)),
-        ).toBeVisible();
+
+        expect(typeof icon.displayName).toBe('string');
+        const title = getGlyphTitle(icon.displayName!);
+
+        expect(typeof title).toBe('string');
+        expect(screen.getByTitle(title!)).toBeVisible();
+
         expect(screen.getByText(label)).toBeVisible();
       });
     });

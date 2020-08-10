@@ -15,7 +15,10 @@ storiesOf('Callout', module)
 
     return (
       <div style={{ width: 700 }}>
-        <Callout variant={variant} title={hasTitle && text('Title', 'Title')}>
+        <Callout
+          variant={variant}
+          title={hasTitle ? text('Title', 'Title') : undefined}
+        >
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry&#39;s standard dummy text
           ever since the 1500s, when an unknown printer took a galley of type
@@ -34,7 +37,10 @@ storiesOf('Callout', module)
 
     return (
       <div style={{ width: 700 }}>
-        <Callout variant={variant} title={hasTitle && text('Title', 'Title')}>
+        <Callout
+          variant={variant}
+          title={hasTitle ? text('Title', 'Title') : undefined}
+        >
           Shopping items
           <ul>
             <li>Milk</li>
@@ -43,7 +49,7 @@ storiesOf('Callout', module)
               <b>Bananas</b>
             </li>
           </ul>
-          <Code>{"console.log('Hello world')"}</Code>
+          <Code language="javascript">{"console.log('Hello world')"}</Code>
         </Callout>
       </div>
     );
