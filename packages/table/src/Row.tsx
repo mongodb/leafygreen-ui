@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
-// import Icon from '@leafygreen-ui/icon';
 import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { isComponentType, IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useTableContext, TableTypes, DataType } from './TableContext';
@@ -99,9 +98,7 @@ function getIndentLevelStyle(indentLevel: number) {
   `;
 }
 
-function generateIndexRef() {
-  return Math.random().toString(36).substring(2);
-}
+const idAllocator = IdAllocator.create('text-input');
 
 interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
   expanded?: boolean;
@@ -128,7 +125,7 @@ const Row = React.forwardRef(
       dispatch: tableDispatch,
     } = useTableContext();
 
-    const indexRef = useRef(generateIndexRef());
+    const indexRef = useRef(idAllocator.generate());
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nodeRef = useRef(null);
 
