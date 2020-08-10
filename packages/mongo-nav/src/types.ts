@@ -229,7 +229,7 @@ export interface OnPremInterface {
   enabled?: boolean;
 }
 
-interface UserMenuURLS {
+export interface UserMenuURLS {
   cloud?: {
     userPreferences: string;
     organizations: string;
