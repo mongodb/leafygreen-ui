@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
-import Icon from '@leafygreen-ui/icon';
+// import Icon from '@leafygreen-ui/icon';
+import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
+import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -170,17 +172,14 @@ const Row = React.forwardRef(
 
     // Iterating over children twice because generated memoized values have different dependants
     const renderedChildren = React.useMemo(() => {
+      const Icon = isExpanded ? ChevronDownIcon : ChevronRightIcon;
       const chevronButton = (
         <IconButton
           onClick={() => setIsExpanded(curr => !curr)}
           aria-label="chevron"
           className={iconButtonMargin}
         >
-          <Icon
-            aria-label="chevron"
-            glyph={isExpanded ? 'ChevronDown' : 'ChevronRight'}
-            color={uiColors.gray.dark2}
-          />
+          <Icon aria-label="chevron" color={uiColors.gray.dark2} />
         </IconButton>
       );
       const renderedChildren: Array<React.ReactElement> = [];
