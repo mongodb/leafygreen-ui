@@ -12,49 +12,25 @@ const textWrapper = css`
   font-size: 10px;
 `;
 
-const spacingBlockVariants = {
-  1: css`
-    background-color: #fb4949;
-    width: ${spacing[1]};
-    height: ${spacing[1]};
-  `,
+const colors = [
+  '#fb4949',
+  '#497ffb',
+  '#62e3fd',
+  '#52c825',
+  '#fdd063',
+  '#fd7fec',
+  '#a5fd8b',
+];
 
-  2: css`
-    background-color: #497ffb;
-    width: ${spacing[2]};
-    height: ${spacing[2]};
-  `,
-
-  3: css`
-    background-color: #62e3fd;
-    width: ${spacing[3]};
-    height: ${spacing[3]};
-  `,
-
-  4: css`
-    background-color: #52c825;
-    width: ${spacing[4]};
-    height: ${spacing[4]};
-  `,
-
-  5: css`
-    background-color: #fdd063;
-    width: ${spacing[5]};
-    height: ${spacing[5]};
-  `,
-
-  6: css`
-    background-color: #fd7fec;
-    width: ${spacing[6]};
-    height: ${spacing[6]};
-  `,
-
-  7: css`
-    background-color: #a5fd8b;
-    width: ${spacing[7]};
-    height: ${spacing[7]};
-  `,
-};
+const spacingBlockVariants = Object.keys(spacing).reduce((acc, key, idx) => {
+  console.log(key);
+  acc[key] = css`
+    background-color: ${colors[idx]};
+    width: ${spacing[key]};
+    height: ${spacing[key]};
+  `;
+  return acc;
+}, {});
 
 function SpacingBlock({ space }: { space: string }) {
   return (
