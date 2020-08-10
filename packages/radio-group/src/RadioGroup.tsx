@@ -74,12 +74,13 @@ function RadioGroup({
 
   let defaultChecked = '';
 
-  !isControlled &&
+  if (!isControlled) {
     React.Children.forEach(children, child => {
       if (isComponentType(child, 'Radio') && child.props?.default) {
         defaultChecked = child.props.value;
       }
     });
+  }
 
   const [uncontrolledValue, setUncontrolledValue] = React.useState<string>(
     defaultChecked,

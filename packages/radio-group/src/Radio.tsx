@@ -12,13 +12,14 @@ const containerMargin = css`
   margin-top: 8px;
 `;
 
-const smallOffset = css`
-  margin-top: -2px;
-`;
-
-const defaultOffset = css`
-  margin-top: 2px;
-`;
+const offsets = {
+  [Size.Small]: css`
+    margin-top: -2px;
+  `,
+  [Size.Default]: css`
+    margin-top: 1px;
+  `,
+};
 
 const labelVariantStyle = {
   [Variant.Default]: {
@@ -137,7 +138,7 @@ const inputStyle = css`
   &:disabled + ${styledDiv.selector} {
     cursor: not-allowed;
 
-    :after {
+    &:after {
       box-shadow: none;
     }
   }
@@ -163,20 +164,17 @@ const divStyle = css`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border-radius: 100px;
+  border-radius: 100%;
   margin-right: 8px;
 
   &:before {
     content: '';
     position: absolute;
-    border-radius: 100px;
+    border-radius: 100%;
     top: -5px;
     bottom: -5px;
     left: -5px;
     right: -5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   &:after {
@@ -186,24 +184,30 @@ const divStyle = css`
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
       border-color 0.15s ease-in-out;
     background-color: white;
-    border-radius: 50px;
+    border-radius: 100%;
     transform: scale(0);
   }
 `;
 
-const getDivHeight = (size: Size) => {
-  const radioSize = size === 'small' ? 14 : 20;
-  const innerSize = size === 'small' ? 4 : 8;
-
-  return css`
-    height: ${radioSize}px;
-    width: ${radioSize}px;
+const divHeight = {
+  [Size.Small]: css`
+    height: 14px;
+    width: 14px;
 
     &:after {
-      width: ${innerSize}px;
-      height: ${innerSize}px;
+      width: 4px;
+      height: 4px;
     }
-  `;
+  `,
+  [Size.Default]: css`
+    height: 20px;
+    width: 20px;
+
+    &:after {
+      width: 8px;
+      height: 8px;
+    }
+  `,
 };
 
 type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
@@ -268,16 +272,9 @@ function Radio({
         />
         <div
           {...styledDiv.prop}
-          className={cx(divStyle, divVariantStyle[variant], getDivHeight(size))}
+          className={cx(divStyle, divVariantStyle[variant], divHeight[size])}
         ></div>
-        <div
-          className={cx({
-            [smallOffset]: size === Size.Small,
-            [defaultOffset]: size === Size.Default,
-          })}
-        >
-          {children}
-        </div>
+        <div className={offsets[variant]}>{children}</div>
       </label>
     </div>
   );
