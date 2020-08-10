@@ -15,14 +15,9 @@ const WrappedModal = ({
   return (
     <ConfirmationModal
       title="Title text"
-      primaryActionProps={{
-        label: 'Primary action',
-      }}
-      secondaryActionProps={{
-        label: 'Secondary action',
-      }}
+      buttonText="Confirm"
       open={open}
-      setOpen={setOpen}
+      onClose={() => setOpen(false)}
       {...props}
     >
       {props.children ?? 'Content text'}
@@ -46,44 +41,40 @@ describe('packages/confirmation-modal', () => {
     const { getByText } = renderModal({ open: true });
     expect(getByText('Title text')).toBeVisible();
     expect(getByText('Content text')).toBeVisible();
-    expect(getByText('Primary action')).toBeVisible();
-    expect(getByText('Secondary action')).toBeVisible();
+    expect(getByText('Confirm')).toBeVisible();
+    expect(getByText('Cancel')).toBeVisible();
   });
 
-  test('fires primary action', () => {
+  test('fires `onClose` on confirmation', () => {
     const clickSpy = jest.fn();
 
     const { getByText } = renderModal({
       open: true,
-      primaryActionProps: {
-        label: 'Primary action',
-        onClick: clickSpy,
-      },
+      onClose: clickSpy,
     });
 
-    const button = getByText('Primary action');
+    const button = getByText('Confirm');
     expect(button).toBeVisible();
 
     fireEvent.click(button);
     expect(clickSpy).toHaveBeenCalledTimes(1);
+    expect(clickSpy).toHaveBeenCalledWith(true);
   });
 
-  test('fires secondary action', () => {
+  test('fires `onClose` on cancel', () => {
     const clickSpy = jest.fn();
 
     const { getByText } = renderModal({
       open: true,
-      secondaryActionProps: {
-        label: 'Secondary action',
-        onClick: clickSpy,
-      },
+      onClose: clickSpy,
     });
 
-    const button = getByText('Secondary action');
+    const button = getByText('Cancel');
     expect(button).toBeVisible();
 
     fireEvent.click(button);
     expect(clickSpy).toHaveBeenCalledTimes(1);
+    expect(clickSpy).toHaveBeenCalledWith(false);
   });
 
   describe('closes when', () => {
@@ -106,10 +97,10 @@ describe('packages/confirmation-modal', () => {
     });
 
     test('x icon is clicked', async () => {
-      const { getByTitle, getByRole } = renderModal({ open: true });
+      const { getByLabelText, getByRole } = renderModal({ open: true });
       const modal = getByRole('dialog');
 
-      const x = getByTitle('close modal');
+      const x = getByLabelText('Close modal');
       fireEvent.click(x);
 
       await waitForElementToBeRemoved(modal);
@@ -117,39 +108,37 @@ describe('packages/confirmation-modal', () => {
   });
 
   describe('requiring text confirmation', () => {
-    test('can select primary action only when text confirmation is entered', () => {
+    test('can only click confirmation button when text confirmation is entered', () => {
       const { getByText, getByLabelText } = renderModal({
         open: true,
-        requireTextEntryConfirmation: true,
+        requiredInputText: 'Confirm',
       });
 
-      const primaryButton = getByText('Primary action');
-      expect(primaryButton).toBeDisabled();
+      const confirmationButton = getByText('Confirm');
+      expect(confirmationButton).toBeDisabled();
 
-      const secondaryButton = getByText('Secondary action');
-      expect(secondaryButton).not.toBeDisabled();
+      const cancelButton = getByText('Cancel');
+      expect(cancelButton).not.toBeDisabled();
 
-      const textInput = getByLabelText(
-        'Type "primary action" to confirm your action',
-      );
+      const textInput = getByLabelText('Type "Confirm" to confirm your action');
 
       expect(textInput).toBeVisible();
       expect(textInput).toBe(document.activeElement);
 
       // Should still be disabled after partial entry
-      fireEvent.change(textInput, { target: { value: 'primary actio' } });
-      expect(primaryButton).toBeDisabled();
+      fireEvent.change(textInput, { target: { value: 'Confir' } });
+      expect(confirmationButton).toBeDisabled();
 
-      fireEvent.change(textInput, { target: { value: 'primary action' } });
-      expect(primaryButton).not.toBeDisabled();
+      fireEvent.change(textInput, { target: { value: 'Confirm' } });
+      expect(confirmationButton).not.toBeDisabled();
 
       // Should be disabled again
-      fireEvent.change(textInput, { target: { value: 'primary actions' } });
-      expect(primaryButton).toBeDisabled();
+      fireEvent.change(textInput, { target: { value: 'Confirm?' } });
+      expect(confirmationButton).toBeDisabled();
 
       // Case matters
-      fireEvent.change(textInput, { target: { value: 'Primary action' } });
-      expect(primaryButton).toBeDisabled();
+      fireEvent.change(textInput, { target: { value: 'confirm' } });
+      expect(confirmationButton).toBeDisabled();
     });
   });
 });
