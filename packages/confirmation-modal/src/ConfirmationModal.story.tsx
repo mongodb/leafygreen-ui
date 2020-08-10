@@ -5,29 +5,25 @@ import ConfirmationModal from '.';
 
 function Confirm() {
   const [open, setOpen] = useState(false);
-  const requireTextEntryConfirmation = boolean(
-    'Require text confirmation',
-    false,
-  );
-  const primaryActionLabel = text('Primary action label', 'Confirm');
-  const secondaryActionLabel = text('Secondary action label', 'Cancel');
+  const buttonText = text('Primary action text', 'Confirm');
+  const requiredInputText = boolean('Require confirmation', false)
+    ? text('Confirmation text', 'confirm')
+    : undefined;
 
   return (
     <>
       <button onClick={() => setOpen(!open)}>Open Modal</button>
       <ConfirmationModal
         open={open}
-        setOpen={setOpen}
+        onClose={confirmed => {
+          setOpen(false);
+          if (confirmed) {
+            alert('Confirmed!');
+          }
+        }}
         title="Confirm Title Here"
-        primaryActionProps={{
-          label: primaryActionLabel,
-          onClick: () => setOpen(false),
-        }}
-        secondaryActionProps={{
-          label: secondaryActionLabel,
-          onClick: () => setOpen(false),
-        }}
-        requireTextEntryConfirmation={requireTextEntryConfirmation}
+        buttonText={buttonText}
+        requiredInputText={requiredInputText}
       >
         This is some description text, and it is extra long so it fills up this
         modal. Another thing about the modals here. This is some description
@@ -40,30 +36,26 @@ function Confirm() {
 
 function Cancel() {
   const [open, setOpen] = useState(false);
-  const requireTextEntryConfirmation = boolean(
-    'Require text confirmation',
-    false,
-  );
-  const primaryActionLabel = text('Primary action label', 'Delete');
-  const secondaryActionLabel = text('Secondary action label', 'Cancel');
+  const buttonText = text('Primary action text', 'Confirm');
+  const requiredInputText = boolean('Require confirmation', false)
+    ? text('Confirmation text', 'confirm')
+    : undefined;
 
   return (
     <>
       <button onClick={() => setOpen(!open)}>Open Modal</button>
       <ConfirmationModal
         open={open}
-        setOpen={setOpen}
+        onClose={confirmed => {
+          setOpen(false);
+          if (confirmed) {
+            alert('Confirmed!');
+          }
+        }}
         title="Delete Title Here"
-        primaryActionProps={{
-          label: primaryActionLabel,
-          variant: 'danger',
-          onClick: () => setOpen(false),
-        }}
-        secondaryActionProps={{
-          label: secondaryActionLabel,
-          onClick: () => setOpen(false),
-        }}
-        requireTextEntryConfirmation={requireTextEntryConfirmation}
+        buttonText={buttonText}
+        dangerous
+        requiredInputText={requiredInputText}
       >
         This is some description text, and it is extra long so it fills up this
         modal. Another thing about the modals here. This is some description
