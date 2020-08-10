@@ -6,7 +6,11 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { RadioGroupProps } from './RadioGroup';
 import { Variant, Size } from './types';
 
+// Clean Styles
+
 const styledDiv = createDataProp('styled-div');
+const inputDisplayWrapper = createDataProp('input-display-wrapper');
+const inputDataProp = createDataProp('input-element');
 
 const containerMargin = css`
   margin-top: 8px;
@@ -53,7 +57,7 @@ const labelStyle = css`
 // Note colors are not in our palette
 const inputVariantStyle = {
   [Variant.Default]: css`
-    &:checked + ${styledDiv.selector} {
+    &:checked + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
       background-color: #2798bd;
       border-color: #2798bd;
 
@@ -62,22 +66,20 @@ const inputVariantStyle = {
       }
     }
 
-    &:hover + ${styledDiv.selector}:before {
-      border: 3px solid rgba(184, 196, 194, 0.3);
+    &:focus + ${inputDisplayWrapper.selector}:before {
+      transform: scale(1);
+      opacity: 1;
+      border-color: #9dd0e7;
     }
 
-    &:focus + ${styledDiv.selector}:before {
-      border: 3px solid #9dd0e7;
-    }
-
-    &:disabled + ${styledDiv.selector} {
+    &:disabled + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
       border-color: ${uiColors.gray.light1};
       background-color: ${uiColors.gray.light2};
     }
   `,
 
   [Variant.Light]: css`
-    &:checked + ${styledDiv.selector} {
+    &:checked + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
       background-color: #43b1e5;
       border-color: #43b1e5;
 
@@ -86,15 +88,13 @@ const inputVariantStyle = {
       }
     }
 
-    &:hover + ${styledDiv.selector}:before {
-      border: 3px solid rgba(255, 255, 255, 0.2);
+    &:focus + ${inputDisplayWrapper.selector}:before {
+      transform: scale(1);
+      opacity: 1;
+      border-color: ${uiColors.blue.base};
     }
 
-    &:focus + ${styledDiv.selector}:before {
-      border: 3px solid ${uiColors.blue.base};
-    }
-
-    &:disabled + ${styledDiv.selector} {
+    &:disabled + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
       background-color: ${uiColors.gray.dark2};
       border-color: rgba(255, 255, 255, 0.15);
     }
@@ -103,7 +103,7 @@ const inputVariantStyle = {
 
 const disabledChecked = {
   [Variant.Default]: css`
-    &:disabled + ${styledDiv.selector} {
+    &:disabled + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
       background-color: ${uiColors.gray.light1};
       border-color: ${uiColors.gray.light1};
 
@@ -115,7 +115,7 @@ const disabledChecked = {
   `,
 
   [Variant.Light]: css`
-    &:disabled + ${styledDiv.selector} {
+    &:disabled + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
       border-color: ${uiColors.gray.dark2};
 
       &:after {
@@ -130,18 +130,6 @@ const inputStyle = css`
   height: 0;
   width: 0;
   opacity: 0;
-
-  &:disabled:hover + ${styledDiv.selector}:before {
-    border: none;
-  }
-
-  &:disabled + ${styledDiv.selector} {
-    cursor: not-allowed;
-
-    &:after {
-      box-shadow: none;
-    }
-  }
 `;
 
 const divVariantStyle = {
@@ -157,16 +145,18 @@ const divVariantStyle = {
 };
 
 const divStyle = css`
-  position: relative;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   transition: background-color 0.15s ease-in-out;
-  background-color: white;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   border-radius: 100%;
-  margin-right: 8px;
-
+ 
   &:before {
     content: '';
     position: absolute;
@@ -181,34 +171,97 @@ const divStyle = css`
     content: '';
     box-shadow: inset 0 -1px 0 0 #f1f1f1, 0 1px 0 0 rgba(0, 0, 0, 0.08),
       0 1px 1px 0 rgba(6, 22, 33, 0.22);
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-      border-color 0.15s ease-in-out;
     background-color: white;
     border-radius: 100%;
     transform: scale(0);
   }
+
+  ${inputDataProp.selector}:disabled + ${inputDisplayWrapper.selector} > & {
+    cursor: not-allowed;
+
+    &:after {
+      box-shadow: none;
+    }
+  }
 `;
 
-const divHeight = {
+const divSize = {
   [Size.Small]: css`
-    height: 14px;
-    width: 14px;
-
     &:after {
       width: 4px;
       height: 4px;
+      transition: transform 0.3s cubic-bezier(0.16, 1.54, 0, 1.31),
+        border-color 0.15s ease-in-out;
     }
+  `,
+  [Size.Default]: css`
+    &:after {
+      width: 8px;
+      height: 8px;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        border-color 0.15s ease-in-out;
+    }
+  `,
+};
+
+const interactionRingSize = {
+  [Size.Small]: css`
+    height: 14px;
+    width: 14px;
   `,
   [Size.Default]: css`
     height: 20px;
     width: 20px;
+  `,
+};
 
-    &:after {
-      width: 8px;
-      height: 8px;
+const interactionRing = css`
+  position: relative;
+  flex-shrink: 0;
+
+  &:before {
+    content: '';
+    transition: all 0.2s ease-in-out;
+    position: absolute;
+    top: -3px;
+    bottom: -3px;
+    left: -3px;
+    right: -3px;
+    transform: scale(0.8);
+    opacity: 0;
+    border-radius: 100%;
+    display: flex;
+    flex-shrink: 0;
+    border: 3px solid transparent;
+  }
+
+  &:hover:before {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  ${inputDataProp.selector}:disabled + &:before {
+    opacity: 0;
+  }
+`;
+
+const interactionRingHoverStyles = {
+  [Variant.Default]: css`
+    &:before {
+      border-color: rgba(184, 196, 194, 0.3);
+    }
+  `,
+
+  [Variant.Light]: css`
+    &:before {
+      border-color: rgba(255, 255, 255, 0.2);
     }
   `,
 };
+
+const labelMargin = css`
+  margin-left: 8px;
+`;
 
 type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
   Pick<RadioGroupProps, 'variant' | 'size'> & {
@@ -258,6 +311,7 @@ function Radio({
       >
         <input
           {...rest}
+          {...inputDataProp.prop}
           id={id}
           name={name}
           type="radio"
@@ -270,11 +324,22 @@ function Radio({
             [disabledChecked[variant]]: disabled && checked,
           })}
         />
+
         <div
-          {...styledDiv.prop}
-          className={cx(divStyle, divVariantStyle[variant], divHeight[size])}
-        ></div>
-        <div className={offsets[variant]}>{children}</div>
+          {...inputDisplayWrapper.prop}
+          className={cx(
+            interactionRing,
+            interactionRingHoverStyles[variant],
+            interactionRingSize[size],
+          )}
+        >
+          <div
+            {...styledDiv.prop}
+            className={cx(divStyle, divVariantStyle[variant], divSize[size])}
+          />
+        </div>
+
+        <div className={cx(labelMargin, offsets[size])}>{children}</div>
       </label>
     </div>
   );
