@@ -2,9 +2,10 @@
   "extends": "../../package.tsconfig.json",
   "compilerOptions": {
     "declarationDir": "dist",
+    "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "../../typings"],
   "references": [
     {
       "path": "../lib"
@@ -20,6 +21,9 @@
     },
     {
       "path": "../icon-button"
+    },
+    {
+      "path": "../checkbox"
     }
   ]
 }
