@@ -76,15 +76,10 @@ interface MarketingModalProps {
   coverStyle?: 'default' | 'cover';
   children: React.ReactNode;
   open?: boolean;
-  setOpen: (open: boolean) => void;
+  onClose?: (confirmed: boolean) => void;
   className?: string;
-  primaryActionProps: ActionProps;
-  secondaryActionProps: ActionProps;
-}
-
-interface ActionProps {
-  label: string;
-  onClick?: () => void;
+  buttonText: string;
+  linkText: string;
 }
 
 const MarketingModal = ({
@@ -92,16 +87,17 @@ const MarketingModal = ({
   title,
   cover,
   coverStyle = 'default',
-  primaryActionProps: { label: primaryActionLabel, ...primaryActionProps },
-  secondaryActionProps: {
-    label: secondaryActionLabel,
-    ...secondaryActionProps
-  },
-
+  onClose,
+  buttonText,
+  linkText,
   ...modalProps
 }: MarketingModalProps) => {
   return (
-    <Modal {...modalProps} contentClassName={baseModalStyle}>
+    <Modal
+      {...modalProps}
+      contentClassName={baseModalStyle}
+      setOpen={() => onClose?.(false)}
+    >
       <div
         className={cx(baseCoverStyle, {
           [defaultCoverStyle]: coverStyle === 'default',
@@ -115,11 +111,11 @@ const MarketingModal = ({
         {children}
       </div>
       <div className={footerContentStyle}>
-        <Button variant="primary" {...primaryActionProps}>
-          {primaryActionLabel}
+        <Button variant="primary" onClick={() => onClose?.(true)}>
+          {buttonText}
         </Button>
-        <Link tabIndex={0} {...secondaryActionProps} hideExternalIcon>
-          {secondaryActionLabel}
+        <Link tabIndex={0} onClick={() => onClose?.(false)} hideExternalIcon>
+          {linkText}
         </Link>
       </div>
     </Modal>
@@ -128,20 +124,16 @@ const MarketingModal = ({
 
 MarketingModal.displayName = 'MarketingModal';
 
-const actionPropType = PropTypes.shape({
-  label: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
-}).isRequired;
-
 MarketingModal.propTypes = {
   title: PropTypes.string.isRequired,
   cover: PropTypes.element.isRequired,
   coverStyle: PropTypes.oneOf(['default', 'cover']),
   open: PropTypes.bool,
+  onClose: PropTypes.func,
   children: PropTypes.node,
   className: PropTypes.string,
-  primaryActionProps: actionPropType,
-  secondaryActionProps: actionPropType,
+  buttonText: PropTypes.string.isRequired,
+  linkText: PropTypes.string.isRequired,
 };
 
 export default MarketingModal;

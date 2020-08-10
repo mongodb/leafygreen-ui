@@ -5,8 +5,8 @@ import MarketingModal from '.';
 
 function Default() {
   const [open, setOpen] = useState(false);
-  const primaryActionLabel = text('Primary action label', 'Okay');
-  const secondaryActionLabel = text('Secondary action label', 'Cancel');
+  const buttonText = text('Button text', 'Okay');
+  const linkText = text('Link text', 'Cancel');
 
   const coverStyle = radios(
     'Cover style example',
@@ -19,7 +19,12 @@ function Default() {
       <button onClick={() => setOpen(!open)}>Open Modal</button>
       <MarketingModal
         open={open}
-        setOpen={setOpen}
+        onClose={confirmed => {
+          setOpen(false);
+          if (confirmed) {
+            alert('Confirmed!');
+          }
+        }}
         title="Introducing New Feature!"
         cover={
           coverStyle === 'default' ? (
@@ -29,14 +34,8 @@ function Default() {
           )
         }
         coverStyle={coverStyle}
-        primaryActionProps={{
-          label: primaryActionLabel,
-          onClick: () => setOpen(false),
-        }}
-        secondaryActionProps={{
-          label: secondaryActionLabel,
-          onClick: () => setOpen(false),
-        }}
+        buttonText={buttonText}
+        linkText={linkText}
       >
         This is some description text, and it is extra long so it fills up this
         modal. Another thing about the modals here.

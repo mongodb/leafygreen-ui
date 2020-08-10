@@ -29,20 +29,14 @@ function Example() {
       <button onClick={() => setOpen(!open)}>Open Modal</button>
       <MarketingModal
         open={open}
-        setOpen={setOpen}
+        onClose={() => setOpen(false)}
         title="Introducing New Feature!"
         cover={
           <img alt="" src="examples/DataLake.png" width={275} height={220} />
         }
         coverStyle="default"
-        primaryActionProps={{
-          label: 'Okay',
-          onClick: () => setOpen(false),
-        }}
-        secondaryActionProps={{
-          label: 'Cancel',
-          onClick: () => setOpen(false),
-        }}
+        buttonText="Okay"
+        linkText="Cancel"
       >
         This is some description text, and it is extra long so it fills up this
         modal. Another thing about the modals here.
@@ -57,24 +51,37 @@ function Example() {
 ```html
 <button>Open Modal</button>
 <div aria-modal="true" role="dialog" tabindex="-1" class="leafygreen-ui-4ltwxx">
-  <svg
-    width="24"
-    height="24"
-    role="img"
-    viewBox="0 0 16 16"
-    fill="#5D6C74"
-    class="leafygreen-ui-1ucc7mh"
-    data-dismiss="modal"
-    aria-hidden="true"
-    size="24"
+  <button
+    tabindex="0"
+    aria-disabled="false"
+    aria-label="Close modal"
+    class="leafygreen-ui-zndd6x"
   >
-    <title>X Icon</title>
-    <path
-      d="M9.414 8l3.182 3.182-1.414 1.414L8 9.414l-3.182 3.182-1.414-1.414L6.586 8 3.404 4.818l1.414-1.414L8 6.586l3.182-3.182 1.414 1.414L9.414 8z"
-      fill="#5D6C74"
-      fill-rule="evenodd"
-    ></path>
-  </svg>
+    <div class="leafygreen-ui-xhlipt">
+      <svg
+        class="leafygreen-ui-19fdo3o"
+        height="20"
+        width="20"
+        viewBox="0 0 16 16"
+        role="img"
+      >
+        <g
+          id="X-Copy"
+          stroke="none"
+          stroke-width="1"
+          fill="none"
+          fill-rule="evenodd"
+        >
+          <path
+            d="M9,7 L13.5,7 L13.5,9 L9,9 L9,13.5 L7,13.5 L7,9 L2.5,9 L2.5,7 L7,7 L7,2.5 L9,2.5 L9,7 Z"
+            id="Combined-Shape-Copy"
+            fill="currentColor"
+            transform="translate(8.000000, 8.000000) rotate(45.000000) translate(-8.000000, -8.000000) "
+          ></path>
+        </g>
+      </svg>
+    </div>
+  </button>
   <div class="leafygreen-ui-ex1gyf">
     <img alt="" src="examples/DataLake.png" width="275" height="220" />
   </div>
@@ -99,21 +106,14 @@ function Example() {
 
 ## Properties
 
-| Prop                   | Type                           | Description                                                                                                                                 | Default     |
-| ---------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `open`                 | `boolean`                      | Determines open state of `Modal` component                                                                                                  | `false`     |
-| `setOpen`              | `function`                     | Callback to set open state of Modal component. `setOpen` accepts a boolean value, which will determine the open state of `Modal` component. | `() => {}`  |
-| `title`                | `string`                       | Title text to display above the main content text.                                                                                          |             |
-| `cover`                | `JSX.IntrinsicElements['img']` | Image element to be used as the cover image of the modal.                                                                                   |             |
-| `coverStyle`           | `'default'`, `'cover'`         | Determines how the `cover` image should be displayed in the modal.                                                                          | `'default'` |
-| `children`             | `node`                         | Children that will be rendered inside `<ConfirmationModal />` component.                                                                    |             |
-| `primaryActionProps`   | `ActionProps`                  | Properties to pass to the primary action button. See below.                                                                                 |             |
-| `secondaryActionProps` | `ActionProps`                  | Properties to pass to the secondary action button. See below.                                                                               |             |
-| `className`            | `string`                       | Style to be applied to the container's root node.                                                                                           |             |
-
-## ActionProps
-
-| Property  | Type       | Description                   | Default    |
-| --------- | ---------- | ----------------------------- | ---------- |
-| `label`   | `string`   | Button text for the action.   |            |
-| `onClick` | `function` | Click handler for the button. | `() => {}` |
+| Prop         | Type                           | Description                                                                                                                                                                         | Default     |
+| ------------ | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `open`       | `boolean`                      | Determines open state of `Modal` component                                                                                                                                          | `false`     |
+| `onClose`    | `function`                     | Callback that can be used to set the modal to be closed. The first argument is `true` if the modal was closed via the confirmation button and `false` if closed by any other means. | `() => {}`  |
+| `title`      | `string`                       | Title text to display above the main content text.                                                                                                                                  |             |
+| `cover`      | `JSX.IntrinsicElements['img']` | Image element to be used as the cover image of the modal.                                                                                                                           |             |
+| `coverStyle` | `'default'`, `'cover'`         | Determines how the `cover` image should be displayed in the modal.                                                                                                                  | `'default'` |
+| `children`   | `node`                         | Children that will be rendered inside `<ConfirmationModal />` component.                                                                                                            |             |
+| `buttonText` | `string`                       | Text content of the confirmation button.                                                                                                                                            |             |
+| `linkText`   | `string`                       | Text content of the alternate action link.                                                                                                                                          |             |
+| `className`  | `string`                       | Style to be applied to the container's root node.                                                                                                                                   |             |

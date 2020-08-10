@@ -15,15 +15,11 @@ const WrappedModal = ({
   return (
     <MarketingModal
       title="Title text"
+      buttonText="Okay"
+      linkText="Cancel"
       open={open}
-      setOpen={setOpen}
+      onClose={() => setOpen(false)}
       cover={<img alt="" src="" aria-label="Cover image" />}
-      primaryActionProps={{
-        label: 'Primary action',
-      }}
-      secondaryActionProps={{
-        label: 'Secondary action',
-      }}
       {...props}
     >
       {props.children ?? 'Content text'}
@@ -48,40 +44,34 @@ describe('packages/confirmation-modal', () => {
     expect(getByLabelText('Cover image')).toBeVisible();
     expect(getByText('Title text')).toBeVisible();
     expect(getByText('Content text')).toBeVisible();
-    expect(getByText('Primary action')).toBeVisible();
-    expect(getByText('Secondary action')).toBeVisible();
+    expect(getByText('Okay')).toBeVisible();
+    expect(getByText('Cancel')).toBeVisible();
   });
 
-  test('fires primary action', () => {
+  test('fires `onClose` on confirmation', () => {
     const clickSpy = jest.fn();
 
     const { getByText } = renderModal({
       open: true,
-      primaryActionProps: {
-        label: 'Primary action',
-        onClick: clickSpy,
-      },
+      onClose: clickSpy,
     });
 
-    const button = getByText('Primary action');
+    const button = getByText('Okay');
     expect(button).toBeVisible();
 
     fireEvent.click(button);
     expect(clickSpy).toHaveBeenCalledTimes(1);
   });
 
-  test('fires secondary action', () => {
+  test('fires `onClose` on cancel', () => {
     const clickSpy = jest.fn();
 
     const { getByText } = renderModal({
       open: true,
-      secondaryActionProps: {
-        label: 'Secondary action',
-        onClick: clickSpy,
-      },
+      onClose: clickSpy,
     });
 
-    const button = getByText('Secondary action');
+    const button = getByText('Cancel');
     expect(button).toBeVisible();
 
     fireEvent.click(button);
@@ -108,10 +98,10 @@ describe('packages/confirmation-modal', () => {
     });
 
     test('x icon is clicked', async () => {
-      const { getByTitle, getByRole } = renderModal({ open: true });
+      const { getByLabelText, getByRole } = renderModal({ open: true });
       const modal = getByRole('dialog');
 
-      const x = getByTitle('close modal');
+      const x = getByLabelText('Close modal');
       fireEvent.click(x);
 
       await waitForElementToBeRemoved(modal);
