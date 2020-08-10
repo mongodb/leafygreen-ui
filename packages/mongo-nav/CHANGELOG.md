@@ -1,5 +1,39 @@
 # @leafygreen-ui/mongo-nav
 
+## 3.1.1
+
+### Patch Changes
+
+- f9fa56e: Updates copy in GovBanner
+
+## 3.1.0
+
+### Minor Changes
+
+- fa55b3d: Make some hooks and MongoNav support server-side rendering
+
+### Patch Changes
+
+- Updated dependencies [458f0c3]
+- Updated dependencies [fa55b3d]
+  - @leafygreen-ui/typography@4.2.0
+  - @leafygreen-ui/hooks@4.0.0
+  - @leafygreen-ui/leafygreen-provider@1.1.3
+  - @leafygreen-ui/menu@7.0.5
+  - @leafygreen-ui/tooltip@3.3.3
+
+## 3.0.0
+
+### Major Changes
+
+- a65f35d: Exposes imperative API to refetch data in MongoNav: `mongoNavRef.current.reload()`. This is a major version bump, because React recommends that when a component is newly wrapped in `forwardRef` it be released as a breaking change.
+
+### Patch Changes
+
+- 135d112: Sets `usePortal` proprety to `false` on GovBanner tooltips
+- Updated dependencies [f6e84ec]
+  - @leafygreen-ui/button@6.0.1
+
 ## 2.1.0
 
 ### Minor Changes

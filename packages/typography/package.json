@@ -1,9 +1,8 @@
 {
   "name": "@leafygreen-ui/typography",
-  "version": "4.1.1",
+  "version": "4.2.0",
   "description": "leafyGreen UI Kit Typography",
-  "browser": "./dist/index.web.js",
-  "main": "./dist/index.node.js",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
@@ -19,6 +18,6 @@
     "@leafygreen-ui/icon": "^6.3.0"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^1.1.2"
+    "@leafygreen-ui/leafygreen-provider": "^1.1.3"
   }
 }

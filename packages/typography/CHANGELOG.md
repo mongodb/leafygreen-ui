@@ -1,5 +1,15 @@
 # @leafygreen-ui/typography
 
+## 4.2.0
+
+### Minor Changes
+
+- 458f0c3: Ensures that `rest` props are spread to every component in Typography package
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@1.1.3
+
 ## 4.1.1
 
 ### Patch Changes

@@ -14,8 +14,8 @@ describe('packages/typography', () => {
           href: 'http://mongodb.design',
           arrowAppearance: 'hover',
         });
-        const openInNewTab = screen.getByTitle('Open in New Tab');
-        const rightArrow = screen.queryByTitle('Glyphs / Arrow / Right');
+        const openInNewTab = screen.getByTitle('Open New Tab Icon');
+        const rightArrow = screen.queryByTitle('Arrow Right Icon');
         expect(openInNewTab).toBeInTheDocument();
         expect(rightArrow).not.toBeInTheDocument();
       });
@@ -24,8 +24,8 @@ describe('packages/typography', () => {
         renderLink({
           href: 'http://mongodb.design',
         });
-        const openInNewTab = screen.getByTitle('Open in New Tab');
-        const rightArrow = screen.queryByTitle('Glyphs / Arrow / Right');
+        const openInNewTab = screen.getByTitle('Open New Tab Icon');
+        const rightArrow = screen.queryByTitle('Arrow Right Icon');
         expect(openInNewTab).toBeInTheDocument();
         expect(rightArrow).not.toBeInTheDocument();
       });
@@ -35,7 +35,7 @@ describe('packages/typography', () => {
           hideExternalIcon: true,
           href: 'http://mongodb.design',
         });
-        const openInNewTab = screen.queryByTitle('Open in New Tab');
+        const openInNewTab = screen.queryByTitle('Open New Tab Icon');
         expect(openInNewTab).not.toBeInTheDocument();
       });
     });
@@ -57,8 +57,8 @@ describe('packages/typography', () => {
           arrowAppearance: 'hover',
         });
         const anchor = screen.getByText('Link');
-        const openInNewTab = screen.queryByTitle('Open in New Tab');
-        const rightArrow = screen.queryByTitle('Glyphs / Arrow / Right');
+        const openInNewTab = screen.queryByTitle('Open New Tab Icon');
+        const rightArrow = screen.queryByTitle('Arrow Right Icon');
         expect(rightArrow).not.toBeVisible();
 
         fireEvent.mouseEnter(anchor);
@@ -72,8 +72,8 @@ describe('packages/typography', () => {
           arrowAppearance: 'persist',
         });
 
-        const openInNewTab = screen.queryByTitle('Open in New Tab');
-        const rightArrow = screen.getByTitle('Glyphs / Arrow / Right');
+        const openInNewTab = screen.queryByTitle('Open New Tab Icon');
+        const rightArrow = screen.getByTitle('Arrow Right Icon');
         expect(rightArrow).toBeInTheDocument();
         expect(openInNewTab).not.toBeInTheDocument();
       });
@@ -83,8 +83,8 @@ describe('packages/typography', () => {
           href: 'http://localhost:9001',
         });
         const anchor = screen.getByText('Link');
-        const openInNewTab = screen.queryByTitle('Open in New Tab');
-        const rightArrow = screen.queryByTitle('Glyphs / Arrow / Right');
+        const openInNewTab = screen.queryByTitle('Open New Tab Icon');
+        const rightArrow = screen.queryByTitle('Arrow Right Icon');
 
         fireEvent.mouseEnter(anchor);
         expect(rightArrow).not.toBeInTheDocument();
@@ -96,7 +96,7 @@ describe('packages/typography', () => {
           href: 'http://localhost:9001',
           target: '_blank',
         });
-        const openInNewTab = screen.getByTitle('Open in New Tab');
+        const openInNewTab = screen.getByTitle('Open New Tab Icon');
         expect(openInNewTab).toBeInTheDocument();
       });
     });

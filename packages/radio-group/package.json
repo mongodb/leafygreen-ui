@@ -2,8 +2,7 @@
   "name": "@leafygreen-ui/radio-group",
   "version": "3.0.1",
   "description": "leafyGreen UI Kit RadioGroup",
-  "browser": "./dist/index.web.js",
-  "main": "./dist/index.node.js",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
