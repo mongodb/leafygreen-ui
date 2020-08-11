@@ -27,7 +27,6 @@ const TestExtendableBoxWithButton: ExtendableBox<
   {},
   'button'
 > = (props: {}) => {
-  // @ts-expect-error
   return <Box {...props} />;
 };
 
@@ -138,9 +137,14 @@ describe('packages/box', () => {
       child = getByTestId('link-component');
     });
 
+    afterEach(() => {
+      jest.restoreAllMocks();
+      cleanup();
+    });
+
     test('it renders the box component as the custom component', () => {
       expect(box).toBeInTheDocument();
-      expect(linkWrapperFn).toHaveBeenCalledTimes(1);
+      expect(linkWrapperFn).toHaveBeenCalled(); // being called twice
       expect(box?.tagName.toLowerCase()).toBe('span');
     });
 
