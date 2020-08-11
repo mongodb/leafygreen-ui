@@ -144,7 +144,7 @@ describe('packages/box', () => {
 
     test('it renders the box component as the custom component', () => {
       expect(box).toBeInTheDocument();
-      expect(linkWrapperFn).toHaveBeenCalled(); // being called twice
+      expect(linkWrapperFn).toHaveBeenCalled();
       expect(box?.tagName.toLowerCase()).toBe('span');
     });
 
