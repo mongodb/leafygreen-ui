@@ -520,5 +520,3 @@ UserMenu.propTypes = {
 };
 
 export default UserMenu;
-
-console.log('shmooo');
