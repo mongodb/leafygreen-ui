@@ -218,4 +218,33 @@ describe('packages/mongo-nav/user-menu', () => {
       expect(queryByText('Two-Factor Authentication')).not.toBeInTheDocument();
     });
   });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('the types behave as expected', () => {
+    // eslint-disable-next-line jest/expect-expect
+    test('does not error when all URLS are passed to urls prop ', () => {
+      <UserMenu urls={urlFixtures} />;
+    });
+    // eslint-disable-next-line jest/expect-expect
+    test('does not error when only userMenu object is passed to urls prop', () => {
+      <UserMenu
+        urls={{
+          userMenu: {
+            cloud: {
+              userPreferences: 'string',
+              invitations: 'string',
+              mfa: 'string',
+              organizations: 'string',
+            },
+            university: {
+              universityPreferences: 'string',
+            },
+            support: {
+              userPreferences: 'string',
+            },
+          },
+        }}
+      />;
+    });
+  });
 });
