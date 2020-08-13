@@ -1,76 +1,273 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { colors } from '@leafygreen-ui/theme';
+import { uiColors } from '@leafygreen-ui/palette';
+import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import Variant from './Variant';
+import { RadioGroupProps } from './RadioGroup';
+import { Variant, Size } from './types';
 
-const labelStyle = css`
-  cursor: pointer;
-  margin-bottom: 5px;
-  display: block;
+// Clean Styles
+
+const styledDiv = createDataProp('styled-div');
+const inputDisplayWrapper = createDataProp('input-display-wrapper');
+const inputDataProp = createDataProp('input-element');
+
+const containerMargin = css`
+  margin-top: 8px;
 `;
 
-const inputStyle = css`
-  margin-right: 0.5em;
-  cursor: pointer;
-
-  &:disabled {
-    cursor: not-allowed;
-  }
-`;
-
-const disabledButtonVariant = {
-  default: css`
-    color: ${colors.gray[5]};
-    cursor: not-allowed;
+const offsets = {
+  [Size.Small]: css`
+    margin-top: -2px;
   `,
-
-  light: css`
-    color: ${colors.gray[4]};
-    cursor: not-allowed;
+  [Size.Default]: css`
+    margin-top: 1px;
   `,
 };
 
-const textStyle = css`
-  line-height: 0.9em;
+const labelVariantStyle = {
+  [Variant.Default]: {
+    base: css`
+      color: ${uiColors.gray.dark2};
+    `,
+
+    disabled: css`
+      color ${uiColors.gray.base};
+    `,
+  },
+
+  [Variant.Light]: {
+    base: css`
+      color: ${uiColors.white};
+    `,
+
+    disabled: css`
+      color: ${uiColors.gray.light1};
+    `,
+  },
+};
+
+const labelStyle = css`
+  display: flex;
+  align-items: flex-start;
+  font-size: 14px;
+  line-height: 20px;
 `;
 
-export interface RadioProps {
-  checked: boolean;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-  name?: string;
-  variant: Variant;
+// Note colors are not in our palette
+const inputVariantStyle = {
+  [Variant.Default]: css`
+    &:checked + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+      background-color: #2798bd;
+      border-color: #2798bd;
 
-  /**
-   * Boolean that determines if the Radio is disabled.
-   */
-  disabled: boolean;
+      &:after {
+        transform: scale(1);
+      }
+    }
 
-  /**
-   * className supplied to Radio container.
-   */
-  className: string;
+    &:focus + ${inputDisplayWrapper.selector}:before {
+      transform: scale(1);
+      opacity: 1;
+      border-color: #9dd0e7;
+    }
 
-  /**
-   * Used to determine what Radio is checked.
-   */
-  value: string | number;
+    &:disabled + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+      border-color: ${uiColors.gray.light1};
+      background-color: ${uiColors.gray.light2};
+    }
+  `,
 
-  /**
-   * Id for Radio and respective label.
-   */
-  id?: string;
+  [Variant.Light]: css`
+    &:checked + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+      background-color: #43b1e5;
+      border-color: #43b1e5;
 
-  /**
-   * If RadioGroup is uncontrolled, the default property makes this Radio checked on the initial render.
-   */
-  default?: boolean;
+      &:after {
+        transform: scale(1);
+      }
+    }
 
-  /**
-   * Content that will appear inside of the Radio component's label.
-   */
-  children?: React.ReactNode;
-}
+    &:focus + ${inputDisplayWrapper.selector}:before {
+      transform: scale(1);
+      opacity: 1;
+      border-color: ${uiColors.blue.base};
+    }
+
+    &:disabled + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+      background-color: ${uiColors.gray.dark2};
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+  `,
+};
+
+const disabledChecked = {
+  [Variant.Default]: css`
+    &:disabled + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+      background-color: ${uiColors.gray.light1};
+      border-color: ${uiColors.gray.light1};
+
+      &:after {
+        background-color: ${uiColors.gray.light2};
+        transform: scale(1);
+      }
+    }
+  `,
+
+  [Variant.Light]: css`
+    &:disabled + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+      border-color: ${uiColors.gray.dark2};
+
+      &:after {
+        background-color: rgba(255, 255, 255, 0.3);
+        transform: scale(1);
+      }
+    }
+  `,
+};
+
+const inputStyle = css`
+  height: 0;
+  width: 0;
+  opacity: 0;
+`;
+
+const divVariantStyle = {
+  [Variant.Default]: css`
+    border: 2px solid ${uiColors.gray.dark1};
+    background-color: rgba(255, 255, 255, 0.31);
+  `,
+
+  [Variant.Light]: css`
+    border: 2px solid ${uiColors.white};
+    background-color: rgba(255, 255, 255, 0.2);
+  `,
+};
+
+const divStyle = css`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transition: background-color 0.15s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 100%;
+ 
+  &:before {
+    content: '';
+    position: absolute;
+    border-radius: 100%;
+    top: -5px;
+    bottom: -5px;
+    left: -5px;
+    right: -5px;
+  }
+
+  &:after {
+    content: '';
+    box-shadow: inset 0 -1px 0 0 #f1f1f1, 0 1px 0 0 rgba(0, 0, 0, 0.08),
+      0 1px 1px 0 rgba(6, 22, 33, 0.22);
+    background-color: white;
+    border-radius: 100%;
+    transform: scale(0);
+  }
+
+  ${inputDataProp.selector}:disabled + ${inputDisplayWrapper.selector} > & {
+    cursor: not-allowed;
+
+    &:after {
+      box-shadow: none;
+    }
+  }
+`;
+
+const divSize = {
+  [Size.Small]: css`
+    &:after {
+      width: 4px;
+      height: 4px;
+      transition: transform 0.2s cubic-bezier(0.16, 1.54, 0, 1.31),
+        border-color 0.15s ease-in-out;
+    }
+  `,
+  [Size.Default]: css`
+    &:after {
+      width: 8px;
+      height: 8px;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        border-color 0.15s ease-in-out;
+    }
+  `,
+};
+
+const interactionRingSize = {
+  [Size.Small]: css`
+    height: 14px;
+    width: 14px;
+  `,
+  [Size.Default]: css`
+    height: 20px;
+    width: 20px;
+  `,
+};
+
+const interactionRing = css`
+  position: relative;
+  flex-shrink: 0;
+
+  &:before {
+    content: '';
+    transition: all 0.2s ease-in-out;
+    position: absolute;
+    top: -3px;
+    bottom: -3px;
+    left: -3px;
+    right: -3px;
+    transform: scale(0.8);
+    opacity: 0;
+    border-radius: 100%;
+    display: flex;
+    flex-shrink: 0;
+    border: 3px solid transparent;
+  }
+
+  &:hover:before {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  ${inputDataProp.selector}:disabled + &:before {
+    opacity: 0;
+  }
+`;
+
+const interactionRingHoverStyles = {
+  [Variant.Default]: css`
+    &:before {
+      border-color: rgba(184, 196, 194, 0.3);
+    }
+  `,
+
+  [Variant.Light]: css`
+    &:before {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+  `,
+};
+
+const labelMargin = css`
+  margin-left: 8px;
+`;
+
+type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
+  Pick<RadioGroupProps, 'variant' | 'size'> & {
+    default?: boolean;
+    id?: string | number;
+  };
 
 /**
  * # Radio
@@ -86,70 +283,82 @@ export interface RadioProps {
  * @param props.id Id for Radio and respective label.
  * @param props.default If RadioGroup is uncontrolled, the default property makes this Radio checked on the initial render.
  * @param props.className className supplied to Radio container.
+ * @param props.size Size of Radio buttons.
  */
-export default class Radio extends PureComponent<
-  RadioProps & React.InputHTMLAttributes<HTMLInputElement>
-> {
-  static displayName = 'Radio';
-
-  static propTypes = {
-    checked: PropTypes.bool,
-    disabled: PropTypes.bool,
-    className: PropTypes.string,
-    children: PropTypes.node,
-    onChange: PropTypes.func,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    id: PropTypes.string,
-    name: PropTypes.string,
-    variant: PropTypes.oneOf(['default', 'light']),
-    default: PropTypes.bool,
-  };
-
-  static defaultProps = {
-    checked: false,
-    disabled: false,
-    className: '',
-    onChange: () => {},
-    variant: Variant.Default,
-  };
-
-  render() {
-    const {
-      children,
-      className,
-      onChange,
-      value,
-      checked,
-      disabled,
-      id,
-      name,
-      variant,
-      ...rest
-    } = this.props;
-
-    return (
-      <label htmlFor={id} className={cx(labelStyle, className)}>
+function Radio({
+  children,
+  className,
+  onChange,
+  value,
+  disabled,
+  id,
+  name,
+  checked = false,
+  size = Size.Default,
+  variant = Variant.Default,
+  ...rest
+}: RadioProps) {
+  return (
+    <div className={containerMargin}>
+      <label
+        htmlFor={id}
+        className={cx(
+          labelStyle,
+          labelVariantStyle[variant].base,
+          { [labelVariantStyle[variant].disabled]: disabled },
+          className,
+        )}
+      >
         <input
           {...rest}
+          {...inputDataProp.prop}
           id={id}
           name={name}
           type="radio"
-          className={inputStyle}
           onChange={onChange}
           value={value}
-          checked={checked}
           aria-checked={checked}
           disabled={disabled}
           aria-disabled={disabled}
-        />
-        <span
-          className={cx(textStyle, {
-            [disabledButtonVariant[variant]]: disabled,
+          className={cx(inputStyle, inputVariantStyle[variant], {
+            [disabledChecked[variant]]: disabled && checked,
           })}
+        />
+
+        <div
+          {...inputDisplayWrapper.prop}
+          className={cx(
+            interactionRing,
+            interactionRingHoverStyles[variant],
+            interactionRingSize[size],
+          )}
         >
-          {children}
-        </span>
+          <div
+            {...styledDiv.prop}
+            className={cx(divStyle, divVariantStyle[variant], divSize[size])}
+          />
+        </div>
+
+        <div className={cx(labelMargin, offsets[size])}>{children}</div>
       </label>
-    );
-  }
+    </div>
+  );
 }
+
+Radio.displayName = 'Radio';
+
+Radio.propTypes = {
+  checked: PropTypes.bool,
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+  children: PropTypes.node,
+  onChange: PropTypes.func,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  variant: PropTypes.oneOf(['default', 'light']),
+  size: PropTypes.oneOf(['small', 'default']),
+  default: PropTypes.bool,
+};
+
+export default Radio;
