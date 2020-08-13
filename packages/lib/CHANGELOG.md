@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 5.1.0
+
+### Minor Changes
+
+- 6aadc0b: Make id generation deterministic using IdAllocator.create class. This improves the SSR compatibility of these components.
+
 ## 5.0.0
 
 ### Major Changes

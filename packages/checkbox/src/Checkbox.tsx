@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp, IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { colors } from '@leafygreen-ui/theme';
 import {
@@ -120,7 +120,7 @@ const disabledTextStyle = css`
   color: ${colors.gray[5]};
 `;
 
-interface CheckboxProps {
+interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   variant: Variant;
   checked?: boolean;
   label: React.ReactNode;
@@ -131,9 +131,7 @@ interface CheckboxProps {
   bold: boolean;
 }
 
-export default class Checkbox extends PureComponent<
-  CheckboxProps & React.InputHTMLAttributes<HTMLInputElement>
-> {
+export default class Checkbox extends PureComponent<CheckboxProps> {
   static displayName = 'Checkbox';
 
   static propTypes = {
@@ -173,7 +171,17 @@ export default class Checkbox extends PureComponent<
     }
   }
 
-  checkboxId = `checkbox-${Math.floor(Math.random() * 10000000)}`;
+  private static idAllocator = IdAllocator.create('checkbox');
+  private _defaultCheckboxId?: string;
+
+  private get defaultCheckboxId(): string {
+    if (!this._defaultCheckboxId) {
+      this._defaultCheckboxId = Checkbox.idAllocator.generate();
+    }
+
+    return this._defaultCheckboxId;
+  }
+
   inputRef = React.createRef<HTMLInputElement>();
 
   onClick = (
@@ -206,7 +214,7 @@ export default class Checkbox extends PureComponent<
   };
 
   render() {
-    const checkboxId = this.props.id || this.checkboxId;
+    const checkboxId = this.props.id || this.defaultCheckboxId;
     const labelId = `${checkboxId}-label`;
 
     const {
