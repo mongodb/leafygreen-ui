@@ -1,6 +1,7 @@
 # @leafygreen-ui/tokens
 
 ## 0.1.0
+
 ### Minor Changes
 
 - 45de359: Initial release of `@leafygreen-ui/tokens`
