@@ -2,4 +2,4 @@
 '@leafygreen-ui/hooks': minor
 ---
 
-Add useObjectDependency hook
+Add `useObjectDependency` hook
