@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import defaultsDeep from 'lodash/defaultsDeep';
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
+import { useElementNode } from '@leafygreen-ui/hooks';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import { LogoMark } from '@leafygreen-ui/logo';
 import {
@@ -54,6 +55,7 @@ const truncate = css`
 const menuStyle = css`
   width: 300px;
   font-weight: normal;
+  overflow: scroll;
 `;
 
 const headerStyle = css`
@@ -308,6 +310,14 @@ function UserMenu({
     rel: 'noopener noreferrer',
   };
 
+  const [refEl, setRefEl] = useElementNode();
+
+  let menuPositionTop = 0;
+
+  if (refEl) {
+    menuPositionTop = refEl.getBoundingClientRect().bottom + 10;
+  }
+
   return (
     <div className={triggerWrapper}>
       <UserMenuTrigger
@@ -315,11 +325,15 @@ function UserMenu({
         name={account?.firstName ?? ''}
         setOpen={setOpen}
         data-testid="user-menu-trigger"
+        ref={setRefEl}
       />
       <Menu
         open={open}
         setOpen={setOpen}
-        className={menuStyle}
+        className={cx(
+          menuStyle,
+          css(`max-height: calc(100vh - ${menuPositionTop}px - 10px);`),
+        )}
         usePortal={false}
       >
         <li role="none" className={headerStyle}>

@@ -12,7 +12,10 @@ import {
   Environment,
 } from './types';
 
-const setStorybookWidth = css`
+const storybookStyles = css`
+  position: fixed;
+  top: 0;
+
   width: 100%;
   margin: 0;
 `;
@@ -32,7 +35,7 @@ storiesOf('MongoNav', module).add('Default', () => {
 
   return (
     <LeafygreenProvider>
-      <div className={setStorybookWidth}>
+      <div className={storybookStyles}>
         <MongoNav
           ref={mongoNavRef}
           mode={select('mode', Object.values(Mode), Mode.Dev)}
