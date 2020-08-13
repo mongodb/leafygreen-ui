@@ -22,7 +22,8 @@ fs.mkdir(newDirectory, { recursive: true }, err => {
 
   fs.writeFile(`${newDirectory}/package.json`, packageJSON, handleErr);
 
-  fs.writeFile(`${newDirectory}/tsconfig.json`, tsConfig, handleErr);
+  fs.writeFile(`${newDirectory}/tsconfig.json`, tsConfigDev, handleErr);
+  fs.writeFile(`${newDirectory}/build.tsconfig.json`, tsConfigBuild, handleErr);
 
   fs.writeFile(`${newDirectory}/README.md`, readMe, handleErr);
 
@@ -63,20 +64,30 @@ const packageJSON = `
   }
 `;
 
-const tsConfig = `
+const tsConfigDev = `
 {
   "extends": "../../package.tsconfig.json",
   "compilerOptions": {
-    "declarationDir": "dist",
-    "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
   },
   "include": ["src/**/*"],
   "references": [
     {
-      "path": "../lib"
+      "path": "../lib/build.tsconfig.json"
     }
   ]
+}
+`;
+
+const tsConfigBuild = `
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declarationDir": "dist",
+    "outDir": "dist"
+  },
+  "exclude": ["src/**/*.spec.*", "src/**/*.story.*"]
 }
 `;
 

@@ -1,26 +1,24 @@
 {
   "extends": "../../package.tsconfig.json",
   "compilerOptions": {
-    "declarationDir": "dist",
-    "outDir": "dist",
     "rootDir": "src"
   },
   "include": ["src/**/*", "../../typings"],
   "references": [
     {
-      "path": "../emotion"
+      "path": "../emotion/build.tsconfig.json"
     },
     {
-      "path": "../lib"
+      "path": "../lib/build.tsconfig.json"
     },
     {
-      "path": "../syntax"
+      "path": "../syntax/build.tsconfig.json"
     },
     {
-      "path": "../icon"
+      "path": "../icon/build.tsconfig.json"
     },
     {
-      "path": "../icon-button"
+      "path": "../icon-button/build.tsconfig.json"
     }
   ]
 }

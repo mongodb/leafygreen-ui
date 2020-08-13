@@ -26,7 +26,7 @@
     "clean": "rimraf packages/*/{dist,node_modules} node_modules",
     "create-package": "node ./scripts/package-builder.js",
     "format": "yarn prettier && yarn eslint:format",
-    "init": "yarn && yarn build && yarn ts --verbose --force",
+    "init": "yarn && yarn build && yarn ts:build --verbose --force",
     "link-all-packages": "lerna exec --ignore @leafygreen-ui/lib --ignore @leafygreen-ui/theme -- yarn link",
     "link": "./scripts/link.sh",
     "lint": "yarn prettier:check && yarn eslint && yarn ts",
@@ -36,6 +36,7 @@
     "prettier:check": "prettier --check \"**/*.{js,ts,tsx,json,md}\"",
     "test": "jest --env jsdom",
     "ts": "tsc --build tsconfig.json",
+    "ts:build": "tsc --build build.tsconfig.json",
     "prepublishOnly": "yarn lint && yarn test && yarn build",
     "release": "yarn changeset publish --public",
     "release:site": "gh-pages --dist storybook/public"
@@ -115,7 +116,7 @@
     "source-map-loader": "^0.2.4",
     "storybook-addon-performance": "^0.9.0",
     "ts-node": "^8.8.2",
-    "typescript": "^3.9.5",
+    "typescript": "^4.0.1-rc",
     "url-loader": "4.1.0",
     "webpack": "4.42.1",
     "webpack-cli": "3.3.11"

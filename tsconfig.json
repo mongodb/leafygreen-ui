@@ -3,103 +3,103 @@
   "include": [],
   "references": [
     {
-      "path": "./packages/badge"
+      "path": "./packages/badge/build.tsconfig.json"
     },
     {
-      "path": "./packages/banner"
+      "path": "./packages/banner/build.tsconfig.json"
     },
     {
-      "path": "./packages/box"
+      "path": "./packages/box/build.tsconfig.json"
     },
     {
-      "path": "./packages/button"
+      "path": "./packages/button/build.tsconfig.json"
     },
     {
-      "path": "./packages/callout"
+      "path": "./packages/callout/build.tsconfig.json"
     },
     {
-      "path": "./packages/card"
+      "path": "./packages/card/build.tsconfig.json"
     },
     {
-      "path": "./packages/checkbox"
+      "path": "./packages/checkbox/build.tsconfig.json"
     },
     {
-      "path": "./packages/code"
+      "path": "./packages/code/build.tsconfig.json"
     },
     {
-      "path": "./packages/emotion"
+      "path": "./packages/emotion/build.tsconfig.json"
     },
     {
-      "path": "./packages/hooks"
+      "path": "./packages/hooks/build.tsconfig.json"
     },
     {
-      "path": "./packages/icon"
+      "path": "./packages/icon/build.tsconfig.json"
     },
     {
-      "path": "./packages/icon-button"
+      "path": "./packages/icon-button/build.tsconfig.json"
     },
     {
-      "path": "./packages/lib"
+      "path": "./packages/lib/build.tsconfig.json"
     },
     {
-      "path": "./packages/logo"
+      "path": "./packages/logo/build.tsconfig.json"
     },
     {
-      "path": "./packages/menu"
+      "path": "./packages/menu/build.tsconfig.json"
     },
     {
-      "path": "./packages/modal"
+      "path": "./packages/modal/build.tsconfig.json"
     },
     {
-      "path": "./packages/mongo-nav"
+      "path": "./packages/mongo-nav/build.tsconfig.json"
     },
     {
-      "path": "./packages/palette"
+      "path": "./packages/palette/build.tsconfig.json"
     },
     {
-      "path": "./packages/pipeline"
+      "path": "./packages/pipeline/build.tsconfig.json"
     },
     {
-      "path": "./packages/popover"
+      "path": "./packages/popover/build.tsconfig.json"
     },
     {
-      "path": "./packages/portal"
+      "path": "./packages/portal/build.tsconfig.json"
     },
     {
-      "path": "./packages/radio-box-group"
+      "path": "./packages/radio-box-group/build.tsconfig.json"
     },
     {
-      "path": "./packages/radio-group"
+      "path": "./packages/radio-group/build.tsconfig.json"
     },
     {
-      "path": "./packages/side-nav"
+      "path": "./packages/side-nav/build.tsconfig.json"
     },
     {
-      "path": "./packages/stepper"
+      "path": "./packages/stepper/build.tsconfig.json"
     },
     {
-      "path": "./packages/syntax"
+      "path": "./packages/syntax/build.tsconfig.json"
     },
     {
-      "path": "./packages/testing-lib"
+      "path": "./packages/testing-lib/build.tsconfig.json"
     },
     {
-      "path": "./packages/text-input"
+      "path": "./packages/text-input/build.tsconfig.json"
     },
     {
-      "path": "./packages/theme"
+      "path": "./packages/theme/build.tsconfig.json"
     },
     {
-      "path": "./packages/toggle"
+      "path": "./packages/toggle/build.tsconfig.json"
     },
     {
-      "path": "./packages/tooltip"
+      "path": "./packages/tooltip/build.tsconfig.json"
     },
     {
-      "path": "./packages/leafygreen-provider"
+      "path": "./packages/leafygreen-provider/build.tsconfig.json"
     },
     {
-      "path": "./packages/typography"
+      "path": "./packages/typography/build.tsconfig.json"
     }
   ]
 }

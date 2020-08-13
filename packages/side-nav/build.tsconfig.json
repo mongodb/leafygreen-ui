@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declarationDir": "dist",
+    "outDir": "dist"
+  },
+  "exclude": ["src/**/*.spec.*", "src/**/*.story.*"]
+}

@@ -1,47 +1,45 @@
 {
   "extends": "../../package.tsconfig.json",
   "compilerOptions": {
-    "declarationDir": "dist",
-    "outDir": "dist",
     "rootDir": "src"
   },
   "include": ["src/**/*"],
   "references": [
     {
-      "path": "../lib"
+      "path": "../lib/build.tsconfig.json"
     },
     {
-      "path": "../palette"
+      "path": "../palette/build.tsconfig.json"
     },
     {
-      "path": "../emotion"
+      "path": "../emotion/build.tsconfig.json"
     },
     {
-      "path": "../logo"
+      "path": "../logo/build.tsconfig.json"
     },
     {
-      "path": "../menu"
+      "path": "../menu/build.tsconfig.json"
     },
     {
-      "path": "../icon"
+      "path": "../icon/build.tsconfig.json"
     },
     {
-      "path": "../testing-lib"
+      "path": "../testing-lib/build.tsconfig.json"
     },
     {
-      "path": "../tooltip"
+      "path": "../tooltip/build.tsconfig.json"
     },
     {
-      "path": "../badge"
+      "path": "../badge/build.tsconfig.json"
     },
     {
-      "path": "../button"
+      "path": "../button/build.tsconfig.json"
     },
     {
-      "path": "../icon-button"
+      "path": "../icon-button/build.tsconfig.json"
     },
     {
-      "path": "../typography"
+      "path": "../typography/build.tsconfig.json"
     }
   ]
 }

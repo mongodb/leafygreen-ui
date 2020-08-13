@@ -1,26 +1,24 @@
 {
   "extends": "../../package.tsconfig.json",
   "compilerOptions": {
-    "declarationDir": "dist",
-    "outDir": "dist",
     "rootDir": "src"
   },
   "include": ["src/**/*", "../../typings/*"],
   "references": [
     {
-      "path": "../emotion"
+      "path": "../emotion/build.tsconfig.json"
     },
     {
-      "path": "../hooks"
+      "path": "../hooks/build.tsconfig.json"
     },
     {
-      "path": "../lib"
+      "path": "../lib/build.tsconfig.json"
     },
     {
-      "path": "../portal"
+      "path": "../portal/build.tsconfig.json"
     },
     {
-      "path": "../palette"
+      "path": "../palette/build.tsconfig.json"
     }
   ]
 }

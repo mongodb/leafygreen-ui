@@ -132,7 +132,7 @@ Make sure that the PR includes the changes made by running this command.
 # To transpile and concatenate all files
 yarn build
 # To build TypeScript type definition files
-yarn ts
+yarn ts:build
 ```
 
 3. Publish all packages to NPM using changesets. This can be done from master.

@@ -1,20 +1,18 @@
 {
   "extends": "../../package.tsconfig.json",
   "compilerOptions": {
-    "declarationDir": "dist",
-    "outDir": "dist",
     "rootDir": "src"
   },
   "include": ["src/**/*"],
   "references": [
     {
-      "path": "../emotion"
+      "path": "../emotion/build.tsconfig.json"
     },
     {
-      "path": "../lib"
+      "path": "../lib/build.tsconfig.json"
     },
     {
-      "path": "../theme"
+      "path": "../theme/build.tsconfig.json"
     }
   ]
 }

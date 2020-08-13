@@ -26,4 +26,4 @@ Thumbs.db
 yarn-error.log
 
 # TypeScript type-checking artifact
-tsconfig.tsbuildinfo
+*.tsbuildinfo

@@ -15,11 +15,11 @@
     "paths": {
       "@leafygreen-ui/*": ["packages/*/src"]
     },
+    "noEmit": true,
     "sourceMap": true,
     "declarationMap": true,
     "emitDeclarationOnly": false,
     "importHelpers": false,
     "composite": true
-  },
-  "exclude": ["**/*/*.spec.*", "**/*/*.story.*"]
+  }
 }
