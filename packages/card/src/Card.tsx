@@ -8,7 +8,7 @@ const containerStyle = css`
   background-color: white;
   border: 1px solid ${uiColors.gray.light2};
   border-radius: 4px;
-  box-shadow: 0px 4px 10px -4px ${uiColors.gray.light1};
+  box-shadow: 0px 4px 10px -4px ${uiColors.gray.dark1};
   transition: border 300ms ease-in-out, box-shadow 300ms ease-in-out;
 
   &:hover {
