@@ -5,5 +5,12 @@
     "declarationDir": "dist",
     "outDir": "dist"
   },
-  "exclude": ["src/**/*.spec.*", "src/**/*.story.*"]
+  "exclude": ["src/**/*.spec.*", "src/**/*.story.*"],
+    "references": [
+    { "path": "../emotion/build.tsconfig.json" },
+    { "path": "../lib/build.tsconfig.json" },
+    { "path": "../syntax/build.tsconfig.json" },
+    { "path": "../icon/build.tsconfig.json" },
+    { "path": "../icon-button/build.tsconfig.json" }
+  ]
 }

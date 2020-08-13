@@ -87,7 +87,12 @@ const tsConfigBuild = `
     "declarationDir": "dist",
     "outDir": "dist"
   },
-  "exclude": ["src/**/*.spec.*", "src/**/*.story.*"]
+  "exclude": ["src/**/*.spec.*", "src/**/*.story.*"],
+  "references": [
+    {
+      "path": "../lib/build.tsconfig.json"
+    }
+  ]
 }
 `;
 

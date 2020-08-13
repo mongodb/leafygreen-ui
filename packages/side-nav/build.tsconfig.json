@@ -2,8 +2,14 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "noEmit": false,
-    "declarationDir": "dist",
-    "outDir": "dist"
+    "outDir": "dist",
+    "declarationDir": "dist"
   },
-  "exclude": ["src/**/*.spec.*", "src/**/*.story.*"]
+  "exclude": ["src/**/*.spec.*", "src/**/*.story.*"],
+    "references": [
+    { "path": "../lib/build.tsconfig.json" },
+    { "path": "../emotion/build.tsconfig.json" },
+    { "path": "../palette/build.tsconfig.json" },
+    { "path": "../menu/build.tsconfig.json" }
+  ]
 }
