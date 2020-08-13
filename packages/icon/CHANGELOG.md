@@ -1,5 +1,13 @@
 # @leafygreen-ui/icon
 
+## 6.3.1
+
+### Patch Changes
+
+- 5ee2098: Remove invalid title attribute from SVG
+- Updated dependencies [6aadc0b]
+  - @leafygreen-ui/lib@5.1.0
+
 ## 6.3.0
 
 ### Minor Changes
