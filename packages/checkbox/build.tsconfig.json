@@ -6,7 +6,7 @@
     "outDir": "dist"
   },
   "exclude": ["src/**/*.spec.*", "src/**/*.story.*"],
-    "references": [
+  "references": [
     { "path": "../emotion/build.tsconfig.json" },
     { "path": "../lib/build.tsconfig.json" },
     { "path": "../theme/build.tsconfig.json" }

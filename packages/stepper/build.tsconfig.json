@@ -6,7 +6,7 @@
     "declarationDir": "dist"
   },
   "exclude": ["src/**/*.spec.*", "src/**/*.story.*"],
-    "references": [
+  "references": [
     { "path": "../emotion/build.tsconfig.json" },
     { "path": "../icon/build.tsconfig.json" },
     { "path": "../lib/build.tsconfig.json" },
