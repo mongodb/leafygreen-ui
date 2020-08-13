@@ -41,7 +41,6 @@ module.exports = function template(
         },
         className,
       )}
-      title={getGlyphTitle('${componentName}', title)}
       height={typeof size === 'number' ? size : sizeMap[size]}
       width={typeof size === 'number' ? size : sizeMap[size]}
       {...props}
@@ -67,21 +66,14 @@ module.exports = function template(
     function getGlyphTitle(name, title) {
       if (title === false) {
         // If title is null, we unset the title entirely, otherwise we generate one.
-        return undefined;
+        return null;
       }
 
       if (title == null || title === true) {
-        let generatedTitle = \`\${name.replace(
-          /([A-Z][a-z])/g,
-          ' $1',
+        return \`\${name.replace(
+          /([a-z])([A-Z])/g,
+          '$1 $2',
         )} Icon\`;
- 
-        // Trim space at beginning of title
-        while (generatedTitle.charAt(0) === ' ') {
-          generatedTitle = generatedTitle.substr(1);
-        }
-
-        return generatedTitle;
       }
 
       return title;
@@ -97,6 +89,8 @@ module.exports = function template(
       const fillStyle = css\`
         color: \${fill};
       \`;
+
+      title = getGlyphTitle('${componentName}', title);
 
       return ${jsx};
     }

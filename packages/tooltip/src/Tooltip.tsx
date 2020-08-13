@@ -10,7 +10,7 @@ import Popover, {
 import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { HTMLElementProps, typeIs } from '@leafygreen-ui/lib';
+import { HTMLElementProps, IdAllocator, typeIs } from '@leafygreen-ui/lib';
 import { transparentize } from 'polished';
 import debounce from 'lodash/debounce';
 import { trianglePosition } from './tooltipUtils';
@@ -176,6 +176,8 @@ export type TooltipProps = Omit<
     }
   >;
 
+const idAllocator = IdAllocator.create('tooltip');
+
 /**
  * # Tooltip
  *
@@ -232,8 +234,8 @@ function Tooltip({
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const tooltipId = useMemo(
-    () => id || `tooltip-${Math.floor(Math.random() * Math.floor(10))}`,
-    [id],
+    () => id ?? tooltipRef.current?.id ?? idAllocator.generate(),
+    [id ?? tooltipRef.current?.id],
   );
 
   const createTriggerProps = (
@@ -370,6 +372,7 @@ Tooltip.propTypes = {
   trigger: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   triggerEvent: PropTypes.oneOf(Object.values(TriggerEvent)),
   variant: PropTypes.oneOf(Object.values(Variant)),
+  enabled: PropTypes.bool,
   open: PropTypes.bool,
   setOpen: PropTypes.func,
   id: PropTypes.string,
