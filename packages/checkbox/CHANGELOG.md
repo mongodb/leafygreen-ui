@@ -1,5 +1,13 @@
 # @leafygreen-ui/checkbox
 
+## 4.0.3
+
+### Patch Changes
+
+- 6aadc0b: Make id generation deterministic using IdAllocator.create class. This improves the SSR compatibility of these components.
+- Updated dependencies [6aadc0b]
+  - @leafygreen-ui/lib@5.1.0
+
 ## 4.0.2
 
 ### Patch Changes
