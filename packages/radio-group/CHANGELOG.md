@@ -1,5 +1,17 @@
 # @leafygreen-ui/radio-group
 
+## 4.0.0
+
+### Major Changes
+
+- ea20761: Implements redesign for RadioGroup component, which includes changes to the DOM structure
+
+### Patch Changes
+
+- 6aadc0b: Make id generation deterministic using IdAllocator.create class. This improves the SSR compatibility of these components.
+- Updated dependencies [6aadc0b]
+  - @leafygreen-ui/lib@5.1.0
+
 ## 3.0.1
 
 ### Patch Changes
