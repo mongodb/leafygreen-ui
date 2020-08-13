@@ -1,5 +1,20 @@
 # @leafygreen-ui/menu
 
+## 7.0.6
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/box@2.1.3
+  - @leafygreen-ui/hooks@4.0.1
+  - @leafygreen-ui/icon@6.3.2
+  - @leafygreen-ui/icon-button@6.1.4
+  - @leafygreen-ui/leafygreen-provider@1.1.4
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/palette@2.0.2
+  - @leafygreen-ui/popover@5.1.4
+
 ## 7.0.5
 
 ### Patch Changes
