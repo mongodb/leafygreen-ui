@@ -1,5 +1,11 @@
 # @leafygreen-ui/mongo-menu
 
+## 3.0.3
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+
 ## 3.0.2
 
 ### Patch Changes

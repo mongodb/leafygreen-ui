@@ -1,5 +1,14 @@
 # @leafygreen-ui/icon
 
+## 6.3.2
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/theme@2.0.1
+
 ## 6.3.1
 
 ### Patch Changes

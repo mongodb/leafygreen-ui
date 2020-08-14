@@ -1,5 +1,17 @@
 # @leafygreen-ui/modal
 
+## 3.1.5
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/hooks@4.0.1
+  - @leafygreen-ui/icon@6.3.2
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/palette@2.0.2
+  - @leafygreen-ui/portal@2.2.1
+
 ## 3.1.4
 
 ### Patch Changes

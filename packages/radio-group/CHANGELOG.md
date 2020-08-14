@@ -1,5 +1,14 @@
 # @leafygreen-ui/radio-group
 
+## 4.0.1
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/palette@2.0.2
+
 ## 4.0.0
 
 ### Major Changes
