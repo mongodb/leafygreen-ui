@@ -369,21 +369,10 @@ function Tooltip({
 
     const { children: triggerChildren } = trigger.props;
 
-    const sharedTooltipProps = {
+    return React.cloneElement(trigger, {
       ...createTriggerProps(triggerEvent, trigger.props),
       'aria-describedby': tooltipId,
       children: [...toArray(triggerChildren), tooltip],
-    };
-
-    if (isComponentType(trigger, 'Button') && !usePortal) {
-      return React.cloneElement(trigger, {
-        ...sharedTooltipProps,
-        className: cx(trigger.props.className, overflowVisible),
-      });
-    }
-
-    return React.cloneElement(trigger, {
-      ...sharedTooltipProps,
       className: cx(trigger.props.className, positionRelative),
     });
   }
