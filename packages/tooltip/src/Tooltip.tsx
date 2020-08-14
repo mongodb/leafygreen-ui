@@ -15,7 +15,6 @@ import {
   HTMLElementProps,
   IdAllocator,
   typeIs,
-  isComponentType,
 } from '@leafygreen-ui/lib';
 import { transparentize } from 'polished';
 import debounce from 'lodash/debounce';
@@ -73,10 +72,6 @@ const baseStyles = css`
 
 const positionRelative = css`
   position: relative;
-`;
-
-const overflowVisible = css`
-  overflow: visible;
 `;
 
 const tooltipVariants: { readonly [K in Variant]: string } = {

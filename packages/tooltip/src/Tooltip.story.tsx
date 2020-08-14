@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
-import { css } from '@leafygreen-ui/emotion';
 import Tooltip, { TriggerEvent, Variant, Align, Justify } from '.';
 import Button from '@leafygreen-ui/button';
 
