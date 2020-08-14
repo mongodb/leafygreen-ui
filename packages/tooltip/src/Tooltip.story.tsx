@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
+import { css } from '@leafygreen-ui/emotion';
 import Tooltip, { TriggerEvent, Variant, Align, Justify } from '.';
 import Button from '@leafygreen-ui/button';
 
@@ -32,7 +33,7 @@ storiesOf('Tooltip', module)
     <Tooltip
       align={select('Align', Object.values(Align), 'top')}
       justify={select('justify', Object.values(Justify), 'start')}
-      trigger={<Button>Trigger</Button>}
+      trigger={<Button>trigger</Button>}
       triggerEvent={select(
         'triggerEvent',
         Object.values(TriggerEvent),
@@ -40,6 +41,7 @@ storiesOf('Tooltip', module)
       )}
       enabled={boolean('Enabled', true)}
       variant={select('Variant', Object.values(Variant), 'dark')}
+      usePortal={boolean('Enabled', false)}
     >
       I am an uncontrolled Tooltip!
     </Tooltip>
