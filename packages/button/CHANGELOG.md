@@ -1,5 +1,17 @@
 # @leafygreen-ui/button
 
+## 6.0.2
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/box@2.1.3
+  - @leafygreen-ui/icon@6.3.2
+  - @leafygreen-ui/leafygreen-provider@1.1.4
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/palette@2.0.2
+
 ## 6.0.1
 
 ### Patch Changes

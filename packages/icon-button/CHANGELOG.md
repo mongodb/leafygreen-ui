@@ -1,5 +1,25 @@
 # @leafygreen-ui/icon-button
 
+## 6.1.4
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/emotion@2.0.2
+  - @leafygreen-ui/icon@6.3.2
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/palette@2.0.2
+
+## 6.1.3
+
+### Patch Changes
+
+- Updated dependencies [6aadc0b]
+- Updated dependencies [5ee2098]
+  - @leafygreen-ui/lib@5.1.0
+  - @leafygreen-ui/icon@6.3.1
+
 ## 6.1.2
 
 ### Patch Changes

@@ -20,6 +20,7 @@ import {
   AccountInterface,
   ActiveNavElement,
   URLS,
+  UserMenuURLS,
   HostsInterface,
   NavElement,
   Platform,
@@ -185,7 +186,7 @@ interface UserMenuProps {
    * Object that supplies URL overrides to UserMenu component.
    * Shape: { userMenu:{ cloud: { userPreferences, organizations, invitations, mfa }, university: { universityPreferences }, support: { userPreferences }, account: { homepage } }}
    */
-  urls?: URLS;
+  urls?: URLS | { userMenu: UserMenuURLS };
 
   /**
    * Object that supplies host overrides to UserMenu component.

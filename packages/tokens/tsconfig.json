@@ -8,13 +8,7 @@
   "include": ["src/**/*"],
   "references": [
     {
-      "path": "../emotion"
-    },
-    {
       "path": "../lib"
-    },
-    {
-      "path": "../palette"
     }
   ]
 }
