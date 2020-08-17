@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/text-input",
-  "version": "3.0.2",
+  "version": "3.0.4",
   "description": "leafyGreen UI Kit Text Input",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -12,11 +12,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^5.0.0",
-    "@leafygreen-ui/icon": "^6.3.0",
-    "@leafygreen-ui/palette": "^2.0.0"
+    "@leafygreen-ui/lib": "^5.1.1",
+    "@leafygreen-ui/icon": "^6.3.2",
+    "@leafygreen-ui/palette": "^2.0.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^1.1.2"
+    "@leafygreen-ui/leafygreen-provider": "^1.1.4"
   }
 }

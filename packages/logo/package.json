@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/logo",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "LeafyGreen UI Kit Logos",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -12,8 +12,8 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/lib": "^5.0.0",
-    "@leafygreen-ui/emotion": "^2.0.0",
-    "@leafygreen-ui/palette": "^2.0.0"
+    "@leafygreen-ui/lib": "^5.1.1",
+    "@leafygreen-ui/emotion": "^2.0.2",
+    "@leafygreen-ui/palette": "^2.0.2"
   }
 }

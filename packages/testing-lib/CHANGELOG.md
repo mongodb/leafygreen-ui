@@ -1,5 +1,11 @@
 # @leafygreen-ui/testing-lib
 
+## 0.1.1
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+
 ## 0.1.0
 
 ### Minor Changes

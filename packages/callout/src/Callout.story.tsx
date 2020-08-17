@@ -43,7 +43,7 @@ storiesOf('Callout', module)
               <b>Bananas</b>
             </li>
           </ul>
-          <Code>{"console.log('Hello world')"}</Code>
+          <Code language="javascript">{"console.log('Hello world')"}</Code>
         </Callout>
       </div>
     );
