@@ -96,7 +96,7 @@ interface UserMenuTriggerProps {
   children?: React.ReactElement;
 }
 
-const UserMenuTrigger = React.forwardRef<HTMLElement, UserMenuTriggerProps>(
+const UserMenuTrigger = React.forwardRef<HTMLDivElement, UserMenuTriggerProps>(
   ({ open, name, setOpen, children, ...rest }: UserMenuTriggerProps, ref) => {
     const onElementClick = useOnElementClick();
     const buttonRef = useRef<HTMLButtonElement>(null);

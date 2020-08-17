@@ -24,7 +24,7 @@ interface InteractionRingWrapperProps {
 }
 
 const InteractionRingWrapper = React.forwardRef<
-  HTMLElement,
+  HTMLDivElement,
   InteractionRingWrapperProps
 >(
   (
