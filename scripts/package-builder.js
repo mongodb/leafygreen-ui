@@ -58,7 +58,7 @@ const packageJSON = `
       "access": "public"
     },
     "dependencies": {
-      "@leafygreen-ui/lib": "^4.0.0"
+      "@leafygreen-ui/lib": "^5.0.0"
     }
   }
 `;
