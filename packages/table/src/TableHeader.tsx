@@ -123,29 +123,27 @@ function TableHeader({
     }
   };
 
-  const sortButton = (
-    <IconButton
-      aria-label="sort"
-      onClick={sortRows}
-      className={css`
-        margin-bottom: 2px;
-      `}
-    >
-      <Glyph
-        size="small"
-        title={`${glyph}-${index}`}
-        className={cx({
-          [glyphColor]: glyph === 'asc' || glyph === 'desc',
-        })}
-      />
-    </IconButton>
-  );
-
   return (
     <th {...rest} className={cx(thStyle, commonCellStyles, className)}>
       <div className={flexDisplay}>
         <span className={labelStyle}>{label}</span>
-        {sortBy != null && sortButton}
+        {sortBy != null && (
+          <IconButton
+            aria-label="sort"
+            onClick={sortRows}
+            className={css`
+              margin-bottom: 2px;
+            `}
+          >
+            <Glyph
+              size="small"
+              title={`${glyph}-${index}`}
+              className={cx({
+                [glyphColor]: glyph === 'asc' || glyph === 'desc',
+              })}
+            />
+          </IconButton>
+        )}
       </div>
     </th>
   );

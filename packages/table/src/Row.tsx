@@ -100,7 +100,7 @@ function getIndentLevelStyle(indentLevel: number) {
 
 const idAllocator = IdAllocator.create('text-input');
 
-interface RowProps extends React.ComponentPropsWithoutRef<'tr'> {
+interface RowProps extends React.ComponentPropsWithRef<'tr'> {
   expanded?: boolean;
   disabled?: boolean;
   indentLevel?: number;
@@ -167,7 +167,6 @@ const Row = React.forwardRef(
       }
     }, [children, hasNestedRows, hasRowSpan, tableDispatch]);
 
-    // Iterating over children twice because generated memoized values have different dependants
     const renderedChildren = React.useMemo(() => {
       const Icon = isExpanded ? ChevronDownIcon : ChevronRightIcon;
       const chevronButton = (
@@ -180,7 +179,7 @@ const Row = React.forwardRef(
         </IconButton>
       );
       const renderedChildren: Array<React.ReactElement> = [];
-      let hasSeenRow = false;
+      let hasNestedRow = false;
 
       React.Children.forEach(children, (child, index) => {
         if (isComponentType(child, 'Cell')) {
@@ -197,14 +196,14 @@ const Row = React.forwardRef(
               disabled: child.props.disabled || disabled,
             }),
           );
-        } else {
-          if (isComponentType(child, 'Row')) {
-            hasSeenRow = true;
-          }
+        }
+
+        if (isComponentType(child, 'Row')) {
+          hasNestedRow = true;
         }
       });
 
-      if (hasSeenRow) {
+      if (hasNestedRow) {
         renderedChildren[0] = React.cloneElement(renderedChildren[0], {
           children: (
             <>
@@ -222,16 +221,10 @@ const Row = React.forwardRef(
       return renderedChildren;
     }, [children, disabled, className, isExpanded, setIsExpanded]);
 
-    // Iterating over children twice because generated memoized values have different dependants
     const nestedRows = React.useMemo(() => {
-      let hasSeenFirstCell = false;
       const nestedRows: Array<React.ReactElement> = [];
 
       React.Children.forEach(children, (child, index) => {
-        if (isComponentType(child, 'Cell') && !hasSeenFirstCell) {
-          hasSeenFirstCell = true;
-        }
-
         if (child != null && isComponentType(child, 'Row')) {
           nestedRows.push(
             React.cloneElement(child, {
@@ -270,12 +263,13 @@ const Row = React.forwardRef(
       className,
     );
 
-    const ariaExpanded =
-      nestedRows.length > 0
-        ? {
-            ['aria-expanded']: isExpanded,
-          }
-        : undefined;
+    const rowHasNestedRows = nestedRows?.length > 0;
+
+    const ariaExpanded = rowHasNestedRows
+      ? {
+          ['aria-expanded']: isExpanded,
+        }
+      : undefined;
 
     return (
       <>
@@ -298,7 +292,7 @@ const Row = React.forwardRef(
             {(state: string) => {
               return (
                 <>
-                  {nestedRows?.map(element =>
+                  {nestedRows.map(element =>
                     React.cloneElement(element, {
                       className: cx(transitionStyles.default, {
                         [transitionStyles.entered]: [
