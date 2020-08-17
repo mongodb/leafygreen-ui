@@ -26,8 +26,11 @@ export const Variant = {
 
 export type Variant = typeof Variant[keyof typeof Variant];
 
-const wrapperStyle = css`
+const wrapperStyleAnimated = css`
   transition: 300ms opacity ease-in-out;
+`;
+
+const wrapperStyle = css`
   height: ${height}px;
   width: ${height}px;
   display: inline-block;
@@ -70,8 +73,11 @@ const wrapperStyleChecked = css`
   opacity: 1;
 `;
 
-const checkboxStyleChecked = css`
+const checkboxStyleAnimated = css`
   transition: 500ms transform steps(29);
+`;
+
+const checkboxStyleChecked = css`
   transform: translate3d(${-width + height}px, 0, 0);
 `;
 
@@ -129,6 +135,7 @@ interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   bold: boolean;
+  animate?: boolean;
 }
 
 export default class Checkbox extends PureComponent<CheckboxProps> {
@@ -144,6 +151,7 @@ export default class Checkbox extends PureComponent<CheckboxProps> {
     onChange: PropTypes.func,
     bold: PropTypes.bool,
     id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    animate: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -220,6 +228,7 @@ export default class Checkbox extends PureComponent<CheckboxProps> {
     const {
       name = checkboxId,
       checked = this.state.checked,
+      animate = true,
       className,
       style,
       label,
@@ -313,11 +322,13 @@ export default class Checkbox extends PureComponent<CheckboxProps> {
           {...checkboxWrapper.prop}
           className={cx(wrapperStyle, {
             [wrapperStyleChecked]: checked && !indeterminate && !disabled,
+            [wrapperStyleAnimated]: animate && !indeterminate && !disabled,
           })}
         >
           <div
             className={cx(checkboxStyle, checkboxBackgroundImage, {
               [checkboxStyleChecked]: checked && !indeterminate && !disabled,
+              [checkboxStyleAnimated]: animate && !indeterminate && !disabled,
             })}
           />
         </div>
