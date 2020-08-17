@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 7.0.0
+
+### Major Changes
+
+- ab4c074: Removed redundant aria-label from the icon that is already on the button
+
 ## 6.1.4
 
 ### Patch Changes

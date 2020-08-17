@@ -1,5 +1,11 @@
 # @leafygreen-ui/checkbox
 
+## 4.1.0
+
+### Minor Changes
+
+- 7605c17: Add prop to disable animations
+
 ## 4.0.4
 
 ### Patch Changes
