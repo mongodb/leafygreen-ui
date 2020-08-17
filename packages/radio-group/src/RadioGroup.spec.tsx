@@ -1,123 +1,138 @@
 import React from 'react';
-import { render, fireEvent, cleanup } from '@testing-library/react';
-import { typeIs } from '@leafygreen-ui/lib';
-import RadioGroup from './RadioGroup';
-import Radio from './Radio';
+import { render, fireEvent, screen } from '@testing-library/react';
+import { RadioGroup, Radio } from '.';
 
-afterAll(cleanup);
-
-describe('packages/RadioGroup', () => {
-  const className = 'test-radiogroup-class';
-  const { container } = render(
-    <RadioGroup className={className} value="1">
-      <Radio value="1">Radio Button 1</Radio>
+const renderControlledRadioGroup = props => {
+  render(
+    <RadioGroup value="input-1" {...props}>
+      <Radio value="input-1">Input 1</Radio>
+      <Radio value="input-2">Input 2</Radio>
+      <Radio value="input-3">Input 3</Radio>
     </RadioGroup>,
   );
+};
 
-  const controlledContainer = container.firstChild;
-
-  if (!typeIs.element(controlledContainer)) {
-    throw new Error('Could not find controlled container component');
-  }
-
-  test(`renders "${className}" in the container labels classList`, () => {
-    expect(controlledContainer.classList.contains(className)).toBe(true);
-  });
-});
-
-describe('when controlled', () => {
-  const controlledOnChange = jest.fn();
-
-  const { container } = render(
-    <RadioGroup value="1" onChange={controlledOnChange}>
-      <Radio value="1">Radio Button 1</Radio>
-      <Radio value="2">Radio Button 2</Radio>
+const renderUncontrolledRadioGroup = props => {
+  render(
+    <RadioGroup {...props}>
+      <Radio default value="input-1">
+        Input 1
+      </Radio>
+      <Radio value="input-2">Input 2</Radio>
+      <Radio value="input-3">Input 3</Radio>
     </RadioGroup>,
   );
+};
 
-  const controlledContainer = container.firstChild;
+const renderRadio = props => {
+  const { getByTestId } = render(
+    <Radio {...props} data-testid="lg-radio" value="input-only" />,
+  );
+  const radio = getByTestId('lg-radio');
+  return { radio };
+};
 
-  if (!typeIs.element(controlledContainer)) {
-    throw new Error('Could not find controlled container component');
-  }
+describe('packages/radio-group', () => {
+  describe('when the RadioGroup is controlled', () => {
+    let onChange;
 
-  const firstInput = controlledContainer.children[0].firstChild;
-  const secondInput = controlledContainer.children[1].firstChild;
+    beforeEach(() => {
+      onChange = jest.fn();
+    });
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
 
-  if (!typeIs.input(firstInput)) {
-    throw new Error('Could not find the first radio input element');
-  }
+    test('initial value set by RadioGroup when prop provided', () => {
+      renderControlledRadioGroup();
+      const firstInput = screen.getAllByRole('radio')[0];
+      expect(firstInput.getAttribute('aria-checked')).toBe('true');
+    });
 
-  if (!typeIs.input(secondInput)) {
-    throw new Error('Could not find the second radio input element');
-  }
+    test('onChange fires once when the label is clicked', () => {
+      renderControlledRadioGroup({ onChange });
+      const secondInput = screen.getAllByRole('radio')[1];
+      fireEvent.click(secondInput);
+      expect(onChange).toHaveBeenCalledTimes(1);
+    });
 
-  fireEvent.click(secondInput);
+    test('Radio does not become checked when clicked', () => {
+      renderControlledRadioGroup();
+      const firstInput = screen.getAllByRole('radio')[0];
+      const secondInput = screen.getAllByRole('radio')[1];
+      fireEvent.click(secondInput);
 
-  test(`initial value set by radio group when prop provided`, () => {
-    expect(firstInput.checked).toBe(true);
-    expect(firstInput.getAttribute('aria-checked')).toBe('true');
+      expect(firstInput.getAttribute('aria-checked')).toBe('true');
+      expect(secondInput.getAttribute('aria-checked')).toBe('false');
+    });
   });
 
-  test('onChange fires once when the label is clicked', () => {
-    expect(controlledOnChange.mock.calls.length).toBe(1);
+  describe('when the RadioGroup is uncontrolled', () => {
+    let onChange;
+
+    beforeEach(() => {
+      onChange = jest.fn();
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    test('renders the className to the RadioGroup container when the prop is set', () => {
+      const className = 'test-className';
+      renderUncontrolledRadioGroup({ className });
+      const container = screen.getByRole('group');
+      expect(container.classList.contains(className)).toBe(true);
+    });
+
+    test('renders the name in the "aria-label" field of the RadioGroup container', () => {
+      const name = 'test-name';
+      renderUncontrolledRadioGroup({ name });
+      const container = screen.getByRole('group');
+      expect(container.getAttribute('aria-label')).toBe(name);
+    });
+
+    test('sets Radio as checked by default when the "default" prop is passed', () => {
+      renderUncontrolledRadioGroup();
+      const firstInput = screen.getAllByRole('radio')[0];
+      expect(firstInput.getAttribute('aria-checked')).toBe('true');
+    });
+
+    test('onChange fires once when the label is clicked', () => {
+      renderUncontrolledRadioGroup({ onChange });
+      const secondInput = screen.getAllByRole('radio')[1];
+      fireEvent.click(secondInput);
+      expect(onChange).toHaveBeenCalledTimes(1);
+    });
+
+    test('Radio becomes checked when clicked', () => {
+      renderUncontrolledRadioGroup();
+      const firstInput = screen.getAllByRole('radio')[0];
+      const secondInput = screen.getAllByRole('radio')[1];
+      fireEvent.click(secondInput);
+
+      expect(firstInput.getAttribute('aria-checked')).toBe('false');
+      expect(secondInput.getAttribute('aria-checked')).toBe('true');
+    });
   });
 
-  test('radio button does not become checked when clicked', () => {
-    expect(secondInput.checked).toBe(false);
-  });
-});
+  describe('packages/radio', () => {
+    const className = 'radio-className';
+    test(`renders "${className}" in the labels's class list`, () => {
+      const { radio } = renderRadio({ className });
+      const label = radio.parentNode;
+      expect(label.classList.contains(className)).toBe(true);
+    });
 
-describe('when uncontrolled', () => {
-  const uncontrolledOnChange = jest.fn();
-  const uncontrolledContainer = render(
-    <RadioGroup onChange={uncontrolledOnChange}>
-      <Radio value="option-1">Radio Button 1</Radio>
-    </RadioGroup>,
-  ).container.firstChild;
+    test(`renders disabled radio when disabled prop is set`, () => {
+      const { radio } = renderRadio({ disabled: true });
+      expect((radio as HTMLInputElement).disabled).toBe(true);
+      expect(radio.getAttribute('aria-disabled')).toBe('true');
+    });
 
-  if (!typeIs.element(uncontrolledContainer)) {
-    throw new Error('Could not find uncontrolled container component');
-  }
-
-  const radioLabel = uncontrolledContainer.firstChild;
-
-  if (!typeIs.element(radioLabel)) {
-    throw new Error('Could not find the label element');
-  }
-
-  const radio = radioLabel.firstChild;
-
-  if (!typeIs.input(radio)) {
-    throw new Error('Could not find the radio input element');
-  }
-
-  fireEvent.click(radioLabel);
-
-  test('onChange fires once when the label is clicked', () => {
-    expect(uncontrolledOnChange.mock.calls.length).toBe(1);
-  });
-
-  test('radio button becomes checked when clicked', () => {
-    expect(radio.checked).toBe(true);
-  });
-
-  describe('and the default prop is set', () => {
-    const uncontrolledContainer = render(
-      <RadioGroup onChange={uncontrolledOnChange}>
-        <Radio value="option-1">Radio Button 1</Radio>
-        <Radio default value="option-2">
-          Radio Button 1
-        </Radio>
-      </RadioGroup>,
-    ).container.firstChild;
-
-    const defaultRadio =
-      uncontrolledContainer &&
-      (uncontrolledContainer as HTMLElement).children[1].firstChild;
-
-    test('radio button is checked when default prop is set', () => {
-      expect((defaultRadio as HTMLInputElement).checked).toBe(true);
+    test(`radio is checked when value is set`, () => {
+      const { radio } = renderRadio({ checked: true });
+      expect(radio.getAttribute('aria-checked')).toBe('true');
     });
   });
 });

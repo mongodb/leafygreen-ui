@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 4.0.1
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+
 ## 4.0.0
 
 ### Major Changes

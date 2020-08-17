@@ -1,4 +1,4 @@
 import Radio from './Radio';
 import RadioGroup from './RadioGroup';
-import Variant from './Variant';
-export { Radio, RadioGroup, Variant };
+import { Variant, Size } from './types';
+export { Radio, RadioGroup, Variant, Size };
