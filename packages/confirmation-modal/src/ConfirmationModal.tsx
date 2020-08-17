@@ -1,10 +1,17 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css } from '@leafygreen-ui/emotion';
-import Button from '@leafygreen-ui/button';
+import Button, { Variant as ButtonVariant } from '@leafygreen-ui/button';
 import Modal, { Footer } from '@leafygreen-ui/modal';
 import { uiColors } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
+
+export const Variant = {
+  Default: ButtonVariant.Primary,
+  Danger: ButtonVariant.Danger,
+} as const;
+
+export type Variant = typeof Variant[keyof typeof Variant];
 
 const titleStyle = css`
   color: ${uiColors.gray.dark2};
@@ -35,14 +42,27 @@ const textEntryInputStyle = css`
   margin-top: 14px;
 `;
 
+const buttonStyle = css`
+  margin: 0 2px;
+
+  :first-of-type {
+    margin: 0 0 0 2px;
+  }
+
+  :last-of-type {
+    margin: 0 2px 0 0;
+  }
+`;
+
 interface ConfirmationModalProps {
   title: string;
   children: React.ReactNode;
   open?: boolean;
-  onClose?: (confirmed: boolean) => void;
+  onConfirm?: () => void;
+  onCancel?: () => void;
   className?: string;
   buttonText: string;
-  dangerous?: boolean;
+  variant?: Variant;
   requiredInputText?: string;
 }
 
@@ -51,8 +71,9 @@ const ConfirmationModal = ({
   title,
   requiredInputText,
   buttonText,
-  dangerous = false,
-  onClose,
+  variant = Variant.Default,
+  onConfirm,
+  onCancel,
   ...modalProps
 }: ConfirmationModalProps) => {
   const [confirmEnabled, setConfirmEnabled] = useState(!requiredInputText);
@@ -81,11 +102,7 @@ const ConfirmationModal = ({
   }, [requiredInputText]);
 
   return (
-    <Modal
-      {...modalProps}
-      contentClassName={baseModalStyle}
-      setOpen={() => onClose?.(false)}
-    >
+    <Modal {...modalProps} contentClassName={baseModalStyle} setOpen={onCancel}>
       <div className={contentStyle}>
         <div className={titleStyle}>{title}</div>
         {children}
@@ -93,13 +110,16 @@ const ConfirmationModal = ({
       </div>
       <Footer>
         <Button
-          variant={dangerous ? 'danger' : 'primary'}
+          variant={variant}
           disabled={!confirmEnabled}
-          onClick={() => onClose?.(true)}
+          onClick={onConfirm}
+          className={buttonStyle}
         >
           {buttonText}
         </Button>
-        <Button onClick={() => onClose?.(false)}>Cancel</Button>
+        <Button onClick={onCancel} className={buttonStyle}>
+          Cancel
+        </Button>
       </Footer>
     </Modal>
   );
@@ -110,11 +130,12 @@ ConfirmationModal.displayName = 'ConfirmationModal';
 ConfirmationModal.propTypes = {
   title: PropTypes.string.isRequired,
   open: PropTypes.bool,
-  onClose: PropTypes.func,
+  onConfirm: PropTypes.func,
+  onCancel: PropTypes.func,
   children: PropTypes.node,
   className: PropTypes.string,
   buttonText: PropTypes.string,
-  dangerous: PropTypes.bool,
+  variant: PropTypes.oneOf(Object.values(Variant)),
   requiredInputText: PropTypes.string,
 };
 

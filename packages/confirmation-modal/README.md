@@ -31,6 +31,7 @@ function ExampleComponent() {
       <button onClick={() => setOpen(!open)}>Open Modal</button>
       <ConfirmationModal
         open={open}
+        onConfirm={() => setOpen(false)}
         onClose={() => setOpen(false)}
         title="Confirm Title Here"
         buttonText="Confirm"
@@ -126,13 +127,14 @@ function ExampleComponent() {
 
 ## Properties
 
-| Prop                | Type       | Description                                                                                                                                                                         | Default    |
-| ------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| `open`              | `boolean`  | Determines open state of `Modal` component                                                                                                                                          | `false`    |
-| `onClose`           | `function` | Callback that can be used to set the modal to be closed. The first argument is `true` if the modal was closed via the confirmation button and `false` if closed by any other means. | `() => {}` |
-| `title`             | `string`   | Title text to display above the main content text.                                                                                                                                  |            |
-| `children`          | `node`     | Children that will be rendered inside `<ConfirmationModal />` component.                                                                                                            |            |
-| `buttonText`        | `string`   | Text content of the confirmation button.                                                                                                                                            |            |
-| `dangerous`         | `boolean`  | Whether the confirmation button should visually indicate a dangerous action.                                                                                                        | `false`    |
-| `requiredInputText` | `string`   | If provided, a text prompt will be displayed and the confirmation button will be disabled until the text prompt is filled out with the required text.                               |            |
-| `className`         | `string`   | Style to be applied to the container's root node.                                                                                                                                   |            |
+| Prop                | Type                    | Description                                                                                                                                           | Default     |
+| ------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `open`              | `boolean`               | Determines open state of `Modal` component                                                                                                            | `false`     |
+| `onConfirm`         | `function`              | Callback that fires when the action is confirmed. This can be used to set the modal to be closed.                                                     | `() => {}`  |
+| `onCancel`          | `function`              | Callback that fires when the cancel button, x button, or backdrop is clicked. This can be used to set the modal to be closed.                         | `() => {}`  |
+| `title`             | `string`                | Title text to display above the main content text.                                                                                                    |             |
+| `children`          | `node`                  | Children that will be rendered inside `<ConfirmationModal />` component.                                                                              |             |
+| `buttonText`        | `string`                | Text content of the confirmation button.                                                                                                              |             |
+| `variant`           | `'default'`, `'danger'` | Sets the style variant.                                                                                                                               | `'default'` |
+| `requiredInputText` | `string`                | If provided, a text prompt will be displayed and the confirmation button will be disabled until the text prompt is filled out with the required text. |             |
+| `className`         | `string`                | Style to be applied to the container's root node.                                                                                                     |             |
