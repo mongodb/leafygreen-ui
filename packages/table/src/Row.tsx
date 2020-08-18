@@ -224,9 +224,9 @@ const Row = React.forwardRef(
     }, [children, disabled, className, isExpanded, setIsExpanded]);
 
     const nestedRows = React.useMemo(() => {
-      // if (!isExpanded) {
-      //   return null;
-      // }
+      if (!isExpanded) {
+        return null;
+      }
 
       const nestedRows: Array<React.ReactElement> = [];
 
@@ -289,13 +289,11 @@ const Row = React.forwardRef(
         >
           {renderedChildren}
         </tr>
-        {isExpanded && nestedRows && nestedRows.length > 0 && (
+        {nestedRows && nestedRows.length > 0 && (
           <Transition
             in={isExpanded && !isAnyAncestorCollapsedProp}
             timeout={150}
             nodeRef={nodeRef}
-            mountOnEnter
-            unmountOnExit
           >
             {(state: string) => {
               return (
