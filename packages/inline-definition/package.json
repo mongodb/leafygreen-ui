@@ -1,0 +1,18 @@
+
+  {
+    "name": "@leafygreen-ui/inline-definition",
+    "version": "0.9.0",
+    "description": "leafyGreen UI Kit Inline Definition",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+      "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
+    },
+    "license": "Apache-2.0",
+    "publishConfig": {
+      "access": "public"
+    },
+    "dependencies": {
+      "@leafygreen-ui/lib": "^5.0.0"
+    }
+  }
