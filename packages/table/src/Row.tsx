@@ -174,6 +174,7 @@ const Row = React.forwardRef(
           onClick={() => setIsExpanded(curr => !curr)}
           aria-label="chevron"
           className={iconButtonMargin}
+          key={`icon-button-${indexRef.current}`}
         >
           <Icon aria-label="chevron" color={uiColors.gray.dark2} />
         </IconButton>

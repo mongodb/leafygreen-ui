@@ -3,18 +3,11 @@ import HeaderRow from './HeaderRow';
 import TableHeader from './TableHeader';
 import { TableProps } from './Table';
 import { isComponentType } from '@leafygreen-ui/lib';
-import { useTableContext } from './TableContext';
 
 type TableHeaderProps<Shape> = Pick<TableProps<Shape>, 'columns'>;
 
 function TableHead<Shape>({ columns = [] }: TableHeaderProps<Shape>) {
   const usingHeaderRow = React.useRef(false);
-
-  const { state: columnInfo } = useTableContext();
-
-  if (!columnInfo) {
-    return null;
-  }
 
   function createCols(array: Array<React.ReactNode>): React.ReactNode {
     return array.map((child, index) => {
@@ -51,13 +44,15 @@ function TableHead<Shape>({ columns = [] }: TableHeaderProps<Shape>) {
       ? React.Children.toArray((columns as React.ReactElement).props.children)
       : (columns as Array<any>);
 
+  const cols = createCols(columnArray);
+
   if (usingHeaderRow.current) {
-    return <thead>{createCols(columnArray)}</thead>;
+    return <thead>{cols}</thead>;
   }
 
   return (
     <thead>
-      <HeaderRow>{createCols(columnArray)}</HeaderRow>
+      <HeaderRow>{cols}</HeaderRow>
     </thead>
   );
 }

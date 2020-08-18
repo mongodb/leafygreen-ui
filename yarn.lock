@@ -1600,6 +1600,15 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@leafygreen-ui/icon-button@^6.1.2":
+  version "6.1.4"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/icon-button/-/icon-button-6.1.4.tgz#23d6fb0d08afa585e8efc0fb03a4f8eb5a4e9308"
+  integrity sha512-nXD4iUbd7qT/SNeWx2aEHIDxkpLsltDQnDSw8LCDhwVut07ZjtncqKk9WPXkNO54MXs+VHvO740yIz7rhmAZ3A==
+  dependencies:
+    "@leafygreen-ui/emotion" "2.0.2"
+    "@leafygreen-ui/lib" "^5.1.1"
+    "@leafygreen-ui/palette" "2.0.2"
+
 "@leafygreen-ui/palette@2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/palette/-/palette-2.0.1.tgz#37b2982d80df7faaca0c7f3c473fb6636786da3c"
