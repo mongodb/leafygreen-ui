@@ -267,7 +267,7 @@ const Row = React.forwardRef(
       className,
     );
 
-    const rowHasNestedRows = nestedRows?.length > 0;
+    const rowHasNestedRows = nestedRows && nestedRows?.length > 0;
 
     const ariaExpanded = rowHasNestedRows
       ? {
