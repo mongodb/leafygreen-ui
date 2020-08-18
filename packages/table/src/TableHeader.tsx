@@ -87,8 +87,6 @@ function TableHeader({
 
   React.useEffect(() => {
     if (typeof index === 'number') {
-      // console.log(label, dispatch, index, dataType);
-
       dispatch({
         type: TableTypes.RegisterColumn,
         payload: {
