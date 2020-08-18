@@ -1,5 +1,17 @@
 # @leafygreen-ui/modal
 
+## 4.0.0
+
+### Major Changes
+
+- ab4c074: - Modals are now vertically centered by default.
+  - A new Footer component has been added.
+
+### Patch Changes
+
+- Updated dependencies [ab4c074]
+  - @leafygreen-ui/icon-button@7.0.0
+
 ## 3.1.5
 
 ### Patch Changes

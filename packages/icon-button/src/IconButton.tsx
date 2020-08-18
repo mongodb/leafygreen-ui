@@ -313,7 +313,6 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
         // Unsets the title within an icon since the button itself will have
         // aria-label or aria-labelledby set.
         newChildProps.title = false;
-        newChildProps['aria-label'] = ariaLabel || ariaLabelledBy;
       }
 
       return React.cloneElement(child, newChildProps);
