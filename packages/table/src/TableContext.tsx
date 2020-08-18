@@ -21,7 +21,6 @@ interface ActionPayload<T = {}> {
   [TableTypes.SortTableData]: {
     columnId: number;
     accessorValue: (data: any) => string;
-    data: Array<T>;
   };
 }
 
@@ -117,7 +116,7 @@ export function reducer(state: State, action: Action): State {
           accessorValue: action.payload.accessorValue,
         },
         data: sortFunction({
-          data: action.payload.data,
+          data: state.data,
           direction: state.sort?.direction === 'desc' ? 'asc' : 'desc',
           accessorValue: action.payload.accessorValue,
         }),

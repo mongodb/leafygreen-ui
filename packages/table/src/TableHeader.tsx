@@ -81,12 +81,14 @@ function TableHeader({
   ...rest
 }: TableHeaderProps) {
   const {
-    state: { sort, data },
+    state: { sort },
     dispatch,
   } = useTableContext();
 
   React.useEffect(() => {
     if (typeof index === 'number') {
+      // console.log(label, dispatch, index, dataType);
+
       dispatch({
         type: TableTypes.RegisterColumn,
         payload: {
@@ -96,7 +98,7 @@ function TableHeader({
         },
       });
     }
-  }, [dispatch, index, dataType]);
+  }, []);
 
   const normalizedAccessor = sortBy && normalizeAccessor(sortBy);
 
@@ -117,7 +119,6 @@ function TableHeader({
         payload: {
           columnId: index,
           accessorValue: normalizedAccessor,
-          data,
         },
       });
     }

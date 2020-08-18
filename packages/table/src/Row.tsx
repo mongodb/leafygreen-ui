@@ -74,7 +74,7 @@ const transitionStyles = {
   `,
 };
 
-function styleColumn(index: string, dataType: DataType) {
+function styleColumn(index: string, dataType?: DataType) {
   let justify;
 
   if (dataType === DataType.Number) {
@@ -222,6 +222,10 @@ const Row = React.forwardRef(
     }, [children, disabled, className, isExpanded, setIsExpanded]);
 
     const nestedRows = React.useMemo(() => {
+      if (!isExpanded) {
+        return null;
+      }
+
       const nestedRows: Array<React.ReactElement> = [];
 
       React.Children.forEach(children, (child, index) => {
@@ -250,7 +254,7 @@ const Row = React.forwardRef(
 
     const alignmentStyles = Object.entries(
       columnInfo,
-    ).map(([key, { dataType }]) => styleColumn(key, dataType!));
+    ).map(([key, { dataType }]) => styleColumn(key, dataType));
 
     const rowClassName = cx(
       rowStyle,
