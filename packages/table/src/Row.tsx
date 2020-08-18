@@ -287,11 +287,13 @@ const Row = React.forwardRef(
         >
           {renderedChildren}
         </tr>
-        {nestedRows && nestedRows.length > 0 && (
+        {isExpanded && nestedRows && nestedRows.length > 0 && (
           <Transition
             in={isExpanded && !isAnyAncestorCollapsedProp}
             timeout={150}
             nodeRef={nodeRef}
+            mountOnEnter
+            unmountOnExit
           >
             {(state: string) => {
               return (
