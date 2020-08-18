@@ -27,6 +27,8 @@ const altColor = css`
 `;
 
 const iconButtonMargin = css`
+  flex-grow: 1;
+  flex-shrink: 0;
   margin-right: 4px;
 `;
 
@@ -174,7 +176,6 @@ const Row = React.forwardRef(
           onClick={() => setIsExpanded(curr => !curr)}
           aria-label="chevron"
           className={iconButtonMargin}
-          key={`icon-button-${indexRef.current}`}
         >
           <Icon aria-label="chevron" color={uiColors.gray.dark2} />
         </IconButton>
@@ -223,9 +224,9 @@ const Row = React.forwardRef(
     }, [children, disabled, className, isExpanded, setIsExpanded]);
 
     const nestedRows = React.useMemo(() => {
-      if (!isExpanded) {
-        return null;
-      }
+      // if (!isExpanded) {
+      //   return null;
+      // }
 
       const nestedRows: Array<React.ReactElement> = [];
 
