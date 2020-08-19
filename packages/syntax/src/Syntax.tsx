@@ -61,14 +61,17 @@ function Syntax({
 
   const codeWrapperSharedProps = { language, variant, ...rest };
 
-  if (language === Language.None) {
+  const highlightedContent = useMemo(() => {
+    if (language === Language.None) {
+      return null;
+    }
+
+    return hljs.highlight(language, children);
+  }, [language, children]);
+
+  if (highlightedContent === null) {
     return <CodeWrapper {...codeWrapperSharedProps}>{children}</CodeWrapper>;
   }
-
-  const highlightedContent = useMemo(() => hljs.highlight(language, children), [
-    language,
-    children,
-  ]);
 
   if (showLineNumbers) {
     return (
