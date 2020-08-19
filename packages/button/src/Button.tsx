@@ -175,24 +175,24 @@ const buttonVariants: { readonly [K in Variant]: string } = {
 
 const buttonSizes: Record<Size, string> = {
   [Size.XSmall]: css`
-    min-height: 22px;
+    height: 22px;
     font-size: 11px;
     text-transform: uppercase;
     font-weight: bold;
   `,
 
   [Size.Small]: css`
-    min-height: 25px;
+    height: 25px;
     font-size: 14px;
   `,
 
   [Size.Normal]: css`
-    min-height: 32px;
+    height: 32px;
     font-size: 14px;
   `,
 
   [Size.Large]: css`
-    min-height: 45px;
+    height: 45px;
     font-size: 16px;
   `,
 } as const;
@@ -354,17 +354,13 @@ const Button: ExtendableBox<BaseButtonProps, 'button'> = React.forwardRef(
       flex-grow: 1;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
     `;
 
     const modifiedGlyph =
       glyph && children
         ? React.cloneElement(glyph, {
-            className: cx(
-              css`
-                flex-shrink: 0;
-              `,
-              { [glyphMargins[size]]: glyph != null },
-            ),
+            className: cx({ [glyphMargins[size]]: glyph != null }),
           })
         : glyph;
 

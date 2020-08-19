@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { LGGlyph } from './types';
+
+const flexShrink = css`
+  flex-shrink: 0;
+`;
 
 export const Size = {
   Small: 'small',
@@ -22,10 +27,10 @@ type GlyphObject = Record<string, LGGlyph.Component>;
 export default function createIconComponent<
   G extends GlyphObject = GlyphObject
 >(glyphs: G) {
-  const Icon = ({ glyph, ...rest }: IconProps) => {
+  const Icon = ({ glyph, className, ...rest }: IconProps) => {
     const SVGComponent = glyphs[glyph];
 
-    return <SVGComponent {...rest} />;
+    return <SVGComponent className={cx(flexShrink, className)} {...rest} />;
   };
 
   Icon.displayName = 'Icon';
