@@ -47,6 +47,10 @@ function renderTooltip(
   return { ...utils, button, backdrop };
 }
 
+beforeEach(() => {
+  onClick.mockReset();
+});
+
 describe('packages/tooltip', () => {
   describe('when uncontrolled', () => {
     test(`renders a button to the DOM with ${buttonText}`, () => {
@@ -240,7 +244,7 @@ describe('packages/tooltip', () => {
       expect(getByTestId(tooltipTestId)).toBeVisible();
     });
 
-    test(' onClick fires when trigger is clicked', () => {
+    test('onClick fires when trigger is clicked', () => {
       const { button } = renderTooltip({
         open: true,
         setOpen,
@@ -250,19 +254,37 @@ describe('packages/tooltip', () => {
       expect(onClick).toHaveBeenCalled();
     });
 
-    test('clicking content inside of tooltip does not force tooltip to close', () => {
-      const { button, getByTestId } = renderTooltip({
-        open: true,
-        setOpen,
-      });
+    describe('clicking content inside of tooltip does not force tooltip to close', () => {
+      function testCase(name: string, usePortal: boolean): void {
+        test(name, () => {
+          const { button, getByTestId } = renderTooltip({
+            open: true,
+            setOpen,
+            usePortal,
+          });
 
-      fireEvent.click(button);
+          fireEvent.click(button);
 
-      const tooltip = getByTestId(tooltipTestId);
-      expect(tooltip).toBeVisible();
+          const tooltip = getByTestId(tooltipTestId);
+          expect(tooltip).toBeVisible();
 
-      fireEvent.click(tooltip);
-      expect(tooltip).toBeVisible();
+          onClick.mockClear();
+
+          let clickTarget = tooltip;
+
+          while (![document.body, button].includes(clickTarget)) {
+            fireEvent.click(clickTarget);
+
+            expect(tooltip).toBeVisible();
+            expect(onClick).not.toHaveBeenCalled();
+
+            clickTarget = clickTarget.parentElement;
+          }
+        });
+      }
+
+      testCase('with portal', true);
+      testCase('without portal', false);
     });
   });
 
