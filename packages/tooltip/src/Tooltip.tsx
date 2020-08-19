@@ -178,6 +178,8 @@ export type TooltipProps = Omit<
 
 const idAllocator = IdAllocator.create('tooltip');
 
+const stopClickPropagation = (evt: React.MouseEvent) => evt.stopPropagation();
+
 /**
  * # Tooltip
  *
@@ -310,6 +312,7 @@ function Tooltip({
       justify={justify}
       adjustOnMutation={true}
       spacing={12}
+      onClick={stopClickPropagation}
       {...portalProps}
     >
       {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
