@@ -6,6 +6,7 @@ import {
   useElementNode,
   useViewportSize,
   usePoller,
+  usePrevious,
 } from './index';
 
 describe('packages/hooks', () => {
@@ -294,6 +295,26 @@ describe('packages/hooks', () => {
 
       // immediate triggers the pollHandler
       expect(pollHandler).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('usePrevious', () => {
+    test('always returns value from previous render', () => {
+      const { rerender, result } = renderHook(
+        (props: number) => usePrevious(props),
+        { initialProps: 42 },
+      );
+
+      expect(result.current).toEqual(undefined);
+
+      rerender(2020);
+      expect(result.current).toEqual(42);
+
+      rerender();
+      expect(result.current).toEqual(2020);
+
+      rerender();
+      expect(result.current).toEqual(2020);
     });
   });
 });
