@@ -8,8 +8,8 @@ import TableHead from './TableHead';
 import TableBody from './TableBody';
 
 // Fix Icons
-// Add test for adding data
 // Fix typing for data
+// Fix typings all around
 
 const tableStyles = css`
   border-collapse: collapse;
@@ -25,9 +25,10 @@ interface TableRowInterface<Shape = {}> {
 export interface TableProps<Shape>
   extends React.ComponentPropsWithoutRef<'table'> {
   data: Array<Shape>;
-  columns:
-    | Array<React.ReactElement<HeaderRowProps | TableHeaderProps> | string>
-    | React.ReactFragment;
+  columns: Array<
+    React.ReactElement<HeaderRowProps | TableHeaderProps> | string
+  >;
+
   children: (TableRowArgs: TableRowInterface<Shape>) => JSX.Element;
 }
 

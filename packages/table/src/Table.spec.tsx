@@ -16,7 +16,7 @@ const defaultColumns = [
   <TableHeader key="name" label="Name" />,
   <TableHeader key="age" label="Age" />,
   <TableHeader key="color" label="Color" />,
-  'Location',
+  <TableHeader key="location" label="Location" />,
 ];
 
 function renderTable(props: Props = {}) {
@@ -58,14 +58,14 @@ describe('packages/table', () => {
     expect(alice).toBeVisible();
   });
 
-  test('it renders the data in descending order when the "sortable" prop is set, and the icon is clicked', () => {
+  test('it renders the data in descending order when the "sortBy" prop is set, and the icon is clicked', () => {
     renderTable({
       table: {
         columns: [
           <TableHeader key="name" label="Name" sortBy="name" />,
-          'Age',
-          'Color',
-          'Location',
+          <TableHeader key="age" label="Age" />,
+          <TableHeader key="color" label="Color" />,
+          <TableHeader key="location" label="Location" />,
         ],
       },
     });
@@ -167,14 +167,12 @@ describe('packages/table', () => {
     test('it formats columns that are passed in as a React.Fragment', () => {
       renderTable({
         table: {
-          columns: (
-            <>
-              <TableHeader key="name" label="name" />
-              <TableHeader key="age" label="age" />
-              <TableHeader key="color" label="color" />
-              <TableHeader key="location" label="location" />
-            </>
-          ),
+          columns: [
+            <TableHeader key="name" label="name" />,
+            <TableHeader key="age" label="age" />,
+            <TableHeader key="color" label="color" />,
+            <TableHeader key="location" label="location" />,
+          ],
         },
       });
       const headerRow = screen.getAllByTestId('leafygreen-ui-header-row');
@@ -188,14 +186,14 @@ describe('packages/table', () => {
       expect(sortableIcons).toStrictEqual([]);
     });
 
-    test('when the "sortable" prop is passed to a column, an icon is rendered', () => {
+    test('when the "sortBy" prop is passed to a column, an icon is rendered', () => {
       renderTable({
         table: {
           columns: [
             <TableHeader key="name" label="Name" sortBy={() => 'name'} />,
-            'Age',
-            'Color',
-            'Location',
+            <TableHeader key="age" label="Age" />,
+            <TableHeader key="color" label="Color" />,
+            <TableHeader key="location" label="Location" />,
           ],
         },
       });

@@ -1,6 +1,5 @@
 import React from 'react';
 import HeaderRow from './HeaderRow';
-import TableHeader from './TableHeader';
 import { TableProps } from './Table';
 import { isComponentType } from '@leafygreen-ui/lib';
 
@@ -30,21 +29,11 @@ function TableHead<Shape>({ columns = [] }: TableHeaderProps<Shape>) {
         return React.cloneElement(child, tableHeaderCommonProps);
       }
 
-      if (typeof child === 'string') {
-        return <TableHeader {...tableHeaderCommonProps} label={child} />;
-      }
-
       return child;
     });
   }
 
-  const columnArray: Array<React.ReactElement> =
-    // @ts-ignore Property 'type' does not exist on type '{}'.ts(2339)
-    columns.type === React.Fragment
-      ? React.Children.toArray((columns as React.ReactElement).props.children)
-      : (columns as Array<any>);
-
-  const cols = createCols(columnArray);
+  const cols = createCols(columns);
 
   if (usingHeaderRow.current) {
     return <thead>{cols}</thead>;

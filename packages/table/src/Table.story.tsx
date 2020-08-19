@@ -7,29 +7,32 @@ storiesOf('Table', module)
   .add('Default', () => (
     <Table
       data={testHeavierDataSet}
-      columns={
-        <>
-          <TableHeader
-            dataType={DataType.String}
-            label="Name"
-            key="name"
-            sortBy="name"
-          />
-          <TableHeader
-            dataType={DataType.Number}
-            label="Age"
-            key="age"
-            sortBy={data => data.age.first ?? data.age}
-          />
-          <TableHeader
-            dataType={DataType.String}
-            label="Favorite Color"
-            key="color"
-            sortBy={data => data.color.primary ?? data.color}
-          />
-          Location
-        </>
-      }
+      columns={[
+        <TableHeader
+          dataType={DataType.String}
+          label="Name"
+          key="name"
+          sortBy="name"
+        />,
+        <TableHeader
+          dataType={DataType.Number}
+          label="Age"
+          key="age"
+          sortBy={data => data.age.first ?? data.age}
+        />,
+        <TableHeader
+          dataType={DataType.String}
+          label="Favorite Color"
+          key="color"
+          sortBy={data => data.color.primary ?? data.color}
+        />,
+        <TableHeader
+          dataType={DataType.String}
+          label="Location"
+          key="location"
+          sortBy={data => data.location}
+        />,
+      ]}
     >
       {({ datum }) => (
         <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
@@ -85,8 +88,8 @@ storiesOf('Table', module)
         </HeaderRow>,
       ]}
     >
-      {({ datum }) => (
-        <Row key={datum.flavor}>
+      {({ datum, index }) => (
+        <Row key={`${datum.flavor}-${index}`}>
           <Cell rowSpan={datum.flavor === 'Funfetti' ? 2 : 1}>
             {datum.flavor}
           </Cell>
@@ -98,18 +101,17 @@ storiesOf('Table', module)
   .add('No nested Rows', () => (
     <Table
       data={defaultData}
-      columns={
-        <>
-          <TableHeader label="Name" dataType="string" />
-          <TableHeader label="Age" dataType="number" />
-          <TableHeader
-            label="Color"
-            sortBy={datum => datum.color.primary ?? datum.color}
-            dataType="string"
-          />
-          Location
-        </>
-      }
+      columns={[
+        <TableHeader key="name" label="Name" dataType="string" />,
+        <TableHeader key="age" label="Age" dataType="number" />,
+        <TableHeader
+          label="Color"
+          sortBy={datum => datum.color.primary ?? datum.color}
+          dataType="string"
+          key="color"
+        />,
+        <TableHeader key="location" label="Location" />,
+      ]}
     >
       {({ datum }) => (
         <Row key={datum.name} disabled={datum.name === 'Charlotte'}>

@@ -59,9 +59,12 @@ export function normalizeAccessor(accessor: string | Function) {
 
 interface TableHeaderInterface {
   label: React.ReactElement | string;
-  onClick?: (colId: number, accessorValue: (data: any) => string) => void;
+  onClick?: (
+    colId: number,
+    accessorValue: ((data: any) => string) | string,
+  ) => void;
   index?: number;
-  sortBy?: (data: any) => string | string;
+  sortBy?: ((data: any) => string) | string;
   dataType?: DataType;
 }
 
