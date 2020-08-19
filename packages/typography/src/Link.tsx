@@ -22,17 +22,16 @@ const linkStyles = css`
   }
 `;
 
-// 14px font-size 20px line height
+/// 1em = 14 + 4 = 18 + 2 = 20 (Body 14)
+/// 1em = 16 + 6 = 22 + 2 = 24 (Body 16)
+/// 1em = 18 + 4 = 22 + 2 = 24 (Subtitle)
+/// 1em = 32 + 6 = 38 + 2 = 40 (H2)
+/// 1em = 60 + 6 = 66 + 2 = 68 (H1)
 
-/// 1em = 14 + 4 = 18 + 2 = 20
-/// 1em = 16 + 6 = 22 + 2 = 24
-/// 1em = 18 + 6 = 22 + 2 = 24
-
-// LH - 1em - 2
+//// fontSize + maxSpace + borderThickness = lineHeight
 
 const underline = css`
   background-repeat: repeat-x;
-  background-position: 0 calc(1em + 4px);
   background-size: 2px 2px;
 
   ${anchorDataProp.selector}:hover & {
@@ -98,6 +97,7 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
 
   const size = useBaseFontSize();
   const fontSize = size === 16 ? typeScale2 : typeScale1;
+  const spacer = size === 16 ? 6 : 4;
 
   useEffect(() => {
     setCurrentHostname(window.location.hostname);
@@ -138,7 +138,16 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
       {...anchorDataProp.prop}
       {...rest}
     >
-      <span className={underline}>{children}</span>
+      <span
+        className={cx(
+          underline,
+          css`
+            background-position: 0 calc(1em + ${spacer}px);
+          `,
+        )}
+      >
+        {children}
+      </span>
       {icon}
     </Box>
   );
