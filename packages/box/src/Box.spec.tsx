@@ -27,7 +27,6 @@ const TestExtendableBoxWithButton: ExtendableBox<
   {},
   'button'
 > = (props: {}) => {
-  // @ts-expect-error
   return <Box {...props} />;
 };
 

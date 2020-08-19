@@ -128,8 +128,8 @@ describe('packages/hooks', () => {
     window.dispatchEvent(new Event('resize'));
     await act(waitForNextUpdate);
 
-    expect(result.current.height).toBe(initialHeight);
-    expect(result.current.width).toBe(initialWidth);
+    expect(result?.current?.height).toBe(initialHeight);
+    expect(result?.current?.width).toBe(initialWidth);
 
     const updateHeight = 768;
     const updateWidth = 1024;
@@ -140,8 +140,8 @@ describe('packages/hooks', () => {
     window.dispatchEvent(new Event('resize'));
     await act(waitForNextUpdate);
 
-    expect(result.current.height).toBe(updateHeight);
-    expect(result.current.width).toBe(updateWidth);
+    expect(result?.current?.height).toBe(updateHeight);
+    expect(result?.current?.width).toBe(updateWidth);
   });
 
   describe('usePoller', () => {
@@ -165,7 +165,7 @@ describe('packages/hooks', () => {
     });
 
     afterEach(() => {
-      delete mutableDocument.visibilityState;
+      mutableDocument.visibilityState = 'visible';
       jest.useRealTimers();
     });
 
