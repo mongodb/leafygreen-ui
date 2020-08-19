@@ -15,10 +15,12 @@ const WrappedModal = ({
   return (
     <MarketingModal
       title="Title text"
-      buttonText="Okay"
-      linkText="Cancel"
+      buttonText="Button action"
+      linkText="Link action"
       open={open}
+      onButtonClick={() => setOpen(false)}
       onClose={() => setOpen(false)}
+      onLinkClick={() => setOpen(false)}
       cover={<img alt="" src="" aria-label="Cover image" />}
       {...props}
     >
@@ -44,38 +46,50 @@ describe('packages/confirmation-modal', () => {
     expect(getByLabelText('Cover image')).toBeVisible();
     expect(getByText('Title text')).toBeVisible();
     expect(getByText('Content text')).toBeVisible();
-    expect(getByText('Okay')).toBeVisible();
-    expect(getByText('Cancel')).toBeVisible();
+    expect(getByText('Button action')).toBeVisible();
+    expect(getByText('Link action')).toBeVisible();
   });
 
-  test('fires `onClose` on confirmation', () => {
-    const clickSpy = jest.fn();
+  test('fires `onButtonClick` when button is clicked', () => {
+    const buttonClickSpy = jest.fn();
+    const linkClickSpy = jest.fn();
+    const closeSpy = jest.fn();
 
     const { getByText } = renderModal({
       open: true,
-      onClose: clickSpy,
+      onButtonClick: buttonClickSpy,
+      onLinkClick: linkClickSpy,
+      onClose: closeSpy,
     });
 
-    const button = getByText('Okay');
+    const button = getByText('Button action');
     expect(button).toBeVisible();
 
     fireEvent.click(button);
-    expect(clickSpy).toHaveBeenCalledTimes(1);
+    expect(buttonClickSpy).toHaveBeenCalledTimes(1);
+    expect(linkClickSpy).not.toHaveBeenCalled();
+    expect(closeSpy).not.toHaveBeenCalled();
   });
 
-  test('fires `onClose` on cancel', () => {
-    const clickSpy = jest.fn();
+  test('fires `onLinkClick` when link is clicked', () => {
+    const buttonClickSpy = jest.fn();
+    const linkClickSpy = jest.fn();
+    const closeSpy = jest.fn();
 
     const { getByText } = renderModal({
       open: true,
-      onClose: clickSpy,
+      onButtonClick: buttonClickSpy,
+      onLinkClick: linkClickSpy,
+      onClose: closeSpy,
     });
 
-    const button = getByText('Cancel');
+    const button = getByText('Link action');
     expect(button).toBeVisible();
 
     fireEvent.click(button);
-    expect(clickSpy).toHaveBeenCalledTimes(1);
+    expect(buttonClickSpy).not.toHaveBeenCalled();
+    expect(linkClickSpy).toHaveBeenCalledTimes(1);
+    expect(closeSpy).not.toHaveBeenCalled();
   });
 
   describe('closes when', () => {

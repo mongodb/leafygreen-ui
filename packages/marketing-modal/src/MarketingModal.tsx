@@ -76,7 +76,9 @@ interface MarketingModalProps {
   coverStyle?: 'default' | 'cover';
   children: React.ReactNode;
   open?: boolean;
-  onClose?: (confirmed: boolean) => void;
+  onButtonClick?: () => void;
+  onLinkClick?: () => void;
+  onClose?: () => void;
   className?: string;
   buttonText: string;
   linkText: string;
@@ -87,17 +89,15 @@ const MarketingModal = ({
   title,
   cover,
   coverStyle = 'default',
+  onButtonClick,
+  onLinkClick,
   onClose,
   buttonText,
   linkText,
   ...modalProps
 }: MarketingModalProps) => {
   return (
-    <Modal
-      {...modalProps}
-      contentClassName={baseModalStyle}
-      setOpen={() => onClose?.(false)}
-    >
+    <Modal {...modalProps} contentClassName={baseModalStyle} setOpen={onClose}>
       <div
         className={cx(baseCoverStyle, {
           [defaultCoverStyle]: coverStyle === 'default',
@@ -111,10 +111,10 @@ const MarketingModal = ({
         {children}
       </div>
       <div className={footerContentStyle}>
-        <Button variant="primary" onClick={() => onClose?.(true)}>
+        <Button variant="primary" onClick={onButtonClick}>
           {buttonText}
         </Button>
-        <Link tabIndex={0} onClick={() => onClose?.(false)} hideExternalIcon>
+        <Link tabIndex={0} onClick={onLinkClick} hideExternalIcon>
           {linkText}
         </Link>
       </div>
@@ -129,6 +129,8 @@ MarketingModal.propTypes = {
   cover: PropTypes.element.isRequired,
   coverStyle: PropTypes.oneOf(['default', 'cover']),
   open: PropTypes.bool,
+  onButtonClick: PropTypes.func,
+  onLinkClick: PropTypes.func,
   onClose: PropTypes.func,
   children: PropTypes.node,
   className: PropTypes.string,

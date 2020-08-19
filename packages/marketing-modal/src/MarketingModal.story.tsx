@@ -19,12 +19,9 @@ function Default() {
       <button onClick={() => setOpen(!open)}>Open Modal</button>
       <MarketingModal
         open={open}
-        onClose={confirmed => {
-          setOpen(false);
-          if (confirmed) {
-            alert('Confirmed!');
-          }
-        }}
+        onButtonClick={() => setOpen(false)}
+        onLinkClick={() => setOpen(false)}
+        onClose={() => setOpen(false)}
         title="Introducing New Feature!"
         cover={
           coverStyle === 'default' ? (

@@ -29,6 +29,8 @@ function Example() {
       <button onClick={() => setOpen(!open)}>Open Modal</button>
       <MarketingModal
         open={open}
+        onButtonClick={() => setOpen(false)}
+        onLinkClick={() => setOpen(false)}
         onClose={() => setOpen(false)}
         title="Introducing New Feature!"
         cover={
@@ -106,14 +108,15 @@ function Example() {
 
 ## Properties
 
-| Prop         | Type                           | Description                                                                                                                                                                         | Default     |
-| ------------ | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `open`       | `boolean`                      | Determines open state of `Modal` component                                                                                                                                          | `false`     |
-| `onClose`    | `function`                     | Callback that can be used to set the modal to be closed. The first argument is `true` if the modal was closed via the confirmation button and `false` if closed by any other means. | `() => {}`  |
-| `title`      | `string`                       | Title text to display above the main content text.                                                                                                                                  |             |
-| `cover`      | `JSX.IntrinsicElements['img']` | Image element to be used as the cover image of the modal.                                                                                                                           |             |
-| `coverStyle` | `'default'`, `'cover'`         | Determines how the `cover` image should be displayed in the modal.                                                                                                                  | `'default'` |
-| `children`   | `node`                         | Children that will be rendered inside `<ConfirmationModal />` component.                                                                                                            |             |
-| `buttonText` | `string`                       | Text content of the confirmation button.                                                                                                                                            |             |
-| `linkText`   | `string`                       | Text content of the alternate action link.                                                                                                                                          |             |
-| `className`  | `string`                       | Style to be applied to the container's root node.                                                                                                                                   |             |
+| Prop            | Type                           | Description                                                                                                                   | Default     |
+| --------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `open`          | `boolean`                      | Determines open state of `Modal` component                                                                                    | `false`     |
+| `onButtonClick` | `function`                     | Callback that fires when the primary button is clicked. This can be used to set the modal to be closed.                       | `() => {}`  |
+| `onLinkClick`   | `function`                     | Callback that fires when the secondary link is clicked. This can be used to set the modal to be closed.                       | `() => {}`  |
+| `onClose`       | `function`                     | Callback that fires when the cancel button, x button, or backdrop is clicked. This can be used to set the modal to be closed. | `() => {}`  | `title` | `string` | Title text to display above the main content text. |  |
+| `cover`         | `JSX.IntrinsicElements['img']` | Image element to be used as the cover image of the modal.                                                                     |             |
+| `coverStyle`    | `'default'`, `'cover'`         | Determines how the `cover` image should be displayed in the modal.                                                            | `'default'` |
+| `children`      | `node`                         | Children that will be rendered inside `<ConfirmationModal />` component.                                                      |             |
+| `buttonText`    | `string`                       | Text content of the confirmation button.                                                                                      |             |
+| `linkText`      | `string`                       | Text content of the alternate action link.                                                                                    |             |
+| `className`     | `string`                       | Style to be applied to the container's root node.                                                                             |             |
