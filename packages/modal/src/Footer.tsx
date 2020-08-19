@@ -13,18 +13,6 @@ const footerStyle = css`
   flex-direction: row-reverse;
   padding: 16px 24px;
   border-top: 1px solid ${uiColors.gray.light2};
-
-  & > * {
-    margin: 0 2px;
-
-    &:first-child {
-      margin: 0 0 0 2px;
-    }
-
-    &:last-child {
-      margin: 0 2px 0 0;
-    }
-  }
 `;
 
 interface FooterProps {

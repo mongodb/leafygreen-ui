@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, text } from '@storybook/addon-knobs';
-import ConfirmationModal from '.';
+import ConfirmationModal, { Variant } from '.';
 
 function Confirm() {
   const [open, setOpen] = useState(false);
@@ -15,12 +15,8 @@ function Confirm() {
       <button onClick={() => setOpen(!open)}>Open Modal</button>
       <ConfirmationModal
         open={open}
-        onClose={confirmed => {
-          setOpen(false);
-          if (confirmed) {
-            alert('Confirmed!');
-          }
-        }}
+        onConfirm={() => setOpen(false)}
+        onCancel={() => setOpen(false)}
         title="Confirm Title Here"
         buttonText={buttonText}
         requiredInputText={requiredInputText}
@@ -34,7 +30,7 @@ function Confirm() {
   );
 }
 
-function Cancel() {
+function Delete() {
   const [open, setOpen] = useState(false);
   const buttonText = text('Primary action text', 'Confirm');
   const requiredInputText = boolean('Require confirmation', false)
@@ -46,15 +42,11 @@ function Cancel() {
       <button onClick={() => setOpen(!open)}>Open Modal</button>
       <ConfirmationModal
         open={open}
-        onClose={confirmed => {
-          setOpen(false);
-          if (confirmed) {
-            alert('Confirmed!');
-          }
-        }}
+        onConfirm={() => setOpen(false)}
+        onCancel={() => setOpen(false)}
         title="Delete Title Here"
         buttonText={buttonText}
-        dangerous
+        variant={Variant.Danger}
         requiredInputText={requiredInputText}
       >
         This is some description text, and it is extra long so it fills up this
@@ -68,4 +60,4 @@ function Cancel() {
 
 storiesOf('ConfirmationModal', module)
   .add('Confirm', () => <Confirm />)
-  .add('Delete', () => <Cancel />);
+  .add('Delete', () => <Delete />);

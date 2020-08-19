@@ -17,7 +17,8 @@ const WrappedModal = ({
       title="Title text"
       buttonText="Confirm"
       open={open}
-      onClose={() => setOpen(false)}
+      onConfirm={() => setOpen(false)}
+      onCancel={() => setOpen(false)}
       {...props}
     >
       {props.children ?? 'Content text'}
@@ -45,36 +46,40 @@ describe('packages/confirmation-modal', () => {
     expect(getByText('Cancel')).toBeVisible();
   });
 
-  test('fires `onClose` on confirmation', () => {
-    const clickSpy = jest.fn();
+  test('fires `onConfirm` on confirmation', () => {
+    const confirmSpy = jest.fn();
+    const cancelSpy = jest.fn();
 
     const { getByText } = renderModal({
       open: true,
-      onClose: clickSpy,
+      onConfirm: confirmSpy,
+      onCancel: cancelSpy,
     });
 
     const button = getByText('Confirm');
     expect(button).toBeVisible();
 
     fireEvent.click(button);
-    expect(clickSpy).toHaveBeenCalledTimes(1);
-    expect(clickSpy).toHaveBeenCalledWith(true);
+    expect(confirmSpy).toHaveBeenCalledTimes(1);
+    expect(cancelSpy).not.toHaveBeenCalled();
   });
 
-  test('fires `onClose` on cancel', () => {
-    const clickSpy = jest.fn();
+  test('fires `onCancel` on cancel', () => {
+    const confirmSpy = jest.fn();
+    const cancelSpy = jest.fn();
 
     const { getByText } = renderModal({
       open: true,
-      onClose: clickSpy,
+      onConfirm: confirmSpy,
+      onCancel: cancelSpy,
     });
 
     const button = getByText('Cancel');
     expect(button).toBeVisible();
 
     fireEvent.click(button);
-    expect(clickSpy).toHaveBeenCalledTimes(1);
-    expect(clickSpy).toHaveBeenCalledWith(false);
+    expect(confirmSpy).not.toHaveBeenCalled();
+    expect(cancelSpy).toHaveBeenCalledTimes(1);
   });
 
   describe('closes when', () => {

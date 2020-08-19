@@ -74,7 +74,7 @@ describe('packages/mongo-nav/on-element-click-provider', () => {
         navElement: el,
         testId: defaultElements[el as keyof typeof defaultElements],
         shouldNavigate: !['-dropdown', '-menu', 'menu-trigger'].some(suffix =>
-          defaultElements[el].endsWith(suffix),
+          defaultElements[el as keyof typeof defaultElements].endsWith(suffix),
         ),
       });
     });
