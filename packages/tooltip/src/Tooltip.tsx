@@ -372,6 +372,7 @@ Tooltip.propTypes = {
   trigger: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   triggerEvent: PropTypes.oneOf(Object.values(TriggerEvent)),
   variant: PropTypes.oneOf(Object.values(Variant)),
+  enabled: PropTypes.bool,
   open: PropTypes.bool,
   setOpen: PropTypes.func,
   id: PropTypes.string,

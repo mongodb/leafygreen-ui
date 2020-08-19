@@ -8,7 +8,7 @@ import SettingsIcon from '@leafygreen-ui/icon/dist/Settings';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
-import { useViewportSize } from '@leafygreen-ui/hooks';
+import { usePrevious, useViewportSize } from '@leafygreen-ui/hooks';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   Menu,
@@ -42,7 +42,7 @@ import {
 
 // mongo-select
 import Input from './Input';
-import { onKeyDown, usePrevious } from './selectHelpers';
+import { onKeyDown } from './selectHelpers';
 import { BaseMongoSelectProps } from './types';
 import {
   activeButtonStyle,

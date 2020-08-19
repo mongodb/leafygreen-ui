@@ -3,13 +3,13 @@ import { render, RenderResult } from '@testing-library/react';
 import { processToken, LineTableRow, treeToLines } from './renderingPlugin';
 
 describe('processToken()', () => {
-  test('when passed `null`, it retuns `null`', () => {
+  test('when passed `null`, it returns `null`', () => {
     expect(processToken(null)).toBeNull();
     expect(processToken(null, 0)).toBeNull();
     expect(processToken(null, 1)).toBeNull();
   });
 
-  test('when passed undefined, it retuns `null`', () => {
+  test('when passed undefined, it returns `null`', () => {
     expect(processToken(undefined)).toBeNull();
     expect(processToken(undefined, 0)).toBeNull();
     expect(processToken(undefined, 1)).toBeNull();
@@ -18,22 +18,26 @@ describe('processToken()', () => {
   test('when passed an Array, it returns an Array', () => {
     expect(processToken([])).toBeInstanceOf(Array);
     expect(
-      processToken([{ foo: 'bar' }, { hello: 'world' }], 0),
+      processToken(
+        [
+          { kind: 'hello', children: [] },
+          { kind: 'world', children: [] },
+        ],
+        0,
+      ),
     ).toBeInstanceOf(Array);
-    expect(processToken([null, null, null], 1)).toBeInstanceOf(Array);
+    expect(processToken(['hello', 'hello', 'hello'], 1)).toBeInstanceOf(Array);
   });
 
   test('when passed an object, it returns a React element', () => {
-    expect(React.isValidElement(processToken({}))).toBeTruthy();
-    expect(React.isValidElement(processToken({}, 0))).toBeTruthy();
-    expect(React.isValidElement(processToken({}, 1))).toBeTruthy();
-
-    expect(React.isValidElement(processToken({ kind: 'hello' }))).toBeTruthy();
     expect(
-      React.isValidElement(processToken({ kind: 'hello' }, 0)),
+      React.isValidElement(processToken({ kind: 'hello', children: [] })),
     ).toBeTruthy();
     expect(
-      React.isValidElement(processToken({ kind: 'hello' }, 1)),
+      React.isValidElement(processToken({ kind: 'hello', children: [] }, 0)),
+    ).toBeTruthy();
+    expect(
+      React.isValidElement(processToken({ kind: 'hello', children: [] }, 1)),
     ).toBeTruthy();
   });
 
@@ -44,8 +48,11 @@ describe('processToken()', () => {
   });
 
   test("when processToken is passed an argument that's not explicitly supported, it returns that value", () => {
+    // @ts-expect-error
     expect(processToken(false)).toBe(false);
+    // @ts-expect-error
     expect(processToken(false, 0)).toBe(false);
+    // @ts-expect-error
     expect(processToken(false, 1)).toBe(false);
   });
 });
@@ -181,6 +188,7 @@ describe('treeToLines()', () => {
 
   // eslint-disable-next-line jest/expect-expect
   test('when passed an invalid set of children, returns a valid Array', () => {
+    // @ts-expect-error
     treeToLines([...sampleChildren, null, 0]).forEach(validateLine);
   });
 

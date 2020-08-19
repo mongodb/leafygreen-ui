@@ -1,5 +1,22 @@
 # @leafygreen-ui/toggle
 
+## 3.0.4
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/palette@2.0.2
+
+## 3.0.3
+
+### Patch Changes
+
+- 6aadc0b: Make id generation deterministic using IdAllocator.create class. This improves the SSR compatibility of these components.
+- Updated dependencies [6aadc0b]
+  - @leafygreen-ui/lib@5.1.0
+
 ## 3.0.2
 
 ### Patch Changes

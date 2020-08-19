@@ -13,6 +13,7 @@ interface ControlProps {
   indeterminate?: boolean;
   label?: string;
   disabled?: boolean;
+  animate?: boolean;
 }
 
 class Control extends PureComponent<ControlProps> {
@@ -23,6 +24,7 @@ class Control extends PureComponent<ControlProps> {
     indeterminate: PropTypes.bool,
     label: PropTypes.string,
     bold: PropTypes.bool,
+    animate: PropTypes.bool,
   };
 
   state = { checked: false };
@@ -35,6 +37,7 @@ class Control extends PureComponent<ControlProps> {
     const {
       bold,
       indeterminate,
+      animate,
       label,
       disabled,
       variant = Variant.Default,
@@ -58,6 +61,7 @@ class Control extends PureComponent<ControlProps> {
           label={label}
           variant={variant}
           bold={bold}
+          animate={animate}
         />
       </div>
     );
@@ -75,5 +79,6 @@ storiesOf('Checkbox', module).add('Default', () => (
     indeterminate={boolean('Indeterminate', false)}
     label={text('Label', 'I agree to this thing.')}
     bold={boolean('Bold', false)}
+    animate={boolean('Animate', true)}
   />
 ));

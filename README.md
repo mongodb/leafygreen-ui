@@ -12,6 +12,7 @@ A set of CSS styles and React components built with design in mind.
 - [Card](https://github.com/mongodb/leafygreen-ui/tree/master/packages/card)
 - [Checkbox](https://github.com/mongodb/leafygreen-ui/tree/master/packages/checkbox)
 - [Code](https://github.com/mongodb/leafygreen-ui/tree/master/packages/code)
+- [Confirmation Modal](https://github.com/mongodb/leafygreen-ui/tree/master/packages/confirmation-modal)
 - [Emotion](https://github.com/mongodb/leafygreen-ui/tree/master/packages/emotion)
 - [Hooks](https://github.com/mongodb/leafygreen-ui/tree/master/packages/hooks)
 - [Icon Button](https://github.com/mongodb/leafygreen-ui/tree/master/packages/icon-button)

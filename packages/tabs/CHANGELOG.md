@@ -1,5 +1,15 @@
 # @leafygreen-ui/tabs
 
+## 2.1.3
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/hooks@4.0.1
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/palette@2.0.2
+
 ## 2.1.2
 
 ### Patch Changes

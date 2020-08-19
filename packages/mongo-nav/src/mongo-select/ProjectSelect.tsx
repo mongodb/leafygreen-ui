@@ -6,6 +6,7 @@ import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { usePrevious } from '@leafygreen-ui/hooks';
 import { createDataProp } from '@leafygreen-ui/lib';
 import {
   Menu,
@@ -30,7 +31,7 @@ import {
 
 // mongo-select
 import Input from './Input';
-import { onKeyDown, usePrevious } from './selectHelpers';
+import { onKeyDown } from './selectHelpers';
 import { BaseMongoSelectProps } from './types';
 import {
   activeButtonStyle,

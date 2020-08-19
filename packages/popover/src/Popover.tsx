@@ -1,20 +1,14 @@
-import React, {
-  Fragment,
-  useState,
-  useLayoutEffect,
-  useRef,
-  useEffect,
-  useMemo,
-} from 'react';
+import React, { useMemo, Fragment, useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
-import Portal from '@leafygreen-ui/portal';
 import { css, cx } from '@leafygreen-ui/emotion';
+import Portal from '@leafygreen-ui/portal';
 import {
   useViewportSize,
   useMutationObserver,
   useElementNode,
   useObjectDependency,
+  usePrevious,
 } from '@leafygreen-ui/hooks';
 import { Align, Justify, PopoverProps } from './types';
 import {
@@ -150,15 +144,8 @@ function Popover({
     ),
   );
 
-  const prevJustifyRef = useRef<Justify>();
-  const prevAlignRef = useRef<Align>();
-  const prevJustify = prevJustifyRef.current;
-  const prevAlign = prevAlignRef.current;
-
-  useEffect(() => {
-    prevJustifyRef.current = justify;
-    prevAlignRef.current = align;
-  });
+  const prevJustify = usePrevious<Justify>(justify);
+  const prevAlign = usePrevious<Align>(align);
 
   const layoutMightHaveChanged =
     (prevJustify !== justify &&

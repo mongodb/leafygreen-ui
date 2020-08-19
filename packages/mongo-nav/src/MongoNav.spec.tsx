@@ -40,7 +40,7 @@ describe('packages/mongo-nav', () => {
   };
 
   describe('by default', () => {
-    const responseObject = {
+    const responseObject: Pick<Response, 'ok' | 'json'> = {
       ok: true,
       json: () => Promise.resolve(dataFixtures),
     };
@@ -138,7 +138,7 @@ describe('packages/mongo-nav', () => {
       });
     };
 
-    let responseObject = {
+    let responseObject: Pick<Response, 'ok' | 'json'> = {
       ok: true,
       json: () => Promise.resolve(dataFixtures),
     };
@@ -486,8 +486,8 @@ describe('packages/mongo-nav', () => {
         fireEvent.click(userMenuTrigger);
 
         const cloudForGovernment = getByText('Cloud for Government').parentNode
-          .parentNode as HTMLAnchorElement;
-        expect(cloudForGovernment.href).toBe('https://cloud.mongodbgov.com/');
+          ?.parentNode as HTMLAnchorElement | undefined;
+        expect(cloudForGovernment?.href).toBe('https://cloud.mongodbgov.com/');
       });
     });
   });
