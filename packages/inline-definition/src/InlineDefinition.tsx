@@ -30,7 +30,7 @@ const maxWidth = css`
   max-width: 240px;
 `;
 
-type InlineDefinitionProps = TooltipProps & {
+type InlineDefinitionProps = Partial<TooltipProps> & {
   definition: string;
 };
 
