@@ -15,6 +15,14 @@ const underline = css`
     ${uiColors.gray.dark1} 75%,
     transparent 25%
   );
+
+  &:hover {
+    background-image: radial-gradient(
+      circle closest-side,
+      currentColor 75%,
+      transparent 25%
+    );
+  }
 `;
 
 const maxWidth = css`
@@ -31,15 +39,9 @@ export default function InlineDefinition({
   ...tooltipProps
 }: InlineDefinitionProps) {
   return (
-    // <div
-    //   className={css`
-    //     line-height: 20px;
-    //     font-size: 14px;
-    //   `}
-    // >
-    //   <div className={underline}>{children}</div>
-    // </div>
     <Tooltip
+      justify="middle"
+      spacing={5}
       {...tooltipProps}
       trigger={<span className={underline}>{children}</span>}
     >

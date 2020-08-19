@@ -22,6 +22,14 @@ const linkStyles = css`
   }
 `;
 
+// 14px font-size 20px line height
+
+/// 1em = 14 + 4 = 18 + 2 = 20
+/// 1em = 16 + 6 = 22 + 2 = 24
+/// 1em = 18 + 6 = 22 + 2 = 24
+
+// LH - 1em - 2
+
 const underline = css`
   background-repeat: repeat-x;
   background-position: 0 calc(1em + 4px);

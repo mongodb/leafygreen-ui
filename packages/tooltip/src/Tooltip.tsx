@@ -309,7 +309,7 @@ function Tooltip({
       align={align}
       justify={justify}
       adjustOnMutation={true}
-      spacing={12}
+      spacing={rest.spacing || 12}
       {...portalProps}
     >
       {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
