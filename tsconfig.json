@@ -42,6 +42,9 @@
       "path": "./packages/icon-button"
     },
     {
+      "path": "./packages/inline-definition"
+    },
+    {
       "path": "./packages/lib"
     },
     {

@@ -1,4 +1,3 @@
-
 {
   "extends": "../../package.tsconfig.json",
   "compilerOptions": {
@@ -10,6 +9,18 @@
   "references": [
     {
       "path": "../lib"
+    },
+    {
+      "path": "../typography"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../tooltip"
+    },
+    {
+      "path": "../emotion"
     }
   ]
 }
