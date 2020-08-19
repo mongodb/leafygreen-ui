@@ -33,7 +33,7 @@ describe('packages/popover', () => {
 
     expect(clickSpy).not.toHaveBeenCalled();
     fireEvent.click(getByText('Popover Content'));
-    expect(clickSpy).not.toHaveBeenCalledTimes(1);
+    expect(clickSpy).toHaveBeenCalledTimes(1);
   });
 
   test('portals popover content to end of DOM, when "usePortal" is not set', () => {
