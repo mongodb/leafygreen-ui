@@ -6,7 +6,7 @@ import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { isComponentType, IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { useTableContext, TableTypes, DataType } from './TableContext';
+import { useTableContext, TableActionTypes, DataType } from './TableContext';
 import { tdInnerDiv } from './Cell';
 
 const rowStyle = css`
@@ -135,6 +135,10 @@ const Row = React.forwardRef(
       let shouldDispatchHasNestedRows = false;
       let shouldDispatchHasRowSpan = false;
 
+      if (hasNestedRows && hasRowSpan) {
+        return;
+      }
+
       React.Children.forEach(children, child => {
         if (
           isComponentType(child, 'Row') &&
@@ -154,20 +158,23 @@ const Row = React.forwardRef(
         }
       });
 
-      if (shouldDispatchHasNestedRows) {
+      if (
+        shouldDispatchHasNestedRows &&
+        hasNestedRows !== shouldDispatchHasNestedRows
+      ) {
         tableDispatch({
-          type: TableTypes.SetHasNestedRows,
+          type: TableActionTypes.SetHasNestedRows,
           payload: true,
         });
       }
 
-      if (shouldDispatchHasRowSpan) {
+      if (shouldDispatchHasRowSpan && hasRowSpan !== shouldDispatchHasRowSpan) {
         tableDispatch({
-          type: TableTypes.SetHasRowSpan,
+          type: TableActionTypes.SetHasRowSpan,
           payload: true,
         });
       }
-    }, [children, hasNestedRows, hasRowSpan, tableDispatch]);
+    }, [children, hasNestedRows, hasRowSpan, tableDispatch, data]);
 
     const renderedChildren = React.useMemo(() => {
       const Icon = isExpanded ? ChevronDownIcon : ChevronRightIcon;

@@ -1,24 +1,24 @@
 import React, { createContext, useContext, useMemo, useReducer } from 'react';
 
-const TableTypes = {
+const TableActionTypes = {
   RegisterColumn: 'REGISTER_COLUMN_INFO',
   SortTableData: 'SORT_TABLE_DATA',
   SetHasNestedRows: 'SET_HAS_NESTED_ROWS',
   SetHasRowSpan: 'SET_HAS_ROW_SPAN',
 } as const;
 
-type TableTypes = typeof TableTypes[keyof typeof TableTypes];
+type TableActionTypes = typeof TableActionTypes[keyof typeof TableActionTypes];
 
-export { TableTypes };
+export { TableActionTypes };
 
 interface ActionPayload<T = {}> {
-  [TableTypes.RegisterColumn]: {
+  [TableActionTypes.RegisterColumn]: {
     dataType?: DataType;
     index: number;
   };
-  [TableTypes.SetHasRowSpan]: boolean;
-  [TableTypes.SetHasNestedRows]: boolean;
-  [TableTypes.SortTableData]: {
+  [TableActionTypes.SetHasRowSpan]: boolean;
+  [TableActionTypes.SetHasNestedRows]: boolean;
+  [TableActionTypes.SortTableData]: {
     columnId: number;
     accessorValue: (data: any) => string;
   };
@@ -84,19 +84,19 @@ const TableContext = createContext<ContextInterface>({
 
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case TableTypes.SetHasRowSpan:
+    case TableActionTypes.SetHasRowSpan:
       return {
         ...state,
         hasRowSpan: action.payload,
       };
 
-    case TableTypes.SetHasNestedRows:
+    case TableActionTypes.SetHasNestedRows:
       return {
         ...state,
         hasNestedRows: action.payload,
       };
 
-    case TableTypes.RegisterColumn:
+    case TableActionTypes.RegisterColumn:
       return {
         ...state,
         columnInfo: {
@@ -107,7 +107,7 @@ export function reducer(state: State, action: Action): State {
         },
       };
 
-    case TableTypes.SortTableData:
+    case TableActionTypes.SortTableData:
       return {
         ...state,
         sort: {
@@ -123,7 +123,7 @@ export function reducer(state: State, action: Action): State {
       };
 
     default:
-      return { ...state };
+      return state;
   }
 }
 

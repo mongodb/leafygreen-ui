@@ -6,7 +6,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { commonCellStyles } from './styles';
-import { useTableContext, TableTypes, DataType } from './TableContext';
+import { useTableContext, TableActionTypes, DataType } from './TableContext';
 
 const thStyle = css`
   width: 144px;
@@ -88,7 +88,7 @@ function TableHeader({
   React.useEffect(() => {
     if (typeof index === 'number') {
       dispatch({
-        type: TableTypes.RegisterColumn,
+        type: TableActionTypes.RegisterColumn,
         payload: {
           // Offsetting 0-index
           index: index + 1,
@@ -113,7 +113,7 @@ function TableHeader({
   const sortRows = () => {
     if (typeof index === 'number' && normalizedAccessor) {
       dispatch({
-        type: TableTypes.SortTableData,
+        type: TableActionTypes.SortTableData,
         payload: {
           columnId: index,
           accessorValue: normalizedAccessor,
