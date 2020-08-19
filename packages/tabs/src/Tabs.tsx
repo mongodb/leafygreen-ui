@@ -99,7 +99,9 @@ function Tabs({
   as = 'button',
   ...rest
 }: TabsProps) {
-  const childrenArray = React.Children.toArray(children);
+  const childrenArray = React.Children.toArray(children) as Array<
+    React.ReactElement
+  >;
 
   const isControlled = typeof controlledSelected === 'number';
   const [uncontrolledSelected, setUncontrolledSelected] = useState(
