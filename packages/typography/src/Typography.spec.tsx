@@ -1,9 +1,10 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Link, LinkProps } from './Link';
+import { BoxProps } from '@leafygreen-ui/box/src';
 
-const renderLink = (props: LinkProps) => {
-  render(<Link {...props}>Link</Link>);
+const renderLink = (props: BoxProps<'a', LinkProps>) => {
+  render(<Link {...(props as Parameters<typeof Link>)}>Link</Link>);
 };
 
 describe('packages/typography', () => {
@@ -105,8 +106,9 @@ describe('packages/typography', () => {
   describe('when no "href" prop is passed and the "as" prop is not supplied', () => {
     test('it renders the Link inside of "span" tags', () => {
       renderLink({});
-      const span = screen.getByText('Link').parentNode;
-      expect(span.tagName.toLowerCase()).toBe('span');
+      const span = screen.getByText('Link').parentElement;
+      expect(span).not.toBeNull();
+      expect(span!.tagName.toLowerCase()).toBe('span');
     });
   });
 
@@ -116,8 +118,9 @@ describe('packages/typography', () => {
         href: 'http://localhost:9001',
         as: 'div',
       });
-      const div = screen.getByText('Link').parentNode;
-      expect(div.tagName.toLowerCase()).toBe('div');
+      const div = screen.getByText('Link').parentElement;
+      expect(div).toBeVisible();
+      expect(div!.tagName.toLowerCase()).toBe('div');
     });
   });
 });

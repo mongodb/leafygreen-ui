@@ -120,8 +120,9 @@ describe('packages/radio-group', () => {
     const className = 'radio-className';
     test(`renders "${className}" in the labels's class list`, () => {
       const { radio } = renderRadio({ className });
-      const label = radio.parentNode;
-      expect(label.classList.contains(className)).toBe(true);
+      const label = radio.parentElement;
+      expect(label).not.toBeNull();
+      expect(label!.classList.contains(className)).toBe(true);
     });
 
     test(`renders disabled radio when disabled prop is set`, () => {

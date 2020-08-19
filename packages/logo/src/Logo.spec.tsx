@@ -17,7 +17,7 @@ const map = {
   charts: { title: 'Charts Logo', icon: ChartsLogo },
 };
 
-const renderProductLogo = (product, props = {}) => {
+const renderProductLogo = (product: keyof typeof map, props = {}) => {
   const Logo = map[product].icon;
   render(
     <div key={product}>
@@ -102,7 +102,7 @@ describe('packages/logo', () => {
     describe('by default renders monochrome product logo with a height of 18', () => {
       Object.keys(map).forEach(product => {
         test(`for the ${product} logo`, () => {
-          renderProductLogo(product);
+          renderProductLogo(product as keyof typeof map);
           const logo = screen.getByTestId('logo-test-id');
           expect(logo).toBeInTheDocument();
           expect(logo.getAttribute('height')).toBe('18');

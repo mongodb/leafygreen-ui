@@ -63,7 +63,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
         onOrganizationChange={onOrganizationChange}
         urls={urlFixtures}
         admin={false}
-        hosts={hostDefaults}
+        hosts={hostDefaults()}
         showProjectNav={true}
         {...props}
       />,
