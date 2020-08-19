@@ -66,7 +66,6 @@ function Popover({
   align = Align.Bottom,
   justify = Justify.Start,
   adjustOnMutation = false,
-  onClick,
   children,
   className,
   portalClassName,

@@ -254,29 +254,37 @@ describe('packages/tooltip', () => {
       expect(onClick).toHaveBeenCalled();
     });
 
-    test('clicking content inside of tooltip does not force tooltip to close', () => {
-      const { button, getByTestId } = renderTooltip({
-        open: true,
-        setOpen,
-      });
+    describe('clicking content inside of tooltip does not force tooltip to close', () => {
+      function testCase(name: string, usePortal: boolean): void {
+        test(name, () => {
+          const { button, getByTestId } = renderTooltip({
+            open: true,
+            setOpen,
+            usePortal,
+          });
 
-      fireEvent.click(button);
+          fireEvent.click(button);
 
-      const tooltip = getByTestId(tooltipTestId);
-      expect(tooltip).toBeVisible();
+          const tooltip = getByTestId(tooltipTestId);
+          expect(tooltip).toBeVisible();
 
-      onClick.mockClear();
+          onClick.mockClear();
 
-      let clickTarget = tooltip;
+          let clickTarget = tooltip;
 
-      while (clickTarget !== document.body) {
-        fireEvent.click(clickTarget);
+          while (![document.body, button].includes(clickTarget)) {
+            fireEvent.click(clickTarget);
 
-        expect(tooltip).toBeVisible();
-        expect(onClick).not.toHaveBeenCalled();
+            expect(tooltip).toBeVisible();
+            expect(onClick).not.toHaveBeenCalled();
 
-        clickTarget = clickTarget.parentElement;
+            clickTarget = clickTarget.parentElement;
+          }
+        });
       }
+
+      testCase('with portal', true);
+      testCase('without portal', false);
     });
   });
 
