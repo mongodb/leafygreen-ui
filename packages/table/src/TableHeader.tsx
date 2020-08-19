@@ -33,8 +33,8 @@ const glyphColor = css`
 
 const glyphMap = {
   unsorted: UnsortedIcon,
-  asc: SortAscendingIcon,
-  desc: SortDescendingIcon,
+  asc: SortDescendingIcon,
+  desc: SortAscendingIcon,
 } as const;
 
 export function normalizeAccessor(accessor: string | Function) {

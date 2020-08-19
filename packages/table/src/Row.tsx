@@ -15,7 +15,6 @@ const rowStyle = css`
 
   & > td > ${tdInnerDiv.selector} {
     height: 40px;
-    overflow: hidden;
     transition: all 150ms ease-in-out;
   }
 `;
@@ -30,6 +29,7 @@ const iconButtonMargin = css`
   flex-grow: 1;
   flex-shrink: 0;
   margin-right: 4px;
+  margin-left: -8px;
 `;
 
 const disabledStyle = css`

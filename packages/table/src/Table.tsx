@@ -7,7 +7,6 @@ import { TableProvider } from './TableContext';
 import TableHead from './TableHead';
 import TableBody from './TableBody';
 
-// Fix Icons
 // Fix typing for data
 // Fix typings all around
 
