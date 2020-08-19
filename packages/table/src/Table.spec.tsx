@@ -20,7 +20,7 @@ const defaultColumns = [
 ];
 
 function renderTable(props: Props = {}) {
-  render(
+  const { rerender } = render(
     <Table
       data-testid="table"
       data={defaultData}
@@ -47,7 +47,7 @@ function renderTable(props: Props = {}) {
     </Table>,
   );
   const table = screen.getByTestId('table');
-  return { table };
+  return { table, rerender };
 }
 
 describe('packages/table', () => {
@@ -86,6 +86,50 @@ describe('packages/table', () => {
   test('it adds a className to the Tables classlist when one is supplied', () => {
     const { table } = renderTable({ table: { className } });
     expect(table.classList.contains(className)).toBe(true);
+  });
+
+  test('when the data changes, the table rerenders', () => {
+    const { rerender } = renderTable();
+    const firstRow = screen.getAllByRole('row')[1];
+    const alice = within(firstRow).getByText('Alice');
+    expect(alice).toBeVisible();
+
+    rerender(
+      <Table
+        data-testid="table"
+        data={[
+          {
+            name: 'Garry',
+            age: '100',
+            color: 'pink',
+            location: 'williamsburg',
+          },
+        ]}
+        columns={defaultColumns}
+      >
+        {({ datum }) => (
+          <Row key={datum.name}>
+            <Cell>{datum.name}</Cell>
+            <Cell>{datum.age}</Cell>
+            <Cell>{datum.color}</Cell>
+            <Cell>{datum.location}</Cell>
+
+            {datum.age > 25 && (
+              <Row>
+                <Cell>hidden: {datum.name}</Cell>
+                <Cell>expanded age: {datum.age}</Cell>
+                <Cell>expanded color: {datum.color}</Cell>
+                <Cell>{datum.location}</Cell>
+              </Row>
+            )}
+          </Row>
+        )}
+      </Table>,
+    );
+
+    const newFirstRow = screen.getAllByRole('row')[1];
+    const garry = within(newFirstRow).getByText('Garry');
+    expect(garry).toBeVisible();
   });
 
   describe('packages/table/table-head', () => {

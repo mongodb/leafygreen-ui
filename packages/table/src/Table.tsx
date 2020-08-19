@@ -7,6 +7,10 @@ import { TableProvider } from './TableContext';
 import TableHead from './TableHead';
 import TableBody from './TableBody';
 
+// Fix Icons
+// Add test for adding data
+// Fix typing for data
+
 const tableStyles = css`
   border-collapse: collapse;
   box-sizing: border-box;

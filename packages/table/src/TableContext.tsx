@@ -1,21 +1,29 @@
-import React, { createContext, useContext, useMemo, useReducer } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useMemo,
+  useReducer,
+  useEffect,
+} from 'react';
 
 const TableActionTypes = {
   RegisterColumn: 'REGISTER_COLUMN_INFO',
   SortTableData: 'SORT_TABLE_DATA',
   SetHasNestedRows: 'SET_HAS_NESTED_ROWS',
   SetHasRowSpan: 'SET_HAS_ROW_SPAN',
+  SetData: 'SET_DATA',
 } as const;
 
 type TableActionTypes = typeof TableActionTypes[keyof typeof TableActionTypes];
 
 export { TableActionTypes };
 
-interface ActionPayload<T = {}> {
+interface ActionPayload {
   [TableActionTypes.RegisterColumn]: {
     dataType?: DataType;
     index: number;
   };
+  [TableActionTypes.SetData]: Array<any>;
   [TableActionTypes.SetHasRowSpan]: boolean;
   [TableActionTypes.SetHasNestedRows]: boolean;
   [TableActionTypes.SortTableData]: {
@@ -107,6 +115,12 @@ export function reducer(state: State, action: Action): State {
         },
       };
 
+    case TableActionTypes.SetData:
+      return {
+        ...state,
+        data: action.payload,
+      };
+
     case TableActionTypes.SortTableData:
       return {
         ...state,
@@ -137,6 +151,13 @@ export function TableProvider({ children, data }: TableProviderInterface) {
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    dispatch({
+      type: TableActionTypes.SetData,
+      payload: data,
+    });
+  }, [data]);
 
   const contextValue = useMemo(() => {
     return { state, dispatch };
