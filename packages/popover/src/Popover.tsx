@@ -1,13 +1,14 @@
 import React, { useMemo, Fragment, useState, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
-import { usePrevious } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Portal from '@leafygreen-ui/portal';
 import {
   useViewportSize,
   useMutationObserver,
   useElementNode,
+  useObjectDependency,
+  usePrevious,
 } from '@leafygreen-ui/hooks';
 import { Align, Justify, PopoverProps } from './types';
 import {
@@ -106,66 +107,101 @@ function Popover({
   );
 
   // We don't memoize these values as they're reliant on scroll positioning
-  const referenceElViewportPos = getElementViewportPosition(referenceElement);
-  const contentElViewportPos = getElementViewportPosition(contentNode);
-
-  const referenceElDocumentPos = useMemo(
-    () => getElementDocumentPosition(referenceElement),
-    [
-      referenceElement,
-      viewportSize,
-      lastTimeRefElMutated,
-      active,
-      align,
-      justify,
-      forceUpdateCounter,
-    ],
+  const referenceElViewportPos = useObjectDependency(
+    getElementViewportPosition(referenceElement),
+  );
+  const contentElViewportPos = useObjectDependency(
+    getElementViewportPosition(contentNode),
   );
 
-  const contentElDocumentPos = useMemo(
-    () => getElementDocumentPosition(contentNode),
-    [
-      contentNode,
-      viewportSize,
-      lastTimeContentElMutated,
-      active,
-      align,
-      justify,
-      forceUpdateCounter,
-    ],
+  const referenceElDocumentPos = useObjectDependency(
+    useMemo(
+      () => getElementDocumentPosition(referenceElement),
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [
+        lastTimeRefElMutated,
+        viewportSize,
+        active,
+        align,
+        justify,
+        forceUpdateCounter,
+      ],
+    ),
+  );
+
+  const contentElDocumentPos = useObjectDependency(
+    useMemo(
+      () => getElementDocumentPosition(contentNode),
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [
+        lastTimeContentElMutated,
+        viewportSize,
+        active,
+        align,
+        justify,
+        forceUpdateCounter,
+      ],
+    ),
   );
 
   const prevJustify = usePrevious<Justify>(justify);
   const prevAlign = usePrevious<Align>(align);
+
+  const layoutMightHaveChanged =
+    (prevJustify !== justify &&
+      (justify === Justify.Fit || prevJustify === Justify.Fit)) ||
+    (prevAlign !== align && justify === Justify.Fit);
 
   useLayoutEffect(() => {
     // justify={Justify.Fit} can cause the content's height/width to change
     // If we're switching to/from Fit, force an extra pass to make sure the popover is positioned correctly.
     // Also if we're switching between alignments and have Justify.Fit, it may switch between setting the width and
     // setting the height, so force an update in that case as well.
-    if (
-      (prevJustify !== justify &&
-        (justify === Justify.Fit || prevJustify === Justify.Fit)) ||
-      (prevAlign !== align && justify === Justify.Fit)
-    ) {
+    if (layoutMightHaveChanged) {
       setForceUpdateCounter(n => n + 1);
     }
-  });
+  }, [layoutMightHaveChanged]);
+
+  const [position, setPosition] = useState<ReturnType<
+    typeof calculatePosition
+  > | null>(null);
+
+  useLayoutEffect(() => {
+    setPosition(
+      calculatePosition({
+        useRelativePositioning: !usePortal,
+        spacing,
+        align,
+        justify,
+        referenceElViewportPos,
+        referenceElDocumentPos,
+        contentElViewportPos,
+        contentElDocumentPos,
+      }),
+    );
+  }, [
+    referenceElViewportPos,
+    referenceElDocumentPos,
+    contentElViewportPos,
+    contentElDocumentPos,
+    lastTimeRefElMutated,
+    lastTimeContentElMutated,
+    usePortal,
+    spacing,
+    align,
+    justify,
+    forceUpdateCounter,
+  ]);
+
+  if (!position) {
+    return null;
+  }
 
   const {
     align: windowSafeAlign,
     justify: windowSafeJustify,
     positionCSS,
-  } = calculatePosition({
-    useRelativePositioning: !usePortal,
-    spacing,
-    align,
-    justify,
-    referenceElViewportPos,
-    referenceElDocumentPos,
-    contentElViewportPos,
-    contentElDocumentPos,
-  });
+  } = position;
 
   const activeStyle = css`
     transform: translate3d(0, 0, 0) scale(1);

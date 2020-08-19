@@ -305,7 +305,7 @@ function Code({
         setScrollState(ScrollState.Right);
       }
     }
-  }, []);
+  }, [multiline]);
 
   const wrapperClassName = cx(
     codeWrapperStyle,
