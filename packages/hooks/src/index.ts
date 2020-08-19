@@ -4,3 +4,4 @@ export { default as useMutationObserver } from './useMutationObserver';
 export { default as useViewportSize } from './useViewportSize';
 export { default as useEscapeKey } from './useEscapeKey';
 export { default as usePoller } from './usePoller';
+export { default as useObjectDependency } from './useObjectDependency';

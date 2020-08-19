@@ -3,6 +3,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:jest/recommended',
     'prettier',
     'prettier/react',
@@ -21,7 +22,7 @@ module.exports = {
   },
   settings: {
     react: {
-      version: '16.4.1',
+      version: '16.13.1',
     },
   },
   rules: {
