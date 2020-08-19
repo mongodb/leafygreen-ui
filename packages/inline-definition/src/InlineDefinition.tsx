@@ -1,8 +1,11 @@
 import React from 'react';
+import Tooltip, { TooltipProps } from '@leafygreen-ui/tooltip';
+import { Body } from '@leafygreen-ui/typography';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 
 const underline = css`
+  display: inline-flex;
   background-repeat: repeat-x;
   background-position: 0 calc(1em + 4px);
   background-size: 3px 2px;
@@ -14,15 +17,33 @@ const underline = css`
   );
 `;
 
-export default function InlineDefinition({ children }) {
+const maxWidth = css`
+  max-width: 240px;
+`;
+
+type InlineDefinitionProps = TooltipProps & {
+  definition: string;
+};
+
+export default function InlineDefinition({
+  definition,
+  children,
+  ...tooltipProps
+}: InlineDefinitionProps) {
   return (
-    <div
-      className={css`
-        line-height: 20px;
-        font-size: 14px;
-      `}
+    // <div
+    //   className={css`
+    //     line-height: 20px;
+    //     font-size: 14px;
+    //   `}
+    // >
+    //   <div className={underline}>{children}</div>
+    // </div>
+    <Tooltip
+      {...tooltipProps}
+      trigger={<span className={underline}>{children}</span>}
     >
-      <div className={underline}>{children}</div>
-    </div>
+      <Body className={maxWidth}>{definition}</Body>
+    </Tooltip>
   );
 }
