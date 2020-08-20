@@ -1600,6 +1600,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@leafygreen-ui/palette@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/palette/-/palette-2.0.1.tgz#37b2982d80df7faaca0c7f3c473fb6636786da3c"
+  integrity sha512-xwD6kOokWvaygxF0T2gnf77HEu68G7EXr1ZrNiNtZzg80Y1V2hikhUNoESWij6g/A6qJZvAiwpseflVo3PnlHQ==
+
 "@lerna/add@3.20.0":
   version "3.20.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.20.0.tgz#bea7edf36fc93fb72ec34cb9ba854c48d4abf309"

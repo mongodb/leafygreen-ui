@@ -1,5 +1,16 @@
 # @leafygreen-ui/tooltip
 
+## 3.3.6
+
+### Patch Changes
+
+- 4a27db7: Clicks inside tooltip are now prevented from propagating to the tooltip's container.
+- Updated dependencies [2c09c48]
+- Updated dependencies [4a27db7]
+- Updated dependencies [add8745]
+  - @leafygreen-ui/hooks@4.1.0
+  - @leafygreen-ui/popover@5.2.0
+
 ## 3.3.5
 
 ### Patch Changes

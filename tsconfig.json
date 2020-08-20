@@ -87,6 +87,9 @@
       "path": "./packages/syntax"
     },
     {
+      "path": "./packages/table"
+    },
+    {
       "path": "./packages/testing-lib"
     },
     {

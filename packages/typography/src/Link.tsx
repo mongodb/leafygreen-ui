@@ -120,12 +120,14 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
     );
   }
 
+  const elementProps = href
+    ? ({ as: 'a', href, target } as const)
+    : ({ as: 'span' } as const);
+
   return (
     <Box
-      as={href ? 'a' : 'span'}
-      href={href && href}
-      target={target}
       className={cx(linkStyles, fontSize, className)}
+      {...elementProps}
       {...anchorDataProp.prop}
       {...rest}
     >

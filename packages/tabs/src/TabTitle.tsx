@@ -90,15 +90,15 @@ function TabTitle(props: TabTitleProps) {
     if (!disabled && selected && titleRef.current) {
       titleRef.current.focus();
     }
-  }, [selected]);
+  }, [disabled, selected]);
 
   const onBlur = useCallback(() => {
     setFocusedState((curr: Array<number>) => curr.filter(el => index !== el));
-  }, [setFocusedState]);
+  }, [index, setFocusedState]);
 
   const onFocus = useCallback(() => {
     setFocusedState((curr: Array<number>) => [...curr, index]);
-  }, [setFocusedState]);
+  }, [index, setFocusedState]);
 
   const renderTabTitle = (Root: React.ElementType<any> = 'button') => (
     <Root

@@ -23,7 +23,6 @@ const colors = [
 ];
 
 const spacingBlockVariants = Object.keys(spacing).reduce((acc, key, idx) => {
-  console.log(key);
   acc[key] = css`
     background-color: ${colors[idx]};
     width: ${spacing[key]};

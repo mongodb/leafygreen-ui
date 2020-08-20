@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import debounce from 'lodash/debounce';
+import React, { useState, useEffect } from 'react';
 
 // leafygreen-ui
 import BuildingIcon from '@leafygreen-ui/icon/dist/Building';
@@ -9,7 +8,7 @@ import SettingsIcon from '@leafygreen-ui/icon/dist/Settings';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
-import { useViewportSize } from '@leafygreen-ui/hooks';
+import { usePrevious, useViewportSize } from '@leafygreen-ui/hooks';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   Menu,
@@ -43,7 +42,7 @@ import {
 
 // mongo-select
 import Input from './Input';
-import { onKeyDown, usePrevious } from './selectHelpers';
+import { onKeyDown } from './selectHelpers';
 import { BaseMongoSelectProps } from './types';
 import {
   activeButtonStyle,
@@ -230,39 +229,7 @@ function OrgSelect({
     }
   };
 
-  const fetchOrgsAsAdmin = (searchTerm = '') => {
-    const queryString = searchTerm ? `?term=${searchTerm}` : '';
-    const endpointURI = `${hosts.cloud}/user/shared/organizations/search${queryString}`;
-    return fetch(endpointURI, {
-      credentials: 'include',
-      mode: 'cors',
-      method: 'GET',
-    });
-  };
-
-  const filterDataAsAdmin = useCallback(
-    debounce((fetchValue: string) => {
-      fetchOrgsAsAdmin(fetchValue)
-        .then(response => response.json())
-        .then((response: Array<OrgFilterResponse>) => {
-          const data = response.map(({ groups, ...org }) => org);
-
-          setFilteredData(data);
-          setIsFetching(false);
-        })
-        .catch(console.error);
-    }, 300),
-    [],
-  );
-
-  const filterData = () => {
-    const normalizedValue = value.toLowerCase();
-    const filtered = data?.filter(
-      datum => datum.orgName.toLowerCase().indexOf(normalizedValue) !== -1,
-    );
-
-    setFilteredData(filtered);
-  };
+  const hasOnChangeProp = !!onChangeProp;
 
   useEffect(() => {
     // Skip if we're not filtering
@@ -271,20 +238,50 @@ function OrgSelect({
     }
 
     // defer all behavior to user-provided filtering
-    if (onChangeProp) {
+    if (hasOnChangeProp) {
       return;
     }
 
     // serverside filtering (admin users only)
     if (isAdminSearch) {
       setIsFetching(true);
-      filterDataAsAdmin(value);
-      return;
+
+      const controller = new AbortController();
+
+      const fetchOrgsAsAdmin = (searchTerm = '') => {
+        const queryString = searchTerm ? `?term=${searchTerm}` : '';
+        const endpointURI = `${hosts.cloud}/user/shared/organizations/search${queryString}`;
+        return fetch(endpointURI, {
+          credentials: 'include',
+          mode: 'cors',
+          method: 'GET',
+          signal: controller.signal,
+        });
+      };
+
+      fetchOrgsAsAdmin(value)
+        .then(response => response.json())
+        .then((response: Array<OrgFilterResponse>) => {
+          const data = response.map(({ groups, ...org }) => org);
+
+          setFilteredData(data);
+          setIsFetching(false);
+        })
+        .catch(console.error);
+
+      return () => {
+        controller.abort();
+      };
     }
 
     // clientside filtering (default)
-    filterData();
-  }, [value]);
+    const normalizedValue = value.toLowerCase();
+    const filtered = data?.filter(
+      datum => datum.orgName.toLowerCase().indexOf(normalizedValue) !== -1,
+    );
+
+    setFilteredData(filtered);
+  }, [isFiltered, hasOnChangeProp, isAdminSearch, hosts.cloud, data, value]);
 
   // on change, make sure value actually changes
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

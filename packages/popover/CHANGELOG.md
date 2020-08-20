@@ -1,5 +1,17 @@
 # @leafygreen-ui/popover
 
+## 5.2.0
+
+### Minor Changes
+
+- 4a27db7: Popover now accepts an onClick prop
+
+### Patch Changes
+
+- Updated dependencies [2c09c48]
+- Updated dependencies [add8745]
+  - @leafygreen-ui/hooks@4.1.0
+
 ## 5.1.4
 
 ### Patch Changes
