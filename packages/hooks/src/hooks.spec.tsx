@@ -7,6 +7,7 @@ import {
   useViewportSize,
   usePoller,
   usePrevious,
+  useObjectDependency,
 } from './index';
 
 describe('packages/hooks', () => {
@@ -295,6 +296,27 @@ describe('packages/hooks', () => {
 
       // immediate triggers the pollHandler
       expect(pollHandler).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('useObjectDependency', () => {
+    test('returns previous object when current object is equal', () => {
+      const originalObject = { a: 1, b: { c: [2, 'hello'] } };
+
+      const { result, rerender } = renderHook(useObjectDependency, {
+        initialProps: originalObject,
+      });
+      expect(result.current).toBe(originalObject);
+
+      const differentButEqualObject = { a: 1, b: { c: [2, 'hello'] } };
+      expect(differentButEqualObject).not.toBe(originalObject);
+      rerender(differentButEqualObject);
+      expect(result.current).toBe(originalObject);
+
+      const unequalObject = { a: 1, b: { c: [2, 'bye'] } };
+      expect(unequalObject).not.toBe(originalObject);
+      rerender(unequalObject);
+      expect(result.current).toBe(unequalObject);
     });
   });
 
