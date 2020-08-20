@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-group
 
+## 4.0.2
+
+### Patch Changes
+
+- add8745: Make id generation deterministic using IdAllocator.create class. This improves SSR compatibility.
+
 ## 4.0.1
 
 ### Patch Changes

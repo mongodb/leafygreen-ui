@@ -1,5 +1,11 @@
 # @leafygreen-ui/checkbox
 
+## 4.1.1
+
+### Patch Changes
+
+- 463a338: Fixes 'aria-checked' value when Checkbox is indeterminate such that the value is `mixed` rather than `false` per WAI-ARIA spec
+
 ## 4.1.0
 
 ### Minor Changes
