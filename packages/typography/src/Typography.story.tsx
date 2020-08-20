@@ -25,12 +25,6 @@ storiesOf('Typography', module).add('Default', () => (
       <InlineCode className={displayBlock}>InlineCode</InlineCode>
       <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
       <Overline>Overline</Overline>
-      <Body>
-        Emma and Brooke love <Link>corgis</Link>.
-      </Body>
-      <Body>
-        However, Jeffrey prefers <Link>Dochhausands.</Link>
-      </Body>
       <Link
         href={select(
           'select Link href',

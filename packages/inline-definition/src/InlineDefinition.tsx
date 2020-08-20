@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Tooltip, { TooltipProps } from '@leafygreen-ui/tooltip';
 import { Body } from '@leafygreen-ui/typography';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -34,7 +35,7 @@ type InlineDefinitionProps = Partial<TooltipProps> & {
   definition: string;
 };
 
-export default function InlineDefinition({
+function InlineDefinition({
   definition,
   children,
   className,
@@ -51,3 +52,11 @@ export default function InlineDefinition({
     </Tooltip>
   );
 }
+
+InlineDefinition.displayName = 'InlineDefinition';
+
+InlineDefinition.propTypes = {
+  definition: PropTypes.string,
+};
+
+export default InlineDefinition;

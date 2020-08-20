@@ -24,7 +24,7 @@ const renderInlineDefinition = () => {
 describe('packages/inline-definition', () => {
   test('renders children to the DOM', () => {
     renderInlineDefinition();
-    expect(screen.getByText('Shard')).toBeInTheDocument();
+    expect(screen.getByText('Shard')).toBeVisible();
   });
 
   test('does not render definition to the DOM', () => {
