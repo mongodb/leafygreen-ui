@@ -15,6 +15,12 @@
       "path": "../icon/build.tsconfig.json"
     },
     {
+      "path": "../icon-button/build.tsconfig.json"
+    },
+    {
+      "path": "../icon/build.tsconfig.json"
+    },
+    {
       "path": "../lib/build.tsconfig.json"
     },
     {

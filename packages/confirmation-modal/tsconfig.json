@@ -1,0 +1,24 @@
+{
+  "extends": "../../package.tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src"
+  },
+  "include": ["src/**/*"],
+  "references": [
+    {
+      "path": "../button"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../modal"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../text-input"
+    }
+  ]
+}

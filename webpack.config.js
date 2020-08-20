@@ -61,6 +61,7 @@ module.exports = function (env = 'production') {
       path: path.resolve(process.cwd(), 'dist'),
       filename: `index.js`,
       libraryTarget: isProduction ? 'umd' : undefined,
+      globalObject: "(typeof self !== 'undefined' ? self : this)",
     },
 
     externals: isProduction

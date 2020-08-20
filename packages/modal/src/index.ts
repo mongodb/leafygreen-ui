@@ -1,4 +1,5 @@
+import Footer from './Footer';
 import Modal, { ModalSize } from './Modal';
 
-export { ModalSize };
+export { Footer, ModalSize };
 export default Modal;

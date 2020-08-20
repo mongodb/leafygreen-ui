@@ -1,5 +1,17 @@
 # @leafygreen-ui/pipeline
 
+## 1.0.5
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/tooltip@3.3.5
+  - @leafygreen-ui/emotion@2.0.2
+  - @leafygreen-ui/hooks@4.0.1
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/palette@2.0.2
+
 ## 1.0.4
 
 ### Patch Changes

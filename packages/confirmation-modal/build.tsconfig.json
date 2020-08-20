@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declarationDir": "dist",
+    "outDir": "dist"
+  },
+  "exclude": ["src/**/*.spec.*", "src/**/*.story.*"],
+  "references": [
+    {
+      "path": "../button/build.tsconfig.json"
+    },
+    {
+      "path": "../lib/build.tsconfig.json"
+    },
+    {
+      "path": "../modal/build.tsconfig.json"
+    },
+    {
+      "path": "../palette/build.tsconfig.json"
+    },
+    {
+      "path": "../text-input/build.tsconfig.json"
+    }
+  ]
+}

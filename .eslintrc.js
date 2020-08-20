@@ -3,6 +3,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:jest/recommended',
     'prettier',
     'prettier/react',
@@ -21,7 +22,7 @@ module.exports = {
   },
   settings: {
     react: {
-      version: '16.4.1',
+      version: '16.13.1',
     },
   },
   rules: {
@@ -53,7 +54,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/*.ts', '**/*.tsx'],
+      files: ['**/*.{ts,tsx}'],
       parser: '@typescript-eslint/parser',
       plugins: ['@typescript-eslint'],
       rules: {
@@ -81,7 +82,7 @@ module.exports = {
       },
     },
     {
-      files: ['packages/**/*.spec.js'],
+      files: ['packages/**/*.spec.{ts,tsx}'],
       globals: {
         expect: true,
         should: true,
@@ -91,6 +92,12 @@ module.exports = {
         'jest/no-disabled-tests': 'error',
         'jest/no-identical-title': 'error',
         'jest/valid-expect': 'error',
+        'jest/expect-expect': [
+          'warn',
+          {
+            assertFunctionNames: ['expect', 'waitForElementToBeRemoved'],
+          },
+        ],
       },
     },
   ],

@@ -1,5 +1,45 @@
 # @leafygreen-ui/mongo-nav
 
+## 3.1.4
+
+### Patch Changes
+
+- Updated dependencies [ab4c074]
+  - @leafygreen-ui/icon-button@7.0.0
+  - @leafygreen-ui/menu@7.0.7
+
+## 3.1.3
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/tooltip@3.3.5
+  - @leafygreen-ui/badge@3.0.2
+  - @leafygreen-ui/button@6.0.2
+  - @leafygreen-ui/hooks@4.0.1
+  - @leafygreen-ui/icon@6.3.2
+  - @leafygreen-ui/icon-button@6.1.4
+  - @leafygreen-ui/leafygreen-provider@1.1.4
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/logo@2.1.2
+  - @leafygreen-ui/menu@7.0.6
+  - @leafygreen-ui/palette@2.0.2
+  - @leafygreen-ui/typography@4.2.1
+
+## 3.1.2
+
+### Patch Changes
+
+- 84b1c21: Fix bug in UserMenu types, such that only component-specific types are required
+- Updated dependencies [11ee447]
+- Updated dependencies [6aadc0b]
+- Updated dependencies [5ee2098]
+  - @leafygreen-ui/tooltip@3.3.4
+  - @leafygreen-ui/lib@5.1.0
+  - @leafygreen-ui/icon@6.3.1
+  - @leafygreen-ui/icon-button@6.1.3
+
 ## 3.1.1
 
 ### Patch Changes

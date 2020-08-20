@@ -13,6 +13,9 @@
     },
     {
       "path": "../theme/build.tsconfig.json"
+    },
+    {
+      "path": "../palette/build.tsconfig.json"
     }
   ]
 }

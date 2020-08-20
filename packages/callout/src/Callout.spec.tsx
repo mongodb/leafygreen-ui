@@ -26,7 +26,10 @@ describe('packages/callout', () => {
         const title = getGlyphTitle(icon.displayName!);
 
         expect(typeof title).toBe('string');
-        expect(screen.getByTitle(title!)).toBeVisible();
+        const glyph = screen.getByTitle(title!).parentElement;
+
+        expect(glyph).toBeInstanceOf(SVGSVGElement);
+        expect(glyph).toBeVisible();
 
         expect(screen.getByText(label)).toBeVisible();
       });

@@ -27,6 +27,9 @@
       "path": "./packages/code/build.tsconfig.json"
     },
     {
+      "path": "./packages/confirmation-modal/build.tsconfig.json"
+    },
+    {
       "path": "./packages/emotion/build.tsconfig.json"
     },
     {

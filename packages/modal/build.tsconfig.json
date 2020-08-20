@@ -7,11 +7,29 @@
   },
   "exclude": ["src/**/*.spec.*", "src/**/*.story.*"],
   "references": [
-    { "path": "../emotion/build.tsconfig.json" },
-    { "path": "../hooks/build.tsconfig.json" },
-    { "path": "../icon/build.tsconfig.json" },
-    { "path": "../lib/build.tsconfig.json" },
-    { "path": "../palette/build.tsconfig.json" },
-    { "path": "../portal/build.tsconfig.json" }
+    {
+      "path": "../emotion/build.tsconfig.json"
+    },
+    {
+      "path": "../hooks/build.tsconfig.json"
+    },
+    {
+      "path": "../icon/build.tsconfig.json"
+    },
+    {
+      "path": "../icon-button/build.tsconfig.json"
+    },
+    {
+      "path": "../icon/build.tsconfig.json"
+    },
+    {
+      "path": "../lib/build.tsconfig.json"
+    },
+    {
+      "path": "../palette/build.tsconfig.json"
+    },
+    {
+      "path": "../portal/build.tsconfig.json"
+    }
   ]
 }
