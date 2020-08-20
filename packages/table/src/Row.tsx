@@ -100,7 +100,7 @@ function getIndentLevelStyle(indentLevel: number) {
   `;
 }
 
-const idAllocator = IdAllocator.create('text-input');
+const idAllocator = IdAllocator.create('table');
 
 interface RowProps extends React.ComponentPropsWithRef<'tr'> {
   expanded?: boolean;
