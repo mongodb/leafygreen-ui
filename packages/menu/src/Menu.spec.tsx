@@ -138,7 +138,9 @@ describe('packages/menu/sub-menu', () => {
     fireEvent.click(subMenuBArrow as HTMLElement);
 
     const subMenuItem = getByTestId('sub-menu-item-a');
-    await act(() => waitForElementToBeRemoved(subMenuItem));
+    await act(async () => {
+      await waitForElementToBeRemoved(subMenuItem);
+    });
 
     const subMenuItemB = getByTestId('sub-menu-item-b');
     expect(subMenuItemB).toBeVisible();
