@@ -7,32 +7,37 @@ storiesOf('Table', module)
   .add('Default', () => (
     <Table
       data={testHeavierDataSet}
-      columns={[
-        <TableHeader
-          dataType={DataType.String}
-          label="Name"
-          key="name"
-          sortBy="name"
-        />,
-        <TableHeader
-          dataType={DataType.Number}
-          label="Age"
-          key="age"
-          sortBy={data => data.age.first ?? data.age}
-        />,
-        <TableHeader
-          dataType={DataType.String}
-          label="Favorite Color"
-          key="color"
-          sortBy={data => data.color.primary ?? data.color}
-        />,
-        <TableHeader
-          dataType={DataType.String}
-          label="Location"
-          key="location"
-          sortBy={data => data.location}
-        />,
-      ]}
+      columns={
+        <>
+          <TableHeader
+            dataType={DataType.String}
+            label="Name"
+            key="name"
+            sortBy="name"
+          />
+
+          <TableHeader
+            dataType={DataType.Number}
+            label="Age"
+            key="age"
+            sortBy={data => data.age.first ?? data.age}
+          />
+
+          <TableHeader
+            dataType={DataType.String}
+            label="Favorite Color"
+            key="color"
+            sortBy={data => data.color.primary ?? data.color}
+          />
+
+          <TableHeader
+            dataType={DataType.String}
+            label="Location"
+            key="location"
+            sortBy={data => data.location}
+          />
+        </>
+      }
     >
       {({ datum }) => (
         <Row key={datum.name} disabled={datum.name === 'Charlotte'}>

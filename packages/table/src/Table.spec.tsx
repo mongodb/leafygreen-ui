@@ -167,12 +167,14 @@ describe('packages/table', () => {
     test('it formats columns that are passed in as a React.Fragment', () => {
       renderTable({
         table: {
-          columns: [
-            <TableHeader key="name" label="name" />,
-            <TableHeader key="age" label="age" />,
-            <TableHeader key="color" label="color" />,
-            <TableHeader key="location" label="location" />,
-          ],
+          columns: (
+            <>
+              <TableHeader key="name" label="name" />
+              <TableHeader key="age" label="age" />
+              <TableHeader key="color" label="color" />
+              <TableHeader key="location" label="location" />
+            </>
+          ),
         },
       });
       const headerRow = screen.getAllByTestId('leafygreen-ui-header-row');

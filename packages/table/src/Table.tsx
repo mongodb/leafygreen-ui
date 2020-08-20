@@ -7,9 +7,6 @@ import { TableProvider } from './TableContext';
 import TableHead from './TableHead';
 import TableBody from './TableBody';
 
-// Fix typing for data
-// Fix typings all around
-
 const tableStyles = css`
   border-collapse: collapse;
   box-sizing: border-box;
@@ -24,9 +21,9 @@ interface TableRowInterface<Shape = {}> {
 export interface TableProps<Shape>
   extends React.ComponentPropsWithoutRef<'table'> {
   data: Array<Shape>;
-  columns: Array<
-    React.ReactElement<HeaderRowProps | TableHeaderProps> | string
-  >;
+  columns:
+    | Array<React.ReactElement<HeaderRowProps | TableHeaderProps>>
+    | React.ReactFragment;
 
   children: (TableRowArgs: TableRowInterface<Shape>) => JSX.Element;
 }
