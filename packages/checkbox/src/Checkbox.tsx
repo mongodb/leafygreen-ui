@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp, IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -138,7 +138,9 @@ interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   animate?: boolean;
 }
 
-export default class Checkbox extends PureComponent<CheckboxProps> {
+export default class Checkbox extends Component<
+  CheckboxProps & React.InputHTMLAttributes<HTMLInputElement>
+> {
   static displayName = 'Checkbox';
 
   static propTypes = {
@@ -301,6 +303,7 @@ export default class Checkbox extends PureComponent<CheckboxProps> {
         })}
         style={style}
         htmlFor={checkboxId}
+        id={labelId}
       >
         <input
           {...rest}
@@ -311,8 +314,9 @@ export default class Checkbox extends PureComponent<CheckboxProps> {
           name={name}
           disabled={disabled}
           checked={checked}
+          aria-label="checkbox"
           aria-disabled={disabled}
-          aria-checked={checked}
+          aria-checked={indeterminate ? 'mixed' : checked}
           aria-labelledby={labelId}
           onClick={this.onClick}
           onChange={this.onChange}
@@ -339,7 +343,6 @@ export default class Checkbox extends PureComponent<CheckboxProps> {
               [disabledTextStyle]: disabled,
               [boldTextStyle]: bold,
             })}
-            id={labelId}
           >
             {label}
           </span>
