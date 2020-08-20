@@ -32,6 +32,7 @@ A set of CSS styles and React components built with design in mind.
 - [Side Nav](https://github.com/mongodb/leafygreen-ui/tree/master/packages/side-nav)
 - [Stepper](https://github.com/mongodb/leafygreen-ui/tree/master/packages/stepper)
 - [Syntax](https://github.com/mongodb/leafygreen-ui/tree/master/packages/syntax)
+- [Table](https://github.com/mongodb/leafygreen-ui/tree/master/packages/table)
 - [Tabs](https://github.com/mongodb/leafygreen-ui/tree/master/packages/tabs)
 - [Testing Lib](https://github.com/mongodb/leafygreen-ui/tree/master/packages/testing-lib)
 - [Text Input](https://github.com/mongodb/leafygreen-ui/tree/master/packages/text-input)
