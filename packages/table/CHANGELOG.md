@@ -1,6 +1,7 @@
 # @leafygreen-ui/table
 
 ## 0.1.0
+
 ### Minor Changes
 
 - 463a338: Initial Release of Table component
