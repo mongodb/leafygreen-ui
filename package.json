@@ -10,7 +10,7 @@
     "react",
     "uikit",
     "leafygreen"
-  ], 
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/mongodb/leafygreen-ui.git"
