@@ -56,5 +56,6 @@ npm install @leafygreen-ui/inline-definition
 | ------------ | --------------------- | ------------------------------------------------------------ | ------- |
 | `definition` | **Required** `string` | Content that describes the term. Will appear inside Tooltip. |         |
 | `children`   | `string`              | Text that will appear underlined                             |         |
+| `className`  | `string`              | className will be applied to the trigger element             |         |
 
 _Any other properties will be spread on the `Tooltip` element_

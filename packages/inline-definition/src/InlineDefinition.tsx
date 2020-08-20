@@ -57,6 +57,8 @@ InlineDefinition.displayName = 'InlineDefinition';
 
 InlineDefinition.propTypes = {
   definition: PropTypes.string,
+  className: PropTypes.string,
+  children: PropTypes.node,
 };
 
 export default InlineDefinition;
