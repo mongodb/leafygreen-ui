@@ -27,6 +27,9 @@
       "path": "./packages/code"
     },
     {
+      "path": "./packages/confirmation-modal"
+    },
+    {
       "path": "./packages/emotion"
     },
     {
@@ -79,6 +82,9 @@
     },
     {
       "path": "./packages/syntax"
+    },
+    {
+      "path": "./packages/table"
     },
     {
       "path": "./packages/testing-lib"

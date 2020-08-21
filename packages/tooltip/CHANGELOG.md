@@ -1,5 +1,37 @@
 # @leafygreen-ui/tooltip
 
+## 3.3.6
+
+### Patch Changes
+
+- 4a27db7: Clicks inside tooltip are now prevented from propagating to the tooltip's container.
+- Updated dependencies [2c09c48]
+- Updated dependencies [4a27db7]
+- Updated dependencies [add8745]
+  - @leafygreen-ui/hooks@4.1.0
+  - @leafygreen-ui/popover@5.2.0
+
+## 3.3.5
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/button@6.0.2
+  - @leafygreen-ui/hooks@4.0.1
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/palette@2.0.2
+  - @leafygreen-ui/popover@5.1.4
+
+## 3.3.4
+
+### Patch Changes
+
+- 11ee447: Adds `enabled` to Tooltip PropTypes
+- 6aadc0b: Make id generation deterministic using IdAllocator.create class. This improves the SSR compatibility of these components.
+- Updated dependencies [6aadc0b]
+  - @leafygreen-ui/lib@5.1.0
+
 ## 3.3.3
 
 ### Patch Changes

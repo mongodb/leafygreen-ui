@@ -178,6 +178,8 @@ export type TooltipProps = Omit<
 
 const idAllocator = IdAllocator.create('tooltip');
 
+const stopClickPropagation = (evt: React.MouseEvent) => evt.stopPropagation();
+
 /**
  * # Tooltip
  *
@@ -233,10 +235,10 @@ function Tooltip({
 
   const tooltipRef = useRef<HTMLDivElement>(null);
 
-  const tooltipId = useMemo(
-    () => id ?? tooltipRef.current?.id ?? idAllocator.generate(),
-    [id ?? tooltipRef.current?.id],
-  );
+  const existingId = id ?? tooltipRef.current?.id;
+  const tooltipId = useMemo(() => existingId ?? idAllocator.generate(), [
+    existingId,
+  ]);
 
   const createTriggerProps = (
     triggerEvent: TriggerEvent,
@@ -310,6 +312,7 @@ function Tooltip({
       justify={justify}
       adjustOnMutation={true}
       spacing={12}
+      onClick={stopClickPropagation}
       {...portalProps}
     >
       {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {

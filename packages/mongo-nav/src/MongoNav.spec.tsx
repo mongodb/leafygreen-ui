@@ -16,21 +16,19 @@ describe('packages/mongo-nav', () => {
   let getByText: RenderResult['getByText'];
 
   let fetchMock: jest.Mock;
-  let originalFetch: (
+  const originalFetch: (
     input: RequestInfo,
     init?: RequestInit | undefined,
-  ) => Promise<Response>;
+  ) => Promise<Response> = window.fetch;
 
   beforeEach(() => {
     fetchMock = jest.fn();
-    originalFetch = window.fetch;
     window.fetch = fetchMock;
   });
 
   afterEach(() => {
     window.fetch = originalFetch;
     jest.restoreAllMocks();
-    cleanup();
   });
 
   const renderComponent = async (props = {}) => {
@@ -42,7 +40,7 @@ describe('packages/mongo-nav', () => {
   };
 
   describe('by default', () => {
-    const responseObject = {
+    const responseObject: Pick<Response, 'ok' | 'json'> = {
       ok: true,
       json: () => Promise.resolve(dataFixtures),
     };
@@ -57,8 +55,10 @@ describe('packages/mongo-nav', () => {
     });
 
     test('fetch is called', () => {
-      // twice, once for main data and once for alerts polling
-      expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(fetchMock.mock.calls.map(([uri]) => uri)).toEqual([
+        'https://cloud.mongodb.com/user/shared',
+        'https://cloud.mongodb.com/user/shared/alerts/project/fakeProjectId1',
+      ]);
     });
 
     test('the organization and project navs are rendered', () => {
@@ -138,7 +138,7 @@ describe('packages/mongo-nav', () => {
       });
     };
 
-    let responseObject = {
+    let responseObject: Pick<Response, 'ok' | 'json'> = {
       ok: true,
       json: () => Promise.resolve(dataFixtures),
     };
@@ -202,8 +202,10 @@ describe('packages/mongo-nav', () => {
     });
 
     test('fetch is called', () => {
-      // twice, once for main data and once for alerts polling
-      expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(fetchMock.mock.calls.map(([uri]) => uri)).toEqual([
+        'https://cloud.mongodb.com/user/shared',
+        'https://cloud.mongodb.com/user/shared/alerts/project/fakeProjectId1',
+      ]);
     });
 
     test('the organization and project navs are rendered', () => {
@@ -255,8 +257,10 @@ describe('packages/mongo-nav', () => {
     });
 
     test('fetch is called', () => {
-      // twice, once for main data and once for alerts polling
-      expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(fetchMock.mock.calls.map(([uri]) => uri)).toEqual([
+        'https://cloud.mongodb.com/user/shared',
+        'https://cloud.mongodb.com/user/shared/alerts/project/fakeProjectId1',
+      ]);
     });
 
     test('the organization and project navs are rendered', () => {
@@ -308,8 +312,10 @@ describe('packages/mongo-nav', () => {
     });
 
     test('fetch is called', () => {
-      // twice, once for main data and once for alerts polling
-      expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(fetchMock.mock.calls.map(([uri]) => uri)).toEqual([
+        'https://cloud.mongodb.com/user/shared',
+        'https://cloud.mongodb.com/user/shared/alerts/project/fakeProjectId1',
+      ]);
     });
 
     test('current orgId is set based on the new activeProjectId', () => {
@@ -480,8 +486,8 @@ describe('packages/mongo-nav', () => {
         fireEvent.click(userMenuTrigger);
 
         const cloudForGovernment = getByText('Cloud for Government').parentNode
-          .parentNode as HTMLAnchorElement;
-        expect(cloudForGovernment.href).toBe('https://cloud.mongodbgov.com/');
+          ?.parentNode as HTMLAnchorElement | undefined;
+        expect(cloudForGovernment?.href).toBe('https://cloud.mongodbgov.com/');
       });
     });
   });

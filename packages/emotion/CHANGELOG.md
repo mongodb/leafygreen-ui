@@ -1,5 +1,11 @@
 # @leafygreen-ui/emotion
 
+## 2.0.2
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+
 ## 2.0.1
 
 ### Patch Changes

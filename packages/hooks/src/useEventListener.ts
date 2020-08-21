@@ -69,5 +69,6 @@ export default function useEventListener<Type extends keyof DocumentEventMap>(
         eventListenerOptions,
       );
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies);
 }

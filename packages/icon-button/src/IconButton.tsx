@@ -36,6 +36,7 @@ const baseIconButtonStyle = css`
   color: ${uiColors.gray.base};
   position: relative;
   cursor: pointer;
+  flex-shrink: 0;
 
   // Set background to fully-transparent white for cross-browser compatability with Safari
   //
@@ -312,7 +313,6 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
         // Unsets the title within an icon since the button itself will have
         // aria-label or aria-labelledby set.
         newChildProps.title = false;
-        newChildProps['aria-label'] = ariaLabel || ariaLabelledBy;
       }
 
       return React.cloneElement(child, newChildProps);
