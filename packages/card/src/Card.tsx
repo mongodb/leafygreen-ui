@@ -14,7 +14,7 @@ const containerStyle = css`
 
   &:hover {
     border: 1px solid ${uiColors.gray.light2};
-    box-shadow: 0 2px 6px -2px ${transparentize(0.4, uiColors.black)};
+    box-shadow: 0 2px 7px -2px ${transparentize(0.4, uiColors.black)};
   }
 `;
 
