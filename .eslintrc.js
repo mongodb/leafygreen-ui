@@ -62,7 +62,12 @@ module.exports = {
         'no-unused-vars': 0,
         '@typescript-eslint/no-unused-vars': [
           1,
-          { ignoreRestSiblings: true, argsIgnorePattern: '^_' },
+          {
+            ignoreRestSiblings: true,
+            argsIgnorePattern: '^_',
+            varsIgnorePattern: '^_',
+            caughtErrorsIgnorePattern: '^_',
+          },
         ],
         '@typescript-eslint/adjacent-overload-signatures': 2,
         '@typescript-eslint/array-type': [2, { default: 'generic' }],
