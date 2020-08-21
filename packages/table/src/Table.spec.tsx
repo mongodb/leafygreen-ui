@@ -10,6 +10,13 @@ interface Props {
   row?: any;
 }
 
+interface Shape {
+  name: string;
+  age: number;
+  color: string;
+  location: string;
+}
+
 const className = 'test-className';
 
 const defaultColumns = [
@@ -27,7 +34,7 @@ function renderTable(props: Props = {}) {
       columns={defaultColumns}
       {...props.table}
     >
-      {({ datum }) => (
+      {({ datum }: { datum: Shape }) => (
         <Row key={datum.name} {...props.row}>
           <Cell>{datum.name}</Cell>
           <Cell>{datum.age}</Cell>
@@ -100,7 +107,7 @@ describe('packages/table', () => {
         data={[
           {
             name: 'Garry',
-            age: '100',
+            age: 100,
             color: 'pink',
             location: 'williamsburg',
           },
@@ -218,11 +225,25 @@ describe('packages/table', () => {
     describe('the normalizeAccessor function works as expected', () => {
       test('it accesses the data correctly when passed a string', () => {
         const normalizedAccessor = normalizeAccessor('test');
-        expect(normalizedAccessor({ test: 'hi' })).toBe('hi');
+
+        // @ts-expect-error
+        const _: 'bye' = normalizedAccessor({ test: 'hi' } as const);
+
+        const hi: 'hi' = normalizedAccessor({ test: 'hi' } as const);
+
+        expect(hi).toBe('hi');
       });
       test('it accesses the data correctly when passed a function', () => {
-        const normalizedAccessor = normalizeAccessor(data => data.test);
-        expect(normalizedAccessor({ test: 'hi' })).toBe('hi');
+        const normalizedAccessor = normalizeAccessor(
+          <T,>(data: { test: T }) => data.test,
+        );
+
+        // @ts-expect-error
+        const _: 'bye' = normalizedAccessor({ test: 'hi' } as const);
+
+        const hi: 'hi' = normalizedAccessor({ test: 'hi' } as const);
+
+        expect(hi).toBe('hi');
       });
     });
 
