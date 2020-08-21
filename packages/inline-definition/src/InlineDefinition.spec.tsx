@@ -40,14 +40,12 @@ describe('packages/inline-definition', () => {
 
     await waitFor(() => screen.getByText(shardDefinition), { timeout: 500 });
 
-    expect(screen.getByText(shardDefinition)).toBeInTheDocument();
+    expect(screen.getByText(shardDefinition)).toBeVisible();
 
     fireEvent.mouseLeave(children);
 
     await waitForElementToBeRemoved(screen.getByText(shardDefinition), {
       timeout: 500,
     });
-
-    expect(screen.queryByText(shardDefinition)).not.toBeInTheDocument();
   });
 });

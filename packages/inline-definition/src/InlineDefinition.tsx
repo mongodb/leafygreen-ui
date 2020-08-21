@@ -56,7 +56,7 @@ function InlineDefinition({
 InlineDefinition.displayName = 'InlineDefinition';
 
 InlineDefinition.propTypes = {
-  definition: PropTypes.string,
+  definition: PropTypes.string.isRequired,
   className: PropTypes.string,
   children: PropTypes.node,
 };
