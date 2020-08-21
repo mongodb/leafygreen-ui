@@ -5,7 +5,7 @@ import { css } from '@leafygreen-ui/emotion';
 import Card from './Card';
 
 const containerStyle = css`
-  margin: 16px;
+  padding: 16px;
   height: 70px;
   width: 140px;
   display: flex;
