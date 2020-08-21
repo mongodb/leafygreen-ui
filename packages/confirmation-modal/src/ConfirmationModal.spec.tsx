@@ -87,7 +87,7 @@ describe('packages/confirmation-modal', () => {
       const { getByRole } = renderModal({ open: true });
       const modal = getByRole('dialog');
 
-      fireEvent.click(modal.parentElement);
+      fireEvent.click(modal.parentElement!);
 
       await waitForElementToBeRemoved(modal);
     });

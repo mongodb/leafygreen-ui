@@ -22,14 +22,12 @@ interface CardProps {
   className?: string;
 }
 
-const Card: ExtendableBox<{}> = ({ className, ...rest }: CardProps) => {
+const Card: ExtendableBox<CardProps> = ({ className, ...rest }: CardProps) => {
   return <Box className={cx(containerStyle, className)} {...rest} />;
 };
 
-// @ts-expect-error
 Card.displayName = 'Card';
 
-// @ts-expect-error
 Card.propTypes = {
   className: PropTypes.string,
 };
