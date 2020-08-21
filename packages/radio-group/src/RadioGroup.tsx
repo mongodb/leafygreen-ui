@@ -13,12 +13,12 @@ export interface RadioGroupProps {
   /**
    * className supplied to RadioGroup container.
    */
-  className: string;
+  className?: string;
 
   /**
    * Callback to be executed when a Radio is selected.
    */
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 
   /**
    * Content that will appear inside of RadioGroup component.
