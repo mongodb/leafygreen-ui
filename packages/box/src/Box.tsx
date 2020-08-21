@@ -100,7 +100,11 @@ export default Box;
 export interface ExtendableBox<
   ExtraProps,
   Default extends React.ElementType = 'div'
-> {
+>
+  extends Pick<
+    React.FunctionComponent<BoxProps<Default, ExtraProps>>,
+    'displayName' | 'propTypes'
+  > {
   (props: BoxDefault<Default, ExtraProps>): JSX.Element | null;
   (props: BoxAnchorDefault<ExtraProps>): JSX.Element | null;
   <TElement extends keyof JSX.IntrinsicElements>(

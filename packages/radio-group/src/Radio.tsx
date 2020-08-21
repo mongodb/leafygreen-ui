@@ -263,7 +263,7 @@ const labelMargin = css`
   margin-left: 8px;
 `;
 
-type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
+export type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
   Pick<RadioGroupProps, 'variant' | 'size'> & {
     default?: boolean;
     id?: string | number;
