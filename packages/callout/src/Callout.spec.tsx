@@ -23,7 +23,7 @@ describe('packages/callout', () => {
         render(<Callout {...defaultProps} variant={variant} />);
 
         expect(typeof icon.displayName).toBe('string');
-        const glyph = screen.getByTitle(getGlyphTitle(icon.displayName!))
+        const glyph = screen.getByTitle(getGlyphTitle(icon.displayName!)!)
           .parentElement;
         expect(glyph).toBeInstanceOf(SVGSVGElement);
         expect(glyph).toBeVisible();

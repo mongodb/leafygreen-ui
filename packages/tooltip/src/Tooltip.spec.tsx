@@ -270,7 +270,7 @@ describe('packages/tooltip', () => {
 
           onClick.mockClear();
 
-          let clickTarget = tooltip;
+          let clickTarget: HTMLElement = tooltip;
 
           while (![document.body, button].includes(clickTarget)) {
             fireEvent.click(clickTarget);
@@ -278,7 +278,7 @@ describe('packages/tooltip', () => {
             expect(tooltip).toBeVisible();
             expect(onClick).not.toHaveBeenCalled();
 
-            clickTarget = clickTarget.parentElement;
+            clickTarget = clickTarget.parentElement!;
           }
         });
       }

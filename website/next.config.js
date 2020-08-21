@@ -1,35 +1,17 @@
 const path = require('path');
-const fs = require('fs');
+const withTM = require('next-transpile-modules')(['@leafygreen-ui/'], {
+  resolveSyminks: true,
+});
 
-function getAliasList(dir) {
-  const dirList = fs.readdirSync(dir);
+module.exports = withTM({
+  webpack: config => {
+    config.resolve.alias['react'] = path.resolve(
+      __dirname,
+      '.',
+      'node_modules',
+      'react',
+    );
 
-  return dirList.map(dir => {
-    return {
-      name: `@leafygreen-ui/${dir}`,
-      path: path.resolve(__dirname, `../packages/${dir}`),
-    };
-  });
-}
-
-const aliasPathsToResolve = getAliasList('../packages');
-console.log(aliasPathsToResolve);
-
-module.exports = () => {
-  return {
-    webpack(config, { defaultLoaders }) {
-      config.module.rules = config.module.rules || [];
-
-      config.module.rules.push({
-        test: /\.(js|jsx)$/,
-        include: [path.resolve(__dirname, '../pages')],
-        use: [defaultLoaders.babel],
-      });
-
-      /** Resolve aliases */
-      aliasPathsToResolve.forEach(module => {
-        config.resolve.alias[module.name] = module.path;
-      });
-    },
-  };
-};
+    return config;
+  },
+});

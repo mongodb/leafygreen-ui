@@ -1,5 +1,12 @@
 # @leafygreen-ui/hooks
 
+## 4.1.0
+
+### Minor Changes
+
+- 2c09c48: Added usePrevious hook
+- add8745: Add `useObjectDependency` hook
+
 ## 4.0.1
 
 ### Patch Changes

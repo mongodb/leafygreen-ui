@@ -22,17 +22,20 @@ const colors = [
   '#a5fd8b',
 ];
 
-const spacingBlockVariants = Object.keys(spacing).reduce((acc, key, idx) => {
-  console.log(key);
-  acc[key] = css`
-    background-color: ${colors[idx]};
-    width: ${spacing[key]};
-    height: ${spacing[key]};
-  `;
-  return acc;
-}, {});
+const spacingBlockVariants = Object.keys(spacing).reduce(
+  (acc: Partial<Record<keyof typeof spacing, string>>, index, idx) => {
+    const key = (index as PropertyKey) as keyof typeof spacing;
+    acc[key] = css`
+      background-color: ${colors[idx]};
+      width: ${spacing[key]};
+      height: ${spacing[key]};
+    `;
+    return acc;
+  },
+  {},
+);
 
-function SpacingBlock({ space }: { space: string }) {
+function SpacingBlock({ space }: { space: keyof typeof spacing }) {
   return (
     <div className={gutter}>
       <div
@@ -50,7 +53,10 @@ storiesOf('Tokens', module).add('Spacing', () => (
     `}
   >
     {Object.keys(spacing).map(space => (
-      <SpacingBlock space={space} key={space} />
+      <SpacingBlock
+        space={(space as PropertyKey) as keyof typeof spacing}
+        key={space}
+      />
     ))}
   </div>
 ));

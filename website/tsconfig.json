@@ -1,5 +1,4 @@
 {
-  "extends": "../package.tsconfig.json",
   "compilerOptions": {
     "rootDir": "pages",
     "jsx": "preserve",
@@ -12,8 +11,13 @@
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
+    "noEmit": true,
     "isolatedModules": true,
-    "noEmit": true
+    "target": "es5",
+    "allowJs": true,
+    "strict": false,
+    "moduleResolution": "node",
+    "module": "esnext"
   },
   "include": [
     "next-env.d.ts",
@@ -22,10 +26,5 @@
   ],
   "exclude": [
     "node_modules"
-  ],
-  "references": [
-    {
-      "path": "../packages/typography"
-    }
   ]
 }
