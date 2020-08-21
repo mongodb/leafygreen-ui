@@ -2,4 +2,4 @@
 '@leafygreen-ui/card': patch
 ---
 
-Make Card box shadow darker
+Tweaked shadow and border radius and make hover style change only appear when the card is clickable (onClick is provided).
