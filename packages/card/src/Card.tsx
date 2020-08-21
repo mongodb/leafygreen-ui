@@ -22,7 +22,7 @@ const hoverStyle = css`
 
 interface CardProps {
   className?: string;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler;
 }
 
 const Card: ExtendableBox<CardProps> = ({ className, ...rest }: CardProps) => {
