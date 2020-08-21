@@ -151,10 +151,10 @@ describe('packages/table', () => {
         table: {
           columns: [
             <HeaderRow key="header-row">
-              <TableHeader key="name" label="name" />,
-              <TableHeader key="age" label="age" />,
-              <TableHeader key="color" label="color" />,
-              <TableHeader key="location" label="location" />,
+              <TableHeader key="name" label="name" />
+              <TableHeader key="age" label="age" />
+              <TableHeader key="color" label="color" />
+              <TableHeader key="location" label="location" />
             </HeaderRow>,
           ],
         },
