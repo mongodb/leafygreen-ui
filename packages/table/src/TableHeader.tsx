@@ -99,7 +99,7 @@ function TableHeader({
         },
       });
     }
-  }, []);
+  }, [index, dataType, dispatch]);
 
   const normalizedAccessor = sortBy && normalizeAccessor(sortBy);
 
