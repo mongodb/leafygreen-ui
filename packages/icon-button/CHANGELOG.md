@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 7.0.1
+
+### Patch Changes
+
+- 463a338: Adds `flex-shrink` property to IconButton
+
 ## 7.0.0
 
 ### Major Changes
