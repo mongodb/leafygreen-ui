@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { radios, text } from '@storybook/addon-knobs';
-import MarketingModal from '.';
+import MarketingModal, { GraphicStyle } from '.';
 
 function Default() {
   const [open, setOpen] = useState(false);
   const buttonText = text('Button text', 'Okay');
   const linkText = text('Link text', 'Cancel');
 
-  const coverStyle = radios(
-    'Cover style example',
-    { default: 'default', cover: 'cover' },
-    'default',
+  const graphicStyle = radios(
+    'Graphic style example',
+    { center: GraphicStyle.Center, fill: GraphicStyle.Fill },
+    GraphicStyle.Center,
   );
 
   return (
@@ -23,14 +23,14 @@ function Default() {
         onLinkClick={() => setOpen(false)}
         onClose={() => setOpen(false)}
         title="Introducing New Feature!"
-        cover={
-          coverStyle === 'default' ? (
+        graphic={
+          graphicStyle === GraphicStyle.Center ? (
             <img alt="" src="examples/DataLake.png" width={275} height={220} />
           ) : (
             <img alt="" src="examples/Realm_Rebrand_Image.png" />
           )
         }
-        coverStyle={coverStyle}
+        graphicStyle={graphicStyle}
         buttonText={buttonText}
         linkText={linkText}
       >

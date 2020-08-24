@@ -1,1 +1,1 @@
-export { default } from './MarketingModal';
+export { default, GraphicStyle } from './MarketingModal';

@@ -21,7 +21,7 @@ const WrappedModal = ({
       onButtonClick={() => setOpen(false)}
       onClose={() => setOpen(false)}
       onLinkClick={() => setOpen(false)}
-      cover={<img alt="" src="" aria-label="Cover image" />}
+      graphic={<img alt="" src="" aria-label="image graphic" />}
       {...props}
     >
       {props.children ?? 'Content text'}
@@ -43,7 +43,7 @@ describe('packages/confirmation-modal', () => {
 
   test('renders if open', () => {
     const { getByText, getByLabelText } = renderModal({ open: true });
-    expect(getByLabelText('Cover image')).toBeVisible();
+    expect(getByLabelText('Image graphic')).toBeVisible();
     expect(getByText('Title text')).toBeVisible();
     expect(getByText('Content text')).toBeVisible();
     expect(getByText('Button action')).toBeVisible();

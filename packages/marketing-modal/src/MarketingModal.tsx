@@ -6,6 +6,13 @@ import { Link } from '@leafygreen-ui/typography';
 import Modal from '@leafygreen-ui/modal';
 import { uiColors } from '@leafygreen-ui/palette';
 
+export const GraphicStyle = {
+  Center: 'center',
+  Fill: 'fill',
+} as const;
+
+type GraphicStyle = typeof GraphicStyle[keyof typeof GraphicStyle];
+
 const titleStyle = css`
   color: ${uiColors.gray.dark2};
   font-size: 24px;
@@ -21,27 +28,26 @@ const baseModalStyle = css`
   overflow: scroll;
 `;
 
-const baseCoverStyle = css`
+const baseGraphicContainerStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  & > * {
-    display: block;
-  }
+`;
+const baseGraphicStyle = css`
+  display: block;
 `;
 
-const defaultCoverStyle = css`
+const centeredGraphicContainerStyle = css`
   padding-top: 20px;
   padding-bottom: 8px;
 `;
 
-const coverCoverStyle = css`
+const filledGraphicContainerStyle = css`
   padding-bottom: 24px;
+`;
 
-  & > * {
-    width: 100%;
-  }
+const filledGraphicStyle = css`
+  width: 100%;
 `;
 
 const contentStyle = css`
@@ -72,8 +78,8 @@ const footerContentStyle = css`
 
 interface MarketingModalProps {
   title: string;
-  cover: JSX.IntrinsicElements['img'];
-  coverStyle?: 'default' | 'cover';
+  graphic: React.ReactElement;
+  graphicStyle?: GraphicStyle;
   children: React.ReactNode;
   open?: boolean;
   onButtonClick?: () => void;
@@ -87,8 +93,8 @@ interface MarketingModalProps {
 const MarketingModal = ({
   children,
   title,
-  cover,
-  coverStyle = 'default',
+  graphic,
+  graphicStyle = 'center',
   onButtonClick,
   onLinkClick,
   onClose,
@@ -99,12 +105,16 @@ const MarketingModal = ({
   return (
     <Modal {...modalProps} contentClassName={baseModalStyle} setOpen={onClose}>
       <div
-        className={cx(baseCoverStyle, {
-          [defaultCoverStyle]: coverStyle === 'default',
-          [coverCoverStyle]: coverStyle === 'cover',
+        className={cx(baseGraphicContainerStyle, {
+          [centeredGraphicContainerStyle]: graphicStyle === GraphicStyle.Center,
+          [filledGraphicContainerStyle]: graphicStyle === GraphicStyle.Fill,
         })}
       >
-        {cover}
+        {React.cloneElement(graphic, {
+          className: `${graphic.props.className ?? ''} ${cx(baseGraphicStyle, {
+            [filledGraphicStyle]: graphicStyle === GraphicStyle.Fill,
+          })}`,
+        })}
       </div>
       <div className={contentStyle}>
         <div className={titleStyle}>{title}</div>
@@ -126,8 +136,8 @@ MarketingModal.displayName = 'MarketingModal';
 
 MarketingModal.propTypes = {
   title: PropTypes.string.isRequired,
-  cover: PropTypes.element.isRequired,
-  coverStyle: PropTypes.oneOf(['default', 'cover']),
+  graphic: PropTypes.element.isRequired,
+  graphicStyle: PropTypes.oneOf(Object.values(GraphicStyle)),
   open: PropTypes.bool,
   onButtonClick: PropTypes.func,
   onLinkClick: PropTypes.func,
