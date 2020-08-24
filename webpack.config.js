@@ -84,9 +84,6 @@ module.exports = function (env = 'production') {
 
     resolve: {
       extensions: ['.js', '.json', '.less', '.css', '.tsx', '.ts'],
-      // alias: {
-      //   ...getAliasObject('../../packages'),
-      // },
     },
 
     devtool: isProduction ? 'source-map' : 'eval-source-map',
