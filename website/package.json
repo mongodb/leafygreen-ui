@@ -9,11 +9,12 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.35",
+    "@leafygreen-ui": "git+ssh://git@github.com:mongodb/leafygreen-ui.git/PD-779#v0.1.0",
     "less": "^3.12.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "next": "9.5.2",
-    "next-transpile-modules": "^4.1.0",
-    "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "next-transpile-modules": "^4.1.0"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.11.0",
