@@ -108,7 +108,7 @@
     "polished": "^3.5.1",
     "prettier": "^2.0.4",
     "prop-types": "^15.7.2",
-    "react": "^16.13.1",
+     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "5.1.2",
     "react-test-renderer": "^16.13.1",
@@ -127,12 +127,5 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ], 
-    "website": [
-      "website/*"
-    ]
-  }
+  "workspaces": ["packages/*", "website"]
 }
