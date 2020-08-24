@@ -10,6 +10,24 @@
   "references": [
     {
       "path": "../lib"
-    }
+    },
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../portal"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../tokens"
+    },
+    {
+      "path": "../icon-button"
+    },
+    {
+      "path": "../typography"
+    },
   ]
 }

@@ -19,6 +19,7 @@
       "@leafygreen-ui/portal": "^2.2.1",
       "@leafygreen-ui/tokens": "^0.1.1",
       "@leafygreen-ui/icon": "^6.3.2",
-      "@leafygreen-ui/icon-button": "^7.0.1"
+      "@leafygreen-ui/icon-button": "^7.0.1",
+      "@leafygreen-ui/typography": "^4.2.0"
     }
   }
