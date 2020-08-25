@@ -7,12 +7,14 @@ import BulbIcon from '@leafygreen-ui/icon/dist/Bulb';
 import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
+import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 
 export const Variant = {
   Note: 'note',
   Tip: 'tip',
   Important: 'important',
   Warning: 'warning',
+  Example: 'example',
 } as const;
 
 export type Variant = typeof Variant[keyof typeof Variant];
@@ -73,6 +75,7 @@ export const headerLabels = {
   [Variant.Tip]: 'Tip',
   [Variant.Important]: 'Important',
   [Variant.Warning]: 'Warning',
+  [Variant.Example]: 'Example',
 } as const;
 
 export const headerIcons = {
@@ -80,6 +83,7 @@ export const headerIcons = {
   [Variant.Tip]: BulbIcon,
   [Variant.Important]: ImportantWithCircleIcon,
   [Variant.Warning]: WarningIcon,
+  [Variant.Example]: BeakerIcon,
 } as const;
 
 export const colorSets: Record<Variant, ColorSet> = {
@@ -118,6 +122,15 @@ export const colorSets: Record<Variant, ColorSet> = {
     text: uiColors.red.dark3,
     bar: uiColors.red.base,
     icon: uiColors.red.base,
+  },
+  [Variant.Example]: {
+    header: {
+      background: uiColors.gray.light2,
+      text: uiColors.gray.dark2,
+    },
+    text: uiColors.gray.dark3,
+    bar: uiColors.gray.dark1,
+    icon: uiColors.gray.dark2,
   },
 };
 
