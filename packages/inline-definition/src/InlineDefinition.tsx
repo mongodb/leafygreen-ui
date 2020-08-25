@@ -6,11 +6,9 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 
 const underline = css`
-  display: inline-flex;
   background-repeat: repeat-x;
   background-position: center bottom;
   background-size: 3px 2px;
-  transition: background-image 150ms ease-in-out;
 
   background-image: radial-gradient(
     circle closest-side,
@@ -56,7 +54,7 @@ function InlineDefinition({
 InlineDefinition.displayName = 'InlineDefinition';
 
 InlineDefinition.propTypes = {
-  definition: PropTypes.string.isRequired,
+  definition: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.node,
 };

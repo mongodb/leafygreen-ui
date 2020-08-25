@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { text } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { H2, Body } from '@leafygreen-ui/typography';
 import InlineDefinition from '.';
@@ -18,7 +19,9 @@ storiesOf('InlineDefinition', module).add('Default', () => (
     `}
   >
     <H2>
-      <InlineDefinition definition={shardDefinition}>Shard</InlineDefinition>{' '}
+      <InlineDefinition definition={text('definition', shardDefinition)}>
+        {text('children', 'Shard')}
+      </InlineDefinition>{' '}
       your cluster
     </H2>
 
