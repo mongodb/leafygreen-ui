@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 6.4.0
+
+### Minor Changes
+
+- 699a65c: Adds `Beaker` glyph
+
 ## 6.3.2
 
 ### Patch Changes
