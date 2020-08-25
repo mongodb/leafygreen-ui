@@ -119,8 +119,9 @@ function Popover({
       () => getElementDocumentPosition(referenceElement),
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [
-        lastTimeRefElMutated,
+        referenceElement,
         viewportSize,
+        lastTimeRefElMutated,
         active,
         align,
         justify,
@@ -134,8 +135,9 @@ function Popover({
       () => getElementDocumentPosition(contentNode),
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [
-        lastTimeContentElMutated,
+        contentNode,
         viewportSize,
+        lastTimeContentElMutated,
         active,
         align,
         justify,
@@ -162,38 +164,15 @@ function Popover({
     }
   }, [layoutMightHaveChanged]);
 
-  const [position, setPosition] = useState<ReturnType<
-    typeof calculatePosition
-  > | null>(null);
+  // Don't render the popover initially since computing the position depends on
+  // the window which isn't available if the component is rendered on server side.
+  const [shouldRender, setShouldRender] = useState(false);
 
   useLayoutEffect(() => {
-    setPosition(
-      calculatePosition({
-        useRelativePositioning: !usePortal,
-        spacing,
-        align,
-        justify,
-        referenceElViewportPos,
-        referenceElDocumentPos,
-        contentElViewportPos,
-        contentElDocumentPos,
-      }),
-    );
-  }, [
-    referenceElViewportPos,
-    referenceElDocumentPos,
-    contentElViewportPos,
-    contentElDocumentPos,
-    lastTimeRefElMutated,
-    lastTimeContentElMutated,
-    usePortal,
-    spacing,
-    align,
-    justify,
-    forceUpdateCounter,
-  ]);
+    setShouldRender(true);
+  }, []);
 
-  if (!position) {
+  if (!shouldRender) {
     return null;
   }
 
@@ -201,7 +180,16 @@ function Popover({
     align: windowSafeAlign,
     justify: windowSafeJustify,
     positionCSS,
-  } = position;
+  } = calculatePosition({
+    useRelativePositioning: !usePortal,
+    spacing,
+    align,
+    justify,
+    referenceElViewportPos,
+    referenceElDocumentPos,
+    contentElViewportPos,
+    contentElDocumentPos,
+  });
 
   const activeStyle = css`
     transform: translate3d(0, 0, 0) scale(1);
