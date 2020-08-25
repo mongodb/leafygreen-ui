@@ -21,7 +21,7 @@ const WrappedModal = ({
       onButtonClick={() => setOpen(false)}
       onClose={() => setOpen(false)}
       onLinkClick={() => setOpen(false)}
-      graphic={<img alt="" src="" aria-label="image graphic" />}
+      graphic={<img alt="" src="" aria-label="Image graphic" />}
       {...props}
     >
       {props.children ?? 'Content text'}
