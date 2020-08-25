@@ -1,5 +1,16 @@
 # @leafygreen-ui/callout
 
+## 1.2.0
+
+### Minor Changes
+
+- 699a65c: Adds `example` variant to Callout component
+
+### Patch Changes
+
+- Updated dependencies [699a65c]
+  - @leafygreen-ui/icon@6.4.0
+
 ## 1.1.2
 
 ### Patch Changes
