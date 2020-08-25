@@ -1,5 +1,11 @@
 # @leafygreen-ui/box
 
+## 2.1.4
+
+### Patch Changes
+
+- a14a079: ExtendableBox type now provides 'displayName' and 'propTypes' properties.
+
 ## 2.1.3
 
 ### Patch Changes
