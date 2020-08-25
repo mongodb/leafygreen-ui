@@ -1,5 +1,14 @@
 # @leafygreen-ui/table
 
+## 0.1.2
+
+### Patch Changes
+
+- bb5fb9d: Type fixes for Table
+- Updated dependencies [699a65c]
+  - @leafygreen-ui/icon@6.4.0
+  - @leafygreen-ui/icon-button@7.0.2
+
 ## 0.1.1
 
 ### Patch Changes
