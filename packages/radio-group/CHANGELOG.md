@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-group
 
+## 4.0.3
+
+### Patch Changes
+
+- 6b0d0a2: Made some props optional that were previously required
+
 ## 4.0.2
 
 ### Patch Changes
