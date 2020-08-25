@@ -26,7 +26,6 @@ module.exports = {
     },
   },
   rules: {
-    'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': [
       'error',
       {
@@ -79,6 +78,10 @@ module.exports = {
         '@typescript-eslint/interface-name-prefix': ['error', 'never'],
         '@typescript-eslint/no-inferrable-types': 'warn',
       },
+    },
+    {
+      files: ['website/**/*.{ts,tsx}'],
+      rules: { 'react/react-in-jsx-scope': 'off' },
     },
     {
       files: ['packages/**/*.spec.{ts,tsx}'],
