@@ -3,7 +3,14 @@ import { transparentize } from 'polished';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
+
+export const ContentStyle = {
+  None: 'none',
+  Clickable: 'clickable',
+} as const;
+
+export type ContentStyle = typeof ContentStyle[keyof typeof ContentStyle];
 
 const baseBoxShadow = `0 4px 10px -4px ${transparentize(0.7, uiColors.black)}`;
 const hoverBoxShadow = `0 2px 6px -2px ${transparentize(0.4, uiColors.black)}`;
@@ -38,15 +45,30 @@ const clickableStyle = css`
 
 interface CardProps {
   className?: string;
-  onClick?: React.MouseEventHandler;
+  contentStyle?: ContentStyle;
 }
 
-const Card: ExtendableBox<CardProps> = ({ className, ...rest }: CardProps) => {
-  const clickable = rest.onClick !== undefined;
+const Card: ExtendableBox<CardProps> = ({
+  className,
+  contentStyle,
+  ...rest
+}: BoxProps<'div', CardProps>) => {
+  if (
+    contentStyle === undefined &&
+    (('onClick' in rest && rest.onClick !== undefined) ||
+      ('href' in rest && !!rest.href))
+  ) {
+    contentStyle = ContentStyle.Clickable;
+  }
+
   return (
     <Box
-      className={cx(containerStyle, { [clickableStyle]: clickable }, className)}
-      tabIndex={clickable ? 0 : undefined}
+      // @ts-expect-error
+      className={cx(
+        containerStyle,
+        { [clickableStyle]: contentStyle === ContentStyle.Clickable },
+        className,
+      )}
       {...rest}
     />
   );
