@@ -1,5 +1,11 @@
 # @leafygreen-ui/popover
 
+## 5.2.1
+
+### Patch Changes
+
+- 290c9fc: Fixes rendering bug
+
 ## 5.2.0
 
 ### Minor Changes
