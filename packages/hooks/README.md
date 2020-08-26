@@ -161,3 +161,7 @@ const Example = ({nextValue: number}) => {
 // Third render
 <Example nextValue={0} />  // will render "2020"
 ```
+
+# useIsomorphicLayoutEffect
+
+Drop-in replacement for `useLayoutEffect` that does not produce warnings during server-side rendering
