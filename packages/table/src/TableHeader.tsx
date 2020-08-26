@@ -37,44 +37,49 @@ const glyphMap = {
   desc: SortAscendingIcon,
 } as const;
 
-export function normalizeAccessor(accessor: string | Function) {
-  let accessorFn = accessor;
+type NormalizedAccessor<T extends string | Function> = T extends string
+  ? <U>(data: U) => T extends keyof U ? U[T] : undefined
+  : T;
+export function normalizeAccessor<T extends string | Function>(
+  accessor: T,
+): NormalizedAccessor<T> {
+  let accessorFn = accessor as NormalizedAccessor<T>;
 
   if (typeof accessor === 'string') {
     if (accessor.includes('.')) {
       const accessorArr = accessor.split('.');
 
-      accessorFn = (data: any) => {
+      accessorFn = ((data: any) => {
         return accessorArr.reduce((obj, access) => {
           return obj[access];
         }, data);
-      };
+      }) as NormalizedAccessor<T>;
     } else {
-      accessorFn = (data: any) => data[accessor];
+      accessorFn = ((data: any) => data[accessor]) as NormalizedAccessor<T>;
     }
   }
 
-  return accessorFn as (data: string) => string;
+  return accessorFn;
 }
 
-interface TableHeaderInterface {
+interface TableHeaderInterface<Shape> {
   label: React.ReactElement | string;
   onClick?: (
     colId: number,
     accessorValue: ((data: any) => string) | string,
   ) => void;
   index?: number;
-  sortBy?: ((data: any) => string) | string;
+  sortBy?: ((data: Shape) => string) | string;
   dataType?: DataType;
 }
 
-export type TableHeaderProps = Omit<
+export type TableHeaderProps<Shape> = Omit<
   React.ComponentPropsWithoutRef<'th'>,
-  keyof TableHeaderInterface
+  keyof TableHeaderInterface<Shape>
 > &
-  TableHeaderInterface;
+  TableHeaderInterface<Shape>;
 
-function TableHeader({
+function TableHeader<Shape>({
   label,
   onClick,
   index,
@@ -82,7 +87,7 @@ function TableHeader({
   dataType,
   sortBy,
   ...rest
-}: TableHeaderProps) {
+}: TableHeaderProps<Shape>) {
   const {
     state: { sort },
     dispatch,

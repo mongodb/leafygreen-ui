@@ -156,7 +156,7 @@ const divStyle = css`
   justify-content: center;
   flex-shrink: 0;
   border-radius: 100%;
- 
+
   &:before {
     content: '';
     position: absolute;
