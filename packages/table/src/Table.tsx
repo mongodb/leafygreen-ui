@@ -22,7 +22,7 @@ export interface TableProps<Shape>
   extends React.ComponentPropsWithoutRef<'table'> {
   data: Array<Shape>;
   columns:
-    | Array<React.ReactElement<HeaderRowProps | TableHeaderProps>>
+    | Array<React.ReactElement<HeaderRowProps | TableHeaderProps<Shape>>>
     | React.ReactFragment;
 
   children: (TableRowArgs: TableRowInterface<Shape>) => JSX.Element;
