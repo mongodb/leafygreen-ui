@@ -18,10 +18,6 @@ npm install @leafygreen-ui/tokens
 
 ### Usage
 
-```shell
-npm install @leafygreen-ui/tokens
-```
-
 ## Spacing
 
 ```js
@@ -40,4 +36,19 @@ import { spacing } from '@leafygreen-ui/tokens';
  */
 
 const example = () => <span style={{ margin: spacing[1] }}>Hello World</span>;
+```
+
+## Fonts
+
+```js
+import { fonts } from '@leafygreen-ui/tokens';
+
+/**
+ * const fonts = {
+ *  default: `Akzidenz, 'Helvetica Neue', Helvetica, Arial, sans-serif`,
+ *  code: `'Source Code Pro', monospace`,
+ * };
+ */
+
+const example = () => <span style={{ font-family: fonts.default }}>Hello World</span>;
 ```
