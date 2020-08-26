@@ -86,20 +86,66 @@ function Body({ children, className, weight = 'regular', ...rest }: BodyProps) {
 
 const code = css`
   font-family: 'Source Code Pro', monospace;
-  display: inline-block;
+  background-color: ${uiColors.gray.light3};
+  border: 1px solid ${uiColors.gray.light1};
+  border-radius: 3px;
 `;
 
-type InlineCodeProps = HTMLElementProps<'code'>;
+const codeLink = css`
+  text-decoration: none;
+  border-radius: 5px;
+  border: 3px solid transparent;
+  margin: -3px;
+  transition: border-color 150ms ease-in-out;
 
+  &:hover {
+    border-color: ${uiColors.gray.light2};
+  }
+
+  &:focus {
+    outline: none;
+    border-color: ${uiColors.blue.light2};
+  }
+`;
+
+const nowrap = css`
+  white-space: nowrap;
+`;
+
+const normal = css`
+  white-space: normal;
+`;
+
+const colorBlue = css`
+  color: ${uiColors.blue.base};
+`;
+
+// Brooke be clever
+type InlineCodeProps = HTMLElementProps<'code'> & HTMLElementProps<'a'>;
+
+// change code height based on type scale
 function InlineCode({ children, className, ...rest }: InlineCodeProps) {
   const size = useBaseFontSize();
-  const body = size === 16 ? typeScale2 : typeScale1;
+  const fontSize = size === 16 ? typeScale2 : typeScale1;
+  const whiteSpace =
+    typeof children === 'string' && children.length <= 30 ? nowrap : normal;
+  const isAnchor = rest.href || rest.onClick;
 
-  return (
-    <code {...rest} className={cx(sharedStyles, code, body, className)}>
+  const renderedInlineCode = (isAnchor = false) => (
+    <code className={cx(fontSize, code, whiteSpace, { [colorBlue]: isAnchor })}>
       {children}
     </code>
   );
+
+  if (isAnchor) {
+    return (
+      <a className={cx(codeLink, className)} {...rest}>
+        {renderedInlineCode(true)}
+      </a>
+    );
+  }
+
+  return renderedInlineCode();
 }
 
 const disclaimer = css`

@@ -22,7 +22,9 @@ storiesOf('Typography', module).add('Default', () => (
       >
         Body
       </Body>
-      <InlineCode className={displayBlock}>InlineCode</InlineCode>
+
+      <InlineCode href="https://mongodb.design">InlineCode</InlineCode>
+
       <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
       <Overline>Overline</Overline>
       <Link
@@ -43,5 +45,24 @@ storiesOf('Typography', module).add('Default', () => (
         Link
       </Link>
     </div>
+    <Body
+      className={css`
+        width: 400px;
+        border: 1px solid gold;
+        padding: 20px;
+        font-size: 14px;
+      `}
+    >
+      <InlineCode href="test">Lorem ipsum dolor</InlineCode> sit amet,
+      consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+      dolore magna aliqua. Ut enim ad minim{' '}
+      <InlineCode>veniam, quis nostrud</InlineCode> exercitation ullamco laboris
+      nisi ut aliquip ex ea commodo consequat.{' '}
+      <InlineCode href="test">
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      </InlineCode>{' '}
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </Body>
   </LeafygreenProvider>
 ));
