@@ -39,6 +39,7 @@ A set of CSS styles and React components built with design in mind.
 - [Toggle](https://github.com/mongodb/leafygreen-ui/tree/master/packages/toggle)
 - [Tooltip](https://github.com/mongodb/leafygreen-ui/tree/master/packages/tooltip)
 - [Typography](https://github.com/mongodb/leafygreen-ui/tree/master/packages/typography)
+- [Toast](https://github.com/mongodb/leafygreen-ui/tree/master/packages/toast)
 
 ## Developer Setup
 
