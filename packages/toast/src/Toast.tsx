@@ -15,6 +15,106 @@ import ProgressBar from './ToastProgressBar';
 
 const toastWidth = 400;
 
+const transitionDuration = 150;
+
+type StyledElements = 'toast' | 'body' | 'icon' | 'contentWrapper' | 'dismissButton'
+
+const baseElementStyles: Partial<Record<StyledElements, string>> = {
+  toast: css`
+    position: fixed;
+    bottom: ${spacing[6]};
+    left: ${spacing[4]};
+    width: ${toastWidth}px;
+    max-width: calc(100vw - (${spacing[4]} * 2));
+    border-radius: 4px;
+    box-shadow: 0 18px 18px -15px ${transparentize(0.7, uiColors.black)};
+    overflow: hidden;
+    transform: translate3d(0, ${spacing[3]}, 0) scale(0.95);
+    transform-origin: bottom center;
+    opacity: 0;
+    transition: all ${transitionDuration}ms ease-in-out;
+  `,
+
+  icon: css`
+    flex-shrink: 0;
+    margin-right: ${spacing[3]};
+  `,
+
+  contentWrapper: css`
+    display: flex;
+    align-items: center;
+    padding: ${spacing[3]};
+  `,
+
+  dismissButton: css`
+    position: absolute;
+    top: ${spacing[2]};
+    right: ${spacing[2]};
+    transition: color 0.15s ease-in-out;
+  `,
+}
+
+const ToastVariants = {
+  success: 'success',
+  progress: 'progress',
+} as const;
+
+type ToastVariants = typeof ToastVariants[keyof typeof ToastVariants];
+
+const variantStyles: Record<ToastVariants, Partial<Record<StyledElements, string>>> = {
+  [ToastVariants.success]: {
+    toast: css`
+      background-color: ${uiColors.green.light3};
+    `,
+
+    icon: css`
+      color: ${uiColors.green.base};
+    `,
+
+    contentWrapper: css`
+      border-radius: 4px;
+      border: 1px solid ${uiColors.green.light2};
+    `,
+
+    body: css`
+      color: ${uiColors.green.dark2};
+    `,
+
+    dismissButton: css`
+      color: ${uiColors.green.base};
+
+      &:hover {
+        color: ${uiColors.green.dark2};
+
+        &:before {
+          background-color: ${uiColors.green.light2};
+        }
+      }
+    `,
+  },
+
+  [ToastVariants.progress]: {
+    toast: css`
+      background-color: ${uiColors.white};
+      padding-bottom: 6px;
+    `,
+
+    icon: css`
+      color: ${uiColors.gray.dark2};
+    `,
+
+    contentWrapper: css`
+      border-radius: 4px 4px 0 0;
+      border: 1px solid ${uiColors.blue.light2};
+      border-bottom: 0;
+    `,
+
+    body: css`
+      color: ${uiColors.gray.dark2};
+    `,
+  },
+};
+
 const RTGStates = {
   Entering: 'entering',
   Entered: 'entered',
@@ -24,115 +124,11 @@ const RTGStates = {
 
 type RTGStates = typeof RTGStates[keyof typeof RTGStates];
 
-const ToastVariants = {
-  success: 'success',
-  progress: 'progress',
-} as const;
-
-type ToastVariants = typeof ToastVariants[keyof typeof ToastVariants];
-
-const transitionDuration = 150;
-
-const baseToastStyle = css`
-  position: fixed;
-  bottom: ${spacing[6]};
-  left: ${spacing[4]};
-  width: ${toastWidth}px;
-  max-width: calc(100vw - (${spacing[4]} * 2));
-  border-radius: 4px;
-  box-shadow: 0 18px 18px -15px ${transparentize(0.7, uiColors.black)};
-  overflow: hidden;
-  transform: translate3d(0, ${spacing[3]}, 0) scale(0.95);
-  transform-origin: bottom center;
-  opacity: 0;
-  transition: all ${transitionDuration}ms ease-in-out;
-`;
-
-const toastVariantStyles: Record<ToastVariants, string> = {
-  [ToastVariants.success]: css`
-    background-color: ${uiColors.green.light3};
-  `,
-
-  [ToastVariants.progress]: css`
-    background-color: ${uiColors.white};
-    padding-bottom: 6px;
-  `,
-};
-
-const toastVisibleStateStyle = css`
-  transform: translate3d(0, 0, 0) scale(1);
-  opacity: 1;
-`;
-
 const toastTransitionStateStyles: Partial<Record<RTGStates, string>> = {
-  [RTGStates.Entered]: toastVisibleStateStyle,
-};
-
-const baseIconStyle = css`
-  flex-shrink: 0;
-  margin-right: ${spacing[3]};
-`;
-
-const iconVariantStyles: Record<ToastVariants, string> = {
-  [ToastVariants.success]: css`
-    color: ${uiColors.green.base};
+  [RTGStates.Entered]: css`
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
   `,
-
-  [ToastVariants.progress]: css`
-    color: ${uiColors.gray.dark2};
-  `,
-};
-
-const contentWrapperStyles = css`
-  display: flex;
-  align-items: center;
-  padding: ${spacing[3]};
-`;
-
-const contentWrapperVariantStyles: Record<ToastVariants, string> = {
-  [ToastVariants.success]: css`
-    border-radius: 4px;
-    border: 1px solid ${uiColors.green.light2};
-  `,
-
-  [ToastVariants.progress]: css`
-    border-radius: 4px 4px 0 0;
-    border: 1px solid ${uiColors.blue.light2};
-    border-bottom: 0;
-  `,
-};
-
-const bodyVariantStyles: Record<ToastVariants, string> = {
-  [ToastVariants.success]: css`
-    color: ${uiColors.green.dark2};
-  `,
-
-  [ToastVariants.progress]: css`
-    color: ${uiColors.gray.dark2};
-  `,
-};
-
-const dismissButtonStyle = css`
-  position: absolute;
-  top: ${spacing[2]};
-  right: ${spacing[2]};
-  transition: color 0.15s ease-in-out;
-`;
-
-const dismissButtonVariantStyle = {
-  [ToastVariants.success]: css`
-    color: ${uiColors.green.base};
-
-    &:hover {
-      color: ${uiColors.green.dark2};
-
-      &:before {
-        background-color: ${uiColors.green.light2};
-      }
-    }
-  `,
-
-  [ToastVariants.progress]: '',
 };
 
 interface ToastProps extends Omit<React.ComponentProps<'div'>, 'title'> {
@@ -199,6 +195,8 @@ function Toast({
     VariantIcon = CheckmarkWithCircleIcon;
   }
 
+  const currentVariantStyles = variantStyles[variant];
+
   return (
     <Transition
       in={open}
@@ -213,8 +211,8 @@ function Toast({
             role="status"
             ref={nodeRef}
             className={cx(
-              baseToastStyle,
-              toastVariantStyles[variant],
+              baseElementStyles.toast,
+              currentVariantStyles.toast,
               toastTransitionStateStyles[state],
               className,
             )}
@@ -222,8 +220,8 @@ function Toast({
           >
             <div
               className={cx(
-                contentWrapperStyles,
-                contentWrapperVariantStyles[variant],
+                baseElementStyles.contentWrapper,
+                currentVariantStyles.contentWrapper,
                 {
                   [css`
                     padding-right: calc(${spacing[3]} + ${spacing[2]});
@@ -232,7 +230,7 @@ function Toast({
               )}
             >
               <VariantIcon
-                className={cx(baseIconStyle, iconVariantStyles[variant])}
+                className={cx(baseElementStyles.icon, currentVariantStyles.icon)}
                 size={30}
               />
 
@@ -240,7 +238,7 @@ function Toast({
                 {title && (
                   <Body
                     className={cx(
-                      bodyVariantStyles[variant],
+                      currentVariantStyles.body,
                       css`
                         font-weight: bold;
                       `,
@@ -250,15 +248,15 @@ function Toast({
                   </Body>
                 )}
 
-                <Body className={bodyVariantStyles[variant]}>{body}</Body>
+                <Body className={currentVariantStyles.body}>{body}</Body>
               </div>
             </div>
 
             {dismissible && (
               <IconButton
                 className={cx(
-                  dismissButtonStyle,
-                  dismissButtonVariantStyle[variant],
+                  baseElementStyles.dismissButton,
+                  currentVariantStyles.dismissButton,
                 )}
                 aria-label="Close Message"
                 onClick={close}
