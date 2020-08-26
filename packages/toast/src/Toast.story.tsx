@@ -9,7 +9,7 @@ storiesOf('Toast', module).add('Default', () => {
     variant,
     progress:
       variant === 'progress'
-        ? number('Progress', 1, { range: true, min: 0, max: 1 })
+        ? number('Progress', 1, { range: true, min: 0, max: 1, step: 0.01 })
         : undefined,
     title: text('Title', 'Exercitation incididunt ea proident velit mollit'),
     body: text('Body', 'Velit ea exercitation qui aute dolor proident.'),

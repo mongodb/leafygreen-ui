@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import { transparentize } from 'polished';
-import { cx, css, keyframes } from '@leafygreen-ui/emotion';
+import { cx, css } from '@leafygreen-ui/emotion';
 import Portal from '@leafygreen-ui/portal';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -10,68 +11,9 @@ import IconButton from '@leafygreen-ui/icon-button';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import RefreshIcon from '@leafygreen-ui/icon/dist/Refresh';
 import XIcon from '@leafygreen-ui/icon/dist/X';
+import ProgressBar from './ToastProgressBar';
 
-const progressBackgroundBase = '#22B7EB';
 const toastWidth = 400;
-
-const progressBarBackgroundStyle = css`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 6px;
-  background-color: ${uiColors.gray.light2};
-  border-radius: 0 0 4px 4px;
-  overflow: hidden;
-`;
-
-const backgroundShimmer = keyframes`
-  0% {
-    background-position: ${-toastWidth}px;
-  }
-
-  100% {
-    background-position: ${toastWidth * 2}px;
-  }
-`;
-
-const progressBarStyle = css`
-  overflow: hidden;
-  height: 6px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  background-color: ${progressBackgroundBase};
-  background-image: linear-gradient(
-    90deg,
-    ${progressBackgroundBase} 0px,
-    #cce8f4 ${toastWidth / 2}px,
-    ${progressBackgroundBase} ${toastWidth}px
-  );
-  background-size: 600px;
-  animation: ${backgroundShimmer} 4s infinite linear;
-  transition: width 0.3s ease-in-out;
-`;
-
-interface ProgressBarProps {
-  progress: number;
-}
-
-function ProgressBar({ progress }: ProgressBarProps) {
-  return (
-    <div className={progressBarBackgroundStyle}>
-      <div
-        className={cx(
-          progressBarStyle,
-          css`
-            width: ${progress * 100}%;
-          `,
-        )}
-      />
-    </div>
-  );
-}
 
 const RTGStates = {
   Entering: 'entering',
@@ -234,7 +176,7 @@ interface ToastProps extends Omit<React.ComponentProps<'div'>, 'title'> {
   close?: React.MouseEventHandler;
 }
 
-export default function Toast({
+function Toast({
   title,
   body,
   className,
@@ -319,6 +261,7 @@ export default function Toast({
                   dismissButtonVariantStyle[variant],
                 )}
                 aria-label="Close Message"
+                onClick={close}
               >
                 <XIcon />
               </IconButton>
@@ -333,3 +276,17 @@ export default function Toast({
     </Transition>
   );
 }
+
+Toast.displayName = 'Toast';
+
+Toast.propTypes = {
+  title: PropTypes.element,
+  body: PropTypes.element.isRequired,
+  className: PropTypes.string,
+  variant: PropTypes.oneOf(Object.values(ToastVariants)).isRequired,
+  progress: PropTypes.number,
+  open: PropTypes.bool,
+  close: PropTypes.func,
+};
+
+export default Toast;
