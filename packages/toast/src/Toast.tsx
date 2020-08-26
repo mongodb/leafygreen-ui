@@ -193,13 +193,44 @@ const dismissButtonVariantStyle = {
   [ToastVariants.progress]: '',
 };
 
-interface ToastProps {
+interface ToastProps extends Omit<React.ComponentProps<'div'>, 'title'> {
+  /**
+   * Optional text shown in bold above the body text.
+   */
   title?: React.ReactNode;
+
+  /**
+   * Required main text for the Toast.
+   */
   body: React.ReactNode;
+
+  /**
+   * Optional className passed to the wrapping <div /> for the toast.
+   */
   className?: string;
+
+  /**
+   * Required style variant to render the Toast as.
+   */
   variant: ToastVariants;
+
+  /**
+   * Optional number between 0 and 1 that sets the progress bar's progress. Note that the progress bar is only rendered when the Toast variant is set to `'progress'`.
+   *
+   * **Default:** `1`
+   */
   progress?: number;
+
+  /**
+   * Optional boolean that renders the Toast and makes it visible when true.
+   *
+   * **Default:** `false`
+   */
   open?: boolean;
+
+  /**
+   * Optional click event handler that, when set, renders a close button that receives the passed handler.
+   */
   close?: React.MouseEventHandler;
 }
 
@@ -211,6 +242,7 @@ export default function Toast({
   progress = 1,
   open = false,
   close,
+  ...rest
 }: ToastProps) {
   const nodeRef = useRef(null);
   const dismissible = !!close;
@@ -220,6 +252,8 @@ export default function Toast({
   if (variant === ToastVariants.progress) {
     VariantIcon = RefreshIcon;
   } else if (variant === ToastVariants.success) {
+    VariantIcon = CheckmarkWithCircleIcon;
+  } else {
     VariantIcon = CheckmarkWithCircleIcon;
   }
 
@@ -242,6 +276,7 @@ export default function Toast({
               toastTransitionStateStyles[state],
               className,
             )}
+            {...rest}
           >
             <div
               className={cx(
@@ -261,7 +296,16 @@ export default function Toast({
 
               <div>
                 {title && (
-                  <Body className={cx(bodyVariantStyles[variant], css`font-weight: bold;`)}>{title}</Body>
+                  <Body
+                    className={cx(
+                      bodyVariantStyles[variant],
+                      css`
+                        font-weight: bold;
+                      `,
+                    )}
+                  >
+                    {title}
+                  </Body>
                 )}
 
                 <Body className={bodyVariantStyles[variant]}>{body}</Body>
