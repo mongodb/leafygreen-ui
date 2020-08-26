@@ -1,5 +1,17 @@
 # @leafygreen-ui/icon
 
+## 6.4.2
+
+### Patch Changes
+
+- 43d47db: Correctly sets fill rule for `Beaker`
+
+## 6.4.1
+
+### Patch Changes
+
+- b80379a: Updates fill rule for `Beaker`
+
 ## 6.4.0
 
 ### Minor Changes

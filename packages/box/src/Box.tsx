@@ -100,8 +100,7 @@ export default Box;
 export interface ExtendableBox<
   ExtraProps,
   Default extends React.ElementType = 'div'
->
-  extends Pick<
+> extends Pick<
     React.FunctionComponent<BoxProps<Default, ExtraProps>>,
     'displayName' | 'propTypes'
   > {
