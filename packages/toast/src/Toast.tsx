@@ -22,14 +22,14 @@ type StyledElements = 'toast' | 'body' | 'icon' | 'contentWrapper' | 'dismissBut
 const baseElementStyles: Partial<Record<StyledElements, string>> = {
   toast: css`
     position: fixed;
-    bottom: ${spacing[6]};
-    left: ${spacing[4]};
+    bottom: ${spacing[6]}px;
+    left: ${spacing[4]}px;
     width: ${toastWidth}px;
-    max-width: calc(100vw - (${spacing[4]} * 2));
+    max-width: calc(100vw - ${spacing[4] * 2}px);
     border-radius: 4px;
     box-shadow: 0 18px 18px -15px ${transparentize(0.7, uiColors.black)};
     overflow: hidden;
-    transform: translate3d(0, ${spacing[3]}, 0) scale(0.95);
+    transform: translate3d(0, ${spacing[3]}px, 0) scale(0.95);
     transform-origin: bottom center;
     opacity: 0;
     transition: all ${transitionDuration}ms ease-in-out;
@@ -37,19 +37,19 @@ const baseElementStyles: Partial<Record<StyledElements, string>> = {
 
   icon: css`
     flex-shrink: 0;
-    margin-right: ${spacing[3]};
+    margin-right: ${spacing[3]}px;
   `,
 
   contentWrapper: css`
     display: flex;
     align-items: center;
-    padding: ${spacing[3]};
+    padding: ${spacing[3]}px;
   `,
 
   dismissButton: css`
     position: absolute;
-    top: ${spacing[2]};
-    right: ${spacing[2]};
+    top: ${spacing[2]}px;
+    right: ${spacing[2]}px;
     transition: color 0.15s ease-in-out;
   `,
 }
@@ -224,7 +224,7 @@ function Toast({
                 currentVariantStyles.contentWrapper,
                 {
                   [css`
-                    padding-right: calc(${spacing[3]} + ${spacing[2]});
+                    padding-right: ${spacing[3] * 2}px;
                   `]: dismissible,
                 },
               )}
