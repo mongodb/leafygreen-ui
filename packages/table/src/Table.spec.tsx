@@ -189,7 +189,7 @@ describe('packages/table', () => {
       expect(headerRow[0].tagName.toLowerCase()).toBe('tr');
     });
 
-    test('it formats columsn that are passed in as a HeaderRow', () => {
+    test('it formats columns that are passed in as a HeaderRow', () => {
       renderTable({
         table: {
           columns: (
