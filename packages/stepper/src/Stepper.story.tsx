@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { number } from '@storybook/addon-knobs';
 import { Step, Stepper } from '.';
-import { times } from 'lodash';
+import times from 'lodash/times';
 import { addons } from '@storybook/addons';
 import { CHANGE } from '@storybook/addon-knobs';
 

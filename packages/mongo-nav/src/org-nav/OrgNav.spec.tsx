@@ -12,7 +12,7 @@ import {
   constructOrganizationURL,
 } from '../data';
 import OrgNav from './OrgNav';
-import { startCase } from 'lodash';
+import startCase from 'lodash/startCase';
 import { NavElement, ActiveNavElement } from '../types';
 
 // data
