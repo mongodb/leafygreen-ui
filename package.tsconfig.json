@@ -4,7 +4,7 @@
     "module": "esnext",
     "declaration": true,
     "paths": {
-      "@leafygreen-ui/*": ["packages/*/src"]
+      "@leafygreen-ui/*": ["packages/*/src", "website/*"]
     },
     "sourceMap": true,
     "declarationMap": true,
