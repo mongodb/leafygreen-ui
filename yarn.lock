@@ -14375,6 +14375,11 @@ typescript@^4.0.0:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.2.tgz#7ea7c88777c723c681e33bf7988be5d008d05ac2"
   integrity sha512-e4ERvRV2wb+rRZ/IQeb3jm2VxBsirQLpQhdxplZ2MEzGvDkkMmPglecnNDfSUBivMjP93vRbngYYDQqQ/78bcQ==
 
+typescript@^4.1.0-dev.20200804:
+  version "4.1.0-dev.20200826"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.0-dev.20200826.tgz#cccc13838d7c33355dd035ec9a8bc9f65c1a2968"
+  integrity sha512-PUT7mgPK24zXnsMrpvZ7tXzQEnTJdSr/5/nu+fPHjM4XqNcn283/hk9d8wLd5PVzpn6SAEl1cL+wQT69gXP82w==
+
 uglify-js@^3.1.4:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.8.1.tgz#43bb15ce6f545eaa0a64c49fd29375ea09fa0f93"

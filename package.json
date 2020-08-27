@@ -37,9 +37,9 @@
     "test": "jest --env jsdom --config jest.config.js",
     "test:ssr": "jest --env jsdom --config ssr.jest.config.js",
     "ts": "tsc --project tsconfig.json",
-    "ts:build": "tsc --build build.tsconfig.json && yarn ts:downlevel",
+    "ts:build": "tsc --build build.tsconfig.json",
     "ts:downlevel": "rimraf packages/*/dist/ts3.4 && echo packages/*/dist | NODE_NO_WARNINGS=1 xargs -I{} -n1 -P8 downlevel-dts {} {}/ts3.4",
-    "prepublishOnly": "yarn lint && yarn test && yarn build",
+    "prepublishOnly": "yarn lint && yarn test && yarn build && yarn ts:downlevel",
     "release": "yarn changeset publish --public",
     "release:site": "gh-pages --dist storybook/public"
   },
