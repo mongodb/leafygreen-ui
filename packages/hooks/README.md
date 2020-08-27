@@ -164,4 +164,4 @@ const Example = ({nextValue: number}) => {
 
 # useIsomorphicLayoutEffect
 
-Drop-in replacement for `useLayoutEffect` that does not produce warnings during server-side rendering
+Drop-in replacement for `useLayoutEffect` that does not produce warnings during server-side rendering. If your project uses the `react-hooks/exhaustive-deps` linter rule, it's recommended to add `useIsomorphicLayoutEffect` to the `additionalHooks` of that rule.
