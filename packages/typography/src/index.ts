@@ -4,6 +4,7 @@ export {
   Subtitle,
   Body,
   InlineCode,
+  InlineKeyCode,
   Disclaimer,
   Overline,
 } from './Typography';
