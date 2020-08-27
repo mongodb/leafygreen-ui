@@ -68,7 +68,7 @@ function ToastProgressBar({ progress }: ProgressBarProps) {
 ToastProgressBar.displayName = 'ToastProgressBar';
 
 ToastProgressBar.propTypes = {
-	progress: PropTypes.number,
+  progress: PropTypes.number,
 };
 
-export default ToastProgressBar
+export default ToastProgressBar;

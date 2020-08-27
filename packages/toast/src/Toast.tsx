@@ -17,7 +17,12 @@ const toastWidth = 400;
 
 const transitionDuration = 150;
 
-type StyledElements = 'toast' | 'body' | 'icon' | 'contentWrapper' | 'dismissButton'
+type StyledElements =
+  | 'toast'
+  | 'body'
+  | 'icon'
+  | 'contentWrapper'
+  | 'dismissButton';
 
 const baseElementStyles: Partial<Record<StyledElements, string>> = {
   toast: css`
@@ -52,7 +57,7 @@ const baseElementStyles: Partial<Record<StyledElements, string>> = {
     right: ${spacing[2]}px;
     transition: color 0.15s ease-in-out;
   `,
-}
+};
 
 const ToastVariants = {
   success: 'success',
@@ -61,7 +66,10 @@ const ToastVariants = {
 
 type ToastVariants = typeof ToastVariants[keyof typeof ToastVariants];
 
-const variantStyles: Record<ToastVariants, Partial<Record<StyledElements, string>>> = {
+const variantStyles: Record<
+  ToastVariants,
+  Partial<Record<StyledElements, string>>
+> = {
   [ToastVariants.success]: {
     toast: css`
       background-color: ${uiColors.green.light3};
@@ -230,7 +238,10 @@ function Toast({
               )}
             >
               <VariantIcon
-                className={cx(baseElementStyles.icon, currentVariantStyles.icon)}
+                className={cx(
+                  baseElementStyles.icon,
+                  currentVariantStyles.icon,
+                )}
                 size={30}
               />
 
