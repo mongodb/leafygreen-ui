@@ -4,11 +4,11 @@ import { css } from '@leafygreen-ui/emotion';
 import { spacing } from '.';
 
 const gutter = css`
-  margin-left: ${spacing[3]};
+  margin-left: ${spacing[3]}px;
 `;
 
 const textWrapper = css`
-  margin-bottom: ${spacing[2]};
+  margin-bottom: ${spacing[2]}px;
   font-size: 10px;
 `;
 
@@ -27,8 +27,8 @@ const spacingBlockVariants = Object.keys(spacing).reduce(
     const key = (index as PropertyKey) as keyof typeof spacing;
     acc[key] = css`
       background-color: ${colors[idx]};
-      width: ${spacing[key]};
-      height: ${spacing[key]};
+      width: ${spacing[key]}px;
+      height: ${spacing[key]}px;
     `;
     return acc;
   },
