@@ -59,11 +59,30 @@ module.exports = {
       plugins: ['@typescript-eslint'],
       rules: {
         // The regular rule thinks imported types are unused
-        'no-unused-vars': 0,
-        '@typescript-eslint/no-unused-vars': [1, { ignoreRestSiblings: true }],
-        '@typescript-eslint/adjacent-overload-signatures': 2,
-        '@typescript-eslint/array-type': [2, { default: 'generic' }],
-        '@typescript-eslint/class-name-casing': 2,
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': [
+          'warn',
+          {
+            ignoreRestSiblings: true,
+            argsIgnorePattern: '^_',
+            varsIgnorePattern: '^_',
+            caughtErrorsIgnorePattern: '^_',
+          },
+        ],
+        '@typescript-eslint/adjacent-overload-signatures': 'error',
+        '@typescript-eslint/array-type': ['error', { default: 'generic' }],
+        '@typescript-eslint/naming-convention': [
+          'error',
+          { selector: 'class', format: ['PascalCase'] },
+          {
+            selector: 'interface',
+            format: ['PascalCase'],
+            custom: {
+              regex: '^I[A-Z]',
+              match: false,
+            },
+          },
+        ],
         '@typescript-eslint/consistent-type-assertions': [
           'error',
           {
@@ -75,9 +94,12 @@ module.exports = {
           'interface',
         ],
         '@typescript-eslint/explicit-function-return-type': 0,
-        '@typescript-eslint/interface-name-prefix': ['error', 'never'],
         '@typescript-eslint/no-inferrable-types': 'warn',
       },
+    },
+    {
+      files: ['website/**/*.{ts,tsx}'],
+      rules: { 'react/react-in-jsx-scope': 'off' },
     },
     {
       files: ['packages/**/*.spec.{ts,tsx}'],
