@@ -98,6 +98,10 @@ module.exports = {
       },
     },
     {
+      files: ['website/**/*.{ts,tsx}'],
+      rules: { 'react/react-in-jsx-scope': 'off' },
+    },
+    {
       files: ['packages/**/*.spec.{ts,tsx}'],
       globals: {
         expect: true,
