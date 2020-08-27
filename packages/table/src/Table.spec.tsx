@@ -205,7 +205,7 @@ describe('packages/table', () => {
       const headerRow = screen.getAllByTestId('leafygreen-ui-header-row');
       expect(headerRow.length).toBe(1);
       expect(headerRow[0].tagName.toLowerCase()).toBe('tr');
-    })
+    });
 
     test('by default, it does not render columns as sortable', () => {
       renderTable();

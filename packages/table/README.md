@@ -24,10 +24,10 @@ import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 <Table
   data={defaultData}
   columns={[
-      <TableHeader label="Name" />,
-      <TableHeader label="Age" />,
-      <TableHeader label="Color" sortBy={datum => datum.color} />,
-      <TableHeader label="Location" />,
+    <TableHeader label="Name" />,
+    <TableHeader label="Age" />,
+    <TableHeader label="Color" sortBy={datum => datum.color} />,
+    <TableHeader label="Location" />,
   ]}
 >
   {({ datum }) => (
