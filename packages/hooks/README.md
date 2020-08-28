@@ -165,6 +165,7 @@ const Example = ({nextValue: number}) => {
 # useIsomorphicLayoutEffect
 
 Drop-in replacement for `useLayoutEffect` that does not produce warnings during server-side rendering. If your project uses the `react-hooks/exhaustive-deps` ESLint rule, it's recommended to add `useIsomorphicLayoutEffect` to the `additionalHooks` of the rule. Example:
+
 ```js
   rules: {
     'react-hooks/exhaustive-deps': [
