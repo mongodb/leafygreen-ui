@@ -1,7 +1,16 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { select } from '@storybook/addon-knobs';
-import { H1, H2, Subtitle, Body, InlineCode, InlineKeyCode, Disclaimer, Overline } from '.';
+import {
+  H1,
+  H2,
+  Subtitle,
+  Body,
+  InlineCode,
+  InlineKeyCode,
+  Disclaimer,
+  Overline,
+} from '.';
 import { Link, ArrowAppearance } from './Link';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { css } from '@leafygreen-ui/emotion';
@@ -23,8 +32,16 @@ storiesOf('Typography', module).add('Default', () => (
         Body
       </Body>
       <InlineCode className={displayBlock}>InlineCode</InlineCode>
-      <div><InlineKeyCode keys="Command" /></div>
-      <InlineKeyCode keys={["Command", "C"]} />
+      <div
+        className={css`
+          margin-bottom: 10px;
+        `}
+      >
+        <Body>
+          here are some fun directions: <InlineKeyCode keys="Command" />
+        </Body>
+      </div>
+      <InlineKeyCode keys={['CTRL', 'P']} />
       <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
       <Overline>Overline</Overline>
       <Link

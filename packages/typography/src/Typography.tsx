@@ -103,48 +103,65 @@ function InlineCode({ children, className, ...rest }: InlineCodeProps) {
 }
 
 type InlineKeyCodeProps = HTMLElementProps<'code'> & {
-  keys: Array<string> | string
-}
+  keys: Array<string> | string;
+};
 
 const inlineKeyCodeFont = css`
   font-family: 'Source Code Pro', monospace;
-  // display: inline-block;
   color: ${uiColors.gray.dark3};
-`
+`;
 
 const inlineKeyCode = css`
   border: 1px solid ${uiColors.gray.dark3};
   border-radius: 3px;
+  padding-left: 4px;
+  padding-right: 4px;
+`;
+
+const plusStyles = css`
   padding-left: 2px;
   padding-right: 2px;
 `;
 
-function InlineKeyCode({keys}: InlineKeyCodeProps) {
+function InlineKeyCode({ keys, ...rest }: InlineKeyCodeProps) {
   const size = useBaseFontSize();
   const body = size === 16 ? typeScale2 : typeScale1;
 
+  const renderIndividualKey = (key: string, index: number) => (
+    <span className={inlineKeyCode} key={index}>
+      {key}
+    </span>
+  );
+
   const renderKeys = () => {
-    return keys.map((arr, index) => {
-      if ((index + 1) < keys.length) {
+    // @ts-expect-error
+    return keys.map((key: string, index: number) => {
+      if (index + 1 < keys.length) {
         return (
           <span key={index}>
-            <span className={inlineKeyCode}>{arr}</span>
-            <span className={css`padding-left: 2px; padding-right: 2px;`}>+</span>
+            {renderIndividualKey(key, index)}
+            <span className={plusStyles}>+</span>
           </span>
-        )
+        );
       }
 
-      return <span key={index} className={inlineKeyCode}>{arr}</span>
-    })
-  }
+      return renderIndividualKey(key, index);
+    });
+  };
 
   if (Array.isArray(keys)) {
-    return <code className={cx(inlineKeyCodeFont, body)}>{renderKeys()}</code>
+    return (
+      <code {...rest} className={cx(inlineKeyCodeFont, body)}>
+        {renderKeys()}
+      </code>
+    );
   }
 
   return (
-    <code className={cx(inlineKeyCode, inlineKeyCodeFont, body)}>{keys}</code>
-  )
+    <code className={cx(inlineKeyCode, inlineKeyCodeFont, body)} {...rest}>
+      {keys}
+    </code>
+  );
 }
 
 const disclaimer = css`
@@ -178,4 +195,13 @@ const Overline: ExtendableBox<{
   return <Box className={cx(sharedStyles, overline, className)} {...rest} />;
 };
 
-export { H1, H2, Subtitle, Body, InlineCode, InlineKeyCode, Disclaimer, Overline };
+export {
+  H1,
+  H2,
+  Subtitle,
+  Body,
+  InlineCode,
+  InlineKeyCode,
+  Disclaimer,
+  Overline,
+};
