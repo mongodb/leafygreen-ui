@@ -4,7 +4,7 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { fonts } from '@leafygreen-ui/tokens';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 import { typeScale1, typeScale2 } from './styles';
 
 const sharedStyles = css`
@@ -86,7 +86,7 @@ function Body({ children, className, weight = 'regular', ...rest }: BodyProps) {
 }
 
 const code = css`
-  font-family: ${fonts.code};
+  font-family: ${fontFamilies.code};
   display: inline-block;
 `;
 

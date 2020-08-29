@@ -3,7 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { Variant, SyntaxProps } from './types';
 import { numberCellDataProp } from './renderingPlugin';
 import { uiColors } from '@leafygreen-ui/palette';
-import { fonts } from '@leafygreen-ui/tokens';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 interface CodeWrapperProps
   extends Omit<SyntaxProps, 'showLineNumbers' | 'children'> {
@@ -23,7 +23,7 @@ export default function CodeWrapper({
   const codeStyles = css`
     color: inherit;
     font-size: 13px;
-    font-family: ${fonts.code};
+    font-family: ${fontFamilies.code};
     line-height: 24px;
 
     & ${numberCellDataProp.selector} {
