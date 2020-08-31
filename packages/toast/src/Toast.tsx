@@ -191,7 +191,7 @@ function Toast({
   ...rest
 }: ToastProps) {
   const nodeRef = useRef(null);
-  const dismissible = !!close;
+  const dismissible = typeof close === 'function';
 
   let VariantIcon: React.ComponentType<any>;
 
