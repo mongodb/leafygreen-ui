@@ -1,6 +1,7 @@
-import React, { useRef, useEffect, useLayoutEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import Syntax, {
   SyntaxProps,
   Variant,
@@ -285,7 +286,7 @@ function Code({
     return () => clearTimeout(timeoutId);
   }, [copied]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (multiline) {
       const multilineEl = scrollableMultiLine.current;
 
