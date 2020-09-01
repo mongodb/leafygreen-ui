@@ -1,5 +1,16 @@
 # @leafygreen-ui/pipeline
 
+## 1.0.6
+
+### Patch Changes
+
+- e599707: Require lodash dependencies instead of inlining them.
+- Updated dependencies [e599707]
+- Updated dependencies [e599707]
+- Updated dependencies [8c867bb]
+  - @leafygreen-ui/tooltip@3.3.7
+  - @leafygreen-ui/hooks@4.2.0
+
 ## 1.0.5
 
 ### Patch Changes

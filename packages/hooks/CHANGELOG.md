@@ -1,5 +1,15 @@
 # @leafygreen-ui/hooks
 
+## 4.2.0
+
+### Minor Changes
+
+- 8c867bb: Adds new useIsomorphicLayoutEffect hook
+
+### Patch Changes
+
+- e599707: Changes import pattern for Lodash method.
+
 ## 4.1.0
 
 ### Minor Changes
