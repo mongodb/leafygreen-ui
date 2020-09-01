@@ -1,5 +1,19 @@
 # @leafygreen-ui/mongo-nav
 
+## 3.1.5
+
+### Patch Changes
+
+- e599707: Require lodash dependencies instead of inlining them.
+- Updated dependencies [e599707]
+- Updated dependencies [e49d66b]
+- Updated dependencies [e599707]
+- Updated dependencies [8c867bb]
+  - @leafygreen-ui/tooltip@3.3.7
+  - @leafygreen-ui/icon@6.5.0
+  - @leafygreen-ui/hooks@4.2.0
+  - @leafygreen-ui/icon-button@7.0.5
+
 ## 3.1.4
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/tokens
 
+## 0.2.0
+
+### Minor Changes
+
+- 6ca8fe6: Updates spacing to numerical rather than string values and exports as const so that consumers can see the values
+
 ## 0.1.1
 
 ### Patch Changes
