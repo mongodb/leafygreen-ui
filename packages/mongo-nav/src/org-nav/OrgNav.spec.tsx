@@ -1,4 +1,5 @@
 import React from 'react';
+import startCase from 'lodash/startCase';
 import {
   cleanup,
   fireEvent,
@@ -12,7 +13,6 @@ import {
   constructOrganizationURL,
 } from '../data';
 import OrgNav from './OrgNav';
-import { startCase } from 'lodash';
 import { NavElement, ActiveNavElement } from '../types';
 
 // data
