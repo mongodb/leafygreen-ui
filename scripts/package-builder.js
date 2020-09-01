@@ -48,8 +48,8 @@ const packageJSON = `
     "name": "@leafygreen-ui/${PACKAGE_LC}",
     "version": "0.9.0",
     "description": "leafyGreen UI Kit ${PACKAGE_HUMANREADABLE}",
-    "main": "./dist/index.js",
-  "module": "./dist/index.esm.js",
+    "main": "./dist/umd/index.js",
+    "module": "./dist/esm/index.js",
     "types": "./dist/index.d.ts",
     "scripts": {
       "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"

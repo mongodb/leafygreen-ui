@@ -2,8 +2,8 @@
   "name": "@leafygreen-ui/icon",
   "version": "6.4.2",
   "description": "LeafyGreen UI Kit Icons",
-  "main": "./dist/index.js",
-  "module": "./dist/index.esm.js",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "pre-build": "ts-node ./scripts/build.ts --files",

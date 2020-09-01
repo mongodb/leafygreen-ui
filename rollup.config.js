@@ -29,27 +29,52 @@ function getDirectGlyphImports() {
 
 const extensions = ['.ts', '.tsx'];
 
-const moduleFormatToSubExtension = {
-  esm: '.esm',
-  umd: '',
+const { name } = require(path.resolve(process.cwd(), 'package.json'));
+
+const allPackages = getAllPackages('../../packages');
+const directGlyphImports = getDirectGlyphImports();
+
+// Mapping of packages to the `window` property they'd be
+// bound to if used in the browser without a module loader.
+// This is defined on a best effort basis since not all
+// modules are compatible with being loaded directly.
+const globals = {
+  clipboard: 'ClipboardJS',
+  'highlightjs-graphql': 'hljsDefineGraphQL',
+  polished: 'polished',
+  react: 'React',
+  'react-dom': 'ReactDOM',
+  'prop-types': 'PropTypes',
+  lodash: '_',
+  /**
+   * External dependencies that must be loaded by a module loader
+   *   - lodash/*
+   *   - highlight.js
+   *   - create-emotion
+   *   - create-emotion-server
+   *   - react-transition-group
+   **/
 };
 
-const config = Object.keys(moduleFormatToSubExtension).map(format => ({
+allPackages.forEach(packageName => {
+  globals[packageName] = packageName;
+});
+
+directGlyphImports.forEach(glyphImport => {
+  // e.g. "@leafygreen-ui/icon/dist/Checkmark" -> "Checkmark"
+  globals[glyphImport] = /[^/]+$/.exec(glyphImport)[0];
+});
+
+const config = ['esm', 'umd'].map(format => ({
   input: 'src/index.ts',
   output: {
-    file: `dist/index${moduleFormatToSubExtension[format]}.js`,
-    name: `dist/index${moduleFormatToSubExtension[format]}.js`,
+    dir: `dist/${format}`,
+    name,
+    // exports: 'named',
 
     format,
     sourcemap: true,
-    globals: {
-      clipboard: 'ClipboardJS',
-      'highlightjs-graphql': 'hljsDefineGraphQL',
-      react: 'React',
-      'react-dom': 'ReactDOM',
-      'prop-types': 'PropTypes',
-      '@leafygreen-ui/leafygreen-provider': 'LeafyGreenProvider',
-    },
+    globals,
   },
   plugins: [
     resolve({ extensions }),
@@ -82,28 +107,28 @@ const config = Object.keys(moduleFormatToSubExtension).map(format => ({
 
     terser(),
   ],
-  external: [
-    'clipboard',
-    'highlightjs-graphql',
-    'react',
-    'react-dom',
-    'emotion',
-    'lodash',
-    'lodash/debounce',
-    'lodash/defaultsDeep',
-    'lodash/findLast',
-    'lodash/flatMap',
-    'lodash/omit',
-    'react-emotion',
-    'create-emotion',
-    'create-emotion-server',
-    'polished',
-    'prop-types',
-    'react-transition-group',
-    '@testing-library/react',
-    ...getAllPackages('../../packages'),
-    ...getDirectGlyphImports(),
-  ],
+  external: id =>
+    [
+      'clipboard',
+      'highlight.js',
+      'highlightjs-graphql',
+      'react',
+      'react-dom',
+      'emotion',
+      'lodash',
+      'create-emotion',
+      'create-emotion-server',
+      'polished',
+      'prop-types',
+      'react-transition-group',
+      '@testing-library/react',
+      ...allPackages,
+      ...directGlyphImports,
+    ].includes(id) ||
+    // We test if an import includes lodash to avoid having
+    // to whitelist every nested lodash module individually
+    /^lodash\//.test(id) ||
+    /^highlight\.js\//.test(id),
 }));
 
 export default config;
