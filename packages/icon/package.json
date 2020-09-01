@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/icon",
-  "version": "6.4.2",
+  "version": "6.5.0",
   "description": "LeafyGreen UI Kit Icons",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

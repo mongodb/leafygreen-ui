@@ -7,7 +7,7 @@ import {
   constructProjectURL,
 } from '../data';
 import ProjectNav from './ProjectNav';
-import { startCase } from 'lodash';
+import startCase from 'lodash/startCase';
 import { Mode } from '../types';
 
 const productToTestId: Record<string, string> = {
