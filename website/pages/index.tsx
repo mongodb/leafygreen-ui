@@ -1,5 +1,5 @@
 import { Body } from '@leafygreen-ui/typography';
 
 export default function Home() {
-  return <Body>Coming Soon!</Body>;
+  return <Body>Testing Hello World</Body>;
 }
