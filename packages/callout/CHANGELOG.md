@@ -1,5 +1,29 @@
 # @leafygreen-ui/callout
 
+## 1.2.0
+
+### Minor Changes
+
+- 699a65c: Adds `example` variant to Callout component
+
+### Patch Changes
+
+- Updated dependencies [699a65c]
+  - @leafygreen-ui/icon@6.4.0
+
+## 1.1.2
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/code@4.0.1
+  - @leafygreen-ui/emotion@2.0.2
+  - @leafygreen-ui/icon@6.3.2
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/palette@2.0.2
+  - @leafygreen-ui/typography@4.2.1
+
 ## 1.1.1
 
 ### Patch Changes

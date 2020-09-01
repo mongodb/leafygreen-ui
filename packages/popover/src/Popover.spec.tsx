@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import Popover from './Popover';
 import { PopoverProps } from './types';
 
@@ -25,6 +25,15 @@ describe('packages/popover', () => {
   test('does not display popover when "active" prop is not set', () => {
     const { container } = renderPopover();
     expect(container.innerHTML.includes('popover-test-id')).toBe(false);
+  });
+
+  test('onClick handler is called when popover contents is clicked', () => {
+    const clickSpy = jest.fn();
+    const { getByText } = renderPopover({ active: true, onClick: clickSpy });
+
+    expect(clickSpy).not.toHaveBeenCalled();
+    fireEvent.click(getByText('Popover Content'));
+    expect(clickSpy).toHaveBeenCalledTimes(1);
   });
 
   test('portals popover content to end of DOM, when "usePortal" is not set', () => {
@@ -54,10 +63,10 @@ describe('packages/popover', () => {
 
   // eslint-disable-next-line jest/expect-expect
   test('does not allow specifying "portalClassName", when "usePortal" is false', () => {
-    // @ts-expect-error
     renderPopover({
       active: true,
       usePortal: false,
+      // @ts-expect-error
       portalClassName: 'test-classname',
     });
   });

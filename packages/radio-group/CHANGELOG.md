@@ -1,5 +1,26 @@
 # @leafygreen-ui/radio-group
 
+## 4.0.3
+
+### Patch Changes
+
+- 6b0d0a2: Made some props optional that were previously required
+
+## 4.0.2
+
+### Patch Changes
+
+- add8745: Make id generation deterministic using IdAllocator.create class. This improves SSR compatibility.
+
+## 4.0.1
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/palette@2.0.2
+
 ## 4.0.0
 
 ### Major Changes

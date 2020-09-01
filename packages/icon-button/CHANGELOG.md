@@ -1,5 +1,49 @@
 # @leafygreen-ui/icon-button
 
+## 7.0.4
+
+### Patch Changes
+
+- Updated dependencies [43d47db]
+  - @leafygreen-ui/icon@6.4.2
+
+## 7.0.3
+
+### Patch Changes
+
+- Updated dependencies [b80379a]
+  - @leafygreen-ui/icon@6.4.1
+
+## 7.0.2
+
+### Patch Changes
+
+- Updated dependencies [699a65c]
+  - @leafygreen-ui/icon@6.4.0
+
+## 7.0.1
+
+### Patch Changes
+
+- 463a338: Adds `flex-shrink` property to IconButton
+
+## 7.0.0
+
+### Major Changes
+
+- ab4c074: Removed redundant aria-label from the icon that is already on the button
+
+## 6.1.4
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/emotion@2.0.2
+  - @leafygreen-ui/icon@6.3.2
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/palette@2.0.2
+
 ## 6.1.3
 
 ### Patch Changes

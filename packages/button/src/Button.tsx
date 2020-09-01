@@ -389,10 +389,8 @@ const Button: ExtendableBox<BaseButtonProps, 'button'> = React.forwardRef(
   },
 );
 
-// @ts-expect-error: Property 'displayName' does not exist on type 'OverrideComponentCast<BaseButtonProps>'.ts(2339)
 Button.displayName = 'Button';
 
-// @ts-expect-error: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 Button.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)),
   size: PropTypes.oneOf(Object.values(Size)),

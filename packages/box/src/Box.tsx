@@ -1,33 +1,59 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-type BoxDivDefault = {
-  as?: never;
-  href?: never;
-} & React.ComponentPropsWithRef<'div'>;
+type Override<T, U> = Omit<T, keyof U> & U;
+type Override2<T, U, V> = Override<Override<T, U>, V>;
 
-type BoxAnchorDefault = {
-  as?: never;
-  href: string;
-} & React.ComponentPropsWithRef<'a'>;
+type BoxDefault<
+  Default extends React.ElementType = 'div',
+  ExtraProps = {}
+> = Override2<
+  React.ComponentPropsWithRef<Default>,
+  {
+    as?: never;
+    href?: never;
+  },
+  ExtraProps
+>;
+
+type BoxAnchorDefault<ExtraProps = {}> = Override2<
+  React.ComponentPropsWithRef<'a'>,
+  {
+    as?: never;
+    href: string;
+  },
+  ExtraProps
+>;
 
 type BoxIntrinsic<
-  TElement extends keyof JSX.IntrinsicElements = keyof JSX.IntrinsicElements
-> = {
-  as: TElement;
-} & React.ComponentPropsWithRef<TElement>;
+  TElement extends keyof JSX.IntrinsicElements = keyof JSX.IntrinsicElements,
+  ExtraProps = {}
+> = Override2<
+  React.ComponentPropsWithRef<TElement>,
+  {
+    as: TElement;
+  },
+  ExtraProps
+>;
 
-type BoxComponent<TProps = {}> = {
-  as: React.ComponentType<TProps>;
-} & React.PropsWithRef<TProps>;
+type BoxComponent<TProps = {}, ExtraProps = {}> = Override2<
+  React.PropsWithRef<TProps>,
+  {
+    as: React.ComponentType<TProps>;
+  },
+  ExtraProps
+>;
 
-export type BoxProps =
-  | BoxAnchorDefault
-  | BoxIntrinsic
-  | BoxComponent
-  | BoxDivDefault;
+export type BoxProps<
+  Default extends React.ElementType = 'div',
+  ExtraProps = {}
+> =
+  | BoxAnchorDefault<ExtraProps>
+  | BoxIntrinsic<keyof JSX.IntrinsicElements, ExtraProps>
+  | BoxComponent<{}, ExtraProps>
+  | BoxDefault<Default, ExtraProps>;
 
-function InlineBox(props: BoxDivDefault, ref: React.Ref<any>): JSX.Element;
+function InlineBox(props: BoxDefault, ref: React.Ref<any>): JSX.Element;
 function InlineBox(props: BoxAnchorDefault, ref: React.Ref<any>): JSX.Element;
 function InlineBox<TElement extends keyof JSX.IntrinsicElements>(
   props: BoxIntrinsic<TElement>,
@@ -72,13 +98,16 @@ Box.propTypes = {
 export default Box;
 
 export interface ExtendableBox<
-  Props,
+  ExtraProps,
   Default extends React.ElementType = 'div'
-> {
-  (props: React.ComponentPropsWithRef<Default> & Props): JSX.Element | null;
-  (props: BoxAnchorDefault & Props): JSX.Element | null;
+> extends Pick<
+    React.FunctionComponent<BoxProps<Default, ExtraProps>>,
+    'displayName' | 'propTypes'
+  > {
+  (props: BoxDefault<Default, ExtraProps>): JSX.Element | null;
+  (props: BoxAnchorDefault<ExtraProps>): JSX.Element | null;
   <TElement extends keyof JSX.IntrinsicElements>(
-    props: BoxIntrinsic<TElement> & Props,
+    props: BoxIntrinsic<TElement, ExtraProps>,
   ): JSX.Element | null;
-  <TProps>(props: BoxComponent<TProps> & Props): JSX.Element | null;
+  <TProps>(props: BoxComponent<TProps, ExtraProps>): JSX.Element | null;
 }

@@ -1,5 +1,32 @@
 # @leafygreen-ui/icon
 
+## 6.4.2
+
+### Patch Changes
+
+- 43d47db: Correctly sets fill rule for `Beaker`
+
+## 6.4.1
+
+### Patch Changes
+
+- b80379a: Updates fill rule for `Beaker`
+
+## 6.4.0
+
+### Minor Changes
+
+- 699a65c: Adds `Beaker` glyph
+
+## 6.3.2
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/theme@2.0.1
+
 ## 6.3.1
 
 ### Patch Changes

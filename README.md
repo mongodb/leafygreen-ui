@@ -12,6 +12,7 @@ A set of CSS styles and React components built with design in mind.
 - [Card](https://github.com/mongodb/leafygreen-ui/tree/master/packages/card)
 - [Checkbox](https://github.com/mongodb/leafygreen-ui/tree/master/packages/checkbox)
 - [Code](https://github.com/mongodb/leafygreen-ui/tree/master/packages/code)
+- [Confirmation Modal](https://github.com/mongodb/leafygreen-ui/tree/master/packages/confirmation-modal)
 - [Emotion](https://github.com/mongodb/leafygreen-ui/tree/master/packages/emotion)
 - [Hooks](https://github.com/mongodb/leafygreen-ui/tree/master/packages/hooks)
 - [Icon Button](https://github.com/mongodb/leafygreen-ui/tree/master/packages/icon-button)
@@ -31,6 +32,7 @@ A set of CSS styles and React components built with design in mind.
 - [Side Nav](https://github.com/mongodb/leafygreen-ui/tree/master/packages/side-nav)
 - [Stepper](https://github.com/mongodb/leafygreen-ui/tree/master/packages/stepper)
 - [Syntax](https://github.com/mongodb/leafygreen-ui/tree/master/packages/syntax)
+- [Table](https://github.com/mongodb/leafygreen-ui/tree/master/packages/table)
 - [Tabs](https://github.com/mongodb/leafygreen-ui/tree/master/packages/tabs)
 - [Testing Lib](https://github.com/mongodb/leafygreen-ui/tree/master/packages/testing-lib)
 - [Text Input](https://github.com/mongodb/leafygreen-ui/tree/master/packages/text-input)
@@ -132,7 +134,10 @@ Make sure that the PR includes the changes made by running this command.
 # To transpile and concatenate all files
 yarn build
 # To build TypeScript type definition files
+yarn ts:build
+# To only typecheck all TypeScript files
 yarn ts
+
 ```
 
 3. Publish all packages to NPM using changesets. This can be done from master.

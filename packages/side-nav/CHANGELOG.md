@@ -1,5 +1,30 @@
 # @leafygreen-ui/side-nav
 
+## 3.0.8
+
+### Patch Changes
+
+- Updated dependencies [6b0d0a2]
+  - @leafygreen-ui/menu@7.0.8
+
+## 3.0.7
+
+### Patch Changes
+
+- @leafygreen-ui/menu@7.0.7
+
+## 3.0.6
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/emotion@2.0.2
+  - @leafygreen-ui/leafygreen-provider@1.1.4
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/menu@7.0.6
+  - @leafygreen-ui/palette@2.0.2
+
 ## 3.0.5
 
 ### Patch Changes

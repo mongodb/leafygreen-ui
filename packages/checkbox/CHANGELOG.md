@@ -1,5 +1,26 @@
 # @leafygreen-ui/checkbox
 
+## 4.1.1
+
+### Patch Changes
+
+- 463a338: Fixes 'aria-checked' value when Checkbox is indeterminate such that the value is `mixed` rather than `false` per WAI-ARIA spec
+
+## 4.1.0
+
+### Minor Changes
+
+- 7605c17: Add prop to disable animations
+
+## 4.0.4
+
+### Patch Changes
+
+- 691eb05: Better support for UMD
+- Updated dependencies [691eb05]
+  - @leafygreen-ui/lib@5.1.1
+  - @leafygreen-ui/theme@2.0.1
+
 ## 4.0.3
 
 ### Patch Changes

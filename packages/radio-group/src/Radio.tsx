@@ -156,7 +156,7 @@ const divStyle = css`
   justify-content: center;
   flex-shrink: 0;
   border-radius: 100%;
- 
+
   &:before {
     content: '';
     position: absolute;
@@ -263,7 +263,7 @@ const labelMargin = css`
   margin-left: 8px;
 `;
 
-type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
+export type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
   Pick<RadioGroupProps, 'variant' | 'size'> & {
     default?: boolean;
     id?: string | number;
