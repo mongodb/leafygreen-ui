@@ -57,7 +57,9 @@ function getDirectGlyphImports() {
   return fs
     .readdirSync(glyphsDir)
     .filter(path => /.svg/.test(path))
-    .map(fileName => `@leafygreen-ui/icon/${path.basename(fileName, '.svg')}`);
+    .map(
+      fileName => `@leafygreen-ui/icon/dist/${path.basename(fileName, '.svg')}`,
+    );
 }
 
 function getGeneratedFiles() {
