@@ -39,6 +39,18 @@ function getAllPackages(dir) {
     .map(packageJsonPath => require(packageJsonPath).name);
 }
 
+function getLodashExternals() {
+  return fs
+    .readdirSync(path.resolve(__dirname, 'node_modules', 'lodash'))
+    .filter(fileName => {
+      const splitName = fileName.split('.');
+      const extension = splitName[splitName.length - 1];
+
+      return extension === 'js';
+    })
+    .map(fileName => 'lodash/' + fileName.split('.')[0]);
+}
+
 function getDirectGlyphImports() {
   const glyphsDir = path.resolve(__dirname, './packages/icon/src/glyphs');
 
@@ -59,7 +71,7 @@ module.exports = function (env = 'production') {
     entry: './src/index',
     output: {
       path: path.resolve(process.cwd(), 'dist'),
-      filename: `index.js`,
+      filename: `index.bundle.js`,
       libraryTarget: isProduction ? 'umd' : undefined,
       globalObject: "(typeof self !== 'undefined' ? self : this)",
     },
@@ -69,7 +81,6 @@ module.exports = function (env = 'production') {
           'react',
           'react-dom',
           'emotion',
-          'lodash',
           'react-emotion',
           'create-emotion',
           'create-emotion-server',
@@ -77,6 +88,8 @@ module.exports = function (env = 'production') {
           'prop-types',
           'react-transition-group',
           '@testing-library/react',
+          'lodash',
+          ...getLodashExternals(),
           ...getAllPackages('../../packages'),
           ...getDirectGlyphImports(),
         ]

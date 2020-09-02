@@ -86,7 +86,7 @@ function Body({ children, className, weight = 'regular', ...rest }: BodyProps) {
 }
 
 const code = css`
-  font-family: 'Source Code Pro', monospace;
+  font-family: ${fontFamilies.code};
   display: inline-block;
 `;
 

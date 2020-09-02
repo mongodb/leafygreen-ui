@@ -1,4 +1,4 @@
-import React, { useMemo, Fragment, useState, useLayoutEffect } from 'react';
+import React, { useMemo, Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -7,6 +7,7 @@ import {
   useViewportSize,
   useMutationObserver,
   useElementNode,
+  useIsomorphicLayoutEffect,
   useObjectDependency,
   usePrevious,
 } from '@leafygreen-ui/hooks';
@@ -154,7 +155,7 @@ function Popover({
       (justify === Justify.Fit || prevJustify === Justify.Fit)) ||
     (prevAlign !== align && justify === Justify.Fit);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     // justify={Justify.Fit} can cause the content's height/width to change
     // If we're switching to/from Fit, force an extra pass to make sure the popover is positioned correctly.
     // Also if we're switching between alignments and have Justify.Fit, it may switch between setting the width and
@@ -168,7 +169,7 @@ function Popover({
   // the window which isn't available if the component is rendered on server side.
   const [shouldRender, setShouldRender] = useState(false);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setShouldRender(true);
   }, []);
 

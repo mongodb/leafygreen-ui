@@ -108,6 +108,9 @@
       "path": "./packages/typography"
     },
     {
+      "path": "./packages/toast"
+    },
+    {
       "path": "./website"
     }
   ]
