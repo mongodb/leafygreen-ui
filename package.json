@@ -129,6 +129,9 @@
     "webpack": "4.42.1",
     "webpack-cli": "3.3.11"
   },
+  "resolutions": {
+    "@types/react": "^16.9.32"
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
