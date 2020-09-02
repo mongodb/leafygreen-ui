@@ -1,6 +1,6 @@
 interface BabelAPI extends Record<string, any> {
   template: {
-    smart: (opts: Record<string, any>) => Record<string, any>;
+    smart: (opts: Record<string, any>) => any;
   } & Record<string, any>;
 }
 
@@ -44,39 +44,17 @@ module.exports = function template(
     jsx.openingElement.attributes[2],
   );
 
-  return typeScriptTpl.ast`
-    ${imports}
+  return typeScriptTpl(`
+    %%imports%%
     import PropTypes from 'prop-types';
     import { css, cx } from '@leafygreen-ui/emotion';
+    import {getGlyphTitle, sizeMap} from '../glyphCommon';
+    import { LGGlyph } from '../types';
   
-    export interface Props extends React.SVGProps<SVGSVGElement> {
-      size?: number | 'small' | 'default' | 'large' | 'xlarge';
-      titleId?: string;
-      title?: string | null | boolean;
-    }
-
-    const sizeMap = {
-      small: 14,
-      default: 16,
-      large: 20,
-      xlarge: 24,
-    };
-
-    function getGlyphTitle(name: string, title?: string | boolean | null) {
-      if (title === false) {
-        // If title is null, we unset the title entirely, otherwise we generate one.
-        return null;
-      }
-    
-      if (title == null || title === true) {
-        return \`\${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon\`;
-      }
-    
-      return title;
-    }
+    export interface ${componentName}Props extends LGGlyph.ComponentProps {}
 
     function generateGlyphTitle(): string {
-      return '${componentName}' + '-' + Math.floor(Math.random() * 1000000);
+      return \`${componentName}-\${Math.floor(Math.random() * 1000000)}\`;
     }
 
     const ${componentName} = ({
@@ -86,7 +64,7 @@ module.exports = function template(
       titleId: customTitleId,
       fill,
       ...props
-    }: Props) => {
+    }: ${componentName}Props) => {
       const titleId = React.useMemo(
         () => customTitleId || generateGlyphTitle(),
         [customTitleId]
@@ -98,7 +76,7 @@ module.exports = function template(
 
       title = getGlyphTitle('${componentName}', title);
 
-      return ${jsx};
+      return %%jsx%%;
     }
 
     ${componentName}.displayName = '${componentName}';
@@ -111,6 +89,10 @@ module.exports = function template(
         className: PropTypes.string,
     };
 
-    ${exports}
-  `;
+    %%exports%%
+  `)({
+    imports: imports,
+    jsx: jsx,
+    exports: exports,
+  });
 };

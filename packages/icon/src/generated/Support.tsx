@@ -2,38 +2,18 @@
  * This is a generated file. Do not modify it manually. To regenerate the file, run:
  *   ts-node ./build.ts
  *
- * @checksum 38f6983dee9e7ea30f5fb6a58c7cc69c
+ * @checksum 232f220dcf1d5bf6ba75bbc0c72a85d3
  *
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-export interface Props extends React.SVGProps<SVGSVGElement> {
-  size?: number | 'small' | 'default' | 'large' | 'xlarge';
-  titleId?: string;
-  title?: string | null | boolean;
-}
-const sizeMap = {
-  small: 14,
-  default: 16,
-  large: 20,
-  xlarge: 24,
-};
-
-function getGlyphTitle(name: string, title?: string | boolean | null) {
-  if (title === false) {
-    return null;
-  }
-
-  if (title == null || title === true) {
-    return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
-  }
-
-  return title;
-}
+import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { LGGlyph } from '../types';
+export interface SupportProps extends LGGlyph.ComponentProps {}
 
 function generateGlyphTitle(): string {
-  return 'Support' + '-' + Math.floor(Math.random() * 1000000);
+  return `Support-${Math.floor(Math.random() * 1000000)}`;
 }
 
 const Support = ({
@@ -43,7 +23,7 @@ const Support = ({
   titleId: customTitleId,
   fill,
   ...props
-}: Props) => {
+}: SupportProps) => {
   const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
     customTitleId,
   ]);

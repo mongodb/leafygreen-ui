@@ -2,38 +2,18 @@
  * This is a generated file. Do not modify it manually. To regenerate the file, run:
  *   ts-node ./build.ts
  *
- * @checksum c7607e9012ae9928269c7335f4f4cf9a
+ * @checksum 6554bb9d1bf9c241df6ac3767e5bffba
  *
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-export interface Props extends React.SVGProps<SVGSVGElement> {
-  size?: number | 'small' | 'default' | 'large' | 'xlarge';
-  titleId?: string;
-  title?: string | null | boolean;
-}
-const sizeMap = {
-  small: 14,
-  default: 16,
-  large: 20,
-  xlarge: 24,
-};
-
-function getGlyphTitle(name: string, title?: string | boolean | null) {
-  if (title === false) {
-    return null;
-  }
-
-  if (title == null || title === true) {
-    return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
-  }
-
-  return title;
-}
+import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { LGGlyph } from '../types';
+export interface NotAllowedProps extends LGGlyph.ComponentProps {}
 
 function generateGlyphTitle(): string {
-  return 'NotAllowed' + '-' + Math.floor(Math.random() * 1000000);
+  return `NotAllowed-${Math.floor(Math.random() * 1000000)}`;
 }
 
 const NotAllowed = ({
@@ -43,7 +23,7 @@ const NotAllowed = ({
   titleId: customTitleId,
   fill,
   ...props
-}: Props) => {
+}: NotAllowedProps) => {
   const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
     customTitleId,
   ]);

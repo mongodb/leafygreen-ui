@@ -2,38 +2,18 @@
  * This is a generated file. Do not modify it manually. To regenerate the file, run:
  *   ts-node ./build.ts
  *
- * @checksum 225c335186b7afb5bbe176399b55ae9d
+ * @checksum 4345becfa1f45e64d1fb585badfe2a18
  *
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-export interface Props extends React.SVGProps<SVGSVGElement> {
-  size?: number | 'small' | 'default' | 'large' | 'xlarge';
-  titleId?: string;
-  title?: string | null | boolean;
-}
-const sizeMap = {
-  small: 14,
-  default: 16,
-  large: 20,
-  xlarge: 24,
-};
-
-function getGlyphTitle(name: string, title?: string | boolean | null) {
-  if (title === false) {
-    return null;
-  }
-
-  if (title == null || title === true) {
-    return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
-  }
-
-  return title;
-}
+import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { LGGlyph } from '../types';
+export interface ChevronRightProps extends LGGlyph.ComponentProps {}
 
 function generateGlyphTitle(): string {
-  return 'ChevronRight' + '-' + Math.floor(Math.random() * 1000000);
+  return `ChevronRight-${Math.floor(Math.random() * 1000000)}`;
 }
 
 const ChevronRight = ({
@@ -43,7 +23,7 @@ const ChevronRight = ({
   titleId: customTitleId,
   fill,
   ...props
-}: Props) => {
+}: ChevronRightProps) => {
   const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
     customTitleId,
   ]);

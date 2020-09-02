@@ -2,38 +2,18 @@
  * This is a generated file. Do not modify it manually. To regenerate the file, run:
  *   ts-node ./build.ts
  *
- * @checksum 0fc8d9fd88dd529b3b885831afdc5d2f
+ * @checksum e530d86b997adfa3701b9ffa5d449189
  *
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-export interface Props extends React.SVGProps<SVGSVGElement> {
-  size?: number | 'small' | 'default' | 'large' | 'xlarge';
-  titleId?: string;
-  title?: string | null | boolean;
-}
-const sizeMap = {
-  small: 14,
-  default: 16,
-  large: 20,
-  xlarge: 24,
-};
-
-function getGlyphTitle(name: string, title?: string | boolean | null) {
-  if (title === false) {
-    return null;
-  }
-
-  if (title == null || title === true) {
-    return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
-  }
-
-  return title;
-}
+import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { LGGlyph } from '../types';
+export interface MenuProps extends LGGlyph.ComponentProps {}
 
 function generateGlyphTitle(): string {
-  return 'Menu' + '-' + Math.floor(Math.random() * 1000000);
+  return `Menu-${Math.floor(Math.random() * 1000000)}`;
 }
 
 const Menu = ({
@@ -43,7 +23,7 @@ const Menu = ({
   titleId: customTitleId,
   fill,
   ...props
-}: Props) => {
+}: MenuProps) => {
   const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
     customTitleId,
   ]);

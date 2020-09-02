@@ -2,38 +2,18 @@
  * This is a generated file. Do not modify it manually. To regenerate the file, run:
  *   ts-node ./build.ts
  *
- * @checksum 5597a6b2018d1e8929a9e70d269fb659
+ * @checksum 1b922bee3b8d1e571e269e7eb12fdc47
  *
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-export interface Props extends React.SVGProps<SVGSVGElement> {
-  size?: number | 'small' | 'default' | 'large' | 'xlarge';
-  titleId?: string;
-  title?: string | null | boolean;
-}
-const sizeMap = {
-  small: 14,
-  default: 16,
-  large: 20,
-  xlarge: 24,
-};
-
-function getGlyphTitle(name: string, title?: string | boolean | null) {
-  if (title === false) {
-    return null;
-  }
-
-  if (title == null || title === true) {
-    return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
-  }
-
-  return title;
-}
+import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { LGGlyph } from '../types';
+export interface GovernmentBuildingProps extends LGGlyph.ComponentProps {}
 
 function generateGlyphTitle(): string {
-  return 'GovernmentBuilding' + '-' + Math.floor(Math.random() * 1000000);
+  return `GovernmentBuilding-${Math.floor(Math.random() * 1000000)}`;
 }
 
 const GovernmentBuilding = ({
@@ -43,7 +23,7 @@ const GovernmentBuilding = ({
   titleId: customTitleId,
   fill,
   ...props
-}: Props) => {
+}: GovernmentBuildingProps) => {
   const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
     customTitleId,
   ]);

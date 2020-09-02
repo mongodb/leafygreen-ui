@@ -2,38 +2,18 @@
  * This is a generated file. Do not modify it manually. To regenerate the file, run:
  *   ts-node ./build.ts
  *
- * @checksum 3f1e5eccc23f919e60840f16fa215dcb
+ * @checksum 5fbf2a72bfad2acd70d52800a4b8adbe
  *
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-export interface Props extends React.SVGProps<SVGSVGElement> {
-  size?: number | 'small' | 'default' | 'large' | 'xlarge';
-  titleId?: string;
-  title?: string | null | boolean;
-}
-const sizeMap = {
-  small: 14,
-  default: 16,
-  large: 20,
-  xlarge: 24,
-};
-
-function getGlyphTitle(name: string, title?: string | boolean | null) {
-  if (title === false) {
-    return null;
-  }
-
-  if (title == null || title === true) {
-    return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
-  }
-
-  return title;
-}
+import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { LGGlyph } from '../types';
+export interface MegaphoneProps extends LGGlyph.ComponentProps {}
 
 function generateGlyphTitle(): string {
-  return 'Megaphone' + '-' + Math.floor(Math.random() * 1000000);
+  return `Megaphone-${Math.floor(Math.random() * 1000000)}`;
 }
 
 const Megaphone = ({
@@ -43,7 +23,7 @@ const Megaphone = ({
   titleId: customTitleId,
   fill,
   ...props
-}: Props) => {
+}: MegaphoneProps) => {
   const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
     customTitleId,
   ]);

@@ -2,38 +2,18 @@
  * This is a generated file. Do not modify it manually. To regenerate the file, run:
  *   ts-node ./build.ts
  *
- * @checksum 054a235e176d1ba59ff20e644e9b48fd
+ * @checksum 41954a6b7233d145dc47e31a2aa37e7c
  *
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-export interface Props extends React.SVGProps<SVGSVGElement> {
-  size?: number | 'small' | 'default' | 'large' | 'xlarge';
-  titleId?: string;
-  title?: string | null | boolean;
-}
-const sizeMap = {
-  small: 14,
-  default: 16,
-  large: 20,
-  xlarge: 24,
-};
-
-function getGlyphTitle(name: string, title?: string | boolean | null) {
-  if (title === false) {
-    return null;
-  }
-
-  if (title == null || title === true) {
-    return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
-  }
-
-  return title;
-}
+import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { LGGlyph } from '../types';
+export interface CaretLeftProps extends LGGlyph.ComponentProps {}
 
 function generateGlyphTitle(): string {
-  return 'CaretLeft' + '-' + Math.floor(Math.random() * 1000000);
+  return `CaretLeft-${Math.floor(Math.random() * 1000000)}`;
 }
 
 const CaretLeft = ({
@@ -43,7 +23,7 @@ const CaretLeft = ({
   titleId: customTitleId,
   fill,
   ...props
-}: Props) => {
+}: CaretLeftProps) => {
   const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
     customTitleId,
   ]);

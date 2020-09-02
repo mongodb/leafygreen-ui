@@ -7,7 +7,8 @@ import { render } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
 import { SVGR } from './types';
 import { createIconComponent, glyphs } from '.';
-import createGlyphComponent, { getGlyphTitle } from './createGlyphComponent';
+import { getGlyphTitle } from './glyphCommon';
+import createGlyphComponent from './createGlyphComponent';
 import EditIcon from '@leafygreen-ui/icon/dist/Edit';
 
 function getBaseName(filePath: string): string {

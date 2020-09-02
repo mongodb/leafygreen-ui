@@ -2,38 +2,18 @@
  * This is a generated file. Do not modify it manually. To regenerate the file, run:
  *   ts-node ./build.ts
  *
- * @checksum 283133fddedc3d6a4d8cc2b3adc7b250
+ * @checksum c92a09c41a448bd9e3daaae900771e7b
  *
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-export interface Props extends React.SVGProps<SVGSVGElement> {
-  size?: number | 'small' | 'default' | 'large' | 'xlarge';
-  titleId?: string;
-  title?: string | null | boolean;
-}
-const sizeMap = {
-  small: 14,
-  default: 16,
-  large: 20,
-  xlarge: 24,
-};
-
-function getGlyphTitle(name: string, title?: string | boolean | null) {
-  if (title === false) {
-    return null;
-  }
-
-  if (title == null || title === true) {
-    return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
-  }
-
-  return title;
-}
+import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { LGGlyph } from '../types';
+export interface ChartsProps extends LGGlyph.ComponentProps {}
 
 function generateGlyphTitle(): string {
-  return 'Charts' + '-' + Math.floor(Math.random() * 1000000);
+  return `Charts-${Math.floor(Math.random() * 1000000)}`;
 }
 
 const Charts = ({
@@ -43,7 +23,7 @@ const Charts = ({
   titleId: customTitleId,
   fill,
   ...props
-}: Props) => {
+}: ChartsProps) => {
   const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
     customTitleId,
   ]);

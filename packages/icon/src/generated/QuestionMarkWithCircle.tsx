@@ -2,38 +2,18 @@
  * This is a generated file. Do not modify it manually. To regenerate the file, run:
  *   ts-node ./build.ts
  *
- * @checksum 32be45868c00dcbd3a795cd97811c388
+ * @checksum 1c3327ed64b3a2d5093a2755028d55e7
  *
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-export interface Props extends React.SVGProps<SVGSVGElement> {
-  size?: number | 'small' | 'default' | 'large' | 'xlarge';
-  titleId?: string;
-  title?: string | null | boolean;
-}
-const sizeMap = {
-  small: 14,
-  default: 16,
-  large: 20,
-  xlarge: 24,
-};
-
-function getGlyphTitle(name: string, title?: string | boolean | null) {
-  if (title === false) {
-    return null;
-  }
-
-  if (title == null || title === true) {
-    return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
-  }
-
-  return title;
-}
+import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { LGGlyph } from '../types';
+export interface QuestionMarkWithCircleProps extends LGGlyph.ComponentProps {}
 
 function generateGlyphTitle(): string {
-  return 'QuestionMarkWithCircle' + '-' + Math.floor(Math.random() * 1000000);
+  return `QuestionMarkWithCircle-${Math.floor(Math.random() * 1000000)}`;
 }
 
 const QuestionMarkWithCircle = ({
@@ -43,7 +23,7 @@ const QuestionMarkWithCircle = ({
   titleId: customTitleId,
   fill,
   ...props
-}: Props) => {
+}: QuestionMarkWithCircleProps) => {
   const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
     customTitleId,
   ]);

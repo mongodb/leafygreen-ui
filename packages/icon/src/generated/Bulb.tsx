@@ -2,38 +2,18 @@
  * This is a generated file. Do not modify it manually. To regenerate the file, run:
  *   ts-node ./build.ts
  *
- * @checksum f72271ed8531e421341cf1547faec926
+ * @checksum 0c1c0e96b7ac9711ced1b612cd250bcd
  *
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-export interface Props extends React.SVGProps<SVGSVGElement> {
-  size?: number | 'small' | 'default' | 'large' | 'xlarge';
-  titleId?: string;
-  title?: string | null | boolean;
-}
-const sizeMap = {
-  small: 14,
-  default: 16,
-  large: 20,
-  xlarge: 24,
-};
-
-function getGlyphTitle(name: string, title?: string | boolean | null) {
-  if (title === false) {
-    return null;
-  }
-
-  if (title == null || title === true) {
-    return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
-  }
-
-  return title;
-}
+import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { LGGlyph } from '../types';
+export interface BulbProps extends LGGlyph.ComponentProps {}
 
 function generateGlyphTitle(): string {
-  return 'Bulb' + '-' + Math.floor(Math.random() * 1000000);
+  return `Bulb-${Math.floor(Math.random() * 1000000)}`;
 }
 
 const Bulb = ({
@@ -43,7 +23,7 @@ const Bulb = ({
   titleId: customTitleId,
   fill,
   ...props
-}: Props) => {
+}: BulbProps) => {
   const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
     customTitleId,
   ]);

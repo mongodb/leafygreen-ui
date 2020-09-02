@@ -2,38 +2,18 @@
  * This is a generated file. Do not modify it manually. To regenerate the file, run:
  *   ts-node ./build.ts
  *
- * @checksum ea8b58a64c9d1feb83614a26973d23d2
+ * @checksum 4317399c645556f272cec9652e1584da
  *
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-export interface Props extends React.SVGProps<SVGSVGElement> {
-  size?: number | 'small' | 'default' | 'large' | 'xlarge';
-  titleId?: string;
-  title?: string | null | boolean;
-}
-const sizeMap = {
-  small: 14,
-  default: 16,
-  large: 20,
-  xlarge: 24,
-};
-
-function getGlyphTitle(name: string, title?: string | boolean | null) {
-  if (title === false) {
-    return null;
-  }
-
-  if (title == null || title === true) {
-    return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
-  }
-
-  return title;
-}
+import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { LGGlyph } from '../types';
+export interface ArrowLeftProps extends LGGlyph.ComponentProps {}
 
 function generateGlyphTitle(): string {
-  return 'ArrowLeft' + '-' + Math.floor(Math.random() * 1000000);
+  return `ArrowLeft-${Math.floor(Math.random() * 1000000)}`;
 }
 
 const ArrowLeft = ({
@@ -43,7 +23,7 @@ const ArrowLeft = ({
   titleId: customTitleId,
   fill,
   ...props
-}: Props) => {
+}: ArrowLeftProps) => {
   const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
     customTitleId,
   ]);

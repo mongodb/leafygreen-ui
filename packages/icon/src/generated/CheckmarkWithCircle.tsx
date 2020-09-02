@@ -2,38 +2,18 @@
  * This is a generated file. Do not modify it manually. To regenerate the file, run:
  *   ts-node ./build.ts
  *
- * @checksum 9114c13cc37fdff1a4ac2e20252b4089
+ * @checksum 0e3f167bc33c3e53964d882b3e4ab67b
  *
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-export interface Props extends React.SVGProps<SVGSVGElement> {
-  size?: number | 'small' | 'default' | 'large' | 'xlarge';
-  titleId?: string;
-  title?: string | null | boolean;
-}
-const sizeMap = {
-  small: 14,
-  default: 16,
-  large: 20,
-  xlarge: 24,
-};
-
-function getGlyphTitle(name: string, title?: string | boolean | null) {
-  if (title === false) {
-    return null;
-  }
-
-  if (title == null || title === true) {
-    return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
-  }
-
-  return title;
-}
+import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { LGGlyph } from '../types';
+export interface CheckmarkWithCircleProps extends LGGlyph.ComponentProps {}
 
 function generateGlyphTitle(): string {
-  return 'CheckmarkWithCircle' + '-' + Math.floor(Math.random() * 1000000);
+  return `CheckmarkWithCircle-${Math.floor(Math.random() * 1000000)}`;
 }
 
 const CheckmarkWithCircle = ({
@@ -43,7 +23,7 @@ const CheckmarkWithCircle = ({
   titleId: customTitleId,
   fill,
   ...props
-}: Props) => {
+}: CheckmarkWithCircleProps) => {
   const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
     customTitleId,
   ]);

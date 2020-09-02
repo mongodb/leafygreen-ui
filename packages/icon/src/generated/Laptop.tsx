@@ -2,38 +2,18 @@
  * This is a generated file. Do not modify it manually. To regenerate the file, run:
  *   ts-node ./build.ts
  *
- * @checksum e10f2eb7b713bf67e818300b62f53ba9
+ * @checksum 756dda13ea6b2146fdbb198f3546842f
  *
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-export interface Props extends React.SVGProps<SVGSVGElement> {
-  size?: number | 'small' | 'default' | 'large' | 'xlarge';
-  titleId?: string;
-  title?: string | null | boolean;
-}
-const sizeMap = {
-  small: 14,
-  default: 16,
-  large: 20,
-  xlarge: 24,
-};
-
-function getGlyphTitle(name: string, title?: string | boolean | null) {
-  if (title === false) {
-    return null;
-  }
-
-  if (title == null || title === true) {
-    return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
-  }
-
-  return title;
-}
+import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { LGGlyph } from '../types';
+export interface LaptopProps extends LGGlyph.ComponentProps {}
 
 function generateGlyphTitle(): string {
-  return 'Laptop' + '-' + Math.floor(Math.random() * 1000000);
+  return `Laptop-${Math.floor(Math.random() * 1000000)}`;
 }
 
 const Laptop = ({
@@ -43,7 +23,7 @@ const Laptop = ({
   titleId: customTitleId,
   fill,
   ...props
-}: Props) => {
+}: LaptopProps) => {
   const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
     customTitleId,
   ]);

@@ -2,38 +2,18 @@
  * This is a generated file. Do not modify it manually. To regenerate the file, run:
  *   ts-node ./build.ts
  *
- * @checksum 07099d8a3f136b0c71e62f5c833eb988
+ * @checksum 972d1c360ef4ffc21ae582ea6c9a53c5
  *
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-export interface Props extends React.SVGProps<SVGSVGElement> {
-  size?: number | 'small' | 'default' | 'large' | 'xlarge';
-  titleId?: string;
-  title?: string | null | boolean;
-}
-const sizeMap = {
-  small: 14,
-  default: 16,
-  large: 20,
-  xlarge: 24,
-};
-
-function getGlyphTitle(name: string, title?: string | boolean | null) {
-  if (title === false) {
-    return null;
-  }
-
-  if (title == null || title === true) {
-    return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
-  }
-
-  return title;
-}
+import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { LGGlyph } from '../types';
+export interface InfoWithCircleProps extends LGGlyph.ComponentProps {}
 
 function generateGlyphTitle(): string {
-  return 'InfoWithCircle' + '-' + Math.floor(Math.random() * 1000000);
+  return `InfoWithCircle-${Math.floor(Math.random() * 1000000)}`;
 }
 
 const InfoWithCircle = ({
@@ -43,7 +23,7 @@ const InfoWithCircle = ({
   titleId: customTitleId,
   fill,
   ...props
-}: Props) => {
+}: InfoWithCircleProps) => {
   const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
     customTitleId,
   ]);
