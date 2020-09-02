@@ -8,7 +8,6 @@ interface SVGROptions extends Record<string, any> {
   state: {
     componentName: string;
   } & Record<string, any>;
-  typescript: boolean;
 }
 
 interface ASTParts extends Record<string, any> {
@@ -22,16 +21,10 @@ interface ASTParts extends Record<string, any> {
 
 module.exports = function template(
   { template }: BabelAPI,
-  { state: { componentName }, typescript }: SVGROptions,
+  { state: { componentName } }: SVGROptions,
   { imports, jsx, exports }: ASTParts,
 ) {
-  const plugins = ['jsx'];
-
-  if (typescript) {
-    plugins.push('typescript');
-  }
-
-  const typeScriptTpl = template.smart({ plugins });
+  const typeScriptTpl = template.smart({ plugins: ['jsx', 'typescript'] });
 
   const jsxAttributes = typeScriptTpl.ast`
     <Glyph
@@ -55,36 +48,49 @@ module.exports = function template(
     ${imports}
     import PropTypes from 'prop-types';
     import { css, cx } from '@leafygreen-ui/emotion';
+  
+    export interface Props extends React.SVGProps<SVGSVGElement> {
+      size?: number | 'small' | 'default' | 'large' | 'xlarge';
+      titleId?: string;
+      title?: string | null | boolean;
+    }
 
     const sizeMap = {
       small: 14,
       default: 16,
       large: 20,
       xlarge: 24,
-    }
+    };
 
-    function getGlyphTitle(name, title) {
+    function getGlyphTitle(name: string, title?: string | boolean | null) {
       if (title === false) {
         // If title is null, we unset the title entirely, otherwise we generate one.
         return null;
       }
-
+    
       if (title == null || title === true) {
-        return \`\${name.replace(
-          /([a-z])([A-Z])/g,
-          '$1 $2',
-        )} Icon\`;
+        return \`\${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon\`;
       }
-
+    
       return title;
     }
 
-    function generateGlyphTitle() {
+    function generateGlyphTitle(): string {
       return '${componentName}' + '-' + Math.floor(Math.random() * 1000000);
     }
 
-    const ${componentName} = ({ className, size = 16, title, customTitleId,  fill, ...props }) => {
-      const { current: titleId } = React.useMemo(() => customTitleId || generateGlyphTitle(), [customTitleId]);
+    const ${componentName} = ({
+      className,
+      size = 16,
+      title,
+      titleId: customTitleId,
+      fill,
+      ...props
+    }: Props) => {
+      const titleId = React.useMemo(
+        () => customTitleId || generateGlyphTitle(),
+        [customTitleId]
+      );
 
       const fillStyle = css\`
         color: \${fill};
