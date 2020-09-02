@@ -189,6 +189,24 @@ describe('packages/table', () => {
       expect(headerRow[0].tagName.toLowerCase()).toBe('tr');
     });
 
+    test('it formats columns that are passed in as a HeaderRow', () => {
+      renderTable({
+        table: {
+          columns: (
+            <HeaderRow>
+              <TableHeader key="name" label="name" />
+              <TableHeader key="age" label="age" />
+              <TableHeader key="color" label="color" />
+              <TableHeader key="location" label="location" />
+            </HeaderRow>
+          ),
+        },
+      });
+      const headerRow = screen.getAllByTestId('leafygreen-ui-header-row');
+      expect(headerRow.length).toBe(1);
+      expect(headerRow[0].tagName.toLowerCase()).toBe('tr');
+    });
+
     test('by default, it does not render columns as sortable', () => {
       renderTable();
       const sortableIcons = screen.queryAllByTitle('sorted icon');

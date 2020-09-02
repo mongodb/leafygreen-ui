@@ -33,6 +33,12 @@ module.exports = {
       },
     ],
     'react/forbid-prop-types': 1,
+    'react-hooks/exhaustive-deps': [
+      'warn',
+      {
+        additionalHooks: '(useIsomorphicLayoutEffect)',
+      },
+    ],
     'react/sort-comp': 'error',
     'import/no-extraneous-dependencies': 0,
     'padding-line-between-statements': [
