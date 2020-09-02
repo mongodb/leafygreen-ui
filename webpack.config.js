@@ -71,7 +71,7 @@ module.exports = function (env = 'production') {
     entry: './src/index',
     output: {
       path: path.resolve(process.cwd(), 'dist'),
-      filename: `index.js`,
+      filename: `index.bundle.js`,
       libraryTarget: isProduction ? 'umd' : undefined,
       globalObject: "(typeof self !== 'undefined' ? self : this)",
     },
