@@ -4,6 +4,7 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 import { typeScale1, typeScale2 } from './styles';
 
 const sharedStyles = css`
@@ -102,64 +103,22 @@ function InlineCode({ children, className, ...rest }: InlineCodeProps) {
   );
 }
 
-type InlineKeyCodeProps = HTMLElementProps<'code'> & {
-  keys: Array<string> | string;
-};
-
-const inlineKeyCodeFont = css`
-  font-family: 'Source Code Pro', monospace;
-  color: ${uiColors.gray.dark3};
-`;
-
 const inlineKeyCode = css`
+  font-family: ${fontFamilies.code};
+  color: ${uiColors.gray.dark3};
   border: 1px solid ${uiColors.gray.dark3};
   border-radius: 3px;
   padding-left: 4px;
   padding-right: 4px;
 `;
 
-const plusStyles = css`
-  padding-left: 2px;
-  padding-right: 2px;
-`;
-
-function InlineKeyCode({ keys, ...rest }: InlineKeyCodeProps) {
+function InlineKeyCode({ children, className, ...rest }: InlineCodeProps) {
   const size = useBaseFontSize();
   const body = size === 16 ? typeScale2 : typeScale1;
 
-  const renderIndividualKey = (key: string, index: number) => (
-    <span className={inlineKeyCode} key={index}>
-      {key}
-    </span>
-  );
-
-  const renderKeys = () => {
-    // @ts-expect-error
-    return keys.map((key: string, index: number) => {
-      if (index + 1 < keys.length) {
-        return (
-          <span key={index}>
-            {renderIndividualKey(key, index)}
-            <span className={plusStyles}>+</span>
-          </span>
-        );
-      }
-
-      return renderIndividualKey(key, index);
-    });
-  };
-
-  if (Array.isArray(keys)) {
-    return (
-      <code {...rest} className={cx(inlineKeyCodeFont, body)}>
-        {renderKeys()}
-      </code>
-    );
-  }
-
   return (
-    <code className={cx(inlineKeyCode, inlineKeyCodeFont, body)} {...rest}>
-      {keys}
+    <code className={cx(inlineKeyCode, body)} {...rest}>
+      {children}
     </code>
   );
 }
