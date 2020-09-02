@@ -52,7 +52,13 @@ interface ProgressBarProps {
 
 function ToastProgressBar({ progress }: ProgressBarProps) {
   return (
-    <div className={progressBarBackgroundStyle}>
+    <div
+      className={progressBarBackgroundStyle}
+      role="progressbar"
+      aria-valuenow={progress * 100}
+      aria-valuemin={0}
+      aria-valuemax={100}
+    >
       <div
         className={cx(
           progressBarStyle,

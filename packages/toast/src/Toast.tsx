@@ -66,6 +66,8 @@ const ToastVariants = {
 
 type ToastVariants = typeof ToastVariants[keyof typeof ToastVariants];
 
+export { ToastVariants };
+
 const variantStyles: Record<
   ToastVariants,
   Partial<Record<StyledElements, string>>
@@ -139,7 +141,7 @@ const toastTransitionStateStyles: Partial<Record<RTGStates, string>> = {
   `,
 };
 
-interface ToastProps extends Omit<React.ComponentProps<'div'>, 'title'> {
+export interface ToastProps extends Omit<React.ComponentProps<'div'>, 'title'> {
   /**
    * Optional text shown in bold above the body text.
    */
@@ -248,6 +250,7 @@ function Toast({
               <div>
                 {title && (
                   <Body
+                    data-testid="toast-title"
                     className={cx(
                       currentVariantStyles.body,
                       css`
@@ -289,8 +292,8 @@ function Toast({
 Toast.displayName = 'Toast';
 
 Toast.propTypes = {
-  title: PropTypes.element,
-  body: PropTypes.element.isRequired,
+  title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  body: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
   className: PropTypes.string,
   variant: PropTypes.oneOf(Object.values(ToastVariants)).isRequired,
   progress: PropTypes.number,
