@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/portal",
   "version": "2.2.1",
   "description": "LeafyGreen UI Kit Portal",
-  "main": "./dist/index.js",
+  "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
