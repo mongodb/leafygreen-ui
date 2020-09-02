@@ -1,10 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { number, select, text, boolean } from '@storybook/addon-knobs';
-import Toast from '.';
+import Toast, { Variant } from './Toast';
 
 storiesOf('Toast', module).add('Default', () => {
-  const variant = select('Variant', ['progress', 'success'], 'success');
+  const variant = select('Variant', Object.values(Variant), 'success');
   const knobs = {
     variant,
     progress:

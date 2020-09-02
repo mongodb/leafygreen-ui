@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import Toast, { ToastProps, ToastVariants } from './Toast';
+import Toast, { ToastProps, Variant } from './Toast';
 
 function renderToast(props: ToastProps) {
   return render(<Toast {...props} />);
@@ -11,8 +11,9 @@ describe('packages/toast', () => {
     test(`undefined, Toast doesn't render`, () => {
       const { queryByRole } = renderToast({
         body: 'hello world',
-        variant: ToastVariants.success,
+        variant: Variant.Success,
       });
+
       const toast = queryByRole('status');
       expect(toast).not.toBeInTheDocument();
     });
@@ -20,7 +21,7 @@ describe('packages/toast', () => {
     test(`false, Toast doesn't render`, () => {
       const { queryByRole } = renderToast({
         body: 'hello world',
-        variant: ToastVariants.success,
+        variant: Variant.Success,
         open: false,
       });
 
@@ -31,12 +32,11 @@ describe('packages/toast', () => {
     test('true, Toast is visible', () => {
       const { queryByRole } = renderToast({
         body: 'hello world',
-        variant: ToastVariants.success,
+        variant: Variant.Success,
         open: true,
       });
 
       const toast = queryByRole('status');
-      expect(toast).toBeInTheDocument();
       expect(toast).toBeVisible();
     });
   });
@@ -46,7 +46,7 @@ describe('packages/toast', () => {
       const { queryByRole } = renderToast({
         open: true,
         body: 'hello world',
-        variant: ToastVariants.success,
+        variant: Variant.Success,
       });
 
       const toast = queryByRole('button');
@@ -58,12 +58,11 @@ describe('packages/toast', () => {
       const { queryByRole } = renderToast({
         open: true,
         body: 'hello world',
-        variant: ToastVariants.success,
+        variant: Variant.Success,
         close: mockFn,
       });
 
       const closeButton = queryByRole('button');
-      expect(closeButton).toBeInTheDocument();
       expect(closeButton).toBeVisible();
 
       if (!closeButton) {
@@ -82,11 +81,10 @@ describe('packages/toast', () => {
       const { queryByRole } = renderToast({
         open: true,
         body: 'hello world',
-        variant: ToastVariants.progress,
+        variant: Variant.Progress,
       });
 
       const progressBar = queryByRole('progressbar');
-      expect(progressBar).toBeInTheDocument();
       expect(progressBar).toBeVisible();
     });
 
@@ -94,12 +92,11 @@ describe('packages/toast', () => {
       const { queryByRole } = renderToast({
         open: true,
         body: 'hello world',
-        variant: ToastVariants.progress,
+        variant: Variant.Progress,
         progress: 0,
       });
 
       const progressBar = queryByRole('progressbar');
-      expect(progressBar).toBeInTheDocument();
       expect(progressBar).toBeVisible();
     });
 
@@ -107,12 +104,11 @@ describe('packages/toast', () => {
       const { queryByRole } = renderToast({
         open: true,
         body: 'hello world',
-        variant: ToastVariants.progress,
+        variant: Variant.Progress,
         progress: 0,
       });
 
       const progressBar = queryByRole('progressbar');
-      expect(progressBar).toBeInTheDocument();
       expect(progressBar).toBeVisible();
     });
   });
@@ -122,7 +118,7 @@ describe('packages/toast', () => {
       const { queryByRole } = renderToast({
         open: true,
         body: 'hello world',
-        variant: ToastVariants.success,
+        variant: Variant.Success,
       });
 
       const progressBar = queryByRole('progressbar');
@@ -133,7 +129,7 @@ describe('packages/toast', () => {
       const { queryByRole } = renderToast({
         open: true,
         body: 'hello world',
-        variant: ToastVariants.success,
+        variant: Variant.Success,
         progress: 0,
       });
 
@@ -145,7 +141,7 @@ describe('packages/toast', () => {
       const { queryByRole } = renderToast({
         open: true,
         body: 'hello world',
-        variant: ToastVariants.success,
+        variant: Variant.Success,
         progress: 0,
       });
 
@@ -159,7 +155,7 @@ describe('packages/toast', () => {
       const { queryByTestId } = renderToast({
         open: true,
         body: 'hello world',
-        variant: ToastVariants.success,
+        variant: Variant.Success,
       });
 
       const body = queryByTestId('toast-title');
@@ -172,11 +168,11 @@ describe('packages/toast', () => {
         open: true,
         body: 'hello world',
         title: titleText,
-        variant: ToastVariants.success,
+        variant: Variant.Success,
       });
 
       const body = queryByText(titleText);
-      expect(body).toBeInTheDocument();
+      expect(body).toBeVisible();
     });
 
     test('a JSX element, the title element renders', () => {
@@ -186,11 +182,11 @@ describe('packages/toast', () => {
         open: true,
         body: 'hello world',
         title: titleElement,
-        variant: ToastVariants.success,
+        variant: Variant.Success,
       });
 
       const titleSpan = queryByText(titleText);
-      expect(titleSpan).toBeInTheDocument();
+      expect(titleSpan).toBeVisible();
     });
   });
 
@@ -200,11 +196,11 @@ describe('packages/toast', () => {
       const { queryByText } = renderToast({
         open: true,
         body: bodyText,
-        variant: ToastVariants.success,
+        variant: Variant.Success,
       });
 
       const body = queryByText(bodyText);
-      expect(body).toBeInTheDocument();
+      expect(body).toBeVisible();
     });
 
     test('a JSX element, the body element renders', () => {
@@ -213,11 +209,11 @@ describe('packages/toast', () => {
       const { queryByText } = renderToast({
         open: true,
         body: bodyElement,
-        variant: ToastVariants.success,
+        variant: Variant.Success,
       });
 
       const bodySpan = queryByText(bodyText);
-      expect(bodySpan).toBeInTheDocument();
+      expect(bodySpan).toBeVisible();
     });
   });
 });

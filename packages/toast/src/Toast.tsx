@@ -59,20 +59,20 @@ const baseElementStyles: Partial<Record<StyledElements, string>> = {
   `,
 };
 
-const ToastVariants = {
-  success: 'success',
-  progress: 'progress',
+const Variant = {
+  Success: 'success',
+  Progress: 'progress',
 } as const;
 
-type ToastVariants = typeof ToastVariants[keyof typeof ToastVariants];
+type Variant = typeof Variant[keyof typeof Variant];
 
-export { ToastVariants };
+export { Variant };
 
 const variantStyles: Record<
-  ToastVariants,
+  Variant,
   Partial<Record<StyledElements, string>>
 > = {
-  [ToastVariants.success]: {
+  [Variant.Success]: {
     toast: css`
       background-color: ${uiColors.green.light3};
     `,
@@ -103,7 +103,7 @@ const variantStyles: Record<
     `,
   },
 
-  [ToastVariants.progress]: {
+  [Variant.Progress]: {
     toast: css`
       background-color: ${uiColors.white};
       padding-bottom: 6px;
@@ -160,7 +160,7 @@ export interface ToastProps extends Omit<React.ComponentProps<'div'>, 'title'> {
   /**
    * Required style variant to render the Toast as.
    */
-  variant: ToastVariants;
+  variant: Variant;
 
   /**
    * Optional number between 0 and 1 that sets the progress bar's progress. Note that the progress bar is only rendered when the Toast variant is set to `'progress'`.
@@ -187,7 +187,7 @@ function Toast({
   body,
   className,
   variant,
-  progress = 1,
+  progress = 1.0,
   open = false,
   close,
   ...rest
@@ -197,9 +197,9 @@ function Toast({
 
   let VariantIcon: React.ComponentType<any>;
 
-  if (variant === ToastVariants.progress) {
+  if (variant === Variant.Progress) {
     VariantIcon = RefreshIcon;
-  } else if (variant === ToastVariants.success) {
+  } else if (variant === Variant.Success) {
     VariantIcon = CheckmarkWithCircleIcon;
   } else {
     VariantIcon = CheckmarkWithCircleIcon;
@@ -279,7 +279,7 @@ function Toast({
               </IconButton>
             )}
 
-            {variant === ToastVariants.progress && (
+            {variant === Variant.Progress && (
               <ProgressBar progress={progress} />
             )}
           </div>
@@ -295,7 +295,7 @@ Toast.propTypes = {
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   body: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
   className: PropTypes.string,
-  variant: PropTypes.oneOf(Object.values(ToastVariants)).isRequired,
+  variant: PropTypes.oneOf(Object.values(Variant)).isRequired,
   progress: PropTypes.number,
   open: PropTypes.bool,
   close: PropTypes.func,

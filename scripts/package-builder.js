@@ -115,7 +115,7 @@ const rootFile = `
 import React from 'react';
 
 export default function ${PACKAGE_UC}({}) {
-  return(<div>your content here</div>);
+  return <div>your content here</div>;
 }
 `;
 

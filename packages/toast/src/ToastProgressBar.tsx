@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clamp from 'lodash/clamp';
 import { cx, css, keyframes } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 
@@ -51,11 +52,13 @@ interface ProgressBarProps {
 }
 
 function ToastProgressBar({ progress }: ProgressBarProps) {
+  const normalizedProgress = clamp(progress, 0, 1) * 100;
+
   return (
     <div
       className={progressBarBackgroundStyle}
       role="progressbar"
-      aria-valuenow={progress * 100}
+      aria-valuenow={normalizedProgress}
       aria-valuemin={0}
       aria-valuemax={100}
     >
@@ -63,7 +66,7 @@ function ToastProgressBar({ progress }: ProgressBarProps) {
         className={cx(
           progressBarStyle,
           css`
-            width: ${progress * 100}%;
+            width: ${normalizedProgress}%;
           `,
         )}
       />
