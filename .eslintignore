@@ -3,3 +3,5 @@ dist
 lib
 storybook/public
 website/.next
+website/out
+website/hosting

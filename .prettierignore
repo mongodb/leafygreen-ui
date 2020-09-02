@@ -4,4 +4,6 @@ package.json
 storybook/public/
 .changeset/
 website/.next/
+website/hosting/
+website/out/
 
