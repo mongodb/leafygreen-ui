@@ -4,6 +4,7 @@ import { select } from '@storybook/addon-knobs';
 import {
   H1,
   H2,
+  H3,
   Subtitle,
   Body,
   InlineCode,
@@ -24,6 +25,7 @@ storiesOf('Typography', module).add('Default', () => (
     <div>
       <H1>Heading 1</H1>
       <H2>Heading 2</H2>
+      <H3>Heading 3</H3>
       <Subtitle>Subtitle</Subtitle>
       <Body
         weight={select('select Body weight', ['medium', 'regular'], 'regular')}
@@ -32,16 +34,11 @@ storiesOf('Typography', module).add('Default', () => (
         Body
       </Body>
       <InlineCode className={displayBlock}>InlineCode</InlineCode>
-      <div
-        className={css`
-          margin-bottom: 10px;
-        `}
-      >
-        <Body>
-          here are some fun directions: <InlineKeyCode keys="Command" />
-        </Body>
-      </div>
-      <InlineKeyCode keys={['CTRL', 'P']} />
+      <>
+        <InlineKeyCode>CTRL</InlineKeyCode>
+        <InlineCode>+</InlineCode>
+        <InlineKeyCode>C</InlineKeyCode>
+      </>
       <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
       <Overline>Overline</Overline>
       <Link
