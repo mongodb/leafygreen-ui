@@ -74,7 +74,7 @@ async function buildSvgFiles(
   }
 
   if (!(await promisify(fs.exists)(outputDir))) {
-    await promisify(fs.mkdir)(outputDir);
+    await promisify(fs.mkdir)(outputDir, { recursive: true });
   }
 
   await Promise.all(
