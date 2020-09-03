@@ -51,6 +51,9 @@
       "path": "./packages/menu"
     },
     {
+      "path": "./packages/marketing-modal"
+    },
+    {
       "path": "./packages/modal"
     },
     {
