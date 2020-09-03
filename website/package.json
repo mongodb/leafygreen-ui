@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export  -o hosting/files/",
+    "build": "next build && next export -o hosting/files/",
+    "release:site": "realm-cli import --app-id=mongodb-design-egzxo --strategy=merge --include-hosting",
     "start": "next start"
   },
   "dependencies": {
