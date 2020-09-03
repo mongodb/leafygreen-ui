@@ -2,29 +2,32 @@ import React, { useRef, useEffect, useCallback, SetStateAction } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { TabProps } from '.';
 
+export const tabTitleDataProp = createDataProp('tab-title-data-prop');
+
 const listTitle = css`
-  display: inline-block;
-  background-color: ${uiColors.white};
-  color: ${uiColors.gray.base};
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 1;
-  // padding-bottom dervied from border height + 5px
-  padding: 3px 20px 8px;
-  cursor: pointer;
-  transition: 150ms color ease-in-out;
-  border: none;
-  background: none;
+  color: ${uiColors.gray.dark1};
+  background-color: transparent;
+  border: 0px;
+  padding: 12px 16px;
   text-decoration: none;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: 150ms color ease-in-out;
+  font-weight: bold;
+  font-size: 16px;
+`;
 
+const listTitleStates = css`
   &:focus {
-    color: ${uiColors.blue.base};
     outline: none;
+    color: ${uiColors.blue.base};
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 
   &:hover:not(:focus) {
@@ -102,9 +105,10 @@ function TabTitle(props: TabTitleProps) {
 
   const renderTabTitle = (Root: React.ElementType<any> = 'button') => (
     <Root
+      {...tabTitleDataProp.prop}
       {...rest}
       ref={titleRef}
-      className={cx(listTitle, className)}
+      className={cx(listTitle, { [listTitleStates]: !disabled }, className)}
       role="tab"
       onClick={onClick}
       aria-controls={ariaControl}

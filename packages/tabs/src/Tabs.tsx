@@ -4,7 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { useEventListener } from '@leafygreen-ui/hooks';
-import TabTitle from './TabTitle';
+import TabTitle, { tabTitleDataProp } from './TabTitle';
 import omit from 'lodash/omit';
 
 const borderHeight = 3;
@@ -17,30 +17,43 @@ const listStyle = css`
 `;
 
 const activeStyle = css`
-  color: ${uiColors.gray.dark3};
-  cursor: default;
+  color: ${uiColors.green.dark2};
+
+  &:hover:not(:focus) {
+    color: ${uiColors.green.dark2};
+  }
 `;
 
 const disabledStyle = css`
-  pointer-events: none;
-  color: ${uiColors.gray.light2};
+  cursor: not-allowed;
+  color: ${uiColors.gray.light1};
 `;
 
-const grayBorder = css`
-  height: ${borderHeight}px;
+const grayLine = css`
+  height: 1px;
   background-color: ${uiColors.gray.light2};
   position: relative;
   // Makes border overlap with box-model for TabTitle components
-  margin-top: -${borderHeight}px;
+  margin-top: -4px;
   pointer-events: none;
 `;
 
-const greenBorder = css`
+const activeIndicator = css`
   position: absolute;
   top: 0;
   bottom: 0;
   background-color: ${uiColors.green.base};
   transition: 150ms transform ease-in-out, 150ms width ease-in-out 10ms;
+`;
+
+const hoverIndicator = css`
+  ${tabTitleDataProp.selector}:hover {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: pink;
+    transition: 150ms transform ease-in-out, 150ms width ease-in-out 10ms;
+  }
 `;
 
 const focusedStyle = css`
@@ -181,8 +194,10 @@ function Tabs({
     }
 
     return css`
-      transform: translate3d(${computedX}px, 0, 0);
+      transform: translate3d(${computedX}px, -3px, 0);
       width: ${tabListChildren[currentIndex].scrollWidth}px;
+      height: 3px;
+      border-radius: 3px 3px 0 0;
     `;
   }
 
@@ -237,9 +252,9 @@ function Tabs({
         })}
       </div>
 
-      <div className={grayBorder}>
+      <div className={grayLine}>
         <div
-          className={cx(greenBorder, calcStyle(), {
+          className={cx(activeIndicator, hoverIndicator, calcStyle(), {
             [focusedStyle]: focusedState.length > 0,
           })}
         />
