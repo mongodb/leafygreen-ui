@@ -1,9 +1,0 @@
-{
-  "name": "@leafygreen-ui/mongo-menu",
-  "version": "3.0.3",
-  "description": "LeafyGreen UI Kit Mongo Menu",
-  "license": "Apache-2.0",
-  "publishConfig": {
-    "access": "public"
-  }
-}
