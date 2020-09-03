@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/badge",
   "version": "3.0.2",
   "description": "leafyGreen UI Kit Badge",
-  "main": "./dist/umd/index.js",
+  "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {

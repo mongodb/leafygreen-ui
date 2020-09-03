@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/tokens",
   "version": "0.2.0",
   "description": "leafyGreen UI Kit Tokens",
-  "main": "./dist/umd/index.js",
+  "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
