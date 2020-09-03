@@ -1,9 +1,8 @@
 /**
- * This is a generated file. Do not modify it manually. To regenerate the file, run:
- *   ts-node ./build.ts
+ * This is a generated file. Do not modify it manually.
  *
- * @checksum 972d1c360ef4ffc21ae582ea6c9a53c5
- *
+ * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
+ * @checksum a94fe2afdf4fde28e18851fb3c1ef92a
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';

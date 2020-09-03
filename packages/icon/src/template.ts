@@ -48,7 +48,7 @@ module.exports = function template(
     %%imports%%
     import PropTypes from 'prop-types';
     import { css, cx } from '@leafygreen-ui/emotion';
-    import {getGlyphTitle, sizeMap} from '../glyphCommon';
+    import { getGlyphTitle, sizeMap } from '../glyphCommon';
     import { LGGlyph } from '../types';
   
     export interface ${componentName}Props extends LGGlyph.ComponentProps {}
