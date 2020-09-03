@@ -1,6 +1,7 @@
 # @leafygreen-ui/toast
 
 ## 0.1.0
+
 ### Minor Changes
 
 - 043c59b: Adds Beta version of the new Toast component.
