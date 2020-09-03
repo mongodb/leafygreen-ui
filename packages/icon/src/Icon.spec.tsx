@@ -201,18 +201,26 @@ describe('Generated glyphs', () => {
 
         const [
           ,
+          script,
           checksum,
           checkedContents,
-        ] = /^\/\*.*@checksum ([^\n]*)\n.*\*\/\n(.*)$/s.exec(
+        ] = /^\/\*.*@script ([^\n]*).*@checksum ([^\n]*).*\*\/\n(.*)$/s.exec(
           generatedFileContents,
         )!;
 
         const expectedChecksum = createHash('md5')
+          .update(script)
           .update(svgFileContents)
           .update(checkedContents)
           .digest('hex');
 
-        expect(checksum).toEqual(expectedChecksum);
+        try {
+          expect(checksum).toEqual(expectedChecksum);
+        } catch (error) {
+          throw new Error(
+            `${error}\n\nForgot to re-run script?: \`${script}\``,
+          );
+        }
       });
     });
   });

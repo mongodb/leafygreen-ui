@@ -74,7 +74,7 @@ async function buildSvgFiles(
   }
 
   if (!(await promisify(fs.exists)(outputDir))) {
-    await promisify(fs.mkdir)(outputDir);
+    await promisify(fs.mkdir)(outputDir, { recursive: true });
   }
 
   await Promise.all(
@@ -138,17 +138,20 @@ async function buildSvgFiles(
         fix: true,
       }).executeOnText(formattedCode);
 
+      const script =
+        './node_modules/.bin/ts-node packages/icon/scripts/build.ts';
+
       const checksum = createHash('md5')
+        .update(script)
         .update(fileContent)
         .update(lintedCode)
         .digest('hex');
 
       const finalCode = `/**
- * This is a generated file. Do not modify it manually. To regenerate the file, run:
- *   ts-node ./build.ts
+ * This is a generated file. Do not modify it manually.
  *
+ * @script ${script}
  * @checksum ${checksum}
- *
  */
 ${lintedCode}`;
 
