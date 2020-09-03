@@ -1,9 +1,11 @@
 export {
   H1,
   H2,
+  H3,
   Subtitle,
   Body,
   InlineCode,
+  InlineKeyCode,
   Disclaimer,
   Overline,
 } from './Typography';
