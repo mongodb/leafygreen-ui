@@ -20,21 +20,21 @@ storiesOf('Table', module)
             dataType={DataType.Number}
             label="Age"
             key="age"
-            sortBy={data => data.age.first ?? data.age}
+            sortBy={(data: typeof testHeavierDataSet[0]) => data.age.toString()}
           />
 
           <TableHeader
             dataType={DataType.String}
             label="Favorite Color"
             key="color"
-            sortBy={data => data.color.primary ?? data.color}
+            sortBy={(data: typeof testHeavierDataSet[0]) => data.color}
           />
 
           <TableHeader
             dataType={DataType.String}
             label="Location"
             key="location"
-            sortBy={data => data.location}
+            sortBy={(data: typeof testHeavierDataSet[0]) => data.location}
           />
         </>
       }
@@ -42,21 +42,21 @@ storiesOf('Table', module)
       {({ datum }) => (
         <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
           <Cell>{datum.name}</Cell>
-          <Cell>{datum.age.second ?? datum.age}</Cell>
-          <Cell>{datum.color?.primary ?? datum.color}</Cell>
+          <Cell>{datum.age}</Cell>
+          <Cell>{datum.color}</Cell>
           <Cell>{datum.location}</Cell>
 
           {datum.age > 21 && (
             <Row>
               <Cell>expanded name: {datum.name}</Cell>
-              <Cell>expanded age: {datum.age.second ?? datum.age}</Cell>
+              <Cell>expanded age: {datum.age}</Cell>
               <Cell>expanded color: {datum.color}</Cell>
               <Cell>{datum.location}</Cell>
 
               {datum.age > 25 && (
                 <Row>
                   <Cell>expanded name: {datum.name}</Cell>
-                  <Cell>expanded age: {datum.age.second ?? datum.age}</Cell>
+                  <Cell>expanded age: {datum.age}</Cell>
                   <Cell>expanded color: {datum.color}</Cell>
                   <Cell>{datum.location}</Cell>
 
@@ -106,23 +106,25 @@ storiesOf('Table', module)
   .add('No nested Rows', () => (
     <Table
       data={defaultData}
-      columns={[
-        <TableHeader key="name" label="Name" dataType="string" />,
-        <TableHeader key="age" label="Age" dataType="number" />,
-        <TableHeader
-          label="Color"
-          sortBy={datum => datum.color.primary ?? datum.color}
-          dataType="string"
-          key="color"
-        />,
-        <TableHeader key="location" label="Location" />,
-      ]}
+      columns={
+        <HeaderRow>
+          <TableHeader key="name" label="Name" dataType="string" />
+          <TableHeader key="age" label="Age" dataType="number" />
+          <TableHeader
+            label="Color"
+            sortBy={(datum: typeof defaultData[0]) => datum.color}
+            dataType="string"
+            key="color"
+          />
+          <TableHeader key="location" label="Location" />
+        </HeaderRow>
+      }
     >
       {({ datum }) => (
         <Row key={datum.name} disabled={datum.name === 'Charlotte'}>
           <Cell>{datum.name}</Cell>
           <Cell>{datum.age}</Cell>
-          <Cell>{datum.color.primary ?? datum.color}</Cell>
+          <Cell>{datum.color}</Cell>
           <Cell>{datum.location}</Cell>
         </Row>
       )}

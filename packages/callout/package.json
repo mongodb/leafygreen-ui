@@ -1,8 +1,8 @@
 {
   "name": "@leafygreen-ui/callout",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "leafyGreen UI Kit Callout",
-  "main": "./dist/index.js",
+  "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
@@ -14,7 +14,7 @@
   "dependencies": {
     "@leafygreen-ui/lib": "^5.1.1",
     "@leafygreen-ui/emotion": "^2.0.2",
-    "@leafygreen-ui/icon": "^6.3.2",
+    "@leafygreen-ui/icon": "^6.4.0",
     "@leafygreen-ui/palette": "^2.0.2",
     "@leafygreen-ui/typography": "^4.2.1",
     "polished": "^3.6.5"

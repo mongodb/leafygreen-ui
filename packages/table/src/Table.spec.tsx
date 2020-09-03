@@ -10,6 +10,13 @@ interface Props {
   row?: any;
 }
 
+interface Shape {
+  name: string;
+  age: number;
+  color: string;
+  location: string;
+}
+
 const className = 'test-className';
 
 const defaultColumns = [
@@ -27,7 +34,7 @@ function renderTable(props: Props = {}) {
       columns={defaultColumns}
       {...props.table}
     >
-      {({ datum }) => (
+      {({ datum }: { datum: Shape }) => (
         <Row key={datum.name} {...props.row}>
           <Cell>{datum.name}</Cell>
           <Cell>{datum.age}</Cell>
@@ -100,7 +107,7 @@ describe('packages/table', () => {
         data={[
           {
             name: 'Garry',
-            age: '100',
+            age: 100,
             color: 'pink',
             location: 'williamsburg',
           },
@@ -182,6 +189,24 @@ describe('packages/table', () => {
       expect(headerRow[0].tagName.toLowerCase()).toBe('tr');
     });
 
+    test('it formats columns that are passed in as a HeaderRow', () => {
+      renderTable({
+        table: {
+          columns: (
+            <HeaderRow>
+              <TableHeader key="name" label="name" />
+              <TableHeader key="age" label="age" />
+              <TableHeader key="color" label="color" />
+              <TableHeader key="location" label="location" />
+            </HeaderRow>
+          ),
+        },
+      });
+      const headerRow = screen.getAllByTestId('leafygreen-ui-header-row');
+      expect(headerRow.length).toBe(1);
+      expect(headerRow[0].tagName.toLowerCase()).toBe('tr');
+    });
+
     test('by default, it does not render columns as sortable', () => {
       renderTable();
       const sortableIcons = screen.queryAllByTitle('sorted icon');
@@ -218,11 +243,25 @@ describe('packages/table', () => {
     describe('the normalizeAccessor function works as expected', () => {
       test('it accesses the data correctly when passed a string', () => {
         const normalizedAccessor = normalizeAccessor('test');
-        expect(normalizedAccessor({ test: 'hi' })).toBe('hi');
+
+        // @ts-expect-error
+        const _: 'bye' = normalizedAccessor({ test: 'hi' } as const);
+
+        const hi: 'hi' = normalizedAccessor({ test: 'hi' } as const);
+
+        expect(hi).toBe('hi');
       });
       test('it accesses the data correctly when passed a function', () => {
-        const normalizedAccessor = normalizeAccessor(data => data.test);
-        expect(normalizedAccessor({ test: 'hi' })).toBe('hi');
+        const normalizedAccessor = normalizeAccessor(
+          <T,>(data: { test: T }) => data.test,
+        );
+
+        // @ts-expect-error
+        const _: 'bye' = normalizedAccessor({ test: 'hi' } as const);
+
+        const hi: 'hi' = normalizedAccessor({ test: 'hi' } as const);
+
+        expect(hi).toBe('hi');
       });
     });
 

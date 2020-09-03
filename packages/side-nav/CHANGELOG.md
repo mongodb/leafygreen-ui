@@ -1,5 +1,18 @@
 # @leafygreen-ui/side-nav
 
+## 3.0.9
+
+### Patch Changes
+
+- e599707: Require lodash dependencies instead of inlining them.
+
+## 3.0.8
+
+### Patch Changes
+
+- Updated dependencies [6b0d0a2]
+  - @leafygreen-ui/menu@7.0.8
+
 ## 3.0.7
 
 ### Patch Changes

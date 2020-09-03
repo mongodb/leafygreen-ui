@@ -1,4 +1,4 @@
-import React, { useMemo, Fragment, useState, useLayoutEffect } from 'react';
+import React, { useMemo, Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -7,6 +7,7 @@ import {
   useViewportSize,
   useMutationObserver,
   useElementNode,
+  useIsomorphicLayoutEffect,
   useObjectDependency,
   usePrevious,
 } from '@leafygreen-ui/hooks';
@@ -119,8 +120,9 @@ function Popover({
       () => getElementDocumentPosition(referenceElement),
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [
-        lastTimeRefElMutated,
+        referenceElement,
         viewportSize,
+        lastTimeRefElMutated,
         active,
         align,
         justify,
@@ -134,8 +136,9 @@ function Popover({
       () => getElementDocumentPosition(contentNode),
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [
-        lastTimeContentElMutated,
+        contentNode,
         viewportSize,
+        lastTimeContentElMutated,
         active,
         align,
         justify,
@@ -152,7 +155,7 @@ function Popover({
       (justify === Justify.Fit || prevJustify === Justify.Fit)) ||
     (prevAlign !== align && justify === Justify.Fit);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     // justify={Justify.Fit} can cause the content's height/width to change
     // If we're switching to/from Fit, force an extra pass to make sure the popover is positioned correctly.
     // Also if we're switching between alignments and have Justify.Fit, it may switch between setting the width and
@@ -162,38 +165,15 @@ function Popover({
     }
   }, [layoutMightHaveChanged]);
 
-  const [position, setPosition] = useState<ReturnType<
-    typeof calculatePosition
-  > | null>(null);
+  // Don't render the popover initially since computing the position depends on
+  // the window which isn't available if the component is rendered on server side.
+  const [shouldRender, setShouldRender] = useState(false);
 
-  useLayoutEffect(() => {
-    setPosition(
-      calculatePosition({
-        useRelativePositioning: !usePortal,
-        spacing,
-        align,
-        justify,
-        referenceElViewportPos,
-        referenceElDocumentPos,
-        contentElViewportPos,
-        contentElDocumentPos,
-      }),
-    );
-  }, [
-    referenceElViewportPos,
-    referenceElDocumentPos,
-    contentElViewportPos,
-    contentElDocumentPos,
-    lastTimeRefElMutated,
-    lastTimeContentElMutated,
-    usePortal,
-    spacing,
-    align,
-    justify,
-    forceUpdateCounter,
-  ]);
+  useIsomorphicLayoutEffect(() => {
+    setShouldRender(true);
+  }, []);
 
-  if (!position) {
+  if (!shouldRender) {
     return null;
   }
 
@@ -201,7 +181,16 @@ function Popover({
     align: windowSafeAlign,
     justify: windowSafeJustify,
     positionCSS,
-  } = position;
+  } = calculatePosition({
+    useRelativePositioning: !usePortal,
+    spacing,
+    align,
+    justify,
+    referenceElViewportPos,
+    referenceElDocumentPos,
+    contentElViewportPos,
+    contentElDocumentPos,
+  });
 
   const activeStyle = css`
     transform: translate3d(0, 0, 0) scale(1);

@@ -1,5 +1,11 @@
 # @leafygreen-ui/card
 
+## 4.1.0
+
+### Minor Changes
+
+- 1c00364: Shadow and border radius have been tweaked a bit. Hover style now only appears when the card is clickable. A focus state was added which is also only active when the card is clickable. A new prop was added which allows specifying that that the rendered component is clickable.
+
 ## 4.0.2
 
 ### Patch Changes

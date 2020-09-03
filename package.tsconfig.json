@@ -1,19 +1,10 @@
 {
+  "extends": "./common.tsconfig.json",
   "compilerOptions": {
     "module": "esnext",
-    "target": "ES5",
-    "jsx": "react",
-    "allowJs": false,
-    "pretty": true,
     "declaration": true,
-    "strictNullChecks": true,
-    "noUnusedLocals": true,
-    "strict": true,
-    "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
-    "baseUrl": ".",
     "paths": {
-      "@leafygreen-ui/*": ["packages/*/src"]
+      "@leafygreen-ui/*": ["packages/*/src", "website/*"]
     },
     "sourceMap": true,
     "declarationMap": true,

@@ -23,14 +23,12 @@ import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 
 <Table
   data={defaultData}
-  columns={
-    <HeaderRow>
-      <TableHeader label="Name" />
-      <TableHeader label="Age" />
-      <TableHeader label="Color" sortBy={datum => datum.color} />
-      Location
-    </HeaderRow>
-  }
+  columns={[
+    <TableHeader label="Name" />,
+    <TableHeader label="Age" />,
+    <TableHeader label="Color" sortBy={datum => datum.color} />,
+    <TableHeader label="Location" />,
+  ]}
 >
   {({ datum }) => (
     <Row key={datum.name}>
@@ -67,11 +65,11 @@ _Any property that can be passed to a `tr` element will be spread on the root_
 
 ## TableHeader Properties
 
-| Prop       | Type                                                      | Description                                                                        | Default |
-| ---------- | --------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------- |
-| `label`    | `string`                                                  | Content that will be rendered inside of the `th` tags                              |         |
-| `sortBy`   | `(data: any) => string | string`                          | String or function that provides information about how the column should be sorted |         |
-| `dataType` | `'number'`, `'weight'`, `'zipCode'`, `'string'`, `'date'` | Describes the type of data in the column                                           |         |
+| Prop       | Type                                                      | Description                                           | Default                                                                            |
+| ---------- | --------------------------------------------------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `label`    | `string`                                                  | Content that will be rendered inside of the `th` tags |                                                                                    |
+| `sortBy`   | `(data: any) => string                                    | string`                                               | String or function that provides information about how the column should be sorted |  |
+| `dataType` | `'number'`, `'weight'`, `'zipCode'`, `'string'`, `'date'` | Describes the type of data in the column              |                                                                                    |
 
 _Any property that can be passed to a `th` element will be spread on the root_
 
