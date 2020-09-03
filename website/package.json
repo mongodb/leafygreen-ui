@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export -o hosting/files/",
+    "release:web": "gh-pages -b website --dist hosting/files",
     "start": "next start"
   },
   "dependencies": {
