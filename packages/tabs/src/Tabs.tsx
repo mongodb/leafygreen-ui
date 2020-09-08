@@ -4,6 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { useEventListener } from '@leafygreen-ui/hooks';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import TabTitle from './TabTitle';
 import omit from 'lodash/omit';
 
@@ -148,6 +149,8 @@ function Tabs({
   as = 'button',
   ...rest
 }: TabsProps) {
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+
   const childrenArray = React.Children.toArray(children) as Array<
     React.ReactElement
   >;
@@ -297,7 +300,7 @@ function Tabs({
       <div className={cx(grayLine, colorVariants[variant].underlineColor)}>
         <div
           className={cx(activeIndicator, calcStyle('active'), {
-            [focusedStyle]: focusedState.length > 0,
+            [focusedStyle]: showFocus && focusedState.length > 0,
           })}
         />
         <div

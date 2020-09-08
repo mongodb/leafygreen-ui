@@ -8,22 +8,19 @@
   "include": ["src/**/*"],
   "references": [
     {
-      "path": "../emotion"
-    },
-    {
       "path": "../lib"
     },
     {
-      "path": "../hooks"
+      "path": "../typography"
     },
     {
       "path": "../palette"
     },
     {
-      "path": "../box"
+      "path": "../tooltip"
     },
     {
-      "path": "../leafygreen-provider"
+      "path": "../emotion"
     }
   ]
 }

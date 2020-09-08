@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Variant } from '.';
 
 const colorVariant = {
@@ -10,12 +11,7 @@ const colorVariant = {
     listTitleColor: css`
       color: ${uiColors.gray.dark1};
     `,
-    listTitleStates: css`
-      &:focus {
-        outline: none;
-        color: ${uiColors.blue.base};
-      }
-
+    listTitleHover: css`
       &:hover {
         cursor: pointer;
       }
@@ -24,24 +20,29 @@ const colorVariant = {
         color: ${uiColors.gray.dark3};
       }
     `,
+    listTitleFocus: css`
+      &:focus {
+        color: ${uiColors.blue.base};
+      }
+    `,
   },
 
   light: {
     listTitleColor: css`
       color: ${uiColors.gray.light1};
     `,
-    listTitleStates: css`
-      &:focus {
-        outline: none;
-        color: #43b1e5;
-      }
-
+    listTitleHover: css`
       &:hover {
         cursor: pointer;
       }
 
       &:hover:not(:focus) {
         color: ${uiColors.white};
+      }
+    `,
+    listTitleFocus: css`
+      &:focus {
+        color: #43b1e5;
       }
     `,
   },
@@ -55,8 +56,12 @@ const listTitle = css`
   overflow: hidden;
   text-overflow: ellipsis;
   transition: 150ms color ease-in-out;
-  font-weight: bold;
+  font-family: Akzidenz Medium;
   font-size: 16px;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 interface BaseTabProps {
@@ -82,6 +87,7 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
   variant,
   ...rest
 }: BaseTabProps) => {
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const titleRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -103,7 +109,10 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
     className: cx(
       listTitle,
       colorVariant[variant].listTitleColor,
-      { [colorVariant[variant].listTitleStates]: !disabled },
+      {
+        [colorVariant[variant].listTitleHover]: !disabled,
+        [colorVariant[variant].listTitleFocus]: showFocus,
+      },
       className,
     ),
     role: 'tab',
@@ -122,7 +131,11 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
     </Box>;
   }
 
-  return <Box {...sharedTabProps}>{children}</Box>;
+  return (
+    <Box as="button" {...sharedTabProps}>
+      {children}
+    </Box>
+  );
 };
 
 TabTitle.displayName = 'TabTitle';
