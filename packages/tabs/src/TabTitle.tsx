@@ -2,13 +2,52 @@ import React, { useRef, useEffect, useCallback, SetStateAction } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
-import { TabProps } from '.';
+import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import { Variant } from '.';
 
-export const tabTitleDataProp = createDataProp('tab-title-data-prop');
+const colorVariant = {
+  default: {
+    listTitleColor: css`
+      color: ${uiColors.gray.dark1};
+    `,
+    listTitleStates: css`
+      &:focus {
+        outline: none;
+        color: ${uiColors.blue.base};
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &:hover:not(:focus) {
+        color: ${uiColors.gray.dark3};
+      }
+    `,
+  },
+
+  light: {
+    listTitleColor: css`
+      color: ${uiColors.gray.light1};
+    `,
+    listTitleStates: css`
+      &:focus {
+        outline: none;
+        color: #43b1e5;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &:hover:not(:focus) {
+        color: ${uiColors.white};
+      }
+    `,
+  },
+};
 
 const listTitle = css`
-  color: ${uiColors.gray.dark1};
   background-color: transparent;
   border: 0px;
   padding: 12px 16px;
@@ -20,73 +59,29 @@ const listTitle = css`
   font-size: 16px;
 `;
 
-const listTitleStates = css`
-  &:focus {
-    outline: none;
-    color: ${uiColors.blue.base};
-  }
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  &:hover:not(:focus) {
-    color: ${uiColors.gray.dark3};
-  }
-`;
-
-interface SharedTabTitleProps
-  extends Omit<TabProps, 'default' | 'name' | 'href' | 'to' | 'value'> {
+interface BaseTabProps {
+  ariaControl: string;
   setFocusedState: React.Dispatch<SetStateAction<Array<number>>>;
-  as?: React.ElementType<any>;
+  variant: Variant;
+  index: number;
+  selected?: boolean;
+  href?: string;
+  children?: React.ReactNode;
+  className?: string;
+  disabled?: boolean;
 }
 
-interface LinkTabTitleProps extends HTMLElementProps<'a'>, SharedTabTitleProps {
-  href: string;
-}
-
-interface ButtonTabTitleProps
-  extends HTMLElementProps<'button'>,
-    SharedTabTitleProps {
-  href?: null;
-}
-
-type CustomElementButtonProps = SharedTabTitleProps & {
-  as: React.ElementType<any>;
-  [key: string]: any;
-};
-
-export type TabTitleProps =
-  | LinkTabTitleProps
-  | ButtonTabTitleProps
-  | CustomElementButtonProps;
-
-function usesCustomElement(
-  props: TabTitleProps,
-): props is CustomElementButtonProps {
-  return (props as any).as != null;
-}
-
-function usesLinkElement(
-  props: LinkTabTitleProps | ButtonTabTitleProps,
-): props is LinkTabTitleProps {
-  return props.href != null;
-}
-
-function TabTitle(props: TabTitleProps) {
-  const {
-    selected,
-    children,
-    className,
-    disabled,
-    onClick,
-    ariaControl,
-    setFocusedState,
-    as,
-    index,
-    ...rest
-  } = props;
-
+const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
+  selected,
+  children,
+  className,
+  disabled,
+  ariaControl,
+  setFocusedState,
+  index,
+  variant,
+  ...rest
+}: BaseTabProps) => {
   const titleRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -103,35 +98,32 @@ function TabTitle(props: TabTitleProps) {
     setFocusedState((curr: Array<number>) => [...curr, index]);
   }, [index, setFocusedState]);
 
-  const renderTabTitle = (Root: React.ElementType<any> = 'button') => (
-    <Root
-      {...tabTitleDataProp.prop}
-      {...rest}
-      ref={titleRef}
-      className={cx(listTitle, { [listTitleStates]: !disabled }, className)}
-      role="tab"
-      onClick={onClick}
-      aria-controls={ariaControl}
-      aria-selected={selected}
-      aria-disabled={disabled}
-      tabIndex={selected ? 0 : -1}
-      onBlur={onBlur}
-      onFocus={onFocus}
-    >
+  const sharedTabProps = {
+    ref: titleRef,
+    className: cx(
+      listTitle,
+      colorVariant[variant].listTitleColor,
+      { [colorVariant[variant].listTitleStates]: !disabled },
+      className,
+    ),
+    role: 'tab',
+    ['aria-controls']: ariaControl,
+    ['aria-selected']: selected,
+    ['aria-disabled']: disabled,
+    tabIndex: selected ? 0 : -1,
+    onBlur: onBlur,
+    onFocus: onFocus,
+    ...rest,
+  };
+
+  if (typeof rest.href === 'string') {
+    <Box as="a" {...sharedTabProps}>
       {children}
-    </Root>
-  );
-
-  if (usesCustomElement(props)) {
-    return renderTabTitle(as);
+    </Box>;
   }
 
-  if (usesLinkElement(props)) {
-    return renderTabTitle('a');
-  }
-
-  return renderTabTitle();
-}
+  return <Box {...sharedTabProps}>{children}</Box>;
+};
 
 TabTitle.displayName = 'TabTitle';
 

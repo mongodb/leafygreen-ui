@@ -4,10 +4,51 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { useEventListener } from '@leafygreen-ui/hooks';
-import TabTitle, { tabTitleDataProp } from './TabTitle';
+import TabTitle from './TabTitle';
 import omit from 'lodash/omit';
 
-const borderHeight = 3;
+const Variant = {
+  Default: 'default',
+  Light: 'light',
+} as const;
+
+type Variant = typeof Variant[keyof typeof Variant];
+
+export { Variant };
+
+const colorVariants = {
+  [Variant.Default]: {
+    activeStyle: css`
+      color: ${uiColors.green.dark2};
+
+      &:hover:not(:focus) {
+        color: ${uiColors.green.dark2};
+      }
+    `,
+    disabledColor: css`
+      color: ${uiColors.gray.light1};
+    `,
+    hoverIndicator: css`
+      background-color: ${uiColors.gray.light2};
+    `,
+  },
+
+  [Variant.Light]: {
+    activeStyle: css`
+      color: ${uiColors.green.light2};
+
+      &:hover:not(:focus) {
+        color: ${uiColors.green.light2};
+      }
+    `,
+    disabledColor: css`
+      color: ${uiColors.gray.dark1};
+    `,
+    hoverIndicator: css`
+      background-color: ${uiColors.gray.dark1};
+    `,
+  },
+};
 
 const listStyle = css`
   list-style: none;
@@ -16,17 +57,8 @@ const listStyle = css`
   width: 100%;
 `;
 
-const activeStyle = css`
-  color: ${uiColors.green.dark2};
-
-  &:hover:not(:focus) {
-    color: ${uiColors.green.dark2};
-  }
-`;
-
 const disabledStyle = css`
   cursor: not-allowed;
-  color: ${uiColors.gray.light1};
 `;
 
 const grayLine = css`
@@ -47,13 +79,9 @@ const activeIndicator = css`
 `;
 
 const hoverIndicator = css`
-  ${tabTitleDataProp.selector}:hover {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    background-color: pink;
-    transition: 150ms transform ease-in-out, 150ms width ease-in-out 10ms;
-  }
+  position: absolute;
+  top: 3px;
+  transition: 150ms transform ease-in-out, 150ms width ease-in-out 10ms;
 `;
 
 const focusedStyle = css`
@@ -80,6 +108,8 @@ interface TabsProps {
    * className supplied to Tabs container.
    */
   className?: string;
+
+  variant?: Variant;
 
   /**
    * HTML Element that wraps title in Tab List.
@@ -109,6 +139,7 @@ function Tabs({
   setSelected: setControlledSelected,
   selected: controlledSelected,
   className,
+  variant = 'default',
   as = 'button',
   ...rest
 }: TabsProps) {
@@ -128,6 +159,8 @@ function Tabs({
   const tabListRef = useRef<HTMLDivElement>(null);
 
   const [focusedState, setFocusedState] = useState([0]);
+
+  const [hoverIndex, setHoverIndex] = useState();
 
   const currentIndex = childrenArray.findIndex((child, index) => {
     if (!child) {
@@ -174,12 +207,10 @@ function Tabs({
 
   useEventListener('keydown', handleArrowKeyPress);
 
-  function calcStyle() {
-    if (
-      !tabListRef ||
-      !tabListRef.current ||
-      typeof currentIndex !== 'number'
-    ) {
+  function calcStyle(state: 'active' | 'hover') {
+    const current = state === 'active' ? currentIndex : hoverIndex;
+
+    if (!tabListRef || !tabListRef.current || typeof current !== 'number') {
       return null;
     }
 
@@ -189,13 +220,13 @@ function Tabs({
 
     let computedX = 0;
 
-    for (let i = 0; i < currentIndex; i++) {
+    for (let i = 0; i < current; i++) {
       computedX += tabListChildren[i].scrollWidth;
     }
 
     return css`
       transform: translate3d(${computedX}px, -3px, 0);
-      width: ${tabListChildren[currentIndex].scrollWidth}px;
+      width: ${tabListChildren[current].scrollWidth}px;
       height: 3px;
       border-radius: 3px 3px 0 0;
     `;
@@ -231,8 +262,11 @@ function Tabs({
               {...filteredRest}
               key={index}
               className={cx({
-                [activeStyle]: selected,
-                [disabledStyle]: disabled,
+                [colorVariants[variant].activeStyle]: selected,
+                [cx(
+                  colorVariants[variant].disabledColor,
+                  disabledStyle,
+                )]: disabled,
               })}
               onClick={
                 !disabled
@@ -245,6 +279,9 @@ function Tabs({
               index={index}
               setFocusedState={setFocusedState}
               as={as}
+              onMouseEnter={() => !disabled && setHoverIndex(index)}
+              onMouseLeave={() => !disabled && setHoverIndex(undefined)}
+              variant={variant}
             >
               {tab.props.name}
             </TabTitle>
@@ -254,10 +291,20 @@ function Tabs({
 
       <div className={grayLine}>
         <div
-          className={cx(activeIndicator, hoverIndicator, calcStyle(), {
+          className={cx(activeIndicator, calcStyle('active'), {
             [focusedStyle]: focusedState.length > 0,
           })}
-        />
+        >
+          <div
+            className={cx({
+              [cx(
+                calcStyle('hover'),
+                hoverIndicator,
+                colorVariants[variant].hoverIndicator,
+              )]: currentIndex !== hoverIndex,
+            })}
+          />
+        </div>
       </div>
 
       {tabs}
