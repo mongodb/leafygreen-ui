@@ -65,6 +65,7 @@ const baseStyles = css`
   padding: 14px 16px;
   border-radius: 3px;
   box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
+  cursor: default;
 `;
 
 const positionRelative = css`
@@ -178,7 +179,10 @@ export type TooltipProps = Omit<
 
 const idAllocator = IdAllocator.create('tooltip');
 
-const stopClickPropagation = (evt: React.MouseEvent) => evt.stopPropagation();
+const stopClickPropagation = (evt: React.MouseEvent) => {
+  evt.preventDefault();
+  evt.stopPropagation();
+};
 
 /**
  * # Tooltip
