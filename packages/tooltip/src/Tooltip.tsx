@@ -116,7 +116,7 @@ interface PopoverFunctionParameters {
   referenceElPos: ElementPosition;
 }
 
-type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'spacing' | 'refEl'>;
+type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'refEl'>;
 
 export type TooltipProps = Omit<
   HTMLElementProps<'div'>,
@@ -241,6 +241,7 @@ function Tooltip({
   shouldClose,
   usePortal = true,
   portalClassName,
+  spacing = 12,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
@@ -318,8 +319,8 @@ function Tooltip({
   });
 
   const portalProps = usePortal
-    ? { usePortal, portalClassName }
-    : { usePortal };
+    ? { spacing, usePortal, portalClassName }
+    : { spacing, usePortal };
 
   const tooltip = (
     <Popover
@@ -328,7 +329,6 @@ function Tooltip({
       align={align}
       justify={justify}
       adjustOnMutation={true}
-      spacing={12}
       onClick={stopClickPropagation}
       {...portalProps}
     >
