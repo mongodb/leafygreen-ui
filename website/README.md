@@ -6,4 +6,4 @@ To deploy run:
 
 `yarn build`
 
-`yarn release:web`
+`yarn release`
