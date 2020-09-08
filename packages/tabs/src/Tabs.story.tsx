@@ -26,7 +26,9 @@ function ControlledTabs() {
         <Tab name={text('name', 'Harry Spencer Wolff')}>
           {text('Tab Content', 'Hello 1')}
         </Tab>
-        <Tab name="Jeremy Steven Tice">Hello 2</Tab>
+        <Tab disabled name="Jeremy Steven Tice">
+          Hello 2
+        </Tab>
         <Tab name="Mark Frederick Truman">Hello 3</Tab>
       </Tabs>
     </div>
@@ -35,7 +37,12 @@ function ControlledTabs() {
 
 storiesOf('Tabs', module)
   .add('Uncontrolled', () => (
-    <Tabs>
+    <Tabs
+      className={css`
+        width: 800px;
+        background-color: orange;
+      `}
+    >
       <Tab
         default={boolean('default', true)}
         name={text('name', 'Brooke Scarlett Yalof')}

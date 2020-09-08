@@ -28,6 +28,9 @@ const colorVariants = {
     disabledColor: css`
       color: ${uiColors.gray.light1};
     `,
+    underlineColor: css`
+      background-color: ${uiColors.gray.light2};
+    `,
     hoverIndicator: css`
       background-color: ${uiColors.gray.light2};
     `,
@@ -44,6 +47,9 @@ const colorVariants = {
     disabledColor: css`
       color: ${uiColors.gray.dark1};
     `,
+    underlineColor: css`
+      background-color: ${uiColors.gray.dark2};
+    `,
     hoverIndicator: css`
       background-color: ${uiColors.gray.dark1};
     `,
@@ -52,7 +58,7 @@ const colorVariants = {
 
 const listStyle = css`
   list-style: none;
-  padding: 0px;
+  padding: 0;
   display: flex;
   width: 100%;
 `;
@@ -63,7 +69,6 @@ const disabledStyle = css`
 
 const grayLine = css`
   height: 1px;
-  background-color: ${uiColors.gray.light2};
   position: relative;
   // Makes border overlap with box-model for TabTitle components
   margin-top: -4px;
@@ -72,19 +77,19 @@ const grayLine = css`
 
 const activeIndicator = css`
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: -1px;
   background-color: ${uiColors.green.base};
   transition: 150ms transform ease-in-out, 150ms width ease-in-out 10ms;
 `;
 
 const hoverIndicator = css`
   position: absolute;
-  top: 3px;
-  transition: 150ms transform ease-in-out, 150ms width ease-in-out 10ms;
+  top: -1px;
 `;
 
 const focusedStyle = css`
+  position: absolute;
+  top: -1px;
   background-color: ${uiColors.blue.base};
 `;
 
@@ -225,10 +230,10 @@ function Tabs({
     }
 
     return css`
-      transform: translate3d(${computedX}px, -3px, 0);
+      transform: translate3d(${computedX}px, -2px, 0);
       width: ${tabListChildren[current].scrollWidth}px;
-      height: 3px;
-      border-radius: 3px 3px 0 0;
+      height: 4px;
+      border-radius: 4px 4px 0 0;
     `;
   }
 
@@ -289,22 +294,21 @@ function Tabs({
         })}
       </div>
 
-      <div className={grayLine}>
+      <div className={cx(grayLine, colorVariants[variant].underlineColor)}>
         <div
           className={cx(activeIndicator, calcStyle('active'), {
             [focusedStyle]: focusedState.length > 0,
           })}
-        >
-          <div
-            className={cx({
-              [cx(
-                calcStyle('hover'),
-                hoverIndicator,
-                colorVariants[variant].hoverIndicator,
-              )]: currentIndex !== hoverIndex,
-            })}
-          />
-        </div>
+        />
+        <div
+          className={cx({
+            [cx(
+              calcStyle('hover'),
+              hoverIndicator,
+              colorVariants[variant].hoverIndicator,
+            )]: currentIndex !== hoverIndex,
+          })}
+        />
       </div>
 
       {tabs}
