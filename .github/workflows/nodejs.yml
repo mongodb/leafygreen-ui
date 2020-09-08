@@ -62,7 +62,7 @@ jobs:
       - name: lint
         run: yarn eslint --format junit -o reports/junit/js-lint-results.xml
       - name: types
-        run: yarn ts:build && yarn ts
+        run: yarn ts
 
   sizeDiff:
     name: Check file size
