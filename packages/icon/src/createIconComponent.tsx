@@ -1,15 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { LGGlyph } from './types';
-
-export const Size = {
-  Small: 'small',
-  Default: 'default',
-  Large: 'large',
-  XLarge: 'xlarge',
-} as const;
-
-export type Size = typeof Size[keyof typeof Size];
+import { Size } from './glyphCommon';
 
 // We omit size here because we map string values for size to numbers in this component.
 export interface IconProps extends Omit<LGGlyph.ComponentProps, 'size'> {
