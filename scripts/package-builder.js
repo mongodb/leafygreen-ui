@@ -48,7 +48,7 @@ const packageJSON = `
     "name": "@leafygreen-ui/${PACKAGE_LC}",
     "version": "0.9.0",
     "description": "leafyGreen UI Kit ${PACKAGE_HUMANREADABLE}",
-    "main": "./dist/index.js",
+    "main": "./dist/index.bundle.js",
     "types": "./dist/index.d.ts",
     "scripts": {
       "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
@@ -112,10 +112,10 @@ npm install @leafygreen-ui/${PACKAGE_LC}
 `;
 
 const rootFile = `
-import React from 'react'
+import React from 'react';
 
 export default function ${PACKAGE_UC}({}) {
-  return(<div>your content here</div>)
+  return <div>your content here</div>;
 }
 `;
 

@@ -1,8 +1,8 @@
 {
   "name": "@leafygreen-ui/side-nav",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "leafyGreen UI Kit Side Nav",
-  "main": "./dist/index.js",
+  "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"

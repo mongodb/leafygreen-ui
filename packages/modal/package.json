@@ -1,8 +1,8 @@
 {
   "name": "@leafygreen-ui/modal",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "LeafyGreen UI Kit Modal",
-  "main": "./dist/index.js",
+  "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
@@ -13,9 +13,9 @@
   },
   "dependencies": {
     "react-transition-group": "^4.4.1",
-    "@leafygreen-ui/hooks": "^4.0.1",
-    "@leafygreen-ui/icon": "^6.3.2",
-    "@leafygreen-ui/icon-button": "^7.0.0",
+    "@leafygreen-ui/hooks": "^4.2.0",
+    "@leafygreen-ui/icon": "^6.5.0",
+    "@leafygreen-ui/icon-button": "^7.0.5",
     "@leafygreen-ui/lib": "^5.1.1",
     "@leafygreen-ui/palette": "^2.0.2",
     "@leafygreen-ui/portal": "^2.2.1"

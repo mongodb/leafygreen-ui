@@ -1,19 +1,14 @@
 const svgr = require('@svgr/core').default;
-// @ts-ignore
 const fs = require('fs');
-// @ts-ignore
 const path = require('path');
-// @ts-ignore
 const meow = require('meow');
-// @ts-ignore
 const template = require('../src/template');
-// @ts-ignore
 const { transformSync } = require('@babel/core');
 
 const cli = meow(
   `
 	Usage
-		$ ts-node ./build.js <filename(s)>
+		$ ts-node ./build.ts <filename(s)>
 
 	Options
 		--outDir, -o  Output directory for built SVG components
@@ -158,7 +153,7 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
         rootMode: 'upward',
         filename: file.name,
         generatorOpts: {
-          minify: true,
+          minified: true,
           compact: true,
         },
       },
