@@ -1,0 +1,18 @@
+{
+  "app_id": "mongodb-design-egzxo",
+  "config_version": 20200603,
+  "name": "mongodb-design",
+  "location": "US-VA",
+  "deployment_model": "GLOBAL",
+  "security": {},
+  "hosting": {
+    "enabled": true,
+    "app_default_domain": "mongodb-design-egzxo.mongodbstitch.com"
+  },
+  "custom_user_data_config": {
+    "enabled": false
+  },
+  "sync": {
+    "development_mode_enabled": false
+  }
+}

@@ -35,7 +35,7 @@ function TableHead<Shape>({ columns = [] }: TableHeaderProps<Shape>) {
 
   const columnArray: Array<React.ReactElement> =
     // @ts-ignore Property 'type' does not exist on type '{}'.ts(2339)
-    columns.type === React.Fragment
+    columns.type === React.Fragment || isComponentType(columns, 'HeaderRow')
       ? React.Children.toArray((columns as React.ReactElement).props.children)
       : (columns as Array<any>);
 

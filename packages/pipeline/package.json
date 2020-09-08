@@ -1,8 +1,8 @@
 {
   "name": "@leafygreen-ui/pipeline",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "LeafyGreen UI Kit Pipeline",
-  "main": "./dist/index.js",
+  "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
@@ -13,10 +13,10 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^2.0.2",
-    "@leafygreen-ui/hooks": "^4.0.1",
+    "@leafygreen-ui/hooks": "^4.2.0",
     "@leafygreen-ui/lib": "^5.1.1",
     "@leafygreen-ui/palette": "^2.0.2",
-    "@leafygreen-ui/tooltip": "^3.3.5",
+    "@leafygreen-ui/tooltip": "^3.3.7",
     "lodash": "^4.17.15",
     "react-children-utilities": "^2.0.0",
     "react-intersection-observer": "8.25.1",
