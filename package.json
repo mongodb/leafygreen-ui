@@ -23,7 +23,7 @@
     "pre-build": "lerna run --parallel pre-build -- --env production",
     "build": "yarn pre-build && lerna run --parallel build -- --env production",
     "build:storybook": "build-storybook -c storybook -o ./storybook/public -s ./storybook/static",
-    "clean": "rimraf packages/*/{dist,node_modules} node_modules",
+    "clean": "rimraf packages/*/{dist,node_modules} node_modules **/*.tsbuildinfo",
     "create-package": "node ./scripts/package-builder.js",
     "format": "yarn prettier && yarn eslint:format",
     "init": "yarn && yarn build && yarn ts:build --verbose --force",
