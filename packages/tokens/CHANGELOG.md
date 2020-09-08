@@ -1,5 +1,11 @@
 # @leafygreen-ui/tokens
 
+## 0.3.0
+
+### Minor Changes
+
+- f792966: Adds default and code fonts to Tokens package
+
 ## 0.2.0
 
 ### Minor Changes

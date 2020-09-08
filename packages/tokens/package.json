@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tokens",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "leafyGreen UI Kit Tokens",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

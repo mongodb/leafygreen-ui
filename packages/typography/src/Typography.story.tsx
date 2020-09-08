@@ -1,7 +1,17 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { select } from '@storybook/addon-knobs';
-import { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline } from '.';
+import {
+  H1,
+  H2,
+  H3,
+  Subtitle,
+  Body,
+  InlineCode,
+  InlineKeyCode,
+  Disclaimer,
+  Overline,
+} from '.';
 import { Link, ArrowAppearance } from './Link';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { css } from '@leafygreen-ui/emotion';
@@ -15,6 +25,7 @@ storiesOf('Typography', module).add('Default', () => (
     <div>
       <H1>Heading 1</H1>
       <H2>Heading 2</H2>
+      <H3>Heading 3</H3>
       <Subtitle>Subtitle</Subtitle>
       <Body
         weight={select('select Body weight', ['medium', 'regular'], 'regular')}
@@ -23,6 +34,11 @@ storiesOf('Typography', module).add('Default', () => (
         Body
       </Body>
       <InlineCode className={displayBlock}>InlineCode</InlineCode>
+      <>
+        <InlineKeyCode>CTRL</InlineKeyCode>
+        <InlineCode>+</InlineCode>
+        <InlineKeyCode>C</InlineKeyCode>
+      </>
       <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
       <Overline>Overline</Overline>
       <Link
