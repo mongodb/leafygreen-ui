@@ -1,9 +1,14 @@
-const svgr = require('@svgr/core').default;
+const { createHash } = require('crypto');
 const fs = require('fs');
 const path = require('path');
+const { promisify } = require('util');
+
+const { default: svgr } = require('@svgr/core');
+const { CLIEngine } = require('eslint');
 const meow = require('meow');
+const prettier = require('prettier');
+
 const template = require('../src/template');
-const { transformSync } = require('@babel/core');
 
 const cli = meow(
   `
@@ -23,6 +28,8 @@ const cli = meow(
   },
 );
 
+const repoPath = path.resolve(__dirname, '../../..');
+
 interface Flags {
   outDir?: string;
 }
@@ -36,52 +43,10 @@ function filterSvgFiles(str: string): boolean {
   return str.includes('.svg');
 }
 
-function generateModuleDefinition(glyphName: string) {
-  return `
-declare module '@leafygreen-ui/icon/dist/${glyphName}' {
-  import { LGGlyph } from '@leafygreen-ui/icon/dist/types';
-  
-  const ${glyphName}: LGGlyph.Component
-
-  export default ${glyphName};
-}
-  `;
-}
-
-function buildDefinitionFiles(input: Array<string>, flags: Flags) {
-  let svgFileNames: Array<string>;
-
-  if (input?.length) {
-    svgFileNames = input
-      .filter(filterSvgFiles)
-      .map((fileName: string) => path.basename(fileName, '.svg'));
-  } else {
-    const glyphsDir: string = path.resolve(__dirname, '..', 'src', 'glyphs');
-
-    svgFileNames = fs
-      .readdirSync(glyphsDir)
-      .filter(filterSvgFiles)
-      .map((fileName: string) => path.basename(fileName, '.svg'));
-  }
-
-  svgFileNames.forEach(name => {
-    const fileContent = generateModuleDefinition(name);
-
-    let outputDir = path.resolve(__dirname, '..', 'dist');
-
-    if (flags.outDir) {
-      outputDir = path.resolve(process.cwd(), flags.outDir);
-    }
-
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir, { recursive: true });
-    }
-
-    fs.writeFileSync(path.resolve(outputDir, `${name}.d.ts`), fileContent);
-  });
-}
-
-function buildSvgFiles(input: Array<string>, flags: Flags) {
+async function buildSvgFiles(
+  input: Array<string>,
+  flags: Flags,
+): Promise<void> {
   let svgFiles: Array<FileObject>;
 
   if (input?.length) {
@@ -94,8 +59,7 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
   } else {
     const glyphsDir: string = path.resolve(__dirname, '..', 'src', 'glyphs');
 
-    svgFiles = fs
-      .readdirSync(glyphsDir)
+    svgFiles = (await promisify(fs.readdir)(glyphsDir))
       .filter(filterSvgFiles)
       .map((fileName: string) => ({
         name: fileName.replace('.svg', ''),
@@ -103,12 +67,23 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
       }));
   }
 
-  svgFiles.forEach(file => {
-    const fileContent = fs.readFileSync(file.path, { encoding: 'utf8' });
+  let outputDir = path.resolve(__dirname, '..', 'src/generated');
 
-    // We transform the output SVGR code to be ES5 compatible.
-    const { code: moduleCode } = transformSync(
-      svgr.sync(
+  if (flags.outDir) {
+    outputDir = path.resolve(process.cwd(), flags.outDir);
+  }
+
+  if (!(await promisify(fs.exists)(outputDir))) {
+    await promisify(fs.mkdir)(outputDir, { recursive: true });
+  }
+
+  await Promise.all(
+    svgFiles.map(async file => {
+      const fileContent = await promisify(fs.readFile)(file.path, {
+        encoding: 'utf8',
+      });
+
+      const moduleCode = await svgr(
         fileContent,
         {
           titleProp: true,
@@ -119,7 +94,6 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
           jsx: {
             babelConfig: {
               plugins: [
-                '@babel/plugin-transform-react-jsx',
                 [
                   // This plugin lets us transform the JSX output to change instances of
                   // #000000 and #000 (the fill for our SVG glyphs) to use `this.props.fill` instead.
@@ -147,34 +121,46 @@ function buildSvgFiles(input: Array<string>, flags: Flags) {
         {
           componentName: file.name,
         },
-      ),
-      {
-        // The root directory this runs in doesn't contain a babel configuration. This sets it to look for the nearest configuration in a parent directory.
-        rootMode: 'upward',
-        filename: file.name,
-        generatorOpts: {
-          minified: true,
-          compact: true,
-        },
-      },
-    );
+      );
 
-    let outputDir = path.resolve(__dirname, '..', 'dist');
+      const options = await prettier.resolveConfig(
+        path.resolve(repoPath, '.prettierrc'),
+      );
+      const formattedCode = prettier.format(moduleCode, {
+        ...options,
+        parser: 'babel',
+      });
 
-    if (flags.outDir) {
-      outputDir = path.resolve(process.cwd(), flags.outDir);
-    }
+      const {
+        results: [{ output: lintedCode = formattedCode }],
+      } = new CLIEngine({
+        cwd: repoPath,
+        fix: true,
+      }).executeOnText(formattedCode);
 
-    const glyphDir = path.resolve(outputDir, 'glyphs');
+      const script =
+        './node_modules/.bin/ts-node packages/icon/scripts/build.ts';
 
-    if (!fs.existsSync(glyphDir)) {
-      fs.mkdirSync(glyphDir, { recursive: true });
-    }
+      const checksum = createHash('md5')
+        .update(script)
+        .update(fileContent)
+        .update(lintedCode)
+        .digest('hex');
 
-    fs.copyFileSync(file.path, path.resolve(glyphDir, `${file.name}.svg`));
-    fs.writeFileSync(path.resolve(outputDir, `${file.name}.js`), moduleCode);
-  });
+      const finalCode = `/**
+ * This is a generated file. Do not modify it manually.
+ *
+ * @script ${script}
+ * @checksum ${checksum}
+ */
+${lintedCode}`;
+
+      await promisify(fs.writeFile)(
+        path.resolve(outputDir, `${file.name}.tsx`),
+        finalCode,
+      );
+    }),
+  );
 }
 
 buildSvgFiles(cli.input, cli.flags);
-buildDefinitionFiles(cli.input, cli.flags);

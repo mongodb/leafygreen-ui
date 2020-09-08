@@ -1,43 +1,52 @@
 import React from 'react';
 import path from 'path';
 import fs from 'fs';
+import { createHash } from 'crypto';
 import { toJson } from 'xml2json';
-import { render, cleanup } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
 import { SVGR } from './types';
 import { createIconComponent, glyphs } from '.';
-import createGlyphComponent, { getGlyphTitle } from './createGlyphComponent';
+import { getGlyphTitle } from './glyphCommon';
+import createGlyphComponent from './createGlyphComponent';
 import EditIcon from '@leafygreen-ui/icon/dist/Edit';
 
-afterAll(cleanup);
+function getBaseName(filePath: string): string {
+  return path.basename(filePath, path.extname(filePath));
+}
+
+const glyphPaths = fs
+  .readdirSync(path.resolve(__dirname, './glyphs'))
+  /**
+   * './glyphs/' contains an index.ts file, so we filter out
+   * anything that's not an svg.
+   */
+  .filter(path => /.*\.svg$/.test(path))
+  .map(fileName => path.resolve(__dirname, './glyphs/', fileName));
+
+const generatedFilesDirectory = path.resolve(__dirname, './generated');
+const baseNameToGeneratedFilePath: Record<string, string> = {};
+
+fs.readdirSync(generatedFilesDirectory).forEach(filePath => {
+  baseNameToGeneratedFilePath[getBaseName(filePath)] = filePath;
+});
 
 describe('packages/Icon/glyphs/', () => {
-  const glyphPaths = fs
-    .readdirSync(path.resolve(__dirname, './glyphs'))
-    /**
-     * './glyphs/' contains an index.ts file, so we filter out
-     * anything that's not an svg.
-     */
-    .filter(path => /.*\.svg$/.test(path));
-
   test('exported glyphs match files in glyphs directory', () => {
     // Test that any export in the glyphs directory has a corresponding file,
     // and return an array of SVG files not exported.
-    const extraGlyphs = Object.keys(glyphs).reduce(
-      (glyphsInDir, glyph) => {
-        expect(glyphsInDir.find(el => el === glyph)).toBe(glyph);
+    const extraGlyphs = Object.keys(glyphs).reduce((glyphsInDir, glyph) => {
+      expect(glyphsInDir.find(el => el === glyph)).toBe(glyph);
 
-        return glyphsInDir.filter(el => el !== glyph);
-      },
-      glyphPaths.map(path => path.replace('.svg', '')),
-    );
+      return glyphsInDir.filter(el => el !== glyph);
+    }, glyphPaths.map(getBaseName));
 
     expect(extraGlyphs.length).toBe(0);
   });
 
   glyphPaths.forEach(glyphPath => {
-    describe(`${glyphPath}`, () => {
-      const { svg } = require(path.resolve(__dirname, `./glyphs/${glyphPath}`));
+    describe(getBaseName(glyphPath), () => {
+      const { svg } = require(glyphPath);
 
       type SVGNodeObject = {
         readonly [K in string]: string | SVGNodeObject;
@@ -153,5 +162,66 @@ describe('packages/Icon/createIconComponent', () => {
 describe('Generated glyphs', () => {
   test('Edit icon has displayName: "Edit"', () => {
     expect(EditIcon.displayName).toBe('Edit');
+  });
+
+  test('have all been generated', () => {
+    const validGlyphBaseNames: Record<string, true> = {};
+
+    glyphPaths.forEach(filePath => {
+      const baseName = getBaseName(filePath);
+      expect(baseNameToGeneratedFilePath).toHaveProperty(baseName);
+
+      validGlyphBaseNames[baseName] = true;
+    });
+
+    Object.keys(baseNameToGeneratedFilePath).forEach(baseName => {
+      // Make sure there aren't any generated files that don't have a corresponding glyph
+      expect(validGlyphBaseNames).toHaveProperty(baseName);
+    });
+  });
+
+  describe('are up-to-date and not been modified', () => {
+    glyphPaths.forEach(glyphPath => {
+      const baseName = getBaseName(glyphPath);
+
+      test(baseName, () => {
+        const svgFileContents = fs.readFileSync(glyphPath, {
+          encoding: 'utf8',
+        });
+
+        const generatedFileContents = fs.readFileSync(
+          path.resolve(
+            generatedFilesDirectory,
+            baseNameToGeneratedFilePath[baseName],
+          ),
+          {
+            encoding: 'utf8',
+          },
+        );
+
+        const [
+          ,
+          script,
+          checksum,
+          checkedContents,
+        ] = /^\/\*.*@script ([^\n]*).*@checksum ([^\n]*).*\*\/\n(.*)$/s.exec(
+          generatedFileContents,
+        )!;
+
+        const expectedChecksum = createHash('md5')
+          .update(script)
+          .update(svgFileContents)
+          .update(checkedContents)
+          .digest('hex');
+
+        try {
+          expect(checksum).toEqual(expectedChecksum);
+        } catch (error) {
+          throw new Error(
+            `${error}\n\nForgot to re-run script?: \`${script}\``,
+          );
+        }
+      });
+    });
   });
 });
