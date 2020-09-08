@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export -o hosting/files/",
+    "release": "gh-pages -b website --dist .",
     "start": "next start"
   },
   "dependencies": {
