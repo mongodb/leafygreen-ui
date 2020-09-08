@@ -1,4 +1,10 @@
-import Tooltip, { TriggerEvent, Variant, Align, Justify } from './Tooltip';
+import Tooltip, {
+  TooltipProps,
+  TriggerEvent,
+  Variant,
+  Align,
+  Justify,
+} from './Tooltip';
 
-export { TriggerEvent, Variant, Align, Justify };
+export { TooltipProps, TriggerEvent, Variant, Align, Justify };
 export default Tooltip;
