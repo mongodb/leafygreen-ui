@@ -171,7 +171,7 @@ module.exports = function (env = 'production') {
       entry: './src/index',
       output: {
         ...baseOutputConfig,
-        filename: 'index.js',
+        filename: 'index.bundle.js',
       },
     },
     ...getGeneratedFiles().map(entry => ({

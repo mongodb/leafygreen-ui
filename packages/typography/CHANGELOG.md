@@ -1,5 +1,13 @@
 # @leafygreen-ui/typography
 
+## 4.2.2
+
+### Patch Changes
+
+- f792966: Uses Tokens package to define `font-family` for InlineCode component
+- Updated dependencies [f792966]
+  - @leafygreen-ui/tokens@0.3.0
+
 ## 4.2.1
 
 ### Patch Changes
