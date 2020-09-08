@@ -75,7 +75,7 @@ const positionRelative = css`
   position: relative;
 `;
 
-const tooltipVariants: { readonly [K in Variant]: string } = {
+const tooltipVariants = {
   [Variant.Dark]: css`
     background-color: ${uiColors.gray.dark3};
     color: ${uiColors.gray.light1};
@@ -86,9 +86,9 @@ const tooltipVariants: { readonly [K in Variant]: string } = {
     color: ${uiColors.gray.dark2};
     border: 1px solid ${uiColors.gray.light2};
   `,
-};
+} as const;
 
-const childrenVariants: { readonly [K in Variant]: string } = {
+const childrenVariants = {
   [Variant.Dark]: css`
     color: ${uiColors.gray.light1};
   `,
@@ -96,7 +96,7 @@ const childrenVariants: { readonly [K in Variant]: string } = {
   [Variant.Light]: css`
     color: ${uiColors.gray.dark2};
   `,
-};
+} as const;
 
 const notchVariants = {
   [Variant.Dark]: css`
