@@ -19,11 +19,11 @@
     "url": "https://github.com/mongodb/leafygreen-ui/issues"
   },
   "scripts": {
-    "start": "start-storybook -p 9001 -c storybook -s ./storybook/static",
+    "start": "start-storybook -p 9001 -c storybook -s ./storybook/static --no-version-updates",
     "pre-build": "lerna run --parallel pre-build -- --env production",
     "build": "yarn pre-build && lerna run --parallel build -- --env production",
     "build:storybook": "build-storybook -c storybook -o ./storybook/public -s ./storybook/static",
-    "clean": "rimraf packages/*/{dist,node_modules} node_modules",
+    "clean": "rimraf packages/*/{dist,node_modules} node_modules **/*.tsbuildinfo",
     "create-package": "node ./scripts/package-builder.js",
     "format": "yarn prettier && yarn eslint:format",
     "init": "yarn && yarn build && yarn ts:build --verbose --force",
@@ -121,6 +121,9 @@
     "url-loader": "4.1.0",
     "webpack": "4.42.1",
     "webpack-cli": "3.3.11"
+  },
+  "resolutions": {
+    "@types/react": "^16.9.32"
   },
   "config": {
     "commitizen": {

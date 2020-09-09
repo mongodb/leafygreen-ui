@@ -1,5 +1,16 @@
 # @leafygreen-ui/tooltip
 
+## 3.3.7
+
+### Patch Changes
+
+- e599707: Require lodash dependencies instead of inlining them.
+- Updated dependencies [8c867bb]
+- Updated dependencies [e599707]
+- Updated dependencies [8c867bb]
+  - @leafygreen-ui/popover@5.2.2
+  - @leafygreen-ui/hooks@4.2.0
+
 ## 3.3.6
 
 ### Patch Changes

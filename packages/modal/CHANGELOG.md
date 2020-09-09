@@ -1,5 +1,20 @@
 # @leafygreen-ui/modal
 
+## 4.1.0
+
+### Minor Changes
+
+- e49d66b: Updated appearance of modal
+
+### Patch Changes
+
+- Updated dependencies [e49d66b]
+- Updated dependencies [e599707]
+- Updated dependencies [8c867bb]
+  - @leafygreen-ui/icon@6.5.0
+  - @leafygreen-ui/hooks@4.2.0
+  - @leafygreen-ui/icon-button@7.0.5
+
 ## 4.0.0
 
 ### Major Changes

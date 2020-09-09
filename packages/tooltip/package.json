@@ -1,8 +1,8 @@
 {
   "name": "@leafygreen-ui/tooltip",
-  "version": "3.3.6",
+  "version": "3.3.7",
   "description": "LeafyGreen UI Kit Tooltip",
-  "main": "./dist/index.js",
+  "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
@@ -15,10 +15,10 @@
     "@leafygreen-ui/button": "^6.0.2"
   },
   "dependencies": {
-    "@leafygreen-ui/popover": "^5.2.0",
+    "@leafygreen-ui/popover": "^5.2.2",
     "@leafygreen-ui/lib": "^5.1.1",
     "@leafygreen-ui/palette": "^2.0.2",
-    "@leafygreen-ui/hooks": "^4.1.0",
+    "@leafygreen-ui/hooks": "^4.2.0",
     "lodash": "^4.17.15"
   }
 }

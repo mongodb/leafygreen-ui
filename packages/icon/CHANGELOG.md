@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 6.5.0
+
+### Minor Changes
+
+- e49d66b: Updated appearance of X icon
+
 ## 6.4.2
 
 ### Patch Changes

@@ -161,3 +161,18 @@ const Example = ({nextValue: number}) => {
 // Third render
 <Example nextValue={0} />  // will render "2020"
 ```
+
+# useIsomorphicLayoutEffect
+
+Drop-in replacement for `useLayoutEffect` that does not produce warnings during server-side rendering. If your project uses the `react-hooks/exhaustive-deps` ESLint rule, it's recommended to add `useIsomorphicLayoutEffect` to the `additionalHooks` of the rule. Example:
+
+```js
+  rules: {
+    'react-hooks/exhaustive-deps': [
+      'warn',
+      {
+        additionalHooks: '(useIsomorphicLayoutEffect)'
+      }
+    ]
+  }
+```

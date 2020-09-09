@@ -1,5 +1,14 @@
 # @leafygreen-ui/tabs
 
+## 2.1.4
+
+### Patch Changes
+
+- e599707: Require lodash dependencies instead of inlining them.
+- Updated dependencies [e599707]
+- Updated dependencies [8c867bb]
+  - @leafygreen-ui/hooks@4.2.0
+
 ## 2.1.3
 
 ### Patch Changes

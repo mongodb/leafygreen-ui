@@ -1,8 +1,8 @@
 import React from 'react';
+import times from 'lodash/times';
 import { storiesOf } from '@storybook/react';
 import { number } from '@storybook/addon-knobs';
 import { Step, Stepper } from '.';
-import { times } from 'lodash';
 import { addons } from '@storybook/addons';
 import { CHANGE } from '@storybook/addon-knobs';
 

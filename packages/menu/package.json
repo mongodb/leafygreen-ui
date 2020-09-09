@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/menu",
   "version": "7.0.8",
   "description": "LeafyGreen UI Kit Menu",
-  "main": "./dist/index.js",
+  "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"

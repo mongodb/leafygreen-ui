@@ -106,17 +106,19 @@ storiesOf('Table', module)
   .add('No nested Rows', () => (
     <Table
       data={defaultData}
-      columns={[
-        <TableHeader key="name" label="Name" dataType="string" />,
-        <TableHeader key="age" label="Age" dataType="number" />,
-        <TableHeader
-          label="Color"
-          sortBy={(datum: typeof defaultData[0]) => datum.color}
-          dataType="string"
-          key="color"
-        />,
-        <TableHeader key="location" label="Location" />,
-      ]}
+      columns={
+        <HeaderRow>
+          <TableHeader key="name" label="Name" dataType="string" />
+          <TableHeader key="age" label="Age" dataType="number" />
+          <TableHeader
+            label="Color"
+            sortBy={(datum: typeof defaultData[0]) => datum.color}
+            dataType="string"
+            key="color"
+          />
+          <TableHeader key="location" label="Location" />
+        </HeaderRow>
+      }
     >
       {({ datum }) => (
         <Row key={datum.name} disabled={datum.name === 'Charlotte'}>

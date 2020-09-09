@@ -1,8 +1,8 @@
 {
   "name": "@leafygreen-ui/icon",
-  "version": "6.4.2",
+  "version": "6.5.0",
   "description": "LeafyGreen UI Kit Icons",
-  "main": "./dist/index.js",
+  "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "pre-build": "ts-node ./scripts/build.ts --files",
@@ -13,7 +13,6 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/theme": "^2.0.1",
     "xml2json": "^0.11.2"
   },
   "dependencies": {

@@ -1,5 +1,14 @@
 # @leafygreen-ui/table
 
+## 0.1.3
+
+### Patch Changes
+
+- cdb4c82: Updates Table documentation to represent default usage of `columns` prop. Additionally, now allows `<HeaderRow />` to be passed to `columns` prop
+- Updated dependencies [e49d66b]
+  - @leafygreen-ui/icon@6.5.0
+  - @leafygreen-ui/icon-button@7.0.5
+
 ## 0.1.2
 
 ### Patch Changes

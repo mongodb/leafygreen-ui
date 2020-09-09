@@ -65,6 +65,7 @@ const baseStyles = css`
   padding: 14px 16px;
   border-radius: 3px;
   box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
+  cursor: default;
 `;
 
 const positionRelative = css`
@@ -102,7 +103,7 @@ interface PopoverFunctionParameters {
   referenceElPos: ElementPosition;
 }
 
-type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'spacing' | 'refEl'>;
+type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'refEl'>;
 
 export type TooltipProps = Omit<
   HTMLElementProps<'div'>,
@@ -178,7 +179,10 @@ export type TooltipProps = Omit<
 
 const idAllocator = IdAllocator.create('tooltip');
 
-const stopClickPropagation = (evt: React.MouseEvent) => evt.stopPropagation();
+const stopClickPropagation = (evt: React.MouseEvent) => {
+  evt.preventDefault();
+  evt.stopPropagation();
+};
 
 /**
  * # Tooltip
@@ -224,6 +228,7 @@ function Tooltip({
   shouldClose,
   usePortal = true,
   portalClassName,
+  spacing = 12,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
@@ -301,8 +306,8 @@ function Tooltip({
   });
 
   const portalProps = usePortal
-    ? { usePortal, portalClassName }
-    : { usePortal };
+    ? { spacing, usePortal, portalClassName }
+    : { spacing, usePortal };
 
   const tooltip = (
     <Popover
@@ -311,7 +316,6 @@ function Tooltip({
       align={align}
       justify={justify}
       adjustOnMutation={true}
-      spacing={12}
       onClick={stopClickPropagation}
       {...portalProps}
     >

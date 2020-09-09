@@ -1,5 +1,18 @@
 # @leafygreen-ui/code
 
+## 4.0.3
+
+### Patch Changes
+
+- e599707: Require lodash dependencies instead of inlining them.
+- 8c867bb: Reduces server side effect warnings
+- Updated dependencies [e49d66b]
+- Updated dependencies [e599707]
+- Updated dependencies [8c867bb]
+  - @leafygreen-ui/icon@6.5.0
+  - @leafygreen-ui/hooks@4.2.0
+  - @leafygreen-ui/icon-button@7.0.5
+
 ## 4.0.2
 
 ### Patch Changes

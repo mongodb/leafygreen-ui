@@ -488,6 +488,7 @@ export default function ProjectNav({
         <>
           <Tooltip
             {...sharedTooltipProps}
+            tabIndex={-1}
             align="bottom"
             justify="middle"
             usePortal={false}

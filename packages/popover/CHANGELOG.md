@@ -1,5 +1,14 @@
 # @leafygreen-ui/popover
 
+## 5.2.2
+
+### Patch Changes
+
+- 8c867bb: Reduces server side effect warnings
+- Updated dependencies [e599707]
+- Updated dependencies [8c867bb]
+  - @leafygreen-ui/hooks@4.2.0
+
 ## 5.2.1
 
 ### Patch Changes

@@ -1,43 +1,104 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
-import Card from './Card';
+import { render } from '@testing-library/react';
+import Card, { ContentStyle } from './Card';
 
-afterAll(cleanup);
+const defaultClassName = 'card-className';
+const defaultChildren = 'this is my card component';
 
-describe('packages/Card', () => {
-  const className = 'card-className';
-  const children = 'this is my card component';
+function isVisuallyClickable(element: HTMLElement): boolean {
+  return (
+    window.getComputedStyle(element).getPropertyValue('cursor') === 'pointer'
+  );
+}
+
+interface PartialCardProps {
+  children?: React.ReactNode;
+  className?: string;
+  href?: string;
+  onClick?: React.MouseEventHandler;
+  as?: 'section';
+  contentStyle?: ContentStyle;
+}
+
+function renderCard({
+  children = defaultChildren,
+  className = defaultClassName,
+  ...rest
+}: PartialCardProps = {}): HTMLElement {
   const cardId = 'cardID';
 
   const { getByTestId } = render(
-    <Card data-testid={cardId} className={className}>
+    // @ts-expect-error
+    <Card data-testid={cardId} className={className} {...rest}>
       {children}
     </Card>,
   );
 
-  const renderedCard = getByTestId(cardId);
+  return getByTestId(cardId);
+}
 
-  test(`renders "${className}" in the cards's classList`, () => {
-    expect(renderedCard.classList.contains(className)).toBe(true);
+describe('packages/Card', () => {
+  test(`renders "${defaultClassName}" in the card's classList`, () => {
+    const renderedCard = renderCard();
+    expect(renderedCard.classList.contains(defaultClassName)).toBe(true);
   });
 
-  test(`renders "${children}" as the cards's textContent`, () => {
-    expect(renderedCard.textContent).toBe(children);
+  test(`renders "${defaultChildren}" as the cards's textContent`, () => {
+    const renderedCard = renderCard();
+    expect(renderedCard.textContent).toBe(defaultChildren);
   });
 
   test(`renders inside of a div tag by default`, () => {
+    const renderedCard = renderCard();
     expect(renderedCard.tagName.toLowerCase()).toBe('div');
   });
 
   test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
-    const newCardId = 'newCardID';
-    const { getByTestId } = render(
-      <Card data-testid={newCardId} as="section">
-        Card!
-      </Card>,
-    );
-    const cardComponent = getByTestId(newCardId);
+    const renderedCard = renderCard({ as: 'section' });
+    expect(renderedCard.tagName.toLowerCase()).toBe('section');
+  });
 
-    expect(cardComponent.tagName.toLowerCase()).toBe('section');
+  describe('content style', () => {
+    describe('is `clickable`', () => {
+      test('when `href` is provided', () => {
+        const renderedCard = renderCard({ href: 'https://mongodb.com' });
+        expect(isVisuallyClickable(renderedCard)).toBe(true);
+      });
+
+      test('when `onClick` is provided', () => {
+        const renderedCard = renderCard({ onClick: () => {} });
+        expect(isVisuallyClickable(renderedCard)).toBe(true);
+      });
+
+      test('when explicit `contentStyle` is provided', () => {
+        const renderedCard = renderCard({
+          contentStyle: ContentStyle.Clickable,
+        });
+        expect(isVisuallyClickable(renderedCard)).toBe(true);
+      });
+    });
+
+    describe('is `none`', () => {
+      test('by default', () => {
+        const renderedCard = renderCard();
+        expect(isVisuallyClickable(renderedCard)).toBe(false);
+      });
+
+      test('when `href` and explicit `contentStyle` are provided', () => {
+        const renderedCard = renderCard({
+          href: 'https://mongodb.com',
+          contentStyle: ContentStyle.None,
+        });
+        expect(isVisuallyClickable(renderedCard)).toBe(false);
+      });
+
+      test('when `onClick` and explicit `contentStyle` are provided', () => {
+        const renderedCard = renderCard({
+          onClick: () => {},
+          contentStyle: ContentStyle.None,
+        });
+        expect(isVisuallyClickable(renderedCard)).toBe(false);
+      });
+    });
   });
 });
