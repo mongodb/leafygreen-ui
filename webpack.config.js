@@ -62,20 +62,25 @@ function getDirectGlyphImports() {
     );
 }
 
+function getGeneratedFiles() {
+  const directory = path.resolve(process.cwd(), 'src/generated');
+
+  if (!fs.existsSync(directory)) {
+    return [];
+  }
+
+  return fs
+    .readdirSync(directory)
+    .filter(file => /\.tsx?$/.test(file))
+    .map(file => path.resolve(directory, file));
+}
+
 // Base Webpack configuration, used by all other configurations for common settings
 module.exports = function (env = 'production') {
   const isProduction = env === 'production';
 
-  return {
+  const baseConfig = {
     mode: env,
-    entry: './src/index',
-    output: {
-      path: path.resolve(process.cwd(), 'dist'),
-      filename: `index.bundle.js`,
-      libraryTarget: isProduction ? 'umd' : undefined,
-      globalObject: "(typeof self !== 'undefined' ? self : this)",
-    },
-
     externals: isProduction
       ? [
           'react',
@@ -153,4 +158,29 @@ module.exports = function (env = 'production') {
       return [ContextReplacementPluginInstance];
     })(),
   };
+
+  const baseOutputConfig = {
+    path: path.resolve(process.cwd(), 'dist'),
+    libraryTarget: isProduction ? 'umd' : undefined,
+    globalObject: "(typeof self !== 'undefined' ? self : this)",
+  };
+
+  return [
+    {
+      ...baseConfig,
+      entry: './src/index',
+      output: {
+        ...baseOutputConfig,
+        filename: 'index.bundle.js',
+      },
+    },
+    ...getGeneratedFiles().map(entry => ({
+      ...baseConfig,
+      entry,
+      output: {
+        ...baseOutputConfig,
+        filename: `${path.basename(entry, path.extname(entry))}.js`,
+      },
+    })),
+  ];
 };
