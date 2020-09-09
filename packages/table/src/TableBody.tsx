@@ -10,42 +10,43 @@ type TableBodyProps<Shape> = Pick<TableProps<Shape>, 'children'>;
  */
 function useRenderedChildren<Props>(
   propList: Array<Props>,
-  renderFunction: (props: Props) => React.ReactNode,
+  renderFunction: React.FunctionComponent<Props>,
   compareFn?: (a: Props, b: Props) => number,
 ): Array<React.ReactNode> {
-  const pairs: Array<[Props, React.ReactNode]> = useMemo(
-    () =>
-      propList.map((props, index) => [
+  const resultMap = useMemo(() => {
+    const resultMap = new Map<Props, React.ReactNode>();
+    propList.forEach((props, index) =>
+      resultMap.set(
         props,
         <React.Fragment key={index}>{renderFunction(props)}</React.Fragment>,
-      ]),
-    [propList, renderFunction],
-  );
+      ),
+    );
+    return resultMap;
+  }, [propList, renderFunction]);
 
   return useMemo(() => {
     if (!compareFn) {
-      return pairs.map(([_, renderResult]) => renderResult);
+      return Array.from(resultMap.values());
     }
 
-    return pairs
-      .sort(([a], [b]) => compareFn(a, b))
-      .map(([_, renderResult]) => renderResult);
-  }, [pairs, compareFn]);
+    return [...propList].sort(compareFn).map(props => resultMap.get(props));
+  }, [propList, resultMap, compareFn]);
 }
 
 function TableBody<Shape>({ children }: TableBodyProps<Shape>) {
   const {
     state: { data, sort },
   } = useTableContext();
-  let compareFn: ((a: Shape, b: Shape) => number) | undefined;
 
-  if (sort) {
-    const { direction, accessorValue } = sort;
+  const compareFn = useMemo(() => {
+    if (sort) {
+      const { direction, accessorValue } = sort;
 
-    if (direction && accessorValue) {
-      compareFn = getDataComparisonFunction({ direction, accessorValue });
+      if (direction && accessorValue) {
+        return getDataComparisonFunction({ direction, accessorValue });
+      }
     }
-  }
+  }, [sort]);
 
   const renderFunction = useCallback(datum => children({ datum }), [children]);
 
