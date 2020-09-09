@@ -37,22 +37,34 @@ function ControlledTabs() {
 }
 
 storiesOf('Tabs', module)
-  .add('Uncontrolled', () => (
-    <LeafyGreenProvider>
-      <Tabs>
-        <Tab
-          default={boolean('default', true)}
-          name={text('name', 'Brooke Scarlett Yalof')}
+  .add('Uncontrolled', () => {
+    const variant = select('variant', Object.values(Variant), Variant.Default);
+
+    return (
+      <LeafyGreenProvider>
+        <Tabs
+          variant={variant}
+          className={css`
+            background-color: ${variant === Variant.Default
+              ? 'white'
+              : uiColors.gray.dark3};
+            padding: 20px;
+          `}
         >
-          {text('Tab Content', 'Hello 1')}
-        </Tab>
-        <Tab name="Robert Arnold Audroue Robert Arnold Audroue Robert Arnold Audroue Robert Arnold Audroue Robert Arnold Audroue Robert Arnold Audroue">
-          Hello 2
-        </Tab>
-        <Tab disabled={boolean('disabled', true)} name="David Scott McCarthy">
-          Hello 3
-        </Tab>
-      </Tabs>
-    </LeafyGreenProvider>
-  ))
+          <Tab
+            default={boolean('default', true)}
+            name={text('name', 'Brooke Scarlett Yalof')}
+          >
+            {text('Tab Content', 'Hello 1')}
+          </Tab>
+          <Tab name="Robert Arnold Audroue Robert Arnold Audroue Robert Arnold Audroue Robert Arnold Audroue Robert Arnold Audroue Robert Arnold Audroue">
+            Hello 2
+          </Tab>
+          <Tab disabled={boolean('disabled', true)} name="David Scott McCarthy">
+            Hello 3
+          </Tab>
+        </Tabs>
+      </LeafyGreenProvider>
+    );
+  })
   .add('Controlled', () => <ControlledTabs />);

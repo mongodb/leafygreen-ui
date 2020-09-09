@@ -79,7 +79,6 @@ const grayLine = css`
 const sharedIndicatorStyles = css`
   position: absolute;
   top: -1px;
-  max-width: 400px;
 `;
 
 const activeIndicator = css`
@@ -165,7 +164,7 @@ function Tabs({
 
   const [focusedState, setFocusedState] = useState([0]);
 
-  const [hoverIndex, setHoverIndex] = useState();
+  const [hoverIndex, setHoverIndex] = useState<number | undefined>();
 
   const currentIndex = childrenArray.findIndex((child, index) => {
     if (!child) {
@@ -226,12 +225,12 @@ function Tabs({
     let computedX = 0;
 
     for (let i = 0; i < current; i++) {
-      computedX += tabListChildren[i].scrollWidth;
+      computedX += tabListChildren[i].clientWidth;
     }
 
     return css`
       transform: translate3d(${computedX}px, -2px, 0);
-      width: ${tabListChildren[current].scrollWidth}px;
+      width: ${tabListChildren[current].clientWidth}px;
       height: 4px;
       border-radius: 4px 4px 0 0;
     `;

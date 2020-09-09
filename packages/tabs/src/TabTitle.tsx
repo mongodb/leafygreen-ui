@@ -1,5 +1,10 @@
-import React, { useRef, useEffect, useCallback, SetStateAction } from 'react';
-import PropTypes from 'prop-types';
+import React, {
+  useRef,
+  useEffect,
+  useCallback,
+  SetStateAction,
+  RefObject,
+} from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
@@ -56,7 +61,7 @@ const listTitle = css`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 400px;
+  max-width: 300px;
   transition: 150ms color ease-in-out;
   font-family: Akzidenz Medium;
   font-size: 16px;
@@ -79,10 +84,10 @@ interface BaseTabProps {
 }
 
 const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
-  selected,
+  selected = false,
+  disabled = false,
   children,
   className,
-  disabled,
   ariaControl,
   setFocusedState,
   index,
@@ -90,7 +95,7 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
   ...rest
 }: BaseTabProps) => {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const titleRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!disabled && selected && titleRef.current) {
@@ -107,7 +112,6 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
   }, [index, setFocusedState]);
 
   const sharedTabProps = {
-    ref: titleRef,
     className: cx(
       listTitle,
       colorVariant[variant].listTitleColor,
@@ -125,32 +129,31 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
     onBlur: onBlur,
     onFocus: onFocus,
     ...rest,
-  };
+  } as const;
 
   if (typeof rest.href === 'string') {
-    <Box as="a" {...sharedTabProps}>
-      {children}
-    </Box>;
+    return (
+      <Box
+        as="a"
+        ref={titleRef as RefObject<HTMLAnchorElement>}
+        {...sharedTabProps}
+      >
+        {children}
+      </Box>
+    );
   }
 
   return (
-    <Box as="button" {...sharedTabProps}>
+    <Box
+      as="button"
+      ref={titleRef as RefObject<HTMLButtonElement>}
+      {...sharedTabProps}
+    >
       {children}
     </Box>
   );
 };
 
 TabTitle.displayName = 'TabTitle';
-
-TabTitle.propTypes = {
-  selected: PropTypes.bool,
-  className: PropTypes.string,
-  id: PropTypes.string,
-  children: PropTypes.node,
-  disabled: PropTypes.bool,
-  onClick: PropTypes.func,
-  ariaControl: PropTypes.string,
-  as: PropTypes.string,
-};
 
 export default TabTitle;
