@@ -55,7 +55,7 @@ function getGeneratedFiles() {
     .map(file => path.resolve(directory, file));
 }
 
-const allPackages = getAllPackages('../../packages');
+const allPackages = getAllPackages(path.resolve(__dirname, 'packages'));
 const directGlyphImports = getDirectGlyphImports();
 
 // Mapping of packages to the `window` property they'd be
