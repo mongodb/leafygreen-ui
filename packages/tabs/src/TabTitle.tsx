@@ -55,6 +55,8 @@ const listTitle = css`
   text-decoration: none;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 400px;
   transition: 150ms color ease-in-out;
   font-family: Akzidenz Medium;
   font-size: 16px;

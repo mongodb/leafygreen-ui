@@ -46,7 +46,9 @@ storiesOf('Tabs', module)
         >
           {text('Tab Content', 'Hello 1')}
         </Tab>
-        <Tab name="Robert Arnold Audroue">Hello 2</Tab>
+        <Tab name="Robert Arnold Audroue Robert Arnold Audroue Robert Arnold Audroue Robert Arnold Audroue Robert Arnold Audroue Robert Arnold Audroue">
+          Hello 2
+        </Tab>
         <Tab disabled={boolean('disabled', true)} name="David Scott McCarthy">
           Hello 3
         </Tab>

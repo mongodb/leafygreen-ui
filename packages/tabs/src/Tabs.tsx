@@ -76,21 +76,18 @@ const grayLine = css`
   pointer-events: none;
 `;
 
-const activeIndicator = css`
+const sharedIndicatorStyles = css`
   position: absolute;
   top: -1px;
+  max-width: 400px;
+`;
+
+const activeIndicator = css`
   background-color: ${uiColors.green.base};
   transition: 150ms transform ease-in-out, 150ms width ease-in-out 10ms;
 `;
 
-const hoverIndicator = css`
-  position: absolute;
-  top: -1px;
-`;
-
 const focusedStyle = css`
-  position: absolute;
-  top: -1px;
   background-color: ${uiColors.blue.base};
 `;
 
@@ -299,15 +296,20 @@ function Tabs({
 
       <div className={cx(grayLine, colorVariants[variant].underlineColor)}>
         <div
-          className={cx(activeIndicator, calcStyle('active'), {
-            [focusedStyle]: showFocus && focusedState.length > 0,
-          })}
+          className={cx(
+            sharedIndicatorStyles,
+            activeIndicator,
+            calcStyle('active'),
+            {
+              [focusedStyle]: showFocus && focusedState.length > 0,
+            },
+          )}
         />
         <div
           className={cx({
             [cx(
+              sharedIndicatorStyles,
               calcStyle('hover'),
-              hoverIndicator,
               colorVariants[variant].hoverIndicator,
             )]: currentIndex !== hoverIndex,
           })}
