@@ -129,11 +129,6 @@ export function reducer(state: State, action: Action): State {
           direction: state.sort?.direction === 'desc' ? 'asc' : 'desc',
           accessorValue: action.payload.accessorValue,
         },
-        data: sortFunction({
-          data: state.data,
-          direction: state.sort?.direction === 'desc' ? 'asc' : 'desc',
-          accessorValue: action.payload.accessorValue,
-        }),
       };
 
     default:
@@ -179,16 +174,14 @@ const alphanumericCollator = new Intl.Collator(undefined, {
   sensitivity: 'base',
 });
 
-export const sortFunction = <T extends {}>({
-  data,
+export const getDataComparisonFunction = <T extends {}>({
   accessorValue,
   direction,
 }: {
-  data: Array<T>;
   accessorValue: (data: T) => string;
   direction: 'asc' | 'desc';
 }) => {
-  return data.sort((a, b) => {
+  return (a: T, b: T) => {
     const aVal = accessorValue(a);
     const bVal = accessorValue(b);
 
@@ -197,5 +190,5 @@ export const sortFunction = <T extends {}>({
     }
 
     return alphanumericCollator.compare(bVal, aVal);
-  });
+  };
 };

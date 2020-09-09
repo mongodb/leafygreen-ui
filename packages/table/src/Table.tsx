@@ -15,7 +15,6 @@ const tableStyles = css`
 
 interface TableRowInterface<Shape = {}> {
   datum: Shape;
-  index?: number;
 }
 
 export interface TableProps<Shape>
