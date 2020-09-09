@@ -4,7 +4,8 @@ import { boolean, text, select } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Tab, Tabs, Variant } from './index';
+import { Tab, Tabs } from './index';
+import { Variant } from './Tabs';
 
 function ControlledTabs() {
   const [selected, setSelected] = useState(0);
