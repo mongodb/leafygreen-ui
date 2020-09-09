@@ -1,3 +1,3 @@
-import Tabs, { Variant } from './Tabs';
+import Tabs from './Tabs';
 import Tab, { TabProps } from './Tab';
-export { Tab, Tabs, TabProps, Variant };
+export { Tab, Tabs, TabProps };

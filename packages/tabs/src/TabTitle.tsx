@@ -9,10 +9,10 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { Variant } from '.';
+import { Variant } from './Tabs';
 
 const colorVariant = {
-  default: {
+  [Variant.Default]: {
     listTitleColor: css`
       color: ${uiColors.gray.dark1};
     `,
@@ -32,7 +32,7 @@ const colorVariant = {
     `,
   },
 
-  light: {
+  [Variant.Light]: {
     listTitleColor: css`
       color: ${uiColors.gray.light1};
     `,

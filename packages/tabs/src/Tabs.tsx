@@ -141,7 +141,7 @@ function Tabs({
   setSelected: setControlledSelected,
   selected: controlledSelected,
   className,
-  variant = 'default',
+  variant = Variant.Default,
   as = 'button',
   ...rest
 }: TabsProps) {
