@@ -12,7 +12,7 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { Variant } from './Tabs';
 
 const colorVariant = {
-  [Variant.Default]: {
+  default: {
     listTitleColor: css`
       color: ${uiColors.gray.dark1};
     `,
@@ -32,7 +32,7 @@ const colorVariant = {
     `,
   },
 
-  [Variant.Light]: {
+  light: {
     listTitleColor: css`
       color: ${uiColors.gray.light1};
     `,
