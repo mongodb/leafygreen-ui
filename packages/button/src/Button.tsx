@@ -260,7 +260,6 @@ const baseStyle = css`
   text-transform: none;
   transition: all 120ms ease;
   user-select: none;
-  overflow: hidden;
   padding: 0;
 
   &:hover {
@@ -355,6 +354,7 @@ const Button: ExtendableBox<BaseButtonProps, 'button'> = React.forwardRef(
       flex-grow: 1;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
     `;
 
     const modifiedGlyph =
