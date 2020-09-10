@@ -17,7 +17,7 @@
     "@leafygreen-ui/lib": "^5.1.1",
     "@leafygreen-ui/palette": "^2.0.2",
     "@leafygreen-ui/tooltip": "^3.3.7",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "react-children-utilities": "^2.0.0",
     "react-intersection-observer": "8.25.1",
     "react-merge-refs": "^1.0.0"
