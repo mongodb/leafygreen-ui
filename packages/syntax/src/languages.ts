@@ -48,10 +48,11 @@ export const languageParsers = {
 
 export const SupportedLanguages = {
   JavaScript: 'javascript',
-  JS: 'js', // Javascript
+  JS: 'js', // Javascript alias
   TypeScript: 'typescript',
-  Cs: 'cs', // C#
+  TS: 'ts', // Typescript alias
   Csharp: 'csharp',
+  Cs: 'cs', // C# alias
   CLike: 'clike',
   Go: 'go',
   Ini: 'ini',

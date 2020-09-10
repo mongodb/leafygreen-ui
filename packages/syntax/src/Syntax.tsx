@@ -12,14 +12,14 @@ import renderingPlugin from './renderingPlugin';
 
 type FilteredSupportedLanguagesEnum = Omit<
   typeof SupportedLanguages,
-  'Cs' | 'JS'
+  'Cs' | 'JS' | 'TS'
 >;
 type FilteredSupportedLanguages = FilteredSupportedLanguagesEnum[keyof FilteredSupportedLanguagesEnum];
 
 function filterSupportedLanguages(
   language: SupportedLanguages,
 ): language is FilteredSupportedLanguages {
-  return language !== 'cs' && language !== 'js';
+  return language !== 'cs' && language !== 'js' && language !== 'ts';
 }
 
 let syntaxHighlightingInitialized = false;

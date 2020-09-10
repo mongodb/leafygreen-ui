@@ -2,4 +2,4 @@
 '@leafygreen-ui/syntax': minor
 ---
 
-Adds JS alias for javascript
+Adds `js` alias for JavaScript and `ts` alias for TypeScript
