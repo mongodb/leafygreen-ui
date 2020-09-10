@@ -48,6 +48,7 @@ export const languageParsers = {
 
 export const SupportedLanguages = {
   JavaScript: 'javascript',
+  JS: 'js', // Javascript
   TypeScript: 'typescript',
   Cs: 'cs', // C#
   Csharp: 'csharp',

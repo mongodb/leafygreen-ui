@@ -10,13 +10,16 @@ import { SupportedLanguages, languageParsers } from './languages';
 import { injectGlobalStyles } from './globalStyles';
 import renderingPlugin from './renderingPlugin';
 
-type FilteredSupportedLanguagesEnum = Omit<typeof SupportedLanguages, 'Cs'>;
+type FilteredSupportedLanguagesEnum = Omit<
+  typeof SupportedLanguages,
+  'Cs' | 'JS'
+>;
 type FilteredSupportedLanguages = FilteredSupportedLanguagesEnum[keyof FilteredSupportedLanguagesEnum];
 
 function filterSupportedLanguages(
   language: SupportedLanguages,
 ): language is FilteredSupportedLanguages {
-  return language !== 'cs';
+  return language !== 'cs' && language !== 'js';
 }
 
 let syntaxHighlightingInitialized = false;
@@ -26,7 +29,7 @@ function initializeSyntaxHighlighting() {
 
   injectGlobalStyles();
 
-  // We filter out 'cs' here because it's redundant with 'csharp'
+  // We filter out 'cs' here because it's redundant with 'csharp' and 'js' because it's redundant with 'javascript'
   const SupportedLanguagesList = Object.values(SupportedLanguages).filter(
     filterSupportedLanguages,
   );
