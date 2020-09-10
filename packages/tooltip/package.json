@@ -20,6 +20,6 @@
     "@leafygreen-ui/palette": "^2.0.2",
     "@leafygreen-ui/hooks": "^4.2.0",
     "@leafygreen-ui/typography": "^4.2.0",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.20"
   }
 }
