@@ -15,6 +15,7 @@ import {
 import { Link, ArrowAppearance } from './Link';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { css } from '@leafygreen-ui/emotion';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const displayBlock = css`
   display: block;
@@ -34,11 +35,11 @@ storiesOf('Typography', module).add('Default', () => (
         Body
       </Body>
       <InlineCode className={displayBlock}>InlineCode</InlineCode>
-      <>
+      <div className={displayBlock}>
         <InlineKeyCode>CTRL</InlineKeyCode>
-        <InlineCode>+</InlineCode>
+        <code>+</code>
         <InlineKeyCode>C</InlineKeyCode>
-      </>
+      </div>
       <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
       <Overline>Overline</Overline>
       <Link
@@ -62,7 +63,7 @@ storiesOf('Typography', module).add('Default', () => (
     <Body
       className={css`
         width: 400px;
-        border: 1px solid gold;
+        border: 2px solid gold;
         padding: 20px;
         font-size: 14px;
       `}

@@ -107,23 +107,24 @@ const code = css`
   border: 1px solid ${uiColors.gray.light1};
   border-radius: 3px;
   font-family: ${fontFamilies.code};
-  display: inline-block;
 `;
 
 const codeLink = css`
   text-decoration: none;
-  border-radius: 5px;
-  border: 3px solid transparent;
-  margin: -3px;
+  // border-radius: 5px;
+  // border: 3px solid transparent;
+  margin: 0;
+  padding: 0;
   transition: border-color 150ms ease-in-out;
 
   &:hover {
-    border-color: ${uiColors.gray.light2};
+    // border-color: ${uiColors.gray.light2};
+    // background-color:
   }
 
   &:focus {
     outline: none;
-    border-color: ${uiColors.blue.light2};
+    // border-color: ${uiColors.blue.light2};
   }
 `;
 
@@ -151,8 +152,8 @@ function InlineCode({ children, className, ...rest }: InlineCodeProps) {
   const isAnchor = rest.href || rest.onClick;
 
   const renderedInlineCode = (isAnchor = false) => (
-    <code className={cx(fontSize, code, whiteSpace, { [colorBlue]: isAnchor })}>
-      {children}
+    <code className={cx(fontSize, whiteSpace, { [colorBlue]: isAnchor })}>
+      <span className={code}>{children}</span>
     </code>
   );
 
