@@ -64,14 +64,15 @@ import { Radio, RadioGroup } from '@leafygreen-ui/radio-group';
 
 ## Properties
 
-| Prop        | Type                   | Description                                                                                                                                                                          | Default     |
-| ----------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
-| `variant`   | `'default'`, `'light'` | Sets the style variant of the `<RadioGroup />`.                                                                                                                                      | `'default'` |
-| `name`      | `string`               | Sets the name of the input group                                                                                                                                                     |             |
-| `value`     | `string` or `number`   | Sets the radio that will appear checked on page load, also makes the component a controlled component                                                                                |             |
-| `className` | `string`               | Adds a className to the root element.                                                                                                                                                | `''`        |
-| `onChange`  | `function`             | The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument.                                                                   | `() => {}`  |
-| `children`  | `node`                 | Can be any node; however, any `<Radio />` components, will be treated as belonging to the `<RadioGroup />` compound component, and will receive internal state from `<RadioGroup />` |             |
+| Prop        | Type                           | Description                                                                                                                                                                          | Default     |
+| ----------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
+| `variant`   | `'default'`, `'light'`         | Sets the style variant of the `<RadioGroup />`.                                                                                                                                      | `'default'` |
+| `name`      | `string`                       | Sets the name of the input group                                                                                                                                                     |             |
+| `value`     | `string` or `number`           | Sets the radio that will appear checked on page load, also makes the component a controlled component                                                                                |             |
+| `className` | `string`                       | Adds a className to the root element.                                                                                                                                                | `''`        |
+| `onChange`  | `function`                     | The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument.                                                                   | `() => {}`  |
+| `children`  | `node`                         | Can be any node; however, any `<Radio />` components, will be treated as belonging to the `<RadioGroup />` compound component, and will receive internal state from `<RadioGroup />` |             |
+| `size`      | `'xsmall', 'small', 'default'` | Sets the size for the Radios. Use of `xsmall` should be limited to only Charts                                                                                                       | `default`   |
 
 _Any other properties will be spread on the root element._
 

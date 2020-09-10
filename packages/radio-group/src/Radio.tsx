@@ -6,8 +6,6 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { RadioGroupProps } from './RadioGroup';
 import { Variant, Size } from './types';
 
-// Clean Styles
-
 const styledDiv = createDataProp('styled-div');
 const inputDisplayWrapper = createDataProp('input-display-wrapper');
 const inputDataProp = createDataProp('input-element');
@@ -17,6 +15,9 @@ const containerMargin = css`
 `;
 
 const offsets = {
+  [Size.XSmall]: css`
+    margin-top: -3px;
+  `,
   [Size.Small]: css`
     margin-top: -2px;
   `,
@@ -298,6 +299,9 @@ function Radio({
   variant = Variant.Default,
   ...rest
 }: RadioProps) {
+  const normalizedSize =
+    size === Size.Small || Size.XSmall ? Size.Small : Size.Default;
+
   return (
     <div className={containerMargin}>
       <label
@@ -305,7 +309,12 @@ function Radio({
         className={cx(
           labelStyle,
           labelVariantStyle[variant].base,
-          { [labelVariantStyle[variant].disabled]: disabled },
+          {
+            [labelVariantStyle[variant].disabled]: disabled,
+            [css`
+              font-size: 12px;
+            `]: size === Size.XSmall,
+          },
           className,
         )}
       >
@@ -330,12 +339,16 @@ function Radio({
           className={cx(
             interactionRing,
             interactionRingHoverStyles[variant],
-            interactionRingSize[size],
+            interactionRingSize[normalizedSize],
           )}
         >
           <div
             {...styledDiv.prop}
-            className={cx(divStyle, divVariantStyle[variant], divSize[size])}
+            className={cx(
+              divStyle,
+              divVariantStyle[variant],
+              divSize[normalizedSize],
+            )}
           />
         </div>
 

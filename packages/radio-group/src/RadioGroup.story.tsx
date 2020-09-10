@@ -4,6 +4,7 @@ import { text, boolean, select } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Radio, RadioGroup, Variant } from '.';
+import { Size } from './types';
 
 function ControlledRadioGroup() {
   const [activeRadio, setActiveRadio] = useState<string>('test1');
@@ -17,7 +18,7 @@ function ControlledRadioGroup() {
   return (
     <div>
       <RadioGroup
-        size={select('size', ['default', 'small'], 'default')}
+        size={select('size', Object.values(Size), 'default')}
         variant={variant}
         onChange={changeHandler}
         value={activeRadio}
@@ -54,7 +55,7 @@ storiesOf('RadioGroup', module)
 
     return (
       <RadioGroup
-        size={select('size', ['default', 'small'], 'default')}
+        size={select('size', Object.values(Size), 'default')}
         name="radio-group-default"
         variant={variant}
         className={css`
