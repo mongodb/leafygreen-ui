@@ -5,14 +5,14 @@ import { HTMLElementProps, Either, isComponentType } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 
-const Variant = {
+const Mode = {
   Light: 'light',
   Dark: 'dark',
 } as const;
 
-type Variant = typeof Variant[keyof typeof Variant];
+type Mode = typeof Mode[keyof typeof Mode];
 
-export { Variant };
+export { Mode };
 
 const Size = {
   Default: 'default',
@@ -83,8 +83,8 @@ const iconButtonSizes = {
   `,
 } as const;
 
-const iconButtonVariants = {
-  [Variant.Light]: css`
+const iconButtonMode = {
+  [Mode.Light]: css`
     &:hover {
       color: ${uiColors.gray.dark2};
 
@@ -102,7 +102,7 @@ const iconButtonVariants = {
     }
   `,
 
-  [Variant.Dark]: css`
+  [Mode.Dark]: css`
     &:hover {
       &:before {
         background-color: ${uiColors.gray.dark2};
@@ -116,19 +116,19 @@ const iconButtonVariants = {
 } as const;
 
 const disabledStyle = {
-  [Variant.Light]: css`
+  [Mode.Light]: css`
     color: ${uiColors.gray.light2};
     pointer-events: none;
   `,
 
-  [Variant.Dark]: css`
+  [Mode.Dark]: css`
     color: ${uiColors.gray.dark2};
     pointer-events: none;
   `,
 } as const;
 
 const activeStyle = {
-  [Variant.Light]: css`
+  [Mode.Light]: css`
     color: ${uiColors.gray.dark2};
     background-color: ${uiColors.gray.light2};
 
@@ -137,7 +137,7 @@ const activeStyle = {
     }
   `,
 
-  [Variant.Dark]: css`
+  [Mode.Dark]: css`
     color: ${uiColors.white};
     background-color: ${uiColors.gray.dark2};
 
@@ -167,13 +167,6 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
 
 interface SharedIconButtonProps {
   /**
-   * Determines color of `IconButton`. Can be `light` or `dark`.
-   *
-   * default: `'light'`
-   */
-  variant?: Variant;
-
-  /**
    * Classname applied to `IconButton`.
    */
   className?: string;
@@ -193,16 +186,23 @@ interface SharedIconButtonProps {
   /**
    * Determines size of IconButton can be: default, large, xlarge
    *
-   * default: `'default'`
+   * @default: `'default'`
    */
   size?: Size;
 
   /**
    * Determines whether `IconButton` will appear `active`
    *
-   * default: `false`
+   * @default: `false`
    */
   active?: boolean;
+
+  /**
+   * Determines whether `IconButton` will appear in darkMode
+   *
+   * @default: `false`
+   */
+  darkMode?: boolean;
 }
 
 // We're omitting CSS here because of the issue with Omit and Pick's interaction
@@ -259,14 +259,14 @@ function isComponentGlyph(
  * IconButton Component
  *
  * ```
-<IconButton variant='dark'>
+<IconButton darkMode={true}>
   <Icon glyph='Copy' />
 </IconButton>
 ```
  * @param props.children Content to appear inside of `IconButton`.
  * @param props.className Classname applied to `IconButton`.
  * @param props.disabled Determines whether or not `IconButton` is disabled.
- * @param props.variant Determines color of `IconButton`. Can be `light` or `dark`.
+ * @param props.darkMode Determines if IconButton will appear in darkMode.
  * @param props.href Destination URL, if supplied `IconButton` will render in `a` tags, rather than `button` tags.
  * @param props.onClick Callback fired when `IconButton` is clicked.
  * @param props.active Determines whether `IconButton` will appear `active`
@@ -275,8 +275,8 @@ function isComponentGlyph(
 
 const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
   const {
-    variant = Variant.Light,
     size = Size.Default,
+    darkMode = false,
     disabled = false,
     active = false,
     className,
@@ -286,6 +286,8 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
     'aria-labelledby': ariaLabelledBy,
     ...rest
   } = props;
+
+  const mode = darkMode ? 'dark' : 'light';
 
   // We do our own proptype validation here to ensure either 'aria-label' or 'aria-labelledby' are passed to the component.
   if (!ariaLabel && !ariaLabelledBy) {
@@ -334,10 +336,10 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
         removeButtonStyle,
         baseIconButtonStyle,
         iconButtonSizes[size],
-        iconButtonVariants[variant],
+        iconButtonMode[mode],
         {
-          [disabledStyle[variant]]: disabled,
-          [activeStyle[variant]]: active,
+          [disabledStyle[mode]]: disabled,
+          [activeStyle[mode]]: active,
         },
         className,
       )}
@@ -357,7 +359,7 @@ IconButton.displayName = 'IconButton';
 
 // @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 IconButton.propTypes = {
-  variant: PropTypes.oneOf(Object.values(Variant)),
+  darkMode: PropTypes.bool,
   size: PropTypes.oneOf(Object.values(Size)),
   className: PropTypes.string,
   children: PropTypes.node,

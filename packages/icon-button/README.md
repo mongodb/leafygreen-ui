@@ -53,7 +53,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 
 | Prop        | Type                         | Description                                                                                                       | Default   |
 | ----------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------- | --------- |
-| `variant`   | `'dark'` or `'light'`        | Sets the style variant of the button.                                                                             | `'light'` |
+| `darkMode`  | `boolean`                    | Determines whether or not the IconButton will appear in darkMode.                                                 | `false`   |
 | `onClick`   | `function`                   | The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument. |           |
 | `disabled`  | `boolean`                    | Disables the `<IconButton />`                                                                                     | `false`   |
 | `href`      | `string`                     | If a href is supplied, the component renders inside of an `a` tag instead of inside of a `button` tag.            |           |
