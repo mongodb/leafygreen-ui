@@ -1,27 +1,23 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { boolean, text, select } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Tab, Tabs } from './index';
-import { Variant } from './Tabs';
 
 function ControlledTabs() {
   const [selected, setSelected] = useState(0);
-
-  const variant = select('variant', Object.values(Variant), Variant.Default);
+  const darkMode = boolean('darkMode', false);
 
   return (
     <LeafyGreenProvider>
       <Tabs
         setSelected={setSelected}
         selected={selected}
-        variant={variant}
+        darkMode={darkMode}
         className={css`
-          background-color: ${variant === Variant.Default
-            ? 'white'
-            : uiColors.gray.dark3};
+          background-color: ${!darkMode ? 'white' : uiColors.gray.dark3};
           padding: 20px;
         `}
       >
@@ -39,16 +35,14 @@ function ControlledTabs() {
 
 storiesOf('Tabs', module)
   .add('Uncontrolled', () => {
-    const variant = select('variant', Object.values(Variant), Variant.Default);
+    const darkMode = boolean('darkMode', false);
 
     return (
       <LeafyGreenProvider>
         <Tabs
-          variant={variant}
+          darkMode={darkMode}
           className={css`
-            background-color: ${variant === Variant.Default
-              ? 'white'
-              : uiColors.gray.dark3};
+            background-color: ${!darkMode ? 'white' : uiColors.gray.dark3};
             padding: 20px;
           `}
         >

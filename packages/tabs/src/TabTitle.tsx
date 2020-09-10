@@ -9,10 +9,10 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { Variant } from './Tabs';
+import { Mode } from './Tabs';
 
-const colorVariant = {
-  default: {
+const modeColors = {
+  light: {
     listTitleColor: css`
       color: ${uiColors.gray.dark1};
     `,
@@ -32,7 +32,7 @@ const colorVariant = {
     `,
   },
 
-  light: {
+  dark: {
     listTitleColor: css`
       color: ${uiColors.gray.light1};
     `,
@@ -74,7 +74,7 @@ const listTitle = css`
 interface BaseTabProps {
   ariaControl: string;
   setFocusedState: React.Dispatch<SetStateAction<Array<number>>>;
-  variant: Variant;
+  darkMode: boolean;
   index: number;
   selected?: boolean;
   href?: string;
@@ -91,11 +91,12 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
   ariaControl,
   setFocusedState,
   index,
-  variant,
+  darkMode,
   ...rest
 }: BaseTabProps) => {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
+  const mode = darkMode ? Mode.Dark : Mode.Light;
 
   useEffect(() => {
     if (!disabled && selected && titleRef.current) {
@@ -114,10 +115,10 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
   const sharedTabProps = {
     className: cx(
       listTitle,
-      colorVariant[variant].listTitleColor,
+      modeColors[mode].listTitleColor,
       {
-        [colorVariant[variant].listTitleHover]: !disabled,
-        [colorVariant[variant].listTitleFocus]: showFocus,
+        [modeColors[mode].listTitleHover]: !disabled,
+        [modeColors[mode].listTitleFocus]: showFocus,
       },
       className,
     ),

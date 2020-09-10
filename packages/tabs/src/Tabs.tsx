@@ -8,17 +8,17 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import TabTitle from './TabTitle';
 import omit from 'lodash/omit';
 
-const Variant = {
-  Default: 'default',
+const Mode = {
+  Dark: 'dark',
   Light: 'light',
 } as const;
 
-type Variant = typeof Variant[keyof typeof Variant];
+type Mode = typeof Mode[keyof typeof Mode];
 
-export { Variant };
+export { Mode };
 
-const colorVariants = {
-  [Variant.Default]: {
+const modeColors = {
+  [Mode.Light]: {
     activeStyle: css`
       color: ${uiColors.green.dark2};
 
@@ -37,7 +37,7 @@ const colorVariants = {
     `,
   },
 
-  [Variant.Light]: {
+  [Mode.Dark]: {
     activeStyle: css`
       color: ${uiColors.green.light2};
 
@@ -111,7 +111,11 @@ interface TabsProps {
    */
   className?: string;
 
-  variant?: Variant;
+  /**
+   * determines if component will appear for Dark Mode
+   * @default false
+   */
+  darkMode?: boolean;
 
   /**
    * HTML Element that wraps title in Tab List.
@@ -141,7 +145,7 @@ function Tabs({
   setSelected: setControlledSelected,
   selected: controlledSelected,
   className,
-  variant = Variant.Default,
+  darkMode = false,
   as = 'button',
   ...rest
 }: TabsProps) {
@@ -248,6 +252,8 @@ function Tabs({
     });
   });
 
+  const mode = darkMode ? Mode.Dark : Mode.Light;
+
   return (
     <div {...rest} className={className}>
       <div className={listStyle} role="tablist" ref={tabListRef} tabIndex={0}>
@@ -266,11 +272,8 @@ function Tabs({
               {...filteredRest}
               key={index}
               className={cx({
-                [colorVariants[variant].activeStyle]: selected,
-                [cx(
-                  colorVariants[variant].disabledColor,
-                  disabledStyle,
-                )]: disabled,
+                [modeColors[mode].activeStyle]: selected,
+                [cx(modeColors[mode].disabledColor, disabledStyle)]: disabled,
               })}
               onClick={
                 !disabled
@@ -285,7 +288,7 @@ function Tabs({
               as={as}
               onMouseEnter={() => !disabled && setHoverIndex(index)}
               onMouseLeave={() => !disabled && setHoverIndex(undefined)}
-              variant={variant}
+              darkMode={darkMode}
             >
               {tab.props.name}
             </TabTitle>
@@ -293,7 +296,7 @@ function Tabs({
         })}
       </div>
 
-      <div className={cx(grayLine, colorVariants[variant].underlineColor)}>
+      <div className={cx(grayLine, modeColors[mode].underlineColor)}>
         <div
           className={cx(
             sharedIndicatorStyles,
@@ -309,7 +312,7 @@ function Tabs({
             [cx(
               sharedIndicatorStyles,
               calcStyle('hover'),
-              colorVariants[variant].hoverIndicator,
+              modeColors[mode].hoverIndicator,
             )]: currentIndex !== hoverIndex,
           })}
         />
