@@ -1,6 +1,7 @@
 # @leafygreen-ui/inline-definition
 
 ## 1.0.0
+
 ### Major Changes
 
 - 3fed752e: Initial release of InlineDefinition component
