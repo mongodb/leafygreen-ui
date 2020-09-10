@@ -1,5 +1,28 @@
 # @leafygreen-ui/tooltip
 
+## 4.0.0
+
+### Major Changes
+
+- 6ab659c8: Tooltips are no longer affected by whether their trigger has an "href" property set.
+- 6883ccd0: `Tooltip` typography previously relied on consumer application's styles. Now, Tooltip children are wrapped in LeafyGreen Body component.
+
+### Minor Changes
+
+- 3fed752e: Adds support for `spacing` prop
+
+### Patch Changes
+
+- d5d40791: Pin lodash version to latest to include fix for [prototype pollution attack vulnerability.](https://hackerone.com/reports/712065)
+- Updated dependencies [3fed752e]
+- Updated dependencies [6883ccd0]
+- Updated dependencies [eda10121]
+- Updated dependencies [d5d40791]
+  - @leafygreen-ui/typography@4.3.0
+  - @leafygreen-ui/button@7.0.0
+  - @leafygreen-ui/hooks@4.2.1
+  - @leafygreen-ui/popover@5.2.3
+
 ## 3.3.7
 
 ### Patch Changes
