@@ -1,5 +1,17 @@
 # @leafygreen-ui/pipeline
 
+## 1.0.7
+
+### Patch Changes
+
+- d5d40791: Pin lodash version to latest to include fix for [prototype pollution attack vulnerability.](https://hackerone.com/reports/712065)
+- Updated dependencies [6ab659c8]
+- Updated dependencies [3fed752e]
+- Updated dependencies [6883ccd0]
+- Updated dependencies [d5d40791]
+  - @leafygreen-ui/tooltip@4.0.0
+  - @leafygreen-ui/hooks@4.2.1
+
 ## 1.0.6
 
 ### Patch Changes

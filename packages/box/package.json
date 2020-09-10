@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/box",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "leafyGreen UI Kit Box",
   "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",

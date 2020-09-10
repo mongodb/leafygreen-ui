@@ -1,5 +1,25 @@
 # @leafygreen-ui/mongo-nav
 
+## 3.1.6
+
+### Patch Changes
+
+- d5d40791: Pin lodash version to latest to include fix for [prototype pollution attack vulnerability.](https://hackerone.com/reports/712065)
+- Updated dependencies [6883ccd0]
+- Updated dependencies [3fed752e]
+- Updated dependencies [6ab659c8]
+- Updated dependencies [6883ccd0]
+- Updated dependencies [3fed752e]
+- Updated dependencies [eda10121]
+- Updated dependencies [6883ccd0]
+- Updated dependencies [d5d40791]
+  - @leafygreen-ui/icon@6.6.0
+  - @leafygreen-ui/typography@4.3.0
+  - @leafygreen-ui/tooltip@4.0.0
+  - @leafygreen-ui/button@7.0.0
+  - @leafygreen-ui/hooks@4.2.1
+  - @leafygreen-ui/icon-button@7.0.6
+
 ## 3.1.5
 
 ### Patch Changes
