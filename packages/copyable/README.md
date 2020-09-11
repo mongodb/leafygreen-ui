@@ -75,11 +75,11 @@ npm install @leafygreen-ui/copyable
 
 ## Properties
 
-| Prop          | Type                   | Description                                   | Default     |
-| ------------- | ---------------------- | --------------------------------------------- | ----------- |
-| `label`       | `string`               | Label text for the copyable contents.         |             |
-| `description` | `string`               | Further text to describe the contents.        | `undefined` |
-| `children`    | `string`               | The text that will be copied.                 |             |
-| `variant`     | `'default'`, `'dark'`  | Sets the style variant.                       | `'default'` |
-| `size`        | `'default'`, `'large'` | Display size of the copyable text.            | `'default'` |
-| `copyable`    | `boolean`              | Whether or not a copy button should be shown. | `true`      |
+| Prop          | Type                   | Description                                                   | Default     |
+| ------------- | ---------------------- | ------------------------------------------------------------- | ----------- |
+| `label`       | `string`               | Label text for the copyable contents.                         |             |
+| `description` | `string`               | Further text to describe the contents.                        | `undefined` |
+| `children`    | `string`               | The text that will be copied.                                 |             |
+| `darkMode`    | `boolean`              | Determines whether or not the component appears in dark mode. | `false`     |
+| `size`        | `'default'`, `'large'` | Display size of the copyable text.                            | `'default'` |
+| `copyable`    | `boolean`              | Whether or not a copy button should be shown.                 | `true`      |

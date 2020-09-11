@@ -1,1 +1,1 @@
-export { default, Size, Variant } from './Copyable';
+export { default, Size } from './Copyable';

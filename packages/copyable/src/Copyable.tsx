@@ -15,12 +15,12 @@ import Tooltip, {
 } from '@leafygreen-ui/tooltip';
 import { InlineCode } from '@leafygreen-ui/typography';
 
-export const Variant = {
-  Default: 'default',
+const Mode = {
+  Light: 'light',
   Dark: 'dark',
 } as const;
 
-export type Variant = typeof Variant[keyof typeof Variant];
+type Mode = typeof Mode[keyof typeof Mode];
 
 export const Size = {
   Default: 'default',
@@ -39,8 +39,8 @@ interface ColorSet {
   };
 }
 
-const colorSets: Record<Variant, ColorSet> = {
-  [Variant.Default]: {
+const colorSets: Record<Mode, ColorSet> = {
+  [Mode.Light]: {
     label: uiColors.gray.dark3,
     description: uiColors.gray.dark1,
     code: {
@@ -49,7 +49,7 @@ const colorSets: Record<Variant, ColorSet> = {
       border: uiColors.gray.light2,
     },
   },
-  [Variant.Dark]: {
+  [Mode.Dark]: {
     label: uiColors.gray.light1,
     description: uiColors.gray.light1,
     code: {
@@ -123,7 +123,7 @@ const iconStyle = css`
 `;
 
 interface CopyableProps {
-  variant?: Variant;
+  darkMode?: boolean;
   children: string;
   label: string;
   description?: string;
@@ -132,14 +132,15 @@ interface CopyableProps {
 }
 
 export default function Copyable({
-  variant = Variant.Default,
+  darkMode = false,
   children,
   label,
   description,
   copyable = true,
   size = Size.Default,
 }: CopyableProps) {
-  const colorSet = colorSets[variant];
+  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const colorSet = colorSets[mode];
 
   const [copied, setCopied] = useState(false);
   const [showCopyButton, setShowCopyButton] = useState(false);
@@ -154,11 +155,11 @@ export default function Copyable({
   if (showCopyButton) {
     let buttonVariant: ButtonVariant;
 
-    switch (variant) {
-      case Variant.Default:
+    switch (mode) {
+      case Mode.Light:
         buttonVariant = ButtonVariant.Default;
         break;
-      case Variant.Dark:
+      case Mode.Dark:
         buttonVariant = ButtonVariant.Dark;
         break;
     }
@@ -177,11 +178,11 @@ export default function Copyable({
 
     let tooltipVariant: TooltipVariant;
 
-    switch (variant) {
-      case Variant.Default:
+    switch (mode) {
+      case Mode.Light:
         tooltipVariant = TooltipVariant.Dark;
         break;
-      case Variant.Dark:
+      case Mode.Dark:
         tooltipVariant = TooltipVariant.Light;
         break;
     }
@@ -268,7 +269,7 @@ export default function Copyable({
 Copyable.displayName = 'Copyable';
 
 Copyable.propTypes = {
-  variant: PropTypes.oneOf(Object.values(Variant)),
+  darkMode: PropTypes.bool,
   size: PropTypes.oneOf(Object.values(Size)),
   children: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,

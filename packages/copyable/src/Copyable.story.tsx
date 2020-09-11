@@ -1,7 +1,7 @@
 import React from 'react';
-import { text, select } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import Copyable, { Size, Variant } from '.';
+import Copyable, { Size } from '.';
 
 function renderCopyable(
   props: Omit<
@@ -12,18 +12,18 @@ function renderCopyable(
   const label = text('Label', 'Label');
   const description = text('Description', '') || undefined;
   const children = text('Text', 'npm install @leafygreen-ui/copyable');
-  const variant = select('Variant', Object.values(Variant), Variant.Default);
+  const darkMode = boolean('Dark mode', false);
   return (
     <div
       style={{
-        backgroundColor: variant === Variant.Dark ? '#21313C' : undefined,
+        backgroundColor: darkMode ? '#21313C' : undefined,
         padding: 48,
       }}
     >
       <Copyable
         label={label}
         description={description}
-        variant={variant}
+        darkMode={darkMode}
         {...props}
       >
         {children}
