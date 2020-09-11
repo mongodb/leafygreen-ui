@@ -144,7 +144,7 @@ export type TooltipProps = Omit<
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 
     /**
-     * Whether the `Tooltip` will appear in `darkMode`.
+     * Whether the `Tooltip` will appear in dark mode.
      * @default: false
      */
     darkMode?: boolean;
