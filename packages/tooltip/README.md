@@ -28,7 +28,7 @@ import Tooltip from '@leafygreen-ui/tooltip';
   justify="start"
   trigger={<button>trigger</button>}
   triggerEvent="hover"
-  darkMode={false}
+  darkMode={true}
 >
   I am an uncontrolled Tooltip!
 </Tooltip>;
