@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/inline-definition",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "leafyGreen UI Kit Inline Definition",
   "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
