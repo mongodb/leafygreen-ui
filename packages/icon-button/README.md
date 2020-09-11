@@ -24,7 +24,7 @@ npm install @leafygreen-ui/icon-button
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import IconButton from '@leafygreen-ui/icon-button';
 
-<IconButton variant="light" aria-label="Some Menu">
+<IconButton darkMode={true} aria-label="Some Menu">
   <EllipsisIcon />
 </IconButton>;
 ```
