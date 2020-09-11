@@ -39,6 +39,18 @@ function getAllPackages(dir) {
     .map(packageJsonPath => require(packageJsonPath).name);
 }
 
+function getLodashExternals() {
+  return fs
+    .readdirSync(path.resolve(__dirname, 'node_modules', 'lodash'))
+    .filter(fileName => {
+      const splitName = fileName.split('.');
+      const extension = splitName[splitName.length - 1];
+
+      return extension === 'js';
+    })
+    .map(fileName => 'lodash/' + fileName.split('.')[0]);
+}
+
 function getDirectGlyphImports() {
   const glyphsDir = path.resolve(__dirname, './packages/icon/src/glyphs');
 
@@ -50,26 +62,30 @@ function getDirectGlyphImports() {
     );
 }
 
+function getGeneratedFiles() {
+  const directory = path.resolve(process.cwd(), 'src/generated');
+
+  if (!fs.existsSync(directory)) {
+    return [];
+  }
+
+  return fs
+    .readdirSync(directory)
+    .filter(file => /\.tsx?$/.test(file))
+    .map(file => path.resolve(directory, file));
+}
+
 // Base Webpack configuration, used by all other configurations for common settings
 module.exports = function (env = 'production') {
   const isProduction = env === 'production';
 
-  return {
+  const baseConfig = {
     mode: env,
-    entry: './src/index',
-    output: {
-      path: path.resolve(process.cwd(), 'dist'),
-      filename: `index.js`,
-      libraryTarget: isProduction ? 'umd' : undefined,
-      globalObject: "(typeof self !== 'undefined' ? self : this)",
-    },
-
     externals: isProduction
       ? [
           'react',
           'react-dom',
           'emotion',
-          'lodash',
           'react-emotion',
           'create-emotion',
           'create-emotion-server',
@@ -77,6 +93,8 @@ module.exports = function (env = 'production') {
           'prop-types',
           'react-transition-group',
           '@testing-library/react',
+          'lodash',
+          ...getLodashExternals(),
           ...getAllPackages('../../packages'),
           ...getDirectGlyphImports(),
         ]
@@ -140,4 +158,29 @@ module.exports = function (env = 'production') {
       return [ContextReplacementPluginInstance];
     })(),
   };
+
+  const baseOutputConfig = {
+    path: path.resolve(process.cwd(), 'dist'),
+    libraryTarget: isProduction ? 'umd' : undefined,
+    globalObject: "(typeof self !== 'undefined' ? self : this)",
+  };
+
+  return [
+    {
+      ...baseConfig,
+      entry: './src/index',
+      output: {
+        ...baseOutputConfig,
+        filename: 'index.bundle.js',
+      },
+    },
+    ...getGeneratedFiles().map(entry => ({
+      ...baseConfig,
+      entry,
+      output: {
+        ...baseOutputConfig,
+        filename: `${path.basename(entry, path.extname(entry))}.js`,
+      },
+    })),
+  ];
 };

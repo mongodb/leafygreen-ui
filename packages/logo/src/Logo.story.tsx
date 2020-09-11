@@ -93,7 +93,7 @@ storiesOf('Logo', module)
     const knockout = boolean('knockout', false);
     const size = number('size', 18);
 
-    const renderProductLogo = product => {
+    const renderProductLogo = (product: keyof typeof map) => {
       const Logo = map[product];
       return (
         <div key={product} className={containerStyle}>
@@ -103,5 +103,11 @@ storiesOf('Logo', module)
       );
     };
 
-    return <>{Object.keys(map).map(renderProductLogo)}</>;
+    return (
+      <>
+        {Object.keys(map).map(key =>
+          renderProductLogo(key as keyof typeof map),
+        )}
+      </>
+    );
   });

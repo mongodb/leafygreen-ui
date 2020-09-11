@@ -1,5 +1,35 @@
 # @leafygreen-ui/icon
 
+## 6.6.0
+
+### Minor Changes
+
+- 6883ccd0: Adds `flex-shrink: 0` property to Icon component
+
+## 6.5.0
+
+### Minor Changes
+
+- e49d66b: Updated appearance of X icon
+
+## 6.4.2
+
+### Patch Changes
+
+- 43d47db: Correctly sets fill rule for `Beaker`
+
+## 6.4.1
+
+### Patch Changes
+
+- b80379a: Updates fill rule for `Beaker`
+
+## 6.4.0
+
+### Minor Changes
+
+- 699a65c: Adds `Beaker` glyph
+
 ## 6.3.2
 
 ### Patch Changes

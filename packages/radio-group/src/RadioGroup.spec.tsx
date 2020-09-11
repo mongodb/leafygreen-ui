@@ -1,8 +1,12 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { RadioGroup, Radio } from '.';
+import { Radio, RadioGroup } from '.';
+import { RadioGroupProps } from './RadioGroup';
+import { RadioProps } from './Radio';
 
-const renderControlledRadioGroup = props => {
+const renderControlledRadioGroup = (
+  props: Omit<RadioGroupProps, 'children'> = {},
+) => {
   render(
     <RadioGroup value="input-1" {...props}>
       <Radio value="input-1">Input 1</Radio>
@@ -12,7 +16,9 @@ const renderControlledRadioGroup = props => {
   );
 };
 
-const renderUncontrolledRadioGroup = props => {
+const renderUncontrolledRadioGroup = (
+  props: Omit<RadioGroupProps, 'children'> = {},
+) => {
   render(
     <RadioGroup {...props}>
       <Radio default value="input-1">
@@ -24,7 +30,7 @@ const renderUncontrolledRadioGroup = props => {
   );
 };
 
-const renderRadio = props => {
+const renderRadio = (props: RadioProps) => {
   const { getByTestId } = render(
     <Radio {...props} data-testid="lg-radio" value="input-only" />,
   );
@@ -34,7 +40,7 @@ const renderRadio = props => {
 
 describe('packages/radio-group', () => {
   describe('when the RadioGroup is controlled', () => {
-    let onChange;
+    let onChange: jest.Mock;
 
     beforeEach(() => {
       onChange = jest.fn();
@@ -68,7 +74,7 @@ describe('packages/radio-group', () => {
   });
 
   describe('when the RadioGroup is uncontrolled', () => {
-    let onChange;
+    let onChange: jest.Mock;
 
     beforeEach(() => {
       onChange = jest.fn();
@@ -120,8 +126,9 @@ describe('packages/radio-group', () => {
     const className = 'radio-className';
     test(`renders "${className}" in the labels's class list`, () => {
       const { radio } = renderRadio({ className });
-      const label = radio.parentNode;
-      expect(label.classList.contains(className)).toBe(true);
+      const label = radio.parentElement;
+      expect(label).not.toBeNull();
+      expect(label!.classList.contains(className)).toBe(true);
     });
 
     test(`renders disabled radio when disabled prop is set`, () => {

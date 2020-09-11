@@ -108,6 +108,8 @@ export type PopoverProps = {
    * default: false
    */
   adjustOnMutation?: boolean;
+
+  onClick?: React.MouseEventHandler;
 } & OneOf<
   {
     /**

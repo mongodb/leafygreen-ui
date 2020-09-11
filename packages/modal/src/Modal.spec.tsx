@@ -56,7 +56,7 @@ describe('packages/modal', () => {
       });
 
       const modal = getByRole('dialog');
-      fireEvent.click(modal.parentElement);
+      fireEvent.click(modal.parentElement!);
 
       await expect(waitForElementToBeRemoved(modal)).rejects.toEqual(
         Error('Timed out in waitForElementToBeRemoved.'),
@@ -71,7 +71,7 @@ describe('packages/modal', () => {
       });
 
       const modal = getByRole('dialog');
-      fireEvent.click(modal.parentElement);
+      fireEvent.click(modal.parentElement!);
 
       await waitForElementToBeRemoved(modal);
     });
@@ -83,7 +83,7 @@ describe('packages/modal', () => {
       });
 
       const modal = getByRole('dialog');
-      fireEvent.click(modal.parentElement);
+      fireEvent.click(modal.parentElement!);
 
       await expect(waitForElementToBeRemoved(modal)).rejects.toEqual(
         Error('Timed out in waitForElementToBeRemoved.'),
@@ -98,7 +98,7 @@ describe('packages/modal', () => {
       });
 
       const modal = getByRole('dialog');
-      fireEvent.click(modal.parentElement);
+      fireEvent.click(modal.parentElement!);
 
       await waitForElementToBeRemoved(modal);
     });

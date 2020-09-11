@@ -1,5 +1,11 @@
 import React from 'react';
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import { Menu, MenuSeparator, MenuItem, SubMenu } from '.';
 
 const menuTestId = 'menu-test-id';
@@ -73,7 +79,7 @@ describe('packages/menu', () => {
 
       fireEvent.click(button);
 
-      expect(menuItem).not.toBeVisible();
+      await waitForElementToBeRemoved(menuItem);
     });
   });
 });
@@ -124,12 +130,18 @@ describe('packages/menu/sub-menu', () => {
     expect(subMenuItem).toBeInTheDocument();
   });
 
-  test('when a SubMenu is clicked, it opens and closes the previously opened SubMenu', () => {
+  test('when a SubMenu is clicked, it opens and closes the previously opened SubMenu', async () => {
     const { getByTestId } = renderSubMenuItem({ active: true });
     const subMenuB = getByTestId('sub-menu-b');
     const subMenuBArrow = subMenuB?.parentNode?.querySelectorAll('button')[1];
 
     fireEvent.click(subMenuBArrow as HTMLElement);
+
+    const subMenuItem = getByTestId('sub-menu-item-a');
+    await act(async () => {
+      await waitForElementToBeRemoved(subMenuItem);
+    });
+
     const subMenuItemB = getByTestId('sub-menu-item-b');
     expect(subMenuItemB).toBeVisible();
   });

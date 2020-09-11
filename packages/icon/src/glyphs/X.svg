@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 54 (76480) - https://sketchapp.com -->
-    <title>X</title>
-    <desc>Created with Sketch.</desc>
-    <g id="X-Copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <path d="M9,7 L13.5,7 L13.5,9 L9,9 L9,13.5 L7,13.5 L7,9 L2.5,9 L2.5,7 L7,7 L7,2.5 L9,2.5 L9,7 Z" id="Combined-Shape-Copy" fill="#000000" transform="translate(8.000000, 8.000000) rotate(45.000000) translate(-8.000000, -8.000000) "></path>
+    <title>Glyphs / X</title>
+    <g id="Audit" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M9,1.5 L8.999,7 L14.5,7 L14.5,9 L8.999,9 L9,14.5 L7,14.5 L6.999,9 L1.5,9 L1.5,7 L6.999,7 L7,1.5 L9,1.5 Z" transform="translate(8.000000, 8.000000) rotate(45.000000) translate(-8.000000, -8.000000)" fill="#000000"></path>
     </g>
 </svg>

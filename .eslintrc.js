@@ -3,6 +3,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:jest/recommended',
     'prettier',
     'prettier/react',
@@ -21,7 +22,7 @@ module.exports = {
   },
   settings: {
     react: {
-      version: '16.4.1',
+      version: '16.13.1',
     },
   },
   rules: {
@@ -32,6 +33,12 @@ module.exports = {
       },
     ],
     'react/forbid-prop-types': 1,
+    'react-hooks/exhaustive-deps': [
+      'warn',
+      {
+        additionalHooks: '(useIsomorphicLayoutEffect)',
+      },
+    ],
     'react/sort-comp': 'error',
     'import/no-extraneous-dependencies': 0,
     'padding-line-between-statements': [
@@ -58,11 +65,30 @@ module.exports = {
       plugins: ['@typescript-eslint'],
       rules: {
         // The regular rule thinks imported types are unused
-        'no-unused-vars': 0,
-        '@typescript-eslint/no-unused-vars': [1, { ignoreRestSiblings: true }],
-        '@typescript-eslint/adjacent-overload-signatures': 2,
-        '@typescript-eslint/array-type': [2, { default: 'generic' }],
-        '@typescript-eslint/class-name-casing': 2,
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': [
+          'warn',
+          {
+            ignoreRestSiblings: true,
+            argsIgnorePattern: '^_',
+            varsIgnorePattern: '^_',
+            caughtErrorsIgnorePattern: '^_',
+          },
+        ],
+        '@typescript-eslint/adjacent-overload-signatures': 'error',
+        '@typescript-eslint/array-type': ['error', { default: 'generic' }],
+        '@typescript-eslint/naming-convention': [
+          'error',
+          { selector: 'class', format: ['PascalCase'] },
+          {
+            selector: 'interface',
+            format: ['PascalCase'],
+            custom: {
+              regex: '^I[A-Z]',
+              match: false,
+            },
+          },
+        ],
         '@typescript-eslint/consistent-type-assertions': [
           'error',
           {
@@ -74,9 +100,12 @@ module.exports = {
           'interface',
         ],
         '@typescript-eslint/explicit-function-return-type': 0,
-        '@typescript-eslint/interface-name-prefix': ['error', 'never'],
         '@typescript-eslint/no-inferrable-types': 'warn',
       },
+    },
+    {
+      files: ['website/**/*.{ts,tsx}'],
+      rules: { 'react/react-in-jsx-scope': 'off' },
     },
     {
       files: ['packages/**/*.spec.{ts,tsx}'],

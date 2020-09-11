@@ -39,6 +39,11 @@ describe('packages/checkbox', () => {
     expect(checkbox.getAttribute('aria-disabled')).toBe('true');
   });
 
+  test('renders as indeterminate when the prop is set', () => {
+    const { checkbox } = renderCheckbox({ indeterminate: true });
+    expect(checkbox.getAttribute('aria-checked')).toBe('mixed');
+  });
+
   describe('when controlled', () => {
     test('onClick fires once when the label is clicked', () => {
       const { label } = renderCheckbox({ onClick, checked: false });

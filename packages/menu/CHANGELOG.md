@@ -1,5 +1,15 @@
 # @leafygreen-ui/menu
 
+## 7.0.8
+
+### Patch Changes
+
+- 6b0d0a2: Removed an extraneous propType
+- Updated dependencies [a14a079]
+- Updated dependencies [290c9fc]
+  - @leafygreen-ui/box@2.1.4
+  - @leafygreen-ui/popover@5.2.1
+
 ## 7.0.7
 
 ### Patch Changes

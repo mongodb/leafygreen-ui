@@ -1,4 +1,3 @@
-import { OneOf } from '@leafygreen-ui/lib';
 import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Popover, {
@@ -7,10 +6,16 @@ import Popover, {
   Justify,
   ElementPosition,
 } from '@leafygreen-ui/popover';
+import { Body } from '@leafygreen-ui/typography';
 import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { HTMLElementProps, IdAllocator, typeIs } from '@leafygreen-ui/lib';
+import {
+  OneOf,
+  HTMLElementProps,
+  IdAllocator,
+  typeIs,
+} from '@leafygreen-ui/lib';
 import { transparentize } from 'polished';
 import debounce from 'lodash/debounce';
 import { trianglePosition } from './tooltipUtils';
@@ -60,18 +65,17 @@ export type Align = typeof Align[keyof typeof Align];
 export { Justify };
 
 const baseStyles = css`
-  font-size: 14px;
-  line-height: 20px;
   padding: 14px 16px;
   border-radius: 3px;
   box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
+  cursor: default;
 `;
 
 const positionRelative = css`
   position: relative;
 `;
 
-const tooltipVariants: { readonly [K in Variant]: string } = {
+const tooltipVariants = {
   [Variant.Dark]: css`
     background-color: ${uiColors.gray.dark3};
     color: ${uiColors.gray.light1};
@@ -82,7 +86,17 @@ const tooltipVariants: { readonly [K in Variant]: string } = {
     color: ${uiColors.gray.dark2};
     border: 1px solid ${uiColors.gray.light2};
   `,
-};
+} as const;
+
+const childrenVariants = {
+  [Variant.Dark]: css`
+    color: ${uiColors.gray.light1};
+  `,
+
+  [Variant.Light]: css`
+    color: ${uiColors.gray.dark2};
+  `,
+} as const;
 
 const notchVariants = {
   [Variant.Dark]: css`
@@ -102,7 +116,7 @@ interface PopoverFunctionParameters {
   referenceElPos: ElementPosition;
 }
 
-type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'spacing' | 'refEl'>;
+type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'refEl'>;
 
 export type TooltipProps = Omit<
   HTMLElementProps<'div'>,
@@ -178,6 +192,11 @@ export type TooltipProps = Omit<
 
 const idAllocator = IdAllocator.create('tooltip');
 
+const stopClickPropagation = (evt: React.MouseEvent) => {
+  evt.preventDefault();
+  evt.stopPropagation();
+};
+
 /**
  * # Tooltip
  *
@@ -222,6 +241,7 @@ function Tooltip({
   shouldClose,
   usePortal = true,
   portalClassName,
+  spacing = 12,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
@@ -233,10 +253,10 @@ function Tooltip({
 
   const tooltipRef = useRef<HTMLDivElement>(null);
 
-  const tooltipId = useMemo(
-    () => id ?? tooltipRef.current?.id ?? idAllocator.generate(),
-    [id ?? tooltipRef.current?.id],
-  );
+  const existingId = id ?? tooltipRef.current?.id;
+  const tooltipId = useMemo(() => existingId ?? idAllocator.generate(), [
+    existingId,
+  ]);
 
   const createTriggerProps = (
     triggerEvent: TriggerEvent,
@@ -299,8 +319,8 @@ function Tooltip({
   });
 
   const portalProps = usePortal
-    ? { usePortal, portalClassName }
-    : { usePortal };
+    ? { spacing, usePortal, portalClassName }
+    : { spacing, usePortal };
 
   const tooltip = (
     <Popover
@@ -309,7 +329,7 @@ function Tooltip({
       align={align}
       justify={justify}
       adjustOnMutation={true}
-      spacing={12}
+      onClick={stopClickPropagation}
       {...portalProps}
     >
       {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
@@ -332,7 +352,7 @@ function Tooltip({
                 className={cx(triangleStyle.notchStyle, notchVariants[variant])}
               />
             </div>
-            {children}
+            <Body className={childrenVariants[variant]}>{children}</Body>
           </div>
         );
       }}
@@ -353,9 +373,9 @@ function Tooltip({
 
     return React.cloneElement(trigger, {
       ...createTriggerProps(triggerEvent, trigger.props),
-      className: cx(trigger.props.className, positionRelative),
       'aria-describedby': tooltipId,
       children: [...toArray(triggerChildren), tooltip],
+      className: cx(trigger.props.className, positionRelative),
     });
   }
 

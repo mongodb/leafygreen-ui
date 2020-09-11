@@ -67,6 +67,7 @@ The popover component will be automatically positioned relative to its nearest p
 | `spacing`          | `number`                                                                             | Specifies the amount of spacing (in pixels) between the trigger element and the content element.                                                                                                                         | `10`       |
 | `className`        | `string`                                                                             | Classname to apply to popover-content container                                                                                                                                                                          |            |
 | `adjustOnMutation` | `boolean`                                                                            | Should the Popover auto adjust its content when the DOM changes (using MutationObserver).                                                                                                                                | `false`    |
+| `onClick`          | `function`                                                                           | Function that will be called when popover content is clicked.                                                                                                                                                            |            |
 
 ## Advanced Use Case
 

@@ -31,9 +31,11 @@ describe('packages/Portal', () => {
     );
 
     const { firstChild, lastChild } = document.body;
+    expect(firstChild).not.toBeNull();
+    expect(lastChild).not.toBeNull();
 
-    expect(firstChild.textContent).toBe('Existing content on the DOM');
-    expect(lastChild.textContent).toBe(
+    expect(firstChild!.textContent).toBe('Existing content on the DOM');
+    expect(lastChild!.textContent).toBe(
       'Content portaled to the end of the DOM',
     );
   });

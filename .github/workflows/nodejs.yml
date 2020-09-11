@@ -30,6 +30,10 @@ jobs:
         run: yarn test --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
         env:
           JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
+      - name: tests (with artificial server rendering)
+        run: yarn test:ssr --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
+        env:
+          JEST_JUNIT_OUTPUT: 'reports/junit/js-test-ssr-results.xml'
 
   lints:
     name: Check lints and types
@@ -58,7 +62,7 @@ jobs:
       - name: lint
         run: yarn eslint --format junit -o reports/junit/js-lint-results.xml
       - name: types
-        run: yarn ts --verbose
+        run: yarn ts
 
   sizeDiff:
     name: Check file size

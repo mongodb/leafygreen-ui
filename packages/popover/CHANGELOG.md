@@ -1,5 +1,40 @@
 # @leafygreen-ui/popover
 
+## 5.2.3
+
+### Patch Changes
+
+- d5d40791: Pin lodash version to latest to include fix for [prototype pollution attack vulnerability.](https://hackerone.com/reports/712065)
+- Updated dependencies [d5d40791]
+  - @leafygreen-ui/hooks@4.2.1
+
+## 5.2.2
+
+### Patch Changes
+
+- 8c867bb: Reduces server side effect warnings
+- Updated dependencies [e599707]
+- Updated dependencies [8c867bb]
+  - @leafygreen-ui/hooks@4.2.0
+
+## 5.2.1
+
+### Patch Changes
+
+- 290c9fc: Fixes rendering bug
+
+## 5.2.0
+
+### Minor Changes
+
+- 4a27db7: Popover now accepts an onClick prop
+
+### Patch Changes
+
+- Updated dependencies [2c09c48]
+- Updated dependencies [add8745]
+  - @leafygreen-ui/hooks@4.1.0
+
 ## 5.1.4
 
 ### Patch Changes

@@ -32,7 +32,7 @@ storiesOf('Tooltip', module)
     <Tooltip
       align={select('Align', Object.values(Align), 'top')}
       justify={select('justify', Object.values(Justify), 'start')}
-      trigger={<Button>Trigger</Button>}
+      trigger={<Button>trigger</Button>}
       triggerEvent={select(
         'triggerEvent',
         Object.values(TriggerEvent),
@@ -40,6 +40,7 @@ storiesOf('Tooltip', module)
       )}
       enabled={boolean('Enabled', true)}
       variant={select('Variant', Object.values(Variant), 'dark')}
+      usePortal={boolean('Enabled', false)}
     >
       I am an uncontrolled Tooltip!
     </Tooltip>
