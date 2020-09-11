@@ -1,5 +1,11 @@
 # @leafygreen-ui/toast
 
+## 0.1.2
+
+### Patch Changes
+
+- 2016e52e: Fixes distributed bundle definition
+
 ## 0.1.1
 
 ### Patch Changes
