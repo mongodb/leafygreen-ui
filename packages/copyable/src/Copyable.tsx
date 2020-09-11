@@ -28,6 +28,7 @@ export const Size = {
 } as const;
 
 export type Size = typeof Size[keyof typeof Size];
+
 interface ColorSet {
   label: string;
   description: string;
@@ -212,21 +213,14 @@ export default function Copyable({
     });
 
     if (copied) {
-      let destroyed = false;
-
       const timeoutId = setTimeout(() => {
         setCopied(false);
-        clipboard.destroy();
-        destroyed = true;
       }, 1500);
 
-      return () => {
-        clearTimeout(timeoutId);
-        if (!destroyed) {
-          clipboard.destroy();
-        }
-      };
+      return () => clearTimeout(timeoutId);
     }
+
+    return () => clipboard.destroy();
   }, [buttonRef, children, copied]);
 
   return (
