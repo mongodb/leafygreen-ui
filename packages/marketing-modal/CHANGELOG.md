@@ -1,5 +1,11 @@
 # @leafygreen-ui/marketing-modal
 
+## 1.0.1
+
+### Patch Changes
+
+- 2016e52e: Fixes distributed bundle definition
+
 ## 1.0.0
 
 ### Major Changes
