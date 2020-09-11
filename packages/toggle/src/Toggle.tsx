@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp, IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -395,18 +395,18 @@ type ToggleProps = BaseToggleProps &
 const idAllocator = IdAllocator.create('toggle');
 
 function Toggle({
+  name,
+  className,
   size = Size.Default,
   darkMode = false,
   disabled = false,
-  className,
   onChange: onChangeProp = () => {},
   checked: checkedProp,
-  name,
-  id,
+  id: idProp,
   ...rest
 }: ToggleProps) {
   const [checked, setChecked] = useState(false);
-  const checkboxId = id || `toggle-${idAllocator.generate()}`;
+  const toggleId = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
   const normalizedChecked = checkedProp || checked;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -429,12 +429,12 @@ function Toggle({
   return (
     <label
       className={cx(statefulStyles.container, className)}
-      htmlFor={checkboxId}
+      htmlFor={toggleId}
     >
       <input
         {...toggleInput.prop}
         {...rest}
-        id={checkboxId}
+        id={toggleId}
         className={inputStyle}
         type="checkbox"
         name={name}
