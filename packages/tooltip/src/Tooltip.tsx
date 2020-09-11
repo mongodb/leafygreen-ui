@@ -122,19 +122,19 @@ export type TooltipProps = Omit<
   ModifiedPopoverProps & {
     /**
      * A slot for the element used to trigger the `Tooltip`.
-     * default: hover
+     * @default: hover
      */
     trigger: React.ReactElement | Function;
 
     /**
      * Determines if a `hover` or `click` event will trigger the opening of a `Tooltip`.
-     * default: 'hover'
+     * @default: 'hover'
      */
     triggerEvent?: TriggerEvent;
 
     /**
      * Controls component and determines the open state of the `Tooltip`
-     * default: `false`
+     * @default: `false`
      */
     open?: boolean;
 
@@ -162,7 +162,7 @@ export type TooltipProps = Omit<
 
     /**
      * Enables Tooltip to trigger based on the event specified by `triggerEvent`.
-     * default: true
+     * @default: true
      */
     enabled?: boolean;
   } & OneOf<
@@ -178,7 +178,7 @@ export type TooltipProps = Omit<
       /**
        * If using a portal, specifies a class name to apply to the root element of the portal.
        *
-       * default: undefined
+       * @default: undefined
        */
       portalClassName?: string;
     },
@@ -212,7 +212,7 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
  * @param props.children Content to appear inside of Tooltip.
  * @param props.open Boolean to describe whether or not Tooltip is open.
  * @param props.setOpen Callback to change the open state of the Tooltip.
- * @param props.darkMOde Whether the Tooltip will apepar in dark mode.
+ * @param props.darkMode Whether the Tooltip will apepar in dark mode.
  * @param props.className Classname applied to Tooltip.
  * @param props.align Alignment of Tooltip relative to trigger: `top`, `bottom`, `left`, `right`.
  * @param props.justify Justification of Tooltip relative to trigger: `start`, `middle`, `end`.
