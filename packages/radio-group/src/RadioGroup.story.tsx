@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { text, boolean, select } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { Radio, RadioGroup, Variant } from '.';
+import { Radio, RadioGroup } from '.';
 
 function ControlledRadioGroup() {
   const [activeRadio, setActiveRadio] = useState<string>('test1');
@@ -12,19 +12,17 @@ function ControlledRadioGroup() {
     setActiveRadio((e.target as HTMLInputElement).value);
   };
 
-  const variant = select('variant', Object.values(Variant), Variant.Default);
+  const darkMode = boolean('darkMode', false);
 
   return (
     <div>
       <RadioGroup
         size={select('size', ['default', 'small'], 'default')}
-        variant={variant}
+        darkMode={darkMode}
         onChange={changeHandler}
         value={activeRadio}
         className={css`
-          background-color: ${variant === Variant.Default
-            ? 'white'
-            : uiColors.gray.dark3};
+          background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
           padding: 20px;
         `}
       >
@@ -50,17 +48,15 @@ function ControlledRadioGroup() {
 
 storiesOf('RadioGroup', module)
   .add('Uncontrolled', () => {
-    const variant = select('variant', Object.values(Variant), Variant.Default);
+    const darkMode = boolean('darkMode', false);
 
     return (
       <RadioGroup
         size={select('size', ['default', 'small'], 'default')}
         name="radio-group-default"
-        variant={variant}
+        darkMode={darkMode}
         className={css`
-          background-color: ${variant === Variant.Default
-            ? 'white'
-            : uiColors.gray.dark3};
+          background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
           padding: 20px;
         `}
       >
