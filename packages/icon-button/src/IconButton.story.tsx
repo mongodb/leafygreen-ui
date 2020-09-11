@@ -48,6 +48,9 @@ storiesOf('IconButton', module)
 
     return (
       <div className={getContainerStyle(commonProps.darkMode)}>
+        <IconButton>
+          <EllipsisIcon />
+        </IconButton>
         <IconButton {...commonProps} href="https://mongodb.design">
           <EllipsisIcon />
         </IconButton>
