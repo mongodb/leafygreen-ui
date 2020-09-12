@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { text, boolean, select } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { Size } from './types';
 import { Radio, RadioGroup } from '.';
 
 function ControlledRadioGroup() {
@@ -52,7 +53,7 @@ storiesOf('RadioGroup', module)
 
     return (
       <RadioGroup
-        size={select('size', ['default', 'small'], 'default')}
+        size={select('size', Object.values(Size), 'default')}
         name="radio-group-default"
         darkMode={darkMode}
         className={css`
