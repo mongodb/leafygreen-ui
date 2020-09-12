@@ -13,8 +13,6 @@ const Mode = {
 
 type Mode = typeof Mode[keyof typeof Mode];
 
-export { Mode };
-
 const Size = {
   Default: 'default',
   Large: 'large',
