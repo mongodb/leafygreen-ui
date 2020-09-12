@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp, IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -130,32 +130,36 @@ interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   darkMode?: boolean;
   checked?: boolean;
   label: React.ReactNode;
-  disabled: boolean;
-  indeterminate: boolean;
-  className: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-  bold: boolean;
+  disabled?: boolean;
+  indeterminate?: boolean;
+  className?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  bold?: boolean;
   animate?: boolean;
 }
 
-const idAllocator = IdAllocator.create('toggle');
+const idAllocator = IdAllocator.create('checkbox');
 
 function Checkbox({
   darkMode = false,
-  checked: checkedProp = false,
+  checked: checkedProp,
   label = '',
   disabled = false,
-  indeterminate: indeterminateProp = false,
+  indeterminate: indeterminateProp,
   bold = false,
   animate = false,
   className,
   onClick: onClickProp,
   onChange: onChangeProp,
   id: idProp,
+  style,
   ...rest
 }: CheckboxProps) {
   const [checked, setChecked] = React.useState(false);
-  const normalizedChecked = checkedProp || checked;
+  const normalizedChecked = React.useMemo(
+    () => (checkedProp != null ? checkedProp : checked),
+    [checkedProp, checked],
+  );
   const normalizedIndeterminate = React.useRef(indeterminateProp);
   const inputRef = React.useRef(null);
   const checkboxId = React.useMemo(() => idProp ?? idAllocator.generate(), [
@@ -164,7 +168,7 @@ function Checkbox({
   const labelId = `${checkboxId}-label`;
 
   React.useEffect(() => {
-    if (indeterminateProp) {
+    if (indeterminateProp != null) {
       normalizedIndeterminate.current = indeterminateProp;
     }
   }, [indeterminateProp]);
@@ -194,18 +198,6 @@ function Checkbox({
     }
   };
 
-  // React.useEffect(() => {
-  //   if (indeterminateProp && inputRef.current) {
-  //     inputRef.current = indeterminateProp
-  //   }
-  //   // if (
-  //   //   prevProps.indeterminate !== this.props.indeterminate &&
-  //   //   this.inputRef.current != null
-  //   // ) {
-  //   //   this.inputRef.current.indeterminate = this.props.indeterminate;
-  //   // }
-  // }, [indeterminateProp, inputRef])
-
   const textVariantStyle = darkMode
     ? textColorSet[Mode.Dark]
     : textColorSet[Mode.Light];
@@ -213,7 +205,7 @@ function Checkbox({
   const checkboxBackgroundImage = (() => {
     if (darkMode) {
       if (disabled) {
-        if (checked) {
+        if (normalizedChecked) {
           return css`
             background-image: url(${disabledLightChecked});
           `;
@@ -235,7 +227,7 @@ function Checkbox({
       `;
     } else {
       if (disabled) {
-        if (checked) {
+        if (normalizedChecked) {
           return css`
             background-image: url(${disabledDarkChecked});
           `;
@@ -263,7 +255,7 @@ function Checkbox({
       className={cx(containerStyle, className, {
         [disabledContainerStyle]: disabled,
       })}
-      // style={style}
+      style={style}
       htmlFor={checkboxId}
       id={labelId}
     >
@@ -278,7 +270,9 @@ function Checkbox({
         checked={normalizedChecked}
         aria-label="checkbox"
         aria-disabled={disabled}
-        aria-checked={normalizedIndeterminate ? 'mixed' : checked}
+        aria-checked={
+          normalizedIndeterminate.current ? 'mixed' : normalizedChecked
+        }
         aria-labelledby={labelId}
         onClick={onClick}
         onChange={onChange}
@@ -288,17 +282,19 @@ function Checkbox({
         {...checkboxWrapper.prop}
         className={cx(wrapperStyle, {
           [wrapperStyleChecked]:
-            checked && !normalizedIndeterminate && !disabled,
+            normalizedChecked && !normalizedIndeterminate.current && !disabled,
           [wrapperStyleAnimated]:
-            animate && !normalizedIndeterminate && !disabled,
+            animate && !normalizedIndeterminate.current && !disabled,
         })}
       >
         <div
           className={cx(checkboxStyle, checkboxBackgroundImage, {
             [checkboxStyleChecked]:
-              checked && !normalizedIndeterminate && !disabled,
+              normalizedChecked &&
+              !normalizedIndeterminate.current &&
+              !disabled,
             [checkboxStyleAnimated]:
-              animate && !normalizedIndeterminate && !disabled,
+              animate && !normalizedIndeterminate.current && !disabled,
           })}
         />
       </div>
