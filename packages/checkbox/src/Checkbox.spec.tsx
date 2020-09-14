@@ -31,7 +31,7 @@ describe('packages/checkbox', () => {
 
   test('renders as checked when the prop is set', () => {
     const { checkbox } = renderCheckbox({ checked: true });
-    // expect((checkbox as HTMLInputElement).checked).toBe(true);
+    expect((checkbox as HTMLInputElement).checked).toBe(true);
     expect(checkbox.getAttribute('aria-checked')).toBe('true');
   });
 
