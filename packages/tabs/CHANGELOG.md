@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 2.1.6
+
+### Patch Changes
+
+- 3e32a2ee: Fixes bug where conditionally rendered Tab elements caused the component to try and read the width of a reference to a non-exisistant element.
+
 ## 2.1.5
 
 ### Patch Changes

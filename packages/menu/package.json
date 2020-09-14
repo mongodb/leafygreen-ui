@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/menu",
-  "version": "7.0.8",
+  "version": "7.0.9",
   "description": "LeafyGreen UI Kit Menu",
   "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
@@ -21,7 +21,7 @@
     "@leafygreen-ui/popover": "^5.2.1",
     "@leafygreen-ui/palette": "^2.0.2",
     "@leafygreen-ui/box": "^2.1.4",
-    "@leafygreen-ui/icon-button": "^7.0.0"
+    "@leafygreen-ui/icon-button": "^8.0.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^1.1.4"

@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 8.0.0
+
+### Major Changes
+
+- a84219f1: Deprecates `variant` in favor of new `darkMode` prop, which determines if the component should be rendered in `darkMode`
+
 ## 7.0.6
 
 ### Patch Changes
