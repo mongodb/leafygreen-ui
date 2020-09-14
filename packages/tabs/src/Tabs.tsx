@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
-import { useEventListener } from '@leafygreen-ui/hooks';
+import { useEventListener, useElementNode } from '@leafygreen-ui/hooks';
 import TabTitle from './TabTitle';
 import omit from 'lodash/omit';
 
@@ -112,9 +112,9 @@ function Tabs({
     ? setControlledSelected
     : setUncontrolledSelected;
 
-  const tabListRef = useRef<HTMLDivElement>(null);
-
   const [focusedState, setFocusedState] = useState([0]);
+
+  const [tabListRef, setTabListRef] = useElementNode();
 
   const currentIndex = childrenArray.findIndex((child, index) => {
     if (!child) {
@@ -162,27 +162,23 @@ function Tabs({
   useEventListener('keydown', handleArrowKeyPress);
 
   function calcStyle() {
-    if (
-      !tabListRef ||
-      !tabListRef.current ||
-      typeof currentIndex !== 'number'
-    ) {
+    if (!tabListRef || typeof currentIndex !== 'number') {
       return null;
     }
 
     const tabListChildren: Array<Element> = Array.from(
-      tabListRef.current.children,
-    );
+      tabListRef.children,
+    ).filter(child => child != null);
 
     let computedX = 0;
 
     for (let i = 0; i < currentIndex; i++) {
-      computedX += tabListChildren[i].scrollWidth;
+      computedX += tabListChildren[i]?.scrollWidth;
     }
 
     return css`
       transform: translate3d(${computedX}px, 0, 0);
-      width: ${tabListChildren[currentIndex].scrollWidth}px;
+      width: ${tabListChildren[currentIndex]?.scrollWidth}px;
     `;
   }
 
@@ -200,7 +196,12 @@ function Tabs({
 
   return (
     <div {...rest} className={className}>
-      <div className={listStyle} role="tablist" ref={tabListRef} tabIndex={0}>
+      <div
+        className={listStyle}
+        role="tablist"
+        ref={setTabListRef}
+        tabIndex={0}
+      >
         {tabs.map((tab, index) => {
           const { selected, disabled, ...rest } = tab.props;
 
