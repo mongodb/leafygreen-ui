@@ -152,6 +152,7 @@ function Checkbox({
   onChange: onChangeProp,
   id: idProp,
   style,
+  name,
   ...rest
 }: CheckboxProps) {
   const [checked, setChecked] = React.useState(false);
