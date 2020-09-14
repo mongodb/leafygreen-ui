@@ -365,7 +365,7 @@ function Code({
       )}
     >
       <IconButton
-        variant={variant}
+        darkMode={variant === Variant.Dark}
         aria-label="Copy"
         className={cx(getCopyButtonStyle(variant, copied), 'copy-btn')}
         onClick={handleClick}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
-import Tooltip, { TriggerEvent, Variant, Align, Justify } from '.';
+import Tooltip, { TriggerEvent, Align, Justify } from '.';
 import Button from '@leafygreen-ui/button';
 
 function ControlledTooltip() {
@@ -21,7 +21,7 @@ function ControlledTooltip() {
         Object.values(TriggerEvent),
         TriggerEvent.Click,
       )}
-      variant={select('Variant', Object.values(Variant), 'light')}
+      darkMode={boolean('darkMode', false)}
     >
       I am a controlled Tooltip!
     </Tooltip>
@@ -33,14 +33,15 @@ storiesOf('Tooltip', module)
     <Tooltip
       align={select('Align', Object.values(Align), 'top')}
       justify={select('justify', Object.values(Justify), 'start')}
-      trigger={<Button>Trigger</Button>}
+      trigger={<Button>trigger</Button>}
       triggerEvent={select(
         'triggerEvent',
         Object.values(TriggerEvent),
         TriggerEvent.Hover,
       )}
       enabled={boolean('Enabled', true)}
-      variant={select('Variant', Object.values(Variant), 'dark')}
+      darkMode={boolean('darkMode', false)}
+      usePortal={boolean('Enabled', false)}
     >
       I am an uncontrolled Tooltip!
     </Tooltip>

@@ -1,8 +1,8 @@
 {
   "name": "@leafygreen-ui/toast",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "leafyGreen UI Kit Toast",
-  "main": "./dist/index.js",
+  "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
@@ -17,9 +17,9 @@
     "@leafygreen-ui/palette": "^2.0.2",
     "@leafygreen-ui/portal": "^2.2.1",
     "@leafygreen-ui/tokens": "^0.3.0",
-    "@leafygreen-ui/icon": "^6.3.2",
-    "@leafygreen-ui/icon-button": "^7.0.1",
-    "@leafygreen-ui/typography": "^4.2.2",
-    "lodash": "^4.17.11"
+    "@leafygreen-ui/icon": "^6.6.0",
+    "@leafygreen-ui/icon-button": "^7.0.6",
+    "@leafygreen-ui/typography": "^4.3.0",
+    "lodash": "^4.17.20"
   }
 }

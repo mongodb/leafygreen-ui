@@ -250,7 +250,7 @@ const Pipeline = forwardRef(
             justify="middle"
             trigger={<Counter size={size} />}
             triggerEvent="hover"
-            variant="dark"
+            darkMode={true}
           >
             {tooltipText}
           </Tooltip>
