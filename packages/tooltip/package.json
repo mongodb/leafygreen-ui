@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tooltip",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "LeafyGreen UI Kit Tooltip",
   "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
@@ -12,7 +12,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^7.0.0"
+    "@leafygreen-ui/button": "^7.0.1"
   },
   "dependencies": {
     "@leafygreen-ui/popover": "^5.2.3",
