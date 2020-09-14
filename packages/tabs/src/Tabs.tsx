@@ -114,7 +114,7 @@ function Tabs({
 
   const [focusedState, setFocusedState] = useState([0]);
 
-  const [ref, setRef] = useElementNode();
+  const [tabListRef, setTabListRef] = useElementNode();
 
   const currentIndex = childrenArray.findIndex((child, index) => {
     if (!child) {
@@ -162,13 +162,13 @@ function Tabs({
   useEventListener('keydown', handleArrowKeyPress);
 
   function calcStyle() {
-    if (!ref || typeof currentIndex !== 'number') {
+    if (!tabListRef || typeof currentIndex !== 'number') {
       return null;
     }
 
-    const tabListChildren: Array<Element> = Array.from(ref.children).filter(
-      child => child != null,
-    );
+    const tabListChildren: Array<Element> = Array.from(
+      tabListRef.children,
+    ).filter(child => child != null);
 
     let computedX = 0;
 
@@ -196,7 +196,12 @@ function Tabs({
 
   return (
     <div {...rest} className={className}>
-      <div className={listStyle} role="tablist" ref={setRef} tabIndex={0}>
+      <div
+        className={listStyle}
+        role="tablist"
+        ref={setTabListRef}
+        tabIndex={0}
+      >
         {tabs.map((tab, index) => {
           const { selected, disabled, ...rest } = tab.props;
 
