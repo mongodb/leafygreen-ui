@@ -18,12 +18,12 @@ const checkboxWrapper = createDataProp('checkbox-wrapper');
 const height = 20;
 const width = 600;
 
-export const Mode = {
+const Mode = {
   Light: 'light',
   Dark: 'dark',
 } as const;
 
-export type Mode = typeof Mode[keyof typeof Mode];
+type Mode = typeof Mode[keyof typeof Mode];
 
 const wrapperStyleAnimated = css`
   transition: 300ms opacity ease-in-out;
