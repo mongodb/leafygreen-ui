@@ -1,5 +1,17 @@
 # @leafygreen-ui/mongo-nav
 
+## 3.1.7
+
+### Patch Changes
+
+- Updated dependencies [47846c77]
+- Updated dependencies [483b8a2e]
+- Updated dependencies [a84219f1]
+  - @leafygreen-ui/button@7.0.1
+  - @leafygreen-ui/menu@7.0.9
+  - @leafygreen-ui/tooltip@5.0.0
+  - @leafygreen-ui/icon-button@8.0.0
+
 ## 3.1.6
 
 ### Patch Changes

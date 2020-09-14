@@ -1,5 +1,16 @@
 # @leafygreen-ui/tooltip
 
+## 5.0.0
+
+### Major Changes
+
+- 483b8a2e: Deprecates `variant` prop in favor of `darkMode` prop to control whether or not the Tooltip appears in dark mode
+
+### Patch Changes
+
+- Updated dependencies [47846c77]
+  - @leafygreen-ui/button@7.0.1
+
 ## 4.0.0
 
 ### Major Changes
