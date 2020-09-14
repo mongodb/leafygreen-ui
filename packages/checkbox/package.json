@@ -12,8 +12,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^5.1.1",
-    "@leafygreen-ui/theme": "^2.0.1"
+    "@leafygreen-ui/lib": "^5.1.1"
   },
   "devDependencies": {
     "@leafygreen-ui/palette": "^2.0.2"

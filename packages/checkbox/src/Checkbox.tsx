@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createDataProp, IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { colors } from '@leafygreen-ui/theme';
 import {
   spritesheetLight,
   spritesheetDark,
@@ -83,11 +82,11 @@ const checkboxStyleChecked = css`
 
 const textColorSet: { [K in Mode]: string } = {
   [Mode.Light]: css`
-    color: ${colors.gray[1]};
+    color: #464c4f; // theme colors.gray[1]
   `,
 
   [Mode.Dark]: css`
-    color: ${colors.gray[8]};
+    color: #f4f6f6; // theme colors.gray[8]
   `,
 };
 
@@ -123,7 +122,7 @@ const disabledContainerStyle = css`
 `;
 
 const disabledTextStyle = css`
-  color: ${colors.gray[5]};
+  color: #babdbe; // theme colors.gray[5]
 `;
 
 interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -329,217 +328,3 @@ Checkbox.propTypes = {
 };
 
 export default Checkbox;
-
-// export default class Checkbox extends Component<
-//   CheckboxProps & React.InputHTMLAttributes<HTMLInputElement>
-// > {
-//   static displayName = 'Checkbox';
-
-// static propTypes = {
-//   variant: PropTypes.oneOf(['default', 'light']),
-//   checked: PropTypes.bool,
-//   label: PropTypes.node,
-//   disabled: PropTypes.bool,
-//   indeterminate: PropTypes.bool,
-//   className: PropTypes.string,
-//   onChange: PropTypes.func,
-//   bold: PropTypes.bool,
-//   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-//   animate: PropTypes.bool,
-// };
-
-//   static defaultProps = {
-// variant: 'default',
-// label: '',
-// disabled: false,
-// indeterminate: false,
-// className: '',
-// onChange: () => {},
-// bold: false,
-//   };
-
-//   state = { checked: false };
-
-//   componentDidMount() {
-//     this.inputRef.current!.indeterminate = this.props.indeterminate;
-//   }
-
-//   componentDidUpdate(prevProps: CheckboxProps) {
-// if (
-//   prevProps.indeterminate !== this.props.indeterminate &&
-//   this.inputRef.current != null
-// ) {
-//   this.inputRef.current.indeterminate = this.props.indeterminate;
-// }
-//   }
-
-//   private static idAllocator = IdAllocator.create('checkbox');
-//   private _defaultCheckboxId?: string;
-
-//   private get defaultCheckboxId(): string {
-//     if (!this._defaultCheckboxId) {
-//       this._defaultCheckboxId = Checkbox.idAllocator.generate();
-//     }
-
-//     return this._defaultCheckboxId;
-//   }
-
-//   inputRef = React.createRef<HTMLInputElement>();
-
-// onClick = (
-//   e: React.MouseEvent<HTMLInputElement> & { target: HTMLInputElement },
-// ) => {
-//   const { onClick } = this.props;
-
-//   if (onClick) {
-//     onClick(e);
-//   }
-
-//   // For Microsoft Edge and IE, when checkbox is indeterminate, change event does not fire when clicked.
-//   // Explicitly call onChange for this case
-//   if (this.inputRef.current && this.inputRef.current.indeterminate) {
-//     this.onChange(e);
-//     e.stopPropagation();
-//   }
-// };
-
-// onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//   const { onChange, checked } = this.props;
-
-//   if (onChange) {
-//     onChange(e);
-//   }
-
-//   if (checked == null) {
-//     this.setState({ checked: e.target.checked });
-//   }
-// };
-
-//   render() {
-//     const checkboxId = this.props.id || this.defaultCheckboxId;
-// const labelId = `${checkboxId}-label`;
-
-//     const {
-//       name = checkboxId,
-//       checked = this.state.checked,
-//       animate = true,
-//       className,
-//       style,
-//       label,
-//       variant,
-//       disabled,
-//       indeterminate,
-//       bold,
-//       ...rest
-//     } = this.props;
-
-// const textVariantStyle =
-//   textVariants[variant] || textVariants[Variant.Default];
-
-// const checkboxBackgroundImage = (() => {
-//   switch (variant) {
-//     case 'light': {
-//       if (disabled) {
-//         if (checked) {
-//           return css`
-//             background-image: url(${disabledLightChecked});
-//           `;
-//         }
-
-//         return css`
-//           background-image: url(${disabledLight});
-//         `;
-//       }
-
-//       if (indeterminate) {
-//         return css`
-//           background-image: url(${indeterminateLight});
-//         `;
-//       }
-
-//       return css`
-//         background-image: url(${spritesheetLight});
-//       `;
-//     }
-
-//     default: {
-//       if (disabled) {
-//         if (checked) {
-//           return css`
-//             background-image: url(${disabledDarkChecked});
-//           `;
-//         }
-
-//         return css`
-//           background-image: url(${disabledDark});
-//         `;
-//       }
-
-//       if (indeterminate) {
-//         return css`
-//           background-image: url(${indeterminateDark});
-//         `;
-//       }
-
-//       return css`
-//         background-image: url(${spritesheetDark});
-//       `;
-//     }
-//   }
-// })();
-
-// return (
-//   <label
-//     className={cx(containerStyle, className, {
-//       [disabledContainerStyle]: disabled,
-//     })}
-//     style={style}
-//     htmlFor={checkboxId}
-//     id={labelId}
-//   >
-//     <input
-//       {...rest}
-//       id={checkboxId}
-//       ref={this.inputRef}
-//       className={inputStyle}
-//       type="checkbox"
-//       name={name}
-//       disabled={disabled}
-//       checked={checked}
-//       aria-label="checkbox"
-//       aria-disabled={disabled}
-//       aria-checked={indeterminate ? 'mixed' : checked}
-//       aria-labelledby={labelId}
-//       onClick={this.onClick}
-//       onChange={this.onChange}
-//     />
-
-//     <div
-//       {...checkboxWrapper.prop}
-//       className={cx(wrapperStyle, {
-//         [wrapperStyleChecked]: checked && !indeterminate && !disabled,
-//         [wrapperStyleAnimated]: animate && !indeterminate && !disabled,
-//       })}
-//     >
-//       <div
-//         className={cx(checkboxStyle, checkboxBackgroundImage, {
-//           [checkboxStyleChecked]: checked && !indeterminate && !disabled,
-//           [checkboxStyleAnimated]: animate && !indeterminate && !disabled,
-//         })}
-//       />
-//     </div>
-
-//     {label && (
-//       <span
-//         className={cx(baseTextStyle, textVariantStyle, {
-//           [disabledTextStyle]: disabled,
-//           [boldTextStyle]: bold,
-//         })}
-//       >
-//         {label}
-//       </span>
-//     )}
-//   </label>
-// );
-//   }
-// }
