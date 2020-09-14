@@ -7,7 +7,7 @@ const Layout = () => {
     <div
       css={css`
         height: 100px;
-        background-color: aliceblue;
+        background-color: orange;
       `}
     />
   );
