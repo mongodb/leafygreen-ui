@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/box",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "leafyGreen UI Kit Box",
   "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
@@ -13,6 +13,6 @@
   },
   "dependencies": {
     "@leafygreen-ui/lib": "^5.1.1",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.20"
   }
 }

@@ -1,5 +1,19 @@
 # @leafygreen-ui/tabs
 
+## 2.1.6
+
+### Patch Changes
+
+- 3e32a2ee: Fixes bug where conditionally rendered Tab elements caused the component to try and read the width of a reference to a non-exisistant element.
+
+## 2.1.5
+
+### Patch Changes
+
+- d5d40791: Pin lodash version to latest to include fix for [prototype pollution attack vulnerability.](https://hackerone.com/reports/712065)
+- Updated dependencies [d5d40791]
+  - @leafygreen-ui/hooks@4.2.1
+
 ## 2.1.4
 
 ### Patch Changes

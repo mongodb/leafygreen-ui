@@ -1,5 +1,11 @@
 # @leafygreen-ui/syntax
 
+## 3.1.0
+
+### Minor Changes
+
+- fe371e37: Adds `js` alias for JavaScript and `ts` alias for TypeScript
+
 ## 3.0.2
 
 ### Patch Changes

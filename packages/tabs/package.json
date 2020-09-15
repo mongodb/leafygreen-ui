@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tabs",
-  "version": "2.1.4",
+  "version": "2.1.6",
   "description": "leafyGreen UI Kit Tabs",
   "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
@@ -14,9 +14,9 @@
   "dependencies": {
     "@leafygreen-ui/lib": "^5.1.1",
     "@leafygreen-ui/palette": "^2.0.2",
-    "@leafygreen-ui/hooks": "^4.2.0",
+    "@leafygreen-ui/hooks": "^4.2.1",
     "@leafygreen-ui/box": "^2.1.4",
     "@leafygreen-ui/leafygreen-provider": "^1.1.4",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.20"
   }
 }

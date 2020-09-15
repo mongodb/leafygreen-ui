@@ -1,5 +1,13 @@
 # @leafygreen-ui/menu
 
+## 7.0.9
+
+### Patch Changes
+
+- 47846c77: Fixes unintentional exclusion of `ref` from TypeScript typing of props for `Button`, `SubMenu`, and `MenuItem` components.
+- Updated dependencies [a84219f1]
+  - @leafygreen-ui/icon-button@8.0.0
+
 ## 7.0.8
 
 ### Patch Changes

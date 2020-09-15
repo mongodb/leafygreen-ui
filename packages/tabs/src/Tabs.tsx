@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { isComponentType, keyMap } from '@leafygreen-ui/lib';
-import { useEventListener } from '@leafygreen-ui/hooks';
+import { keyMap, isComponentType } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { useEventListener, useElementNode } from '@leafygreen-ui/hooks';
 import TabTitle from './TabTitle';
 import omit from 'lodash/omit';
 
@@ -164,11 +164,10 @@ function Tabs({
     ? setControlledSelected
     : setUncontrolledSelected;
 
-  const tabListRef = useRef<HTMLDivElement>(null);
-
   const [focusedState, setFocusedState] = useState([0]);
 
   const [hoverIndex, setHoverIndex] = useState<number | undefined>();
+  const [tabListRef, setTabListRef] = useElementNode();
 
   const currentIndex = childrenArray.findIndex((child, index) => {
     if (!child) {
@@ -218,13 +217,13 @@ function Tabs({
   function calcStyle(state: 'active' | 'hover') {
     const current = state === 'active' ? currentIndex : hoverIndex;
 
-    if (!tabListRef || !tabListRef.current || typeof current !== 'number') {
+    if (!tabListRef || typeof currentIndex !== 'number' || !current) {
       return null;
     }
 
     const tabListChildren: Array<Element> = Array.from(
-      tabListRef.current.children,
-    );
+      tabListRef.children,
+    ).filter(child => child != null);
 
     let computedX = 0;
 
@@ -256,7 +255,12 @@ function Tabs({
 
   return (
     <div {...rest} className={className}>
-      <div className={listStyle} role="tablist" ref={tabListRef} tabIndex={0}>
+      <div
+        className={listStyle}
+        role="tablist"
+        ref={setTabListRef}
+        tabIndex={0}
+      >
         {tabs.map((tab, index) => {
           const { selected, disabled, ...rest } = tab.props;
 
