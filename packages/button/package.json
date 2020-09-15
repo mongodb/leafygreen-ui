@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/button",
-  "version": "6.0.2",
+  "version": "7.0.1",
   "description": "leafyGreen UI Kit Button",
   "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
@@ -14,11 +14,11 @@
   "dependencies": {
     "@leafygreen-ui/lib": "^5.1.1",
     "@leafygreen-ui/palette": "^2.0.2",
-    "@leafygreen-ui/box": "^2.1.3",
-    "lodash": "^4.17.15"
+    "@leafygreen-ui/box": "^2.1.5",
+    "lodash": "^4.17.20"
   },
   "devDependencies": {
-    "@leafygreen-ui/icon": "^6.3.2"
+    "@leafygreen-ui/icon": "^6.6.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^1.1.4"

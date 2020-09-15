@@ -1,5 +1,13 @@
 # @leafygreen-ui/popover
 
+## 5.2.3
+
+### Patch Changes
+
+- d5d40791: Pin lodash version to latest to include fix for [prototype pollution attack vulnerability.](https://hackerone.com/reports/712065)
+- Updated dependencies [d5d40791]
+  - @leafygreen-ui/hooks@4.2.1
+
 ## 5.2.2
 
 ### Patch Changes

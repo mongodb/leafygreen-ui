@@ -1,5 +1,20 @@
 # @leafygreen-ui/typography
 
+## 4.3.0
+
+### Minor Changes
+
+- eda10121: Adds `H3` and `InlineKeyCode` components
+  Updates color of typography elements from `uiColors.gray.dark2` to `uiColors.gray.dark3`
+
+### Patch Changes
+
+- 3fed752e: Fixes styles for Link component
+- Updated dependencies [6883ccd0]
+- Updated dependencies [d5d40791]
+  - @leafygreen-ui/icon@6.6.0
+  - @leafygreen-ui/box@2.1.5
+
 ## 4.2.2
 
 ### Patch Changes
