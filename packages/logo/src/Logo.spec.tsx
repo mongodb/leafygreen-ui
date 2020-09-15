@@ -37,20 +37,20 @@ describe('packages/logo', () => {
       expect(logomark).toBeInTheDocument();
     });
 
-    test('renders dark knockout logomark, when variant is set to dark', () => {
+    test('renders dark knockout logomark, when darkMode is true', () => {
       const testId = '#21313C-monochrome-logomark';
       const { getByTestId } = render(
-        <LogoMark variant="dark" knockout={true} data-testid={testId} />,
+        <LogoMark darkMode knockout={true} data-testid={testId} />,
       );
       const logomark = getByTestId(testId);
 
       expect(logomark).toBeInTheDocument();
     });
 
-    test('renders light knockout logomark, when variant is set to light', () => {
+    test('renders light knockout logomark, when darkMode is not set', () => {
       const testId = '#FFFFFF-monochrome-logomark';
       const { getByTestId } = render(
-        <LogoMark variant="light" knockout={true} data-testid={testId} />,
+        <LogoMark knockout={true} data-testid={testId} />,
       );
       const logomark = getByTestId(testId);
 
@@ -67,30 +67,30 @@ describe('packages/logo', () => {
       expect(logo).toBeInTheDocument();
     });
 
-    test('renders full-color logomark with light text when variant is set to light', () => {
+    test('renders full-color logomark with light text when dakrMode is set to false', () => {
       const testId = '#FFFFFF-rgb-logo';
       const { getByTestId } = render(
-        <Logo variant="light" data-testid={testId} />,
+        <Logo darkMode={false} data-testid={testId} />,
       );
       const logo = getByTestId(testId);
 
       expect(logo).toBeInTheDocument();
     });
 
-    test('renders dark knockout, when variant and knockout props are set', () => {
+    test('renders dark knockout, when darkMode is true and knockout prop is set', () => {
       const testId = '#21313C-monochrome-logo';
       const { getByTestId } = render(
-        <Logo variant="dark" knockout={true} data-testid={testId} />,
+        <Logo darkMode knockout={true} data-testid={testId} />,
       );
       const logo = getByTestId(testId);
 
       expect(logo).toBeInTheDocument();
     });
 
-    test('renders light knockout, when variant and knockout props are set', () => {
+    test('renders light knockout, when darkMode is set to false and knockout prop is set', () => {
       const testId = '#FFFFFF-monochrome-logo';
       const { getByTestId } = render(
-        <Logo variant="light" knockout={true} data-testid={testId} />,
+        <Logo darkMode={false} knockout={true} data-testid={testId} />,
       );
       const logo = getByTestId(testId);
 
