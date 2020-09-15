@@ -165,7 +165,6 @@ function Tabs({
     : setUncontrolledSelected;
 
   const [focusedState, setFocusedState] = useState([0]);
-
   const [hoverIndex, setHoverIndex] = useState<number | undefined>();
   const [tabListRef, setTabListRef] = useElementNode();
 
@@ -217,7 +216,7 @@ function Tabs({
   function calcStyle(state: 'active' | 'hover') {
     const current = state === 'active' ? currentIndex : hoverIndex;
 
-    if (!tabListRef || typeof currentIndex !== 'number' || !current) {
+    if (!tabListRef || typeof current !== 'number') {
       return null;
     }
 
@@ -228,12 +227,12 @@ function Tabs({
     let computedX = 0;
 
     for (let i = 0; i < current; i++) {
-      computedX += tabListChildren[i].clientWidth;
+      computedX += tabListChildren[i]?.clientWidth;
     }
 
     return css`
       transform: translate3d(${computedX}px, -2px, 0);
-      width: ${tabListChildren[current].clientWidth}px;
+      width: ${tabListChildren[current]?.clientWidth}px;
       height: 4px;
       border-radius: 4px 4px 0 0;
     `;
