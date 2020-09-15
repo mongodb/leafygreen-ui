@@ -5,7 +5,7 @@ import { css } from '@leafygreen-ui/emotion';
 import hljs from 'highlight.js/lib/core';
 import hljsDefineGraphQL from 'highlightjs-graphql';
 import CodeWrapper from './CodeWrapper';
-import { Variant, Language, SyntaxProps } from './types';
+import { Mode, Language, SyntaxProps } from './types';
 import { SupportedLanguages, languageParsers } from './languages';
 import { injectGlobalStyles } from './globalStyles';
 import renderingPlugin from './renderingPlugin';
@@ -54,7 +54,7 @@ function initializeSyntaxHighlighting() {
 function Syntax({
   children,
   language,
-  variant = Variant.Light,
+  darkMode = false,
   showLineNumbers = false,
   ...rest
 }: SyntaxProps) {
@@ -62,7 +62,7 @@ function Syntax({
     initializeSyntaxHighlighting();
   }
 
-  const codeWrapperSharedProps = { language, variant, ...rest };
+  const codeWrapperSharedProps = { language, darkMode, ...rest };
 
   const highlightedContent = useMemo(() => {
     if (language === Language.None) {
@@ -103,7 +103,7 @@ Syntax.propTypes = {
   children: PropTypes.string.isRequired,
   lang: PropTypes.oneOf(Object.values(Language)),
   className: PropTypes.string,
-  variant: PropTypes.oneOf(Object.values(Variant)),
+  darkMode: PropTypes.bool,
 };
 
 export default Syntax;
