@@ -5,8 +5,7 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  tests:
-    name: Run tests
+  setup:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -25,65 +24,57 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: yarn install
+
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
       - run: yarn build
+
+  test:
+    name: Run tests
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: tests
         run: yarn test --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
         env:
           JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
-      - name: tests (with artificial server rendering)
+
+  test-ssr:
+    name: Run tests with artificial server rendering
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: tests
         run: yarn test:ssr --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
         env:
           JEST_JUNIT_OUTPUT: 'reports/junit/js-test-ssr-results.xml'
 
   lints:
-    name: Check lints and types
+    name: Check lints
+    needs: setup
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v1
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - run: yarn install
-      - run: yarn pre-build
-
       - name: prettier
         run: yarn prettier:check
-      - name: lint
+      - name: eslint
         run: yarn eslint --format junit -o reports/junit/js-lint-results.xml
+
+  types:
+    name: Check types
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
       - name: types
         run: yarn ts
 
   sizeDiff:
     name: Check file size
+    needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v1
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
       - uses: preactjs/compressed-size-action@v1
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
+          build-script: 'noop'

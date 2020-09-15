@@ -41,7 +41,8 @@
     "prepublishOnly": "yarn lint && yarn test && yarn build",
     "release": "yarn changeset publish --public",
     "release:site": "gh-pages --dist storybook/public",
-    "demo:site": "./scripts/publish-storybook.sh"
+    "demo:site": "./scripts/publish-storybook.sh",
+    "noop": "echo"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
