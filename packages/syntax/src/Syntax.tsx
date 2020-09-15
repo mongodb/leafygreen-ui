@@ -5,7 +5,7 @@ import { css } from '@leafygreen-ui/emotion';
 import hljs from 'highlight.js/lib/core';
 import hljsDefineGraphQL from 'highlightjs-graphql';
 import CodeWrapper from './CodeWrapper';
-import { Mode, Language, SyntaxProps } from './types';
+import { Language, SyntaxProps } from './types';
 import { SupportedLanguages, languageParsers } from './languages';
 import { injectGlobalStyles } from './globalStyles';
 import renderingPlugin from './renderingPlugin';

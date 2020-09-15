@@ -18,7 +18,7 @@ export default function CodeWrapper({
   ...rest
 }: CodeWrapperProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  const numberColor = uiColors.gray[mode === Mode.Dark ? 'dark1' : 'light1'];
+  const numberColor = uiColors.gray[darkMode ? 'dark1' : 'light1'];
 
   const codeStyles = css`
     color: inherit;
