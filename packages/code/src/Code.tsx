@@ -5,7 +5,6 @@ import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import Syntax, {
   SyntaxProps,
   Language,
-  Mode,
   variantColors,
 } from '@leafygreen-ui/syntax';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
@@ -15,6 +14,13 @@ import WindowChrome from './WindowChrome';
 import debounce from 'lodash/debounce';
 import { uiColors } from '@leafygreen-ui/palette';
 import ClipboardJS from 'clipboard';
+
+const Mode = {
+  Light: 'light',
+  Dark: 'dark',
+} as const;
+
+type Mode = typeof Mode[keyof typeof Mode];
 
 const whiteSpace = 12;
 

@@ -1,8 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { Mode, variantColors } from '@leafygreen-ui/syntax';
+import { variantColors } from '@leafygreen-ui/syntax';
 import { darken } from 'polished';
+
+const Mode = {
+  Light: 'light',
+  Dark: 'dark',
+} as const;
+
+type Mode = typeof Mode[keyof typeof Mode];
 
 export const windowChromeHeight = 28;
 const controlSize = 12;
