@@ -46,12 +46,12 @@ export const TriggerEvent = {
 
 type TriggerEvent = typeof TriggerEvent[keyof typeof TriggerEvent];
 
-export const Variant = {
+export const Mode = {
   Light: 'light',
   Dark: 'dark',
 } as const;
 
-export type Variant = typeof Variant[keyof typeof Variant];
+export type Mode = typeof Mode[keyof typeof Mode];
 
 export const Align = {
   Top: PopoverAlign.Top,
@@ -75,39 +75,36 @@ const positionRelative = css`
   position: relative;
 `;
 
-const tooltipVariants = {
-  [Variant.Dark]: css`
-    background-color: ${uiColors.gray.dark3};
-    color: ${uiColors.gray.light1};
-  `,
+const colorSet = {
+  [Mode.Dark]: {
+    tooltip: css`
+      background-color: ${uiColors.gray.dark3};
+      color: ${uiColors.gray.light1};
+    `,
+    children: css`
+      color: ${uiColors.gray.light1};
+    `,
+    notch: css`
+      background-color: ${uiColors.gray.dark3};
+      box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
+    `,
+  },
 
-  [Variant.Light]: css`
-    background-color: ${uiColors.gray.light3};
-    color: ${uiColors.gray.dark2};
-    border: 1px solid ${uiColors.gray.light2};
-  `,
-} as const;
-
-const childrenVariants = {
-  [Variant.Dark]: css`
-    color: ${uiColors.gray.light1};
-  `,
-
-  [Variant.Light]: css`
-    color: ${uiColors.gray.dark2};
-  `,
-} as const;
-
-const notchVariants = {
-  [Variant.Dark]: css`
-    background-color: ${uiColors.gray.dark3};
-    box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
-  `,
-  [Variant.Light]: css`
-    background-color: ${uiColors.gray.light3};
-    border: 1px solid ${uiColors.gray.light2};
-    box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
-  `,
+  [Mode.Light]: {
+    tooltip: css`
+      background-color: ${uiColors.gray.light3};
+      color: ${uiColors.gray.dark2};
+      border: 1px solid ${uiColors.gray.light2};
+    `,
+    children: css`
+      color: ${uiColors.gray.dark2};
+    `,
+    notch: css`
+      background-color: ${uiColors.gray.light3};
+      border: 1px solid ${uiColors.gray.light2};
+      box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
+    `,
+  },
 };
 
 interface PopoverFunctionParameters {
@@ -125,19 +122,19 @@ export type TooltipProps = Omit<
   ModifiedPopoverProps & {
     /**
      * A slot for the element used to trigger the `Tooltip`.
-     * default: hover
+     * @default: hover
      */
     trigger: React.ReactElement | Function;
 
     /**
      * Determines if a `hover` or `click` event will trigger the opening of a `Tooltip`.
-     * default: 'hover'
+     * @default: 'hover'
      */
     triggerEvent?: TriggerEvent;
 
     /**
      * Controls component and determines the open state of the `Tooltip`
-     * default: `false`
+     * @default: `false`
      */
     open?: boolean;
 
@@ -147,10 +144,10 @@ export type TooltipProps = Omit<
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 
     /**
-     * Whether the `Tooltip` will be `light` or `dark`.
-     * default: light
+     * Whether the `Tooltip` will appear in dark mode.
+     * @default: false
      */
-    variant?: Variant;
+    darkMode?: boolean;
 
     /**
      * id given to `Tooltip` content.
@@ -165,7 +162,7 @@ export type TooltipProps = Omit<
 
     /**
      * Enables Tooltip to trigger based on the event specified by `triggerEvent`.
-     * default: true
+     * @default: true
      */
     enabled?: boolean;
   } & OneOf<
@@ -181,7 +178,7 @@ export type TooltipProps = Omit<
       /**
        * If using a portal, specifies a class name to apply to the root element of the portal.
        *
-       * default: undefined
+       * @default: undefined
        */
       portalClassName?: string;
     },
@@ -208,7 +205,6 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
   justify='start'
   trigger={<button>trigger</button>}
   triggerEvent='hover'
-  variant='light'
 >
   I am an uncontrolled Tooltip!
 </Tooltip>
@@ -216,7 +212,7 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
  * @param props.children Content to appear inside of Tooltip.
  * @param props.open Boolean to describe whether or not Tooltip is open.
  * @param props.setOpen Callback to change the open state of the Tooltip.
- * @param props.variant Whether the Tooltip should be `dark` or `light`.
+ * @param props.darkMode Whether the Tooltip will apepar in dark mode.
  * @param props.className Classname applied to Tooltip.
  * @param props.align Alignment of Tooltip relative to trigger: `top`, `bottom`, `left`, `right`.
  * @param props.justify Justification of Tooltip relative to trigger: `start`, `middle`, `end`.
@@ -232,16 +228,16 @@ function Tooltip({
   className,
   children,
   trigger,
-  variant = Variant.Light,
   triggerEvent = TriggerEvent.Hover,
+  darkMode = false,
   enabled = true,
+  usePortal = true,
   align = 'top',
   justify = 'start',
+  spacing = 12,
   id,
   shouldClose,
-  usePortal = true,
   portalClassName,
-  spacing = 12,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
@@ -322,6 +318,8 @@ function Tooltip({
     ? { spacing, usePortal, portalClassName }
     : { spacing, usePortal };
 
+  const mode = darkMode ? Mode.Dark : Mode.Light;
+
   const tooltip = (
     <Popover
       key="tooltip"
@@ -344,15 +342,15 @@ function Tooltip({
             {...rest}
             role="tooltip"
             id={tooltipId}
-            className={cx(baseStyles, tooltipVariants[variant], className)}
+            className={cx(baseStyles, colorSet[mode].tooltip, className)}
             ref={tooltipRef}
           >
             <div className={triangleStyle.containerStyle}>
               <div
-                className={cx(triangleStyle.notchStyle, notchVariants[variant])}
+                className={cx(triangleStyle.notchStyle, colorSet[mode].notch)}
               />
             </div>
-            <Body className={childrenVariants[variant]}>{children}</Body>
+            <Body className={colorSet[mode].children}>{children}</Body>
           </div>
         );
       }}
@@ -391,7 +389,7 @@ Tooltip.propTypes = {
   justify: PropTypes.oneOf(Object.values(Justify)),
   trigger: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   triggerEvent: PropTypes.oneOf(Object.values(TriggerEvent)),
-  variant: PropTypes.oneOf(Object.values(Variant)),
+  darkMode: PropTypes.bool,
   enabled: PropTypes.bool,
   open: PropTypes.bool,
   setOpen: PropTypes.func,

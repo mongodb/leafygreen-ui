@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean, text } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
-import { Variant, Language } from '@leafygreen-ui/syntax';
+import { Language } from '@leafygreen-ui/syntax';
 import Code from '.';
 
 const jsSnippet = `
@@ -30,7 +30,7 @@ storiesOf('Code', module).add(
           multiline={boolean('Multiline', true)}
           copyable={boolean('Copyable', true)}
           chromeTitle={text('Chrome label', 'directory/fileName.js')}
-          variant={select('Variant', Object.values(Variant), Variant.Light)}
+          darkMode={boolean('darkMode', false)}
           language={select(
             'Language',
             Object.values(Language),
