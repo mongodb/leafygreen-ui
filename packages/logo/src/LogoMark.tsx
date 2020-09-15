@@ -14,7 +14,7 @@ import RGBLogoMark from './logos/RGBLogoMark';
  * ```
 <LogoMark />
 ```
- * @param props.variant Determines color variant of <LogoMark /> component. Can be 'light' or 'dark'.
+ * @param props.darkMode Determines whether or not the LogoMark will appear in darkMode.
  * @param props.knockout Boolean to describe whether or not knockout version of MongoDB logomark will be used.
  * @param props.height Determines height of the <LogoMark /> component.
  */

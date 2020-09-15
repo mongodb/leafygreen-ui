@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { getByTestId, render, screen } from '@testing-library/react';
 
 import {
   Logo,
@@ -30,71 +30,87 @@ const renderProductLogo = (product: keyof typeof map, props = {}) => {
 describe('packages/logo', () => {
   describe('logomark component', () => {
     test('renders full-color logomark by default', () => {
-      const testId = 'rgb-logomark';
-      const { getByTestId } = render(<LogoMark data-testid={testId} />);
-      const logomark = getByTestId(testId);
+      render(<LogoMark data-testid="default-logomark" />);
+      const logoMark = screen.getByTestId('default-logomark');
+      const path1 = logoMark.children[1];
+      const path2 = logoMark.children[2];
+      const path3 = logoMark.children[3];
 
-      expect(logomark).toBeInTheDocument();
+      expect(path1.getAttribute('fill')).toBe('#10aa50');
+      expect(path2.getAttribute('fill')).toBe('#b8c4c2');
+      expect(path3.getAttribute('fill')).toBe('#12924f');
     });
 
-    test('renders dark knockout logomark, when darkMode is true', () => {
-      const testId = '#21313C-monochrome-logomark';
-      const { getByTestId } = render(
-        <LogoMark darkMode knockout={true} data-testid={testId} />,
-      );
-      const logomark = getByTestId(testId);
+    describe('when knockout is true', () => {
+      test('and darkMode is set', () => {
+        render(
+          <LogoMark
+            darkMode
+            knockout
+            data-testid="darkmode-knockout-logomark"
+          />,
+        );
+        const logoMark = screen.getByTestId('darkmode-knockout-logomark');
+        const path = logoMark.children[1];
 
-      expect(logomark).toBeInTheDocument();
-    });
+        expect(path.getAttribute('fill')).toBe('#FFFFFF');
+      });
 
-    test('renders light knockout logomark, when darkMode is not set', () => {
-      const testId = '#FFFFFF-monochrome-logomark';
-      const { getByTestId } = render(
-        <LogoMark knockout={true} data-testid={testId} />,
-      );
-      const logomark = getByTestId(testId);
+      test('and darkMode is not set', () => {
+        render(<LogoMark knockout data-testid="darkmode-knockout-logomark" />);
+        const logoMark = screen.getByTestId('darkmode-knockout-logomark');
+        const path = logoMark.children[1];
 
-      expect(logomark).toBeInTheDocument();
+        expect(path.getAttribute('fill')).toBe('#21313C');
+      });
     });
   });
 
   describe('logo component', () => {
-    test('renders full-color logomark with dark text by default', () => {
-      const testId = '#21313C-rgb-logo';
-      const { getByTestId } = render(<Logo data-testid={testId} />);
-      const logo = getByTestId(testId);
+    test('renders full-color logo with dark text by default', () => {
+      const testId = 'default-color-logo';
+      render(<Logo data-testid={testId} />);
+      const logo = screen.getByTestId(testId);
+      const path1 = logo.children[1]; // leaf
+      const path4 = logo.children[4]; // text
 
-      expect(logo).toBeInTheDocument();
+      expect(path1.getAttribute('fill')).toBe('#10aa50');
+      expect(path4.getAttribute('fill')).toBe('#21313C');
     });
 
-    test('renders full-color logomark with light text when dakrMode is set to false', () => {
-      const testId = '#FFFFFF-rgb-logo';
-      const { getByTestId } = render(
-        <Logo darkMode={false} data-testid={testId} />,
-      );
-      const logo = getByTestId(testId);
+    test('renders full-color logo with light text when darkMode is true', () => {
+      const testId = 'dark-mode-color-logo';
+      render(<Logo data-testid={testId} darkMode />);
+      const logo = screen.getByTestId(testId);
+      const path1 = logo.children[1]; // leaf
+      const path4 = logo.children[4]; // text
 
-      expect(logo).toBeInTheDocument();
+      expect(path1.getAttribute('fill')).toBe('#10aa50');
+      expect(path4.getAttribute('fill')).toBe('#FFFFFF');
     });
 
-    test('renders dark knockout, when darkMode is true and knockout prop is set', () => {
-      const testId = '#21313C-monochrome-logo';
-      const { getByTestId } = render(
-        <Logo darkMode knockout={true} data-testid={testId} />,
-      );
-      const logo = getByTestId(testId);
+    describe('when knockout is true', () => {
+      test('and darkMode is true', () => {
+        const testId = 'dark-mode-knockout-logo';
+        render(<Logo data-testid={testId} darkMode knockout />);
+        const logo = screen.getByTestId(testId);
+        const path1 = logo.children[1]; // leaf
+        const path4 = logo.children[4]; // text
 
-      expect(logo).toBeInTheDocument();
-    });
+        expect(path1.getAttribute('fill')).toBe('#FFFFFF');
+        expect(path4.getAttribute('fill')).toBe('#FFFFFF');
+      });
 
-    test('renders light knockout, when darkMode is set to false and knockout prop is set', () => {
-      const testId = '#FFFFFF-monochrome-logo';
-      const { getByTestId } = render(
-        <Logo darkMode={false} knockout={true} data-testid={testId} />,
-      );
-      const logo = getByTestId(testId);
+      test('and darkMode is not set', () => {
+        const testId = 'dark-mode-knockout-logo';
+        render(<Logo data-testid={testId} knockout />);
+        const logo = screen.getByTestId(testId);
+        const path1 = logo.children[1]; // leaf
+        const path4 = logo.children[4]; // text
 
-      expect(logo).toBeInTheDocument();
+        expect(path1.getAttribute('fill')).toBe('#21313C');
+        expect(path4.getAttribute('fill')).toBe('#21313C');
+      });
     });
   });
 
