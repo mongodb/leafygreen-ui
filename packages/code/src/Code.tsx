@@ -246,7 +246,7 @@ function CodeOuterWrapper({
  * @param props.children The string to be formatted.
  * @param props.className An additional CSS class added to the root element of Code.
  * @param props.multiline When true, whitespace and line breaks will be preserved. Default: `true`
- * @param props.language The language used for syntax highlighing. 
+ * @param props.language The language used for syntax highlighing.
  * @param props.darkMode Determines if the code block will be rendered in dark mode. Default: `false`
  * @param props.showLineNumbers When true, shows line numbers in preformatted code blocks. Default: `false`
  * @param props.copyable When true, allows the code block to be copied to the user's clipboard. Default: `true`
