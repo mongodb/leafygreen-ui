@@ -131,7 +131,10 @@ interface BaseMenuItemProps {
   href?: string;
 }
 
-const MenuItem: ExtendableBox<BaseMenuItemProps, 'button'> = React.forwardRef(
+const MenuItem: ExtendableBox<
+  BaseMenuItemProps & { ref?: React.Ref<any> },
+  'button'
+> = React.forwardRef(
   (
     {
       disabled = false,
