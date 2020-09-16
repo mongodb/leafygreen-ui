@@ -23,12 +23,36 @@ export function notchPositionStyles(
   const notchStyleObj: Partial<Record<Styles, string>> = {};
   const containerStyleObj: Partial<Record<Styles, string>> = {};
 
+  // The bounds used to clamp the notchOffset value
+  const notchOffsetLowerBound = 5
+  let notchOffsetUpperBound = notchOffsetLowerBound * 2;
+
+  // The un-clamped value that would exactly center the tooltip notch relative to the trigger.
+  let notchOffsetActual: number;
+
+  // The clamped value that makes a best-attempt to center the notch relative to the trigger,
+  // while also ensuring that the notch is positioned within the bounds of the tooltip itself,
+  // and still has the appearance of an alignment.
   let notchOffset = 0;
+
+  // Boolean derived from the notchOffsetActual and notchOffsetLowerBound that determines if the trigger
+  // is small enough to make a transformation of the tooltip itself necessary.
+  let transformPosition: boolean;
+
+  // When the trigger is smaller than the minimum offset we require to position the notch over the trigger,
+  // we calculate a transformation to apply to the entire tooltip so that the notch centers on that element.
+  // This is particularly important for things like icons, and icon buttons where without this transformation,
+  // the tooltip's notch could be positioned entirely off of the trigger.
+  let tooltipOffsetTransform = '';
 
   switch (align) {
     case 'top':
     case 'bottom':
-      notchOffset = clamp((triggerRect.width / 2) - (containerSize / 2), 5, 100);
+      notchOffsetUpperBound = notchOffsetLowerBound * 3;
+      notchOffsetActual = (triggerRect.width / 2) - (containerSize / 2)
+      notchOffset = clamp(notchOffsetActual, notchOffsetLowerBound, notchOffsetUpperBound);
+      transformPosition = notchOffsetActual <= notchOffsetLowerBound
+
       notchStyleObj.left = '0px';
       notchStyleObj.right = '0px';
 
@@ -43,6 +67,11 @@ export function notchPositionStyles(
       switch (justify) {
         case Justify.Start:
           containerStyleObj.left = `${notchOffset}px`;
+
+          if (transformPosition) {
+            tooltipOffsetTransform = `translateX(-${notchOffsetLowerBound - notchOffsetActual}px)`
+          }
+
           break;
 
         case Justify.Middle:
@@ -53,6 +82,11 @@ export function notchPositionStyles(
 
         case Justify.End:
           containerStyleObj.right = `${notchOffset}px`;
+
+          if (transformPosition) {
+            tooltipOffsetTransform = `translateX(${notchOffsetLowerBound - notchOffsetActual}px)`
+          }
+
           break;
       }
 
@@ -60,7 +94,11 @@ export function notchPositionStyles(
 
     case 'left':
     case 'right':
-      notchOffset = clamp((triggerRect.height / 2) - (containerSize / 2), 5, 100);
+      notchOffsetUpperBound = notchOffsetLowerBound * 2;
+      notchOffsetActual = (triggerRect.height / 2) - (containerSize / 2);
+      notchOffset = clamp(notchOffsetActual, notchOffsetLowerBound, notchOffsetUpperBound);
+      transformPosition = notchOffsetActual <= notchOffsetLowerBound
+
       notchStyleObj.top = '0px';
       notchStyleObj.bottom = '0px';
 
@@ -75,6 +113,11 @@ export function notchPositionStyles(
       switch (justify) {
         case Justify.Start:
           containerStyleObj.top = `${notchOffset}px`;
+
+          if (transformPosition) {
+            tooltipOffsetTransform = `translateY(-${notchOffsetLowerBound - notchOffsetActual}px)`
+          }
+
           break;
 
         case Justify.Middle:
@@ -85,6 +128,11 @@ export function notchPositionStyles(
 
         case Justify.End:
           containerStyleObj.bottom = `${notchOffset}px`;
+
+          if (transformPosition) {
+            tooltipOffsetTransform = `translateY(${notchOffsetLowerBound - notchOffsetActual}px)`
+          }
+
           break;
       }
 
@@ -110,6 +158,7 @@ export function notchPositionStyles(
     `,
     tooltip: css`
       min-width: ${notchOffset * 2 + containerSize}px;
+      transform: ${tooltipOffsetTransform};
     `,
   };
 }
