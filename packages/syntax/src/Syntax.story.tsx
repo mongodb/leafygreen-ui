@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { select, text, boolean } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import Syntax from '.';
-import { Language, Variant } from './types';
+import { Language } from './types';
 
 const jsSnippet = `
 function greeting(entity) {
@@ -26,7 +26,7 @@ storiesOf('Syntax', module).add(
     >
       <Syntax
         showLineNumbers={boolean('Show line numbers', false)}
-        variant={select('variant', Object.values(Variant), Variant.Light)}
+        darkMode={boolean('darkMode', false)}
         language={select('language', Language, Language.JavaScript)}
       >
         {text('Code snippet', jsSnippet)}

@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 7.0.1
+
+### Patch Changes
+
+- 47846c77: Fixes unintentional exclusion of `ref` from TypeScript typing of props for `Button`, `SubMenu`, and `MenuItem` components.
+
 ## 7.0.0
 
 ### Major Changes
