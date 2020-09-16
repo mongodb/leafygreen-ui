@@ -35,7 +35,10 @@ function MockSideNav() {
         </SideNavItem>
       </SideNavGroup>
 
-      <SideNavGroup header={text('Header Text', 'With Knobs!')}>
+      <SideNavGroup
+        header={text('Header Text', 'With Knobs!')}
+        collapsable={boolean('collapsable', false)}
+      >
         <SideNavItem
           active={boolean('Active', false)}
           disabled={boolean('Disabled', false)}
