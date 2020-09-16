@@ -95,7 +95,7 @@ interface SideNavGroupProps {
  * @param props.header Content that will be rendered as the component's header
  *   If a string is provided, it will be rendered with default styling as a header tag.
  * @param props.children Class name that will be applied to the component's header.
- * @param props.collapsable Determines whether or not the Group can be collapsed. 
+ * @param props.collapsable Determines whether or not the Group can be collapsed.
  */
 function SideNavGroup({
   header,
