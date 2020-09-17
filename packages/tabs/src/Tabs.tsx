@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { keyMap, isComponentType } from '@leafygreen-ui/lib';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { useEventListener, useElementNode } from '@leafygreen-ui/hooks';
+import { useEventListener } from '@leafygreen-ui/hooks';
 import TabTitle from './TabTitle';
 import omit from 'lodash/omit';
 
@@ -32,9 +31,6 @@ const modeColors = {
     underlineColor: css`
       background-color: ${uiColors.gray.light2};
     `,
-    hoverIndicator: css`
-      background-color: ${uiColors.gray.light2};
-    `,
   },
 
   [Mode.Dark]: {
@@ -51,9 +47,6 @@ const modeColors = {
     underlineColor: css`
       background-color: ${uiColors.gray.dark2};
     `,
-    hoverIndicator: css`
-      background-color: ${uiColors.gray.dark1};
-    `,
   },
 };
 
@@ -66,28 +59,6 @@ const listStyle = css`
 
 const disabledStyle = css`
   cursor: not-allowed;
-`;
-
-const grayLine = css`
-  height: 1px;
-  position: relative;
-  // Makes border overlap with box-model for TabTitle components
-  margin-top: -4px;
-  pointer-events: none;
-`;
-
-const sharedIndicatorStyles = css`
-  position: absolute;
-  top: -1px;
-`;
-
-const activeIndicator = css`
-  background-color: ${uiColors.green.base};
-  transition: 150ms transform ease-in-out, 150ms width ease-in-out 10ms;
-`;
-
-const focusedStyle = css`
-  background-color: ${uiColors.blue.base};
 `;
 
 interface TabsProps {
@@ -149,8 +120,6 @@ function Tabs({
   as = 'button',
   ...rest
 }: TabsProps) {
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-
   const childrenArray = React.Children.toArray(children) as Array<
     React.ReactElement
   >;
@@ -163,22 +132,6 @@ function Tabs({
   const setSelected = isControlled
     ? setControlledSelected
     : setUncontrolledSelected;
-
-  const [focusedState, setFocusedState] = useState([0]);
-  const [hoverIndex, setHoverIndex] = useState<number | undefined>();
-  const [tabListRef, setTabListRef] = useElementNode();
-
-  const currentIndex = childrenArray.findIndex((child, index) => {
-    if (!child) {
-      return false;
-    }
-
-    if (typeof selected === 'number') {
-      return selected === index;
-    }
-
-    return child.props.default;
-  });
 
   function handleChange(
     e: React.SyntheticEvent<Element, MouseEvent>,
@@ -213,31 +166,6 @@ function Tabs({
 
   useEventListener('keydown', handleArrowKeyPress);
 
-  function calcStyle(state: 'active' | 'hover') {
-    const current = state === 'active' ? currentIndex : hoverIndex;
-
-    if (!tabListRef || typeof current !== 'number') {
-      return null;
-    }
-
-    const tabListChildren: Array<Element> = Array.from(
-      tabListRef.children,
-    ).filter(child => child != null);
-
-    let computedX = 0;
-
-    for (let i = 0; i < current; i++) {
-      computedX += tabListChildren[i]?.clientWidth;
-    }
-
-    return css`
-      transform: translate3d(${computedX}px, -2px, 0);
-      width: ${tabListChildren[current]?.clientWidth}px;
-      height: 4px;
-      border-radius: 4px 4px 0 0;
-    `;
-  }
-
   const tabs = React.Children.map(children, (child, index) => {
     if (!isComponentType<'Tab'>(child, 'Tab')) {
       return child;
@@ -255,9 +183,8 @@ function Tabs({
   return (
     <div {...rest} className={className}>
       <div
-        className={listStyle}
+        className={cx(listStyle, modeColors[mode].underlineColor)}
         role="tablist"
-        ref={setTabListRef}
         tabIndex={0}
       >
         {tabs.map((tab, index) => {
@@ -287,38 +214,13 @@ function Tabs({
               disabled={disabled}
               selected={selected}
               index={index}
-              setFocusedState={setFocusedState}
               as={as}
-              onMouseEnter={() => !disabled && setHoverIndex(index)}
-              onMouseLeave={() => !disabled && setHoverIndex(undefined)}
               darkMode={darkMode}
             >
               {tab.props.name}
             </TabTitle>
           );
         })}
-      </div>
-
-      <div className={cx(grayLine, modeColors[mode].underlineColor)}>
-        <div
-          className={cx(
-            sharedIndicatorStyles,
-            activeIndicator,
-            calcStyle('active'),
-            {
-              [focusedStyle]: showFocus && focusedState.length > 0,
-            },
-          )}
-        />
-        <div
-          className={cx({
-            [cx(
-              sharedIndicatorStyles,
-              calcStyle('hover'),
-              modeColors[mode].hoverIndicator,
-            )]: currentIndex !== hoverIndex,
-          })}
-        />
       </div>
 
       {tabs}

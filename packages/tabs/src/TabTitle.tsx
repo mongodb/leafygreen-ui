@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useEffect,
-  useCallback,
-  SetStateAction,
-  RefObject,
-} from 'react';
+import React, { useRef, useEffect, RefObject } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
@@ -19,15 +13,29 @@ const modeColors = {
     listTitleHover: css`
       &:hover {
         cursor: pointer;
-      }
 
-      &:hover:not(:focus) {
-        color: ${uiColors.gray.dark3};
+        &:not(:focus) {
+          color: ${uiColors.gray.dark3};
+
+          &:after {
+            background-color: ${uiColors.gray.light2};
+          }
+        }
       }
     `,
     listTitleFocus: css`
       &:focus {
         color: ${uiColors.blue.base};
+
+        &:after {
+          background-color: ${uiColors.blue.base};
+        }
+      }
+    `,
+    listTitleSelected: css`
+      &:after {
+        transform: scaleX(1);
+        background-color: ${uiColors.green.base};
       }
     `,
   },
@@ -39,15 +47,29 @@ const modeColors = {
     listTitleHover: css`
       &:hover {
         cursor: pointer;
-      }
 
-      &:hover:not(:focus) {
-        color: ${uiColors.white};
+        &:not(:focus) {
+          color: ${uiColors.white};
+
+          &:after {
+            background-color: ${uiColors.gray.dark1};
+          }
+        }
       }
     `,
     listTitleFocus: css`
       &:focus {
         color: #43b1e5;
+
+        &:after {
+          background-color: ${uiColors.blue.base};
+        }
+      }
+    `,
+    listTitleSelected: css`
+      &:after {
+        transform: scaleX(1);
+        background-color: ${uiColors.green.base};
       }
     `,
   },
@@ -65,15 +87,32 @@ const listTitle = css`
   transition: 150ms color ease-in-out;
   font-family: Akzidenz Medium;
   font-size: 16px;
+  position: relative;
 
   &:focus {
     outline: none;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    border-radius: 4px 4px 0 0;
+    transition: all 150ms ease-in-out;
+    background-color: transparent;
+    transform: scaleX(0.8);
+  }
+
+  &:hover:after {
+    transform: scaleX(0.95);
   }
 `;
 
 interface BaseTabProps {
   ariaControl: string;
-  setFocusedState: React.Dispatch<SetStateAction<Array<number>>>;
   darkMode: boolean;
   index: number;
   selected?: boolean;
@@ -89,7 +128,6 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
   children,
   className,
   ariaControl,
-  setFocusedState,
   index,
   darkMode,
   ...rest
@@ -104,14 +142,6 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
     }
   }, [disabled, selected]);
 
-  const onBlur = useCallback(() => {
-    setFocusedState((curr: Array<number>) => curr.filter(el => index !== el));
-  }, [index, setFocusedState]);
-
-  const onFocus = useCallback(() => {
-    setFocusedState((curr: Array<number>) => [...curr, index]);
-  }, [index, setFocusedState]);
-
   const sharedTabProps = {
     className: cx(
       listTitle,
@@ -119,6 +149,7 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
       {
         [modeColors[mode].listTitleHover]: !disabled,
         [modeColors[mode].listTitleFocus]: showFocus,
+        [modeColors[mode].listTitleSelected]: selected,
       },
       className,
     ),
@@ -127,8 +158,6 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
     ['aria-selected']: selected,
     ['aria-disabled']: disabled,
     tabIndex: selected ? 0 : -1,
-    onBlur: onBlur,
-    onFocus: onFocus,
     ...rest,
   } as const;
 
