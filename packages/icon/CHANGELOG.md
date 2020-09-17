@@ -1,5 +1,17 @@
 # @leafygreen-ui/icon
 
+## 6.6.0
+
+### Minor Changes
+
+- 6883ccd0: Adds `flex-shrink: 0` property to Icon component
+
+## 6.5.0
+
+### Minor Changes
+
+- e49d66b: Updated appearance of X icon
+
 ## 6.4.2
 
 ### Patch Changes

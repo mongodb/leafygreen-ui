@@ -19,11 +19,11 @@
     "url": "https://github.com/mongodb/leafygreen-ui/issues"
   },
   "scripts": {
-    "start": "start-storybook -p 9001 -c storybook -s ./storybook/static",
+    "start": "start-storybook -p 9001 -c storybook -s ./storybook/static --no-version-updates",
     "pre-build": "lerna run --parallel pre-build -- --env production",
     "build": "yarn pre-build && lerna run --parallel build -- --env production",
     "build:storybook": "build-storybook -c storybook -o ./storybook/public -s ./storybook/static",
-    "clean": "rimraf packages/*/{dist,node_modules} node_modules",
+    "clean": "rimraf packages/*/{dist,node_modules} node_modules **/*.tsbuildinfo",
     "create-package": "node ./scripts/package-builder.js",
     "format": "yarn prettier && yarn eslint:format",
     "init": "yarn && yarn build && yarn ts:build --verbose --force",
@@ -41,7 +41,8 @@
     "ts:downlevel": "rimraf packages/*/dist/ts3.4 && echo packages/*/dist | NODE_NO_WARNINGS=1 xargs -I{} -n1 -P8 downlevel-dts {} {}/ts3.4",
     "prepublishOnly": "yarn lint && yarn test && yarn build && yarn ts:downlevel",
     "release": "yarn changeset publish --public",
-    "release:site": "gh-pages --dist storybook/public"
+    "release:site": "gh-pages --dist storybook/public",
+    "demo:site": "./scripts/publish-storybook.sh"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
@@ -124,14 +125,13 @@
     "webpack": "4.42.1",
     "webpack-cli": "3.3.11"
   },
+  "resolutions": {
+    "@types/react": "^16.9.32"
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
-  }
+  "workspaces": ["packages/*", "website"]
 }

@@ -1,8 +1,8 @@
 {
   "name": "@leafygreen-ui/popover",
-  "version": "5.2.1",
+  "version": "5.2.3",
   "description": "LeafyGreen UI Kit Popover",
-  "main": "./dist/index.js",
+  "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "<3.9": { "*": ["ts3.4/*"] }
@@ -16,10 +16,10 @@
   },
   "dependencies": {
     "react-transition-group": "^4.4.1",
-    "@leafygreen-ui/hooks": "^4.1.0",
+    "@leafygreen-ui/hooks": "^4.2.1",
     "@leafygreen-ui/lib": "^5.1.1",
     "@leafygreen-ui/portal": "^2.2.1",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.20"
   },
   "devDependencies": {
     "@leafygreen-ui/palette": "^2.0.2"

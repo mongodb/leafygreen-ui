@@ -1,4 +1,4 @@
-import { Variant } from './types';
+import { Mode } from './types';
 import { injectGlobal } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 
@@ -16,8 +16,8 @@ interface Base16Palette {
   10: string; // Keywords, Storage, Selector, Markup Italic, Diff Changed
 }
 
-export const variantColors: { readonly [K in Variant]: Base16Palette } = {
-  [Variant.Light]: {
+export const variantColors: { readonly [K in Mode]: Base16Palette } = {
+  [Mode.Light]: {
     0: uiColors.gray.light3,
     1: uiColors.gray.light2,
     2: uiColors.gray.dark2,
@@ -31,7 +31,7 @@ export const variantColors: { readonly [K in Variant]: Base16Palette } = {
     10: '#CC3887',
   },
 
-  [Variant.Dark]: {
+  [Mode.Dark]: {
     0: uiColors.black,
     1: uiColors.gray.dark3,
     2: uiColors.gray.light1,
@@ -46,8 +46,8 @@ export const variantColors: { readonly [K in Variant]: Base16Palette } = {
   },
 };
 
-const getStyles = (variant: Variant): string => `
-  .lg-highlight-hljs-${variant} {
+const getStyles = (mode: Mode): string => `
+  .lg-highlight-hljs-${mode} {
     .lg-highlight-quote,
     .lg-highlight-literal,
     .lg-highlight-class,
@@ -55,24 +55,24 @@ const getStyles = (variant: Variant): string => `
     .lg-highlight-name,
     .lg-highlight-class > .lg-highlight-keyword,
     .lg-highlight-function > .lg-highlight-keyword {
-      color: ${variantColors[variant][9]};
+      color: ${variantColors[mode][9]};
     }
   
     .lg-highlight-regexp,
     .lg-highlight-params,
     .lg-highlight-meta,
     .lg-highlight-meta-string {
-      color: ${variantColors[variant][8]};
+      color: ${variantColors[mode][8]};
     }
   
     .lg-highlight-comment {
-      color: ${variantColors[variant][2]};
+      color: ${variantColors[mode][2]};
       font-style: italic;
     }
 
     .lg-highlight-doctag,
     .lg-highlight-formula {
-      color: ${variantColors[variant][3]};
+      color: ${variantColors[mode][3]};
     }
   
     .lg-highlight-keyword,
@@ -81,7 +81,7 @@ const getStyles = (variant: Variant): string => `
     .lg-highlight-selector-pseudo,
     .lg-highlight-selector-id,
     .lg-highlight-selector-class {
-      color: ${variantColors[variant][10]};
+      color: ${variantColors[mode][10]};
     }
   
     .lg-highlight-variable,
@@ -97,13 +97,13 @@ const getStyles = (variant: Variant): string => `
     .lg-highlight-built_in,
     .lg-highlight-template-variable,
     .lg-highlight-type {
-      color: ${variantColors[variant][5]}
+      color: ${variantColors[mode][5]}
     }
   
     .lg-highlight-string,
     .lg-highlight-addition,
     .lg-highlight-title {
-      color: ${variantColors[variant][7]};
+      color: ${variantColors[mode][7]};
     }
   
     .lg-highlight-emphasis {
@@ -117,5 +117,5 @@ const getStyles = (variant: Variant): string => `
 `;
 
 export function injectGlobalStyles() {
-  Object.values(Variant).forEach(variant => injectGlobal(getStyles(variant)));
+  Object.values(Mode).forEach(mode => injectGlobal(getStyles(mode)));
 }

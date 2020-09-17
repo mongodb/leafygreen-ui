@@ -1,8 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { Variant, variantColors } from '@leafygreen-ui/syntax';
+import { variantColors } from '@leafygreen-ui/syntax';
 import { darken } from 'polished';
+
+const Mode = {
+  Light: 'light',
+  Dark: 'dark',
+} as const;
+
+type Mode = typeof Mode[keyof typeof Mode];
 
 export const windowChromeHeight = 28;
 const controlSize = 12;
@@ -51,15 +58,16 @@ function WindowControl({ color }: { color: string }) {
 }
 
 interface WindowChromeProps {
-  variant?: Variant;
+  darkMode?: boolean;
   chromeTitle?: string;
 }
 
 function WindowChrome({
-  variant = Variant.Light,
+  darkMode = false,
   chromeTitle = '',
 }: WindowChromeProps) {
-  const colors = variantColors[variant];
+  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const colors = variantColors[mode];
 
   return (
     <div
@@ -87,7 +95,7 @@ function WindowChrome({
 WindowChrome.displayName = 'WindowChrome';
 
 WindowChrome.propTypes = {
-  variant: PropTypes.oneOf(Object.values(Variant)),
+  darkMode: PropTypes.bool,
   chromeTitle: PropTypes.string,
 };
 

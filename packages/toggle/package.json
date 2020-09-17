@@ -1,8 +1,8 @@
 {
   "name": "@leafygreen-ui/toggle",
-  "version": "3.0.4",
+  "version": "4.0.0",
   "description": "LeafyGreen UI Kit Toggle",
-  "main": "./dist/index.js",
+  "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "<3.9": { "*": ["ts3.4/*"] }

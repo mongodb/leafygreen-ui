@@ -254,7 +254,7 @@ function OrgNav({
         <Tooltip
           align="bottom"
           justify="start"
-          variant="dark"
+          darkMode={true}
           className={css`
             width: 150px;
           `}
@@ -402,7 +402,7 @@ function OrgNav({
           {onPremEnabled && onPremVersion && (
             <Tooltip
               usePortal={false}
-              variant="dark"
+              darkMode={true}
               align="bottom"
               justify="middle"
               className={css`

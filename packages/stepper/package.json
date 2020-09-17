@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/stepper",
   "version": "1.0.2",
   "description": "leafyGreen UI Kit Stepper",
-  "main": "./dist/index.js",
+  "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "<3.9": { "*": ["ts3.4/*"] }

@@ -1,5 +1,19 @@
 # @leafygreen-ui/syntax
 
+## 3.1.0
+
+### Minor Changes
+
+- fe371e37: Adds `js` alias for JavaScript and `ts` alias for TypeScript
+
+## 3.0.2
+
+### Patch Changes
+
+- f792966: Explicitly sets `font-family` for syntax component to `Source Code Pro`
+- Updated dependencies [f792966]
+  - @leafygreen-ui/tokens@0.3.0
+
 ## 3.0.1
 
 ### Patch Changes

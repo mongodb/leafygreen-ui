@@ -1,0 +1,25 @@
+{
+  "name": "website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && next export -o hosting/files/",
+    "release": "gh-pages -b website --dist .",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@emotion/core": "^10.0.35",
+    "next": "9.5.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.43",
+    "@typescript-eslint/eslint-plugin": "^3.7.1",
+    "@typescript-eslint/parser": "^3.7.1",
+    "eslint": "^7.5.0",
+    "eslint-plugin-react": "^7.20.5",
+    "typescript": "^4.0.0"
+  }
+}

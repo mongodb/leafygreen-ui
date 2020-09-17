@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Callout, { headerIcons, headerLabels, Variant } from './Callout';
-import { getGlyphTitle } from '../../icon/src/createGlyphComponent';
+import { getGlyphTitle } from '../../icon/src/glyphCommon';
 
 const title = 'this is the callout title';
 const children = 'this is the callout content.';

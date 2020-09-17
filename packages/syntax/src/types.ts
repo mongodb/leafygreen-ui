@@ -1,11 +1,11 @@
 import { SupportedLanguages } from './languages';
 
-export const Variant = {
+export const Mode = {
   Light: 'light',
   Dark: 'dark',
 } as const;
 
-export type Variant = typeof Variant[keyof typeof Variant];
+export type Mode = typeof Mode[keyof typeof Mode];
 
 export const Language = {
   ...SupportedLanguages,
@@ -31,16 +31,15 @@ export interface SyntaxProps extends React.HTMLAttributes<HTMLElement> {
   language: Language;
 
   /**
-   * The variant for the syntax-highlighted block.
+   * Determines whether or not the syntax will be rendered in dark mode.
    *
-   * default: `'light'`
+   * @default: `false`
    */
-  variant?: Variant;
-
+  darkMode?: boolean;
   /**
    * Shows line numbers. This is specifically used for the Code component implementation.
    *
-   * default: `'false'`
+   * @default: `false`
    */
   showLineNumbers?: boolean;
 }

@@ -1,5 +1,21 @@
 # @leafygreen-ui/hooks
 
+## 4.2.1
+
+### Patch Changes
+
+- d5d40791: Pin lodash version to latest to include fix for [prototype pollution attack vulnerability.](https://hackerone.com/reports/712065)
+
+## 4.2.0
+
+### Minor Changes
+
+- 8c867bb: Adds new useIsomorphicLayoutEffect hook
+
+### Patch Changes
+
+- e599707: Changes import pattern for Lodash method.
+
 ## 4.1.0
 
 ### Minor Changes
