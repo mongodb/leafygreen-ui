@@ -9,7 +9,9 @@ const onChange = jest.fn();
 const onClick = jest.fn();
 
 function renderCheckbox(props = {}) {
-  const utils = render(<Checkbox data-testid="checkbox" {...props} />);
+  const utils = render(
+    <Checkbox data-testid="checkbox" label="this is the label" {...props} />,
+  );
   const checkbox = utils.getByTestId('checkbox');
   const label = utils.container.querySelector('label');
   return { ...utils, checkbox, label };
