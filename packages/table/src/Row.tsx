@@ -126,7 +126,7 @@ const Row = React.forwardRef(
       state: { data, columnInfo, hasNestedRows, hasRowSpan },
       dispatch: tableDispatch,
     } = useTableContext();
-    console.log('i rerender');
+
     const indexRef = useRef(idAllocator.generate());
     const [isExpanded, setIsExpanded] = useState(expanded);
     const nodeRef = useRef(null);
