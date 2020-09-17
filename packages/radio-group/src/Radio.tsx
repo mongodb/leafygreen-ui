@@ -4,11 +4,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { RadioGroupProps } from './RadioGroup';
-<<<<<<< HEAD
-import { Variant, Size } from './types';
-=======
 import { Size } from './types';
->>>>>>> origin
 
 const styledDiv = createDataProp('styled-div');
 const inputDisplayWrapper = createDataProp('input-display-wrapper');
@@ -273,10 +269,6 @@ const interactionRingHoverStyles = {
   `,
 };
 
-const labelMargin = css`
-  margin-left: 8px;
-`;
-
 export type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
   Pick<RadioGroupProps, 'darkMode' | 'size'> & {
     default?: boolean;
@@ -313,7 +305,8 @@ function Radio({
   ...rest
 }: RadioProps) {
   const normalizedSize =
-    size === Size.Small || Size.XSmall ? Size.Small : Size.Default;
+    size === Size.Small || size === Size.XSmall ? Size.Small : Size.Default;
+
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
   return (
@@ -323,9 +316,12 @@ function Radio({
         className={cx(
           labelStyle,
           labelColorSet[mode].base,
-          { [labelColorSet[mode].disabled]: disabled, [css`
+          {
+            [labelColorSet[mode].disabled]: disabled,
+            [css`
               font-size: 12px;
-            `]: size === Size.XSmall, },
+            `]: size === Size.XSmall,
+          },
           className,
         )}
       >
@@ -359,7 +355,16 @@ function Radio({
           />
         </div>
 
-        <div className={cx(labelMargin, offsets[size])}>{children}</div>
+        <div
+          className={cx(
+            css`
+              margin-left: ${size === Size.XSmall ? 4 : 8}px;
+            `,
+            offsets[size],
+          )}
+        >
+          {children}
+        </div>
       </label>
     </div>
   );
@@ -376,9 +381,9 @@ Radio.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   id: PropTypes.string,
   name: PropTypes.string,
-  variant: PropTypes.oneOf(['default', 'light']),
-  size: PropTypes.oneOf(['small', 'default']),
+  size: PropTypes.oneOf(['xsmall', 'small', 'default']),
   default: PropTypes.bool,
+  darkMode: PropTypes.bool,
 };
 
 export default Radio;
