@@ -4,7 +4,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
 import RGBLogo from './logos/RGBLogo';
 import MonochromeLogo from './logos/MonochromeLogo';
-import { LogoProps, Variant } from './utils';
+import { LogoProps } from './utils';
 
 /**
  * # Logo
@@ -14,12 +14,12 @@ import { LogoProps, Variant } from './utils';
  * ```
 <Logo />
 ```
- * @param props.variant Determines color variant of <Logo /> component. Can be 'light' or 'dark'.
+ * @param props.darkMode Determines whether or not the <Logo /> will appear in dark mode.
  * @param props.knockout Boolean to describe whether or not knockout version of MongoDB logo will be used.
  * @param props.height Determines height of the <Logo /> component.
  */
 function Logo({
-  variant = 'dark',
+  darkMode = false,
   knockout = false,
   height = 40,
   ...rest
@@ -30,7 +30,7 @@ function Logo({
   `;
 
   const MarkComponent = knockout ? MonochromeLogo : RGBLogo;
-  const fill = variant === 'light' ? uiColors.white : uiColors.gray.dark3;
+  const fill = darkMode ? uiColors.white : uiColors.gray.dark3;
 
   return <MarkComponent {...rest} fill={fill} className={className} />;
 }
@@ -38,7 +38,7 @@ function Logo({
 Logo.displayName = 'Logo';
 
 Logo.propTypes = {
-  variant: PropTypes.oneOf(Object.values(Variant)),
+  darkMode: PropTypes.bool,
   knockout: PropTypes.bool,
   height: PropTypes.number,
 };

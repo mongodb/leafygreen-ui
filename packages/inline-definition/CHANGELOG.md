@@ -1,5 +1,18 @@
 # @leafygreen-ui/inline-definition
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [483b8a2e]
+  - @leafygreen-ui/tooltip@5.0.0
+
+## 1.0.1
+
+### Patch Changes
+
+- 2016e52e: Fixes distributed bundle definition
+
 ## 1.0.0
 
 ### Major Changes

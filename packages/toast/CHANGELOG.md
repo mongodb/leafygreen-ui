@@ -1,5 +1,18 @@
 # @leafygreen-ui/toast
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies [a84219f1]
+  - @leafygreen-ui/icon-button@8.0.0
+
+## 0.1.2
+
+### Patch Changes
+
+- 2016e52e: Fixes distributed bundle definition
+
 ## 0.1.1
 
 ### Patch Changes

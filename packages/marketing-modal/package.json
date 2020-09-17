@@ -1,8 +1,8 @@
 {
   "name": "@leafygreen-ui/marketing-modal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "leafyGreen UI Kit Marketing Modal",
-  "main": "./dist/index.js",
+  "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
