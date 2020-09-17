@@ -36,18 +36,18 @@ export default function Table<Shape>({
   ...rest
 }: TableProps<Shape>) {
   return (
-    <TableProvider data={dataProp}>
-      <table
-        cellSpacing="0"
-        cellPadding="0"
-        className={cx(tableStyles, className)}
-        {...rest}
-      >
+    <table
+      cellSpacing="0"
+      cellPadding="0"
+      className={cx(tableStyles, className)}
+      {...rest}
+    >
+      <TableProvider data={dataProp}>
         <SortProvider>
           <TableHead columns={columns} />
           <TableBody>{children}</TableBody>
         </SortProvider>
-      </table>
-    </TableProvider>
+      </TableProvider>
+    </table>
   );
 }
