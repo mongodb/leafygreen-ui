@@ -8,7 +8,6 @@ import React, {
 
 const TableActionTypes = {
   RegisterColumn: 'REGISTER_COLUMN_INFO',
-  SortTableData: 'SORT_TABLE_DATA',
   SetHasNestedRows: 'SET_HAS_NESTED_ROWS',
   SetHasRowSpan: 'SET_HAS_ROW_SPAN',
   SetData: 'SET_DATA',
@@ -26,10 +25,6 @@ interface ActionPayload {
   [TableActionTypes.SetData]: Array<any>;
   [TableActionTypes.SetHasRowSpan]: boolean;
   [TableActionTypes.SetHasNestedRows]: boolean;
-  [TableActionTypes.SortTableData]: {
-    columnId: number;
-    accessorValue: (data: any) => string;
-  };
 }
 
 type ActionMap<A extends Record<string, any>> = {
@@ -47,12 +42,6 @@ type Action = ActionMap<ActionPayload>[keyof ActionMap<ActionPayload>];
 
 type Dispatch = (action: Action) => void;
 
-interface Sort {
-  columnId?: number;
-  direction?: 'asc' | 'desc';
-  accessorValue?: (data: any) => string;
-}
-
 const DataType = {
   Number: 'number',
   Weight: 'weight',
@@ -66,7 +55,6 @@ type DataType = typeof DataType[keyof typeof DataType];
 export { DataType };
 
 export interface State {
-  sort?: Sort;
   data: Array<any>;
   columnInfo?: Record<number, { dataType?: DataType }>;
   hasNestedRows?: boolean;
@@ -121,21 +109,6 @@ export function reducer(state: State, action: Action): State {
         data: action.payload,
       };
 
-    case TableActionTypes.SortTableData:
-      return {
-        ...state,
-        sort: {
-          columnId: action.payload.columnId,
-          direction: state.sort?.direction === 'desc' ? 'asc' : 'desc',
-          accessorValue: action.payload.accessorValue,
-        },
-        data: sortFunction({
-          data: state.data,
-          direction: state.sort?.direction === 'desc' ? 'asc' : 'desc',
-          accessorValue: action.payload.accessorValue,
-        }),
-      };
-
     default:
       return state;
   }
@@ -143,9 +116,6 @@ export function reducer(state: State, action: Action): State {
 
 export function TableProvider({ children, data }: TableProviderInterface) {
   const initialState: State = {
-    sort: {
-      direction: undefined,
-    },
     data,
     hasNestedRows: false,
   };
@@ -173,29 +143,3 @@ export function TableProvider({ children, data }: TableProviderInterface) {
 export function useTableContext() {
   return useContext(TableContext);
 }
-
-const alphanumericCollator = new Intl.Collator(undefined, {
-  numeric: true,
-  sensitivity: 'base',
-});
-
-export const sortFunction = <T extends {}>({
-  data,
-  accessorValue,
-  direction,
-}: {
-  data: Array<T>;
-  accessorValue: (data: T) => string;
-  direction: 'asc' | 'desc';
-}) => {
-  return data.sort((a, b) => {
-    const aVal = accessorValue(a);
-    const bVal = accessorValue(b);
-
-    if (direction !== 'desc') {
-      return alphanumericCollator.compare(aVal, bVal);
-    }
-
-    return alphanumericCollator.compare(bVal, aVal);
-  });
-};
