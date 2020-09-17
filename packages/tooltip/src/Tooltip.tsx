@@ -23,7 +23,7 @@ const baseTypeStyle = css`
   margin: unset;
   font-family: ${fontFamilies.default};
   color: ${uiColors.gray.dark3};
-  font-weight: 600;
+  font-weight: 400;
 `;
 
 const typeScale1 = css`
@@ -361,7 +361,6 @@ function Tooltip({
                 baseTypeStyle,
                 size === 16 ? typeScale2 : typeScale1,
                 colorSet[mode].children,
-                className,
               )}
             >
               {children}
