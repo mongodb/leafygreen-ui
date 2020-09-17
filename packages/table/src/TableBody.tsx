@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
-import { getDataComparisonFunction, useTableContext } from './TableContext';
+import { useTableContext } from './TableContext';
+import { getDataComparisonFunction, useSortContext } from './SortContext';
 import { TableProps } from './Table';
 
 type TableBodyProps<Shape> = Pick<TableProps<Shape>, 'children'>;
@@ -35,14 +36,16 @@ function useRenderedChildren<Datum>(
 
 function TableBody<Shape>({ children }: TableBodyProps<Shape>) {
   const {
-    state: { data, sort },
+    state: { data },
   } = useTableContext();
+
+  const { sort } = useSortContext();
 
   const compareFn = useMemo(() => {
     if (sort) {
       const { direction, accessorValue } = sort;
 
-      if (direction && accessorValue) {
+      if (accessorValue) {
         return getDataComparisonFunction({ direction, accessorValue });
       }
     }

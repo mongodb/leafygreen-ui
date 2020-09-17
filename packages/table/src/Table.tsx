@@ -6,6 +6,7 @@ import { TableHeaderProps } from './TableHeader';
 import { TableProvider } from './TableContext';
 import TableHead from './TableHead';
 import TableBody from './TableBody';
+import { SortProvider } from './SortContext';
 
 const tableStyles = css`
   border-collapse: collapse;
@@ -42,8 +43,10 @@ export default function Table<Shape>({
         className={cx(tableStyles, className)}
         {...rest}
       >
-        <TableHead columns={columns} />
-        <TableBody>{children}</TableBody>
+        <SortProvider>
+          <TableHead columns={columns} />
+          <TableBody>{children}</TableBody>
+        </SortProvider>
       </table>
     </TableProvider>
   );
