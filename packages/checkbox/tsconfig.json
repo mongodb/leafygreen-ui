@@ -14,7 +14,7 @@
       "path": "../lib"
     },
     {
-      "path": "../theme"
+      "path": "../palette"
     }
   ]
 }

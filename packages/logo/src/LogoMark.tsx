@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css } from '@leafygreen-ui/emotion';
-import { LogoProps, Variant } from './utils';
+import { LogoProps } from './utils';
 import MonochromeLogoMark from './logos/MonochromeLogoMark';
 import RGBLogoMark from './logos/RGBLogoMark';
 
@@ -14,13 +14,13 @@ import RGBLogoMark from './logos/RGBLogoMark';
  * ```
 <LogoMark />
 ```
- * @param props.variant Determines color variant of <LogoMark /> component. Can be 'light' or 'dark'.
+ * @param props.darkMode Determines whether or not the LogoMark will appear in darkMode.
  * @param props.knockout Boolean to describe whether or not knockout version of MongoDB logomark will be used.
  * @param props.height Determines height of the <LogoMark /> component.
  */
 function LogoMark({
   height = 40,
-  variant,
+  darkMode = false,
   knockout = false,
   ...rest
 }: LogoProps): ReactElement {
@@ -30,7 +30,7 @@ function LogoMark({
   `;
 
   const MarkComponent = knockout ? MonochromeLogoMark : RGBLogoMark;
-  const fill = variant === 'light' ? uiColors.white : uiColors.gray.dark3;
+  const fill = darkMode ? uiColors.white : uiColors.gray.dark3;
 
   return <MarkComponent {...rest} fill={fill} className={className} />;
 }
@@ -38,7 +38,7 @@ function LogoMark({
 LogoMark.displayName = 'LogoMark';
 
 LogoMark.propTypes = {
-  variant: PropTypes.oneOf(Object.values(Variant)),
+  darkMode: PropTypes.bool,
   knockout: PropTypes.bool,
   height: PropTypes.number,
 };
