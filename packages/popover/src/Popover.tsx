@@ -95,7 +95,7 @@ function Popover({
 
   // We already recalculate the position when the element becomes active,
   // So it's safe for us to disable the mutation observers when the element isn't active.
-  const observeMutations = adjustOnMutation && active
+  const observeMutations = adjustOnMutation && active;
 
   const lastTimeRefElMutated = useMutationObserver(
     referenceElement,
@@ -216,7 +216,7 @@ function Popover({
       referenceElPos: referenceElDocumentPos,
     });
   } else {
-    renderedChildren = children
+    renderedChildren = children;
   }
 
   return (
@@ -249,9 +249,7 @@ function Popover({
                 We create this inner node with a ref because placing it on its parent
                 creates an infinite loop in some cases when dynamic styles are applied.
                */}
-              <div ref={setContentNode}>
-                {renderedChildren}
-              </div>
+              <div ref={setContentNode}>{renderedChildren}</div>
             </div>
           </Root>
         </>

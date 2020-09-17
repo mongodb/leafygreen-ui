@@ -24,7 +24,7 @@ export function notchPositionStyles(
   const containerStyleObj: Partial<Record<Styles, string>> = {};
 
   // The bounds used to clamp the notchOffset value
-  const notchOffsetLowerBound = 5
+  const notchOffsetLowerBound = 5;
   let notchOffsetUpperBound = notchOffsetLowerBound * 2;
 
   // The un-clamped value that would exactly center the tooltip notch relative to the trigger.
@@ -49,9 +49,13 @@ export function notchPositionStyles(
     case 'top':
     case 'bottom':
       notchOffsetUpperBound = notchOffsetLowerBound * 3;
-      notchOffsetActual = (triggerRect.width / 2) - (containerSize / 2)
-      notchOffset = clamp(notchOffsetActual, notchOffsetLowerBound, notchOffsetUpperBound);
-      transformPosition = notchOffsetActual <= notchOffsetLowerBound
+      notchOffsetActual = triggerRect.width / 2 - containerSize / 2;
+      notchOffset = clamp(
+        notchOffsetActual,
+        notchOffsetLowerBound,
+        notchOffsetUpperBound,
+      );
+      transformPosition = notchOffsetActual <= notchOffsetLowerBound;
 
       notchStyleObj.left = '0px';
       notchStyleObj.right = '0px';
@@ -69,7 +73,9 @@ export function notchPositionStyles(
           containerStyleObj.left = `${notchOffset}px`;
 
           if (transformPosition) {
-            tooltipOffsetTransform = `translateX(-${notchOffsetLowerBound - notchOffsetActual}px)`
+            tooltipOffsetTransform = `translateX(-${
+              notchOffsetLowerBound - notchOffsetActual
+            }px)`;
           }
 
           break;
@@ -84,7 +90,9 @@ export function notchPositionStyles(
           containerStyleObj.right = `${notchOffset}px`;
 
           if (transformPosition) {
-            tooltipOffsetTransform = `translateX(${notchOffsetLowerBound - notchOffsetActual}px)`
+            tooltipOffsetTransform = `translateX(${
+              notchOffsetLowerBound - notchOffsetActual
+            }px)`;
           }
 
           break;
@@ -95,9 +103,13 @@ export function notchPositionStyles(
     case 'left':
     case 'right':
       notchOffsetUpperBound = notchOffsetLowerBound * 2;
-      notchOffsetActual = (triggerRect.height / 2) - (containerSize / 2);
-      notchOffset = clamp(notchOffsetActual, notchOffsetLowerBound, notchOffsetUpperBound);
-      transformPosition = notchOffsetActual <= notchOffsetLowerBound
+      notchOffsetActual = triggerRect.height / 2 - containerSize / 2;
+      notchOffset = clamp(
+        notchOffsetActual,
+        notchOffsetLowerBound,
+        notchOffsetUpperBound,
+      );
+      transformPosition = notchOffsetActual <= notchOffsetLowerBound;
 
       notchStyleObj.top = '0px';
       notchStyleObj.bottom = '0px';
@@ -115,7 +127,9 @@ export function notchPositionStyles(
           containerStyleObj.top = `${notchOffset}px`;
 
           if (transformPosition) {
-            tooltipOffsetTransform = `translateY(-${notchOffsetLowerBound - notchOffsetActual}px)`
+            tooltipOffsetTransform = `translateY(-${
+              notchOffsetLowerBound - notchOffsetActual
+            }px)`;
           }
 
           break;
@@ -130,7 +144,9 @@ export function notchPositionStyles(
           containerStyleObj.bottom = `${notchOffset}px`;
 
           if (transformPosition) {
-            tooltipOffsetTransform = `translateY(${notchOffsetLowerBound - notchOffsetActual}px)`
+            tooltipOffsetTransform = `translateY(${
+              notchOffsetLowerBound - notchOffsetActual
+            }px)`;
           }
 
           break;

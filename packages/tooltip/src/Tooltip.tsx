@@ -6,18 +6,37 @@ import Popover, {
   Justify,
   ElementPosition,
 } from '@leafygreen-ui/popover';
-import { Body } from '@leafygreen-ui/typography';
 import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import {
-  OneOf,
-  HTMLElementProps,
-  IdAllocator,
-} from '@leafygreen-ui/lib';
+import { fontFamilies } from '@leafygreen-ui/tokens';
+import { OneOf, HTMLElementProps, IdAllocator } from '@leafygreen-ui/lib';
+import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { transparentize } from 'polished';
 import debounce from 'lodash/debounce';
 import { notchPositionStyles } from './tooltipUtils';
+
+// The typographic styles below are largely copied from the Body component.
+// We can't use the Body component here due to it rendering a paragraph tag,
+// Which would conflict with any children passed to it containing a div.
+const baseTypeStyle = css`
+  margin: unset;
+  font-family: ${fontFamilies.default};
+  color: ${uiColors.gray.dark3};
+  font-weight: 600;
+`;
+
+const typeScale1 = css`
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0px;
+`;
+
+const typeScale2 = css`
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0px;
+`;
 
 export const TriggerEvent = {
   Hover: 'hover',
@@ -224,6 +243,7 @@ function Tooltip({
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
+  const size = useBaseFontSize();
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   // typescript is not recognizing isControlled checks that controlledSetOpen exists
   const setOpen =
@@ -336,7 +356,7 @@ function Tooltip({
               <div className={cx(notchStyle, colorSet[mode].notch)} />
             </div>
 
-            <Body className={colorSet[mode].children}>{children}</Body>
+            <div className={cx(baseTypeStyle, size === 16 ? typeScale2 : typeScale1, colorSet[mode].children, className)}>{children}</div>
           </div>
         );
       }}
