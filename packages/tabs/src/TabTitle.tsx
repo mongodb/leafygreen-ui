@@ -32,12 +32,6 @@ const modeColors = {
         }
       }
     `,
-    listTitleSelected: css`
-      &:after {
-        transform: scaleX(1);
-        background-color: ${uiColors.green.base};
-      }
-    `,
   },
 
   dark: {
@@ -66,14 +60,20 @@ const modeColors = {
         }
       }
     `,
-    listTitleSelected: css`
-      &:after {
-        transform: scaleX(1);
-        background-color: ${uiColors.green.base};
-      }
-    `,
   },
 };
+
+const listTitleSelected = css`
+  &:after {
+    transform: scaleX(1);
+    background-color: ${uiColors.green.base};
+  }
+
+  &:hover:after {
+    transform: scaleX(1);
+    background-color: ${uiColors.green.base};
+  }
+`;
 
 const listTitle = css`
   background-color: transparent;
@@ -148,8 +148,8 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
       modeColors[mode].listTitleColor,
       {
         [modeColors[mode].listTitleHover]: !disabled,
+        [listTitleSelected]: selected,
         [modeColors[mode].listTitleFocus]: showFocus,
-        [modeColors[mode].listTitleSelected]: selected,
       },
       className,
     ),

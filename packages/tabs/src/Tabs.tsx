@@ -29,7 +29,7 @@ const modeColors = {
       color: ${uiColors.gray.light1};
     `,
     underlineColor: css`
-      background-color: ${uiColors.gray.light2};
+      border-bottom: 1px solid ${uiColors.gray.light2};
     `,
   },
 
@@ -45,7 +45,7 @@ const modeColors = {
       color: ${uiColors.gray.dark1};
     `,
     underlineColor: css`
-      background-color: ${uiColors.gray.dark2};
+      border-bottom: 1px solid ${uiColors.gray.dark2};
     `,
   },
 };
@@ -201,6 +201,12 @@ function Tabs({
             <TabTitle
               {...filteredRest}
               key={index}
+              ariaControl={`tab-${index}`}
+              disabled={disabled}
+              selected={selected}
+              index={index}
+              as={as}
+              darkMode={darkMode}
               className={cx({
                 [modeColors[mode].activeStyle]: selected,
                 [cx(modeColors[mode].disabledColor, disabledStyle)]: disabled,
@@ -210,12 +216,6 @@ function Tabs({
                   ? (event: React.MouseEvent) => handleChange(event, index)
                   : undefined
               }
-              ariaControl={`tab-${index}`}
-              disabled={disabled}
-              selected={selected}
-              index={index}
-              as={as}
-              darkMode={darkMode}
             >
               {tab.props.name}
             </TabTitle>
