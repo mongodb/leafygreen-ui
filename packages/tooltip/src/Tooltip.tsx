@@ -356,7 +356,16 @@ function Tooltip({
               <div className={cx(notchStyle, colorSet[mode].notch)} />
             </div>
 
-            <div className={cx(baseTypeStyle, size === 16 ? typeScale2 : typeScale1, colorSet[mode].children, className)}>{children}</div>
+            <div
+              className={cx(
+                baseTypeStyle,
+                size === 16 ? typeScale2 : typeScale1,
+                colorSet[mode].children,
+                className,
+              )}
+            >
+              {children}
+            </div>
           </div>
         );
       }}
