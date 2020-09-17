@@ -135,7 +135,7 @@ Make sure that the PR includes the changes made by running this command.
 yarn build
 # To build TypeScript type definition files
 yarn ts:build
-# To only typecheck all TypeScript files (must have run ts:build at least once)
+# To only typecheck all TypeScript files
 yarn ts
 
 ```
