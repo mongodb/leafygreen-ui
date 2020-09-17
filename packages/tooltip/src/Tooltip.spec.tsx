@@ -435,7 +435,8 @@ describe('packages/tooltip', () => {
     });
 
     expect(
-      getByTestId(tooltipTestId).parentElement?.parentElement?.parentElement?.className,
+      getByTestId(tooltipTestId).parentElement?.parentElement?.parentElement
+        ?.className,
     ).toBe('test-classname');
   });
 
