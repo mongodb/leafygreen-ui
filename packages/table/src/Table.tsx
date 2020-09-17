@@ -6,6 +6,7 @@ import { TableHeaderProps } from './TableHeader';
 import { TableProvider } from './TableContext';
 import TableHead from './TableHead';
 import TableBody from './TableBody';
+import { SortProvider } from './SortContext';
 
 const tableStyles = css`
   border-collapse: collapse;
@@ -15,7 +16,6 @@ const tableStyles = css`
 
 interface TableRowInterface<Shape = {}> {
   datum: Shape;
-  index?: number;
 }
 
 export interface TableProps<Shape>
@@ -36,16 +36,18 @@ export default function Table<Shape>({
   ...rest
 }: TableProps<Shape>) {
   return (
-    <TableProvider data={dataProp}>
-      <table
-        cellSpacing="0"
-        cellPadding="0"
-        className={cx(tableStyles, className)}
-        {...rest}
-      >
-        <TableHead columns={columns} />
-        <TableBody>{children}</TableBody>
-      </table>
-    </TableProvider>
+    <table
+      cellSpacing="0"
+      cellPadding="0"
+      className={cx(tableStyles, className)}
+      {...rest}
+    >
+      <TableProvider data={dataProp}>
+        <SortProvider>
+          <TableHead columns={columns} />
+          <TableBody>{children}</TableBody>
+        </SortProvider>
+      </TableProvider>
+    </table>
   );
 }
