@@ -90,6 +90,7 @@ const [selected, setSelected] = useState(0)
 | `as`          | `HTML Tag` or `React Element` | Sets the root element of all `<Tab />` components in `<Tabs />`. For example, setting as to `Link` will render each tab as a `<Link />` component rather than as a button.                                                                    | `button` |
 | `className`   | `string`                      | Adds a className to the root element.                                                                                                                                                                                                         |          |
 | `children`    | `node`                        | `<Tab />` components that will be supplied to `<Tabs />` component.                                                                                                                                                                           |          |
+| `darkMode`    | `boolean`                     | Determines whether or not the component will appear in DarkMode                                                                                                                                                                               | `false`  |
 
 _Any other properties supplied will be spread on the root element._
 
