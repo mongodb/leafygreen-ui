@@ -44,7 +44,7 @@ function MockSideNav() {
 
       <SideNavGroup
         header={text('Header Text', 'With Knobs!')}
-        collapsible={boolean('collapsible', false)}
+        collapsible={boolean('collapsible', true)}
       >
         <SideNavItem
           active={boolean('Active', false)}
@@ -57,9 +57,8 @@ function MockSideNav() {
         <SideNavItem>Brooke</SideNavItem>
         <SideNavItem>Rob</SideNavItem>
         <SideNavItem>Michael</SideNavItem>
-      </SideNavGroup>
-      <SideNavGroup header="header">
-        <SideNavItem>hi</SideNavItem>
+        <SideNavItem>Fred</SideNavItem>
+        <SideNavItem>Harry</SideNavItem>
       </SideNavGroup>
     </SideNav>
   );
