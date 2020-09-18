@@ -1,5 +1,13 @@
 # @leafygreen-ui/table
 
+## 0.1.5
+
+### Patch Changes
+
+- e5ba48e6: Improve table re-rendering performance when changing the sort order.
+- Updated dependencies [02ee0c05]
+  - @leafygreen-ui/checkbox@5.0.0
+
 ## 0.1.4
 
 ### Patch Changes
