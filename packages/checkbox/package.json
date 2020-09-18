@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/checkbox",
-  "version": "4.1.1",
+  "version": "5.0.0",
   "description": "LeafyGreen UI Kit Checkbox",
   "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
