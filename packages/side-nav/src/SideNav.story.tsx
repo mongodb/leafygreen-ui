@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, text } from '@storybook/addon-knobs';
 import { SideNav, SideNavItem, SideNavGroup } from './index';
+import { css } from '@leafygreen-ui/emotion';
 
 function MockSideNav() {
   const textHeader = 'States (text header)';
@@ -14,13 +15,17 @@ function MockSideNav() {
   );
 
   return (
-    <SideNav>
+    <SideNav
+      className={css`
+        position: fixed;
+      `}
+    >
       <SideNavGroup header={textHeader}>
         <SideNavItem active>Active State</SideNavItem>
         <SideNavItem disabled>Disabled State</SideNavItem>
       </SideNavGroup>
 
-      <SideNavGroup header={contentHeader}>
+      <SideNavGroup header={contentHeader} collapsable>
         <SideNavItem>Default root element (button)</SideNavItem>
         <SideNavItem href="/">Anchor root element</SideNavItem>
         <SideNavItem as="label" htmlFor="docs-input">
