@@ -114,9 +114,6 @@ function RadioGroup({
     const checked = isControlled
       ? child.props.value === controlledValue || child.props.checked
       : child.props.value === uncontrolledValue;
-    // const checked = isControlled
-    //   ? child.props.value === controlledValue || child.props.checked
-    //   : child.props.value === uncontrolledValue;
 
     return React.cloneElement(child, {
       onChange: handleChange,
