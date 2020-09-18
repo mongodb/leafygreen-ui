@@ -53,6 +53,13 @@ function MockSideNav() {
         >
           {text('Nav Item Text', 'Modify Me!')}
         </SideNavItem>
+        <SideNavItem>Dave</SideNavItem>
+        <SideNavItem>Brooke</SideNavItem>
+        <SideNavItem>Rob</SideNavItem>
+        <SideNavItem>Michael</SideNavItem>
+      </SideNavGroup>
+      <SideNavGroup header="header">
+        <SideNavItem>hi</SideNavItem>
       </SideNavGroup>
     </SideNav>
   );

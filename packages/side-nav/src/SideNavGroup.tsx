@@ -4,11 +4,14 @@ import { Transition } from 'react-transition-group';
 import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { createDataProp } from '@leafygreen-ui/lib';
 import {
   ulStyleOverrides,
   sideNavItemSidePadding,
   sideNavWidth,
 } from './styles';
+
+const button = createDataProp('side-nav-group-button');
 
 const sideNavLabelStyle = css`
   font-size: 12px;
@@ -44,6 +47,14 @@ const collapsibleHeaderStyle = css`
     margin-left: 16px;
     margin-right: 16px;
   }
+
+  ${button.selector}:focus & {
+    color: ${uiColors.blue.base};
+
+    &:before {
+      background-color: ${uiColors.blue.light3};
+    }
+  }
 `;
 
 const buttonResetStyles = css`
@@ -67,12 +78,10 @@ const openIconStyle = css`
 `;
 
 const hideUl = css`
+  max-height: 0;
+  overflow: hidden;
   opacity: 0;
-  transition: opacity 150ms ease-in-out;
-`;
-
-const showUl = css`
-  opacity: 1;
+  transition: all 150ms ease-in-out;
 `;
 
 interface SideNavGroupProps {
@@ -125,11 +134,13 @@ function SideNavGroup({
 }: SideNavGroupProps) {
   const [open, setOpen] = React.useState(false);
   const nodeRef = React.useRef(null);
+  const ulRef = React.useRef<HTMLUListElement>(null);
 
   if (collapsible) {
     return (
       <li {...rest}>
         <button
+          {...button.prop}
           className={buttonResetStyles}
           onClick={() => setOpen(curr => !curr)}
         >
@@ -146,19 +157,24 @@ function SideNavGroup({
         <Transition
           in={open}
           timeout={150}
+          nodeRef={nodeRef}
           mountOnEnter
           unmountOnExit
-          nodeRef={nodeRef}
         >
           {(state: string) => (
-            <ul
-              role="menu"
-              className={cx(ulStyleOverrides, hideUl, {
-                [showUl]: state === 'entered',
+            <div
+              className={cx(hideUl, {
+                [css`
+                  opacity: 1;
+                  max-height: ${ulRef?.current?.getBoundingClientRect()
+                    .height}px;
+                `]: state === 'entered',
               })}
             >
-              {children}
-            </ul>
+              <ul ref={ulRef} role="menu" className={ulStyleOverrides}>
+                {children}
+              </ul>
+            </div>
           )}
         </Transition>
       </li>
