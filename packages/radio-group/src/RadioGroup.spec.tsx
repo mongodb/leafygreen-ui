@@ -25,7 +25,7 @@ function WrappedRadio({ checked }: { checked: string }) {
   );
 }
 
-const renderWrappedRadioGroup = checked => {
+const renderWrappedRadioGroup = (checked: string) => {
   render(<WrappedRadio checked={checked} />);
 };
 
