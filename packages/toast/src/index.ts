@@ -1,1 +1,1 @@
-export { default } from './Toast';
+export { default, Variant } from './Toast';
