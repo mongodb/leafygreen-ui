@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <div>
       <GridContainer>
-        <GridItem lg={12}>
+        <GridItem lg={10} colStart={2}>
           <PinkDiv />
         </GridItem>
       </GridContainer>

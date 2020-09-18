@@ -1,5 +1,11 @@
 # @leafygreen-ui/toggle
 
+## 4.0.0
+
+### Major Changes
+
+- b863e502: Refactors Toggle from class-based to functional component, and deprecates `variant` in favor of new `darkMode` prop to control whether or not the component appears in dark mode
+
 ## 3.0.4
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/box
 
+## 2.1.5
+
+### Patch Changes
+
+- d5d40791: Pin lodash version to latest to include fix for [prototype pollution attack vulnerability.](https://hackerone.com/reports/712065)
+
 ## 2.1.4
 
 ### Patch Changes

@@ -179,7 +179,7 @@ export function GridItem({
   lg: lgProp,
   xl: xlProp,
   children,
-  colStart,
+  colStart = 0,
 }: GridItemProps) {
   const { sm, md, lg, xl } = useMemo(
     () =>
@@ -201,46 +201,38 @@ export function GridItem({
     };
   }, [sm, md, lg, xl]);
 
-  return (
-    <>
-      {colStart && (
-        <div
-          css={css`
-            ${baseGridItemStyles}
-            width: ${Math.round(100 / 12) * colStart}%;
-            flex-basis: ${Math.round(100 / 12) * colStart}%;
-          `}
-        />
-      )}
+  console.log(colStart);
 
-      <div
-        css={css`
-          ${baseGridItemStyles}
-          ${visibleGridItemStyles}
-          ${mq({
-            width: [
-              styles.sm.width,
-              styles.md.width,
-              styles.lg.width,
-              styles.xl.width,
-            ],
-            flexBasis: [
-              styles.sm.flexBasis,
-              styles.md.flexBasis,
-              styles.lg.flexBasis,
-              styles.xl.flexBasis,
-            ],
-            display: [
-              styles.sm.display,
-              styles.md.display,
-              styles.lg.display,
-              styles.xl.display,
-            ],
-          })}
-        `}
-      >
-        {children}
-      </div>
-    </>
+  return (
+    <div
+      css={css`
+        ${baseGridItemStyles}
+        ${visibleGridItemStyles}
+        margin-left: ${Math.round(100 / 12) *
+        colStart}%;
+        ${mq({
+          width: [
+            styles.sm.width,
+            styles.md.width,
+            styles.lg.width,
+            styles.xl.width,
+          ],
+          flexBasis: [
+            styles.sm.flexBasis,
+            styles.md.flexBasis,
+            styles.lg.flexBasis,
+            styles.xl.flexBasis,
+          ],
+          display: [
+            styles.sm.display,
+            styles.md.display,
+            styles.lg.display,
+            styles.xl.display,
+          ],
+        })}
+      `}
+    >
+      {children}
+    </div>
   );
 }

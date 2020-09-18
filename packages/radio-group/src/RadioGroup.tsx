@@ -2,13 +2,15 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { IdAllocator, isComponentType } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { Variant, Size } from './types';
+import { Size } from './types';
 
 export interface RadioGroupProps {
   /**
-   * Determines if the component will appear in default or light mode.
+   * Determines whether or not the RadioGroup will appear in dark mode.
+   *
+   * @default false
    */
-  variant?: Variant;
+  darkMode?: boolean;
 
   /**
    * className supplied to RadioGroup container.
@@ -37,6 +39,7 @@ export interface RadioGroupProps {
 
   /**
    * Determines the size of the Radio components Can be 'small' or 'default.
+   *
    * @default default
    */
   size?: Size;
@@ -60,11 +63,11 @@ const idAllocator = IdAllocator.create('radio-group');
  * @param props.value Radio that should appear checked. If value passed, component will be controlled by consumer.
  * @param props.className classname applied to RadioGroup container.
  * @param props.name Name passed to each Radio belonging to the RadioGroup.
- * @param props.variant Variant to determine if component will appear `default` or `light`.
+ * @param props.darkMode Determines whether or not the RadioGroup will appear in dark mode.
  * @param props.size Determines the size of the Radio components Can be 'small' or 'default.
  */
 function RadioGroup({
-  variant = Variant.Default,
+  darkMode = false,
   size = Size.Default,
   className,
   onChange,
@@ -113,7 +116,7 @@ function RadioGroup({
       onChange: handleChange,
       id: child.props.id || `${name}-${index}`,
       checked,
-      variant,
+      darkMode,
       name,
       size,
     });
@@ -136,7 +139,7 @@ function RadioGroup({
 }
 
 RadioGroup.propTypes = {
-  variant: PropTypes.oneOf(['default', 'light']),
+  darkMode: PropTypes.bool,
   size: PropTypes.oneOf(['small', 'default']),
   className: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

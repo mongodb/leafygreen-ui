@@ -1,6 +1,6 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { Variant, SyntaxProps } from './types';
+import { Mode, SyntaxProps } from './types';
 import { numberCellDataProp } from './renderingPlugin';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
@@ -14,11 +14,11 @@ export default function CodeWrapper({
   children,
   className,
   language,
-  variant = Variant.Light,
+  darkMode = false,
   ...rest
 }: CodeWrapperProps) {
-  const numberColor =
-    uiColors.gray[variant === Variant.Dark ? 'dark1' : 'light1'];
+  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const numberColor = uiColors.gray[darkMode ? 'dark1' : 'light1'];
 
   const codeStyles = css`
     color: inherit;
@@ -32,7 +32,7 @@ export default function CodeWrapper({
   `;
 
   const codeClassName = cx(
-    `lg-highlight-hljs-${variant}`,
+    `lg-highlight-hljs-${mode}`,
     codeStyles,
     language,
     className,

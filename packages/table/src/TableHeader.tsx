@@ -6,6 +6,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { commonCellStyles } from './styles';
+import { useSortContext } from './SortContext';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
 
 const thStyle = css`
@@ -88,10 +89,8 @@ function TableHeader<Shape>({
   sortBy,
   ...rest
 }: TableHeaderProps<Shape>) {
-  const {
-    state: { sort },
-    dispatch,
-  } = useTableContext();
+  const { dispatch } = useTableContext();
+  const { sort, setSort } = useSortContext();
 
   React.useEffect(() => {
     if (typeof index === 'number') {
@@ -120,13 +119,16 @@ function TableHeader<Shape>({
 
   const sortRows = () => {
     if (typeof index === 'number' && normalizedAccessor) {
-      dispatch({
-        type: TableActionTypes.SortTableData,
-        payload: {
-          columnId: index,
-          accessorValue: normalizedAccessor,
-        },
-      });
+      setSort(prevSort => ({
+        columnId: index,
+        direction:
+          index === prevSort?.columnId
+            ? prevSort.direction === 'asc'
+              ? 'desc'
+              : 'asc'
+            : 'desc',
+        accessorValue: normalizedAccessor,
+      }));
     }
   };
 
