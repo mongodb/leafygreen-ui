@@ -69,7 +69,7 @@ describe('packages/radio-group', () => {
       fireEvent.click(secondInput);
 
       expect(firstInput.getAttribute('aria-checked')).toBe('true');
-      expect(secondInput.getAttribute('aria-checked')).toBe('false');
+      expect(secondInput.getAttribute('aria-checked')).toBe(null);
     });
   });
 

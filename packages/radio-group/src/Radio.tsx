@@ -294,13 +294,13 @@ export type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
 function Radio({
   children,
   className,
-  onChange,
+  onChange = () => {},
   value,
   disabled,
   id,
   name,
   darkMode,
-  checked = false,
+  checked,
   size = Size.Default,
   ...rest
 }: RadioProps) {
@@ -328,6 +328,7 @@ function Radio({
         <input
           {...rest}
           {...inputDataProp.prop}
+          checked={checked}
           id={id}
           name={name}
           type="radio"
