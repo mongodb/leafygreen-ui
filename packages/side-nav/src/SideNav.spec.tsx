@@ -178,10 +178,10 @@ describe('packages/side-nav', () => {
   describe('SideNavGroup', () => {
     const renderGroup = ({
       header,
-      collapsable = false,
+      collapsible = false,
     }: {
       header?: header;
-      collapsable?: boolean;
+      collapsible?: boolean;
     } = {}) => {
       const { sideNavGroup, sideNavLink } = testIds;
       render(
@@ -189,7 +189,7 @@ describe('packages/side-nav', () => {
           className={className}
           header={header}
           data-testid={sideNavGroup}
-          collapsable={collapsable}
+          collapsible={collapsible}
         >
           <SideNavItem>
             <a href="#clusters" data-testid={sideNavLink}>
@@ -224,6 +224,7 @@ describe('packages/side-nav', () => {
       });
 
       test('renders the children of the side nav group', () => {
+        console.log(screen.getByTestId(sideNavGroup));
         expect(screen.getByTestId(sideNavLink)).toBeInTheDocument();
       });
 
@@ -256,9 +257,9 @@ describe('packages/side-nav', () => {
       });
     });
 
-    describe('when `collapsable` is true', () => {
+    describe('when `collapsible` is true', () => {
       beforeEach(() => {
-        renderGroup({ collapsable: true });
+        renderGroup({ collapsible: true });
       });
 
       test('it renders an icon in the header', () => {

@@ -170,7 +170,7 @@ _Any other properties will be spread on the root-level element._
 | `className`   | `string`                | Class name that will be applied to the root-level element.                                                                                       | `undefined` |
 | `header`      | `string`<br />or `node` | Content that will be rendered as the component's header.<br />If a string is provided, it will be rendered with default styling as a header tag. | `undefined` |
 | `children`    | `node`                  | Content that will be rendered inside the root-level element.                                                                                     | `undefined` |
-| `collapsable` | `boolean`               | Determines whether or not the Group is collapsable                                                                                               | `false`     |
+| `collapsible` | `boolean`               | Determines whether or not the Group is collapsible                                                                                               | `false`     |
 
 _Any other properties will be spread on the root-level element._
 

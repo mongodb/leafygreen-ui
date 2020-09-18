@@ -2,4 +2,4 @@
 '@leafygreen-ui/side-nav': minor
 ---
 
-Adds `collapsable` prop to SideNavGroup
+Adds `collapsible` prop to SideNavGroup

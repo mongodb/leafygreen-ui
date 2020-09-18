@@ -23,11 +23,11 @@ const sideNavLabelStyle = css`
   position: relative;
 `;
 
-const collapsableHeaderStyle = css`
+const collapsibleHeaderStyle = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 2px; // padding-bottom is 4px for not collapsable groups, but spec has the border closer to the element
+  padding-bottom: 2px; // padding-bottom is 4px for not collapsible groups, but spec has the border closer to the element
   margin-bottom: 2px; // adds the remaining 2px of space between group header and subsequent content
   cursor: pointer;
   width: ${sideNavWidth}px;
@@ -97,7 +97,7 @@ interface SideNavGroupProps {
    *
    * @default: `false`
    */
-  collapsable?: boolean;
+  collapsible?: boolean;
 }
 
 /**
@@ -115,25 +115,25 @@ interface SideNavGroupProps {
  * @param props.header Content that will be rendered as the component's header
  *   If a string is provided, it will be rendered with default styling as a header tag.
  * @param props.children Class name that will be applied to the component's header.
- * @param props.collapsable Determines whether or not the Group can be collapsed.
+ * @param props.collapsible Determines whether or not the Group can be collapsed.
  */
 function SideNavGroup({
   header,
   children,
-  collapsable,
+  collapsible = false,
   ...rest
 }: SideNavGroupProps) {
   const [open, setOpen] = React.useState(false);
   const nodeRef = React.useRef(null);
 
-  if (collapsable != null) {
+  if (collapsible) {
     return (
       <li {...rest}>
         <button
           className={buttonResetStyles}
           onClick={() => setOpen(curr => !curr)}
         >
-          <h4 className={cx(sideNavLabelStyle, collapsableHeaderStyle)}>
+          <h4 className={cx(sideNavLabelStyle, collapsibleHeaderStyle)}>
             {header}
             <ChevronRightIcon
               size={12}
@@ -173,62 +173,6 @@ function SideNavGroup({
       </ul>
     </li>
   );
-  // const collapsableUl = (
-  // <Transition
-  //   in={open}
-  //   timeout={150}
-  //   mountOnEnter
-  //   unmountOnExit
-  //   nodeRef={nodeRef}
-  // >
-  //   {(state: string) => (
-  //     <ul
-  //       role="menu"
-  //       className={cx(ulStyleOverrides, hideUl, {
-  //         [showUl]: state === 'entered',
-  //       })}
-  //     >
-  //       {children}
-  //     </ul>
-  //   )}
-  // </Transition>
-  // );
-
-  // const defaultUl = (
-  // <ul role="menu" className={ulStyleOverrides}>
-  //   {children}
-  // </ul>
-  // );
-
-  // const handleClick = () => {
-  //   if (!collapsable) {
-  //     return;
-  //   }
-
-  //   setOpen(curr => !curr);
-  // };
-
-  // return (
-  //   <li {...rest}>
-  //     <h4
-  //       onClick={handleClick}
-  // className={cx(sideNavLabelStyle, {
-  //   [collapsableHeaderStyle]: collapsable,
-  // })}
-  //     >
-  //       {header}
-  //       {collapsable && (
-  // <ChevronRightIcon
-  //   size={12}
-  //   className={cx(iconStyle, {
-  //     [openIconStyle]: open,
-  //   })}
-  // />
-  //       )}
-  //     </h4>
-  //     {!collapsable ? defaultUl : collapsableUl}
-  //   </li>
-  // );
 }
 
 SideNavGroup.displayName = 'SideNavGroup';

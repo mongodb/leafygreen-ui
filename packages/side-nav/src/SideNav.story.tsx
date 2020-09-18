@@ -25,7 +25,7 @@ function MockSideNav() {
         <SideNavItem disabled>Disabled State</SideNavItem>
       </SideNavGroup>
 
-      <SideNavGroup header={contentHeader} collapsable>
+      <SideNavGroup header={contentHeader}>
         <SideNavItem>Default root element (button)</SideNavItem>
         <SideNavItem href="/">Anchor root element</SideNavItem>
         <SideNavItem as="label" htmlFor="docs-input">
@@ -42,7 +42,7 @@ function MockSideNav() {
 
       <SideNavGroup
         header={text('Header Text', 'With Knobs!')}
-        collapsable={boolean('collapsable', false)}
+        collapsible={boolean('collapsible', false)}
       >
         <SideNavItem
           active={boolean('Active', false)}
