@@ -4,6 +4,12 @@ import { boolean, text } from '@storybook/addon-knobs';
 import { SideNav, SideNavItem, SideNavGroup } from './index';
 import { css } from '@leafygreen-ui/emotion';
 
+const wrapperStyles = css`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+`;
+
 function MockSideNav() {
   const textHeader = 'States (text header)';
   const contentHeader = (
@@ -15,11 +21,7 @@ function MockSideNav() {
   );
 
   return (
-    <SideNav
-      className={css`
-        position: fixed;
-      `}
-    >
+    <SideNav className={wrapperStyles}>
       <SideNavGroup header={textHeader}>
         <SideNavItem active>Active State</SideNavItem>
         <SideNavItem disabled>Disabled State</SideNavItem>
