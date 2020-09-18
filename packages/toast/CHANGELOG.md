@@ -1,5 +1,11 @@
 # @leafygreen-ui/toast
 
+## 0.1.4
+
+### Patch Changes
+
+- 35119b8d: Export Toast variant enum
+
 ## 0.1.3
 
 ### Patch Changes
