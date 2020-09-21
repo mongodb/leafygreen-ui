@@ -12,9 +12,13 @@ storiesOf('Toggle', module).add('Default', () => {
     <div
       className={css`
         background-color: ${darkMode ? uiColors.gray.dark1 : uiColors.white};
-        padding: 20px;
+        // padding: 20px;
+        display: flex;
+        width: 100vw;
+        justify-content: space-between;
       `}
     >
+      <div>Brooke</div>
       <Toggle
         darkMode={darkMode}
         size={select('Size', Object.values(Size) as Array<Size>, Size.Default)}

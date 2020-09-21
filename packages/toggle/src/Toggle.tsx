@@ -28,8 +28,8 @@ const focusRing = 3;
 const inputStyle = css`
   margin: 0;
   position: absolute;
-  left: 100%;
-  top: 100%;
+  left: 0;
+  top: 0;
   pointer-events: none;
   opacity: 0;
 `;
@@ -40,18 +40,19 @@ const inputStyle = css`
 const focusStateStyle = css`
   transition: all ${transitionInMS}ms ease-in-out;
   position: absolute;
-  top: -${focusRing}px;
-  bottom: -${focusRing}px;
-  left: -${focusRing}px;
-  right: -${focusRing}px;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
   border: ${focusRing}px solid #63b0d0;
   border-radius: 50px;
   opacity: 0;
-  transform: scale(0.8);
+  // transform: scale(0.8);
+  transform: scale(1, 1);
 
   ${toggleInput.selector}:focus ~ & {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(${(focusRing * 2) / 62 + 1}, ${(focusRing * 2) / 32 + 1});
   }
 `;
 
