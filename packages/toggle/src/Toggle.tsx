@@ -23,13 +23,13 @@ const toggleInput = createDataProp('toggle-input');
 const toggleGroove = createDataProp('toggle-groove');
 
 const transitionInMS = 150;
-const focusRing = 3;
+export const focusRing = 3;
 
 const inputStyle = css`
   margin: 0;
   position: absolute;
-  left: 100%;
-  top: 100%;
+  left: 0;
+  top: 0;
   pointer-events: none;
   opacity: 0;
 `;

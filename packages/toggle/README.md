@@ -68,3 +68,17 @@ import Toggle from '@leafygreen-ui/toggle'
 | `className` | `string`                           | Adds a className to the outermost element.                                                                         | `''`                      |
 
 _Any other properties will be spread on the `input` element._
+
+Note: There's an edge condition where the Toggle component's focus state can cause scroll bars to appear (horizontally and vertically) on a user's browser. If you're experiencing this, add a margin of `interactionRingSize` to the wrapping container.
+
+```jsx
+import Toggle, { interactionRingSize } from '@leafygreen-ui/toggle';
+
+<div
+  className={css`
+    margin: ${interactionRingSize}px;
+  `}
+>
+  <Toggle className="my-toggle" checked={true} />
+</div>;
+```

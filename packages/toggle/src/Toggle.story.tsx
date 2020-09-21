@@ -15,6 +15,7 @@ storiesOf('Toggle', module).add('Default', () => {
         padding: 20px;
       `}
     >
+      <div>Brooke</div>
       <Toggle
         darkMode={darkMode}
         size={select('Size', Object.values(Size) as Array<Size>, Size.Default)}
