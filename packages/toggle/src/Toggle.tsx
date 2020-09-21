@@ -26,10 +26,12 @@ const transitionInMS = 150;
 export const focusRing = 3;
 
 const inputStyle = css`
-  margin: 0;
   position: absolute;
+  margin: 0;
   left: 0;
   top: 0;
+  height: 0;
+  width: 0;
   pointer-events: none;
   opacity: 0;
 `;
