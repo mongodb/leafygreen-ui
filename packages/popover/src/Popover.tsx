@@ -100,14 +100,14 @@ function Popover({
   const lastTimeRefElMutated = useMutationObserver(
     referenceElement,
     mutationOptions,
-    useCallback(() => Date.now(), []),
+    useCallback(Date.now, []),
     observeMutations,
   );
 
   const lastTimeContentElMutated = useMutationObserver(
     contentNode,
     mutationOptions,
-    useCallback(() => Date.now(), []),
+    useCallback(Date.now, []),
     observeMutations,
   );
 
