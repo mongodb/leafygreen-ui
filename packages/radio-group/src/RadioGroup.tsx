@@ -75,17 +75,20 @@ function RadioGroup({
   value: controlledValue,
   name: nameProp,
 }: RadioGroupProps) {
-  const isControlled = controlledValue != null;
+  let isControlled = controlledValue != null ? true : false,
+    defaultChecked = '';
 
-  let defaultChecked = '';
+  React.Children.forEach(children, child => {
+    if (isComponentType(child, 'Radio')) {
+      if (child.props.checked != null) {
+        isControlled = true;
+      }
 
-  if (!isControlled) {
-    React.Children.forEach(children, child => {
-      if (isComponentType(child, 'Radio') && child.props?.default) {
+      if (child.props.default) {
         defaultChecked = child.props.value;
       }
-    });
-  }
+    }
+  });
 
   const [uncontrolledValue, setUncontrolledValue] = React.useState<string>(
     defaultChecked,

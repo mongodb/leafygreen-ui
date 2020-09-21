@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/code",
-  "version": "4.0.4",
+  "version": "5.0.0",
   "description": "leafyGreen UI Kit Code Blocks",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -16,7 +16,7 @@
   "dependencies": {
     "@leafygreen-ui/hooks": "^4.2.0",
     "@leafygreen-ui/lib": "^5.1.1",
-    "@leafygreen-ui/syntax": "^3.1.0",
+    "@leafygreen-ui/syntax": "^4.0.0",
     "@leafygreen-ui/icon": "^6.5.0",
     "@leafygreen-ui/icon-button": "^8.0.0",
     "clipboard": "^2.0.6"
