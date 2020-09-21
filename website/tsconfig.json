@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "rootDir": "pages",
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],
     "skipLibCheck": true,
@@ -15,6 +14,12 @@
     "moduleResolution": "node",
     "module": "esnext"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "components/**/*.tsx",
+    "pages/*.tsx"
+  ],
   "exclude": ["node_modules"]
 }
