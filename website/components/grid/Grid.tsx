@@ -89,7 +89,14 @@ const visibleGridItemStyles = css`
   flex-shrink: 0;
 `;
 
-function getNormalizedBreakpoints({ sm, md, lg, xl }) {
+interface BreakpointArgs {
+  sm?: number;
+  md?: number;
+  lg?: number;
+  xl?: number;
+}
+
+function getNormalizedBreakpoints({ sm, md, lg, xl }: BreakpointArgs) {
   if (xl) {
     const normalizedLg = lg ?? xl;
     const normalizedMd = md ?? Math.ceil((normalizedLg / 2) * 3);
@@ -140,7 +147,7 @@ function getNormalizedBreakpoints({ sm, md, lg, xl }) {
   };
 }
 
-function getItemStyle(num: number) {
+function getItemStyle(num: number | undefined) {
   if (num === 0) {
     return {
       display: 'none',
@@ -200,8 +207,6 @@ export function GridItem({
       xl: getItemStyle(xl),
     };
   }, [sm, md, lg, xl]);
-
-  console.log(colStart);
 
   return (
     <div
