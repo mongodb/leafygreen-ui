@@ -93,8 +93,8 @@ function Popover({
 
   const viewportSize = useViewportSize();
 
-  // We already recalculate the position when the element becomes active,
-  // So it's safe for us to disable the mutation observers when the element isn't active.
+  // We calculate the position of the popover when it becomes active,
+  // so it's safe for us to only enable the mutation observers once the popover is active.
   const observeMutations = adjustOnMutation && active;
 
   const lastTimeRefElMutated = useMutationObserver(

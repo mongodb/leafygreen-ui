@@ -25,6 +25,9 @@ export function notchPositionStyles(
 
   // The bounds used to clamp the notchOffset value
   const notchOffsetLowerBound = 5;
+
+  // This number is somewhat "magical", but adjusted for the Tooltip alignment.
+  // Calculating the exact value needed here requires setting a ref on the Tooltip content wrapper, and getting the height / width of it. The problem was that the height / width changes when the open prop is set, causing the notch to lose its positioning before the tooltip transitions out in some cases.
   let notchOffsetUpperBound = notchOffsetLowerBound * 2;
 
   // The un-clamped value that would exactly center the tooltip notch relative to the trigger.
