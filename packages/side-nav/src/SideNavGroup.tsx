@@ -5,6 +5,7 @@ import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   ulStyleOverrides,
   sideNavItemSidePadding,
@@ -47,7 +48,9 @@ const collapsibleHeaderStyle = css`
     margin-left: 16px;
     margin-right: 16px;
   }
+`;
 
+const collapsibleHeaderFocusStyle = css`
   ${button.selector}:focus & {
     color: ${uiColors.blue.base};
 
@@ -135,6 +138,7 @@ function SideNavGroup({
   const [open, setOpen] = React.useState(false);
   const nodeRef = React.useRef(null);
   const ulRef = React.useRef<HTMLUListElement>(null);
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
   if (collapsible) {
     return (
@@ -144,7 +148,11 @@ function SideNavGroup({
           className={buttonResetStyles}
           onClick={() => setOpen(curr => !curr)}
         >
-          <h4 className={cx(sideNavLabelStyle, collapsibleHeaderStyle)}>
+          <h4
+            className={cx(sideNavLabelStyle, collapsibleHeaderStyle, {
+              [collapsibleHeaderFocusStyle]: showFocus,
+            })}
+          >
             {header}
             <ChevronRightIcon
               size={12}
