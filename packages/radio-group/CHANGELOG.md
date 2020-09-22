@@ -1,5 +1,17 @@
 # @leafygreen-ui/radio-group
 
+## 5.1.0
+
+### Minor Changes
+
+- cb12b399: Adds `xsmall` size for Charts
+
+## 5.0.0
+
+### Major Changes
+
+- 1f7e9132: Deprecates `variant` prop in favor of `darkMode` prop to control whether or not the component appears in dark mode
+
 ## 4.0.3
 
 ### Patch Changes

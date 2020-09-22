@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 3.0.0
+
+### Major Changes
+
+- 1a127dc8: Deprecates `variant` prop in favor of `darkMode` prop to control whether or not the Logo component appears in dark mode.
+
 ## 2.1.2
 
 ### Patch Changes

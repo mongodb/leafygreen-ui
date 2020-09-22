@@ -4,19 +4,29 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { RadioGroupProps } from './RadioGroup';
-import { Variant, Size } from './types';
-
-// Clean Styles
+import { Size } from './types';
 
 const styledDiv = createDataProp('styled-div');
 const inputDisplayWrapper = createDataProp('input-display-wrapper');
 const inputDataProp = createDataProp('input-element');
+
+const Mode = {
+  Dark: 'dark',
+  Light: 'light',
+} as const;
+
+type Mode = typeof Mode[keyof typeof Mode];
+
+export { Mode };
 
 const containerMargin = css`
   margin-top: 8px;
 `;
 
 const offsets = {
+  [Size.XSmall]: css`
+    margin-top: -3px;
+  `,
   [Size.Small]: css`
     margin-top: -2px;
   `,
@@ -25,8 +35,8 @@ const offsets = {
   `,
 };
 
-const labelVariantStyle = {
-  [Variant.Default]: {
+const labelColorSet = {
+  [Mode.Light]: {
     base: css`
       color: ${uiColors.gray.dark2};
     `,
@@ -36,7 +46,7 @@ const labelVariantStyle = {
     `,
   },
 
-  [Variant.Light]: {
+  [Mode.Dark]: {
     base: css`
       color: ${uiColors.white};
     `,
@@ -55,8 +65,8 @@ const labelStyle = css`
 `;
 
 // Note colors are not in our palette
-const inputVariantStyle = {
-  [Variant.Default]: css`
+const inputColorSet = {
+  [Mode.Light]: css`
     &:checked + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
       background-color: #2798bd;
       border-color: #2798bd;
@@ -78,7 +88,7 @@ const inputVariantStyle = {
     }
   `,
 
-  [Variant.Light]: css`
+  [Mode.Dark]: css`
     &:checked + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
       background-color: #43b1e5;
       border-color: #43b1e5;
@@ -102,7 +112,7 @@ const inputVariantStyle = {
 };
 
 const disabledChecked = {
-  [Variant.Default]: css`
+  [Mode.Light]: css`
     &:disabled + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
       background-color: ${uiColors.gray.light1};
       border-color: ${uiColors.gray.light1};
@@ -114,7 +124,7 @@ const disabledChecked = {
     }
   `,
 
-  [Variant.Light]: css`
+  [Mode.Dark]: css`
     &:disabled + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
       border-color: ${uiColors.gray.dark2};
 
@@ -132,13 +142,13 @@ const inputStyle = css`
   opacity: 0;
 `;
 
-const divVariantStyle = {
-  [Variant.Default]: css`
+const divColorSet = {
+  [Mode.Light]: css`
     border: 2px solid ${uiColors.gray.dark1};
     background-color: rgba(255, 255, 255, 0.31);
   `,
 
-  [Variant.Light]: css`
+  [Mode.Dark]: css`
     border: 2px solid ${uiColors.white};
     background-color: rgba(255, 255, 255, 0.2);
   `,
@@ -246,25 +256,21 @@ const interactionRing = css`
 `;
 
 const interactionRingHoverStyles = {
-  [Variant.Default]: css`
+  [Mode.Light]: css`
     &:before {
       border-color: rgba(184, 196, 194, 0.3);
     }
   `,
 
-  [Variant.Light]: css`
+  [Mode.Dark]: css`
     &:before {
       border-color: rgba(255, 255, 255, 0.2);
     }
   `,
 };
 
-const labelMargin = css`
-  margin-left: 8px;
-`;
-
 export type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
-  Pick<RadioGroupProps, 'variant' | 'size'> & {
+  Pick<RadioGroupProps, 'darkMode' | 'size'> & {
     default?: boolean;
     id?: string | number;
   };
@@ -288,30 +294,41 @@ export type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
 function Radio({
   children,
   className,
-  onChange,
+  onChange = () => {},
   value,
   disabled,
   id,
   name,
-  checked = false,
+  darkMode,
+  checked,
   size = Size.Default,
-  variant = Variant.Default,
   ...rest
 }: RadioProps) {
+  const normalizedSize =
+    size === Size.Small || size === Size.XSmall ? Size.Small : Size.Default;
+
+  const mode = darkMode ? Mode.Dark : Mode.Light;
+
   return (
     <div className={containerMargin}>
       <label
         htmlFor={id}
         className={cx(
           labelStyle,
-          labelVariantStyle[variant].base,
-          { [labelVariantStyle[variant].disabled]: disabled },
+          labelColorSet[mode].base,
+          {
+            [labelColorSet[mode].disabled]: disabled,
+            [css`
+              font-size: 12px;
+            `]: size === Size.XSmall,
+          },
           className,
         )}
       >
         <input
           {...rest}
           {...inputDataProp.prop}
+          checked={checked}
           id={id}
           name={name}
           type="radio"
@@ -320,8 +337,8 @@ function Radio({
           aria-checked={checked}
           disabled={disabled}
           aria-disabled={disabled}
-          className={cx(inputStyle, inputVariantStyle[variant], {
-            [disabledChecked[variant]]: disabled && checked,
+          className={cx(inputStyle, inputColorSet[mode], {
+            [disabledChecked[mode]]: disabled && checked,
           })}
         />
 
@@ -329,17 +346,26 @@ function Radio({
           {...inputDisplayWrapper.prop}
           className={cx(
             interactionRing,
-            interactionRingHoverStyles[variant],
-            interactionRingSize[size],
+            interactionRingHoverStyles[mode],
+            interactionRingSize[normalizedSize],
           )}
         >
           <div
             {...styledDiv.prop}
-            className={cx(divStyle, divVariantStyle[variant], divSize[size])}
+            className={cx(divStyle, divColorSet[mode], divSize[normalizedSize])}
           />
         </div>
 
-        <div className={cx(labelMargin, offsets[size])}>{children}</div>
+        <div
+          className={cx(
+            css`
+              margin-left: ${size === Size.XSmall ? 4 : 8}px;
+            `,
+            offsets[size],
+          )}
+        >
+          {children}
+        </div>
       </label>
     </div>
   );
@@ -356,9 +382,9 @@ Radio.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   id: PropTypes.string,
   name: PropTypes.string,
-  variant: PropTypes.oneOf(['default', 'light']),
-  size: PropTypes.oneOf(['small', 'default']),
+  size: PropTypes.oneOf(['xsmall', 'small', 'default']),
   default: PropTypes.bool,
+  darkMode: PropTypes.bool,
 };
 
 export default Radio;

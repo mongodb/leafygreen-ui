@@ -3,7 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { text, boolean, select } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { Radio, RadioGroup, Variant } from '.';
+import { Size } from './types';
+import { Radio, RadioGroup } from '.';
 
 function ControlledRadioGroup() {
   const [activeRadio, setActiveRadio] = useState<string>('test1');
@@ -12,35 +13,33 @@ function ControlledRadioGroup() {
     setActiveRadio((e.target as HTMLInputElement).value);
   };
 
-  const variant = select('variant', Object.values(Variant), Variant.Default);
+  const darkMode = boolean('darkMode', false);
 
   return (
     <div>
       <RadioGroup
-        size={select('size', ['default', 'small'], 'default')}
-        variant={variant}
+        size={select('size', Object.values(Size), 'default')}
+        darkMode={darkMode}
         onChange={changeHandler}
         value={activeRadio}
         className={css`
-          background-color: ${variant === Variant.Default
-            ? 'white'
-            : uiColors.gray.dark3};
+          background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
           padding: 20px;
         `}
       >
-        <Radio value="test1">
+        <Radio checked={activeRadio === 'test1'} value="test1">
           {text('Radio Content', ' Lorem ipsum dolor sit amet')}
         </Radio>
-        <Radio value="test2">
+        <Radio checked={activeRadio === 'test2'} value="test2">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
           aliquip ex ea commodo consequat.
         </Radio>
-        <Radio value="test3">
+        <Radio checked={activeRadio === 'test3'} value="test3">
           Duis aute irure dolor in reprehenderit in voluptate
         </Radio>
-        <Radio value="test4" disabled checked={true}>
+        <Radio checked={activeRadio === 'test4'} value="test4" disabled>
           Excepteur sint occaecat cupidatat non proident
         </Radio>
       </RadioGroup>
@@ -50,17 +49,15 @@ function ControlledRadioGroup() {
 
 storiesOf('RadioGroup', module)
   .add('Uncontrolled', () => {
-    const variant = select('variant', Object.values(Variant), Variant.Default);
+    const darkMode = boolean('darkMode', false);
 
     return (
       <RadioGroup
-        size={select('size', ['default', 'small'], 'default')}
+        size={select('size', Object.values(Size), 'default')}
         name="radio-group-default"
-        variant={variant}
+        darkMode={darkMode}
         className={css`
-          background-color: ${variant === Variant.Default
-            ? 'white'
-            : uiColors.gray.dark3};
+          background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
           padding: 20px;
         `}
       >

@@ -1,6 +1,6 @@
 import React from 'react';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { HTMLElementProps, createDataProp, OneOf } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -102,30 +102,23 @@ function Body({ children, className, weight = 'regular', ...rest }: BodyProps) {
   );
 }
 
+const anchorDataProp = createDataProp('anchor-inline-code');
+
 const code = css`
   background-color: ${uiColors.gray.light3};
   border: 1px solid ${uiColors.gray.light1};
   border-radius: 3px;
   font-family: ${fontFamilies.code};
+
+  ${anchorDataProp.selector}:hover > code > & {
+    border-color: pink;
+  }
 `;
 
 const codeLink = css`
   text-decoration: none;
-  // border-radius: 5px;
-  // border: 3px solid transparent;
   margin: 0;
   padding: 0;
-  transition: border-color 150ms ease-in-out;
-
-  &:hover {
-    // border-color: ${uiColors.gray.light2};
-    // background-color:
-  }
-
-  &:focus {
-    outline: none;
-    // border-color: ${uiColors.blue.light2};
-  }
 `;
 
 const nowrap = css`
@@ -140,16 +133,14 @@ const colorBlue = css`
   color: ${uiColors.blue.base};
 `;
 
-// Brooke be clever
-type InlineCodeProps = HTMLElementProps<'code'> & HTMLElementProps<'a'>;
+type InlineCodeProps = OneOf<HTMLElementProps<'code'>, HTMLElementProps<'a'>>;
 
-// change code height based on type scale
 function InlineCode({ children, className, ...rest }: InlineCodeProps) {
   const size = useBaseFontSize();
   const fontSize = size === 16 ? typeScale2 : typeScale1;
   const whiteSpace =
     typeof children === 'string' && children.length <= 30 ? nowrap : normal;
-  const isAnchor = rest.href || rest.onClick;
+  const isAnchor = rest?.href || rest.onClick;
 
   const renderedInlineCode = (isAnchor = false) => (
     <code className={cx(fontSize, whiteSpace, { [colorBlue]: isAnchor })}>
@@ -159,7 +150,7 @@ function InlineCode({ children, className, ...rest }: InlineCodeProps) {
 
   if (isAnchor) {
     return (
-      <a className={cx(codeLink, className)} {...rest}>
+      <a {...anchorDataProp.prop} className={cx(codeLink, className)} {...rest}>
         {renderedInlineCode(true)}
       </a>
     );

@@ -206,7 +206,10 @@ interface SubMenuProps {
   href?: string;
 }
 
-const SubMenu: ExtendableBox<SubMenuProps, 'button'> = React.forwardRef(
+const SubMenu: ExtendableBox<
+  SubMenuProps & { ref?: React.Ref<any> },
+  'button'
+> = React.forwardRef(
   (
     {
       title,

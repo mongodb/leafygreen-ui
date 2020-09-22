@@ -162,6 +162,12 @@ You can deploy a static build of our Storybook site to gh-pages from the master 
 1. First be sure you've built a static version of Storybook: `yarn build:storybook`
 2. Then deploy to gh-pages: `yarn release:site`
 
+### To deploy to your own mirror of leafygreen-ui
+
+1. Run `yarn demo:site [your_github_username]`.
+2. If you haven't built a static version of Storybook yet, you will be prompted to do so.
+3. You will be asked for confirmation before Storybook is published.
+
 ## License
 
 The source files in this repository are made available under the terms of the Apache License, version 2.0.

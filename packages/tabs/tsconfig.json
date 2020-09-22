@@ -18,6 +18,12 @@
     },
     {
       "path": "../palette"
+    },
+    {
+      "path": "../box"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }

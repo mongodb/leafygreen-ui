@@ -1,5 +1,12 @@
 # @leafygreen-ui/callout
 
+## 1.2.1
+
+### Patch Changes
+
+- Updated dependencies [729c79f8]
+  - @leafygreen-ui/code@5.0.0
+
 ## 1.2.0
 
 ### Minor Changes

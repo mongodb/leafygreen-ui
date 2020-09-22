@@ -59,7 +59,7 @@ import Toggle from '@leafygreen-ui/toggle'
 
 | Prop        | Type                               | Description                                                                                                        | Default                   |
 | ----------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------- |
-| `variant`   | `'default'`, `'dark'`              | Sets the style variant of the toggle.                                                                              | `'default'`               |
+| `darkMode`  | `boolean`                          | Determines if the Toggle will appear in dark mode.                                                                 | `false`                   |
 | `size`      | `'default'`, `'small'`, `'xsmall'` | Sets the size of the toggle.                                                                                       | `'default'`               |
 | `checked`   | `boolean`                          | Checks the `<Toggle />`.                                                                                           |                           |
 | `disabled`  | `boolean`                          | Disables the `<Toggle />`.                                                                                         | `false`                   |

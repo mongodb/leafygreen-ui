@@ -1,5 +1,17 @@
 # @leafygreen-ui/syntax
 
+## 4.0.0
+
+### Major Changes
+
+- 729c79f8: Deprecates `variant` prop in favor of `darkMode` prop to control whether or not the component will appear in dark mode
+
+## 3.1.0
+
+### Minor Changes
+
+- fe371e37: Adds `js` alias for JavaScript and `ts` alias for TypeScript
+
 ## 3.0.2
 
 ### Patch Changes
