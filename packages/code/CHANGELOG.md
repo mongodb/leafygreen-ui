@@ -1,5 +1,16 @@
 # @leafygreen-ui/code
 
+## 5.0.0
+
+### Major Changes
+
+- 729c79f8: Deprecates `variant` prop in favor of `darkMode` prop to control whether or not the component will appear in dark mode
+
+### Patch Changes
+
+- Updated dependencies [729c79f8]
+  - @leafygreen-ui/syntax@4.0.0
+
 ## 4.0.4
 
 ### Patch Changes

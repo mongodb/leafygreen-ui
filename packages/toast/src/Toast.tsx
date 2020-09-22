@@ -14,7 +14,6 @@ import XIcon from '@leafygreen-ui/icon/dist/X';
 import ProgressBar from './ToastProgressBar';
 
 const toastWidth = 400;
-
 const transitionDuration = 150;
 
 type StyledElements =
