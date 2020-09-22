@@ -24,6 +24,9 @@ const containerMargin = css`
 `;
 
 const offsets = {
+  [Size.XSmall]: css`
+    margin-top: -3px;
+  `,
   [Size.Small]: css`
     margin-top: -2px;
   `,
@@ -266,10 +269,6 @@ const interactionRingHoverStyles = {
   `,
 };
 
-const labelMargin = css`
-  margin-left: 8px;
-`;
-
 export type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
   Pick<RadioGroupProps, 'darkMode' | 'size'> & {
     default?: boolean;
@@ -295,16 +294,19 @@ export type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
 function Radio({
   children,
   className,
-  onChange,
+  onChange = () => {},
   value,
   disabled,
   id,
   name,
   darkMode,
-  checked = false,
+  checked,
   size = Size.Default,
   ...rest
 }: RadioProps) {
+  const normalizedSize =
+    size === Size.Small || size === Size.XSmall ? Size.Small : Size.Default;
+
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
   return (
@@ -314,13 +316,19 @@ function Radio({
         className={cx(
           labelStyle,
           labelColorSet[mode].base,
-          { [labelColorSet[mode].disabled]: disabled },
+          {
+            [labelColorSet[mode].disabled]: disabled,
+            [css`
+              font-size: 12px;
+            `]: size === Size.XSmall,
+          },
           className,
         )}
       >
         <input
           {...rest}
           {...inputDataProp.prop}
+          checked={checked}
           id={id}
           name={name}
           type="radio"
@@ -339,16 +347,25 @@ function Radio({
           className={cx(
             interactionRing,
             interactionRingHoverStyles[mode],
-            interactionRingSize[size],
+            interactionRingSize[normalizedSize],
           )}
         >
           <div
             {...styledDiv.prop}
-            className={cx(divStyle, divColorSet[mode], divSize[size])}
+            className={cx(divStyle, divColorSet[mode], divSize[normalizedSize])}
           />
         </div>
 
-        <div className={cx(labelMargin, offsets[size])}>{children}</div>
+        <div
+          className={cx(
+            css`
+              margin-left: ${size === Size.XSmall ? 4 : 8}px;
+            `,
+            offsets[size],
+          )}
+        >
+          {children}
+        </div>
       </label>
     </div>
   );
@@ -365,9 +382,9 @@ Radio.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   id: PropTypes.string,
   name: PropTypes.string,
-  variant: PropTypes.oneOf(['default', 'light']),
-  size: PropTypes.oneOf(['small', 'default']),
+  size: PropTypes.oneOf(['xsmall', 'small', 'default']),
   default: PropTypes.bool,
+  darkMode: PropTypes.bool,
 };
 
 export default Radio;
