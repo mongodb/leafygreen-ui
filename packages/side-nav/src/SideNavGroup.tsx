@@ -80,12 +80,24 @@ const openIconStyle = css`
   transition: 150ms all ease-in-out;
 `;
 
-const hideUl = css`
+const defaultStyle = css`
+  transition: all 150ms ease-in-out;
   max-height: 0;
   overflow: hidden;
-  opacity: 0;
-  transition: all 150ms ease-in-out;
+  opacity: 1;
 `;
+
+const transitionStyles = {
+  entering: css`
+    opacity: 0;
+  `,
+  exiting: css`
+    opacity: 0;
+  `,
+  exited: css`
+    opacity: 0;
+  `,
+};
 
 interface SideNavGroupProps {
   /**
@@ -171,12 +183,16 @@ function SideNavGroup({
         >
           {(state: string) => (
             <div
-              className={cx(hideUl, {
+              ref={nodeRef}
+              className={cx(defaultStyle, {
+                [transitionStyles.entering]: state === 'entering',
                 [css`
                   opacity: 1;
                   max-height: ${ulRef?.current?.getBoundingClientRect()
                     .height}px;
                 `]: state === 'entered',
+                [transitionStyles.exiting]: state === 'exiting',
+                [transitionStyles.exited]: state === 'exited',
               })}
             >
               <ul ref={ulRef} role="menu" className={ulStyleOverrides}>
