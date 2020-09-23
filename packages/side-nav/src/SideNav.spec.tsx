@@ -179,11 +179,11 @@ describe('packages/side-nav', () => {
     const renderGroup = ({
       header,
       collapsible = false,
-      defaultCollapsed = true,
+      initialCollapsed = true,
     }: {
       header?: header;
       collapsible?: boolean;
-      defaultCollapsed?: boolean;
+      initialCollapsed?: boolean;
     } = {}) => {
       const { sideNavGroup, sideNavLink } = testIds;
       render(
@@ -192,7 +192,7 @@ describe('packages/side-nav', () => {
           header={header}
           data-testid={sideNavGroup}
           collapsible={collapsible}
-          defaultCollapsed={defaultCollapsed}
+          initialCollapsed={initialCollapsed}
         >
           <SideNavItem>
             <a href="#clusters" data-testid={sideNavLink}>
@@ -286,9 +286,9 @@ describe('packages/side-nav', () => {
       });
     });
 
-    describe('when `collapsible` is true and `defaultCollapsed` is false', () => {
+    describe('when `collapsible` is true and `initialCollapsed` is false', () => {
       beforeEach(() => {
-        renderGroup({ collapsible: true, defaultCollapsed: false });
+        renderGroup({ collapsible: true, initialCollapsed: false });
       });
 
       test('the content appears on the page by default', () => {

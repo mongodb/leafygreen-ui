@@ -4,7 +4,7 @@ import { Transition } from 'react-transition-group';
 import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp, OneOf } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   ulStyleOverrides,
@@ -104,7 +104,7 @@ const transitionStyles = {
   `,
 };
 
-interface SideNavGroupProps {
+interface SideNavGroupBaseProps {
   /**
    * Class name that will be applied to the root-level element.
    */
@@ -120,21 +120,30 @@ interface SideNavGroupProps {
    * Content that will be rendered inside the root-level element.
    */
   children?: React.ReactNode;
-
-  /**
-   * Determines whether or not the Group can be collapsed.
-   *
-   * @defaultValue `false`
-   */
-  collapsible?: boolean;
-
-  /**
-   * If collapsible, determines whether or not the group should be XX or collapsed by default.
-   *
-   * @defaultValue `true`
-   */
-  defaultCollapsed?: boolean;
 }
+
+type CollapsedProps = OneOf<
+  {
+    /**
+     * Determines whether or not the Group can be collapsed.
+     *
+     * @defaultValue `false`
+     */
+    collapsible: true;
+
+    /**
+     * If collapsible, determines whether or not the group should be XX or collapsed by default.
+     *
+     * @defaultValue `true`
+     */
+    initialCollapsed?: boolean;
+  },
+  {
+    collapsible?: false;
+  }
+>;
+
+type SideNavGroupProps = CollapsedProps & SideNavGroupBaseProps;
 
 /**
  * # SideNavGroup
@@ -152,16 +161,16 @@ interface SideNavGroupProps {
  *   If a string is provided, it will be rendered with default styling as a header tag.
  * @param props.children Class name that will be applied to the component's header.
  * @param props.collapsible Determines whether or not the Group can be collapsed. @defaultValue false
- * @param props.defaultCollapsed Determines whether or not the Group is open by default. @defaultValue true
+ * @param props.initialCollapsed Determines whether or not the Group is open by default. @defaultValue true
  */
 function SideNavGroup({
   header,
   children,
   collapsible = false,
-  defaultCollapsed = true,
+  initialCollapsed,
   ...rest
 }: SideNavGroupProps) {
-  const [open, setOpen] = React.useState(!defaultCollapsed);
+  const [open, setOpen] = React.useState(!initialCollapsed);
   const nodeRef = React.useRef(null);
   const ulRef = React.useRef<HTMLUListElement>(null);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();

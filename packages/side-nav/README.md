@@ -171,7 +171,7 @@ _Any other properties will be spread on the root-level element._
 | `header`           | `string`<br />or `node` | Content that will be rendered as the component's header.<br />If a string is provided, it will be rendered with default styling as a header tag. | `undefined` |
 | `children`         | `node`                  | Content that will be rendered inside the root-level element.                                                                                     | `undefined` |
 | `collapsible`      | `boolean`               | Determines whether or not the Group is collapsible                                                                                               | `false`     |
-| `defaultCollapsed` | `boolean`               | Determines whether or not the SideNavGroup should be collapsed by default.                                                                       | `true`      |
+| `initialCollapsed` | `boolean`               | Determines whether or not the SideNavGroup should be collapsed by default.                                                                       | `true`      |
 
 _Any other properties will be spread on the root-level element._
 

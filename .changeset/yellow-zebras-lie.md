@@ -2,4 +2,4 @@
 '@leafygreen-ui/side-nav': minor
 ---
 
-Adds `defaultCollapsed` prop
+Adds `initialCollapsed` prop
