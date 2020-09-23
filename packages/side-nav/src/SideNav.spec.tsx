@@ -179,7 +179,7 @@ describe('packages/side-nav', () => {
     const renderGroup = ({
       header,
       collapsible = false,
-      initialCollapsed = true,
+      ...rest
     }: {
       header?: header;
       collapsible?: boolean;
@@ -192,7 +192,7 @@ describe('packages/side-nav', () => {
           header={header}
           data-testid={sideNavGroup}
           collapsible={collapsible}
-          initialCollapsed={initialCollapsed}
+          {...rest}
         >
           <SideNavItem>
             <a href="#clusters" data-testid={sideNavLink}>

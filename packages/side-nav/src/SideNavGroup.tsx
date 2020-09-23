@@ -167,7 +167,7 @@ function SideNavGroup({
   header,
   children,
   collapsible = false,
-  initialCollapsed,
+  initialCollapsed = true,
   ...rest
 }: SideNavGroupProps) {
   const [open, setOpen] = React.useState(!initialCollapsed);
