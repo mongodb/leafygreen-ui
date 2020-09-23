@@ -6,38 +6,37 @@ import Popover, {
   Justify,
   ElementPosition,
 } from '@leafygreen-ui/popover';
-import { Body } from '@leafygreen-ui/typography';
 import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import {
-  OneOf,
-  HTMLElementProps,
-  IdAllocator,
-  typeIs,
-} from '@leafygreen-ui/lib';
+import { fontFamilies } from '@leafygreen-ui/tokens';
+import { OneOf, HTMLElementProps, IdAllocator } from '@leafygreen-ui/lib';
+import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { transparentize } from 'polished';
 import debounce from 'lodash/debounce';
-import { trianglePosition } from './tooltipUtils';
+import { notchPositionStyles } from './tooltipUtils';
 
-/**
- * Converts any type to an array of that type if it isn't already an array,
- * or an empty array for nullish values.
- * */
-function toArray(item: null | undefined): [];
-function toArray<T>(item: Array<T>): Array<T>;
-function toArray<T>(item: T): Array<T>;
-function toArray<T>(item: T) {
-  if (item == null) {
-    return [];
-  }
+// The typographic styles below are largely copied from the Body component.
+// We can't use the Body component here due to it rendering a paragraph tag,
+// Which would conflict with any children passed to it containing a div.
+const baseTypeStyle = css`
+  margin: unset;
+  font-family: ${fontFamilies.default};
+  color: ${uiColors.gray.dark3};
+  font-weight: 400;
+`;
 
-  if (typeIs.array(item)) {
-    return item;
-  }
+const typeScale1 = css`
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0px;
+`;
 
-  return [item];
-}
+const typeScale2 = css`
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0px;
+`;
 
 export const TriggerEvent = {
   Hover: 'hover',
@@ -115,6 +114,28 @@ interface PopoverFunctionParameters {
 
 type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'refEl'>;
 
+type PortalProps = OneOf<
+  {
+    /**
+     * Specifies that the popover content will appear portaled to the end of the DOM,
+     * rather than in the DOM tree.
+     *
+     * default: `true`
+     */
+    usePortal?: true;
+
+    /**
+     * If using a portal, specifies a class name to apply to the root element of the portal.
+     *
+     * default: undefined
+     */
+    portalClassName?: string;
+  },
+  {
+    usePortal: false;
+  }
+>;
+
 export type TooltipProps = Omit<
   HTMLElementProps<'div'>,
   keyof ModifiedPopoverProps
@@ -165,27 +186,7 @@ export type TooltipProps = Omit<
      * @default: true
      */
     enabled?: boolean;
-  } & OneOf<
-    {
-      /**
-       * Specifies that the popover content will appear portaled to the end of the DOM,
-       * rather than in the DOM tree.
-       *
-       * default: `true`
-       */
-      usePortal?: true;
-
-      /**
-       * If using a portal, specifies a class name to apply to the root element of the portal.
-       *
-       * @default: undefined
-       */
-      portalClassName?: string;
-    },
-    {
-      usePortal: false;
-    }
-  >;
+  } & PortalProps;
 
 const idAllocator = IdAllocator.create('tooltip');
 
@@ -242,6 +243,7 @@ function Tooltip({
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
+  const size = useBaseFontSize();
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   // typescript is not recognizing isControlled checks that controlledSetOpen exists
   const setOpen =
@@ -331,26 +333,38 @@ function Tooltip({
       {...portalProps}
     >
       {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
-        const triangleStyle = trianglePosition(
-          align,
-          justify,
-          referenceElPos,
-        ) as { containerStyle: string; notchStyle: string };
+        const {
+          notchContainer: notchContainerStyle,
+          notch: notchStyle,
+          tooltip: tooltipNotchStyle,
+        } = notchPositionStyles(align, justify, referenceElPos);
 
         return (
           <div
             {...rest}
             role="tooltip"
             id={tooltipId}
-            className={cx(baseStyles, colorSet[mode].tooltip, className)}
+            className={cx(
+              baseStyles,
+              tooltipNotchStyle,
+              colorSet[mode].tooltip,
+              className,
+            )}
             ref={tooltipRef}
           >
-            <div className={triangleStyle.containerStyle}>
-              <div
-                className={cx(triangleStyle.notchStyle, colorSet[mode].notch)}
-              />
+            <div className={notchContainerStyle}>
+              <div className={cx(notchStyle, colorSet[mode].notch)} />
             </div>
-            <Body className={colorSet[mode].children}>{children}</Body>
+
+            <div
+              className={cx(
+                baseTypeStyle,
+                size === 16 ? typeScale2 : typeScale1,
+                colorSet[mode].children,
+              )}
+            >
+              {children}
+            </div>
           </div>
         );
       }}
@@ -367,13 +381,16 @@ function Tooltip({
       });
     }
 
-    const { children: triggerChildren } = trigger.props;
-
     return React.cloneElement(trigger, {
       ...createTriggerProps(triggerEvent, trigger.props),
       'aria-describedby': tooltipId,
-      children: [...toArray(triggerChildren), tooltip],
-      className: cx(trigger.props.className, positionRelative),
+      children: (
+        <>
+          {trigger.props.children}
+          {tooltip}
+        </>
+      ),
+      className: cx(positionRelative, trigger.props.className),
     });
   }
 
