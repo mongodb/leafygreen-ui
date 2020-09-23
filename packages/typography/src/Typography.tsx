@@ -1,7 +1,10 @@
 import React from 'react';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { HTMLElementProps, createDataProp, OneOf } from '@leafygreen-ui/lib';
-import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+import {
+  useBaseFontSize,
+  useUsingKeyboardContext,
+} from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
@@ -111,7 +114,14 @@ const code = css`
   font-family: ${fontFamilies.code};
 
   ${anchorDataProp.selector}:hover > code > & {
-    border-color: pink;
+    border-color: ${uiColors.blue.base};
+  }
+`;
+
+const codeFocus = css`
+  ${anchorDataProp.selector}:focus > code > & {
+    border-color: ${uiColors.blue.base};
+    background-color: ${uiColors.gray.light3};
   }
 `;
 
@@ -119,6 +129,10 @@ const codeLink = css`
   text-decoration: none;
   margin: 0;
   padding: 0;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const nowrap = css`
@@ -136,6 +150,7 @@ const colorBlue = css`
 type InlineCodeProps = OneOf<HTMLElementProps<'code'>, HTMLElementProps<'a'>>;
 
 function InlineCode({ children, className, ...rest }: InlineCodeProps) {
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const size = useBaseFontSize();
   const fontSize = size === 16 ? typeScale2 : typeScale1;
   const whiteSpace =
@@ -144,7 +159,7 @@ function InlineCode({ children, className, ...rest }: InlineCodeProps) {
 
   const renderedInlineCode = (isAnchor = false) => (
     <code className={cx(fontSize, whiteSpace, { [colorBlue]: isAnchor })}>
-      <span className={code}>{children}</span>
+      <span className={cx(code, { [codeFocus]: showFocus })}>{children}</span>
     </code>
   );
 

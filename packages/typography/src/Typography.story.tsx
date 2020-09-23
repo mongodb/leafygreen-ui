@@ -15,7 +15,6 @@ import {
 import { Link, ArrowAppearance } from './Link';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { css } from '@leafygreen-ui/emotion';
-import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const displayBlock = css`
   display: block;
@@ -34,7 +33,8 @@ storiesOf('Typography', module).add('Default', () => (
       >
         Body
       </Body>
-      <InlineCode className={displayBlock}>InlineCode</InlineCode>
+      <InlineCode className={displayBlock}>InlineCode</InlineCode> and{' '}
+      <InlineCode href="https://mongodb.design">with link</InlineCode>
       <div className={displayBlock}>
         <InlineKeyCode>CTRL</InlineKeyCode>
         <code>+</code>
@@ -60,24 +60,5 @@ storiesOf('Typography', module).add('Default', () => (
         Link
       </Link>
     </div>
-    <Body
-      className={css`
-        width: 400px;
-        border: 2px solid gold;
-        padding: 20px;
-        font-size: 14px;
-      `}
-    >
-      <InlineCode href="test">Lorem ipsum dolor</InlineCode> sit amet,
-      consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-      dolore magna aliqua. Ut enim ad minim{' '}
-      <InlineCode>veniam, quis nostrud</InlineCode> exercitation ullamco laboris
-      nisi ut aliquip ex ea commodo consequat.{' '}
-      <InlineCode href="test">
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      </InlineCode>{' '}
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </Body>
   </LeafygreenProvider>
 ));
