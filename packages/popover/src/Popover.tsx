@@ -1,4 +1,4 @@
-import React, { useMemo, Fragment, useState } from 'react';
+import React, { useMemo, Fragment, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -93,24 +93,29 @@ function Popover({
 
   const viewportSize = useViewportSize();
 
+  // We calculate the position of the popover when it becomes active,
+  // so it's safe for us to only enable the mutation observers once the popover is active.
+  const observeMutations = adjustOnMutation && active;
+
   const lastTimeRefElMutated = useMutationObserver(
     referenceElement,
     mutationOptions,
-    () => Date.now(),
-    adjustOnMutation,
+    useCallback(Date.now, []),
+    observeMutations,
   );
 
   const lastTimeContentElMutated = useMutationObserver(
     contentNode,
     mutationOptions,
-    () => Date.now(),
-    adjustOnMutation,
+    useCallback(Date.now, []),
+    observeMutations,
   );
 
   // We don't memoize these values as they're reliant on scroll positioning
   const referenceElViewportPos = useObjectDependency(
     getElementViewportPosition(referenceElement),
   );
+
   const contentElViewportPos = useObjectDependency(
     getElementViewportPosition(contentNode),
   );
@@ -169,9 +174,7 @@ function Popover({
   // the window which isn't available if the component is rendered on server side.
   const [shouldRender, setShouldRender] = useState(false);
 
-  useIsomorphicLayoutEffect(() => {
-    setShouldRender(true);
-  }, []);
+  useIsomorphicLayoutEffect(() => setShouldRender(true), []);
 
   if (!shouldRender) {
     return null;
@@ -202,21 +205,19 @@ function Popover({
   const Root = usePortal ? Portal : Fragment;
   const rootProps = usePortal ? { className: portalClassName } : {};
 
-  const renderedChildren = (() => {
-    if (!children) {
-      return null;
-    }
+  let renderedChildren: null | React.ReactNode;
 
-    if (typeof children === 'function') {
-      return children({
-        align: windowSafeAlign,
-        justify: windowSafeJustify,
-        referenceElPos: referenceElDocumentPos,
-      });
-    }
-
-    return children;
-  })();
+  if (children == null) {
+    renderedChildren = null;
+  } else if (typeof children === 'function') {
+    renderedChildren = children({
+      align: windowSafeAlign,
+      justify: windowSafeJustify,
+      referenceElPos: referenceElDocumentPos,
+    });
+  } else {
+    renderedChildren = children;
+  }
 
   return (
     <Transition
@@ -237,7 +238,6 @@ function Popover({
           <Root {...rootProps}>
             <div
               {...rest}
-              ref={setContentNode}
               className={cx(
                 rootPopoverStyle,
                 css(positionCSS),
@@ -245,7 +245,11 @@ function Popover({
                 className,
               )}
             >
-              {renderedChildren}
+              {/*
+                We create this inner node with a ref because placing it on its parent
+                creates an infinite loop in some cases when dynamic styles are applied.
+               */}
+              <div ref={setContentNode}>{renderedChildren}</div>
             </div>
           </Root>
         </>
