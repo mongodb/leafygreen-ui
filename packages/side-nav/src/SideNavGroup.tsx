@@ -124,9 +124,16 @@ interface SideNavGroupProps {
   /**
    * Determines whether or not the Group can be collapsed.
    *
-   * @default: `false`
+   * @defaultValue `false`
    */
   collapsible?: boolean;
+
+  /**
+   * If collapsible, determines whether or not the group should be XX or collapsed by default.
+   *
+   * @defaultValue `true`
+   */
+  defaultCollapsed?: boolean;
 }
 
 /**
@@ -144,15 +151,17 @@ interface SideNavGroupProps {
  * @param props.header Content that will be rendered as the component's header
  *   If a string is provided, it will be rendered with default styling as a header tag.
  * @param props.children Class name that will be applied to the component's header.
- * @param props.collapsible Determines whether or not the Group can be collapsed.
+ * @param props.collapsible Determines whether or not the Group can be collapsed. @defaultValue false
+ * @param props.defaultCollapsed Determines whether or not the Group is open by default. @defaultValue true
  */
 function SideNavGroup({
   header,
   children,
   collapsible = false,
+  defaultCollapsed = true,
   ...rest
 }: SideNavGroupProps) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(!defaultCollapsed);
   const nodeRef = React.useRef(null);
   const ulRef = React.useRef<HTMLUListElement>(null);
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -181,6 +190,7 @@ function SideNavGroup({
         </button>
         <Transition
           in={open}
+          appear
           timeout={150}
           nodeRef={nodeRef}
           mountOnEnter

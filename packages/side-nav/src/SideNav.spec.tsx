@@ -179,9 +179,11 @@ describe('packages/side-nav', () => {
     const renderGroup = ({
       header,
       collapsible = false,
+      defaultCollapsed = true,
     }: {
       header?: header;
       collapsible?: boolean;
+      defaultCollapsed?: boolean;
     } = {}) => {
       const { sideNavGroup, sideNavLink } = testIds;
       render(
@@ -190,6 +192,7 @@ describe('packages/side-nav', () => {
           header={header}
           data-testid={sideNavGroup}
           collapsible={collapsible}
+          defaultCollapsed={defaultCollapsed}
         >
           <SideNavItem>
             <a href="#clusters" data-testid={sideNavLink}>
@@ -224,7 +227,6 @@ describe('packages/side-nav', () => {
       });
 
       test('renders the children of the side nav group', () => {
-        console.log(screen.getByTestId(sideNavGroup));
         expect(screen.getByTestId(sideNavLink)).toBeInTheDocument();
       });
 
@@ -279,6 +281,17 @@ describe('packages/side-nav', () => {
         const icon = screen.getByTitle('Chevron Right Icon');
         fireEvent.click(icon);
 
+        const childContent = screen.getByTestId(sideNavLink);
+        expect(childContent).toBeInTheDocument();
+      });
+    });
+
+    describe('when `collapsible` is true and `defaultCollapsed` is false', () => {
+      beforeEach(() => {
+        renderGroup({ collapsible: true, defaultCollapsed: false });
+      });
+
+      test('the content appears on the page by default', () => {
         const childContent = screen.getByTestId(sideNavLink);
         expect(childContent).toBeInTheDocument();
       });
