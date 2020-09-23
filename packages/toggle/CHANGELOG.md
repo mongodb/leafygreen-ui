@@ -1,5 +1,11 @@
 # @leafygreen-ui/toggle
 
+## 4.1.1
+
+### Patch Changes
+
+- 6e210765: The tooltip's notch now appears at more appropriate positions for smaller trigger elements.
+
 ## 4.1.0
 
 ### Minor Changes
