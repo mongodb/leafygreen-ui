@@ -48,6 +48,10 @@ const collapsibleHeaderStyle = css`
     margin-left: 16px;
     margin-right: 16px;
   }
+
+  &:hover:before {
+    background-color: ${uiColors.green.base};
+  }
 `;
 
 const collapsibleHeaderFocusStyle = css`
