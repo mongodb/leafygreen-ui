@@ -1,7 +1,6 @@
 import React, { ReactNode, ElementType } from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
-
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import {
