@@ -2,9 +2,9 @@ import React from 'react';
 import { render, cleanup, screen, fireEvent } from '@testing-library/react';
 import { SideNav, SideNavGroup, SideNavItem } from './index';
 import { SideNavItemProps } from './SideNavItem';
+import { SideNavGroupProps } from './SideNavGroup';
 
 type renderedElement = HTMLElement | null;
-type header = React.ReactNode;
 
 interface RenderedElements {
   navEl?: renderedElement;
@@ -176,22 +176,13 @@ describe('packages/side-nav', () => {
   });
 
   describe('SideNavGroup', () => {
-    const renderGroup = ({
-      header,
-      collapsible = false,
-      ...rest
-    }: {
-      header?: header;
-      collapsible?: boolean;
-      initialCollapsed?: boolean;
-    } = {}) => {
+    const renderGroup = ({ header, ...rest }: SideNavGroupProps = {}) => {
       const { sideNavGroup, sideNavLink } = testIds;
       render(
         <SideNavGroup
           className={className}
           header={header}
           data-testid={sideNavGroup}
-          collapsible={collapsible}
           {...rest}
         >
           <SideNavItem>

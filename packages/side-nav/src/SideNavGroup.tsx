@@ -143,7 +143,7 @@ type CollapsedProps = OneOf<
   }
 >;
 
-type SideNavGroupProps = CollapsedProps & SideNavGroupBaseProps;
+export type SideNavGroupProps = CollapsedProps & SideNavGroupBaseProps;
 
 /**
  * # SideNavGroup
