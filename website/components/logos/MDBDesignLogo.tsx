@@ -1,3 +1,5 @@
+import React from 'react';
+
 function MDBDesignLogo(props: JSX.IntrinsicElements['svg']) {
   return (
     <svg
