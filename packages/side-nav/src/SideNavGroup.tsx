@@ -47,6 +47,7 @@ const collapsibleHeaderStyle = css`
     border-radius: 2px;
     margin-left: 16px;
     margin-right: 16px;
+    transition: background-color 150ms ease-in-out;
   }
 
   &:hover:before {
