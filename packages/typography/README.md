@@ -102,6 +102,10 @@ All props extend the HTMLElementProps of their root tag, however `<Body />` and 
 | -------- | ------------------- | ----------------------------------------- | --------- |
 | `weight` | `regular`, `medium` | font-weight applied to typography element | `regular` |
 
+## InlineCode
+
+If an `href` prop is passed to `InlineCode` it will be rendered with an `a` tag wrapping the `code` tag. Otherwise, it'll simply render as a `code` tag.
+
 ## Overline
 
 | Prop        | Type                                  | Description                                                                                                                         | Default |
