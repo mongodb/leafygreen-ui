@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum e41c1de9c59628f589c0d1385d4bfb73
+ * @checksum b21faae46ce3deca4b09709031915873
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface BeakerProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Beaker-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Beaker');
 
 const Beaker = ({
   className,
@@ -23,7 +21,7 @@ const Beaker = ({
   fill,
   ...props
 }: BeakerProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`

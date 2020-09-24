@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 0674fa4617d79732cc1ccb44d8804e85
+ * @checksum 2101479291b7b79ff9859658f63d0bf5
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface VerticalEllipsisProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `VerticalEllipsis-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('VerticalEllipsis');
 
 const VerticalEllipsis = ({
   className,
@@ -23,7 +21,7 @@ const VerticalEllipsis = ({
   fill,
   ...props
 }: VerticalEllipsisProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`

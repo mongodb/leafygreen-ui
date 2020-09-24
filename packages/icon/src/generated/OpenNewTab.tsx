@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 0cd14e9f7947c8ecd1d6e6869133c966
+ * @checksum 7a7d8167d762f92975cb21cf0e6f63dd
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface OpenNewTabProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `OpenNewTab-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('OpenNewTab');
 
 const OpenNewTab = ({
   className,
@@ -23,7 +21,7 @@ const OpenNewTab = ({
   fill,
   ...props
 }: OpenNewTabProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`

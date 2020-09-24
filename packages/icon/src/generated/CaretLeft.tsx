@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum f447fcb2d9d90b0c3d170585d793b47d
+ * @checksum 9d9e9a121e6a6f6c49b680daa3a19eef
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CaretLeftProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `CaretLeft-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('CaretLeft');
 
 const CaretLeft = ({
   className,
@@ -23,7 +21,7 @@ const CaretLeft = ({
   fill,
   ...props
 }: CaretLeftProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
