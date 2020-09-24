@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 926599aa90e6f92bfedad0b7b68ed818
+ * @checksum e51788f64647add956e0701f82ddbc38
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CaretUpProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `CaretUp-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('CaretUp');
 
 const CaretUp = ({
   className,
@@ -23,7 +21,7 @@ const CaretUp = ({
   fill,
   ...props
 }: CaretUpProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
