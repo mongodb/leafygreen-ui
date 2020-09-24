@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum f3e142679faaa21540bbe9ec6eb352e0
+ * @checksum d807fda51d33e8443ae541e2a0b36624
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface XWithCircleProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `XWithCircle-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('XWithCircle');
 
 const XWithCircle = ({
   className,
@@ -23,7 +21,7 @@ const XWithCircle = ({
   fill,
   ...props
 }: XWithCircleProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`

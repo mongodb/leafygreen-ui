@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 6c29437fcf5de50fe2757146f79afd8e
+ * @checksum 08006197a45353b35968d5a546d01970
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface BulbProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Bulb-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Bulb');
 
 const Bulb = ({
   className,
@@ -23,7 +21,7 @@ const Bulb = ({
   fill,
   ...props
 }: BulbProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`

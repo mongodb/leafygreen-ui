@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 8c408fbf122e78231d63b233fe359092
+ * @checksum 5cc324799565170bfc8d48938414025e
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface FolderProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Folder-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Folder');
 
 const Folder = ({
   className,
@@ -23,7 +21,7 @@ const Folder = ({
   fill,
   ...props
 }: FolderProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`

@@ -1,5 +1,15 @@
 # @leafygreen-ui/side-nav
 
+## 3.1.0
+
+### Minor Changes
+
+- dd0b6d5f: Adds `collapsible` prop to SideNavGroup
+
+### Patch Changes
+
+- @leafygreen-ui/menu@7.0.10
+
 ## 3.0.10
 
 ### Patch Changes
