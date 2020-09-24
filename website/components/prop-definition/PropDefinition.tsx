@@ -1,18 +1,56 @@
+/** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { uiColors } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 
 const flexContainer = css`
   display: flex;
-  background-color: ${uiColors.gray.light3};
+  flex-wrap: wrap;
+  background-color: ${uiColors.gray.base};
+  padding: 0;
+  width: 360px;
 `;
 
-function Definition() {
+function PropBlock({ type, value }) {
   return (
-    <div>
+    <div
+      css={css`
+        width: 50%;
+        margin-bottom: ${spacing[3]}px;
+      `}
+    >
+      <p
+        css={css`
+          margin: 0;
+        `}
+      >
+        {type}
+      </p>
+      <code
+        css={css`
+          font-weight: bold;
+        `}
+      >
+        {value}
+      </code>
+    </div>
+  );
+}
+
+function Definition({ prop, type, defaultValue, description }) {
+  return (
+    <div
+      css={css`
+        width: 360px;
+      `}
+    >
       <div css={flexContainer}>
-        <div>Prop:</div>
+        <PropBlock type="Prop" value={prop} />
+        <PropBlock type="Type" value={type} />
+        <PropBlock type="Default" value={defaultValue} />
       </div>
+      {description}
     </div>
   );
 }
@@ -20,11 +58,12 @@ function Definition() {
 function PropDefinition({ prop, type, defaultValue, description }) {
   return (
     <InlineDefinition
+      open={true}
       definition={
         <Definition
           prop={prop}
           type={type}
-          defaultvalue={defaultValue}
+          defaultValue={defaultValue}
           description={description}
         />
       }

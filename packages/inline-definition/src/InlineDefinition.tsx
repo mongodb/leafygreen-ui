@@ -26,17 +26,16 @@ const underline = css`
 `;
 
 const maxWidth = css`
-  max-width: 240px;
+  max-width: 360px;
 `;
 
 type InlineDefinitionProps = Partial<TooltipProps> & {
-  definition: string;
+  definition: React.ReactNode;
 };
 
 function InlineDefinition({
   definition,
   children,
-  className,
   ...tooltipProps
 }: InlineDefinitionProps) {
   return (
@@ -44,7 +43,7 @@ function InlineDefinition({
       justify="middle"
       spacing={5}
       {...tooltipProps}
-      trigger={<span className={cx(underline, className)}>{children}</span>}
+      trigger={<span className={underline}>{children}</span>}
     >
       <Body className={maxWidth}>{definition}</Body>
     </Tooltip>
