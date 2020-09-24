@@ -36,6 +36,7 @@ type InlineDefinitionProps = Partial<TooltipProps> & {
 function InlineDefinition({
   definition,
   children,
+  className,
   ...tooltipProps
 }: InlineDefinitionProps) {
   return (
@@ -43,7 +44,7 @@ function InlineDefinition({
       justify="middle"
       spacing={5}
       {...tooltipProps}
-      trigger={<span className={underline}>{children}</span>}
+      trigger={<span className={cx(underline, className)}>{children}</span>}
     >
       <Body className={maxWidth}>{definition}</Body>
     </Tooltip>
@@ -53,7 +54,8 @@ function InlineDefinition({
 InlineDefinition.displayName = 'InlineDefinition';
 
 InlineDefinition.propTypes = {
-  definition: PropTypes.string.isRequired,
+  definition: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
+    .isRequired,
   className: PropTypes.string,
   children: PropTypes.node,
 };

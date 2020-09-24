@@ -1,64 +1,87 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
+import { InlineCode } from '@leafygreen-ui/typography';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
+
+interface PropDefinitionProps {
+  defaultValue: string;
+  prop: string;
+  type: string;
+  description: string;
+}
+
+const propBlockContainer = css`
+  width: 50%;
+  margin-bottom: ${spacing[3]}px;
+`;
+
+const propBlockPStyle = css`
+  margin: 0;
+`;
+
+const propBlockCodeStyle = css`
+  font-weight: bold;
+`;
+
+function PropBlock({ header, value }: { header: string; value: string }) {
+  return (
+    <div css={propBlockContainer}>
+      <p css={propBlockPStyle}>{header}</p>
+      <InlineCode css={propBlockCodeStyle}>{value}</InlineCode>
+    </div>
+  );
+}
 
 const flexContainer = css`
   display: flex;
   flex-wrap: wrap;
-  background-color: ${uiColors.gray.base};
-  padding: 0;
+`;
+
+const definitionContainer = css`
   width: 360px;
 `;
 
-function PropBlock({ type, value }) {
-  return (
-    <div
-      css={css`
-        width: 50%;
-        margin-bottom: ${spacing[3]}px;
-      `}
-    >
-      <p
-        css={css`
-          margin: 0;
-        `}
-      >
-        {type}
-      </p>
-      <code
-        css={css`
-          font-weight: bold;
-        `}
-      >
-        {value}
-      </code>
-    </div>
-  );
-}
+const descriptionContainer = css`
+  margin-left: -16px;
+  margin-right: -16px;
+  margin-bottom: -14px;
+  background-color: white;
+  padding: 10px 20px;
+`;
 
-function Definition({ prop, type, defaultValue, description }) {
+function Definition({
+  prop,
+  type,
+  defaultValue,
+  description,
+}: PropDefinitionProps) {
   return (
-    <div
-      css={css`
-        width: 360px;
-      `}
-    >
+    <div css={definitionContainer}>
       <div css={flexContainer}>
-        <PropBlock type="Prop" value={prop} />
-        <PropBlock type="Type" value={type} />
-        <PropBlock type="Default" value={defaultValue} />
+        <PropBlock header="Prop" value={prop} />
+        <PropBlock header="Type" value={type} />
+        <PropBlock header="Default" value={defaultValue} />
       </div>
-      {description}
+      <div css={descriptionContainer}>{description}</div>
     </div>
   );
 }
 
-function PropDefinition({ prop, type, defaultValue, description }) {
+const inlineDefinitionStyle = css`
+  padding: 0;
+`;
+
+function PropDefinition({
+  prop,
+  type,
+  defaultValue,
+  description,
+}: PropDefinitionProps) {
   return (
     <InlineDefinition
-      open={true}
+      open
+      css={inlineDefinitionStyle}
       definition={
         <Definition
           prop={prop}

@@ -38,9 +38,10 @@ describe('packages/inline-definition', () => {
 
     fireEvent.mouseEnter(children);
 
-    await waitFor(() => screen.getByText(shardDefinition), { timeout: 500 });
-
-    expect(screen.getByText(shardDefinition)).toBeVisible();
+    await waitFor(
+      () => expect(screen.getByText(shardDefinition)).toBeVisible(),
+      { timeout: 500 },
+    );
 
     fireEvent.mouseLeave(children);
 
