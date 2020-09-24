@@ -5,6 +5,7 @@ import { transparentize } from 'polished';
 import facepaint from 'facepaint';
 import Portal from '@leafygreen-ui/portal';
 import XIcon from '@leafygreen-ui/icon/dist/X';
+import IconButton from '@leafygreen-ui/icon-button';
 import { useEscapeKey } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -28,7 +29,8 @@ export const mq = facepaint([
   `@media only screen and (min-width: ${large})`,
 ]);
 
-const defaultSpacing = 18;
+const defaultHorizontalSpacing = 18;
+const defaultVerticalSpacing = 64;
 
 const backdrop = css`
   background-color: ${transparentize(0.4, uiColors.black)};
@@ -48,21 +50,26 @@ const visibleBackdrop = css`
 
 const scrollContainer = css`
   position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
+  min-height: 100%;
+  width: 100%;
+
+  padding: ${defaultVerticalSpacing}px ${defaultHorizontalSpacing}px;
   overflow-y: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const modalContentStyle = css`
   transition: all 150ms ease-in-out;
-  margin: ${defaultSpacing}px auto;
-  padding: 36px;
+  margin: auto;
+  max-height: calc(100% - ${defaultVerticalSpacing}px);
+  padding: 32px;
   color: ${uiColors.gray.dark3};
   background-color: ${uiColors.white};
-  border-radius: 3px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 7px;
+  box-shadow: 0 5px 15px ${transparentize(0.4, uiColors.black)};
   position: relative;
   pointer-events: all;
   transform: translate3d(0, -16px, 0);
@@ -84,7 +91,7 @@ const modalSizes: { readonly [K in ModalSize]: string } = {
   `,
 
   default: css`
-    width: 720px;
+    width: 600px;
   `,
 
   large: css`
@@ -98,8 +105,14 @@ const closeButton = css`
   color: ${uiColors.gray.dark1};
   position: absolute;
   cursor: pointer;
-  right: 12px;
-  top: 12px;
+  // x-icon should be 16px from edge. IconButton is 28x28 and Icon is 16x16
+  // so there's already (28 - 16) / 2 = 6px of spacing. 16 - 6 = 10.
+  right: 10px;
+  top: 10px;
+
+  &:hover {
+    color: ${uiColors.gray.dark3};
+  }
 `;
 
 interface ModalProps {
@@ -239,15 +252,13 @@ function Modal({
                   contentClassName,
                 )}
               >
-                <XIcon
-                  fill={uiColors.gray.dark1}
-                  size="large"
+                <IconButton
                   onClick={handleClose}
+                  aria-label="Close modal"
                   className={closeButton}
-                  data-dismiss="modal"
-                  tabIndex={0}
-                  title="close modal"
-                />
+                >
+                  <XIcon />
+                </IconButton>
 
                 {children}
               </div>

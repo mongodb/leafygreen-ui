@@ -1,5 +1,23 @@
 # @leafygreen-ui/checkbox
 
+## 5.0.0
+
+### Major Changes
+
+- 02ee0c05: Deprecates `variant` prop and adds `darkMode` prop to determine whether or not Checkbox appears in dark mode.
+
+## 4.1.1
+
+### Patch Changes
+
+- 463a338: Fixes 'aria-checked' value when Checkbox is indeterminate such that the value is `mixed` rather than `false` per WAI-ARIA spec
+
+## 4.1.0
+
+### Minor Changes
+
+- 7605c17: Add prop to disable animations
+
 ## 4.0.4
 
 ### Patch Changes

@@ -1,5 +1,74 @@
 # @leafygreen-ui/mongo-nav
 
+## 3.1.9
+
+### Patch Changes
+
+- 6e210765: Fixes regression from adding darkMode prop, where tooltips were light in the nav by default.
+  - @leafygreen-ui/menu@7.0.10
+  - @leafygreen-ui/tooltip@5.0.1
+
+## 3.1.8
+
+### Patch Changes
+
+- Updated dependencies [1a127dc8]
+  - @leafygreen-ui/logo@3.0.0
+
+## 3.1.7
+
+### Patch Changes
+
+- Updated dependencies [47846c77]
+- Updated dependencies [483b8a2e]
+- Updated dependencies [a84219f1]
+  - @leafygreen-ui/button@7.0.1
+  - @leafygreen-ui/menu@7.0.9
+  - @leafygreen-ui/tooltip@5.0.0
+  - @leafygreen-ui/icon-button@8.0.0
+
+## 3.1.6
+
+### Patch Changes
+
+- d5d40791: Pin lodash version to latest to include fix for [prototype pollution attack vulnerability.](https://hackerone.com/reports/712065)
+- Updated dependencies [6883ccd0]
+- Updated dependencies [3fed752e]
+- Updated dependencies [6ab659c8]
+- Updated dependencies [6883ccd0]
+- Updated dependencies [3fed752e]
+- Updated dependencies [eda10121]
+- Updated dependencies [6883ccd0]
+- Updated dependencies [d5d40791]
+  - @leafygreen-ui/icon@6.6.0
+  - @leafygreen-ui/typography@4.3.0
+  - @leafygreen-ui/tooltip@4.0.0
+  - @leafygreen-ui/button@7.0.0
+  - @leafygreen-ui/hooks@4.2.1
+  - @leafygreen-ui/icon-button@7.0.6
+
+## 3.1.5
+
+### Patch Changes
+
+- e599707: Require lodash dependencies instead of inlining them.
+- Updated dependencies [e599707]
+- Updated dependencies [e49d66b]
+- Updated dependencies [e599707]
+- Updated dependencies [8c867bb]
+  - @leafygreen-ui/tooltip@3.3.7
+  - @leafygreen-ui/icon@6.5.0
+  - @leafygreen-ui/hooks@4.2.0
+  - @leafygreen-ui/icon-button@7.0.5
+
+## 3.1.4
+
+### Patch Changes
+
+- Updated dependencies [ab4c074]
+  - @leafygreen-ui/icon-button@7.0.0
+  - @leafygreen-ui/menu@7.0.7
+
 ## 3.1.3
 
 ### Patch Changes

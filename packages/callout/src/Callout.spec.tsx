@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Callout, { headerIcons, headerLabels, Variant } from './Callout';
-import { getGlyphTitle } from '../../icon/src/createGlyphComponent';
+import { getGlyphTitle } from '../../icon/src/glyphCommon';
 
 const title = 'this is the callout title';
 const children = 'this is the callout content.';
@@ -14,7 +14,7 @@ const defaultProps = {
 
 describe('packages/callout', () => {
   for (const key of Object.keys(Variant)) {
-    const variant = Variant[key];
+    const variant = Variant[key as keyof typeof Variant];
     const icon = headerIcons[variant];
     const label = headerLabels[variant];
 
@@ -22,7 +22,8 @@ describe('packages/callout', () => {
       test(`renders icon "${icon.displayName}" and label "${label}" in header"`, () => {
         render(<Callout {...defaultProps} variant={variant} />);
 
-        const glyph = screen.getByTitle(getGlyphTitle(icon.displayName))
+        expect(typeof icon.displayName).toBe('string');
+        const glyph = screen.getByTitle(getGlyphTitle(icon.displayName!)!)
           .parentElement;
         expect(glyph).toBeInstanceOf(SVGSVGElement);
         expect(glyph).toBeVisible();

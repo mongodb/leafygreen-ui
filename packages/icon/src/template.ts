@@ -1,6 +1,6 @@
 interface BabelAPI extends Record<string, any> {
   template: {
-    smart: (opts: Record<string, any>) => Record<string, any>;
+    smart: (opts: Record<string, any>) => any;
   } & Record<string, any>;
 }
 
@@ -8,7 +8,6 @@ interface SVGROptions extends Record<string, any> {
   state: {
     componentName: string;
   } & Record<string, any>;
-  typescript: boolean;
 }
 
 interface ASTParts extends Record<string, any> {
@@ -22,16 +21,10 @@ interface ASTParts extends Record<string, any> {
 
 module.exports = function template(
   { template }: BabelAPI,
-  { state: { componentName }, typescript }: SVGROptions,
+  { state: { componentName } }: SVGROptions,
   { imports, jsx, exports }: ASTParts,
 ) {
-  const plugins = ['jsx'];
-
-  if (typescript) {
-    plugins.push('typescript');
-  }
-
-  const typeScriptTpl = template.smart({ plugins });
+  const typeScriptTpl = template.smart({ plugins: ['jsx', 'typescript'] });
 
   const jsxAttributes = typeScriptTpl.ast`
     <Glyph
@@ -51,40 +44,30 @@ module.exports = function template(
     jsx.openingElement.attributes[2],
   );
 
-  return typeScriptTpl.ast`
-    ${imports}
+  return typeScriptTpl(`
+    %%imports%%
     import PropTypes from 'prop-types';
     import { css, cx } from '@leafygreen-ui/emotion';
+    import { IdAllocator } from '@leafygreen-ui/lib';
+    import { getGlyphTitle, sizeMap } from '../glyphCommon';
+    import { LGGlyph } from '../types';
+  
+    export interface ${componentName}Props extends LGGlyph.ComponentProps {}
 
-    const sizeMap = {
-      small: 14,
-      default: 16,
-      large: 20,
-      xlarge: 24,
-    }
+    const idAllocator = IdAllocator.create('${componentName}');
 
-    function getGlyphTitle(name, title) {
-      if (title === false) {
-        // If title is null, we unset the title entirely, otherwise we generate one.
-        return null;
-      }
-
-      if (title == null || title === true) {
-        return \`\${name.replace(
-          /([a-z])([A-Z])/g,
-          '$1 $2',
-        )} Icon\`;
-      }
-
-      return title;
-    }
-
-    function generateGlyphTitle() {
-      return '${componentName}' + '-' + Math.floor(Math.random() * 1000000);
-    }
-
-    const ${componentName} = ({ className, size = 16, title, customTitleId,  fill, ...props }) => {
-      const { current: titleId } = React.useMemo(() => customTitleId || generateGlyphTitle(), [customTitleId]);
+    const ${componentName} = ({
+      className,
+      size = 16,
+      title,
+      titleId: customTitleId,
+      fill,
+      ...props
+    }: ${componentName}Props) => {
+      const titleId = React.useMemo(
+        () => customTitleId || idAllocator.generate(),
+        [customTitleId]
+      );
 
       const fillStyle = css\`
         color: \${fill};
@@ -92,7 +75,7 @@ module.exports = function template(
 
       title = getGlyphTitle('${componentName}', title);
 
-      return ${jsx};
+      return %%jsx%%;
     }
 
     ${componentName}.displayName = '${componentName}';
@@ -105,6 +88,10 @@ module.exports = function template(
         className: PropTypes.string,
     };
 
-    ${exports}
-  `;
+    %%exports%%
+  `)({
+    imports: imports,
+    jsx: jsx,
+    exports: exports,
+  });
 };

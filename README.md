@@ -12,13 +12,16 @@ A set of CSS styles and React components built with design in mind.
 - [Card](https://github.com/mongodb/leafygreen-ui/tree/master/packages/card)
 - [Checkbox](https://github.com/mongodb/leafygreen-ui/tree/master/packages/checkbox)
 - [Code](https://github.com/mongodb/leafygreen-ui/tree/master/packages/code)
+- [Confirmation Modal](https://github.com/mongodb/leafygreen-ui/tree/master/packages/confirmation-modal)
 - [Emotion](https://github.com/mongodb/leafygreen-ui/tree/master/packages/emotion)
 - [Hooks](https://github.com/mongodb/leafygreen-ui/tree/master/packages/hooks)
-- [Icon Button](https://github.com/mongodb/leafygreen-ui/tree/master/packages/icon-button)
 - [Icon](https://github.com/mongodb/leafygreen-ui/tree/master/packages/icon)
+- [Icon Button](https://github.com/mongodb/leafygreen-ui/tree/master/packages/icon-button)
+- [Inline Definition](https://github.com/mongodb/leafygreen-ui/tree/master/packages/inline-definition)
 - [LeafyGreen Provider](https://github.com/mongodb/leafygreen-ui/tree/master/packages/leafygreen-provider)
 - [Lib](https://github.com/mongodb/leafygreen-ui/tree/master/packages/lib)
 - [Logo](https://github.com/mongodb/leafygreen-ui/tree/master/packages/logo)
+- [Marketing Modal](https://github.com/mongodb/leafygreen-ui/tree/master/packages/marketing-modal)
 - [Menu](https://github.com/mongodb/leafygreen-ui/tree/master/packages/menu)
 - [Modal](https://github.com/mongodb/leafygreen-ui/tree/master/packages/modal)
 - [MongoMenu](https://github.com/mongodb/leafygreen-ui/tree/master/packages/mongo-menu)
@@ -31,9 +34,11 @@ A set of CSS styles and React components built with design in mind.
 - [Side Nav](https://github.com/mongodb/leafygreen-ui/tree/master/packages/side-nav)
 - [Stepper](https://github.com/mongodb/leafygreen-ui/tree/master/packages/stepper)
 - [Syntax](https://github.com/mongodb/leafygreen-ui/tree/master/packages/syntax)
+- [Table](https://github.com/mongodb/leafygreen-ui/tree/master/packages/table)
 - [Tabs](https://github.com/mongodb/leafygreen-ui/tree/master/packages/tabs)
 - [Testing Lib](https://github.com/mongodb/leafygreen-ui/tree/master/packages/testing-lib)
 - [Text Input](https://github.com/mongodb/leafygreen-ui/tree/master/packages/text-input)
+- [Toast](https://github.com/mongodb/leafygreen-ui/tree/master/packages/toast)
 - [Toggle](https://github.com/mongodb/leafygreen-ui/tree/master/packages/toggle)
 - [Tooltip](https://github.com/mongodb/leafygreen-ui/tree/master/packages/tooltip)
 - [Typography](https://github.com/mongodb/leafygreen-ui/tree/master/packages/typography)
@@ -132,7 +137,10 @@ Make sure that the PR includes the changes made by running this command.
 # To transpile and concatenate all files
 yarn build
 # To build TypeScript type definition files
+yarn ts:build
+# To only typecheck all TypeScript files
 yarn ts
+
 ```
 
 3. Publish all packages to NPM using changesets. This can be done from master.
@@ -153,6 +161,12 @@ You can deploy a static build of our Storybook site to gh-pages from the master 
 
 1. First be sure you've built a static version of Storybook: `yarn build:storybook`
 2. Then deploy to gh-pages: `yarn release:site`
+
+### To deploy to your own mirror of leafygreen-ui
+
+1. Run `yarn demo:site [your_github_username]`.
+2. If you haven't built a static version of Storybook yet, you will be prompted to do so.
+3. You will be asked for confirmation before Storybook is published.
 
 ## License
 

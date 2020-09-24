@@ -21,7 +21,7 @@ const storybookStyles = css`
 `;
 
 storiesOf('MongoNav', module).add('Default', () => {
-  const mongoNavRef = React.useRef(null);
+  const mongoNavRef = React.useRef<{ reloadData: () => void }>(null);
 
   const [triggerDataReload, setTriggerDataReload] = React.useState(false);
 
@@ -29,7 +29,7 @@ storiesOf('MongoNav', module).add('Default', () => {
 
   React.useEffect(() => {
     if (triggerDataReload) {
-      mongoNavRef.current.reloadData();
+      mongoNavRef?.current?.reloadData?.();
     }
   }, [triggerDataReload]);
 

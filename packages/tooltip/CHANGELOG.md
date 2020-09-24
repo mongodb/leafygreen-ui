@@ -1,5 +1,68 @@
 # @leafygreen-ui/tooltip
 
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies [6e210765]
+  - @leafygreen-ui/popover@6.0.0
+
+## 5.0.0
+
+### Major Changes
+
+- 483b8a2e: Deprecates `variant` prop in favor of `darkMode` prop to control whether or not the Tooltip appears in dark mode
+
+### Patch Changes
+
+- Updated dependencies [47846c77]
+  - @leafygreen-ui/button@7.0.1
+
+## 4.0.0
+
+### Major Changes
+
+- 6ab659c8: Tooltips are no longer affected by whether their trigger has an "href" property set.
+- 6883ccd0: `Tooltip` typography previously relied on consumer application's styles. Now, Tooltip children are wrapped in LeafyGreen Body component.
+
+### Minor Changes
+
+- 3fed752e: Adds support for `spacing` prop
+
+### Patch Changes
+
+- d5d40791: Pin lodash version to latest to include fix for [prototype pollution attack vulnerability.](https://hackerone.com/reports/712065)
+- Updated dependencies [3fed752e]
+- Updated dependencies [6883ccd0]
+- Updated dependencies [eda10121]
+- Updated dependencies [d5d40791]
+  - @leafygreen-ui/typography@4.3.0
+  - @leafygreen-ui/button@7.0.0
+  - @leafygreen-ui/hooks@4.2.1
+  - @leafygreen-ui/popover@5.2.3
+
+## 3.3.7
+
+### Patch Changes
+
+- e599707: Require lodash dependencies instead of inlining them.
+- Updated dependencies [8c867bb]
+- Updated dependencies [e599707]
+- Updated dependencies [8c867bb]
+  - @leafygreen-ui/popover@5.2.2
+  - @leafygreen-ui/hooks@4.2.0
+
+## 3.3.6
+
+### Patch Changes
+
+- 4a27db7: Clicks inside tooltip are now prevented from propagating to the tooltip's container.
+- Updated dependencies [2c09c48]
+- Updated dependencies [4a27db7]
+- Updated dependencies [add8745]
+  - @leafygreen-ui/hooks@4.1.0
+  - @leafygreen-ui/popover@5.2.0
+
 ## 3.3.5
 
 ### Patch Changes

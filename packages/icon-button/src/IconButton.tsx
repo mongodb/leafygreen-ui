@@ -1,18 +1,17 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
-import { HTMLElementProps, Either, isComponentType } from '@leafygreen-ui/lib';
+import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import { Either, isComponentType } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 
-const Variant = {
+const Mode = {
   Light: 'light',
   Dark: 'dark',
 } as const;
 
-type Variant = typeof Variant[keyof typeof Variant];
-
-export { Variant };
+type Mode = typeof Mode[keyof typeof Mode];
 
 const Size = {
   Default: 'default',
@@ -36,6 +35,7 @@ const baseIconButtonStyle = css`
   color: ${uiColors.gray.base};
   position: relative;
   cursor: pointer;
+  flex-shrink: 0;
 
   // Set background to fully-transparent white for cross-browser compatability with Safari
   //
@@ -82,8 +82,8 @@ const iconButtonSizes = {
   `,
 } as const;
 
-const iconButtonVariants = {
-  [Variant.Light]: css`
+const iconButtonMode = {
+  [Mode.Light]: css`
     &:hover {
       color: ${uiColors.gray.dark2};
 
@@ -101,7 +101,7 @@ const iconButtonVariants = {
     }
   `,
 
-  [Variant.Dark]: css`
+  [Mode.Dark]: css`
     &:hover {
       &:before {
         background-color: ${uiColors.gray.dark2};
@@ -115,19 +115,19 @@ const iconButtonVariants = {
 } as const;
 
 const disabledStyle = {
-  [Variant.Light]: css`
+  [Mode.Light]: css`
     color: ${uiColors.gray.light2};
     pointer-events: none;
   `,
 
-  [Variant.Dark]: css`
+  [Mode.Dark]: css`
     color: ${uiColors.gray.dark2};
     pointer-events: none;
   `,
 } as const;
 
 const activeStyle = {
-  [Variant.Light]: css`
+  [Mode.Light]: css`
     color: ${uiColors.gray.dark2};
     background-color: ${uiColors.gray.light2};
 
@@ -136,7 +136,7 @@ const activeStyle = {
     }
   `,
 
-  [Variant.Dark]: css`
+  [Mode.Dark]: css`
     color: ${uiColors.white};
     background-color: ${uiColors.gray.dark2};
 
@@ -163,83 +163,21 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
   size?: Size | number;
   title?: string | null | boolean;
 }
-
-interface SharedIconButtonProps {
-  /**
-   * Determines color of `IconButton`. Can be `light` or `dark`.
-   *
-   * default: `'light'`
-   */
-  variant?: Variant;
-
-  /**
-   * Classname applied to `IconButton`.
-   */
+interface BaseIconButtonProps {
   className?: string;
-
-  /**
-   * Content to appear inside of `IconButton`.
-   */
   children?: React.ReactNode;
-
-  /**
-   * Determines whether or not `IconButton` is disabled.
-   *
-   * default: `false`
-   */
   disabled?: boolean;
-
-  /**
-   * Determines size of IconButton can be: default, large, xlarge
-   *
-   * default: `'default'`
-   */
   size?: Size;
-
-  /**
-   * Determines whether `IconButton` will appear `active`
-   *
-   * default: `false`
-   */
+  darkMode?: boolean;
   active?: boolean;
-}
-
-// We're omitting CSS here because of the issue with Omit and Pick's interaction
-// with Emotion's module declaration for 'react' described in this issue:
-// https://github.com/emotion-js/emotion/issues/1431
-//
-// The issue arises specifically when combined with the "Either" TS helper.
-interface LinkIconButtonProps
-  extends Omit<HTMLElementProps<'a'>, 'css'>,
-    SharedIconButtonProps {
-  /**
-   * Destination URL, if supplied `IconButton` will render in `a` tags, rather than `button` tags.
-   */
-  href: string;
-}
-
-interface ButtonIconButtonProps
-  extends Omit<HTMLElementProps<'button'>, 'css'>,
-    SharedIconButtonProps {
-  href?: null;
+  href?: string;
+  'aria-label'?: string;
+  'aria-labelledby'?: string;
 }
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';
-type AccessibleLinkIconButtonProps = Either<LinkIconButtonProps, AriaLabels>;
-type AccessibleButtonIconButtonProps = Either<
-  ButtonIconButtonProps,
-  AriaLabels
->;
 
-type IconButtonProps =
-  | AccessibleLinkIconButtonProps
-  | AccessibleButtonIconButtonProps;
-
-function usesLinkElement(
-  props: IconButtonProps,
-): props is AccessibleLinkIconButtonProps {
-  return props.href != null;
-}
+type AccessibleIconButtonProps = Either<BaseIconButtonProps, AriaLabels>;
 
 function isComponentGlyph(
   child: React.ReactNode,
@@ -252,112 +190,104 @@ function isComponentGlyph(
   );
 }
 
-/**
- * # IconButton
- *
- * IconButton Component
- *
- * ```
-<IconButton variant='dark'>
-  <Icon glyph='Copy' />
-</IconButton>
-```
- * @param props.children Content to appear inside of `IconButton`.
- * @param props.className Classname applied to `IconButton`.
- * @param props.disabled Determines whether or not `IconButton` is disabled.
- * @param props.variant Determines color of `IconButton`. Can be `light` or `dark`.
- * @param props.href Destination URL, if supplied `IconButton` will render in `a` tags, rather than `button` tags.
- * @param props.onClick Callback fired when `IconButton` is clicked.
- * @param props.active Determines whether `IconButton` will appear `active`
- *
- */
+const IconButton: ExtendableBox<
+  AccessibleIconButtonProps & { ref?: React.Ref<any> },
+  'button'
+> = React.forwardRef(
+  (
+    {
+      size = Size.Default,
+      darkMode = false,
+      disabled = false,
+      active = false,
+      className,
+      children,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledBy,
+      ...rest
+    }: AccessibleIconButtonProps,
+    ref: React.Ref<any>,
+  ) => {
+    const mode = darkMode ? 'dark' : 'light';
 
-const IconButton = React.forwardRef((props: IconButtonProps, ref) => {
-  const {
-    variant = Variant.Light,
-    size = Size.Default,
-    disabled = false,
-    active = false,
-    className,
-    href,
-    children,
-    'aria-label': ariaLabel,
-    'aria-labelledby': ariaLabelledBy,
-    ...rest
-  } = props;
-
-  // We do our own proptype validation here to ensure either 'aria-label' or 'aria-labelledby' are passed to the component.
-  if (!ariaLabel && !ariaLabelledBy) {
-    console.error(
-      'For screen-reader accessibility, aria-label or aria-labelledby must be provided to IconButton.',
-    );
-  }
-
-  const processedChildren = React.Children.map(children, child => {
-    if (!child) {
-      return null;
+    // We do our own proptype validation here to ensure either 'aria-label' or 'aria-labelledby' are passed to the component.
+    if (!ariaLabel && !ariaLabelledBy) {
+      console.error(
+        'For screen-reader accessibility, aria-label or aria-labelledby must be provided to IconButton.',
+      );
     }
 
-    // Check to see if child is a LeafyGreen Icon or a LeafyGreen Glyph
-    // If so, we unset the title and rely on the aria-label prop to give
-    // information about the rendered content.
-    if (isComponentType(child, 'Icon') || isComponentGlyph(child)) {
-      const { size: childSize, title }: IconProps = child.props;
-
-      const newChildProps: Partial<IconProps> = {
-        size: childSize || size,
-      };
-
-      if (typeof title !== 'string' || title.length === 0) {
-        // Unsets the title within an icon since the button itself will have
-        // aria-label or aria-labelledby set.
-        newChildProps.title = false;
-        newChildProps['aria-label'] = ariaLabel || ariaLabelledBy;
+    const processedChildren = React.Children.map(children, child => {
+      if (!child) {
+        return null;
       }
 
-      return React.cloneElement(child, newChildProps);
-    }
+      // Check to see if child is a LeafyGreen Icon or a LeafyGreen Glyph
+      // If so, we unset the title and rely on the aria-label prop to give
+      // information about the rendered content.
+      if (isComponentType(child, 'Icon') || isComponentGlyph(child)) {
+        const { size: childSize, title }: IconProps = child.props;
 
-    return child;
-  });
+        const newChildProps: Partial<IconProps> = {
+          size: childSize || size,
+        };
 
-  const renderIconButton = (Root: React.ElementType = 'button') => (
-    <Root
-      {...rest}
-      ref={ref}
-      href={href}
-      tabIndex={disabled ? -1 : 0}
-      aria-disabled={disabled}
-      aria-label={ariaLabel}
-      aria-labelledby={ariaLabelledBy}
-      className={cx(
+        if (typeof title !== 'string' || title.length === 0) {
+          // Unsets the title within an icon since the button itself will have
+          // aria-label or aria-labelledby set.
+          newChildProps.title = false;
+        }
+
+        return React.cloneElement(child, newChildProps);
+      }
+
+      return child;
+    });
+
+    const accessibleLabel = ariaLabel
+      ? { ['aria-label']: ariaLabel }
+      : { ['aria-labelledby']: ariaLabelledBy };
+
+    const iconButtonProps = {
+      ...rest,
+      ...accessibleLabel,
+      ref,
+      tabIndex: disabled ? -1 : 0,
+      ['aria-disabled']: disabled,
+      className: cx(
         removeButtonStyle,
         baseIconButtonStyle,
         iconButtonSizes[size],
-        iconButtonVariants[variant],
+        iconButtonMode[mode],
         {
-          [disabledStyle[variant]]: disabled,
-          [activeStyle[variant]]: active,
+          [disabledStyle[mode]]: disabled,
+          [activeStyle[mode]]: active,
         },
         className,
-      )}
-    >
-      <div className={iconStyle}>{processedChildren}</div>
-    </Root>
-  );
+      ),
+    };
 
-  if (usesLinkElement(props)) {
-    return renderIconButton('a');
-  }
+    if (typeof rest.href === 'string') {
+      return (
+        <Box as="a" {...iconButtonProps}>
+          <div className={iconStyle}>{processedChildren}</div>
+        </Box>
+      );
+    }
 
-  return renderIconButton();
-});
+    return (
+      <Box as="button" {...iconButtonProps}>
+        <div className={iconStyle}>{processedChildren}</div>
+      </Box>
+    );
+  },
+);
 
 IconButton.displayName = 'IconButton';
 
 // @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 IconButton.propTypes = {
-  variant: PropTypes.oneOf(Object.values(Variant)),
+  darkMode: PropTypes.bool,
   size: PropTypes.oneOf(Object.values(Size)),
   className: PropTypes.string,
   children: PropTypes.node,

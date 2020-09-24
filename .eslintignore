@@ -2,3 +2,5 @@ node_modules
 dist
 lib
 storybook/public
+website/.next
+website/hosting

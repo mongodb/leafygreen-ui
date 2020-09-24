@@ -6,6 +6,8 @@ import {
   useElementNode,
   useViewportSize,
   usePoller,
+  usePrevious,
+  useObjectDependency,
 } from './index';
 
 describe('packages/hooks', () => {
@@ -128,8 +130,8 @@ describe('packages/hooks', () => {
     window.dispatchEvent(new Event('resize'));
     await act(waitForNextUpdate);
 
-    expect(result.current.height).toBe(initialHeight);
-    expect(result.current.width).toBe(initialWidth);
+    expect(result?.current?.height).toBe(initialHeight);
+    expect(result?.current?.width).toBe(initialWidth);
 
     const updateHeight = 768;
     const updateWidth = 1024;
@@ -140,8 +142,8 @@ describe('packages/hooks', () => {
     window.dispatchEvent(new Event('resize'));
     await act(waitForNextUpdate);
 
-    expect(result.current.height).toBe(updateHeight);
-    expect(result.current.width).toBe(updateWidth);
+    expect(result?.current?.height).toBe(updateHeight);
+    expect(result?.current?.width).toBe(updateWidth);
   });
 
   describe('usePoller', () => {
@@ -165,7 +167,7 @@ describe('packages/hooks', () => {
     });
 
     afterEach(() => {
-      delete mutableDocument.visibilityState;
+      mutableDocument.visibilityState = 'visible';
       jest.useRealTimers();
     });
 
@@ -294,6 +296,47 @@ describe('packages/hooks', () => {
 
       // immediate triggers the pollHandler
       expect(pollHandler).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('useObjectDependency', () => {
+    test('returns previous object when current object is equal', () => {
+      const originalObject = { a: 1, b: { c: [2, 'hello'] } };
+
+      const { result, rerender } = renderHook(useObjectDependency, {
+        initialProps: originalObject,
+      });
+      expect(result.current).toBe(originalObject);
+
+      const differentButEqualObject = { a: 1, b: { c: [2, 'hello'] } };
+      expect(differentButEqualObject).not.toBe(originalObject);
+      rerender(differentButEqualObject);
+      expect(result.current).toBe(originalObject);
+
+      const unequalObject = { a: 1, b: { c: [2, 'bye'] } };
+      expect(unequalObject).not.toBe(originalObject);
+      rerender(unequalObject);
+      expect(result.current).toBe(unequalObject);
+    });
+  });
+
+  describe('usePrevious', () => {
+    test('always returns value from previous render', () => {
+      const { rerender, result } = renderHook(
+        (props: number) => usePrevious(props),
+        { initialProps: 42 },
+      );
+
+      expect(result.current).toEqual(undefined);
+
+      rerender(2020);
+      expect(result.current).toEqual(42);
+
+      rerender();
+      expect(result.current).toEqual(2020);
+
+      rerender();
+      expect(result.current).toEqual(2020);
     });
   });
 });

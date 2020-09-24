@@ -260,7 +260,6 @@ const baseStyle = css`
   text-transform: none;
   transition: all 120ms ease;
   user-select: none;
-  overflow: hidden;
   padding: 0;
 
   &:hover {
@@ -314,7 +313,10 @@ interface BaseButtonProps {
   href?: string;
 }
 
-const Button: ExtendableBox<BaseButtonProps, 'button'> = React.forwardRef(
+const Button: ExtendableBox<
+  BaseButtonProps & { ref?: React.Ref<any> },
+  'button'
+> = React.forwardRef(
   (
     {
       className,
@@ -355,6 +357,7 @@ const Button: ExtendableBox<BaseButtonProps, 'button'> = React.forwardRef(
       flex-grow: 1;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
     `;
 
     const modifiedGlyph =
@@ -389,10 +392,8 @@ const Button: ExtendableBox<BaseButtonProps, 'button'> = React.forwardRef(
   },
 );
 
-// @ts-expect-error: Property 'displayName' does not exist on type 'OverrideComponentCast<BaseButtonProps>'.ts(2339)
 Button.displayName = 'Button';
 
-// @ts-expect-error: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 Button.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)),
   size: PropTypes.oneOf(Object.values(Size)),

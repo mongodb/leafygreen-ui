@@ -41,7 +41,7 @@ function renderSteps(
       ))}
     </Stepper>,
   );
-  return result ? result.rerender : undefined;
+  return result ? result.rerender : renderFunction;
 }
 
 function assertVisibleSteps({
@@ -72,7 +72,7 @@ function assertVisibleSteps({
       expect(visibleStepElement).toBeVisible();
       expect(visibleStepElement).toHaveTextContent(step);
 
-      if (allSteps[currentStep] === step) {
+      if (currentStep !== undefined && allSteps[currentStep] === step) {
         expect(visibleStepElement).toHaveAttribute('aria-current', 'step');
       } else {
         expect(visibleStepElement).not.toHaveAttribute('aria-current');
@@ -181,17 +181,20 @@ describe('packages/stepper', () => {
     });
 
     // Preview of next steps appears on hover
-    fireEvent.mouseEnter(
-      onlyElement(screen.getAllByLabelText('Next steps').filter(isVisible)),
+    const nextSteps = onlyElement(
+      screen.getAllByLabelText('Next steps').filter(isVisible),
     );
+    expect(nextSteps).toBeVisible();
+    fireEvent.mouseEnter(nextSteps!);
+
     assertVisibleSteps({
       allSteps,
       expectedSteps: ['Previous steps', 'Third step', 'Next steps'],
     });
+
     // Preview disappears
-    fireEvent.mouseLeave(
-      onlyElement(screen.getAllByLabelText('Next steps').filter(isVisible)),
-    );
+    expect(nextSteps).not.toBeVisible();
+    fireEvent.mouseLeave(nextSteps!);
     assertVisibleSteps({
       allSteps,
       currentStep: 1,
@@ -256,18 +259,19 @@ describe('packages/stepper', () => {
     });
 
     // Preview of previous steps appears on hover
-    const visiblePreviousStepsElement = onlyElement(
+    const previousStepsElement = onlyElement(
       screen.queryAllByLabelText('Previous steps').filter(isVisible),
     );
-    fireEvent.mouseEnter(visiblePreviousStepsElement);
+    expect(previousStepsElement).toBeVisible();
+    fireEvent.mouseEnter(previousStepsElement!);
     assertVisibleSteps({
       allSteps,
       expectedSteps: ['Previous steps', 'Third step', 'Next steps'],
     });
+
     // Preview disappears
-    fireEvent.mouseLeave(
-      onlyElement(screen.getAllByLabelText('Previous steps').filter(isVisible)),
-    );
+    expect(previousStepsElement).not.toBeVisible();
+    fireEvent.mouseLeave(previousStepsElement!);
     assertVisibleSteps({
       allSteps,
       currentStep: 4,

@@ -488,9 +488,11 @@ export default function ProjectNav({
         <>
           <Tooltip
             {...sharedTooltipProps}
+            tabIndex={-1}
             align="bottom"
             justify="middle"
             usePortal={false}
+            darkMode={true}
             trigger={
               <IconButton
                 aria-label="Invite"
@@ -516,6 +518,7 @@ export default function ProjectNav({
             align="bottom"
             justify="middle"
             usePortal={false}
+            darkMode={true}
             trigger={
               <IconButton
                 aria-label="Project Activity Feed"
@@ -541,6 +544,7 @@ export default function ProjectNav({
             align="bottom"
             justify="end"
             usePortal={false}
+            darkMode={true}
             trigger={
               <IconButton
                 aria-label="Alerts"

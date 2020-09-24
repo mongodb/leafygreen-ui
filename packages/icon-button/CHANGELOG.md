@@ -1,5 +1,58 @@
 # @leafygreen-ui/icon-button
 
+## 8.0.0
+
+### Major Changes
+
+- a84219f1: Deprecates `variant` in favor of new `darkMode` prop, which determines if the component should be rendered in `darkMode`
+
+## 7.0.6
+
+### Patch Changes
+
+- Updated dependencies [6883ccd0]
+  - @leafygreen-ui/icon@6.6.0
+
+## 7.0.5
+
+### Patch Changes
+
+- Updated dependencies [e49d66b]
+  - @leafygreen-ui/icon@6.5.0
+
+## 7.0.4
+
+### Patch Changes
+
+- Updated dependencies [43d47db]
+  - @leafygreen-ui/icon@6.4.2
+
+## 7.0.3
+
+### Patch Changes
+
+- Updated dependencies [b80379a]
+  - @leafygreen-ui/icon@6.4.1
+
+## 7.0.2
+
+### Patch Changes
+
+- Updated dependencies [699a65c]
+  - @leafygreen-ui/icon@6.4.0
+
+## 7.0.1
+
+### Patch Changes
+
+- 463a338: Adds `flex-shrink` property to IconButton
+
+## 7.0.0
+
+### Major Changes
+
+- ab4c074: Removed redundant aria-label from the icon that is already on the button
+
 ## 6.1.4
 
 ### Patch Changes

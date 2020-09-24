@@ -1,19 +1,15 @@
-import React, {
-  useMemo,
-  Fragment,
-  useState,
-  useLayoutEffect,
-  useRef,
-  useEffect,
-} from 'react';
+import React, { useMemo, Fragment, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
-import Portal from '@leafygreen-ui/portal';
 import { css, cx } from '@leafygreen-ui/emotion';
+import Portal from '@leafygreen-ui/portal';
 import {
   useViewportSize,
   useMutationObserver,
   useElementNode,
+  useIsomorphicLayoutEffect,
+  useObjectDependency,
+  usePrevious,
 } from '@leafygreen-ui/hooks';
 import { Align, Justify, PopoverProps } from './types';
 import {
@@ -97,73 +93,92 @@ function Popover({
 
   const viewportSize = useViewportSize();
 
+  // We calculate the position of the popover when it becomes active,
+  // so it's safe for us to only enable the mutation observers once the popover is active.
+  const observeMutations = adjustOnMutation && active;
+
   const lastTimeRefElMutated = useMutationObserver(
     referenceElement,
     mutationOptions,
-    () => Date.now(),
-    adjustOnMutation,
+    useCallback(Date.now, []),
+    observeMutations,
   );
 
   const lastTimeContentElMutated = useMutationObserver(
     contentNode,
     mutationOptions,
-    () => Date.now(),
-    adjustOnMutation,
+    useCallback(Date.now, []),
+    observeMutations,
   );
 
   // We don't memoize these values as they're reliant on scroll positioning
-  const referenceElViewportPos = getElementViewportPosition(referenceElement);
-  const contentElViewportPos = getElementViewportPosition(contentNode);
-
-  const referenceElDocumentPos = useMemo(
-    () => getElementDocumentPosition(referenceElement),
-    [
-      referenceElement,
-      viewportSize,
-      lastTimeRefElMutated,
-      active,
-      align,
-      justify,
-      forceUpdateCounter,
-    ],
+  const referenceElViewportPos = useObjectDependency(
+    getElementViewportPosition(referenceElement),
   );
 
-  const contentElDocumentPos = useMemo(
-    () => getElementDocumentPosition(contentNode),
-    [
-      contentNode,
-      viewportSize,
-      lastTimeContentElMutated,
-      active,
-      align,
-      justify,
-      forceUpdateCounter,
-    ],
+  const contentElViewportPos = useObjectDependency(
+    getElementViewportPosition(contentNode),
   );
 
-  const prevJustifyRef = useRef<Justify>();
-  const prevAlignRef = useRef<Align>();
-  const prevJustify = prevJustifyRef.current;
-  const prevAlign = prevAlignRef.current;
+  const referenceElDocumentPos = useObjectDependency(
+    useMemo(
+      () => getElementDocumentPosition(referenceElement),
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [
+        referenceElement,
+        viewportSize,
+        lastTimeRefElMutated,
+        active,
+        align,
+        justify,
+        forceUpdateCounter,
+      ],
+    ),
+  );
 
-  useEffect(() => {
-    prevJustifyRef.current = justify;
-    prevAlignRef.current = align;
-  });
+  const contentElDocumentPos = useObjectDependency(
+    useMemo(
+      () => getElementDocumentPosition(contentNode),
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [
+        contentNode,
+        viewportSize,
+        lastTimeContentElMutated,
+        active,
+        align,
+        justify,
+        forceUpdateCounter,
+      ],
+    ),
+  );
 
-  useLayoutEffect(() => {
+  const prevJustify = usePrevious<Justify>(justify);
+  const prevAlign = usePrevious<Align>(align);
+
+  const layoutMightHaveChanged =
+    (prevJustify !== justify &&
+      (justify === Justify.Fit || prevJustify === Justify.Fit)) ||
+    (prevAlign !== align && justify === Justify.Fit);
+
+  useIsomorphicLayoutEffect(() => {
     // justify={Justify.Fit} can cause the content's height/width to change
     // If we're switching to/from Fit, force an extra pass to make sure the popover is positioned correctly.
     // Also if we're switching between alignments and have Justify.Fit, it may switch between setting the width and
     // setting the height, so force an update in that case as well.
-    if (
-      (prevJustify !== justify &&
-        (justify === Justify.Fit || prevJustify === Justify.Fit)) ||
-      (prevAlign !== align && justify === Justify.Fit)
-    ) {
+    if (layoutMightHaveChanged) {
       setForceUpdateCounter(n => n + 1);
     }
-  });
+  }, [layoutMightHaveChanged]);
+
+  // Don't render the popover initially since computing the position depends on
+  // the window which isn't available if the component is rendered on server side.
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useIsomorphicLayoutEffect(() => setShouldRender(true), []);
+
+  if (!shouldRender) {
+    return null;
+  }
 
   const {
     align: windowSafeAlign,
@@ -190,21 +205,19 @@ function Popover({
   const Root = usePortal ? Portal : Fragment;
   const rootProps = usePortal ? { className: portalClassName } : {};
 
-  const renderedChildren = (() => {
-    if (!children) {
-      return null;
-    }
+  let renderedChildren: null | React.ReactNode;
 
-    if (typeof children === 'function') {
-      return children({
-        align: windowSafeAlign,
-        justify: windowSafeJustify,
-        referenceElPos: referenceElDocumentPos,
-      });
-    }
-
-    return children;
-  })();
+  if (children == null) {
+    renderedChildren = null;
+  } else if (typeof children === 'function') {
+    renderedChildren = children({
+      align: windowSafeAlign,
+      justify: windowSafeJustify,
+      referenceElPos: referenceElDocumentPos,
+    });
+  } else {
+    renderedChildren = children;
+  }
 
   return (
     <Transition
@@ -225,7 +238,6 @@ function Popover({
           <Root {...rootProps}>
             <div
               {...rest}
-              ref={setContentNode}
               className={cx(
                 rootPopoverStyle,
                 css(positionCSS),
@@ -233,7 +245,11 @@ function Popover({
                 className,
               )}
             >
-              {renderedChildren}
+              {/*
+                We create this inner node with a ref because placing it on its parent
+                creates an infinite loop in some cases when dynamic styles are applied.
+               */}
+              <div ref={setContentNode}>{renderedChildren}</div>
             </div>
           </Root>
         </>

@@ -1,84 +1,49 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, boolean, select } from '@storybook/addon-knobs';
+import { text, boolean } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
-import { colors } from '@leafygreen-ui/theme';
-import Checkbox, { Variant } from '.';
+import { uiColors } from '@leafygreen-ui/palette';
+import Checkbox from '.';
 
-interface ControlProps {
-  variant?: Variant;
-  checked?: boolean;
-  bold?: boolean;
-  indeterminate?: boolean;
-  label?: string;
-  disabled?: boolean;
-  animate?: boolean;
+function Control() {
+  const [checked, setChecked] = React.useState(false);
+  const darkMode = boolean('darkMode', false);
+
+  return (
+    <Checkbox
+      darkMode={darkMode}
+      checked={checked}
+      disabled={boolean('Disabled', false)}
+      indeterminate={boolean('Indeterminate', false)}
+      bold={boolean('Bold', false)}
+      animate={boolean('Animate', true)}
+      onChange={() => setChecked(curr => !curr)}
+      label={text('Label', 'I agree to this thing.')}
+      className={css`
+        padding: 20px;
+        background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
+      `}
+    />
+  );
 }
 
-class Control extends PureComponent<ControlProps> {
-  static propTypes = {
-    variant: PropTypes.oneOf(['default', 'light']),
-    checked: PropTypes.bool,
-    disabled: PropTypes.bool,
-    indeterminate: PropTypes.bool,
-    label: PropTypes.string,
-    bold: PropTypes.bool,
-    animate: PropTypes.bool,
-  };
-
-  state = { checked: false };
-
-  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ checked: e.target.checked });
-  };
-
-  render() {
-    const {
-      bold,
-      indeterminate,
-      animate,
-      label,
-      disabled,
-      variant = Variant.Default,
-    } = this.props;
-    const { checked } = this.state;
+storiesOf('Checkbox', module)
+  .add('Uncontrolled', () => {
+    const darkMode = boolean('darkMode', false);
 
     return (
-      <div
+      <Checkbox
+        darkMode={darkMode}
+        disabled={boolean('Disabled', false)}
+        indeterminate={boolean('Indeterminate', false)}
+        label={text('Label', 'I agree to this thing.')}
+        bold={boolean('Bold', false)}
+        animate={boolean('Animate', true)}
         className={css`
-          background-color: ${variant === 'light'
-            ? colors.gray[1]
-            : colors.gray[8]};
           padding: 20px;
+          background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
         `}
-      >
-        <Checkbox
-          checked={checked}
-          disabled={disabled}
-          indeterminate={indeterminate}
-          onChange={this.onChange}
-          label={label}
-          variant={variant}
-          bold={bold}
-          animate={animate}
-        />
-      </div>
+      />
     );
-  }
-}
-
-storiesOf('Checkbox', module).add('Default', () => (
-  <Control
-    variant={select(
-      'Variant',
-      Object.values(Variant) as Array<Variant>,
-      Variant.Default,
-    )}
-    disabled={boolean('Disabled', false)}
-    indeterminate={boolean('Indeterminate', false)}
-    label={text('Label', 'I agree to this thing.')}
-    bold={boolean('Bold', false)}
-    animate={boolean('Animate', true)}
-  />
-));
+  })
+  .add('Controlled', () => <Control />);

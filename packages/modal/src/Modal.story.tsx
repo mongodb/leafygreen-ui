@@ -55,7 +55,7 @@ function Interactive() {
         size={select('size', Object.values(ModalSize), ModalSize.Default)}
       >
         <div>
-          <p>Modal Content goes here.</p>
+          <div>Modal Content goes here.</div>
           <button>Click me, I will not close the modal!</button>
         </div>
       </Modal>

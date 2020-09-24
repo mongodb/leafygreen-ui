@@ -1,24 +1,26 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { IdAllocator, isComponentType } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { Variant, Size } from './types';
+import { Size } from './types';
 
 export interface RadioGroupProps {
   /**
-   * Determines if the component will appear in default or light mode.
+   * Determines whether or not the RadioGroup will appear in dark mode.
+   *
+   * @default false
    */
-  variant?: Variant;
+  darkMode?: boolean;
 
   /**
    * className supplied to RadioGroup container.
    */
-  className: string;
+  className?: string;
 
   /**
    * Callback to be executed when a Radio is selected.
    */
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 
   /**
    * Content that will appear inside of RadioGroup component.
@@ -37,10 +39,13 @@ export interface RadioGroupProps {
 
   /**
    * Determines the size of the Radio components Can be 'small' or 'default.
+   *
    * @default default
    */
   size?: Size;
 }
+
+const idAllocator = IdAllocator.create('radio-group');
 
 /**
  * # RadioGroup
@@ -58,11 +63,11 @@ export interface RadioGroupProps {
  * @param props.value Radio that should appear checked. If value passed, component will be controlled by consumer.
  * @param props.className classname applied to RadioGroup container.
  * @param props.name Name passed to each Radio belonging to the RadioGroup.
- * @param props.variant Variant to determine if component will appear `default` or `light`.
+ * @param props.darkMode Determines whether or not the RadioGroup will appear in dark mode.
  * @param props.size Determines the size of the Radio components Can be 'small' or 'default.
  */
 function RadioGroup({
-  variant = Variant.Default,
+  darkMode = false,
   size = Size.Default,
   className,
   onChange,
@@ -70,23 +75,26 @@ function RadioGroup({
   value: controlledValue,
   name: nameProp,
 }: RadioGroupProps) {
-  const isControlled = controlledValue != null;
+  let isControlled = controlledValue != null ? true : false,
+    defaultChecked = '';
 
-  let defaultChecked = '';
+  React.Children.forEach(children, child => {
+    if (isComponentType(child, 'Radio')) {
+      if (child.props.checked != null) {
+        isControlled = true;
+      }
 
-  if (!isControlled) {
-    React.Children.forEach(children, child => {
-      if (isComponentType(child, 'Radio') && child.props?.default) {
+      if (child.props.default) {
         defaultChecked = child.props.value;
       }
-    });
-  }
+    }
+  });
 
   const [uncontrolledValue, setUncontrolledValue] = React.useState<string>(
     defaultChecked,
   );
 
-  const name = nameProp || `radio-group-${Math.floor(Math.random() * 1000000)}`;
+  const name = useMemo(() => nameProp ?? idAllocator.generate(), [nameProp]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
@@ -111,7 +119,7 @@ function RadioGroup({
       onChange: handleChange,
       id: child.props.id || `${name}-${index}`,
       checked,
-      variant,
+      darkMode,
       name,
       size,
     });
@@ -134,7 +142,7 @@ function RadioGroup({
 }
 
 RadioGroup.propTypes = {
-  variant: PropTypes.oneOf(['default', 'light']),
+  darkMode: PropTypes.bool,
   size: PropTypes.oneOf(['small', 'default']),
   className: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

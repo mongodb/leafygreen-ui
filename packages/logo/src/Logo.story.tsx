@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { number, select, boolean } from '@storybook/addon-knobs';
+import { number, boolean } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { Variant } from './utils';
 import {
   Logo,
   LogoMark,
@@ -42,15 +41,11 @@ const map = {
 
 storiesOf('Logo', module)
   .add('LogoMark', () => {
-    const variant = select(
-      'Variant',
-      Object.values(Variant) as Array<Variant>,
-      Variant.Dark,
-    );
+    const darkMode = boolean('darkMode', false);
 
     const background = css`
       padding: 10px;
-      background-color: ${variant === Variant.Dark
+      background-color: ${!darkMode
         ? uiColors.gray.light3
         : uiColors.gray.dark3};
     `;
@@ -58,7 +53,7 @@ storiesOf('Logo', module)
     return (
       <div className={background}>
         <LogoMark
-          variant={variant}
+          darkMode={darkMode}
           knockout={boolean('Knockout', false)}
           height={number('Height', 40)}
         />
@@ -66,15 +61,11 @@ storiesOf('Logo', module)
     );
   })
   .add('Logo', () => {
-    const variant = select(
-      'Variant',
-      Object.values(Variant) as Array<Variant>,
-      Variant.Dark,
-    );
+    const darkMode = boolean('darkMode', false);
 
     const background = css`
       padding: 10px;
-      background-color: ${variant === Variant.Dark
+      background-color: ${!darkMode
         ? uiColors.gray.light3
         : uiColors.gray.dark3};
     `;
@@ -82,7 +73,7 @@ storiesOf('Logo', module)
     return (
       <div className={background}>
         <Logo
-          variant={variant}
+          darkMode={darkMode}
           knockout={boolean('Knockout', false)}
           height={number('Height', 40)}
         />
@@ -93,7 +84,7 @@ storiesOf('Logo', module)
     const knockout = boolean('knockout', false);
     const size = number('size', 18);
 
-    const renderProductLogo = product => {
+    const renderProductLogo = (product: keyof typeof map) => {
       const Logo = map[product];
       return (
         <div key={product} className={containerStyle}>
@@ -103,5 +94,11 @@ storiesOf('Logo', module)
       );
     };
 
-    return <>{Object.keys(map).map(renderProductLogo)}</>;
+    return (
+      <>
+        {Object.keys(map).map(key =>
+          renderProductLogo(key as keyof typeof map),
+        )}
+      </>
+    );
   });

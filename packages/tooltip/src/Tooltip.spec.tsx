@@ -47,6 +47,10 @@ function renderTooltip(
   return { ...utils, button, backdrop };
 }
 
+beforeEach(() => {
+  onClick.mockReset();
+});
+
 describe('packages/tooltip', () => {
   describe('when uncontrolled', () => {
     test(`renders a button to the DOM with ${buttonText}`, () => {
@@ -54,7 +58,7 @@ describe('packages/tooltip', () => {
       expect(getByText(buttonText)).toBeInTheDocument();
     });
 
-    test('when "triggerEvent" is set to click, clicking trigger opens and closes the tooltip', () => {
+    test('when "triggerEvent" is set to click, clicking trigger opens and closes the tooltip', async () => {
       const { button, getByTestId } = renderTooltip({
         triggerEvent: 'click',
       });
@@ -69,7 +73,7 @@ describe('packages/tooltip', () => {
 
       // checking for visibility, because opacity changes before tooltip transitions out of the DOM
       fireEvent.click(button);
-      expect(tooltip).not.toBeVisible();
+      await waitForElementToBeRemoved(tooltip);
     });
 
     test('when "triggerEvent" is set to "hover", hovering on and off the trigger opens and closes the tooltip', async () => {
@@ -136,16 +140,18 @@ describe('packages/tooltip', () => {
     });
 
     test('tooltip closes when enabled is set to "false"', async () => {
-      const { queryByTestId, getByTestId, button, container } = renderTooltip({
+      const { getByTestId, button, container } = renderTooltip({
         triggerEvent: 'click',
         enabled: true,
       });
 
       fireEvent.click(button);
 
-      await waitFor(() => getByTestId(tooltipTestId), { timeout: 500 });
-
-      expect(getByTestId(tooltipTestId)).toBeInTheDocument();
+      const tooltip = await waitFor(() => {
+        const tooltip = getByTestId(tooltipTestId);
+        expect(tooltip).toBeVisible();
+        return tooltip;
+      });
 
       render(
         <>
@@ -163,14 +169,12 @@ describe('packages/tooltip', () => {
         { container },
       );
 
-      await waitForElementToBeRemoved(getByTestId(tooltipTestId), {
-        timeout: 500,
+      await waitFor(() => {
+        expect(tooltip).not.toBeInTheDocument();
       });
-
-      expect(queryByTestId(tooltipTestId)).not.toBeInTheDocument();
     });
 
-    test('backdrop clicks close the tooltip', () => {
+    test('backdrop clicks close the tooltip', async () => {
       const { getByTestId, button, backdrop } = renderTooltip({
         triggerEvent: 'click',
       });
@@ -180,7 +184,7 @@ describe('packages/tooltip', () => {
       expect(tooltip).toBeInTheDocument();
 
       fireEvent.click(backdrop);
-      expect(tooltip).not.toBeVisible();
+      await waitForElementToBeRemoved(tooltip);
     });
 
     test('escape click closes tooltip', async () => {
@@ -196,7 +200,7 @@ describe('packages/tooltip', () => {
         key: 'Escape',
         keyCode: 27,
       });
-      expect(tooltip).not.toBeVisible();
+      await waitForElementToBeRemoved(tooltip);
     });
 
     test('when "shouldClose" prop is returns true', async () => {
@@ -210,7 +214,7 @@ describe('packages/tooltip', () => {
       await act(() => waitFor(() => expect(tooltip).toBeVisible()));
 
       fireEvent.click(backdrop);
-      expect(tooltip).not.toBeVisible();
+      await waitForElementToBeRemoved(tooltip);
     });
 
     test('when "shouldClose" prop is returns false', async () => {
@@ -240,7 +244,7 @@ describe('packages/tooltip', () => {
       expect(getByTestId(tooltipTestId)).toBeVisible();
     });
 
-    test(' onClick fires when trigger is clicked', () => {
+    test('onClick fires when trigger is clicked', () => {
       const { button } = renderTooltip({
         open: true,
         setOpen,
@@ -250,19 +254,37 @@ describe('packages/tooltip', () => {
       expect(onClick).toHaveBeenCalled();
     });
 
-    test('clicking content inside of tooltip does not force tooltip to close', () => {
-      const { button, getByTestId } = renderTooltip({
-        open: true,
-        setOpen,
-      });
+    describe('clicking content inside of tooltip does not force tooltip to close', () => {
+      function testCase(name: string, usePortal: boolean): void {
+        test(name, () => {
+          const { button, getByTestId } = renderTooltip({
+            open: true,
+            setOpen,
+            usePortal,
+          });
 
-      fireEvent.click(button);
+          fireEvent.click(button);
 
-      const tooltip = getByTestId(tooltipTestId);
-      expect(tooltip).toBeVisible();
+          const tooltip = getByTestId(tooltipTestId);
+          expect(tooltip).toBeVisible();
 
-      fireEvent.click(tooltip);
-      expect(tooltip).toBeVisible();
+          onClick.mockClear();
+
+          let clickTarget: HTMLElement = tooltip;
+
+          while (![document.body, button].includes(clickTarget)) {
+            fireEvent.click(clickTarget);
+
+            expect(tooltip).toBeVisible();
+            expect(onClick).not.toHaveBeenCalled();
+
+            clickTarget = clickTarget.parentElement!;
+          }
+        });
+      }
+
+      testCase('with portal', true);
+      testCase('without portal', false);
     });
   });
 
@@ -297,7 +319,7 @@ describe('packages/tooltip', () => {
       expect(button).toBeVisible();
     });
 
-    test('component triggers opening and closing of tooltip', () => {
+    test('component triggers opening and closing of tooltip', async () => {
       const { button, getByTestId } = renderClassTrigger({
         triggerEvent: 'click',
       });
@@ -307,7 +329,7 @@ describe('packages/tooltip', () => {
       const tooltip = getByTestId(tooltipTestId);
       expect(tooltip).toBeInTheDocument();
       fireEvent.click(button);
-      expect(tooltip).not.toBeVisible();
+      await waitForElementToBeRemoved(tooltip);
     });
   });
 
@@ -339,7 +361,7 @@ describe('packages/tooltip', () => {
       expect(button).toBeInTheDocument();
     });
 
-    test(`when "triggerEvent" is click, clicking triggers opening and closing of tooltip`, () => {
+    test(`when "triggerEvent" is click, clicking triggers opening and closing of tooltip`, async () => {
       const { button, getByTestId } = renderInlineTrigger({
         triggerEvent: 'click',
       });
@@ -349,7 +371,7 @@ describe('packages/tooltip', () => {
       expect(tooltip).toBeInTheDocument();
 
       fireEvent.click(button);
-      expect(tooltip).not.toBeVisible();
+      await waitForElementToBeRemoved(tooltip);
     });
   });
 
@@ -412,17 +434,19 @@ describe('packages/tooltip', () => {
       portalClassName: 'test-classname',
     });
 
-    expect(
-      getByTestId(tooltipTestId).parentElement?.parentElement?.className,
-    ).toBe('test-classname');
+    const matchedElements = document.querySelectorAll('body > .test-classname');
+    expect(matchedElements).toHaveLength(1);
+
+    const portalRoot = matchedElements.item(0);
+    expect(portalRoot).toContainElement(getByTestId(tooltipTestId));
   });
 
   // eslint-disable-next-line jest/expect-expect
   test('does not allow specifying "portalClassName", when "usePortal" is false', () => {
-    // @ts-expect-error
     renderTooltip({
       open: true,
       usePortal: false,
+      // @ts-expect-error
       portalClassName: 'test-classname',
     });
   });

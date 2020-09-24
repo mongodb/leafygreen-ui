@@ -20,19 +20,6 @@ function renderTabs(props = {}, useDefault?: boolean) {
   return utils;
 }
 
-function renderTab(props = {}) {
-  const utils = render(
-    <Tabs>
-      <Tab name="Name A" {...props} data-testid="tab-test-id">
-        Test Content 1
-      </Tab>
-      <Tab name="Name B">Test Content 2</Tab>
-    </Tabs>,
-  );
-  const tab = utils.getByTestId('tab-test-id');
-  return { ...utils, tab };
-}
-
 describe('packages/tab', () => {
   test('clicking a tab fires setSelected callback', () => {
     const { getByText } = renderTabs({ setSelected, selected: 1 });
@@ -162,12 +149,5 @@ describe('packages/tab', () => {
       const activeTab = getByText('Test Content 1');
       expect(activeTab).toBeVisible();
     });
-  });
-});
-
-describe('packages/tabs/tab', () => {
-  test('tab renders as disabled when the prop is set', () => {
-    const { tab } = renderTab({ disabled: true });
-    expect(tab).toHaveAttribute('aria-disabled');
   });
 });

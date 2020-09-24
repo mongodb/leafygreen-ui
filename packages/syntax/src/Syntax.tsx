@@ -5,18 +5,21 @@ import { css } from '@leafygreen-ui/emotion';
 import hljs from 'highlight.js/lib/core';
 import hljsDefineGraphQL from 'highlightjs-graphql';
 import CodeWrapper from './CodeWrapper';
-import { Variant, Language, SyntaxProps } from './types';
+import { Language, SyntaxProps } from './types';
 import { SupportedLanguages, languageParsers } from './languages';
 import { injectGlobalStyles } from './globalStyles';
 import renderingPlugin from './renderingPlugin';
 
-type FilteredSupportedLanguagesEnum = Omit<typeof SupportedLanguages, 'Cs'>;
+type FilteredSupportedLanguagesEnum = Omit<
+  typeof SupportedLanguages,
+  'Cs' | 'JS' | 'TS'
+>;
 type FilteredSupportedLanguages = FilteredSupportedLanguagesEnum[keyof FilteredSupportedLanguagesEnum];
 
 function filterSupportedLanguages(
   language: SupportedLanguages,
 ): language is FilteredSupportedLanguages {
-  return language !== 'cs';
+  return language !== 'cs' && language !== 'js' && language !== 'ts';
 }
 
 let syntaxHighlightingInitialized = false;
@@ -26,7 +29,7 @@ function initializeSyntaxHighlighting() {
 
   injectGlobalStyles();
 
-  // We filter out 'cs' here because it's redundant with 'csharp'
+  // We filter out 'cs' here because it's redundant with 'csharp' and 'js' because it's redundant with 'javascript'
   const SupportedLanguagesList = Object.values(SupportedLanguages).filter(
     filterSupportedLanguages,
   );
@@ -51,7 +54,7 @@ function initializeSyntaxHighlighting() {
 function Syntax({
   children,
   language,
-  variant = Variant.Light,
+  darkMode = false,
   showLineNumbers = false,
   ...rest
 }: SyntaxProps) {
@@ -59,16 +62,19 @@ function Syntax({
     initializeSyntaxHighlighting();
   }
 
-  const codeWrapperSharedProps = { language, variant, ...rest };
+  const codeWrapperSharedProps = { language, darkMode, ...rest };
 
-  if (language === Language.None) {
+  const highlightedContent = useMemo(() => {
+    if (language === Language.None) {
+      return null;
+    }
+
+    return hljs.highlight(language, children);
+  }, [language, children]);
+
+  if (highlightedContent === null) {
     return <CodeWrapper {...codeWrapperSharedProps}>{children}</CodeWrapper>;
   }
-
-  const highlightedContent = useMemo(() => hljs.highlight(language, children), [
-    language,
-    children,
-  ]);
 
   if (showLineNumbers) {
     return (
@@ -97,7 +103,7 @@ Syntax.propTypes = {
   children: PropTypes.string.isRequired,
   lang: PropTypes.oneOf(Object.values(Language)),
   className: PropTypes.string,
-  variant: PropTypes.oneOf(Object.values(Variant)),
+  darkMode: PropTypes.bool,
 };
 
 export default Syntax;

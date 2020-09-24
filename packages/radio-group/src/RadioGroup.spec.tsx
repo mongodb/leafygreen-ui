@@ -1,8 +1,37 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { RadioGroup, Radio } from '.';
+import { Radio, RadioGroup } from '.';
+import { RadioGroupProps } from './RadioGroup';
+import { RadioProps } from './Radio';
 
-const renderControlledRadioGroup = props => {
+function WrappedRadio({ checked }: { checked: string }) {
+  return (
+    <RadioGroup>
+      <Radio
+        value="input-1"
+        checked={checked === 'input-1'}
+        data-testid="first-radio"
+      >
+        Input 1
+      </Radio>
+      <Radio
+        value="input-2"
+        checked={checked === 'input-2'}
+        data-testid="second-radio"
+      >
+        Input 2
+      </Radio>
+    </RadioGroup>
+  );
+}
+
+const renderWrappedRadioGroup = (checked: string) => {
+  render(<WrappedRadio checked={checked} />);
+};
+
+const renderControlledRadioGroup = (
+  props: Omit<RadioGroupProps, 'children'> = {},
+) => {
   render(
     <RadioGroup value="input-1" {...props}>
       <Radio value="input-1">Input 1</Radio>
@@ -12,7 +41,9 @@ const renderControlledRadioGroup = props => {
   );
 };
 
-const renderUncontrolledRadioGroup = props => {
+const renderUncontrolledRadioGroup = (
+  props: Omit<RadioGroupProps, 'children'> = {},
+) => {
   render(
     <RadioGroup {...props}>
       <Radio default value="input-1">
@@ -24,7 +55,7 @@ const renderUncontrolledRadioGroup = props => {
   );
 };
 
-const renderRadio = props => {
+const renderRadio = (props: RadioProps) => {
   const { getByTestId } = render(
     <Radio {...props} data-testid="lg-radio" value="input-only" />,
   );
@@ -34,7 +65,7 @@ const renderRadio = props => {
 
 describe('packages/radio-group', () => {
   describe('when the RadioGroup is controlled', () => {
-    let onChange;
+    let onChange: jest.Mock;
 
     beforeEach(() => {
       onChange = jest.fn();
@@ -63,12 +94,27 @@ describe('packages/radio-group', () => {
       fireEvent.click(secondInput);
 
       expect(firstInput.getAttribute('aria-checked')).toBe('true');
-      expect(secondInput.getAttribute('aria-checked')).toBe('false');
+      expect(secondInput.getAttribute('aria-checked')).toBe(null);
+    });
+  });
+
+  describe('when an external component controls the RadioGroup', () => {
+    test('initial checked Radio is determined by `checked` prop on Radio', () => {
+      renderWrappedRadioGroup('input-1');
+      const initialChecked = screen.getByTestId('first-radio');
+      expect((initialChecked as HTMLInputElement).checked).toBe(true);
+    });
+    test('when `checked` value changes, the checked Radio changes', () => {
+      renderWrappedRadioGroup('input-2');
+      const newChecked = screen.getByTestId('second-radio');
+      expect((newChecked as HTMLInputElement).checked).toBe(true);
+      const initialChecked = screen.getByTestId('first-radio');
+      expect((initialChecked as HTMLInputElement).checked).toBe(false);
     });
   });
 
   describe('when the RadioGroup is uncontrolled', () => {
-    let onChange;
+    let onChange: jest.Mock;
 
     beforeEach(() => {
       onChange = jest.fn();
@@ -120,8 +166,9 @@ describe('packages/radio-group', () => {
     const className = 'radio-className';
     test(`renders "${className}" in the labels's class list`, () => {
       const { radio } = renderRadio({ className });
-      const label = radio.parentNode;
-      expect(label.classList.contains(className)).toBe(true);
+      const label = radio.parentElement;
+      expect(label).not.toBeNull();
+      expect(label!.classList.contains(className)).toBe(true);
     });
 
     test(`renders disabled radio when disabled prop is set`, () => {

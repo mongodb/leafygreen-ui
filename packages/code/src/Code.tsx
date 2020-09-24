@@ -1,9 +1,9 @@
-import React, { useRef, useEffect, useLayoutEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import Syntax, {
   SyntaxProps,
-  Variant,
   Language,
   variantColors,
 } from '@leafygreen-ui/syntax';
@@ -14,6 +14,13 @@ import WindowChrome from './WindowChrome';
 import debounce from 'lodash/debounce';
 import { uiColors } from '@leafygreen-ui/palette';
 import ClipboardJS from 'clipboard';
+
+const Mode = {
+  Light: 'light',
+  Dark: 'dark',
+} as const;
+
+type Mode = typeof Mode[keyof typeof Mode];
 
 const whiteSpace = 12;
 
@@ -43,8 +50,8 @@ const singleLineCopyStyle = css`
   padding: 10px;
 `;
 
-function getWrapperVariantStyle(variant: Variant): string {
-  const colors = variantColors[variant];
+function getWrapperVariantStyle(mode: Mode): string {
+  const colors = variantColors[mode];
 
   return css`
     border-color: ${colors[1]};
@@ -53,16 +60,16 @@ function getWrapperVariantStyle(variant: Variant): string {
   `;
 }
 
-function getSidebarVariantStyle(variant: Variant): string {
-  const colors = variantColors[variant];
+function getSidebarVariantStyle(mode: Mode): string {
+  const colors = variantColors[mode];
 
-  switch (variant) {
-    case Variant.Light:
+  switch (mode) {
+    case Mode.Light:
       return css`
         border-color: ${colors[1]};
         background-color: white;
       `;
-    case Variant.Dark:
+    case Mode.Dark:
       return css`
         border-color: ${colors[1]};
         background-color: ${colors[1]};
@@ -70,7 +77,7 @@ function getSidebarVariantStyle(variant: Variant): string {
   }
 }
 
-function getCopyButtonStyle(variant: Variant, copied: boolean): string {
+function getCopyButtonStyle(mode: Mode, copied: boolean): string {
   const baseStyle = css`
     align-self: center;
     color: ${uiColors.gray.base};
@@ -102,7 +109,7 @@ function getCopyButtonStyle(variant: Variant, copied: boolean): string {
     );
   }
 
-  if (variant === Variant.Dark) {
+  if (mode === Mode.Dark) {
     return cx(
       baseStyle,
       css`
@@ -123,13 +130,10 @@ const ScrollState = {
 
 type ScrollState = typeof ScrollState[keyof typeof ScrollState];
 
-function getScrollShadowStyle(
-  scrollState: ScrollState,
-  variant: Variant,
-): string {
-  const colors = variantColors[variant];
+function getScrollShadowStyle(scrollState: ScrollState, mode: Mode): string {
+  const colors = variantColors[mode];
   const shadowColor =
-    variant === Variant.Light ? 'rgba(93,108,116,0.3)' : 'rgba(0,0,0,0.35)';
+    mode === Mode.Light ? 'rgba(93,108,116,0.3)' : 'rgba(0,0,0,0.35)';
 
   if (scrollState === ScrollState.Both) {
     return css`
@@ -201,18 +205,20 @@ type DetailedElementProps<T> = React.DetailedHTMLProps<
 >;
 
 interface CodeOuterWrapperProps
-  extends Pick<CodeProps, 'chromeTitle' | 'variant' | 'showWindowChrome'> {
+  extends Pick<CodeProps, 'chromeTitle' | 'showWindowChrome' | 'darkMode'> {
   children: React.ReactNode;
 }
 
 function CodeOuterWrapper({
   children,
   chromeTitle,
-  variant = Variant.Light,
+  darkMode = false,
   showWindowChrome,
 }: CodeOuterWrapperProps) {
+  const mode = darkMode ? Mode.Dark : Mode.Light;
+
   const wrapperStyle = css`
-    border: 1px solid ${variantColors[variant][1]};
+    border: 1px solid ${variantColors[mode][1]};
     border-radius: 4px;
     overflow: hidden;
   `;
@@ -220,7 +226,7 @@ function CodeOuterWrapper({
   return (
     <div className={wrapperStyle}>
       {showWindowChrome && (
-        <WindowChrome chromeTitle={chromeTitle} variant={variant} />
+        <WindowChrome chromeTitle={chromeTitle} darkMode={darkMode} />
       )}
 
       <div
@@ -246,8 +252,8 @@ function CodeOuterWrapper({
  * @param props.children The string to be formatted.
  * @param props.className An additional CSS class added to the root element of Code.
  * @param props.multiline When true, whitespace and line breaks will be preserved. Default: `true`
- * @param props.lang The language used for syntax highlighing. Default: `auto`
- * @param props.variant Determines if the code block is rendered with a dark or light background. Default: 'light'
+ * @param props.language The language used for syntax highlighing.
+ * @param props.darkMode Determines if the code block will be rendered in dark mode. Default: `false`
  * @param props.showLineNumbers When true, shows line numbers in preformatted code blocks. Default: `false`
  * @param props.copyable When true, allows the code block to be copied to the user's clipboard. Default: `true`
  * @param props.onCopy Callback fired when Code is copied
@@ -257,7 +263,7 @@ function Code({
   className,
   multiline = true,
   language,
-  variant = Variant.Light,
+  darkMode = false,
   showLineNumbers = false,
   showWindowChrome = false,
   chromeTitle = '',
@@ -270,6 +276,7 @@ function Code({
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [copied, setCopied] = useState(false);
   const showCopyBar = !showWindowChrome && copyable;
+  const mode = darkMode ? Mode.Dark : Mode.Light;
 
   useEffect(() => {
     let timeoutId: any;
@@ -285,7 +292,7 @@ function Code({
     return () => clearTimeout(timeoutId);
   }, [copied]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (multiline) {
       const multilineEl = scrollableMultiLine.current;
 
@@ -305,22 +312,22 @@ function Code({
         setScrollState(ScrollState.Right);
       }
     }
-  }, []);
+  }, [multiline]);
 
   const wrapperClassName = cx(
     codeWrapperStyle,
-    getWrapperVariantStyle(variant),
+    getWrapperVariantStyle(mode),
     {
       [codeWrapperStyleWithWindowChrome]: showWindowChrome,
     },
     className,
-    getScrollShadowStyle(scrollState, variant),
+    getScrollShadowStyle(scrollState, mode),
   );
 
   const renderedSyntaxComponent = (
     <Syntax
       showLineNumbers={showLineNumbers}
-      variant={variant}
+      darkMode={darkMode}
       language={language}
     >
       {children}
@@ -360,13 +367,13 @@ function Code({
       className={cx(
         copyStyle,
         { [singleLineCopyStyle]: !multiline },
-        getSidebarVariantStyle(variant),
+        getSidebarVariantStyle(mode),
       )}
     >
       <IconButton
-        variant={variant}
+        darkMode={darkMode}
         aria-label="Copy"
-        className={cx(getCopyButtonStyle(variant, copied), 'copy-btn')}
+        className={cx(getCopyButtonStyle(mode, copied), 'copy-btn')}
         onClick={handleClick}
         data-clipboard-text={children}
       >
@@ -382,7 +389,7 @@ function Code({
 
   const commonWrapperProps = {
     chromeTitle,
-    variant,
+    darkMode,
     showWindowChrome,
   } as const;
 
@@ -425,7 +432,7 @@ Code.propTypes = {
   children: PropTypes.string.isRequired,
   multiline: PropTypes.bool,
   language: PropTypes.oneOf(Object.values(Language)),
-  variant: PropTypes.oneOf(Object.values(Variant)),
+  darkMode: PropTypes.bool,
   className: PropTypes.string,
   showLineNumbers: PropTypes.bool,
   showWindowChrome: PropTypes.bool,

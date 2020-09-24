@@ -1,5 +1,25 @@
 # @leafygreen-ui/button
 
+## 7.0.1
+
+### Patch Changes
+
+- 47846c77: Fixes unintentional exclusion of `ref` from TypeScript typing of props for `Button`, `SubMenu`, and `MenuItem` components.
+
+## 7.0.0
+
+### Major Changes
+
+- 6883ccd0: Moves `overflow` css rule to support the component's usage as a trigger for the Tooltip component
+
+### Patch Changes
+
+- d5d40791: Pin lodash version to latest to include fix for [prototype pollution attack vulnerability.](https://hackerone.com/reports/712065)
+- Updated dependencies [6883ccd0]
+- Updated dependencies [d5d40791]
+  - @leafygreen-ui/icon@6.6.0
+  - @leafygreen-ui/box@2.1.5
+
 ## 6.0.2
 
 ### Patch Changes

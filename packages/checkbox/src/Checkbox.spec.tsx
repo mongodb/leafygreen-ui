@@ -9,7 +9,9 @@ const onChange = jest.fn();
 const onClick = jest.fn();
 
 function renderCheckbox(props = {}) {
-  const utils = render(<Checkbox data-testid="checkbox" {...props} />);
+  const utils = render(
+    <Checkbox data-testid="checkbox" label="this is the label" {...props} />,
+  );
   const checkbox = utils.getByTestId('checkbox');
   const label = utils.container.querySelector('label');
   return { ...utils, checkbox, label };
@@ -37,6 +39,11 @@ describe('packages/checkbox', () => {
     const { checkbox } = renderCheckbox({ disabled: true });
     expect((checkbox as HTMLInputElement).disabled).toBe(true);
     expect(checkbox.getAttribute('aria-disabled')).toBe('true');
+  });
+
+  test('renders as indeterminate when the prop is set', () => {
+    const { checkbox } = renderCheckbox({ indeterminate: true });
+    expect(checkbox.getAttribute('aria-checked')).toBe('mixed');
   });
 
   describe('when controlled', () => {

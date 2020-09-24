@@ -1,5 +1,45 @@
 # @leafygreen-ui/code
 
+## 5.0.0
+
+### Major Changes
+
+- 729c79f8: Deprecates `variant` prop in favor of `darkMode` prop to control whether or not the component will appear in dark mode
+
+### Patch Changes
+
+- Updated dependencies [729c79f8]
+  - @leafygreen-ui/syntax@4.0.0
+
+## 4.0.4
+
+### Patch Changes
+
+- Updated dependencies [fe371e37]
+- Updated dependencies [a84219f1]
+  - @leafygreen-ui/syntax@3.1.0
+  - @leafygreen-ui/icon-button@8.0.0
+
+## 4.0.3
+
+### Patch Changes
+
+- e599707: Require lodash dependencies instead of inlining them.
+- 8c867bb: Reduces server side effect warnings
+- Updated dependencies [e49d66b]
+- Updated dependencies [e599707]
+- Updated dependencies [8c867bb]
+  - @leafygreen-ui/icon@6.5.0
+  - @leafygreen-ui/hooks@4.2.0
+  - @leafygreen-ui/icon-button@7.0.5
+
+## 4.0.2
+
+### Patch Changes
+
+- Updated dependencies [ab4c074]
+  - @leafygreen-ui/icon-button@7.0.0
+
 ## 4.0.1
 
 ### Patch Changes

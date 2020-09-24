@@ -1,50 +1,64 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { isComponentType, keyMap } from '@leafygreen-ui/lib';
+import { keyMap, isComponentType } from '@leafygreen-ui/lib';
 import { useEventListener } from '@leafygreen-ui/hooks';
 import TabTitle from './TabTitle';
 import omit from 'lodash/omit';
 
-const borderHeight = 3;
+const Mode = {
+  Dark: 'dark',
+  Light: 'light',
+} as const;
+
+type Mode = typeof Mode[keyof typeof Mode];
+
+export { Mode };
+
+const modeColors = {
+  [Mode.Light]: {
+    activeStyle: css`
+      color: ${uiColors.green.dark2};
+
+      &:hover:not(:focus) {
+        color: ${uiColors.green.dark2};
+      }
+    `,
+    disabledColor: css`
+      color: ${uiColors.gray.light1};
+    `,
+    underlineColor: css`
+      border-bottom: 1px solid ${uiColors.gray.light2};
+    `,
+  },
+
+  [Mode.Dark]: {
+    activeStyle: css`
+      color: ${uiColors.green.light2};
+
+      &:hover:not(:focus) {
+        color: ${uiColors.green.light2};
+      }
+    `,
+    disabledColor: css`
+      color: ${uiColors.gray.dark1};
+    `,
+    underlineColor: css`
+      border-bottom: 1px solid ${uiColors.gray.dark2};
+    `,
+  },
+};
 
 const listStyle = css`
   list-style: none;
-  padding: 0px;
+  padding: 0;
   display: flex;
   width: 100%;
 `;
 
-const activeStyle = css`
-  color: ${uiColors.gray.dark3};
-  cursor: default;
-`;
-
 const disabledStyle = css`
-  pointer-events: none;
-  color: ${uiColors.gray.light2};
-`;
-
-const grayBorder = css`
-  height: ${borderHeight}px;
-  background-color: ${uiColors.gray.light2};
-  position: relative;
-  // Makes border overlap with box-model for TabTitle components
-  margin-top: -${borderHeight}px;
-  pointer-events: none;
-`;
-
-const greenBorder = css`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  background-color: ${uiColors.green.base};
-  transition: 150ms transform ease-in-out, 150ms width ease-in-out 10ms;
-`;
-
-const focusedStyle = css`
-  background-color: ${uiColors.blue.base};
+  cursor: not-allowed;
 `;
 
 interface TabsProps {
@@ -67,6 +81,12 @@ interface TabsProps {
    * className supplied to Tabs container.
    */
   className?: string;
+
+  /**
+   * determines if component will appear for Dark Mode
+   * @default false
+   */
+  darkMode?: boolean;
 
   /**
    * HTML Element that wraps title in Tab List.
@@ -96,10 +116,13 @@ function Tabs({
   setSelected: setControlledSelected,
   selected: controlledSelected,
   className,
+  darkMode = false,
   as = 'button',
   ...rest
 }: TabsProps) {
-  const childrenArray = React.Children.toArray(children);
+  const childrenArray = React.Children.toArray(children) as Array<
+    React.ReactElement
+  >;
 
   const isControlled = typeof controlledSelected === 'number';
   const [uncontrolledSelected, setUncontrolledSelected] = useState(
@@ -109,22 +132,6 @@ function Tabs({
   const setSelected = isControlled
     ? setControlledSelected
     : setUncontrolledSelected;
-
-  const tabListRef = useRef<HTMLDivElement>(null);
-
-  const [focusedState, setFocusedState] = useState([0]);
-
-  const currentIndex = childrenArray.findIndex((child, index) => {
-    if (!child) {
-      return false;
-    }
-
-    if (typeof selected === 'number') {
-      return selected === index;
-    }
-
-    return child.props.default;
-  });
 
   function handleChange(
     e: React.SyntheticEvent<Element, MouseEvent>,
@@ -159,31 +166,6 @@ function Tabs({
 
   useEventListener('keydown', handleArrowKeyPress);
 
-  function calcStyle() {
-    if (
-      !tabListRef ||
-      !tabListRef.current ||
-      typeof currentIndex !== 'number'
-    ) {
-      return null;
-    }
-
-    const tabListChildren: Array<Element> = Array.from(
-      tabListRef.current.children,
-    );
-
-    let computedX = 0;
-
-    for (let i = 0; i < currentIndex; i++) {
-      computedX += tabListChildren[i].scrollWidth;
-    }
-
-    return css`
-      transform: translate3d(${computedX}px, 0, 0);
-      width: ${tabListChildren[currentIndex].scrollWidth}px;
-    `;
-  }
-
   const tabs = React.Children.map(children, (child, index) => {
     if (!isComponentType<'Tab'>(child, 'Tab')) {
       return child;
@@ -196,9 +178,15 @@ function Tabs({
     });
   });
 
+  const mode = darkMode ? Mode.Dark : Mode.Light;
+
   return (
     <div {...rest} className={className}>
-      <div className={listStyle} role="tablist" ref={tabListRef} tabIndex={0}>
+      <div
+        className={cx(listStyle, modeColors[mode].underlineColor)}
+        role="tablist"
+        tabIndex={0}
+      >
         {tabs.map((tab, index) => {
           const { selected, disabled, ...rest } = tab.props;
 
@@ -213,34 +201,26 @@ function Tabs({
             <TabTitle
               {...filteredRest}
               key={index}
+              ariaControl={`tab-${index}`}
+              disabled={disabled}
+              selected={selected}
+              index={index}
+              as={as}
+              darkMode={darkMode}
               className={cx({
-                [activeStyle]: selected,
-                [disabledStyle]: disabled,
+                [modeColors[mode].activeStyle]: selected,
+                [cx(modeColors[mode].disabledColor, disabledStyle)]: disabled,
               })}
               onClick={
                 !disabled
                   ? (event: React.MouseEvent) => handleChange(event, index)
                   : undefined
               }
-              ariaControl={`tab-${index}`}
-              disabled={disabled}
-              selected={selected}
-              index={index}
-              setFocusedState={setFocusedState}
-              as={as}
             >
               {tab.props.name}
             </TabTitle>
           );
         })}
-      </div>
-
-      <div className={grayBorder}>
-        <div
-          className={cx(greenBorder, calcStyle(), {
-            [focusedStyle]: focusedState.length > 0,
-          })}
-        />
       </div>
 
       {tabs}

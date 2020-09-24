@@ -5,7 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
-import IconButton, { Variant, Size } from './IconButton';
+import IconButton, { Size } from './IconButton';
 
 const containerStyle = css`
   padding: 60px;
@@ -15,9 +15,9 @@ const darkBackground = css`
   background-color: ${uiColors.gray.dark3};
 `;
 
-function getContainerStyle(variant: Variant) {
+function getContainerStyle(darkMode: boolean) {
   return cx(containerStyle, {
-    [darkBackground]: variant === Variant.Dark,
+    [darkBackground]: darkMode,
   });
 }
 
@@ -26,11 +26,7 @@ function getCommonProps() {
     'aria-label': 'Cloud',
     active: boolean('active', false),
     disabled: boolean('disabled', false),
-    variant: select(
-      'variant',
-      Object.values(Variant) as Array<Variant>,
-      Variant.Light,
-    ),
+    darkMode: boolean('darkMode', false),
     size: select('Size', Object.values(Size) as Array<Size>, Size.Default),
   };
 }
@@ -40,7 +36,7 @@ storiesOf('IconButton', module)
     const commonProps = getCommonProps();
 
     return (
-      <div className={getContainerStyle(commonProps.variant)}>
+      <div className={getContainerStyle(commonProps.darkMode)}>
         <IconButton {...commonProps}>
           <CloudIcon />
         </IconButton>
@@ -51,7 +47,7 @@ storiesOf('IconButton', module)
     const commonProps = getCommonProps();
 
     return (
-      <div className={getContainerStyle(commonProps.variant)}>
+      <div className={getContainerStyle(commonProps.darkMode)}>
         <IconButton {...commonProps} href="https://mongodb.design">
           <EllipsisIcon />
         </IconButton>

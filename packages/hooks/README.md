@@ -136,3 +136,43 @@ usePoller(onPoll, {
 | `optional.interval`  | `number`   | What interval the onPoll should be called.                           | `30000` |
 | `optional.immediate` | `boolean`  | If we immediately poll, if false we wait till first interval occurs. | `true`  |
 | `optional.enabled`   | `boolean`  | Is polling enabled.                                                  | `true`  |
+
+# usePrevious
+
+Hook to retrieve a value from the previous render.
+
+### Example
+
+```jsx
+import { usePrevious } from '@leafygreen-ui/hooks';
+
+const Example = ({nextValue: number}) => {
+  const value = usePrevious(nextValue);
+
+  return <div>{value}</div>;
+}
+
+// First render
+<Example nextValue={42} />  // will render an empty `div`
+
+// Second render
+<Example nextValue={2020} />  // will render "42"
+
+// Third render
+<Example nextValue={0} />  // will render "2020"
+```
+
+# useIsomorphicLayoutEffect
+
+Drop-in replacement for `useLayoutEffect` that does not produce warnings during server-side rendering. If your project uses the `react-hooks/exhaustive-deps` ESLint rule, it's recommended to add `useIsomorphicLayoutEffect` to the `additionalHooks` of the rule. Example:
+
+```js
+  rules: {
+    'react-hooks/exhaustive-deps': [
+      'warn',
+      {
+        additionalHooks: '(useIsomorphicLayoutEffect)'
+      }
+    ]
+  }
+```

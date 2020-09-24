@@ -11,6 +11,8 @@ import { typeScale1, typeScale2 } from './styles';
 const anchorDataProp = createDataProp('anchor-container');
 
 const linkStyles = css`
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
   color: ${uiColors.blue.base};
   cursor: pointer;
@@ -22,12 +24,11 @@ const linkStyles = css`
 
 const underline = css`
   background-repeat: repeat-x;
-  background-position: 0 1em;
-  background-size: 3px 3px;
+  background-size: 2px 2px;
+  background-position: center bottom;
 
   ${anchorDataProp.selector}:hover & {
     background-image: linear-gradient(
-      to right,
       ${uiColors.gray.light2} 100%,
       ${uiColors.gray.light2} 0
     );
@@ -54,7 +55,7 @@ const arrowRightIconHover = css`
 `;
 
 const openInNewTabStyles = css`
-  margin-bottom: -1px;
+  margin-bottom: 4px;
   margin-left: -1px;
   margin-right: -2px;
 `;
@@ -119,12 +120,14 @@ const Link: ExtendableBox<LinkProps, 'a'> = ({
     );
   }
 
+  const elementProps = href
+    ? ({ as: 'a', href, target } as const)
+    : ({ as: 'span' } as const);
+
   return (
     <Box
-      as={href ? 'a' : 'span'}
-      href={href && href}
-      target={target}
       className={cx(linkStyles, fontSize, className)}
+      {...elementProps}
       {...anchorDataProp.prop}
       {...rest}
     >
