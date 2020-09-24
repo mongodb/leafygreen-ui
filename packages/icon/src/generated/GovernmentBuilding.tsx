@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 2f6186236b53860194080cfe2b7f129f
+ * @checksum 0a7cd2ce6da88f8441cecbcc91933507
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface GovernmentBuildingProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `GovernmentBuilding-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('GovernmentBuilding');
 
 const GovernmentBuilding = ({
   className,
@@ -23,7 +21,7 @@ const GovernmentBuilding = ({
   fill,
   ...props
 }: GovernmentBuildingProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
