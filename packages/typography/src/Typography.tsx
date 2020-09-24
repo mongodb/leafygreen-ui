@@ -33,6 +33,8 @@ function H1({ children, className, ...rest }: H1Props) {
   );
 }
 
+H1.displayName = 'H1';
+
 const h2 = css`
   font-size: 32px;
   line-height: 40px;
@@ -48,6 +50,8 @@ function H2({ children, className, ...rest }: H2Props) {
     </h2>
   );
 }
+
+H2.displayName = 'H2';
 
 const h3 = css`
   font-size: 24px;
@@ -66,6 +70,8 @@ function H3({ children, className, ...rest }: H3Props) {
   );
 }
 
+H3.displayName = 'H3';
+
 const subtitle = css`
   font-size: 18px;
   line-height: 24px;
@@ -82,7 +88,9 @@ function Subtitle({ children, className, ...rest }: SubtitleProps) {
   );
 }
 
-type BodyProps = HTMLElementProps<'p'> & {
+Subtitle.displayName = 'Subtitle';
+
+type BodyProps = HTMLElementProps<'div'> & {
   /**
    * font-weight applied to typography element
    * default: `regular`
@@ -99,11 +107,13 @@ function Body({ children, className, weight = 'regular', ...rest }: BodyProps) {
   `;
 
   return (
-    <p {...rest} className={cx(sharedStyles, body, fontWeight, className)}>
+    <div {...rest} className={cx(sharedStyles, body, fontWeight, className)}>
       {children}
-    </p>
+    </div>
   );
 }
+
+Body.displayName = 'Body';
 
 const anchorDataProp = createDataProp('anchor-inline-code');
 
@@ -174,6 +184,8 @@ function InlineCode({ children, className, ...rest }: InlineCodeProps) {
   return renderedInlineCode();
 }
 
+InlineCode.displayName = 'InlineCode';
+
 const inlineKeyCode = css`
   font-family: ${fontFamilies.code};
   color: ${uiColors.gray.dark3};
@@ -194,6 +206,8 @@ function InlineKeyCode({ children, className, ...rest }: InlineCodeProps) {
   );
 }
 
+InlineKeyCode.displayName = 'InlineKeyCode';
+
 const disclaimer = css`
   display: block;
   font-size: 12px;
@@ -211,6 +225,8 @@ function Disclaimer({ children, className, ...rest }: DisclaimerProps) {
   );
 }
 
+Disclaimer.displayName = 'Disclaimer';
+
 const overline = css`
   font-size: 12px;
   font-weight: 600;
@@ -224,6 +240,8 @@ const Overline: ExtendableBox<{
 }> = ({ className, ...rest }: { className?: string }) => {
   return <Box className={cx(sharedStyles, overline, className)} {...rest} />;
 };
+
+Overline.displayName = 'Overline';
 
 export {
   H1,

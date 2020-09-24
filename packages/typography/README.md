@@ -53,7 +53,7 @@ import { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline } from '@leafy
 <h2 class="leafygreen-ui-1t0mh6j">Heading 2</h2>
 <h3 class="leafygreen-ui-1t0mh6j">Heading 3</h3>
 <h6 class="leafygreen-ui-1dmxpt6">Subtitle</h6>
-<p class="leafygreen-ui-wkgw79">Body</p>
+<div class="leafygreen-ui-wkgw79">Body</div>
 <code class="leafygreen-ui-18bk0d8">Code</code>
 <code class="leafygreen-ui-1vl51l4">CTRL</code
 ><code class="leafygreen-ui-1vl51l4">+</code

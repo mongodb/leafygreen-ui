@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum d9cdb4fcb03ed1d8302eb75312964e61
+ * @checksum 199d6530ec1e11cb20f705abcdd2f1e0
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface UnsortedProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Unsorted-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Unsorted');
 
 const Unsorted = ({
   className,
@@ -23,7 +21,7 @@ const Unsorted = ({
   fill,
   ...props
 }: UnsortedProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`

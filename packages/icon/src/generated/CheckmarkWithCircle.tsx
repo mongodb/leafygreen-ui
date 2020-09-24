@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum e0b61f7c9d56f602639dc60bad2f3311
+ * @checksum e5a13020a80ef0e1083782891b787060
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CheckmarkWithCircleProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `CheckmarkWithCircle-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('CheckmarkWithCircle');
 
 const CheckmarkWithCircle = ({
   className,
@@ -23,7 +21,7 @@ const CheckmarkWithCircle = ({
   fill,
   ...props
 }: CheckmarkWithCircleProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`

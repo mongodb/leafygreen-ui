@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum e8314155853150b373d47b109a926ca9
+ * @checksum 1cac530567b9487ecd9e6c913e611d66
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface MegaphoneProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Megaphone-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Megaphone');
 
 const Megaphone = ({
   className,
@@ -23,7 +21,7 @@ const Megaphone = ({
   fill,
   ...props
 }: MegaphoneProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
