@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum bda544952886555f829e93f081e6c390
+ * @checksum 0df7db00771c4a323345befb442e725b
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CheckmarkProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Checkmark-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Checkmark');
 
 const Checkmark = ({
   className,
@@ -23,7 +21,7 @@ const Checkmark = ({
   fill,
   ...props
 }: CheckmarkProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
