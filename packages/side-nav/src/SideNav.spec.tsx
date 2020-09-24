@@ -2,9 +2,9 @@ import React from 'react';
 import { render, cleanup, screen, fireEvent } from '@testing-library/react';
 import { SideNav, SideNavGroup, SideNavItem } from './index';
 import { SideNavItemProps } from './SideNavItem';
+import { SideNavGroupProps } from './SideNavGroup';
 
 type renderedElement = HTMLElement | null;
-type header = React.ReactNode;
 
 interface RenderedElements {
   navEl?: renderedElement;
@@ -176,20 +176,14 @@ describe('packages/side-nav', () => {
   });
 
   describe('SideNavGroup', () => {
-    const renderGroup = ({
-      header,
-      collapsible = false,
-    }: {
-      header?: header;
-      collapsible?: boolean;
-    } = {}) => {
+    const renderGroup = ({ header, ...rest }: SideNavGroupProps = {}) => {
       const { sideNavGroup, sideNavLink } = testIds;
       render(
         <SideNavGroup
           className={className}
           header={header}
           data-testid={sideNavGroup}
-          collapsible={collapsible}
+          {...rest}
         >
           <SideNavItem>
             <a href="#clusters" data-testid={sideNavLink}>
@@ -224,7 +218,6 @@ describe('packages/side-nav', () => {
       });
 
       test('renders the children of the side nav group', () => {
-        console.log(screen.getByTestId(sideNavGroup));
         expect(screen.getByTestId(sideNavLink)).toBeInTheDocument();
       });
 
@@ -279,6 +272,17 @@ describe('packages/side-nav', () => {
         const icon = screen.getByTitle('Chevron Right Icon');
         fireEvent.click(icon);
 
+        const childContent = screen.getByTestId(sideNavLink);
+        expect(childContent).toBeInTheDocument();
+      });
+    });
+
+    describe('when `collapsible` is true and `initialCollapsed` is false', () => {
+      beforeEach(() => {
+        renderGroup({ collapsible: true, initialCollapsed: false });
+      });
+
+      test('the content appears on the page by default', () => {
         const childContent = screen.getByTestId(sideNavLink);
         expect(childContent).toBeInTheDocument();
       });
