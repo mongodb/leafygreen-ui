@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 79efa584a3a8fee9ae3ba37e8606afab
+ * @checksum 91b9e8897a508d52346347b367afbb1d
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface EditProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Edit-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Edit');
 
 const Edit = ({
   className,
@@ -23,7 +21,7 @@ const Edit = ({
   fill,
   ...props
 }: EditProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`

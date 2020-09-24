@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 15c9198b5615cbb7b33fa236ad4e130b
+ * @checksum 9ef6fe326705325bf2e8d213c3602dd1
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ArrowLeftProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `ArrowLeft-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('ArrowLeft');
 
 const ArrowLeft = ({
   className,
@@ -23,7 +21,7 @@ const ArrowLeft = ({
   fill,
   ...props
 }: ArrowLeftProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
