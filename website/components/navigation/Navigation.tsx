@@ -33,7 +33,11 @@ function Navigation() {
       {/* this is a placeholder until we get our select component */}
       <TextInput label="" placeholder="Find docs" css={inputStyles} />
       <SideNav>
-        <SideNavGroup header="Core Guidelines" collapsible>
+        <SideNavGroup
+          header="Core Guidelines"
+          collapsible
+          initialCollapsed={false}
+        >
           <SideNavItem>Logos</SideNavItem>
           <SideNavItem>User Personas</SideNavItem>
           <SideNavItem>Tone</SideNavItem>
@@ -41,7 +45,7 @@ function Navigation() {
           <SideNavItem>Illustration</SideNavItem>
           <SideNavItem>Typography</SideNavItem>
         </SideNavGroup>
-        <SideNavGroup header="Components" collapsible>
+        <SideNavGroup header="Components" collapsible initialCollapsed={false}>
           <SideNavItem>Badges</SideNavItem>
           <SideNavItem>Banners</SideNavItem>
           <SideNavItem>Box</SideNavItem>
