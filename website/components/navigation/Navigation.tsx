@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import TextInput from '@leafygreen-ui/text-input';
 import { spacing } from '@leafygreen-ui/tokens';
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
 import MDBDesignLogo from '../logos/MDBDesignLogo';
@@ -16,13 +15,6 @@ const logoStyles = css`
   // adds back spacing that was already built into side nav
   margin-left: ${spacing[3]}px;
   margin-top: 12px;
-`;
-
-const inputStyles = css`
-  width: 192px;
-  // adds back spacing that was already built into side nav
-  margin-left: ${spacing[3]}px;
-  margin-top: ${spacing[4]}px;
   margin-bottom: ${spacing[4]}px;
 `;
 
@@ -30,8 +22,6 @@ function Navigation() {
   return (
     <nav css={navWidth}>
       <MDBDesignLogo css={logoStyles} />
-      {/* this is a placeholder until we get our select component */}
-      <TextInput label="" placeholder="Find docs" css={inputStyles} />
       <SideNav>
         <SideNavGroup
           header="Core Guidelines"
