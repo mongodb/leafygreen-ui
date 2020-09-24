@@ -106,6 +106,178 @@ const userMenuActiveNavItems = [
   ActiveNavElement.OrgNavAllClusters,
 ];
 
+function DropdownMenuIcon({ open }: { open: boolean }) {
+  const Icon = open ? CaretUpIcon : CaretDownIcon;
+  return (
+    <Icon
+      className={cx(
+        css`
+          margin-left: 8px;
+        `,
+        {
+          [css`
+            color: ${uiColors.gray.dark1};
+          `]: !open,
+        },
+      )}
+    />
+  );
+}
+
+function MoreDropdownMenu({
+  children,
+  className,
+  loading,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  loading: boolean;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const onElementClick = useOnElementClick();
+
+  return (
+    <OrgNavLink
+      loading={loading}
+      className={className}
+      onClick={onElementClick(NavElement.OrgNavDropdownMoreMenu, () =>
+        setIsOpen(open => !open),
+      )}
+      isButton={true}
+    >
+      More
+      <DropdownMenuIcon open={isOpen} />
+      <Menu open={isOpen} setOpen={setIsOpen}>
+        {children}
+      </Menu>
+    </OrgNavLink>
+  );
+}
+
+function NavLinks({
+  loading,
+  showMoreDropdownMenu,
+  admin,
+  onPremVersion,
+  urls,
+  activeNav,
+}: {
+  loading: boolean;
+  showMoreDropdownMenu: boolean;
+  admin: boolean;
+  onPremVersion?: string;
+  urls: URLS['orgNav'];
+  activeNav?: ActiveNavElement;
+}) {
+  const onElementClick = useOnElementClick();
+
+  const navLinks: Array<{
+    href?: string;
+    navId: NavElement;
+    text: string;
+  }> = [];
+
+  navLinks.push({
+    href: urls.allClusters,
+    navId: ActiveNavElement.OrgNavAllClusters,
+    text: 'All Clusters',
+  });
+
+  if (admin) {
+    navLinks.push({
+      href: urls.admin,
+      navId: ActiveNavElement.OrgNavAdmin,
+      text: 'Admin',
+    });
+  }
+
+  let items: Array<React.ReactNode>;
+
+  if (showMoreDropdownMenu) {
+    items = navLinks.map(({ href, navId, text }) => (
+      <MenuItem size="large" key={navId} href={href}>
+        <div className={css(`font-size: 16px;`)}>{text}</div>
+      </MenuItem>
+    ));
+  } else {
+    items = navLinks.map(({ href, navId, text }) => (
+      <OrgNavLink
+        href={href}
+        loading={loading}
+        isActive={activeNav === navId}
+        className={rightLinkMargin}
+        key={navId}
+        onClick={onElementClick(navId)}
+      >
+        {text}
+      </OrgNavLink>
+    ));
+  }
+
+  if (onPremVersion) {
+    const versionNumber = (
+      <Tooltip
+        usePortal={true}
+        darkMode={true}
+        align="bottom"
+        justify="middle"
+        className={css`
+          width: 165px;
+        `}
+        trigger={
+          showMoreDropdownMenu ? (
+            <MenuItem
+              size="large"
+              className={css(`background-color: ${uiColors.gray.light3};`)}
+            >
+              <div
+                className={css(`
+                  color: ${uiColors.green.dark2};
+                  font-size: 14px;
+                `)}
+              >
+                {onPremVersion}
+              </div>
+            </MenuItem>
+          ) : (
+            <span
+              className={versionStyle}
+              data-testid="org-nav-on-prem-version"
+            >
+              {onPremVersion}
+            </span>
+          )
+        }
+        key="ops manager version"
+      >
+        Ops Manager Version
+      </Tooltip>
+    );
+
+    if (showMoreDropdownMenu) {
+      items.push(versionNumber);
+    } else {
+      items.unshift(versionNumber);
+    }
+  }
+
+  return (
+    <div
+      className={css`
+        margin-left: auto;
+      `}
+    >
+      {showMoreDropdownMenu ? (
+        <MoreDropdownMenu loading={loading} className={rightLinkMargin}>
+          {items}
+        </MoreDropdownMenu>
+      ) : (
+        items
+      )}
+    </div>
+  );
+}
+
 type OrgNavProps = Pick<
   MongoNavInterface,
   | 'onOrganizationChange'
@@ -240,7 +412,6 @@ function OrgNav({
     );
   }
 
-  const AccessManagerIcon = accessManagerOpen ? CaretUpIcon : CaretDownIcon;
   const { orgNav } = urls;
 
   return (
@@ -306,18 +477,7 @@ function OrgNav({
               isButton={true}
             >
               Access Manager
-              <AccessManagerIcon
-                className={cx(
-                  css`
-                    margin-left: 8px;
-                  `,
-                  {
-                    [css`
-                      color: ${uiColors.gray.dark1};
-                    `]: !accessManagerOpen,
-                  },
-                )}
-              />
+              <DropdownMenuIcon open={accessManagerOpen} />
               {current && (
                 <Menu
                   open={accessManagerOpen}
@@ -394,56 +554,14 @@ function OrgNav({
           </>
         )}
 
-        <div
-          className={css`
-            margin-left: auto;
-          `}
-        >
-          {onPremEnabled && onPremVersion && (
-            <Tooltip
-              usePortal={false}
-              darkMode={true}
-              align="bottom"
-              justify="middle"
-              className={css`
-                width: 165px;
-              `}
-              trigger={
-                <span
-                  className={versionStyle}
-                  data-testid="org-nav-on-prem-version"
-                >
-                  {onPremVersion}
-                </span>
-              }
-            >
-              Ops Manager Version
-            </Tooltip>
-          )}
-
-          {!isMobile && (
-            <OrgNavLink
-              href={orgNav.allClusters}
-              isActive={activeNav === ActiveNavElement.OrgNavAllClusters}
-              className={rightLinkMargin}
-              data-testid="org-nav-all-clusters-link"
-              onClick={onElementClick(NavElement.OrgNavAllClusters)}
-            >
-              All Clusters
-            </OrgNavLink>
-          )}
-
-          {!isTablet && admin && (
-            <OrgNavLink
-              href={orgNav.admin}
-              isActive={activeNav === ActiveNavElement.OrgNavAdmin}
-              className={rightLinkMargin}
-              data-testid="org-nav-admin-link"
-            >
-              Admin
-            </OrgNavLink>
-          )}
-        </div>
+        <NavLinks
+          loading={!current}
+          showMoreDropdownMenu={isMobile || isTablet}
+          admin={!!admin}
+          onPremVersion={onPremEnabled ? onPremVersion : undefined}
+          urls={urls.orgNav}
+          activeNav={activeNav}
+        />
 
         {renderUserMenu()}
       </nav>
