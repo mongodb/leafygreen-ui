@@ -1,5 +1,6 @@
 import React from 'react';
+import PropDefinition from '../components/prop-definition/PropDefinition';
 
 export default function Home() {
-  return <div>Hello, world!</div>;
+  return <PropDefinition prop={'variant'} />;
 }
