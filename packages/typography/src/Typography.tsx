@@ -164,7 +164,9 @@ function InlineCode({ children, className, ...rest }: InlineCodeProps) {
   const size = useBaseFontSize();
   const fontSize = size === 16 ? typeScale2 : typeScale1;
   const whiteSpace =
-    typeof children === 'string' && children.length <= 30 ? nowrap : normal;
+    (typeof children === 'string' && children.match(/./gu)?.length) ?? 0 <= 30
+      ? nowrap
+      : normal;
   const isAnchor = rest?.href || rest.onClick;
 
   const renderedInlineCode = (isAnchor = false) => (
