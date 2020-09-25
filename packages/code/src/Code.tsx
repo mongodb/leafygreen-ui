@@ -388,7 +388,12 @@ Code.propTypes = {
   showLineNumbers: PropTypes.bool,
   showWindowChrome: PropTypes.bool,
   chromeTitle: PropTypes.string,
-  highlightLines: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number])),
+  highlightLines: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.number),
+      PropTypes.number,
+    ]),
+  ),
 };
 
 export default Code;

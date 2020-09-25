@@ -12,22 +12,22 @@ import { injectGlobalStyles } from './globalStyles';
 import renderingPlugin, { TableContent } from './renderingPlugin';
 import { SyntaxContext } from './SyntaxContext';
 
-export function expandRangeTuple(
-  tuple: [number, number],
-): number | Array<number> {
-  const [lower, upper] = [...tuple].map(bound => {
-    // Make sure passing infinity doesn't freeze the browser
-    if (bound === Infinity) {
-      return 2000
-    }
+export function expandRangeTuple(tuple: [number, number]): Array<number> {
+  const [lower, upper] = [...tuple]
+    .map(bound => {
+      // Make sure passing infinity doesn't freeze the browser
+      if (bound === Infinity) {
+        // 2000 is arbitrary, but far larger than existing use-cases for our syntax highlighting
+        return 2000;
+      }
 
-    // Default negative numbers to 0
-    return Math.max(bound, 0)
-  }).sort();
+      if (bound === -Infinity) {
+        return -2000;
+      }
 
-  if (lower === upper) {
-    return lower;
-  }
+      return bound;
+    })
+    .sort();
 
   const expandedRange = [];
 
@@ -133,7 +133,9 @@ function Syntax({
     );
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  const parsedHighlightLines = normalizeLineHighlightingDefinition(highlightLines);
+  const parsedHighlightLines = normalizeLineHighlightingDefinition(
+    highlightLines,
+  );
 
   return (
     <SyntaxContext.Provider
@@ -172,7 +174,12 @@ Syntax.propTypes = {
   className: PropTypes.string,
   darkMode: PropTypes.bool,
   showLineNumbers: PropTypes.bool,
-  highlightLines: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number])),
+  highlightLines: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.number),
+      PropTypes.number,
+    ]),
+  ),
 };
 
 export default Syntax;
