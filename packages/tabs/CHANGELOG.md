@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 3.0.0
+
+### Major Changes
+
+- cac8348a: Updates Tabs component to match new design spec and adds `darkMode` prop
+
 ## 2.1.6
 
 ### Patch Changes

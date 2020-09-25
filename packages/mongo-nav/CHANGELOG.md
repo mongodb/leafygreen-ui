@@ -1,5 +1,20 @@
 # @leafygreen-ui/mongo-nav
 
+## 3.1.9
+
+### Patch Changes
+
+- 6e210765: Fixes regression from adding darkMode prop, where tooltips were light in the nav by default.
+  - @leafygreen-ui/menu@7.0.10
+  - @leafygreen-ui/tooltip@5.0.1
+
+## 3.1.8
+
+### Patch Changes
+
+- Updated dependencies [1a127dc8]
+  - @leafygreen-ui/logo@3.0.0
+
 ## 3.1.7
 
 ### Patch Changes

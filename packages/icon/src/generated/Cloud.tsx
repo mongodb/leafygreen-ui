@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum f48294690d570df9e9c77f7d8d9f5a06
+ * @checksum 1d6cf815002b2888f8d01082abfdaae4
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CloudProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Cloud-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Cloud');
 
 const Cloud = ({
   className,
@@ -23,7 +21,7 @@ const Cloud = ({
   fill,
   ...props
 }: CloudProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`

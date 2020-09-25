@@ -1,5 +1,11 @@
 # @leafygreen-ui/checkbox
 
+## 5.0.0
+
+### Major Changes
+
+- 02ee0c05: Deprecates `variant` prop and adds `darkMode` prop to determine whether or not Checkbox appears in dark mode.
+
 ## 4.1.1
 
 ### Patch Changes

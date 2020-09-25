@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-group
 
+## 5.1.0
+
+### Minor Changes
+
+- cb12b399: Adds `xsmall` size for Charts
+
 ## 5.0.0
 
 ### Major Changes

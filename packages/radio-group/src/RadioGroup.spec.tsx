@@ -4,6 +4,31 @@ import { Radio, RadioGroup } from '.';
 import { RadioGroupProps } from './RadioGroup';
 import { RadioProps } from './Radio';
 
+function WrappedRadio({ checked }: { checked: string }) {
+  return (
+    <RadioGroup>
+      <Radio
+        value="input-1"
+        checked={checked === 'input-1'}
+        data-testid="first-radio"
+      >
+        Input 1
+      </Radio>
+      <Radio
+        value="input-2"
+        checked={checked === 'input-2'}
+        data-testid="second-radio"
+      >
+        Input 2
+      </Radio>
+    </RadioGroup>
+  );
+}
+
+const renderWrappedRadioGroup = (checked: string) => {
+  render(<WrappedRadio checked={checked} />);
+};
+
 const renderControlledRadioGroup = (
   props: Omit<RadioGroupProps, 'children'> = {},
 ) => {
@@ -69,7 +94,22 @@ describe('packages/radio-group', () => {
       fireEvent.click(secondInput);
 
       expect(firstInput.getAttribute('aria-checked')).toBe('true');
-      expect(secondInput.getAttribute('aria-checked')).toBe('false');
+      expect(secondInput.getAttribute('aria-checked')).toBe(null);
+    });
+  });
+
+  describe('when an external component controls the RadioGroup', () => {
+    test('initial checked Radio is determined by `checked` prop on Radio', () => {
+      renderWrappedRadioGroup('input-1');
+      const initialChecked = screen.getByTestId('first-radio');
+      expect((initialChecked as HTMLInputElement).checked).toBe(true);
+    });
+    test('when `checked` value changes, the checked Radio changes', () => {
+      renderWrappedRadioGroup('input-2');
+      const newChecked = screen.getByTestId('second-radio');
+      expect((newChecked as HTMLInputElement).checked).toBe(true);
+      const initialChecked = screen.getByTestId('first-radio');
+      expect((initialChecked as HTMLInputElement).checked).toBe(false);
     });
   });
 

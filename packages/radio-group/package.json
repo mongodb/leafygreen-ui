@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/radio-group",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "leafyGreen UI Kit RadioGroup",
   "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
