@@ -35,11 +35,15 @@ storiesOf('Code', module).add(
             Object.values(Language),
             Language.JavaScript,
           )}
-          highlightLines={select('highlight lines', {
-            none: undefined,
-            single: [1],
-            multiple: [2, 3, 5],
-          }, undefined)}
+          highlightLines={select(
+            'highlight lines',
+            {
+              none: undefined,
+              single: [1],
+              multiple: [2, 3, 5],
+            },
+            undefined,
+          )}
         >
           {text('Code snippet', jsSnippet)}
         </Code>

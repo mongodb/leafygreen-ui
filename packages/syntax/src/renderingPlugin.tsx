@@ -1,7 +1,7 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import {uiColors} from '@leafygreen-ui/palette';
-import { useSyntaxContext } from './SyntaxContext'
+import { uiColors } from '@leafygreen-ui/palette';
+import { useSyntaxContext } from './SyntaxContext';
 
 interface TokenProps {
   kind?: string;
@@ -72,26 +72,34 @@ const cellStyle = css`
 `;
 
 function getHighlightedRowStyle(darkMode: boolean) {
-  const backgroundColor = darkMode ? 'transparent' : uiColors.yellow.light3;
-  const backgroundImage = darkMode ? `linear-gradient(90deg, ${uiColors.gray.dark3}, transparent)` : 'none';
-  const borderColor = darkMode ? uiColors.gray.dark3 : uiColors.yellow.light2;
+  let backgroundColor: string, backgroundImage: string, borderColor: string;
+
+  if (darkMode) {
+    backgroundColor = 'transparent';
+    backgroundImage = `linear-gradient(90deg, ${uiColors.gray.dark3}, transparent)`;
+    borderColor = uiColors.gray.dark3;
+  } else {
+    backgroundColor = uiColors.yellow.light3;
+    backgroundImage = 'none';
+    borderColor = uiColors.yellow.light2;
+  }
 
   return css`
     background-color: ${backgroundColor};
     background-image: ${backgroundImage};
-    
+
     // Selects all children of a highlighted row, and adds a border top
     & > td {
       border-top: 1px solid ${borderColor};
     }
-    
+
     // Selects following rows after a highlighted row, and adds a border top
     // We don't add border bottoms here to support consecutive highlighted rows.
     & + tr > td {
       border-top: 1px solid ${borderColor};
     }
 
-    // Remove borders between consecutive highlighted rows 
+    // Remove borders between consecutive highlighted rows
     & + & > td {
       border-top: 0;
     }
@@ -100,7 +108,7 @@ function getHighlightedRowStyle(darkMode: boolean) {
     &:last-child > td {
       border-bottom: 1px solid ${borderColor};
     }
-  `
+  `;
 }
 
 interface LineTableRowProps {
@@ -110,23 +118,33 @@ interface LineTableRowProps {
   darkMode: boolean;
 }
 
-export function LineTableRow({ lineNumber, highlighted, darkMode, children }: LineTableRowProps) {
+export function LineTableRow({
+  lineNumber,
+  highlighted,
+  darkMode,
+  children,
+}: LineTableRowProps) {
   const numberColor = uiColors.gray[darkMode ? 'dark1' : 'light1'];
-  const highlightedNumberColor = darkMode ? uiColors.gray.light2 : uiColors.yellow.dark2;
+  const highlightedNumberColor = darkMode
+    ? uiColors.gray.light2
+    : uiColors.yellow.dark2;
 
   return (
-    <tr className={cx({[getHighlightedRowStyle(darkMode)]: highlighted})}>
-      { lineNumber &&
+    <tr className={cx({ [getHighlightedRowStyle(darkMode)]: highlighted })}>
+      {lineNumber && (
         <td
-          className={cx(cellStyle, css`
-            padding-right: 24px;
-            user-select: none;
-            color: ${highlighted ? highlightedNumberColor : numberColor};
-          `)}
+          className={cx(
+            cellStyle,
+            css`
+              padding-right: 24px;
+              user-select: none;
+              color: ${highlighted ? highlightedNumberColor : numberColor};
+            `,
+          )}
         >
           {lineNumber}
         </td>
-      }
+      )}
 
       <td className={cellStyle}>{children}</td>
     </tr>
@@ -185,9 +203,8 @@ interface TableContentProps {
 }
 
 export function TableContent({ lines }: TableContentProps) {
-  const { highlightLines, showLineNumbers, darkMode } = useSyntaxContext()
-
-  const trimmedLines = lines
+  const { highlightLines, showLineNumbers, darkMode } = useSyntaxContext();
+  const trimmedLines = lines;
 
   // Strip empty lines from the beginning of code blocks
   while (trimmedLines[0].length === 0) {
@@ -202,34 +219,47 @@ export function TableContent({ lines }: TableContentProps) {
   return (
     <>
       {trimmedLines.map((line, index) => {
-        const currentLineNumber = index + 1
-        const highlightLine = highlightLines.includes(currentLineNumber)
-        
+        const currentLineNumber = index + 1;
+        const highlightLine = highlightLines.includes(currentLineNumber);
+
         let displayLineNumber;
 
         if (showLineNumbers) {
-          displayLineNumber = currentLineNumber
+          displayLineNumber = currentLineNumber;
         }
 
-        // We create placeholder content when a line break appears to preserve the line break's height
-        // It needs to be inline-block for the table row to not collapse.
-        const processedLine = line.length ? line.map(processToken) : <div className={css`display: inline-block;`} />
+        const processedLine = line.length ? (
+          line.map(processToken)
+        ) : (
+          // We create placeholder content when a line break appears to preserve the line break's height
+          // It needs to be inline-block for the table row to not collapse.
+          <div
+            className={css`
+              display: inline-block;
+            `}
+          />
+        );
 
         return (
-          <LineTableRow key={index} lineNumber={displayLineNumber} darkMode={darkMode} highlighted={highlightLine}>
+          <LineTableRow
+            key={index}
+            lineNumber={displayLineNumber}
+            darkMode={darkMode}
+            highlighted={highlightLine}
+          >
             {processedLine}
           </LineTableRow>
         );
       })}
     </>
-  )
+  );
 }
 
 const plugin: HighlightPluginEventCallbacks = {
   'after:highlight': function (result) {
     const { rootNode } = result.emitter;
 
-    result.react = <TableContent lines={treeToLines(rootNode.children)} />
+    result.react = <TableContent lines={treeToLines(rootNode.children)} />;
   },
 };
 

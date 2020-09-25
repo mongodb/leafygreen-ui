@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import flatten from 'lodash/flatten'
+import flatten from 'lodash/flatten';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 // Import from core so we can register the appropriate languages ourselves
@@ -9,10 +9,12 @@ import hljsDefineGraphQL from 'highlightjs-graphql';
 import { Language, SyntaxProps, Mode } from './types';
 import { SupportedLanguages, languageParsers } from './languages';
 import { injectGlobalStyles } from './globalStyles';
-import renderingPlugin, {TableContent} from './renderingPlugin';
-import { SyntaxContext } from './SyntaxContext'
+import renderingPlugin, { TableContent } from './renderingPlugin';
+import { SyntaxContext } from './SyntaxContext';
 
-export function expandRangeTuple(tuple: [number, number]): number | Array<number> {
+export function expandRangeTuple(
+  tuple: [number, number],
+): number | Array<number> {
   const [lower, upper] = tuple.sort();
 
   if (lower === upper) {
@@ -28,16 +30,19 @@ export function expandRangeTuple(tuple: [number, number]): number | Array<number
   return expandedRange;
 }
 
-export function parseLineHighlightNumbers(numbers: Array<number | [number, number]>): Array<number> {
-  return flatten(numbers.map(item => {
-    if (item instanceof Array) {
-      return expandRangeTuple(item)
-    }
+export function parseLineHighlightNumbers(
+  numbers: Array<number | [number, number]>,
+): Array<number> {
+  return flatten(
+    numbers.map(item => {
+      if (item instanceof Array) {
+        return expandRangeTuple(item);
+      }
 
-    return item
-  }))
+      return item;
+    }),
+  );
 }
-
 
 type FilteredSupportedLanguagesEnum = Omit<
   typeof SupportedLanguages,
@@ -108,24 +113,42 @@ function Syntax({
     return hljs.highlight(language, children);
   }, [language, children]);
 
-  const content = highlightedContent === null ?
-    // We create a similar data structure to the rendering plugin so that we can generate
-    // a table that's identical when the plugin isn't being used.
-    <TableContent lines={children.split('\n').map(item => item ? [item] : [])} /> :
-    highlightedContent.react
+  const content =
+    highlightedContent === null ? (
+      // We create a similar data structure to the rendering plugin so that we can generate
+      // a table that's identical when the plugin isn't being used.
+      <TableContent
+        lines={children.split('\n').map(item => (item ? [item] : []))}
+      />
+    ) : (
+      highlightedContent.react
+    );
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const parsedHighlightLines = parseLineHighlightNumbers(highlightLines);
 
   return (
-    <SyntaxContext.Provider value={{highlightLines: parsedHighlightLines, showLineNumbers, darkMode}}>
-      <code {...rest} className={cx(
-        `lg-highlight-hljs-${mode}`,
-        codeStyles,
-        language,
-        className,
-      )}>
-        <table className={css`border-spacing: 0;`}>
+    <SyntaxContext.Provider
+      value={{
+        highlightLines: parsedHighlightLines,
+        showLineNumbers,
+        darkMode,
+      }}
+    >
+      <code
+        {...rest}
+        className={cx(
+          `lg-highlight-hljs-${mode}`,
+          codeStyles,
+          language,
+          className,
+        )}
+      >
+        <table
+          className={css`
+            border-spacing: 0;
+          `}
+        >
           <tbody>{content}</tbody>
         </table>
       </code>

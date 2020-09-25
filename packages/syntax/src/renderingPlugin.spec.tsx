@@ -65,7 +65,9 @@ describe('LineTableRow', () => {
     return render(
       <table>
         <tbody data-testid="tbody">
-          <LineTableRow darkMode={false} lineNumber={lineNumber}>{content}</LineTableRow>
+          <LineTableRow darkMode={false} lineNumber={lineNumber}>
+            {content}
+          </LineTableRow>
         </tbody>
       </table>,
     );

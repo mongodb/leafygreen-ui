@@ -14,7 +14,6 @@ import WindowChrome from './WindowChrome';
 import debounce from 'lodash/debounce';
 import { uiColors } from '@leafygreen-ui/palette';
 import ClipboardJS from 'clipboard';
-import { border } from 'polished';
 
 const Mode = {
   Light: 'light',
@@ -56,8 +55,8 @@ const singleLineCopyStyle = css`
 function getWrapperVariantStyle(mode: Mode): string {
   const colors = variantColors[mode];
 
-  const borderStyle = mode === 'dark' ?
-    `border: 0` : `border-color: ${colors[1]}`;
+  const borderStyle =
+    mode === 'dark' ? `border: 0` : `border-color: ${colors[1]}`;
 
   return css`
     ${borderStyle};
@@ -200,50 +199,13 @@ interface CodeProps extends Omit<SyntaxProps, 'onCopy'> {
   /**
    * An array of the line numbers to highlight
    */
-  highlightLines?: Array<number>
+  highlightLines?: Array<number>;
 }
 
 type DetailedElementProps<T> = React.DetailedHTMLProps<
   React.HTMLAttributes<T>,
   T
 >;
-
-interface CodeOuterWrapperProps
-  extends Pick<CodeProps, 'chromeTitle' | 'showWindowChrome' | 'darkMode'> {
-  children: React.ReactNode;
-}
-
-function CodeOuterWrapper({
-  children,
-  chromeTitle,
-  darkMode = false,
-  showWindowChrome,
-}: CodeOuterWrapperProps) {
-  const mode = darkMode ? Mode.Dark : Mode.Light;
-  const borderStyle = darkMode ? `border: 0` : `border: 1px solid ${variantColors[mode][1]}`
-
-  const wrapperStyle = css`
-    ${borderStyle};
-    border-radius: 4px;
-    overflow: hidden;
-  `;
-
-  return (
-    <div className={wrapperStyle}>
-      {showWindowChrome && (
-        <WindowChrome chromeTitle={chromeTitle} darkMode={darkMode} />
-      )}
-
-      <div
-        className={css`
-          display: flex;
-        `}
-      >
-        {children}
-      </div>
-    </div>
-  );
-}
 
 /**
  * # Code
@@ -280,7 +242,7 @@ function Code({
   const [copied, setCopied] = useState(false);
   const showCopyBar = !showWindowChrome && copyable;
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  const isMultiline = useMemo(() => children.includes('\n'), [children])
+  const isMultiline = useMemo(() => children.includes('\n'), [children]);
 
   useEffect(() => {
     let timeoutId: any;
@@ -356,6 +318,20 @@ function Code({
 
   const debounceScroll = debounce(handleScroll, 50, { leading: true });
 
+  const onScroll: React.UIEventHandler<HTMLDivElement | HTMLPreElement> = e => {
+    e.persist();
+    debounceScroll(e);
+  };
+
+  const borderStyle = darkMode
+    ? `border: 0`
+    : `border: 1px solid ${variantColors[mode][1]}`;
+  const wrapperStyle = css`
+    ${borderStyle};
+    border-radius: 4px;
+    overflow: hidden;
+  `;
+
   const copyBar = showCopyBar && (
     <div
       className={cx(
@@ -376,30 +352,29 @@ function Code({
     </div>
   );
 
-  const onScroll: React.UIEventHandler<HTMLDivElement | HTMLPreElement> = e => {
-    e.persist();
-    debounceScroll(e);
-  };
-
-  const commonWrapperProps = {
-    chromeTitle,
-    darkMode,
-    showWindowChrome,
-  } as const;
-
   return (
-    <CodeOuterWrapper {...commonWrapperProps}>
-      <pre
-        {...(rest as DetailedElementProps<HTMLPreElement>)}
-        className={wrapperClassName}
-        onScroll={onScroll}
-        ref={scrollableElement}
-      >
-        {renderedSyntaxComponent}
-      </pre>
+    <div className={wrapperStyle}>
+      {showWindowChrome && (
+        <WindowChrome chromeTitle={chromeTitle} darkMode={darkMode} />
+      )}
 
-      {copyBar}
-    </CodeOuterWrapper>
+      <div
+        className={css`
+          display: flex;
+        `}
+      >
+        <pre
+          {...(rest as DetailedElementProps<HTMLPreElement>)}
+          className={wrapperClassName}
+          onScroll={onScroll}
+          ref={scrollableElement}
+        >
+          {renderedSyntaxComponent}
+        </pre>
+
+        {copyBar}
+      </div>
+    </div>
   );
 }
 
