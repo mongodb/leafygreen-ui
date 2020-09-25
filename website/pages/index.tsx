@@ -13,7 +13,6 @@ export default function Home() {
           rel="stylesheet"
         />
       </Head>
-      brooke
       <Navigation />
     </>
   );
