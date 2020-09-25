@@ -15,7 +15,15 @@ import { SyntaxContext } from './SyntaxContext';
 export function expandRangeTuple(
   tuple: [number, number],
 ): number | Array<number> {
-  const [lower, upper] = tuple.sort();
+  const [lower, upper] = [...tuple].map(bound => {
+    // Make sure passing infinity doesn't freeze the browser
+    if (bound === Infinity) {
+      return 2000
+    }
+
+    // Default negative numbers to 0
+    return Math.max(bound, 0)
+  }).sort();
 
   if (lower === upper) {
     return lower;
@@ -30,7 +38,7 @@ export function expandRangeTuple(
   return expandedRange;
 }
 
-export function parseLineHighlightNumbers(
+export function normalizeLineHighlightingDefinition(
   numbers: Array<number | [number, number]>,
 ): Array<number> {
   return flatten(
@@ -125,7 +133,7 @@ function Syntax({
     );
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  const parsedHighlightLines = parseLineHighlightNumbers(highlightLines);
+  const parsedHighlightLines = normalizeLineHighlightingDefinition(highlightLines);
 
   return (
     <SyntaxContext.Provider

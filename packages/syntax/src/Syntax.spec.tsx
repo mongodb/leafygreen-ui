@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Syntax, { expandRangeTuple, parseLineHighlightNumbers } from './Syntax';
+import Syntax, { expandRangeTuple, normalizeLineHighlightingDefinition } from './Syntax';
 
 const codeSnippet = 'const greeting = "Hello, world!";';
 const className = 'test-class';
@@ -62,20 +62,20 @@ describe('packages/Syntax', () => {
     });
   });
 
-  describe('parseLineHighlightNumbers()', () => {
+  describe('normalizeLineHighlightingDefinition()', () => {
     test('when passed an empty array, returns an empty array', () => {
-      expect(parseLineHighlightNumbers([])).toEqual([]);
+      expect(normalizeLineHighlightingDefinition([])).toEqual([]);
     });
 
     test('when passed an array of numbers, returns an array of those numbers', () => {
-      expect(parseLineHighlightNumbers([0, 1])).toEqual([0, 1]);
-      expect(parseLineHighlightNumbers([1, 2])).toEqual([1, 2]);
+      expect(normalizeLineHighlightingDefinition([0, 1])).toEqual([0, 1]);
+      expect(normalizeLineHighlightingDefinition([1, 2])).toEqual([1, 2]);
     });
 
     test('when passed an array of tuples, returns an array of numbers', () => {
-      expect(parseLineHighlightNumbers([[0, 1]])).toEqual([0, 1]);
+      expect(normalizeLineHighlightingDefinition([[0, 1]])).toEqual([0, 1]);
       expect(
-        parseLineHighlightNumbers([
+        normalizeLineHighlightingDefinition([
           [1, 3],
           [4, 4],
           [7, 5],
@@ -84,7 +84,7 @@ describe('packages/Syntax', () => {
     });
 
     test('when passed an array of tuples and numbers, returns an array of numbers', () => {
-      expect(parseLineHighlightNumbers([[1, 3], 4, [7, 5]])).toEqual([
+      expect(normalizeLineHighlightingDefinition([[1, 3], 4, [7, 5]])).toEqual([
         1,
         2,
         3,

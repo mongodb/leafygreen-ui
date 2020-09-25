@@ -184,14 +184,14 @@ interface CodeProps extends Omit<SyntaxProps, 'onCopy'> {
   chromeTitle?: string;
 
   /**
-   * When true, allows the code block to be copied to the user's clipboard
+   * When true, allows the code block to be copied to the user's clipboard by clicking the rendered copy button.
    *
    * default: `true`
    */
   copyable?: boolean;
 
   /**
-   * Callback fired when Code is copied
+   * Callback fired when Code is copied via the copy button.
    *
    */
   onCopy?: Function;
@@ -199,7 +199,7 @@ interface CodeProps extends Omit<SyntaxProps, 'onCopy'> {
   /**
    * An array of the line numbers to highlight
    */
-  highlightLines?: Array<number>;
+  highlightLines?: Array<number | [number, number]>;
 }
 
 type DetailedElementProps<T> = React.DetailedHTMLProps<

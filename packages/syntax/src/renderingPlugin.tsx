@@ -204,7 +204,7 @@ interface TableContentProps {
 
 export function TableContent({ lines }: TableContentProps) {
   const { highlightLines, showLineNumbers, darkMode } = useSyntaxContext();
-  const trimmedLines = lines;
+  const trimmedLines = [...lines];
 
   // Strip empty lines from the beginning of code blocks
   while (trimmedLines[0].length === 0) {
@@ -242,7 +242,7 @@ export function TableContent({ lines }: TableContentProps) {
 
         return (
           <LineTableRow
-            key={index}
+            key={currentLineNumber}
             lineNumber={displayLineNumber}
             darkMode={darkMode}
             highlighted={highlightLine}
