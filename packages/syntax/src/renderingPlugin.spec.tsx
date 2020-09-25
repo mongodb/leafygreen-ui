@@ -48,11 +48,8 @@ describe('processToken()', () => {
   });
 
   test("when processToken is passed an argument that's not explicitly supported, it returns that value", () => {
-    // @ts-expect-error
     expect(processToken(false)).toBe(false);
-    // @ts-expect-error
     expect(processToken(false, 0)).toBe(false);
-    // @ts-expect-error
     expect(processToken(false, 1)).toBe(false);
   });
 });
@@ -190,7 +187,6 @@ describe('treeToLines()', () => {
 
   // eslint-disable-next-line jest/expect-expect
   test('when passed an invalid set of children, returns a valid Array', () => {
-    // @ts-expect-error
     treeToLines([...sampleChildren, null, 0]).forEach(validateLine);
   });
 });
