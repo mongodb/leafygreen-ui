@@ -160,9 +160,11 @@ Syntax.displayName = 'Syntax';
 
 Syntax.propTypes = {
   children: PropTypes.string.isRequired,
-  lang: PropTypes.oneOf(Object.values(Language)),
+  language: PropTypes.oneOf(Object.values(Language)),
   className: PropTypes.string,
   darkMode: PropTypes.bool,
+  showLineNumbers: PropTypes.bool,
+  highlightLines: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number])),
 };
 
 export default Syntax;
