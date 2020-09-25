@@ -41,7 +41,7 @@ describe('processToken()', () => {
     ).toBeTruthy();
   });
 
-  test('when passed a string, it returns astring', () => {
+  test('when passed a string, it returns a string', () => {
     expect(processToken('hello')).toBe('hello');
     expect(processToken('hello', 0)).toBe('hello');
     expect(processToken('hello', 1)).toBe('hello');
@@ -65,7 +65,7 @@ describe('LineTableRow', () => {
     return render(
       <table>
         <tbody data-testid="tbody">
-          <LineTableRow lineNumber={lineNumber}>{content}</LineTableRow>
+          <LineTableRow darkMode={false} lineNumber={lineNumber}>{content}</LineTableRow>
         </tbody>
       </table>,
     );
@@ -190,17 +190,5 @@ describe('treeToLines()', () => {
   test('when passed an invalid set of children, returns a valid Array', () => {
     // @ts-expect-error
     treeToLines([...sampleChildren, null, 0]).forEach(validateLine);
-  });
-
-  test('strips empty line breaks from beginning of result', () => {
-    const lines = treeToLines(sampleChildren);
-
-    expect(lines[0]).not.toHaveLength(0);
-  });
-
-  test('strips empty line breaks from end of result', () => {
-    const lines = treeToLines(sampleChildren);
-
-    expect(lines[lines.length - 1]).not.toHaveLength(0);
   });
 });

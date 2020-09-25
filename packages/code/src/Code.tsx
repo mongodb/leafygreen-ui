@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
@@ -14,6 +14,7 @@ import WindowChrome from './WindowChrome';
 import debounce from 'lodash/debounce';
 import { uiColors } from '@leafygreen-ui/palette';
 import ClipboardJS from 'clipboard';
+import { border } from 'polished';
 
 const Mode = {
   Light: 'light',
@@ -27,7 +28,9 @@ const whiteSpace = 12;
 const codeWrapperStyle = css`
   overflow-x: auto;
   border-left: 2px solid;
-  padding: ${whiteSpace}px;
+  // We apply left / right padding in Syntax to support line highlighting
+  padding-top: ${whiteSpace}px;
+  padding-bottom: ${whiteSpace}px;
   margin: 0;
   position: relative;
   flex-grow: 1;
@@ -53,8 +56,11 @@ const singleLineCopyStyle = css`
 function getWrapperVariantStyle(mode: Mode): string {
   const colors = variantColors[mode];
 
+  const borderStyle = mode === 'dark' ?
+    `border: 0` : `border-color: ${colors[1]}`;
+
   return css`
-    border-color: ${colors[1]};
+    ${borderStyle};
     background-color: ${colors[0]};
     color: ${colors[3]};
   `;
@@ -179,13 +185,6 @@ interface CodeProps extends Omit<SyntaxProps, 'onCopy'> {
   chromeTitle?: string;
 
   /**
-   * When true, whitespace and line breaks will be preserved.
-   *
-   * default: `true`
-   * */
-  multiline?: boolean;
-
-  /**
    * When true, allows the code block to be copied to the user's clipboard
    *
    * default: `true`
@@ -197,6 +196,11 @@ interface CodeProps extends Omit<SyntaxProps, 'onCopy'> {
    *
    */
   onCopy?: Function;
+
+  /**
+   * An array of the line numbers to highlight
+   */
+  highlightLines?: Array<number>
 }
 
 type DetailedElementProps<T> = React.DetailedHTMLProps<
@@ -216,9 +220,10 @@ function CodeOuterWrapper({
   showWindowChrome,
 }: CodeOuterWrapperProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
+  const borderStyle = darkMode ? `border: 0` : `border: 1px solid ${variantColors[mode][1]}`
 
   const wrapperStyle = css`
-    border: 1px solid ${variantColors[mode][1]};
+    ${borderStyle};
     border-radius: 4px;
     overflow: hidden;
   `;
@@ -251,7 +256,6 @@ function CodeOuterWrapper({
  * ---
  * @param props.children The string to be formatted.
  * @param props.className An additional CSS class added to the root element of Code.
- * @param props.multiline When true, whitespace and line breaks will be preserved. Default: `true`
  * @param props.language The language used for syntax highlighing.
  * @param props.darkMode Determines if the code block will be rendered in dark mode. Default: `false`
  * @param props.showLineNumbers When true, shows line numbers in preformatted code blocks. Default: `false`
@@ -261,7 +265,6 @@ function CodeOuterWrapper({
 function Code({
   children = '',
   className,
-  multiline = true,
   language,
   darkMode = false,
   showLineNumbers = false,
@@ -269,14 +272,15 @@ function Code({
   chromeTitle = '',
   copyable = true,
   onCopy,
+  highlightLines,
   ...rest
 }: CodeProps) {
-  const scrollableMultiLine = useRef<HTMLPreElement>(null);
-  const scrollableSingleLine = useRef<HTMLDivElement>(null);
+  const scrollableElement = useRef<HTMLPreElement>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [copied, setCopied] = useState(false);
   const showCopyBar = !showWindowChrome && copyable;
   const mode = darkMode ? Mode.Dark : Mode.Light;
+  const isMultiline = useMemo(() => children.includes('\n'), [children])
 
   useEffect(() => {
     let timeoutId: any;
@@ -293,26 +297,15 @@ function Code({
   }, [copied]);
 
   useIsomorphicLayoutEffect(() => {
-    if (multiline) {
-      const multilineEl = scrollableMultiLine.current;
+    const scrollableElementRef = scrollableElement.current;
 
-      if (
-        multilineEl != null &&
-        multilineEl.scrollWidth > multilineEl.clientWidth
-      ) {
-        setScrollState(ScrollState.Right);
-      }
-    } else {
-      const singlelineEl = scrollableSingleLine.current;
-
-      if (
-        singlelineEl != null &&
-        singlelineEl.scrollWidth > singlelineEl.clientWidth
-      ) {
-        setScrollState(ScrollState.Right);
-      }
+    if (
+      scrollableElementRef != null &&
+      scrollableElementRef.scrollWidth > scrollableElementRef.clientWidth
+    ) {
+      setScrollState(ScrollState.Right);
     }
-  }, [multiline]);
+  }, []);
 
   const wrapperClassName = cx(
     codeWrapperStyle,
@@ -329,6 +322,7 @@ function Code({
       showLineNumbers={showLineNumbers}
       darkMode={darkMode}
       language={language}
+      highlightLines={highlightLines}
     >
       {children}
     </Syntax>
@@ -366,7 +360,7 @@ function Code({
     <div
       className={cx(
         copyStyle,
-        { [singleLineCopyStyle]: !multiline },
+        { [singleLineCopyStyle]: !isMultiline },
         getSidebarVariantStyle(mode),
       )}
     >
@@ -393,30 +387,13 @@ function Code({
     showWindowChrome,
   } as const;
 
-  if (!multiline) {
-    return (
-      <CodeOuterWrapper {...commonWrapperProps}>
-        <div
-          {...(rest as DetailedElementProps<HTMLDivElement>)}
-          className={wrapperClassName}
-          onScroll={onScroll}
-          ref={scrollableSingleLine}
-        >
-          {renderedSyntaxComponent}
-        </div>
-
-        {copyBar}
-      </CodeOuterWrapper>
-    );
-  }
-
   return (
     <CodeOuterWrapper {...commonWrapperProps}>
       <pre
         {...(rest as DetailedElementProps<HTMLPreElement>)}
         className={wrapperClassName}
         onScroll={onScroll}
-        ref={scrollableMultiLine}
+        ref={scrollableElement}
       >
         {renderedSyntaxComponent}
       </pre>
@@ -430,7 +407,6 @@ Code.displayName = 'Code';
 
 Code.propTypes = {
   children: PropTypes.string.isRequired,
-  multiline: PropTypes.bool,
   language: PropTypes.oneOf(Object.values(Language)),
   darkMode: PropTypes.bool,
   className: PropTypes.string,

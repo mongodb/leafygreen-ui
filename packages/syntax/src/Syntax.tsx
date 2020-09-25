@@ -1,14 +1,43 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { css } from '@leafygreen-ui/emotion';
+import flatten from 'lodash/flatten'
+import { cx, css } from '@leafygreen-ui/emotion';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 // Import from core so we can register the appropriate languages ourselves
 import hljs from 'highlight.js/lib/core';
 import hljsDefineGraphQL from 'highlightjs-graphql';
-import CodeWrapper from './CodeWrapper';
-import { Language, SyntaxProps } from './types';
+import { Language, SyntaxProps, Mode } from './types';
 import { SupportedLanguages, languageParsers } from './languages';
 import { injectGlobalStyles } from './globalStyles';
-import renderingPlugin from './renderingPlugin';
+import renderingPlugin, {TableContent} from './renderingPlugin';
+import { SyntaxContext } from './SyntaxContext'
+
+export function expandRangeTuple(tuple: [number, number]): number | Array<number> {
+  const [lower, upper] = tuple.sort();
+
+  if (lower === upper) {
+    return lower;
+  }
+
+  const expandedRange = [];
+
+  for (let i = lower; i <= upper; i++) {
+    expandedRange.push(i);
+  }
+
+  return expandedRange;
+}
+
+export function parseLineHighlightNumbers(numbers: Array<number | [number, number]>): Array<number> {
+  return flatten(numbers.map(item => {
+    if (item instanceof Array) {
+      return expandRangeTuple(item)
+    }
+
+    return item
+  }))
+}
+
 
 type FilteredSupportedLanguagesEnum = Omit<
   typeof SupportedLanguages,
@@ -51,18 +80,25 @@ function initializeSyntaxHighlighting() {
   hljs.addPlugin(renderingPlugin);
 }
 
+const codeStyles = css`
+  color: inherit;
+  font-size: 13px;
+  font-family: ${fontFamilies.code};
+  line-height: 24px;
+`;
+
 function Syntax({
   children,
   language,
   darkMode = false,
   showLineNumbers = false,
+  highlightLines = [],
+  className,
   ...rest
 }: SyntaxProps) {
   if (!syntaxHighlightingInitialized) {
     initializeSyntaxHighlighting();
   }
-
-  const codeWrapperSharedProps = { language, darkMode, ...rest };
 
   const highlightedContent = useMemo(() => {
     if (language === Language.None) {
@@ -72,28 +108,28 @@ function Syntax({
     return hljs.highlight(language, children);
   }, [language, children]);
 
-  if (highlightedContent === null) {
-    return <CodeWrapper {...codeWrapperSharedProps}>{children}</CodeWrapper>;
-  }
+  const content = highlightedContent === null ?
+    // We create a similar data structure to the rendering plugin so that we can generate
+    // a table that's identical when the plugin isn't being used.
+    <TableContent lines={children.split('\n').map(item => item ? [item] : [])} /> :
+    highlightedContent.react
 
-  if (showLineNumbers) {
-    return (
-      <CodeWrapper {...codeWrapperSharedProps}>
-        <table
-          className={css`
-            border-spacing: 0;
-          `}
-        >
-          <tbody>{highlightedContent.reactWithNumbers}</tbody>
-        </table>
-      </CodeWrapper>
-    );
-  }
+  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const parsedHighlightLines = parseLineHighlightNumbers(highlightLines);
 
   return (
-    <CodeWrapper {...codeWrapperSharedProps}>
-      {highlightedContent.react}
-    </CodeWrapper>
+    <SyntaxContext.Provider value={{highlightLines: parsedHighlightLines, showLineNumbers, darkMode}}>
+      <code {...rest} className={cx(
+        `lg-highlight-hljs-${mode}`,
+        codeStyles,
+        language,
+        className,
+      )}>
+        <table className={css`border-spacing: 0;`}>
+          <tbody>{content}</tbody>
+        </table>
+      </code>
+    </SyntaxContext.Provider>
   );
 }
 

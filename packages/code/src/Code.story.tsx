@@ -27,7 +27,6 @@ storiesOf('Code', module).add(
         <Code
           showLineNumbers={boolean('Show line numbers', false)}
           showWindowChrome={boolean('Show window chrome', false)}
-          multiline={boolean('Multiline', true)}
           copyable={boolean('Copyable', true)}
           chromeTitle={text('Chrome label', 'directory/fileName.js')}
           darkMode={boolean('darkMode', false)}
@@ -36,6 +35,11 @@ storiesOf('Code', module).add(
             Object.values(Language),
             Language.JavaScript,
           )}
+          highlightLines={select('highlight lines', {
+            none: undefined,
+            single: [1],
+            multiple: [2, 3, 5],
+          }, undefined)}
         >
           {text('Code snippet', jsSnippet)}
         </Code>
