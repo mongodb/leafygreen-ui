@@ -80,7 +80,6 @@ function PropDefinition({
 }: PropDefinitionProps) {
   return (
     <InlineDefinition
-      open
       css={inlineDefinitionStyle}
       definition={
         <Definition
