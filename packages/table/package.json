@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/table",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "leafyGreen UI Kit Table",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/lib": "^5.1.1",
-    "@leafygreen-ui/checkbox": "^4.1.1",
+    "@leafygreen-ui/checkbox": "^5.0.0",
     "@leafygreen-ui/emotion": "^2.0.1",
     "@leafygreen-ui/palette": "2.0.1",
     "@leafygreen-ui/icon": "^6.5.0",

@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 47e4743ce47e83deb092a998fe07abde
+ * @checksum 6686d0b57b3494f6ae36a3283efb9a80
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface LaptopProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Laptop-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Laptop');
 
 const Laptop = ({
   className,
@@ -23,7 +21,7 @@ const Laptop = ({
   fill,
   ...props
 }: LaptopProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`

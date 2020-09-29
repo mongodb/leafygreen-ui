@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 301ba4449b8730213af937c64bf4a351
+ * @checksum d6bd6255335de2a0be9e3223ea942e0f
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface RefreshProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Refresh-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Refresh');
 
 const Refresh = ({
   className,
@@ -23,7 +21,7 @@ const Refresh = ({
   fill,
   ...props
 }: RefreshProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
