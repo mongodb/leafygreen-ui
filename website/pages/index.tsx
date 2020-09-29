@@ -16,14 +16,6 @@ export default function Home() {
       </Head>
 
       <Navigation />
-      <div>
-        <PropDefinition
-          prop="showWindowChrome"
-          type="boolean"
-          defaultValue="false"
-          description="Shows a stylized window chrome frame around the code snippet. This is purely stylistic. Shows a styalized window chrome frame around the code snippet. This is purely stylistic. Shows a styalized window chrome frame around the code snippet. This is purely stylistic. Shows a styalized window chrome frame around the code snippet. This is purely stylistic. Shows a styalized window chrome frame around the code snippet. This is purely stylistic."
-        />
-      </div>
     </>
   );
 }
