@@ -76,7 +76,7 @@ function MobileNavigationGroup({
 }: MobileNavigationGroupProps) {
   const [open, setOpen] = useState(false);
   const nodeRef = useRef(null);
-  const ulRef = useRef(null);
+  const ulRef = useRef<HTMLUListElement>(null);
 
   return (
     <li

@@ -24,7 +24,7 @@ const logoStyles = css`
 
 function Navigation() {
   const viewport = useViewportSize();
-  const isMobile = viewport?.width < 768;
+  const isMobile = viewport && viewport.width < 768;
   const Group = isMobile ? MobileNavigationGroup : SideNavGroup;
   const Item = isMobile ? MobileNavigationItem : SideNavItem;
 
