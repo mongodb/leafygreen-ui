@@ -7,7 +7,7 @@ export default function Home() {
       prop="showWindowChrome"
       type="boolean"
       defaultValue="false"
-      description="Shows a styalized window chrome frame around the code snippet. This is purely stylistic. Shows a styalized window chrome frame around the code snippet. This is purely stylistic. Shows a styalized window chrome frame around the code snippet. This is purely stylistic. Shows a styalized window chrome frame around the code snippet. This is purely stylistic. Shows a styalized window chrome frame around the code snippet. This is purely stylistic."
+      description="Shows a stylized window chrome frame around the code snippet. This is purely stylistic. Shows a styalized window chrome frame around the code snippet. This is purely stylistic. Shows a styalized window chrome frame around the code snippet. This is purely stylistic. Shows a styalized window chrome frame around the code snippet. This is purely stylistic. Shows a styalized window chrome frame around the code snippet. This is purely stylistic."
     />
   );
 }
