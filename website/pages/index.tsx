@@ -1,6 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
-import Navigation from '../components/navigation/Navigation';
+import { Navigation } from '../components/navigation';
+
+// store breakpoint sizes somewhere
 
 export default function Home() {
   return (

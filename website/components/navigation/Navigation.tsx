@@ -2,7 +2,11 @@
 import { css, jsx } from '@emotion/core';
 import { spacing } from '@leafygreen-ui/tokens';
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
+import { useViewportSize } from '@leafygreen-ui/hooks';
 import MDBDesignLogo from '../logos/MDBDesignLogo';
+import MobileNavigationGroup from './MobileNavigationGroup';
+import MobileNavigationItem from './MobileNavigationItem';
+import MobileNavigation from './MobileNavigation';
 
 const navWidth = css`
   width: 270px;
@@ -19,57 +23,74 @@ const logoStyles = css`
 `;
 
 function Navigation() {
+  const viewport = useViewportSize();
+  const isMobile = viewport?.width <= 768;
+  const Group = isMobile ? MobileNavigationGroup : SideNavGroup;
+  const Item = isMobile ? MobileNavigationItem : SideNavItem;
+
+  const groupProps =
+    !isMobile &&
+    ({
+      collapsible: true,
+      initialCollapsed: false,
+    } as const);
+
+  const content = (
+    <>
+      <Group header="Core Guidelines" {...groupProps}>
+        <Item>Logos</Item>
+        <Item>User Personas</Item>
+        <Item>Tone</Item>
+        <Item>Colors</Item>
+        <Item>Illustration</Item>
+        <Item>Typography</Item>
+      </Group>
+      <Group header="Components" {...groupProps}>
+        <Item>Badges</Item>
+        <Item>Banners</Item>
+        <Item>Box</Item>
+        <Item>Button</Item>
+        <Item>Callout</Item>
+        <Item>Code</Item>
+        <Item>Confirmation Modal</Item>
+        <Item>Icons</Item>
+        <Item>Icon Button</Item>
+        <Item>Inline Definition</Item>
+        <Item>Logo</Item>
+        <Item>Marketing Modal</Item>
+        <Item>Menu</Item>
+        <Item>Modal</Item>
+        <Item>Mongo Nav</Item>
+        <Item>Palette</Item>
+        <Item>Pipeline</Item>
+        <Item>Popover</Item>
+        <Item>Portal</Item>
+        <Item>Radio Box Group</Item>
+        <Item>Radio Group</Item>
+        <Item>Side Nav</Item>
+        <Item>Stepper</Item>
+        <Item>Syntax</Item>
+        <Item>Table</Item>
+        <Item>Tabs</Item>
+        <Item>Text Input</Item>
+        <Item>Toast</Item>
+        <Item>Toggle</Item>
+        <Item>Tokens</Item>
+        <Item>Tooltip</Item>
+        <Item>Typography</Item>
+      </Group>
+    </>
+  );
+
+  if (isMobile) {
+    console.log('here');
+    return <MobileNavigation>{content}</MobileNavigation>;
+  }
+
   return (
     <nav css={navWidth}>
       <MDBDesignLogo css={logoStyles} />
-      <SideNav>
-        <SideNavGroup
-          header="Core Guidelines"
-          collapsible
-          initialCollapsed={false}
-        >
-          <SideNavItem>Logos</SideNavItem>
-          <SideNavItem>User Personas</SideNavItem>
-          <SideNavItem>Tone</SideNavItem>
-          <SideNavItem>Colors</SideNavItem>
-          <SideNavItem>Illustration</SideNavItem>
-          <SideNavItem>Typography</SideNavItem>
-        </SideNavGroup>
-        <SideNavGroup header="Components" collapsible initialCollapsed={false}>
-          <SideNavItem>Badges</SideNavItem>
-          <SideNavItem>Banners</SideNavItem>
-          <SideNavItem>Box</SideNavItem>
-          <SideNavItem>Button</SideNavItem>
-          <SideNavItem>Callout</SideNavItem>
-          <SideNavItem>Code</SideNavItem>
-          <SideNavItem>Confirmation Modal</SideNavItem>
-          <SideNavItem>Icons</SideNavItem>
-          <SideNavItem>Icon Button</SideNavItem>
-          <SideNavItem>Inline Definition</SideNavItem>
-          <SideNavItem>Logo</SideNavItem>
-          <SideNavItem>Marketing Modal</SideNavItem>
-          <SideNavItem>Menu</SideNavItem>
-          <SideNavItem>Modal</SideNavItem>
-          <SideNavItem>Mongo Nav</SideNavItem>
-          <SideNavItem>Palette</SideNavItem>
-          <SideNavItem>Pipeline</SideNavItem>
-          <SideNavItem>Popover</SideNavItem>
-          <SideNavItem>Portal</SideNavItem>
-          <SideNavItem>Radio Box Group</SideNavItem>
-          <SideNavItem>Radio Group</SideNavItem>
-          <SideNavItem>Side Nav</SideNavItem>
-          <SideNavItem>Stepper</SideNavItem>
-          <SideNavItem>Syntax</SideNavItem>
-          <SideNavItem>Table</SideNavItem>
-          <SideNavItem>Tabs</SideNavItem>
-          <SideNavItem>Text Input</SideNavItem>
-          <SideNavItem>Toast</SideNavItem>
-          <SideNavItem>Toggle</SideNavItem>
-          <SideNavItem>Tokens</SideNavItem>
-          <SideNavItem>Tooltip</SideNavItem>
-          <SideNavItem>Typography</SideNavItem>
-        </SideNavGroup>
-      </SideNav>
+      <SideNav>{content}</SideNav>
     </nav>
   );
 }
