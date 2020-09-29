@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/callout",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "leafyGreen UI Kit Callout",
   "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
@@ -23,6 +23,6 @@
     "polished": "^3.6.5"
   },
   "devDependencies": {
-    "@leafygreen-ui/code": "^4.0.1"
+    "@leafygreen-ui/code": "^5.0.0"
   }
 }

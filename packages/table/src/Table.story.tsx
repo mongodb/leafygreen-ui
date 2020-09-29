@@ -93,8 +93,8 @@ storiesOf('Table', module)
         </HeaderRow>,
       ]}
     >
-      {({ datum, index }) => (
-        <Row key={`${datum.flavor}-${index}`}>
+      {({ datum }) => (
+        <Row>
           <Cell rowSpan={datum.flavor === 'Funfetti' ? 2 : 1}>
             {datum.flavor}
           </Cell>

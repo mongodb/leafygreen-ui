@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, screen, fireEvent } from '@testing-library/react';
 import { SideNav, SideNavGroup, SideNavItem } from './index';
 import { SideNavItemProps } from './SideNavItem';
+import { SideNavGroupProps } from './SideNavGroup';
 
 type renderedElement = HTMLElement | null;
-type header = React.ReactNode;
 
 interface RenderedElements {
   navEl?: renderedElement;
@@ -176,13 +176,14 @@ describe('packages/side-nav', () => {
   });
 
   describe('SideNavGroup', () => {
-    const renderGroup = (header?: header) => {
-      const { sideNavGroup, sideNavHeader, sideNavLink } = testIds;
-      const { getByTestId, queryByText, queryByTestId } = render(
+    const renderGroup = ({ header, ...rest }: SideNavGroupProps = {}) => {
+      const { sideNavGroup, sideNavLink } = testIds;
+      render(
         <SideNavGroup
           className={className}
           header={header}
           data-testid={sideNavGroup}
+          {...rest}
         >
           <SideNavItem>
             <a href="#clusters" data-testid={sideNavLink}>
@@ -191,52 +192,49 @@ describe('packages/side-nav', () => {
           </SideNavItem>
         </SideNavGroup>,
       );
-
-      renderedEls.groupEl = getByTestId(sideNavGroup);
-      renderedEls.defaultHeaderEl = queryByText(headerText);
-      renderedEls.headerContentEl = queryByTestId(sideNavHeader);
-      renderedEls.childEl = getByTestId(sideNavLink);
     };
+
+    const { sideNavGroup, sideNavHeader, sideNavLink } = testIds;
 
     describe('when the group includes a string header', () => {
       beforeEach(() => {
-        renderGroup(headerText);
+        renderGroup({ header: headerText });
       });
 
       test('renders the side nav group with a default header', () => {
-        expect(renderedEls.groupEl).toBeInTheDocument();
-        expect(renderedEls.defaultHeaderEl).toBeInTheDocument();
-        expect(renderedEls.headerContentEl).toBeNull();
+        expect(screen.getByTestId(sideNavGroup)).toBeInTheDocument();
+        expect(screen.queryByText(headerText)).toBeInTheDocument();
+        expect(screen.queryByTestId(sideNavHeader)).toBeNull();
       });
 
       test('sets the role of the list as a menu', () => {
-        const listEl = renderedEls.groupEl?.querySelector('ul');
+        const listEl = screen.getByTestId(sideNavGroup)?.querySelector('ul');
         expect(listEl).toBeInTheDocument();
         expect(listEl).toHaveAttribute('role', 'menu');
       });
 
       test('it displays the header text in a header', () => {
-        expect(renderedEls.defaultHeaderEl?.tagName).toEqual('H4');
+        expect(screen.queryByText(headerText)?.tagName).toEqual('H4');
       });
 
       test('renders the children of the side nav group', () => {
-        expect(renderedEls.childEl).toBeInTheDocument();
+        expect(screen.getByTestId(sideNavLink)).toBeInTheDocument();
       });
 
       test('it renders with the provided class name', () => {
-        expect(renderedEls.groupEl).toHaveClass(className);
+        expect(screen.getByTestId(sideNavGroup)).toHaveClass(className);
       });
     });
 
     describe('when the group includes header content', () => {
       beforeEach(() => {
-        renderGroup(headerContent);
+        renderGroup({ header: headerContent });
       });
 
       test('renders the side nav group with the header content', () => {
-        expect(renderedEls.groupEl).toBeInTheDocument();
-        expect(renderedEls.defaultHeaderEl).toBeNull();
-        expect(renderedEls.headerContentEl).toBeInTheDocument();
+        expect(screen.getByTestId(sideNavGroup)).toBeInTheDocument();
+        expect(screen.queryByText(headerText)).toBeNull();
+        expect(screen.queryByTestId(sideNavHeader)).toBeInTheDocument();
       });
     });
 
@@ -246,9 +244,47 @@ describe('packages/side-nav', () => {
       });
 
       test('renders the side nav group without a header', () => {
-        expect(renderedEls.groupEl).toBeInTheDocument();
-        expect(renderedEls.defaultHeaderEl).toBeNull();
-        expect(renderedEls.headerContentEl).toBeNull();
+        expect(screen.getByTestId(sideNavGroup)).toBeInTheDocument();
+        expect(screen.queryByText(headerText)).toBeNull();
+        expect(screen.queryByTestId(sideNavHeader)).toBeNull();
+      });
+    });
+
+    describe('when `collapsible` is true', () => {
+      beforeEach(() => {
+        renderGroup({ collapsible: true });
+      });
+
+      test('it renders an icon in the header', () => {
+        const icon = screen.getByTitle('Chevron Right Icon');
+        expect(icon).toBeInTheDocument();
+      });
+
+      test('the content is collapsed by default', () => {
+        const childContent = screen.queryByTestId(sideNavLink);
+        expect(childContent).not.toBeInTheDocument();
+      });
+
+      test('the content expands when icon is clicked', () => {
+        const hiddenChildContent = screen.queryByTestId(sideNavLink);
+        expect(hiddenChildContent).not.toBeInTheDocument();
+
+        const icon = screen.getByTitle('Chevron Right Icon');
+        fireEvent.click(icon);
+
+        const childContent = screen.getByTestId(sideNavLink);
+        expect(childContent).toBeInTheDocument();
+      });
+    });
+
+    describe('when `collapsible` is true and `initialCollapsed` is false', () => {
+      beforeEach(() => {
+        renderGroup({ collapsible: true, initialCollapsed: false });
+      });
+
+      test('the content appears on the page by default', () => {
+        const childContent = screen.getByTestId(sideNavLink);
+        expect(childContent).toBeInTheDocument();
       });
     });
   });

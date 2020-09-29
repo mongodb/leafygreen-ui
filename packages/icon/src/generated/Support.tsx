@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 9bb011abf74320a9ffd43a9dda68fa01
+ * @checksum ddd4a53ed59a9a93f0a38517be14207a
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface SupportProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Support-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Support');
 
 const Support = ({
   className,
@@ -23,7 +21,7 @@ const Support = ({
   fill,
   ...props
 }: SupportProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`

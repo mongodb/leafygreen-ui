@@ -1,5 +1,11 @@
 # @leafygreen-ui/popover
 
+## 6.0.0
+
+### Major Changes
+
+- 6e210765: Fixes issue where under certain implementations of Popover, an infinite loop would occur. This fix is potentially breaking due to a change in the DOM.
+
 ## 5.2.3
 
 ### Patch Changes
