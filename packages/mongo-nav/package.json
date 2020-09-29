@@ -4,6 +4,9 @@
   "description": "LeafyGreen UI Kit Mongo Nav",
   "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": { "*": ["ts3.4/*"] }
+  },
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
   },
