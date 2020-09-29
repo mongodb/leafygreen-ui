@@ -54,8 +54,7 @@ function InlineDefinition({
 InlineDefinition.displayName = 'InlineDefinition';
 
 InlineDefinition.propTypes = {
-  definition: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
-    .isRequired,
+  definition: PropTypes.node.isRequired,
   className: PropTypes.string,
   children: PropTypes.node,
 };
