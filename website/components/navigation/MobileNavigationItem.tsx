@@ -24,7 +24,13 @@ const activeStyle = css`
   background-color: ${uiColors.green.light3};
 `;
 
-function MobileNavigationItem({ children, active }) {
+function MobileNavigationItem({
+  children,
+  active,
+}: {
+  children: React.ReactNode;
+  active?: boolean;
+}) {
   return (
     <li className={cx(listItemStyle, { [activeStyle]: active })}>{children}</li>
   );

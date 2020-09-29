@@ -3,8 +3,7 @@ import { css, cx } from 'emotion';
 import { Transition } from 'react-transition-group';
 import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
 import { uiColors } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
-import { borderColor, leftRightPadding } from './styles';
+import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
 
 const buttonResetStyles = css`
   background-color: transparent;
@@ -25,6 +24,11 @@ const groupButtonStyles = css`
   width: 100%;
   height: 68px;
   border-top: 1px solid ${borderColor}};
+`;
+
+const openIconStyle = css`
+  transform: rotate(90deg);
+  transition: 150ms all ease-in-out;
 `;
 
 const navItemStyle = css`
@@ -53,14 +57,6 @@ const transitionStyles = {
   `,
 };
 
-const ulStyleOverrides = css`
-  margin-block-start: 0px;
-  margin-block-end: 0px;
-  padding-inline-start: 0px;
-  padding: 0;
-  list-style-type: none;
-`;
-
 const ulStyles = css`
   ${ulStyleOverrides}
   display: flex;
@@ -68,10 +64,19 @@ const ulStyles = css`
   border-top: 1px solid ${borderColor};
 `;
 
-function MobileNavigationGroup({ header, children, ...rest }) {
+type MobileNavigationGroupProps = JSX.IntrinsicElements['li'] & {
+  header: string;
+  children: React.ReactNode;
+};
+
+function MobileNavigationGroup({
+  header,
+  children,
+  ...rest
+}: MobileNavigationGroupProps) {
   const [open, setOpen] = useState(false);
-  const nodeRef = useRef();
-  const ulRef = useRef();
+  const nodeRef = useRef(null);
+  const ulRef = useRef(null);
 
   return (
     <li
@@ -86,9 +91,12 @@ function MobileNavigationGroup({ header, children, ...rest }) {
       >
         <ChevronRightIcon
           size={20}
-          className={css`
-            margin-right: 12px;
-          `}
+          className={cx(
+            css`
+              margin-right: 12px;
+            `,
+            { [openIconStyle]: open },
+          )}
         />
         <h4 className={navItemStyle}>{header}</h4>
       </button>

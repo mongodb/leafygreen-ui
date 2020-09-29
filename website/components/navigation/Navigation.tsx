@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import React from 'react';
+import { css } from 'emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
 import { useViewportSize } from '@leafygreen-ui/hooks';
@@ -24,7 +24,7 @@ const logoStyles = css`
 
 function Navigation() {
   const viewport = useViewportSize();
-  const isMobile = viewport?.width <= 768;
+  const isMobile = viewport?.width < 768;
   const Group = isMobile ? MobileNavigationGroup : SideNavGroup;
   const Item = isMobile ? MobileNavigationItem : SideNavItem;
 
@@ -83,13 +83,12 @@ function Navigation() {
   );
 
   if (isMobile) {
-    console.log('here');
     return <MobileNavigation>{content}</MobileNavigation>;
   }
 
   return (
-    <nav css={navWidth}>
-      <MDBDesignLogo css={logoStyles} />
+    <nav className={navWidth}>
+      <MDBDesignLogo className={logoStyles} />
       <SideNav>{content}</SideNav>
     </nav>
   );

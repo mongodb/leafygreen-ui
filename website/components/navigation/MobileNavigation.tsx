@@ -1,9 +1,14 @@
 import React from 'react';
-import { css, cx } from 'emotion';
+import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import MDBDesignLogo from '../logos/MDBDesignLogo';
-import { GridContainer, GridItem } from '../grid/Grid';
-import { borderColor, leftRightPadding } from './styles';
+import { GridContainer, GridItem } from '../grid';
+import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
+
+const navStyle = css`
+  border-right: 1px solid ${borderColor};
+  min-height: 100vh;
+`;
 
 const logoContainer = css`
   ${leftRightPadding}
@@ -13,14 +18,6 @@ const logoContainer = css`
   flex-grow: 1;
 `;
 
-const ulStyleOverrides = css`
-  margin-block-start: 0px;
-  margin-block-end: 0px;
-  padding-inline-start: 0px;
-  padding: 0;
-  list-style-type: none;
-`;
-
 const navItemStyle = css`
   font-size: 20px;
   line-height: 24px;
@@ -28,36 +25,27 @@ const navItemStyle = css`
   margin: 0;
 `;
 
-function MobileNavigation({ children }) {
+const h4Style = css`
+  ${navItemStyle}
+  ${leftRightPadding}
+  display: flex;
+  align-items: center;
+  height: 68px;
+  border-top: 1px solid ${borderColor};
+  margin: 0;
+`;
+
+function MobileNavigation({ children }: { children: React.ReactNode }) {
   return (
     <GridContainer justify="flex-start">
       <GridItem sm={10}>
-        <nav
-          className={css`
-            height: 100vh;
-            border-right: 1px solid ${borderColor};
-          `}
-        >
+        <nav className={navStyle}>
           <div className={logoContainer}>
             <MDBDesignLogo />
           </div>
           <ol className={ulStyleOverrides}>
             <li>
-              <h4
-                className={cx(
-                  navItemStyle,
-                  css`
-                    ${leftRightPadding}
-                    display: flex;
-                    align-items: center;
-                    height: 68px;
-                    border-top: 1px solid ${borderColor};
-                    margin: 0;
-                  `,
-                )}
-              >
-                Home
-              </h4>
+              <h4 className={h4Style}>Home</h4>
             </li>
             {children}
           </ol>

@@ -8,3 +8,11 @@ export const leftRightPadding = css`
 `;
 
 export const borderColor = uiColors.gray.light2;
+
+export const ulStyleOverrides = css`
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  padding-inline-start: 0px;
+  padding: 0;
+  list-style-type: none;
+`;
