@@ -1,7 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
 import Navigation from '../components/navigation/Navigation';
-import PropDefinition from '../components/prop-definition/PropDefinition';
 
 export default function Home() {
   return (
@@ -14,7 +13,6 @@ export default function Home() {
           rel="stylesheet"
         />
       </Head>
-
       <Navigation />
     </>
   );
