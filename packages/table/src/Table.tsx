@@ -52,7 +52,6 @@ function getScrollShadowStyle(scrollState: ScrollState): string {
       `;
 
     case ScrollState.None:
-    default:
       return '';
   }
 }
