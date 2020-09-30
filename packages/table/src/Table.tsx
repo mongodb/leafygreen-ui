@@ -100,12 +100,15 @@ export default function Table<Shape>({
     }
   }, [viewportSize]);
 
-  const handleScroll = (e: React.UIEvent & { target: HTMLDivElement }) => {
-    const { scrollWidth, clientWidth: elementWidth } = e.target;
+  const handleScroll = (e: React.UIEvent) => {
+    const {
+      scrollWidth,
+      clientWidth: elementWidth,
+    } = e.target as HTMLDivElement;
     const isScrollable = scrollWidth > elementWidth;
 
     if (isScrollable) {
-      const scrollPosition = e.target.scrollLeft;
+      const scrollPosition = (e.target as HTMLDivElement).scrollLeft;
       const maxPosition = scrollWidth - elementWidth;
 
       if (scrollPosition > 0 && scrollPosition < maxPosition) {
@@ -120,9 +123,7 @@ export default function Table<Shape>({
 
   const debounceScroll = debounce(handleScroll, 50, { leading: true });
 
-  const onScroll: React.EventHandler<
-    React.UIEvent & { target: HTMLDivElement }
-  > = e => {
+  const onScroll: React.EventHandler<React.UIEvent> = e => {
     e.persist();
     debounceScroll(e);
   };
