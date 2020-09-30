@@ -17,10 +17,12 @@
   "dependencies": {
     "@leafygreen-ui/lib": "^5.1.1",
     "@leafygreen-ui/checkbox": "^5.0.0",
+    "@leafygreen-ui/hooks": "^4.2.1",
     "@leafygreen-ui/emotion": "^2.0.1",
     "@leafygreen-ui/palette": "2.0.1",
     "@leafygreen-ui/icon": "^6.5.0",
     "@leafygreen-ui/icon-button": "^8.0.0",
-    "react-transition-group": "^4.4.1"
+    "react-transition-group": "^4.4.1",
+    "lodash": "^4.17.20"
   }
 }

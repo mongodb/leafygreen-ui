@@ -1,5 +1,6 @@
 import React from 'react';
 import debounce from 'lodash/debounce';
+import { transparentize } from 'polished';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import {
@@ -29,30 +30,31 @@ const ScrollState = {
 type ScrollState = typeof ScrollState[keyof typeof ScrollState];
 
 function getScrollShadowStyle(scrollState: ScrollState): string {
-  const shadowColor = 'rgba(93,108,116,0.3)';
+  const shadowColor = transparentize(0.6, uiColors.gray.dark1);
 
-  if (scrollState === ScrollState.Both) {
-    return css`
-      box-shadow: inset 6px 0 6px -6px ${shadowColor},
-        inset -6px 0 6px -6px ${shadowColor},
-        inset 0 6px 6px -6px ${uiColors.gray.light3},
-        inset 0 -6px 6px -6px ${uiColors.gray.light3};
-    `;
+  switch (scrollState) {
+    case ScrollState.Both:
+      return css`
+        box-shadow: inset 6px 0 6px -6px ${shadowColor},
+          inset -6px 0 6px -6px ${shadowColor},
+          inset 0 6px 6px -6px ${uiColors.gray.light3},
+          inset 0 -6px 6px -6px ${uiColors.gray.light3};
+      `;
+
+    case ScrollState.Left:
+      return css`
+        box-shadow: inset 6px 0 6px -6px ${shadowColor};
+      `;
+
+    case ScrollState.Right:
+      return css`
+        box-shadow: inset -6px 0 6px -6px ${shadowColor};
+      `;
+
+    case ScrollState.None:
+    default:
+      return '';
   }
-
-  if (scrollState === ScrollState.Left) {
-    return css`
-      box-shadow: inset 6px 0 6px -6px ${shadowColor};
-    `;
-  }
-
-  if (scrollState === ScrollState.Right) {
-    return css`
-      box-shadow: inset -6px 0 6px -6px ${shadowColor};
-    `;
-  }
-
-  return '';
 }
 
 interface TableRowInterface<Shape = {}> {
@@ -81,23 +83,25 @@ export default function Table<Shape>({
   );
   const divRef = React.useRef<HTMLDivElement>(null);
   const viewportSize = useViewportSize();
-  console.log(viewportSize);
 
   useIsomorphicLayoutEffect(() => {
     const ref = divRef.current;
 
-    if (ref != null && ref.scrollWidth > ref.clientWidth) {
+    if (ref == null) {
+      return;
+    }
+
+    if (ref.scrollWidth > ref.clientWidth) {
       setScrollState(ScrollState.Right);
     } else if (
-      ref != null &&
       viewportSize != null &&
-      ref.getBoundingClientRect().width < viewportSize.width
+      ref.getBoundingClientRect().width <= viewportSize.width
     ) {
       setScrollState(ScrollState.None);
     }
   }, [viewportSize]);
 
-  const handleScroll = (e: React.UIEvent) => {
+  const handleScroll = (e: React.UIEvent<HTMLElement>) => {
     const { scrollWidth, clientWidth: elementWidth } = e.target as HTMLElement;
     const isScrollable = scrollWidth > elementWidth;
 
