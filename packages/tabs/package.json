@@ -17,6 +17,7 @@
   "dependencies": {
     "@leafygreen-ui/lib": "^5.1.1",
     "@leafygreen-ui/palette": "^2.0.2",
+    "@leafygreen-ui/tokens": "^0.3.0",
     "@leafygreen-ui/hooks": "^4.2.1",
     "@leafygreen-ui/box": "^2.1.4",
     "@leafygreen-ui/leafygreen-provider": "^1.1.4",
