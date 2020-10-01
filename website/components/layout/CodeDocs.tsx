@@ -53,8 +53,8 @@ function CodeDocs({
 }) {
   const [modalOpen, setModalOpen] = React.useState(false);
   const version = changelog.match(/<h2>([\s\S]*?)<\/h2>/m)[1];
-  const example = readme.match(/Javascript([\s\S]*?)```/m)[1];
-  console.log(example);
+  const example = readme.match(/Javascript([\s\S]*?)```/m)?.[1];
+  const html = readme.match(/```HTML([\s\S]*?)```/m)?.[1];
 
   console.log(readme);
 
@@ -95,7 +95,7 @@ function CodeDocs({
           margin-top: 20px;
         `}
       >
-        <Tab name="Example">
+        <Tab name="Example" default>
           <div
             className={css`
               margin-top: 20px;
@@ -104,7 +104,15 @@ function CodeDocs({
             <Code language="js">{example}</Code>
           </div>
         </Tab>
-        <Tab name="OutputHTML"></Tab>
+        <Tab name="OutputHTML">
+          <div
+            className={css`
+              margin-top: 20px;
+            `}
+          >
+            <Code language="js">{html}</Code>
+          </div>
+        </Tab>
       </Tabs>
     </>
   );
