@@ -1,11 +1,15 @@
 {
   "name": "@leafygreen-ui/tabs",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "leafyGreen UI Kit Tabs",
   "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
-    "<3.9": { "*": ["ts3.4/*"] }
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
   },
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
