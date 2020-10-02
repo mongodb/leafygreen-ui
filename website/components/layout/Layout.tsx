@@ -3,8 +3,11 @@ import { css } from 'emotion';
 import { GridContainer, GridItem } from '../grid/Grid';
 import Navigation from '../navigation/Navigation';
 import Header from './Header';
-
 import { BaseLayoutProps } from './types';
+
+const topMargin = css`
+  margin-top: 36px;
+`;
 
 export default function Layout({
   component,
@@ -24,13 +27,7 @@ export default function Layout({
 
       <GridContainer justify="flex-start">
         <GridItem md={6} lg={8}>
-          <div
-            className={css`
-              // border: 3px solid gold;
-              height: 600px;
-              margin-top: 36px;
-            `}
-          >
+          <div className={topMargin}>
             <Header
               component={component}
               changelog={changelog}
