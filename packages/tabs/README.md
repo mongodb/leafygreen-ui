@@ -20,7 +20,7 @@ npm install @leafygreen-ui/tabs
 
 ## Example
 
-```js
+```Javascript
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
 
 const [selected, setSelected] = useState(0)

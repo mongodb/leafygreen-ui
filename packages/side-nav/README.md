@@ -26,7 +26,7 @@ npm install @leafygreen-ui/side-nav
 
 ## Example
 
-```js
+```Javascript
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
 
 const header = (

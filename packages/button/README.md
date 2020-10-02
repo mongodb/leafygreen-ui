@@ -41,10 +41,14 @@ import Button from '@leafygreen-ui/button';
 
 **Output HTML**
 
-```HTML
-  <button class="css-1rgbgdt create-item-button" title="Create an item" disabled="false">
-    Submit
-  </button>
+```html
+<button
+  class="css-1rgbgdt create-item-button"
+  title="Create an item"
+  disabled="false"
+>
+  Submit
+</button>
 ```
 
 ## Properties

@@ -22,7 +22,7 @@ Hook to subscribe to changes in a ref
 
 ### Example
 
-```js
+```Javascript
 import { useElementNode } from '@leafygreen-ui/hooks';
 
 const Example = () => {
@@ -38,7 +38,7 @@ Hook to create and remove eventListeners
 
 ### Example
 
-```js
+```Javascript
 import { useEventListener } from '@leafygreen-ui/hooks';
 
 useEventListener('click', handleClick, { enabled });
@@ -61,7 +61,7 @@ Hook that listens for `EscapeKey` press.
 
 ### Example
 
-```js
+```Javascript
 import { useEscapeKey } from '@leafygreen-ui/hooks';
 
 useEscapeKey(handleEscapeCallback);
@@ -78,7 +78,7 @@ useEscapeKey(handleEscapeCallback);
 
 ### Example
 
-```js
+```Javascript
 import { useMutationObserver } from '@leafygreen-ui/hooks';
 
 const lastTimeContentElMutated = useMutationObserver(
@@ -104,7 +104,7 @@ Hook to subscribe to changes in viewport size
 
 ### Example
 
-```js
+```Javascript
 const viewportSize = useViewportSize();
 ```
 
@@ -118,7 +118,7 @@ This hooks also makes use of the [Page Visibility API](https://developer.mozilla
 
 ### Example
 
-```js
+```Javascript
 import { usePoller } from '@leafygreen-ui/hooks';
 
 usePoller(onPoll, {
@@ -143,7 +143,7 @@ Hook to retrieve a value from the previous render.
 
 ### Example
 
-```jsx
+```Javascriptx
 import { usePrevious } from '@leafygreen-ui/hooks';
 
 const Example = ({nextValue: number}) => {
@@ -166,7 +166,7 @@ const Example = ({nextValue: number}) => {
 
 Drop-in replacement for `useLayoutEffect` that does not produce warnings during server-side rendering. If your project uses the `react-hooks/exhaustive-deps` ESLint rule, it's recommended to add `useIsomorphicLayoutEffect` to the `additionalHooks` of the rule. Example:
 
-```js
+```Javascript
   rules: {
     'react-hooks/exhaustive-deps': [
       'warn',

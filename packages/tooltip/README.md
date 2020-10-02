@@ -20,7 +20,7 @@ npm install @leafygreen-ui/tooltip
 
 ## Example
 
-```js
+```Javascript
 import Tooltip from '@leafygreen-ui/tooltip';
 
 <Tooltip

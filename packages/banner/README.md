@@ -20,7 +20,7 @@ npm install @leafygreen-ui/banner
 
 ## Example
 
-```js
+```Javascript
 <Banner>This is the banner content</Banner>
 ```
 

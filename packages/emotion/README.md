@@ -26,7 +26,7 @@ We expose three methods as named exports that are also exposed by the base `emot
 
 ### Example
 
-```js
+```Javascript
 import { renderToString } from 'react-dom/server';
 import { renderStylesToString } from '@leafygreen-ui/emotion';
 import App from './App';

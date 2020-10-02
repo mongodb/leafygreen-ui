@@ -30,8 +30,8 @@ import Badge from '@leafygreen-ui/badge';
 
 **Output HTML**
 
-```HTML
-  <div class="leafygreen-ui-rhgfxf my-badge">New</div>
+```html
+<div class="leafygreen-ui-rhgfxf my-badge">New</div>
 ```
 
 ## Properties

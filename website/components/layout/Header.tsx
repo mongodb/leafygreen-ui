@@ -5,13 +5,11 @@ import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { H2 } from '@leafygreen-ui/typography';
-import CodeDocs from './CodeDocs';
 
 function transformComponentName(string) {
-  return string.replace(
-    /\w\S*/g,
-    m => m.charAt(0).toUpperCase() + m.substr(1).toLowerCase(),
-  );
+  return string
+    .replace(/\w*/g, m => m.charAt(0).toUpperCase() + m.substr(1).toLowerCase())
+    .replace('-', ' ');
 }
 
 const componentsStyle = css`
@@ -61,13 +59,7 @@ function Header({ component, changelog, readme }: HeaderProps) {
       <Tabs>
         <Tab name="Live Example">Live Example</Tab>
         <Tab name="Design Guidelines">Design Guidelines</Tab>
-        <Tab name="Code Docs">
-          <CodeDocs
-            changelog={changelog}
-            component={component}
-            readme={readme}
-          />
-        </Tab>
+        <Tab name="Code Docs">Code docs!</Tab>
       </Tabs>
     </div>
   );

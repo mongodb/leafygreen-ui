@@ -20,7 +20,7 @@ npm install @leafygreen-ui/syntax
 
 ## Example
 
-```js
+```Javascript
 import Syntax from '@leafygreen-ui/syntax';
 
 const codeSnippet = `
@@ -36,26 +36,25 @@ const SomeComponent = () => <Syntax>{codeSnippet}</Syntax>;
 
 **Output HTML**
 
-```HTML
+```html
 <code class="lg-highlight-hljs-light leafygreen-ui-16k3j4z">
-	<span class="lg-highlight-function">
-		<span class="lg-highlight-keyword">function</span>
+  <span class="lg-highlight-function">
+    <span class="lg-highlight-keyword">function</span>
 
-		<span class="lg-highlight-title">greeting</span>
-		(
-		<span class="lg-highlight-params">entity</span>
-		)
-	</span>
-	{
-	<span class="lg-highlight-keyword">return</span>
+    <span class="lg-highlight-title">greeting</span>
+    (
+    <span class="lg-highlight-params">entity</span>
+    )
+  </span>
+  {
+  <span class="lg-highlight-keyword">return</span>
 
-	<span class="lg-highlight-string">
-		`Hello, <span class="lg-highlight-subst">${entity}</span>!`
-	</span>;
-	}
-	<span class="lg-highlight-built_in">console</span>
-	.log(greeting(
-	<span class="lg-highlight-string">'World'</span>));
+  <span class="lg-highlight-string">
+    `Hello, <span class="lg-highlight-subst">${entity}</span>!` </span
+  >; }
+  <span class="lg-highlight-built_in">console</span>
+  .log(greeting(
+  <span class="lg-highlight-string">'World'</span>));
 </code>
 ```
 

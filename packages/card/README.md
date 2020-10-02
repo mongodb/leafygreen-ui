@@ -33,7 +33,7 @@ import Card from '@leafygreen-ui/card';
 
 **Output HTML**
 
-```HTML
+```html
 <div class="leafygreen-ui-1lu17q2 card-styles">This is my card component</div>
 ```
 

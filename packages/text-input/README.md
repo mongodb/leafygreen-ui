@@ -45,16 +45,20 @@ return (
 
 **Output HTML**
 
-```HTML
+```html
 <div class="leafygreen-ui-4t2zpc">
-  <label for="text-input-2604213" class="leafygreen-ui-1ie388">
-    Email
-  </label>
-  <p class="leafygreen-ui-1vlu192">
-    Enter your email below
-  </p>
+  <label for="text-input-2604213" class="leafygreen-ui-1ie388"> Email </label>
+  <p class="leafygreen-ui-1vlu192">Enter your email below</p>
   <div class="leafygreen-ui-lzja97">
-    <input data-leafygreen-ui="input-selector" class="leafygreen-ui-86cw8t" type="text" required="" placeholder="your.email@example.com" id="text-input-2604213" value="">
+    <input
+      data-leafygreen-ui="input-selector"
+      class="leafygreen-ui-86cw8t"
+      type="text"
+      required=""
+      placeholder="your.email@example.com"
+      id="text-input-2604213"
+      value=""
+    />
     <div data-leafygreen-ui="icon-selector" class="leafygreen-ui-m329s1"></div>
     <div class="leafygreen-ui-1andb55"></div>
   </div>

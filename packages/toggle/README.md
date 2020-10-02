@@ -32,27 +32,27 @@ import Toggle from '@leafygreen-ui/toggle'
 
 **Output HTML**
 
-```HTML
-  <label class="my-toggle css-1rgbgdt css-3jdsksdd" for="toggle-14827892">
-		<input
-		  checked
-			type="checkbox"
-			role="checkbox"
-			class="css-32kjhsdaf"
-			id="toggle-14827892"
-			name="toggle-14827892"
-			aria-disabled="false"
-			aria-checked="true"
-		/>
+```html
+<label class="my-toggle css-1rgbgdt css-3jdsksdd" for="toggle-14827892">
+  <input
+    checked
+    type="checkbox"
+    role="checkbox"
+    class="css-32kjhsdaf"
+    id="toggle-14827892"
+    name="toggle-14827892"
+    aria-disabled="false"
+    aria-checked="true"
+  />
 
-		<div class="css-328akljss"></div>
+  <div class="css-328akljss"></div>
 
-		<div class="css-34kjkdfg css-8sjlkdjcx">
-			<div class="css-38kjdsjkdf">On</div>
-			<div class="css-22kjdsmncf">Off</div>
-			<div class="css-98sdfjsad css-2dsfdsli css-78kljdfva"></div>
-		</div>
-  </label>
+  <div class="css-34kjkdfg css-8sjlkdjcx">
+    <div class="css-38kjdsjkdf">On</div>
+    <div class="css-22kjdsmncf">Off</div>
+    <div class="css-98sdfjsad css-2dsfdsli css-78kljdfva"></div>
+  </div>
+</label>
 ```
 
 ## Properties
