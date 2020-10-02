@@ -5,7 +5,7 @@ import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { H2 } from '@leafygreen-ui/typography';
-import { BaseLayoutProps } from './types';
+import { BaseLayoutProps } from '../../utils/types';
 
 function transformComponentName(string) {
   return string
@@ -34,7 +34,7 @@ const flexContainer = css`
   align-items: center;
 `;
 
-function Header({ component, changelog, readme }: BaseLayoutProps) {
+function Header({ component }: BaseLayoutProps) {
   if (!component) {
     return null;
   }

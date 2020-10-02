@@ -4,19 +4,28 @@ import fs from 'fs';
 import path from 'path';
 import Layout from '../../../components/layout';
 import markdownToHtml from '../../../utils/markdownToHtml';
+import { BaseLayoutProps } from '../../../utils/types';
 
-export default function Component({ component, changelog, readme }) {
+export default function Component({
+  component,
+  changelog,
+  readme,
+}: BaseLayoutProps) {
   return <Layout component={component} changelog={changelog} readme={readme} />;
 }
 
 export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
-  const changelogMarkdown = fs.readFileSync(
-    path.join('../packages', id, 'changelog.md'),
-  );
+  let changelogMarkdown, readme;
 
-  const readme = fs
-    .readFileSync(path.join('../packages', id, 'README.md'))
-    .toString();
+  if (typeof id === 'string') {
+    changelogMarkdown = fs.readFileSync(
+      path.join('../packages', id, 'changelog.md'),
+    );
+
+    readme = fs
+      .readFileSync(path.join('../packages', id, 'README.md'))
+      .toString();
+  }
 
   const changelog = await markdownToHtml(changelogMarkdown || '');
 

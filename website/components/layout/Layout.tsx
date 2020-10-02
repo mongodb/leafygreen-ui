@@ -3,7 +3,7 @@ import { css } from 'emotion';
 import { GridContainer, GridItem } from '../grid/Grid';
 import Navigation from '../navigation/Navigation';
 import Header from './Header';
-import { BaseLayoutProps } from './types';
+import { BaseLayoutProps } from '../../utils/types';
 
 const topMargin = css`
   margin-top: 36px;
