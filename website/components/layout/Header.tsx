@@ -7,7 +7,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { H2 } from '@leafygreen-ui/typography';
 import { BaseLayoutProps } from '../../utils/types';
 
-function transformComponentName(string) {
+function transformComponentName(string: string) {
   return string
     .replace(/\w*/g, m => m.charAt(0).toUpperCase() + m.substr(1).toLowerCase())
     .replace('-', ' ');

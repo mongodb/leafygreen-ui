@@ -14,7 +14,13 @@ export default function Component({
   return <Layout component={component} changelog={changelog} readme={readme} />;
 }
 
-export const getStaticProps: GetStaticProps = async ({ params: { id } }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  if (!params) {
+    return { props: {} };
+  }
+
+  const { id } = params;
+
   let changelogMarkdown, readme;
 
   if (typeof id === 'string') {
