@@ -3,8 +3,7 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import fs from 'fs';
 import path from 'path';
 import Layout from '../../../components/layout';
-import markdownToHtml from '../../../utils/markdownToHtml';
-import { BaseLayoutProps } from '../../../utils/types';
+import { BaseLayoutProps, markdownToHtml } from '../../../utils';
 
 export default function Component({
   component,

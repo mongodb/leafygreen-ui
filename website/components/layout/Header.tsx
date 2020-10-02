@@ -5,7 +5,7 @@ import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { H2 } from '@leafygreen-ui/typography';
-import { BaseLayoutProps } from '../../utils/types';
+import { BaseLayoutProps } from '../../utils/';
 
 function transformComponentName(string: string) {
   return string
