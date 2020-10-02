@@ -45,7 +45,9 @@ const defaultStyle = css`
   opacity: 1;
 `;
 
-const transitionStyles = {
+type States = 'entering' | 'entered' | 'exiting' | 'exited';
+
+const transitionStyles: Partial<Record<States, string>> = {
   entering: css`
     opacity: 0;
   `,
@@ -112,7 +114,7 @@ function MobileNavigationGroup({
         mountOnEnter
         unmountOnExit
       >
-        {(state: string) => (
+        {(state: States) => (
           <div
             ref={nodeRef}
             className={cx(defaultStyle, transitionStyles[state], {
