@@ -1,5 +1,20 @@
 # @leafygreen-ui/typography
 
+## 5.0.0
+
+### Major Changes
+
+- 001a277f: `Body` component now renders as a `div` instead of `p` element.
+
+### Minor Changes
+
+- d0dac1a0: Updates InlineCode component to match design spec. InlineCode components may now also be links.
+
+### Patch Changes
+
+- Updated dependencies [001a277f]
+  - @leafygreen-ui/icon@6.6.1
+
 ## 4.3.0
 
 ### Minor Changes

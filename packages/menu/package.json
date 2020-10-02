@@ -1,11 +1,15 @@
 {
   "name": "@leafygreen-ui/menu",
-  "version": "7.0.10",
+  "version": "8.0.0",
   "description": "LeafyGreen UI Kit Menu",
   "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
-    "<3.9": { "*": ["ts3.4/*"] }
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
   },
   "scripts": {
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
@@ -15,7 +19,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/icon": "^6.3.2"
+    "@leafygreen-ui/icon": "^6.6.1"
   },
   "dependencies": {
     "react-transition-group": "^4.4.1",
@@ -24,7 +28,7 @@
     "@leafygreen-ui/popover": "^6.0.0",
     "@leafygreen-ui/palette": "^2.0.2",
     "@leafygreen-ui/box": "^2.1.4",
-    "@leafygreen-ui/icon-button": "^8.0.0"
+    "@leafygreen-ui/icon-button": "^8.0.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^1.1.4"
