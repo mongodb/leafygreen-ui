@@ -1,5 +1,16 @@
 # @leafygreen-ui/side-nav
 
+## 3.2.0
+
+### Minor Changes
+
+- f8b285a7: Adds `initialCollapsed` prop
+
+### Patch Changes
+
+- Updated dependencies [a18b4e1b]
+  - @leafygreen-ui/menu@8.0.0
+
 ## 3.1.0
 
 ### Minor Changes
