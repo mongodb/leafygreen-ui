@@ -26,7 +26,7 @@ npm install @leafygreen-ui/menu
 
 ## Example
 
-```Javascript
+```js
 import { Menu, MenuSeparator, MenuItem } from '@leafygreen-ui/menu';
 
 <Menu align="bottom" justify="start" trigger={<button>trigger</button>}>
@@ -164,7 +164,7 @@ _Any other properties will be spread on the MenuItem `div` container_
 
 ## Example
 
-```Javascript
+```js
 import { Menu, MenuSeparator, MenuItem } from '@leafygreen-ui/menu';
 
 <Menu

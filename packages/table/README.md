@@ -18,7 +18,7 @@ npm install @leafygreen-ui/table
 
 ## Example
 
-```Javascript
+```js
 import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 
 <Table

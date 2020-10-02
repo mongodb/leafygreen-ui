@@ -20,7 +20,7 @@ npm install @leafygreen-ui/portal
 
 ## Example
 
-```Javascript
+```js
 import Portal from '@leafygreen-ui/portal';
 
 <Portal>

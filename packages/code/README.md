@@ -20,7 +20,7 @@ npm install @leafygreen-ui/code
 
 ## Example
 
-```Javascript
+```js
 import Code from '@leafygreen-ui/code';
 
 const codeSnippet = `

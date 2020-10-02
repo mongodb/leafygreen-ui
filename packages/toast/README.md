@@ -20,21 +20,20 @@ npm install @leafygreen-ui/toast
 
 ## Example
 
-```Javascript
+```js
 import Toast from '@leafygreen-ui/toast';
 
-const [toastOpen, setToastOpen] = useState(true)
+const [toastOpen, setToastOpen] = useState(true);
 
 return (
-	<Toast
-		variant='success'
-		title='This is a title'
-		body='This is a description'
-		open={toastOpen}
-		close={() => setToastOpen(false)}
-	/>
-)
-
+  <Toast
+    variant="success"
+    title="This is a title"
+    body="This is a description"
+    open={toastOpen}
+    close={() => setToastOpen(false)}
+  />
+);
 ```
 
 **Output HTML**

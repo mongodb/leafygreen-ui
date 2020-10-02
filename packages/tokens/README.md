@@ -20,7 +20,7 @@ npm install @leafygreen-ui/tokens
 
 ## Spacing
 
-```Javascript
+```js
 import { spacing } from '@leafygreen-ui/tokens';
 
 const example = () => <span style={{ margin: spacing[1] }}>Hello World</span>;
@@ -28,7 +28,7 @@ const example = () => <span style={{ margin: spacing[1] }}>Hello World</span>;
 
 ## Fonts
 
-```Javascript
+```js
 import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const example = () => <span style={{ font-family: fontFamilies.default }}>Hello World</span>;

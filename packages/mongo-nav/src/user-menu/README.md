@@ -18,7 +18,7 @@ npm install @leafygreen-ui/mongo-nav
 
 ## Example
 
-```Javascript
+```js
 import { UserMenu } from '@leafygreen-ui/mongo-nav';
 
 <UserMenu

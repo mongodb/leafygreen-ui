@@ -47,7 +47,7 @@
 
 - eba8391: Box component now accepts `as` prop instead of `component` and exports generic `ExtendableBox` as helper type for components wrapping Box.
 
-  ```Javascript
+  ```js
   Example Usage:
   function Example<ExtendableBox<ExampleProps>>(props: ExampleProps) {
     return <div>Example Component</div>

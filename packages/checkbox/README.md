@@ -20,16 +20,18 @@ npm install @leafygreen-ui/checkbox
 
 ## Example
 
-```Javascript
+```js
 import Checkbox from '@leafygreen-ui/checkbox';
 
 <Checkbox
-	className='my-checkbox'
-	onChange={(event) => {/* Something to handle the click event */}}
-	label='This is how you enable a thing'
-	checked={true}
-	bold={false}
-/>
+  className="my-checkbox"
+  onChange={event => {
+    /* Something to handle the click event */
+  }}
+  label="This is how you enable a thing"
+  checked={true}
+  bold={false}
+/>;
 ```
 
 **Output HTML**

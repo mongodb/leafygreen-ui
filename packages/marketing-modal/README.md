@@ -20,7 +20,7 @@ npm install @leafygreen-ui/marketing-modal
 
 ## Example
 
-```Javascript
+```js
 function Example() {
   const [open, setOpen] = useState(false);
 

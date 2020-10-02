@@ -32,7 +32,7 @@ This package contains the colors for the following palettes:
 npm install @leafygreen-ui/palette
 ```
 
-```Javascript
+```js
 import { uiColors } from '@leafygreen-ui/palette';
 
 /**

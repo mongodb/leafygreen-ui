@@ -20,7 +20,7 @@ npm install @leafygreen-ui/pipeline
 
 ### Example
 
-```Javascript
+```js
 <Pipeline size="xsmall" className="my-pipeline">
   <Stage>$match</Stage>
   <Stage>$addFields</Stage>

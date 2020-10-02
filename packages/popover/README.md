@@ -20,7 +20,7 @@ npm install @leafygreen-ui/popover
 
 ## Example
 
-```Javascript
+```js
 import Popover from '@leafygreen-ui/popover';
 
 <button

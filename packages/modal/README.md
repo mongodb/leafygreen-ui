@@ -20,7 +20,7 @@ npm install @leafygreen-ui/modal
 
 ## Example
 
-```Javascript
+```js
 import Modal from '@leafygreen-ui/modal';
 
 function ExampleComponent() {

@@ -26,17 +26,19 @@ npm install @leafygreen-ui/button
 
 ## Example
 
-```Javascript
+```js
 import Button from '@leafygreen-ui/button';
 
 <Button
-  variant='primary'
-  className='create-item-button'
-  title='Create an item'
-  onClick={(event) => {/* Something to handle the click event */}}
+  variant="primary"
+  className="create-item-button"
+  title="Create an item"
+  onClick={event => {
+    /* Something to handle the click event */
+  }}
 >
   Submit
-</Button>
+</Button>;
 ```
 
 **Output HTML**

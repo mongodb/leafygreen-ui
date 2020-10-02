@@ -20,7 +20,7 @@ npm install @leafygreen-ui/icon
 
 ## Example
 
-```Javascript
+```js
 import Icon from '@leafygreen-ui/icon';
 
 const SomeComponent = () => <Icon glyph="Plus" fill="#FF0000" />;
@@ -58,7 +58,7 @@ const SomeComponent = () => <Icon glyph="Plus" fill="#FF0000" />;
 
 This package exposes a method used to generate a custom version of the Icon component with any specified set of icons.
 
-```Javascript
+```js
 // Import the createIconComponent method from the Icon package
 import { createIconComponent } from '@leafygreen-ui/Icon';
 
@@ -81,7 +81,7 @@ const SomeComponent = () => (
 
 We also export the default icon set for you! If you want to include our glyphs with your custom glyphs, you can do something like this:
 
-```Javascript
+```js
 import { createIconComponent, glyphs } from '@leafygreen-ui/Icon';
 
 const myGlyphs = {

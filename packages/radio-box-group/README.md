@@ -26,7 +26,7 @@ npm install @leafygreen-ui/radio-box-group
 
 ## Example
 
-```Javascript
+```js
 import { RadioBox, RadioBoxGroup } from '@leafygreen-ui/radio-box-group';
 
 <RadioBoxGroup className="radio-box-group-style">
@@ -89,7 +89,7 @@ _Any other properties supplied will be spread on the root element._
 
 ## Example
 
-```Javascript
+```js
 <RadioBox value="option-2">Radio Box 2</RadioBox>
 ```
 

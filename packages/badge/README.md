@@ -20,12 +20,12 @@ npm install @leafygreen-ui/badge
 
 ## Example
 
-```Javascript
+```js
 import Badge from '@leafygreen-ui/badge';
 
-<Badge variant='blue' className='my-badge'>
+<Badge variant="blue" className="my-badge">
   New
-</Badge>
+</Badge>;
 ```
 
 **Output HTML**

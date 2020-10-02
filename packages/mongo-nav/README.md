@@ -26,7 +26,7 @@ npm install @leafygreen-ui/mongo-nav @leafygreen-ui/leafygreen-provider@1.1.0
 
 ## Example
 
-```Javascript
+```js
 <MongoNav
   mode="dev"
   activeProduct="cloud"
@@ -75,7 +75,7 @@ We have customized the ref instance value that is exposed to components wrapping
 
 ## Example
 
-```Javascript
+```js
 const mongoNavRef = React.useRef(null);
 
 const onClick = () => {

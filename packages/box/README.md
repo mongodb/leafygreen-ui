@@ -29,7 +29,7 @@ npm install @leafygreen-ui/box
 
 ## Example
 
-```Javascript
+```js
 import Box from '@leafygreen-ui/box';
 
 <Box href="https://mongodb.design">I shall render as a link</Box>;

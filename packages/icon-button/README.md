@@ -20,7 +20,7 @@ npm install @leafygreen-ui/icon-button
 
 ## Example
 
-```Javascript
+```js
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import IconButton from '@leafygreen-ui/icon-button';
 

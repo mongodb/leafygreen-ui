@@ -20,7 +20,7 @@ npm install @leafygreen-ui/radio-group
 
 ## Example
 
-```Javascript
+```js
 import { Radio, RadioGroup } from '@leafygreen-ui/radio-group';
 
 <RadioGroup
@@ -80,7 +80,7 @@ _Any other properties will be spread on the root element._
 
 ## Example
 
-```Javascript
+```js
 <Radio className="my-radio" value="option-1" disabled={true}>
   Label Text Goes Here
 </Radio>

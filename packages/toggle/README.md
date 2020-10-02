@@ -20,14 +20,16 @@ npm install @leafygreen-ui/toggle
 
 ## Example
 
-```Javascript
-import Toggle from '@leafygreen-ui/toggle'
+```js
+import Toggle from '@leafygreen-ui/toggle';
 
 <Toggle
-  className='my-toggle'
-	onChange={(event) => {/* Something to handle the change event */}}
-	checked={true}
-/>
+  className="my-toggle"
+  onChange={event => {
+    /* Something to handle the change event */
+  }}
+  checked={true}
+/>;
 ```
 
 **Output HTML**

@@ -20,10 +20,10 @@ npm install @leafygreen-ui/logo
 
 ## Example
 
-```Javascript
-import { Logo } from '@leafygreen-ui/logo'
+```js
+import { Logo } from '@leafygreen-ui/logo';
 
-<Logo />
+<Logo />;
 ```
 
 **Output HTML**
@@ -62,10 +62,10 @@ import { Logo } from '@leafygreen-ui/logo'
 
 ## Example
 
-```Javascript
-import { LogoMark } from '@leafygreen-ui/logo'
+```js
+import { LogoMark } from '@leafygreen-ui/logo';
 
-<LogoMark />
+<LogoMark />;
 ```
 
 **Output HTML**
@@ -94,10 +94,15 @@ import { LogoMark } from '@leafygreen-ui/logo'
 
 ## Example
 
-```Javascript
-import { CloudManagerLogo, AtlasLogo, RealmLogo, ChartsLogo } from '@leafygreen-ui/logo'
+```js
+import {
+  CloudManagerLogo,
+  AtlasLogo,
+  RealmLogo,
+  ChartsLogo,
+} from '@leafygreen-ui/logo';
 
-<CloudManagerLogo />
+<CloudManagerLogo />;
 ```
 
 **Output HTML**

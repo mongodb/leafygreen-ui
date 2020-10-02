@@ -20,7 +20,7 @@ npm install @leafygreen-ui/syntax
 
 ## Example
 
-```Javascript
+```js
 import Syntax from '@leafygreen-ui/syntax';
 
 const codeSnippet = `

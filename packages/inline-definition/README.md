@@ -20,7 +20,7 @@ npm install @leafygreen-ui/inline-definition
 
 ## Example
 
-```Javascriptx
+```js
 <H2>
   <InlineDefinition definition={shardDefinition}>Shard</InlineDefinition> your
   cluster

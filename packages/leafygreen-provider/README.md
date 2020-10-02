@@ -28,12 +28,12 @@ This is the context provider for LeafyGreen Provider, and should be added as hig
 
 #### Input
 
-```Javascript
+```js
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 <LeafyGreenProvider>
   <div>My Children</div>
-</LeafyGreenProvider>
+</LeafyGreenProvider>;
 ```
 
 #### Output
@@ -53,7 +53,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 **Returns:**
 
-```Javascript
+```js
 {
   usingKeyboard: boolean | undefined,
   setUsingKeyboard: boolean => void,
@@ -64,7 +64,7 @@ This hook allows you to directly read, and set the state of whether a user is in
 
 ### Example
 
-```Javascript
+```js
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 
 const { usingKeyboard, setUsingKeyboard } = useUsingKeyboardContext();
@@ -85,7 +85,7 @@ function autoFocus() {
 
 **Returns:**
 
-```Javascript
+```js
 `number`;
 ```
 
@@ -93,7 +93,7 @@ This hook allows you to read the base `font-size` of an application, based on th
 
 ### Example
 
-```Javascript
+```js
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 
 function InlineCode({ children, className }: InlineCodeProps) {
