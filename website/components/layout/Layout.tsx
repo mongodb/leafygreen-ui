@@ -4,11 +4,13 @@ import { GridContainer, GridItem } from '../grid/Grid';
 import Navigation from '../navigation/Navigation';
 import Header from './Header';
 
-interface Layout {
-  component: string;
-}
+import { BaseLayoutProps } from './types';
 
-export default function Layout({ component, changelog, readme }) {
+export default function Layout({
+  component,
+  changelog,
+  readme,
+}: BaseLayoutProps) {
   return (
     <div
       className={css`
