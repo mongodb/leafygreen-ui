@@ -115,14 +115,11 @@ function MobileNavigationGroup({
         {(state: string) => (
           <div
             ref={nodeRef}
-            className={cx(defaultStyle, {
-              [transitionStyles.entering]: state === 'entering',
+            className={cx(defaultStyle, transitionStyles[state], {
               [css`
                 opacity: 1;
                 max-height: ${ulRef?.current?.getBoundingClientRect().height}px;
               `]: state === 'entered',
-              [transitionStyles.exiting]: state === 'exiting',
-              [transitionStyles.exited]: state === 'exited',
             })}
           >
             <ul ref={ulRef} role="menu" className={ulStyles}>
