@@ -22,20 +22,17 @@ const logoStyles = css`
   margin-bottom: ${spacing[4]}px;
 `;
 
-function Navigation() {
-  const viewport = useViewportSize();
-  const isMobile = viewport && viewport.width < 768;
+function Content({ isMobile = false }: { isMobile?: boolean }) {
   const Group = isMobile ? MobileNavigationGroup : SideNavGroup;
   const Item = isMobile ? MobileNavigationItem : SideNavItem;
+  const groupProps = isMobile
+    ? undefined
+    : ({
+        collapsible: true,
+        initialCollapsed: false,
+      } as const);
 
-  const groupProps =
-    !isMobile &&
-    ({
-      collapsible: true,
-      initialCollapsed: false,
-    } as const);
-
-  const content = (
+  return (
     <>
       <Group header="Core Guidelines" {...groupProps}>
         <Item>Logos</Item>
@@ -81,15 +78,26 @@ function Navigation() {
       </Group>
     </>
   );
+}
+
+function Navigation() {
+  const viewport = useViewportSize();
+  const isMobile = !!viewport && viewport.width < 768;
 
   if (isMobile) {
-    return <MobileNavigation>{content}</MobileNavigation>;
+    return (
+      <MobileNavigation>
+        <Content isMobile />
+      </MobileNavigation>
+    );
   }
 
   return (
     <nav className={navWidth}>
       <MDBDesignLogo className={logoStyles} />
-      <SideNav>{content}</SideNav>
+      <SideNav>
+        <Content />
+      </SideNav>
     </nav>
   );
 }

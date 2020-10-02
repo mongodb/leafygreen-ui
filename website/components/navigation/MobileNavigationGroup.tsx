@@ -8,8 +8,8 @@ import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
 const buttonResetStyles = css`
   background-color: transparent;
   border: none;
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
 
   &:focus {
     outline: none;
@@ -72,6 +72,7 @@ type MobileNavigationGroupProps = JSX.IntrinsicElements['li'] & {
 function MobileNavigationGroup({
   header,
   children,
+  className,
   ...rest
 }: MobileNavigationGroupProps) {
   const [open, setOpen] = useState(false);
@@ -80,9 +81,12 @@ function MobileNavigationGroup({
 
   return (
     <li
-      className={css`
-        list-style: none;
-      `}
+      className={cx(
+        css`
+          list-style: none;
+        `,
+        className,
+      )}
       {...rest}
     >
       <button
