@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/icon-button",
-  "version": "8.0.1",
+  "version": "8.0.2",
   "description": "LeafyGreen UI Kit Icon Buttons",
   "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
@@ -19,7 +19,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/icon": "6.6.1"
+    "@leafygreen-ui/icon": "6.7.0"
   },
   "dependencies": {
     "@leafygreen-ui/lib": "^5.1.1",
