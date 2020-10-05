@@ -207,12 +207,12 @@ export function TableContent({ lines }: TableContentProps) {
   const trimmedLines = [...lines];
 
   // Strip empty lines from the beginning of code blocks
-  while (trimmedLines[0].length === 0) {
-    lines.shift();
+  while (trimmedLines[0]?.length === 0) {
+    trimmedLines.shift();
   }
 
   // Strip empty lines from the end of code blocks
-  while (trimmedLines[trimmedLines.length - 1].length === 0) {
+  while (trimmedLines[trimmedLines.length - 1]?.length === 0) {
     trimmedLines.pop();
   }
 
@@ -228,7 +228,7 @@ export function TableContent({ lines }: TableContentProps) {
           displayLineNumber = currentLineNumber;
         }
 
-        const processedLine = line.length ? (
+        const processedLine = line?.length ? (
           line.map(processToken)
         ) : (
           // We create placeholder content when a line break appears to preserve the line break's height
@@ -257,9 +257,17 @@ export function TableContent({ lines }: TableContentProps) {
 
 const plugin: HighlightPluginEventCallbacks = {
   'after:highlight': function (result) {
-    const { rootNode } = result.emitter;
+    let lines: Array<Array<TreeItem>>;
 
-    result.react = <TableContent lines={treeToLines(rootNode.children)} />;
+    if (result.illegal) {
+      // If highlight.js identifies invalid syntax, we render the string like we would with language set to "none"
+      lines = result.code.split('\n').map(str => [str]);
+    } else {
+      const { rootNode } = result.emitter;
+      lines = treeToLines(rootNode.children);
+    }
+
+    result.react = <TableContent lines={lines} />;
   },
 };
 
