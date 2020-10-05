@@ -59,7 +59,7 @@ describe('packages/Syntax', () => {
       expect(expandRangeTuple([5, 2])).toEqual([2, 3, 4, 5]);
       expect(expandRangeTuple([0, 0])).toEqual([0]);
       expect(expandRangeTuple([2, 2])).toEqual([2]);
-      expect(expandRangeTuple([-1, 1])).toEqual([-1, 0, 1]);
+      expect(expandRangeTuple([-1, 1])).toEqual([0, 1]);
     });
   });
 

@@ -258,7 +258,6 @@ export function TableContent({ lines }: TableContentProps) {
 const plugin: HighlightPluginEventCallbacks = {
   'after:highlight': function (result) {
     const { rootNode } = result.emitter;
-    console.log(result)
 
     result.react = <TableContent lines={treeToLines(rootNode.children)} />;
   },

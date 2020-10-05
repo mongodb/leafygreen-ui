@@ -21,11 +21,7 @@ export function expandRangeTuple(tuple: [number, number]): Array<number> {
         return 2000;
       }
 
-      if (bound === -Infinity) {
-        return -2000;
-      }
-
-      return bound;
+      return Math.max(bound, 0);
     })
     .sort();
 
