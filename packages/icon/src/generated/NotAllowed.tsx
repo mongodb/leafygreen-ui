@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum dfef825ef625bdcbc5c6eeeee3c90356
+ * @checksum 0eccf39f0042cb0494f06fa90ad6efb6
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface NotAllowedProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `NotAllowed-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('NotAllowed');
 
 const NotAllowed = ({
   className,
@@ -23,7 +21,7 @@ const NotAllowed = ({
   fill,
   ...props
 }: NotAllowedProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`

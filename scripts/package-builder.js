@@ -50,6 +50,9 @@ const packageJSON = `
     "description": "leafyGreen UI Kit ${PACKAGE_HUMANREADABLE}",
     "main": "./dist/index.bundle.js",
     "types": "./dist/index.d.ts",
+    "typesVersions": {
+      "<3.9": { "*": ["ts3.4/*"] }
+    },
     "scripts": {
       "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
     },

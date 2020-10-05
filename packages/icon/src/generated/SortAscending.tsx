@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 06fd0b3d7980afc1da1f4051cbeb58e2
+ * @checksum ed7eeacfa0192e75a5cadc47500326c9
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface SortAscendingProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `SortAscending-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('SortAscending');
 
 const SortAscending = ({
   className,
@@ -23,7 +21,7 @@ const SortAscending = ({
   fill,
   ...props
 }: SortAscendingProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`

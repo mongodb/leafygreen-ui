@@ -1,9 +1,16 @@
 {
   "name": "@leafygreen-ui/icon",
-  "version": "6.6.0",
+  "version": "6.6.1",
   "description": "LeafyGreen UI Kit Icons",
   "main": "./dist/index.bundle.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "scripts": {
     "pre-build": "ts-node ./scripts/build.ts --files",
     "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
