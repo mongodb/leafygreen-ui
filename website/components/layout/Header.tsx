@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@leafygreen-ui/button';
-import ArrowDownIcon from '@leafygreen-ui/icon/dist/ArrowDown';
+import DownloadIcon from '@leafygreen-ui/icon/dist/Download';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -46,7 +46,7 @@ function Header({ component }: BaseLayoutProps) {
         <div className={flexContainer}>
           <H2>{transformComponentName(component)}</H2>
 
-          <Button glyph={<ArrowDownIcon />} variant="primary">
+          <Button glyph={<DownloadIcon />} variant="primary">
             Download Sketch Library
           </Button>
         </div>
