@@ -60,6 +60,9 @@ describe('packages/Syntax', () => {
       expect(expandRangeTuple([0, 0])).toEqual([0]);
       expect(expandRangeTuple([2, 2])).toEqual([2]);
       expect(expandRangeTuple([-1, 1])).toEqual([0, 1]);
+
+      // Caps maximum range to 500 lines
+      expect(expandRangeTuple([1, 1000]).length).toEqual(500);
     });
   });
 

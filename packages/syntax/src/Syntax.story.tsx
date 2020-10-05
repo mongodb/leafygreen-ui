@@ -34,9 +34,7 @@ storiesOf('Syntax', module).add(
         showLineNumbers={boolean('Show line numbers', false)}
         darkMode={boolean('darkMode', false)}
         language={select('language', Language, Language.JavaScript)}
-        highlightLines={
-          examples[select('highlight lines', Object.keys(examples), 'none')]
-        }
+        highlightLines={select('highlight lines', examples, 'none')}
       >
         {text('Code snippet', jsSnippet)}
       </Syntax>

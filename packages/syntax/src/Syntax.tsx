@@ -13,21 +13,15 @@ import renderingPlugin, { TableContent } from './renderingPlugin';
 import { SyntaxContext } from './SyntaxContext';
 
 export function expandRangeTuple(tuple: [number, number]): Array<number> {
-  const [lower, upper] = [...tuple]
-    .map(bound => {
-      // Make sure passing infinity doesn't freeze the browser
-      if (bound === Infinity) {
-        // 2000 is arbitrary, but far larger than existing use-cases for our syntax highlighting
-        return 2000;
-      }
+  const [lower, upper] = [...tuple].map(bound => Math.max(bound, 0)).sort();
+  const maxHighlightingDifference = 499;
 
-      return Math.max(bound, 0);
-    })
-    .sort();
+  // Make sure passing large numbers doesn't freeze the browser
+  const clampedUpperBound = Math.min(lower + maxHighlightingDifference, upper);
 
   const expandedRange = [];
 
-  for (let i = lower; i <= upper; i++) {
+  for (let i = lower; i <= clampedUpperBound; i++) {
     expandedRange.push(i);
   }
 
