@@ -1,7 +1,10 @@
 import React from 'react';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+import { HTMLElementProps, createDataProp, OneOf } from '@leafygreen-ui/lib';
+import {
+  useBaseFontSize,
+  useUsingKeyboardContext,
+} from '@leafygreen-ui/leafygreen-provider';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
@@ -112,22 +115,75 @@ function Body({ children, className, weight = 'regular', ...rest }: BodyProps) {
 
 Body.displayName = 'Body';
 
+const anchorDataProp = createDataProp('anchor-inline-code');
+
 const code = css`
+  background-color: ${uiColors.gray.light3};
+  border: 1px solid ${uiColors.gray.light1};
+  border-radius: 3px;
   font-family: ${fontFamilies.code};
-  display: inline-block;
+
+  ${anchorDataProp.selector}:hover > code > & {
+    border-color: ${uiColors.blue.base};
+  }
 `;
 
-type InlineCodeProps = HTMLElementProps<'code'>;
+const codeFocus = css`
+  ${anchorDataProp.selector}:focus > code > & {
+    border-color: ${uiColors.blue.base};
+    background-color: ${uiColors.gray.light3};
+  }
+`;
+
+const codeLink = css`
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const nowrap = css`
+  white-space: nowrap;
+`;
+
+const normal = css`
+  white-space: normal;
+`;
+
+const colorBlue = css`
+  color: ${uiColors.blue.base};
+`;
+
+type InlineCodeProps = OneOf<HTMLElementProps<'code'>, HTMLElementProps<'a'>>;
 
 function InlineCode({ children, className, ...rest }: InlineCodeProps) {
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const size = useBaseFontSize();
-  const body = size === 16 ? typeScale2 : typeScale1;
+  const fontSize = size === 16 ? typeScale2 : typeScale1;
+  const whiteSpace =
+    ((typeof children === 'string' && children.match(/./gu)?.length) ?? 0) <= 30
+      ? nowrap
+      : normal;
+  const isAnchor = rest?.href || rest.onClick;
 
-  return (
-    <code {...rest} className={cx(sharedStyles, code, body, className)}>
-      {children}
+  const renderedInlineCode = (isAnchor = false) => (
+    <code className={cx(fontSize, whiteSpace, { [colorBlue]: isAnchor })}>
+      <span className={cx(code, { [codeFocus]: showFocus })}>{children}</span>
     </code>
   );
+
+  if (isAnchor) {
+    return (
+      <a {...anchorDataProp.prop} className={cx(codeLink, className)} {...rest}>
+        {renderedInlineCode(true)}
+      </a>
+    );
+  }
+
+  return renderedInlineCode();
 }
 
 InlineCode.displayName = 'InlineCode';

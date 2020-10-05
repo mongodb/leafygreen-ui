@@ -23,6 +23,9 @@
       "path": "../box"
     },
     {
+      "path": "../tokens"
+    },
+    {
       "path": "../leafygreen-provider"
     }
   ]

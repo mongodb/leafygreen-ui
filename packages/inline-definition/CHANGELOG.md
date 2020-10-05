@@ -1,5 +1,14 @@
 # @leafygreen-ui/inline-definition
 
+## 1.0.3
+
+### Patch Changes
+
+- 0dc3907e: Updates definition to support `React.ReactNode` not just `string`
+- Updated dependencies [001a277f]
+- Updated dependencies [d0dac1a0]
+  - @leafygreen-ui/typography@5.0.0
+
 ## 1.0.2
 
 ### Patch Changes

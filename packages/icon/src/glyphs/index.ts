@@ -25,6 +25,7 @@ import ChevronLeft from './ChevronLeft.svg';
 import Charts from './Charts.svg';
 import Cloud from './Cloud.svg';
 import CreditCard from './CreditCard.svg';
+import Download from './Download.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
 import Folder from './Folder.svg';
@@ -84,6 +85,7 @@ const glyphs = {
   Charts,
   Cloud,
   CreditCard,
+  Download,
   Edit,
   Ellipsis,
   Folder,

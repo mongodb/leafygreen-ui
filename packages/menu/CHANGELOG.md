@@ -1,5 +1,17 @@
 # @leafygreen-ui/menu
 
+## 8.0.0
+
+### Major Changes
+
+- a18b4e1b: Menus are now scrollable when their contents exceed their size. Previously the excess content would be hidden.
+
+### Patch Changes
+
+- Updated dependencies [001a277f]
+  - @leafygreen-ui/icon@6.6.1
+  - @leafygreen-ui/icon-button@8.0.1
+
 ## 7.0.10
 
 ### Patch Changes
