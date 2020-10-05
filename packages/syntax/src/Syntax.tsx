@@ -118,7 +118,7 @@ function Syntax({
       return null;
     }
 
-    return hljs.highlight(language, children);
+    return hljs.highlight(language, children, true);
   }, [language, children]);
 
   const content =

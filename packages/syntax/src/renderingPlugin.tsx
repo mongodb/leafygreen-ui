@@ -257,17 +257,10 @@ export function TableContent({ lines }: TableContentProps) {
 
 const plugin: HighlightPluginEventCallbacks = {
   'after:highlight': function (result) {
-    let lines: Array<Array<TreeItem>>;
+    const { rootNode } = result.emitter;
+    console.log(result)
 
-    if (result.illegal) {
-      // If highlight.js identifies invalid syntax, we render the string like we would with language set to "none"
-      lines = result.code.split('\n').map(str => [str]);
-    } else {
-      const { rootNode } = result.emitter;
-      lines = treeToLines(rootNode.children);
-    }
-
-    result.react = <TableContent lines={lines} />;
+    result.react = <TableContent lines={treeToLines(rootNode.children)} />;
   },
 };
 
