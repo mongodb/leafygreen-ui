@@ -58,9 +58,15 @@ describe('packages/modal', () => {
       const modal = getByRole('dialog');
       fireEvent.click(modal.parentElement!);
 
-      await expect(waitForElementToBeRemoved(modal)).rejects.toContainEqual(
-        Error('Timed out in waitForElementToBeRemoved.'),
-      ); ///
+      try {
+        await waitForElementToBeRemoved(modal);
+        throw new Error('Expected to catch error.');
+      } catch (error) {
+        // eslint-disable-next-line jest/no-try-expect
+        expect(error.toString()).toMatch(
+          'Timed out in waitForElementToBeRemoved.',
+        );
+      }
 
       expect(modal).toBeVisible();
     });
@@ -86,9 +92,16 @@ describe('packages/modal', () => {
       const modal = getByRole('dialog');
       fireEvent.click(modal.parentElement!);
 
-      await expect(waitForElementToBeRemoved(modal)).rejects.toEqual(
-        Error('Timed out in waitForElementToBeRemoved.'),
-      );
+      try {
+        await waitForElementToBeRemoved(modal);
+        throw new Error('Expected to catch error.');
+      } catch (error) {
+        // eslint-disable-next-line jest/no-try-expect
+        expect(error.toString()).toMatch(
+          'Timed out in waitForElementToBeRemoved.',
+        );
+      }
+
       expect(modal).toBeVisible();
     });
 
