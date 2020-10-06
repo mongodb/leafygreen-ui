@@ -2547,10 +2547,23 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@leafygreen-ui/palette@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/palette/-/palette-2.0.1.tgz#37b2982d80df7faaca0c7f3c473fb6636786da3c"
-  integrity sha512-xwD6kOokWvaygxF0T2gnf77HEu68G7EXr1ZrNiNtZzg80Y1V2hikhUNoESWij6g/A6qJZvAiwpseflVo3PnlHQ==
+"@leafygreen-ui/emotion@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/emotion/-/emotion-2.0.2.tgz#032eff2814010da94621e4dfdf4cf7ff0a2e7279"
+  integrity sha512-/JAoOfS8VunR2W2TVWZeXEnZsMQRZg4dlQ8IFFq5xfu0bpObhqhCwgxlu/edV21dFy9jdZWTHTx/IldYBSjeXw==
+  dependencies:
+    create-emotion "^10.0.7"
+    create-emotion-server "10.0.27"
+    emotion "^10.0.7"
+
+"@leafygreen-ui/lib@^5.0.0":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-5.1.1.tgz#997e80cc7b3918bdaf41fadbe3034147acbac30e"
+  integrity sha512-M/2L5pT5udbMZOMLH9RS+lgM4oj1xMaeq3QeJtH7FJjSGtutdZCjxOC3K6g+TWD1v519hBxsf6X1mDS2+2X49g==
+  dependencies:
+    "@leafygreen-ui/emotion" "^2.0.2"
+    facepaint "^1.2.1"
+    polished "^2.3.0"
 
 "@lerna/add@3.20.0":
   version "3.20.0"

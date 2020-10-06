@@ -1,12 +1,16 @@
 {
   "name": "@leafygreen-ui/lib",
-  "version": "5.1.1",
+  "version": "6.0.0",
   "description": "leafyGreen UI Kit Internal Library",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
-    "<3.9": { "*": ["ts3.4/*"] }
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
   },
   "scripts": {
     "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
@@ -21,7 +25,7 @@
     "react": "^16.0.0"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^2.0.2",
+    "@leafygreen-ui/emotion": "^3.0.0",
     "facepaint": "^1.2.1",
     "polished": "^2.3.0"
   },
