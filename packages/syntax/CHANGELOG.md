@@ -1,5 +1,17 @@
 # @leafygreen-ui/syntax
 
+## 5.0.0
+
+### Major Changes
+
+- 50ea11ad: - Adds the line highlighting feature! This feature is supported through the `highlightLines` prop.
+  - All code examples are now rendered as a table, making unhighlighted code render consistently with highlighted code.
+  - Fixes an issue where users might be unable to manually copy code.
+
+### Patch Changes
+
+- 50ea11ad: Fixes issue where the Code and Syntax components would break when passed code with invalid syntax"
+
 ## 4.0.0
 
 ### Major Changes

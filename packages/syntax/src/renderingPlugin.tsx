@@ -1,6 +1,7 @@
 import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { uiColors } from '@leafygreen-ui/palette';
+import { useSyntaxContext } from './SyntaxContext';
 
 interface TokenProps {
   kind?: string;
@@ -57,32 +58,94 @@ export function processToken(token: TreeItem, key?: number): React.ReactNode {
 }
 
 const cellStyle = css`
-  user-select: none;
   border-spacing: 0;
   padding: 0;
   vertical-align: top;
+
+  &:first-of-type {
+    padding-left: 12px;
+  }
+
+  &:last-of-type {
+    padding-right: 12px;
+  }
 `;
 
-export const numberCellDataProp = createDataProp('code-number-cell');
+function getHighlightedRowStyle(darkMode: boolean) {
+  let backgroundColor: string, backgroundImage: string, borderColor: string;
 
-interface LineTableRowProps {
-  lineNumber: number;
-  children: React.ReactNode;
+  if (darkMode) {
+    backgroundColor = 'transparent';
+    backgroundImage = `linear-gradient(90deg, ${uiColors.gray.dark3}, transparent)`;
+    borderColor = uiColors.gray.dark3;
+  } else {
+    backgroundColor = uiColors.yellow.light3;
+    backgroundImage = 'none';
+    borderColor = uiColors.yellow.light2;
+  }
+
+  return css`
+    background-color: ${backgroundColor};
+    background-image: ${backgroundImage};
+
+    // Selects all children of a highlighted row, and adds a border top
+    & > td {
+      border-top: 1px solid ${borderColor};
+    }
+
+    // Selects following rows after a highlighted row, and adds a border top
+    // We don't add border bottoms here to support consecutive highlighted rows.
+    & + tr > td {
+      border-top: 1px solid ${borderColor};
+    }
+
+    // Remove borders between consecutive highlighted rows
+    & + & > td {
+      border-top: 0;
+    }
+
+    // If the highlighted row is the last child, then we add a border bottom
+    &:last-child > td {
+      border-bottom: 1px solid ${borderColor};
+    }
+  `;
 }
 
-export function LineTableRow({ lineNumber, children }: LineTableRowProps) {
-  const numberCellStyle = css`
-    padding-right: 24px;
-  `;
+interface LineTableRowProps {
+  lineNumber?: number;
+  children: React.ReactNode;
+  highlighted?: boolean;
+  darkMode: boolean;
+}
+
+export function LineTableRow({
+  lineNumber,
+  highlighted,
+  darkMode,
+  children,
+}: LineTableRowProps) {
+  const numberColor = uiColors.gray[darkMode ? 'dark1' : 'light1'];
+  const highlightedNumberColor = darkMode
+    ? uiColors.gray.light2
+    : uiColors.yellow.dark2;
 
   return (
-    <tr>
-      <td
-        {...numberCellDataProp.prop}
-        className={cx(cellStyle, numberCellStyle)}
-      >
-        {lineNumber}
-      </td>
+    <tr className={cx({ [getHighlightedRowStyle(darkMode)]: highlighted })}>
+      {lineNumber && (
+        <td
+          className={cx(
+            cellStyle,
+            css`
+              padding-right: 24px;
+              user-select: none;
+              color: ${highlighted ? highlightedNumberColor : numberColor};
+            `,
+          )}
+        >
+          {lineNumber}
+        </td>
+      )}
+
       <td className={cellStyle}>{children}</td>
     </tr>
   );
@@ -132,43 +195,62 @@ export function treeToLines(
     }
   });
 
-  // Strip empty lines from the beginning of code blocks
-  while (lines[0].length === 0) {
-    lines.shift();
-  }
-
-  // Strip empty lines from the end of code blocks
-  while (lines[lines.length - 1].length === 0) {
-    lines.pop();
-  }
-
   return lines;
 }
 
-interface TableRowLineProps {
-  lineNumber: number;
-  line: Array<TreeItem>;
+interface TableContentProps {
+  lines: Array<Array<TreeItem>>;
 }
 
-function TableRowLine({ lineNumber, line }: TableRowLineProps) {
-  return (
-    <LineTableRow lineNumber={lineNumber}>
-      {line.map(processToken)}
-    </LineTableRow>
-  );
-}
+export function TableContent({ lines }: TableContentProps) {
+  const { highlightLines, showLineNumbers, darkMode } = useSyntaxContext();
+  const trimmedLines = [...lines];
 
-interface TableRowFragmentProps {
-  line: Array<TreeItem>;
-}
+  // Strip empty lines from the beginning of code blocks
+  while (trimmedLines[0]?.length === 0) {
+    trimmedLines.shift();
+  }
 
-function TableRowFragment({ line }: TableRowFragmentProps) {
+  // Strip empty lines from the end of code blocks
+  while (trimmedLines[trimmedLines.length - 1]?.length === 0) {
+    trimmedLines.pop();
+  }
+
   return (
     <>
-      <span>{line.map(processToken)}</span>
+      {trimmedLines.map((line, index) => {
+        const currentLineNumber = index + 1;
+        const highlightLine = highlightLines.includes(currentLineNumber);
 
-      {/* We use a new line character here instead of <br /> so that text will not break outside of a <pre /> tag */}
-      {'\n'}
+        let displayLineNumber;
+
+        if (showLineNumbers) {
+          displayLineNumber = currentLineNumber;
+        }
+
+        const processedLine = line?.length ? (
+          line.map(processToken)
+        ) : (
+          // We create placeholder content when a line break appears to preserve the line break's height
+          // It needs to be inline-block for the table row to not collapse.
+          <div
+            className={css`
+              display: inline-block;
+            `}
+          />
+        );
+
+        return (
+          <LineTableRow
+            key={currentLineNumber}
+            lineNumber={displayLineNumber}
+            darkMode={darkMode}
+            highlighted={highlightLine}
+          >
+            {processedLine}
+          </LineTableRow>
+        );
+      })}
     </>
   );
 }
@@ -176,17 +258,8 @@ function TableRowFragment({ line }: TableRowFragmentProps) {
 const plugin: HighlightPluginEventCallbacks = {
   'after:highlight': function (result) {
     const { rootNode } = result.emitter;
-    const lines = treeToLines(rootNode.children);
 
-    result.react = [];
-    result.reactWithNumbers = [];
-
-    lines.forEach((line, index) => {
-      result.react.push(<TableRowFragment key={index} line={line} />);
-      result.reactWithNumbers.push(
-        <TableRowLine key={index} lineNumber={index + 1} line={line} />,
-      );
-    });
+    result.react = <TableContent lines={treeToLines(rootNode.children)} />;
   },
 };
 

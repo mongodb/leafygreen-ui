@@ -1,5 +1,17 @@
 # @leafygreen-ui/mongo-nav
 
+## 3.3.0
+
+### Minor Changes
+
+- bddbde71: Exports `GovBanner` as standalone component
+
+### Patch Changes
+
+- Updated dependencies [65d5ed4d]
+  - @leafygreen-ui/icon@6.7.0
+  - @leafygreen-ui/icon-button@8.0.2
+
 ## 3.2.0
 
 ### Minor Changes
