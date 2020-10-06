@@ -1,12 +1,16 @@
 {
   "name": "@leafygreen-ui/emotion",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "leafyGreen UI Kit's Custom Instance of Emotion",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
-    "<3.9": { "*": ["ts3.4/*"] }
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
   },
   "scripts": {
     "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
