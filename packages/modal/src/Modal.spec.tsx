@@ -58,7 +58,7 @@ describe('packages/modal', () => {
       const modal = getByRole('dialog');
       fireEvent.click(modal.parentElement!);
 
-      await expect(waitForElementToBeRemoved(modal)).rejects.toBe(
+      await expect(waitForElementToBeRemoved(modal)).rejects.toContainEqual(
         Error('Timed out in waitForElementToBeRemoved.'),
       ); ///
 

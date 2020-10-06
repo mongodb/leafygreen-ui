@@ -2,6 +2,7 @@ import React from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import fs from 'fs';
 import path from 'path';
+import util from 'util';
 import { css } from 'emotion';
 import { GridContainer, GridItem } from '../../../components/grid/Grid';
 import Navigation from '../../../components/navigation/Navigation';
@@ -52,19 +53,21 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const { id } = params;
 
-  let changelogMarkdown, readme;
+  let changelogMarkdown: Buffer, readme: string;
 
   if (typeof id === 'string') {
-    changelogMarkdown = fs.readFileSync(
+    const getFileContent = util.promisify(fs.readFile);
+    changelogMarkdown = await getFileContent(
       path.join('../packages', id, 'changelog.md'),
     );
 
-    readme = fs
-      .readFileSync(path.join('../packages', id, 'README.md'))
-      .toString();
+    readme = await getFileContent(
+      path.join('../packages', id, 'README.md'),
+      'utf-8',
+    );
   }
 
-  const changelog = await markdownToHtml(changelogMarkdown || '');
+  const changelog = await markdownToHtml(changelogMarkdown);
 
   return {
     props: {
