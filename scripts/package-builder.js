@@ -51,6 +51,9 @@ const packageJSON = `
     "main": "./dist/index.js",
     "module": "./dist/esm/index.js",
     "types": "./dist/index.d.ts",
+    "typesVersions": {
+      "<3.9": { "*": ["ts3.4/*"] }
+    },
     "scripts": {
       "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
     },

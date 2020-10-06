@@ -96,62 +96,63 @@ interface UserMenuTriggerProps {
   children?: React.ReactElement;
 }
 
-export default function UserMenuTrigger({
-  open,
-  name,
-  setOpen,
-  children,
-  ...rest
-}: UserMenuTriggerProps) {
-  const onElementClick = useOnElementClick();
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const viewportSize = useViewportSize();
+const UserMenuTrigger = React.forwardRef<HTMLDivElement, UserMenuTriggerProps>(
+  ({ open, name, setOpen, children, ...rest }: UserMenuTriggerProps, ref) => {
+    const onElementClick = useOnElementClick();
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const viewportSize = useViewportSize();
 
-  const isTablet = viewportSize
-    ? viewportSize.width < breakpoints.medium
-    : false;
+    const isTablet = viewportSize
+      ? viewportSize.width < breakpoints.medium
+      : false;
 
-  // Show first initial on tablets and smaller, otherwise use the full name passed in
-  const displayName = isTablet ? name.split('')[0] : name;
+    // Show first initial on tablets and smaller, otherwise use the full name passed in
+    const displayName = isTablet ? name.split('')[0] : name;
 
-  const activeWidth = css`
-    width: ${buttonRef?.current?.getBoundingClientRect().width}px;
-  `;
+    const activeWidth = css`
+      width: ${buttonRef?.current?.getBoundingClientRect().width}px;
+    `;
 
-  return (
-    <InteractionRingWrapper
-      ringClassName={ringClassName}
-      selector={buttonDataProp.selector}
-    >
-      <button
-        {...rest}
-        {...buttonDataProp.prop}
-        ref={buttonRef}
-        className={cx(baseButtonStyles, {
-          [openBaseButtonStyle]: open,
-          [activeWidth]: open,
-        })}
-        onClick={onElementClick(NavElement.UserMenuTrigger, () => {
-          setOpen(curr => !curr);
-        })}
+    return (
+      <InteractionRingWrapper
+        ringClassName={ringClassName}
+        selector={buttonDataProp.selector}
+        ref={ref}
       >
-        <span
-          className={cx(menuNameStyle, truncate, {
-            [css`
-              margin-right: unset;
-            `]: open,
+        <button
+          {...rest}
+          {...buttonDataProp.prop}
+          ref={buttonRef}
+          className={cx(baseButtonStyles, {
+            [openBaseButtonStyle]: open,
+            [activeWidth]: open,
+          })}
+          onClick={onElementClick(NavElement.UserMenuTrigger, () => {
+            setOpen(curr => !curr);
           })}
         >
-          {displayName}
-        </span>
+          <span
+            className={cx(menuNameStyle, truncate, {
+              [css`
+                margin-right: unset;
+              `]: open,
+            })}
+          >
+            {displayName}
+          </span>
 
-        {open ? (
-          <CaretUpIcon {...iconDataProp.prop} className={openIconStyle} />
-        ) : (
-          <CaretDownIcon {...iconDataProp.prop} className={closedIconStyle} />
-        )}
-        {children}
-      </button>
-    </InteractionRingWrapper>
-  );
-}
+          {open ? (
+            <CaretUpIcon {...iconDataProp.prop} className={openIconStyle} />
+          ) : (
+            <CaretDownIcon {...iconDataProp.prop} className={closedIconStyle} />
+          )}
+          {children}
+        </button>
+      </InteractionRingWrapper>
+    );
+  },
+);
+
+UserMenuTrigger.displayName = 'UserMenuTrigger';
+
+export default UserMenuTrigger;

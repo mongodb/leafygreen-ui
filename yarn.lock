@@ -7959,6 +7959,14 @@ dotenv@^8.0.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
   integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
 
+downlevel-dts@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/downlevel-dts/-/downlevel-dts-0.6.0.tgz#1e52db9fa3ad9e3919a36545412f0b41a44289d1"
+  integrity sha512-Jy3ZZcXWPzTn5jJRW5WpdEtIq8+UowWWi5TEBgHHvzw320kouV//2KgVhfcuOpP93KS3UAokTxnZKU4L75kRSQ==
+  dependencies:
+    shelljs "^0.8.3"
+    typescript "^4.1.0-dev.20200804"
+
 duplexer2@^0.1.2:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/duplexer2/-/duplexer2-0.1.4.tgz#8b12dab878c0d69e3e7891051662a32fc6bddcc1"
@@ -16505,6 +16513,11 @@ typescript@^4.0.0:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.2.tgz#7ea7c88777c723c681e33bf7988be5d008d05ac2"
   integrity sha512-e4ERvRV2wb+rRZ/IQeb3jm2VxBsirQLpQhdxplZ2MEzGvDkkMmPglecnNDfSUBivMjP93vRbngYYDQqQ/78bcQ==
+
+typescript@^4.1.0-dev.20200804:
+  version "4.1.0-dev.20200826"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.0-dev.20200826.tgz#cccc13838d7c33355dd035ec9a8bc9f65c1a2968"
+  integrity sha512-PUT7mgPK24zXnsMrpvZ7tXzQEnTJdSr/5/nu+fPHjM4XqNcn283/hk9d8wLd5PVzpn6SAEl1cL+wQT69gXP82w==
 
 uglify-js@^3.1.4:
   version "3.8.1"

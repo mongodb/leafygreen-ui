@@ -1,5 +1,34 @@
 # @leafygreen-ui/mongo-nav
 
+## 3.3.0
+
+### Minor Changes
+
+- bddbde71: Exports `GovBanner` as standalone component
+
+### Patch Changes
+
+- Updated dependencies [65d5ed4d]
+  - @leafygreen-ui/icon@6.7.0
+  - @leafygreen-ui/icon-button@8.0.2
+
+## 3.2.0
+
+### Minor Changes
+
+- a18b4e1b: MongoNav menus are now scrollable instead of cut-off when window height is too short.
+
+### Patch Changes
+
+- Updated dependencies [001a277f]
+- Updated dependencies [d0dac1a0]
+- Updated dependencies [a18b4e1b]
+- Updated dependencies [001a277f]
+  - @leafygreen-ui/typography@5.0.0
+  - @leafygreen-ui/menu@8.0.0
+  - @leafygreen-ui/icon@6.6.1
+  - @leafygreen-ui/icon-button@8.0.1
+
 ## 3.1.9
 
 ### Patch Changes

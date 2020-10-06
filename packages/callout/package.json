@@ -1,10 +1,17 @@
 {
   "name": "@leafygreen-ui/callout",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "description": "leafyGreen UI Kit Callout",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "scripts": {
     "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
   },
@@ -15,12 +22,12 @@
   "dependencies": {
     "@leafygreen-ui/lib": "^5.1.1",
     "@leafygreen-ui/emotion": "^2.0.2",
-    "@leafygreen-ui/icon": "^6.4.0",
+    "@leafygreen-ui/icon": "^6.7.0",
     "@leafygreen-ui/palette": "^2.0.2",
-    "@leafygreen-ui/typography": "^4.2.1",
+    "@leafygreen-ui/typography": "^5.0.0",
     "polished": "^3.6.5"
   },
   "devDependencies": {
-    "@leafygreen-ui/code": "^5.0.0"
+    "@leafygreen-ui/code": "^6.0.0"
   }
 }

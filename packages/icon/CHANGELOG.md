@@ -1,5 +1,17 @@
 # @leafygreen-ui/icon
 
+## 6.7.0
+
+### Minor Changes
+
+- 65d5ed4d: Adds Download glyph to Icon library
+
+## 6.6.1
+
+### Patch Changes
+
+- 001a277f: Server side rendering now produces fewer warnings
+
 ## 6.6.0
 
 ### Minor Changes

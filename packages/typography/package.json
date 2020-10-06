@@ -1,10 +1,17 @@
 {
   "name": "@leafygreen-ui/typography",
-  "version": "4.3.0",
+  "version": "5.0.0",
   "description": "leafyGreen UI Kit Typography",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "scripts": {
     "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
   },
@@ -16,7 +23,7 @@
     "@leafygreen-ui/lib": "^5.1.1",
     "@leafygreen-ui/palette": "^2.0.2",
     "@leafygreen-ui/box": "^2.1.5",
-    "@leafygreen-ui/icon": "^6.6.0",
+    "@leafygreen-ui/icon": "^6.6.1",
     "@leafygreen-ui/tokens": "^0.3.0"
   },
   "peerDependencies": {

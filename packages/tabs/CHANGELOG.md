@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 3.0.1
+
+### Patch Changes
+
+- a550d645: Properly sets `font-family` of TabTitle and adds fallbacks in case the font is not available
+
 ## 3.0.0
 
 ### Major Changes

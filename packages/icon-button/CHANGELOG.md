@@ -1,5 +1,19 @@
 # @leafygreen-ui/icon-button
 
+## 8.0.2
+
+### Patch Changes
+
+- Updated dependencies [65d5ed4d]
+  - @leafygreen-ui/icon@6.7.0
+
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [001a277f]
+  - @leafygreen-ui/icon@6.6.1
+
 ## 8.0.0
 
 ### Major Changes

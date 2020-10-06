@@ -33,12 +33,13 @@ storiesOf('Typography', module).add('Default', () => (
       >
         Body
       </Body>
-      <InlineCode className={displayBlock}>InlineCode</InlineCode>
-      <>
+      <InlineCode className={displayBlock}>InlineCode</InlineCode> and{' '}
+      <InlineCode href="https://mongodb.design">with link</InlineCode>
+      <div className={displayBlock}>
         <InlineKeyCode>CTRL</InlineKeyCode>
-        <InlineCode>+</InlineCode>
+        <code>+</code>
         <InlineKeyCode>C</InlineKeyCode>
-      </>
+      </div>
       <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
       <Overline>Overline</Overline>
       <Link
