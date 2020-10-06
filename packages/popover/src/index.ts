@@ -1,5 +1,3 @@
-import Popover from './Popover';
-import { Align, Justify, ElementPosition, PopoverProps } from './types';
-
-export default Popover;
-export { Align, Justify, ElementPosition, PopoverProps };
+export { default } from './Popover';
+export { Align, Justify } from './types';
+export type { ElementPosition, PopoverProps } from './types';
