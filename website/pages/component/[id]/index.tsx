@@ -47,34 +47,29 @@ export default function Component({
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  if (!params) {
+  if (!params || typeof params.id !== 'string') {
     return { props: {} };
   }
 
   const { id } = params;
 
-  let changelogMarkdown: Buffer, readme: string;
+  const props: Partial<BaseLayoutProps> = { component: id };
 
-  if (typeof id === 'string') {
-    const getFileContent = util.promisify(fs.readFile);
-    changelogMarkdown = await getFileContent(
-      path.join('../packages', id, 'changelog.md'),
-    );
+  const getFileContent = util.promisify(fs.readFile);
 
-    readme = await getFileContent(
-      path.join('../packages', id, 'README.md'),
-      'utf-8',
-    );
-  }
+  const changelogMarkdown = await getFileContent(
+    path.join('../packages', id, 'changelog.md'),
+  );
 
-  const changelog = await markdownToHtml(changelogMarkdown);
+  props.changelog = await markdownToHtml(changelogMarkdown);
+
+  props.readme = await getFileContent(
+    path.join('../packages', id, 'README.md'),
+    'utf-8',
+  );
 
   return {
-    props: {
-      changelog,
-      readme,
-      component: id,
-    },
+    props,
   };
 };
 
