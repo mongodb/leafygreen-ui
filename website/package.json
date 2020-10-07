@@ -12,7 +12,9 @@
     "@emotion/core": "^10.0.35",
     "next": "9.5.2",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1", 
+    "remark": "^12.0.1", 
+    "remark-html": "^12.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.43",

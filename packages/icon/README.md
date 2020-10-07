@@ -28,10 +28,20 @@ const SomeComponent = () => <Icon glyph="Plus" fill="#FF0000" />;
 
 **Output HTML**
 
-```HTML
-<svg width="16" height="16" role="img" viewBox="0 0 16 16" class="leafygreen-ui-yqbynm">
-	<title>Plus Icon</title>
-	<path d="M9 7h4v2H9v4H7V9H3V7h4V3h2v4z" fill="currentColor" fill-rule="evenodd"></path>
+```html
+<svg
+  width="16"
+  height="16"
+  role="img"
+  viewBox="0 0 16 16"
+  class="leafygreen-ui-yqbynm"
+>
+  <title>Plus Icon</title>
+  <path
+    d="M9 7h4v2H9v4H7V9H3V7h4V3h2v4z"
+    fill="currentColor"
+    fill-rule="evenodd"
+  ></path>
 </svg>
 ```
 
