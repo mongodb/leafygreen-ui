@@ -204,8 +204,7 @@ export function GridItem({
       className={css`
         ${baseGridItemStyles}
         ${visibleGridItemStyles}
-        margin-left: ${Math.round(100 / 12) *
-        colStart}%;
+        margin-left: ${Math.round(100 / 12) * colStart}%;
         ${mq({
           width: [
             styles.sm.width,

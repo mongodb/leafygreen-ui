@@ -1,25 +1,30 @@
 {
   "name": "@leafygreen-ui/pipeline",
-  "version": "1.0.8",
+  "version": "2.0.0",
   "description": "LeafyGreen UI Kit Pipeline",
-  "main": "./dist/index.bundle.js",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
-    "<3.9": { "*": ["ts3.4/*"] }
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
   },
   "scripts": {
-    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
+    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
   },
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^2.0.2",
-    "@leafygreen-ui/hooks": "^4.2.1",
-    "@leafygreen-ui/lib": "^5.1.1",
-    "@leafygreen-ui/palette": "^2.0.2",
-    "@leafygreen-ui/tooltip": "^5.0.0",
+    "@leafygreen-ui/emotion": "^3.0.0",
+    "@leafygreen-ui/hooks": "^5.0.0",
+    "@leafygreen-ui/lib": "^6.0.0",
+    "@leafygreen-ui/palette": "^3.0.0",
+    "@leafygreen-ui/tooltip": "^6.0.0",
     "lodash": "^4.17.20",
     "react-children-utilities": "^2.0.0",
     "react-intersection-observer": "8.25.1",
