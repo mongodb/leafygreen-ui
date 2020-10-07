@@ -4,11 +4,11 @@ import fs from 'fs';
 import path from 'path';
 import util from 'util';
 import { css } from 'emotion';
-import { GridContainer, GridItem } from '../../../components/grid/Grid';
-import Navigation from '../../../components/navigation/Navigation';
-import Header from '../../../components/layout/Header';
-import markdownToHtml from '../../../utils/markdownToHtml';
-import { BaseLayoutProps } from '../../../utils/types';
+import { GridContainer, GridItem } from 'components/grid/Grid';
+import Navigation from 'components/navigation/Navigation';
+import Header from 'components/layout/Header';
+import markdownToHtml from 'utils/markdownToHtml';
+import { BaseLayoutProps } from 'utils/types';
 
 const containerStyle = css`
   margin-top: 12px;
@@ -26,7 +26,6 @@ export default function Component({
   changelog,
   readme,
 }: BaseLayoutProps) {
-  console.log(component, changelog, readme);
   return (
     <div className={containerStyle}>
       <Navigation />
@@ -46,6 +45,9 @@ export default function Component({
   );
 }
 
+const getFileContent = util.promisify(fs.readFile);
+const getDirContent = util.promisify(fs.readdir);
+
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (!params || typeof params.id !== 'string') {
     return { props: {} };
@@ -54,8 +56,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { id } = params;
 
   const props: Partial<BaseLayoutProps> = { component: id };
-
-  const getFileContent = util.promisify(fs.readFile);
 
   const changelogMarkdown = await getFileContent(
     path.join('../packages', id, 'changelog.md'),
@@ -74,7 +74,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const packages = fs.readdirSync('../packages');
+  const packages = await getDirContent('../packages');
 
   const paths = packages.map(folderName => ({
     params: {
