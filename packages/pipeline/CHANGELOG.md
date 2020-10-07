@@ -1,5 +1,20 @@
 # @leafygreen-ui/pipeline
 
+## 2.0.0
+
+### Major Changes
+
+- 0267bfd2: The underlying structure of distributed module definition files have changed and now have official support for ES modules. Module definition files are now generated using Rollup instead of Webpack. This should not affect functionality, but some thorough testing and caution should be exercised when upgrading.
+
+### Patch Changes
+
+- Updated dependencies [0267bfd2]
+  - @leafygreen-ui/emotion@3.0.0
+  - @leafygreen-ui/hooks@5.0.0
+  - @leafygreen-ui/lib@6.0.0
+  - @leafygreen-ui/palette@3.0.0
+  - @leafygreen-ui/tooltip@6.0.0
+
 ## 1.0.8
 
 ### Patch Changes

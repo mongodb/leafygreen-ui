@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/syntax",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "leafyGreen UI Kit Syntax-highlighting Component",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -21,9 +21,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^5.1.1",
-    "@leafygreen-ui/palette": "^2.0.2",
-    "@leafygreen-ui/tokens": "^0.3.0",
+    "@leafygreen-ui/lib": "^6.0.0",
+    "@leafygreen-ui/palette": "^3.0.0",
+    "@leafygreen-ui/tokens": "^0.4.0",
     "highlight.js": "^10.0.3",
     "highlightjs-line-numbers.js": "^2.7.0",
     "highlightjs-graphql": "^1.0.1"
