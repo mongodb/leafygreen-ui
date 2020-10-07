@@ -6,6 +6,7 @@ import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { H2 } from '@leafygreen-ui/typography';
 import { BaseLayoutProps } from 'utils/types';
+import CodeDocs from './CodeDocs';
 
 function transformComponentName(string: string) {
   return string
@@ -34,7 +35,7 @@ const flexContainer = css`
   align-items: center;
 `;
 
-function Header({ component }: BaseLayoutProps) {
+function Header({ component, changelog, readme }: BaseLayoutProps) {
   if (!component) {
     return null;
   }
@@ -54,7 +55,13 @@ function Header({ component }: BaseLayoutProps) {
       <Tabs>
         <Tab name="Live Example">Live Example</Tab>
         <Tab name="Design Guidelines">Design Guidelines</Tab>
-        <Tab name="Code Docs">Code docs!</Tab>
+        <Tab name="Code Docs">
+          <CodeDocs
+            component={component}
+            changelog={changelog}
+            readme={readme}
+          />
+        </Tab>
       </Tabs>
     </div>
   );

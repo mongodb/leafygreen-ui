@@ -31,7 +31,7 @@ export default function Component({
       <Navigation />
 
       <GridContainer justify="flex-start">
-        <GridItem md={6} lg={8}>
+        <GridItem lg={8}>
           <div className={topMargin}>
             <Header
               component={component}
