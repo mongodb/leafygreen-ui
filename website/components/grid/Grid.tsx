@@ -85,7 +85,6 @@ const baseGridItemStyles = css`
 `;
 
 const visibleGridItemStyles = css`
-  flex-grow: 1;
   flex-shrink: 0;
 `;
 
@@ -213,8 +212,7 @@ export function GridItem({
       css={css`
         ${baseGridItemStyles}
         ${visibleGridItemStyles}
-        margin-left: ${Math.round(100 / 12) *
-        colStart}%;
+        margin-left: ${Math.round(100 / 12) * colStart}%;
         ${mq({
           width: [
             styles.sm.width,
