@@ -1,5 +1,6 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import React from 'react';
+import { css } from 'emotion';
+import styled from '@emotion/styled';
 import facepaint from 'facepaint';
 import { useMemo } from 'react';
 
@@ -9,14 +10,6 @@ const mq = facepaint(
   breakpoints.map(bp => `@media (min-width: ${bp}px)`),
   { literal: true },
 );
-
-const baseContainerStyles = css`
-  display: flex;
-  ${mq({
-    width: breakpointGaps.map(gap => `calc(100% + ${gap})`),
-    margin: breakpointGaps.map(gap => `calc(-1 * ${gap} / 2)`),
-  })}
-`;
 
 const Direction = {
   Row: 'row',
@@ -59,23 +52,22 @@ type GridContainerProps = JSX.IntrinsicElements['div'] & {
   wrap?: Wrap;
 };
 
-export function GridContainer({
-  direction = Direction.Row,
-  align = Align.Center,
-  justify = Justify.Center,
-  wrap = Wrap.Wrap,
-  children,
-}: GridContainerProps) {
-  const gridContainerStyles = css`
-    ${baseContainerStyles};
-    flex-direction: ${direction};
-    flex-wrap: ${wrap};
-    align-items: ${align};
-    justify-content: ${justify};
-  `;
+const GridContainer = styled<'div', GridContainerProps>('div')`
+  ${mq({
+    width: breakpointGaps.map(gap => `calc(100% + ${gap})`),
+    margin: breakpointGaps.map(gap => `calc(-1 * ${gap} / 2)`),
+  })}
 
-  return <div css={gridContainerStyles}>{children}</div>;
-}
+  display: flex;
+  ${['flex-direction']}: ${props =>
+    props.direction ? props.direction : Direction.Row};
+  ${['flex-wrap']}: ${props => (props.wrap ? props.wrap : Wrap.Wrap)};
+  ${['align-items']}: ${props => (props.align ? props.align : Align.Center)};
+  ${['justify-content']}: ${props =>
+    props.justify ? props.justify : Justify.Center};
+`;
+
+export { GridContainer };
 
 const baseGridItemStyles = css`
   box-sizing: border-box;
@@ -85,7 +77,6 @@ const baseGridItemStyles = css`
 `;
 
 const visibleGridItemStyles = css`
-  // flex-grow: 1;
   flex-shrink: 0;
 `;
 
@@ -210,7 +201,7 @@ export function GridItem({
 
   return (
     <div
-      css={css`
+      className={css`
         ${baseGridItemStyles}
         ${visibleGridItemStyles}
         margin-left: ${Math.round(100 / 12) * colStart}%;

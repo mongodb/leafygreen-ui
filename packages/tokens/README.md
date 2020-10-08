@@ -33,3 +33,14 @@ import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const example = () => <span style={{ font-family: fontFamilies.default }}>Hello World</span>;
 ```
+
+## Breakpoints
+
+```js
+import { breakpoints } from '@leafygreen-ui/tokens';
+
+const mq = facepaint(
+  breakpoints.map(bp => `@media (min-width: ${bp}px)`),
+  { literal: true },
+);
+```

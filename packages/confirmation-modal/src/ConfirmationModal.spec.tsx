@@ -119,10 +119,17 @@ describe('packages/confirmation-modal', () => {
         requiredInputText: 'Confirm',
       });
 
+<<<<<<< HEAD
       const confirmationButton = getByText('Confirm').parentNode;
       expect(confirmationButton).toBeDisabled();
 
       const cancelButton = getByText('Cancel').parentNode;
+=======
+      const confirmationButton = getByText('Confirm').closest('button');
+      expect(confirmationButton).toBeDisabled();
+
+      const cancelButton = getByText('Cancel').closest('button');
+>>>>>>> origin
       expect(cancelButton).not.toBeDisabled();
 
       const textInput = getByLabelText('Type "Confirm" to confirm your action');
