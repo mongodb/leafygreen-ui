@@ -93,6 +93,9 @@
       "path": "./packages/table"
     },
     {
+      "path": "./packages/tabs"
+    },
+    {
       "path": "./packages/testing-lib"
     },
     {
