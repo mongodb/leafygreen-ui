@@ -35,6 +35,8 @@ export default function Table<Shape>({
   className,
   ...rest
 }: TableProps<Shape>) {
+  console.log('hi');
+
   return (
     <table
       cellSpacing="0"

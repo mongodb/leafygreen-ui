@@ -53,7 +53,10 @@ function TableBody<Shape>({ children }: TableBodyProps<Shape>) {
 
   const renderFunction = useCallback(datum => children({ datum }), [children]);
 
-  const rows = useRenderedChildren(data, renderFunction, compareFn);
+  const rows =
+    typeof children === 'function'
+      ? useRenderedChildren(data, renderFunction, compareFn)
+      : children;
 
   return <tbody>{rows}</tbody>;
 }

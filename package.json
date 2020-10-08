@@ -144,5 +144,8 @@
   "workspaces": [
     "packages/*",
     "website"
-  ]
+  ],
+  "dependencies": {
+    "remark-react": "^8.0.0"
+  }
 }

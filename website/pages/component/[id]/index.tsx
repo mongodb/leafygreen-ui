@@ -61,12 +61,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     path.join('../packages', id, 'changelog.md'),
   );
 
-  const readmeMarkdown = await getFileContent(
-    path.join('../packages', id, 'README.md'),
-  );
-
-  console.log(await markdownToHtml(readmeMarkdown));
-
   props.changelog = await markdownToHtml(changelogMarkdown);
 
   props.readme = await getFileContent(
