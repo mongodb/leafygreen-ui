@@ -1,8 +1,13 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import React from 'react';
+import { useRouter } from 'next/router';
+import { css } from 'emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
+import { useViewportSize } from '@leafygreen-ui/hooks';
 import MDBDesignLogo from '../logos/MDBDesignLogo';
+import MobileNavigationGroup from './MobileNavigationGroup';
+import MobileNavigationItem from './MobileNavigationItem';
+import MobileNavigation from './MobileNavigation';
 
 const navWidth = css`
   width: 270px;
@@ -18,57 +23,101 @@ const logoStyles = css`
   margin-bottom: ${spacing[4]}px;
 `;
 
-function Navigation() {
+const coreGuidelines = [
+  'logos',
+  'user-personas',
+  'tone',
+  'colors',
+  'illustration',
+  'typography',
+];
+
+const components = [
+  'badge',
+  'banner',
+  'box',
+  'button',
+  'callout',
+  'code',
+  'confirmation-modal',
+  'icon',
+  'icon-button',
+  'inline-definition',
+  'logo',
+  'marketing-modal',
+  'menu',
+  'modal',
+  'mongo-nav',
+  'palette',
+  'pipeline',
+  'popover',
+  'portal',
+  'radio-box-group',
+  'radio-group',
+  'side-nav',
+  'stepper',
+  'syntax',
+  'table',
+  'tabs',
+  'text-input',
+  'toast',
+  'toggle',
+  'tokens',
+  'tooltip',
+  'typography',
+];
+
+// add transition to mobile navigation
+
+function Content({ isMobile = false }: { isMobile?: boolean }) {
+  const router = useRouter();
+
+  const Group = isMobile ? MobileNavigationGroup : SideNavGroup;
+  const Item = isMobile ? MobileNavigationItem : SideNavItem;
+  const groupProps = isMobile
+    ? undefined
+    : ({
+        collapsible: true,
+        initialCollapsed: false,
+      } as const);
+
   return (
-    <nav css={navWidth}>
-      <MDBDesignLogo css={logoStyles} />
+    <>
+      <Group header="Core Guidelines" {...groupProps}>
+        {coreGuidelines.map(item => (
+          <Item key={item} onClick={() => router.push(`/guideline/${item}`)}>
+            {item.split('-').join(' ')}
+          </Item>
+        ))}
+      </Group>
+      <Group header="Components" {...groupProps}>
+        {components.map(item => (
+          <Item key={item} onClick={() => router.push(`/component/${item}`)}>
+            {item.split('-').join(' ')}
+          </Item>
+        ))}
+      </Group>
+    </>
+  );
+}
+
+function Navigation() {
+  const viewport = useViewportSize();
+  const isMobile = !!viewport && viewport.width < 768;
+
+  if (isMobile) {
+    return (
+      <MobileNavigation>
+        <Content isMobile />
+      </MobileNavigation>
+    );
+  }
+
+  return (
+    <nav className={navWidth}>
+      <MDBDesignLogo className={logoStyles} />
       <SideNav>
-        <SideNavGroup
-          header="Core Guidelines"
-          collapsible
-          initialCollapsed={false}
-        >
-          <SideNavItem>Logos</SideNavItem>
-          <SideNavItem>User Personas</SideNavItem>
-          <SideNavItem>Tone</SideNavItem>
-          <SideNavItem>Colors</SideNavItem>
-          <SideNavItem>Illustration</SideNavItem>
-          <SideNavItem>Typography</SideNavItem>
-        </SideNavGroup>
-        <SideNavGroup header="Components" collapsible initialCollapsed={false}>
-          <SideNavItem>Badges</SideNavItem>
-          <SideNavItem>Banners</SideNavItem>
-          <SideNavItem>Box</SideNavItem>
-          <SideNavItem>Button</SideNavItem>
-          <SideNavItem>Callout</SideNavItem>
-          <SideNavItem>Code</SideNavItem>
-          <SideNavItem>Confirmation Modal</SideNavItem>
-          <SideNavItem>Icons</SideNavItem>
-          <SideNavItem>Icon Button</SideNavItem>
-          <SideNavItem>Inline Definition</SideNavItem>
-          <SideNavItem>Logo</SideNavItem>
-          <SideNavItem>Marketing Modal</SideNavItem>
-          <SideNavItem>Menu</SideNavItem>
-          <SideNavItem>Modal</SideNavItem>
-          <SideNavItem>Mongo Nav</SideNavItem>
-          <SideNavItem>Palette</SideNavItem>
-          <SideNavItem>Pipeline</SideNavItem>
-          <SideNavItem>Popover</SideNavItem>
-          <SideNavItem>Portal</SideNavItem>
-          <SideNavItem>Radio Box Group</SideNavItem>
-          <SideNavItem>Radio Group</SideNavItem>
-          <SideNavItem>Side Nav</SideNavItem>
-          <SideNavItem>Stepper</SideNavItem>
-          <SideNavItem>Syntax</SideNavItem>
-          <SideNavItem>Table</SideNavItem>
-          <SideNavItem>Tabs</SideNavItem>
-          <SideNavItem>Text Input</SideNavItem>
-          <SideNavItem>Toast</SideNavItem>
-          <SideNavItem>Toggle</SideNavItem>
-          <SideNavItem>Tokens</SideNavItem>
-          <SideNavItem>Tooltip</SideNavItem>
-          <SideNavItem>Typography</SideNavItem>
-        </SideNavGroup>
+        <Content />
       </SideNav>
     </nav>
   );
