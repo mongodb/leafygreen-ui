@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import { css } from 'emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
@@ -22,7 +23,55 @@ const logoStyles = css`
   margin-bottom: ${spacing[4]}px;
 `;
 
+const coreGuidelines = [
+  'logos',
+  'user-personas',
+  'tone',
+  'colors',
+  'illustration',
+  'typography',
+];
+
+const components = [
+  'badge',
+  'banner',
+  'box',
+  'button',
+  'callout',
+  'code',
+  'confirmation-modal',
+  'icon',
+  'icon-button',
+  'inline-definition',
+  'logo',
+  'marketing-modal',
+  'menu',
+  'modal',
+  'mongo-nav',
+  'palette',
+  'pipeline',
+  'popover',
+  'portal',
+  'radio-box-group',
+  'radio-group',
+  'side-nav',
+  'stepper',
+  'syntax',
+  'table',
+  'tabs',
+  'text-input',
+  'toast',
+  'toggle',
+  'tokens',
+  'tooltip',
+  'typography',
+];
+
+// add transition to mobile navigation
+
 function Content({ isMobile = false }: { isMobile?: boolean }) {
+  const router = useRouter();
+
   const Group = isMobile ? MobileNavigationGroup : SideNavGroup;
   const Item = isMobile ? MobileNavigationItem : SideNavItem;
   const groupProps = isMobile
@@ -35,46 +84,18 @@ function Content({ isMobile = false }: { isMobile?: boolean }) {
   return (
     <>
       <Group header="Core Guidelines" {...groupProps}>
-        <Item>Logos</Item>
-        <Item>User Personas</Item>
-        <Item>Tone</Item>
-        <Item>Colors</Item>
-        <Item>Illustration</Item>
-        <Item>Typography</Item>
+        {coreGuidelines.map(item => (
+          <Item key={item} onClick={() => router.push(`/guideline/${item}`)}>
+            {item.split('-').join(' ')}
+          </Item>
+        ))}
       </Group>
       <Group header="Components" {...groupProps}>
-        <Item>Badges</Item>
-        <Item>Banners</Item>
-        <Item>Box</Item>
-        <Item>Button</Item>
-        <Item>Callout</Item>
-        <Item>Code</Item>
-        <Item>Confirmation Modal</Item>
-        <Item>Icons</Item>
-        <Item>Icon Button</Item>
-        <Item>Inline Definition</Item>
-        <Item>Logo</Item>
-        <Item>Marketing Modal</Item>
-        <Item>Menu</Item>
-        <Item>Modal</Item>
-        <Item>Mongo Nav</Item>
-        <Item>Palette</Item>
-        <Item>Pipeline</Item>
-        <Item>Popover</Item>
-        <Item>Portal</Item>
-        <Item>Radio Box Group</Item>
-        <Item>Radio Group</Item>
-        <Item>Side Nav</Item>
-        <Item>Stepper</Item>
-        <Item>Syntax</Item>
-        <Item>Table</Item>
-        <Item>Tabs</Item>
-        <Item>Text Input</Item>
-        <Item>Toast</Item>
-        <Item>Toggle</Item>
-        <Item>Tokens</Item>
-        <Item>Tooltip</Item>
-        <Item>Typography</Item>
+        {components.map(item => (
+          <Item key={item} onClick={() => router.push(`/component/${item}`)}>
+            {item.split('-').join(' ')}
+          </Item>
+        ))}
       </Group>
     </>
   );
