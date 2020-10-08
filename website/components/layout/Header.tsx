@@ -7,12 +7,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { H2 } from '@leafygreen-ui/typography';
 import { BaseLayoutProps } from 'utils/types';
 import CodeDocs from './CodeDocs';
-
-function transformComponentName(string: string) {
-  return string
-    .replace(/\w*/g, m => m.charAt(0).toUpperCase() + m.substr(1).toLowerCase())
-    .replace('-', ' ');
-}
+import { capitalize } from 'lodash';
 
 const componentsStyle = css`
   height: 16px;
@@ -35,6 +30,10 @@ const flexContainer = css`
   align-items: center;
 `;
 
+const caps = css`
+  text-transform: capitalize;
+`;
+
 function Header({ component, changelog, readme }: BaseLayoutProps) {
   if (!component) {
     return null;
@@ -45,7 +44,7 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
       <div className={marginBotton}>
         <small className={componentsStyle}>Components</small>
         <div className={flexContainer}>
-          <H2>{transformComponentName(component)}</H2>
+          <H2 className={caps}>{component.split('-').join(' ')}</H2>
 
           <Button glyph={<DownloadIcon />} variant="primary">
             Download Sketch Library

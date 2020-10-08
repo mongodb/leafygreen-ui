@@ -5,11 +5,13 @@ import Button from '@leafygreen-ui/button';
 import Card from '@leafygreen-ui/card';
 import Code from '@leafygreen-ui/code';
 import Modal from '@leafygreen-ui/modal';
+import { Table, Row, TableHeader, Cell } from '@leafygreen-ui/table';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { Subtitle, Body } from '@leafygreen-ui/typography';
 import { spacing } from '@leafygreen-ui/tokens';
 import { BaseLayoutProps } from 'utils/types';
 import { GridContainer, GridItem } from 'components/grid/Grid';
+import markdownToHtml from 'utils/markdownToHtml';
 
 const gridContainerStyle = css`
   width: 100%;
@@ -37,11 +39,28 @@ const tabMargin = css`
   margin-top: ${spacing[3]}px;
 `;
 
+async function getTableData(table) {
+  const html = await markdownToHtml(table);
+  const rows = html.match(/(?<=<tbody>).*?(?=<\/tbody)/s)?.[0];
+  // const data = []
+  // const parseRows = rows.split("tr").map(row => )
+
+  // console.log(rows.split('<tr>'));
+  // const body = html.slice('body');
+  // console.log(body.join(''));
+
+  // const data = [{ prop: 'xx', type: 'xx', description: 'xx', default: 'xxx' }];
+}
+
 function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
   const [openModal, setOpenModal] = useState(false);
   const version = changelog.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
   const example = readme.match(/(?<=js).*?(?=```)/s)?.[0];
   const outputHTML = readme.match(/(?<=html).*?(?=```)/s)?.[0];
+  const table = readme.match(/(?<=Properties).*?(?=_)/s)?.[0];
+
+  // console.log(getTableData(table));
+  const tableData = getTableData(table);
 
   return (
     <>
@@ -88,6 +107,41 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
               <Code language="xml">{outputHTML}</Code>
             </Tab>
           </Tabs>
+        </GridItem>
+      </GridContainer>
+      <GridContainer>
+        <GridItem xl={12}>
+          {/* <Table
+            data={tableData}
+            columns={[
+              <TableHeader dataType="string" label="Prop" key="prop" />,
+              <TableHeader dataType="string" label="Type" key="type" />,
+              <TableHeader
+                dataType="string"
+                label="Description"
+                key="description"
+              />,
+              <TableHeader dataType="string" label="Default" key="default" />,
+            ]}
+          >
+            {({
+              datum,
+            }: {
+              datum: {
+                prop: string;
+                type: string;
+                description: string;
+                default: string;
+              };
+            }) => (
+              <Row key={datum.prop}>
+                <Cell>{datum.prop}</Cell>
+                <Cell>{datum.type}</Cell>
+                <Cell>{datum.description}</Cell>
+                <Cell>{datum.default}</Cell>
+              </Row>
+            )}
+          </Table> */}
         </GridItem>
       </GridContainer>
     </>
