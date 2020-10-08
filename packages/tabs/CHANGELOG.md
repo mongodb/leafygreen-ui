@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 4.0.1
+
+### Patch Changes
+
+- 4c0587a0: Fixes issue where TypeScript types were not packaged.
+
 ## 4.0.0
 
 ### Major Changes
