@@ -13,8 +13,8 @@ export const globalStyles = css`
   }
 
   @font-face {
-    font-family: 'Akzidenz Medium';
-    font-weight: normal;
+    font-family: 'Akzidenz';
+    font-weight: medium;
     font-style: normal;
     src: url('fonts/akzidgrostdmed.eot');
     src: url('fonts/akzidgrostdmed.eot?#iefix') format('embedded-opentype'),

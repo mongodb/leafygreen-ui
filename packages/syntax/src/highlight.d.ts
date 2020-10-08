@@ -52,8 +52,7 @@ interface HighlightResult {
   isTransformed: boolean;
   valueWithLineNumbers: string;
   emitter: TokenTreeEmitter;
-  react: Array<React.ReactNode>;
-  reactWithNumbers: Array<React.ReactNode>;
+  react: React.ReactNode;
   relevance: number;
   language: string;
   illegal: boolean;

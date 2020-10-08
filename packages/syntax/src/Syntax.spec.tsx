@@ -1,6 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Syntax from './Syntax';
+import Syntax, {
+  expandRangeTuple,
+  normalizeLineHighlightingDefinition,
+} from './Syntax';
 
 const codeSnippet = 'const greeting = "Hello, world!";';
 const className = 'test-class';
@@ -24,12 +27,14 @@ describe('packages/Syntax', () => {
       </Syntax>,
     );
 
-    const code = container.firstChild as HTMLElement;
-    // Text nodes in HTMLCollections are ignored since they are not considered "elements",
-    // so we check that children is empty here since we expect a text node to be rendered.
-    //
-    // https://www.w3.org/TR/domcore/#concept-element
-    expect(code.children.length).toBe(0);
+    const tableCells = container.querySelectorAll('td');
+    Array.from(tableCells).forEach(child => {
+      // Text nodes in HTMLCollections are ignored since they are not considered "elements",
+      // so we check that the table cell is empty here since we expect a text node to be rendered.
+      //
+      // https://www.w3.org/TR/domcore/#concept-element
+      expect(child.children.length).toBe(0);
+    });
   });
 
   test("highlights code when language is 'javascript'", () => {
@@ -38,10 +43,60 @@ describe('packages/Syntax', () => {
         {codeSnippet}
       </Syntax>,
     );
-    const code = container.firstChild as HTMLElement;
+    const tableCells = container.querySelectorAll('td');
 
-    // We test for more than one node rather than a specific number here and below to ensure
-    // we're testing this component rather than the underlying library's implementation.
-    expect(code.children[0].children.length).toBeGreaterThan(1);
+    Array.from(tableCells).forEach(child => {
+      // We test for more than one node rather than a specific number here and below to ensure
+      // we're testing this component rather than the underlying library's implementation.
+      expect(child.children.length).toBeGreaterThan(1);
+    });
+  });
+
+  describe('expandRangeTuple()', () => {
+    test('when passed two numbers, returns an inclusive array of that range', () => {
+      expect(expandRangeTuple([0, 5])).toEqual([0, 1, 2, 3, 4, 5]);
+      expect(expandRangeTuple([2, 5])).toEqual([2, 3, 4, 5]);
+      expect(expandRangeTuple([5, 2])).toEqual([2, 3, 4, 5]);
+      expect(expandRangeTuple([0, 0])).toEqual([0]);
+      expect(expandRangeTuple([2, 2])).toEqual([2]);
+      expect(expandRangeTuple([-1, 1])).toEqual([0, 1]);
+
+      // Caps maximum range to 500 lines
+      expect(expandRangeTuple([1, 1000]).length).toEqual(500);
+    });
+  });
+
+  describe('normalizeLineHighlightingDefinition()', () => {
+    test('when passed an empty array, returns an empty array', () => {
+      expect(normalizeLineHighlightingDefinition([])).toEqual([]);
+    });
+
+    test('when passed an array of numbers, returns an array of those numbers', () => {
+      expect(normalizeLineHighlightingDefinition([0, 1])).toEqual([0, 1]);
+      expect(normalizeLineHighlightingDefinition([1, 2])).toEqual([1, 2]);
+    });
+
+    test('when passed an array of tuples, returns an array of numbers', () => {
+      expect(normalizeLineHighlightingDefinition([[0, 1]])).toEqual([0, 1]);
+      expect(
+        normalizeLineHighlightingDefinition([
+          [1, 3],
+          [4, 4],
+          [7, 5],
+        ]),
+      ).toEqual([1, 2, 3, 4, 5, 6, 7]);
+    });
+
+    test('when passed an array of tuples and numbers, returns an array of numbers', () => {
+      expect(normalizeLineHighlightingDefinition([[1, 3], 4, [7, 5]])).toEqual([
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+      ]);
+    });
   });
 });

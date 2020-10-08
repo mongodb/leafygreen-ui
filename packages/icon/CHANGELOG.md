@@ -1,5 +1,28 @@
 # @leafygreen-ui/icon
 
+## 7.0.0
+
+### Major Changes
+
+- 0267bfd2: The underlying structure of distributed module definition files have changed and now have official support for ES modules. Module definition files are now generated using Rollup instead of Webpack. This should not affect functionality, but some thorough testing and caution should be exercised when upgrading.
+
+### Patch Changes
+
+- Updated dependencies [0267bfd2]
+  - @leafygreen-ui/lib@6.0.0
+
+## 6.7.0
+
+### Minor Changes
+
+- 65d5ed4d: Adds Download glyph to Icon library
+
+## 6.6.1
+
+### Patch Changes
+
+- 001a277f: Server side rendering now produces fewer warnings
+
 ## 6.6.0
 
 ### Minor Changes

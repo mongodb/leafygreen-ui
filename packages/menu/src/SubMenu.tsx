@@ -201,7 +201,7 @@ interface SubMenuProps {
 
   onClick?: React.MouseEventHandler;
 
-  onExited?: ExitHandler;
+  onExited?: ExitHandler<HTMLElement>;
 
   href?: string;
 }

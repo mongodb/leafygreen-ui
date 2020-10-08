@@ -3,6 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 import { Mode } from './Tabs';
 
 const modeColors = {
@@ -85,7 +86,8 @@ const listTitle = css`
   white-space: nowrap;
   max-width: 300px;
   transition: 150ms color ease-in-out;
-  font-family: Akzidenz Medium;
+  font-family: ${fontFamilies.default};
+  font-weight: 600;
   font-size: 16px;
   position: relative;
 
