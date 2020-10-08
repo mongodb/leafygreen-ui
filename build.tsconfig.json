@@ -81,6 +81,9 @@
       "path": "./packages/radio-group"
     },
     {
+      "path": "./packages/select"
+    },
+    {
       "path": "./packages/side-nav"
     },
     {

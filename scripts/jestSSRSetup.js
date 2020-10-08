@@ -51,43 +51,39 @@ Context.within(new ArtificialServerContext(), () => {
 const { CacheProvider } = require('@emotion/core');
 const { cache, extractCritical } = require('@leafygreen-ui/emotion');
 
-const originalRender = ReactDOM.render;
-
 const stylesToCleanup = new Set();
 let registeredStyleCleanup = false;
 
 ReactDOM.render = (element, container, callback) => {
   element = React.createElement(CacheProvider, { value: cache }, element);
 
-  if (container._reactRootContainer) {
-    // No need to hydrate since component is already mounted
-    return originalRender(element, container, callback);
-  }
+  if (!container._reactRootContainer) {
+    const { html, css, ids } = extractCritical(
+      Context.within(new ArtificialServerContext(), () =>
+        ReactDOMServer.renderToString(element),
+      ),
+    );
 
-  const { html, css, ids } = extractCritical(
-    Context.within(new ArtificialServerContext(), () =>
-      ReactDOMServer.renderToString(element),
-    ),
-  );
+    // Client-only Emotion renders the style tags inline, but SSR requires
+    // manually adding the style tags https://emotion.sh/docs/ssr#on-server
+    const style = document.createElement('style');
+    style.setAttribute('data-emotion-css', ids.join(' '));
+    style.innerHTML = css;
+    document.head.appendChild(style);
+    stylesToCleanup.add(style);
 
-  // Client-only Emotion renders the style tags inline, but SSR requires
-  // manually adding the style tags https://emotion.sh/docs/ssr#on-server
-  const style = document.createElement('style');
-  style.setAttribute('data-emotion-css', ids.join(' '));
-  style.innerHTML = css;
-  document.head.appendChild(style);
-  stylesToCleanup.add(style);
-
-  if (!registeredStyleCleanup) {
-    registeredStyleCleanup = true;
-    afterEach(() => {
-      stylesToCleanup.forEach(style => {
-        style.remove();
-        stylesToCleanup.delete(style);
+    if (!registeredStyleCleanup) {
+      registeredStyleCleanup = true;
+      afterEach(() => {
+        stylesToCleanup.forEach(style => {
+          style.remove();
+          stylesToCleanup.delete(style);
+        });
       });
-    });
+    }
+
+    container.innerHTML = html;
   }
 
-  container.innerHTML = html;
   return ReactDOM.hydrate(element, container, callback);
 };

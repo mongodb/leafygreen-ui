@@ -459,6 +459,14 @@
     "@babel/helper-plugin-utils" "^7.10.4"
     "@babel/plugin-syntax-json-strings" "^7.8.0"
 
+"@babel/plugin-proposal-logical-assignment-operators@7.12.1":
+  version "7.12.1"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-logical-assignment-operators/-/plugin-proposal-logical-assignment-operators-7.12.1.tgz#f2c490d36e1b3c9659241034a5d2cd50263a2751"
+  integrity sha512-k8ZmVv0JU+4gcUGeCDZOGd0lCIamU/sMtIiX3UWnUc5yzgq6YUGyEolNYD+MLYKfSzgECPcqetVcJP9Afe/aCA==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.10.4"
+    "@babel/plugin-syntax-logical-assignment-operators" "^7.10.4"
+
 "@babel/plugin-proposal-logical-assignment-operators@^7.11.0":
   version "7.11.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-logical-assignment-operators/-/plugin-proposal-logical-assignment-operators-7.11.0.tgz#9f80e482c03083c87125dee10026b58527ea20c8"
@@ -1373,6 +1381,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.12.0":
+  version "7.12.1"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.1.tgz#b4116a6b6711d010b2dad3b7b6e43bf1b9954740"
+  integrity sha512-J5AIf3vPj3UwXaAzb5j1xM4WAQDX3EMgemF8rjCP3SoW09LfRKAXQKt6CoVYl230P6iWdRcBbnLDDdnqWxZSCA==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.10.4", "@babel/template@^7.3.3", "@babel/template@^7.7.4", "@babel/template@^7.8.6":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.10.4.tgz#3251996c4200ebc71d1a8fc405fba940f36ba278"
@@ -2054,24 +2069,6 @@
     "@types/node" "*"
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
-
-"@leafygreen-ui/emotion@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/emotion/-/emotion-2.0.2.tgz#032eff2814010da94621e4dfdf4cf7ff0a2e7279"
-  integrity sha512-/JAoOfS8VunR2W2TVWZeXEnZsMQRZg4dlQ8IFFq5xfu0bpObhqhCwgxlu/edV21dFy9jdZWTHTx/IldYBSjeXw==
-  dependencies:
-    create-emotion "^10.0.7"
-    create-emotion-server "10.0.27"
-    emotion "^10.0.7"
-
-"@leafygreen-ui/lib@^5.0.0":
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-5.1.1.tgz#997e80cc7b3918bdaf41fadbe3034147acbac30e"
-  integrity sha512-M/2L5pT5udbMZOMLH9RS+lgM4oj1xMaeq3QeJtH7FJjSGtutdZCjxOC3K6g+TWD1v519hBxsf6X1mDS2+2X49g==
-  dependencies:
-    "@leafygreen-ui/emotion" "^2.0.2"
-    facepaint "^1.2.1"
-    polished "^2.3.0"
 
 "@lerna/add@3.20.0":
   version "3.20.0"
@@ -4304,6 +4301,13 @@
   version "16.9.8"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.9.8.tgz#fe4c1e11dfc67155733dfa6aa65108b4971cb423"
   integrity sha512-ykkPQ+5nFknnlU6lDd947WbQ6TE3NNzbQAkInC2EKY1qeYdTKp7onFusmYZb+ityzx2YviqT6BXSu+LyWWJwcA==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-is@^16.7.1":
+  version "16.7.1"
+  resolved "https://registry.yarnpkg.com/@types/react-is/-/react-is-16.7.1.tgz#d3f1c68c358c00ce116b55ef5410cf486dd08539"
+  integrity sha512-dMLFD2cCsxtDgMkTydQCM0PxDq8vwc6uN5M/jRktDfYvH3nQj6pjC9OrCXS2lKlYoYTNJorI/dI8x9dpLshexQ==
   dependencies:
     "@types/react" "*"
 
@@ -8277,7 +8281,7 @@ eslint-plugin-jest@23.8.2:
   dependencies:
     "@typescript-eslint/experimental-utils" "^2.5.0"
 
-eslint-plugin-jsx-a11y@^6.2.3:
+eslint-plugin-jsx-a11y@^6.3.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-6.3.1.tgz#99ef7e97f567cc6a5b8dd5ab95a94a67058a2660"
   integrity sha512-i1S+P+c3HOlBJzMFORRbC58tHa65Kbo8b52/TwCwSKLohwvpfT5rm2GjGWzOHTEuq4xxf2aRlHHTtmExDQOP+g==
@@ -13737,6 +13741,13 @@ polished@^4.0.1:
   dependencies:
     "@babel/runtime" "^7.9.2"
 
+polished@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/polished/-/polished-4.0.3.tgz#e2bde249f8884bdabc6997dd3eca225ee32f7a26"
+  integrity sha512-yOALHMrqcYHlHIxFkHvGX8NGsjsbSaYMZ8Z3uEElVpzF5ZgNmTgqMOh4bnSVXGC6sXjBTZCH6+GebTRWhJR4zQ==
+  dependencies:
+    "@babel/runtime" "^7.12.0"
+
 popper.js@^1.14.4, popper.js@^1.14.7:
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.1.tgz#2a223cb3dc7b6213d740e40372be40de43e65b1b"
@@ -14432,7 +14443,7 @@ react-intersection-observer@8.25.1:
   dependencies:
     tiny-invariant "^1.0.6"
 
-react-is@16.13.1, react-is@^16.12.0, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6, react-is@^16.9.0:
+react-is@16.13.1, react-is@^16.12.0, react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6, react-is@^16.9.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==

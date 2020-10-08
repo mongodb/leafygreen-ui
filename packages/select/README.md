@@ -1,0 +1,128 @@
+# Select
+
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/select.svg)
+
+#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/select--default)
+
+## Installation
+
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/select
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/select
+```
+
+## Example
+
+```js
+import Select, { Option, OptionGroup, Size } from '@leafygreen-ui/select';
+
+<Select
+  label="Label"
+  description="Description"
+  placeholder="Placeholder"
+  name="Name"
+  size={Size.Normal}
+  defaultValue="cat"
+>
+  <Option value="dog">Dog</Option>
+  <Option value="cat">Cat</Option>
+  <OptionGroup label="Less common">
+    <Option value="hamster">Hamster</Option>
+    <Option value="parrot">Parrot</Option>
+  </OptionGroup>
+</Select>;
+```
+
+**Output HTML**
+
+```html
+<div>
+  <label id="select-39-label" class="leafygreen-ui-xzhurf">Label</label>
+  <div id="select-39-description" class="leafygreen-ui-1bf65pq">
+    Description
+  </div>
+  <div
+    role="combobox"
+    aria-labelledby="select-39-label"
+    aria-controls="select-39-menu"
+    aria-expanded="false"
+    aria-describedby="select-39-description"
+    tabindex="0"
+    class="leafygreen-ui-5kxwjh"
+  >
+    <div class="leafygreen-ui-cdhhty">
+      <input type="hidden" name="Name" value="cat" /><span
+        class="leafygreen-ui-1ks3bq2"
+        >Cat</span
+      ><svg
+        class="leafygreen-ui-msi0rg"
+        height="16"
+        width="16"
+        viewBox="0 0 16 16"
+        role="img"
+        aria-labelledby="CaretDown-39"
+      >
+        <title id="CaretDown-39">Caret Down Icon</title>
+        <g
+          id="CaretDown-Copy"
+          stroke="none"
+          stroke-width="1"
+          fill="none"
+          fill-rule="evenodd"
+        >
+          <path
+            d="M4.67285687,6 L11.3271431,6 C11.9254697,6 12.224633,6.775217 11.8024493,7.22717749 L8.47530616,10.7889853 C8.21248981,11.0703382 7.78751019,11.0703382 7.52748976,10.7889853 L4.19755071,7.22717749 C3.77536701,6.775217 4.07453029,6 4.67285687,6 Z"
+            id="Path"
+            fill="currentColor"
+          ></path>
+        </g>
+      </svg>
+    </div>
+    <div></div>
+  </div>
+</div>
+```
+
+## Select Properties
+
+| Prop           | Type                                               | Description                                                                                                   | Default    |
+| -------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ---------- |
+| `children`     | `node`                                             | `<Option />` and `<OptionGroup />` elements.                                                                  |            |
+| `className`    | `string`                                           | Adds a className to the outermost element.                                                                    |            |
+| `darkMode`     | `boolean`                                          | Determines whether or not the component will appear in dark mode.                                             | `false`    |
+| `size`         | `'xsmall'` \| `'small'` \| `'normal'` \| `'large'` | Sets the size of the component's elements.                                                                    | `'normal'` |
+| `id`           | `string`                                           | id associated with the Select component.                                                                      |            |
+| `label`        | `string`                                           | Text shown in bold above the input element.                                                                   |            |
+| `description`  | `string`                                           | Text that gives more detail about the requirements for the input.                                             |            |
+| `placeholder`  | `string`                                           | The placeholder text shown in the input element when an option is not selected.                               | `'Select'` |
+| `disabled`     | `boolean`                                          | Disables the component from being edited.                                                                     | `false`    |
+| `value`        | `string`                                           | Sets the `<Option />` that will appear selected and makes the component a controlled component.               | `''`       |
+| `defaultValue` | `string`                                           | Sets the `<Option />` that will appear selected on page load when the component is uncontrolled.              | `''`       |
+| `onChange`     | `function`                                         | A function that gets called when the selected value changes. Receives the value string as the first argument. | `() => {}` |
+| `readOnly`     | `boolean`                                          | Disables the console warning when the component is controlled and no `onChange` prop is provided.             | `false`    |
+
+## Option
+
+| Prop        | Type                 | Description                                                                                           | Default                     |
+| ----------- | -------------------- | ----------------------------------------------------------------------------------------------------- | --------------------------- |
+| `children`  | `node`               | Content to appear inside of the component.                                                            |                             |
+| `className` | `string`             | Adds a className to the outermost element.                                                            |                             |
+| `glyph`     | `React.ReactElement` | Icon to display next to the option text.                                                              |                             |
+| `value`     | `string`             | Corresponds to the value passed into the `onChange` prop of `<Select />` when the option is selected. | text contents of `children` |
+| `disabled`  | `boolean`            | Prevents the option from being selectable.                                                            | `false`                     |
+
+## OptionGroup
+
+| Prop        | Type      | Description                                               | Default |
+| ----------- | --------- | --------------------------------------------------------- | ------- |
+| `children`  | `node`    | `<Option />` elements                                     |         |
+| `className` | `string`  | Adds a className to the outermost element.                |         |
+| `label`     | `string`  | Text shown above the group's options                      |         |
+| `disabled`  | `boolean` | Prevents all the contained options from being selectable. | `false` |
