@@ -54,7 +54,7 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
       <Tabs>
         <Tab name="Live Example">Live Example</Tab>
         <Tab name="Design Guidelines">Design Guidelines</Tab>
-        <Tab name="Code Docs">
+        <Tab name="Code Docs" default>
           <CodeDocs
             component={component}
             changelog={changelog}
