@@ -18,11 +18,8 @@ import { Subtitle, Body } from '@leafygreen-ui/typography';
 import { spacing } from '@leafygreen-ui/tokens';
 import { BaseLayoutProps } from 'utils/types';
 import { GridContainer, GridItem } from 'components/grid/Grid';
-import markdownToHtml from 'utils/markdownToHtml';
-
 import unified from 'unified';
-import parse from 'remark-parse';
-import remark2react from 'remark-react';
+import markdown from 'remark-parse';
 
 const gridContainerStyle = css`
   width: 100%;
@@ -50,19 +47,31 @@ const tabMargin = css`
   margin-top: ${spacing[3]}px;
 `;
 
-async function getTableData(table) {
-  // const rows = html.match(/(?<=<tbody>).*?(?=<\/tbody)/s)?.[0];
-  const tableData = unified().use(parse).process(table);
+const map = {
+  [0]: 'prop',
+  [1]: 'type',
+  [2]: 'description',
+  [3]: 'default',
+};
 
-  console.log(tableData);
-  // const data = []
-  // const parseRows = rows.split("tr").map(row => )
+// (10) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+// 0: {type: "tableRow", children: Array(4), position: Position}
 
-  // console.log(rows.split('<tr>'));
-  // const body = html.slice('body');
-  // console.log(body.join(''));
+function getTableData(
+  table: string,
+): Array<{ prop: string; type: string; description: string; default: string }> {
+  const tree = unified().use(markdown).parse(table);
+  const rows = tree.children[0].children;
+  const rowMap = rows.map(row => {
+    const rowObj = {};
+    row.children.map((cell, index) => {
+      rowObj[map[index]] = cell.children[0]?.value || '-';
+    });
+    return rowObj;
+  });
 
-  // const data = [{ prop: 'xx', type: 'xx', description: 'xx', default: 'xxx' }];
+  rowMap.shift();
+  return rowMap;
 }
 
 function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
@@ -72,43 +81,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
   const outputHTML = readme.match(/(?<=html).*?(?=```)/s)?.[0];
   const table = readme.match(/(?<=Properties).*?(?=_)/s)?.[0];
 
-  console.log(getTableData(table));
-
-  const RenderedTable = ({ children }) => {
-    return (
-      <Table
-        data={tableData}
-        columns={[
-          <TableHeader dataType="string" label="Prop" key="prop" />,
-          <TableHeader dataType="string" label="Type" key="type" />,
-          <TableHeader
-            dataType="string"
-            label="Description"
-            key="description"
-          />,
-          <TableHeader dataType="string" label="Default" key="default" />,
-        ]}
-      >
-        {({
-          datum,
-        }: {
-          datum: {
-            prop: string;
-            type: string;
-            description: string;
-            default: string;
-          };
-        }) => (
-          <Row key={datum.prop}>
-            <Cell>{datum.prop}</Cell>
-            <Cell>{datum.type}</Cell>
-            <Cell>{datum.description}</Cell>
-            <Cell>{datum.default}</Cell>
-          </Row>
-        )}
-      </Table>
-    );
-  };
+  const tableData = getTableData(table);
 
   return (
     <>
@@ -158,31 +131,23 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
         </GridItem>
       </GridContainer>
       <GridContainer>
-        <GridItem xl={12}>
-          {/* {tableData} */}
-          {/* <Table
+        <GridItem md={12} xl={12}>
+          <Table
             data={tableData}
-            columns={[
-              <TableHeader dataType="string" label="Prop" key="prop" />,
-              <TableHeader dataType="string" label="Type" key="type" />,
-              <TableHeader
-                dataType="string"
-                label="Description"
-                key="description"
-              />,
-              <TableHeader dataType="string" label="Default" key="default" />,
-            ]}
+            columns={
+              <>
+                <TableHeader dataType="string" label="Prop" key="prop" />
+                <TableHeader dataType="string" label="Type" key="type" />
+                <TableHeader
+                  dataType="string"
+                  label="Description"
+                  key="description"
+                />
+                <TableHeader dataType="string" label="Default" key="deafult" />
+              </>
+            }
           >
-            {({
-              datum,
-            }: {
-              datum: {
-                prop: string;
-                type: string;
-                description: string;
-                default: string;
-              };
-            }) => (
+            {({ datum }) => (
               <Row key={datum.prop}>
                 <Cell>{datum.prop}</Cell>
                 <Cell>{datum.type}</Cell>
@@ -190,7 +155,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
                 <Cell>{datum.default}</Cell>
               </Row>
             )}
-          </Table> */}
+          </Table>
         </GridItem>
       </GridContainer>
     </>
