@@ -4,7 +4,7 @@ import { css } from 'emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
 import { useViewportSize } from '@leafygreen-ui/hooks';
-import MDBDesignLogo from '../logos/MDBDesignLogo';
+import MDBDesignLogo from '../svgs/MDBDesignLogo';
 import MobileNavigationGroup from './MobileNavigationGroup';
 import MobileNavigationItem from './MobileNavigationItem';
 import MobileNavigation from './MobileNavigation';

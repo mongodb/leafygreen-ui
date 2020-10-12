@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build && next export -o hosting/files/",
     "release": "gh-pages -b website --dist .",
-    "start": "next start"
+    "start": "next start",
+    "ts": "tsc --project tsconfig.json"
   },
   "dependencies": {
     "@emotion/core": "^10.0.35",

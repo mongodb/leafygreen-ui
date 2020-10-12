@@ -4,12 +4,40 @@ import PropDefinition from 'components/PropDefinition';
 import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 import { Subtitle } from '@leafygreen-ui/typography/dist';
 
+/**
+ * Syntactic units in unist syntax trees are called nodes.
+ * Interface dervied from Unified types
+ */
+export interface Node {
+  /**
+   * The variant of a node.
+   */
+  type: string;
+
+  /**
+   * Information from the ecosystem.
+   */
+  data?: {
+    [key: string]: unknown;
+  };
+
+  /**
+   * Location of a node in a source document.
+   * Must not be present if a node is generated.
+   */
+  position?: Position;
+
+  children?: Array<any>;
+
+  [key: string]: unknown;
+}
+
 const map = {
   [0]: 'prop',
   [1]: 'type',
   [2]: 'description',
   [3]: 'default',
-};
+} as const;
 
 interface TableDataInterface {
   prop: string;
@@ -24,9 +52,19 @@ function getTableData(rows: Array<any>): Array<TableDataInterface> {
   }
 
   const rowMap = rows.map(row => {
-    const rowObj = {};
+    const rowObj: Partial<TableDataInterface> = {};
     row.children.map((cell, index) => {
-      const value = cell.children?.map(child => child.value).join('') || '-';
+      const value =
+        cell.children
+          .map(child => {
+            if (child.children) {
+              return child.children.map(child => child.value).join('');
+            }
+
+            return child.value;
+          })
+          .join('') || '-';
+
       rowObj[map[index]] = value;
     });
     return rowObj;
@@ -34,10 +72,10 @@ function getTableData(rows: Array<any>): Array<TableDataInterface> {
 
   rowMap.shift();
 
-  return rowMap;
+  return rowMap as Array<TableDataInterface>;
 }
 
-function PropTable({ mdAst }) {
+function PropTable({ mdAst }: { mdAst: Node }) {
   let peerDepIndex: number | undefined;
 
   const headers = mdAst?.children
@@ -60,9 +98,9 @@ function PropTable({ mdAst }) {
         margin-top: 100px;
       `}
     >
-      {headers.map((header, index) => {
+      {headers.map((header: string, index: number) => {
         return (
-          <>
+          <div key={index}>
             {headers.length > 1 && (
               <Subtitle
                 className={css`
@@ -111,7 +149,7 @@ function PropTable({ mdAst }) {
                 )}
               </Table>
             )}
-          </>
+          </div>
         );
       })}
     </div>

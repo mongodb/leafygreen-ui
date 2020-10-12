@@ -78,12 +78,16 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem xl={12}>
           <Tabs className={tabsPadding}>
-            <Tab default name="Example" className={tabMargin}>
-              <Code language="js">{example}</Code>
-            </Tab>
-            <Tab name="Output HTML" className={tabMargin}>
-              <Code language="xml">{outputHTML}</Code>
-            </Tab>
+            {example && (
+              <Tab default name="Example" className={tabMargin}>
+                <Code language="js">{example}</Code>
+              </Tab>
+            )}
+            {outputHTML && (
+              <Tab name="Output HTML" className={tabMargin} default={!example}>
+                <Code language="xml">{outputHTML}</Code>
+              </Tab>
+            )}
           </Tabs>
         </GridItem>
       </GridContainer>

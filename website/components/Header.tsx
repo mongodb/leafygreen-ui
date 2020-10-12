@@ -5,8 +5,11 @@ import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { H2 } from '@leafygreen-ui/typography';
+import { spacing } from '@leafygreen-ui/tokens';
 import { BaseLayoutProps } from 'utils/types';
-import CodeDocs from './CodeDocs';
+import CodeDocs from 'components/CodeDocs';
+import ReactIcon from 'components/svgs/ReactIcon';
+import SketchIcon from 'components/svgs/SketchIcon';
 
 const componentsStyle = css`
   height: 16px;
@@ -33,6 +36,15 @@ const caps = css`
   text-transform: capitalize;
 `;
 
+const tabNameContainer = css`
+  display: flex;
+  align-items: center;
+`;
+
+const iconMargin = css`
+  margin-right: ${spacing[1]}px;
+`;
+
 function Header({ component, changelog, readme }: BaseLayoutProps) {
   if (!component) {
     return null;
@@ -52,8 +64,25 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
       </div>
       <Tabs>
         <Tab name="Live Example">Live Example</Tab>
-        <Tab name="Design Guidelines">Design Guidelines</Tab>
-        <Tab name="Code Docs" default>
+        <Tab
+          name={
+            <span className={tabNameContainer}>
+              <SketchIcon className={iconMargin} />
+              Design Guidelines
+            </span>
+          }
+        >
+          Design Guidelines
+        </Tab>
+        <Tab
+          name={
+            <span className={tabNameContainer}>
+              <ReactIcon className={iconMargin} />
+              Code Docs
+            </span>
+          }
+          default
+        >
           <CodeDocs
             component={component}
             changelog={changelog}
