@@ -14,7 +14,7 @@ const rowStyle = css`
   color: ${uiColors.gray.dark2};
 
   & > td > ${tdInnerDiv.selector} {
-    height: 40px;
+    min-height: 40px;
     transition: all 150ms ease-in-out;
   }
 `;
@@ -46,10 +46,10 @@ const displayFlex = css`
 `;
 
 const truncation = css`
-  max-width: 100px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  // max-width: 70%;
+  // white-space: nowrap;
+  // text-overflow: ellipsis;
+  // overflow: hidden;
 `;
 
 const transitionStyles = {
@@ -71,7 +71,7 @@ const transitionStyles = {
     border-top-color: ${uiColors.gray.light2};
 
     & > td > ${tdInnerDiv.selector} {
-      max-height: 40px;
+      min-height: 40px;
     }
   `,
 };

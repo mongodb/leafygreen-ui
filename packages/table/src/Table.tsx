@@ -12,6 +12,7 @@ const tableStyles = css`
   border-collapse: collapse;
   box-sizing: border-box;
   border-bottom: 1px solid ${uiColors.gray.light2};
+  width: 100%;
 `;
 
 interface TableRowInterface<Shape = {}> {
@@ -35,8 +36,6 @@ export default function Table<Shape>({
   className,
   ...rest
 }: TableProps<Shape>) {
-  console.log('hi');
-
   return (
     <table
       cellSpacing="0"

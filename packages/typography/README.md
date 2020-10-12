@@ -24,8 +24,6 @@ npm install @leafygreen-ui/typography
 | ------------------------------------ | -------- |
 | `@leafygreen-ui/leafygreen-provider` | `^1.1.0` |
 
-# H1
-
 ## Example
 
 ```js
@@ -96,23 +94,25 @@ All props extend the HTMLElementProps of their root tag, however `<Body />` and 
 | `Overline`      | `p`     |
 | `Link`          | `a`     |
 
-## Body
+# Body
 
 | Prop     | Type                | Description                               | Default   |
 | -------- | ------------------- | ----------------------------------------- | --------- |
 | `weight` | `regular`, `medium` | font-weight applied to typography element | `regular` |
 
-## InlineCode
+# InlineCode
 
-If an `href` prop is passed to `InlineCode` it will be rendered with an `a` tag wrapping the `code` tag. Otherwise, it'll simply render as a `code` tag.
+| Prop   | Type                    | Description                                                                                                                                              | Default |
+| ------ | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `href` | `string` or `undefined` | If an `href` prop is passed to `InlineCode` it will be rendered with an `a` tag wrapping the `code` tag. Otherwise, it'll simply render as a `code` tag. |         |
 
-## Overline
+# Overline
 
 | Prop        | Type                                  | Description                                                                                                                         | Default |
 | ----------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `component` | `HTMLElement` or `React.ReactElement` | The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `p`     |
 
-## Link
+# Link
 
 | Prop               | Type      | Description                                                                                          | Default |
 | ------------------ | --------- | ---------------------------------------------------------------------------------------------------- | ------- |

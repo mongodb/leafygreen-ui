@@ -10,7 +10,7 @@ import { useSortContext } from './SortContext';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
 
 const thStyle = css`
-  width: 144px;
+  // width: 144px;
   border-width: 0px 1px 3px 1px;
   border-color: ${uiColors.gray.light2};
   border-style: solid;
