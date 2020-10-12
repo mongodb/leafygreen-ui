@@ -1,5 +1,18 @@
 # @leafygreen-ui/table
 
+## 0.2.1
+
+### Patch Changes
+
+- dac3f38b: Fixes a publishing error that prevented UMD modules from being distributed
+- Updated dependencies [dac3f38b]
+  - @leafygreen-ui/checkbox@6.0.1
+  - @leafygreen-ui/emotion@3.0.1
+  - @leafygreen-ui/icon@7.0.1
+  - @leafygreen-ui/icon-button@9.0.1
+  - @leafygreen-ui/lib@6.0.1
+  - @leafygreen-ui/palette@3.0.1
+
 ## 0.2.0
 
 ### Minor Changes

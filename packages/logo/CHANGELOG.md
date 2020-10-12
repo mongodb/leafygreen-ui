@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 4.0.1
+
+### Patch Changes
+
+- dac3f38b: Fixes a publishing error that prevented UMD modules from being distributed
+
 ## 4.0.0
 
 ### Major Changes
