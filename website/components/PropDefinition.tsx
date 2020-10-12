@@ -22,6 +22,7 @@ const propBlockPStyle = css`
 
 const propBlockCodeStyle = css`
   font-weight: bold;
+  white-space: pre-wrap;
 `;
 
 function PropBlock({ header, value }: { header: string; value: string }) {

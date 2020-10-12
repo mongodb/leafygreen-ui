@@ -7,7 +7,6 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { H2 } from '@leafygreen-ui/typography';
 import { BaseLayoutProps } from 'utils/types';
 import CodeDocs from './CodeDocs';
-import { capitalize } from 'lodash';
 
 const componentsStyle = css`
   height: 16px;

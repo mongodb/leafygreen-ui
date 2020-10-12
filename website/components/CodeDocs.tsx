@@ -5,25 +5,14 @@ import Button from '@leafygreen-ui/button';
 import Card from '@leafygreen-ui/card';
 import Code from '@leafygreen-ui/code';
 import Modal from '@leafygreen-ui/modal';
-import { Table, Row, TableHeader, Cell } from '@leafygreen-ui/table';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { Subtitle, Body } from '@leafygreen-ui/typography';
 import { spacing } from '@leafygreen-ui/tokens';
 import { BaseLayoutProps } from 'utils/types';
-import { GridContainer, GridItem } from 'components/grid/Grid';
-import PropDefinition from 'components/prop-definition/PropDefinition';
-import PropTable from 'components/layout/PropTable';
+import { GridContainer, GridItem } from 'components/Grid';
+import PropTable from 'components/PropTable';
 import unified from 'unified';
 import markdown from 'remark-parse';
-
-// Components with two prop tables
-// Fix other null states
-// Clean up Table
-// Clean empty string
-
-const gridContainerStyle = css`
-  width: 100%;
-`;
 
 const topAlignment = css`
   margin-top: ${spacing[4]}px;
@@ -47,108 +36,17 @@ const tabMargin = css`
   margin-top: ${spacing[3]}px;
 `;
 
-const map = {
-  [0]: 'prop',
-  [1]: 'type',
-  [2]: 'description',
-  [3]: 'default',
-};
-
-interface TableDataInterface {
-  prop: string;
-  type: string;
-  description: string;
-  default: string;
-}
-
-function getTableData(rows: Array<any>): Array<TableDataInterface> {
-  if (!rows) {
-    return null;
-  }
-
-  const rowMap = rows.map(row => {
-    const rowObj = {};
-    row.children.map((cell, index) => {
-      const value = cell.children?.map(child => child.value).join('') || '-';
-      rowObj[map[index]] = value;
-    });
-    return rowObj;
-  });
-
-  rowMap.shift();
-  console.log(rowMap);
-  return rowMap;
-}
-
-function CodeDocsTable({
-  tableData,
-}: {
-  tableData: Array<TableDataInterface>;
-}) {
-  return (
-    <Table
-      className={css`
-        margin-top: 100px;
-      `}
-      data={tableData}
-      columns={[
-        <TableHeader dataType="string" label="Prop" key="prop" />,
-        <TableHeader dataType="string" label="Type" key="type" />,
-        <TableHeader dataType="string" label="Description" key="description" />,
-        <TableHeader dataType="string" label="Default" key="deafult" />,
-      ]}
-    >
-      {({ datum }) => (
-        <Row key={datum.prop}>
-          <Cell>
-            <PropDefinition
-              prop={datum.prop}
-              type={datum.type}
-              description={datum.description}
-              defaultValue={datum.default}
-            />
-          </Cell>
-          <Cell>{datum.type}</Cell>
-          <Cell>{datum.description}</Cell>
-          <Cell>{datum.default}</Cell>
-        </Row>
-      )}
-    </Table>
-  );
-}
-
 function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
   const [openModal, setOpenModal] = useState(false);
   const version = changelog.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
   const example = readme.match(/(?<=js).*?(?=```)/s)?.[0];
   const outputHTML = readme.match(/(?<=html).*?(?=```)/s)?.[0];
 
-  const tree: Array<unknown> = unified().use(markdown).parse(readme);
-  const headers = tree?.children
-    .filter(treeItem => treeItem.type === 'heading' && treeItem.depth === 1)
-    .map(item => item?.children?.[0].value);
-
-  const tableData: Array<Array<TableDataInterface>> = tree?.children
-    .filter(treeItem => treeItem.type === 'table')
-    .map(item => getTableData(item.children));
-
-  const renderedTableData = headers.map((header, index) => {
-    return (
-      <PropTable
-        key={header}
-        tableData={tableData[index]}
-        component={headers.length > 1 && header}
-      />
-    );
-  });
+  const mdAst = unified().use(markdown).parse(readme);
 
   return (
     <>
-      <GridContainer
-        justify="flex-start"
-        align="flex-start"
-        className={gridContainerStyle}
-      >
+      <GridContainer justify="flex-start" align="flex-start">
         <GridItem lg={7}>
           <div className={topAlignment}>
             <Subtitle>Installation</Subtitle>
@@ -190,7 +88,9 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
         </GridItem>
       </GridContainer>
       <GridContainer align="flex-start" justify="flex-start">
-        <GridItem xl={12}>{renderedTableData}</GridItem>
+        <GridItem xl={12}>
+          <PropTable mdAst={mdAst} />
+        </GridItem>
       </GridContainer>
     </>
   );

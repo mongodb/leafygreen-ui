@@ -5,9 +5,9 @@ import fs from 'fs';
 import path from 'path';
 import util from 'util';
 import { css } from 'emotion';
-import { GridContainer, GridItem } from 'components/grid/Grid';
 import Navigation from 'components/navigation/Navigation';
-import Header from 'components/layout/Header';
+import Header from 'components/Header';
+import { GridContainer, GridItem } from 'components/Grid';
 import markdownToHtml from 'utils/markdownToHtml';
 import { BaseLayoutProps } from 'utils/types';
 
