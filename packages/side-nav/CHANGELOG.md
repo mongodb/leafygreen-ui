@@ -1,5 +1,17 @@
 # @leafygreen-ui/side-nav
 
+## 4.0.1
+
+### Patch Changes
+
+- dac3f38b: Fixes a publishing error that prevented UMD modules from being distributed
+- Updated dependencies [dac3f38b]
+  - @leafygreen-ui/emotion@3.0.1
+  - @leafygreen-ui/leafygreen-provider@2.0.1
+  - @leafygreen-ui/lib@6.0.1
+  - @leafygreen-ui/menu@9.0.1
+  - @leafygreen-ui/palette@3.0.1
+
 ## 4.0.0
 
 ### Major Changes

@@ -1,5 +1,17 @@
 # @leafygreen-ui/syntax
 
+## 6.0.1
+
+### Patch Changes
+
+- f56f5ab1: Fixes an issue where line highlighting might not span the entire component.
+- dac3f38b: Fixes a publishing error that prevented UMD modules from being distributed
+- Updated dependencies [dac3f38b]
+- Updated dependencies [059ef833]
+  - @leafygreen-ui/lib@6.0.1
+  - @leafygreen-ui/palette@3.0.1
+  - @leafygreen-ui/tokens@0.5.0
+
 ## 6.0.0
 
 ### Major Changes
