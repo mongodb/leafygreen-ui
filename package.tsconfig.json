@@ -3,9 +3,8 @@
   "compilerOptions": {
     "module": "esnext",
     "declaration": true,
-    "sourceMap": true,
     "declarationMap": true,
-    "emitDeclarationOnly": false,
+    "emitDeclarationOnly": true,
     "importHelpers": false,
     "composite": true
   },
