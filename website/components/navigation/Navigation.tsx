@@ -4,7 +4,7 @@ import { css } from 'emotion';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
 import { useViewportSize } from '@leafygreen-ui/hooks';
-import MDBDesignLogo from '../svgs/MDBDesignLogo';
+import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
 import MobileNavigationGroup from './MobileNavigationGroup';
 import MobileNavigationItem from './MobileNavigationItem';
 import MobileNavigation from './MobileNavigation';
@@ -18,9 +18,7 @@ const navWidth = css`
 
 const logoStyles = css`
   // adds back spacing that was already built into side nav
-  margin-left: ${spacing[3]}px;
-  margin-top: 12px;
-  margin-bottom: ${spacing[4]}px;
+  margin: 12px 0 ${spacing[4]}px ${spacing[3]}px;
 `;
 
 const coreGuidelines = [
@@ -67,14 +65,12 @@ const components = [
   'typography',
 ];
 
-// add transition to mobile navigation
-
-function Content({ isMobile = false }: { isMobile?: boolean }) {
+function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
   const router = useRouter();
 
-  const Group = isMobile ? MobileNavigationGroup : SideNavGroup;
-  const Item = isMobile ? MobileNavigationItem : SideNavItem;
-  const groupProps = isMobile
+  const Group = isTouchDevice ? MobileNavigationGroup : SideNavGroup;
+  const Item = isTouchDevice ? MobileNavigationItem : SideNavItem;
+  const groupProps = isTouchDevice
     ? undefined
     : ({
         collapsible: true,
@@ -103,12 +99,12 @@ function Content({ isMobile = false }: { isMobile?: boolean }) {
 
 function Navigation() {
   const viewport = useViewportSize();
-  const isMobile = !!viewport && viewport.width < 768;
+  const isTouchDevice = !!viewport && viewport.width < breakpoints.Desktop;
 
-  if (isMobile) {
+  if (isTouchDevice) {
     return (
       <MobileNavigation>
-        <Content isMobile />
+        <Content isTouchDevice />
       </MobileNavigation>
     );
   }

@@ -17,7 +17,7 @@ const propBlockContainer = css`
 `;
 
 const propBlockPStyle = css`
-  margin: 0;
+  margin: 0 0 ${spacing[1]}px 0;
 `;
 
 const propBlockCodeStyle = css`
@@ -73,6 +73,7 @@ function Definition({
 
 const inlineDefinitionStyle = css`
   padding: 0;
+  font-weight: 600;
 `;
 
 function PropDefinition({

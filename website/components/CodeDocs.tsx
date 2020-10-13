@@ -1,28 +1,37 @@
 import React, { useState } from 'react';
 import { css, cx } from 'emotion';
+import unified from 'unified';
+import markdown from 'remark-parse';
 import ActivityFeedIcon from '@leafygreen-ui/icon/dist/ActivityFeed';
 import Button from '@leafygreen-ui/button';
 import Card from '@leafygreen-ui/card';
 import Code from '@leafygreen-ui/code';
 import Modal from '@leafygreen-ui/modal';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
-import { Subtitle, Body } from '@leafygreen-ui/typography';
+import { Subtitle, Body, InlineCode } from '@leafygreen-ui/typography';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { BaseLayoutProps } from 'utils/types';
 import { GridContainer, GridItem } from 'components/Grid';
 import PropTable from 'components/PropTable';
-import unified from 'unified';
-import markdown from 'remark-parse';
+import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table/dist';
 
 const topAlignment = css`
   margin-top: ${spacing[4]}px;
   padding-top: ${spacing[3]}px;
 `;
 
+const mt3 = css`
+  margin-top: ${spacing[3]}px;
+`;
+
+const mb1 = css`
+  margin-bottom: ${spacing[1]}px;
+`;
+
 const versionCard = css`
-  height: 106px;
-  padding-left: ${spacing[4]}px;
+  min-height: 106px;
+  padding: ${spacing[3]}px ${spacing[4]}px;
 `;
 
 const subtitlePadding = css`
@@ -33,19 +42,41 @@ const tabsPadding = css`
   padding-top: ${spacing[2]}px;
 `;
 
-const tabMargin = css`
-  margin-top: ${spacing[3]}px;
+const mobileInstallMargin = css`
+  margin-top: 50px;
 `;
 
-function VersionCard({ version, changelog }) {
+interface VersionCardProps {
+  version: string;
+  changelog: string;
+  isMobile?: boolean;
+}
+
+interface InstallProps {
+  component: string;
+  version: string;
+  changelog: string;
+}
+
+function VersionCard({
+  version,
+  changelog,
+  isMobile = false,
+}: VersionCardProps) {
   const [openModal, setOpenModal] = useState(false);
 
   return (
     <Card className={cx(topAlignment, versionCard)}>
       <Subtitle className={subtitlePadding}>Version {version}</Subtitle>
       <Button
+        size={isMobile ? 'large' : 'normal'}
         glyph={<ActivityFeedIcon />}
         onClick={() => setOpenModal(curr => !curr)}
+        className={cx({
+          [css`
+            width: 100%;
+          `]: isMobile,
+        })}
       >
         View Changelog
       </Button>
@@ -56,31 +87,17 @@ function VersionCard({ version, changelog }) {
   );
 }
 
-function MobileInstall({ component, version, changelog }) {
+function MobileInstall({ component, version, changelog }: InstallProps) {
   return (
     <GridContainer>
       <GridItem sm={12}>
-        <div
-          className={css`
-            margin-top: 50px;
-          `}
-        >
+        <div className={mobileInstallMargin}>
           <Subtitle>Installation</Subtitle>
-          <Body
-            weight="medium"
-            className={css`
-              margin-top: ${spacing[3]}px;
-            `}
-          >
+          <Body weight="medium" className={mt3}>
             Yarn
           </Body>
           <Code language="js">{`yarn add @leafygreen-ui/${component}`}</Code>
-          <Body
-            weight="medium"
-            className={css`
-              margin-top: ${spacing[3]}px;
-            `}
-          >
+          <Body weight="medium" className={mt3}>
             NPM
           </Body>
           <Code language="js">{`npm install @leafygreen-ui/${component}`}</Code>
@@ -92,21 +109,29 @@ function MobileInstall({ component, version, changelog }) {
             margin-bottom: 70px;
           `}
         >
-          <VersionCard version={version} changelog={changelog} />
+          <VersionCard version={version} changelog={changelog} isMobile />
         </div>
       </GridItem>
     </GridContainer>
   );
 }
 
-function DesktopInstall({ component, changelog, version }) {
+function DesktopInstall({ component, changelog, version }: InstallProps) {
   return (
     <>
-      <GridContainer justify="flex-start" align="center">
+      <GridContainer justify="flex-start" align="flex-start">
         <GridItem md={7} lg={7}>
           <div className={topAlignment}>
-            <Subtitle>Installation</Subtitle>
-            <Body weight="medium">Yarn</Body>
+            <Subtitle
+              className={css`
+                margin-bottom: ${spacing[3]}px;
+              `}
+            >
+              Installation
+            </Subtitle>
+            <Body weight="medium" className={mb1}>
+              Yarn
+            </Body>
             <Code language="js">{`yarn add @leafygreen-ui/${component}`}</Code>
           </div>
         </GridItem>
@@ -116,7 +141,9 @@ function DesktopInstall({ component, changelog, version }) {
       </GridContainer>
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem md={7} lg={7}>
-          <Body weight="medium">NPM</Body>
+          <Body weight="medium" className={mb1}>
+            NPM
+          </Body>
           <Code language="js">{`npm install @leafygreen-ui/${component}`}</Code>
         </GridItem>
       </GridContainer>
@@ -152,13 +179,17 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
         <GridItem sm={12} md={12} xl={12}>
           <Tabs className={tabsPadding}>
             {example && (
-              <Tab default name="Example" className={tabMargin}>
-                <Code language="js">{example}</Code>
+              <Tab default name="Example" className={mt3}>
+                <Code showLineNumbers language="js">
+                  {example}
+                </Code>
               </Tab>
             )}
             {outputHTML && (
-              <Tab name="Output HTML" className={tabMargin} default={!example}>
-                <Code language="xml">{outputHTML}</Code>
+              <Tab name="Output HTML" className={mt3} default={!example}>
+                <Code showLineNumbers language="xml">
+                  {outputHTML}
+                </Code>
               </Tab>
             )}
           </Tabs>
@@ -166,7 +197,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
       </GridContainer>
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
-          <PropTable mdAst={mdAst} />
+          <PropTable mdAst={mdAst} component={component} />
         </GridItem>
       </GridContainer>
     </>

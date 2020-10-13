@@ -1,8 +1,9 @@
 import React from 'react';
 import { css } from 'emotion';
-import PropDefinition from 'components/PropDefinition';
 import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table';
-import { Subtitle } from '@leafygreen-ui/typography/dist';
+import { Subtitle, InlineCode } from '@leafygreen-ui/typography/dist';
+import PropDefinition from 'components/PropDefinition';
+import TypographyPropTable from 'components/TypographyPropTable';
 
 /**
  * Syntactic units in unist syntax trees are called nodes.
@@ -75,7 +76,7 @@ function getTableData(rows: Array<any>): Array<TableDataInterface> {
   return rowMap as Array<TableDataInterface>;
 }
 
-function PropTable({ mdAst }: { mdAst: Node }) {
+function PropTable({ mdAst, component }: { mdAst: Node; component: string }) {
   let peerDepIndex: number | undefined;
 
   const headers = mdAst?.children
@@ -92,24 +93,29 @@ function PropTable({ mdAst }: { mdAst: Node }) {
     })
     .map(item => getTableData(item.children));
 
+  if (component === 'typography') {
+    headers.shift();
+    tableData.shift();
+  }
+
   return (
     <div
       className={css`
         margin-top: 100px;
       `}
     >
+      {component === 'typography' && <TypographyPropTable />}
       {headers.map((header: string, index: number) => {
         return (
           <div key={index}>
-            {headers.length > 1 && (
-              <Subtitle
-                className={css`
-                  margin-bottom: 24px;
-                `}
-              >
-                {header}
-              </Subtitle>
-            )}
+            <Subtitle
+              className={css`
+                margin-bottom: 24px;
+              `}
+            >
+              {header} Props
+            </Subtitle>
+
             {tableData[index] && (
               <Table
                 className={css`
@@ -118,14 +124,34 @@ function PropTable({ mdAst }: { mdAst: Node }) {
                 key={header}
                 data={tableData[index]}
                 columns={[
-                  <TableHeader dataType="string" label="Prop" key="prop" />,
-                  <TableHeader dataType="string" label="Type" key="type" />,
                   <TableHeader
+                    className={css`
+                      width: 10%;
+                    `}
+                    dataType="string"
+                    label="Prop"
+                    key="prop"
+                  />,
+                  <TableHeader
+                    className={css`
+                      width: 30%;
+                    `}
+                    dataType="string"
+                    label="Type"
+                    key="type"
+                  />,
+                  <TableHeader
+                    className={css`
+                      width: 50%;
+                    `}
                     dataType="string"
                     label="Description"
                     key="description"
                   />,
                   <TableHeader
+                    className={css`
+                      width: 10%;
+                    `}
                     dataType="string"
                     label="Default"
                     key="deafult"
@@ -142,9 +168,17 @@ function PropTable({ mdAst }: { mdAst: Node }) {
                         defaultValue={datum.default}
                       />
                     </Cell>
-                    <Cell>{datum.type}</Cell>
+                    <Cell>
+                      <InlineCode>{datum.type}</InlineCode>
+                    </Cell>
                     <Cell>{datum.description}</Cell>
-                    <Cell>{datum.default}</Cell>
+                    <Cell>
+                      {datum.default === '-' ? (
+                        '-'
+                      ) : (
+                        <InlineCode>{datum.default}</InlineCode>
+                      )}
+                    </Cell>
                   </Row>
                 )}
               </Table>
