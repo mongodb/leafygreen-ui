@@ -19,8 +19,6 @@ export default function useViewportSize(): ViewportSize | null {
   );
 
   useEffect(() => {
-    if (typeof window === undefined) return;
-
     setViewportUpdateVal(getViewportSize());
 
     const calcResize = debounce(
