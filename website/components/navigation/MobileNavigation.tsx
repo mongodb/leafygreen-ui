@@ -5,7 +5,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { breakpoints } from '@leafygreen-ui/tokens';
 import IconButton from '@leafygreen-ui/icon-button';
 import MenuIcon from '@leafygreen-ui/icon/dist/Menu';
-import MDBDesignLogo from '../svgs/MDBDesignLogo';
+import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
 import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
 
 const closedContainer = css`

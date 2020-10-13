@@ -5,6 +5,14 @@ import { Subtitle, InlineCode } from '@leafygreen-ui/typography/dist';
 import PropDefinition from 'components/PropDefinition';
 import TypographyPropTable from 'components/TypographyPropTable';
 
+const subtitleBottomMargin = css`
+  margin-bottom: 24px;
+`;
+
+const tableBottomMargin = css`
+  margin-bottom: 56px;
+`;
+
 /**
  * Syntactic units in unist syntax trees are called nodes.
  * Interface dervied from Unified types
@@ -108,19 +116,11 @@ function PropTable({ mdAst, component }: { mdAst: Node; component: string }) {
       {headers.map((header: string, index: number) => {
         return (
           <div key={index}>
-            <Subtitle
-              className={css`
-                margin-bottom: 24px;
-              `}
-            >
-              {header} Props
-            </Subtitle>
+            <Subtitle className={subtitleBottomMargin}>{header} Props</Subtitle>
 
             {tableData[index] && (
               <Table
-                className={css`
-                  margin-bottom: 56px;
-                `}
+                className={tableBottomMargin}
                 key={header}
                 data={tableData[index]}
                 columns={[

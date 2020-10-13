@@ -3,6 +3,14 @@ import { css } from 'emotion';
 import { Subtitle, InlineCode } from '@leafygreen-ui/typography';
 import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 
+const subtTitleBottomMargin = css`
+  margin-bottom: 24px;
+`;
+
+const tableBottomMargin = css`
+  margin-bottom: 56px;
+`;
+
 const typeData = [
   { component: 'H1', root: 'h1' },
   { component: 'H2', root: 'h2' },
@@ -19,11 +27,7 @@ const typeData = [
 function TypographyPropTable() {
   return (
     <div>
-      <Subtitle
-        className={css`
-          margin-bottom: 24px;
-        `}
-      >
+      <Subtitle className={subtTitleBottomMargin}>
         All props extend the <InlineCode>HTMLElementProps</InlineCode> of their
         root tag
       </Subtitle>
@@ -33,9 +37,7 @@ function TypographyPropTable() {
           <TableHeader label="Component" key="comp" />,
           <TableHeader label="Root" key="root" />,
         ]}
-        className={css`
-          margin-bottom: 56px;
-        `}
+        className={tableBottomMargin}
       >
         {({ datum }) => (
           <Row>

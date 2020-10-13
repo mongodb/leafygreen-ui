@@ -6,7 +6,7 @@ import path from 'path';
 import util from 'util';
 import { css } from 'emotion';
 import { breakpoints } from '@leafygreen-ui/tokens';
-import Navigation from 'components/navigation/Navigation';
+import Navigation from 'components/navigation';
 import Header from 'components/Header';
 import markdownToHtml from 'utils/markdownToHtml';
 import { BaseLayoutProps } from 'utils/types';
