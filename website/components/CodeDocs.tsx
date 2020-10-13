@@ -7,7 +7,8 @@ import Code from '@leafygreen-ui/code';
 import Modal from '@leafygreen-ui/modal';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { Subtitle, Body } from '@leafygreen-ui/typography';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, breakpoints } from '@leafygreen-ui/tokens';
+import { useViewportSize } from '@leafygreen-ui/hooks';
 import { BaseLayoutProps } from 'utils/types';
 import { GridContainer, GridItem } from 'components/Grid';
 import PropTable from 'components/PropTable';
@@ -36,47 +37,119 @@ const tabMargin = css`
   margin-top: ${spacing[3]}px;
 `;
 
-function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
+function VersionCard({ version, changelog }) {
   const [openModal, setOpenModal] = useState(false);
-  const version = changelog.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
-  const example = readme.match(/(?<=js).*?(?=```)/s)?.[0];
-  const outputHTML = readme.match(/(?<=html).*?(?=```)/s)?.[0];
-
-  const mdAst = unified().use(markdown).parse(readme);
 
   return (
+    <Card className={cx(topAlignment, versionCard)}>
+      <Subtitle className={subtitlePadding}>Version {version}</Subtitle>
+      <Button
+        glyph={<ActivityFeedIcon />}
+        onClick={() => setOpenModal(curr => !curr)}
+      >
+        View Changelog
+      </Button>
+      <Modal open={openModal} setOpen={setOpenModal}>
+        <div dangerouslySetInnerHTML={{ __html: changelog }}></div>
+      </Modal>
+    </Card>
+  );
+}
+
+function MobileInstall({ component, version, changelog }) {
+  return (
+    <GridContainer>
+      <GridItem sm={12}>
+        <div
+          className={css`
+            margin-top: 50px;
+          `}
+        >
+          <Subtitle>Installation</Subtitle>
+          <Body
+            weight="medium"
+            className={css`
+              margin-top: ${spacing[3]}px;
+            `}
+          >
+            Yarn
+          </Body>
+          <Code language="js">{`yarn add @leafygreen-ui/${component}`}</Code>
+          <Body
+            weight="medium"
+            className={css`
+              margin-top: ${spacing[3]}px;
+            `}
+          >
+            NPM
+          </Body>
+          <Code language="js">{`npm install @leafygreen-ui/${component}`}</Code>
+        </div>
+      </GridItem>
+      <GridItem sm={12}>
+        <div
+          className={css`
+            margin-bottom: 70px;
+          `}
+        >
+          <VersionCard version={version} changelog={changelog} />
+        </div>
+      </GridItem>
+    </GridContainer>
+  );
+}
+
+function DesktopInstall({ component, changelog, version }) {
+  return (
     <>
-      <GridContainer justify="flex-start" align="flex-start">
-        <GridItem lg={7}>
+      <GridContainer justify="flex-start" align="center">
+        <GridItem md={7} lg={7}>
           <div className={topAlignment}>
             <Subtitle>Installation</Subtitle>
             <Body weight="medium">Yarn</Body>
             <Code language="js">{`yarn add @leafygreen-ui/${component}`}</Code>
           </div>
         </GridItem>
-        <GridItem lg={5}>
-          <Card className={cx(topAlignment, versionCard)}>
-            <Subtitle className={subtitlePadding}>Version {version}</Subtitle>
-            <Button
-              glyph={<ActivityFeedIcon />}
-              onClick={() => setOpenModal(curr => !curr)}
-            >
-              View Changelog
-            </Button>
-            <Modal open={openModal} setOpen={setOpenModal}>
-              <div dangerouslySetInnerHTML={{ __html: changelog }}></div>
-            </Modal>
-          </Card>
+        <GridItem md={5} lg={5}>
+          <VersionCard changelog={changelog} version={version} />
         </GridItem>
       </GridContainer>
       <GridContainer align="flex-start" justify="flex-start">
-        <GridItem lg={7}>
+        <GridItem md={7} lg={7}>
           <Body weight="medium">NPM</Body>
           <Code language="js">{`npm install @leafygreen-ui/${component}`}</Code>
         </GridItem>
       </GridContainer>
+    </>
+  );
+}
+
+function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
+  const viewport = useViewportSize();
+  const isMobile = viewport?.width < breakpoints.Tablet;
+
+  const version = changelog.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
+  const example = readme.match(/(?<=js).*?(?=```)/s)?.[0];
+  const outputHTML = readme.match(/(?<=html).*?(?=```)/s)?.[0];
+  const mdAst = unified().use(markdown).parse(readme);
+
+  return (
+    <>
+      {isMobile ? (
+        <MobileInstall
+          component={component}
+          version={version}
+          changelog={changelog}
+        />
+      ) : (
+        <DesktopInstall
+          component={component}
+          version={version}
+          changelog={changelog}
+        />
+      )}
       <GridContainer align="flex-start" justify="flex-start">
-        <GridItem xl={12}>
+        <GridItem sm={12} md={12} xl={12}>
           <Tabs className={tabsPadding}>
             {example && (
               <Tab default name="Example" className={tabMargin}>
@@ -92,7 +165,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
         </GridItem>
       </GridContainer>
       <GridContainer align="flex-start" justify="flex-start">
-        <GridItem xl={12}>
+        <GridItem sm={12} md={12} xl={12}>
           <PropTable mdAst={mdAst} />
         </GridItem>
       </GridContainer>

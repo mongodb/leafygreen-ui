@@ -5,7 +5,8 @@ import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { H2 } from '@leafygreen-ui/typography';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, breakpoints } from '@leafygreen-ui/tokens';
+import { useViewportSize } from '@leafygreen-ui/hooks';
 import { BaseLayoutProps } from 'utils/types';
 import CodeDocs from 'components/CodeDocs';
 import ReactIcon from 'components/svgs/ReactIcon';
@@ -41,11 +42,15 @@ const tabNameContainer = css`
   align-items: center;
 `;
 
-const iconMargin = css`
+const iconStyle = css`
   margin-right: ${spacing[1]}px;
+  flex-shrink: 0;
 `;
 
 function Header({ component, changelog, readme }: BaseLayoutProps) {
+  const viewport = useViewportSize();
+  const isMobile = viewport?.width < breakpoints.Tablet;
+
   if (!component) {
     return null;
   }
@@ -57,9 +62,11 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
         <div className={flexContainer}>
           <H2 className={caps}>{component.split('-').join(' ')}</H2>
 
-          <Button glyph={<DownloadIcon />} variant="primary">
-            Download Sketch Library
-          </Button>
+          {!isMobile && (
+            <Button glyph={<DownloadIcon />} variant="primary">
+              Download Sketch Library
+            </Button>
+          )}
         </div>
       </div>
       <Tabs>
@@ -67,7 +74,7 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
         <Tab
           name={
             <span className={tabNameContainer}>
-              <SketchIcon className={iconMargin} />
+              <SketchIcon className={iconStyle} />
               Design Guidelines
             </span>
           }
@@ -77,7 +84,7 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
         <Tab
           name={
             <span className={tabNameContainer}>
-              <ReactIcon className={iconMargin} />
+              <ReactIcon className={iconStyle} />
               Code Docs
             </span>
           }
