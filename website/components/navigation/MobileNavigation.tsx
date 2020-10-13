@@ -7,6 +7,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import MenuIcon from '@leafygreen-ui/icon/dist/Menu';
 import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
 import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
+import { m } from 'styles/spacing';
 
 const closedContainer = css`
   display: flex;
@@ -15,10 +16,6 @@ const closedContainer = css`
   @media only screen and (max-width: ${breakpoints.Tablet}px) {
     display: block;
   }
-`;
-
-const iconMargin = css`
-  margin-right: 24px;
 `;
 
 const navStyle = css`
@@ -87,7 +84,7 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
         <IconButton
           aria-label="menu"
           onClick={() => setOpen(true)}
-          className={iconMargin}
+          className={m.r4}
         >
           <MenuIcon size={20} />
         </IconButton>

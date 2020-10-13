@@ -8,38 +8,23 @@ import Card from '@leafygreen-ui/card';
 import Code from '@leafygreen-ui/code';
 import Modal from '@leafygreen-ui/modal';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
-import { Subtitle, Body, InlineCode } from '@leafygreen-ui/typography';
-import { spacing, breakpoints } from '@leafygreen-ui/tokens';
+import { Subtitle, Body } from '@leafygreen-ui/typography';
+import { breakpoints } from '@leafygreen-ui/tokens';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { BaseLayoutProps } from 'utils/types';
 import { GridContainer, GridItem } from 'components/Grid';
 import PropTable from 'components/PropTable';
-import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table/dist';
+import { m, p } from 'styles/spacing';
 
 const topAlignment = css`
-  margin-top: ${spacing[4]}px;
-  padding-top: ${spacing[3]}px;
-`;
-
-const mt3 = css`
-  margin-top: ${spacing[3]}px;
-`;
-
-const mb1 = css`
-  margin-bottom: ${spacing[1]}px;
+  ${m.t4}
+  ${p.t3}
 `;
 
 const versionCard = css`
   min-height: 106px;
-  padding: ${spacing[3]}px ${spacing[4]}px;
-`;
-
-const subtitlePadding = css`
-  padding-bottom: ${spacing[3]}px;
-`;
-
-const tabsPadding = css`
-  padding-top: ${spacing[2]}px;
+  ${p.y3}
+  ${p.x4}
 `;
 
 const mobileInstallMargin = css`
@@ -67,7 +52,7 @@ function VersionCard({
 
   return (
     <Card className={cx(topAlignment, versionCard)}>
-      <Subtitle className={subtitlePadding}>Version {version}</Subtitle>
+      <Subtitle className={p.b3}>Version {version}</Subtitle>
       <Button
         size={isMobile ? 'large' : 'normal'}
         glyph={<ActivityFeedIcon />}
@@ -93,11 +78,11 @@ function MobileInstall({ component, version, changelog }: InstallProps) {
       <GridItem sm={12}>
         <div className={mobileInstallMargin}>
           <Subtitle>Installation</Subtitle>
-          <Body weight="medium" className={mt3}>
+          <Body weight="medium" className={m.t3}>
             Yarn
           </Body>
           <Code language="js">{`yarn add @leafygreen-ui/${component}`}</Code>
-          <Body weight="medium" className={mt3}>
+          <Body weight="medium" className={m.t3}>
             NPM
           </Body>
           <Code language="js">{`npm install @leafygreen-ui/${component}`}</Code>
@@ -122,14 +107,8 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
       <GridContainer justify="flex-start" align="flex-start">
         <GridItem md={7} lg={7}>
           <div className={topAlignment}>
-            <Subtitle
-              className={css`
-                margin-bottom: ${spacing[3]}px;
-              `}
-            >
-              Installation
-            </Subtitle>
-            <Body weight="medium" className={mb1}>
+            <Subtitle className={m.b3}>Installation</Subtitle>
+            <Body weight="medium" className={m.b1}>
               Yarn
             </Body>
             <Code language="js">{`yarn add @leafygreen-ui/${component}`}</Code>
@@ -141,7 +120,7 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
       </GridContainer>
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem md={7} lg={7}>
-          <Body weight="medium" className={mb1}>
+          <Body weight="medium" className={m.b1}>
             NPM
           </Body>
           <Code language="js">{`npm install @leafygreen-ui/${component}`}</Code>
@@ -177,16 +156,16 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
       )}
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
-          <Tabs className={tabsPadding}>
+          <Tabs className={p.t2}>
             {example && (
-              <Tab default name="Example" className={mt3}>
+              <Tab default name="Example" className={m.t3}>
                 <Code showLineNumbers language="js">
                   {example}
                 </Code>
               </Tab>
             )}
             {outputHTML && (
-              <Tab name="Output HTML" className={mt3} default={!example}>
+              <Tab name="Output HTML" className={m.t3} default={!example}>
                 <Code showLineNumbers language="xml">
                   {outputHTML}
                 </Code>

@@ -3,6 +3,7 @@ import { css } from 'emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { InlineCode } from '@leafygreen-ui/typography';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
+import { m } from 'styles/spacing';
 
 interface PropDefinitionProps {
   defaultValue: string;
@@ -13,7 +14,7 @@ interface PropDefinitionProps {
 
 const propBlockContainer = css`
   width: 50%;
-  margin-bottom: ${spacing[3]}px;
+  ${m.b3}
 `;
 
 const propBlockPStyle = css`
