@@ -120,6 +120,7 @@ function Tabs({
   as = 'button',
   ...rest
 }: TabsProps) {
+  const tabsRef = React.useRef<HTMLDivElement>(null);
   const childrenArray = React.Children.toArray(children) as Array<
     React.ReactElement
   >;
@@ -149,7 +150,9 @@ function Tabs({
   };
 
   const handleArrowKeyPress = (e: KeyboardEvent) => {
-    if (!(e.metaKey || e.ctrlKey)) {
+    const isFocusedTabs = tabsRef?.current?.contains(document.activeElement);
+
+    if (isFocusedTabs && !(e.metaKey || e.ctrlKey)) {
       if (e.keyCode === keyMap.ArrowRight) {
         const [enabledIndexes, current] = getEnabledIndexes();
         setSelected(enabledIndexes[(current + 1) % enabledIndexes.length]);
@@ -183,6 +186,7 @@ function Tabs({
   return (
     <div {...rest} className={className}>
       <div
+        ref={tabsRef}
         className={cx(listStyle, modeColors[mode].underlineColor)}
         role="tablist"
         tabIndex={0}
