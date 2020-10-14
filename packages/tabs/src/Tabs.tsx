@@ -120,7 +120,6 @@ function Tabs({
   as = 'button',
   ...rest
 }: TabsProps) {
-  const tabsRef = React.useRef<HTMLDivElement>(null);
   const childrenArray = React.Children.toArray(children) as Array<
     React.ReactElement
   >;
@@ -182,7 +181,6 @@ function Tabs({
   return (
     <div {...rest} className={className}>
       <div
-        ref={tabsRef}
         className={cx(listStyle, modeColors[mode].underlineColor)}
         role="tablist"
         tabIndex={0}

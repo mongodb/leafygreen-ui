@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Tabs, Tab } from './index';
 
 const setSelected = jest.fn();
@@ -186,9 +187,7 @@ describe('packages/tab', () => {
         keyCode: 37,
       });
 
-      expect(tabSet1AContent).toBeInTheDocument();
-      const tabSet2BContent = screen.getByText('Content 2-B');
-      expect(tabSet2BContent).toBeInTheDocument();
+      expect(screen.getByText('Tab Set 2-B')).toHaveFocus();
     });
   });
 });
