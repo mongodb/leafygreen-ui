@@ -147,6 +147,7 @@ function Syntax({
         <table
           className={css`
             border-spacing: 0;
+            width: 100%;
           `}
         >
           <tbody>{content}</tbody>

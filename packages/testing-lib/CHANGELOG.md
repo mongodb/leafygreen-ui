@@ -1,5 +1,11 @@
 # @leafygreen-ui/testing-lib
 
+## 0.2.1
+
+### Patch Changes
+
+- dac3f38b: Fixes a publishing error that prevented UMD modules from being distributed
+
 ## 0.2.0
 
 ### Minor Changes

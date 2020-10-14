@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { keyMap, isComponentType } from '@leafygreen-ui/lib';
-import { useEventListener } from '@leafygreen-ui/hooks';
 import TabTitle from './TabTitle';
 import omit from 'lodash/omit';
 
@@ -164,8 +163,6 @@ function Tabs({
     }
   };
 
-  useEventListener('keydown', handleArrowKeyPress);
-
   const tabs = React.Children.map(children, (child, index) => {
     if (!isComponentType<'Tab'>(child, 'Tab')) {
       return child;
@@ -211,6 +208,7 @@ function Tabs({
                 [modeColors[mode].activeStyle]: selected,
                 [cx(modeColors[mode].disabledColor, disabledStyle)]: disabled,
               })}
+              onKeyDown={handleArrowKeyPress}
               onClick={
                 !disabled
                   ? (event: React.MouseEvent) => handleChange(event, index)
