@@ -150,9 +150,7 @@ function Tabs({
   };
 
   const handleArrowKeyPress = (e: KeyboardEvent) => {
-    const isFocusedTabs = tabsRef?.current?.contains(document.activeElement);
-
-    if (isFocusedTabs && !(e.metaKey || e.ctrlKey)) {
+    if (!(e.metaKey || e.ctrlKey)) {
       if (e.keyCode === keyMap.ArrowRight) {
         const [enabledIndexes, current] = getEnabledIndexes();
         setSelected(enabledIndexes[(current + 1) % enabledIndexes.length]);
@@ -166,8 +164,6 @@ function Tabs({
       }
     }
   };
-
-  useEventListener('keydown', handleArrowKeyPress);
 
   const tabs = React.Children.map(children, (child, index) => {
     if (!isComponentType<'Tab'>(child, 'Tab')) {
@@ -215,6 +211,7 @@ function Tabs({
                 [modeColors[mode].activeStyle]: selected,
                 [cx(modeColors[mode].disabledColor, disabledStyle)]: disabled,
               })}
+              onKeyDown={handleArrowKeyPress}
               onClick={
                 !disabled
                   ? (event: React.MouseEvent) => handleChange(event, index)
