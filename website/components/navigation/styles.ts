@@ -1,8 +1,5 @@
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { p } from 'styles/spacing';
-
-export const leftRightPadding = p.x4;
 
 export const borderColor = uiColors.gray.light2;
 

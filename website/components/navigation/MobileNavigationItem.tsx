@@ -1,10 +1,10 @@
 import React from 'react';
 import { css, cx } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { borderColor, leftRightPadding } from './styles';
+import { borderColor } from './styles';
+import { padding } from 'styles/spacing';
 
 const listItemStyle = css`
-  ${leftRightPadding}
   width: 50%;
   height: 68px;
   background-color: ${uiColors.gray.light3};
@@ -36,7 +36,10 @@ function MobileNavigationItem({
   ...rest
 }: MobileNavigationItemProps) {
   return (
-    <li className={cx(listItemStyle, { [activeStyle]: active })} {...rest}>
+    <li
+      className={cx(listItemStyle, padding.x4, { [activeStyle]: active })}
+      {...rest}
+    >
       {children}
     </li>
   );

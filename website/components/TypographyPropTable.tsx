@@ -2,7 +2,7 @@ import React from 'react';
 import { css } from 'emotion';
 import { Subtitle, InlineCode } from '@leafygreen-ui/typography';
 import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table';
-import { m } from 'styles/spacing';
+import { margin } from 'styles/spacing';
 
 const tableBottomMargin = css`
   margin-bottom: 56px;
@@ -24,7 +24,7 @@ const typeData = [
 function TypographyPropTable() {
   return (
     <div>
-      <Subtitle className={m.b4}>
+      <Subtitle className={margin.b4}>
         All props extend the <InlineCode>HTMLElementProps</InlineCode> of their
         root tag
       </Subtitle>

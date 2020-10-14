@@ -4,7 +4,7 @@ import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 import { Subtitle, InlineCode } from '@leafygreen-ui/typography/dist';
 import PropDefinition from 'components/PropDefinition';
 import TypographyPropTable from 'components/TypographyPropTable';
-import { m } from 'styles/spacing';
+import { margin } from 'styles/spacing';
 
 const tableBottomMargin = css`
   margin-bottom: 56px;
@@ -113,7 +113,7 @@ function PropTable({ mdAst, component }: { mdAst: Node; component: string }) {
       {headers.map((header: string, index: number) => {
         return (
           <div key={index}>
-            <Subtitle className={m.b4}>{header} Props</Subtitle>
+            <Subtitle className={margin.b4}>{header} Props</Subtitle>
 
             {tableData[index] && (
               <Table

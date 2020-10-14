@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@leafygreen-ui/button';
 import DownloadIcon from '@leafygreen-ui/icon/dist/Download';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { H2 } from '@leafygreen-ui/typography';
 import { breakpoints } from '@leafygreen-ui/tokens';
@@ -11,7 +11,7 @@ import { BaseLayoutProps } from 'utils/types';
 import CodeDocs from 'components/CodeDocs';
 import ReactIcon from 'components/svgs/ReactIcon';
 import SketchIcon from 'components/svgs/SketchIcon';
-import { m } from 'styles/spacing';
+import { margin } from 'styles/spacing';
 
 const componentsStyle = css`
   height: 16px;
@@ -44,7 +44,6 @@ const tabNameContainer = css`
 `;
 
 const iconStyle = css`
-  ${m.r1};
   flex-shrink: 0;
 `;
 
@@ -75,7 +74,7 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
         <Tab
           name={
             <span className={tabNameContainer}>
-              <SketchIcon className={iconStyle} />
+              <SketchIcon className={cx(iconStyle, margin.r1)} />
               Design Guidelines
             </span>
           }
@@ -85,7 +84,7 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
         <Tab
           name={
             <span className={tabNameContainer}>
-              <ReactIcon className={iconStyle} />
+              <ReactIcon className={cx(iconStyle, margin.r1)} />
               Code Docs
             </span>
           }

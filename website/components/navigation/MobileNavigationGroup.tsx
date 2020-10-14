@@ -3,7 +3,8 @@ import { css, cx } from 'emotion';
 import { Transition } from 'react-transition-group';
 import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
 import { uiColors } from '@leafygreen-ui/palette';
-import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
+import { borderColor, ulStyleOverrides } from './styles';
+import { padding } from 'styles/spacing';
 
 const buttonResetStyles = css`
   background-color: transparent;
@@ -17,7 +18,6 @@ const buttonResetStyles = css`
 `;
 
 const groupButtonStyles = css`
-  ${leftRightPadding}
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -92,7 +92,7 @@ function MobileNavigationGroup({
       {...rest}
     >
       <button
-        className={cx(buttonResetStyles, groupButtonStyles)}
+        className={cx(buttonResetStyles, groupButtonStyles, padding.x4)}
         onClick={() => setOpen(curr => !curr)}
       >
         <ChevronRightIcon

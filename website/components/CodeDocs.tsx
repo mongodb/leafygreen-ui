@@ -14,17 +14,10 @@ import { useViewportSize } from '@leafygreen-ui/hooks';
 import { BaseLayoutProps } from 'utils/types';
 import { GridContainer, GridItem } from 'components/Grid';
 import PropTable from 'components/PropTable';
-import { m, p } from 'styles/spacing';
-
-const topAlignment = css`
-  ${m.t4}
-  ${p.t3}
-`;
+import { margin, padding } from 'styles/spacing';
 
 const versionCard = css`
   min-height: 106px;
-  ${p.y3}
-  ${p.x4}
 `;
 
 const mobileInstallMargin = css`
@@ -51,8 +44,8 @@ function VersionCard({
   const [openModal, setOpenModal] = useState(false);
 
   return (
-    <Card className={cx(topAlignment, versionCard)}>
-      <Subtitle className={p.b3}>Version {version}</Subtitle>
+    <Card className={cx(margin.t4, padding.x4, padding.y3, versionCard)}>
+      <Subtitle className={padding.b3}>Version {version}</Subtitle>
       <Button
         size={isMobile ? 'large' : 'normal'}
         glyph={<ActivityFeedIcon />}
@@ -78,11 +71,11 @@ function MobileInstall({ component, version, changelog }: InstallProps) {
       <GridItem sm={12}>
         <div className={mobileInstallMargin}>
           <Subtitle>Installation</Subtitle>
-          <Body weight="medium" className={m.t3}>
+          <Body weight="medium" className={margin.t3}>
             Yarn
           </Body>
           <Code language="js">{`yarn add @leafygreen-ui/${component}`}</Code>
-          <Body weight="medium" className={m.t3}>
+          <Body weight="medium" className={margin.t3}>
             NPM
           </Body>
           <Code language="js">{`npm install @leafygreen-ui/${component}`}</Code>
@@ -106,9 +99,9 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
     <>
       <GridContainer justify="flex-start" align="flex-start">
         <GridItem md={7} lg={7}>
-          <div className={topAlignment}>
-            <Subtitle className={m.b3}>Installation</Subtitle>
-            <Body weight="medium" className={m.b1}>
+          <div className={cx(margin.t4, padding.t3)}>
+            <Subtitle className={margin.b3}>Installation</Subtitle>
+            <Body weight="medium" className={margin.b1}>
               Yarn
             </Body>
             <Code language="js">{`yarn add @leafygreen-ui/${component}`}</Code>
@@ -120,7 +113,7 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
       </GridContainer>
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem md={7} lg={7}>
-          <Body weight="medium" className={m.b1}>
+          <Body weight="medium" className={margin.b1}>
             NPM
           </Body>
           <Code language="js">{`npm install @leafygreen-ui/${component}`}</Code>
@@ -156,16 +149,16 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
       )}
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
-          <Tabs className={p.t2}>
+          <Tabs className={padding.t2}>
             {example && (
-              <Tab default name="Example" className={m.t3}>
+              <Tab default name="Example" className={margin.t3}>
                 <Code showLineNumbers language="js">
                   {example}
                 </Code>
               </Tab>
             )}
             {outputHTML && (
-              <Tab name="Output HTML" className={m.t3} default={!example}>
+              <Tab name="Output HTML" className={margin.t3} default={!example}>
                 <Code showLineNumbers language="xml">
                   {outputHTML}
                 </Code>

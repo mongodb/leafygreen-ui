@@ -2,20 +2,15 @@ import React, { useRef, useState } from 'react';
 import { css, cx } from 'emotion';
 import { Transition } from 'react-transition-group';
 import { uiColors } from '@leafygreen-ui/palette';
-import { breakpoints } from '@leafygreen-ui/tokens';
 import IconButton from '@leafygreen-ui/icon-button';
 import MenuIcon from '@leafygreen-ui/icon/dist/Menu';
 import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
-import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
-import { m } from 'styles/spacing';
+import { margin, padding } from 'styles/spacing';
+import { borderColor, ulStyleOverrides } from './styles';
 
 const closedContainer = css`
   display: flex;
   align-items: center;
-
-  @media only screen and (max-width: ${breakpoints.Tablet}px) {
-    display: block;
-  }
 `;
 
 const navStyle = css`
@@ -44,7 +39,6 @@ const backdrop = css`
 `;
 
 const logoContainer = css`
-  ${leftRightPadding}
   height: 124px;
   display: flex;
   align-items: center;
@@ -60,7 +54,6 @@ const navItemStyle = css`
 
 const h4Style = css`
   ${navItemStyle}
-  ${leftRightPadding}
   display: flex;
   align-items: center;
   height: 68px;
@@ -84,7 +77,7 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
         <IconButton
           aria-label="menu"
           onClick={() => setOpen(true)}
-          className={m.r4}
+          className={margin.r4}
         >
           <MenuIcon size={20} />
         </IconButton>
@@ -113,12 +106,12 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
               })}
               ref={scrollContainerRef}
             >
-              <div className={logoContainer}>
+              <div className={cx(logoContainer, padding.x4)}>
                 <MDBDesignLogo />
               </div>
               <ol className={ulStyleOverrides}>
                 <li>
-                  <h4 className={h4Style}>Home</h4>
+                  <h4 className={cx(h4Style, padding.x4)}>Home</h4>
                 </li>
                 {children}
               </ol>

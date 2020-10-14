@@ -1,9 +1,9 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { InlineCode } from '@leafygreen-ui/typography';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
-import { m } from 'styles/spacing';
+import { margin } from 'styles/spacing';
 
 interface PropDefinitionProps {
   defaultValue: string;
@@ -14,7 +14,6 @@ interface PropDefinitionProps {
 
 const propBlockContainer = css`
   width: 50%;
-  ${m.b3}
 `;
 
 const propBlockPStyle = css`
@@ -28,7 +27,7 @@ const propBlockCodeStyle = css`
 
 function PropBlock({ header, value }: { header: string; value: string }) {
   return (
-    <div className={propBlockContainer}>
+    <div className={cx(propBlockContainer, margin.b3)}>
       <p className={propBlockPStyle}>{header}</p>
       <InlineCode className={propBlockCodeStyle}>{value}</InlineCode>
     </div>

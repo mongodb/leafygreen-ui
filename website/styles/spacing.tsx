@@ -1,7 +1,7 @@
 import { css } from 'emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 
-export const m = {
+export const margin = {
   b1: css`
     margin-bottom: ${spacing[1]}px;
   `,
@@ -84,7 +84,7 @@ export const m = {
   `,
 } as const;
 
-export const p = {
+export const padding = {
   b1: css`
     padding-bottom: ${spacing[1]}px;
   `,
