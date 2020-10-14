@@ -16953,6 +16953,11 @@ typescript@^4.0.0:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.3.tgz#153bbd468ef07725c1df9c77e8b453f8d36abba5"
   integrity sha512-tEu6DGxGgRJPb/mVPIZ48e69xCn2yRmCgYmDugAVwmJ6o+0u1RI18eO7E7WBTLYLaEVVOhwQmcdhQHweux/WPg==
 
+typescript@^4.1.0-beta:
+  version "4.1.0-beta"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.0-beta.tgz#e4d054035d253b7a37bdc077dd71706508573e69"
+  integrity sha512-b/LAttdVl3G6FEmnMkDsK0xvfvaftXpSKrjXn+OVCRqrwz5WD/6QJOiN+dTorqDY+hkaH+r2gP5wI1jBDmdQ7A==
+
 typescript@^4.1.0-dev.20200804:
   version "4.1.0-dev.20201006"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.0-dev.20201006.tgz#cf0c497bccfd9cad582eddf176664a45c6b6c9e3"
@@ -17008,13 +17013,6 @@ unicode-property-aliases-ecmascript@^1.0.4:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/unicode-property-aliases-ecmascript/-/unicode-property-aliases-ecmascript-1.1.0.tgz#dd57a99f6207bedff4628abefb94c50db941c8f4"
   integrity sha512-PqSoPh/pWetQ2phoj5RLiaqIk4kCNwoV3CI+LfGmWLKI3rE3kl1h59XpX2BjgDrmbxD9ARtQobPGU1SguCYuQg==
-
-unified-stream@1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/unified-stream/-/unified-stream-1.0.6.tgz#0b291d93295eea6ba81db8fa58af660ea45e8865"
-  integrity sha512-04s1S5XCMz5DRMuzioZBSciB2BqCwZX/AaF1/1FuuGunerQd5F6BqbbJZp/GwgSNdWIVv3dcrZZnamHnAEtwmw==
-  dependencies:
-    once "^1.4.0"
 
 unified@^9.0.0:
   version "9.2.0"

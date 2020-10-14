@@ -1,9 +1,13 @@
 import { css } from 'emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 
+type Position = 't' | 'b' | 'l' | 'r' | 'x' | 'y';
+type Modifier = keyof typeof spacing;
+type Combined = `${Position}${Modifier}`; 
+
 function generator(
   size: number,
-  modifier: string,
+  modifier: Modifier,
   boxType: 'padding' | 'margin',
 ) {
   return {
@@ -27,15 +31,21 @@ function generator(
       ${boxType}-top: ${size}px;
       ${boxType}-bottom: ${size}px;
     `,
-  };
+  } as const;
 }
 
-export const margin = Object.entries(spacing).reduce((acc, spacer) => {
+export const margin: Partial<Record<Combined, string>> = Object.entries(spacing).reduce((acc, spacer) => {
   const [modifier, space] = spacer;
-  return { ...acc, ...generator(space, modifier, 'margin') };
+  return {
+    ...acc,
+    ...generator(space, (modifier as unknown) as Modifier, 'margin'),
+  };
 }, {});
 
-export const padding = Object.entries(spacing).reduce((acc, spacer) => {
+export const padding: Partial<Record<Combined, string>>  = Object.entries(spacing).reduce((acc, spacer) => {
   const [modifier, space] = spacer;
-  return { ...acc, ...generator(space, modifier, 'padding') };
+  return {
+    ...acc,
+    ...generator(space, (modifier as unknown) as Modifier, 'padding'),
+  };
 }, {});

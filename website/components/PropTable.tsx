@@ -27,12 +27,6 @@ export interface Node {
     [key: string]: unknown;
   };
 
-  /**
-   * Location of a node in a source document.
-   * Must not be present if a node is generated.
-   */
-  position?: Position;
-
   children?: Array<any>;
 
   [key: string]: unknown;
