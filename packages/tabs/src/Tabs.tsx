@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { keyMap, isComponentType } from '@leafygreen-ui/lib';
-import { useEventListener } from '@leafygreen-ui/hooks';
 import TabTitle from './TabTitle';
 import omit from 'lodash/omit';
 

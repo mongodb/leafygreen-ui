@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { Tabs, Tab } from './index';
 
 const setSelected = jest.fn();
