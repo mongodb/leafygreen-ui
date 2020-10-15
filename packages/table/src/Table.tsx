@@ -136,6 +136,7 @@ export default function Table<Shape>({
         css`
           max-width: calc(100% - 100px);
           overflow-x: auto;
+          transition: all 150 ease-in-out;
         `,
         getScrollShadowStyle(scrollState),
       )}

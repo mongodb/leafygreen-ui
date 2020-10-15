@@ -1,5 +1,13 @@
 # @leafygreen-ui/icon
 
+## 7.0.1
+
+### Patch Changes
+
+- dac3f38b: Fixes a publishing error that prevented UMD modules from being distributed
+- Updated dependencies [dac3f38b]
+  - @leafygreen-ui/lib@6.0.1
+
 ## 7.0.0
 
 ### Major Changes
