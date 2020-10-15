@@ -1,5 +1,19 @@
 # @leafygreen-ui/tabs
 
+## 4.0.2
+
+### Patch Changes
+
+- dac3f38b: Fixes a publishing error that prevented UMD modules from being distributed
+- Updated dependencies [dac3f38b]
+- Updated dependencies [059ef833]
+  - @leafygreen-ui/box@3.0.1
+  - @leafygreen-ui/hooks@5.0.1
+  - @leafygreen-ui/leafygreen-provider@2.0.1
+  - @leafygreen-ui/lib@6.0.1
+  - @leafygreen-ui/palette@3.0.1
+  - @leafygreen-ui/tokens@0.5.0
+
 ## 4.0.1
 
 ### Patch Changes
