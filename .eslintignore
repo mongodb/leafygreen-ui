@@ -4,3 +4,4 @@ lib
 storybook/public
 website/.next
 website/hosting
+website/styles/spacing.tsx

@@ -23,8 +23,8 @@
     "@types/react": "^16.9.43",
     "@typescript-eslint/eslint-plugin": "^3.7.1",
     "@typescript-eslint/parser": "^3.7.1",
-    "eslint": "^7.5.0",
-    "eslint-plugin-react": "^7.20.5",
+    "eslint": "^7.11.0",
+    "eslint-plugin-react": "^7.21.4",
     "typescript": "^4.1.0-beta"
   }
 }

@@ -7,7 +7,7 @@ type Combined = `${Position}${Modifier}`;
 
 function generator(
   size: number,
-  modifier: Modifier,
+  modifier: `${Modifier}`,
   boxType: 'padding' | 'margin',
 ) {
   return {
@@ -31,21 +31,21 @@ function generator(
       ${boxType}-top: ${size}px;
       ${boxType}-bottom: ${size}px;
     `,
-  } as const;
+  } 
 }
 
 export const margin: Partial<Record<Combined, string>> = Object.entries(spacing).reduce((acc, spacer) => {
   const [modifier, space] = spacer;
   return {
     ...acc,
-    ...generator(space, (modifier as unknown) as Modifier, 'margin'),
+    ...generator(space, modifier as `${Modifier}`, 'margin'),
   };
-}, {});
+}, {}) as Record<Combined, string>;
 
 export const padding: Partial<Record<Combined, string>>  = Object.entries(spacing).reduce((acc, spacer) => {
   const [modifier, space] = spacer;
   return {
     ...acc,
-    ...generator(space, (modifier as unknown) as Modifier, 'padding'),
+    ...generator(space, modifier as `${Modifier}`, 'padding'),
   };
-}, {});
+}, {}) as Record<Combined, string>;
