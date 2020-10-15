@@ -8,13 +8,12 @@ import Card from '@leafygreen-ui/card';
 import Code from '@leafygreen-ui/code';
 import Modal from '@leafygreen-ui/modal';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
-import { Subtitle, Body, InlineCode } from '@leafygreen-ui/typography';
+import { Subtitle, Body } from '@leafygreen-ui/typography';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { BaseLayoutProps } from 'utils/types';
 import { GridContainer, GridItem } from 'components/Grid';
 import PropTable from 'components/PropTable';
-import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table/dist';
 
 const topAlignment = css`
   margin-top: ${spacing[4]}px;
