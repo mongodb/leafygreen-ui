@@ -2,6 +2,7 @@ import React from 'react';
 import { css } from 'emotion';
 import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 import { Subtitle, InlineCode } from '@leafygreen-ui/typography/dist';
+import { OneOf } from '@leafygreen-ui/lib';
 import PropDefinition from 'components/PropDefinition';
 import TypographyPropTable from 'components/TypographyPropTable';
 
@@ -20,29 +21,6 @@ const tableHeaderNames: Array<'prop' | 'type' | 'description' | 'default'> = [
   'default',
 ];
 
-/**
- * Syntactic units in unist syntax trees are called nodes.
- * Interface derived from Unified types
- * See here: https://github.com/syntax-tree/unist#:~:text=Syntactic%20units%20in%20unist%20syntax,and%20implement%20the%20Node%20interface.
- */
-export interface Node {
-  /**
-   * The variant of a node.
-   */
-  type: string;
-
-  /**
-   * Information from the ecosystem.
-   */
-  data?: {
-    [key: string]: unknown;
-  };
-
-  children?: Array<any>;
-
-  [key: string]: unknown;
-}
-
 interface TableDataInterface {
   prop: string;
   type: string;
@@ -50,14 +28,29 @@ interface TableDataInterface {
   default: string;
 }
 
-interface RowElement {
-  type: string;
-  children?: Array<RowElement>;
-  value?: string;
-  position: { [key: string]: any };
+interface RowInterface {
+  children: Array<CellRoot>;
 }
 
-function getTableData(rows: Array<RowElement>): Array<TableDataInterface> {
+export interface CellRoot {
+  children: Array<CellChild>;
+}
+
+type CellChild = OneOf<
+  {
+    children: Array<CellLeaf>;
+  },
+  CellLeaf
+>;
+
+interface CellLeaf {
+  children?: undefined;
+  value: string;
+  type: string;
+  depth: number;
+}
+
+function getTableData(rows: Array<RowInterface>): Array<TableDataInterface> {
   if (!rows) {
     return null;
   }
@@ -90,7 +83,7 @@ function PropTable({
   markdownAst,
   component,
 }: {
-  markdownAst: Node;
+  markdownAst: CellRoot;
   component: string;
 }) {
   let peerDepIndex: number | undefined;
@@ -107,7 +100,7 @@ function PropTable({
 
       return peerDepIndex + 1 !== index && treeItem.type === 'table';
     })
-    .map(item => getTableData(item.children));
+    .map(item => getTableData(item.children as Array<RowInterface>));
 
   if (component === 'typography') {
     headers.shift();

@@ -9,11 +9,12 @@ import Code from '@leafygreen-ui/code';
 import Modal from '@leafygreen-ui/modal';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { Subtitle, Body } from '@leafygreen-ui/typography';
+import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { BaseLayoutProps } from 'utils/types';
 import { GridContainer, GridItem } from 'components/Grid';
-import PropTable from 'components/PropTable';
+import PropTable, { CellRoot } from 'components/PropTable';
 
 const topAlignment = css`
   margin-top: ${spacing[4]}px;
@@ -80,7 +81,13 @@ function VersionCard({
         View Changelog
       </Button>
       <Modal open={openModal} setOpen={setOpenModal}>
-        <div dangerouslySetInnerHTML={{ __html: changelog }}></div>
+        <div
+          className={css`
+            text-decoration: none;
+            color: ${uiColors.gray.dark3};
+          `}
+          dangerouslySetInnerHTML={{ __html: changelog }}
+        ></div>
       </Modal>
     </Card>
   );
@@ -157,7 +164,9 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
   const version = changelog.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
   const example = readme.match(/(?<=js).*?(?=```)/s)?.[0];
   const outputHTML = readme.match(/(?<=html).*?(?=```)/s)?.[0];
-  const markdownAst = unified().use(markdown).parse(readme);
+  const markdownAst = (unified()
+    .use(markdown)
+    .parse(readme) as unknown) as CellRoot;
 
   return (
     <>
