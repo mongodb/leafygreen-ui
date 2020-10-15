@@ -158,7 +158,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
   const version = changelog.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
   const example = readme.match(/(?<=js).*?(?=```)/s)?.[0];
   const outputHTML = readme.match(/(?<=html).*?(?=```)/s)?.[0];
-  const mdAst = unified().use(markdown).parse(readme);
+  const markdownAst = unified().use(markdown).parse(readme);
 
   return (
     <>
@@ -197,7 +197,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
       </GridContainer>
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
-          <PropTable mdAst={mdAst} component={component} />
+          <PropTable markdownAst={markdownAst} component={component} />
         </GridItem>
       </GridContainer>
     </>

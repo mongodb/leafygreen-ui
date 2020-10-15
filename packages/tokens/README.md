@@ -21,8 +21,8 @@ npm install @leafygreen-ui/tokens
 ```js
 import { spacing, fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
 
-const example = () => <span style={{ margin: spacing[1] }}>Hello World</span>;
-const example = () => <span style={{ font-family: fontFamilies.default }}>Hello World</span>;
+const spacingExample = () => <span style={{ margin: spacing[1] }}>Hello World</span>;
+const fontFamiliesExample = () => <span style={{ font-family: fontFamilies.default }}>Hello World</span>;
 const mq = facepaint(
   breakpoints.map(bp => `@media (min-width: ${bp}px)`),
   { literal: true },

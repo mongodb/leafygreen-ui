@@ -49,7 +49,8 @@ const iconStyle = css`
 
 function Header({ component, changelog, readme }: BaseLayoutProps) {
   const viewport = useViewportSize();
-  const isMobile = viewport?.width < breakpoints.Tablet;
+  const isMobile =
+    viewport !== null ? viewport.width < breakpoints.Tablet : false;
 
   if (!component) {
     return null;

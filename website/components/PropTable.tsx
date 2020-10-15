@@ -13,9 +13,17 @@ const tableBottomMargin = css`
   margin-bottom: 56px;
 `;
 
+const tableHeaderNames: Array<'prop' | 'type' | 'description' | 'default'> = [
+  'prop',
+  'type',
+  'description',
+  'default',
+];
+
 /**
  * Syntactic units in unist syntax trees are called nodes.
- * Interface dervied from Unified types
+ * Interface derived from Unified types
+ * See here: https://github.com/syntax-tree/unist#:~:text=Syntactic%20units%20in%20unist%20syntax,and%20implement%20the%20Node%20interface.
  */
 export interface Node {
   /**
@@ -30,23 +38,10 @@ export interface Node {
     [key: string]: unknown;
   };
 
-  /**
-   * Location of a node in a source document.
-   * Must not be present if a node is generated.
-   */
-  position?: Position;
-
   children?: Array<any>;
 
   [key: string]: unknown;
 }
-
-const map = {
-  [0]: 'prop',
-  [1]: 'type',
-  [2]: 'description',
-  [3]: 'default',
-} as const;
 
 interface TableDataInterface {
   prop: string;
@@ -55,7 +50,14 @@ interface TableDataInterface {
   default: string;
 }
 
-function getTableData(rows: Array<any>): Array<TableDataInterface> {
+interface RowElement {
+  type: string;
+  children?: Array<RowElement>;
+  value?: string;
+  position: { [key: string]: any };
+}
+
+function getTableData(rows: Array<RowElement>): Array<TableDataInterface> {
   if (!rows) {
     return null;
   }
@@ -74,7 +76,7 @@ function getTableData(rows: Array<any>): Array<TableDataInterface> {
           })
           .join('') || '-';
 
-      rowObj[map[index]] = value;
+      rowObj[tableHeaderNames[index]] = value;
     });
     return rowObj;
   });
@@ -84,14 +86,20 @@ function getTableData(rows: Array<any>): Array<TableDataInterface> {
   return rowMap as Array<TableDataInterface>;
 }
 
-function PropTable({ mdAst, component }: { mdAst: Node; component: string }) {
+function PropTable({
+  markdownAst,
+  component,
+}: {
+  markdownAst: Node;
+  component: string;
+}) {
   let peerDepIndex: number | undefined;
 
-  const headers = mdAst?.children
+  const headers = markdownAst.children
     .filter(treeItem => treeItem.type === 'heading' && treeItem.depth === 1)
     .map(item => item?.children?.[0].value);
 
-  const tableData: Array<Array<TableDataInterface>> = mdAst?.children
+  const tableData: Array<Array<TableDataInterface>> = markdownAst.children
     .filter((treeItem, index) => {
       if (treeItem.children?.[0].value === 'Peer Dependencies') {
         peerDepIndex = index;
