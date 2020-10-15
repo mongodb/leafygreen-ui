@@ -14,10 +14,60 @@ import TableHead from './TableHead';
 import TableBody from './TableBody';
 import { SortProvider } from './SortContext';
 
+const shadowColor = transparentize(0.6, uiColors.gray.dark1);
+
+const containerStyle = css`
+  position: relative;
+  max-width: calc(100% - 100px);
+`;
+
 const tableStyles = css`
   border-collapse: collapse;
   box-sizing: border-box;
   border-bottom: 1px solid ${uiColors.gray.light2};
+`;
+
+const shadow = css`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  overflow: hidden;
+
+  &:after {
+    opacity: 0;
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    border-radius: 100%;
+    transition: opacity 150ms ease-in-out;
+  }
+`;
+
+const leftShadow = css`
+  left: 0;
+
+  &:after {
+    right: 100%;
+    box-shadow: 6px 0 6px ${shadowColor};
+  }
+`;
+
+const rightShadow = css`
+  right: 0;
+
+  &:after {
+    left: 100%;
+    box-shadow: -6px 0 6px ${shadowColor};
+  }
+`;
+
+const showScroll = css`
+  &:after {
+    opacity: 1;
+  }
 `;
 
 const ScrollState = {
@@ -28,33 +78,6 @@ const ScrollState = {
 } as const;
 
 type ScrollState = typeof ScrollState[keyof typeof ScrollState];
-
-function getScrollShadowStyle(scrollState: ScrollState): string {
-  const shadowColor = transparentize(0.6, uiColors.gray.dark1);
-
-  switch (scrollState) {
-    case ScrollState.Both:
-      return css`
-        box-shadow: inset 6px 0 6px -6px ${shadowColor},
-          inset -6px 0 6px -6px ${shadowColor},
-          inset 0 6px 6px -6px ${uiColors.gray.light3},
-          inset 0 -6px 6px -6px ${uiColors.gray.light3};
-      `;
-
-    case ScrollState.Left:
-      return css`
-        box-shadow: inset 6px 0 6px -6px ${shadowColor};
-      `;
-
-    case ScrollState.Right:
-      return css`
-        box-shadow: inset -6px 0 6px -6px ${shadowColor};
-      `;
-
-    case ScrollState.None:
-      return '';
-  }
-}
 
 interface TableRowInterface<Shape = {}> {
   datum: Shape;
@@ -128,32 +151,43 @@ export default function Table<Shape>({
     debounceScroll(e);
   };
 
+  const showLeft =
+    scrollState === ScrollState.Left || scrollState === ScrollState.Both;
+  const showRight =
+    scrollState === ScrollState.Right || scrollState === ScrollState.Both;
+
   return (
-    <div
-      ref={divRef}
-      onScroll={onScroll}
-      className={cx(
-        css`
-          max-width: calc(100% - 100px);
-          overflow-x: auto;
-          transition: all 150 ease-in-out;
-        `,
-        getScrollShadowStyle(scrollState),
-      )}
-    >
-      <table
-        cellSpacing="0"
-        cellPadding="0"
-        className={cx(tableStyles, className)}
-        {...rest}
+    <div className={containerStyle}>
+      <div
+        className={cx(shadow, leftShadow, {
+          [showScroll]: showLeft,
+        })}
+      />
+      <div className={cx(shadow, rightShadow, { [showScroll]: showRight })} />
+
+      <div
+        ref={divRef}
+        onScroll={onScroll}
+        className={cx(
+          css`
+            overflow-x: auto;
+          `,
+        )}
       >
-        <TableProvider data={dataProp}>
-          <SortProvider>
-            <TableHead columns={columns} />
-            <TableBody>{children}</TableBody>
-          </SortProvider>
-        </TableProvider>
-      </table>
+        <table
+          cellSpacing="0"
+          cellPadding="0"
+          className={cx(tableStyles, className)}
+          {...rest}
+        >
+          <TableProvider data={dataProp}>
+            <SortProvider>
+              <TableHead columns={columns} />
+              <TableBody>{children}</TableBody>
+            </SortProvider>
+          </TableProvider>
+        </table>
+      </div>
     </div>
   );
 }
