@@ -1,4 +1,4 @@
-import { OneOf } from './index';
+import { enforceExhaustive, OneOf } from './index';
 
 describe('packages/lib', () => {
   describe('OneOf', () => {
@@ -78,5 +78,55 @@ describe('packages/lib', () => {
         yield { same: 'same' };
       });
     });
+  });
+
+  test.skip('enforceExhaustive', () => {
+    (color: 'red' | 'blue') => {
+      switch (color) {
+        case 'red':
+          break;
+        case 'blue':
+          break;
+        default:
+          enforceExhaustive(color);
+      }
+    };
+
+    (color: 'red' | 'blue' | 'green') => {
+      switch (color) {
+        case 'red':
+          break;
+        case 'blue':
+          break;
+        default:
+          // @ts-expect-error
+          enforceExhaustive(color);
+      }
+    };
+
+    (key: number | string) => {
+      if (typeof key === 'string') {
+        return;
+      }
+
+      if (typeof key === 'number') {
+        return;
+      }
+
+      enforceExhaustive(key);
+    };
+
+    (key: number | string | symbol) => {
+      if (typeof key === 'string') {
+        return;
+      }
+
+      if (typeof key === 'number') {
+        return;
+      }
+
+      // @ts-expect-error
+      enforceExhaustive(key);
+    };
   });
 });
