@@ -48,10 +48,14 @@ const packageJSON = `
     "name": "@leafygreen-ui/${PACKAGE_LC}",
     "version": "0.9.0",
     "description": "leafyGreen UI Kit ${PACKAGE_HUMANREADABLE}",
-    "main": "./dist/index.bundle.js",
+    "main": "./dist/index.js",
+    "module": "./dist/esm/index.js",
     "types": "./dist/index.d.ts",
+    "typesVersions": {
+      "<3.9": { "*": ["ts3.4/*"] }
+    },
     "scripts": {
-      "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
+      "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
     },
     "license": "Apache-2.0",
     "publishConfig": {

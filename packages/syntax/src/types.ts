@@ -36,10 +36,16 @@ export interface SyntaxProps extends React.HTMLAttributes<HTMLElement> {
    * @default: `false`
    */
   darkMode?: boolean;
+
   /**
    * Shows line numbers. This is specifically used for the Code component implementation.
    *
    * @default: `false`
    */
   showLineNumbers?: boolean;
+
+  /**
+   * An array of lines to highlight. The array can only contain numbers corresponding to the line numbers to highlight, and / or tuples representing a range (e.g. `[6, 10]`);
+   */
+  highlightLines?: Array<number | [number, number]>;
 }

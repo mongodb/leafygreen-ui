@@ -28,7 +28,7 @@ npm install @leafygreen-ui/typography
 
 ## Example
 
-```jsx
+```js
 import { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline } from '@leafygreen-ui/typography';
 <H1>Heading 1</H1>
 <H2>Heading 2</H2>
@@ -101,6 +101,10 @@ All props extend the HTMLElementProps of their root tag, however `<Body />` and 
 | Prop     | Type                | Description                               | Default   |
 | -------- | ------------------- | ----------------------------------------- | --------- |
 | `weight` | `regular`, `medium` | font-weight applied to typography element | `regular` |
+
+## InlineCode
+
+If an `href` prop is passed to `InlineCode` it will be rendered with an `a` tag wrapping the `code` tag. Otherwise, it'll simply render as a `code` tag.
 
 ## Overline
 

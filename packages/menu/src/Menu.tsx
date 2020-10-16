@@ -13,6 +13,10 @@ const rootMenuStyle = css`
   overflow: hidden;
   box-shadow: 0 2px 6px ${transparentize(0.8, uiColors.black)};
   background-color: ${uiColors.white};
+`;
+
+const scrollContainerStyle = css`
+  overflow: scroll;
   list-style: none;
   margin-block-start: 0px;
   margin-block-end: 0px;
@@ -342,17 +346,19 @@ function Menu({
       spacing={spacing}
       adjustOnMutation={adjustOnMutation}
     >
-      {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
-      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
-      <ul
-        {...rest}
-        className={cx(rootMenuStyle, className)}
-        role="menu"
-        ref={popoverRef}
-        onClick={e => e.stopPropagation()}
-      >
-        {updatedChildren}
-      </ul>
+      <div className={cx(rootMenuStyle, className)}>
+        {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
+        <ul
+          {...rest}
+          className={scrollContainerStyle}
+          role="menu"
+          ref={popoverRef}
+          onClick={e => e.stopPropagation()}
+        >
+          {updatedChildren}
+        </ul>
+      </div>
     </Popover>
   );
 

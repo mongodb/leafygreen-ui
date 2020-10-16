@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { Tabs, Tab } from './index';
 
 const setSelected = jest.fn();
@@ -148,6 +148,45 @@ describe('packages/tab', () => {
 
       const activeTab = getByText('Test Content 1');
       expect(activeTab).toBeVisible();
+    });
+  });
+
+  describe('when there are two sets of tabs on the page', () => {
+    beforeEach(() => {
+      render(
+        <>
+          <Tabs>
+            <Tab default name="Tab Set 1-A">
+              Content 1-A
+            </Tab>
+            <Tab name="Tab Set 1-B">Content 1-B</Tab>
+          </Tabs>
+          <Tabs>
+            <Tab default name="Tab Set 2-A">
+              Content 2-A
+            </Tab>
+            <Tab name="Tab Set 2-B">Content 2-B</Tab>
+          </Tabs>
+        </>,
+      );
+    });
+
+    test('only the current Tabs set is toggled when the arrow keys are pressed', () => {
+      const tabSet2A = screen.getByText('Tab Set 2-A');
+
+      const tabSet1AContent = screen.getByText('Content 1-A');
+      const tabSet2AContent = screen.getByText('Content 2-A');
+      expect(tabSet1AContent).toBeInTheDocument();
+      expect(tabSet2AContent).toBeInTheDocument();
+
+      tabSet2A.focus();
+
+      fireEvent.keyDown(tabSet2A, {
+        key: 'ArrowRight',
+        keyCode: 37,
+      });
+
+      expect(screen.getByText('Tab Set 2-B')).toHaveFocus();
     });
   });
 });

@@ -20,16 +20,21 @@ npm install @leafygreen-ui/logo
 
 ## Example
 
-```Javascript
-import { Logo } from '@leafygreen-ui/logo'
+```js
+import { Logo } from '@leafygreen-ui/logo';
 
-<Logo />
+<Logo />;
 ```
 
 **Output HTML**
 
-```HTML
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1112.61 300" height="40" width="100%">
+```html
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1112.61 300"
+  height="40"
+  width="100%"
+>
   <title>MongoDB Logo</title>
   <path class="leafygreen-ui-17842x1"></path>
   <path class="leafygreen-ui-197s9ut"></path>
@@ -57,16 +62,21 @@ import { Logo } from '@leafygreen-ui/logo'
 
 ## Example
 
-```Javascript
-import { LogoMark } from '@leafygreen-ui/logo'
+```js
+import { LogoMark } from '@leafygreen-ui/logo';
 
-<LogoMark />
+<LogoMark />;
 ```
 
 **Output HTML**
 
-```HTML
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 216.56 448.5" height="40" width="auto">
+```html
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 216.56 448.5"
+  height="40"
+  width="auto"
+>
   <title>MongoDB LogoMark</title>
   <path class="leafygreen-ui-17842x1"></path>
   <path class="leafygreen-ui-197s9ut"></path>
@@ -84,16 +94,26 @@ import { LogoMark } from '@leafygreen-ui/logo'
 
 ## Example
 
-```Javascript
-import { CloudManagerLogo, AtlasLogo, RealmLogo, ChartsLogo } from '@leafygreen-ui/logo'
+```js
+import {
+  CloudManagerLogo,
+  AtlasLogo,
+  RealmLogo,
+  ChartsLogo,
+} from '@leafygreen-ui/logo';
 
-<CloudManagerLogo />
+<CloudManagerLogo />;
 ```
 
 **Output HTML**
 
-```HTML
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 216.56 448.5" height="40" width="auto">
+```html
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 216.56 448.5"
+  height="40"
+  width="auto"
+>
   <title>MongoDB LogoMark</title>
   <path class="leafygreen-ui-17842x1"></path>
   <path class="leafygreen-ui-197s9ut"></path>

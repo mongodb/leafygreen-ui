@@ -20,50 +20,76 @@ npm install @leafygreen-ui/toast
 
 ## Example
 
-```Javascript
+```js
 import Toast from '@leafygreen-ui/toast';
 
-const [toastOpen, setToastOpen] = useState(true)
+const [toastOpen, setToastOpen] = useState(true);
 
 return (
-	<Toast
-		variant='success'
-		title='This is a title'
-		body='This is a description'
-		open={toastOpen}
-		close={() => setToastOpen(false)}
-	/>
-)
-
+  <Toast
+    variant="success"
+    title="This is a title"
+    body="This is a description"
+    open={toastOpen}
+    close={() => setToastOpen(false)}
+  />
+);
 ```
 
 **Output HTML**
 
-```HTML
+```html
 <div role="status" class="leafygreen-ui-r1u4g0">
-	<div class="leafygreen-ui-1lymiei">
-		<svg class="leafygreen-ui-1b4llpu" height="30" width="30" viewBox="0 0 16 16" role="img">
-			<title>Checkmark With Circle Icon</title>
-			<g id="Glyphs-/-Checkmark-With-Circle" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-				<path d="..." fill="currentColor"></path>
-			</g>
-		</svg>
+  <div class="leafygreen-ui-1lymiei">
+    <svg
+      class="leafygreen-ui-1b4llpu"
+      height="30"
+      width="30"
+      viewBox="0 0 16 16"
+      role="img"
+    >
+      <title>Checkmark With Circle Icon</title>
+      <g
+        id="Glyphs-/-Checkmark-With-Circle"
+        stroke="none"
+        stroke-width="1"
+        fill="none"
+        fill-rule="evenodd"
+      >
+        <path d="..." fill="currentColor"></path>
+      </g>
+    </svg>
 
-		<div>
-			<p class="leafygreen-ui-d2tjkm">This is a title</p>
-			<p class="leafygreen-ui-10eu8wb">This is a description</p>
-		</div>
-	</div>
+    <div>
+      <p class="leafygreen-ui-d2tjkm">This is a title</p>
+      <p class="leafygreen-ui-10eu8wb">This is a description</p>
+    </div>
+  </div>
 
-	<button tabindex="0" aria-disabled="false" aria-label="Close Message" class="leafygreen-ui-ptvv4q">
-		<div class="leafygreen-ui-xhlipt">
-			<svg class="" height="16" width="16" viewBox="0 0 16 16" role="img">
-				<g id="X-Copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-					<path d="..." fill="currentColor" transform="translate(8.000000, 8.000000) rotate(45.000000) translate(-8.000000, -8.000000) "></path>
-				</g>
-			</svg>
-		</div>
-	</button>
+  <button
+    tabindex="0"
+    aria-disabled="false"
+    aria-label="Close Message"
+    class="leafygreen-ui-ptvv4q"
+  >
+    <div class="leafygreen-ui-xhlipt">
+      <svg class="" height="16" width="16" viewBox="0 0 16 16" role="img">
+        <g
+          id="X-Copy"
+          stroke="none"
+          stroke-width="1"
+          fill="none"
+          fill-rule="evenodd"
+        >
+          <path
+            d="..."
+            fill="currentColor"
+            transform="translate(8.000000, 8.000000) rotate(45.000000) translate(-8.000000, -8.000000) "
+          ></path>
+        </g>
+      </svg>
+    </div>
+  </button>
 </div>
 ```
 

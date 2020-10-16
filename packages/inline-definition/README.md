@@ -20,7 +20,7 @@ npm install @leafygreen-ui/inline-definition
 
 ## Example
 
-```jsx
+```js
 <H2>
   <InlineDefinition definition={shardDefinition}>Shard</InlineDefinition> your
   cluster
@@ -52,10 +52,10 @@ npm install @leafygreen-ui/inline-definition
 
 ## Properties
 
-| Prop         | Type                  | Description                                                  | Default |
-| ------------ | --------------------- | ------------------------------------------------------------ | ------- |
-| `definition` | **Required** `string` | Content that describes the term. Will appear inside Tooltip. |         |
-| `children`   | `string`              | Text that will appear underlined                             |         |
-| `className`  | `string`              | className will be applied to the trigger element             |         |
+| Prop         | Type                           | Description                                                  | Default |
+| ------------ | ------------------------------ | ------------------------------------------------------------ | ------- |
+| `definition` | **Required** `React.ReactNode` | Content that describes the term. Will appear inside Tooltip. |         |
+| `children`   | `string`                       | Text that will appear underlined                             |         |
+| `className`  | `string`                       | className will be applied to the trigger element             |         |
 
 _Any other properties will be spread on the `Tooltip` element_

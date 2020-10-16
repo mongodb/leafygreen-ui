@@ -1,11 +1,19 @@
 {
   "name": "@leafygreen-ui/toast",
-  "version": "0.1.4",
+  "version": "0.2.1",
   "description": "leafyGreen UI Kit Toast",
-  "main": "./dist/index.bundle.js",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "scripts": {
-    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
+    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
   },
   "license": "Apache-2.0",
   "publishConfig": {
@@ -13,13 +21,13 @@
   },
   "dependencies": {
     "react-transition-group": "^4.4.1",
-    "@leafygreen-ui/lib": "^5.0.0",
-    "@leafygreen-ui/palette": "^2.0.2",
-    "@leafygreen-ui/portal": "^2.2.1",
-    "@leafygreen-ui/tokens": "^0.3.0",
-    "@leafygreen-ui/icon": "^6.6.0",
-    "@leafygreen-ui/icon-button": "^8.0.0",
-    "@leafygreen-ui/typography": "^4.3.0",
+    "@leafygreen-ui/lib": "^6.0.1",
+    "@leafygreen-ui/palette": "^3.0.1",
+    "@leafygreen-ui/portal": "^3.0.1",
+    "@leafygreen-ui/tokens": "^0.5.0",
+    "@leafygreen-ui/icon": "^7.0.1",
+    "@leafygreen-ui/icon-button": "^9.0.1",
+    "@leafygreen-ui/typography": "^6.0.1",
     "lodash": "^4.17.20"
   }
 }
