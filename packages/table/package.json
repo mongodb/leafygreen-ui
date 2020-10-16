@@ -20,12 +20,14 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/hooks": "^5.0.1",
     "@leafygreen-ui/lib": "^6.0.1",
     "@leafygreen-ui/checkbox": "^6.0.1",
     "@leafygreen-ui/emotion": "^3.0.1",
     "@leafygreen-ui/palette": "3.0.1",
     "@leafygreen-ui/icon": "^7.0.1",
     "@leafygreen-ui/icon-button": "^9.0.1",
-    "react-transition-group": "^4.4.1"
+    "react-transition-group": "^4.4.1",
+    "lodash": "^4.17.20"
   }
 }
