@@ -39,8 +39,8 @@ const shadow = css`
     opacity: 0;
     content: '';
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: 8px;
+    bottom: 8px;
     width: 12px;
     border-radius: 100%;
     transition: opacity 150ms ease-in-out;
