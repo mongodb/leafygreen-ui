@@ -170,7 +170,9 @@ function InlineCode({ children, className, ...rest }: InlineCodeProps) {
   const isAnchor = rest?.href || rest.onClick;
 
   const renderedInlineCode = (isAnchor = false) => (
-    <code className={cx(fontSize, whiteSpace, { [colorBlue]: isAnchor })}>
+    <code
+      className={cx(fontSize, whiteSpace, { [colorBlue]: isAnchor }, className)}
+    >
       <span className={cx(code, { [codeFocus]: showFocus })}>{children}</span>
     </code>
   );

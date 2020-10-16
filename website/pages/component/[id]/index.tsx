@@ -5,31 +5,34 @@ import fs from 'fs';
 import path from 'path';
 import util from 'util';
 import { css } from 'emotion';
-import { GridContainer, GridItem } from 'components/grid/Grid';
-import Navigation from 'components/navigation/Navigation';
-import Header from 'components/layout/Header';
+import { breakpoints } from '@leafygreen-ui/tokens';
+import Navigation from 'components/navigation';
+import Header from 'components/Header';
 import markdownToHtml from 'utils/markdownToHtml';
 import { BaseLayoutProps } from 'utils/types';
 
-const breakpoints = [320, 768, 1024, 1440];
 const mq = facepaint(
-  breakpoints.map(bp => `@media (min-width: ${bp}px)`),
+  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
   { literal: true },
 );
 
 const containerStyle = css`
   margin-top: 12px;
-  display: flex;
   width: 100%;
-  ${mq({
-    flexDirection: ['column', 'row'],
-    paddingLeft: ['24px', '0px'],
-  })}
+  display: flex;
   align-items: flex-start;
+  ${mq({
+    flexDirection: ['column', 'column', 'row'],
+    paddingLeft: ['24px', '24px', '0px'],
+    paddingRight: ['24px', '24px', '0px'],
+  })}
 `;
 
 const topMargin = css`
   margin-top: 36px;
+  ${mq({
+    width: ['100%', '100%', '700px', '700px'],
+  })}
 `;
 
 export default function Component({
@@ -41,17 +44,9 @@ export default function Component({
     <div className={containerStyle}>
       <Navigation />
 
-      <GridContainer justify="flex-start">
-        <GridItem sm={12} md={10} lg={9}>
-          <div className={topMargin}>
-            <Header
-              component={component}
-              changelog={changelog}
-              readme={readme}
-            />
-          </div>
-        </GridItem>
-      </GridContainer>
+      <div className={topMargin}>
+        <Header component={component} changelog={changelog} readme={readme} />
+      </div>
     </div>
   );
 }

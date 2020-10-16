@@ -2,14 +2,19 @@ import React, { useRef, useState } from 'react';
 import { css, cx } from 'emotion';
 import { Transition } from 'react-transition-group';
 import { uiColors } from '@leafygreen-ui/palette';
+import { breakpoints } from '@leafygreen-ui/tokens';
 import IconButton from '@leafygreen-ui/icon-button';
 import MenuIcon from '@leafygreen-ui/icon/dist/Menu';
-import MDBDesignLogo from '../logos/MDBDesignLogo';
+import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
 import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
 
 const closedContainer = css`
   display: flex;
   align-items: center;
+
+  @media only screen and (max-width: ${breakpoints.Tablet}px) {
+    display: block;
+  }
 `;
 
 const iconMargin = css`

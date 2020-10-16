@@ -79,8 +79,6 @@ const [selected, setSelected] = useState(0)
 </div>
 ```
 
-# Tabs
-
 ## Properties
 
 | Prop          | Type                          | Description                                                                                                                                                                                                                                   | Default  |
