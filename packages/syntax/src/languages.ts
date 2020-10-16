@@ -20,6 +20,7 @@ import sql from 'highlight.js/lib/languages/sql';
 import yaml from 'highlight.js/lib/languages/yaml';
 import json from 'highlight.js/lib/languages/json';
 import diff from 'highlight.js/lib/languages/diff';
+import xml from 'highlight.js/lib/languages/xml';
 
 export const languageParsers = {
   javascript,
@@ -44,6 +45,7 @@ export const languageParsers = {
   yaml,
   json,
   diff,
+  xml,
 } as const;
 
 export const SupportedLanguages = {
@@ -73,6 +75,7 @@ export const SupportedLanguages = {
   Json: 'json',
   Graphql: 'graphql',
   Diff: 'diff',
+  Xml: 'xml',
 } as const;
 
 export type SupportedLanguages = typeof SupportedLanguages[keyof typeof SupportedLanguages];

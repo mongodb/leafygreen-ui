@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import React from 'react';
+import { css } from 'emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { InlineCode } from '@leafygreen-ui/typography';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
@@ -17,18 +17,19 @@ const propBlockContainer = css`
 `;
 
 const propBlockPStyle = css`
-  margin: 0;
+  margin: 0 0 ${spacing[1]}px 0;
 `;
 
 const propBlockCodeStyle = css`
   font-weight: bold;
+  white-space: pre-wrap;
 `;
 
 function PropBlock({ header, value }: { header: string; value: string }) {
   return (
-    <div css={propBlockContainer}>
-      <p css={propBlockPStyle}>{header}</p>
-      <InlineCode css={propBlockCodeStyle}>{value}</InlineCode>
+    <div className={propBlockContainer}>
+      <p className={propBlockPStyle}>{header}</p>
+      <InlineCode className={propBlockCodeStyle}>{value}</InlineCode>
     </div>
   );
 }
@@ -56,20 +57,23 @@ function Definition({
   defaultValue,
   description,
 }: PropDefinitionProps) {
+  const showDefault = defaultValue !== '-';
+
   return (
-    <div css={definitionContainer}>
-      <div css={flexContainer}>
+    <div className={definitionContainer}>
+      <div className={flexContainer}>
         <PropBlock header="Prop" value={prop} />
         <PropBlock header="Type" value={type} />
-        <PropBlock header="Default" value={defaultValue} />
+        {showDefault && <PropBlock header="Default" value={defaultValue} />}
       </div>
-      <div css={descriptionContainer}>{description}</div>
+      <div className={descriptionContainer}>{description}</div>
     </div>
   );
 }
 
 const inlineDefinitionStyle = css`
   padding: 0;
+  font-weight: 600;
 `;
 
 function PropDefinition({
@@ -80,7 +84,7 @@ function PropDefinition({
 }: PropDefinitionProps) {
   return (
     <InlineDefinition
-      css={inlineDefinitionStyle}
+      className={inlineDefinitionStyle}
       definition={
         <Definition
           prop={prop}

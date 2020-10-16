@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { css } from 'emotion';
 import styled from '@emotion/styled';
 import facepaint from 'facepaint';
-import { useMemo } from 'react';
+import { breakpoints } from '@leafygreen-ui/tokens';
 
-const breakpoints = [320, 768, 1024, 1440];
 const breakpointGaps = ['16px', '16px', '32px', '32px'];
 const mq = facepaint(
-  breakpoints.map(bp => `@media (min-width: ${bp}px)`),
+  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
   { literal: true },
 );
 

@@ -20,10 +20,12 @@ npm install @leafygreen-ui/stepper
 
 ## Example
 
+```js
 <Stepper currentStep={0} maxDisplayedSteps={2}>
   <Step>Step 1</Step>
   <Step>Step 2</Step>
 </Stepper>
+```
 
 **Output HTML**
 
