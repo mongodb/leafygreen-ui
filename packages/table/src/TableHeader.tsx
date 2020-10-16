@@ -19,6 +19,7 @@ const thStyle = css`
 const flexDisplay = css`
   display: flex;
   justify-content: space-between;
+  min-height: 32px;
 `;
 
 const labelStyle = css`
