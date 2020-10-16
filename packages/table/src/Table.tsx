@@ -31,7 +31,7 @@ const shadow = css`
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 20px;
+  width: 16px;
   overflow: hidden;
   pointer-events: none;
 
@@ -39,9 +39,9 @@ const shadow = css`
     opacity: 0;
     content: '';
     position: absolute;
-    top: 8px;
-    bottom: 8px;
-    width: 12px;
+    top: 0;
+    bottom: 0;
+    width: 16px;
     border-radius: 100%;
     transition: opacity 150ms ease-in-out;
   }
@@ -52,7 +52,7 @@ const leftShadow = css`
 
   &:after {
     right: 100%;
-    box-shadow: 4px 0 4px ${shadowColor};
+    box-shadow: 3px 0 4px ${shadowColor};
   }
 `;
 
@@ -61,7 +61,7 @@ const rightShadow = css`
 
   &:after {
     left: 100%;
-    box-shadow: -4px 0 4px ${shadowColor};
+    box-shadow: -3px 0 4px ${shadowColor};
   }
 `;
 
