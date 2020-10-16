@@ -22,7 +22,7 @@ const tableHeaderNames: Array<'prop' | 'type' | 'description' | 'default'> = [
 ];
 
 export interface ReadmeMarkdown {
-  children: Array<OneOf<Heading, Table>>;
+  children: Array<Heading | Table>;
 }
 
 interface Heading {
@@ -109,7 +109,10 @@ function PropTable({
 
   const tableData = markdownAst.children
     .filter((treeItem, index) => {
-      if ((treeItem as Heading).children?.[0].value === 'Peer Dependencies') {
+      if (
+        treeItem.type === 'heading' &&
+        treeItem.children?.[0].value === 'Peer Dependencies'
+      ) {
         peerDepIndex = index;
       }
 
