@@ -30,7 +30,7 @@
     "create-package": "node ./scripts/package-builder.js",
     "format": "yarn prettier && yarn eslint:format",
     "init": "yarn && yarn build && yarn ts:build --verbose",
-    "link-all-packages": "lerna exec --ignore @leafygreen-ui/lib --ignore @leafygreen-ui/theme -- yarn link",
+    "link-all-packages": "lerna exec --ignore @leafygreen-ui/lib --ignore @leafygreen-ui/theme --ignore @leafygreen-ui/mongo-nav -- yarn link",
     "link": "./scripts/link.sh",
     "lint": "yarn prettier:check && yarn eslint && yarn ts",
     "eslint": "eslint \"**/*.{js,ts,tsx}\"",
