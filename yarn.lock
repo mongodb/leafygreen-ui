@@ -4410,6 +4410,11 @@
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.3.tgz#9c088679876f374eb5983f150d4787aa6fb32d7e"
   integrity sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==
 
+"@types/unist@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/unist/-/unist-1.0.0.tgz#a05df966d9b4b8191f04bf5109056a1848fcb9dd"
+  integrity sha512-DnOXel8XWjuoTQ7RgWm1E40Gc4GkT3r3g4s7+fHBPtwbGg9fbc6JJ+bJpmV8fA88FeGTwOyiTaKV7nYZz9h23Q==
+
 "@types/webpack-env@^1.15.0", "@types/webpack-env@^1.15.2":
   version "1.15.3"
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.15.3.tgz#fb602cd4c2f0b7c0fb857e922075fdf677d25d84"
@@ -14942,7 +14947,7 @@ remark-html@^12.0.0:
     mdast-util-to-hast "^9.0.0"
     xtend "^4.0.1"
 
-remark-parse@^8.0.0:
+remark-parse@8.0.3, remark-parse@^8.0.0:
   version "8.0.3"
   resolved "https://registry.yarnpkg.com/remark-parse/-/remark-parse-8.0.3.tgz#9c62aa3b35b79a486454c690472906075f40c7e1"
   integrity sha512-E1K9+QLGgggHxCQtLt++uXltxEprmWzNfg+MxpfHsZlrddKzZ/hZyWHDbK3/Ap8HJQqYJRXP+jHczdL6q6i85Q==

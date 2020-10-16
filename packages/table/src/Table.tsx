@@ -25,6 +25,7 @@ const tableStyles = css`
   border-collapse: collapse;
   box-sizing: border-box;
   border-bottom: 1px solid ${uiColors.gray.light2};
+  width: 100%;
 `;
 
 const shadow = css`

@@ -57,6 +57,8 @@ import Popover from '@leafygreen-ui/popover';
 
 The popover component will be automatically positioned relative to its nearest parent. If `usePortal` is set to `false`, then it will be positioned relative to its nearest ancestor with the CSS property: `position: absolute | relative | fixed`.
 
+## Properties
+
 | Prop               | Type                                                                                 | Description                                                                                                                                                                                                              | Default    |
 | ------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- |
 | `active`           | `boolean`                                                                            | Determines whether the Popover is active or inactive                                                                                                                                                                     | `false`    |

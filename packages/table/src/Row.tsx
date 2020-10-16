@@ -14,7 +14,7 @@ const rowStyle = css`
   color: ${uiColors.gray.dark2};
 
   & > td > ${tdInnerDiv.selector} {
-    height: 40px;
+    min-height: 40px;
     transition: all 150ms ease-in-out;
   }
 `;
@@ -45,13 +45,6 @@ const displayFlex = css`
   align-items: center;
 `;
 
-const truncation = css`
-  max-width: 100px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-`;
-
 const transitionStyles = {
   default: css`
     transition: border 150ms ease-in-out;
@@ -71,7 +64,7 @@ const transitionStyles = {
     border-top-color: ${uiColors.gray.light2};
 
     & > td > ${tdInnerDiv.selector} {
-      max-height: 40px;
+      min-height: 40px;
     }
   `,
 };
@@ -198,9 +191,7 @@ const Row = React.forwardRef(
 
           renderedChildren.push(
             React.cloneElement(child, {
-              children: (
-                <span className={truncation}>{child.props.children}</span>
-              ),
+              children: <span>{child.props.children}</span>,
               key: `${indexRef.current}-${index}`,
               disabled: child.props.disabled || disabled,
             }),
@@ -217,9 +208,7 @@ const Row = React.forwardRef(
           children: (
             <>
               {chevronButton}
-              <span className={truncation}>
-                {renderedChildren[0].props.children}
-              </span>
+              <span>{renderedChildren[0].props.children}</span>
             </>
           ),
           className: cx(displayFlex, className),
