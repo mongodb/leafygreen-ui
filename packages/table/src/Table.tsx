@@ -14,7 +14,7 @@ import TableHead from './TableHead';
 import TableBody from './TableBody';
 import { SortProvider } from './SortContext';
 
-const shadowColor = transparentize(0.6, uiColors.black);
+const shadowColor = transparentize(0.7, uiColors.black);
 
 const containerStyle = css`
   position: relative;
@@ -33,6 +33,7 @@ const shadow = css`
   bottom: 0;
   width: 20px;
   overflow: hidden;
+  pointer-events: none;
 
   &:after {
     opacity: 0;
@@ -40,7 +41,7 @@ const shadow = css`
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 6px;
+    width: 12px;
     border-radius: 100%;
     transition: opacity 150ms ease-in-out;
   }
@@ -51,7 +52,7 @@ const leftShadow = css`
 
   &:after {
     right: 100%;
-    box-shadow: 6px 0 6px ${shadowColor};
+    box-shadow: 4px 0 4px ${shadowColor};
   }
 `;
 
@@ -60,7 +61,7 @@ const rightShadow = css`
 
   &:after {
     left: 100%;
-    box-shadow: -6px 0 6px ${shadowColor};
+    box-shadow: -4px 0 4px ${shadowColor};
   }
 `;
 
