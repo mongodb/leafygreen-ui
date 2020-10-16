@@ -14,7 +14,7 @@ import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { BaseLayoutProps } from 'utils/types';
 import { GridContainer, GridItem } from 'components/Grid';
-import PropTable, { CellRoot } from 'components/PropTable';
+import PropTable, { ReadmeMarkdown } from 'components/PropTable';
 
 const topAlignment = css`
   margin-top: ${spacing[4]}px;
@@ -166,7 +166,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
   const outputHTML = readme.match(/(?<=html).*?(?=```)/s)?.[0];
   const markdownAst = (unified()
     .use(markdown)
-    .parse(readme) as unknown) as CellRoot;
+    .parse(readme) as unknown) as ReadmeMarkdown;
 
   return (
     <>

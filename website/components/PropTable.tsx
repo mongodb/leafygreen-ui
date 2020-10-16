@@ -21,11 +21,19 @@ const tableHeaderNames: Array<'prop' | 'type' | 'description' | 'default'> = [
   'default',
 ];
 
-interface TableDataInterface {
-  prop: string;
-  type: string;
-  description: string;
-  default: string;
+export interface ReadmeMarkdown {
+  children: Array<OneOf<Heading, Table>>;
+}
+
+interface Heading {
+  type: 'heading';
+  depth: number;
+  children: Array<{ value: string }>;
+}
+
+interface Table {
+  type: 'table';
+  children: Array<RowInterface>;
 }
 
 interface RowInterface {
@@ -50,7 +58,14 @@ interface CellLeaf {
   depth: number;
 }
 
-function getTableData(rows: Array<RowInterface>): Array<TableDataInterface> {
+interface TableDataInterface {
+  prop: string;
+  type: string;
+  description: string;
+  default: string;
+}
+
+function getTableData(rows: Table['children']): Array<TableDataInterface> {
   if (!rows) {
     return null;
   }
@@ -83,24 +98,24 @@ function PropTable({
   markdownAst,
   component,
 }: {
-  markdownAst: CellRoot;
+  markdownAst: ReadmeMarkdown;
   component: string;
 }) {
   let peerDepIndex: number | undefined;
 
   const headers = markdownAst.children
     .filter(treeItem => treeItem.type === 'heading' && treeItem.depth === 1)
-    .map(item => item?.children?.[0].value);
+    .map((item: Heading) => item?.children?.[0].value);
 
-  const tableData: Array<Array<TableDataInterface>> = markdownAst.children
+  const tableData = markdownAst.children
     .filter((treeItem, index) => {
-      if (treeItem.children?.[0].value === 'Peer Dependencies') {
+      if ((treeItem as Heading).children?.[0].value === 'Peer Dependencies') {
         peerDepIndex = index;
       }
 
       return peerDepIndex + 1 !== index && treeItem.type === 'table';
     })
-    .map(item => getTableData(item.children as Array<RowInterface>));
+    .map((item: Table) => getTableData(item.children));
 
   if (component === 'typography') {
     headers.shift();
