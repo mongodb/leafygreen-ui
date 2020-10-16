@@ -14,7 +14,7 @@ import TableHead from './TableHead';
 import TableBody from './TableBody';
 import { SortProvider } from './SortContext';
 
-const shadowColor = transparentize(0.6, uiColors.gray.dark1);
+const shadowColor = transparentize(0.6, uiColors.black);
 
 const containerStyle = css`
   position: relative;
