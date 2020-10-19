@@ -63,16 +63,29 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const props: Partial<BaseLayoutProps> = { component: id };
 
-  const changelogMarkdown = await getFileContent(
-    path.join('../packages', id, 'changelog.md'),
-  );
+  let changelogMarkdown: '' | Buffer = '';
+  let readmeMarkdown = '';
+
+  try {
+    changelogMarkdown = await getFileContent(
+      path.join('../packages', id, 'CHANGELOG.md'),
+    );
+  } catch (error) {
+    console.warn(error);
+  }
+
+  try {
+    readmeMarkdown = await getFileContent(
+      path.join('../packages', id, 'README.md'),
+      'utf-8',
+    );
+  } catch (error) {
+    console.warn(error);
+  }
 
   props.changelog = await markdownToHtml(changelogMarkdown);
 
-  props.readme = await getFileContent(
-    path.join('../packages', id, 'README.md'),
-    'utf-8',
-  );
+  props.readme = readmeMarkdown;
 
   return {
     props,
