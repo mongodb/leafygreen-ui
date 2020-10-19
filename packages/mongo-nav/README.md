@@ -41,17 +41,17 @@ npm install @leafygreen-ui/mongo-nav @leafygreen-ui/leafygreen-provider@1.1.0
 
 | Prop                       | Type                                                                            | Description                                                                                                                                                                                                                                                                                                                              | Default                                                   |
 | -------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `activeProduct`            | `Product`                                                                       | Describes what product is currently active                                                                                                                                                                                                                                                                                               |                                                           |
-| `activeNav`                | `ActiveNavElement` (see below for possible values)                              | Determines what nav item is currently active                                                                                                                                                                                                                                                                                             |                                                           |
+| `activeProduct`            | `'cloud'` \| `'realm'` \| `'charts'`                                            | Describes what product is currently active                                                                                                                                                                                                                                                                                               |                                                           |
+| `activeNav`                | `ActiveNavElement`                                                              | Determines what nav item is currently active                                                                                                                                                                                                                                                                                             |                                                           |
 | `admin`                    | `boolean`                                                                       | Describes whether or not user is an `admin`                                                                                                                                                                                                                                                                                              | `false`                                                   |
-| `mode`                     | `production` or `dev`                                                           | Describes what environment the component is being used in, defaults to `production`                                                                                                                                                                                                                                                      | `production`                                              |
+| `mode`                     | `'production'` \| `'dev'`                                                       | Describes what environment the component is being used in                                                                                                                                                                                                                                                                                | `'production'`                                            |
 | `onOrganizationChange`     | `({value: string, setData: Function, event: React.ChangeEvent}) => void`        | Callback invoked when user types in the OrgSelect filter box. The function receives an object as its argument with three keys. The first is the current value of the filter box, the second is a Function that allows the consumer to control what data is rendered based on the current search, and the final is the `ChangeEvent`.     |                                                           |
 | `onProjectChange`          | `({value: string, setData: Function, event: React.ChangeEvent}) => void`        | Callback invoked when user types in the ProjectSelect filter box. The function receives an object as its argument with three keys. The first is the current value of the filter box, the second is a Function that allows the consumer to control what data is rendered based on the current search, and the final is the `ChangeEvent`. |                                                           |
 | `constructOrganizationURL` | `(Organization) => string`                                                      | Function that allows consumers to determine destination URL when user selects an organization from the organization picker, see also `hosts`                                                                                                                                                                                             | `(org) => '${hosts.cloud}/v2#/org/${org.orgId}/projects'` |
 | `constructProjectURL`      | `(Project) => string`                                                           | Function that allows consumers to determine destination URL when user selects a project from the project picker, see also `hosts`                                                                                                                                                                                                        | `(project) => '${hosts.cloud}/v2#/${project.projectId}'`  |
 | `showProjectNav`           | `boolean`                                                                       | Determines whether the project navigation should be shown                                                                                                                                                                                                                                                                                | `true`                                                    |
 | `hosts`                    | `{cloud: '', realm: '', charts: '', account: '', university: '', support: ''}`  | Object where keys are MDB products and values are the desired hostURL override for that product, to enable `<MongoNav />` to work across all environments                                                                                                                                                                                |                                                           |
-| `urls`                     | `URLInterface` (see below for type)                                             | Object to enable custom overrides for every `href` used in `<MongoNav />`                                                                                                                                                                                                                                                                |                                                           |
+| `urls`                     | `URLInterface`                                                                  | Object to enable custom overrides for every `href` used in `<MongoNav />`                                                                                                                                                                                                                                                                |                                                           |
 | `onError`                  | `(ErrorCode) => {}`,                                                            | Function that is passed an error code as a string, so that consuming application can handle fetch failures                                                                                                                                                                                                                               | `() => {}`                                                |
 | `onSuccess`                | `(response) => {}`                                                              | Callback that receives the response of the fetched data, having been converted from JSON into an object                                                                                                                                                                                                                                  | `() => {}`                                                |
 | `onPrem`                   | `{enabled: boolean, mfa: boolean, version: string}`                             | onPrem config object with three keys: enabled, version and mfa                                                                                                                                                                                                                                                                           | `{enabled: false, mfa: false, version: ''}`               |
@@ -64,89 +64,47 @@ npm install @leafygreen-ui/mongo-nav @leafygreen-ui/leafygreen-provider@1.1.0
 | `loadData`                 | `boolean`                                                                       | Determines whether or not the component will fetch data from cloud                                                                                                                                                                                                                                                                       | `true`                                                    |
 | `onElementClick`           | `(type: 'logout', 'cloud', 'realm', 'charts', event: React.MouseEvent => void)` | Click EventHandler that receives a `type` as its first argument and the associated `MouseEvent` as its second. This prop provides a hook into product link and logout link clicks and allows consuming applications to handle routing internally                                                                                         | `() => {}`                                                |
 | `dataFixtures`             | `DataInterface`                                                                 | Allows consumers to control fixture data when in dev mode                                                                                                                                                                                                                                                                                |                                                           |
-| `activePlatform`           | `Platform`                                                                      | Describes what platform is currently active                                                                                                                                                                                                                                                                                              |                                                           |
+| `activePlatform`           | `'account'` \| `'cloud'` \| `'support'` \|`'university'`                        | Describes what platform is currently active                                                                                                                                                                                                                                                                                              |                                                           |
 | `alertPollingInterval`     | `number`                                                                        | Defines interval for alert polling                                                                                                                                                                                                                                                                                                       | `600e3 // 10 minutes`                                     |
 
 _Any other properties will be spread on the root element_
 
-## Imperative API Handle
+##### ActiveNavElement
 
-We have customized the ref instance value that is exposed to components wrapping `MongoNav`, such that the instance's current property contains a `reloadData` key. Invoking `reloadData` triggers a refetch of data from MongoNav.
+```typescript
+const ActiveNavElement = {
+  OrgNavOrgSettings: 'orgNavOrgSettings',
+  OrgNavAccessManagerDropdown: 'orgNavAccessManagerDropdown',
+  OrgNavSupport: 'orgNavSupport',
+  OrgNavBilling: 'orgNavBilling',
+  OrgNavAdmin: 'orgNavAdmin',
+  OrgNavAllClusters: 'orgNavAllClusters',
+  OrgNavDropdownOrgAccessManager: 'orgNavDropdownOrgAccessManager',
+  OrgNavDropdownProjectAccessManager: 'orgNavDropdownProjectAccessManager',
+  ProjectNavInvite: 'projectNavInvite',
+  ProjectNavActivityFeed: 'projectNavActivityFeed',
+  ProjectNavAlerts: 'projectNavAlerts',
+  ProjectNavProjectSettings: 'projectNavProjectSettings',
+  ProjectNavProjectSupport: 'projectNavProjectSupport',
+  ProjectNavProjectIntegrations: 'projectNavProjectIntegrations',
+  UserMenuCloudMFA: 'userMenuCloudMFA',
+  UserMenuCloudInvitations: 'userMenuCloudInvitations',
+  UserMenuCloudOrganizations: 'userMenuCloudOrganizations',
+  UserMenuCloudUserPreferences: 'userMenuCloudUserPreferences',
+  UserMenuCloudOther: 'userMenuCloudOther',
+  UserMenuOnPremProfile: 'userMenuOnPremProfile',
+  UserMenuOnPremTwoFactorAuth: 'userMenuOnPremTwoFactorAuth',
+  UserMenuOnPremPersonalization: 'userMenuOnPremPersonalization',
+  UserMenuOnPremInvitations: 'userMenuOnPremInvitations',
+  UserMenuOnPremOrganizations: 'userMenuOnPremOrganizations',
+  UserMenuOnPremPublicApiAccess: 'userMenuOnPremPublicApiAccess',
+  UserMenuOnPremOther: 'userMenuOnPremPublicApiAccess',
+} as const;
 
-## Example
-
-```js
-const mongoNavRef = React.useRef(null);
-
-const onClick = () => {
-  mongooNavRef.current.reloadData();
-};
-
-<MongoNav
-  ref={mongoNavRef}
-  mode="dev"
-  activeProduct="cloud"
-  activeNav="accessManager"
-  onOrganizationChange={onOrganizationChange}
-  onProjectChange={onProjectChange}
-  admin={true}
-/>;
+type ActiveNavElement = typeof ActiveNavElement[keyof typeof ActiveNavElement];
 ```
 
-### `Platform Values`
-
-`Account`
-`Cloud`
-`Support`
-`University`
-
-### `Product Values`
-
-`Cloud`
-`Realm`
-`Charts`
-
-### `ActiveNavElement` Values
-
-#### Org Nav Elements
-
-`OrgNavAccessManagerDropdown`
-`OrgNavAdmin`
-`OrgNavAllClusters`
-`OrgNavBilling`
-`OrgNavDropdownOrgAccessManager`
-`OrgNavDropdownProjectAccessManager`
-`OrgNavOrgSettings`
-`OrgNavSupport`
-
-#### Project Nav Elements
-
-`ProjectNavActivityFeed`
-`ProjectNavAlerts`
-`ProjectNavInvite`
-`ProjectNavProjectIntegrations`
-`ProjectNavProjectSettings`
-`ProjectNavProjectSupport`
-
-#### Cloud User Menu Elements
-
-`UserMenuCloudInvitations`
-`UserMenuCloudMFA`
-`UserMenuCloudOrganizations`
-`UserMenuCloudOther`
-`UserMenuCloudUserPreferences`
-
-#### On Prem User Menu Elements
-
-`UserMenuOnPremInvitations`
-`UserMenuOnPremOrganizations`
-`UserMenuOnPremOther`
-`UserMenuOnPremPersonalization`
-`UserMenuOnPremProfile`
-`UserMenuOnPremPublicApiAccess`
-`UserMenuOnPremTwoFactorAuth`
-
-### URLInterface
+##### URLInterface
 
 ```typescript
 export interface URLSInterface {
@@ -203,4 +161,72 @@ export interface URLSInterface {
     featureRequest?: string;
   };
 }
+```
+
+##### DataInterface
+
+```typescript
+export interface AccountInterface {
+  email: string;
+  firstName: string;
+  lastName: string;
+  openInvitations?: number;
+  username?: string;
+  admin?: boolean;
+}
+
+export interface ProjectInterface {
+  projectId: string;
+  projectName: string;
+  planType?: PlanType;
+  orgId?: string;
+}
+
+export interface CurrentProjectInterface extends ProjectInterface {
+  alertsOpen: number;
+  chartsActivated: boolean;
+  status?: ProjectStatus;
+}
+
+export interface OrganizationInterface {
+  orgId: string;
+  orgName: string;
+  planType: PlanType;
+}
+
+export interface CurrentOrganizationInterface extends OrganizationInterface {
+  paymentStatus?: OrgPaymentLabel;
+}
+
+export interface DataInterface {
+  readonly account: AccountInterface;
+  currentOrganization?: CurrentOrganizationInterface;
+  currentProject?: CurrentProjectInterface;
+  readonly organizations: Array<OrganizationInterface>;
+  readonly projects: Array<ProjectInterface>;
+}
+```
+
+## Imperative API Handle
+
+We have customized the ref instance value that is exposed to components wrapping `MongoNav`, such that the instance's current property contains a `reloadData` key. Invoking `reloadData` triggers a refetch of data from MongoNav.
+
+## Example
+
+```js
+const mongoNavRef = React.useRef(null);
+
+const onClick = () => {
+  mongooNavRef.current.reloadData();
+};
+
+<MongoNav
+  ref={mongoNavRef}
+  mode="dev"
+  activeProduct="cloud"
+  activeNav="accessManager"
+  onOrganizationChange={onOrganizationChange}
+  onProjectChange={onProjectChange}
+  admin={true}
+/>;
 ```

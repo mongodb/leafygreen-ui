@@ -120,6 +120,10 @@ function PropTable({
     })
     .map((item: Table) => getTableData(item.children));
 
+  if (tableData.length < 1) {
+    return null;
+  }
+
   if (component === 'typography') {
     headers.shift();
     tableData.shift();
@@ -135,7 +139,9 @@ function PropTable({
       {headers.map((header: string, index: number) => {
         return (
           <div key={index}>
-            <Subtitle className={subtitleBottomMargin}>{header} Props</Subtitle>
+            <Subtitle className={subtitleBottomMargin}>
+              <InlineCode>{header.split(' ').join('')}</InlineCode> Props
+            </Subtitle>
 
             {tableData[index] && (
               <Table
@@ -143,49 +149,33 @@ function PropTable({
                 key={header}
                 data={tableData[index]}
                 columns={[
+                  <TableHeader dataType="string" label="Prop" key="prop" />,
+                  <TableHeader dataType="string" label="Type" key="type" />,
                   <TableHeader
-                    className={css`
-                      width: 10%;
-                    `}
-                    dataType="string"
-                    label="Prop"
-                    key="prop"
-                  />,
-                  <TableHeader
-                    className={css`
-                      width: 30%;
-                    `}
-                    dataType="string"
-                    label="Type"
-                    key="type"
-                  />,
-                  <TableHeader
-                    className={css`
-                      width: 50%;
-                    `}
                     dataType="string"
                     label="Description"
                     key="description"
                   />,
                   <TableHeader
-                    className={css`
-                      width: 10%;
-                    `}
                     dataType="string"
                     label="Default"
-                    key="deafult"
+                    key="default"
                   />,
                 ]}
               >
                 {({ datum }) => (
                   <Row key={datum.prop}>
                     <Cell>
-                      <PropDefinition
-                        prop={datum.prop}
-                        type={datum.type}
-                        description={datum.description}
-                        defaultValue={datum.default}
-                      />
+                      {datum.prop === '...' ? (
+                        datum.prop
+                      ) : (
+                        <PropDefinition
+                          prop={datum.prop}
+                          type={datum.type}
+                          description={datum.description}
+                          defaultValue={datum.default}
+                        />
+                      )}
                     </Cell>
                     <Cell>
                       <InlineCode>{datum.type}</InlineCode>

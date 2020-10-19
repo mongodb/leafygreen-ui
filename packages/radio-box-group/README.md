@@ -74,16 +74,15 @@ import { RadioBox, RadioBoxGroup } from '@leafygreen-ui/radio-box-group';
 
 ## Properties
 
-| Prop        | Type                               | Description                                                                                                      | Default     |
-| ----------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ----------- |
-| `size`      | `'compact'`, `'default'`, `'full'` | Sets the style of the `<RadioBoxGroup />`.                                                                       | `'default'` |
-| `name`      | `string`                           | Sets the name of the input group.                                                                                |             |
-| `value`     | `string` or `number`               | Sets the `<Radio />` that will appear checked on page load, also makes the component a controlled component      |             |
-| `className` | `string`                           | Adds a className to the root element                                                                             |             |
-| `children`  | `node`                             | Content of the component                                                                                         |             |
-| `onChange`  | `function`                         | The event handler function for the 'onChange' event. Receives the associated event object as the first argument. | `() => {}`  |
-
-_Any other properties supplied will be spread on the root element._
+| Prop        | Type                                   | Description                                                                                                      | Default     |
+| ----------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ----------- |
+| `size`      | `'compact'` \| `'default'` \| `'full'` | Sets the style of the `<RadioBoxGroup />`.                                                                       | `'default'` |
+| `name`      | `string`                               | Sets the name of the input group.                                                                                |             |
+| `value`     | `string` \| `number`                   | Sets the `<Radio />` that will appear checked on page load, also makes the component a controlled component      |             |
+| `className` | `string`                               | Adds a className to the root element                                                                             |             |
+| `children`  | `node`                                 | Content of the component                                                                                         |             |
+| `onChange`  | `function`                             | The event handler function for the 'onChange' event. Receives the associated event object as the first argument. | `() => {}`  |
+| ...         | `React.HTMLAttributes<HTMLDivElement>` | Any other properties supplied will be spread on the root element.                                                |             |
 
 # Radio Box
 
@@ -113,13 +112,12 @@ _Any other properties supplied will be spread on the root element._
 
 ## Properties
 
-| Prop        | Type                              | Description                                                                                                     | Default |
-| ----------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------- |
-| `value`     | **Required** `string` or `number` | Every `<RadioBox />` needs a value prop                                                                         |         |
-| `className` | `string`                          | Adds a className to the root element                                                                            | `''`    |
-| `checked`   | `boolean`                         | Indicates whether or not the box will be checked                                                                | `false` |
-| `disabled`  | `boolean`                         | Indicates whether or not the radio can be clicked by a user                                                     | `false` |
-| `children`  | `node`                            | Content that appears inside of the `<RadioBox />`                                                               |         |
-| `default`   | `boolean`                         | If `<RadioBoxGroup />` is uncontrolled, the default property makes this RadioBox checked on the initial render. |         |
-
-_Any other properties supplied will be spread on the root element._
+| Prop        | Type                                          | Description                                                                                                     | Default |
+| ----------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------- |
+| `value`     | **Required** `string` \| `number`             | Every `<RadioBox />` needs a value prop                                                                         |         |
+| `className` | `string`                                      | Adds a className to the root element                                                                            | `''`    |
+| `checked`   | `boolean`                                     | Indicates whether or not the box will be checked                                                                | `false` |
+| `disabled`  | `boolean`                                     | Indicates whether or not the radio can be clicked by a user                                                     | `false` |
+| `children`  | `node`                                        | Content that appears inside of the `<RadioBox />`                                                               |         |
+| `default`   | `boolean`                                     | If `<RadioBoxGroup />` is uncontrolled, the default property makes this RadioBox checked on the initial render. |         |
+| ...         | `React.InputHTMLAttributes<HTMLInputElement>` | Any other properties supplied will be spread on the root element.                                               |         |
