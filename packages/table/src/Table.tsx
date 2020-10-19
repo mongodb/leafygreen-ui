@@ -18,7 +18,7 @@ const shadowColor = transparentize(0.7, uiColors.black);
 
 const containerStyle = css`
   position: relative;
-  max-width: calc(100% - 100px);
+  max-width: 100%;
 `;
 
 const tableStyles = css`
