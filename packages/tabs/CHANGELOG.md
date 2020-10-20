@@ -1,5 +1,13 @@
 # @leafygreen-ui/tabs
 
+## 4.0.3
+
+### Patch Changes
+
+- 6858240b: Previously, if multiple `<Tabs />` were rendered, only the first on the page would be navigable via keyboard. Now, the currently focused `<Tabs />` will be navigable via keyboard, regardless of location on page.
+- Updated dependencies [5cf0c95c]
+  - @leafygreen-ui/lib@6.1.0
+
 ## 4.0.2
 
 ### Patch Changes
