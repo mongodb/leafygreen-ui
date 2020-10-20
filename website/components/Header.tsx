@@ -8,6 +8,7 @@ import { H2 } from '@leafygreen-ui/typography';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { BaseLayoutProps } from 'utils/types';
+import LiveExample from 'components/LiveExample';
 import CodeDocs from 'components/CodeDocs';
 import ReactIcon from 'components/svgs/ReactIcon';
 import SketchIcon from 'components/svgs/SketchIcon';
@@ -71,7 +72,29 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
         </div>
       </div>
       <Tabs>
-        <Tab name="Live Example">Live Example</Tab>
+        <Tab default name="Live Example">
+          <LiveExample
+            component={Button}
+            props={{
+              variant: {
+                type: 'select',
+                options: ['primary', 'default'],
+                default: 'primary',
+                label: 'Variant',
+              },
+              disabled: {
+                type: 'boolean',
+                default: false,
+                label: 'Disabled',
+              },
+              children: {
+                type: 'text',
+                default: 'Button',
+                label: 'Children',
+              },
+            }}
+          />
+        </Tab>
         <Tab
           name={
             <span className={tabNameContainer}>
@@ -89,7 +112,6 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
               Code Docs
             </span>
           }
-          default
         >
           <CodeDocs
             component={component}
