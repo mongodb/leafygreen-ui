@@ -1,89 +1,29 @@
 import React, { useState } from 'react';
-import Toggle from '@leafygreen-ui/toggle';
-import TextInput from '@leafygreen-ui/text-input';
+import { css } from 'emotion';
+import Card from '@leafygreen-ui/card';
+import Icon from '@leafygreen-ui/icon';
+import { spacing } from '@leafygreen-ui/tokens';
+import { uiColors } from '@leafygreen-ui/palette';
+import {
+  KnobType,
+  BooleanKnob,
+  TextKnob,
+  NumberKnob,
+  SelectKnob,
+} from 'components/Knobs';
 import { GridContainer, GridItem } from 'components/Grid';
 import { enforceExhaustive } from '@leafygreen-ui/lib/dist';
 
-const KnobType = {
-  Select: 'select',
-  Number: 'number',
-  Text: 'text',
-  Boolean: 'boolean',
-} as const;
-
-type KnobType = typeof KnobType[keyof typeof KnobType];
-
-interface KnobInterface {
-  label: string;
-  prop: string;
-}
-
-interface BooleanKnobInterface extends KnobInterface {
-  onChange: (value: boolean, prop: string) => void;
-  value: boolean;
-}
-
-interface TextKnobInterface extends KnobInterface {
-  onChange: (value: string, prop: string) => void;
-  value: string;
-}
-
-interface NumberKnobInterface extends KnobInterface {
-  onChange: (value: number, prop: string) => void;
-  value: number;
-}
-
-interface SelectKnobInterface extends KnobInterface {
-  onChange: (value: string, prop: string) => void;
-  value: string;
-  options: Array<string>;
-}
-
-function BooleanKnob({ onChange, label, value, prop }: BooleanKnobInterface) {
-  const handleChange = () => {
-    onChange(!value, prop);
-  };
-
-  return (
-    <>
-      <label>{label}</label>
-      <Toggle onChange={handleChange} value={value.toString()} />
-    </>
-  );
-}
-
-function NumberKnob({ onChange, label, value, prop }: NumberKnobInterface) {
-  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(parseInt(target.value), prop);
-  };
-
-  return (
-    <TextInput
-      type="number"
-      onChange={handleChange}
-      label={label}
-      value={value.toString()}
-    />
-  );
-}
-
-function TextKnob({ onChange, label, value, prop }: TextKnobInterface) {
-  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(target.value, prop);
-  };
-
-  return (
-    <TextInput onChange={handleChange} label={label} value={value.toString()} />
-  );
-}
-
-function SelectKnob({}: SelectKnobInterface) {
-  return <div>select</div>;
-}
+const previewStyle = css`
+  display: flex;
+  flex-direction: column;
+  padding-top: ${spacing[3]}px;
+  margin-top: 56px;
+`;
 
 interface SelectConfigInterface {
   type: 'select';
-  options: Array<unknown>;
+  options: Array<string>;
   default: string;
   label: string;
 }
@@ -125,14 +65,23 @@ function LiveExample({
   props: propsProp,
 }: LiveExampleInterface) {
   const initialProps = Object.keys(propsProp).reduce((acc, val) => {
-    acc[val] = propsProp[val].default;
+    if (val === 'glyph') {
+      acc[val] = <Icon glyph={propsProp[val].default} />;
+    } else {
+      acc[val] = propsProp[val].default;
+    }
+
     return { ...acc };
   }, {});
 
   const [props, setProps] = useState(initialProps);
 
   const onChange = (value, prop) => {
-    setProps({ ...props, [prop]: value });
+    if (prop === 'glyph') {
+      setProps({ ...props, [prop]: <Icon glyph={value} /> });
+    } else {
+      setProps({ ...props, [prop]: value });
+    }
   };
 
   const renderKnobs = () => {
@@ -161,10 +110,30 @@ function LiveExample({
   };
 
   return (
-    <GridContainer>
+    <GridContainer align="center" justify="center">
       <GridItem sm={12} md={12} lg={12} xl={12}>
-        <Component {...props} />
-        <div>{renderKnobs()}</div>
+        <Card className={previewStyle}>
+          <div
+            className={css`
+              border-bottom: 1px solid ${uiColors.gray.light2};
+              padding: ${spacing[4]}px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            `}
+          >
+            <Component {...props} />
+          </div>
+          <div
+            className={css`
+              padding-left: ${spacing[4]}px;
+              padding-right: ${spacing[4]}px;
+              padding-top: 42px;
+            `}
+          >
+            {renderKnobs()}
+          </div>
+        </Card>
       </GridItem>
     </GridContainer>
   );

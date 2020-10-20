@@ -7,6 +7,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { H2 } from '@leafygreen-ui/typography';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { useViewportSize } from '@leafygreen-ui/hooks';
+import { glyphs } from '@leafygreen-ui/icon';
 import { BaseLayoutProps } from 'utils/types';
 import LiveExample from 'components/LiveExample';
 import CodeDocs from 'components/CodeDocs';
@@ -78,14 +79,37 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
             props={{
               variant: {
                 type: 'select',
-                options: ['primary', 'default'],
+                options: ['primary', 'default', 'info', 'dark', 'danger'],
                 default: 'primary',
                 label: 'Variant',
+              },
+              size: {
+                type: 'select',
+                options: ['xsmall', 'small', 'normal', 'large'],
+                default: 'normal',
+                label: 'Size',
               },
               disabled: {
                 type: 'boolean',
                 default: false,
                 label: 'Disabled',
+              },
+              href: {
+                type: 'select',
+                options: ['localhost:3000/components/box', undefined],
+                default: 'localhost:3000/components/box',
+                label: 'href',
+              },
+              title: {
+                type: 'text',
+                default: 'The button title',
+                label: 'Title',
+              },
+              glyph: {
+                type: 'select',
+                options: Object.keys(glyphs),
+                default: 'Edit',
+                label: 'Glyph',
               },
               children: {
                 type: 'text',
