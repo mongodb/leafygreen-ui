@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 6.1.0
+
+### Minor Changes
+
+- 5cf0c95c: Added `enforceExhaustive` helper
+
 ## 6.0.1
 
 ### Patch Changes

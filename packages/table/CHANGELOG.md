@@ -1,5 +1,17 @@
 # @leafygreen-ui/table
 
+## 1.0.0
+
+### Major Changes
+
+- 2643d4e7: Updates styles to no longer truncate large column data by default
+- 034d3893: Adds `box-shadow` to table when its contents overflow
+
+### Patch Changes
+
+- Updated dependencies [5cf0c95c]
+  - @leafygreen-ui/lib@6.1.0
+
 ## 0.2.1
 
 ### Patch Changes

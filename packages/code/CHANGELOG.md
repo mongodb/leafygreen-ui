@@ -1,5 +1,18 @@
 # @leafygreen-ui/code
 
+## 7.1.0
+
+### Minor Changes
+
+- 2643d4e7: Adds support for `xml` language
+
+### Patch Changes
+
+- Updated dependencies [5cf0c95c]
+- Updated dependencies [2643d4e7]
+  - @leafygreen-ui/lib@6.1.0
+  - @leafygreen-ui/syntax@6.1.0
+
 ## 7.0.1
 
 ### Patch Changes
