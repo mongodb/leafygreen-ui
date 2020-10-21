@@ -24,6 +24,9 @@
     },
     {
       "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../live-example"
     }
   ]
 }

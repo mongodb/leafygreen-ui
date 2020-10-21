@@ -34,28 +34,28 @@ interface KnobInterface {
   prop: string;
 }
 
-interface BooleanKnobInterface extends KnobInterface {
+export interface BooleanKnobInterface extends KnobInterface {
   onChange: (value: boolean, prop: string) => void;
   value: boolean;
 }
 
-interface TextKnobInterface extends KnobInterface {
+export interface TextKnobInterface extends KnobInterface {
   onChange: (value: string, prop: string) => void;
   value: string;
 }
 
-interface NumberKnobInterface extends KnobInterface {
+export interface NumberKnobInterface extends KnobInterface {
   onChange: (value: number, prop: string) => void;
   value: number;
 }
 
-interface BasicSelectKnobInterface extends KnobInterface {
+export interface BasicSelectKnobInterface extends KnobInterface {
   onChange: (value: string, prop: string) => void;
   value: string;
   options: Array<string>;
 }
 
-interface GlyphSelectKnobInterface {
+export interface GlyphSelectKnobInterface {
   onChange: (value: string, prop: string) => void;
   value: React.ReactElement;
   options: Array<string>;
@@ -144,6 +144,7 @@ function SelectKnob({
   return (
     <div className={knobContainerStyle}>
       <label className={labelStyle}>{label}</label>
+      {/* eslint-disable-next-line */}
       <select onChange={handleChange}>{generateOptions()}</select>
     </div>
   );

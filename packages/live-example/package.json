@@ -17,7 +17,7 @@
   },
   "keywords": [],
   "license": "Apache-2.0",
-   "dependencies": {
+  "dependencies": {
     "@leafygreen-ui/lib": "^6.1.0",
     "@leafygreen-ui/emotion": "^3.0.1",
     "@leafygreen-ui/card": "^5.0.1",

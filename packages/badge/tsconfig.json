@@ -18,6 +18,9 @@
     },
     {
       "path": "../theme"
+    },
+    {
+      "path": "../live-example"
     }
   ]
 }

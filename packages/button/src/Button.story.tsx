@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { text, select, boolean } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import Button, { Size, Variant } from '.';
+import Button, { ButtonLiveExample, Size, Variant } from '.';
 
 const buttonClass = css`
   & + & {
@@ -12,6 +12,7 @@ const buttonClass = css`
 `;
 
 storiesOf('Button', module)
+  .add('With our own storybook mechanism', () => <ButtonLiveExample />)
   .add('Default', () => (
     <Button
       size={select('Size', Object.values(Size) as Array<Size>, Size.Normal)}

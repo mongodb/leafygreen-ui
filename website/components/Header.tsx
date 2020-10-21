@@ -7,12 +7,11 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { H2 } from '@leafygreen-ui/typography';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { useViewportSize } from '@leafygreen-ui/hooks';
-import { glyphs } from '@leafygreen-ui/icon';
 import { BaseLayoutProps } from 'utils/types';
-import LiveExample from '@leafygreen-ui/live-example';
 import CodeDocs from 'components/CodeDocs';
 import ReactIcon from 'components/svgs/ReactIcon';
 import SketchIcon from 'components/svgs/SketchIcon';
+import { componentLiveExampleMap } from 'utils/componentLiveExampleMap';
 
 const componentsStyle = css`
   height: 16px;
@@ -58,6 +57,8 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
     return null;
   }
 
+  const LiveExampleComponent = componentLiveExampleMap[component];
+
   return (
     <div>
       <div className={marginBotton}>
@@ -74,51 +75,7 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
       </div>
       <Tabs>
         <Tab default name="Live Example">
-          <LiveExample
-            knobsConfig={{
-              variant: {
-                type: 'select',
-                options: ['primary', 'default', 'info', 'dark', 'danger'],
-                default: 'primary',
-                label: 'Variant',
-              },
-              size: {
-                type: 'select',
-                options: ['xsmall', 'small', 'normal', 'large'],
-                default: 'normal',
-                label: 'Size',
-              },
-              disabled: {
-                type: 'boolean',
-                default: false,
-                label: 'Disabled',
-              },
-              href: {
-                type: 'select',
-                options: ['localhost:3000/components/box', undefined],
-                default: 'localhost:3000/components/box',
-                label: 'href',
-              },
-              title: {
-                type: 'text',
-                default: 'The button title',
-                label: 'Title',
-              },
-              glyph: {
-                type: 'select',
-                options: Object.keys(glyphs),
-                default: 'Edit',
-                label: 'Glyph',
-              },
-              children: {
-                type: 'text',
-                default: 'Button',
-                label: 'Children',
-              },
-            }}
-          >
-            {props => <Button {...props} />}
-          </LiveExample>
+          <LiveExampleComponent />
         </Tab>
         <Tab
           name={
