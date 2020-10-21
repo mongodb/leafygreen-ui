@@ -1,0 +1,38 @@
+{
+  "extends": "../../package.tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src/**/*", "../../typings/*", "typings/**/*"],
+  "references": [
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../card"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../toggle"
+    },
+    {
+      "path": "../tokens"
+    },
+    {
+      "path": "../text-input"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { css } from 'emotion';
+import { enforceExhaustive } from '@leafygreen-ui/lib';
+import { css } from '@leafygreen-ui/emotion';
 import Card from '@leafygreen-ui/card';
 import Icon from '@leafygreen-ui/icon';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -10,9 +11,7 @@ import {
   TextKnob,
   NumberKnob,
   SelectKnob,
-} from 'components/Knobs';
-import { GridContainer, GridItem } from 'components/Grid';
-import { enforceExhaustive } from '@leafygreen-ui/lib/dist';
+} from './Knobs';
 
 const previewStyle = css`
   display: flex;
@@ -56,19 +55,16 @@ type PropsType =
   | TextConfigInterface;
 
 interface LiveExampleInterface {
-  component: React.ElementType;
-  props: { [key: string]: PropsType };
+  knobsConfig: { [key: string]: PropsType };
+  children: (props: { [key: string]: unknown }) => JSX.Element;
 }
 
-function LiveExample({
-  component: Component,
-  props: propsProp,
-}: LiveExampleInterface) {
-  const initialProps = Object.keys(propsProp).reduce((acc, val) => {
+function LiveExample({ knobsConfig, children }: LiveExampleInterface) {
+  const initialProps = Object.keys(knobsConfig).reduce((acc, val) => {
     if (val === 'glyph') {
-      acc[val] = <Icon glyph={propsProp[val].default} />;
+      acc[val] = <Icon glyph={knobsConfig[val].default} />;
     } else {
-      acc[val] = propsProp[val].default;
+      acc[val] = knobsConfig[val].default;
     }
 
     return { ...acc };
@@ -85,7 +81,7 @@ function LiveExample({
   };
 
   const renderKnobs = () => {
-    return Object.entries(propsProp).map(([propName, knobConfig]) => {
+    return Object.entries(knobsConfig).map(([propName, knobConfig]) => {
       const sharedProps = {
         onChange,
         propName,
@@ -110,32 +106,30 @@ function LiveExample({
   };
 
   return (
-    <GridContainer align="center" justify="center">
-      <GridItem sm={12} md={12} lg={12} xl={12}>
-        <Card className={previewStyle}>
-          <div
-            className={css`
-              border-bottom: 1px solid ${uiColors.gray.light2};
-              padding: ${spacing[4]}px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            `}
-          >
-            <Component {...props} />
-          </div>
-          <div
-            className={css`
-              padding-left: ${spacing[4]}px;
-              padding-right: ${spacing[4]}px;
-              padding-top: 42px;
-            `}
-          >
-            {renderKnobs()}
-          </div>
-        </Card>
-      </GridItem>
-    </GridContainer>
+    <div>
+      <Card className={previewStyle}>
+        <div
+          className={css`
+            border-bottom: 1px solid ${uiColors.gray.light2};
+            padding: ${spacing[4]}px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          `}
+        >
+          {children(props)}
+        </div>
+        <div
+          className={css`
+            padding-left: ${spacing[4]}px;
+            padding-right: ${spacing[4]}px;
+            padding-top: 42px;
+          `}
+        >
+          {renderKnobs()}
+        </div>
+      </Card>
+    </div>
   );
 }
 

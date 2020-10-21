@@ -9,7 +9,7 @@ import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { glyphs } from '@leafygreen-ui/icon';
 import { BaseLayoutProps } from 'utils/types';
-import LiveExample from 'components/LiveExample';
+import LiveExample from '@leafygreen-ui/live-example';
 import CodeDocs from 'components/CodeDocs';
 import ReactIcon from 'components/svgs/ReactIcon';
 import SketchIcon from 'components/svgs/SketchIcon';
@@ -75,8 +75,7 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
       <Tabs>
         <Tab default name="Live Example">
           <LiveExample
-            component={Button}
-            props={{
+            knobsConfig={{
               variant: {
                 type: 'select',
                 options: ['primary', 'default', 'info', 'dark', 'danger'],
@@ -117,7 +116,9 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
                 label: 'Children',
               },
             }}
-          />
+          >
+            {props => <Button {...props} />}
+          </LiveExample>
         </Tab>
         <Tab
           name={
