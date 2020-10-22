@@ -163,7 +163,7 @@ function getScrollShadowStyle(scrollState: ScrollState, mode: Mode): string {
   return '';
 }
 
-interface CodeProps extends Omit<SyntaxProps, 'onCopy'> {
+export interface CodeProps extends Omit<SyntaxProps, 'onCopy'> {
   /**
    * Shows line numbers in preformatted code blocks.
    *

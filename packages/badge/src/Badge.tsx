@@ -66,7 +66,7 @@ export const badgeVariants: { [K in Variant]: string } = {
   `,
 } as const;
 
-interface BadgeProps {
+export interface BadgeProps {
   /**
    * An additional className to add to the component's classList
    */

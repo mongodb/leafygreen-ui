@@ -125,7 +125,8 @@ const disabledTextStyle = css`
   color: #babdbe; // theme colors.gray[5]
 `;
 
-interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface CheckboxProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   darkMode?: boolean;
   checked?: boolean;
   label: React.ReactNode;

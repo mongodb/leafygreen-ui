@@ -43,16 +43,18 @@ const clickableStyle = css`
   }
 `;
 
-interface CardProps {
+interface BasicCardProps {
   className?: string;
   contentStyle?: ContentStyle;
 }
 
-const Card: ExtendableBox<CardProps> = ({
+export type ExtendedCardProps = BoxProps<'div', BasicCardProps>;
+
+const Card: ExtendableBox<BasicCardProps> = ({
   className,
   contentStyle,
   ...rest
-}: BoxProps<'div', CardProps>) => {
+}: ExtendedCardProps) => {
   if (
     contentStyle === undefined &&
     (('onClick' in rest && rest.onClick !== undefined) ||

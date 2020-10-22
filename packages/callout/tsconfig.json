@@ -18,6 +18,9 @@
     },
     {
       "path": "../icon"
+    },
+    {
+      "path": "../live-example"
     }
   ]
 }

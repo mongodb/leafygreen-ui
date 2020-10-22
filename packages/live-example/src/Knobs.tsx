@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
@@ -20,6 +20,10 @@ const labelStyle = css`
   font-weight: 600;
 `;
 
+const labelDarkMode = css`
+  color: ${uiColors.gray.light1};
+`;
+
 const KnobType = {
   Select: 'select',
   Number: 'number',
@@ -32,6 +36,7 @@ type KnobType = typeof KnobType[keyof typeof KnobType];
 interface KnobInterface {
   label: string;
   prop: string;
+  darkMode: boolean;
 }
 
 export interface BooleanKnobInterface extends KnobInterface {
@@ -63,20 +68,39 @@ export interface GlyphSelectKnobInterface {
   prop: 'glyph';
 }
 
-function BooleanKnob({ onChange, label, value, prop }: BooleanKnobInterface) {
+function BooleanKnob({
+  onChange,
+  label,
+  value,
+  prop,
+  darkMode,
+}: BooleanKnobInterface) {
   const handleChange = () => {
     onChange(!value, prop);
   };
 
   return (
     <div className={knobContainerStyle}>
-      <label className={labelStyle}>{label}</label>
-      <Toggle onChange={handleChange} value={value.toString()} size="small" />
+      <label className={cx(labelStyle, { [labelDarkMode]: darkMode })}>
+        {label}
+      </label>
+      <Toggle
+        onChange={handleChange}
+        value={value.toString()}
+        size="small"
+        darkMode={darkMode}
+      />
     </div>
   );
 }
 
-function NumberKnob({ onChange, label, value, prop }: NumberKnobInterface) {
+function NumberKnob({
+  onChange,
+  label,
+  value,
+  prop,
+  darkMode,
+}: NumberKnobInterface) {
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     onChange(parseInt(target.value), prop);
   };
@@ -85,7 +109,10 @@ function NumberKnob({ onChange, label, value, prop }: NumberKnobInterface) {
 
   return (
     <div className={knobContainerStyle}>
-      <label className={labelStyle} id={labelId}>
+      <label
+        className={cx(labelStyle, { [labelDarkMode]: darkMode })}
+        id={labelId}
+      >
         {label}
       </label>
       <TextInput
@@ -98,7 +125,13 @@ function NumberKnob({ onChange, label, value, prop }: NumberKnobInterface) {
   );
 }
 
-function TextKnob({ onChange, label, value, prop }: TextKnobInterface) {
+function TextKnob({
+  onChange,
+  label,
+  value,
+  prop,
+  darkMode,
+}: TextKnobInterface) {
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     onChange(target.value, prop);
   };
@@ -107,7 +140,10 @@ function TextKnob({ onChange, label, value, prop }: TextKnobInterface) {
 
   return (
     <div className={knobContainerStyle}>
-      <label className={labelStyle} id={labelId}>
+      <label
+        className={cx(labelStyle, { [labelDarkMode]: darkMode })}
+        id={labelId}
+      >
         {label}
       </label>
       <TextInput
@@ -125,6 +161,7 @@ function SelectKnob({
   value,
   prop,
   options,
+  darkMode,
 }: BasicSelectKnobInterface | GlyphSelectKnobInterface) {
   const normalizedValue =
     prop === 'glyph' ? (value as React.ReactElement).props.glyph : value;
@@ -143,7 +180,9 @@ function SelectKnob({
 
   return (
     <div className={knobContainerStyle}>
-      <label className={labelStyle}>{label}</label>
+      <label className={cx(labelStyle, { [labelDarkMode]: darkMode })}>
+        {label}
+      </label>
       {/* eslint-disable-next-line */}
       <select onChange={handleChange}>{generateOptions()}</select>
     </div>

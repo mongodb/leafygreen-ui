@@ -184,7 +184,7 @@ const getTextStyle = (image: boolean, dismissible: boolean) => {
   `;
 };
 
-interface BannerProps extends React.ComponentPropsWithoutRef<'div'> {
+export interface BannerProps extends React.ComponentPropsWithoutRef<'div'> {
   /**
    * Sets the variant for the Banner
    *

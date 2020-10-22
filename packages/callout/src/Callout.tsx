@@ -144,7 +144,7 @@ interface ColorSet {
   icon: string;
 }
 
-interface CalloutProps {
+export interface CalloutProps {
   title?: string;
   children: React.ReactNode;
   className?: string;

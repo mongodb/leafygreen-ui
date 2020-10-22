@@ -75,7 +75,7 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
       </div>
       <Tabs>
         <Tab default name="Live Example">
-          <LiveExampleComponent />
+          {componentLiveExampleMap[component] ? <LiveExampleComponent /> : 'hi'}
         </Tab>
         <Tab
           name={

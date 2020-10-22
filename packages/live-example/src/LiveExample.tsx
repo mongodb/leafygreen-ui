@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { enforceExhaustive } from '@leafygreen-ui/lib';
-import { css } from '@leafygreen-ui/emotion';
+import { cx, css } from '@leafygreen-ui/emotion';
 import Card from '@leafygreen-ui/card';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -31,6 +31,10 @@ const componentContainer = css`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const componentContainerDarkMode = css`
+  border-bottom: 1px solid ${uiColors.gray.dark2};
 `;
 
 const knobContainer = css`
@@ -73,16 +77,19 @@ type PropsType =
   | TextConfigInterface
   | SelectConfigInterface;
 
-interface KnobsConfigInterface {
-  [key: string]: PropsType;
+export type KnobsConfigInterface<ComponentProps> = {
+  [K in keyof ComponentProps]: PropsType;
+};
+
+interface LiveExampleInterface<ComponentProps> {
+  knobsConfig: KnobsConfigInterface<ComponentProps>;
+  children: (props: ComponentProps) => JSX.Element;
 }
 
-interface LiveExampleInterface {
-  knobsConfig: KnobsConfigInterface;
-  children: (props: { [key: string]: unknown }) => JSX.Element;
-}
-
-function LiveExample({ knobsConfig, children }: LiveExampleInterface) {
+function LiveExample<ComponentProps extends Record<string, unknown>>({
+  knobsConfig,
+  children,
+}: LiveExampleInterface<ComponentProps>) {
   const initialProps = Object.keys(knobsConfig).reduce((acc, val) => {
     if (val === 'glyph') {
       acc[val] = (
@@ -93,9 +100,9 @@ function LiveExample({ knobsConfig, children }: LiveExampleInterface) {
     }
 
     return { ...acc };
-  }, {} as { [key: string]: unknown });
+  }, {} as ComponentProps);
 
-  const [props, setProps] = useState(initialProps);
+  const [props, setProps] = useState<ComponentProps>(initialProps);
 
   const onChange = (value: PropsType['default'], prop: string) => {
     if (prop === 'glyph') {
@@ -118,6 +125,7 @@ function LiveExample({ knobsConfig, children }: LiveExampleInterface) {
         prop: propName,
         key: propName,
         options: knobConfig?.options,
+        darkMode: !!props.darkMode,
       };
 
       switch (knobConfig.type) {
@@ -143,8 +151,20 @@ function LiveExample({ knobsConfig, children }: LiveExampleInterface) {
 
   return (
     <div>
-      <Card className={previewStyle}>
-        <div className={componentContainer}>{children(props)}</div>
+      <Card
+        className={cx(previewStyle, {
+          [css`
+            background-color: ${uiColors.gray.dark3};
+          `]: !!props.darkMode,
+        })}
+      >
+        <div
+          className={cx(componentContainer, {
+            [componentContainerDarkMode]: !!props.darkMode,
+          })}
+        >
+          {children(props)}
+        </div>
         <div className={knobContainer}>{renderKnobs()}</div>
       </Card>
     </div>

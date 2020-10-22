@@ -18,6 +18,9 @@
     },
     {
       "path": "../box"
+    },
+    {
+      "path": "../live-example"
     }
   ]
 }

@@ -36,6 +36,8 @@ const components = [
   'box',
   'button',
   'callout',
+  'card',
+  'checkbox',
   'code',
   'confirmation-modal',
   'icon',

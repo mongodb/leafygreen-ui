@@ -1,8 +1,11 @@
 import React from 'react';
-import LiveExample, { KnobType } from '@leafygreen-ui/live-example';
-import Badge, { Variant } from '.';
+import LiveExample, {
+  KnobsConfigInterface,
+  KnobType,
+} from '@leafygreen-ui/live-example';
+import Badge, { BadgeProps, Variant } from './Badge';
 
-const knobsConfig = {
+const knobsConfig: KnobsConfigInterface<Partial<BadgeProps>> = {
   variant: {
     type: KnobType.Select,
     options: Object.values(Variant),
@@ -17,6 +20,7 @@ const knobsConfig = {
 };
 
 const BadgeLiveExample = () => {
+  console.log('inside badge');
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <Badge {...props} />}
