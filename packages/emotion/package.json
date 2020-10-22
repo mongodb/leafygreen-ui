@@ -21,6 +21,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/tokens": "^0.5.0",
     "create-emotion": "^10.0.7",
     "create-emotion-server": "10.0.27",
     "emotion": "^10.0.7"

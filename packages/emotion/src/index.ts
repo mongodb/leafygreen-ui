@@ -1,5 +1,7 @@
-import emotion from './emotion';
 import createEmotionServer from 'create-emotion-server';
+import emotion from './emotion';
+
+export { default as mqcss } from './mqcss';
 
 export const {
   flush,
