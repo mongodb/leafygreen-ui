@@ -21,7 +21,7 @@ npm install @leafygreen-ui/select
 ## Example
 
 ```js
-import Select, { Option, OptionGroup, Size } from '@leafygreen-ui/select';
+import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 
 <Select
   label="Label"
@@ -108,7 +108,7 @@ import Select, { Option, OptionGroup, Size } from '@leafygreen-ui/select';
 | `onChange`     | `function`                                         | A function that gets called when the selected value changes. Receives the value string as the first argument. | `() => {}` |
 | `readOnly`     | `boolean`                                          | Disables the console warning when the component is controlled and no `onChange` prop is provided.             | `false`    |
 
-## Option
+# Option
 
 | Prop        | Type                 | Description                                                                                           | Default                     |
 | ----------- | -------------------- | ----------------------------------------------------------------------------------------------------- | --------------------------- |
@@ -118,7 +118,7 @@ import Select, { Option, OptionGroup, Size } from '@leafygreen-ui/select';
 | `value`     | `string`             | Corresponds to the value passed into the `onChange` prop of `<Select />` when the option is selected. | text contents of `children` |
 | `disabled`  | `boolean`            | Prevents the option from being selectable.                                                            | `false`                     |
 
-## OptionGroup
+# OptionGroup
 
 | Prop        | Type      | Description                                               | Default |
 | ----------- | --------- | --------------------------------------------------------- | ------- |

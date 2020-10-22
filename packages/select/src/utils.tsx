@@ -69,7 +69,19 @@ export function convertToInternalElements(
 }
 
 export function getOptionValue(option: OptionElement | null): string {
-  return option !== null ? option.props.value ?? option.props.children : '';
+  if (option === null) {
+    return '';
+  }
+
+  if (option.props.value !== undefined) {
+    return option.props.value;
+  }
+
+  if (option.props.children instanceof Array) {
+    return option.props.children.filter(child => !isReactEmpty(child)).join('');
+  }
+
+  return option.props.children.toString();
 }
 
 export function isOptionDisabled(
@@ -138,14 +150,17 @@ export function reconcileOption(
 export const useSmartRef: typeof useRef = function <T>(
   initialValue?: T,
 ): React.MutableRefObject<T | undefined> {
-  const [value, setValue] = useState(initialValue);
+  // eslint-disable-next-line prefer-const
+  let [value, setValue] = useState(initialValue);
+
   return useMemo(
     () => ({
       get current() {
         return value;
       },
-      set current(value) {
-        setValue(value);
+      set current(nextValue) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        setValue((value = nextValue));
       },
     }),
     [value],

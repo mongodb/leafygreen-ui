@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { cx, css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { IdAllocator } from '@leafygreen-ui/lib';
 import { breakpoints } from '@leafygreen-ui/tokens';
 import { colorSets, mobileSizeSet, Mode, Size, sizeSets } from './styleSets';
@@ -60,7 +60,7 @@ const idAllocator = IdAllocator.create('select');
 export default function Select({
   children,
   darkMode = false,
-  size = Size.Normal,
+  size = Size.Default,
   disabled = false,
   className,
   id: idProp,

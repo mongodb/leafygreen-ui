@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { cx, css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import Option from './Option';
 import SelectContext from './SelectContext';
 import { colorSets } from './styleSets';

@@ -6,10 +6,10 @@ import {
   RenderResult,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { enforceExhaustive } from '@leafygreen-ui/lib';
+import { enforceExhaustive, keyMap } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import Select, { Option, OptionGroup } from '.';
+import { Option, OptionGroup, Select } from '.';
 import { act } from 'react-dom/test-utils';
 
 const Color = {
@@ -357,10 +357,7 @@ describe('packages/select', () => {
         expect(queryByRole('listbox')).not.toBeInTheDocument();
         expect(queryByText('None')).not.toBeInTheDocument();
 
-        fireEvent.keyDown(getByRole('combobox'), {
-          key: 'ArrowDown',
-          keyCode: 40,
-        });
+        fireEvent.keyDown(getByRole('combobox'), { keyCode: keyMap.ArrowDown });
 
         expect(getByRole('listbox')).toBeVisible();
 
@@ -376,10 +373,7 @@ describe('packages/select', () => {
         expect(queryByRole('listbox')).not.toBeInTheDocument();
         expect(queryByText('Yellow')).not.toBeInTheDocument();
 
-        fireEvent.keyDown(getByRole('combobox'), {
-          key: 'ArrowUp',
-          keyCode: 38,
-        });
+        fireEvent.keyDown(getByRole('combobox'), { keyCode: keyMap.ArrowUp });
 
         expect(getByRole('listbox')).toBeVisible();
 
@@ -407,7 +401,7 @@ describe('packages/select', () => {
           );
 
           const combobox = getByRole('combobox');
-          fireEvent.keyDown(combobox, { key: 'ArrowDown', keyCode: 40 });
+          fireEvent.keyDown(combobox, { keyCode: keyMap.ArrowDown });
 
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
@@ -418,7 +412,7 @@ describe('packages/select', () => {
           );
 
           const combobox = getByRole('combobox');
-          fireEvent.keyDown(combobox, { key: 'ArrowUp', keyCode: 38 });
+          fireEvent.keyDown(combobox, { keyCode: keyMap.ArrowUp });
 
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
@@ -460,8 +454,7 @@ describe('packages/select', () => {
 
       test('by escape key', () => {
         fireEvent.keyDown(getByRole(focusedElementRole), {
-          key: 'Escape',
-          keyCode: 27,
+          keyCode: keyMap.Escape,
         });
 
         const combobox = getByRole('combobox');
@@ -507,7 +500,7 @@ describe('packages/select', () => {
 
       userEvent.tab();
 
-      fireEvent.keyDown(combobox, { key: 'Escape', keyCode: 27 });
+      fireEvent.keyDown(combobox, { keyCode: keyMap.Escape });
 
       expect(getByTextFor(combobox, 'Select')).toBeVisible();
     });
@@ -553,9 +546,9 @@ describe('packages/select', () => {
         ['option in group', 'Green', Color.Green],
       ])('%p', (_, optionText, optionValue) => {
         test.each([
-          ['tab', 'Tab', 9],
-          ['enter', 'Enter', 13],
-        ])('by %p key', (_, key, keyCode) => {
+          ['tab', keyMap.Tab],
+          ['enter', keyMap.Enter],
+        ])('by %p key', (_, keyCode) => {
           userEvent.click(combobox);
 
           const targetOption = getByText(optionText).closest('li');
@@ -563,7 +556,7 @@ describe('packages/select', () => {
 
           act(() => targetOption!.focus());
 
-          fireEvent.keyDown(targetOption!, { key, keyCode });
+          fireEvent.keyDown(targetOption!, { keyCode });
 
           expect(onChangeSpy).toHaveBeenCalledTimes(1);
           expect(onChangeSpy).toHaveBeenCalledWith(optionValue);
@@ -601,16 +594,16 @@ describe('packages/select', () => {
         ['option in disabled group', 'Indigo'],
       ])('does not occur for %p', (_, optionText) => {
         test.each([
-          ['tab', 'Tab', 9],
-          ['enter', 'Enter', 13],
-        ])('by %p key', (_, key, keyCode) => {
+          ['tab', keyMap.Tab],
+          ['enter', keyMap.Enter],
+        ])('by %p key', (_, keyCode) => {
           userEvent.click(combobox);
 
           const targetOption = getByText(optionText).closest('li');
           expect(targetOption).not.toBe(null);
 
           act(() => targetOption!.focus());
-          fireEvent.keyDown(targetOption!, { key, keyCode });
+          fireEvent.keyDown(targetOption!, { keyCode });
 
           expect(onChangeSpy).not.toHaveBeenCalled();
 
@@ -646,13 +639,13 @@ describe('packages/select', () => {
         const listbox = getByRole('listbox');
 
         enabledOptions.forEach(expectedOptionText => {
-          fireEvent.keyDown(listbox, { key: 'ArrowDown', keyCode: 40 });
+          fireEvent.keyDown(listbox, { keyCode: keyMap.ArrowDown });
 
           expect(getByText(expectedOptionText).closest('li')).toHaveFocus();
         });
 
         // Doesn't move when the end is reached
-        fireEvent.keyDown(listbox, { key: 'ArrowDown', keyCode: 40 });
+        fireEvent.keyDown(listbox, { keyCode: keyMap.ArrowDown });
 
         expect(getByText('Yellow').closest('li')).toHaveFocus();
       });
@@ -665,13 +658,13 @@ describe('packages/select', () => {
         const listbox = getByRole('listbox');
 
         [...enabledOptions].reverse().forEach(expectedOptionText => {
-          fireEvent.keyDown(listbox, { key: 'ArrowUp', keyCode: 38 });
+          fireEvent.keyDown(listbox, { keyCode: keyMap.ArrowUp });
 
           expect(getByText(expectedOptionText).closest('li')).toHaveFocus();
         });
 
         // Doesn't move when the top is reached
-        fireEvent.keyDown(listbox, { key: 'ArrowUp', keyCode: 38 });
+        fireEvent.keyDown(listbox, { keyCode: keyMap.ArrowUp });
 
         expect(getByText('None').closest('li')).toHaveFocus();
       });
@@ -754,7 +747,7 @@ describe('packages/select', () => {
         rerender(
           <Select label="Choice" name="choice">
             {nonselected}
-            <Option>selected</Option>
+            <Option>select{'ed'}</Option>
           </Select>,
         );
 

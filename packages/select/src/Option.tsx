@@ -85,7 +85,7 @@ export function InternalOption({
     if (shouldScrollIntoView) {
       scrollIntoView();
     }
-  }, [ref, scrollIntoView, shouldScrollIntoView]);
+  }, [scrollIntoView, shouldScrollIntoView]);
 
   const wasFocused = usePrevious(focused);
   const shouldFocus = focused && !wasFocused;
@@ -177,17 +177,13 @@ export function InternalOption({
 
 InternalOption.displayName = 'Option';
 
-type Props = {
+interface Props {
   className?: string;
   glyph?: GlyphElement;
   disabled?: boolean;
-} & (
-  | {
-      value: string;
-      children: React.ReactText | Array<React.ReactText | ReactEmpty>;
-    }
-  | { children: string; value?: undefined }
-);
+  value?: string;
+  children: React.ReactText | Array<React.ReactText | ReactEmpty>;
+}
 
 export default function Option(_: Props): JSX.Element {
   throw Error('`Option` must be a child of a `Select` instance');

@@ -10,7 +10,7 @@ interface SelectData {
 
 export const SelectContext = createContext<SelectData>({
   mode: Mode.Light,
-  size: Size.Normal,
+  size: Size.Default,
   open: false,
   disabled: false,
 });

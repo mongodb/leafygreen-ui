@@ -5,7 +5,7 @@ import { css } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { uiColors } from '@leafygreen-ui/palette';
-import Select, { Option, OptionGroup, Size } from '.';
+import { Option, OptionGroup, Select, Size } from '.';
 
 storiesOf('Select', module)
   .add('Uncontrolled', () => {
@@ -13,7 +13,7 @@ storiesOf('Select', module)
     const label = text('Label', 'Label');
     const description = text('Description', 'This is a description');
     const placeholder = text('Placeholder', 'Select');
-    const size = select('Size', Object.values(Size), Size.Normal);
+    const size = select('Size', Object.values(Size), Size.Default);
     const disabled = boolean('Disabled', false);
     const withIcons = boolean('With icons', false);
     const glyph = withIcons ? <BeakerIcon /> : undefined;
@@ -70,7 +70,7 @@ storiesOf('Select', module)
     const label = text('Label', 'Label');
     const description = text('Description', 'This is a description');
     const placeholder = text('Placeholder', 'Select');
-    const size = select('Size', Object.values(Size), Size.Normal);
+    const size = select('Size', Object.values(Size), Size.Default);
     const disabled = boolean('Disabled', false);
     const withIcons = boolean('With icons', false);
     const glyph = withIcons ? <BeakerIcon /> : undefined;

@@ -190,7 +190,7 @@ export const colorSets: Record<Mode, ColorSet> = {
 export const Size = {
   XSmall: 'xsmall',
   Small: 'small',
-  Normal: 'normal',
+  Default: 'default',
   Large: 'large',
 } as const;
 
@@ -258,7 +258,7 @@ export const sizeSets: Record<Size, SizeSet> = {
       text: 14,
     },
   },
-  [Size.Normal]: {
+  [Size.Default]: {
     height: 36,
     width: 194,
     text: 14,

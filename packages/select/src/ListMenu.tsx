@@ -1,6 +1,7 @@
 import React, { useCallback, useContext } from 'react';
-import { cx, css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize } from '@leafygreen-ui/hooks';
+import { keyMap } from '@leafygreen-ui/lib';
 import { breakpoints } from '@leafygreen-ui/tokens';
 import SelectContext from './SelectContext';
 import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
@@ -8,10 +9,8 @@ import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
 const menuStyle = css`
   position: relative;
   top: 5px;
-
   width: 100%;
   border-radius: 3px;
-
   line-height: 16px;
   list-style: none;
   margin: 0;
@@ -54,17 +53,17 @@ export default function ListMenu({
       let bubble = false;
 
       switch (event.keyCode) {
-        case 9: // Tab
-        case 13: // Enter
+        case keyMap.Tab:
+        case keyMap.Enter:
           onSelectFocusedOption();
           break;
-        case 27: // Escape
+        case keyMap.Escape:
           onClose();
           break;
-        case 38: // ArrowUp
+        case keyMap.ArrowUp:
           onFocusPreviousOption();
           break;
-        case 40: // ArrowDown
+        case keyMap.ArrowDown:
           onFocusNextOption();
           break;
         /* istanbul ignore next */

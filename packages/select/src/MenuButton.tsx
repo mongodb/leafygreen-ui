@@ -1,7 +1,8 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { cx, css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { keyMap } from '@leafygreen-ui/lib';
 import { breakpoints } from '@leafygreen-ui/tokens';
 import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
@@ -111,22 +112,22 @@ function MenuButton({
       let bubble = false;
 
       switch (event.keyCode) {
-        case 9: // Tab
+        case keyMap.Tab:
           onClose();
           bubble = true;
           break;
-        case 27: // Escape
+        case keyMap.Escape:
           if (open) {
             onClose();
           } else {
             onDeselect();
           }
           break;
-        case 38: // ArrowUp
+        case keyMap.ArrowUp:
           onOpen();
           onFocusLastOption();
           break;
-        case 40: // ArrowDown
+        case keyMap.ArrowDown:
           onOpen();
           onFocusFirstOption();
           break;
