@@ -20,6 +20,11 @@ const CheckboxLiveExample = dynamic(() =>
 const CodeLiveExample = dynamic(() =>
   import('@leafygreen-ui/code').then(mod => mod.CodeLiveExample),
 );
+const ConfirmationModalLiveExample = dynamic(() =>
+  import('@leafygreen-ui/confirmation-modal').then(
+    mod => mod.ConfirmationModalLiveExample,
+  ),
+);
 
 const componentLiveExampleMap = {
   badge: BadgeLiveExample,
@@ -29,6 +34,7 @@ const componentLiveExampleMap = {
   card: CardLiveExample,
   checkbox: CheckboxLiveExample,
   code: CodeLiveExample,
+  ['confirmation-modal']: ConfirmationModalLiveExample,
 };
 
 export { componentLiveExampleMap };

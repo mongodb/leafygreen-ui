@@ -54,7 +54,7 @@ const buttonStyle = css`
   }
 `;
 
-interface ConfirmationModalProps {
+export interface ConfirmationModalProps {
   title: string;
   children: React.ReactNode;
   open?: boolean;
