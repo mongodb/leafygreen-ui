@@ -66,6 +66,7 @@ import Button from '@leafygreen-ui/button';
 | `disabled`  | `boolean`                                                | Disabled the button                                                                                                                                   | `false`     |
 | `as`        | `React.ElementType`                                      | Determines the root element. For example, `Link` or `a` tags can be supplied to replace `button` from being the DOM element that wraps the component. | `button`    |
 | `href`      | `string`                                                 | If a href is supplied it will change the `as` value, such that the component renders inside of an `a` tag instead of inside of a `button` tag.        |             |
+| `glyph`     | `React.ReactElement`                                     | When supplied a rendered Icon, renders a button with the specified glyph on the left-side of the content, and adjusts Button padding accordingly.     |             |
 
 _Any other properties will be spread on the input element._
 
