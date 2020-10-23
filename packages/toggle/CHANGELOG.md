@@ -1,5 +1,44 @@
 # @leafygreen-ui/toggle
 
+## 5.0.1
+
+### Patch Changes
+
+- dac3f38b: Fixes a publishing error that prevented UMD modules from being distributed
+- Updated dependencies [dac3f38b]
+  - @leafygreen-ui/lib@6.0.1
+  - @leafygreen-ui/palette@3.0.1
+
+## 5.0.0
+
+### Major Changes
+
+- 0267bfd2: The underlying structure of distributed module definition files have changed and now have official support for ES modules. Module definition files are now generated using Rollup instead of Webpack. This should not affect functionality, but some thorough testing and caution should be exercised when upgrading.
+
+### Patch Changes
+
+- Updated dependencies [0267bfd2]
+  - @leafygreen-ui/lib@6.0.0
+  - @leafygreen-ui/palette@3.0.0
+
+## 4.1.1
+
+### Patch Changes
+
+- 6e210765: The tooltip's notch now appears at more appropriate positions for smaller trigger elements.
+
+## 4.1.0
+
+### Minor Changes
+
+- 24af55cc: Addresses issue where Toggle caused scrollbars to appear in certain environments. This should no longer happen by default; however, if the focus state still causes the scrollbars to appear, this version adds an export, `interactionRingSize`, which is a value that can be applied to the margin of the container wrapping Toggle, and in turn prevent the focus state from overflowing.
+
+## 4.0.0
+
+### Major Changes
+
+- b863e502: Refactors Toggle from class-based to functional component, and deprecates `variant` in favor of new `darkMode` prop to control whether or not the component appears in dark mode
+
 ## 3.0.4
 
 ### Patch Changes

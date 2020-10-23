@@ -1,5 +1,102 @@
 # @leafygreen-ui/mongo-nav
 
+## 4.0.1
+
+### Patch Changes
+
+- dac3f38b: Fixes a publishing error that prevented UMD modules from being distributed
+- Updated dependencies [dac3f38b]
+  - @leafygreen-ui/badge@4.0.1
+  - @leafygreen-ui/button@8.0.1
+  - @leafygreen-ui/hooks@5.0.1
+  - @leafygreen-ui/icon@7.0.1
+  - @leafygreen-ui/icon-button@9.0.1
+  - @leafygreen-ui/leafygreen-provider@2.0.1
+  - @leafygreen-ui/lib@6.0.1
+  - @leafygreen-ui/logo@4.0.1
+  - @leafygreen-ui/menu@9.0.1
+  - @leafygreen-ui/palette@3.0.1
+  - @leafygreen-ui/tooltip@6.0.1
+  - @leafygreen-ui/typography@6.0.1
+
+## 4.0.0
+
+### Major Changes
+
+- 0267bfd2: The underlying structure of distributed module definition files have changed and now have official support for ES modules. Module definition files are now generated using Rollup instead of Webpack. This should not affect functionality, but some thorough testing and caution should be exercised when upgrading.
+
+### Patch Changes
+
+- Updated dependencies [0267bfd2]
+  - @leafygreen-ui/badge@4.0.0
+  - @leafygreen-ui/button@8.0.0
+  - @leafygreen-ui/hooks@5.0.0
+  - @leafygreen-ui/icon-button@9.0.0
+  - @leafygreen-ui/icon@7.0.0
+  - @leafygreen-ui/leafygreen-provider@2.0.0
+  - @leafygreen-ui/lib@6.0.0
+  - @leafygreen-ui/logo@4.0.0
+  - @leafygreen-ui/menu@9.0.0
+  - @leafygreen-ui/palette@3.0.0
+  - @leafygreen-ui/tooltip@6.0.0
+  - @leafygreen-ui/typography@6.0.0
+
+## 3.3.0
+
+### Minor Changes
+
+- bddbde71: Exports `GovBanner` as standalone component
+
+### Patch Changes
+
+- Updated dependencies [65d5ed4d]
+  - @leafygreen-ui/icon@6.7.0
+  - @leafygreen-ui/icon-button@8.0.2
+
+## 3.2.0
+
+### Minor Changes
+
+- a18b4e1b: MongoNav menus are now scrollable instead of cut-off when window height is too short.
+
+### Patch Changes
+
+- Updated dependencies [001a277f]
+- Updated dependencies [d0dac1a0]
+- Updated dependencies [a18b4e1b]
+- Updated dependencies [001a277f]
+  - @leafygreen-ui/typography@5.0.0
+  - @leafygreen-ui/menu@8.0.0
+  - @leafygreen-ui/icon@6.6.1
+  - @leafygreen-ui/icon-button@8.0.1
+
+## 3.1.9
+
+### Patch Changes
+
+- 6e210765: Fixes regression from adding darkMode prop, where tooltips were light in the nav by default.
+  - @leafygreen-ui/menu@7.0.10
+  - @leafygreen-ui/tooltip@5.0.1
+
+## 3.1.8
+
+### Patch Changes
+
+- Updated dependencies [1a127dc8]
+  - @leafygreen-ui/logo@3.0.0
+
+## 3.1.7
+
+### Patch Changes
+
+- Updated dependencies [47846c77]
+- Updated dependencies [483b8a2e]
+- Updated dependencies [a84219f1]
+  - @leafygreen-ui/button@7.0.1
+  - @leafygreen-ui/menu@7.0.9
+  - @leafygreen-ui/tooltip@5.0.0
+  - @leafygreen-ui/icon-button@8.0.0
+
 ## 3.1.6
 
 ### Patch Changes

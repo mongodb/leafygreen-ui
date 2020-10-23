@@ -1,6 +1,10 @@
 import React from 'react';
-import { Body } from '@leafygreen-ui/typography';
+import Navigation from 'components/navigation';
 
 export default function Home() {
-  return <Body>Hello, World!</Body>;
+  return (
+    <div>
+      <Navigation />
+    </div>
+  );
 }

@@ -2,6 +2,9 @@
   "description": "leafyGreen UI Kit",
   "license": "Apache-2.0",
   "private": true,
+  "engines": {
+    "node": ">= 14.0.0"
+  },
   "keywords": [
     "mongodb",
     "ui",
@@ -21,13 +24,13 @@
   "scripts": {
     "start": "start-storybook -p 9001 -c storybook -s ./storybook/static --no-version-updates",
     "pre-build": "lerna run --parallel pre-build -- --env production",
-    "build": "yarn pre-build && lerna run --parallel build -- --env production",
+    "build": "yarn pre-build && lerna run --parallel build",
     "build:storybook": "build-storybook -c storybook -o ./storybook/public -s ./storybook/static",
     "clean": "rimraf packages/*/{dist,node_modules} node_modules **/*.tsbuildinfo",
     "create-package": "node ./scripts/package-builder.js",
     "format": "yarn prettier && yarn eslint:format",
-    "init": "yarn && yarn build && yarn ts:build --verbose --force",
-    "link-all-packages": "lerna exec --ignore @leafygreen-ui/lib --ignore @leafygreen-ui/theme -- yarn link",
+    "init": "yarn && yarn build && yarn ts:build --verbose",
+    "link-all-packages": "lerna exec --ignore @leafygreen-ui/lib --ignore @leafygreen-ui/theme --ignore @leafygreen-ui/mongo-nav -- yarn link",
     "link": "./scripts/link.sh",
     "lint": "yarn prettier:check && yarn eslint && yarn ts",
     "eslint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -36,11 +39,13 @@
     "prettier:check": "prettier --check \"**/*.{js,ts,tsx,json,md}\"",
     "test": "jest --env jsdom --config jest.config.js",
     "test:ssr": "jest --env jsdom --config ssr.jest.config.js",
-    "ts:build": "tsc --build build.tsconfig.json",
     "ts": "tsc --project tsconfig.json",
-    "prepublishOnly": "yarn lint && yarn test && yarn build",
+    "ts:build": "tsc --build build.tsconfig.json",
+    "ts:downlevel": "rimraf packages/*/dist/ts3.4 && echo packages/*/dist | NODE_NO_WARNINGS=1 xargs -I{} -n1 -P8 downlevel-dts {} {}/ts3.4",
+    "prepublishOnly": "yarn lint && yarn test && yarn build && yarn ts:downlevel",
     "release": "yarn changeset publish --public",
-    "release:site": "gh-pages --dist storybook/public"
+    "release:site": "gh-pages --dist storybook/public",
+    "demo:site": "./scripts/publish-storybook.sh"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
@@ -60,6 +65,10 @@
     "@emotion/styled": "^10.0.27",
     "@leafygreen-ui/lib": "^5.0.0",
     "@leafygreen-ui/testing-lib": "*",
+    "@rollup/plugin-babel": "^5.2.0",
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-url": "^5.0.1",
     "@storybook/addon-a11y": "^5.3.18",
     "@storybook/addon-knobs": "^5.3.18",
     "@storybook/react": "^5.3.18",
@@ -67,11 +76,13 @@
     "@svgr/babel-plugin-replace-jsx-attribute-value": "^5.0.1",
     "@svgr/cli": "^5.3.1",
     "@svgr/core": "^5.3.1",
+    "@svgr/rollup": "^5.4.0",
     "@svgr/webpack": "^5.3.1",
     "@testing-library/dom": "^7.2.1",
     "@testing-library/jest-dom": "^5.4.0",
     "@testing-library/react": "^10.0.3",
     "@testing-library/react-hooks": "^3.2.1",
+    "@testing-library/user-event": "^12.1.8",
     "@types/facepaint": "^1.2.1",
     "@types/highlight.js": "^9.12.3",
     "@types/jest": "^26.0.0",
@@ -91,6 +102,7 @@
     "babel-plugin-emotion": "10.0.33",
     "create-emotion": "^10.0.27",
     "cz-conventional-changelog": "^3.1.0",
+    "downlevel-dts": "^0.6.0",
     "emotion": "^10.0.27",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.10.1",
@@ -114,6 +126,8 @@
     "react-test-renderer": "^16.13.1",
     "regenerator-runtime": "^0.13.5",
     "rimraf": "^3.0.2",
+    "rollup": "^2.26.8",
+    "rollup-plugin-terser": "^7.0.1",
     "source-map-loader": "^0.2.4",
     "storybook-addon-performance": "^0.9.0",
     "ts-node": "^8.8.2",
@@ -123,6 +137,7 @@
     "webpack-cli": "3.3.11"
   },
   "resolutions": {
+    "caniuse-lite": "^1.0.30001135",
     "@types/react": "^16.9.32"
   },
   "config": {
@@ -130,5 +145,8 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "workspaces": ["packages/*", "website"]
+  "workspaces": [
+    "packages/*",
+    "website"
+  ]
 }

@@ -143,7 +143,7 @@ Hook to retrieve a value from the previous render.
 
 ### Example
 
-```jsx
+```js
 import { usePrevious } from '@leafygreen-ui/hooks';
 
 const Example = ({nextValue: number}) => {

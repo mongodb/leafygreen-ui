@@ -1,10 +1,9 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import Syntax, {
   SyntaxProps,
-  Variant,
   Language,
   variantColors,
 } from '@leafygreen-ui/syntax';
@@ -16,12 +15,21 @@ import debounce from 'lodash/debounce';
 import { uiColors } from '@leafygreen-ui/palette';
 import ClipboardJS from 'clipboard';
 
+const Mode = {
+  Light: 'light',
+  Dark: 'dark',
+} as const;
+
+type Mode = typeof Mode[keyof typeof Mode];
+
 const whiteSpace = 12;
 
 const codeWrapperStyle = css`
   overflow-x: auto;
   border-left: 2px solid;
-  padding: ${whiteSpace}px;
+  // We apply left / right padding in Syntax to support line highlighting
+  padding-top: ${whiteSpace}px;
+  padding-bottom: ${whiteSpace}px;
   margin: 0;
   position: relative;
   flex-grow: 1;
@@ -44,26 +52,29 @@ const singleLineCopyStyle = css`
   padding: 10px;
 `;
 
-function getWrapperVariantStyle(variant: Variant): string {
-  const colors = variantColors[variant];
+function getWrapperVariantStyle(mode: Mode): string {
+  const colors = variantColors[mode];
+
+  const borderStyle =
+    mode === 'dark' ? `border: 0` : `border-color: ${colors[1]}`;
 
   return css`
-    border-color: ${colors[1]};
+    ${borderStyle};
     background-color: ${colors[0]};
     color: ${colors[3]};
   `;
 }
 
-function getSidebarVariantStyle(variant: Variant): string {
-  const colors = variantColors[variant];
+function getSidebarVariantStyle(mode: Mode): string {
+  const colors = variantColors[mode];
 
-  switch (variant) {
-    case Variant.Light:
+  switch (mode) {
+    case Mode.Light:
       return css`
         border-color: ${colors[1]};
         background-color: white;
       `;
-    case Variant.Dark:
+    case Mode.Dark:
       return css`
         border-color: ${colors[1]};
         background-color: ${colors[1]};
@@ -71,7 +82,7 @@ function getSidebarVariantStyle(variant: Variant): string {
   }
 }
 
-function getCopyButtonStyle(variant: Variant, copied: boolean): string {
+function getCopyButtonStyle(mode: Mode, copied: boolean): string {
   const baseStyle = css`
     align-self: center;
     color: ${uiColors.gray.base};
@@ -103,7 +114,7 @@ function getCopyButtonStyle(variant: Variant, copied: boolean): string {
     );
   }
 
-  if (variant === Variant.Dark) {
+  if (mode === Mode.Dark) {
     return cx(
       baseStyle,
       css`
@@ -124,13 +135,10 @@ const ScrollState = {
 
 type ScrollState = typeof ScrollState[keyof typeof ScrollState];
 
-function getScrollShadowStyle(
-  scrollState: ScrollState,
-  variant: Variant,
-): string {
-  const colors = variantColors[variant];
+function getScrollShadowStyle(scrollState: ScrollState, mode: Mode): string {
+  const colors = variantColors[mode];
   const shadowColor =
-    variant === Variant.Light ? 'rgba(93,108,116,0.3)' : 'rgba(0,0,0,0.35)';
+    mode === Mode.Light ? 'rgba(93,108,116,0.3)' : 'rgba(0,0,0,0.35)';
 
   if (scrollState === ScrollState.Both) {
     return css`
@@ -176,64 +184,28 @@ interface CodeProps extends Omit<SyntaxProps, 'onCopy'> {
   chromeTitle?: string;
 
   /**
-   * When true, whitespace and line breaks will be preserved.
-   *
-   * default: `true`
-   * */
-  multiline?: boolean;
-
-  /**
-   * When true, allows the code block to be copied to the user's clipboard
+   * When true, allows the code block to be copied to the user's clipboard by clicking the rendered copy button.
    *
    * default: `true`
    */
   copyable?: boolean;
 
   /**
-   * Callback fired when Code is copied
+   * Callback fired when Code is copied via the copy button.
    *
    */
   onCopy?: Function;
+
+  /**
+   * An array of the line numbers to highlight
+   */
+  highlightLines?: Array<number | [number, number]>;
 }
 
 type DetailedElementProps<T> = React.DetailedHTMLProps<
   React.HTMLAttributes<T>,
   T
 >;
-
-interface CodeOuterWrapperProps
-  extends Pick<CodeProps, 'chromeTitle' | 'variant' | 'showWindowChrome'> {
-  children: React.ReactNode;
-}
-
-function CodeOuterWrapper({
-  children,
-  chromeTitle,
-  variant = Variant.Light,
-  showWindowChrome,
-}: CodeOuterWrapperProps) {
-  const wrapperStyle = css`
-    border: 1px solid ${variantColors[variant][1]};
-    border-radius: 4px;
-    overflow: hidden;
-  `;
-
-  return (
-    <div className={wrapperStyle}>
-      {showWindowChrome && (
-        <WindowChrome chromeTitle={chromeTitle} variant={variant} />
-      )}
-
-      <div
-        className={css`
-          display: flex;
-        `}
-      >
-        {children}
-      </div>
-    </div>
-  );
-}
 
 /**
  * # Code
@@ -246,9 +218,8 @@ function CodeOuterWrapper({
  * ---
  * @param props.children The string to be formatted.
  * @param props.className An additional CSS class added to the root element of Code.
- * @param props.multiline When true, whitespace and line breaks will be preserved. Default: `true`
- * @param props.lang The language used for syntax highlighing. Default: `auto`
- * @param props.variant Determines if the code block is rendered with a dark or light background. Default: 'light'
+ * @param props.language The language used for syntax highlighing.
+ * @param props.darkMode Determines if the code block will be rendered in dark mode. Default: `false`
  * @param props.showLineNumbers When true, shows line numbers in preformatted code blocks. Default: `false`
  * @param props.copyable When true, allows the code block to be copied to the user's clipboard. Default: `true`
  * @param props.onCopy Callback fired when Code is copied
@@ -256,21 +227,22 @@ function CodeOuterWrapper({
 function Code({
   children = '',
   className,
-  multiline = true,
   language,
-  variant = Variant.Light,
+  darkMode = false,
   showLineNumbers = false,
   showWindowChrome = false,
   chromeTitle = '',
   copyable = true,
   onCopy,
+  highlightLines,
   ...rest
 }: CodeProps) {
-  const scrollableMultiLine = useRef<HTMLPreElement>(null);
-  const scrollableSingleLine = useRef<HTMLDivElement>(null);
+  const scrollableElement = useRef<HTMLPreElement>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [copied, setCopied] = useState(false);
   const showCopyBar = !showWindowChrome && copyable;
+  const mode = darkMode ? Mode.Dark : Mode.Light;
+  const isMultiline = useMemo(() => children.includes('\n'), [children]);
 
   useEffect(() => {
     let timeoutId: any;
@@ -287,42 +259,32 @@ function Code({
   }, [copied]);
 
   useIsomorphicLayoutEffect(() => {
-    if (multiline) {
-      const multilineEl = scrollableMultiLine.current;
+    const scrollableElementRef = scrollableElement.current;
 
-      if (
-        multilineEl != null &&
-        multilineEl.scrollWidth > multilineEl.clientWidth
-      ) {
-        setScrollState(ScrollState.Right);
-      }
-    } else {
-      const singlelineEl = scrollableSingleLine.current;
-
-      if (
-        singlelineEl != null &&
-        singlelineEl.scrollWidth > singlelineEl.clientWidth
-      ) {
-        setScrollState(ScrollState.Right);
-      }
+    if (
+      scrollableElementRef != null &&
+      scrollableElementRef.scrollWidth > scrollableElementRef.clientWidth
+    ) {
+      setScrollState(ScrollState.Right);
     }
-  }, [multiline]);
+  }, []);
 
   const wrapperClassName = cx(
     codeWrapperStyle,
-    getWrapperVariantStyle(variant),
+    getWrapperVariantStyle(mode),
     {
       [codeWrapperStyleWithWindowChrome]: showWindowChrome,
     },
     className,
-    getScrollShadowStyle(scrollState, variant),
+    getScrollShadowStyle(scrollState, mode),
   );
 
   const renderedSyntaxComponent = (
     <Syntax
       showLineNumbers={showLineNumbers}
-      variant={variant}
+      darkMode={darkMode}
       language={language}
+      highlightLines={highlightLines}
     >
       {children}
     </Syntax>
@@ -356,18 +318,32 @@ function Code({
 
   const debounceScroll = debounce(handleScroll, 50, { leading: true });
 
+  const onScroll: React.UIEventHandler<HTMLDivElement | HTMLPreElement> = e => {
+    e.persist();
+    debounceScroll(e);
+  };
+
+  const borderStyle = darkMode
+    ? `border: 0`
+    : `border: 1px solid ${variantColors[mode][1]}`;
+  const wrapperStyle = css`
+    ${borderStyle};
+    border-radius: 4px;
+    overflow: hidden;
+  `;
+
   const copyBar = showCopyBar && (
     <div
       className={cx(
         copyStyle,
-        { [singleLineCopyStyle]: !multiline },
-        getSidebarVariantStyle(variant),
+        { [singleLineCopyStyle]: !isMultiline },
+        getSidebarVariantStyle(mode),
       )}
     >
       <IconButton
-        variant={variant}
+        darkMode={darkMode}
         aria-label="Copy"
-        className={cx(getCopyButtonStyle(variant, copied), 'copy-btn')}
+        className={cx(getCopyButtonStyle(mode, copied), 'copy-btn')}
         onClick={handleClick}
         data-clipboard-text={children}
       >
@@ -376,47 +352,29 @@ function Code({
     </div>
   );
 
-  const onScroll: React.UIEventHandler<HTMLDivElement | HTMLPreElement> = e => {
-    e.persist();
-    debounceScroll(e);
-  };
+  return (
+    <div className={wrapperStyle}>
+      {showWindowChrome && (
+        <WindowChrome chromeTitle={chromeTitle} darkMode={darkMode} />
+      )}
 
-  const commonWrapperProps = {
-    chromeTitle,
-    variant,
-    showWindowChrome,
-  } as const;
-
-  if (!multiline) {
-    return (
-      <CodeOuterWrapper {...commonWrapperProps}>
-        <div
-          {...(rest as DetailedElementProps<HTMLDivElement>)}
+      <div
+        className={css`
+          display: flex;
+        `}
+      >
+        <pre
+          {...(rest as DetailedElementProps<HTMLPreElement>)}
           className={wrapperClassName}
           onScroll={onScroll}
-          ref={scrollableSingleLine}
+          ref={scrollableElement}
         >
           {renderedSyntaxComponent}
-        </div>
+        </pre>
 
         {copyBar}
-      </CodeOuterWrapper>
-    );
-  }
-
-  return (
-    <CodeOuterWrapper {...commonWrapperProps}>
-      <pre
-        {...(rest as DetailedElementProps<HTMLPreElement>)}
-        className={wrapperClassName}
-        onScroll={onScroll}
-        ref={scrollableMultiLine}
-      >
-        {renderedSyntaxComponent}
-      </pre>
-
-      {copyBar}
-    </CodeOuterWrapper>
+      </div>
+    </div>
   );
 }
 
@@ -424,13 +382,18 @@ Code.displayName = 'Code';
 
 Code.propTypes = {
   children: PropTypes.string.isRequired,
-  multiline: PropTypes.bool,
   language: PropTypes.oneOf(Object.values(Language)),
-  variant: PropTypes.oneOf(Object.values(Variant)),
+  darkMode: PropTypes.bool,
   className: PropTypes.string,
   showLineNumbers: PropTypes.bool,
   showWindowChrome: PropTypes.bool,
   chromeTitle: PropTypes.string,
+  highlightLines: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.number),
+      PropTypes.number,
+    ]),
+  ),
 };
 
 export default Code;

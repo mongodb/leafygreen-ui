@@ -1,5 +1,30 @@
 # @leafygreen-ui/lib
 
+## 6.1.0
+
+### Minor Changes
+
+- 5cf0c95c: Added `enforceExhaustive` helper
+
+## 6.0.1
+
+### Patch Changes
+
+- dac3f38b: Fixes a publishing error that prevented UMD modules from being distributed
+- Updated dependencies [dac3f38b]
+  - @leafygreen-ui/emotion@3.0.1
+
+## 6.0.0
+
+### Major Changes
+
+- 0267bfd2: The underlying structure of distributed module definition files have changed and now have official support for ES modules. Module definition files are now generated using Rollup instead of Webpack. This should not affect functionality, but some thorough testing and caution should be exercised when upgrading.
+
+### Patch Changes
+
+- Updated dependencies [0267bfd2]
+  - @leafygreen-ui/emotion@3.0.0
+
 ## 5.1.1
 
 ### Patch Changes

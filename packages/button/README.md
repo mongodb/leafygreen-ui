@@ -26,25 +26,31 @@ npm install @leafygreen-ui/button
 
 ## Example
 
-```Javascript
+```js
 import Button from '@leafygreen-ui/button';
 
 <Button
-  variant='primary'
-  className='create-item-button'
-  title='Create an item'
-  onClick={(event) => {/* Something to handle the click event */}}
+  variant="primary"
+  className="create-item-button"
+  title="Create an item"
+  onClick={event => {
+    /* Something to handle the click event */
+  }}
 >
   Submit
-</Button>
+</Button>;
 ```
 
 **Output HTML**
 
-```HTML
-  <button class="css-1rgbgdt create-item-button" title="Create an item" disabled="false">
-    Submit
-  </button>
+```html
+<button
+  class="css-1rgbgdt create-item-button"
+  title="Create an item"
+  disabled="false"
+>
+  Submit
+</button>
 ```
 
 ## Properties
@@ -60,6 +66,7 @@ import Button from '@leafygreen-ui/button';
 | `disabled`  | `boolean`                                                | Disabled the button                                                                                                                                   | `false`     |
 | `as`        | `React.ElementType`                                      | Determines the root element. For example, `Link` or `a` tags can be supplied to replace `button` from being the DOM element that wraps the component. | `button`    |
 | `href`      | `string`                                                 | If a href is supplied it will change the `as` value, such that the component renders inside of an `a` tag instead of inside of a `button` tag.        |             |
+| `glyph`     | `React.ReactElement`                                     | When supplied a rendered Icon, renders a button with the specified glyph on the left-side of the content, and adjusts Button padding accordingly.     |             |
 
 _Any other properties will be spread on the input element._
 

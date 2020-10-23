@@ -26,11 +26,11 @@ const underline = css`
 `;
 
 const maxWidth = css`
-  max-width: 240px;
+  max-width: 360px;
 `;
 
 type InlineDefinitionProps = Partial<TooltipProps> & {
-  definition: string;
+  definition: React.ReactNode;
 };
 
 function InlineDefinition({
@@ -54,7 +54,7 @@ function InlineDefinition({
 InlineDefinition.displayName = 'InlineDefinition';
 
 InlineDefinition.propTypes = {
-  definition: PropTypes.string.isRequired,
+  definition: PropTypes.node.isRequired,
   className: PropTypes.string,
   children: PropTypes.node,
 };

@@ -28,17 +28,17 @@ This is the context provider for LeafyGreen Provider, and should be added as hig
 
 #### Input
 
-```JS
+```js
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 <LeafyGreenProvider>
   <div>My Children</div>
-</LeafyGreenProvider>
+</LeafyGreenProvider>;
 ```
 
 #### Output
 
-```HTML
+```html
 <div>My Children</div>
 ```
 

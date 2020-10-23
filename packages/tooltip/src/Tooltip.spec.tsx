@@ -434,9 +434,11 @@ describe('packages/tooltip', () => {
       portalClassName: 'test-classname',
     });
 
-    expect(
-      getByTestId(tooltipTestId).parentElement?.parentElement?.className,
-    ).toBe('test-classname');
+    const matchedElements = document.querySelectorAll('body > .test-classname');
+    expect(matchedElements).toHaveLength(1);
+
+    const portalRoot = matchedElements.item(0);
+    expect(portalRoot).toContainElement(getByTestId(tooltipTestId));
   });
 
   // eslint-disable-next-line jest/expect-expect

@@ -52,6 +52,7 @@ describe('packages/Icon/glyphs/', () => {
         readonly [K in string]: string | SVGNodeObject;
       };
 
+      //@ts-expect-error
       const rootGlyphObject: SVGNodeObject = toJson(svg, { object: true });
 
       function validateGlyphObject(obj: SVGNodeObject) {

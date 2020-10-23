@@ -6,38 +6,37 @@ import Popover, {
   Justify,
   ElementPosition,
 } from '@leafygreen-ui/popover';
-import { Body } from '@leafygreen-ui/typography';
 import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import {
-  OneOf,
-  HTMLElementProps,
-  IdAllocator,
-  typeIs,
-} from '@leafygreen-ui/lib';
+import { fontFamilies } from '@leafygreen-ui/tokens';
+import { OneOf, HTMLElementProps, IdAllocator } from '@leafygreen-ui/lib';
+import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { transparentize } from 'polished';
 import debounce from 'lodash/debounce';
-import { trianglePosition } from './tooltipUtils';
+import { notchPositionStyles } from './tooltipUtils';
 
-/**
- * Converts any type to an array of that type if it isn't already an array,
- * or an empty array for nullish values.
- * */
-function toArray(item: null | undefined): [];
-function toArray<T>(item: Array<T>): Array<T>;
-function toArray<T>(item: T): Array<T>;
-function toArray<T>(item: T) {
-  if (item == null) {
-    return [];
-  }
+// The typographic styles below are largely copied from the Body component.
+// We can't use the Body component here due to it rendering a paragraph tag,
+// Which would conflict with any children passed to it containing a div.
+const baseTypeStyle = css`
+  margin: unset;
+  font-family: ${fontFamilies.default};
+  color: ${uiColors.gray.dark3};
+  font-weight: 400;
+`;
 
-  if (typeIs.array(item)) {
-    return item;
-  }
+const typeScale1 = css`
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0px;
+`;
 
-  return [item];
-}
+const typeScale2 = css`
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0px;
+`;
 
 export const TriggerEvent = {
   Hover: 'hover',
@@ -46,12 +45,12 @@ export const TriggerEvent = {
 
 type TriggerEvent = typeof TriggerEvent[keyof typeof TriggerEvent];
 
-export const Variant = {
+export const Mode = {
   Light: 'light',
   Dark: 'dark',
 } as const;
 
-export type Variant = typeof Variant[keyof typeof Variant];
+export type Mode = typeof Mode[keyof typeof Mode];
 
 export const Align = {
   Top: PopoverAlign.Top,
@@ -75,39 +74,36 @@ const positionRelative = css`
   position: relative;
 `;
 
-const tooltipVariants = {
-  [Variant.Dark]: css`
-    background-color: ${uiColors.gray.dark3};
-    color: ${uiColors.gray.light1};
-  `,
+const colorSet = {
+  [Mode.Dark]: {
+    tooltip: css`
+      background-color: ${uiColors.gray.dark3};
+      color: ${uiColors.gray.light1};
+    `,
+    children: css`
+      color: ${uiColors.gray.light1};
+    `,
+    notch: css`
+      background-color: ${uiColors.gray.dark3};
+      box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
+    `,
+  },
 
-  [Variant.Light]: css`
-    background-color: ${uiColors.gray.light3};
-    color: ${uiColors.gray.dark2};
-    border: 1px solid ${uiColors.gray.light2};
-  `,
-} as const;
-
-const childrenVariants = {
-  [Variant.Dark]: css`
-    color: ${uiColors.gray.light1};
-  `,
-
-  [Variant.Light]: css`
-    color: ${uiColors.gray.dark2};
-  `,
-} as const;
-
-const notchVariants = {
-  [Variant.Dark]: css`
-    background-color: ${uiColors.gray.dark3};
-    box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
-  `,
-  [Variant.Light]: css`
-    background-color: ${uiColors.gray.light3};
-    border: 1px solid ${uiColors.gray.light2};
-    box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
-  `,
+  [Mode.Light]: {
+    tooltip: css`
+      background-color: ${uiColors.gray.light3};
+      color: ${uiColors.gray.dark2};
+      border: 1px solid ${uiColors.gray.light2};
+    `,
+    children: css`
+      color: ${uiColors.gray.dark2};
+    `,
+    notch: css`
+      background-color: ${uiColors.gray.light3};
+      border: 1px solid ${uiColors.gray.light2};
+      box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
+    `,
+  },
 };
 
 interface PopoverFunctionParameters {
@@ -118,6 +114,28 @@ interface PopoverFunctionParameters {
 
 type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'refEl'>;
 
+type PortalProps = OneOf<
+  {
+    /**
+     * Specifies that the popover content will appear portaled to the end of the DOM,
+     * rather than in the DOM tree.
+     *
+     * default: `true`
+     */
+    usePortal?: true;
+
+    /**
+     * If using a portal, specifies a class name to apply to the root element of the portal.
+     *
+     * default: undefined
+     */
+    portalClassName?: string;
+  },
+  {
+    usePortal: false;
+  }
+>;
+
 export type TooltipProps = Omit<
   HTMLElementProps<'div'>,
   keyof ModifiedPopoverProps
@@ -125,19 +143,19 @@ export type TooltipProps = Omit<
   ModifiedPopoverProps & {
     /**
      * A slot for the element used to trigger the `Tooltip`.
-     * default: hover
+     * @default: hover
      */
     trigger: React.ReactElement | Function;
 
     /**
      * Determines if a `hover` or `click` event will trigger the opening of a `Tooltip`.
-     * default: 'hover'
+     * @default: 'hover'
      */
     triggerEvent?: TriggerEvent;
 
     /**
      * Controls component and determines the open state of the `Tooltip`
-     * default: `false`
+     * @default: `false`
      */
     open?: boolean;
 
@@ -147,10 +165,10 @@ export type TooltipProps = Omit<
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 
     /**
-     * Whether the `Tooltip` will be `light` or `dark`.
-     * default: light
+     * Whether the `Tooltip` will appear in dark mode.
+     * @default: false
      */
-    variant?: Variant;
+    darkMode?: boolean;
 
     /**
      * id given to `Tooltip` content.
@@ -165,30 +183,10 @@ export type TooltipProps = Omit<
 
     /**
      * Enables Tooltip to trigger based on the event specified by `triggerEvent`.
-     * default: true
+     * @default: true
      */
     enabled?: boolean;
-  } & OneOf<
-    {
-      /**
-       * Specifies that the popover content will appear portaled to the end of the DOM,
-       * rather than in the DOM tree.
-       *
-       * default: `true`
-       */
-      usePortal?: true;
-
-      /**
-       * If using a portal, specifies a class name to apply to the root element of the portal.
-       *
-       * default: undefined
-       */
-      portalClassName?: string;
-    },
-    {
-      usePortal: false;
-    }
-  >;
+  } & PortalProps;
 
 const idAllocator = IdAllocator.create('tooltip');
 
@@ -208,7 +206,6 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
   justify='start'
   trigger={<button>trigger</button>}
   triggerEvent='hover'
-  variant='light'
 >
   I am an uncontrolled Tooltip!
 </Tooltip>
@@ -216,7 +213,7 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
  * @param props.children Content to appear inside of Tooltip.
  * @param props.open Boolean to describe whether or not Tooltip is open.
  * @param props.setOpen Callback to change the open state of the Tooltip.
- * @param props.variant Whether the Tooltip should be `dark` or `light`.
+ * @param props.darkMode Whether the Tooltip will apepar in dark mode.
  * @param props.className Classname applied to Tooltip.
  * @param props.align Alignment of Tooltip relative to trigger: `top`, `bottom`, `left`, `right`.
  * @param props.justify Justification of Tooltip relative to trigger: `start`, `middle`, `end`.
@@ -232,20 +229,21 @@ function Tooltip({
   className,
   children,
   trigger,
-  variant = Variant.Light,
   triggerEvent = TriggerEvent.Hover,
+  darkMode = false,
   enabled = true,
+  usePortal = true,
   align = 'top',
   justify = 'start',
+  spacing = 12,
   id,
   shouldClose,
-  usePortal = true,
   portalClassName,
-  spacing = 12,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
+  const size = useBaseFontSize();
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   // typescript is not recognizing isControlled checks that controlledSetOpen exists
   const setOpen =
@@ -322,6 +320,8 @@ function Tooltip({
     ? { spacing, usePortal, portalClassName }
     : { spacing, usePortal };
 
+  const mode = darkMode ? Mode.Dark : Mode.Light;
+
   const tooltip = (
     <Popover
       key="tooltip"
@@ -333,26 +333,38 @@ function Tooltip({
       {...portalProps}
     >
       {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
-        const triangleStyle = trianglePosition(
-          align,
-          justify,
-          referenceElPos,
-        ) as { containerStyle: string; notchStyle: string };
+        const {
+          notchContainer: notchContainerStyle,
+          notch: notchStyle,
+          tooltip: tooltipNotchStyle,
+        } = notchPositionStyles(align, justify, referenceElPos);
 
         return (
           <div
             {...rest}
             role="tooltip"
             id={tooltipId}
-            className={cx(baseStyles, tooltipVariants[variant], className)}
+            className={cx(
+              baseStyles,
+              tooltipNotchStyle,
+              colorSet[mode].tooltip,
+              className,
+            )}
             ref={tooltipRef}
           >
-            <div className={triangleStyle.containerStyle}>
-              <div
-                className={cx(triangleStyle.notchStyle, notchVariants[variant])}
-              />
+            <div className={notchContainerStyle}>
+              <div className={cx(notchStyle, colorSet[mode].notch)} />
             </div>
-            <Body className={childrenVariants[variant]}>{children}</Body>
+
+            <div
+              className={cx(
+                baseTypeStyle,
+                size === 16 ? typeScale2 : typeScale1,
+                colorSet[mode].children,
+              )}
+            >
+              {children}
+            </div>
           </div>
         );
       }}
@@ -369,13 +381,16 @@ function Tooltip({
       });
     }
 
-    const { children: triggerChildren } = trigger.props;
-
     return React.cloneElement(trigger, {
       ...createTriggerProps(triggerEvent, trigger.props),
       'aria-describedby': tooltipId,
-      children: [...toArray(triggerChildren), tooltip],
-      className: cx(trigger.props.className, positionRelative),
+      children: (
+        <>
+          {trigger.props.children}
+          {tooltip}
+        </>
+      ),
+      className: cx(positionRelative, trigger.props.className),
     });
   }
 
@@ -391,7 +406,7 @@ Tooltip.propTypes = {
   justify: PropTypes.oneOf(Object.values(Justify)),
   trigger: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   triggerEvent: PropTypes.oneOf(Object.values(TriggerEvent)),
-  variant: PropTypes.oneOf(Object.values(Variant)),
+  darkMode: PropTypes.bool,
   enabled: PropTypes.bool,
   open: PropTypes.bool,
   setOpen: PropTypes.func,

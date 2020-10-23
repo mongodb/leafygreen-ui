@@ -1,31 +1,39 @@
 {
   "name": "@leafygreen-ui/mongo-nav",
-  "version": "3.1.6",
+  "version": "4.0.1",
   "description": "LeafyGreen UI Kit Mongo Nav",
-  "main": "./dist/index.bundle.js",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "scripts": {
-    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
+    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
   },
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^5.1.1",
-    "@leafygreen-ui/palette": "^2.0.2",
-    "@leafygreen-ui/logo": "^2.1.2",
-    "@leafygreen-ui/menu": "^7.0.7",
-    "@leafygreen-ui/icon": "^6.6.0",
-    "@leafygreen-ui/tooltip": "^4.0.0",
-    "@leafygreen-ui/badge": "^3.0.2",
-    "@leafygreen-ui/button": "^7.0.0",
-    "@leafygreen-ui/hooks": "^4.2.1",
-    "@leafygreen-ui/icon-button": "^7.0.6",
-    "@leafygreen-ui/typography": "^4.3.0",
+    "@leafygreen-ui/lib": "^6.0.1",
+    "@leafygreen-ui/palette": "^3.0.1",
+    "@leafygreen-ui/logo": "^4.0.1",
+    "@leafygreen-ui/menu": "^9.0.1",
+    "@leafygreen-ui/icon": "^7.0.1",
+    "@leafygreen-ui/tooltip": "^6.0.1",
+    "@leafygreen-ui/badge": "^4.0.1",
+    "@leafygreen-ui/button": "^8.0.1",
+    "@leafygreen-ui/hooks": "^5.0.1",
+    "@leafygreen-ui/icon-button": "^9.0.1",
+    "@leafygreen-ui/typography": "^6.0.1",
     "lodash": "^4.17.20"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^1.1.4"
+    "@leafygreen-ui/leafygreen-provider": "^2.0.1"
   }
 }

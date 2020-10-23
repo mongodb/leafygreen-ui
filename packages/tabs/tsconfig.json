@@ -14,10 +14,16 @@
       "path": "../lib"
     },
     {
-      "path": "../hooks"
+      "path": "../palette"
     },
     {
-      "path": "../palette"
+      "path": "../box"
+    },
+    {
+      "path": "../tokens"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }

@@ -48,14 +48,13 @@ module.exports = function template(
     %%imports%%
     import PropTypes from 'prop-types';
     import { css, cx } from '@leafygreen-ui/emotion';
+    import { IdAllocator } from '@leafygreen-ui/lib';
     import { getGlyphTitle, sizeMap } from '../glyphCommon';
     import { LGGlyph } from '../types';
   
     export interface ${componentName}Props extends LGGlyph.ComponentProps {}
 
-    function generateGlyphTitle(): string {
-      return \`${componentName}-\${Math.floor(Math.random() * 1000000)}\`;
-    }
+    const idAllocator = IdAllocator.create('${componentName}');
 
     const ${componentName} = ({
       className,
@@ -66,7 +65,7 @@ module.exports = function template(
       ...props
     }: ${componentName}Props) => {
       const titleId = React.useMemo(
-        () => customTitleId || generateGlyphTitle(),
+        () => customTitleId || idAllocator.generate(),
         [customTitleId]
       );
 

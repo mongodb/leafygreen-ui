@@ -1,5 +1,86 @@
 # @leafygreen-ui/code
 
+## 7.1.0
+
+### Minor Changes
+
+- 2643d4e7: Adds support for `xml` language
+
+### Patch Changes
+
+- Updated dependencies [5cf0c95c]
+- Updated dependencies [2643d4e7]
+  - @leafygreen-ui/lib@6.1.0
+  - @leafygreen-ui/syntax@6.1.0
+
+## 7.0.1
+
+### Patch Changes
+
+- f56f5ab1: Fixes an issue where line highlighting might not span the entire component.
+- dac3f38b: Fixes a publishing error that prevented UMD modules from being distributed
+- Updated dependencies [f56f5ab1]
+- Updated dependencies [dac3f38b]
+  - @leafygreen-ui/syntax@6.0.1
+  - @leafygreen-ui/hooks@5.0.1
+  - @leafygreen-ui/icon@7.0.1
+  - @leafygreen-ui/icon-button@9.0.1
+  - @leafygreen-ui/lib@6.0.1
+
+## 7.0.0
+
+### Major Changes
+
+- 0267bfd2: The underlying structure of distributed module definition files have changed and now have official support for ES modules. Module definition files are now generated using Rollup instead of Webpack. This should not affect functionality, but some thorough testing and caution should be exercised when upgrading.
+
+### Patch Changes
+
+- Updated dependencies [0267bfd2]
+  - @leafygreen-ui/hooks@5.0.0
+  - @leafygreen-ui/icon-button@9.0.0
+  - @leafygreen-ui/icon@7.0.0
+  - @leafygreen-ui/lib@6.0.0
+  - @leafygreen-ui/syntax@6.0.0
+
+## 6.0.0
+
+### Major Changes
+
+- 50ea11ad: Deprecates the `multiline` prop in the Code component. Single line code examples are now detected automatically via the presence of line breaks in the string, and single line spacing is applied automatically.
+- 50ea11ad: - Adds the line highlighting feature! This feature is supported through the `highlightLines` prop.
+  - All code examples are now rendered as a table, making unhighlighted code render consistently with highlighted code.
+  - Fixes an issue where users might be unable to manually copy code.
+
+### Patch Changes
+
+- 50ea11ad: Fixes issue where the Code and Syntax components would break when passed code with invalid syntax"
+- Updated dependencies [65d5ed4d]
+- Updated dependencies [50ea11ad]
+- Updated dependencies [50ea11ad]
+  - @leafygreen-ui/icon@6.7.0
+  - @leafygreen-ui/syntax@5.0.0
+  - @leafygreen-ui/icon-button@8.0.2
+
+## 5.0.0
+
+### Major Changes
+
+- 729c79f8: Deprecates `variant` prop in favor of `darkMode` prop to control whether or not the component will appear in dark mode
+
+### Patch Changes
+
+- Updated dependencies [729c79f8]
+  - @leafygreen-ui/syntax@4.0.0
+
+## 4.0.4
+
+### Patch Changes
+
+- Updated dependencies [fe371e37]
+- Updated dependencies [a84219f1]
+  - @leafygreen-ui/syntax@3.1.0
+  - @leafygreen-ui/icon-button@8.0.0
+
 ## 4.0.3
 
 ### Patch Changes

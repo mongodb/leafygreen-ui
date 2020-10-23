@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 386a4e5197581498e3016f7f37dce709
+ * @checksum 93e2e9cd3bb83fc293b4c1452fa9f6c1
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface TrashProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Trash-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Trash');
 
 const Trash = ({
   className,
@@ -23,7 +21,7 @@ const Trash = ({
   fill,
   ...props
 }: TrashProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`

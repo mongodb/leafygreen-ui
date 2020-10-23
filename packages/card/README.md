@@ -20,20 +20,17 @@ npm install @leafygreen-ui/card
 
 ## Example
 
-```Javascript
+```js
 import Card from '@leafygreen-ui/card';
 
-<Card
-  className='card-styles'
-  as='article'
->
+<Card className="card-styles" as="article">
   This is my card component
-</Card>
+</Card>;
 ```
 
 **Output HTML**
 
-```HTML
+```html
 <div class="leafygreen-ui-1lu17q2 card-styles">This is my card component</div>
 ```
 

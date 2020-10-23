@@ -24,11 +24,9 @@ npm install @leafygreen-ui/typography
 | ------------------------------------ | -------- |
 | `@leafygreen-ui/leafygreen-provider` | `^1.1.0` |
 
-# H1
-
 ## Example
 
-```jsx
+```js
 import { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline } from '@leafygreen-ui/typography';
 <H1>Heading 1</H1>
 <H2>Heading 2</H2>
@@ -53,7 +51,7 @@ import { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline } from '@leafy
 <h2 class="leafygreen-ui-1t0mh6j">Heading 2</h2>
 <h3 class="leafygreen-ui-1t0mh6j">Heading 3</h3>
 <h6 class="leafygreen-ui-1dmxpt6">Subtitle</h6>
-<p class="leafygreen-ui-wkgw79">Body</p>
+<div class="leafygreen-ui-wkgw79">Body</div>
 <code class="leafygreen-ui-18bk0d8">Code</code>
 <code class="leafygreen-ui-1vl51l4">CTRL</code
 ><code class="leafygreen-ui-1vl51l4">+</code
@@ -96,19 +94,25 @@ All props extend the HTMLElementProps of their root tag, however `<Body />` and 
 | `Overline`      | `p`     |
 | `Link`          | `a`     |
 
-## Body
+# Body
 
 | Prop     | Type                | Description                               | Default   |
 | -------- | ------------------- | ----------------------------------------- | --------- |
 | `weight` | `regular`, `medium` | font-weight applied to typography element | `regular` |
 
-## Overline
+# InlineCode
+
+| Prop   | Type                    | Description                                                                                                                                              | Default |
+| ------ | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `href` | `string` or `undefined` | If an `href` prop is passed to `InlineCode` it will be rendered with an `a` tag wrapping the `code` tag. Otherwise, it'll simply render as a `code` tag. |         |
+
+# Overline
 
 | Prop        | Type                                  | Description                                                                                                                         | Default |
 | ----------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `component` | `HTMLElement` or `React.ReactElement` | The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `p`     |
 
-## Link
+# Link
 
 | Prop               | Type      | Description                                                                                          | Default |
 | ------------------ | --------- | ---------------------------------------------------------------------------------------------------- | ------- |

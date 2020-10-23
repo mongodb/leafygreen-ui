@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 5bb942e28773edcc85d391b89cf44fe9
+ * @checksum 756fc07e7ba4297170017495831ae0df
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CreditCardProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `CreditCard-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('CreditCard');
 
 const CreditCard = ({
   className,
@@ -23,7 +21,7 @@ const CreditCard = ({
   fill,
   ...props
 }: CreditCardProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
