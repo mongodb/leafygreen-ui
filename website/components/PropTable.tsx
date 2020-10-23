@@ -56,13 +56,14 @@ interface CellLeaf {
   value: string;
   type: string;
   depth: number;
+  url?: string;
 }
 
 interface TableDataInterface {
-  prop: string;
-  type: string;
-  description: string;
-  default: string;
+  prop: { value?: string; url?: string };
+  type: { value?: string; url?: string };
+  description: { value?: string; url?: string };
+  default: { value?: string; url?: string };
 }
 
 function getTableData(rows: Table['children']): Array<TableDataInterface> {
@@ -73,6 +74,10 @@ function getTableData(rows: Table['children']): Array<TableDataInterface> {
   const rowMap = rows.map(row => {
     const rowObj: Partial<TableDataInterface> = {};
     row.children.map((cell, index) => {
+      if (cell.children?.[0]?.url) {
+        rowObj[tableHeaderNames[index]] = { url: cell.children[0].url };
+      }
+
       const value =
         cell.children
           .map(child => {
@@ -84,7 +89,10 @@ function getTableData(rows: Table['children']): Array<TableDataInterface> {
           })
           .join('') || '-';
 
-      rowObj[tableHeaderNames[index]] = value;
+      rowObj[tableHeaderNames[index]] = {
+        ...rowObj[tableHeaderNames[index]],
+        value,
+      };
     });
     return rowObj;
   });
@@ -129,6 +137,29 @@ function PropTable({
     tableData.shift();
   }
 
+  const formatProp = (datum: TableDataInterface) => {
+    if (datum.prop.value === '...') {
+      return datum.prop.value;
+    }
+
+    return (
+      <PropDefinition
+        prop={datum.prop.value}
+        type={datum.type.value}
+        description={datum.description.value}
+        defaultValue={datum.default.value}
+      />
+    );
+  };
+
+  const formatDefault = (datum: TableDataInterface) => {
+    if (datum.default.value === '-') {
+      return '-';
+    }
+
+    return <InlineCode>{datum.default.value}</InlineCode>;
+  };
+
   return (
     <div
       className={css`
@@ -164,30 +195,15 @@ function PropTable({
                 ]}
               >
                 {({ datum }) => (
-                  <Row key={datum.prop}>
+                  <Row key={datum.prop.value}>
+                    <Cell>{formatProp(datum)}</Cell>
                     <Cell>
-                      {datum.prop === '...' ? (
-                        datum.prop
-                      ) : (
-                        <PropDefinition
-                          prop={datum.prop}
-                          type={datum.type}
-                          description={datum.description}
-                          defaultValue={datum.default}
-                        />
-                      )}
+                      <InlineCode href={datum.type.url}>
+                        {datum.type.value}
+                      </InlineCode>
                     </Cell>
-                    <Cell>
-                      <InlineCode>{datum.type}</InlineCode>
-                    </Cell>
-                    <Cell>{datum.description}</Cell>
-                    <Cell>
-                      {datum.default === '-' ? (
-                        '-'
-                      ) : (
-                        <InlineCode>{datum.default}</InlineCode>
-                      )}
-                    </Cell>
+                    <Cell>{datum.description.value}</Cell>
+                    <Cell>{formatDefault(datum)}</Cell>
                   </Row>
                 )}
               </Table>

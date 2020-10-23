@@ -52,57 +52,9 @@ npm install @leafygreen-ui/inline-definition
 
 ## Properties
 
-| Prop                    | Type              | Description                                                  | Default |
-| ----------------------- | ----------------- | ------------------------------------------------------------ | ------- |
-| `definition` (Required) | `React.ReactNode` | Content that describes the term. Will appear inside Tooltip. |         |
-| `children`              | `string`          | Text that will appear underlined                             |         |
-| `className`             | `string`          | className will be applied to the trigger element             |         |
-| ...                     | `TooltipProps`    | Any other properties will be spread on the Tooltip element   |         |
-
-##### TooltipProps
-
-```typescript
-const Justify = {
-  Start: 'start',
-  Middle: 'middle',
-  End: 'end',
-  Fit: 'fit',
-} as const;
-type Justify = typeof Justify[keyof typeof Justify];
-
-const Align = {
-  Top: 'top',
-  Bottom: 'bottom',
-  Left: 'left',
-  Right: 'right',
-  CenterVertical: 'center-vertical',
-  CenterHorizontal: 'center-horizontal',
-} as const;
-type Align = typeof Align[keyof typeof Align];
-
-type PortalProps = OneOf<
-  {
-    usePortal?: true;
-    portalClassName?: string;
-  },
-  {
-    usePortal: false;
-  }
->;
-
-export type TooltipProps = HTMLElementProps<'div'> & {
-  align?: Align;
-  justify?: Justify;
-  spacing?: number;
-  adjustOnMutation?: boolean;
-  onClick?: React.MouseEventHandler;
-  trigger: React.ReactElement | Function;
-  triggerEvent?: TriggerEvent;
-  open?: boolean;
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-  darkMode?: boolean;
-  id?: string;
-  shouldClose?: () => boolean;
-  enabled?: boolean;
-} & PortalProps;
-```
+| Prop                    | Type                               | Description                                                  | Default |
+| ----------------------- | ---------------------------------- | ------------------------------------------------------------ | ------- |
+| `definition` (Required) | `React.ReactNode`                  | Content that describes the term. Will appear inside Tooltip. |         |
+| `children`              | `string`                           | Text that will appear underlined                             |         |
+| `className`             | `string`                           | className will be applied to the trigger element             |         |
+| ...                     | [TooltipProps](/component/tooltip) | Any other properties will be spread on the Tooltip element   |         |
