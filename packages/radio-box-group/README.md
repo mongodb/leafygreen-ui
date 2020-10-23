@@ -112,12 +112,12 @@ import { RadioBox, RadioBoxGroup } from '@leafygreen-ui/radio-box-group';
 
 ## Properties
 
-| Prop        | Type                                          | Description                                                                                                     | Default |
-| ----------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------- |
-| `value`     | **Required** `string` \| `number`             | Every `<RadioBox />` needs a value prop                                                                         |         |
-| `className` | `string`                                      | Adds a className to the root element                                                                            | `''`    |
-| `checked`   | `boolean`                                     | Indicates whether or not the box will be checked                                                                | `false` |
-| `disabled`  | `boolean`                                     | Indicates whether or not the radio can be clicked by a user                                                     | `false` |
-| `children`  | `node`                                        | Content that appears inside of the `<RadioBox />`                                                               |         |
-| `default`   | `boolean`                                     | If `<RadioBoxGroup />` is uncontrolled, the default property makes this RadioBox checked on the initial render. |         |
-| ...         | `React.InputHTMLAttributes<HTMLInputElement>` | Any other properties supplied will be spread on the root element.                                               |         |
+| Prop               | Type                                          | Description                                                                                                     | Default |
+| ------------------ | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------- |
+| `value` (Required) | `string` \| `number`                          | Every `<RadioBox />` needs a value prop                                                                         |         |
+| `className`        | `string`                                      | Adds a className to the root element                                                                            | `''`    |
+| `checked`          | `boolean`                                     | Indicates whether or not the box will be checked                                                                | `false` |
+| `disabled`         | `boolean`                                     | Indicates whether or not the radio can be clicked by a user                                                     | `false` |
+| `children`         | `node`                                        | Content that appears inside of the `<RadioBox />`                                                               |         |
+| `default`          | `boolean`                                     | If `<RadioBoxGroup />` is uncontrolled, the default property makes this RadioBox checked on the initial render. |         |
+| ...                | `React.InputHTMLAttributes<HTMLInputElement>` | Any other properties supplied will be spread on the root element.                                               |         |
