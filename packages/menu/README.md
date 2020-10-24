@@ -136,7 +136,7 @@ Self-closing component that provides a way to group `MenuItems` in a `Menu` comp
 | `onClick`     | `function`                           | Function that will be called when a `<MenuItem />` is clicked                                    |           |
 | `active`      | `boolean`                            | Determines if the `<MenuItem />` is `active`                                                     | `false`   |
 | `disabled`    | `boolean`                            | Determines if the `<MenuItem />` is `disabled`                                                   | `false`   |
-| `description` | `React.ReactElement`                 | Content to appear below main text of the `<MenuItem />`                                          |           |
+| `description` | `node`                               | Content to appear below main text of the `<MenuItem />`                                          |           |
 | `as`          | `React.ElementType` or `HTMLElement` | Determines what the `<MenuItem />` will be rendered as                                           |           |
 | `size`        | `default` or `large`                 | Size of the `<MenuItem />` component                                                             | `default` |
 | `glyph`       | `React.ReactElement`                 | Slot to pass in an Icon rendered to the left of `<MenuItem />` text.                             |           |
@@ -147,18 +147,18 @@ _Any other properties will be spread on the MenuItem `div` container_
 
 ## Properties
 
-| Prop          | Type                 | Description                                                                                     | Default |
-| ------------- | -------------------- | ----------------------------------------------------------------------------------------------- | ------- |
-| `open`        | `boolean`            | Determines if `<SubMenu />` item appears open                                                   | `false` |
-| `setOpen`     | `function`           | Function to set the value of `open` in `<SubMenu />`                                            |         |
-| `className`   | `string`             | className applied to `SubMenu` root element                                                     |         |
-| `description` | `React.ReactElement` | Content to appear below main text of SubMenu                                                    |         |
-| `active`      | `boolean`            | Determines if `<SubMenu />` appears `active`                                                    | `false` |
-| `disabled`    | `boolean`            | Determines if `<SubMenu />` appears `disabled`                                                  | `false` |
-| `glyph`       | `React.ReactElement` | Slot to pass in an Icon rendered to the left of `<SubMenu />` text.                             |         |
-| `title`       | `string`             | Main text rendered in `<SubMenu />`                                                             |         |
-| `href`        | `string`             | If supplied, will render the `<SubMenu />` inside of an `<a>` tag, rather than a `<button>` tag |         |
-| `spacing`     | `number`             | Distance between the content rendered inside of the Menu and the trigger                        | `15`    |
+| Prop          | Type                             | Description                                                                                     | Default |
+| ------------- | -------------------------------- | ----------------------------------------------------------------------------------------------- | ------- |
+| `open`        | `boolean`                        | Determines if `<SubMenu />` item appears open                                                   | `false` |
+| `setOpen`     | `function`                       | Function to set the value of `open` in `<SubMenu />`                                            |         |
+| `className`   | `string`                         | className applied to `SubMenu` root element                                                     |         |
+| `description` | `string` \| `React.ReactElement` | Content to appear below main text of SubMenu                                                    |         |
+| `active`      | `boolean`                        | Determines if `<SubMenu />` appears `active`                                                    | `false` |
+| `disabled`    | `boolean`                        | Determines if `<SubMenu />` appears `disabled`                                                  | `false` |
+| `glyph`       | `React.ReactElement`             | Slot to pass in an Icon rendered to the left of `<SubMenu />` text.                             |         |
+| `title`       | `string`                         | Main text rendered in `<SubMenu />`                                                             |         |
+| `href`        | `string`                         | If supplied, will render the `<SubMenu />` inside of an `<a>` tag, rather than a `<button>` tag |         |
+| `spacing`     | `number`                         | Distance between the content rendered inside of the Menu and the trigger                        | `15`    |
 
 ## Advanced Use Case
 

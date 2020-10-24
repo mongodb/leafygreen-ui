@@ -27,7 +27,7 @@ function Uncontrolled() {
           Menu Item With Description
         </MenuItem>
         <MenuItem
-          disabled={boolean('Disabled', true)}
+          disabled={boolean('Disable item', true)}
           description="I am a description"
         >
           Disabled Menu Item
@@ -57,7 +57,7 @@ function Controlled() {
           >
             Active Menu Item
           </MenuItem>
-          <MenuItem disabled={boolean('Disabled', true)} size="large">
+          <MenuItem disabled={boolean('Disable item', true)} size="large">
             Disabled Menu Item
           </MenuItem>
           <MenuItem active description="I am a description" size="large">
