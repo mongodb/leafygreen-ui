@@ -7,12 +7,7 @@ import Button, { Variant as ButtonVariant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import { uiColors } from '@leafygreen-ui/palette';
-import Tooltip, {
-  Align,
-  Justify,
-  TriggerEvent,
-  Variant as TooltipVariant,
-} from '@leafygreen-ui/tooltip';
+import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
 import { InlineCode } from '@leafygreen-ui/typography';
 
 const Mode = {
@@ -113,8 +108,7 @@ const buttonWrapperStyle = css`
 
 const buttonStyle = css`
   height: 100%;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  border-radius: 0 4px 4px 0;
   filter: drop-shadow(2px 0 6px ${transparentize(0.7, uiColors.gray.dark1)});
 `;
 
@@ -176,23 +170,12 @@ export default function Copyable({
       </Button>
     );
 
-    let tooltipVariant: TooltipVariant;
-
-    switch (mode) {
-      case Mode.Light:
-        tooltipVariant = TooltipVariant.Dark;
-        break;
-      case Mode.Dark:
-        tooltipVariant = TooltipVariant.Light;
-        break;
-    }
-
     copyButton = (
       // `Tooltip` forces its trigger to be `position: relative` :/
       <div className={buttonWrapperStyle}>
         <Tooltip
           open={copied}
-          variant={tooltipVariant}
+          darkMode={darkMode}
           align={Align.Top}
           justify={Justify.Middle}
           trigger={trigger}
@@ -227,7 +210,14 @@ export default function Copyable({
   return (
     <>
       {label && (
-        <div className={cx(labelStyle, css(`color: ${colorSet.label};`))}>
+        <div
+          className={cx(
+            labelStyle,
+            css`
+              color: ${colorSet.label};
+            `,
+          )}
+        >
           {label}
         </div>
       )}
@@ -235,7 +225,9 @@ export default function Copyable({
         <div
           className={cx(
             descriptionStyle,
-            css(`color: ${colorSet.description};`),
+            css`
+              color: ${colorSet.description};
+            `,
           )}
         >
           {description}
@@ -250,11 +242,11 @@ export default function Copyable({
         <InlineCode
           className={cx(
             codeStyle,
-            css(`
+            css`
               color: ${colorSet.code.text};
               background-color: ${colorSet.code.background};
               border-color: ${colorSet.code.border};
-            `),
+            `,
             { [largeCodeStyle]: size === Size.Large },
           )}
         >
