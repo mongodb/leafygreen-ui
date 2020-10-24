@@ -1,4 +1,4 @@
-import React, { useMemo, Fragment, useState, useCallback } from 'react';
+import React, { useMemo, Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -100,14 +100,14 @@ function Popover({
   const lastTimeRefElMutated = useMutationObserver(
     referenceElement,
     mutationOptions,
-    useCallback(Date.now, []),
+    Date.now,
     observeMutations,
   );
 
   const lastTimeContentElMutated = useMutationObserver(
     contentNode,
     mutationOptions,
-    useCallback(Date.now, []),
+    Date.now,
     observeMutations,
   );
 

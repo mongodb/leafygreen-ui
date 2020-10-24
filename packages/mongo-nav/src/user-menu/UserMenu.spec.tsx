@@ -222,7 +222,7 @@ describe('packages/mongo-nav/user-menu', () => {
   // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('the types behave as expected', () => {
     // eslint-disable-next-line jest/expect-expect
-    test('does not error when all URLS are passed to urls prop ', () => {
+    test('does not error when all URLS are passed to urls prop', () => {
       <UserMenu urls={urlFixtures} />;
     });
     // eslint-disable-next-line jest/expect-expect

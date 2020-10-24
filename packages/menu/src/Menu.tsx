@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo, useEffect } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { useEventListener } from '@leafygreen-ui/hooks';
@@ -6,6 +6,9 @@ import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { transparentize } from 'polished';
+import { FocusableMenuItemElement } from './FocusableMenuItem';
+import { MenuItemElement } from './MenuItem';
+import { SubMenuElement } from './SubMenu';
 
 const rootMenuStyle = css`
   width: 200px;
@@ -95,17 +98,13 @@ function Menu({
   trigger,
   ...rest
 }: MenuProps) {
-  const refs: Array<HTMLElement> = [];
-  const titleArr: Array<string> = [];
-
   const hasSetInitialFocus = useRef(false);
   const hasSetInitialOpen = useRef(false);
-  const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
 
   const [, setClosed] = useState(false);
-  const [currentSubMenu, setCurrentSubMenu] = useState<React.ReactElement<
-    HTMLLIElement
-  > | null>(null);
+  const [currentSubMenu, setCurrentSubMenu] = useState<SubMenuElement | null>(
+    null,
+  );
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
 
   const setOpen =
@@ -113,32 +112,16 @@ function Menu({
     uncontrolledSetOpen;
   const open = controlledOpen ?? uncontrolledOpen;
 
-  // When a SubMenu becomes open, it's set to currentSubMenu, and we focus on the first child.
-  const focusedRefIndex = refs.indexOf(focused);
-
-  let item: HTMLElement | undefined;
-
-  if (focusedRefIndex !== -1) {
-    if (!currentSubMenu) {
-      const subMenu = refs[focusedRefIndex];
-      item = subMenu;
-    } else {
-      const subMenuFirstChild = refs[focusedRefIndex + 1];
-      item = subMenuFirstChild;
-    }
-  }
-
-  useEffect(() => {
-    item?.focus();
-  }, [item]);
-
-  const updatedChildren = React.useMemo(() => {
+  const { updatedChildren, refs } = React.useMemo(() => {
     if (
       children == null ||
       ['boolean', 'number', 'string'].includes(typeof children)
     ) {
-      return;
+      return { updatedChildren: undefined, refs: [] };
     }
+
+    const titleArr: Array<string> = [];
+    const refs: Array<HTMLElement> = [];
 
     function updateChildren(children: React.ReactNode): React.ReactNode {
       return React.Children.map(children, child => {
@@ -166,11 +149,11 @@ function Menu({
 
         const title = props?.title ?? false;
 
-        const onFocus = ({ target }: { target: HTMLElement }) => {
+        const onFocus = ({ target }: React.FocusEvent<HTMLElement>) => {
           setFocused(target);
         };
 
-        if (isComponentType<'SubMenu'>(child, 'SubMenu') && title) {
+        if (isComponentType<SubMenuElement>(child, 'SubMenu') && title) {
           if (titleArr.includes(title)) {
             throw new Error('SubMenu titles must be unique');
           }
@@ -194,7 +177,7 @@ function Menu({
 
               setCurrentSubMenu(state ? child : null);
             },
-            onKeyDown: (e: KeyboardEvent) => {
+            onKeyDown: (e: React.KeyboardEvent<HTMLButtonElement>) => {
               if (e.keyCode === keyMap.ArrowLeft && isCurrentSubMenu) {
                 setCurrentSubMenu(null);
               }
@@ -211,9 +194,15 @@ function Menu({
           });
         }
 
+        if (isComponentType<MenuItemElement>(child, 'MenuItem')) {
+          return React.cloneElement(child, {
+            ref: setRef,
+            onFocus,
+          });
+        }
+
         if (
-          isComponentType<'MenuItem'>(child, 'MenuItem') ||
-          isComponentType<'FocusableMenuItem'>(child, 'FocusableMenuItem')
+          isComponentType<FocusableMenuItemElement>(child, 'FocusableMenuItem')
         ) {
           return React.cloneElement(child, {
             ref: setRef,
@@ -231,8 +220,10 @@ function Menu({
       });
     }
 
-    return updateChildren(children);
-  }, [children, currentSubMenu, open, refs, titleArr]);
+    return { updatedChildren: updateChildren(children), refs };
+  }, [children, currentSubMenu, open]);
+
+  const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
 
   const popoverRef: React.RefObject<HTMLUListElement> = useRef(null);
 

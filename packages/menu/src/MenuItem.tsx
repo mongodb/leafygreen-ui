@@ -4,7 +4,7 @@ import { createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import {
   menuItemContainerStyle,
   activeMenuItemContainerStyle,
@@ -255,3 +255,8 @@ MenuItem.propTypes = {
 };
 
 export default MenuItem;
+
+export type MenuItemElement = React.ReactComponentElement<
+  typeof MenuItem,
+  BoxProps<'button', BaseMenuItemProps & { ref?: React.Ref<any> }>
+>;

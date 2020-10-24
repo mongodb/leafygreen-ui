@@ -26,13 +26,15 @@ module.exports = {
     },
   },
   rules: {
+    'jest/no-conditional-expect': 'off',
+    // 'jest/valid-title': 'off', // can't detect titles that are string variables
     'react/jsx-filename-extension': [
       'error',
       {
         extensions: ['.js', '.tsx'],
       },
     ],
-    'react/forbid-prop-types': 1,
+    'react/forbid-prop-types': 'warn',
     'react-hooks/exhaustive-deps': [
       'warn',
       {
@@ -40,7 +42,7 @@ module.exports = {
       },
     ],
     'react/sort-comp': 'error',
-    'import/no-extraneous-dependencies': 0,
+    'import/no-extraneous-dependencies': 'off',
     'padding-line-between-statements': [
       'error',
       {
@@ -54,9 +56,11 @@ module.exports = {
         next: ['block-like', 'const', 'let', 'case', 'if', 'while', 'return'],
       },
     ],
-    'no-var': 1,
-    'prefer-const': 1,
+    'no-redeclare': 'off', // covered by TypeScript
     'no-trailing-spaces': 'error',
+    'no-undef': 'off', // covered by TypeScript
+    'no-var': 'warn',
+    'prefer-const': 'warn',
   },
   overrides: [
     {
@@ -99,7 +103,7 @@ module.exports = {
           'error',
           'interface',
         ],
-        '@typescript-eslint/explicit-function-return-type': 0,
+        '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/no-inferrable-types': 'warn',
       },
     },

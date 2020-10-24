@@ -157,7 +157,7 @@ describe('packages/box', () => {
     });
 
     // eslint-disable-next-line jest/expect-expect
-    test('does not allow specifying "href", when "as" is set to "div" ', () => {
+    test('does not allow specifying "href", when "as" is set to "div"', () => {
       // @ts-expect-error
       <Box as="div" href="string" />;
     });
@@ -191,7 +191,7 @@ describe('packages/box', () => {
       });
 
       // eslint-disable-next-line jest/expect-expect
-      test('does not allow specifying "href", when "as" is set to "div" ', () => {
+      test('does not allow specifying "href", when "as" is set to "div"', () => {
         // @ts-expect-error
         <TestExtendableBox as="div" href="string" />;
       });
