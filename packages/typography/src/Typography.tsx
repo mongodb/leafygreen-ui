@@ -123,15 +123,14 @@ const code = css`
   border-radius: 3px;
   font-family: ${fontFamilies.code};
 
-  ${anchorDataProp.selector}:hover > code > & {
-    border-color: ${uiColors.blue.base};
+  ${anchorDataProp.selector}:hover > & {
+    box-shadow: 0 0 0 3px ${uiColors.gray.light2};
   }
 `;
 
 const codeFocus = css`
-  ${anchorDataProp.selector}:focus > code > & {
-    border-color: ${uiColors.blue.base};
-    background-color: ${uiColors.gray.light3};
+  ${anchorDataProp.selector}:focus > & {
+    box-shadow: 0 0 0 3px ${uiColors.blue.light2};
   }
 `;
 
@@ -167,25 +166,35 @@ function InlineCode({ children, className, ...rest }: InlineCodeProps) {
     ((typeof children === 'string' && children.match(/./gu)?.length) ?? 0) <= 30
       ? nowrap
       : normal;
-  const isAnchor = rest?.href || rest.onClick;
+  const isAnchor = rest?.href !== undefined || rest.onClick !== undefined;
 
-  const renderedInlineCode = (isAnchor = false) => (
+  const renderedInlineCode = (
     <code
-      className={cx(fontSize, whiteSpace, { [colorBlue]: isAnchor }, className)}
+      className={cx(
+        code,
+        fontSize,
+        whiteSpace,
+        { [codeFocus]: showFocus },
+        className,
+      )}
     >
-      <span className={cx(code, { [codeFocus]: showFocus })}>{children}</span>
+      {children}
     </code>
   );
 
   if (isAnchor) {
     return (
-      <a {...anchorDataProp.prop} className={cx(codeLink, className)} {...rest}>
-        {renderedInlineCode(true)}
+      <a
+        {...anchorDataProp.prop}
+        className={cx(codeLink, colorBlue, className)}
+        {...rest}
+      >
+        {renderedInlineCode}
       </a>
     );
   }
 
-  return renderedInlineCode();
+  return renderedInlineCode;
 }
 
 InlineCode.displayName = 'InlineCode';
