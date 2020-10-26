@@ -52,9 +52,11 @@ npm install @leafygreen-ui/inline-definition
 
 ## Properties
 
-| Prop                    | Type                               | Description                                                  | Default |
-| ----------------------- | ---------------------------------- | ------------------------------------------------------------ | ------- |
-| `definition` (Required) | `React.ReactNode`                  | Content that describes the term. Will appear inside Tooltip. |         |
-| `children`              | `string`                           | Text that will appear underlined                             |         |
-| `className`             | `string`                           | className will be applied to the trigger element             |         |
-| ...                     | [TooltipProps](/component/tooltip) | Any other properties will be spread on the Tooltip element   |         |
+| Prop                    | Type                                           | Description                                                                                                                                                                                                                                        | Default   |
+| ----------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| `definition` (Required) | `React.ReactNode`                              | Content that describes the term. Will appear inside Tooltip.                                                                                                                                                                                       |           |
+| `children`              | `string`                                       | Text that will appear underlined                                                                                                                                                                                                                   |           |
+| `className`             | `string`                                       | className will be applied to the trigger element                                                                                                                                                                                                   |           |
+| `align`                 | `'top'` \| `'bottom'` \| `'left'` \| `'right'` | Determines the preferred alignment of the `<Tooltip />` component relative to the element passed to the `trigger` prop. If no `trigger` is passed, the Tooltip will be positioned against its nearest parent element.                              | `'top'`   |
+| `justify`               | `'start'` \| `'middle'` \| `'end'` \| `'fit'`  | Determines the preferred justification of the `<Tooltip />` component (based on the alignment) relative to the element passed to the `trigger` prop. If no `trigger` is passed, the Tooltip will be positioned against its nearest parent element. | `'start'` |
+| `darkMode`              | `boolean`                                      | Determines if the `<Tooltip />` will appear in dark mode.                                                                                                                                                                                          | `false`   |
