@@ -24,7 +24,7 @@ const componentsStyle = css`
 `;
 
 const marginBotton = css`
-  margin-bottom: 36px;
+  margin-bottom: 24px;
 `;
 
 const flexContainer = css`

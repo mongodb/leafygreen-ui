@@ -147,8 +147,10 @@ function getItemStyle(num: number | undefined) {
   }
 
   if (num) {
-    const width = `${Math.round(100 / 12) * num}%`;
+    const width = `${(100 / 12) * num}%`;
+
     return {
+      num,
       width,
       flexBasis: width,
       display: 'initial',
