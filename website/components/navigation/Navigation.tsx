@@ -77,12 +77,6 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
 
   const Group = isTouchDevice ? MobileNavigationGroup : SideNavGroup;
   const Item = isTouchDevice ? MobileNavigationItem : SideNavItem;
-  const groupProps = isTouchDevice
-    ? undefined
-    : ({
-        collapsible: true,
-        initialCollapsed: false,
-      } as const);
 
   const renderGroup = (type: GroupType) => {
     const isGuideline = type === GroupType.Guideline;
@@ -91,9 +85,9 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
     return (
       <Group
         key={type}
-        defaultOpen={isTouchDevice && router.asPath.includes(type)}
         header={isGuideline ? 'Core Guidelines' : 'Components'}
-        {...groupProps}
+        collapsible={isTouchDevice ? undefined : true}
+        initialCollapsed={isTouchDevice ? !router.asPath.includes(type) : false}
       >
         {items.map(item => {
           const path = `/${type}/${item}`;

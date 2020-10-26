@@ -69,17 +69,17 @@ const ulStyles = css`
 type MobileNavigationGroupProps = JSX.IntrinsicElements['li'] & {
   header: string;
   children: React.ReactNode;
-  defaultOpen?: boolean;
+  initialCollapsed?: boolean;
 };
 
 function MobileNavigationGroup({
   header,
   children,
   className,
-  defaultOpen = false,
+  initialCollapsed = true,
   ...rest
 }: MobileNavigationGroupProps) {
-  const [open, setOpen] = useState(defaultOpen);
+  const [open, setOpen] = useState(!initialCollapsed);
   const nodeRef = useRef(null);
   const ulRef = useRef<HTMLUListElement>(null);
 

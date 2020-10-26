@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { css, cx } from 'emotion';
 import { Transition } from 'react-transition-group';
 import { uiColors } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
 import IconButton from '@leafygreen-ui/icon-button';
 import MenuIcon from '@leafygreen-ui/icon/dist/Menu';
 import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
@@ -13,7 +14,7 @@ const closedContainer = css`
 `;
 
 const iconMargin = css`
-  margin-right: 16px;
+  margin-right: ${spacing[3]}px;
 `;
 
 const navStyle = css`
@@ -79,7 +80,7 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
   return (
     <div
       className={css`
-        margin-top: 32px;
+        margin-top: ${spacing[5]}px;
       `}
     >
       <div className={closedContainer}>
