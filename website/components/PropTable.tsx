@@ -129,7 +129,6 @@ function PropTable({
     <div
       className={css`
         margin-top: 40px;
-        margin-right: -16px; // offsets grid padding so container takes up entire width
       `}
     >
       {component === 'typography' && <TypographyPropTable />}

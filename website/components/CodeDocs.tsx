@@ -40,7 +40,6 @@ const subtitlePadding = css`
 
 const tabsPadding = css`
   padding-top: ${spacing[4]}px;
-  margin-right: -16px; // offsets grid padding so container takes up entire width
 `;
 
 const mobileInstallMargin = css`
@@ -123,6 +122,7 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
   return (
     <>
       <GridContainer justify="space-between" align="flex-start">
+        {/* <div></div> */}
         <GridItem md={7} lg={7}>
           <div className={topAlignment}>
             <Subtitle
