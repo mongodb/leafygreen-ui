@@ -87,6 +87,7 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
           aria-label="menu"
           onClick={() => setOpen(true)}
           className={iconMargin}
+          size="large"
         >
           <MenuIcon size={20} />
         </IconButton>

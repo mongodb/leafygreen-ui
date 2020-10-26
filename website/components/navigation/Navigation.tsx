@@ -65,6 +65,13 @@ const components = [
   'typography',
 ];
 
+const GroupType = {
+  Component: 'component',
+  Guideline: 'guideline',
+} as const;
+
+type GroupType = typeof GroupType[keyof typeof GroupType];
+
 function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
   const router = useRouter();
 
@@ -77,22 +84,38 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
         initialCollapsed: false,
       } as const);
 
+  const renderGroup = (type: GroupType) => {
+    const isGuideline = type === GroupType.Guideline;
+    const items = isGuideline ? coreGuidelines : components;
+
+    return (
+      <Group
+        key={type}
+        defaultOpen={isTouchDevice && router.asPath.includes(type)}
+        header={isGuideline ? 'Core Guidelines' : 'Components'}
+        {...groupProps}
+      >
+        {items.map(item => {
+          const path = `/${type}/${item}`;
+          return (
+            <Item
+              key={item}
+              onClick={() => router.push(path)}
+              active={router.asPath === path}
+            >
+              {item.split('-').join(' ')}
+            </Item>
+          );
+        })}
+      </Group>
+    );
+  };
+
   return (
     <>
-      <Group header="Core Guidelines" {...groupProps}>
-        {coreGuidelines.map(item => (
-          <Item key={item} onClick={() => router.push(`/guideline/${item}`)}>
-            {item.split('-').join(' ')}
-          </Item>
-        ))}
-      </Group>
-      <Group header="Components" {...groupProps}>
-        {components.map(item => (
-          <Item key={item} onClick={() => router.push(`/component/${item}`)}>
-            {item.split('-').join(' ')}
-          </Item>
-        ))}
-      </Group>
+      {[GroupType.Guideline, GroupType.Component].map((group: GroupType) =>
+        renderGroup(group),
+      )}
     </>
   );
 }
