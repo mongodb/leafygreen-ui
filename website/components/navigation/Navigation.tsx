@@ -105,13 +105,7 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
     );
   };
 
-  return (
-    <>
-      {[GroupType.Guideline, GroupType.Component].map((group: GroupType) =>
-        renderGroup(group),
-      )}
-    </>
-  );
+  return <>{[GroupType.Guideline, GroupType.Component].map(renderGroup)}</>;
 }
 
 function Navigation() {

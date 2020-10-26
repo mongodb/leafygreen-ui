@@ -150,7 +150,6 @@ function getItemStyle(num: number | undefined) {
     const width = `${(100 / 12) * num}%`;
 
     return {
-      num,
       width,
       flexBasis: width,
       display: 'initial',
