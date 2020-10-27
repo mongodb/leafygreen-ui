@@ -178,7 +178,7 @@ const inputStyle = css`
   }
 
   &:disabled {
-    pointer-events: none;
+    cursor: not-allowed;
   }
 `;
 
@@ -225,6 +225,7 @@ interface ColorSets {
   interactionRing: string;
   interactionRingFocus: string;
   labelColor: string;
+  disabledLabelColor: string;
   descriptionColor: string;
   inputColor: string;
   inputBackgroundColor: string;
@@ -235,6 +236,7 @@ interface ColorSets {
   errorMessage: string;
   optional: string;
   defaultBorder: string;
+  validBorder: string;
 }
 
 const colorSets: Record<Mode, ColorSets> = {
@@ -242,6 +244,7 @@ const colorSets: Record<Mode, ColorSets> = {
     interactionRing: uiColors.gray.light2,
     interactionRingFocus: '#9dd0e7',
     labelColor: uiColors.gray.dark2,
+    disabledLabelColor: uiColors.gray.dark1,
     descriptionColor: uiColors.gray.dark1,
     inputColor: uiColors.gray.dark3,
     inputBackgroundColor: uiColors.white,
@@ -252,11 +255,13 @@ const colorSets: Record<Mode, ColorSets> = {
     errorBorder: uiColors.red.base,
     optional: uiColors.gray.dark1,
     defaultBorder: uiColors.gray.light1,
+    validBorder: uiColors.green.base,
   },
   [Mode.Dark]: {
-    interactionRing: uiColors.gray.dark2,
+    interactionRing: uiColors.gray.dark1,
     interactionRingFocus: uiColors.blue.base,
     labelColor: uiColors.white,
+    disabledLabelColor: uiColors.gray.light1,
     descriptionColor: uiColors.gray.light1,
     inputColor: uiColors.white,
     inputBackgroundColor: '#394F5A',
@@ -264,9 +269,10 @@ const colorSets: Record<Mode, ColorSets> = {
     disabledBackgroundColor: '#263843',
     errorIconColor: '#EF8D6F',
     errorMessage: '#EF8D6F',
-    errorBorder: '#CF4A22',
+    errorBorder: '#5a3c3b',
     optional: uiColors.gray.light1,
     defaultBorder: '#394F5A',
+    validBorder: '#394F5A',
   },
 } as const;
 
@@ -275,7 +281,7 @@ function getStatefulInputStyles(state: State, optional: boolean, mode: Mode) {
     case State.Valid: {
       return css`
         padding-right: 30px;
-        border-color: ${uiColors.green.base};
+        border-color: ${colorSets[mode].validBorder};
       `;
     }
 
@@ -381,7 +387,9 @@ const TextInput = React.forwardRef(
             className={cx(
               labelStyle,
               css`
-                color: ${colorSets[mode].labelColor};
+                color: ${disabled
+                  ? colorSets[mode].disabledLabelColor
+                  : colorSets[mode].labelColor};
               `,
             )}
           >
@@ -412,12 +420,16 @@ const TextInput = React.forwardRef(
                 color: ${colorSets[mode].inputColor};
                 background-color: ${colorSets[mode].inputBackgroundColor};
 
+                &:focus {
+                  border: 1px solid ${colorSets[mode].inputBackgroundColor};
+                }
+
                 &:disabled {
                   color: ${colorSets[mode].disabledColor};
                   background-color: ${colorSets[mode].disabledBackgroundColor};
                 }
               `,
-              getStatefulInputStyles(state, optional, mode),
+              { [getStatefulInputStyles(state, optional, mode)]: !disabled },
             )}
             value={value}
             required={!optional}
@@ -427,51 +439,55 @@ const TextInput = React.forwardRef(
             ref={forwardRef}
             id={id}
           />
-          <div {...iconSelectorProp.prop} className={inputIconStyle}>
-            {state === State.Valid && (
-              <RenderedCheckmarkIcon className={validIconStyle} />
-            )}
+          {!disabled && (
+            <div {...iconSelectorProp.prop} className={inputIconStyle}>
+              {state === State.Valid && (
+                <RenderedCheckmarkIcon className={validIconStyle} />
+              )}
 
-            {state === State.Error && (
-              <WarningIcon
-                className={css`
-                  color: ${colorSets[mode].errorIconColor};
-                `}
-              />
-            )}
+              {state === State.Error && (
+                <WarningIcon
+                  className={css`
+                    color: ${colorSets[mode].errorIconColor};
+                  `}
+                />
+              )}
 
-            {state === State.None && optional && (
-              <div
-                className={cx(
-                  optionalStyle,
-                  css`
-                    color: ${colorSets[mode].optional};
-                  `,
-                )}
-              >
-                <p>Optional</p>
-              </div>
-            )}
-          </div>
-          <div
-            className={cx(
-              interactionRing,
-              css`
-                background-color: ${colorSets[mode].interactionRing};
-              `,
-              interactionRingHoverStyle,
-              {
-                [interactionRingFocusStyle]: showFocus,
-                [css`
-                  ${inputSelectorProp.selector}:focus ~ & {
-                    background-color: ${colorSets[mode].interactionRingFocus};
-                  }
-                `]: showFocus,
-              },
-            )}
-          />
+              {state === State.None && optional && (
+                <div
+                  className={cx(
+                    optionalStyle,
+                    css`
+                      color: ${colorSets[mode].optional};
+                    `,
+                  )}
+                >
+                  <p>Optional</p>
+                </div>
+              )}
+            </div>
+          )}
+          {!disabled && (
+            <div
+              className={cx(
+                interactionRing,
+                css`
+                  background-color: ${colorSets[mode].interactionRing};
+                `,
+                interactionRingHoverStyle,
+                {
+                  [interactionRingFocusStyle]: showFocus,
+                  [css`
+                    ${inputSelectorProp.selector}:focus ~ & {
+                      background-color: ${colorSets[mode].interactionRingFocus};
+                    }
+                  `]: showFocus,
+                },
+              )}
+            />
+          )}
         </div>
-        {state === State.Error && errorMessage && (
+        {!disabled && state === State.Error && errorMessage && (
           <div
             className={cx(
               errorMessageStyle,
