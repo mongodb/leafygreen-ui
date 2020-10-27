@@ -7,7 +7,8 @@ import MenuSeparator from './MenuSeparator';
 import MenuItem from './MenuItem';
 import SubMenu from './SubMenu';
 
-interface MenuExampleInterface {
+// eslint-disable-next-line
+type MenuExampleInterface = {
   subMenuTitle: string;
   subMenuDescription: React.ReactElement;
   subMenuGlyph: keyof typeof glyphs;
@@ -15,7 +16,7 @@ interface MenuExampleInterface {
   subMenuHref?: string | undefined;
   menuItemChildren: string;
   menuItemActive: boolean;
-}
+};
 
 const knobsConfig: KnobsConfigInterface<MenuExampleInterface> = {
   subMenuTitle: {
@@ -60,7 +61,7 @@ const knobsConfig: KnobsConfigInterface<MenuExampleInterface> = {
 const MenuExample = (props: MenuExampleInterface) => {
   return (
     <LeafyGreenProvider>
-      <Menu>
+      <Menu trigger={<button>trigger</button>}>
         <SubMenu
           title={props.subMenuTitle}
           description={props.subMenuDescription}

@@ -20,7 +20,6 @@ const knobsConfig: KnobsConfigInterface<Partial<BadgeProps>> = {
 };
 
 const BadgeLiveExample = () => {
-  console.log('inside badge');
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <Badge {...props} />}

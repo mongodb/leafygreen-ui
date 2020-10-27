@@ -82,6 +82,7 @@ return (
 | `value`        | `string`                                            | Sets the HTML `value` attribute.                                                                                          | `''`    |
 | `className`    | `string`                                            | Adds a className to the class attribute.                                                                                  | `''`    |
 | `type`         | `email`, `password`, `search`, `text`, `url`, `tel` | Sets type for TextInput                                                                                                   | `text`  |
+| `darkMode`     | `boolean`                                           | Determines whether or not the component will appear in dark mode.                                                         | `false` |
 
 ### Special Case: Aria Labels
 

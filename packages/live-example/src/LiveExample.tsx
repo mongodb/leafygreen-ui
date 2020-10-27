@@ -71,7 +71,7 @@ interface TextConfigInterface {
   label: string;
 }
 
-type PropsType =
+export type PropsType =
   | BooleanConfigInterface
   | NumberConfigInterface
   | TextConfigInterface

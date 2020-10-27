@@ -150,6 +150,7 @@ function TextKnob({
         onChange={handleChange}
         value={value.toString()}
         aria-labelledby={labelId}
+        darkMode={darkMode}
       />
     </div>
   );

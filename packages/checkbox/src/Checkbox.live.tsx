@@ -1,5 +1,4 @@
 import React from 'react';
-import { css } from '@leafygreen-ui/emotion';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import Checkbox, { CheckboxProps } from './Checkbox';
 
@@ -37,7 +36,6 @@ const knobsConfig: KnobsConfigInterface<CheckboxProps> = {
 } as const;
 
 const CheckboxLiveExample = () => {
-  console.log('hi');
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <Checkbox {...props} />}
