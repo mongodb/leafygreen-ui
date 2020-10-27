@@ -29,7 +29,7 @@ const maxWidth = css`
   max-width: 360px;
 `;
 
-type InlineDefinitionProps = Partial<TooltipProps> & {
+export type InlineDefinitionProps = Partial<TooltipProps> & {
   definition: React.ReactNode;
 };
 

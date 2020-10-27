@@ -177,7 +177,7 @@ interface BaseIconButtonProps {
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';
 
-type AccessibleIconButtonProps = Either<BaseIconButtonProps, AriaLabels>;
+export type AccessibleIconButtonProps = Either<BaseIconButtonProps, AriaLabels>;
 
 function isComponentGlyph(
   child: React.ReactNode,

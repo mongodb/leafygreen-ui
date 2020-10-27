@@ -25,6 +25,17 @@ const ConfirmationModalLiveExample = dynamic(() =>
     mod => mod.ConfirmationModalLiveExample,
   ),
 );
+const IconLiveExample = dynamic(() =>
+  import('@leafygreen-ui/icon').then(mod => mod.IconLiveExample),
+);
+const IconButtonLiveExample = dynamic(() =>
+  import('@leafygreen-ui/icon-button').then(mod => mod.IconButtonLiveExample),
+);
+const InlineDefinitionLiveExample = dynamic(() =>
+  import('@leafygreen-ui/inline-definition').then(
+    mod => mod.InlineDefinitionLiveExample,
+  ),
+);
 
 const componentLiveExampleMap = {
   badge: BadgeLiveExample,
@@ -35,6 +46,9 @@ const componentLiveExampleMap = {
   checkbox: CheckboxLiveExample,
   code: CodeLiveExample,
   ['confirmation-modal']: ConfirmationModalLiveExample,
+  icon: IconLiveExample,
+  ['icon-button']: IconButtonLiveExample,
+  ['inline-definition']: InlineDefinitionLiveExample,
 };
 
 export { componentLiveExampleMap };
