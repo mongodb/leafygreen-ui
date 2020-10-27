@@ -76,7 +76,7 @@ const footerContentStyle = css`
   }
 `;
 
-interface MarketingModalProps {
+export interface MarketingModalProps {
   title: string;
   graphic: React.ReactElement;
   graphicStyle?: GraphicStyle;

@@ -11,6 +11,7 @@ import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
 const closedContainer = css`
   display: flex;
   align-items: center;
+  margin-left: -${spacing[2]}px;
 `;
 
 const iconMargin = css`

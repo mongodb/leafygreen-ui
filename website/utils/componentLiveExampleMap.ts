@@ -36,6 +36,14 @@ const InlineDefinitionLiveExample = dynamic(() =>
     mod => mod.InlineDefinitionLiveExample,
   ),
 );
+const LogoLiveExample = dynamic(() =>
+  import('@leafygreen-ui/logo').then(mod => mod.LogoLiveExample),
+);
+const MarketingModalLiveExample = dynamic(() =>
+  import('@leafygreen-ui/marketing-modal').then(
+    mod => mod.MarketingModalLiveExample,
+  ),
+);
 
 const componentLiveExampleMap = {
   badge: BadgeLiveExample,
@@ -49,6 +57,8 @@ const componentLiveExampleMap = {
   icon: IconLiveExample,
   ['icon-button']: IconButtonLiveExample,
   ['inline-definition']: InlineDefinitionLiveExample,
+  logo: LogoLiveExample,
+  ['marketing-modal']: MarketingModalLiveExample,
 };
 
 export { componentLiveExampleMap };

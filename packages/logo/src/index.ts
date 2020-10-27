@@ -1,3 +1,4 @@
+export { LogoLiveExample } from './Logo.live';
 export { default as Logo } from './Logo';
 export { default as LogoMark } from './LogoMark';
 export { default as CloudManagerLogo } from './CloudManagerLogo';

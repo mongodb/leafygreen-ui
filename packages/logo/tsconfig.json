@@ -18,6 +18,9 @@
     },
     {
       "path": "../live-example"
+    },
+    {
+      "path": "../typography"
     }
   ]
 }

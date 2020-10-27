@@ -21,8 +21,8 @@ import {
 const previewStyle = css`
   display: flex;
   flex-direction: column;
-  padding-top: ${spacing[3]}px;
-  margin-top: 56px;
+  // padding-top: ${spacing[3]}px;
+  margin-top: ${spacing[5]}px;
 `;
 
 const componentContainer = css`

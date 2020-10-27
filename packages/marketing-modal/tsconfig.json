@@ -21,6 +21,9 @@
     },
     {
       "path": "../typography"
+    },
+    {
+      "path": "../live-example"
     }
   ]
 }
