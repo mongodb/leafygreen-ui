@@ -47,6 +47,9 @@ const MarketingModalLiveExample = dynamic(() =>
 const MenuLiveExample = dynamic(() =>
   import('@leafygreen-ui/menu').then(mod => mod.MenuLiveExample),
 );
+const ModalLiveExample = dynamic(() =>
+  import('@leafygreen-ui/modal').then(mod => mod.ModalLiveExample),
+);
 
 const componentLiveExampleMap = {
   badge: BadgeLiveExample,
@@ -63,6 +66,7 @@ const componentLiveExampleMap = {
   logo: LogoLiveExample,
   ['marketing-modal']: MarketingModalLiveExample,
   menu: MenuLiveExample,
+  modal: ModalLiveExample,
 };
 
 export { componentLiveExampleMap };

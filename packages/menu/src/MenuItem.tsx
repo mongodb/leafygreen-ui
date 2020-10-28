@@ -83,6 +83,8 @@ const Size = {
 
 type Size = typeof Size[keyof typeof Size];
 
+export { Size };
+
 const menuItemHeight: Record<Size, string> = {
   [Size.Default]: css`
     min-height: 36px;

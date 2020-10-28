@@ -47,7 +47,6 @@ const renderGlyph = (glyph, size: Size = 'default') => {
 };
 
 const IconLiveExample = () => {
-  console.log('hi');
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => (
