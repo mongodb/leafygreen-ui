@@ -27,7 +27,7 @@ module.exports = {
   },
   rules: {
     'jest/no-conditional-expect': 'off',
-    // 'jest/valid-title': 'off', // can't detect titles that are string variables
+    'jest/valid-title': 'off', // can't detect titles that are string variables
     'react/jsx-filename-extension': [
       'error',
       {
