@@ -83,13 +83,11 @@ const copyableContainerStyle = css`
 const codeStyle = css`
   display: inline-flex;
   align-items: center;
-
   height: 100%;
   width: 100%;
   padding-left: 12px;
   border: 1px solid;
   border-radius: 4px;
-
   font-size: 14px;
   overflow: hidden;
 `;

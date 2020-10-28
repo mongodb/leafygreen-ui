@@ -20,7 +20,7 @@ npm install @leafygreen-ui/copyable
 
 ## Example
 
-```tsx
+```js
 <Copyable label="Label" description="Description">
   {children}
 </Copyable>
