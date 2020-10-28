@@ -9,7 +9,6 @@ const textAreaProp = createDataProp('area-selector');
 
 export const State = {
   None: 'none',
-  Valid: 'valid',
   Error: 'error',
 } as const;
 
@@ -108,7 +107,6 @@ interface ColorSets {
   disabledColor: string;
   interactionRing: string;
   interactionRingFocus: string;
-  validBorder: string;
   errorBorder: string;
   errorMessage: string;
 }
@@ -123,7 +121,6 @@ const colorSets: Record<Mode, ColorSets> = {
     disabledBackgroundColor: uiColors.gray.light2,
     interactionRing: uiColors.gray.light2,
     interactionRingFocus: '#9dd0e7',
-    validBorder: uiColors.green.base,
     errorBorder: uiColors.red.base,
     errorMessage: uiColors.red.base,
   },
@@ -136,8 +133,7 @@ const colorSets: Record<Mode, ColorSets> = {
     disabledBackgroundColor: '#263843',
     interactionRing: uiColors.gray.dark1,
     interactionRingFocus: uiColors.blue.base,
-    validBorder: uiColors.green.base,
-    errorBorder: '#EF8D6F',
+    errorBorder: '#5a3c3b',
     errorMessage: '#EF8D6F',
   },
 };
@@ -191,11 +187,6 @@ export default function TextArea({
     );
   }
 
-  const stateBorderColor =
-    state === State.Valid
-      ? colorSets[mode].validBorder
-      : colorSets[mode].errorBorder;
-
   return (
     <div className={containerStyles}>
       {label && (
@@ -216,7 +207,7 @@ export default function TextArea({
           className={cx(
             descriptionStyle,
             css`
-              color: ${colorSets[mode].labelColor};
+              color: ${colorSets[mode].descriptionColor};
             `,
           )}
         >
@@ -242,8 +233,11 @@ export default function TextArea({
             `,
             {
               [css`
-                border: 1px solid ${stateBorderColor};
-              `]: state !== State.None,
+                border: 1px solid ${colorSets[mode].errorBorder};
+              `]: state === State.Error,
+              [css`
+                background-color: #5a3c3b;
+              `]: state === State.Error && darkMode,
             },
             className,
           )}

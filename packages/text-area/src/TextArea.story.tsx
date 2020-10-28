@@ -18,7 +18,7 @@ storiesOf('TextArea', module).add('Default', () => {
         label={text('Label', 'Input Label')}
         description={text('Description', 'This is a description for the input')}
         disabled={boolean('Disabled', false)}
-        state={select('State', ['none', 'valid', 'error'], 'none')}
+        state={select('State', Object.values(State), State.None)}
         darkMode={darkMode}
         errorMessage={text('Error Message', 'This is an error message')}
       />
