@@ -160,7 +160,7 @@ function Menu({
 
           titleArr.push(title);
 
-          if (props.active && !hasSetInitialOpen.current) {
+          if (!currentSubMenu && props.active && !hasSetInitialOpen.current) {
             setCurrentSubMenu(child);
             hasSetInitialOpen.current = true;
           }

@@ -1,5 +1,10 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import {
+  render,
+  fireEvent,
+  getByLabelText,
+  waitFor,
+} from '@testing-library/react';
 import { JestDOM } from '@leafygreen-ui/testing-lib';
 import { urlFixtures, hostDefaults } from '../data';
 import UserMenu from '.';
@@ -53,21 +58,24 @@ describe('packages/mongo-nav/user-menu', () => {
     expect(mfa).toBeInTheDocument();
   });
 
-  test('renders university MenuItems when university dropdown is clicked and closes other SubMenus', () => {
-    const { getByText, getByTestId, getAllByRole } = renderUserMenu({
+  test('renders university MenuItems when university dropdown is clicked and closes other SubMenus', async () => {
+    const { getByTestId, getByText } = renderUserMenu({
       activePlatform: 'cloud',
     });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
 
-    const universityTrigger = getAllByRole('button', {
-      name: 'Open Sub-menu',
-    })[0];
+    const universitySubMenu = getByText('University').closest('li');
+    const universityTrigger = getByLabelText(
+      universitySubMenu!,
+      'Open Sub-menu',
+    );
+    await waitFor(() => expect(universityTrigger).toBeVisible());
+
     fireEvent.click(universityTrigger);
 
     const universityItem = getByText('University Preferences');
-
-    expect(universityItem).toBeInTheDocument();
+    expect(universityItem).toBeVisible();
   });
 
   test('atlas MenuItem links to cloud.mongodb.com', () => {

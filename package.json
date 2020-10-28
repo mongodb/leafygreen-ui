@@ -63,7 +63,7 @@
     "@changesets/cli": "^2.6.2",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
-    "@leafygreen-ui/lib": "^5.0.0",
+    "@leafygreen-ui/lib": "^6.1.0",
     "@leafygreen-ui/testing-lib": "*",
     "@rollup/plugin-babel": "^5.2.0",
     "@rollup/plugin-commonjs": "^15.0.0",
