@@ -2,10 +2,15 @@ import React from 'react';
 import { css } from 'emotion';
 import Code from '@leafygreen-ui/code';
 import { InlineCode } from '@leafygreen-ui/typography';
+import { readmeDepthMap } from './PropTable';
 
 function TypeDefinition({ markdownAst, readme }) {
   const typeNames = markdownAst.children
-    .filter(treeItem => treeItem.type === 'heading' && treeItem.depth === 5)
+    .filter(
+      treeItem =>
+        treeItem.type === 'heading' &&
+        treeItem.depth === readmeDepthMap.typeDefinition,
+    )
     .map(treeItem => treeItem.children?.[0].value);
 
   // Gets types defined in readmes to expand upon below the prop table
@@ -35,10 +40,6 @@ function TypeDefinition({ markdownAst, readme }) {
         </Code>
       </div>
     );
-  }
-
-  if (typeNames.length !== interfaceDefinitions.length) {
-    return null;
   }
 
   return typeNames.map((typeName: string, index: number) =>

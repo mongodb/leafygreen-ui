@@ -21,6 +21,11 @@ const tableHeaderNames: Array<'prop' | 'type' | 'description' | 'default'> = [
   'default',
 ];
 
+export const readmeDepthMap = {
+  componentName: 1,
+  typeDefinition: 5,
+};
+
 export interface ReadmeMarkdown {
   children: Array<Heading | Table>;
 }
@@ -112,7 +117,11 @@ function PropTable({
   let peerDepIndex: number | undefined;
 
   const headers = markdownAst.children
-    .filter(treeItem => treeItem.type === 'heading' && treeItem.depth === 1)
+    .filter(
+      treeItem =>
+        treeItem.type === 'heading' &&
+        treeItem.depth === readmeDepthMap.componentName,
+    )
     .map((item: Heading) => item?.children?.[0].value);
 
   const tableData = markdownAst.children
