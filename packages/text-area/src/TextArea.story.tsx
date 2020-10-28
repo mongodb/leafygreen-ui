@@ -15,8 +15,11 @@ storiesOf('TextArea', module).add('Default', () => {
       `}
     >
       <TextArea
-        label={text('Label', 'Input Label')}
-        description={text('Description', 'This is a description for the input')}
+        label={text('Label', 'TextArea Label')}
+        description={text(
+          'Description',
+          'This is a description for the textarea',
+        )}
         disabled={boolean('Disabled', false)}
         state={select('State', Object.values(State), State.None)}
         darkMode={darkMode}
