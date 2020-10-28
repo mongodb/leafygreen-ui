@@ -21,9 +21,18 @@ const tableHeaderNames: Array<'prop' | 'type' | 'description' | 'default'> = [
   'default',
 ];
 
+const HeadingType = {
+  ComponentName: 'componentName',
+  TypeDefinition: 'typeDefinition',
+} as const;
+
+type HeadingType = typeof HeadingType[keyof typeof HeadingType];
+
+export { HeadingType };
+
 export const readmeDepthMap = {
-  componentName: 1,
-  typeDefinition: 5,
+  [HeadingType.ComponentName]: 1,
+  [HeadingType.TypeDefinition]: 5,
 };
 
 export interface ReadmeMarkdown {
@@ -32,7 +41,7 @@ export interface ReadmeMarkdown {
 
 interface Heading {
   type: 'heading';
-  depth: number;
+  depth: typeof readmeDepthMap[keyof typeof readmeDepthMap];
   children: Array<{ value: string }>;
 }
 
@@ -120,7 +129,7 @@ function PropTable({
     .filter(
       treeItem =>
         treeItem.type === 'heading' &&
-        treeItem.depth === readmeDepthMap.componentName,
+        treeItem.depth === readmeDepthMap[HeadingType.ComponentName],
     )
     .map((item: Heading) => item?.children?.[0].value);
 

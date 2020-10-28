@@ -2,14 +2,14 @@ import React from 'react';
 import { css } from 'emotion';
 import Code from '@leafygreen-ui/code';
 import { InlineCode } from '@leafygreen-ui/typography';
-import { readmeDepthMap } from './PropTable';
+import { readmeDepthMap, HeadingType } from './PropTable';
 
 function TypeDefinition({ markdownAst, readme }) {
   const typeNames = markdownAst.children
     .filter(
       treeItem =>
         treeItem.type === 'heading' &&
-        treeItem.depth === readmeDepthMap.typeDefinition,
+        treeItem.depth === readmeDepthMap[HeadingType.TypeDefinition],
     )
     .map(treeItem => treeItem.children?.[0].value);
 
