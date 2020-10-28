@@ -15,7 +15,7 @@ import { useViewportSize } from '@leafygreen-ui/hooks';
 import { BaseLayoutProps } from 'utils/types';
 import { GridContainer, GridItem } from 'components/Grid';
 import PropTable, { ReadmeMarkdown } from 'components/PropTable';
-import TypeDefintion from 'components/TypeDefinition';
+import TypeDefinition from 'components/TypeDefinition';
 
 const topAlignment = css`
   margin-top: ${spacing[4]}px;
@@ -203,7 +203,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
           <PropTable markdownAst={markdownAst} component={component} />
-          <TypeDefintion markdownAst={markdownAst} readme={readme} />
+          <TypeDefinition markdownAst={markdownAst} readme={readme} />
         </GridItem>
       </GridContainer>
     </>

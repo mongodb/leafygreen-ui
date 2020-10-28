@@ -73,8 +73,8 @@ The popover component will be automatically positioned relative to its nearest p
 
 ## Advanced Use Case
 
-| Prop    | Type     | Description                                                                                                                                                                                         | Default |
-| ------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `refEl` | `object` | You can supply a `refEl` prop, if you do not want the popover to be positioned relative to it's nearest parent. Ref to the element to which the popover component should be positioned relative to. | `null`  |
+| Prop    | Type          | Description                                                                                                                                                                                         | Default |
+| ------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `refEl` | `HTMLElement` | You can supply a `refEl` prop, if you do not want the popover to be positioned relative to it's nearest parent. Ref to the element to which the popover component should be positioned relative to. | `null`  |
 
 _Any other properties will be spread on the popover-content container_

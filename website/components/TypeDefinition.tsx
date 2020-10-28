@@ -8,13 +8,14 @@ function TypeDefinition({ markdownAst, readme }) {
     .filter(treeItem => treeItem.type === 'heading' && treeItem.depth === 5)
     .map(treeItem => treeItem.children?.[0].value);
 
+  // Gets types defined in readmes to expand upon below the prop table
   const interfaceDefinitions = readme.match(/(?<=typescript).*?(?=```)/gs);
 
   if (typeNames.length < 1) {
     return null;
   }
 
-  function formatType(typeName, interfaceDefinition) {
+  function formatType(typeName: string, interfaceDefinition: string) {
     return (
       <div
         className={css`
@@ -36,7 +37,11 @@ function TypeDefinition({ markdownAst, readme }) {
     );
   }
 
-  return typeNames.map((typeName, index) =>
+  if (typeNames.length !== interfaceDefinitions.length) {
+    return null;
+  }
+
+  return typeNames.map((typeName: string, index: number) =>
     formatType(typeName, interfaceDefinitions[index]),
   );
 }

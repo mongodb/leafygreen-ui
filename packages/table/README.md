@@ -47,7 +47,7 @@ import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 | ---------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------- |
 | `data`     | `Array<unknown>`                                                                                  | Data that will be rendered inside of the table                                  |         |
 | `columns`  | `Array<React.ReactElement<HeaderRowProps` \| `TableHeaderProps<Shape>>>` \| `React.ReactFragment` | Columns in the Table                                                            |         |
-| `children` | `(datum, string) => {JSX.Element}`                                                                | Rows of the table                                                               |         |
+| `children` | `(datum, string) => JSX.Element`                                                                  | Rows of the table                                                               |         |
 | ...        | `React.ComponentPropsWithoutRef<'table'>`                                                         | Any property that can be passed to a `table` element will be spread on the root |         |
 
 # HeaderRow

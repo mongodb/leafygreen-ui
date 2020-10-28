@@ -108,9 +108,9 @@ All props extend the HTMLElementProps of their root tag, however `<Body />` and 
 
 # Overline
 
-| Prop        | Type                                  | Description                                                                                                                         | Default |
-| ----------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `component` | `HTMLElement` \| `React.ReactElement` | The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `p`     |
+| Prop | Type                | Description                                                                                                                         | Default |
+| ---- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `as` | `React.ElementType` | The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `p`     |
 
 # Link
 

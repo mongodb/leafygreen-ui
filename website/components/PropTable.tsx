@@ -128,7 +128,7 @@ function PropTable({
     })
     .map((item: Table) => getTableData(item.children));
 
-  if (tableData.length < 1) {
+  if (tableData.length === 0) {
     return null;
   }
 
@@ -171,7 +171,7 @@ function PropTable({
         return (
           <div key={index}>
             <Subtitle className={subtitleBottomMargin}>
-              <InlineCode>{header.split(' ').join('')}</InlineCode> Props
+              <InlineCode>{header.replace(/ /g, '')}</InlineCode> Props
             </Subtitle>
 
             {tableData[index] && (

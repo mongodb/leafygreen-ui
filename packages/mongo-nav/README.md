@@ -72,36 +72,34 @@ _Any other properties will be spread on the root element_
 ##### ActiveNavElement
 
 ```typescript
-const ActiveNavElement = {
-  OrgNavOrgSettings: 'orgNavOrgSettings',
-  OrgNavAccessManagerDropdown: 'orgNavAccessManagerDropdown',
-  OrgNavSupport: 'orgNavSupport',
-  OrgNavBilling: 'orgNavBilling',
-  OrgNavAdmin: 'orgNavAdmin',
-  OrgNavAllClusters: 'orgNavAllClusters',
-  OrgNavDropdownOrgAccessManager: 'orgNavDropdownOrgAccessManager',
-  OrgNavDropdownProjectAccessManager: 'orgNavDropdownProjectAccessManager',
-  ProjectNavInvite: 'projectNavInvite',
-  ProjectNavActivityFeed: 'projectNavActivityFeed',
-  ProjectNavAlerts: 'projectNavAlerts',
-  ProjectNavProjectSettings: 'projectNavProjectSettings',
-  ProjectNavProjectSupport: 'projectNavProjectSupport',
-  ProjectNavProjectIntegrations: 'projectNavProjectIntegrations',
-  UserMenuCloudMFA: 'userMenuCloudMFA',
-  UserMenuCloudInvitations: 'userMenuCloudInvitations',
-  UserMenuCloudOrganizations: 'userMenuCloudOrganizations',
-  UserMenuCloudUserPreferences: 'userMenuCloudUserPreferences',
-  UserMenuCloudOther: 'userMenuCloudOther',
-  UserMenuOnPremProfile: 'userMenuOnPremProfile',
-  UserMenuOnPremTwoFactorAuth: 'userMenuOnPremTwoFactorAuth',
-  UserMenuOnPremPersonalization: 'userMenuOnPremPersonalization',
-  UserMenuOnPremInvitations: 'userMenuOnPremInvitations',
-  UserMenuOnPremOrganizations: 'userMenuOnPremOrganizations',
-  UserMenuOnPremPublicApiAccess: 'userMenuOnPremPublicApiAccess',
-  UserMenuOnPremOther: 'userMenuOnPremPublicApiAccess',
-} as const;
-
-type ActiveNavElement = typeof ActiveNavElement[keyof typeof ActiveNavElement];
+type ActiveNavElement = {
+  | 'orgNavOrgSettings'
+  | 'orgNavAccessManagerDropdown'
+  | 'orgNavSupport'
+  | 'orgNavBilling'
+  | 'orgNavAdmin'
+  | 'orgNavAllClusters'
+  | 'orgNavDropdownOrgAccessManager'
+  | 'orgNavDropdownProjectAccessManager'
+  | 'projectNavInvite'
+  | 'projectNavActivityFeed'
+  | 'projectNavAlerts'
+  | 'projectNavProjectSettings'
+  | 'projectNavProjectSupport'
+  | 'projectNavProjectIntegrations'
+  | 'userMenuCloudMFA'
+  | 'userMenuCloudInvitations'
+  | 'userMenuCloudOrganizations'
+  | 'userMenuCloudUserPreferences'
+  | 'userMenuCloudOther'
+  | 'userMenuOnPremProfile'
+  | 'userMenuOnPremTwoFactorAuth'
+  | 'userMenuOnPremPersonalization'
+  | 'userMenuOnPremInvitations'
+  | 'userMenuOnPremOrganizations'
+  | 'userMenuOnPremPublicApiAccess'
+  | 'userMenuOnPremPublicApiAccess'
+}
 ```
 
 ##### URLInterface
