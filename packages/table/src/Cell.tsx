@@ -8,7 +8,7 @@ export const tdInnerDiv = createDataProp('td-inner-div');
 interface CellProps extends React.ComponentPropsWithRef<'td'> {}
 
 const tdStyles = css`
-  line-height: 16px;
+  line-height: 20px;
   position: relative;
 `;
 
