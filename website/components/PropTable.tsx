@@ -163,7 +163,7 @@ function PropTable({
   return (
     <div
       className={css`
-        margin-top: 100px;
+        margin-top: 40px;
       `}
     >
       {component === 'typography' && <TypographyPropTable />}
