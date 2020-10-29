@@ -3,6 +3,7 @@ import typescript from 'highlight.js/lib/languages/typescript';
 import csharp from 'highlight.js/lib/languages/csharp';
 import clike from 'highlight.js/lib/languages/c-like';
 import go from 'highlight.js/lib/languages/go';
+import http from 'highlight.js/lib/languages/http';
 import ini from 'highlight.js/lib/languages/ini';
 import java from 'highlight.js/lib/languages/java';
 import perl from 'highlight.js/lib/languages/perl';
@@ -28,6 +29,7 @@ export const languageParsers = {
   csharp,
   clike,
   go,
+  http,
   ini,
   java,
   perl,
@@ -57,6 +59,7 @@ export const SupportedLanguages = {
   Cs: 'cs', // C# alias
   CLike: 'clike',
   Go: 'go',
+  Http: 'http',
   Ini: 'ini',
   Java: 'java',
   Perl: 'perl',
