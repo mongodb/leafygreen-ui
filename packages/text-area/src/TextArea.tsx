@@ -84,13 +84,6 @@ const interactionRingStyles = css`
   right: -3px;
   pointer-events: none;
 
-  // ${textAreaProp.selector} {
-  //   &:hover ~ &,
-  //   &:focus ~ & {
-  //     transform: scale(1);
-  //   }
-  // }
-
   ${textAreaProp.selector}:focus ~ & {
     transform: scale(1);
   }
@@ -111,69 +104,94 @@ interface ColorSets {
   labelColor: string;
   descriptionColor: string;
   defaultBorder: string;
-  textArea: {
-    backgroundColor: string;
-    color: string;
-    focusBorder: string;
-  };
-  disabled: {
-    backgroundColor: string;
-    color: string;
-  };
-  interactionRing: {
-    backgroundColor: string;
-    focusColor: string;
-  };
-  error: {
-    border: string;
-    message: string;
-  };
+  textArea: string;
+  errorBorder: string;
+  errorMessage: string;
+  interactionRing: string;
 }
 
 const colorSets: Record<Mode, ColorSets> = {
   [Mode.Light]: {
-    labelColor: uiColors.gray.dark2,
-    descriptionColor: uiColors.gray.dark1,
-    defaultBorder: uiColors.gray.light1,
-    textArea: {
-      color: uiColors.gray.dark3,
-      backgroundColor: uiColors.white,
-      focusBorder: uiColors.white,
-    },
-    disabled: {
-      color: uiColors.gray.base,
-      backgroundColor: uiColors.gray.light2,
-    },
-    interactionRing: {
-      backgroundColor: uiColors.gray.light2,
-      focusColor: '#9dd0e7',
-    },
-    error: {
-      border: uiColors.red.base,
-      message: uiColors.red.base,
-    },
+    labelColor: css`
+      color: ${uiColors.gray.dark2};
+    `,
+    descriptionColor: css`
+      color: ${uiColors.gray.dark1};
+    `,
+    defaultBorder: css`
+      border-color: ${uiColors.gray.light1};
+    `,
+    textArea: css`
+      color: ${uiColors.gray.dark3};
+      background-color: ${uiColors.white};
+      border-color: ${uiColors.gray.light1};
+
+      &:focus {
+        border-color: ${uiColors.white};
+      }
+
+      &:disabled {
+        color: ${uiColors.gray.base};
+        background-color: ${uiColors.gray.light2};
+      }
+    `,
+    errorBorder: css`
+      border-color: ${uiColors.red.base};
+    `,
+    errorMessage: css`
+      color: ${uiColors.red.base};
+    `,
+    interactionRing: css`
+      background-color: ${uiColors.gray.light2};
+
+      ${textAreaProp.selector}:focus ~ & {
+        background-color: #9dd0e7;
+      }
+    `,
   },
   [Mode.Dark]: {
-    labelColor: uiColors.white,
-    descriptionColor: uiColors.gray.light1,
-    defaultBorder: '#394F5A',
-    textArea: {
-      color: uiColors.white,
-      backgroundColor: '#394F5A',
-      focusBorder: '#394F5A',
-    },
-    disabled: {
-      color: uiColors.gray.dark1,
-      backgroundColor: '#263843',
-    },
-    interactionRing: {
-      backgroundColor: uiColors.gray.dark1,
-      focusColor: uiColors.blue.base,
-    },
-    error: {
-      message: '#EF8D6F',
-      border: '#5a3c3b',
-    },
+    labelColor: css`
+      color: ${uiColors.white};
+    `,
+
+    descriptionColor: css`
+      color: ${uiColors.gray.light1};
+    `,
+
+    defaultBorder: css`
+      border-color: #394f5a;
+    `,
+
+    textArea: css`
+      color: ${uiColors.white};
+      background-color: #394f5a;
+      border-color: #394f5a;
+
+      &:focus {
+        border-color: #394f5a;
+      }
+
+      &:disabled {
+        color: ${uiColors.gray.dark1};
+        background-color: #263843;
+      }
+    `,
+
+    errorBorder: css`
+      border-color: #ef8d6f;
+    `,
+
+    errorMessage: css`
+      color: #ef8d6f;
+    `,
+
+    interactionRing: css`
+      background-color: ${uiColors.gray.dark1};
+
+      ${textAreaProp.selector}:focus ~ & {
+        background-color: ${uiColors.blue.base};
+      }
+    `,
   },
 };
 
@@ -231,25 +249,13 @@ export default function TextArea({
       {label && (
         <label
           htmlFor={id}
-          className={cx(
-            labelStyle,
-            css`
-              color: ${colorSets[mode].labelColor};
-            `,
-          )}
+          className={cx(labelStyle, colorSets[mode].labelColor)}
         >
           {label}
         </label>
       )}
       {description && (
-        <p
-          className={cx(
-            descriptionStyle,
-            css`
-              color: ${colorSets[mode].descriptionColor};
-            `,
-          )}
-        >
+        <p className={cx(descriptionStyle, colorSets[mode].descriptionColor)}>
           {description}
         </p>
       )}
@@ -261,24 +267,9 @@ export default function TextArea({
           id={id}
           className={cx(
             textAreaStyle,
-            css`
-              color: ${colorSets[mode].textArea.color};
-              background-color: ${colorSets[mode].textArea.backgroundColor};
-              border: 1px solid ${colorSets[mode].defaultBorder};
-
-              &:focus {
-                border-color: ${colorSets[mode].textArea.focusBorder};
-              }
-
-              &:disabled {
-                color: ${colorSets[mode].disabled.color};
-                background-color: ${colorSets[mode].disabled.backgroundColor};
-              }
-            `,
+            colorSets[mode].textArea,
             {
-              [css`
-                border: 1px solid ${colorSets[mode].error.border};
-              `]: state === State.Error,
+              [colorSets[mode].errorBorder]: state === State.Error,
               [css`
                 background-color: #5a3c3b;
               `]: state === State.Error && darkMode,
@@ -294,28 +285,13 @@ export default function TextArea({
           <div
             className={cx(
               interactionRingStyles,
-              css`
-                background-color: ${colorSets[mode].interactionRing
-                  .backgroundColor};
-
-                ${textAreaProp.selector}:focus ~ & {
-                  background-color: ${colorSets[mode].interactionRing
-                    .focusColor};
-                }
-              `,
+              colorSets[mode].interactionRing,
             )}
           />
         )}
       </div>
       {!disabled && state === State.Error && errorMessage && (
-        <div
-          className={cx(
-            errorMessageStyle,
-            css`
-              color: ${colorSets[mode].error.message};
-            `,
-          )}
-        >
+        <div className={cx(errorMessageStyle, colorSets[mode].errorMessage)}>
           <label>{errorMessage}</label>
         </div>
       )}
