@@ -64,6 +64,7 @@ const textAreaStyle = css`
 
   &:focus {
     outline: none;
+    border: none;
   }
 
   &:disabled {
@@ -81,13 +82,13 @@ const interactionRingStyles = css`
   left: -3px;
   right: -3px;
   pointer-events: none;
-  background-color: pink;
 
-  ${textAreaProp.selector} {
-    &:hover ~ &,
-    &:focus ~ & {
-      transform: scale(1);
-    }
+  ${textAreaProp.selector}:focus ~ & {
+    transform: scale(1);
+  }
+
+  ${textAreaProp.selector}:hover ~ & {
+    transform: scale(1);
   }
 `;
 
@@ -101,40 +102,67 @@ const errorMessageStyle = css`
 interface ColorSets {
   labelColor: string;
   descriptionColor: string;
-  textAreaBackgroundColor: string;
-  textAreaColor: string;
-  disabledBackgroundColor: string;
-  disabledColor: string;
-  interactionRing: string;
-  interactionRingFocus: string;
-  errorBorder: string;
-  errorMessage: string;
+  defaultBorder: string;
+  textArea: {
+    backgroundColor: string;
+    color: string;
+  };
+  disabled: {
+    backgroundColor: string;
+    color: string;
+  };
+  interactionRing: {
+    backgroundColor: string;
+    focusColor: string;
+  };
+  error: {
+    border: string;
+    message: string;
+  };
 }
 
 const colorSets: Record<Mode, ColorSets> = {
   [Mode.Light]: {
     labelColor: uiColors.gray.dark2,
     descriptionColor: uiColors.gray.dark1,
-    textAreaColor: uiColors.gray.dark3,
-    textAreaBackgroundColor: uiColors.white,
-    disabledColor: uiColors.gray.base,
-    disabledBackgroundColor: uiColors.gray.light2,
-    interactionRing: uiColors.gray.light2,
-    interactionRingFocus: '#9dd0e7',
-    errorBorder: uiColors.red.base,
-    errorMessage: uiColors.red.base,
+    defaultBorder: uiColors.gray.light1,
+    textArea: {
+      color: uiColors.gray.dark3,
+      backgroundColor: uiColors.white,
+    },
+    disabled: {
+      color: uiColors.gray.base,
+      backgroundColor: uiColors.gray.light2,
+    },
+    interactionRing: {
+      backgroundColor: uiColors.gray.light2,
+      focusColor: '#9dd0e7',
+    },
+    error: {
+      border: uiColors.red.base,
+      message: uiColors.red.base,
+    },
   },
   [Mode.Dark]: {
     labelColor: uiColors.white,
     descriptionColor: uiColors.gray.light1,
-    textAreaColor: uiColors.white,
-    textAreaBackgroundColor: '#394F5A',
-    disabledColor: uiColors.gray.dark1,
-    disabledBackgroundColor: '#263843',
-    interactionRing: uiColors.gray.dark1,
-    interactionRingFocus: uiColors.blue.base,
-    errorBorder: '#5a3c3b',
-    errorMessage: '#EF8D6F',
+    defaultBorder: '#394F5A',
+    textArea: {
+      color: uiColors.white,
+      backgroundColor: '#394F5A',
+    },
+    disabled: {
+      color: uiColors.gray.dark1,
+      backgroundColor: '#263843',
+    },
+    interactionRing: {
+      backgroundColor: uiColors.gray.dark1,
+      focusColor: uiColors.blue.base,
+    },
+    error: {
+      message: '#EF8D6F',
+      border: '#5a3c3b',
+    },
   },
 };
 
@@ -223,17 +251,18 @@ export default function TextArea({
           className={cx(
             textAreaStyle,
             css`
-              color: ${colorSets[mode].textAreaColor};
-              background-color: ${colorSets[mode].textAreaBackgroundColor};
+              color: ${colorSets[mode].textArea.color};
+              background-color: ${colorSets[mode].textArea.backgroundColor};
+              border: 1px solid ${colorSets[mode].defaultBorder};
 
               &:disabled {
-                color: ${colorSets[mode].disabledColor};
-                background-color: ${colorSets[mode].disabledBackgroundColor};
+                color: ${colorSets[mode].disabled.color};
+                background-color: ${colorSets[mode].disabled.backgroundColor};
               }
             `,
             {
               [css`
-                border: 1px solid ${colorSets[mode].errorBorder};
+                border: 1px solid ${colorSets[mode].error.border};
               `]: state === State.Error,
               [css`
                 background-color: #5a3c3b;
@@ -251,10 +280,12 @@ export default function TextArea({
             className={cx(
               interactionRingStyles,
               css`
-                background-color: ${colorSets[mode].interactionRing};
+                background-color: ${colorSets[mode].interactionRing
+                  .backgroundColor};
 
                 ${textAreaProp.selector}:focus ~ & {
-                  background-color: ${colorSets[mode].interactionRingFocus};
+                  background-color: ${colorSets[mode].interactionRing
+                    .focusColor};
                 }
               `,
             )}
@@ -266,7 +297,7 @@ export default function TextArea({
           className={cx(
             errorMessageStyle,
             css`
-              color: ${colorSets[mode].errorMessage};
+              color: ${colorSets[mode].error.message};
             `,
           )}
         >
