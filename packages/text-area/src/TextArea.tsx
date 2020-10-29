@@ -61,6 +61,7 @@ const textAreaStyle = css`
   line-height: 16px;
   z-index: 1;
   border: 1px solid;
+  transition: border-color 150ms ease-in-out
 
   &:focus {
     outline: none;
