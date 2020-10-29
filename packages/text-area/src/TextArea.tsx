@@ -60,6 +60,7 @@ const textAreaStyle = css`
   font-weight: normal;
   font-family: ${fontFamilies.default};
   z-index: 1;
+  border: 1px solid;
 
   &:focus {
     outline: none;
@@ -82,12 +83,11 @@ const interactionRingStyles = css`
   pointer-events: none;
   background-color: pink;
 
-  ${textAreaProp.selector}:hover ~ & {
-    transform: scale(1);
-  }
-
-  ${textAreaProp.selector}:focus ~ & {
-    transform: scale(1);
+  ${textAreaProp.selector} {
+    &:hover ~ &,
+    &:focus ~ & {
+      transform: scale(1);
+    }
   }
 `;
 

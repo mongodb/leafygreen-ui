@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/text-area': minor
+'@leafygreen-ui/text-area': major
 ---
 
-Beta release of TextArea component
+Initial release of TextArea component
