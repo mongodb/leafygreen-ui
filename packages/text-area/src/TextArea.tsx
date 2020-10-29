@@ -55,10 +55,11 @@ const textAreaStyle = css`
   min-height: ${spacing[6]}px;
   resize: none;
   border-radius: 4px;
-  padding-left: 12px;
+  padding: 10px 1px 1px 12px;
   font-size: 14px;
   font-weight: normal;
   font-family: ${fontFamilies.default};
+  line-height: 16px;
   z-index: 1;
   border: 1px solid;
 
