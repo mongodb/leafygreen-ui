@@ -43,7 +43,6 @@ const descriptionStyle = css`
 `;
 
 const textAreaContainer = css`
-  margin-top: 4px;
   position: relative;
   display: flex;
   align-items: center;
@@ -55,7 +54,7 @@ const textAreaStyle = css`
   min-height: ${spacing[6]}px;
   resize: none;
   border-radius: 4px;
-  padding: 10px 1px 1px 12px;
+  padding: 10px 12px 1px 12px;
   font-size: 14px;
   font-weight: normal;
   font-family: ${fontFamilies.default};
@@ -65,7 +64,7 @@ const textAreaStyle = css`
 
   &:focus {
     outline: none;
-    border: none;
+    border: 1px solid;
   }
 
   &:disabled {
@@ -83,6 +82,13 @@ const interactionRingStyles = css`
   left: -3px;
   right: -3px;
   pointer-events: none;
+
+  // ${textAreaProp.selector} {
+  //   &:hover ~ &,
+  //   &:focus ~ & {
+  //     transform: scale(1);
+  //   }
+  // }
 
   ${textAreaProp.selector}:focus ~ & {
     transform: scale(1);
@@ -107,6 +113,7 @@ interface ColorSets {
   textArea: {
     backgroundColor: string;
     color: string;
+    focusBorder: string;
   };
   disabled: {
     backgroundColor: string;
@@ -130,6 +137,7 @@ const colorSets: Record<Mode, ColorSets> = {
     textArea: {
       color: uiColors.gray.dark3,
       backgroundColor: uiColors.white,
+      focusBorder: uiColors.white,
     },
     disabled: {
       color: uiColors.gray.base,
@@ -151,6 +159,7 @@ const colorSets: Record<Mode, ColorSets> = {
     textArea: {
       color: uiColors.white,
       backgroundColor: '#394F5A',
+      focusBorder: '#394F5A',
     },
     disabled: {
       color: uiColors.gray.dark1,
@@ -255,6 +264,10 @@ export default function TextArea({
               color: ${colorSets[mode].textArea.color};
               background-color: ${colorSets[mode].textArea.backgroundColor};
               border: 1px solid ${colorSets[mode].defaultBorder};
+
+              &:focus {
+                border-color: ${colorSets[mode].textArea.focusBorder};
+              }
 
               &:disabled {
                 color: ${colorSets[mode].disabled.color};
