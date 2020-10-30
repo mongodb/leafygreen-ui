@@ -1,5 +1,11 @@
 # @leafygreen-ui/table
 
+## 1.1.0
+
+### Minor Changes
+
+- cf2f9422: Updates cell styles in Table component
+
 ## 1.0.0
 
 ### Major Changes

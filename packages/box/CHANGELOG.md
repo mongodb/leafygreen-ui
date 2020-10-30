@@ -1,5 +1,11 @@
 # @leafygreen-ui/box
 
+## 3.0.2
+
+### Patch Changes
+
+- 90996818: Fixes style rule from `box-style` to `box-sizing`
+
 ## 3.0.1
 
 ### Patch Changes
