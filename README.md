@@ -38,6 +38,7 @@ A set of CSS styles and React components built with design in mind.
 - [Table](https://github.com/mongodb/leafygreen-ui/tree/master/packages/table)
 - [Tabs](https://github.com/mongodb/leafygreen-ui/tree/master/packages/tabs)
 - [Testing Lib](https://github.com/mongodb/leafygreen-ui/tree/master/packages/testing-lib)
+- [Text Area](https://github.com/mongodb/leafygreen-ui/tree/master/packages/text-area)
 - [Text Input](https://github.com/mongodb/leafygreen-ui/tree/master/packages/text-input)
 - [Toast](https://github.com/mongodb/leafygreen-ui/tree/master/packages/toast)
 - [Toggle](https://github.com/mongodb/leafygreen-ui/tree/master/packages/toggle)

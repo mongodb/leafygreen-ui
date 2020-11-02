@@ -1,5 +1,12 @@
 # @leafygreen-ui/mongo-nav
 
+## 4.0.2
+
+### Patch Changes
+
+- Updated dependencies [ac0f3ff1]
+  - @leafygreen-ui/typography@7.0.0
+
 ## 4.0.1
 
 ### Patch Changes

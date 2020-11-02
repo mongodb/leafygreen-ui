@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/callout",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "leafyGreen UI Kit Callout",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -24,10 +24,10 @@
     "@leafygreen-ui/emotion": "^3.0.1",
     "@leafygreen-ui/icon": "^7.0.1",
     "@leafygreen-ui/palette": "^3.0.1",
-    "@leafygreen-ui/typography": "^6.0.1",
+    "@leafygreen-ui/typography": "^7.0.0",
     "polished": "^3.6.5"
   },
   "devDependencies": {
-    "@leafygreen-ui/code": "^7.0.1"
+    "@leafygreen-ui/code": "^7.2.0"
   }
 }
