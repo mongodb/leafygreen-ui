@@ -11,11 +11,6 @@ import {
   TextKnob,
   NumberKnob,
   SelectKnob,
-  BooleanKnobInterface,
-  TextKnobInterface,
-  NumberKnobInterface,
-  BasicSelectKnobInterface,
-  GlyphSelectKnobInterface,
 } from './Knobs';
 
 const previewStyle = css`
@@ -77,36 +72,50 @@ export type PropsType =
   | TextConfigInterface
   | SelectConfigInterface;
 
-export type KnobsConfigInterface<ComponentProps> = {
-  [K in keyof ComponentProps]?: PropsType;
+interface ComponentPropsInterface {
+  darkMode?: boolean;
+  glyph?: React.ReactElement;
+  [key: string]: unknown;
+}
+
+export type KnobsConfigInterface<
+  ComponentProps extends ComponentPropsInterface
+> = {
+  [K in keyof ComponentProps]: Extract<
+    PropsType,
+    { default: ComponentProps[K] }
+  >;
 };
 
-interface LiveExampleInterface<ComponentProps> {
+interface LiveExampleInterface<ComponentProps extends ComponentPropsInterface> {
   knobsConfig: KnobsConfigInterface<ComponentProps>;
   children: (props: ComponentProps) => JSX.Element;
 }
 
-function LiveExample<ComponentProps>({
+function LiveExample<ComponentProps extends ComponentPropsInterface>({
   knobsConfig,
   children,
 }: LiveExampleInterface<ComponentProps>) {
-  const initialProps = Object.keys(knobsConfig).reduce((acc, val) => {
-    const value = val as keyof typeof knobsConfig
+  const initialProps = Object.keys(knobsConfig).reduce(
+    (acc: Partial<ComponentProps>, val) => {
+      const value = val as keyof ComponentProps;
 
-    // if (value === 'glyph') {
-    //   acc[value] = (
-    //     <Icon glyph={knobsConfig[value].default as keyof typeof glyphs} />
-    //   );
-    // } else {
-    acc[value] = knobsConfig[value].default;
-    // }
+      if (value === 'glyph') {
+        acc.glyph = (
+          <Icon glyph={knobsConfig[value].default as keyof typeof glyphs} />
+        );
+      } else {
+        acc[value] = knobsConfig[value].default;
+      }
 
-    return { ...acc };
-  }, {} as ComponentProps);
+      return { ...acc };
+    },
+    {},
+  ) as ComponentProps;
 
   const [props, setProps] = useState<ComponentProps>(initialProps);
 
-  const onChange = (value: PropsType['default'], prop: string) => {
+  const onChange = <T extends PropsType['default']>(value: T, prop: string) => {
     // if (prop === 'glyph') {
     //   setProps({
     //     ...props,
@@ -118,35 +127,45 @@ function LiveExample<ComponentProps>({
   };
 
   const renderKnobs = () => {
-    return Object.entries(knobsConfig).map(([propName, knobConfig]) => {
+    return Object.entries(knobsConfig).map(entry => {
+      const propName = entry[0] as keyof ComponentProps;
+      const knobConfig = entry[1] as KnobsConfigInterface<
+        ComponentProps
+      >[keyof ComponentProps];
+
       const sharedProps = {
         onChange,
         propName,
-        value: props[propName],
         label: knobConfig.label,
         prop: propName,
         key: propName,
         options: knobConfig?.options,
-        darkMode: !!props?.darkMode,
+        darkMode: !!props.darkMode,
       };
 
       switch (knobConfig.type) {
         case KnobType.Boolean:
-          return <BooleanKnob {...(sharedProps as BooleanKnobInterface)} />;
+          return (
+            <BooleanKnob {...sharedProps} value={props[propName] as boolean} />
+          );
         case KnobType.Number:
-          return <NumberKnob {...(sharedProps as NumberKnobInterface)} />;
+          return (
+            <NumberKnob {...sharedProps} value={props[propName] as number} />
+          );
         case KnobType.Text:
-          return <TextKnob {...(sharedProps as TextKnobInterface)} />;
+          return (
+            <TextKnob {...sharedProps} value={props[propName] as string} />
+          );
         case KnobType.Select:
           return (
             <SelectKnob
-              {...(sharedProps as
-                | BasicSelectKnobInterface
-                | GlyphSelectKnobInterface)}
+              {...sharedProps}
+              options={knobConfig?.options as Array<string>}
+              value={props[propName] as string}
             />
           );
         default:
-          enforceExhaustive(knobConfig);
+          enforceExhaustive(knobConfig.type);
       }
     });
   };
@@ -157,12 +176,12 @@ function LiveExample<ComponentProps>({
         className={cx(previewStyle, {
           [css`
             background-color: ${uiColors.gray.dark3};
-          `]: !!props?.darkMode,
+          `]: !!props.darkMode,
         })}
       >
         <div
           className={cx(componentContainer, {
-            [componentContainerDarkMode]: !!props?.darkMode,
+            [componentContainerDarkMode]: !!props.darkMode,
           })}
         >
           {children(props)}
