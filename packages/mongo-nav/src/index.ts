@@ -4,3 +4,4 @@ export { OnPremUserMenu } from './helpers';
 export { ActiveNavElement, NavElement, Product, Platform } from './types';
 export { orgNavHeight, GovBanner } from './org-nav';
 export { projectNavHeight, ProjectSelect } from './project-nav';
+export { MongoNavLiveExample } from './MongoNav.live';

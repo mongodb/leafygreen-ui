@@ -6,9 +6,5 @@
     "rootDir": "src"
   },
   "include": ["src/**/*"],
-  "references": [
-    {
-      "path": "../lib"
-    }
-  ]
+  "references": [{ "path": "../lib" }, { "path": "../live-example" }]
 }

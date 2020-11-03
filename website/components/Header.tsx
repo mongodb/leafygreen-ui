@@ -58,9 +58,6 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
   }
 
   const LiveExampleComponent = componentLiveExampleMap[component];
-  const Test = componentLiveExampleMap.icon;
-  console.log(<Test />);
-  console.log(<LiveExampleComponent />);
 
   return (
     <div>

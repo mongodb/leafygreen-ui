@@ -1,6 +1,7 @@
 import React from 'react';
 import { glyphs } from '@leafygreen-ui/icon';
 import LiveExample, { KnobType } from '@leafygreen-ui/live-example';
+import Icon from '@leafygreen-ui/icon'
 import Button from '.';
 
 const knobsConfig = {
@@ -48,7 +49,10 @@ const knobsConfig = {
 const ButtonLiveExample = () => {
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {props => <Button {...props} />}
+      {({ glyph, ...rest }) => {
+        console.log(glyph, 'glyph')
+        return (<Button {...rest} />)
+      }}
     </LiveExample>
   );
 };

@@ -23,3 +23,5 @@ const BoxLiveExample = () => {
     </LiveExample>
   );
 };
+
+export { BoxLiveExample}

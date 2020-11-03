@@ -78,7 +78,7 @@ export type PropsType =
   | SelectConfigInterface;
 
 export type KnobsConfigInterface<ComponentProps> = {
-  [K in keyof ComponentProps]: PropsType;
+  [K in keyof ComponentProps]?: PropsType;
 };
 
 interface LiveExampleInterface<ComponentProps> {
@@ -86,18 +86,20 @@ interface LiveExampleInterface<ComponentProps> {
   children: (props: ComponentProps) => JSX.Element;
 }
 
-function LiveExample<ComponentProps extends Record<string, unknown>>({
+function LiveExample<ComponentProps>({
   knobsConfig,
   children,
 }: LiveExampleInterface<ComponentProps>) {
   const initialProps = Object.keys(knobsConfig).reduce((acc, val) => {
-    if (val === 'glyph') {
-      acc[val] = (
-        <Icon glyph={knobsConfig[val].default as keyof typeof glyphs} />
-      );
-    } else {
-      acc[val] = knobsConfig[val].default;
-    }
+    const value = val as keyof typeof knobsConfig
+
+    // if (value === 'glyph') {
+    //   acc[value] = (
+    //     <Icon glyph={knobsConfig[value].default as keyof typeof glyphs} />
+    //   );
+    // } else {
+    acc[value] = knobsConfig[value].default;
+    // }
 
     return { ...acc };
   }, {} as ComponentProps);
@@ -105,14 +107,14 @@ function LiveExample<ComponentProps extends Record<string, unknown>>({
   const [props, setProps] = useState<ComponentProps>(initialProps);
 
   const onChange = (value: PropsType['default'], prop: string) => {
-    if (prop === 'glyph') {
-      setProps({
-        ...props,
-        [prop]: <Icon glyph={value as keyof typeof glyphs} />,
-      });
-    } else {
-      setProps({ ...props, [prop]: value });
-    }
+    // if (prop === 'glyph') {
+    //   setProps({
+    //     ...props,
+    //     [prop]: <Icon glyph={value as keyof typeof glyphs} />,
+    //   });
+    // } else {
+    setProps({ ...props, [prop]: value });
+    // }
   };
 
   const renderKnobs = () => {
@@ -125,7 +127,7 @@ function LiveExample<ComponentProps extends Record<string, unknown>>({
         prop: propName,
         key: propName,
         options: knobConfig?.options,
-        darkMode: !!props.darkMode,
+        darkMode: !!props?.darkMode,
       };
 
       switch (knobConfig.type) {
@@ -155,12 +157,12 @@ function LiveExample<ComponentProps extends Record<string, unknown>>({
         className={cx(previewStyle, {
           [css`
             background-color: ${uiColors.gray.dark3};
-          `]: !!props.darkMode,
+          `]: !!props?.darkMode,
         })}
       >
         <div
           className={cx(componentContainer, {
-            [componentContainerDarkMode]: !!props.darkMode,
+            [componentContainerDarkMode]: !!props?.darkMode,
           })}
         >
           {children(props)}

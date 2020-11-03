@@ -11,7 +11,7 @@ function greeting(entity) {
 console.log(greeting('World'));
 `;
 
-const knobsConfig: KnobsConfigInterface<Partial<CodeProps>> = {
+const knobsConfig: KnobsConfigInterface<CodeProps> = {
   showWindowChrome: {
     type: 'boolean',
     default: false,
@@ -38,12 +38,12 @@ const knobsConfig: KnobsConfigInterface<Partial<CodeProps>> = {
     options: Object.values(Language),
     label: 'Language',
   },
-  highlightLines: {
-    type: 'select',
-    default: undefined,
-    options: [undefined, [1], [2, 3, 5]],
-    label: 'Highlight Lines',
-  },
+  // highlightLines: {
+  //   type: 'select',
+  //   default: undefined,
+  //   options: [undefined, [1], [2, 3, 5]],
+  //   label: 'Highlight Lines',
+  // },
   children: {
     type: 'text',
     default: jsSnippet,

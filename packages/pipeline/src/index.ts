@@ -4,3 +4,4 @@ import Counter from './Counter';
 import { Size } from './styles';
 
 export { Pipeline, Stage, Counter, Size };
+export { PipelineLiveExample } from './Pipeline.live';

@@ -1,38 +1,61 @@
 {
-  "extends": "../../package.tsconfig.json",
+  // "extends": "../../package.tsconfig.json",
   "compilerOptions": {
     "declarationDir": "dist",
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "module": "esnext",
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "importHelpers": false,
+    "composite": true, 
+    "target": "ES5",
+    "jsx": "react",
+    "allowJs": false,
+    "pretty": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
   },
+  "exclude": [
+    "**/*/*.spec.*",
+    "**/*/*.story.*"
+  ],
   "include": ["src/**/*", "../../typings/*", "typings/**/*"],
-  "references": [
-    {
-      "path": "../emotion"
-    },
-    {
-      "path": "../lib"
-    },
-    {
-      "path": "../card"
-    },
-    {
-      "path": "../palette"
-    },
-    {
-      "path": "../icon"
-    },
-    {
-      "path": "../palette"
-    },
-    {
-      "path": "../toggle"
-    },
-    {
-      "path": "../tokens"
-    },
-    {
-      "path": "../text-input"
-    }
-  ]
+  // "references": [
+  //   {
+  //     "path": "../emotion"
+  //   },
+  //   {
+  //     "path": "../lib"
+  //   },
+  //   {
+  //     "path": "../card"
+  //   },
+  //   {
+  //     "path": "../palette"
+  //   },
+  //   {
+  //     "path": "../icon"
+  //   },
+  //   {
+  //     "path": "../palette"
+  //   },
+  //   {
+  //     "path": "../toggle"
+  //   },
+  //   {
+  //     "path": "../tokens"
+  //   },
+  //   {
+  //     "path": "../text-input"
+  //   },
+  //   {
+  //     "path": "../text-area"
+  //   }
+  // ]
 }

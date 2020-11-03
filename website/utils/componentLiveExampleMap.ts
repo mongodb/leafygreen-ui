@@ -1,3 +1,5 @@
+// Box, Card, Icon, Palette
+
 import dynamic from 'next/dynamic';
 const BadgeLiveExample = dynamic(() =>
   import('@leafygreen-ui/badge').then(mod => mod.BadgeLiveExample),
@@ -50,6 +52,15 @@ const MenuLiveExample = dynamic(() =>
 const ModalLiveExample = dynamic(() =>
   import('@leafygreen-ui/modal').then(mod => mod.ModalLiveExample),
 );
+const MongoNavLiveExample = dynamic(() =>
+  import('@leafygreen-ui/mongo-nav').then(mod => mod.MongoNavLiveExample),
+);
+// const PaletteLiveExample = dynamic(() =>
+//   import('@leafygreen-ui/palette').then(mod => mod.PaletteLiveExample),
+// );
+const PipelineLiveExample = dynamic(() =>
+  import('@leafygreen-ui/pipeline').then(mod => mod.PipelineLiveExample),
+);
 
 const componentLiveExampleMap = {
   badge: BadgeLiveExample,
@@ -67,6 +78,8 @@ const componentLiveExampleMap = {
   ['marketing-modal']: MarketingModalLiveExample,
   menu: MenuLiveExample,
   modal: ModalLiveExample,
+  ['mongo-nav']: MongoNavLiveExample,
+  pipeline: PipelineLiveExample,
 };
 
 export { componentLiveExampleMap };

@@ -59,6 +59,7 @@ const components = [
   'syntax',
   'table',
   'tabs',
+  'text-area',
   'text-input',
   'toast',
   'toggle',

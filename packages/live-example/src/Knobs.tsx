@@ -3,6 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
+import TextArea from '@leafygreen-ui/text-area';
 import Toggle from '@leafygreen-ui/toggle';
 
 const knobContainerStyle = css`
@@ -120,6 +121,7 @@ function NumberKnob({
         onChange={handleChange}
         value={value.toString()}
         aria-labelledby={labelId}
+        darkMode={darkMode}
       />
     </div>
   );
@@ -132,7 +134,7 @@ function TextKnob({
   prop,
   darkMode,
 }: TextKnobInterface) {
-  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
     onChange(target.value, prop);
   };
 
@@ -146,11 +148,14 @@ function TextKnob({
       >
         {label}
       </label>
-      <TextInput
+      <TextArea
         onChange={handleChange}
         value={value.toString()}
         aria-labelledby={labelId}
         darkMode={darkMode}
+        className={css`
+          flex-grow: 1;
+        `}
       />
     </div>
   );
@@ -164,8 +169,8 @@ function SelectKnob({
   options,
   darkMode,
 }: BasicSelectKnobInterface | GlyphSelectKnobInterface) {
-  const normalizedValue =
-    prop === 'glyph' ? (value as React.ReactElement).props.glyph : value;
+  // const normalizedValue =
+  //   prop === 'glyph' ? (value as React.ReactElement).props.glyph : value;
 
   const handleChange = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
     onChange(target.value, prop);
@@ -173,7 +178,7 @@ function SelectKnob({
 
   const generateOptions = () => {
     return options.map(option => (
-      <option key={option} value={option} selected={option === normalizedValue}>
+      <option key={option} value={option} selected={option === value}>
         {option}
       </option>
     ));

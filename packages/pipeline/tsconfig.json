@@ -24,6 +24,9 @@
     },
     {
       "path": "../tooltip"
+    },
+    {
+      "path": "../live-example"
     }
   ]
 }
