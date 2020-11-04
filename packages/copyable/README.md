@@ -79,6 +79,7 @@ npm install @leafygreen-ui/copyable
 | ------------- | ------------------------ | ------------------------------------------------------------- | ----------- |
 | `label`       | `string`                 | Label text for the copyable contents.                         |             |
 | `description` | `string`                 | Further text to describe the contents.                        | `undefined` |
+| `className`   | `string`                 | className applied to the container of the code element        |             |
 | `children`    | `string`                 | The text that will be copied.                                 |             |
 | `darkMode`    | `boolean`                | Determines whether or not the component appears in dark mode. | `false`     |
 | `size`        | `'default'` \| `'large'` | Display size of the copyable text.                            | `'default'` |

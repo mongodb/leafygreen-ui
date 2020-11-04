@@ -119,6 +119,7 @@ interface CopyableProps {
   children: string;
   label: string;
   description?: string;
+  className?: string;
   copyable?: boolean;
   size?: Size;
 }
@@ -128,6 +129,7 @@ export default function Copyable({
   children,
   label,
   description,
+  className,
   copyable = true,
   size = Size.Default,
 }: CopyableProps) {
@@ -233,9 +235,13 @@ export default function Copyable({
       )}
 
       <div
-        className={cx(containerStyle, {
-          [copyableContainerStyle]: showCopyButton,
-        })}
+        className={cx(
+          containerStyle,
+          {
+            [copyableContainerStyle]: showCopyButton,
+          },
+          className,
+        )}
       >
         <InlineCode
           className={cx(
@@ -264,5 +270,6 @@ Copyable.propTypes = {
   children: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   description: PropTypes.string,
+  className: PropTypes.string,
   copyable: PropTypes.bool,
 };
