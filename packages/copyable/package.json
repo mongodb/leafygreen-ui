@@ -26,7 +26,7 @@
       "@leafygreen-ui/icon": "^7.0.0",
       "@leafygreen-ui/palette": "^3.0.0",
       "@leafygreen-ui/tooltip": "^6.0.0",
-      "@leafygreen-ui/typography": "^6.0.0",
+      "@leafygreen-ui/typography": "^7.0.0",
       "clipboard": "^2.0.6"
     }
   }
