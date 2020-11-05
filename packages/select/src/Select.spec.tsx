@@ -4,6 +4,7 @@ import {
   getByText as getByTextFor,
   render,
   RenderResult,
+  waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { enforceExhaustive, keyMap } from '@leafygreen-ui/lib';
@@ -22,7 +23,7 @@ const Color = {
   Violet: 'Violet',
 } as const;
 
-const enabledOptions = ['None', 'Red', 'Blue', 'Green', 'Yellow'] as const;
+const enabledOptions = ['Select', 'Red', 'Blue', 'Green', 'Yellow'] as const;
 
 const defaultProps = {
   label: 'Label',
@@ -94,8 +95,8 @@ describe('packages/select', () => {
     expect(getByText(defaultProps.description)).toBeVisible();
   });
 
-  test('renders placeholder', () => {
-    const { getByRole, rerender } = render(<Select {...defaultProps} />);
+  test('renders placeholder', async () => {
+    const { getByRole, findByRole, rerender } = render(<Select {...defaultProps} />);
 
     let combobox = getByRole('combobox');
     expect(combobox).toBeVisible();
@@ -105,6 +106,11 @@ describe('packages/select', () => {
 
     combobox = getByRole('combobox');
     expect(getByTextFor(combobox, 'Explicit placeholder')).toBeVisible();
+
+    userEvent.click(combobox);
+
+    const listbox = await findByRole('listbox');
+    expect(getByTextFor(listbox, 'Explicit placeholder')).toBeVisible();
   });
 
   test('renders hidden input', () => {
@@ -182,9 +188,7 @@ describe('packages/select', () => {
         />,
       );
 
-      expect(
-        getByTextFor(getByRole('combobox'), 'Blue', { selector: ':not(li)' }),
-      ).toBeVisible();
+      expect(getByTextFor(getByRole('combobox'), 'Blue')).toBeVisible();
 
       const input = getInput(container);
       expect(input.value).toEqual('Blue');
@@ -201,9 +205,7 @@ describe('packages/select', () => {
         />,
       );
 
-      expect(
-        getByTextFor(getByRole('combobox'), 'Blue', { selector: ':not(li)' }),
-      ).toBeVisible();
+      expect(getByTextFor(getByRole('combobox'), 'Blue')).toBeVisible();
 
       const input = getInput(container);
       expect(input.value).toEqual('Blue');
@@ -242,8 +244,8 @@ describe('packages/select', () => {
       ['dark', true],
       ['light', false],
     ])('renders in %p mode', (_, darkMode) => {
-      test('all valid options', () => {
-        const { getByRole, queryByText } = Context.within(
+      test('all valid options', async () => {
+        const { findByRole, queryByText } = Context.within(
           Jest.spyContext(console, 'error'),
           spy => {
             spy.mockImplementation();
@@ -266,7 +268,7 @@ describe('packages/select', () => {
           },
         );
 
-        const listbox = getByRole('listbox');
+        const listbox = await findByRole('listbox');
 
         Object.keys(Color).forEach(color => {
           expect(getByTextFor(listbox, color)).toBeVisible();
@@ -297,8 +299,8 @@ describe('packages/select', () => {
         });
       });
 
-      test('glyph', () => {
-        const { getByRole, getAllByTitle } = render(
+      test('glyph', async () => {
+        const { findByRole, getByRole, getAllByTitle } = render(
           <Select {...defaultProps} darkMode={darkMode} defaultValue="selected">
             <Option glyph={<BeakerIcon />} value="nonselected">
               Non-selected with glyph
@@ -310,6 +312,8 @@ describe('packages/select', () => {
         );
 
         userEvent.click(getByRole('combobox'));
+
+        await findByRole('listbox');
 
         getAllByTitle('Beaker Icon').forEach(element =>
           expect(element.closest('svg')).toBeVisible(),
@@ -336,8 +340,10 @@ describe('packages/select', () => {
     });
 
     describe('opening', () => {
-      test('by clicking', () => {
-        const { getByRole, queryByRole } = render(<Select {...defaultProps} />);
+      test('by clicking', async () => {
+        const { findByRole, getByRole, queryByRole } = render(
+          <Select {...defaultProps} />,
+        );
 
         const combobox = getByRole('combobox');
 
@@ -345,28 +351,28 @@ describe('packages/select', () => {
 
         userEvent.click(combobox);
 
-        expect(getByRole('listbox')).toBeVisible();
+        expect(await findByRole('listbox')).toBeVisible();
         expect(combobox).toHaveFocus();
       });
 
-      test('by arrow down key', () => {
-        const { getByRole, queryByRole, getByText, queryByText } = render(
+      test('by arrow down key', async () => {
+        const { findByRole, getByRole, queryByRole } = render(
           <Select {...defaultProps} />,
         );
 
         expect(queryByRole('listbox')).not.toBeInTheDocument();
-        expect(queryByText('None')).not.toBeInTheDocument();
 
         fireEvent.keyDown(getByRole('combobox'), { keyCode: keyMap.ArrowDown });
 
-        expect(getByRole('listbox')).toBeVisible();
+        const listbox = await findByRole('listbox');
+        expect(listbox).toBeVisible();
 
         // First option is focused
-        expect(getByText('None').closest('li')).toHaveFocus();
+        expect(getByTextFor(listbox, 'Select').closest('li')).toHaveFocus();
       });
 
-      test('by arrow up key', () => {
-        const { getByRole, queryByRole, getByText, queryByText } = render(
+      test('by arrow up key', async () => {
+        const { findByRole, getByRole, queryByRole, queryByText } = render(
           <Select {...defaultProps} />,
         );
 
@@ -375,10 +381,11 @@ describe('packages/select', () => {
 
         fireEvent.keyDown(getByRole('combobox'), { keyCode: keyMap.ArrowUp });
 
-        expect(getByRole('listbox')).toBeVisible();
+        const listbox = await findByRole('listbox');
+        expect(listbox).toBeVisible();
 
         // Last enabled option is focused
-        expect(getByText('Yellow').closest('li')).toHaveFocus();
+        expect(getByTextFor(listbox, 'Yellow').closest('li')).toHaveFocus();
       });
 
       describe('is not allowed when disabled', () => {
@@ -423,11 +430,11 @@ describe('packages/select', () => {
       ['menu button', 'combobox'],
       ['list menu', 'listbox'],
     ] as const)('closing when %p is focused', (_, focusedElementRole) => {
+      let findByRole: RenderResult['findByRole'];
       let getByRole: RenderResult['getByRole'];
-      let queryByRole: RenderResult['queryByRole'];
 
       beforeEach(() => {
-        ({ getByRole, queryByRole } = render(<Select {...defaultProps} />));
+        ({ findByRole, getByRole } = render(<Select {...defaultProps} />));
 
         userEvent.click(getByRole('combobox'));
 
@@ -435,24 +442,24 @@ describe('packages/select', () => {
         focusedElement.focus();
       });
 
-      test('by clicking outside', () => {
+      test('by clicking outside', async () => {
         userEvent.click(document.body);
 
         expect(document.body).toHaveFocus();
 
-        expect(queryByRole('listbox')).not.toBeInTheDocument();
+        await waitForElementToBeRemoved(getByRole('listbox'));
       });
 
-      test('by clicking menu button', () => {
+      test('by clicking menu button', async () => {
         const combobox = getByRole('combobox');
         userEvent.click(combobox);
 
         expect(combobox).toHaveFocus();
 
-        expect(queryByRole('listbox')).not.toBeInTheDocument();
+        await waitForElementToBeRemoved(getByRole('listbox'));
       });
 
-      test('by escape key', () => {
+      test('by escape key', async () => {
         fireEvent.keyDown(getByRole(focusedElementRole), {
           keyCode: keyMap.Escape,
         });
@@ -460,27 +467,27 @@ describe('packages/select', () => {
         const combobox = getByRole('combobox');
         expect(combobox).toHaveFocus();
 
-        expect(queryByRole('listbox')).not.toBeInTheDocument();
+        await waitForElementToBeRemoved(getByRole('listbox'));
       });
 
       switch (focusedElementRole) {
         case 'combobox':
-          test('by tab key', () => {
+          test('by tab key', async () => {
             userEvent.tab();
 
             expect(document.body).toHaveFocus();
 
-            expect(queryByRole('listbox')).not.toBeInTheDocument();
+            await waitForElementToBeRemoved(getByRole('listbox'));
           });
           break;
         case 'listbox':
-          test('does not occur by tab key', () => {
+          test('does not occur by tab key', async () => {
             userEvent.tab();
 
-            const listbox = getByRole('listbox');
+            const listbox = await findByRole('listbox');
             expect(listbox).toHaveFocus();
 
-            expect(listbox).toBeInTheDocument();
+            expect(listbox).toBeVisible();
           });
           break;
         default:
@@ -494,9 +501,7 @@ describe('packages/select', () => {
       );
 
       const combobox = getByRole('combobox');
-      expect(
-        getByTextFor(combobox, 'Blue', { selector: ':not(li)' }),
-      ).toBeVisible();
+      expect(getByTextFor(combobox, 'Blue')).toBeVisible();
 
       userEvent.tab();
 
@@ -509,9 +514,9 @@ describe('packages/select', () => {
       ['uncontrolled', false],
       ['controlled', true],
     ])('when %p selecting', (_, controlled) => {
+      let findByRole: RenderResult['findByRole'];
       let getByRole: RenderResult['getByRole'];
-      let getByText: RenderResult['getByText'];
-      let queryByRole: RenderResult['queryByRole'];
+
       let combobox: HTMLElement;
       let container: HTMLElement;
       let onChangeSpy: jest.MockedFunction<(value: string) => void>;
@@ -519,7 +524,7 @@ describe('packages/select', () => {
       beforeEach(() => {
         onChangeSpy = jest.fn();
 
-        ({ container, getByRole, getByText, queryByRole } = render(
+        ({ container, findByRole, getByRole } = render(
           controlled ? (
             <Controller initialValue="">
               {(value, setValue) => (
@@ -548,10 +553,13 @@ describe('packages/select', () => {
         test.each([
           ['tab', keyMap.Tab],
           ['enter', keyMap.Enter],
-        ])('by %p key', (_, keyCode) => {
+        ])('by %p key', async (_, keyCode) => {
           userEvent.click(combobox);
 
-          const targetOption = getByText(optionText).closest('li');
+          const listbox = await findByRole('listbox');
+          expect(listbox).toBeVisible();
+
+          const targetOption = getByTextFor(listbox, optionText).closest('li');
           expect(targetOption).not.toBe(null);
 
           act(() => targetOption!.focus());
@@ -561,28 +569,28 @@ describe('packages/select', () => {
           expect(onChangeSpy).toHaveBeenCalledTimes(1);
           expect(onChangeSpy).toHaveBeenCalledWith(optionValue);
 
-          expect(queryByRole('listbox')).not.toBeInTheDocument();
+          await waitForElementToBeRemoved(listbox);
 
-          expect(
-            getByTextFor(combobox, optionText, { selector: ':not(li)' }),
-          ).toBeVisible();
+          expect(getByTextFor(combobox, optionText)).toBeVisible();
           expect(combobox).toHaveFocus();
 
           expect(getInput(container)).toHaveValue(optionValue);
         });
 
-        test('by clicking', () => {
+        test('by clicking', async () => {
           userEvent.click(combobox);
-          userEvent.click(getByText(optionText));
+
+          const listbox = await findByRole('listbox');
+          expect(listbox).toBeVisible();
+
+          userEvent.click(getByTextFor(listbox, optionText));
 
           expect(onChangeSpy).toHaveBeenCalledTimes(1);
           expect(onChangeSpy).toHaveBeenCalledWith(optionValue);
 
-          expect(queryByRole('listbox')).not.toBeInTheDocument();
+          await waitForElementToBeRemoved(listbox);
 
-          expect(
-            getByTextFor(combobox, optionText, { selector: ':not(li)' }),
-          ).toBeVisible();
+          expect(getByTextFor(combobox, optionText)).toBeVisible();
           expect(combobox).toHaveFocus();
 
           expect(getInput(container)).toHaveValue(optionValue);
@@ -596,18 +604,20 @@ describe('packages/select', () => {
         test.each([
           ['tab', keyMap.Tab],
           ['enter', keyMap.Enter],
-        ])('by %p key', (_, keyCode) => {
+        ])('by %p key', async (_, keyCode) => {
           userEvent.click(combobox);
 
-          const targetOption = getByText(optionText).closest('li');
+          const listbox = await findByRole('listbox');
+          expect(listbox).toBeVisible();
+
+          const targetOption = getByTextFor(listbox, optionText).closest('li');
           expect(targetOption).not.toBe(null);
 
           act(() => targetOption!.focus());
           fireEvent.keyDown(targetOption!, { keyCode });
 
           expect(onChangeSpy).not.toHaveBeenCalled();
-
-          expect(getByRole('listbox')).toBeVisible();
+          expect(listbox).toBeVisible();
 
           expect(getByTextFor(combobox, 'Select')).toBeVisible();
           expect(targetOption).toHaveFocus();
@@ -616,13 +626,16 @@ describe('packages/select', () => {
         });
 
         // eslint-disable-next-line jest/no-identical-title
-        test('by clicking', () => {
+        test('by clicking', async () => {
           userEvent.click(combobox);
-          userEvent.click(getByText(optionText));
+
+          const listbox = await findByRole('listbox');
+          expect(listbox).toBeVisible();
+
+          userEvent.click(getByTextFor(listbox, optionText));
 
           expect(onChangeSpy).not.toHaveBeenCalled();
-
-          expect(getByRole('listbox')).toBeVisible();
+          expect(listbox).toBeVisible();
 
           expect(getByTextFor(combobox, 'Select')).toBeVisible();
           expect(getInput(container)).toHaveValue('');
@@ -631,42 +644,48 @@ describe('packages/select', () => {
     });
 
     describe('focus', () => {
-      test('moves to next option by arrow down key', () => {
-        const { getByRole, getByText } = render(<Select {...defaultProps} />);
+      test('moves to next option by arrow down key', async () => {
+        const { findByRole, getByRole } = render(<Select {...defaultProps} />);
 
         userEvent.click(getByRole('combobox'));
 
-        const listbox = getByRole('listbox');
+        const listbox = await findByRole('listbox');
+        expect(listbox).toBeVisible();
 
         enabledOptions.forEach(expectedOptionText => {
           fireEvent.keyDown(listbox, { keyCode: keyMap.ArrowDown });
 
-          expect(getByText(expectedOptionText).closest('li')).toHaveFocus();
+          expect(
+            getByTextFor(listbox, expectedOptionText).closest('li'),
+          ).toHaveFocus();
         });
 
         // Doesn't move when the end is reached
         fireEvent.keyDown(listbox, { keyCode: keyMap.ArrowDown });
 
-        expect(getByText('Yellow').closest('li')).toHaveFocus();
+        expect(getByTextFor(listbox, 'Yellow').closest('li')).toHaveFocus();
       });
 
-      test('moves to previous option by arrow down key', () => {
-        const { getByRole, getByText } = render(<Select {...defaultProps} />);
+      test('moves to previous option by arrow down key', async () => {
+        const { findByRole, getByRole } = render(<Select {...defaultProps} />);
 
         userEvent.click(getByRole('combobox'));
 
-        const listbox = getByRole('listbox');
+        const listbox = await findByRole('listbox');
+        expect(listbox).toBeVisible();
 
         [...enabledOptions].reverse().forEach(expectedOptionText => {
           fireEvent.keyDown(listbox, { keyCode: keyMap.ArrowUp });
 
-          expect(getByText(expectedOptionText).closest('li')).toHaveFocus();
+          expect(
+            getByTextFor(listbox, expectedOptionText).closest('li'),
+          ).toHaveFocus();
         });
 
         // Doesn't move when the top is reached
         fireEvent.keyDown(listbox, { keyCode: keyMap.ArrowUp });
 
-        expect(getByText('None').closest('li')).toHaveFocus();
+        expect(getByTextFor(listbox, 'Select').closest('li')).toHaveFocus();
       });
     });
   });
@@ -679,13 +698,13 @@ describe('packages/select', () => {
       <Option value="nonselected">Non-selected Option</Option>
     );
 
+    let findByRole: RenderResult['findByRole'];
     let getByRole: RenderResult['getByRole'];
-    let getByText: RenderResult['getByText'];
     let rerender: RenderResult['rerender'];
     let combobox: HTMLElement;
 
-    beforeEach(() => {
-      ({ getByRole, getByText, rerender } = render(
+    beforeEach(async () => {
+      ({ findByRole, getByRole, rerender } = render(
         <Select label="Choice" name="choice">
           {selected}
           {nonselected}
@@ -695,7 +714,8 @@ describe('packages/select', () => {
       combobox = getByRole('combobox');
       userEvent.click(combobox);
 
-      userEvent.click(getByText('Selected Option'));
+      const listbox = await findByRole('listbox');
+      userEvent.click(getByTextFor(listbox, 'Selected Option'));
     });
 
     test('when selected option is removed', () => {

@@ -8,6 +8,9 @@
   "include": ["src/**/*"],
   "references": [
     {
+      "path": "../button"
+    },
+    {
       "path": "../emotion"
     },
     {
@@ -24,6 +27,9 @@
     },
     {
       "path": "../palette"
+    },
+    {
+      "path": "../popover"
     },
     {
       "path": "../tokens"

@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useState } from 'react';
+import Button, { Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
@@ -6,15 +7,16 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { breakpoints } from '@leafygreen-ui/tokens';
 import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
+import { useForwardedRef } from './utils';
 
 const menuButtonStyle = css`
-  cursor: pointer;
-  outline: none;
-  border: 1px solid;
-  border-radius: 3px;
-  font-weight: initial;
-  user-select: none;
   margin-top: 2px;
+  outline: none;
+  transition: all 150ms ease-in-out;
+
+  > span {
+    padding: 0;
+  }
 `;
 
 const menuButtonContentsStyle = css`
@@ -23,6 +25,7 @@ const menuButtonContentsStyle = css`
   align-items: center;
   justify-content: space-between;
   height: 100%;
+  width: 100%;
 `;
 
 const menuButtonTextStyle = css`
@@ -38,7 +41,6 @@ type Props = {
   name: string;
   deselected: boolean;
   readOnly?: boolean;
-  refElement: React.MutableRefObject<HTMLDivElement | null>;
   onFocusFirstOption: () => void;
   onFocusLastOption: () => void;
   onDeselect: () => void;
@@ -51,52 +53,44 @@ type Props = {
   >
 >;
 
-function MenuButton({
-  children,
-  value,
-  text,
-  name,
-  deselected,
-  readOnly,
-  onDeselect,
-  onFocusFirstOption,
-  onFocusLastOption,
-  onClose,
-  onOpen,
-  refElement,
-  ...ariaProps
-}: Props) {
+const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
+  {
+    children,
+    value,
+    text,
+    name,
+    deselected,
+    readOnly,
+    onDeselect,
+    onFocusFirstOption,
+    onFocusLastOption,
+    onClose,
+    onOpen,
+    ...ariaProps
+  }: Props,
+  forwardedRef,
+) {
   const { mode, size, open, disabled } = useContext(SelectContext);
 
   const { usingKeyboard } = useUsingKeyboardContext();
 
   const [isHovered, setIsHovered] = useState(false);
 
+  const ref = useForwardedRef(forwardedRef, null);
+
   const colorSet = colorSets[mode];
   const sizeSet = sizeSets[size];
 
   const baseBoxShadow = `inset 0 -1px 0 0 ${colorSet.shadow.base}`;
-  let boxShadowExpanded = `0 0 0 3px ${colorSet.shadow.expanded}`;
-
-  if (mode === Mode.Dark) {
-    boxShadowExpanded = `inset 0 2px 2px 0 #373B3C, ${boxShadowExpanded}`;
-  }
+  const boxShadowExpanded = `
+    inset 0 2px 2px 0 ${colorSet.shadow.expanded.inner},
+    0 0 0 3px ${colorSet.shadow.expanded.outer}`;
 
   const focusStyle = cx({
     [css`
       box-shadow: ${boxShadowExpanded};
     `]: usingKeyboard,
   });
-
-  const onMouseDown = useCallback(
-    (event: React.MouseEvent) => {
-      if (disabled) {
-        // prevent receiving focus
-        event.preventDefault();
-      }
-    },
-    [disabled],
-  );
 
   const onKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
@@ -153,15 +147,13 @@ function MenuButton({
   );
 
   const onClick = useCallback(() => {
-    if (!disabled) {
-      if (open) {
-        onClose();
-      } else {
-        onOpen();
-      }
-      refElement.current!.focus();
+    if (open) {
+      onClose();
+    } else {
+      onOpen();
     }
-  }, [disabled, onClose, onOpen, open, refElement]);
+    ref.current!.focus();
+  }, [onClose, onOpen, open, ref]);
 
   const offHover = useCallback(() => {
     setIsHovered(false);
@@ -178,17 +170,18 @@ function MenuButton({
   };
 
   return (
-    <div
+    <Button
       // eslint-disable-next-line jsx-a11y/role-has-required-aria-props
       role="combobox"
       {...ariaProps}
       tabIndex={disabled ? -1 : 0}
-      ref={refElement}
+      ref={ref}
       onClick={onClick}
-      onMouseDown={onMouseDown}
       onKeyDown={onKeyDown}
       onMouseEnter={onHover}
       onMouseLeave={offHover}
+      variant={mode === Mode.Dark ? Variant.Dark : Variant.Default}
+      disabled={disabled}
       className={cx(
         menuButtonStyle,
         css`
@@ -197,14 +190,7 @@ function MenuButton({
           font-size: ${sizeSet.text}px;
           color: ${deselected ? colorSet.text.deselected : colorSet.text.base};
           border-color: ${open ? colorSet.border.open : colorSet.border.base};
-          background: linear-gradient(
-            180deg,
-            ${colorSet.background.gradientStart.base} 0%,
-            ${colorSet.background.gradientEnd.base} 100%
-          );
           box-shadow: ${baseBoxShadow};
-          transition: box-shadow 150ms ease-in-out;
-          padding-bottom: 2px; // Counter-balances inset box shadow to re-center text
 
           @media only screen and (max-width: ${breakpoints.Desktop}px) {
             height: ${mobileSizeSet.height}px;
@@ -214,22 +200,15 @@ function MenuButton({
         `,
         {
           [css`
-            background: linear-gradient(
-              180deg,
-              ${colorSet.background.gradientStart.base} 0%,
-              ${colorSet.background.gradientEnd.hovered} 100%
-            );
             box-shadow: ${baseBoxShadow}, 0 0 0 3px ${colorSet.shadow.hovered};
           `]: isHovered && !disabled,
           [css`
             ${focusStyle};
 
-            background: linear-gradient(
-              180deg,
-              ${colorSet.background.gradientStart.expanded} 0%,
-              ${colorSet.background.gradientEnd.expanded} 100%
-            );
-            padding-bottom: 0;
+            // Displays the active state defined by <Button />
+            &:after {
+              opacity: 1;
+            }
           `]: open && !disabled,
           [css`
             &:focus {
@@ -237,11 +216,9 @@ function MenuButton({
             }
           `]: !disabled,
           [css`
-            cursor: not-allowed;
             box-shadow: none;
             background: ${colorSet.background.disabled};
             color: ${colorSet.text.disabled};
-            padding-bottom: 0;
           `]: disabled,
         },
       )}
@@ -282,9 +259,9 @@ function MenuButton({
         />
       </div>
       <div {...preventChildrenFromTriggeringHoverProps}>{children}</div>
-    </div>
+    </Button>
   );
-}
+});
 
 MenuButton.displayName = 'MenuButton';
 

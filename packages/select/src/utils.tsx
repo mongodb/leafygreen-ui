@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { isComponentType } from '@leafygreen-ui/lib';
 import {
   InternalOption,
@@ -77,7 +77,7 @@ export function getOptionValue(option: OptionElement | null): string {
     return option.props.value;
   }
 
-  if (option.props.children instanceof Array) {
+  if (Array.isArray(option.props.children)) {
     return option.props.children.filter(child => !isReactEmpty(child)).join('');
   }
 
@@ -144,25 +144,93 @@ export function reconcileOption(
   );
 }
 
-/**
- * TODO: Explore obsoleting `useElementNode` and moving this into hooks lib
- */
-export const useSmartRef: typeof useRef = function <T>(
-  initialValue?: T,
-): React.MutableRefObject<T | undefined> {
-  // eslint-disable-next-line prefer-const
-  let [value, setValue] = useState(initialValue);
+export function useObservedRef<T>(
+  callback: (value: T) => void,
+  initialValue: T,
+  options: { initialValue: T; deps?: React.DependencyList },
+): React.MutableRefObject<T>;
+export function useObservedRef<T>(
+  callback: (value: T) => void,
+  options?: { initialValue: T | null; deps?: React.DependencyList },
+): React.RefObject<T>;
+export function useObservedRef<T>(
+  callback: (value: T | undefined) => void,
+  options?: { deps?: React.DependencyList },
+): React.MutableRefObject<T>;
+export function useObservedRef<T>(
+  callback: (value: T | null | undefined) => void,
+  {
+    initialValue,
+    deps = [],
+  }: { initialValue?: T | null; deps?: React.DependencyList } = {},
+) {
+  const ref = useRef(initialValue);
 
   return useMemo(
     () => ({
       get current() {
-        return value;
+        return ref.current;
       },
       set current(nextValue) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        setValue((value = nextValue));
+        ref.current = nextValue;
+        callback(nextValue);
       },
     }),
-    [value],
+    [
+      callback,
+      ref,
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      ...deps,
+    ],
   );
+}
+
+type SettableRef<T> = React.RefCallback<T> | React.MutableRefObject<T>;
+
+type ValueOrArray<T> = T | ReadonlyArray<T>;
+
+export function useForwardedRef<T>(
+  forwardedRefOrRefs: ValueOrArray<SettableRef<T> | null>,
+  initialValue: T,
+): React.MutableRefObject<T>;
+export function useForwardedRef<T>(
+  forwardedRefOrRefs: ValueOrArray<SettableRef<T | null> | null>,
+  initialValue: T | null,
+): React.RefObject<T>;
+export function useForwardedRef<T>(
+  forwardedRefOrRefs: ValueOrArray<SettableRef<T | null | undefined> | null>,
+  initialValue?: T | null,
+): React.MutableRefObject<T | null | undefined> {
+  const forwardValueToRefs = useCallback(
+    <T,>(
+      forwardedRefOrRefs: ValueOrArray<SettableRef<T> | null>,
+      nextValue: T,
+    ) => {
+      if (Array.isArray(forwardedRefOrRefs)) {
+        forwardedRefOrRefs.forEach(forwardValueToRefs);
+      } else if (typeof forwardedRefOrRefs === 'function') {
+        forwardedRefOrRefs(nextValue);
+      } else if (forwardedRefOrRefs) {
+        // @ts-expect-error https://github.com/microsoft/TypeScript/issues/40527
+        forwardedRefOrRefs.current = nextValue;
+      }
+    },
+    [],
+  );
+
+  return useObservedRef(
+    useCallback(value => forwardValueToRefs(forwardedRefOrRefs, value), [
+      forwardedRefOrRefs,
+      forwardValueToRefs,
+    ]),
+    { initialValue },
+  );
+}
+
+/**
+ * TODO: Explore obsoleting `useElementNode` in favor of this
+ */
+export const useStateRef: typeof useRef = <T,>(initialValue?: T) => {
+  const [value, setValue] = useState(initialValue);
+  return useObservedRef(setValue, { initialValue, deps: [value] });
 };

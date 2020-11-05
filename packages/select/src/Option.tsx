@@ -34,7 +34,7 @@ export interface InternalProps {
   disabled: boolean;
   onClick: React.MouseEventHandler;
   onFocus: React.FocusEventHandler;
-  isNone: boolean;
+  isDeselection: boolean;
   triggerScrollIntoView: boolean;
 }
 
@@ -47,7 +47,7 @@ export function InternalOption({
   disabled,
   onClick,
   onFocus,
-  isNone,
+  isDeselection,
   triggerScrollIntoView,
 }: InternalProps) {
   const { mode } = useContext(SelectContext);
@@ -160,9 +160,9 @@ export function InternalOption({
             color: ${colorSet.text.disabled};
           `]: disabled,
           [css`
-            color: ${colorSet.text.none};
+            color: ${colorSet.text.deselection};
             font-style: italic;
-          `]: isNone,
+          `]: isDeselection,
         },
         className,
       )}

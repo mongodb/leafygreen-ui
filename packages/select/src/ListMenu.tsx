@@ -2,13 +2,14 @@ import React, { useCallback, useContext } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
+import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import { breakpoints } from '@leafygreen-ui/tokens';
 import SelectContext from './SelectContext';
 import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
+import { useForwardedRef } from './utils';
 
 const menuStyle = css`
   position: relative;
-  top: 5px;
   width: 100%;
   border-radius: 3px;
   line-height: 16px;
@@ -21,98 +22,127 @@ const menuStyle = css`
 interface ListMenuProps {
   children: React.ReactNode;
   id: string;
-  refElement: React.MutableRefObject<HTMLUListElement | null>;
+  referenceElement: React.MutableRefObject<HTMLElement | null>;
   onClose: () => void;
   onSelectFocusedOption: () => void;
   onFocusPreviousOption: () => void;
   onFocusNextOption: () => void;
+  className?: string;
 }
 
-export default function ListMenu({
-  children,
-  id,
-  refElement,
-  onClose,
-  onFocusPreviousOption,
-  onFocusNextOption,
-  onSelectFocusedOption,
-}: ListMenuProps) {
-  const { mode, size } = useContext(SelectContext);
+const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
+  function ListMenu(
+    {
+      children,
+      id,
+      referenceElement,
+      onClose,
+      onFocusPreviousOption,
+      onFocusNextOption,
+      onSelectFocusedOption,
+      className,
+    }: ListMenuProps,
+    forwardedRef,
+  ) {
+    const { mode, size, disabled, open } = useContext(SelectContext);
 
-  const colorSet = colorSets[mode];
-  const sizeSet = sizeSets[size];
+    const colorSet = colorSets[mode];
+    const sizeSet = sizeSets[size];
 
-  const onKeyDown = useCallback(
-    (event: React.KeyboardEvent) => {
-      // No support for modifiers yet
-      /* istanbul ignore if */
-      if (event.ctrlKey || event.shiftKey || event.altKey) {
-        return;
-      }
+    const ref = useForwardedRef(forwardedRef, null);
 
-      let bubble = false;
+    const onKeyDown = useCallback(
+      (event: React.KeyboardEvent) => {
+        // No support for modifiers yet
+        /* istanbul ignore if */
+        if (event.ctrlKey || event.shiftKey || event.altKey) {
+          return;
+        }
 
-      switch (event.keyCode) {
-        case keyMap.Tab:
-        case keyMap.Enter:
-          onSelectFocusedOption();
-          break;
-        case keyMap.Escape:
-          onClose();
-          break;
-        case keyMap.ArrowUp:
-          onFocusPreviousOption();
-          break;
-        case keyMap.ArrowDown:
-          onFocusNextOption();
-          break;
-        /* istanbul ignore next */
-        default:
-          bubble = true;
-      }
+        let bubble = false;
 
-      /* istanbul ignore else */
-      if (!bubble) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    },
-    [onClose, onFocusNextOption, onFocusPreviousOption, onSelectFocusedOption],
-  );
+        switch (event.keyCode) {
+          case keyMap.Tab:
+          case keyMap.Enter:
+            onSelectFocusedOption();
+            break;
+          case keyMap.Escape:
+            onClose();
+            break;
+          case keyMap.ArrowUp:
+            onFocusPreviousOption();
+            break;
+          case keyMap.ArrowDown:
+            onFocusNextOption();
+            break;
+          /* istanbul ignore next */
+          default:
+            bubble = true;
+        }
 
-  const viewportSize = useViewportSize();
+        /* istanbul ignore else */
+        if (!bubble) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      },
+      [
+        onClose,
+        onFocusNextOption,
+        onFocusPreviousOption,
+        onSelectFocusedOption,
+      ],
+    );
 
-  const maxHeight =
-    viewportSize === null || refElement.current === null
-      ? 0
-      : viewportSize.height -
-        refElement.current.getBoundingClientRect().top -
-        10;
+    const viewportSize = useViewportSize();
 
-  return (
-    <ul
-      role="listbox"
-      ref={refElement}
-      tabIndex={-1}
-      onKeyDown={onKeyDown}
-      className={cx(
-        menuStyle,
-        css`
-          font-size: ${sizeSet.option.text}px;
-          max-height: ${maxHeight}px;
-          background-color: ${colorSet.option.background.base};
-          box-shadow: 0 3px 7px 0 ${colorSet.menu.shadow};
+    const maxHeight =
+      viewportSize === null || ref.current === null
+        ? 0
+        : viewportSize.height - ref.current.getBoundingClientRect().top - 10;
 
-          @media only screen and (max-width: ${breakpoints.Desktop}px) {
-            font-size: ${mobileSizeSet.option.text}px;
-          }
-        `,
-      )}
-      id={id}
-    >
-      {children}
-    </ul>
-  );
-}
+    return (
+      <Popover
+        active={open && !disabled}
+        spacing={4}
+        align={Align.Bottom}
+        justify={Justify.End}
+        adjustOnMutation
+        className={cx(
+          css`
+            transform: none; // prevent default scaling transition
+          `,
+          className,
+        )}
+        refEl={referenceElement}
+      >
+        <ul
+          role="listbox"
+          ref={ref}
+          tabIndex={-1}
+          onKeyDown={onKeyDown}
+          className={cx(
+            menuStyle,
+            css`
+              font-size: ${sizeSet.option.text}px;
+              max-height: ${maxHeight}px;
+              background-color: ${colorSet.option.background.base};
+              box-shadow: 0 3px 7px 0 ${colorSet.menu.shadow};
+
+              @media only screen and (max-width: ${breakpoints.Desktop}px) {
+                font-size: ${mobileSizeSet.option.text}px;
+              }
+            `,
+          )}
+          id={id}
+        >
+          {children}
+        </ul>
+      </Popover>
+    );
+  },
+);
 
 ListMenu.displayName = 'ListMenu';
+
+export default ListMenu;

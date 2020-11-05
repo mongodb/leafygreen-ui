@@ -37,7 +37,7 @@ interface ColorSet {
       focused: string;
     };
     text: {
-      none: string;
+      deselection: string;
       base: string;
       selected: string;
       disabled: string;
@@ -49,21 +49,15 @@ interface ColorSet {
     };
   };
   background: {
-    gradientStart: {
-      base: string;
-      expanded: string;
-    };
-    gradientEnd: {
-      base: string;
-      hovered: string;
-      expanded: string;
-    };
     disabled: string;
   };
   shadow: {
     base: string;
     hovered: string;
-    expanded: string;
+    expanded: {
+      inner: string;
+      outer: string;
+    }
   };
 }
 
@@ -97,7 +91,7 @@ export const colorSets: Record<Mode, ColorSet> = {
         focused: uiColors.blue.light3,
       },
       text: {
-        none: uiColors.gray.dark1,
+        deselection: uiColors.gray.dark1,
         base: uiColors.gray.dark3,
         selected: uiColors.blue.base,
         disabled: uiColors.gray.base,
@@ -109,21 +103,15 @@ export const colorSets: Record<Mode, ColorSet> = {
       },
     },
     background: {
-      gradientStart: {
-        base: uiColors.white,
-        expanded: uiColors.gray.light2,
-      },
-      gradientEnd: {
-        base: uiColors.gray.light2,
-        hovered: '#DDE4E2',
-        expanded: uiColors.white,
-      },
       disabled: uiColors.gray.light2,
     },
     shadow: {
       base: uiColors.gray.light1,
       hovered: '#E4EAE8',
-      expanded: '#9DD0E7',
+      expanded: {
+        inner: 'rgba(0, 0, 0, 0)',
+        outer: '#9DD0E7',
+      }
     },
   },
 
@@ -156,7 +144,7 @@ export const colorSets: Record<Mode, ColorSet> = {
         focused: uiColors.blue.base,
       },
       text: {
-        none: uiColors.gray.light1,
+        deselection: uiColors.gray.light1,
         base: uiColors.white,
         selected: '#9DD0E7',
         disabled: uiColors.gray.base,
@@ -168,21 +156,15 @@ export const colorSets: Record<Mode, ColorSet> = {
       },
     },
     background: {
-      gradientStart: {
-        base: uiColors.gray.base,
-        expanded: uiColors.gray.dark1,
-      },
-      gradientEnd: {
-        base: uiColors.gray.dark1,
-        hovered: uiColors.gray.dark2,
-        expanded: uiColors.gray.base,
-      },
       disabled: uiColors.gray.dark2,
     },
     shadow: {
       base: uiColors.gray.dark2,
       hovered: uiColors.gray.dark1,
-      expanded: '#007DB2',
+      expanded: {
+        inner: '#373B3C',
+        outer: '#007DB2',
+      }
     },
   },
 };

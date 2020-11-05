@@ -15,7 +15,7 @@ import {
   isOptionSelectable,
   reconcileOption,
   traverseSelectChildren,
-  useSmartRef,
+  useStateRef,
 } from './utils';
 import { useViewportSize } from '@leafygreen-ui/hooks/src';
 
@@ -80,8 +80,8 @@ export default function Select({
 
   const [open, setOpen] = useState(false);
 
-  const menuButtonRef = useSmartRef<HTMLDivElement | null>(null);
-  const listMenuRef = useSmartRef<HTMLUListElement | null>(null);
+  const menuButtonRef = useStateRef<HTMLDivElement | null>(null);
+  const listMenuRef = useStateRef<HTMLUListElement | null>(null);
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const colorSet = colorSets[mode];
@@ -121,9 +121,9 @@ export default function Select({
     }
 
     const onClickOutside = (event: MouseEvent) => {
-      const stillFocused = menuButtonRef.current!.contains(
-        event.target as Node,
-      );
+      const stillFocused =
+        menuButtonRef.current!.contains(event.target as Node) ||
+        listMenuRef.current!.contains(event.target as Node);
       setOpen(stillFocused);
     };
 
@@ -131,7 +131,7 @@ export default function Select({
     return () => {
       document.removeEventListener('mousedown', onClickOutside);
     };
-  }, [menuButtonRef, open]);
+  }, [listMenuRef, menuButtonRef, open]);
 
   const initialUncontrolledSelectedOption = useMemo(() => {
     let initialUncontrolledSelectedOption: OptionElement | null = null;
@@ -300,7 +300,7 @@ export default function Select({
     [focusedOption, listMenuRef, open, viewportSize],
   );
 
-  const noneOption = useMemo(() => {
+  const deselectionOption = useMemo(() => {
     const selected = selectedOption === null;
     return (
       <InternalOption
@@ -311,10 +311,10 @@ export default function Select({
         disabled={false}
         onClick={getOptionClickHandler(null, false)}
         onFocus={getOptionFocusHandler(null, false)}
-        isNone
+        isDeselection
         triggerScrollIntoView={selected && canTriggerScrollIntoView}
       >
-        None
+        {placeholder}
       </InternalOption>
     );
   }, [
@@ -322,6 +322,7 @@ export default function Select({
     focusedOption,
     getOptionClickHandler,
     getOptionFocusHandler,
+    placeholder,
     selectedOption,
   ]);
 
@@ -339,7 +340,7 @@ export default function Select({
             focused: option === focusedOption,
             disabled,
             children: option.props.children,
-            isNone: false,
+            isDeselection: false,
             onClick: getOptionClickHandler(option, disabled),
             onFocus: getOptionFocusHandler(option, disabled),
             triggerScrollIntoView: selected && canTriggerScrollIntoView,
@@ -362,7 +363,16 @@ export default function Select({
   );
 
   return (
-    <div className={className}>
+    <div
+      className={cx(
+        {
+          [css`
+            cursor: not-allowed;
+          `]: disabled,
+        },
+        className,
+      )}
+    >
       <label
         id={labelId}
         className={cx(
@@ -390,30 +400,23 @@ export default function Select({
       {description && (
         <div
           id={descriptionId}
-          className={cx(
-            css`
-              color: ${colorSet.description};
-              font-size: ${sizeSet.description.text}px;
-              line-height: ${sizeSet.description.lineHeight}px;
+          className={css`
+            color: ${colorSet.description};
+            font-size: ${sizeSet.description.text}px;
+            line-height: ${sizeSet.description.lineHeight}px;
 
-              @media only screen and (max-width: ${breakpoints.Desktop}px) {
-                font-size: ${mobileSizeSet.description.text}px;
-                line-height: ${mobileSizeSet.description.lineHeight}px;
-              }
-            `,
-            {
-              [css`
-                cursor: not-allowed;
-              `]: disabled,
-            },
-          )}
+            @media only screen and (max-width: ${breakpoints.Desktop}px) {
+              font-size: ${mobileSizeSet.description.text}px;
+              line-height: ${mobileSizeSet.description.lineHeight}px;
+            }
+          `}
         >
           {description}
         </div>
       )}
       <SelectContext.Provider value={providerData}>
         <MenuButton
-          refElement={menuButtonRef}
+          ref={menuButtonRef}
           name={name}
           readOnly={readOnly}
           value={getOptionValue(selectedOption)}
@@ -433,19 +436,21 @@ export default function Select({
           aria-expanded={open}
           aria-describedby={descriptionId}
         >
-          {open && (
-            <ListMenu
-              id={menuId}
-              refElement={listMenuRef}
-              onClose={onClose}
-              onSelectFocusedOption={onSelectFocusedOption}
-              onFocusPreviousOption={onFocusPreviousOption}
-              onFocusNextOption={onFocusNextOption}
-            >
-              {noneOption}
-              {renderedChildren}
-            </ListMenu>
-          )}
+          <ListMenu
+            id={menuId}
+            referenceElement={menuButtonRef}
+            ref={listMenuRef}
+            onClose={onClose}
+            onSelectFocusedOption={onSelectFocusedOption}
+            onFocusPreviousOption={onFocusPreviousOption}
+            onFocusNextOption={onFocusNextOption}
+            className={css`
+              width: ${menuButtonRef.current?.clientWidth}px;
+            `}
+          >
+            {deselectionOption}
+            {renderedChildren}
+          </ListMenu>
         </MenuButton>
       </SelectContext.Provider>
     </div>
