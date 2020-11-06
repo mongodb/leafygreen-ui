@@ -57,7 +57,7 @@ interface ColorSet {
     expanded: {
       inner: string;
       outer: string;
-    }
+    };
   };
 }
 
@@ -111,7 +111,7 @@ export const colorSets: Record<Mode, ColorSet> = {
       expanded: {
         inner: 'rgba(0, 0, 0, 0)',
         outer: '#9DD0E7',
-      }
+      },
     },
   },
 
@@ -164,7 +164,7 @@ export const colorSets: Record<Mode, ColorSet> = {
       expanded: {
         inner: '#373B3C',
         outer: '#007DB2',
-      }
+      },
     },
   },
 };

@@ -96,7 +96,9 @@ describe('packages/select', () => {
   });
 
   test('renders placeholder', async () => {
-    const { getByRole, findByRole, rerender } = render(<Select {...defaultProps} />);
+    const { getByRole, findByRole, rerender } = render(
+      <Select {...defaultProps} />,
+    );
 
     let combobox = getByRole('combobox');
     expect(combobox).toBeVisible();
