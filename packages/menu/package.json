@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/menu",
-  "version": "9.0.1",
+  "version": "9.0.2",
   "description": "LeafyGreen UI Kit Menu",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
