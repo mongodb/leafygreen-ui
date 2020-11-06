@@ -42,14 +42,22 @@ const labelStyle = css`
 
 type LabelProps = JSX.IntrinsicElements['label'] & {
   darkMode?: boolean;
-  id: string | number;
+  htmlFor: string;
 };
 
-const Label = ({ id, darkMode = false, children }: LabelProps) => {
+const Label = ({
+  darkMode = false,
+  className,
+  children,
+  ...rest
+}: LabelProps) => {
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
   return (
-    <label htmlFor={id} className={cx(labelStyle, colorSets[mode].labelColor)}>
+    <label
+      className={cx(labelStyle, colorSets[mode].labelColor, className)}
+      {...rest}
+    >
       {children}
     </label>
   );
@@ -70,11 +78,23 @@ type DescriptionProps = JSX.IntrinsicElements['p'] & {
   darkMode?: boolean;
 };
 
-const Description = ({ darkMode = false, children }: DescriptionProps) => {
+const Description = ({
+  darkMode = false,
+  children,
+  className,
+  ...rest
+}: DescriptionProps) => {
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
   return (
-    <p className={cx(descriptionStyle, colorSets[mode].descriptionColor)}>
+    <p
+      className={cx(
+        descriptionStyle,
+        colorSets[mode].descriptionColor,
+        className,
+      )}
+      {...rest}
+    >
       {children}
     </p>
   );

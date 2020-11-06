@@ -78,7 +78,7 @@ storiesOf('Typography', module).add('Default', () => {
               : uiColors.white};
           `}
         >
-          <Label darkMode={darkMode} id="form-id">
+          <Label darkMode={darkMode} htmlFor="id">
             This is a label
           </Label>
           <Description darkMode={darkMode}>
