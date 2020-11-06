@@ -1,5 +1,13 @@
 # @leafygreen-ui/mongo-nav
 
+## 4.0.3
+
+### Patch Changes
+
+- f7b3d668: Fixes issue where menu scrollbar is always visible
+- Updated dependencies [f7b3d668]
+  - @leafygreen-ui/menu@9.0.2
+
 ## 4.0.2
 
 ### Patch Changes
