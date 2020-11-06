@@ -55,7 +55,7 @@ const truncate = css`
 const menuStyle = css`
   width: 300px;
   font-weight: normal;
-  overflow: scroll;
+  overflow: auto;
 `;
 
 const headerStyle = css`
