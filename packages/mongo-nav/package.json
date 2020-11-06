@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/mongo-nav",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "LeafyGreen UI Kit Mongo Nav",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,7 +23,7 @@
     "@leafygreen-ui/lib": "^6.0.1",
     "@leafygreen-ui/palette": "^3.0.1",
     "@leafygreen-ui/logo": "^4.0.1",
-    "@leafygreen-ui/menu": "^9.0.1",
+    "@leafygreen-ui/menu": "^9.0.2",
     "@leafygreen-ui/icon": "^7.0.1",
     "@leafygreen-ui/tooltip": "^6.0.1",
     "@leafygreen-ui/badge": "^4.0.1",
