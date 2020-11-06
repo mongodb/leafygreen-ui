@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
+import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 import { colorSets } from './styleSets';
 import SelectContext from './SelectContext';
@@ -25,6 +26,11 @@ const optionTextStyle = css`
   align-items: center;
 `;
 
+const iconStyle = css`
+  min-width: 16px;
+  margin-right: 6px;
+`;
+
 export interface InternalProps {
   children: React.ReactNode;
   className: string | undefined;
@@ -35,6 +41,7 @@ export interface InternalProps {
   onClick: React.MouseEventHandler;
   onFocus: React.FocusEventHandler;
   isDeselection: boolean;
+  hasGlyphs: boolean;
   triggerScrollIntoView: boolean;
 }
 
@@ -49,6 +56,7 @@ export function InternalOption({
   onFocus,
   isDeselection,
   triggerScrollIntoView,
+  hasGlyphs,
 }: InternalProps) {
   const { mode } = useContext(SelectContext);
 
@@ -97,9 +105,30 @@ export function InternalOption({
     }
   }, [scrollIntoView, shouldFocus]);
 
-  let renderedChildren: React.ReactNode = (
-    <span className={optionTextStyle}>{children}</span>
+  const styledChildren: React.ReactNode = (
+    <span
+      className={cx(optionTextStyle, {
+        [css`
+          font-weight: bold;
+        `]: selected && !isDeselection,
+      })}
+    >
+      {children}
+    </span>
   );
+
+  const iconPlaceholder = (
+    <span
+      className={cx(
+        iconStyle,
+        css`
+          height: 100%;
+        `,
+      )}
+    />
+  );
+
+  let styledGlyph = iconPlaceholder;
 
   if (glyph) {
     if (!glyph.type.isGlyph) {
@@ -107,13 +136,12 @@ export function InternalOption({
         '`Option` instance did not render icon because it is not a known glyph element.',
       );
     } else {
-      const styledIcon = React.cloneElement(glyph, {
+      styledGlyph = React.cloneElement(glyph, {
+        key: 'glyph',
         className: cx(
+          iconStyle,
           css`
-            min-width: 16px;
-            margin-right: 12px;
-
-            color: ${selected ? colorSet.icon.selected : colorSet.icon.base};
+            color: ${colorSet.icon.base};
           `,
           {
             [css`
@@ -123,14 +151,58 @@ export function InternalOption({
           glyph.props.className,
         ),
       });
-
-      renderedChildren = (
-        <>
-          {styledIcon}
-          {renderedChildren}
-        </>
-      );
     }
+  }
+
+  const checkmark =
+    selected && !isDeselection ? (
+      <CheckmarkIcon
+        key="checkmark"
+        className={cx(
+          iconStyle,
+          css`
+            color: ${colorSet.icon.selected};
+          `,
+          {
+            [css`
+              color: ${colorSet.icon.disabled};
+            `]: disabled,
+          },
+        )}
+      />
+    ) : (
+      iconPlaceholder
+    );
+
+  let renderedChildren: React.ReactNode;
+
+  if (hasGlyphs) {
+    renderedChildren = (
+      <span
+        className={css`
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+        `}
+      >
+        <span
+          className={css`
+            display: flex;
+          `}
+        >
+          {styledGlyph}
+          {styledChildren}
+        </span>
+        {checkmark}
+      </span>
+    );
+  } else {
+    renderedChildren = (
+      <>
+        {checkmark}
+        {styledChildren}
+      </>
+    );
   }
 
   return (
@@ -143,7 +215,7 @@ export function InternalOption({
         optionStyle,
         css`
           cursor: pointer;
-          color: ${selected ? colorSet.text.selected : colorSet.text.base};
+          color: ${colorSet.text.base};
         `,
         {
           [css(`
@@ -159,10 +231,6 @@ export function InternalOption({
             cursor: not-allowed;
             color: ${colorSet.text.disabled};
           `]: disabled,
-          [css`
-            color: ${colorSet.text.deselection};
-            font-style: italic;
-          `]: isDeselection,
         },
         className,
       )}

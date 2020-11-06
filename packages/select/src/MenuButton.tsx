@@ -14,6 +14,7 @@ const menuButtonStyle = css`
   outline: none;
   transition: all 150ms ease-in-out;
 
+  // reset default Button padding
   > span {
     padding: 0;
   }

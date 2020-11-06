@@ -52,9 +52,7 @@ storiesOf('Select', module)
               <Option value="hamster" glyph={glyph}>
                 Hamster
               </Option>
-              <Option value="parrot" glyph={glyph}>
-                Parrot
-              </Option>
+              <Option value="parrot">Parrot</Option>
             </OptionGroup>
             <Option glyph={glyph}>Mexican spiny-tailed iguana</Option>
             <Option value="spider" glyph={glyph} disabled>

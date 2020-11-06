@@ -291,6 +291,16 @@ export default function Select({
 
   const viewportSize = useViewportSize();
 
+  const hasGlyphs = useMemo(() => {
+    let hasGlyphs = false;
+
+    traverseSelectChildren(children, option => {
+      hasGlyphs ||= option.props.glyph !== undefined;
+    });
+
+    return hasGlyphs;
+  }, [children]);
+
   const canTriggerScrollIntoView = useMemo(
     () =>
       viewportSize !== null &&
@@ -312,6 +322,7 @@ export default function Select({
         onClick={getOptionClickHandler(null, false)}
         onFocus={getOptionFocusHandler(null, false)}
         isDeselection
+        hasGlyphs
         triggerScrollIntoView={selected && canTriggerScrollIntoView}
       >
         {placeholder}
@@ -341,6 +352,7 @@ export default function Select({
             disabled,
             children: option.props.children,
             isDeselection: false,
+            hasGlyphs,
             onClick: getOptionClickHandler(option, disabled),
             onFocus: getOptionFocusHandler(option, disabled),
             triggerScrollIntoView: selected && canTriggerScrollIntoView,
@@ -358,6 +370,7 @@ export default function Select({
       focusedOption,
       getOptionClickHandler,
       getOptionFocusHandler,
+      hasGlyphs,
       selectedOption,
     ],
   );

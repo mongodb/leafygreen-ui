@@ -37,7 +37,6 @@ interface ColorSet {
       focused: string;
     };
     text: {
-      deselection: string;
       base: string;
       selected: string;
       disabled: string;
@@ -91,7 +90,6 @@ export const colorSets: Record<Mode, ColorSet> = {
         focused: uiColors.blue.light3,
       },
       text: {
-        deselection: uiColors.gray.dark1,
         base: uiColors.gray.dark3,
         selected: uiColors.blue.base,
         disabled: uiColors.gray.base,
@@ -144,7 +142,6 @@ export const colorSets: Record<Mode, ColorSet> = {
         focused: uiColors.blue.base,
       },
       text: {
-        deselection: uiColors.gray.light1,
         base: uiColors.white,
         selected: '#9DD0E7',
         disabled: uiColors.gray.base,
