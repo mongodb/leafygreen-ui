@@ -48,9 +48,10 @@ npm install @leafygreen-ui/banner
 
 ## Properties
 
-| Prop          | Type                                   | Description                                                           | Default    |
-| ------------- | -------------------------------------- | --------------------------------------------------------------------- | ---------- |
-| `variant`     | `info`, `warning`, `danger`, `success` | Sets the variant for the Banner                                       | `info`     |
-| `dismissible` | `boolean`                              | Determines whether or not the Banner is dismissible                   | `false`    |
-| `onClose`     | `React.MouseEventHandler`              | Callback fired when dismiss button is clicked                         | `() => {}` |
-| `image`       | `React.ReactElement`                   | Illustration that will replace default Icon when the prop is supplied |            |
+| Prop          | Type                                                 | Description                                                           | Default    |
+| ------------- | ---------------------------------------------------- | --------------------------------------------------------------------- | ---------- |
+| `variant`     | `'info'` \| `'warning'` \| `'danger'` \| `'success'` | Sets the variant for the Banner                                       | `'info'`   |
+| `dismissible` | `boolean`                                            | Determines whether or not the Banner is dismissible                   | `false`    |
+| `onClose`     | `React.MouseEventHandler`                            | Callback fired when dismiss button is clicked                         | `() => {}` |
+| `image`       | `React.ReactElement`                                 | Illustration that will replace default Icon when the prop is supplied |            |
+| ...           | `React.ComponentPropsWithoutRef<'div'>`              | Any other properties will be spread on the root element.              |            |
