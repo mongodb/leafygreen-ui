@@ -70,8 +70,8 @@ const descriptionStyle = css`
   line-height: 16px;
   font-weight: normal;
   padding-bottom: 4px;
-  margin-top: 0px;
-  margin-bottom: 0px;
+  margin-top: 0;
+  margin-bottom: 0;
 `;
 
 type DescriptionProps = JSX.IntrinsicElements['p'] & {
