@@ -68,12 +68,14 @@ const h4Style = css`
 `;
 
 function MobileNavigation({ children }: { children: React.ReactNode }) {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRefObj = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
+
+  const scrollContainerRef = scrollContainerRefObj?.current
 
   const handleBackdropClick = useCallback(
     (e: React.MouseEvent) => {
-      if (!scrollContainerRef?.current?.contains(e.target as Node)) {
+      if (!scrollContainerRef?.contains(e.target as Node)) {
         setOpen(false);
       }
     },
@@ -118,7 +120,7 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
                   opacity: 1;
                 `]: state === 'entered',
               })}
-              ref={scrollContainerRef}
+              ref={scrollContainerRefObj}
             >
               <div className={logoContainer}>
                 <MDBDesignLogo />
