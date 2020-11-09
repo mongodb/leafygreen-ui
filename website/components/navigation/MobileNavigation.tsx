@@ -71,7 +71,7 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
   const scrollContainerRefObj = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
 
-  const scrollContainerRef = scrollContainerRefObj?.current
+  const scrollContainerRef = scrollContainerRefObj?.current;
 
   const handleBackdropClick = useCallback(
     (e: React.MouseEvent) => {
