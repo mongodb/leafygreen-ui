@@ -44,33 +44,32 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 
 ```html
 <div class="">
-  <label id="select-3-label" class="leafygreen-ui-xzhurf">Label</label>
-  <div id="select-3-description" class="leafygreen-ui-3gds6m">Description</div>
+  <label id="select-7-label" class="leafygreen-ui-xzhurf">Label</label>
+  <div id="select-7-description" class="leafygreen-ui-3gds6m">Description</div>
   <button
     type="button"
     class="leafygreen-ui-1fdrra0"
     aria-disabled="false"
     role="combobox"
-    aria-labelledby="select-3-label"
-    aria-controls="select-3-menu"
+    aria-labelledby="select-7-label"
+    aria-controls="select-7-menu"
     aria-expanded="false"
-    aria-describedby="select-3-description"
-    tabindex="0"
+    aria-describedby="select-7-description"
+    name="Name"
+    value="cat"
   >
     <span class="leafygreen-ui-tdo6z2"
       ><div class="leafygreen-ui-ogsjyj">
-        <input type="hidden" name="Name" value="cat" /><span
-          class="leafygreen-ui-1ks3bq2"
-          >Cat</span
+        <span class="leafygreen-ui-1ks3bq2">Cat</span
         ><svg
           class="leafygreen-ui-msi0rg"
           height="16"
           width="16"
           viewBox="0 0 16 16"
           role="img"
-          aria-labelledby="CaretDown-3"
+          aria-labelledby="CaretDown-7"
         >
-          <title id="CaretDown-3">Caret Down Icon</title>
+          <title id="CaretDown-7">Caret Down Icon</title>
           <desc>Created with Sketch.</desc>
           <g
             id="CaretDown-Copy"

@@ -175,14 +175,15 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       // eslint-disable-next-line jsx-a11y/role-has-required-aria-props
       role="combobox"
       {...ariaProps}
-      tabIndex={disabled ? -1 : 0}
       ref={ref}
+      name={name}
+      value={value}
+      disabled={disabled}
       onClick={onClick}
       onKeyDown={onKeyDown}
       onMouseEnter={onHover}
       onMouseLeave={offHover}
       variant={mode === Mode.Dark ? Variant.Dark : Variant.Default}
-      disabled={disabled}
       className={cx(
         menuButtonStyle,
         css`
@@ -190,7 +191,9 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
           width: ${sizeSet.width}px;
           font-size: ${sizeSet.text}px;
           color: ${deselected ? colorSet.text.deselected : colorSet.text.base};
-          border-color: ${open ? colorSet.border.open : colorSet.border.base};
+          border-color: ${open && !disabled
+            ? colorSet.border.open
+            : colorSet.border.base};
           box-shadow: ${baseBoxShadow};
 
           @media only screen and (max-width: ${breakpoints.Desktop}px) {
@@ -225,14 +228,6 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       )}
     >
       <div className={menuButtonContentsStyle}>
-        <input
-          type="hidden"
-          name={name}
-          value={value}
-          readOnly={readOnly}
-          disabled={disabled}
-        />
-
         <span
           className={cx(
             menuButtonTextStyle,

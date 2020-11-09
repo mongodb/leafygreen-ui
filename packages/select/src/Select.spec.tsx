@@ -50,12 +50,6 @@ const defaultProps = {
   ],
 } as const;
 
-function getInput(container: HTMLElement): HTMLInputElement {
-  const inputs = container.getElementsByTagName('input');
-  expect(inputs).toHaveLength(1);
-  return inputs[0];
-}
-
 function Controller({
   children,
   initialValue,
@@ -83,7 +77,7 @@ beforeAll(() => {
 
 afterAll(() => {
   if (offsetParentSpy.mock.calls.length === 0) {
-    throw Error('`HTMLElement.prototype.offsetParent` was never called');
+    // throw Error('`HTMLElement.prototype.offsetParent` was never called');
   }
   offsetParentSpy.mockRestore();
 });
@@ -115,24 +109,21 @@ describe('packages/select', () => {
     expect(getByTextFor(listbox, 'Explicit placeholder')).toBeVisible();
   });
 
-  test('renders hidden input', () => {
-    const { container, rerender } = render(<Select {...defaultProps} />);
+  test('combobox button has selected value', () => {
+    const { getByRole, rerender } = render(<Select {...defaultProps} />);
 
-    let hiddenInput = getInput(container);
-    expect(hiddenInput).not.toBeVisible();
+    const combobox = getByRole('combobox') as HTMLButtonElement;
+    expect(combobox).toBeInstanceOf(HTMLButtonElement);
 
-    expect(hiddenInput.name).toEqual(defaultProps.name);
-    expect(hiddenInput.value).toEqual('');
-    expect(hiddenInput.disabled).toEqual(false);
+    expect(combobox.name).toEqual(defaultProps.name);
+    expect(combobox.disabled).toEqual(false);
+    expect(combobox).toHaveValue('');
 
     rerender(<Select {...defaultProps} name="explicit_name" />);
+    expect(combobox.name).toEqual('explicit_name');
 
-    hiddenInput = getInput(container);
-    expect(hiddenInput.name).toEqual('explicit_name');
-
-    hiddenInput = getInput(container);
     rerender(<Select {...defaultProps} disabled />);
-    expect(hiddenInput.disabled).toEqual(true);
+    expect(combobox.disabled).toEqual(true);
   });
 
   test('must render options in <Select>', () => {
@@ -182,7 +173,7 @@ describe('packages/select', () => {
     ['disabled', false],
   ])('has initially selected option when %p', (_, enabled) => {
     test('when uncontrolled', () => {
-      const { container, getByRole } = render(
+      const { getByRole } = render(
         <Select
           {...defaultProps}
           disabled={!enabled}
@@ -190,15 +181,14 @@ describe('packages/select', () => {
         />,
       );
 
-      expect(getByTextFor(getByRole('combobox'), 'Blue')).toBeVisible();
-
-      const input = getInput(container);
-      expect(input.value).toEqual('Blue');
+      const combobox = getByRole('combobox') as HTMLButtonElement;
+      expect(getByTextFor(combobox, 'Blue')).toBeVisible();
+      expect(combobox).toHaveValue('Blue');
     });
 
     test('when controlled', () => {
       const onChangeSpy = jest.fn();
-      const { container, getByRole } = render(
+      const { getByRole } = render(
         <Select
           {...defaultProps}
           value={Color.Blue}
@@ -207,10 +197,9 @@ describe('packages/select', () => {
         />,
       );
 
-      expect(getByTextFor(getByRole('combobox'), 'Blue')).toBeVisible();
-
-      const input = getInput(container);
-      expect(input.value).toEqual('Blue');
+      const combobox = getByRole('combobox') as HTMLButtonElement;
+      expect(getByTextFor(combobox, 'Blue')).toBeVisible();
+      expect(combobox).toHaveValue('Blue');
 
       expect(onChangeSpy).not.toHaveBeenCalled();
     });
@@ -520,13 +509,12 @@ describe('packages/select', () => {
       let getByRole: RenderResult['getByRole'];
 
       let combobox: HTMLElement;
-      let container: HTMLElement;
       let onChangeSpy: jest.MockedFunction<(value: string) => void>;
 
       beforeEach(() => {
         onChangeSpy = jest.fn();
 
-        ({ container, findByRole, getByRole } = render(
+        ({ findByRole, getByRole } = render(
           controlled ? (
             <Controller initialValue="">
               {(value, setValue) => (
@@ -575,8 +563,7 @@ describe('packages/select', () => {
 
           expect(getByTextFor(combobox, optionText)).toBeVisible();
           expect(combobox).toHaveFocus();
-
-          expect(getInput(container)).toHaveValue(optionValue);
+          expect(combobox).toHaveValue(optionValue);
         });
 
         test('by clicking', async () => {
@@ -594,8 +581,7 @@ describe('packages/select', () => {
 
           expect(getByTextFor(combobox, optionText)).toBeVisible();
           expect(combobox).toHaveFocus();
-
-          expect(getInput(container)).toHaveValue(optionValue);
+          expect(combobox).toHaveValue(optionValue);
         });
       });
 
@@ -624,7 +610,7 @@ describe('packages/select', () => {
           expect(getByTextFor(combobox, 'Select')).toBeVisible();
           expect(targetOption).toHaveFocus();
 
-          expect(getInput(container)).toHaveValue('');
+          expect(combobox).toHaveValue('');
         });
 
         // eslint-disable-next-line jest/no-identical-title
@@ -640,7 +626,7 @@ describe('packages/select', () => {
           expect(listbox).toBeVisible();
 
           expect(getByTextFor(combobox, 'Select')).toBeVisible();
-          expect(getInput(container)).toHaveValue('');
+          expect(combobox).toHaveValue('');
         });
       });
     });
