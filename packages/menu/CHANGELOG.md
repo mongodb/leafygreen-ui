@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 9.0.2
+
+### Patch Changes
+
+- f7b3d668: Fixes issue where scrollbar is always visible
+
 ## 9.0.1
 
 ### Patch Changes

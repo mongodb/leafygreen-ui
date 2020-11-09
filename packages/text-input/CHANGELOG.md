@@ -1,5 +1,11 @@
 # @leafygreen-ui/text-input
 
+## 4.1.0
+
+### Minor Changes
+
+- 5a3fb225: Adds `darkMode` prop to component
+
 ## 4.0.1
 
 ### Patch Changes

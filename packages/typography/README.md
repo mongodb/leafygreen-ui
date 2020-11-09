@@ -93,6 +93,8 @@ All props extend the HTMLElementProps of their root tag, however `<Body />` and 
 | `Disclaimer`    | `small` |
 | `Overline`      | `p`     |
 | `Link`          | `a`     |
+| `Label`         | `label` |
+| `Description`   | `p`     |
 
 # Body
 
@@ -118,5 +120,17 @@ All props extend the HTMLElementProps of their root tag, however `<Body />` and 
 | ------------------ | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | `arrowAppearance`  | `'hover'` \| `'persist'` \| `'none'` | Displays a right arrow adjacent to the anchor tag. When set to `persist` the arrow will always be present. When set to `hover`, the arrow will only appear when hovering over the arrow. | `'none'` |
 | `hideExternalIcon` | `boolean`                            | Hides the external icon when the current host name is different from the host of the destination URL                                                                                     | `false`  |
+
+# Label
+
+| Prop       | Type      | Description                                      | Default |
+| ---------- | --------- | ------------------------------------------------ | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
+
+# Description
+
+| Prop       | Type      | Description                                      | Default |
+| ---------- | --------- | ------------------------------------------------ | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
 
 _Note:_ If the current host name is different from the host of the destination URL, we will provide the "\_blank" value for the `target` prop. When the target is set to open in a new tab, we render an icon as a visual affordance.

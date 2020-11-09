@@ -1,5 +1,16 @@
 # @leafygreen-ui/code
 
+## 7.2.0
+
+### Minor Changes
+
+- 611012de: Adds support for `http` language
+
+### Patch Changes
+
+- Updated dependencies [611012de]
+  - @leafygreen-ui/syntax@6.2.0
+
 ## 7.1.0
 
 ### Minor Changes
