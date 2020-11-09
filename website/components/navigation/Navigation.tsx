@@ -82,11 +82,13 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
     const isGuideline = type === GroupType.Guideline;
     const items = isGuideline ? coreGuidelines : components;
 
+    const collapsibleProp = isTouchDevice && { collapsible: true } as const
+
     return (
       <Group
+        {...collapsibleProp}
         key={type}
         header={isGuideline ? 'Core Guidelines' : 'Components'}
-        collapsible={isTouchDevice ? undefined : true}
         initialCollapsed={isTouchDevice ? !router.asPath.includes(type) : false}
       >
         {items.map(item => {

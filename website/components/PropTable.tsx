@@ -82,7 +82,7 @@ interface TableDataInterface {
 
 function getTableData(rows: Table['children']): Array<TableDataInterface> {
   if (!rows) {
-    return null;
+    return [];
   }
 
   const rowMap = rows.map(row => {
@@ -142,7 +142,7 @@ function PropTable({
         peerDepIndex = index;
       }
 
-      return peerDepIndex + 1 !== index && treeItem.type === 'table';
+      return typeof peerDepIndex === 'number' && peerDepIndex + 1 !== index && treeItem.type === 'table';
     })
     .map((item: Table) => getTableData(item.children));
 
@@ -162,10 +162,10 @@ function PropTable({
 
     return (
       <PropDefinition
-        prop={datum.prop.value}
-        type={datum.type.value}
-        description={datum.description.value}
-        defaultValue={datum.default.value}
+        prop={datum.prop.value || ''}
+        type={datum.type.value || ''}
+        description={datum.description.value || ''}
+        defaultValue={datum.default.value || ''}
       />
     );
   };

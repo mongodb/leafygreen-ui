@@ -48,14 +48,14 @@ const mobileInstallMargin = css`
 `;
 
 interface VersionCardProps {
-  version: string;
+  version?: string;
   changelog: string;
   isMobile?: boolean;
 }
 
 interface InstallProps {
   component: string;
-  version: string;
+  version?: string;
   changelog: string;
 }
 
@@ -68,6 +68,7 @@ function VersionCard({
 
   return (
     <Card className={cx(topAlignment, versionCard)}>
+      {/* TODO: Provide fallback if no version */}
       <Subtitle className={subtitlePadding}>Version {version}</Subtitle>
       <Button
         size={isMobile ? 'large' : 'normal'}
@@ -156,7 +157,7 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
 
 function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
   const viewport = useViewportSize();
-  const isMobile = viewport?.width < breakpoints.Tablet;
+  const isMobile = viewport?.width! < breakpoints.Tablet;
 
   const version = changelog.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
   const example = readme.match(/(?<=js).*?(?=```)/s)?.[0];
@@ -174,29 +175,31 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
           changelog={changelog}
         />
       ) : (
-        <DesktopInstall
-          component={component}
-          version={version}
-          changelog={changelog}
-        />
-      )}
+          <DesktopInstall
+            component={component}
+            version={version}
+            changelog={changelog}
+          />
+        )}
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
           <Tabs className={tabsPadding}>
-            {example && (
+            {example ? (
               <Tab default name="Example" className={mt3}>
                 <Code showLineNumbers language="js">
                   {example}
                 </Code>
               </Tab>
-            )}
-            {outputHTML && (
+            ) : <></>}
+
+            {outputHTML ? (
               <Tab name="Output HTML" className={mt3} default={!example}>
                 <Code showLineNumbers language="xml">
                   {outputHTML}
                 </Code>
               </Tab>
-            )}
+            ) : <></>}
+
           </Tabs>
         </GridItem>
       </GridContainer>
