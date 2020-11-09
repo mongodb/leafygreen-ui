@@ -15,6 +15,7 @@ import { useViewportSize } from '@leafygreen-ui/hooks';
 import { BaseLayoutProps } from 'utils/types';
 import { GridContainer, GridItem } from 'components/Grid';
 import PropTable, { ReadmeMarkdown } from 'components/PropTable';
+import TypeDefinition from 'components/TypeDefinition';
 
 const topAlignment = css`
   margin-top: ${spacing[4]}px;
@@ -47,14 +48,14 @@ const mobileInstallMargin = css`
 `;
 
 interface VersionCardProps {
-  version: string;
+  version?: string;
   changelog: string;
   isMobile?: boolean;
 }
 
 interface InstallProps {
   component: string;
-  version: string;
+  version?: string;
   changelog: string;
 }
 
@@ -67,6 +68,7 @@ function VersionCard({
 
   return (
     <Card className={cx(topAlignment, versionCard)}>
+      {/* TODO: Provide fallback if no version */}
       <Subtitle className={subtitlePadding}>Version {version}</Subtitle>
       <Button
         size={isMobile ? 'large' : 'normal'}
@@ -155,7 +157,9 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
 
 function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
   const viewport = useViewportSize();
-  const isMobile = viewport?.width < breakpoints.Tablet;
+  const isMobile = viewport?.width
+    ? viewport?.width < breakpoints.Tablet
+    : false;
 
   const version = changelog.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
   const example = readme.match(/(?<=js).*?(?=```)/s)?.[0];
@@ -182,19 +186,24 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
           <Tabs className={tabsPadding}>
-            {example && (
+            {example ? (
               <Tab default name="Example" className={mt3}>
                 <Code showLineNumbers language="js">
                   {example}
                 </Code>
               </Tab>
+            ) : (
+              <></>
             )}
-            {outputHTML && (
+
+            {outputHTML ? (
               <Tab name="Output HTML" className={mt3} default={!example}>
                 <Code showLineNumbers language="xml">
                   {outputHTML}
                 </Code>
               </Tab>
+            ) : (
+              <></>
             )}
           </Tabs>
         </GridItem>
@@ -202,6 +211,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
           <PropTable markdownAst={markdownAst} component={component} />
+          <TypeDefinition markdownAst={markdownAst} readme={readme} />
         </GridItem>
       </GridContainer>
     </>
