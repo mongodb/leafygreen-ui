@@ -23,6 +23,7 @@
     "**/*.ts",
     "**/*.tsx",
     "components/**/*.tsx",
+    "components/live-examples/*.tsx",
     "utils/*.tsx",
     "pages/*.tsx"
   ],

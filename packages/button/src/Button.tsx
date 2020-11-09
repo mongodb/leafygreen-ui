@@ -363,8 +363,8 @@ const Button: ExtendableBox<
     const modifiedGlyph =
       glyph && children
         ? React.cloneElement(glyph, {
-            className: cx({ [glyphMargins[size]]: glyph != null }),
-          })
+          className: cx({ [glyphMargins[size]]: glyph != null }),
+        })
         : glyph;
 
     const content = (

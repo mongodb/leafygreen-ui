@@ -48,6 +48,9 @@
       "path": "./packages/lib"
     },
     {
+      "path": "./packages/live-example"
+    },
+    {
       "path": "./packages/logo"
     },
     {
