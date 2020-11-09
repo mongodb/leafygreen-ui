@@ -78,15 +78,13 @@ function ExampleComponent() {
 
 ## Properties
 
-| Prop                   | Type                        | Description                                                                                                                                 | Default      |
-| ---------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
-| `open`                 | `boolean`                   | Determines open state of `Modal` component                                                                                                  | `false`      |
-| `setOpen`              | `function`                  | Callback to set open state of Modal component. `setOpen` accepts a boolean value, which will determine the open state of `Modal` component. | `() => {}`   |
-| `size`                 | `small`, `default`, `large` | Determines `Modal` size.                                                                                                                    | `default`    |
-| `shouldClose`          | `function`                  | Callback to determine whether or not Modal should close when user tries to close it.                                                        | `() => true` |
-| `children`             | `node`                      | Children that will be rendered inside `<Modal />` component.                                                                                |              |
-| `className`            | `string`                    | Style to be applied to the container's root node.                                                                                           |              |
-| `contentClassName`     | `string`                    | Style to be applied to the content div.                                                                                                     |              |
-| `closeOnBackdropClick` | `boolean`                   | Determines whether or not a Modal should close when a user clicks outside the modal.                                                        | `true`       |
-
-_Any other properties will be spread on the overlay container's root node._
+| Prop                   | Type                                  | Description                                                                                                                                 | Default      |
+| ---------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| `open`                 | `boolean`                             | Determines open state of `Modal` component                                                                                                  | `false`      |
+| `setOpen`              | `function`                            | Callback to set open state of Modal component. `setOpen` accepts a boolean value, which will determine the open state of `Modal` component. | `() => {}`   |
+| `size`                 | `'small'` \| `'default'` \| `'large'` | Determines `Modal` size.                                                                                                                    | `'default'`  |
+| `shouldClose`          | `function`                            | Callback to determine whether or not Modal should close when user tries to close it.                                                        | `() => true` |
+| `children`             | `node`                                | Children that will be rendered inside `<Modal />` component.                                                                                |              |
+| `className`            | `string`                              | Style to be applied to the container's root node.                                                                                           |              |
+| `contentClassName`     | `string`                              | Style to be applied to the content div.                                                                                                     |              |
+| `closeOnBackdropClick` | `boolean`                             | Determines whether or not a Modal should close when a user clicks outside the modal.                                                        | `true`       |

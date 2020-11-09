@@ -16,7 +16,11 @@
     "allowJs": true,
     "strict": false,
     "moduleResolution": "node",
-    "module": "esnext"
+    "module": "esnext",
+    "pretty": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "next-env.d.ts",

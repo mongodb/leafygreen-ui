@@ -75,33 +75,53 @@ type GroupType = typeof GroupType[keyof typeof GroupType];
 function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
   const router = useRouter();
 
-  const Group = isTouchDevice ? MobileNavigationGroup : SideNavGroup;
-  const Item = isTouchDevice ? MobileNavigationItem : SideNavItem;
-
   const renderGroup = (type: GroupType) => {
     const isGuideline = type === GroupType.Guideline;
     const items = isGuideline ? coreGuidelines : components;
 
+    if (isTouchDevice) {
+      return (
+        <MobileNavigationGroup
+          key={type}
+          header={isGuideline ? 'Core Guidelines' : 'Components'}
+          initialCollapsed={!router.asPath.includes(type)}
+        >
+          {items.map(item => {
+            const path = `/${type}/${item}`;
+            return (
+              <MobileNavigationItem
+                key={item}
+                onClick={() => router.push(path)}
+                active={router.asPath === path}
+              >
+                {item.split('-').join(' ')}
+              </MobileNavigationItem>
+            );
+          })}
+        </MobileNavigationGroup>
+      );
+    }
+
     return (
-      <Group
+      <SideNavGroup
         key={type}
         header={isGuideline ? 'Core Guidelines' : 'Components'}
-        collapsible={isTouchDevice ? undefined : true}
-        initialCollapsed={isTouchDevice ? !router.asPath.includes(type) : false}
+        collapsible
+        initialCollapsed={false}
       >
         {items.map(item => {
           const path = `/${type}/${item}`;
           return (
-            <Item
+            <SideNavItem
               key={item}
               onClick={() => router.push(path)}
               active={router.asPath === path}
             >
               {item.split('-').join(' ')}
-            </Item>
+            </SideNavItem>
           );
         })}
-      </Group>
+      </SideNavGroup>
     );
   };
 

@@ -59,14 +59,13 @@ import Toggle from '@leafygreen-ui/toggle';
 
 ## Properties
 
-| Prop        | Type                               | Description                                                                                                        | Default                   |
-| ----------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------- |
-| `darkMode`  | `boolean`                          | Determines if the Toggle will appear in dark mode.                                                                 | `false`                   |
-| `size`      | `'default'`, `'small'`, `'xsmall'` | Sets the size of the toggle.                                                                                       | `'default'`               |
-| `checked`   | `boolean`                          | Checks the `<Toggle />`.                                                                                           |                           |
-| `disabled`  | `boolean`                          | Disables the `<Toggle />`.                                                                                         | `false`                   |
-| `onChange`  | `function`                         | The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument. | `() => {}`                |
-| `id`        | `string` or `number`               | Adds an ID only to the input, and it's used elsewhere for accessibility props.                                     | Randomly generated string |
-| `className` | `string`                           | Adds a className to the outermost element.                                                                         | `''`                      |
-
-_Any other properties will be spread on the `input` element._
+| Prop        | Type                                          | Description                                                                                                        | Default                   |
+| ----------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------- |
+| `darkMode`  | `boolean`                                     | Determines if the Toggle will appear in dark mode.                                                                 | `false`                   |
+| `size`      | `'default'` \| `'small'` \| `'xsmall'`        | Sets the size of the toggle.                                                                                       | `'default'`               |
+| `checked`   | `boolean`                                     | Checks the `<Toggle />`.                                                                                           |                           |
+| `disabled`  | `boolean`                                     | Disables the `<Toggle />`.                                                                                         | `false`                   |
+| `onChange`  | `function`                                    | The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument. | `() => {}`                |
+| `id`        | `string` \| `number`                          | Adds an ID only to the input, and it's used elsewhere for accessibility props.                                     | Randomly generated string |
+| `className` | `string`                                      | Adds a className to the outermost element.                                                                         | `''`                      |
+| ...         | `React.InputHTMLAttributes<HTMLInputElement>` | Any other properties will be spread on the `input` element.                                                        |                           |

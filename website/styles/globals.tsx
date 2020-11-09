@@ -14,24 +14,24 @@ export const globalStyles = css`
 
   @font-face {
     font-family: 'Akzidenz';
-    font-weight: medium;
+    font-weight: 600;
     font-style: normal;
-    src: url('fonts/akzidgrostdmed.eot');
-    src: url('fonts/akzidgrostdmed.eot?#iefix') format('embedded-opentype'),
-      url('fonts/akzidgrostdmed.woff') format('woff'),
-      url('fonts/akzidgrostdmed.ttf') format('truetype'),
-      url('fonts/akzidgrostdmed.svg#Akzidenz') format('svg');
+    src: url('/fonts/akzidgrostdmed.eot');
+    src: url('/fonts/akzidgrostdmed.eot?#iefix') format('embedded-opentype'),
+      url('/fonts/akzidgrostdmed.woff') format('woff'),
+      url('/fonts/akzidgrostdmed.ttf') format('truetype'),
+      url('/fonts/akzidgrostdmed.svg#Akzidenz') format('svg');
   }
 
   @font-face {
     font-family: 'Akzidenz';
     font-weight: bold;
     font-style: normal;
-    src: url('fonts/akzidgrostdmed.eot');
-    src: url('fonts/akzidgrostdmed.eot?#iefix') format('embedded-opentype'),
-      url('fonts/akzidgrostdmed.woff') format('woff'),
-      url('fonts/akzidgrostdmed.ttf') format('truetype'),
-      url('fonts/akzidgrostdmed.svg#Akzidenz') format('svg');
+    src: url('/fonts/akzidgrostdmed.eot');
+    src: url('/fonts/akzidgrostdmed.eot?#iefix') format('embedded-opentype'),
+      url('/fonts/akzidgrostdmed.woff') format('woff'),
+      url('/fonts/akzidgrostdmed.ttf') format('truetype'),
+      url('/fonts/akzidgrostdmed.svg#Akzidenz') format('svg');
   }
 
   html {
