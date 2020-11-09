@@ -157,7 +157,9 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
 
 function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
   const viewport = useViewportSize();
-  const isMobile = viewport?.width! < breakpoints.Tablet;
+  const isMobile = viewport?.width
+    ? viewport?.width < breakpoints.Tablet
+    : false;
 
   const version = changelog.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
   const example = readme.match(/(?<=js).*?(?=```)/s)?.[0];
@@ -175,12 +177,12 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
           changelog={changelog}
         />
       ) : (
-          <DesktopInstall
-            component={component}
-            version={version}
-            changelog={changelog}
-          />
-        )}
+        <DesktopInstall
+          component={component}
+          version={version}
+          changelog={changelog}
+        />
+      )}
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
           <Tabs className={tabsPadding}>
@@ -190,7 +192,9 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
                   {example}
                 </Code>
               </Tab>
-            ) : <></>}
+            ) : (
+              <></>
+            )}
 
             {outputHTML ? (
               <Tab name="Output HTML" className={mt3} default={!example}>
@@ -198,8 +202,9 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
                   {outputHTML}
                 </Code>
               </Tab>
-            ) : <></>}
-
+            ) : (
+              <></>
+            )}
           </Tabs>
         </GridItem>
       </GridContainer>

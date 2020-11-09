@@ -142,7 +142,11 @@ function PropTable({
         peerDepIndex = index;
       }
 
-      return typeof peerDepIndex === 'number' && peerDepIndex + 1 !== index && treeItem.type === 'table';
+      return (
+        typeof peerDepIndex === 'number' &&
+        peerDepIndex + 1 !== index &&
+        treeItem.type === 'table'
+      );
     })
     .map((item: Table) => getTableData(item.children));
 
@@ -162,10 +166,10 @@ function PropTable({
 
     return (
       <PropDefinition
-        prop={datum.prop.value || ''}
-        type={datum.type.value || ''}
-        description={datum.description.value || ''}
-        defaultValue={datum.default.value || ''}
+        prop={datum.prop.value ?? ''}
+        type={datum.type.value ?? ''}
+        description={datum.description.value ?? ''}
+        defaultValue={datum.default.value ?? ''}
       />
     );
   };
