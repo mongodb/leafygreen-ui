@@ -51,17 +51,18 @@ import IconButton from '@leafygreen-ui/icon-button';
 
 ## Properties
 
-| Prop                              | Type                         | Description                                                                                                       | Default   |
-| --------------------------------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------- | --------- |
-| `darkMode`                        | `boolean`                    | Determines whether or not the IconButton will appear in darkMode.                                                 | `false`   |
-| `onClick`                         | `function`                   | The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument. |           |
-| `disabled`                        | `boolean`                    | Disables the `<IconButton />`                                                                                     | `false`   |
-| `href`                            | `string`                     | If a href is supplied, the component renders inside of an `a` tag instead of inside of a `button` tag.            |           |
-| `className`                       | `string`                     | Adds a className to the class attribute on the container element.                                                 |           |
-| `children`                        | `node`                       | Content rendered inside of the `<IconButton />` component                                                         |           |
-| `size`                            | `default`, `large`, `xlarge` | Determines the size of the IconButton                                                                             | `default` |
-| `active`                          | `boolean`                    | Determines whether the `<IconButton />` will appear `active`                                                      | `false`   |
-| `aria-label` or `aria-labelledby` | `string`                     | One of these must be provided. See note below                                                                     |           |
+| Prop                              | Type                                             | Description                                                                                                       | Default     |
+| --------------------------------- | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- | ----------- |
+| `darkMode`                        | `boolean`                                        | Determines whether or not the IconButton will appear in darkMode.                                                 | `false`     |
+| `onClick`                         | `function`                                       | The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument. |             |
+| `disabled`                        | `boolean`                                        | Disables the `<IconButton />`                                                                                     | `false`     |
+| `href`                            | `string`                                         | If a href is supplied, the component renders inside of an `a` tag instead of inside of a `button` tag.            |             |
+| `className`                       | `string`                                         | Adds a className to the class attribute on the container element.                                                 |             |
+| `children`                        | `node`                                           | Content rendered inside of the `<IconButton />` component                                                         |             |
+| `size`                            | `'default'` \| `'large'` \| `'xlarge'`           | Determines the size of the IconButton                                                                             | `'default'` |
+| `active`                          | `boolean`                                        | Determines whether the `<IconButton />` will appear `active`                                                      | `false`     |
+| `aria-label` or `aria-labelledby` | `string`                                         | One of these must be provided. See note below                                                                     |             |
+| ...                               | `React.ComponentPropsWithRef<'a'` \| `'button'>` | Any other properties will be spread on the rendered HTML element or component.                                    |             |
 
 ### Special Case: Aria Labels
 

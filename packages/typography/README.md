@@ -98,28 +98,28 @@ All props extend the HTMLElementProps of their root tag, however `<Body />` and 
 
 # Body
 
-| Prop     | Type                | Description                               | Default   |
-| -------- | ------------------- | ----------------------------------------- | --------- |
-| `weight` | `regular`, `medium` | font-weight applied to typography element | `regular` |
+| Prop     | Type                      | Description                               | Default     |
+| -------- | ------------------------- | ----------------------------------------- | ----------- |
+| `weight` | `'regular'` \| `'medium'` | font-weight applied to typography element | `'regular'` |
 
 # InlineCode
 
 | Prop   | Type                    | Description                                                                                                                                              | Default |
 | ------ | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `href` | `string` or `undefined` | If an `href` prop is passed to `InlineCode` it will be rendered with an `a` tag wrapping the `code` tag. Otherwise, it'll simply render as a `code` tag. |         |
+| `href` | `string` \| `undefined` | If an `href` prop is passed to `InlineCode` it will be rendered with an `a` tag wrapping the `code` tag. Otherwise, it'll simply render as a `code` tag. |         |
 
 # Overline
 
-| Prop        | Type                                  | Description                                                                                                                         | Default |
-| ----------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `component` | `HTMLElement` or `React.ReactElement` | The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `p`     |
+| Prop | Type                | Description                                                                                                                         | Default |
+| ---- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `as` | `React.ElementType` | The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `p`     |
 
 # Link
 
-| Prop               | Type      | Description                                                                                          | Default |
-| ------------------ | --------- | ---------------------------------------------------------------------------------------------------- | ------- |
-| `arrowAppearance`  | `'hover'  | 'persist'                                                                                            | 'none'` | Displays a right arrow adjacent to the anchor tag. When set to `persist` the arrow will always be present. When set to `hover`, the arrow will only appear when hovering over the arrow. | `none` |
-| `hideExternalIcon` | `boolean` | Hides the external icon when the current host name is different from the host of the destination URL | `false` |
+| Prop               | Type                                 | Description                                                                                                                                                                              | Default  |
+| ------------------ | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `arrowAppearance`  | `'hover'` \| `'persist'` \| `'none'` | Displays a right arrow adjacent to the anchor tag. When set to `persist` the arrow will always be present. When set to `hover`, the arrow will only appear when hovering over the arrow. | `'none'` |
+| `hideExternalIcon` | `boolean`                            | Hides the external icon when the current host name is different from the host of the destination URL                                                                                     | `false`  |
 
 # Label
 

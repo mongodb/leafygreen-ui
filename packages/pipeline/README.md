@@ -78,24 +78,24 @@ npm install @leafygreen-ui/pipeline
 
 ## Properties
 
-### Pipeline
-
-| Prop        | Type     | Description                                                                                                                                                                                                | Default     |
-| ----------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `className` | `String` | Adds a className to the class attribute.                                                                                                                                                                   | `''`        |
-| `children`  | `Node`   | The content that will render inside of the component. If any nodes other than `Stage` components are passed in as children, the `Pipeline` component will automatically wrap them with `Stage` components. | `undefined` |
-| `size`      | `String` | Sets the size variant of the Pipeline. Valid sizes are: `'xsmall'`, `'small'`, `'normal'`, and `'large'`                                                                                                   | `'xsmall'`  |
+| Prop        | Type                                               | Description                                                                                                                                                                                                | Default     |
+| ----------- | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `className` | `string`                                           | Adds a className to the class attribute.                                                                                                                                                                   | `''`        |
+| `children`  | `node`                                             | The content that will render inside of the component. If any nodes other than `Stage` components are passed in as children, the `Pipeline` component will automatically wrap them with `Stage` components. | `undefined` |
+| `size`      | `'xsmall'` \| `'small'` \| `'normal'` \| `'large'` | Sets the size variant of the Pipeline.                                                                                                                                                                     | `'xsmall'`  |
 
 _All other props will be spread onto the root element._
 
-### Stage
+# Stage
 
-| Prop               | Type      | Description                                                                                                                                                       | Default     |
-| ------------------ | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `className`        | `String`  | Adds a className to the class attribute.                                                                                                                          | `''`        |
-| `children`         | `Node`    | The content that will render inside of the component.                                                                                                             | `undefined` |
-| `intersectionNode` | `Element` | The DOM element to observe intersections with. When used with the `Pipeline` component, this prop is automatically set to the element rendered by the `Pipeline`. | `window`    |
-| `threshold`        | `Number`  | Either a single number or an array of numbers which indicate at what percentage of the target's visibility, the observer's callback should be executed.           | `0.8`       |
-| `size`             | `String`  | Sets the size variant of the Pipeline. Valid sizes are: `'xsmall'`, `'small'`, `'normal'`, and `'large'`                                                          | `'xsmall'`  |
+## Properties
+
+| Prop               | Type            | Description                                                                                                                                                       | Default     |
+| ------------------ | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `className`        | `string`        | Adds a className to the class attribute.                                                                                                                          | `''`        |
+| `children`         | `node`          | The content that will render inside of the component.                                                                                                             | `undefined` |
+| `intersectionNode` | `React.Element` | The DOM element to observe intersections with. When used with the `Pipeline` component, this prop is automatically set to the element rendered by the `Pipeline`. | `window`    |
+| `threshold`        | `number`        | Either a single number or an array of numbers which indicate at what percentage of the target's visibility, the observer's callback should be executed.           | `0.8`       |
+| `size`             | `string`        | Sets the size variant of the Pipeline. Valid sizes are: `'xsmall'`\| `'small'`\| `'normal'`\| `'large'`                                                           | `'xsmall'`  |
 
 _All other props will be spread onto the root element. The Pipeline component will also decorate the child Stage components with the `size` prop that it is supplied with._
