@@ -21,13 +21,27 @@ const tableHeaderNames: Array<'prop' | 'type' | 'description' | 'default'> = [
   'default',
 ];
 
+const HeadingType = {
+  ComponentName: 'componentName',
+  TypeDefinition: 'typeDefinition',
+} as const;
+
+type HeadingType = typeof HeadingType[keyof typeof HeadingType];
+
+export { HeadingType };
+
+export const readmeDepthMap = {
+  [HeadingType.ComponentName]: 1,
+  [HeadingType.TypeDefinition]: 5,
+};
+
 export interface ReadmeMarkdown {
   children: Array<Heading | Table>;
 }
 
 interface Heading {
   type: 'heading';
-  depth: number;
+  depth: typeof readmeDepthMap[keyof typeof readmeDepthMap];
   children: Array<{ value: string }>;
 }
 
@@ -56,23 +70,28 @@ interface CellLeaf {
   value: string;
   type: string;
   depth: number;
+  url?: string;
 }
 
 interface TableDataInterface {
-  prop: string;
-  type: string;
-  description: string;
-  default: string;
+  prop: { value?: string; url?: string };
+  type: { value?: string; url?: string };
+  description: { value?: string; url?: string };
+  default: { value?: string; url?: string };
 }
 
 function getTableData(rows: Table['children']): Array<TableDataInterface> {
   if (!rows) {
-    return null;
+    return [];
   }
 
   const rowMap = rows.map(row => {
     const rowObj: Partial<TableDataInterface> = {};
     row.children.map((cell, index) => {
+      if (cell.children?.[0]?.url) {
+        rowObj[tableHeaderNames[index]] = { url: cell.children[0].url };
+      }
+
       const value =
         cell.children
           .map(child => {
@@ -84,7 +103,10 @@ function getTableData(rows: Table['children']): Array<TableDataInterface> {
           })
           .join('') || '-';
 
-      rowObj[tableHeaderNames[index]] = value;
+      rowObj[tableHeaderNames[index]] = {
+        ...rowObj[tableHeaderNames[index]],
+        value,
+      };
     });
     return rowObj;
   });
@@ -104,7 +126,11 @@ function PropTable({
   let peerDepIndex: number | undefined;
 
   const headers = markdownAst.children
-    .filter(treeItem => treeItem.type === 'heading' && treeItem.depth === 1)
+    .filter(
+      treeItem =>
+        treeItem.type === 'heading' &&
+        treeItem.depth === readmeDepthMap[HeadingType.ComponentName],
+    )
     .map((item: Heading) => item?.children?.[0].value);
 
   const tableData = markdownAst.children
@@ -116,14 +142,45 @@ function PropTable({
         peerDepIndex = index;
       }
 
-      return peerDepIndex + 1 !== index && treeItem.type === 'table';
+      return (
+        typeof peerDepIndex === 'number' &&
+        peerDepIndex + 1 !== index &&
+        treeItem.type === 'table'
+      );
     })
     .map((item: Table) => getTableData(item.children));
+
+  if (tableData.length === 0) {
+    return null;
+  }
 
   if (component === 'typography') {
     headers.shift();
     tableData.shift();
   }
+
+  const formatProp = (datum: TableDataInterface) => {
+    if (datum.prop.value === '...') {
+      return datum.prop.value;
+    }
+
+    return (
+      <PropDefinition
+        prop={datum.prop.value ?? ''}
+        type={datum.type.value ?? ''}
+        description={datum.description.value ?? ''}
+        defaultValue={datum.default.value ?? ''}
+      />
+    );
+  };
+
+  const formatDefault = (datum: TableDataInterface) => {
+    if (datum.default.value === '-') {
+      return '-';
+    }
+
+    return <InlineCode>{datum.default.value}</InlineCode>;
+  };
 
   return (
     <div
@@ -135,7 +192,9 @@ function PropTable({
       {headers.map((header: string, index: number) => {
         return (
           <div key={index}>
-            <Subtitle className={subtitleBottomMargin}>{header} Props</Subtitle>
+            <Subtitle className={subtitleBottomMargin}>
+              <InlineCode>{header.replace(/ /g, '')}</InlineCode> Props
+            </Subtitle>
 
             {tableData[index] && (
               <Table
@@ -143,61 +202,30 @@ function PropTable({
                 key={header}
                 data={tableData[index]}
                 columns={[
+                  <TableHeader dataType="string" label="Prop" key="prop" />,
+                  <TableHeader dataType="string" label="Type" key="type" />,
                   <TableHeader
-                    className={css`
-                      width: 10%;
-                    `}
-                    dataType="string"
-                    label="Prop"
-                    key="prop"
-                  />,
-                  <TableHeader
-                    className={css`
-                      width: 30%;
-                    `}
-                    dataType="string"
-                    label="Type"
-                    key="type"
-                  />,
-                  <TableHeader
-                    className={css`
-                      width: 50%;
-                    `}
                     dataType="string"
                     label="Description"
                     key="description"
                   />,
                   <TableHeader
-                    className={css`
-                      width: 10%;
-                    `}
                     dataType="string"
                     label="Default"
-                    key="deafult"
+                    key="default"
                   />,
                 ]}
               >
                 {({ datum }) => (
-                  <Row key={datum.prop}>
+                  <Row key={datum.prop.value}>
+                    <Cell>{formatProp(datum)}</Cell>
                     <Cell>
-                      <PropDefinition
-                        prop={datum.prop}
-                        type={datum.type}
-                        description={datum.description}
-                        defaultValue={datum.default}
-                      />
+                      <InlineCode href={datum.type.url}>
+                        {datum.type.value}
+                      </InlineCode>
                     </Cell>
-                    <Cell>
-                      <InlineCode>{datum.type}</InlineCode>
-                    </Cell>
-                    <Cell>{datum.description}</Cell>
-                    <Cell>
-                      {datum.default === '-' ? (
-                        '-'
-                      ) : (
-                        <InlineCode>{datum.default}</InlineCode>
-                      )}
-                    </Cell>
+                    <Cell>{datum.description.value}</Cell>
+                    <Cell>{formatDefault(datum)}</Cell>
                   </Row>
                 )}
               </Table>
