@@ -30,6 +30,9 @@
       "path": "./packages/confirmation-modal"
     },
     {
+      "path": "./packages/copyable"
+    },
+    {
       "path": "./packages/emotion"
     },
     {
