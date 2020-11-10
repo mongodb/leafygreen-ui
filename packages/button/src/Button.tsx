@@ -1,237 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import { transparentize } from 'polished';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
-
-export const Variant = {
-  Default: 'default',
-  Primary: 'primary',
-  Info: 'info',
-  Danger: 'danger',
-  Dark: 'dark',
-} as const;
-
-export type Variant = typeof Variant[keyof typeof Variant];
-
-export const Size = {
-  XSmall: 'xsmall',
-  Small: 'small',
-  Normal: 'normal',
-  Large: 'large',
-} as const;
-
-export type Size = typeof Size[keyof typeof Size];
-
-const buttonVariants: { readonly [K in Variant]: string } = {
-  [Variant.Default]: css`
-    color: ${uiColors.gray.dark2};
-    border: 1px solid ${uiColors.gray.light1};
-    background-color: ${uiColors.gray.light3};
-    background-image: linear-gradient(
-      ${uiColors.white},
-      ${uiColors.gray.light2}
-    );
-    box-shadow: inset 0 -1px 0 ${uiColors.gray.light1};
-
-    &:before {
-      border-color: ${uiColors.gray.light1};
-      background-color: ${uiColors.gray.light2};
-      background-image: linear-gradient(${uiColors.gray.light3}, #dde4e2);
-      box-shadow: inset 0 -1px 0 ${uiColors.gray.light1},
-        0 1px 4px ${transparentize(0.9, uiColors.black)};
-    }
-
-    &:after {
-      border-color: ${uiColors.gray.light1};
-      background-color: ${uiColors.gray.light3};
-      background-image: linear-gradient(#dde4e2, ${uiColors.gray.light3});
-      box-shadow: inset 0 2px 2px ${transparentize(0.9, uiColors.black)};
-    }
-
-    &:focus,
-    &:hover {
-      color: ${uiColors.gray.dark2};
-    }
-  `,
-
-  [Variant.Primary]: css`
-    color: ${uiColors.white};
-    border: 1px solid #158242;
-    background-color: ${uiColors.green.base};
-    background-image: linear-gradient(${uiColors.green.base}, #18964c);
-    box-shadow: inset 0 -1px 0 #158242;
-
-    &:before {
-      background-color: #129f4c;
-      background-image: linear-gradient(#129f4c, #148040);
-      box-shadow: 0 1px 4px ${transparentize(0.9, uiColors.black)},
-        inset 0 -1px 0 #158242;
-    }
-
-    &:after {
-      background-color: ${uiColors.green.base};
-      background-image: linear-gradient(#148040, #129f4c);
-      box-shadow: inset 0 2px 2px ${uiColors.green.dark2};
-    }
-
-    &:focus,
-    &:hover {
-      color: ${uiColors.white};
-    }
-  `,
-
-  [Variant.Info]: css`
-    color: ${uiColors.green.base};
-    background-color: transparent;
-    background-image: none;
-    border: 1px solid ${uiColors.green.base};
-    box-shadow: none;
-
-    &:before {
-      background-color: #129f4c;
-      background-image: linear-gradient(#129f4c, #148040);
-      box-shadow: 0 1px 4px ${transparentize(0.9, uiColors.black)},
-        inset 0 -1px 0 #158242;
-    }
-
-    &:after {
-      background-color: ${uiColors.green.base};
-      background-image: linear-gradient(#148040, #129f4c);
-      box-shadow: inset 0 2px 2px ${uiColors.green.dark2};
-    }
-
-    &:not(:disabled) {
-      &:focus,
-      &:hover,
-      &:active {
-        border-color: #158242;
-        color: ${uiColors.white};
-      }
-    }
-  `,
-
-  [Variant.Danger]: css`
-    color: ${uiColors.white};
-    border: 1px solid ${uiColors.red.dark2};
-    background-color: ${uiColors.red.base};
-    background-image: linear-gradient(#e45b26, #b63016);
-    box-shadow: inset 0 -1px 0 0 ${uiColors.red.dark2};
-
-    &:before {
-      background-color: ${uiColors.red.dark2};
-      background-image: linear-gradient(#e45b26, ${uiColors.red.dark2});
-      box-shadow: 0 1px 4px ${transparentize(0.9, uiColors.black)},
-        inset 0 -1px 0 ${uiColors.red.dark2};
-    }
-
-    &:after {
-      background-color: ${uiColors.red.dark2};
-      background-image: linear-gradient(#ad231b, #e45b26);
-      box-shadow: inset 0 2px 2px ${uiColors.red.dark2};
-    }
-
-    &:focus,
-    &:hover {
-      color: ${uiColors.white};
-    }
-  `,
-
-  [Variant.Dark]: css`
-    color: ${uiColors.white};
-    border: 1px solid ${uiColors.gray.dark2};
-    background-color: ${uiColors.gray.dark1};
-    background-image: linear-gradient(
-      ${uiColors.gray.base},
-      ${uiColors.gray.dark1}
-    );
-    box-shadow: inset 0 -1px 0 ${uiColors.gray.dark2};
-
-    &:before {
-      background-image: linear-gradient(
-        ${uiColors.gray.base},
-        ${uiColors.gray.dark2}
-      );
-      box-shadow: 0 1px 4px ${transparentize(0.9, uiColors.black)},
-        inset 0 -1px 0 ${uiColors.gray.dark2};
-    }
-
-    &:after {
-      background-image: linear-gradient(
-        ${uiColors.gray.dark1},
-        ${uiColors.gray.base}
-      );
-      box-shadow: inset 0 2px 2px ${uiColors.gray.dark2};
-    }
-
-    &:focus,
-    &:hover {
-      color: ${uiColors.white};
-    }
-  `,
-};
-
-const buttonSizes: Record<Size, string> = {
-  [Size.XSmall]: css`
-    height: 22px;
-    font-size: 11px;
-    text-transform: uppercase;
-    font-weight: bold;
-  `,
-
-  [Size.Small]: css`
-    height: 25px;
-    font-size: 14px;
-  `,
-
-  [Size.Normal]: css`
-    height: 32px;
-    font-size: 14px;
-  `,
-
-  [Size.Large]: css`
-    height: 45px;
-    font-size: 16px;
-  `,
-} as const;
-
-const spanSizes: Record<Size, string> = {
-  [Size.XSmall]: css`
-    padding: 0 8px;
-  `,
-
-  [Size.Small]: css`
-    padding: 0 10px;
-  `,
-
-  [Size.Normal]: css`
-    padding: 0 12px;
-  `,
-
-  [Size.Large]: css`
-    padding: 0 20px;
-  `,
-} as const;
-
-const glyphMargins: Record<Size, string> = {
-  [Size.XSmall]: css`
-    margin-right: 2px;
-  `,
-
-  [Size.Small]: css`
-    margin-right: 4px;
-  `,
-
-  [Size.Normal]: css`
-    margin-right: 5px;
-  `,
-
-  [Size.Large]: css`
-    margin-right: 8px;
-  `,
-} as const;
+import { css, cx } from '@leafygreen-ui/emotion';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { uiColors } from '@leafygreen-ui/palette';
+import { colorSets, Size, sizeSets, Variant } from './styleSets';
 
 const focusStyle = css`
   &:focus {
@@ -259,8 +32,10 @@ const baseStyle = css`
   text-decoration: none;
   text-transform: none;
   transition: all 120ms ease;
+  outline: none;
   user-select: none;
   padding: 0;
+  overflow: hidden;
 
   &:hover {
     text-decoration: none;
@@ -306,6 +81,7 @@ const disabledStyle = css`
 interface BaseButtonProps {
   disabled?: boolean;
   variant?: Variant;
+  darkMode?: boolean;
   size?: Size;
   glyph?: React.ReactElement;
   className?: string;
@@ -321,6 +97,7 @@ const Button: ExtendableBox<
     {
       className,
       children,
+      darkMode = false,
       disabled = false,
       variant = Variant.Default,
       size = Size.Normal,
@@ -329,16 +106,76 @@ const Button: ExtendableBox<
     }: BaseButtonProps,
     ref: React.Ref<any>,
   ) => {
+    const colorSet = colorSets[variant];
+    const sizeSet = sizeSets[size];
+
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
     const commonProps = {
       ref,
       className: cx(
         baseStyle,
-        buttonSizes[size],
-        buttonVariants[variant],
+        css`
+          color: ${colorSet.text};
+          border: 1px solid ${colorSet.border};
+          height: ${sizeSet.height}px;
+          font-size: ${sizeSet.text.size}px;
+          background-image: ${colorSet.background.image.base};
+
+          // Include an invisible placeholder for transitioning the focus ring
+          box-shadow: 0 0 0 3px rgba(0, 0, 0, 0),
+            ${colorSet.background.shadow.base};
+
+          &:hover {
+            box-shadow: 0 0 0 3px ${darkMode ? uiColors.gray.dark1 : '#E4EAE8'},
+              ${colorSet.background.shadow.base};
+          }
+
+          &:before {
+            background-color: ${colorSet.background.color['focus/hover']};
+            background-image: ${colorSet.background.image['focus/hover']};
+            box-shadow: ${colorSet.background.shadow['focus/hover'].higher},
+              ${colorSet.background.shadow['focus/hover'].lower};
+
+            // Prevent the background of pseudo-element from covering
+            // the corners of the button's inset box-shadow
+            border-radius: 2px;
+          }
+
+          &:after {
+            background-color: ${colorSet.background.color.active};
+            background-image: ${colorSet.background.image.active};
+            box-shadow: ${colorSet.background.shadow.active};
+          }
+        `,
+        {
+          [css`
+            &:active,
+            &:focus,
+            &:hover {
+              color: ${colorSets[Variant.Primary].text};
+              border-color: ${colorSets[Variant.Primary].border};
+            }
+          `]: variant === Variant.Info,
+          [css`
+            text-transform: ${sizeSet.text.transform};
+          `]: sizeSet.text.transform !== undefined,
+          [css`
+            font-weight: ${sizeSet.text.weight};
+          `]: sizeSet.text.weight !== undefined,
+        },
+        {
+          [cx(
+            focusStyle,
+            css`
+              &:focus {
+                box-shadow: 0 0 0 3px ${darkMode ? '#007DB2' : '#9DD0E7'},
+                  ${colorSet.background.shadow.base};
+              }
+            `,
+          )]: showFocus,
+        },
         { [disabledStyle]: disabled },
-        { [focusStyle]: showFocus },
         className,
       ),
       // only add a disabled prop if not an anchor
@@ -363,12 +200,23 @@ const Button: ExtendableBox<
     const modifiedGlyph =
       glyph && children
         ? React.cloneElement(glyph, {
-            className: cx({ [glyphMargins[size]]: glyph != null }),
+            className: cx({
+              [css`
+                margin-right: ${sizeSet.glyph.margin}px;
+              `]: glyph != null,
+            }),
           })
         : glyph;
 
     const content = (
-      <span className={cx(spanStyle, spanSizes[size])}>
+      <span
+        className={cx(
+          spanStyle,
+          css`
+            padding: 0 ${sizeSet.content.padding.horizontal}px;
+          `,
+        )}
+      >
         {modifiedGlyph}
         {children}
       </span>
@@ -396,6 +244,7 @@ Button.displayName = 'Button';
 
 Button.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)),
+  darkMode: PropTypes.bool,
   size: PropTypes.oneOf(Object.values(Size)),
   className: PropTypes.string,
   children: PropTypes.node,
