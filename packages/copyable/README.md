@@ -22,34 +22,36 @@ npm install @leafygreen-ui/copyable
 
 ```js
 <Copyable label="Label" description="Description">
-  {children}
+  {'npm install @leafygreen-ui/copyable'}
 </Copyable>
 ```
 
 **Output HTML**
 
 ```html
-<div class="leafygreen-ui-ay85fu">Label</div>
-<div class="leafygreen-ui-1yr9pf8">Description</div>
-<div class="leafygreen-ui-z4hn35">
-  <code class="leafygreen-ui-1q9khkv">npm install @leafygreen-ui/copyable</code>
-  <div class="leafygreen-ui-16fe9tr">
-    <button
+<label class="leafygreen-ui-1x9zy2h" for="copyable-7">Label</label>
+<p class="leafygreen-ui-1jtodpe">Description</p>
+<div class="leafygreen-ui-1r7yzs7">
+  <code class="leafygreen-ui-b24pl6" id="copyable-7"
+    >npm install @leafygreen-ui/copyable</code
+  ><span class="leafygreen-ui-10wc33h"
+    ><button
       type="button"
-      class="copy-btn leafygreen-ui-10r830k"
+      class="leafygreen-ui-crgt"
       aria-disabled="false"
-      aria-describedby="tooltip-35"
+      aria-describedby="tooltip-7"
     >
-      <span class="leafygreen-ui-1cpk24m"
+      <span class="leafygreen-ui-tdo6z2"
         ><svg
           class="leafygreen-ui-1akpp5z"
           height="20"
           width="20"
           viewBox="0 0 16 16"
           role="img"
-          aria-labelledby="Copy-796277"
+          aria-labelledby="Copy-7"
         >
-          <title id="Copy-796277">Copy Icon</title>
+          <title id="Copy-7">Copy Icon</title>
+          <desc>Created with Sketch.</desc>
           <g
             id="Copy-Copy"
             stroke="none"
@@ -68,8 +70,8 @@ npm install @leafygreen-ui/copyable
           </g></svg
         >Copy</span
       >
-    </button>
-  </div>
+    </button></span
+  >
 </div>
 ```
 

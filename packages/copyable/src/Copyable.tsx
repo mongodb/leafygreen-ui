@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ClipboardJS from 'clipboard';
 import { transparentize } from 'polished';
-
 import Button, { Variant as ButtonVariant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
-import { InlineCode } from '@leafygreen-ui/typography';
+import { Description, InlineCode, Label } from '@leafygreen-ui/typography';
 
 const Mode = {
   Light: 'light',
@@ -54,19 +54,6 @@ const colorSets: Record<Mode, ColorSet> = {
     },
   },
 };
-
-const labelStyle = css`
-  font-size: 14px;
-  font-weight: bold;
-  line-height: 20px;
-`;
-
-const descriptionStyle = css`
-  color: ${uiColors.gray.dark1};
-  font-size: 14px;
-  line-height: 20px;
-  margin-bottom: 6px;
-`;
 
 const containerStyle = css`
   position: relative;
@@ -149,6 +136,8 @@ interface CopyableProps {
   size?: Size;
 }
 
+const idAllocator = IdAllocator.create('copyable');
+
 export default function Copyable({
   darkMode = false,
   children,
@@ -168,6 +157,8 @@ export default function Copyable({
   useEffect(() => {
     setShowCopyButton(copyable && ClipboardJS.isSupported());
   }, [copyable]);
+
+  const codeId = React.useMemo(() => idAllocator.generate(), []);
 
   let copyButton: JSX.Element | undefined;
 
@@ -236,29 +227,11 @@ export default function Copyable({
   return (
     <>
       {label && (
-        <div
-          className={cx(
-            labelStyle,
-            css`
-              color: ${colorSet.label};
-            `,
-          )}
-        >
+        <Label darkMode={darkMode} htmlFor={codeId}>
           {label}
-        </div>
+        </Label>
       )}
-      {description && (
-        <div
-          className={cx(
-            descriptionStyle,
-            css`
-              color: ${colorSet.description};
-            `,
-          )}
-        >
-          {description}
-        </div>
-      )}
+      {description && <Description>{description}</Description>}
 
       <div
         className={cx(
@@ -270,6 +243,7 @@ export default function Copyable({
         )}
       >
         <InlineCode
+          id={codeId}
           className={cx(
             codeStyle,
             css`
@@ -287,9 +261,7 @@ export default function Copyable({
         >
           {children}
         </InlineCode>
-        <span className={cx(buttonWrapperStyle)}>
-          {copyButton}
-        </span>
+        <span className={cx(buttonWrapperStyle)}>{copyButton}</span>
       </div>
     </>
   );
