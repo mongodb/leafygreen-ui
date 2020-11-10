@@ -99,7 +99,7 @@ Note: it's important to follow the kebab-casing convention described above.
 
 When you run `yarn fix`, we do the following:
 
-- We run `yarn prettier` so that we have consistently formatted code.
+- We run `yarn prettier:fix` so that we have consistently formatted code.
 - We run `yarn eslint:fix` to catch any syntax errors, unused variables, and any other easy-to-catch issues.
 
 To fix all files in the repository, run the following:
@@ -117,7 +117,7 @@ yarn prettier:check
 To run linting without automatically fixing issues, run the following:
 
 ```
-yarn eslint
+yarn eslint:check
 ```
 
 ## Typechecking
