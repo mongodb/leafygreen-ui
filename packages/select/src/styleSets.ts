@@ -47,17 +47,6 @@ interface ColorSet {
       disabled: string;
     };
   };
-  background: {
-    disabled: string;
-  };
-  shadow: {
-    base: string;
-    hovered: string;
-    expanded: {
-      inner: string;
-      outer: string;
-    };
-  };
 }
 
 export const colorSets: Record<Mode, ColorSet> = {
@@ -100,17 +89,6 @@ export const colorSets: Record<Mode, ColorSet> = {
         disabled: uiColors.gray.base,
       },
     },
-    background: {
-      disabled: uiColors.gray.light2,
-    },
-    shadow: {
-      base: uiColors.gray.light1,
-      hovered: '#E4EAE8',
-      expanded: {
-        inner: 'rgba(0, 0, 0, 0)',
-        outer: '#9DD0E7',
-      },
-    },
   },
 
   [Mode.Dark]: {
@@ -150,17 +128,6 @@ export const colorSets: Record<Mode, ColorSet> = {
         base: uiColors.gray.light1,
         selected: '#9DD0E7',
         disabled: uiColors.gray.base,
-      },
-    },
-    background: {
-      disabled: uiColors.gray.dark2,
-    },
-    shadow: {
-      base: uiColors.gray.dark2,
-      hovered: uiColors.gray.dark1,
-      expanded: {
-        inner: '#373B3C',
-        outer: '#007DB2',
       },
     },
   },

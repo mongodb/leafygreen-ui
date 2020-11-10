@@ -1,8 +1,7 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext } from 'react';
 import Button, { Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { breakpoints } from '@leafygreen-ui/tokens';
 import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
@@ -11,8 +10,6 @@ import { useForwardedRef } from './utils';
 
 const menuButtonStyle = css`
   margin-top: 2px;
-  outline: none;
-  transition: all 150ms ease-in-out;
 
   // reset default Button padding
   > span {
@@ -73,25 +70,10 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
 ) {
   const { mode, size, open, disabled } = useContext(SelectContext);
 
-  const { usingKeyboard } = useUsingKeyboardContext();
-
-  const [isHovered, setIsHovered] = useState(false);
-
   const ref = useForwardedRef(forwardedRef, null);
 
   const colorSet = colorSets[mode];
   const sizeSet = sizeSets[size];
-
-  const baseBoxShadow = `inset 0 -1px 0 0 ${colorSet.shadow.base}`;
-  const boxShadowExpanded = `
-    inset 0 2px 2px 0 ${colorSet.shadow.expanded.inner},
-    0 0 0 3px ${colorSet.shadow.expanded.outer}`;
-
-  const focusStyle = cx({
-    [css`
-      box-shadow: ${boxShadowExpanded};
-    `]: usingKeyboard,
-  });
 
   const onKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
@@ -156,20 +138,6 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     ref.current!.focus();
   }, [onClose, onOpen, open, ref]);
 
-  const offHover = useCallback(() => {
-    setIsHovered(false);
-  }, []);
-
-  const onHover = useCallback(() => {
-    setIsHovered(true);
-  }, []);
-
-  // Only directly hovering over the button should induce hover
-  const preventChildrenFromTriggeringHoverProps = {
-    onMouseEnter: offHover,
-    onMouseLeave: onHover,
-  };
-
   return (
     <Button
       // eslint-disable-next-line jsx-a11y/role-has-required-aria-props
@@ -179,10 +147,9 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       name={name}
       value={value}
       disabled={disabled}
+      focused={open ? true : undefined}
       onClick={onClick}
       onKeyDown={onKeyDown}
-      onMouseEnter={onHover}
-      onMouseLeave={offHover}
       variant={mode === Mode.Dark ? Variant.Dark : Variant.Default}
       className={cx(
         menuButtonStyle,
@@ -194,7 +161,6 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
           border-color: ${open && !disabled
             ? colorSet.border.open
             : colorSet.border.base};
-          box-shadow: ${baseBoxShadow};
 
           @media only screen and (max-width: ${breakpoints.Desktop}px) {
             height: ${mobileSizeSet.height}px;
@@ -204,24 +170,12 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
         `,
         {
           [css`
-            box-shadow: ${baseBoxShadow}, 0 0 0 3px ${colorSet.shadow.hovered};
-          `]: isHovered && !disabled,
-          [css`
-            ${focusStyle};
-
             // Displays the active state defined by <Button />
             &:after {
               opacity: 1;
             }
           `]: open && !disabled,
           [css`
-            &:focus {
-              ${focusStyle}
-            }
-          `]: !disabled,
-          [css`
-            box-shadow: none;
-            background: ${colorSet.background.disabled};
             color: ${colorSet.text.disabled};
           `]: disabled,
         },
@@ -254,7 +208,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
           `}
         />
       </div>
-      <div {...preventChildrenFromTriggeringHoverProps}>{children}</div>
+      {children}
     </Button>
   );
 });
