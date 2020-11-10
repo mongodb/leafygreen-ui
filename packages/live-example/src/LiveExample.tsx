@@ -15,16 +15,17 @@ import {
 const previewStyle = css`
   display: flex;
   flex-direction: column;
-  // padding-top: ${spacing[3]}px;
   margin-top: ${spacing[5]}px;
 `;
 
 const componentContainer = css`
   border-bottom: 1px solid ${uiColors.gray.light2};
-  padding: ${spacing[4]}px;
+  padding: ${spacing[6]}px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
 `;
 
 const componentContainerDarkMode = css`
@@ -37,10 +38,10 @@ const knobContainer = css`
   padding-top: 42px;
 `;
 
-interface SelectConfigInterface {
+interface SelectConfigInterface<T> {
   type: 'select';
-  options: Array<string | undefined>;
-  default: string;
+  options: Array<T | undefined>;
+  default: T;
   label: string;
 }
 
@@ -65,15 +66,14 @@ interface TextConfigInterface {
   label: string;
 }
 
-export type PropsType =
+export type PropsType<T = string> =
   | BooleanConfigInterface
   | NumberConfigInterface
   | TextConfigInterface
-  | SelectConfigInterface;
+  | SelectConfigInterface<T>;
 
 interface ComponentPropsInterface {
   darkMode?: boolean;
-  glyph?: React.ReactElement;
   [key: string]: unknown;
 }
 
@@ -81,7 +81,7 @@ export type KnobsConfigInterface<
   ComponentProps extends ComponentPropsInterface
   > = {
     [K in keyof ComponentProps]: Extract<
-      PropsType,
+      PropsType<ComponentProps[K]>,
       { default: ComponentProps[K] }
     >;
   };
@@ -136,7 +136,10 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
           );
         case KnobType.Number:
           return (
-            <NumberKnob {...sharedProps} value={props[propName] as number} />
+            <NumberKnob
+              {...sharedProps}
+              value={props[propName] as number}
+            />
           );
         case KnobType.Text:
           return (

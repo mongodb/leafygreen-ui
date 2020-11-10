@@ -303,7 +303,7 @@ const disabledStyle = css`
   pointer-events: none;
 `;
 
-interface BaseButtonProps {
+export interface ButtonProps {
   disabled?: boolean;
   variant?: Variant;
   size?: Size;
@@ -314,7 +314,7 @@ interface BaseButtonProps {
 }
 
 const Button: ExtendableBox<
-  BaseButtonProps & { ref?: React.Ref<any> },
+  ButtonProps & { ref?: React.Ref<any> },
   'button'
 > = React.forwardRef(
   (
@@ -326,7 +326,7 @@ const Button: ExtendableBox<
       size = Size.Normal,
       glyph,
       ...rest
-    }: BaseButtonProps,
+    }: ButtonProps,
     ref: React.Ref<any>,
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -363,8 +363,8 @@ const Button: ExtendableBox<
     const modifiedGlyph =
       glyph && children
         ? React.cloneElement(glyph, {
-          className: cx({ [glyphMargins[size]]: glyph != null }),
-        })
+            className: cx({ [glyphMargins[size]]: glyph != null }),
+          })
         : glyph;
 
     const content = (

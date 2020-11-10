@@ -1,19 +1,27 @@
 import React from 'react';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
-import Button, { Variant, Size } from '@leafygreen-ui/button/';
+import Button, { Variant, Size } from '@leafygreen-ui/button';
 
-const knobsConfig: KnobsConfigInterface<{}> = {
+const knobsConfig: KnobsConfigInterface<{
+  disabled: boolean;
+  variant: Variant;
+  size: Size;
+  glyph: string;
+  children: React.ReactNode;
+  href: string;
+  title: string;
+}> = {
   variant: {
     type: 'select',
     options: Object.values(Variant),
-    default: 'primary',
+    default: Variant.Primary,
     label: 'Variant',
   },
   size: {
     type: 'select',
     options: Object.values(Size),
-    default: 'normal',
+    default: Size.Normal,
     label: 'Size',
   },
   disabled: {

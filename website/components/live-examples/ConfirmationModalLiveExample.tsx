@@ -1,0 +1,72 @@
+import React, { useState } from 'react';
+import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
+import ConfirmationModal from '@leafygreen-ui/confirmation-modal';
+
+// When interface is used, ts complains that index signature is missing
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+type ConfirmationModalExampleProps = {
+  buttonText: string;
+  requiredInputText: boolean;
+  title: string;
+  children: string;
+};
+
+const knobsConfig: KnobsConfigInterface<ConfirmationModalExampleProps> = {
+  buttonText: {
+    type: 'text',
+    default: 'Confirm',
+    label: 'Button Text',
+  },
+  requiredInputText: {
+    type: 'boolean',
+    default: false,
+    label: 'Required Input Text',
+  },
+  title: {
+    type: 'text',
+    default: 'Confirm Title Here',
+    label: 'Title',
+  },
+  children: {
+    type: 'text',
+    default:
+      'This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here. This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here.',
+    label: 'Children',
+  },
+};
+
+function Confirm({
+  title = 'Confirm Title Here',
+  buttonText = 'Confirm',
+  requiredInputText,
+  children,
+}: ConfirmationModalExampleProps) {
+  const [open, setOpen] = useState(false);
+  const reqInputText = requiredInputText ? 'Confirmation text' : undefined;
+
+  return (
+    <>
+      <button onClick={() => setOpen(!open)}>Open Modal</button>
+      <ConfirmationModal
+        open={open}
+        onConfirm={() => setOpen(false)}
+        onCancel={() => setOpen(false)}
+        title={title}
+        buttonText={buttonText}
+        requiredInputText={reqInputText}
+      >
+        {children}
+      </ConfirmationModal>
+    </>
+  );
+}
+
+const ConfirmationModalLiveExample = () => {
+  return (
+    <LiveExample knobsConfig={knobsConfig}>
+      {props => <Confirm {...props} />}
+    </LiveExample>
+  );
+};
+
+export default ConfirmationModalLiveExample;

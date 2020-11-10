@@ -352,6 +352,7 @@ const TextInput = React.forwardRef(
     }: TextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
   ) => {
+    console.log('rest is', rest)
     const mode = darkMode ? Mode.Dark : Mode.Light;
     const isControlled = typeof controlledValue === 'string';
     const [uncontrolledValue, setValue] = useState('');

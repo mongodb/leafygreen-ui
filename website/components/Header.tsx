@@ -11,7 +11,7 @@ import { BaseLayoutProps } from 'utils/types';
 import CodeDocs from 'components/CodeDocs';
 import ReactIcon from 'components/svgs/ReactIcon';
 import SketchIcon from 'components/svgs/SketchIcon';
-import LiveExample from 'components/LiveExample'
+import LiveExample from 'components/LiveExample';
 
 const componentsStyle = css`
   height: 16px;
@@ -73,7 +73,7 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
       </div>
       <Tabs>
         <Tab default name="Live Example">
-          <LiveExample />
+          <LiveExample component={component} />
         </Tab>
         <Tab
           name={

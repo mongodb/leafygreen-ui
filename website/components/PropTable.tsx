@@ -81,6 +81,8 @@ interface TableDataInterface {
 }
 
 function getTableData(rows: Table['children']): Array<TableDataInterface> {
+  console.log(rows)
+
   if (!rows) {
     return [];
   }
@@ -143,8 +145,8 @@ function PropTable({
       }
 
       return (
-        typeof peerDepIndex === 'number' &&
-        peerDepIndex + 1 !== index &&
+        !(typeof peerDepIndex === 'number' &&
+          peerDepIndex + 1 === index) &&
         treeItem.type === 'table'
       );
     })
@@ -175,7 +177,7 @@ function PropTable({
   };
 
   const formatDefault = (datum: TableDataInterface) => {
-    if (datum.default.value === '-') {
+    if (datum.default?.value === '-') {
       return '-';
     }
 

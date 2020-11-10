@@ -9,5 +9,5 @@ export {
   Disclaimer,
   Overline,
 } from './Typography';
-export { Link } from './Link';
+export { Link, ArrowAppearance } from './Link';
 export { Label, Description } from './FormElements';

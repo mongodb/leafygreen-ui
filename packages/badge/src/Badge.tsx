@@ -85,7 +85,7 @@ export interface BaseBadgeProps {
   variant?: Variant;
 }
 
-export type BadgeProps = BaseBadgeProps & React.HTMLAttributes<HTMLDivElement>
+export type BadgeProps = BaseBadgeProps & React.HTMLAttributes<HTMLDivElement>;
 
 function Badge({
   children,

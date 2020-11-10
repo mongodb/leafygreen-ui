@@ -1,9 +1,12 @@
 import React from 'react';
 import LiveExample from '@leafygreen-ui/live-example';
-import type { KnobsConfigInterface } from '@leafygreen-ui/live-example'
+import type { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import Badge, { Variant } from '@leafygreen-ui/badge';
 
-const knobsConfig: KnobsConfigInterface<{}> = {
+const knobsConfig: KnobsConfigInterface<{
+  variant: Variant;
+  children: string;
+}> = {
   variant: {
     type: 'select',
     options: Object.values(Variant),
