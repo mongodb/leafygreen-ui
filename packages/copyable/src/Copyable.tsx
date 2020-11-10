@@ -73,7 +73,6 @@ const containerStyle = css`
   height: 48px;
   width: 400px;
   margin: 1px 0;
-  overflow: hidden;
 `;
 
 const copyableContainerStyle = css`
@@ -90,6 +89,7 @@ const codeStyle = css`
   border-radius: 4px;
   font-size: 14px;
   overflow: hidden;
+  white-space: nowrap;
 `;
 
 const largeCodeStyle = css`
@@ -97,17 +97,42 @@ const largeCodeStyle = css`
 `;
 
 const buttonWrapperStyle = css`
+  display: inline-block;
+  height: 100%;
   position: absolute;
   z-index: 1;
   right: 0;
   top: 0;
-  height: 100%;
+
+  // Pseudo-element that gives the illusion of the button casting a shadow
+  // that doesn't overflow the container. We can't set "overflow: hidden" on
+  // on the container because the interaction rings of the button need to be
+  // able to overflow.
+  &:before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    height: calc(100% - 2px);
+    width: 8px;
+    left: -8px;
+    top: 1px;
+
+    background: linear-gradient(
+      to right,
+      ${transparentize(1, uiColors.gray.dark1)} 0%,
+      ${transparentize(0.9, uiColors.gray.dark1)} 100%
+    );
+  }
 `;
 
 const buttonStyle = css`
   height: 100%;
   border-radius: 0 4px 4px 0;
-  filter: drop-shadow(2px 0 6px ${transparentize(0.7, uiColors.gray.dark1)});
+
+  &:before,
+  &:after {
+    border-radius: 0 4px 4px 0;
+  }
 `;
 
 const iconStyle = css`
@@ -158,12 +183,16 @@ export default function Copyable({
         break;
     }
 
+    // Forward darkMode prop for future versions of Button that support it
+    const buttonRestProps: {} = { darkMode };
+
     const trigger = (
       <Button
         ref={setButtonRef}
         variant={buttonVariant}
         className={buttonStyle}
         onClick={() => setCopied(true)}
+        {...buttonRestProps}
       >
         <CopyIcon size="large" className={iconStyle} />
         Copy
@@ -171,19 +200,16 @@ export default function Copyable({
     );
 
     copyButton = (
-      // `Tooltip` forces its trigger to be `position: relative` :/
-      <div className={buttonWrapperStyle}>
-        <Tooltip
-          open={copied}
-          darkMode={darkMode}
-          align={Align.Top}
-          justify={Justify.Middle}
-          trigger={trigger}
-          triggerEvent={TriggerEvent.Click}
-        >
-          Copied!
-        </Tooltip>
-      </div>
+      <Tooltip
+        open={copied}
+        darkMode={!darkMode}
+        align={Align.Top}
+        justify={Justify.Middle}
+        trigger={trigger}
+        triggerEvent={TriggerEvent.Click}
+      >
+        Copied!
+      </Tooltip>
     );
   }
 
@@ -252,11 +278,18 @@ export default function Copyable({
               border-color: ${colorSet.code.border};
             `,
             { [largeCodeStyle]: size === Size.Large },
+            {
+              [css`
+                border-radius: 0 4px 4px 0;
+              `]: showCopyButton,
+            },
           )}
         >
           {children}
         </InlineCode>
-        {copyButton}
+        <span className={cx(buttonWrapperStyle)}>
+          {copyButton}
+        </span>
       </div>
     </>
   );
