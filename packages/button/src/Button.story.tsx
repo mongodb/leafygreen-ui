@@ -20,6 +20,12 @@ storiesOf('Button', module)
         Object.values(Variant) as Array<Variant>,
         Variant.Default,
       )}
+      darkMode={boolean('Dark mode', false)}
+      focused={
+        { true: true, false: false, undefined }[
+          select('Focused', ['true', 'false', 'undefined'], 'undefined')
+        ]
+      }
       title={text('Title', 'The button title')}
       disabled={boolean('Disabled', false)}
       href={

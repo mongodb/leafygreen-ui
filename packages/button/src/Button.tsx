@@ -6,16 +6,6 @@ import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { uiColors } from '@leafygreen-ui/palette';
 import { colorSets, Size, sizeSets, Variant } from './styleSets';
 
-const focusStyle = css`
-  &:focus {
-    text-decoration: none;
-
-    &:not(:disabled):before {
-      opacity: 1;
-    }
-  }
-`;
-
 const baseStyle = css`
   position: relative;
   // Establishes the root element as a new stacking context
@@ -87,6 +77,7 @@ interface BaseButtonProps {
   className?: string;
   children?: React.ReactNode;
   href?: string;
+  focused?: boolean;
 }
 
 const Button: ExtendableBox<
@@ -102,6 +93,7 @@ const Button: ExtendableBox<
       variant = Variant.Default,
       size = Size.Normal,
       glyph,
+      focused,
       ...rest
     }: BaseButtonProps,
     ref: React.Ref<any>,
@@ -110,6 +102,11 @@ const Button: ExtendableBox<
     const sizeSet = sizeSets[size];
 
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+
+    const focusStyle = css`
+      box-shadow: 0 0 0 3px ${darkMode ? '#007DB2' : '#9DD0E7'},
+        ${colorSet.background.shadow.base};
+    `;
 
     const commonProps = {
       ref,
@@ -165,15 +162,18 @@ const Button: ExtendableBox<
           `]: sizeSet.text.weight !== undefined,
         },
         {
-          [cx(
-            focusStyle,
-            css`
-              &:focus {
-                box-shadow: 0 0 0 3px ${darkMode ? '#007DB2' : '#9DD0E7'},
-                  ${colorSet.background.shadow.base};
-              }
-            `,
-          )]: showFocus,
+          [css`
+            &:focus {
+              ${focusStyle}
+            }
+          `]: showFocus && focused !== false,
+          [css`
+            ${focusStyle}
+
+            :hover {
+              ${focusStyle}
+            }
+          `]: showFocus && focused === true,
         },
         { [disabledStyle]: disabled },
         className,
@@ -249,6 +249,7 @@ Button.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   disabled: PropTypes.bool,
+  focused: PropTypes.bool,
   // @ts-ignore
   as: PropTypes.oneOfType([
     PropTypes.element,
