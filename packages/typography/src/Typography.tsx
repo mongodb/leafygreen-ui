@@ -194,7 +194,7 @@ function InlineCode({ children, className, ...rest }: InlineCodeProps) {
     );
   }
 
-  return renderedInlineCode;
+  return React.cloneElement(renderedInlineCode, rest);
 }
 
 InlineCode.displayName = 'InlineCode';
