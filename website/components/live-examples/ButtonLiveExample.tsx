@@ -53,7 +53,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
 };
 
-const ButtonLiveExample = () => {
+export default function ButtonLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {({ glyph, ...props }) => (
@@ -61,6 +61,4 @@ const ButtonLiveExample = () => {
       )}
     </LiveExample>
   );
-};
-
-export default ButtonLiveExample;
+}

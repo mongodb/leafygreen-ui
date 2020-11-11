@@ -26,7 +26,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
 };
 
-const BoxLiveExample = () => {
+export default function BoxLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {({ as, href, children }) => (
@@ -37,6 +37,4 @@ const BoxLiveExample = () => {
       )}
     </LiveExample>
   );
-};
-
-export default BoxLiveExample;
+}

@@ -119,12 +119,10 @@ function DefaultExample({
   );
 }
 
-const TableLiveExample = () => {
+export default function TableLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <DefaultExample {...props} />}
     </LiveExample>
   );
-};
-
-export default TableLiveExample;
+}

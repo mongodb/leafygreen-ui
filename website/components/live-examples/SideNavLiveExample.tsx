@@ -65,12 +65,10 @@ function DefaultExample({
   );
 }
 
-const SideNavLiveExample = () => {
+export default function SideNavLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <DefaultExample {...props} />}
     </LiveExample>
   );
-};
-
-export default SideNavLiveExample;
+}

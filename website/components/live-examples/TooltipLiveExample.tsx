@@ -46,7 +46,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
 };
 
-const TooltipLiveExample = () => {
+export default function TooltipLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => (
@@ -56,6 +56,4 @@ const TooltipLiveExample = () => {
       )}
     </LiveExample>
   );
-};
-
-export default TooltipLiveExample;
+}

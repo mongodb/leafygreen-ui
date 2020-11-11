@@ -82,7 +82,7 @@ const knobsConfig: KnobsConfigInterface<MenuExampleInterface> = {
   },
 };
 
-const MenuExample = (props: MenuExampleInterface) => {
+function MenuExample(props: MenuExampleInterface) {
   return (
     <LeafyGreenProvider>
       <Menu trigger={<button>trigger</button>}>
@@ -111,14 +111,12 @@ const MenuExample = (props: MenuExampleInterface) => {
       </Menu>
     </LeafyGreenProvider>
   );
-};
+}
 
-const MenuLiveExample = () => {
+export default function MenuLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <MenuExample {...props} />}
     </LiveExample>
   );
-};
-
-export default MenuLiveExample;
+}

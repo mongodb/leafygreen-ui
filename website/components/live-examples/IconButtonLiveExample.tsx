@@ -32,7 +32,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
 };
 
-const IconButtonLiveExample = () => {
+export default function IconButtonLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => (
@@ -42,6 +42,4 @@ const IconButtonLiveExample = () => {
       )}
     </LiveExample>
   );
-};
-
-export default IconButtonLiveExample;
+}

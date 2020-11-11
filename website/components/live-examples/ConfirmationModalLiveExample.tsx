@@ -61,12 +61,10 @@ function Confirm({
   );
 }
 
-const ConfirmationModalLiveExample = () => {
+export default function ConfirmationModalLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <Confirm {...props} />}
     </LiveExample>
   );
-};
-
-export default ConfirmationModalLiveExample;
+}

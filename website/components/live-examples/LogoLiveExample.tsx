@@ -1,7 +1,7 @@
 import React from 'react';
+import { css } from 'emotion';
 import { Overline } from '@leafygreen-ui/typography';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
-import { css } from '@leafygreen-ui/emotion';
 import {
   AtlasLogo,
   ChartsLogo,
@@ -17,7 +17,6 @@ const flexContainer = css`
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
-  // width: 100%;
 `;
 
 const logoContainer = css`
@@ -64,12 +63,13 @@ const knobsConfig: KnobsConfigInterface<LogoProps> = {
   },
 } as const;
 
-const LogoLiveExample = () => {
+export default function LogoLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {({ darkMode, knockout, height, size }) => (
         <div className={flexContainer}>
           <div className={logoContainer}>
+            {/* @ts-expect-error */}
             <Overline
               className={css`
                 margin-bottom: 10px;
@@ -82,6 +82,7 @@ const LogoLiveExample = () => {
             <Logo darkMode={darkMode} knockout={knockout} height={height} />
           </div>
           <div className={logoContainer}>
+            {/* @ts-expect-error */}
             <Overline
               className={css`
                 margin-bottom: 10px;
@@ -94,6 +95,7 @@ const LogoLiveExample = () => {
             <LogoMark darkMode={darkMode} knockout={knockout} height={height} />
           </div>
           <div className={logoContainer}>
+            {/* @ts-expect-error */}
             <Overline
               className={css`
                 margin-bottom: 10px;
@@ -130,6 +132,4 @@ const LogoLiveExample = () => {
       )}
     </LiveExample>
   );
-};
-
-export default LogoLiveExample;
+}

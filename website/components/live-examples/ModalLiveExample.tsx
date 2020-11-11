@@ -23,7 +23,7 @@ const knobsConfig: KnobsConfigInterface<ModalKnobs> = {
   },
 } as const;
 
-const ModalExample = (props: ModalKnobs) => {
+function ModalExample(props: ModalKnobs) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -32,14 +32,12 @@ const ModalExample = (props: ModalKnobs) => {
       <Modal open={open} setOpen={setOpen} {...props} />
     </>
   );
-};
+}
 
-const ModalLiveExample = () => {
+export default function ModalLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <ModalExample {...props} />}
     </LiveExample>
   );
-};
-
-export default ModalLiveExample;
+}

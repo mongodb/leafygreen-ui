@@ -43,12 +43,10 @@ const knobsConfig: KnobsConfigInterface<{
   },
 };
 
-const TextAreaLiveExample = () => {
+export default function TextAreaLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <TextArea {...props} />}
     </LiveExample>
   );
-};
-
-export default TextAreaLiveExample;
+}

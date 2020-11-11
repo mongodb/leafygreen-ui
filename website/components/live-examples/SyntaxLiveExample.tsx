@@ -39,12 +39,10 @@ const knobsConfig: KnobsConfigInterface<{
   },
 };
 
-const SyntaxLiveExample = () => {
+export default function SyntaxLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <Syntax {...props} />}
     </LiveExample>
   );
-};
-
-export default SyntaxLiveExample;
+}

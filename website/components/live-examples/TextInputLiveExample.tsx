@@ -62,12 +62,10 @@ const knobsConfig: KnobsConfigInterface<{
   },
 };
 
-const TextInputLiveExample = () => {
+export default function TextInputLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <TextInput {...props} />}
     </LiveExample>
   );
-};
-
-export default TextInputLiveExample;
+}

@@ -1,7 +1,7 @@
 import React from 'react';
+import { css } from 'emotion';
 import { RadioGroup, Radio, Size } from '@leafygreen-ui/radio-group';
 import { uiColors } from '@leafygreen-ui/palette';
-import { css } from '@leafygreen-ui/emotion';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 
 // When interface is used, ts complains that index signature is missing
@@ -37,7 +37,7 @@ const knobsConfig: KnobsConfigInterface<Knobs> = {
   },
 };
 
-const DefaultExample = ({ darkMode, size, disabled, children }: Knobs) => {
+function DefaultExample({ darkMode, size, disabled, children }: Knobs) {
   return (
     <RadioGroup
       size={size}
@@ -58,14 +58,12 @@ const DefaultExample = ({ darkMode, size, disabled, children }: Knobs) => {
       </Radio>
     </RadioGroup>
   );
-};
+}
 
-const RadioGroupLiveExample = () => {
+export default function RadioGroupLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <DefaultExample {...props} />}
     </LiveExample>
   );
-};
-
-export default RadioGroupLiveExample;
+}

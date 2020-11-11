@@ -8,6 +8,7 @@ import CardLiveExample from './live-examples/CardLiveExample';
 import CheckboxLiveExample from './live-examples/CheckboxLiveExample';
 import CodeLiveExample from './live-examples/CodeLiveExample';
 import ConfirmationModalLiveExample from './live-examples/ConfirmationModalLiveExample';
+import CopyableLiveExample from './live-examples/CopyableLiveExample';
 import IconButtonLiveExample from './live-examples/IconButtonLiveExample';
 import IconLiveExample from './live-examples/IconLiveExample';
 import InlineDefinitionLiveExample from './live-examples/InlineDefinitionLiveExample';
@@ -32,8 +33,9 @@ import ToastLiveExample from './live-examples/ToastLiveExample';
 import ToggleLiveExample from './live-examples/ToggleLiveExample';
 import TooltipLiveExample from './live-examples/TooltipLiveExample';
 import TypographyLiveExample from './live-examples/TypographyLiveExample';
+import Components from 'utils/components';
 
-const map = {
+const map: Record<Components, React.FC> = {
   badge: BadgeLiveExample,
   banner: BannerLiveExample,
   box: BoxLiveExample,
@@ -43,6 +45,7 @@ const map = {
   checkbox: CheckboxLiveExample,
   code: CodeLiveExample,
   ['confirmation-modal']: ConfirmationModalLiveExample,
+  copyable: CopyableLiveExample,
   ['icon-button']: IconButtonLiveExample,
   icon: IconLiveExample,
   ['inline-definition']: InlineDefinitionLiveExample,

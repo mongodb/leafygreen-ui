@@ -43,18 +43,16 @@ const knobsConfig: KnobsConfigInterface<{
   },
 };
 
-const ToastLiveExample = () => {
+export default function ToastLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {({ progress, close, ...rest }) => (
         <Toast
           progress={progress}
-          close={close ? () => { } : undefined}
+          close={close ? () => {} : undefined}
           {...rest}
         />
       )}
     </LiveExample>
   );
-};
-
-export default ToastLiveExample;
+}

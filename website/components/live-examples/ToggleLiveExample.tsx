@@ -25,12 +25,10 @@ const knobsConfig: KnobsConfigInterface<{
   },
 };
 
-const ToggleLiveExample = () => {
+export default function ToggleLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <Toggle {...props} />}
     </LiveExample>
   );
-};
-
-export default ToggleLiveExample;
+}

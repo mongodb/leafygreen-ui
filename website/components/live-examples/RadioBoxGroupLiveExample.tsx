@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from '@leafygreen-ui/emotion';
+import { css } from 'emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { RadioBoxGroup, RadioBox, Size } from '@leafygreen-ui/radio-box-group';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
@@ -52,12 +52,10 @@ function DefaultExample({ size, disabled, children }: Knobs) {
   );
 }
 
-const RadioBoxGroupLiveExample = () => {
+export default function RadioBoxGroupLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <DefaultExample {...props} />}
     </LiveExample>
   );
-};
-
-export default RadioBoxGroupLiveExample;
+}

@@ -28,12 +28,10 @@ function DefaultExample({ currentStep }: { currentStep: number }) {
   );
 }
 
-const StepperLiveExample = () => {
+export default function StepperLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <DefaultExample {...props} />}
     </LiveExample>
   );
-};
-
-export default StepperLiveExample;
+}

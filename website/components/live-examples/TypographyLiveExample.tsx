@@ -2,7 +2,7 @@ import React from 'react';
 import { css, cx } from 'emotion';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
-import { spacing } from '@leafygreen-ui/tokens'
+import { spacing } from '@leafygreen-ui/tokens';
 import {
   H1,
   H2,
@@ -24,7 +24,7 @@ const displayBlock = css`
 
 const margin = css`
   margin: ${spacing[2]}px;
-`
+`;
 
 const knobsConfig: KnobsConfigInterface<{
   weight: 'regular' | 'medium';
@@ -61,7 +61,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
 };
 
-const TypographyLiveExample = () => {
+export default function TypographyLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {({ weight, href, arrowAppearance, baseFontSize }) => (
@@ -80,7 +80,9 @@ const TypographyLiveExample = () => {
               <code>+</code>
               <InlineKeyCode>C</InlineKeyCode>
             </div>
-            <Disclaimer className={cx(displayBlock, margin)}>Disclaimer</Disclaimer>
+            <Disclaimer className={cx(displayBlock, margin)}>
+              Disclaimer
+            </Disclaimer>
             <Overline className={margin}>Overline</Overline>
             <Link
               href={href}
@@ -89,13 +91,15 @@ const TypographyLiveExample = () => {
             >
               Link
             </Link>
-            <Label className={margin} htmlFor="id">This is a label</Label>
-            <Description className={margin}>This is the description for said label</Description>
+            <Label className={margin} htmlFor="id">
+              This is a label
+            </Label>
+            <Description className={margin}>
+              This is the description for said label
+            </Description>
           </div>
         </LeafygreenProvider>
       )}
     </LiveExample>
   );
-};
-
-export default TypographyLiveExample;
+}

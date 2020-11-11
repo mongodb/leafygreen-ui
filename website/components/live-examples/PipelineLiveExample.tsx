@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from '@leafygreen-ui/emotion';
+import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import { Pipeline, Stage, Size } from '@leafygreen-ui/pipeline';
@@ -46,12 +46,10 @@ function DefaultExample(props: { size: Size }) {
   );
 }
 
-const PipelineLiveExample = () => {
+export default function PipelineLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <DefaultExample {...props} />}
     </LiveExample>
   );
-};
-
-export default PipelineLiveExample;
+}

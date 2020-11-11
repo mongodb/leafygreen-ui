@@ -20,12 +20,10 @@ const knobsConfig: KnobsConfigInterface<{
   },
 };
 
-const BadgeLiveExample = () => {
+export default function BadgeLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <Badge {...props} />}
     </LiveExample>
   );
-};
-
-export default BadgeLiveExample;
+}

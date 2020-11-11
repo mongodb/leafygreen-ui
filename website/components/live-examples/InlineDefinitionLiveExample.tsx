@@ -37,7 +37,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
 };
 
-const InlineDefinitionLiveExample = () => {
+export default function InlineDefinitionLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => (
@@ -47,6 +47,4 @@ const InlineDefinitionLiveExample = () => {
       )}
     </LiveExample>
   );
-};
-
-export default InlineDefinitionLiveExample;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from '@leafygreen-ui/emotion';
+import { css } from 'emotion';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import Card from '@leafygreen-ui/card';
 
@@ -21,7 +21,7 @@ const knobsConfig: KnobsConfigInterface<{ as: string; children: string }> = {
   },
 };
 
-const CardLiveExample = () => {
+export default function CardLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {({ as = 'div', ...rest }) => (
@@ -35,6 +35,4 @@ const CardLiveExample = () => {
       )}
     </LiveExample>
   );
-};
-
-export default CardLiveExample;
+}

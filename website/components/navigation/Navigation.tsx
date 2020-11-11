@@ -8,6 +8,7 @@ import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
 import MobileNavigationGroup from './MobileNavigationGroup';
 import MobileNavigationItem from './MobileNavigationItem';
 import MobileNavigation from './MobileNavigation';
+import Components from 'utils/components';
 
 const navWidth = css`
   width: 270px;
@@ -30,43 +31,7 @@ const coreGuidelines = [
   'typography',
 ];
 
-const components = [
-  'badge',
-  'banner',
-  'box',
-  'button',
-  'callout',
-  'card',
-  'checkbox',
-  'code',
-  'confirmation-modal',
-  'icon',
-  'icon-button',
-  'inline-definition',
-  'logo',
-  'marketing-modal',
-  'menu',
-  'modal',
-  'mongo-nav',
-  'palette',
-  'pipeline',
-  'popover',
-  'portal',
-  'radio-box-group',
-  'radio-group',
-  'side-nav',
-  'stepper',
-  'syntax',
-  'table',
-  'tabs',
-  'text-area',
-  'text-input',
-  'toast',
-  'toggle',
-  'tokens',
-  'tooltip',
-  'typography',
-];
+const components = Object.values(Components);
 
 const GroupType = {
   Component: 'component',

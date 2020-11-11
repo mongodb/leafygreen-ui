@@ -1,8 +1,7 @@
 import React from 'react';
+import { css } from 'emotion';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import Icon, { Size, glyphs } from '@leafygreen-ui/icon';
-
-import { css } from '@leafygreen-ui/emotion';
 
 const containerStyle = css`
   width: 150px;
@@ -43,7 +42,7 @@ const renderGlyph = (glyph, size: Size = 'default') => {
   );
 };
 
-const IconLiveExample = () => {
+export default function IconLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => (
@@ -51,6 +50,4 @@ const IconLiveExample = () => {
       )}
     </LiveExample>
   );
-};
-
-export default IconLiveExample;
+}

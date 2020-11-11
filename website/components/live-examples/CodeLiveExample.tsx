@@ -59,12 +59,10 @@ const knobsConfig: KnobsConfigInterface<{
   },
 } as const;
 
-const CodeLiveExample = () => {
+export default function CodeLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <Code {...props} />}
     </LiveExample>
   );
-};
-
-export default CodeLiveExample;
+}

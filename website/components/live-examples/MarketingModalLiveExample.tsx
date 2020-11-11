@@ -40,7 +40,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
 } as const;
 
-const MarketingModalLiveExample = () => {
+export default function MarketingModalLiveExample() {
   const [open, setOpen] = useState(false);
 
   return (
@@ -76,6 +76,4 @@ const MarketingModalLiveExample = () => {
       )}
     </LiveExample>
   );
-};
-
-export default MarketingModalLiveExample;
+}

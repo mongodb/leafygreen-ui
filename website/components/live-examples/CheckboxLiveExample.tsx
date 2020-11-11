@@ -42,12 +42,10 @@ const knobsConfig: KnobsConfigInterface<{
   },
 } as const;
 
-const CheckboxLiveExample = () => {
+export default function CheckboxLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <Checkbox {...props} />}
     </LiveExample>
   );
-};
-
-export default CheckboxLiveExample;
+}

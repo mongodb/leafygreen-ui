@@ -26,7 +26,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
 } as const;
 
-const CalloutLiveExample = () => {
+export default function CalloutLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {({ title, ...rest }) => (
@@ -34,6 +34,4 @@ const CalloutLiveExample = () => {
       )}
     </LiveExample>
   );
-};
-
-export default CalloutLiveExample;
+}

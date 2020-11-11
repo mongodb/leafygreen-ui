@@ -80,8 +80,6 @@ function renderColors() {
   return <div>{renderedRanges}</div>;
 }
 
-const PaletteLiveExample = () => {
+export default function PaletteLiveExample() {
   return <LiveExample knobsConfig={{}}>{renderColors}</LiveExample>;
-};
-
-export default PaletteLiveExample;
+}

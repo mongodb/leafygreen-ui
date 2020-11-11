@@ -1,11 +1,11 @@
 import React from 'react';
+import { css } from 'emotion';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import MongoNav, {
   Platform,
   Product,
   ActiveNavElement,
 } from '@leafygreen-ui/mongo-nav';
-import { css } from '@leafygreen-ui/emotion';
 
 const knobsConfig: KnobsConfigInterface<{
   activePlatform: Platform;
@@ -45,7 +45,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
 };
 
-const MongoNavLiveExample = () => {
+export default function MongoNavLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => (
@@ -59,6 +59,4 @@ const MongoNavLiveExample = () => {
       )}
     </LiveExample>
   );
-};
-
-export default MongoNavLiveExample;
+}

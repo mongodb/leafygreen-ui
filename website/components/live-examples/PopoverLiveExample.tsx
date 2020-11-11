@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
-import { css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
+import { css } from 'emotion';
 
 const popoverStyle = css`
   border: 1px solid ${uiColors.gray.light1};
@@ -85,12 +85,10 @@ function DefaultExample({
   );
 }
 
-const PopoverLiveExample = () => {
+export default function PopoverLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => <DefaultExample {...props} />}
     </LiveExample>
   );
-};
-
-export default PopoverLiveExample;
+}

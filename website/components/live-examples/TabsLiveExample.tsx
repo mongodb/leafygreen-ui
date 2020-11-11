@@ -32,7 +32,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
 };
 
-const TabsLiveExample = () => {
+export default function TabsLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {({ children, name, disabled, darkMode }) => (
@@ -52,6 +52,4 @@ const TabsLiveExample = () => {
       )}
     </LiveExample>
   );
-};
-
-export default TabsLiveExample;
+}
