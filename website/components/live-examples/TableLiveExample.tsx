@@ -4,64 +4,25 @@ import { Table, Row, Cell, TableHeader, HeaderRow } from '@leafygreen-ui/table';
 
 const defaultData = [
   {
-    name: 'Alice',
-    age: 19,
-    color: 'blue',
-    location: 'bedford',
+    name: 'First Project',
+    clusters: '1 Cluster',
+    users: '12 Users',
+    teams: '0 Teams',
+    alerts: '5 Alerts'
   },
   {
-    name: 'Brooke',
-    age: 20,
-    color: 'green',
-    location: 'bedford',
+    name: 'Second Project',
+    clusters: '2 Clusters',
+    users: '6 Users',
+    teams: '4 Teams',
+    alerts: '2 Alerts'
   },
   {
-    name: 'Charlotte',
-    age: 21,
-    color: 'white',
-    location: 'bedford',
-  },
-  {
-    name: 'Donna',
-    age: 22,
-    color: 'green',
-    location: 'bedford',
-  },
-  {
-    name: 'Emma',
-    age: 23,
-    color: 'white',
-    location: 'bedford',
-  },
-  {
-    name: 'Georgia',
-    age: 24,
-    color: 'white',
-    location: 'bedford',
-  },
-  {
-    name: 'Frannie',
-    age: 29,
-    color: 'green',
-    location: 'bedford',
-  },
-  {
-    name: 'Iman',
-    age: 26,
-    color: 'white',
-    location: 'bedford',
-  },
-  {
-    name: 'Hannah',
-    age: 27,
-    color: 'green',
-    location: 'bedford',
-  },
-  {
-    name: 'Jill',
-    age: 28,
-    color: 'green',
-    location: 'bedford',
+    name: 'Third Project',
+    clusters: '5 Clusters',
+    users: '2 Users',
+    teams: '0 Teams',
+    alerts: '1 Alert'
   },
 ];
 
@@ -93,26 +54,27 @@ function DefaultExample({
       data={defaultData}
       columns={
         <HeaderRow>
-          <TableHeader key="name" label="Name" dataType="string" />
-          <TableHeader key="age" label="Age" dataType="number" />
+          <TableHeader key="name" label="Project Name" />
           <TableHeader
-            label="Color"
+            label="Clusters"
             sortBy={
-              sortBy ? (datum: typeof defaultData[0]) => datum.color : undefined
+              sortBy ? (datum: typeof defaultData[0]) => datum.clusters : undefined
             }
-            dataType="string"
-            key="color"
+            key="clusters"
           />
-          <TableHeader key="location" label="Location" />
+          <TableHeader key="users" label="Users" />
+          <TableHeader key="teams" label="Teams" />
+          <TableHeader key="alerts" label="Alerts" />
         </HeaderRow>
       }
     >
       {({ datum }) => (
-        <Row key={datum.name} disabled={disabled && datum.name === 'Charlotte'}>
+        <Row key={datum.name} disabled={disabled && datum.name === 'Second Project'}>
           <Cell>{datum.name}</Cell>
-          <Cell>{datum.age}</Cell>
-          <Cell>{datum.color}</Cell>
-          <Cell>{datum.location}</Cell>
+          <Cell>{datum.clusters}</Cell>
+          <Cell>{datum.users}</Cell>
+          <Cell>{datum.teams}</Cell>
+          <Cell>{datum.alerts}</Cell>
         </Row>
       )}
     </Table>

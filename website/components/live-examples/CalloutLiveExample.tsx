@@ -16,7 +16,7 @@ const knobsConfig: KnobsConfigInterface<{
   children: {
     type: 'text',
     default:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+      'If you are running your mongod instance with the default host (localhost) and port (27017), you can leave those parameters out when running mongo shell.',
     label: 'Children',
   },
   title: {

@@ -107,24 +107,28 @@ export default function LogoLiveExample() {
             </Overline>
             <div>
               <AtlasLogo
-                className={productLogoPadding}
+                className={css`padding: 8px 8px 8px 0`}
                 knockout={knockout}
                 size={size}
+                color={darkMode ? uiColors.white : uiColors.gray.dark3}
               />
               <ChartsLogo
                 className={productLogoPadding}
                 knockout={knockout}
                 size={size}
+                color={darkMode ? uiColors.white : uiColors.gray.dark3}
               />
               <RealmLogo
                 className={productLogoPadding}
                 knockout={knockout}
                 size={size}
+                color={darkMode ? uiColors.white : uiColors.gray.dark3}
               />
               <CloudManagerLogo
                 className={productLogoPadding}
                 knockout={knockout}
                 size={size}
+                color={darkMode ? uiColors.white : uiColors.gray.dark3}
               />
             </div>
           </div>

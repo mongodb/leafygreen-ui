@@ -1,122 +1,39 @@
 import React from 'react';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
-import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { Menu, MenuSeparator, MenuItem, SubMenu } from '@leafygreen-ui/menu';
+import Icon from '@leafygreen-ui/icon';
+import { Menu, MenuItem } from '@leafygreen-ui/menu';
+import Button from '@leafygreen-ui/button'
 
-// When interface is used, ts complains that index signature is missing
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-type MenuExampleInterface = {
-  subMenuTitle: string;
-  subMenuDescription: string;
-  subMenuGlyph: string;
-  subMenuActive: boolean;
-  subMenuHref?: string | undefined;
-  menuItemChildren: string;
-  menuItemActive: boolean;
-  menuItemDisabled: boolean;
-  menuItemSize: 'default' | 'large';
-  menuItemGlyph: string;
-  menuItemDescription: string;
-};
 
-const knobsConfig: KnobsConfigInterface<MenuExampleInterface> = {
-  subMenuTitle: {
-    type: 'text',
-    default: 'Settings',
-    label: 'SubMenu Title',
-  },
-  subMenuDescription: {
-    type: 'text',
-    default: 'User Settings',
-    label: 'SubMenu Description',
-  },
-  subMenuGlyph: {
-    type: 'select',
-    options: Object.keys(glyphs),
-    default: 'Cloud',
-    label: 'SubMenu Glyph',
-  },
-  subMenuActive: {
+const knobsConfig: KnobsConfigInterface<{ active: boolean; disabled: boolean; children: string }> = {
+  active: {
     type: 'boolean',
     default: true,
-    label: 'SubMenu Active',
+    label: 'Active'
   },
-  subMenuHref: {
-    type: 'select',
-    default: undefined,
-    options: ['http://mongodb.design', undefined],
-    label: 'SubMenu Href',
-  },
-  menuItemActive: {
+  disabled: {
     type: 'boolean',
     default: false,
-    label: 'MenuItem Active',
+    label: 'Disabled'
   },
-  menuItemChildren: {
+  children: {
     type: 'text',
-    default: 'Preferences',
-    label: 'MenuItem Children',
-  },
-  menuItemDisabled: {
-    type: 'boolean',
-    default: false,
-    label: 'MenuItem Disabled',
-  },
-  menuItemSize: {
-    type: 'select',
-    default: 'default',
-    options: ['default', 'large'],
-    label: 'MenuItem Size',
-  },
-  menuItemDescription: {
-    type: 'text',
-    default: 'Description text',
-    label: 'MenuItem Description',
-  },
-  menuItemGlyph: {
-    type: 'select',
-    options: Object.keys(glyphs),
-    default: 'Megaphone',
-    label: 'SubMenu Glyph',
-  },
+    default: 'Unlink Data source',
+    label: 'Children'
+  }
 };
 
-function MenuExample(props: MenuExampleInterface) {
-  return (
-    <LeafyGreenProvider>
-      <Menu trigger={<button>trigger</button>}>
-        <SubMenu
-          title={props.subMenuTitle}
-          description={props.subMenuDescription}
-          glyph={<Icon glyph={props.subMenuGlyph} />}
-          active={props.subMenuActive}
-          href={props.subMenuHref}
-        >
-          <MenuItem active={props.menuItemActive}>
-            {props.menuItemChildren}
-          </MenuItem>
-          <MenuItem size={props.menuItemSize} disabled={props.menuItemDisabled}>
-            Security
-          </MenuItem>
-        </SubMenu>
-        <MenuItem
-          glyph={<Icon glyph={props.menuItemGlyph} />}
-          description={props.menuItemDescription}
-        >
-          Feedback
-        </MenuItem>
-        <MenuSeparator />
-        <MenuItem>Logout</MenuItem>
-      </Menu>
-    </LeafyGreenProvider>
-  );
-}
 
 export default function MenuLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {props => <MenuExample {...props} />}
+      {({ children, active, disabled }) => (
+        <Menu trigger={<Button glyph={<Icon glyph="Ellipsis" />}></Button>}>
+          <MenuItem active={active}>Edit Data Source Configuration</MenuItem>
+          <MenuItem disabled={disabled}>Edit Rules</MenuItem>
+          <MenuItem>{children}</MenuItem>
+        </Menu>
+      )}
     </LiveExample>
   );
 }

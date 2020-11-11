@@ -32,7 +32,7 @@ const knobsConfig: KnobsConfigInterface<Knobs> = {
   },
   children: {
     type: 'text',
-    default: 'Radio Input Copy',
+    default: 'System',
     label: 'Children',
   },
 };
@@ -48,13 +48,13 @@ function DefaultExample({ darkMode, size, disabled, children }: Knobs) {
         padding: 20px;
       `}
     >
-      <Radio value="1">Radio Input Copy</Radio>
+      <Radio value="1">Application Authentication</Radio>
       <Radio value="2">{children}</Radio>
       <Radio default value="3">
-        Radio Input Copy
+        User Id
       </Radio>
       <Radio disabled={disabled} value="Selection-4">
-        Taj Mahal
+        Script
       </Radio>
     </RadioGroup>
   );

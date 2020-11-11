@@ -48,7 +48,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
   children: {
     type: 'text',
-    default: 'Button',
+    default: 'Edit',
     label: 'Children',
   },
 };

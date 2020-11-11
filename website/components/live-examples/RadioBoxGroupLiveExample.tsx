@@ -1,6 +1,5 @@
 import React from 'react';
 import { css } from 'emotion';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { RadioBoxGroup, RadioBox, Size } from '@leafygreen-ui/radio-box-group';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 
@@ -26,29 +25,27 @@ const knobsConfig: KnobsConfigInterface<Knobs> = {
   },
   children: {
     type: 'text',
-    default: 'Option Two',
+    default: 'Mumbai (ap-south-1)',
     label: 'Children',
   },
 };
 
 function DefaultExample({ size, disabled, children }: Knobs) {
   return (
-    <LeafyGreenProvider>
-      <div
-        className={css`
-          width: 100%;
-          padding: 2rem;
-        `}
-      >
-        <RadioBoxGroup size={size} name="radio-box-group-default">
-          <RadioBox value="1">Option One</RadioBox>
-          <RadioBox value="2">{children}</RadioBox>
-          <RadioBox disabled={disabled} value="option-4">
-            Disabled Option
-          </RadioBox>
-        </RadioBoxGroup>
-      </div>
-    </LeafyGreenProvider>
+    <div
+      className={css`
+        width: 100%;
+        padding: 2rem;
+      `}
+    >
+      <RadioBoxGroup size={size} name="radio-box-group-default">
+        <RadioBox value="1">N. Virginia (us-east-1)</RadioBox>
+        <RadioBox value="2">{children}</RadioBox>
+        <RadioBox disabled={disabled} value="option-4">
+          Ireland (eu-west-1)
+        </RadioBox>
+      </RadioBoxGroup>
+    </div>
   );
 }
 

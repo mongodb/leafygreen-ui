@@ -12,12 +12,12 @@ const knobsConfig: KnobsConfigInterface<{
 }> = {
   label: {
     type: 'text',
-    default: 'Text Area Label',
+    default: 'Name',
     label: 'Label',
   },
   description: {
     type: 'text',
-    default: 'This is the description for the text area',
+    default: 'This is the name of your function. You can use this name to call your function from a client.',
     label: 'Description',
   },
   disabled: {
@@ -38,7 +38,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
   errorMessage: {
     type: 'text',
-    default: 'This is an error message',
+    default: 'Not a valid name, please try again',
     label: 'Error Message',
   },
 };

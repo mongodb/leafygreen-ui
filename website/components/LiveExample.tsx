@@ -1,62 +1,65 @@
 import React from 'react';
-import BadgeLiveExample from './live-examples/BadgeLiveExample';
-import BannerLiveExample from './live-examples/BannerLiveExample';
-import BoxLiveExample from './live-examples/BoxLiveExample';
-import ButtonLiveExample from './live-examples/ButtonLiveExample';
-import CalloutLiveExample from './live-examples/CalloutLiveExample';
-import CardLiveExample from './live-examples/CardLiveExample';
-import CheckboxLiveExample from './live-examples/CheckboxLiveExample';
-import CodeLiveExample from './live-examples/CodeLiveExample';
-import ConfirmationModalLiveExample from './live-examples/ConfirmationModalLiveExample';
-import CopyableLiveExample from './live-examples/CopyableLiveExample';
-import IconButtonLiveExample from './live-examples/IconButtonLiveExample';
-import IconLiveExample from './live-examples/IconLiveExample';
-import InlineDefinitionLiveExample from './live-examples/InlineDefinitionLiveExample';
-import LogoLiveExample from './live-examples/LogoLiveExample';
-import MarketingModalLiveExample from './live-examples/MarketingModalLiveExample';
-import MenuLiveExample from './live-examples/MenuLiveExample';
-import ModalLiveExample from './live-examples/ModalLiveExample';
-import MongoNavLiveExample from './live-examples/MongoNavLiveExample';
-import PaletteLiveExample from './live-examples/PaletteLiveExample';
-import PipelineLiveExample from './live-examples/PipelineLiveExample';
-import PopoverLiveExample from './live-examples/PopoverLiveExample';
-import RadioBoxGroupLiveExample from './live-examples/RadioBoxGroupLiveExample';
-import RadioGroupLiveExample from './live-examples/RadioGroupLiveExample';
-import SideNavLiveExample from './live-examples/SideNavLiveExample';
-import StepperLiveExample from './live-examples/StepperLiveExample';
-import SyntaxLiveExample from './live-examples/SyntaxLiveExample';
-import TableLiveExample from './live-examples/TableLiveExample';
-import TabsLiveExample from './live-examples/TabsLiveExample';
-import TextAreaLiveExample from './live-examples/TextAreaLiveExample';
-import TextInputLiveExample from './live-examples/TextInputLiveExample';
-import ToastLiveExample from './live-examples/ToastLiveExample';
-import ToggleLiveExample from './live-examples/ToggleLiveExample';
-import TooltipLiveExample from './live-examples/TooltipLiveExample';
-import TypographyLiveExample from './live-examples/TypographyLiveExample';
+import BadgeLiveExample from 'components/live-examples/BadgeLiveExample';
+import BannerLiveExample from 'components/live-examples/BannerLiveExample';
+import BoxLiveExample from 'components/live-examples/BoxLiveExample';
+import ButtonLiveExample from 'components/live-examples/ButtonLiveExample';
+import CalloutLiveExample from 'components/live-examples/CalloutLiveExample';
+import CardLiveExample from 'components/live-examples/CardLiveExample';
+import CheckboxLiveExample from 'components/live-examples/CheckboxLiveExample';
+import CodeLiveExample from 'components/live-examples/CodeLiveExample';
+import ConfirmationModalLiveExample from 'components/live-examples/ConfirmationModalLiveExample';
+import CopyableLiveExample from 'components/live-examples/CopyableLiveExample';
+import IconButtonLiveExample from 'components/live-examples/IconButtonLiveExample';
+import IconLiveExample from 'components/live-examples/IconLiveExample';
+import InlineDefinitionLiveExample from 'components/live-examples/InlineDefinitionLiveExample';
+import LogoLiveExample from 'components/live-examples/LogoLiveExample';
+import MarketingModalLiveExample from 'components/live-examples/MarketingModalLiveExample';
+import MenuLiveExample from 'components/live-examples/MenuLiveExample';
+import ModalLiveExample from 'components/live-examples/ModalLiveExample';
+import MongoNavLiveExample from 'components/live-examples/MongoNavLiveExample';
+import PaletteLiveExample from 'components/live-examples/PaletteLiveExample';
+import PipelineLiveExample from 'components/live-examples/PipelineLiveExample';
+import PopoverLiveExample from 'components/live-examples/PopoverLiveExample';
+import PortalLiveExample from 'components/live-examples/PortalLiveExample';
+import RadioBoxGroupLiveExample from 'components/live-examples/RadioBoxGroupLiveExample';
+import RadioGroupLiveExample from 'components/live-examples/RadioGroupLiveExample';
+import SideNavLiveExample from 'components/live-examples/SideNavLiveExample';
+import StepperLiveExample from 'components/live-examples/StepperLiveExample';
+import SyntaxLiveExample from 'components/live-examples/SyntaxLiveExample';
+import TableLiveExample from 'components/live-examples/TableLiveExample';
+import TabsLiveExample from 'components/live-examples/TabsLiveExample';
+import TextAreaLiveExample from 'components/live-examples/TextAreaLiveExample';
+import TextInputLiveExample from 'components/live-examples/TextInputLiveExample';
+import ToastLiveExample from 'components/live-examples/ToastLiveExample';
+import ToggleLiveExample from 'components/live-examples/ToggleLiveExample';
+import TokensLiveExample from 'components/live-examples/TokensLiveExample';
+import TooltipLiveExample from 'components/live-examples/TooltipLiveExample';
+import TypographyLiveExample from 'components/live-examples/TypographyLiveExample';
 import Components from 'utils/components';
 
 const map: Record<Components, React.FC> = {
   badge: BadgeLiveExample,
   banner: BannerLiveExample,
-  box: BoxLiveExample,
+  box: BoxLiveExample, // come back to me
   button: ButtonLiveExample,
   callout: CalloutLiveExample,
-  card: CardLiveExample,
+  card: CardLiveExample, // come back to me
   checkbox: CheckboxLiveExample,
   code: CodeLiveExample,
-  ['confirmation-modal']: ConfirmationModalLiveExample,
+  ['confirmation-modal']: ConfirmationModalLiveExample, // come back to me
   copyable: CopyableLiveExample,
   ['icon-button']: IconButtonLiveExample,
   icon: IconLiveExample,
   ['inline-definition']: InlineDefinitionLiveExample,
   logo: LogoLiveExample,
-  ['marketing-modal']: MarketingModalLiveExample,
+  ['marketing-modal']: MarketingModalLiveExample, // fix image load
   menu: MenuLiveExample,
   modal: ModalLiveExample,
   ['mongo-nav']: MongoNavLiveExample,
   palette: PaletteLiveExample,
   pipeline: PipelineLiveExample,
-  popover: PopoverLiveExample,
+  popover: PopoverLiveExample, // broken
+  portal: PortalLiveExample, // broken
   ['radio-box-group']: RadioBoxGroupLiveExample,
   ['radio-group']: RadioGroupLiveExample,
   ['side-nav']: SideNavLiveExample,
@@ -68,12 +71,13 @@ const map: Record<Components, React.FC> = {
   ['text-input']: TextInputLiveExample,
   toast: ToastLiveExample,
   toggle: ToggleLiveExample,
+  tokens: TokensLiveExample,
   tooltip: TooltipLiveExample,
   typography: TypographyLiveExample,
 };
 
-export default function LiveExample({ component }: { component: string }) {
-  const Component = map?.[component] ? map[component] : <div>hi</div>;
+export default function LiveExample({ component }: { component: Components }) {
+  const Component = map[component] ? map[component] : <div>hi</div>;
 
   return <Component />;
 }

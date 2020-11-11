@@ -1,6 +1,5 @@
 import React from 'react';
 import { css, cx } from 'emotion';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import { spacing } from '@leafygreen-ui/tokens';
 import {
@@ -29,15 +28,8 @@ const margin = css`
 const knobsConfig: KnobsConfigInterface<{
   weight: 'regular' | 'medium';
   arrowAppearance: 'hover' | 'persist' | 'none';
-  baseFontSize: 14 | 16;
   href: string;
 }> = {
-  baseFontSize: {
-    type: 'select',
-    options: [14, 16],
-    default: 14,
-    label: 'Base Font Size',
-  },
   weight: {
     type: 'select',
     options: ['medium', 'regular'],
@@ -64,8 +56,8 @@ const knobsConfig: KnobsConfigInterface<{
 export default function TypographyLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {({ weight, href, arrowAppearance, baseFontSize }) => (
-        <LeafygreenProvider baseFontSize={baseFontSize}>
+      {({ weight, href, arrowAppearance }) => {
+        return (
           <div>
             <H1 className={margin}>Heading 1</H1>
             <H2 className={margin}>Heading 2</H2>
@@ -98,8 +90,8 @@ export default function TypographyLiveExample() {
               This is the description for said label
             </Description>
           </div>
-        </LeafygreenProvider>
-      )}
+        );
+      }}
     </LiveExample>
   );
 }

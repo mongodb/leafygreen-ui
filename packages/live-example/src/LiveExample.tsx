@@ -172,7 +172,9 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
         >
           {children(props)}
         </div>
-        <div className={knobContainer}>{renderKnobs()}</div>
+        {Object.keys(knobsConfig).length > 0 && (
+          <div className={knobContainer}>{renderKnobs()}</div>
+        )}
       </Card>
     </div>
   );

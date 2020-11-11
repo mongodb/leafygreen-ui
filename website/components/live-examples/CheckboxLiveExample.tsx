@@ -27,7 +27,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
   label: {
     type: 'text',
-    default: 'I agree to this thing',
+    default: 'Insert',
     label: 'Label',
   },
   bold: {

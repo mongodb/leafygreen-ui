@@ -1,7 +1,6 @@
 import React from 'react';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 // When interface is used, ts complains that index signature is missing
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
@@ -16,7 +15,7 @@ type Knobs = {
 const knobsConfig: KnobsConfigInterface<Knobs> = {
   header: {
     type: 'text',
-    default: 'Header',
+    default: 'Organization',
     label: 'Header',
   },
   active: {
@@ -36,7 +35,7 @@ const knobsConfig: KnobsConfigInterface<Knobs> = {
   },
   children: {
     type: 'text',
-    default: 'Text!',
+    default: 'Admin',
     label: 'children',
   },
 };
@@ -49,19 +48,22 @@ function DefaultExample({
   children,
 }: Knobs) {
   return (
-    <LeafyGreenProvider>
-      <SideNav>
-        <SideNavGroup
-          header={header}
-          collapsible={collapsible}
-          initialCollapsed={false}
-        >
-          <SideNavItem active={active}>Active State</SideNavItem>
-          <SideNavItem disabled={disabled}>Disabled State</SideNavItem>
-          <SideNavItem>{children}</SideNavItem>
-        </SideNavGroup>
-      </SideNav>
-    </LeafyGreenProvider>
+    <SideNav>
+      <SideNavGroup
+        header={header}
+        collapsible={collapsible}
+        initialCollapsed={false}
+      >
+        <SideNavItem active={active}>Projects</SideNavItem>
+        <SideNavItem disabled={disabled}>Alerts</SideNavItem>
+        <SideNavItem>Activity Feed</SideNavItem>
+        <SideNavItem>Settings</SideNavItem>
+        <SideNavItem>Access Manager</SideNavItem>
+        <SideNavItem>Billing</SideNavItem>
+        <SideNavItem>Support</SideNavItem>
+        <SideNavItem>{children}</SideNavItem>
+      </SideNavGroup>
+    </SideNav>
   );
 }
 

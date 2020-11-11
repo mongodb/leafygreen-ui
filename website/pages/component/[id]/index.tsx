@@ -61,7 +61,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const { id } = params;
 
-  const props: Partial<BaseLayoutProps> = { component: id };
+  const props: Partial<BaseLayoutProps> = {
+    component: id as BaseLayoutProps['component'],
+  };
 
   let changelogMarkdown: '' | Buffer = '';
   let readmeMarkdown = '';

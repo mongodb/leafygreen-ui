@@ -5,9 +5,6 @@ import Toast, { Variant } from '@leafygreen-ui/toast';
 const knobsConfig: KnobsConfigInterface<{
   variant: Variant;
   progress: number;
-  title: string;
-  body: string;
-  open: boolean;
   close: boolean;
 }> = {
   variant: {
@@ -21,21 +18,6 @@ const knobsConfig: KnobsConfigInterface<{
     default: 1,
     label: 'Progress',
   },
-  title: {
-    type: 'text',
-    default: 'Exercitation incididunt ea proident velit mollit',
-    label: 'Title',
-  },
-  body: {
-    type: 'text',
-    default: 'Velit ea exercitation qui aute dolor proident.',
-    label: 'Body',
-  },
-  open: {
-    type: 'boolean',
-    default: true,
-    label: 'Open',
-  },
   close: {
     type: 'boolean',
     default: false,
@@ -44,14 +26,23 @@ const knobsConfig: KnobsConfigInterface<{
 };
 
 export default function ToastLiveExample() {
+  const [open, setOpen] = React.useState(false)
+
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {({ progress, close, ...rest }) => (
-        <Toast
-          progress={progress}
-          close={close ? () => {} : undefined}
-          {...rest}
-        />
+      {({ variant, progress, close, ...rest }) => (
+        <>
+          <button onClick={() => setOpen(curr => !curr)}>Trigger toast</button>
+          <Toast
+            progress={progress}
+            close={close ? () => { } : undefined}
+            open={open}
+            variant={variant}
+            body={variant === 'success' ? 'You have successfully linked your MongoDB account LeafyCorp to your GCP account.' : 'Currently: capturing backup snapshot'}
+            title={variant === 'success' ? 'Success!' : 'Deploying your change.'}
+            {...rest}
+          />
+        </>
       )}
     </LiveExample>
   );

@@ -15,12 +15,12 @@ const knobsConfig: KnobsConfigInterface<{
 }> = {
   label: {
     type: 'text',
-    default: 'Text Input Label',
+    default: 'Name Your Team',
     label: 'Label',
   },
   description: {
     type: 'text',
-    default: 'This is the description for the text input',
+    default: 'Team names have to be unique within the organization',
     label: 'Description',
   },
   optional: {
@@ -35,7 +35,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
   placeholder: {
     type: 'text',
-    default: 'This is some placeholder text',
+    default: 'Team name',
     label: 'Placeholder',
   },
   state: {
@@ -57,7 +57,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
   errorMessage: {
     type: 'text',
-    default: 'This is an error message',
+    default: 'The team name that you entered is not unique, please pick another',
     label: 'Error Message',
   },
 };

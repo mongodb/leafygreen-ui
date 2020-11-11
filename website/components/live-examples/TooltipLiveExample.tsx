@@ -50,8 +50,8 @@ export default function TooltipLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => (
-        <Tooltip {...props} trigger={<Button>trigger</Button>}>
-          I am a tooltip!
+        <Tooltip {...props} trigger={<Button>Linked Data Sources</Button>}>
+          Your clusters and data lakes.
         </Tooltip>
       )}
     </LiveExample>

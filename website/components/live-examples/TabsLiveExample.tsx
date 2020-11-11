@@ -1,6 +1,6 @@
 import React from 'react';
+import { css } from 'emotion'
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Tab, Tabs } from '@leafygreen-ui/tabs';
 
 const knobsConfig: KnobsConfigInterface<{
@@ -21,13 +21,13 @@ const knobsConfig: KnobsConfigInterface<{
   },
   name: {
     type: 'text',
-    default: 'Lorem Ipsum',
+    default: 'Users',
     label: 'Name',
   },
   children: {
     type: 'text',
     default:
-      'Enim praesent elementum facilisis leo. Magnis dis parturient montes nascetur.',
+      'Find a user',
     label: 'Children',
   },
 };
@@ -36,19 +36,19 @@ export default function TabsLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {({ children, name, disabled, darkMode }) => (
-        <LeafyGreenProvider>
+        <div className={css`min-width: 400px`}>
           <Tabs darkMode={darkMode}>
             <Tab default disabled={disabled} name={name}>
               {children}
             </Tab>
-            <Tab name="Qui officia deserunt mollit">
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            <Tab name="Teams">
+              Grant teams of users access to projects
             </Tab>
-            <Tab name="Vulputate mi sit amet">
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
+            <Tab name="API Keys">
+              Manage your infrastructure in code
             </Tab>
           </Tabs>
-        </LeafyGreenProvider>
+        </div>
       )}
     </LiveExample>
   );
