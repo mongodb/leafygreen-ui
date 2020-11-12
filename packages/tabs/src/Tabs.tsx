@@ -158,7 +158,7 @@ function Tabs({
         const [enabledIndexes, current] = getEnabledIndexes();
         setSelected(
           enabledIndexes[
-          (current - 1 + enabledIndexes.length) % enabledIndexes.length
+            (current - 1 + enabledIndexes.length) % enabledIndexes.length
           ],
         );
       }
@@ -188,7 +188,7 @@ function Tabs({
       >
         {tabs?.map((tab, index) => {
           if (!isComponentType(tab, 'Tab')) {
-            return tab
+            return tab;
           }
 
           const { selected, disabled, ...rest } = tab.props;
