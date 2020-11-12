@@ -6,7 +6,7 @@ import ConfirmationModal, { Variant } from '.';
 function Confirm() {
   const [open, setOpen] = useState(false);
   const buttonText = text('Primary action text', 'Confirm');
-  const submitDisabled = boolean('submitDisabled', false)
+  const submitDisabled = boolean('submitDisabled', false);
   const requiredInputText = boolean('Require confirmation', false)
     ? text('Confirmation text', 'confirm')
     : undefined;
@@ -35,7 +35,7 @@ function Confirm() {
 function Delete() {
   const [open, setOpen] = useState(false);
   const buttonText = text('Primary action text', 'Confirm');
-  const submitDisabled = boolean('submitDisabled', false)
+  const submitDisabled = boolean('submitDisabled', false);
   const requiredInputText = boolean('Require confirmation', false)
     ? text('Confirmation text', 'confirm')
     : undefined;

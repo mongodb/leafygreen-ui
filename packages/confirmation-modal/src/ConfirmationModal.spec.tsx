@@ -156,6 +156,6 @@ describe('packages/confirmation-modal', () => {
 
       const confirmationButton = getByText('Confirm').closest('button');
       expect(confirmationButton).toBeDisabled();
-    })
-  })
+    });
+  });
 });
