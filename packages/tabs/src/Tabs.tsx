@@ -60,11 +60,13 @@ const disabledStyle = css`
   cursor: not-allowed;
 `;
 
+type ReactEmpty = null | undefined | false | '';
+
 interface TabsProps {
   /**
    * Content that will appear inside of Tabs component. Should be comprised of at least two Tabs.
    */
-  children: Array<React.ReactElement>;
+  children: Array<React.ReactElement | ReactEmpty>;
 
   /**
    * Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
@@ -156,7 +158,7 @@ function Tabs({
         const [enabledIndexes, current] = getEnabledIndexes();
         setSelected(
           enabledIndexes[
-            (current - 1 + enabledIndexes.length) % enabledIndexes.length
+          (current - 1 + enabledIndexes.length) % enabledIndexes.length
           ],
         );
       }
@@ -184,7 +186,9 @@ function Tabs({
         role="tablist"
         tabIndex={0}
       >
-        {tabs.map((tab, index) => {
+        {tabs?.map((tab, index) => {
+          if (!tab) return null
+
           const { selected, disabled, ...rest } = tab.props;
 
           const filteredRest = omit(rest, [
