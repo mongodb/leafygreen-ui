@@ -77,7 +77,7 @@ const map: Record<Components, React.FC> = {
 };
 
 export default function LiveExample({ component }: { component: Components }) {
-  const Component = map[component] // Provide fallback if doesn't exist
+  const Component = map[component]; // Provide fallback if doesn't exist
 
   return <Component />;
 }

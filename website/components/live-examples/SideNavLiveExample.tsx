@@ -47,19 +47,18 @@ function DefaultExample({
   collapsible,
   children,
 }: Knobs) {
-  const collapsibleProps = collapsible ? {
-    collapsible: true,
-    initialCollapsed: false
-  } as const : {
-    collapsible: false
-  } as const
+  const collapsibleProps = collapsible
+    ? ({
+        collapsible: true,
+        initialCollapsed: false,
+      } as const)
+    : ({
+        collapsible: false,
+      } as const);
 
   return (
     <SideNav>
-      <SideNavGroup
-        {...collapsibleProps}
-        header={header}
-      >
+      <SideNavGroup {...collapsibleProps} header={header}>
         <SideNavItem active={active}>Projects</SideNavItem>
         <SideNavItem disabled={disabled}>Alerts</SideNavItem>
         <SideNavItem>Activity Feed</SideNavItem>
