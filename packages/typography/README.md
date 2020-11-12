@@ -123,9 +123,10 @@ All props extend the HTMLElementProps of their root tag, however `<Body />` and 
 
 # Label
 
-| Prop       | Type      | Description                                      | Default |
-| ---------- | --------- | ------------------------------------------------ | ------- |
-| `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
+| Prop       | Type      | Description                                             | Default |
+| ---------- | --------- | ------------------------------------------------------- | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode        | `false` |
+| `disabled` | `boolean` | Determines whether the component should appear disabled | `false` |
 
 # Description
 

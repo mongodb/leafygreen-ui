@@ -20,10 +20,16 @@
       "path": "../icon"
     },
     {
+      "path": "../interaction-ring"
+    },
+    {
       "path": "../leafygreen-provider"
     },
     {
       "path": "../palette"
+    },
+    {
+      "path": "../typography"
     }
   ]
 }

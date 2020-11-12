@@ -7,6 +7,7 @@ import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
+import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { createDataProp } from '@leafygreen-ui/lib';
 import {
   Menu,
@@ -17,7 +18,6 @@ import {
 
 // mongo-nav
 import { mq } from '../breakpoints';
-import { InteractionRingWrapper } from '../helpers';
 import { useOnElementClick } from '../on-element-click-provider';
 import { textLoadingStyle, iconLoadingStyle } from '../styles';
 import {
@@ -71,25 +71,22 @@ const projectTriggerStyle = css`
   }
 `;
 
-const projectTriggerWrapperStyle = css`
+const emptyStateStyle = css`
+  font-size: 14px;
+  padding: 4px 8px;
+  margin-bottom: 20px;
+`;
+
+const interactionRingStyle = css`
   margin-left: 16px;
   margin-right: 2px;
-  z-index: 1;
 
   ${mq({
     marginLeft: ['16px', '0px', '16px'],
   })}
 `;
 
-const projectTriggerRingStyle = css`
-  border-radius: 7px;
-`;
-
-const emptyStateStyle = css`
-  font-size: 14px;
-  padding: 4px 8px;
-  margin-bottom: 20px;
-`;
+const interactionRingBorderRadius = '5px';
 
 // types
 interface ProjectMongoSelectProps extends BaseMongoSelectProps {
@@ -234,102 +231,109 @@ function ProjectSelect({
     );
   };
 
+  const [buttonElement, setButtonElement] = useState<HTMLElement | null>(null);
+
   const CurrentIcon = open ? CaretUpIcon : CaretDownIcon;
 
   return (
-    <InteractionRingWrapper
-      selector={projectTriggerDataProp.selector}
-      className={projectTriggerWrapperStyle}
-      ringClassName={projectTriggerRingStyle}
+    <InteractionRing
+      className={interactionRingStyle}
+      borderRadius={interactionRingBorderRadius}
+      focusedElement={buttonElement}
+      forceState={{ hovered: open ? false : undefined }}
+      disabled={loading}
     >
-      <button
-        {...rest}
-        {...projectTriggerDataProp.prop}
-        onClick={onElementClick(
-          NavElement.ProjectNavProjectSelectTrigger,
-          toggleOpen,
-        )}
-        data-testid="project-select-trigger"
-        className={cx(
-          baseButtonStyle,
-          projectTriggerStyle,
-          {
-            [activeButtonStyle]: open,
-            [textLoadingStyle]: loading,
-          },
-          className,
-        )}
-        disabled={loading}
-        aria-disabled={loading}
-      >
-        <FolderIcon
-          className={cx(iconColorStyle, { [iconLoadingStyle]: loading })}
-        />
-        <span
-          className={cx(selectedStyle, { [textLoadingStyle]: loading })}
-          data-testid="project-select-active-project"
+      <div>
+        <button
+          {...rest}
+          {...projectTriggerDataProp.prop}
+          ref={setButtonElement}
+          onClick={onElementClick(
+            NavElement.ProjectNavProjectSelectTrigger,
+            toggleOpen,
+          )}
+          data-testid="project-select-trigger"
+          className={cx(
+            baseButtonStyle,
+            projectTriggerStyle,
+            {
+              [activeButtonStyle]: open,
+              [textLoadingStyle]: loading,
+            },
+            className,
+          )}
+          disabled={loading}
+          aria-disabled={loading}
         >
-          {current?.projectName ?? ''}
-        </span>
-
-        <CurrentIcon
-          size="small"
-          className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
-        />
-      </button>
-      <Menu
-        usePortal={false}
-        className={menuContainerStyle}
-        justify="start"
-        spacing={0}
-        open={open}
-        setOpen={toggleOpen}
-        data-testid="project-select-project-list"
-      >
-        <FocusableMenuItem>
-          <Input
-            data-testid="project-filter-input"
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-            variant="project"
-            value={value}
+          <FolderIcon
+            className={cx(iconColorStyle, { [iconLoadingStyle]: loading })}
           />
-        </FocusableMenuItem>
+          <span
+            className={cx(selectedStyle, { [textLoadingStyle]: loading })}
+            data-testid="project-select-active-project"
+          >
+            {current?.projectName ?? ''}
+          </span>
 
-        <ul className={ulStyle}>
-          {isAdminSearch && isFetching && (
-            <li className={emptyStateStyle}>Searching...</li>
-          )}
-          {isAdminSearch && !isFetching && renderedData.length === 0 && (
-            <li className={emptyStateStyle}>No matches found</li>
-          )}
-          {renderedData?.map(renderProjectOption)}
-        </ul>
-
-        <MenuSeparator />
-
-        <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
+          <CurrentIcon
+            size="small"
+            className={cx(caretBaseStyle, { [iconLoadingStyle]: loading })}
+          />
+        </button>
+        <Menu
+          usePortal={false}
+          className={menuContainerStyle}
+          justify="start"
+          spacing={0}
+          open={open}
+          setOpen={toggleOpen}
+          data-testid="project-select-project-list"
+        >
           <FocusableMenuItem>
-            <Button
-              href={urls.viewAllProjects as string}
-              data-testid="project-select-view-all-projects"
-              onClick={onElementClick(NavElement.ProjectNavViewAllProjects)}
-            >
-              View All Projects
-            </Button>
+            <Input
+              data-testid="project-filter-input"
+              onChange={onChange}
+              onKeyDown={onKeyDown}
+              variant="project"
+              value={value}
+            />
           </FocusableMenuItem>
-          <FocusableMenuItem>
-            <Button
-              href={urls.newProject as string}
-              data-testid="project-select-add-new-project"
-              onClick={onElementClick(NavElement.ProjectNavAddProject)}
-            >
-              + New Project
-            </Button>
-          </FocusableMenuItem>
-        </li>
-      </Menu>
-    </InteractionRingWrapper>
+
+          <ul className={ulStyle}>
+            {isAdminSearch && isFetching && (
+              <li className={emptyStateStyle}>Searching...</li>
+            )}
+            {isAdminSearch && !isFetching && renderedData.length === 0 && (
+              <li className={emptyStateStyle}>No matches found</li>
+            )}
+            {renderedData?.map(renderProjectOption)}
+          </ul>
+
+          <MenuSeparator />
+
+          <li onKeyDown={onKeyDown} role="none" className={projectButtonStyle}>
+            <FocusableMenuItem>
+              <Button
+                href={urls.viewAllProjects as string}
+                data-testid="project-select-view-all-projects"
+                onClick={onElementClick(NavElement.ProjectNavViewAllProjects)}
+              >
+                View All Projects
+              </Button>
+            </FocusableMenuItem>
+            <FocusableMenuItem>
+              <Button
+                href={urls.newProject as string}
+                data-testid="project-select-add-new-project"
+                onClick={onElementClick(NavElement.ProjectNavAddProject)}
+              >
+                + New Project
+              </Button>
+            </FocusableMenuItem>
+          </li>
+        </Menu>
+      </div>
+    </InteractionRing>
   );
 }
 

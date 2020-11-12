@@ -4,16 +4,16 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
+import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { uiColors } from '@leafygreen-ui/palette';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   createDataProp,
   HTMLElementProps,
   Either,
   IdAllocator,
 } from '@leafygreen-ui/lib';
+import { Description, Label } from '@leafygreen-ui/typography';
 
-const inputSelectorProp = createDataProp('input-selector');
 const iconSelectorProp = createDataProp('icon-selector');
 
 export const State = {
@@ -111,37 +111,13 @@ interface BaseTextInputProps extends HTMLElementProps<'input'> {
 type AriaLabels = 'label' | 'aria-labelledby';
 type TextInputProps = Either<BaseTextInputProps, AriaLabels>;
 
-const interactionRing = css`
-  transition: all 150ms ease-in-out;
-  transform: scale(0.9, 0.8);
-  border-radius: 7px;
-  position: absolute;
-  top: -3px;
-  bottom: -3px;
-  left: -3px;
-  right: -3px;
-  pointer-events: none;
+const interactionRingStyle = css`
+  width: 100%;
 `;
 
 const textInputStyle = css`
   display: flex;
   flex-direction: column;
-`;
-
-const labelStyle = css`
-  font-size: 14px;
-  font-weight: bold;
-  line-height: 16px;
-  padding-bottom: 4px;
-`;
-
-const descriptionStyle = css`
-  font-size: 14px;
-  line-height: 16px;
-  font-weight: normal;
-  padding-bottom: 4px;
-  margin-top: 0px;
-  margin-bottom: 0px;
 `;
 
 const inputContainerStyle = css`
@@ -161,13 +137,13 @@ const inputStyle = css`
   font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
   border: 1px solid;
   z-index: 1;
+  outline: none;
 
   &::placeholder {
     color: ${uiColors.gray.base};
   }
 
   &:focus {
-    outline: none;
     z-index: 2;
     border-color: #9dd0e7;
     transition: border-color 150ms ease-in-out;
@@ -179,19 +155,6 @@ const inputStyle = css`
 
   &:disabled {
     cursor: not-allowed;
-  }
-`;
-
-const interactionRingFocusStyle = css`
-  ${inputSelectorProp.selector}:focus ~ & {
-    transform: scale(1);
-    z-index: 1;
-  }
-`;
-
-const interactionRingHoverStyle = css`
-  ${inputSelectorProp.selector}:hover ~ & {
-    transform: scale(1);
   }
 `;
 
@@ -222,11 +185,6 @@ const errorMessageStyle = css`
 `;
 
 interface ColorSets {
-  interactionRing: string;
-  interactionRingFocus: string;
-  labelColor: string;
-  disabledLabelColor: string;
-  descriptionColor: string;
   inputColor: string;
   inputBackgroundColor: string;
   disabledColor: string;
@@ -241,11 +199,6 @@ interface ColorSets {
 
 const colorSets: Record<Mode, ColorSets> = {
   [Mode.Light]: {
-    interactionRing: uiColors.gray.light2,
-    interactionRingFocus: '#9dd0e7',
-    labelColor: uiColors.gray.dark2,
-    disabledLabelColor: uiColors.gray.dark1,
-    descriptionColor: uiColors.gray.dark1,
     inputColor: uiColors.gray.dark3,
     inputBackgroundColor: uiColors.white,
     disabledColor: uiColors.gray.base,
@@ -258,11 +211,6 @@ const colorSets: Record<Mode, ColorSets> = {
     validBorder: uiColors.green.base,
   },
   [Mode.Dark]: {
-    interactionRing: uiColors.gray.dark1,
-    interactionRingFocus: uiColors.blue.base,
-    labelColor: uiColors.white,
-    disabledLabelColor: uiColors.gray.light1,
-    descriptionColor: uiColors.gray.light1,
     inputColor: uiColors.white,
     inputBackgroundColor: '#394F5A',
     disabledColor: uiColors.gray.dark1,
@@ -356,7 +304,6 @@ const TextInput = React.forwardRef(
     const isControlled = typeof controlledValue === 'string';
     const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
-    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const id = useMemo(() => propsId ?? idAllocator.generate(), [propsId]);
 
     function onValueChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -382,63 +329,48 @@ const TextInput = React.forwardRef(
     return (
       <div className={cx(textInputStyle, className)}>
         {label && (
-          <label
-            htmlFor={id}
-            className={cx(
-              labelStyle,
-              css`
-                color: ${disabled
-                  ? colorSets[mode].disabledLabelColor
-                  : colorSets[mode].labelColor};
-              `,
-            )}
-          >
+          <Label htmlFor={id} disabled={disabled}>
             {label}
-          </label>
+          </Label>
         )}
-        {description && (
-          <p
-            className={cx(
-              descriptionStyle,
-              css`
-                color: ${colorSets[mode].descriptionColor};
-              `,
-            )}
-          >
-            {description}
-          </p>
-        )}
+        {description && <Description>{description}</Description>}
         <div className={inputContainerStyle}>
-          <input
-            {...inputSelectorProp.prop}
-            {...rest}
-            aria-labelledby={ariaLabelledBy}
-            type={type}
-            className={cx(
-              inputStyle,
-              css`
-                color: ${colorSets[mode].inputColor};
-                background-color: ${colorSets[mode].inputBackgroundColor};
-
-                &:focus {
-                  border: 1px solid ${colorSets[mode].inputBackgroundColor};
-                }
-
-                &:disabled {
-                  color: ${colorSets[mode].disabledColor};
-                  background-color: ${colorSets[mode].disabledBackgroundColor};
-                }
-              `,
-              { [getStatefulInputStyles(state, optional, mode)]: !disabled },
-            )}
-            value={value}
-            required={!optional}
+          <InteractionRing
+            className={interactionRingStyle}
+            darkMode={darkMode}
             disabled={disabled}
-            placeholder={placeholder}
-            onChange={onValueChange}
-            ref={forwardRef}
-            id={id}
-          />
+          >
+            <input
+              {...rest}
+              aria-labelledby={ariaLabelledBy}
+              type={type}
+              className={cx(
+                inputStyle,
+                css`
+                  color: ${colorSets[mode].inputColor};
+                  background-color: ${colorSets[mode].inputBackgroundColor};
+
+                  &:focus {
+                    border: 1px solid ${colorSets[mode].inputBackgroundColor};
+                  }
+
+                  &:disabled {
+                    color: ${colorSets[mode].disabledColor};
+                    background-color: ${colorSets[mode]
+                      .disabledBackgroundColor};
+                  }
+                `,
+                { [getStatefulInputStyles(state, optional, mode)]: !disabled },
+              )}
+              value={value}
+              required={!optional}
+              disabled={disabled}
+              placeholder={placeholder}
+              onChange={onValueChange}
+              ref={forwardRef}
+              id={id}
+            />
+          </InteractionRing>
           {!disabled && (
             <div {...iconSelectorProp.prop} className={inputIconStyle}>
               {state === State.Valid && (
@@ -466,25 +398,6 @@ const TextInput = React.forwardRef(
                 </div>
               )}
             </div>
-          )}
-          {!disabled && (
-            <div
-              className={cx(
-                interactionRing,
-                css`
-                  background-color: ${colorSets[mode].interactionRing};
-                `,
-                interactionRingHoverStyle,
-                {
-                  [interactionRingFocusStyle]: showFocus,
-                  [css`
-                    ${inputSelectorProp.selector}:focus ~ & {
-                      background-color: ${colorSets[mode].interactionRingFocus};
-                    }
-                  `]: showFocus,
-                },
-              )}
-            />
           )}
         </div>
         {!disabled && state === State.Error && errorMessage && (

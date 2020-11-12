@@ -11,6 +11,7 @@ type Mode = typeof Mode[keyof typeof Mode];
 
 interface ColorSets {
   labelColor: string;
+  disabledLabelColor: string;
   descriptionColor: string;
 }
 
@@ -19,6 +20,9 @@ const colorSets: Record<Mode, ColorSets> = {
     labelColor: css`
       color: ${uiColors.gray.dark2};
     `,
+    disabledLabelColor: css`
+      color: ${uiColors.gray.dark1};
+    `,
     descriptionColor: css`
       color: ${uiColors.gray.dark1};
     `,
@@ -26,6 +30,9 @@ const colorSets: Record<Mode, ColorSets> = {
   [Mode.Dark]: {
     labelColor: css`
       color: ${uiColors.white};
+    `,
+    disabledLabelColor: css`
+      color: ${uiColors.gray.light1};
     `,
     descriptionColor: css`
       color: ${uiColors.gray.light1};
@@ -43,19 +50,26 @@ const labelStyle = css`
 type LabelProps = JSX.IntrinsicElements['label'] & {
   darkMode?: boolean;
   htmlFor: string;
+  disabled?: boolean;
 };
 
 const Label = ({
   darkMode = false,
   className,
   children,
+  disabled = false,
   ...rest
 }: LabelProps) => {
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
   return (
     <label
-      className={cx(labelStyle, colorSets[mode].labelColor, className)}
+      className={cx(
+        labelStyle,
+        colorSets[mode].labelColor,
+        { [colorSets[mode].disabledLabelColor]: disabled },
+        className,
+      )}
       {...rest}
     >
       {children}

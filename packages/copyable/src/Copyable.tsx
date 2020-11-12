@@ -90,7 +90,9 @@ const buttonWrapperStyle = css`
   z-index: 1;
   right: 0;
   top: 0;
+`;
 
+const copyableButtonWrapperStyle = css`
   // Pseudo-element that gives the illusion of the button casting a shadow
   // that doesn't overflow the container. We can't set "overflow: hidden" on
   // on the container because the interaction rings of the button need to be
@@ -114,12 +116,6 @@ const buttonWrapperStyle = css`
 
 const buttonStyle = css`
   height: 100%;
-  border-radius: 0 4px 4px 0;
-
-  &:before,
-  &:after {
-    border-radius: 0 4px 4px 0;
-  }
 `;
 
 const iconStyle = css`
@@ -182,6 +178,7 @@ export default function Copyable({
         ref={setButtonRef}
         variant={buttonVariant}
         className={buttonStyle}
+        borderRadius="0 4px 4px 0;"
         onClick={() => setCopied(true)}
         {...buttonRestProps}
       >
@@ -261,7 +258,13 @@ export default function Copyable({
         >
           {children}
         </InlineCode>
-        <span className={cx(buttonWrapperStyle)}>{copyButton}</span>
+        <span
+          className={cx(buttonWrapperStyle, {
+            [copyableButtonWrapperStyle]: showCopyButton,
+          })}
+        >
+          {copyButton}
+        </span>
       </div>
     </>
   );

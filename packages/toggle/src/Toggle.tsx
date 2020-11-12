@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { createDataProp, IdAllocator } from '@leafygreen-ui/lib';
+import React, { useState, useMemo } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
+import InteractionRing from '@leafygreen-ui/interaction-ring';
+import { createDataProp, IdAllocator } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 
 export const Size = {
@@ -23,7 +24,6 @@ const toggleInput = createDataProp('toggle-input');
 const toggleGroove = createDataProp('toggle-groove');
 
 const transitionInMS = 150;
-export const interactionRingSize = 3;
 
 const inputStyle = css`
   position: absolute;
@@ -34,27 +34,6 @@ const inputStyle = css`
   width: 0;
   pointer-events: none;
   opacity: 0;
-`;
-
-// We use a div for the focus state rather than a pseudo-element
-// because said pseudo-element would need to be on the label element
-// which can't use the contained input's focus pseudo-class.
-const focusStateStyle = css`
-  transition: all ${transitionInMS}ms ease-in-out;
-  position: absolute;
-  top: -${interactionRingSize}px;
-  bottom: -${interactionRingSize}px;
-  left: -${interactionRingSize}px;
-  right: -${interactionRingSize}px;
-  border: ${interactionRingSize}px solid #63b0d0;
-  border-radius: 50px;
-  opacity: 0;
-  transform: scale(0.8);
-
-  ${toggleInput.selector}:focus ~ & {
-    opacity: 1;
-    transform: scale(1);
-  }
 `;
 
 interface StateForStyle {
@@ -148,7 +127,6 @@ const getGrooveStyles = ({ mode, checked, disabled }: StateForStyle) => {
   const baseStyle = css`
     transition: ${transitionInMS}ms all ease-in-out, 0 background-color linear;
     display: inline-block;
-    overflow: hidden;
     flex-shrink: 0;
     position: relative;
     border-radius: 50px;
@@ -428,38 +406,46 @@ function Toggle({
     mode: darkMode ? Mode.Dark : Mode.Light,
   });
 
+  const [inputElement, setInputElement] = useState<HTMLElement | null>(null);
+
   return (
-    <label
-      className={cx(statefulStyles.container, className)}
-      htmlFor={toggleId}
+    <InteractionRing
+      darkMode={darkMode}
+      disabled={disabled}
+      borderRadius="50px"
+      focusedElement={inputElement}
     >
-      <input
-        {...toggleInput.prop}
-        {...rest}
-        id={toggleId}
-        className={inputStyle}
-        type="checkbox"
-        name={name}
-        disabled={disabled}
-        aria-disabled={disabled}
-        checked={normalizedChecked}
-        aria-checked={normalizedChecked}
-        onChange={onChange}
-      />
+      <label
+        className={cx(statefulStyles.container, className)}
+        htmlFor={toggleId}
+      >
+        <input
+          {...toggleInput.prop}
+          {...rest}
+          ref={setInputElement}
+          id={toggleId}
+          className={inputStyle}
+          type="checkbox"
+          name={name}
+          disabled={disabled}
+          aria-disabled={disabled}
+          checked={normalizedChecked}
+          aria-checked={normalizedChecked}
+          onChange={onChange}
+        />
 
-      <div className={focusStateStyle} />
+        <div {...toggleGroove.prop} className={statefulStyles.groove}>
+          {size === 'default' && !disabled && (
+            <>
+              <div className={onLabelStyle}>On</div>
+              <div className={offLabelStyle}>Off</div>
+            </>
+          )}
 
-      <div {...toggleGroove.prop} className={statefulStyles.groove}>
-        {size === 'default' && !disabled && (
-          <>
-            <div className={onLabelStyle}>On</div>
-            <div className={offLabelStyle}>Off</div>
-          </>
-        )}
-
-        <div className={statefulStyles.slider} />
-      </div>
-    </label>
+          <div className={statefulStyles.slider} />
+        </div>
+      </label>
+    </InteractionRing>
   );
 }
 
