@@ -6,6 +6,7 @@ import ConfirmationModal, { Variant } from '.';
 function Confirm() {
   const [open, setOpen] = useState(false);
   const buttonText = text('Primary action text', 'Confirm');
+  const submitDisabled = boolean('submitDisabled', false)
   const requiredInputText = boolean('Require confirmation', false)
     ? text('Confirmation text', 'confirm')
     : undefined;
@@ -20,6 +21,7 @@ function Confirm() {
         title="Confirm Title Here"
         buttonText={buttonText}
         requiredInputText={requiredInputText}
+        submitDisabled={submitDisabled}
       >
         This is some description text, and it is extra long so it fills up this
         modal. Another thing about the modals here. This is some description
@@ -33,6 +35,7 @@ function Confirm() {
 function Delete() {
   const [open, setOpen] = useState(false);
   const buttonText = text('Primary action text', 'Confirm');
+  const submitDisabled = boolean('submitDisabled', false)
   const requiredInputText = boolean('Require confirmation', false)
     ? text('Confirmation text', 'confirm')
     : undefined;
@@ -48,6 +51,7 @@ function Delete() {
         buttonText={buttonText}
         variant={Variant.Danger}
         requiredInputText={requiredInputText}
+        submitDisabled={submitDisabled}
       >
         This is some description text, and it is extra long so it fills up this
         modal. Another thing about the modals here. This is some description

@@ -64,6 +64,7 @@ interface ConfirmationModalProps {
   buttonText: string;
   variant?: Variant;
   requiredInputText?: string;
+  submitDisabled?: boolean;
 }
 
 const ConfirmationModal = ({
@@ -71,6 +72,7 @@ const ConfirmationModal = ({
   title,
   requiredInputText,
   buttonText,
+  submitDisabled = false,
   variant = Variant.Default,
   onConfirm,
   onCancel,
@@ -111,7 +113,7 @@ const ConfirmationModal = ({
       <Footer>
         <Button
           variant={variant}
-          disabled={!confirmEnabled}
+          disabled={!confirmEnabled || submitDisabled}
           onClick={onConfirm}
           className={buttonStyle}
         >

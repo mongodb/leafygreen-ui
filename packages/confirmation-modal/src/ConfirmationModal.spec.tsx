@@ -146,4 +146,16 @@ describe('packages/confirmation-modal', () => {
       expect(confirmationButton).toBeDisabled();
     });
   });
+
+  describe('submit is disabled when', () => {
+    test('"submitDisabled" prop is set', () => {
+      const { getByText } = renderModal({
+        open: true,
+        submitDisabled: true,
+      });
+
+      const confirmationButton = getByText('Confirm').closest('button');
+      expect(confirmationButton).toBeDisabled();
+    })
+  })
 });
