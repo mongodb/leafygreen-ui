@@ -18,7 +18,6 @@ const knobsConfig: KnobsConfigInterface<{
   darkMode: boolean;
   language: Language;
   children: string;
-  // highlightLines?: Array<number>
 }> = {
   showWindowChrome: {
     type: 'boolean',
@@ -46,12 +45,6 @@ const knobsConfig: KnobsConfigInterface<{
     options: Object.values(Language),
     label: 'Language',
   },
-  // highlightLines: {
-  //   type: 'select',
-  //   default: undefined,
-  //   options: [undefined, [1], [2, 3, 5]],
-  //   label: 'Highlight Lines',
-  // },
   children: {
     type: 'text',
     default: jsSnippet,

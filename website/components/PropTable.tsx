@@ -81,8 +81,6 @@ interface TableDataInterface {
 }
 
 function getTableData(rows: Table['children']): Array<TableDataInterface> {
-  console.log(rows);
-
   if (!rows) {
     return [];
   }

@@ -8,7 +8,7 @@ const portalChildrenStyle = css`
 `;
 
 export default function PortalLiveExample() {
-  const [node, setNode] = useState<HTMLDivElement | null>(null);
+  const [node, setNode] = useState<HTMLDivElement | null>();
 
   return (
     <LiveExample knobsConfig={{}}>
