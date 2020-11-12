@@ -192,7 +192,7 @@ const buttonSizes: Record<Size, string> = {
   `,
 
   [Size.Large]: css`
-    height: 45px;
+    height: 48px;
     font-size: 16px;
   `,
 } as const;
@@ -363,8 +363,8 @@ const Button: ExtendableBox<
     const modifiedGlyph =
       glyph && children
         ? React.cloneElement(glyph, {
-            className: cx({ [glyphMargins[size]]: glyph != null }),
-          })
+          className: cx({ [glyphMargins[size]]: glyph != null }),
+        })
         : glyph;
 
     const content = (
