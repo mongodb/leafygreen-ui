@@ -1,6 +1,6 @@
-import Components from 'utils/components';
+import Component from 'utils/component';
 export interface BaseLayoutProps {
-  component: Components;
+  component: Component;
   changelog: string;
   readme: string;
 }

@@ -1,4 +1,4 @@
-const Components = {
+const Component = {
   Badge: 'badge',
   Banner: 'banner',
   Button: 'button',
@@ -37,6 +37,6 @@ const Components = {
   Typography: 'typography',
 } as const;
 
-type Components = typeof Components[keyof typeof Components];
+type Component = typeof Component[keyof typeof Component];
 
-export default Components;
+export default Component;

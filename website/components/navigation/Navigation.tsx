@@ -8,7 +8,7 @@ import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
 import MobileNavigationGroup from './MobileNavigationGroup';
 import MobileNavigationItem from './MobileNavigationItem';
 import MobileNavigation from './MobileNavigation';
-import Components from 'utils/components';
+import Component from 'utils/component';
 
 const navWidth = css`
   width: 270px;
@@ -31,7 +31,7 @@ const coreGuidelines = [
   'typography',
 ];
 
-const components = Object.values(Components);
+const components = Object.values(Component);
 
 const GroupType = {
   Component: 'component',

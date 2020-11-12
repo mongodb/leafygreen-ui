@@ -35,9 +35,9 @@ import ToggleLiveExample from 'components/live-examples/ToggleLiveExample';
 import TokensLiveExample from 'components/live-examples/TokensLiveExample';
 import TooltipLiveExample from 'components/live-examples/TooltipLiveExample';
 import TypographyLiveExample from 'components/live-examples/TypographyLiveExample';
-import Components from 'utils/components';
+import Component from 'utils/component';
 
-const map: Record<Components, React.FC> = {
+const map: Record<Component, React.FC> = {
   badge: BadgeLiveExample,
   banner: BannerLiveExample,
   box: BoxLiveExample,
@@ -76,7 +76,7 @@ const map: Record<Components, React.FC> = {
   typography: TypographyLiveExample,
 };
 
-export default function LiveExample({ component }: { component: Components }) {
+export default function LiveExample({ component }: { component: Component }) {
   const Component = map[component]; // Provide fallback if doesn't exist
 
   return <Component />;
