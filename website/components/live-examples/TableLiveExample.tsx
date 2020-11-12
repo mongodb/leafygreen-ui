@@ -8,21 +8,21 @@ const defaultData = [
     clusters: '1 Cluster',
     users: '12 Users',
     teams: '0 Teams',
-    alerts: '5 Alerts'
+    alerts: '5 Alerts',
   },
   {
     name: 'Second Project',
     clusters: '2 Clusters',
     users: '6 Users',
     teams: '4 Teams',
-    alerts: '2 Alerts'
+    alerts: '2 Alerts',
   },
   {
     name: 'Third Project',
     clusters: '5 Clusters',
     users: '2 Users',
     teams: '0 Teams',
-    alerts: '1 Alert'
+    alerts: '1 Alert',
   },
 ];
 
@@ -58,7 +58,9 @@ function DefaultExample({
           <TableHeader
             label="Clusters"
             sortBy={
-              sortBy ? (datum: typeof defaultData[0]) => datum.clusters : undefined
+              sortBy
+                ? (datum: typeof defaultData[0]) => datum.clusters
+                : undefined
             }
             key="clusters"
           />
@@ -69,7 +71,10 @@ function DefaultExample({
       }
     >
       {({ datum }) => (
-        <Row key={datum.name} disabled={disabled && datum.name === 'Second Project'}>
+        <Row
+          key={datum.name}
+          disabled={disabled && datum.name === 'Second Project'}
+        >
           <Cell>{datum.name}</Cell>
           <Cell>{datum.clusters}</Cell>
           <Cell>{datum.users}</Cell>

@@ -34,8 +34,7 @@ function DefaultExample({ size, disabled, children }: Knobs) {
   return (
     <div
       className={css`
-        width: 100%;
-        padding: 2rem;
+        overflow-x: auto;
       `}
     >
       <RadioBoxGroup size={size} name="radio-box-group-default">

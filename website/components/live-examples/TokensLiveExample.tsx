@@ -51,7 +51,11 @@ export default function TokensLiveExample() {
   return (
     <LiveExample knobsConfig={{}}>
       {() => (
-        <div>
+        <div
+          className={css`
+            overflow-x: auto;
+          `}
+        >
           <Subtitle
             className={css`
               margin-bottom: ${spacing[2]}px;

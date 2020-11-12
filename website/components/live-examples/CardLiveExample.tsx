@@ -16,7 +16,8 @@ const knobsConfig: KnobsConfigInterface<{ as: string; children: string }> = {
   },
   children: {
     type: 'text',
-    default: 'This is a card component.',
+    default:
+      'Sync user data between mobile devices and Atlas, without writing any conflict resolution or networking code. Easily backup user data, build collaborative features, and keep data up-to-date whenever devices are online.',
     label: 'Children',
   },
 };

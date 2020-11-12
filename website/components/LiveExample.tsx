@@ -40,26 +40,26 @@ import Components from 'utils/components';
 const map: Record<Components, React.FC> = {
   badge: BadgeLiveExample,
   banner: BannerLiveExample,
-  box: BoxLiveExample, // come back to me
+  box: BoxLiveExample,
   button: ButtonLiveExample,
   callout: CalloutLiveExample,
-  card: CardLiveExample, // come back to me
+  card: CardLiveExample,
   checkbox: CheckboxLiveExample,
   code: CodeLiveExample,
-  ['confirmation-modal']: ConfirmationModalLiveExample, // come back to me
+  ['confirmation-modal']: ConfirmationModalLiveExample,
   copyable: CopyableLiveExample,
   ['icon-button']: IconButtonLiveExample,
   icon: IconLiveExample,
   ['inline-definition']: InlineDefinitionLiveExample,
   logo: LogoLiveExample,
-  ['marketing-modal']: MarketingModalLiveExample, // fix image load
+  ['marketing-modal']: MarketingModalLiveExample,
   menu: MenuLiveExample,
   modal: ModalLiveExample,
   ['mongo-nav']: MongoNavLiveExample,
   palette: PaletteLiveExample,
   pipeline: PipelineLiveExample,
-  popover: PopoverLiveExample, // broken
-  portal: PortalLiveExample, // broken
+  popover: PopoverLiveExample,
+  portal: PortalLiveExample,
   ['radio-box-group']: RadioBoxGroupLiveExample,
   ['radio-group']: RadioGroupLiveExample,
   ['side-nav']: SideNavLiveExample,
@@ -77,7 +77,7 @@ const map: Record<Components, React.FC> = {
 };
 
 export default function LiveExample({ component }: { component: Components }) {
-  const Component = map[component] ? map[component] : <div>hi</div>;
+  const Component = map[component] // Provide fallback if doesn't exist
 
   return <Component />;
 }

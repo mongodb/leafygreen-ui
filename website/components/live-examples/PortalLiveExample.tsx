@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { css } from 'emotion';
 import Portal from '@leafygreen-ui/portal';
 import LiveExample from '@leafygreen-ui/live-example';
@@ -8,14 +8,14 @@ const portalChildrenStyle = css`
 `;
 
 export default function PortalLiveExample() {
-  const ref = React.useRef<HTMLDivElement>(null);
+  const [node, setNode] = useState<HTMLDivElement | null>(null);
 
   return (
     <LiveExample knobsConfig={{}}>
       {() => (
         <>
-          <div ref={ref} />
-          <Portal container={ref.current}>
+          <div ref={setNode} />
+          <Portal container={node}>
             <div className={portalChildrenStyle}>
               Portals transport their children to a <code>div</code> that is
               appended to the end of the <code>document.body</code> to or a{' '}

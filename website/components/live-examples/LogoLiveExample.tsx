@@ -17,6 +17,7 @@ const flexContainer = css`
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
+  overflow-x: auto;
 `;
 
 const logoContainer = css`
@@ -107,7 +108,9 @@ export default function LogoLiveExample() {
             </Overline>
             <div>
               <AtlasLogo
-                className={css`padding: 8px 8px 8px 0`}
+                className={css`
+                  padding: 8px 8px 8px 0;
+                `}
                 knockout={knockout}
                 size={size}
                 color={darkMode ? uiColors.white : uiColors.gray.dark3}

@@ -17,7 +17,8 @@ const knobsConfig: KnobsConfigInterface<{
   },
   description: {
     type: 'text',
-    default: 'This is the name of your function. You can use this name to call your function from a client.',
+    default:
+      'This is the name of your function. You can use this name to call your function from a client.',
     label: 'Description',
   },
   disabled: {

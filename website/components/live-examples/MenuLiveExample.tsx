@@ -2,27 +2,29 @@ import React from 'react';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import Icon from '@leafygreen-ui/icon';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
-import Button from '@leafygreen-ui/button'
+import Button from '@leafygreen-ui/button';
 
-
-const knobsConfig: KnobsConfigInterface<{ active: boolean; disabled: boolean; children: string }> = {
+const knobsConfig: KnobsConfigInterface<{
+  active: boolean;
+  disabled: boolean;
+  children: string;
+}> = {
   active: {
     type: 'boolean',
     default: true,
-    label: 'Active'
+    label: 'Active',
   },
   disabled: {
     type: 'boolean',
     default: false,
-    label: 'Disabled'
+    label: 'Disabled',
   },
   children: {
     type: 'text',
     default: 'Unlink Data source',
-    label: 'Children'
-  }
+    label: 'Children',
+  },
 };
-
 
 export default function MenuLiveExample() {
   return (

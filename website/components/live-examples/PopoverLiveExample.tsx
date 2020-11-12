@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
+import { css } from 'emotion';
 import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import { uiColors } from '@leafygreen-ui/palette';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
-import { css } from 'emotion';
+import Button from '@leafygreen-ui/button';
+
+const containerStyle = css`
+  position: absolute;
+`;
 
 const popoverStyle = css`
   border: 1px solid ${uiColors.gray.light1};
   text-align: center;
   padding: 20px;
   background-color: ${uiColors.white};
-  max-height: 100%;
   overflow: hidden;
 `;
 
@@ -69,18 +73,23 @@ function DefaultExample({
   const [active, setActive] = useState(false);
   return (
     <div>
-      <button onClick={() => setActive(!active)}>
+      <Button
+        onClick={() => setActive(!active)}
+        variant="primary"
+        className={containerStyle}
+      >
         Popover
         <Popover
           align={align}
           justify={justify}
+          active={active}
           usePortal={usePortal}
           spacing={spacing}
           adjustOnMutation={adjustOnMutation}
         >
           <div className={popoverStyle}>Popover content</div>
         </Popover>
-      </button>
+      </Button>
     </div>
   );
 }

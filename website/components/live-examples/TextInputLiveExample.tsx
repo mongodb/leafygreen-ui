@@ -57,7 +57,8 @@ const knobsConfig: KnobsConfigInterface<{
   },
   errorMessage: {
     type: 'text',
-    default: 'The team name that you entered is not unique, please pick another',
+    default:
+      'The team name that you entered is not unique, please pick another',
     label: 'Error Message',
   },
 };

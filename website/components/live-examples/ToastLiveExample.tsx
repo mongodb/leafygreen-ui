@@ -26,7 +26,7 @@ const knobsConfig: KnobsConfigInterface<{
 };
 
 export default function ToastLiveExample() {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
 
   return (
     <LiveExample knobsConfig={knobsConfig}>
@@ -35,11 +35,17 @@ export default function ToastLiveExample() {
           <button onClick={() => setOpen(curr => !curr)}>Trigger toast</button>
           <Toast
             progress={progress}
-            close={close ? () => { } : undefined}
+            close={close ? () => {} : undefined}
             open={open}
             variant={variant}
-            body={variant === 'success' ? 'You have successfully linked your MongoDB account LeafyCorp to your GCP account.' : 'Currently: capturing backup snapshot'}
-            title={variant === 'success' ? 'Success!' : 'Deploying your change.'}
+            body={
+              variant === 'success'
+                ? 'You have successfully linked your MongoDB account LeafyCorp to your GCP account.'
+                : 'Currently: capturing backup snapshot'
+            }
+            title={
+              variant === 'success' ? 'Success!' : 'Deploying your change.'
+            }
             {...rest}
           />
         </>

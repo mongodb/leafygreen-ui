@@ -88,7 +88,7 @@ function BooleanKnob({
       </label>
       <Toggle
         onChange={handleChange}
-        value={value.toString()}
+        checked={value}
         size="small"
         darkMode={darkMode}
       />
@@ -174,13 +174,20 @@ function SelectKnob({
     onChange(target.value, prop);
   };
 
-  const generateOptions = () => {
-    return options.map(option => (
-      <option key={option} value={option} selected={option === value}>
-        {option}
-      </option>
-    ));
+  const generateOptionsCallback = () => {
+    return options
+      .sort((a, b) => a.localeCompare(b))
+      .map(option => (
+        <option key={option} value={option} selected={option === value}>
+          {option}
+        </option>
+      ));
   };
+
+  const generateOptions = React.useCallback(generateOptionsCallback, [
+    options,
+    value,
+  ]);
 
   return (
     <div className={knobContainerStyle}>

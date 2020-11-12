@@ -14,7 +14,7 @@ type ConfirmationModalExampleProps = {
 const knobsConfig: KnobsConfigInterface<ConfirmationModalExampleProps> = {
   buttonText: {
     type: 'text',
-    default: 'Confirm',
+    default: 'Configure a New Data Lake',
     label: 'Button Text',
   },
   requiredInputText: {
@@ -24,13 +24,12 @@ const knobsConfig: KnobsConfigInterface<ConfirmationModalExampleProps> = {
   },
   title: {
     type: 'text',
-    default: 'Confirm Title Here',
+    default: 'Configure a New Data Lake',
     label: 'Title',
   },
   children: {
     type: 'text',
-    default:
-      'This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here. This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here.',
+    default: 'Analyze your data in S3 with MQL.',
     label: 'Children',
   },
 };
