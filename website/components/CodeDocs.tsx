@@ -186,24 +186,20 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
           <Tabs className={tabsPadding}>
-            {example ? (
+            {example && (
               <Tab default name="Example" className={mt3}>
                 <Code showLineNumbers language="js">
                   {example}
                 </Code>
               </Tab>
-            ) : (
-              <></>
             )}
 
-            {outputHTML ? (
+            {outputHTML && (
               <Tab name="Output HTML" className={mt3} default={!example}>
                 <Code showLineNumbers language="xml">
                   {outputHTML}
                 </Code>
               </Tab>
-            ) : (
-              <></>
             )}
           </Tabs>
         </GridItem>
