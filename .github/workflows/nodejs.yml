@@ -104,7 +104,7 @@ jobs:
       - name: prettier
         run: yarn prettier:check
       - name: eslint
-        run: yarn eslint --format junit -o reports/junit/js-lint-results.xml
+        run: yarn eslint:check --format junit -o reports/junit/js-lint-results.xml
 
   types:
     name: Check types
