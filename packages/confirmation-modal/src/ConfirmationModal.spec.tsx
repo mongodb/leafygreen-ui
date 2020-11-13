@@ -180,6 +180,6 @@ describe('packages/confirmation-modal', () => {
 
       fireEvent.change(textInput, { target: { value: 'Confirm' } });
       expect(confirmationButton).toBeDisabled();
-    })
+    });
   });
 });
