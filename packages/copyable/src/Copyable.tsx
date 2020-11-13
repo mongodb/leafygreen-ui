@@ -76,6 +76,7 @@ const codeStyle = css`
   border-radius: 4px;
   font-size: 14px;
   white-space: nowrap;
+  overflow: hidden;
 `;
 
 const largeCodeStyle = css`
