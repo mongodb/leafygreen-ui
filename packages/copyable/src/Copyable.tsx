@@ -173,7 +173,7 @@ export default function Copyable({
     }
 
     // Forward darkMode prop for future versions of Button that support it
-    // const buttonRestProps: {} = { darkMode };
+    const buttonRestProps = 'darkMode' in Button.propTypes! ? { darkMode } : {};
 
     const trigger = (
       <Button
@@ -181,6 +181,7 @@ export default function Copyable({
         variant={buttonVariant}
         className={buttonStyle}
         onClick={() => setCopied(true)}
+        {...buttonRestProps}
       >
         <CopyIcon size="large" className={iconStyle} />
         Copy
