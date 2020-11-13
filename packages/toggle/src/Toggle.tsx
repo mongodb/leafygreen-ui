@@ -413,7 +413,7 @@ function Toggle({
       darkMode={darkMode}
       disabled={disabled}
       borderRadius="50px"
-      focusedElement={inputElement}
+      focusTargetElement={inputElement}
     >
       <label
         className={cx(statefulStyles.container, className)}

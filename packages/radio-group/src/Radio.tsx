@@ -309,7 +309,7 @@ function Radio({
         <InteractionRing
           darkMode={darkMode}
           disabled={disabled}
-          focusedElement={inputElement}
+          focusTargetElement={inputElement}
           className={cx(radioBoxStyle, radioBoxSize[normalizedSize])}
           borderRadius="100%"
         >

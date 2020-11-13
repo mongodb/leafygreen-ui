@@ -345,7 +345,7 @@ function OrgSelect({
       <InteractionRing
         className={interactionRingStyle}
         borderRadius={getInteractionRingBorderRadius({ disabled })}
-        focusedElement={buttonElement}
+        focusTargetElement={buttonElement}
         forceState={{ hovered: open ? false : undefined }}
         disabled={loading}
       >

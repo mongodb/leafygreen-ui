@@ -239,7 +239,7 @@ function ProjectSelect({
     <InteractionRing
       className={interactionRingStyle}
       borderRadius={interactionRingBorderRadius}
-      focusedElement={buttonElement}
+      focusTargetElement={buttonElement}
       forceState={{ hovered: open ? false : undefined }}
       disabled={loading}
     >

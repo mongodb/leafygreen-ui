@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 
 const Mode = {
@@ -44,7 +45,9 @@ const baseInteractionRingStyle = css`
   pointer-events: none;
 `;
 
-function getInteractionRingStyle({
+const interactionRingDataProp = createDataProp('interaction-ring');
+
+function computeStyles({
   mode,
   hovered,
   focused,
@@ -52,8 +55,8 @@ function getInteractionRingStyle({
   color,
 }: {
   mode: Mode;
-  hovered: boolean;
-  focused: boolean;
+  hovered: boolean | undefined;
+  focused: boolean | undefined;
   borderRadius?: string;
   color?: {
     focused?: string;
@@ -70,18 +73,27 @@ function getInteractionRingStyle({
       ${color?.focused ?? colorSets[mode].interactionRingFocus};
   `;
 
-  return cx(
-    baseInteractionRingStyle,
-    css`
-      border-radius: ${borderRadius};
-    `,
-    {
-      [hoverStyle]: hovered,
-    },
-    {
-      [focusStyle]: focused,
-    },
-  );
+  return {
+    container: cx(baseContainerStyle, {
+      [css`
+        &:hover > ${interactionRingDataProp.selector} {
+          ${hoverStyle}
+        }
+      `]: hovered !== false && !focused,
+    }),
+    interactionRing: cx(
+      baseInteractionRingStyle,
+      css`
+        border-radius: ${borderRadius};
+      `,
+      {
+        [hoverStyle]: hovered ?? false,
+      },
+      {
+        [focusStyle]: focused,
+      },
+    ),
+  };
 }
 
 const baseContentStyle = css`
@@ -94,6 +106,11 @@ const baseContentStyle = css`
   font-size: 100%;
 `;
 
+interface State {
+  hovered?: boolean;
+  focused?: boolean;
+}
+
 interface InteractionRingProps {
   darkMode?: boolean;
   className?: string;
@@ -102,13 +119,10 @@ interface InteractionRingProps {
     focused?: string;
     hovered?: string;
   };
-  focusedElement?: HTMLElement | null;
+  focusTargetElement?: HTMLElement | null;
   children: React.ReactElement;
   disabled?: boolean;
-  forceState?: {
-    focused?: boolean;
-    hovered?: boolean;
-  };
+  forceState?: State;
 }
 
 export default function InteractionRing({
@@ -116,7 +130,7 @@ export default function InteractionRing({
   className,
   borderRadius,
   color,
-  focusedElement,
+  focusTargetElement,
   children,
   disabled = false,
   forceState = {},
@@ -124,87 +138,70 @@ export default function InteractionRing({
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
-  const [hovered, setHovered] = useState(false);
-  const [focused, setFocused] = useState(false);
+  const [focused, setFocused] = useState<boolean>();
 
-  const interactionRingStyle = getInteractionRingStyle({
+  const styles = computeStyles({
     mode,
-    hovered: forceState.hovered ?? hovered,
+    hovered: forceState.hovered,
     focused: showFocus && (forceState.focused ?? focused),
     borderRadius,
     color,
   });
 
   useEffect(() => {
-    if (focusedElement === undefined || focusedElement === null) {
+    if (focusTargetElement === undefined || focusTargetElement === null) {
       return;
     }
 
+    const focused = focusTargetElement === document.activeElement;
+    setFocused(focused);
+
     if (focused) {
       const offFocus = () => setFocused(false);
-      focusedElement.addEventListener('blur', offFocus);
-      return () => focusedElement.removeEventListener('focus', offFocus);
+      focusTargetElement.addEventListener('blur', offFocus);
+      return () => focusTargetElement.removeEventListener('focus', offFocus);
     } else {
       const onFocus = () => setFocused(true);
-      focusedElement.addEventListener('focus', onFocus);
-      return () => focusedElement.removeEventListener('focus', onFocus);
+      focusTargetElement.addEventListener('focus', onFocus);
+      return () => focusTargetElement.removeEventListener('focus', onFocus);
     }
-  }, [focusedElement, focused]);
+  }, [focusTargetElement]);
 
   const { className: contentClassName } = children.props;
 
-  const onMouseEnter = useCallback(
-    (event: React.MouseEvent) => {
-      setHovered(true);
-      children.props.onMouseEnter?.(event);
-    },
-    [children.props.onMouseEnter],
+  const childIsFocusTarget = focusTargetElement === undefined;
+
+  const onFocus = useMemo(
+    () =>
+      childIsFocusTarget ? () => setFocused(true) : children.props.onFocus,
+    [children.props.onFocus, childIsFocusTarget],
   );
 
-  const onMouseLeave = useCallback(
-    (event: React.MouseEvent) => {
-      setHovered(false);
-      children.props.onMouseLeave?.(event);
-    },
-    [children.props.onMouseLeave],
+  const onBlur = useMemo(
+    () =>
+      childIsFocusTarget ? () => setFocused(false) : children.props.onBlur,
+    [children.props.onBlur, childIsFocusTarget],
   );
 
-  const childIsFocusedElement = focusedElement === undefined;
-
-  const onFocus = useCallback(
-    (event: React.FocusEvent) => {
-      if (childIsFocusedElement) {
-        setFocused(true);
-      }
-      children.props.onFocus?.(event);
-    },
-    [children.props.onFocus, childIsFocusedElement],
+  const content = useMemo(
+    () =>
+      React.cloneElement(children, {
+        className: cx(baseContentStyle, contentClassName),
+        onFocus,
+        onBlur,
+      }),
+    [children, contentClassName, onBlur, onFocus],
   );
-
-  const onBlur = useCallback(
-    (event: React.FocusEvent) => {
-      if (childIsFocusedElement) {
-        setFocused(false);
-      }
-      children.props.onBlur?.(event);
-    },
-    [children.props.onBlur, childIsFocusedElement],
-  );
-
-  const content = useMemo(() => {
-    return React.cloneElement(children, {
-      className: cx(baseContentStyle, contentClassName),
-      onMouseEnter,
-      onMouseLeave,
-      onFocus,
-      onBlur,
-    });
-  }, [children, contentClassName, onBlur, onFocus, onMouseEnter, onMouseLeave]);
 
   return (
-    <div className={cx(baseContainerStyle, className)}>
+    <div className={cx(styles.container, className)}>
       {content}
-      {!disabled && <div className={interactionRingStyle} />}
+      {!disabled && (
+        <div
+          {...interactionRingDataProp.prop}
+          className={styles.interactionRing}
+        />
+      )}
     </div>
   );
 }

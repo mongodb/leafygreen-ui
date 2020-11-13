@@ -231,7 +231,7 @@ export default function RadioBox({
         <InteractionRing
           className={interactionContainerStyle}
           disabled={disabled}
-          focusedElement={inputElement}
+          focusTargetElement={inputElement}
           borderRadius="2px"
           color={{ hovered: checked ? uiColors.green.base : undefined }}
           forceState={{
