@@ -70,14 +70,11 @@ const codeStyle = css`
   display: inline-flex;
   align-items: center;
   height: 100%;
-  // Button is 75px wide. Need to set a smaller width so that we're able to scroll when text overflows.
-  width: calc(100% - 75px);
+  width: 100%;
   padding-left: 12px;
   border: 1px solid;
   border-radius: 4px;
   font-size: 14px;
-  overflow-x: auto;
-  overflow-y: hidden;
   white-space: nowrap;
 `;
 
