@@ -52,3 +52,4 @@ const [inputElement, setInputElement] =
 | `focusTargetElement` | `HTMLElement`                              | The element for which to watch focus events.                                                                                                 | The element rendered by the provided `children` prop |
 | `disabled`           | `boolean`                                  | Whether to disable the interaction ring.                                                                                                     | `false`                                              |
 | `forceState`         | `{ hovered?: boolean, focused?: boolean }` | Force the specified interaction ring states to be displayed.                                                                                 |
+|                      |

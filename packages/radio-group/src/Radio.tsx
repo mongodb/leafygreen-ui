@@ -7,7 +7,8 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { RadioGroupProps } from './RadioGroup';
 import { Size } from './types';
 
-const inputDisplay = createDataProp('styled-div');
+const inputDisplay = createDataProp('radio-input-display');
+const inputDisplayWrapper = createDataProp('radio-input-display-wrapper');
 const inputDataProp = createDataProp('input-element');
 
 const Mode = {
@@ -67,7 +68,7 @@ const labelStyle = css`
 // Note colors are not in our palette
 const inputColorSet = {
   [Mode.Light]: css`
-    &:checked + * > ${inputDisplay.selector} {
+    &:checked + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
       background-color: #2798bd;
       border-color: #2798bd;
 
@@ -82,14 +83,14 @@ const inputColorSet = {
       border-color: #9dd0e7;
     }
 
-    &:disabled + * > ${inputDisplay.selector} {
+    &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
       border-color: ${uiColors.gray.light1};
       background-color: ${uiColors.gray.light2};
     }
   `,
 
   [Mode.Dark]: css`
-    &:checked + * > ${inputDisplay.selector} {
+    &:checked + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
       background-color: #43b1e5;
       border-color: #43b1e5;
 
@@ -104,7 +105,7 @@ const inputColorSet = {
       border-color: ${uiColors.blue.base};
     }
 
-    &:disabled + * > ${inputDisplay.selector} {
+    &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
       background-color: ${uiColors.gray.dark2};
       border-color: rgba(255, 255, 255, 0.15);
     }
@@ -113,7 +114,7 @@ const inputColorSet = {
 
 const disabledChecked = {
   [Mode.Light]: css`
-    &:disabled + * > ${inputDisplay.selector} {
+    &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
       background-color: ${uiColors.gray.light1};
       border-color: ${uiColors.gray.light1};
 
@@ -125,7 +126,7 @@ const disabledChecked = {
   `,
 
   [Mode.Dark]: css`
-    &:disabled + * > ${inputDisplay.selector} {
+    &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
       border-color: ${uiColors.gray.dark2};
 
       &:after {
@@ -186,7 +187,7 @@ const divStyle = css`
     transform: scale(0);
   }
 
-  ${inputDataProp.selector}:disabled + * > & {
+  ${inputDataProp.selector}:disabled + ${inputDisplayWrapper.selector} & {
     cursor: not-allowed;
 
     &:after {
@@ -312,6 +313,7 @@ function Radio({
           focusTargetElement={inputElement}
           className={cx(radioBoxStyle, radioBoxSize[normalizedSize])}
           borderRadius="100%"
+          {...inputDisplayWrapper.prop}
         >
           <div
             {...inputDisplay.prop}

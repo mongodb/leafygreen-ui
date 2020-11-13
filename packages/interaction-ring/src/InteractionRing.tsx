@@ -134,6 +134,7 @@ export default function InteractionRing({
   children,
   disabled = false,
   forceState = {},
+  ...rest
 }: InteractionRingProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -194,7 +195,7 @@ export default function InteractionRing({
   );
 
   return (
-    <div className={cx(styles.container, className)}>
+    <div className={cx(styles.container, className)} {...rest}>
       {content}
       {!disabled && (
         <div
