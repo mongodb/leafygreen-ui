@@ -70,12 +70,14 @@ const codeStyle = css`
   display: inline-flex;
   align-items: center;
   height: 100%;
-  width: 100%;
+  // Button is 75px wide. Need to set a smaller width so that we're able to scroll when text overflows.
+  width: calc(100% - 75px);
   padding-left: 12px;
   border: 1px solid;
   border-radius: 4px;
   font-size: 14px;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   white-space: nowrap;
 `;
 
@@ -87,7 +89,6 @@ const buttonWrapperStyle = css`
   display: inline-block;
   height: 100%;
   position: absolute;
-  z-index: 1;
   right: 0;
   top: 0;
 
@@ -129,7 +130,7 @@ const iconStyle = css`
 interface CopyableProps {
   darkMode?: boolean;
   children: string;
-  label: string;
+  label?: string;
   description?: string;
   className?: string;
   copyable?: boolean;
@@ -175,7 +176,7 @@ export default function Copyable({
     }
 
     // Forward darkMode prop for future versions of Button that support it
-    const buttonRestProps: {} = { darkMode };
+    // const buttonRestProps: {} = { darkMode };
 
     const trigger = (
       <Button
@@ -183,7 +184,6 @@ export default function Copyable({
         variant={buttonVariant}
         className={buttonStyle}
         onClick={() => setCopied(true)}
-        {...buttonRestProps}
       >
         <CopyIcon size="large" className={iconStyle} />
         Copy
@@ -273,7 +273,7 @@ Copyable.propTypes = {
   darkMode: PropTypes.bool,
   size: PropTypes.oneOf(Object.values(Size)),
   children: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   description: PropTypes.string,
   className: PropTypes.string,
   copyable: PropTypes.bool,
