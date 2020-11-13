@@ -437,6 +437,7 @@ const Button: ExtendableBox<
 Button.displayName = 'Button';
 
 Button.propTypes = {
+  darkMode: PropTypes.bool,
   variant: PropTypes.oneOf(Object.values(Variant)),
   size: PropTypes.oneOf(Object.values(Size)),
   className: PropTypes.string,
@@ -450,6 +451,7 @@ Button.propTypes = {
   ]),
   href: PropTypes.string,
   glyph: PropTypes.element,
+  borderRadius: PropTypes.string,
 };
 
 export default Button;

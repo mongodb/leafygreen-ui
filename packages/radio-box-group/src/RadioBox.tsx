@@ -83,7 +83,7 @@ const getBorderStyles = ({ disabled, size }: StateForStyles) => {
   return baseStyles;
 };
 
-const getRadioDisplayStyles = ({ checked, disabled }: StateForStyles) => {
+const getRadioDisplayStyles = ({ disabled }: StateForStyles) => {
   const baseStyles = css`
     transition: box-shadow 150ms ease-in-out;
     padding: 15px;
@@ -105,15 +105,6 @@ const getRadioDisplayStyles = ({ checked, disabled }: StateForStyles) => {
       css`
         color: ${uiColors.gray.light1};
         background: ${uiColors.gray.light3};
-      `,
-    );
-  }
-
-  if (checked) {
-    return cx(
-      baseStyles,
-      css`
-        // border: 1px solid rgba(0, 0, 0, 0);
       `,
     );
   }

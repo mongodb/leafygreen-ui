@@ -7,8 +7,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { RadioGroupProps } from './RadioGroup';
 import { Size } from './types';
 
-const styledDiv = createDataProp('styled-div');
-const inputDisplayWrapper = createDataProp('input-display-wrapper');
+const inputDisplay = createDataProp('styled-div');
 const inputDataProp = createDataProp('input-element');
 
 const Mode = {
@@ -68,7 +67,7 @@ const labelStyle = css`
 // Note colors are not in our palette
 const inputColorSet = {
   [Mode.Light]: css`
-    &:checked + * ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+    &:checked + * > ${inputDisplay.selector} {
       background-color: #2798bd;
       border-color: #2798bd;
 
@@ -77,20 +76,20 @@ const inputColorSet = {
       }
     }
 
-    &:focus + * ${inputDisplayWrapper.selector}:before {
+    &:focus + div:before {
       transform: scale(1);
       opacity: 1;
       border-color: #9dd0e7;
     }
 
-    &:disabled + * ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+    &:disabled + * > ${inputDisplay.selector} {
       border-color: ${uiColors.gray.light1};
       background-color: ${uiColors.gray.light2};
     }
   `,
 
   [Mode.Dark]: css`
-    &:checked + * ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+    &:checked + * > ${inputDisplay.selector} {
       background-color: #43b1e5;
       border-color: #43b1e5;
 
@@ -99,13 +98,13 @@ const inputColorSet = {
       }
     }
 
-    &:focus + * ${inputDisplayWrapper.selector}:before {
+    &:focus + div:before {
       transform: scale(1);
       opacity: 1;
       border-color: ${uiColors.blue.base};
     }
 
-    &:disabled + * ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+    &:disabled + * > ${inputDisplay.selector} {
       background-color: ${uiColors.gray.dark2};
       border-color: rgba(255, 255, 255, 0.15);
     }
@@ -114,7 +113,7 @@ const inputColorSet = {
 
 const disabledChecked = {
   [Mode.Light]: css`
-    &:disabled + * ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+    &:disabled + * > ${inputDisplay.selector} {
       background-color: ${uiColors.gray.light1};
       border-color: ${uiColors.gray.light1};
 
@@ -126,7 +125,7 @@ const disabledChecked = {
   `,
 
   [Mode.Dark]: css`
-    &:disabled + * ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+    &:disabled + * > ${inputDisplay.selector} {
       border-color: ${uiColors.gray.dark2};
 
       &:after {
@@ -187,7 +186,7 @@ const divStyle = css`
     transform: scale(0);
   }
 
-  ${inputDataProp.selector}:disabled + * ${inputDisplayWrapper.selector} > & {
+  ${inputDataProp.selector}:disabled + * > & {
     cursor: not-allowed;
 
     &:after {
@@ -311,21 +310,13 @@ function Radio({
           darkMode={darkMode}
           disabled={disabled}
           focusedElement={inputElement}
+          className={cx(radioBoxStyle, radioBoxSize[normalizedSize])}
           borderRadius="100%"
         >
           <div
-            {...inputDisplayWrapper.prop}
-            className={cx(radioBoxStyle, radioBoxSize[normalizedSize])}
-          >
-            <div
-              {...styledDiv.prop}
-              className={cx(
-                divStyle,
-                divColorSet[mode],
-                divSize[normalizedSize],
-              )}
-            />
-          </div>
+            {...inputDisplay.prop}
+            className={cx(divStyle, divColorSet[mode], divSize[normalizedSize])}
+          />
         </InteractionRing>
 
         <div
