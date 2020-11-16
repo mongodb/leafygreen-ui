@@ -1,6 +1,6 @@
 import React from 'react';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import Toast, { Variant } from '@leafygreen-ui/toast';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
   variant: Variant;
@@ -35,7 +35,7 @@ export default function ToastLiveExample() {
           <button onClick={() => setOpen(curr => !curr)}>Trigger toast</button>
           <Toast
             progress={progress}
-            close={close ? () => {} : undefined}
+            close={close ? () => { } : undefined}
             open={open}
             variant={variant}
             body={

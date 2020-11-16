@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import MarketingModal, { GraphicStyle } from '@leafygreen-ui/marketing-modal';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const children =
   'This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here.';
@@ -63,8 +63,8 @@ export default function MarketingModalLiveExample() {
                   height={220}
                 />
               ) : (
-                <img alt="" src="/assets/examples/Realm_Rebrand_Image.png" />
-              )
+                  <img alt="" src="/assets/examples/Realm_Rebrand_Image.png" />
+                )
             }
             graphicStyle={graphicStyle}
             buttonText={buttonText}

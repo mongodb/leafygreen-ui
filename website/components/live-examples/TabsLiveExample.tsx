@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from 'emotion';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import { Tab, Tabs } from '@leafygreen-ui/tabs';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
   darkMode: boolean;

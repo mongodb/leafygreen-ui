@@ -1,7 +1,6 @@
 import React from 'react';
 import { css } from 'emotion';
 import { Overline } from '@leafygreen-ui/typography';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import {
   AtlasLogo,
   ChartsLogo,
@@ -11,6 +10,7 @@ import {
   LogoMark,
 } from '@leafygreen-ui/logo';
 import { uiColors } from '@leafygreen-ui/palette';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const flexContainer = css`
   display: flex;

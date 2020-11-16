@@ -1,6 +1,5 @@
 import React from 'react';
 import { css, cx } from 'emotion';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import { spacing } from '@leafygreen-ui/tokens';
 import {
   H1,
@@ -16,6 +15,7 @@ import {
   Label,
   Description,
 } from '@leafygreen-ui/typography';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const displayBlock = css`
   display: block;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import ConfirmationModal from '@leafygreen-ui/confirmation-modal';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 // When interface is used, ts complains that index signature is missing
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions

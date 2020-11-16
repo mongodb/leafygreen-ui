@@ -1,8 +1,8 @@
 import React from 'react';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import Icon from '@leafygreen-ui/icon';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
 import Button from '@leafygreen-ui/button';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
   active: boolean;

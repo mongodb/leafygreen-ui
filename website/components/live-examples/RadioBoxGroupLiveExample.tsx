@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from 'emotion';
 import { RadioBoxGroup, RadioBox, Size } from '@leafygreen-ui/radio-box-group';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 // When interface is used, ts complains that index signature is missing
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions

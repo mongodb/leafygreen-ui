@@ -1,7 +1,7 @@
 import React from 'react';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
 import Button from '@leafygreen-ui/button';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
   align: Align;

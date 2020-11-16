@@ -1,7 +1,7 @@
 import React from 'react';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import IconButton, { Size } from '@leafygreen-ui/icon-button';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
   active: boolean;

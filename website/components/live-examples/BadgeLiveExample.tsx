@@ -1,7 +1,6 @@
 import React from 'react';
-import LiveExample from '@leafygreen-ui/live-example';
-import type { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import Badge, { Variant } from '@leafygreen-ui/badge';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
   variant: Variant;

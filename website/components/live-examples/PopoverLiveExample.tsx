@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { css } from 'emotion';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import { uiColors } from '@leafygreen-ui/palette';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import Button from '@leafygreen-ui/button';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const containerStyle = css`
   position: absolute;

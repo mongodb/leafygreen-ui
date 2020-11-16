@@ -1,6 +1,6 @@
 import React from 'react';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 // When interface is used, ts complains that index signature is missing
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
@@ -49,12 +49,12 @@ function DefaultExample({
 }: Knobs) {
   const collapsibleProps = collapsible
     ? ({
-        collapsible: true,
-        initialCollapsed: false,
-      } as const)
+      collapsible: true,
+      initialCollapsed: false,
+    } as const)
     : ({
-        collapsible: false,
-      } as const);
+      collapsible: false,
+    } as const);
 
   return (
     <SideNav>

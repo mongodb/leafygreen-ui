@@ -1,8 +1,8 @@
 import React from 'react';
-import LiveExample from '@leafygreen-ui/live-example';
 import styled from '@emotion/styled';
 import { lighten, darken, readableColor, transparentize } from 'polished';
 import { uiColors } from '@leafygreen-ui/palette';
+import LiveExample from 'components/live-example';
 
 interface ColorBlockProps {
   color: string;

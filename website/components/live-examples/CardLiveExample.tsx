@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from 'emotion';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import Card from '@leafygreen-ui/card';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const cardPadding = css`
   padding: 20px;

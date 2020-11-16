@@ -1,11 +1,11 @@
 import React from 'react';
 import { css } from 'emotion';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import MongoNav, {
   Platform,
   Product,
   ActiveNavElement,
 } from '@leafygreen-ui/mongo-nav';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
   activePlatform: Platform;

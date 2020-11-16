@@ -194,7 +194,7 @@ function SelectKnob({
       <label className={cx(labelStyle, { [labelDarkMode]: darkMode })}>
         {label}
       </label>
-      {/* eslint-disable-next-line */}
+      {/* eslint-disable-next-line jsx-a11y/no-onchange */}
       <select onChange={handleChange}>{generateOptions()}</select>
     </div>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import Box from '@leafygreen-ui/box';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
   as: string;

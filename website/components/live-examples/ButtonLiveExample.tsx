@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import Button, { Variant, Size } from '@leafygreen-ui/button';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
   disabled: boolean;

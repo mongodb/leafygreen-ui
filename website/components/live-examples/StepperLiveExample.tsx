@@ -1,6 +1,6 @@
 import React from 'react';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import { Step, Stepper } from '@leafygreen-ui/stepper';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{ currentStep: number }> = {
   currentStep: {

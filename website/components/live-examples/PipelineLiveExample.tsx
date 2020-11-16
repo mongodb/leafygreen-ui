@@ -1,8 +1,8 @@
 import React from 'react';
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import { Pipeline, Stage, Size } from '@leafygreen-ui/pipeline';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{ size: Size }> = {
   size: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from 'emotion';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
 import Icon, { Size, glyphs } from '@leafygreen-ui/icon';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const containerStyle = css`
   width: 150px;

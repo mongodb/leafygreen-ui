@@ -1,6 +1,6 @@
 import React from 'react';
 import Copyable from '@leafygreen-ui/copyable';
-import LiveExample, { KnobsConfigInterface } from '@leafygreen-ui/live-example';
+import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
   label: string;
