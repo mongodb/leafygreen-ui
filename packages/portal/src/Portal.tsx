@@ -5,7 +5,10 @@ import { createPortal } from 'react-dom';
 
 type PortalProps = {
   children?: React.ReactNode;
-} & OneOf<{ container: HTMLElement, className?: never }, { className?: string, container?: null }>;
+} & OneOf<
+  { container: HTMLElement; className?: never },
+  { className?: string; container?: null }
+>;
 
 function createPortalContainer(): HTMLElement {
   const el = document.createElement('div');

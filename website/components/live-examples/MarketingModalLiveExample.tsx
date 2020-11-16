@@ -63,8 +63,8 @@ export default function MarketingModalLiveExample() {
                   height={220}
                 />
               ) : (
-                  <img alt="" src="/assets/examples/Realm_Rebrand_Image.png" />
-                )
+                <img alt="" src="/assets/examples/Realm_Rebrand_Image.png" />
+              )
             }
             graphicStyle={graphicStyle}
             buttonText={buttonText}

@@ -79,12 +79,12 @@ interface ComponentPropsInterface {
 
 export type KnobsConfigInterface<
   ComponentProps extends ComponentPropsInterface
-  > = {
-    [K in keyof ComponentProps]: Extract<
-      PropsType<ComponentProps[K]>,
-      { default: ComponentProps[K] }
-    >;
-  };
+> = {
+  [K in keyof ComponentProps]: Extract<
+    PropsType<ComponentProps[K]>,
+    { default: ComponentProps[K] }
+  >;
+};
 
 interface LiveExampleInterface<ComponentProps extends ComponentPropsInterface> {
   knobsConfig: KnobsConfigInterface<ComponentProps>;

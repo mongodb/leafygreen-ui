@@ -49,12 +49,12 @@ function DefaultExample({
 }: Knobs) {
   const collapsibleProps = collapsible
     ? ({
-      collapsible: true,
-      initialCollapsed: false,
-    } as const)
+        collapsible: true,
+        initialCollapsed: false,
+      } as const)
     : ({
-      collapsible: false,
-    } as const);
+        collapsible: false,
+      } as const);
 
   return (
     <SideNav>

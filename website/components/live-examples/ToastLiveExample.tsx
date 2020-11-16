@@ -35,7 +35,7 @@ export default function ToastLiveExample() {
           <button onClick={() => setOpen(curr => !curr)}>Trigger toast</button>
           <Toast
             progress={progress}
-            close={close ? () => { } : undefined}
+            close={close ? () => {} : undefined}
             open={open}
             variant={variant}
             body={
