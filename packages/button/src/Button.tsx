@@ -192,7 +192,7 @@ const buttonSizes: Record<Size, string> = {
   `,
 
   [Size.Large]: css`
-    height: 45px;
+    height: 48px;
     font-size: 16px;
   `,
 } as const;
