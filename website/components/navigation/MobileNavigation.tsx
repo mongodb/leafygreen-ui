@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { css, cx } from 'emotion';
 import { Transition } from 'react-transition-group';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -68,18 +68,19 @@ const h4Style = css`
 `;
 
 function MobileNavigation({ children }: { children: React.ReactNode }) {
-  const scrollContainerRefObj = useRef<HTMLDivElement>(null);
+  const [
+    scrollContainerNode,
+    setScrollContainerNode,
+  ] = useState<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);
-
-  const scrollContainerRef = scrollContainerRefObj?.current;
 
   const handleBackdropClick = useCallback(
     (e: React.MouseEvent) => {
-      if (!scrollContainerRef?.contains(e.target as Node)) {
+      if (!scrollContainerNode?.contains(e.target as Node)) {
         setOpen(false);
       }
     },
-    [scrollContainerRef],
+    [scrollContainerNode],
   );
 
   return (
@@ -120,7 +121,7 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
                   opacity: 1;
                 `]: state === 'entered',
               })}
-              ref={scrollContainerRefObj}
+              ref={setScrollContainerNode}
             >
               <div className={logoContainer}>
                 <MDBDesignLogo />

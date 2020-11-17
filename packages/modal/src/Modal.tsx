@@ -1,4 +1,4 @@
-import React, { useCallback, SetStateAction, useRef } from 'react';
+import React, { SetStateAction, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import { transparentize } from 'polished';
@@ -200,7 +200,11 @@ function Modal({
   contentClassName,
   ...rest
 }: ModalProps) {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [
+    scrollContainerNode,
+    setScrollContainerNode,
+  ] = useState<HTMLDivElement | null>(null);
+
   const nodeRef = React.useRef(null);
 
   const handleClose = useCallback(() => {
@@ -209,11 +213,14 @@ function Modal({
     }
   }, [setOpen, shouldClose]);
 
-  const handleBackdropClick = (e: React.SyntheticEvent) => {
-    if (closeOnBackdropClick && e.target === scrollContainerRef?.current) {
-      handleClose();
-    }
-  };
+  const handleBackdropClick = useCallback(
+    (e: React.SyntheticEvent) => {
+      if (closeOnBackdropClick && e.target === scrollContainerNode) {
+        handleClose();
+      }
+    },
+    [closeOnBackdropClick, handleClose, scrollContainerNode],
+  );
 
   useEscapeKey(handleClose, { enabled: open });
 
@@ -238,7 +245,7 @@ function Modal({
               [visibleBackdrop]: state === 'entered',
             })}
           >
-            <div className={scrollContainer} ref={scrollContainerRef}>
+            <div className={scrollContainer} ref={setScrollContainerNode}>
               <div
                 aria-modal="true"
                 role="dialog"
