@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { IdAllocator, Either, createDataProp } from '@leafygreen-ui/lib';
+import { HTMLElementProps, IdAllocator, Either, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
@@ -195,7 +195,7 @@ const colorSets: Record<Mode, ColorSets> = {
   },
 };
 
-type BaseTextAreaProps = JSX.IntrinsicElements['textarea'] & {
+type BaseTextAreaProps = HTMLElementProps<'textarea', never> & {
   id?: string;
   darkMode?: boolean;
   label: string;

@@ -1,11 +1,11 @@
 import React from 'react';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { commonCellStyles } from './styles';
 
 export const tdInnerDiv = createDataProp('td-inner-div');
 
-interface CellProps extends React.ComponentPropsWithRef<'td'> {}
+type CellProps = HTMLElementProps<'td', HTMLTableCellElement>
 
 const tdStyles = css`
   line-height: 20px;

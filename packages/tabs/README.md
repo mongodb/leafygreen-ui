@@ -96,13 +96,13 @@ _Any other properties supplied will be spread on the root element._
 
 ## Properties
 
-| Prop              | Type                                     | Description                                                                                                               | Default |
-| ----------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `name` (Required) | `string` \| `ReactNode`                  | String that will appear in the list of tabs.                                                                              |         |
-| `disabled`        | `boolean`                                | Indicates whether or not the `<Tab />` can be clicked by a user.                                                          | `false` |
-| `default`         | `boolean`                                | Should be supplied when using the uncontrolled `<Tabs />` component. This determines which tab will be active by default. |         |
-| `className`       | `string`                                 | Adds a className to the root element.                                                                                     |         |
-| `href`            | `string`                                 | Destination when Tab's `name` in the list should be rendered as an `a` tag.                                               |         |
-| `to`              | `string`                                 | Destination when Tab's `name` in the list should be rendered as a `Link` tag.                                             |         |
-| `children`        | `node`                                   | Content that appears inside the `<Tab />` component                                                                       |         |
-| ...               | `React.ComponentPropsWithRef<typeof as>` | Any other properties will be spread on the rendered HTML element or component.                                            |         |
+| Prop              | Type                                               | Description                                                                                                               | Default |
+| ----------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `name` (Required) | `string` \| `ReactNode`                            | String that will appear in the list of tabs.                                                                              |         |
+| `disabled`        | `boolean`                                          | Indicates whether or not the `<Tab />` can be clicked by a user.                                                          | `false` |
+| `default`         | `boolean`                                          | Should be supplied when using the uncontrolled `<Tabs />` component. This determines which tab will be active by default. |         |
+| `className`       | `string`                                           | Adds a className to the root element.                                                                                     |         |
+| `href`            | `string`                                           | Destination when Tab's `name` in the list should be rendered as an `a` tag.                                               |         |
+| `to`              | `string`                                           | Destination when Tab's `name` in the list should be rendered as a `Link` tag.                                             |         |
+| `children`        | `node`                                             | Content that appears inside the `<Tab />` component                                                                       |         |
+| ...               | native attributes of component passed to `as` prop | Any other props will be spread on the root element                                                                        |         |

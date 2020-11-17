@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { uiColors } from '@leafygreen-ui/palette';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { RadioGroupProps } from './RadioGroup';
 import { Size } from './types';
@@ -269,7 +269,7 @@ const interactionRingHoverStyles = {
   `,
 };
 
-export type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
+export type RadioProps = Omit<HTMLElementProps<'input', never>, 'size'> &
   Pick<RadioGroupProps, 'darkMode' | 'size'> & {
     default?: boolean;
     id?: string | number;
@@ -294,7 +294,7 @@ export type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
 function Radio({
   children,
   className,
-  onChange = () => {},
+  onChange = () => { },
   value,
   disabled,
   id,
