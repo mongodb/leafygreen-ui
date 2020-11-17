@@ -35,7 +35,11 @@ const underline = css`
   }
 
   ${anchorDataProp.selector}:focus & {
-    background-image: linear-gradient(to right, #9dd0e7 100%, #9dd0e7 0);
+    background-image: linear-gradient(
+      to right,
+      ${uiColors.blue.light1} 100%,
+      ${uiColors.blue.light1} 0
+    );
   }
 `;
 

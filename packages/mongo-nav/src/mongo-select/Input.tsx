@@ -52,7 +52,7 @@ const interactionRing = css`
     transform: scale(1);
   }
   ${focusRing.selector}:focus + & {
-    background-color: #9dd0e7;
+    background-color: ${uiColors.blue.light1};
   }
 `;
 

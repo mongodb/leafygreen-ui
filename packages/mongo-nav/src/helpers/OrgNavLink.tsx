@@ -54,7 +54,7 @@ const navItemFocusStyle = css`
     color: ${uiColors.blue.base};
 
     span:after {
-      background-color: #9dd0e7;
+      background-color: ${uiColors.blue.light1};
       opacity: 1;
       transform: scale(1);
     }
