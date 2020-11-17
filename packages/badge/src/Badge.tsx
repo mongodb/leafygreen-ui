@@ -91,7 +91,7 @@ function Badge({
   variant = Variant.LightGray,
   className,
   ...rest
-}: BadgeProps & HTMLElementProps<'div'>) {
+}: BadgeProps & HTMLElementProps<'div', never>) {
   return (
     <div {...rest} className={cx(baseStyle, badgeVariants[variant], className)}>
       {children}

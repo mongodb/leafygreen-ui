@@ -162,7 +162,7 @@ Self-closing component that provides a way to group `MenuItems` in a `Menu` comp
 | `title`       | `string`                               | Main text rendered in `<SubMenu />`                                                             |         |
 | `href`        | `string`                               | If supplied, will render the `<SubMenu />` inside of an `<a>` tag, rather than a `<button>` tag |         |
 | `spacing`     | `number`                               | Distance between the content rendered inside of the Menu and the trigger                        | `15`    |
-| ...           | native `anchor` \| `button` attributes | Any other props will be spread on the root element                                              |         |
+| ...           | native `anchor` or `button` attributes | Any other props will be spread on the root element                                              |         |
 
 # Advanced Use Case
 
