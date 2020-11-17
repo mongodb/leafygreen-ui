@@ -5,7 +5,7 @@ import { commonCellStyles } from './styles';
 
 export const tdInnerDiv = createDataProp('td-inner-div');
 
-type CellProps = HTMLElementProps<'td', HTMLTableCellElement>
+type CellProps = HTMLElementProps<'td', HTMLTableCellElement>;
 
 const tdStyles = css`
   line-height: 20px;

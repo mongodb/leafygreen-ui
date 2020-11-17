@@ -1,5 +1,5 @@
 import React from 'react';
-import { HTMLElementProps } from '@leafygreen-ui/lib'
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 export type HeaderRowProps = HTMLElementProps<'tr', never>;
 function HeaderRow({ children, className, ...rest }: HeaderRowProps) {

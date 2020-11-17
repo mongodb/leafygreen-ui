@@ -1,5 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import { HTMLElementProps, IdAllocator, Either, createDataProp } from '@leafygreen-ui/lib';
+import {
+  HTMLElementProps,
+  IdAllocator,
+  Either,
+  createDataProp,
+} from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';

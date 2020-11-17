@@ -3,7 +3,11 @@ import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
 import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
-import { isComponentType, IdAllocator, HTMLElementProps } from '@leafygreen-ui/lib';
+import {
+  isComponentType,
+  IdAllocator,
+  HTMLElementProps,
+} from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
@@ -269,8 +273,8 @@ const Row = React.forwardRef(
 
     const ariaExpanded = rowHasNestedRows
       ? {
-        ['aria-expanded']: isExpanded,
-      }
+          ['aria-expanded']: isExpanded,
+        }
       : undefined;
 
     return (

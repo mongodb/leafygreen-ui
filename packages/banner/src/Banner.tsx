@@ -6,7 +6,7 @@ import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircl
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { HTMLElementProps } from '@leafygreen-ui/lib'
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 const Variant = {
   Info: 'info',
@@ -229,7 +229,7 @@ interface BannerProps extends HTMLElementProps<'div', never> {
 export default function Banner({
   variant = Variant.Info,
   dismissible = false,
-  onClose = () => { },
+  onClose = () => {},
   image,
   children,
   className,
@@ -242,16 +242,16 @@ export default function Banner({
       className: renderedImageStyles,
     })
   ) : (
-      <Icon
-        fill={color}
-        className={cx(
-          flexShrink,
-          css`
+    <Icon
+      fill={color}
+      className={cx(
+        flexShrink,
+        css`
           margin-top: 1px;
         `,
-        )}
-      />
-    );
+      )}
+    />
+  );
 
   return (
     <div

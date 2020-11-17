@@ -77,7 +77,7 @@ function isRadioBoxElement(
 export default class RadioBoxGroup extends PureComponent<
   RadioBoxGroupProps,
   RadioBoxGroupState
-  > {
+> {
   static displayName = 'RadioBoxGroup';
 
   static propTypes = {
@@ -90,7 +90,7 @@ export default class RadioBoxGroup extends PureComponent<
   };
 
   static defaultProps = {
-    onChange: () => { },
+    onChange: () => {},
     size: 'default',
   };
 

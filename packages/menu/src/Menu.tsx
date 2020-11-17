@@ -386,11 +386,11 @@ function Menu({
       },
       children: triggerChildren
         ? [
-          ...(triggerChildren instanceof Array
-            ? triggerChildren
-            : [triggerChildren]),
-          popoverContent,
-        ]
+            ...(triggerChildren instanceof Array
+              ? triggerChildren
+              : [triggerChildren]),
+            popoverContent,
+          ]
         : popoverContent,
     });
   }

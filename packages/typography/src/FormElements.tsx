@@ -1,5 +1,5 @@
 import React from 'react';
-import { HTMLElementProps } from '@leafygreen-ui/lib'
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 

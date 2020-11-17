@@ -294,7 +294,7 @@ export type RadioProps = Omit<HTMLElementProps<'input', never>, 'size'> &
 function Radio({
   children,
   className,
-  onChange = () => { },
+  onChange = () => {},
   value,
   disabled,
   id,

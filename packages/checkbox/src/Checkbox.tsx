@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { HTMLElementProps, createDataProp, IdAllocator } from '@leafygreen-ui/lib';
+import {
+  HTMLElementProps,
+  createDataProp,
+  IdAllocator,
+} from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
   spritesheetLight,
