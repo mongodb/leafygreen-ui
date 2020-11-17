@@ -75,7 +75,7 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
 
   const handleBackdropClick = useCallback(
-    (e: React.SyntheticEvent) => {
+    (e: React.MouseEvent) => {
       if (!scrollContainerNode?.contains(e.target as Node)) {
         setOpen(false);
       }
