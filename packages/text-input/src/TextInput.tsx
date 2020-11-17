@@ -42,7 +42,7 @@ const Mode = {
 
 type Mode = typeof Mode[keyof typeof Mode];
 
-interface BaseTextInputProps extends HTMLElementProps<'input'> {
+interface BaseTextInputProps {
   /**
    * id associated with the TextInput component.
    */
@@ -106,10 +106,14 @@ interface BaseTextInputProps extends HTMLElementProps<'input'> {
   darkMode?: boolean;
 
   type?: TextInputType;
+
+  ['aria-labelledby']?: string;
 }
 
+type TextInputProps = BaseTextInputProps &
+  Omit<HTMLElementProps<'input', never>, keyof BaseTextInputProps>;
 type AriaLabels = 'label' | 'aria-labelledby';
-type TextInputProps = Either<BaseTextInputProps, AriaLabels>;
+type AccessibleTextInputProps = Either<TextInputProps, AriaLabels>;
 
 const interactionRing = css`
   transition: all 150ms ease-in-out;
@@ -349,7 +353,7 @@ const TextInput = React.forwardRef(
       className,
       darkMode = false,
       ...rest
-    }: TextInputProps,
+    }: AccessibleTextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
   ) => {
     const mode = darkMode ? Mode.Dark : Mode.Light;
