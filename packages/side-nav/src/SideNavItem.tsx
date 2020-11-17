@@ -194,7 +194,6 @@ const SideNavItem: ExtendableBox<
   } = props;
 
   const rest = omit(props, [
-    'as',
     'active',
     'disabled',
     'ariaCurrentValue',
@@ -207,7 +206,7 @@ const SideNavItem: ExtendableBox<
   return (
     <li role="none">
       <Box
-        as="button"
+        as={props.href ? 'a' : "button"}
         {...rest}
         {...sideNavItemContainer.prop}
         role="menuitem"
