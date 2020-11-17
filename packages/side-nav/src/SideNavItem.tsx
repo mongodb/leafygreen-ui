@@ -129,7 +129,7 @@ const disabledTextStyle = css`
   color: ${uiColors.gray.light1};
 `;
 
-interface SharedSideNavItemProps {
+export interface SideNavItemProps {
   /**
    * Whether or not the component should be rendered in an active state.
    */
@@ -182,9 +182,9 @@ interface SharedSideNavItemProps {
  */
 
 const SideNavItem: ExtendableBox<
-  SharedSideNavItemProps & { ref?: React.Ref<any> },
+  SideNavItemProps & { ref?: React.Ref<any> },
   'button'
-> = React.forwardRef((props: SharedSideNavItemProps, forwardRef) => {
+> = React.forwardRef((props: SideNavItemProps, forwardRef) => {
   const {
     active = false,
     disabled = false,
@@ -207,9 +207,9 @@ const SideNavItem: ExtendableBox<
     <li role="none">
       <Box
         as={props.href ? 'a' : 'button'}
+        role="menuitem"
         {...rest}
         {...sideNavItemContainer.prop}
-        role="menuitem"
         className={cx(
           defaultStyle,
           {
