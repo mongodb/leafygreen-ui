@@ -206,7 +206,7 @@ const SideNavItem: ExtendableBox<
   return (
     <li role="none">
       <Box
-        as={props.href ? 'a' : "button"}
+        as={props.href ? 'a' : 'button'}
         {...rest}
         {...sideNavItemContainer.prop}
         role="menuitem"
