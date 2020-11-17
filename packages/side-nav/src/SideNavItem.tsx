@@ -3,12 +3,9 @@ import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import {
-  AriaCurrentValue,
-  createDataProp,
-} from '@leafygreen-ui/lib';
+import { AriaCurrentValue, createDataProp } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import Box, { ExtendableBox } from '@leafygreen-ui/box'
+import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { sideNavItemSidePadding } from './styles';
 
 const sideNavItemContainer = createDataProp('side-nav-item-container');
@@ -210,10 +207,10 @@ const SideNavItem: ExtendableBox<
   return (
     <li role="none">
       <Box
-        as='button'
+        as="button"
         {...rest}
         {...sideNavItemContainer.prop}
-        role='menuitem'
+        role="menuitem"
         className={cx(
           defaultStyle,
           {
