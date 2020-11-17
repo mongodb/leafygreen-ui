@@ -160,13 +160,13 @@ export default function InteractionRing({
     if (focused) {
       const offFocus = () => setFocused(false);
       focusTargetElement.addEventListener('blur', offFocus);
-      return () => focusTargetElement.removeEventListener('focus', offFocus);
+      return () => focusTargetElement.removeEventListener('blur', offFocus);
     } else {
       const onFocus = () => setFocused(true);
       focusTargetElement.addEventListener('focus', onFocus);
       return () => focusTargetElement.removeEventListener('focus', onFocus);
     }
-  }, [focusTargetElement]);
+  }, [focusTargetElement, focused]);
 
   const { className: contentClassName } = children.props;
 
