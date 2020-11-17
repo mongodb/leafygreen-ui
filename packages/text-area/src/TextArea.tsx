@@ -145,7 +145,7 @@ const colorSets: Record<Mode, ColorSets> = {
       background-color: ${uiColors.gray.light2};
 
       ${textAreaProp.selector}:focus ~ & {
-        background-color: ${uiColors.blue.light1};
+        background-color: #9DD0E7;
       }
     `,
   },
