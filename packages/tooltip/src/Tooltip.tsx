@@ -68,6 +68,7 @@ const baseStyles = css`
   border-radius: 3px;
   box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
   cursor: default;
+  overflow-wrap: break-word;
 `;
 
 const positionRelative = css`
