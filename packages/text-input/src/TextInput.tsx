@@ -145,7 +145,7 @@ const inputStyle = css`
 
   &:focus {
     z-index: 2;
-    border-color: #9dd0e7;
+    border-color: ${uiColors.blue.light1};
     transition: border-color 150ms ease-in-out;
 
     & ~ ${iconSelectorProp.selector} {

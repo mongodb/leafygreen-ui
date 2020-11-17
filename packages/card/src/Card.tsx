@@ -14,7 +14,7 @@ export type ContentStyle = typeof ContentStyle[keyof typeof ContentStyle];
 
 const baseBoxShadow = `0 4px 10px -4px ${transparentize(0.7, uiColors.black)}`;
 const hoverBoxShadow = `0 2px 6px -2px ${transparentize(0.4, uiColors.black)}`;
-const focusBoxShadow = '0 0 0 3px #9dd0e7';
+const focusBoxShadow = `0 0 0 3px ${uiColors.blue.light1}`;
 
 const containerStyle = css`
   position: relative;
