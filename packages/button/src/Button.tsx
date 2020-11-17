@@ -408,16 +408,24 @@ const Button: ExtendableBox<
       </span>
     );
 
+    let button;
+
     if (typeof rest.href === 'string') {
-      return (
+      button = (
         <Box as="a" {...commonProps} {...rest}>
+          {content}
+        </Box>
+      );
+    } else {
+      // we give button a default "as" value based on the `href` prop, if a custom
+      // "as" prop is supplied, it will overwrite this value through {...rest}
+      button = (
+        <Box as="button" type="button" {...commonProps} {...rest}>
           {content}
         </Box>
       );
     }
 
-    // we give button a default "as" value based on the `href` prop, if a custom
-    // "as" prop is supplied, it will overwrite this value through {...rest}
     return (
       <InteractionRing
         className={cx(buttonSizes[size], className)}
@@ -426,9 +434,7 @@ const Button: ExtendableBox<
         disabled={disabled}
         forceState={forceState}
       >
-        <Box as="button" type="button" {...commonProps} {...rest}>
-          {content}
-        </Box>
+        {button}
       </InteractionRing>
     );
   },

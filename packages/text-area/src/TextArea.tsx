@@ -174,11 +174,13 @@ export default function TextArea({
   return (
     <div className={containerStyles}>
       {label && (
-        <Label htmlFor={id} disabled={disabled}>
+        <Label darkMode={darkMode} htmlFor={id} disabled={disabled}>
           {label}
         </Label>
       )}
-      {description && <Description>{description}</Description>}
+      {description && (
+        <Description darkMode={darkMode}>{description}</Description>
+      )}
       <InteractionRing darkMode={darkMode} disabled={disabled}>
         <textarea
           {...rest}

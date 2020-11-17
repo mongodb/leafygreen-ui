@@ -20,7 +20,7 @@ npm install @leafygreen-ui/interaction-ring
 
 ## Example
 
-```js
+```jsx
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 
 // When the child is the focused element
@@ -29,8 +29,7 @@ import InteractionRing from '@leafygreen-ui/interaction-ring';
 </InteractionRing>;
 
 // When the focused element is not the child
-const [inputElement, setInputElement] =
-  (React.useState < HTMLElement) | (null > null);
+const [inputElement, setInputElement] = React.useState(null);
 
 <InteractionRing focusTargetElement={inputElement}>
   <div className="Div appearing as button">
@@ -38,6 +37,17 @@ const [inputElement, setInputElement] =
     <input className="Visually hidden input" ref={setInputElement} />
   </div>
 </InteractionRing>;
+```
+
+**Output HTML**
+
+```html
+<div class="leafygreen-ui-1wkamvn">
+  <div class="leafygreen-ui-pppkef Div appearing as button">
+    Click me<input class="Visually hidden input" />
+  </div>
+  <div data-leafygreen-ui="interaction-ring" class="leafygreen-ui-ebg95b"></div>
+</div>
 ```
 
 ## Properties
