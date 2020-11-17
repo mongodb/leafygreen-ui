@@ -1,9 +1,6 @@
-import React, { useEffect } from 'react';
 import { act, renderHook } from '@testing-library/react-hooks';
-import { render } from '@testing-library/react';
 import {
   useEventListener,
-  useElementNode,
   useViewportSize,
   usePoller,
   usePrevious,
@@ -92,30 +89,6 @@ describe('packages/hooks', () => {
 
   // Difficult to test a hook that measures changes to the DOM without having access to the DOM
   describe.skip('useMutationObserver', () => {}); //eslint-disable-line jest/no-disabled-tests
-
-  describe('useElementNode', () => {
-    let count = 0;
-
-    function TestUseElementNode() {
-      const [refEl, setRefEl] = useElementNode();
-      useEffect(() => {
-        count += 1;
-      }, [refEl]);
-      return <div ref={setRefEl} />;
-    }
-
-    test('it gets called twice', () => {
-      act(() => {
-        render(<TestUseElementNode />);
-      });
-
-      // using jest default timeout so that the component has enough
-      // time to render before the tests are called
-      setTimeout(() => {
-        expect(count).toBe(2);
-      }, 4500);
-    });
-  });
 
   test('useViewportSize responds to updates in window size', async () => {
     const { result, waitForNextUpdate } = renderHook(() => useViewportSize());
