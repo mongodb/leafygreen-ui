@@ -25,7 +25,7 @@ const titleStyle = css`
 const baseModalStyle = css`
   width: 600px;
   padding: initial;
-  overflow: scroll;
+  overflow: auto;
 `;
 
 const baseGraphicContainerStyle = css`

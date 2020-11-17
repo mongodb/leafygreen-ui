@@ -6,6 +6,7 @@ import ActivityFeedIcon from '@leafygreen-ui/icon/dist/ActivityFeed';
 import Button from '@leafygreen-ui/button';
 import Card from '@leafygreen-ui/card';
 import Code from '@leafygreen-ui/code';
+import Copyable from '@leafygreen-ui/copyable';
 import Modal from '@leafygreen-ui/modal';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { Subtitle, Body } from '@leafygreen-ui/typography';
@@ -15,6 +16,7 @@ import { useViewportSize } from '@leafygreen-ui/hooks';
 import { BaseLayoutProps } from 'utils/types';
 import { GridContainer, GridItem } from 'components/Grid';
 import PropTable, { ReadmeMarkdown } from 'components/PropTable';
+import TypeDefinition from 'components/TypeDefinition';
 
 const topAlignment = css`
   margin-top: ${spacing[4]}px;
@@ -39,7 +41,7 @@ const subtitlePadding = css`
 `;
 
 const tabsPadding = css`
-  padding-top: ${spacing[2]}px;
+  padding-top: ${spacing[4]}px;
 `;
 
 const mobileInstallMargin = css`
@@ -47,14 +49,14 @@ const mobileInstallMargin = css`
 `;
 
 interface VersionCardProps {
-  version: string;
+  version?: string;
   changelog: string;
   isMobile?: boolean;
 }
 
 interface InstallProps {
   component: string;
-  version: string;
+  version?: string;
   changelog: string;
 }
 
@@ -67,6 +69,7 @@ function VersionCard({
 
   return (
     <Card className={cx(topAlignment, versionCard)}>
+      {/* TODO: Provide fallback if no version */}
       <Subtitle className={subtitlePadding}>Version {version}</Subtitle>
       <Button
         size={isMobile ? 'large' : 'normal'}
@@ -102,19 +105,15 @@ function MobileInstall({ component, version, changelog }: InstallProps) {
           <Body weight="medium" className={mt3}>
             Yarn
           </Body>
-          <Code language="js">{`yarn add @leafygreen-ui/${component}`}</Code>
+          <Copyable>{`yarn add @leafygreen-ui/${component}`}</Copyable>
           <Body weight="medium" className={mt3}>
             NPM
           </Body>
-          <Code language="js">{`npm install @leafygreen-ui/${component}`}</Code>
+          <Copyable>{`npm install @leafygreen-ui/${component}`}</Copyable>
         </div>
       </GridItem>
       <GridItem sm={12}>
-        <div
-          className={css`
-            margin-bottom: 70px;
-          `}
-        >
+        <div>
           <VersionCard version={version} changelog={changelog} isMobile />
         </div>
       </GridItem>
@@ -125,7 +124,7 @@ function MobileInstall({ component, version, changelog }: InstallProps) {
 function DesktopInstall({ component, changelog, version }: InstallProps) {
   return (
     <>
-      <GridContainer justify="flex-start" align="flex-start">
+      <GridContainer justify="space-between" align="flex-start">
         <GridItem md={7} lg={7}>
           <div className={topAlignment}>
             <Subtitle
@@ -138,7 +137,7 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
             <Body weight="medium" className={mb1}>
               Yarn
             </Body>
-            <Code language="js">{`yarn add @leafygreen-ui/${component}`}</Code>
+            <Copyable>{`yarn add @leafygreen-ui/${component}`}</Copyable>
           </div>
         </GridItem>
         <GridItem md={5} lg={5}>
@@ -150,7 +149,7 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
           <Body weight="medium" className={mb1}>
             NPM
           </Body>
-          <Code language="js">{`npm install @leafygreen-ui/${component}`}</Code>
+          <Copyable>{`npm install @leafygreen-ui/${component}`}</Copyable>
         </GridItem>
       </GridContainer>
     </>
@@ -159,7 +158,9 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
 
 function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
   const viewport = useViewportSize();
-  const isMobile = viewport?.width < breakpoints.Tablet;
+  const isMobile = viewport?.width
+    ? viewport?.width < breakpoints.Tablet
+    : false;
 
   const version = changelog.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
   const example = readme.match(/(?<=js).*?(?=```)/s)?.[0];
@@ -193,6 +194,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
                 </Code>
               </Tab>
             )}
+
             {outputHTML && (
               <Tab name="Output HTML" className={mt3} default={!example}>
                 <Code showLineNumbers language="xml">
@@ -206,6 +208,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
           <PropTable markdownAst={markdownAst} component={component} />
+          <TypeDefinition markdownAst={markdownAst} readme={readme} />
         </GridItem>
       </GridContainer>
     </>

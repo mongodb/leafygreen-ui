@@ -18,7 +18,7 @@ yarn add @leafygreen-ui/palette
 npm install @leafygreen-ui/palette
 ```
 
-This package contains the colors for the following palettes:
+This package contains the colors for the following palettes
 
 - **UI**: MongoDB-branded, general-use UI palette.
 - _Chart (coming soon)_: Color palette for accessible charting colors.

@@ -1,0 +1,29 @@
+{
+  "extends": "../../package.tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src/**/*", "../../typings"],
+  "references": [
+    {
+      "path": "../button"
+    },
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../tooltip"
+    },
+    {
+      "path": "../typography"
+    }
+  ]
+}

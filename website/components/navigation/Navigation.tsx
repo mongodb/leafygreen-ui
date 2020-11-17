@@ -65,36 +65,67 @@ const components = [
   'typography',
 ];
 
+const GroupType = {
+  Component: 'component',
+  Guideline: 'guideline',
+} as const;
+
+type GroupType = typeof GroupType[keyof typeof GroupType];
+
 function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
   const router = useRouter();
 
-  const Group = isTouchDevice ? MobileNavigationGroup : SideNavGroup;
-  const Item = isTouchDevice ? MobileNavigationItem : SideNavItem;
-  const groupProps = isTouchDevice
-    ? undefined
-    : ({
-        collapsible: true,
-        initialCollapsed: false,
-      } as const);
+  const renderGroup = (type: GroupType) => {
+    const isGuideline = type === GroupType.Guideline;
+    const items = isGuideline ? coreGuidelines : components;
 
-  return (
-    <>
-      <Group header="Core Guidelines" {...groupProps}>
-        {coreGuidelines.map(item => (
-          <Item key={item} onClick={() => router.push(`/guideline/${item}`)}>
-            {item.split('-').join(' ')}
-          </Item>
-        ))}
-      </Group>
-      <Group header="Components" {...groupProps}>
-        {components.map(item => (
-          <Item key={item} onClick={() => router.push(`/component/${item}`)}>
-            {item.split('-').join(' ')}
-          </Item>
-        ))}
-      </Group>
-    </>
-  );
+    if (isTouchDevice) {
+      return (
+        <MobileNavigationGroup
+          key={type}
+          header={isGuideline ? 'Core Guidelines' : 'Components'}
+          initialCollapsed={!router.asPath.includes(type)}
+        >
+          {items.map(item => {
+            const path = `/${type}/${item}`;
+            return (
+              <MobileNavigationItem
+                key={item}
+                onClick={() => router.push(path)}
+                active={router.asPath === path}
+              >
+                {item.split('-').join(' ')}
+              </MobileNavigationItem>
+            );
+          })}
+        </MobileNavigationGroup>
+      );
+    }
+
+    return (
+      <SideNavGroup
+        key={type}
+        header={isGuideline ? 'Core Guidelines' : 'Components'}
+        collapsible
+        initialCollapsed={false}
+      >
+        {items.map(item => {
+          const path = `/${type}/${item}`;
+          return (
+            <SideNavItem
+              key={item}
+              onClick={() => router.push(path)}
+              active={router.asPath === path}
+            >
+              {item.split('-').join(' ')}
+            </SideNavItem>
+          );
+        })}
+      </SideNavGroup>
+    );
+  };
+
+  return <>{[GroupType.Guideline, GroupType.Component].map(renderGroup)}</>;
 }
 
 function Navigation() {

@@ -22,7 +22,7 @@ const rootMenuStyle = css`
 `;
 
 const scrollContainerStyle = css`
-  overflow: scroll;
+  overflow: auto;
   list-style: none;
   margin-block-start: 0px;
   margin-block-end: 0px;
