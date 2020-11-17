@@ -1,4 +1,10 @@
-import React, { useState, useRef, useMemo, useEffect } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { useEventListener } from '@leafygreen-ui/hooks';
@@ -234,7 +240,7 @@ function Menu({
     return updateChildren(children);
   }, [children, currentSubMenu, open, refs, titleArr]);
 
-  const popoverRef: React.RefObject<HTMLUListElement> = useRef(null);
+  const [popoverNode, setPopoverNode] = useState<HTMLUListElement | null>(null);
 
   const setFocus = (el: HTMLElement) => {
     if (el == null) {
@@ -252,22 +258,20 @@ function Menu({
     }
   }, [open]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     if (shouldClose()) {
       setOpen(false);
     }
-  };
+  }, [setOpen, shouldClose]);
 
-  const handleBackdropClick = (e: MouseEvent) => {
-    const popoverReference = popoverRef && popoverRef.current;
-
-    if (
-      popoverReference &&
-      !popoverReference.contains(e.target as HTMLElement)
-    ) {
-      handleClose();
-    }
-  };
+  const handleBackdropClick = useCallback(
+    (e: MouseEvent) => {
+      if (popoverNode && !popoverNode.contains(e.target as HTMLElement)) {
+        handleClose();
+      }
+    },
+    [handleClose, popoverNode],
+  );
 
   useEventListener('click', handleBackdropClick, {
     enabled: open,
@@ -353,7 +357,7 @@ function Menu({
           {...rest}
           className={scrollContainerStyle}
           role="menu"
-          ref={popoverRef}
+          ref={setPopoverNode}
           onClick={e => e.stopPropagation()}
         >
           {updatedChildren}

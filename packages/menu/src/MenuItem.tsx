@@ -103,6 +103,7 @@ interface BaseMenuItemProps {
    * Description element displayed below title in MenuItem.
    */
   description?: React.ReactNode;
+
   /**
    * Determines whether or not the MenuItem is disabled.
    */
