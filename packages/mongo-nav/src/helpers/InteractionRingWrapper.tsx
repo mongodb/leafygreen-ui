@@ -41,7 +41,7 @@ const InteractionRingWrapper = React.forwardRef<
 
     const interactionRingFocusStyle = css`
       ${selector}:focus + & {
-        background-color: #9dd0e7;
+        background-color: ${uiColors.blue.light1};
         transform: scale(1);
         z-index: 1;
       }

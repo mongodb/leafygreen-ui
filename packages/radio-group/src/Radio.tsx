@@ -79,7 +79,7 @@ const inputColorSet = {
     &:focus + ${inputDisplayWrapper.selector}:before {
       transform: scale(1);
       opacity: 1;
-      border-color: #9dd0e7;
+      border-color: ${uiColors.blue.light1};
     }
 
     &:disabled + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {

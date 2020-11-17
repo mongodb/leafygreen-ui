@@ -169,7 +169,7 @@ const inputStyle = css`
   &:focus {
     outline: none;
     z-index: 2;
-    border-color: #9dd0e7;
+    border-color: ${uiColors.blue.light1};
     transition: border-color 150ms ease-in-out;
 
     & ~ ${iconSelectorProp.selector} {
@@ -242,7 +242,7 @@ interface ColorSets {
 const colorSets: Record<Mode, ColorSets> = {
   [Mode.Light]: {
     interactionRing: uiColors.gray.light2,
-    interactionRingFocus: '#9dd0e7',
+    interactionRingFocus: uiColors.blue.light1,
     labelColor: uiColors.gray.dark2,
     disabledLabelColor: uiColors.gray.dark1,
     descriptionColor: uiColors.gray.dark1,
