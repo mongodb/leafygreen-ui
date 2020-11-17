@@ -1,5 +1,4 @@
 export { default as useEventListener } from './useEventListener';
-export { default as useElementNode } from './useElementNode';
 export { default as useMutationObserver } from './useMutationObserver';
 export { default as useViewportSize } from './useViewportSize';
 export { default as useEscapeKey } from './useEscapeKey';

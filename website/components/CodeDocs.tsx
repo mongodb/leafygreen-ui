@@ -6,6 +6,7 @@ import ActivityFeedIcon from '@leafygreen-ui/icon/dist/ActivityFeed';
 import Button from '@leafygreen-ui/button';
 import Card from '@leafygreen-ui/card';
 import Code from '@leafygreen-ui/code';
+import Copyable from '@leafygreen-ui/copyable';
 import Modal from '@leafygreen-ui/modal';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { Subtitle, Body } from '@leafygreen-ui/typography';
@@ -104,11 +105,11 @@ function MobileInstall({ component, version, changelog }: InstallProps) {
           <Body weight="medium" className={mt3}>
             Yarn
           </Body>
-          <Code language="js">{`yarn add @leafygreen-ui/${component}`}</Code>
+          <Copyable>{`yarn add @leafygreen-ui/${component}`}</Copyable>
           <Body weight="medium" className={mt3}>
             NPM
           </Body>
-          <Code language="js">{`npm install @leafygreen-ui/${component}`}</Code>
+          <Copyable>{`npm install @leafygreen-ui/${component}`}</Copyable>
         </div>
       </GridItem>
       <GridItem sm={12}>
@@ -136,7 +137,7 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
             <Body weight="medium" className={mb1}>
               Yarn
             </Body>
-            <Code language="js">{`yarn add @leafygreen-ui/${component}`}</Code>
+            <Copyable>{`yarn add @leafygreen-ui/${component}`}</Copyable>
           </div>
         </GridItem>
         <GridItem md={5} lg={5}>
@@ -148,7 +149,7 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
           <Body weight="medium" className={mb1}>
             NPM
           </Body>
-          <Code language="js">{`npm install @leafygreen-ui/${component}`}</Code>
+          <Copyable>{`npm install @leafygreen-ui/${component}`}</Copyable>
         </GridItem>
       </GridContainer>
     </>

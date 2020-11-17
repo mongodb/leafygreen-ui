@@ -1,6 +1,8 @@
+import ClipboardJS from 'clipboard';
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
+import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 import Code from './Code';
 
 const codeSnippet = 'const greeting = "Hello, world!";';
@@ -8,10 +10,17 @@ const className = 'test-class';
 const onCopy = jest.fn();
 
 describe('packages/Syntax', () => {
-  const { container } = render(
-    <Code className={className} language="javascript">
-      {codeSnippet}
-    </Code>,
+  const { container } = Context.within(
+    Jest.spyContext(ClipboardJS, 'isSupported'),
+    spy => {
+      spy.mockReturnValue(true);
+
+      return render(
+        <Code className={className} language="javascript">
+          {codeSnippet}
+        </Code>,
+      );
+    },
   );
 
   const codeContainer = (container.firstChild as HTMLElement).lastChild;
@@ -36,11 +45,16 @@ describe('packages/Syntax', () => {
 
   describe('when copyable is true', () => {
     test('onCopy callback is fired when code is copied', () => {
-      render(
-        <Code onCopy={onCopy} copyable={true} language="javascript">
-          {codeSnippet}
-        </Code>,
-      );
+      Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
+        spy.mockReturnValue(true);
+
+        render(
+          <Code onCopy={onCopy} copyable={true} language="javascript">
+            {codeSnippet}
+          </Code>,
+        );
+      });
+
       const copyIcon = screen.getByRole('button');
       fireEvent.click(copyIcon);
       expect(onCopy).toBeCalledTimes(1);
