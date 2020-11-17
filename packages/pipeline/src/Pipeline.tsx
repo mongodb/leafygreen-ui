@@ -13,7 +13,7 @@ import findLast from 'lodash/findLast';
 import { uiColors } from '@leafygreen-ui/palette';
 import Tooltip from '@leafygreen-ui/tooltip';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { useElementNode, useMutationObserver } from '@leafygreen-ui/hooks';
+import { useMutationObserver } from '@leafygreen-ui/hooks';
 
 import Stage from './Stage';
 import Counter from './Counter';
@@ -140,7 +140,7 @@ const Pipeline = forwardRef(
     ref: Ref<HTMLDivElement>,
   ): ReactElement => {
     // State
-    const [pipelineNode, setPipelineNode] = useElementNode();
+    const [pipelineNode, setPipelineNode] = useState<HTMLElement | null>(null);
     const [hasHiddenStages, setHasHiddenStages] = useState(false);
 
     // Handlers
