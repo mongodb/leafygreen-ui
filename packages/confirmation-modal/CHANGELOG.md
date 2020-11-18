@@ -1,5 +1,24 @@
 # @leafygreen-ui/confirmation-modal
 
+## 2.1.0
+
+### Minor Changes
+
+- 720078e7: Adds `submitDisabled` prop
+
+### Patch Changes
+
+- Updated dependencies [10bdc295]
+- Updated dependencies [374430ea]
+- Updated dependencies [c18f16e6]
+- Updated dependencies [c9a0d89f]
+- Updated dependencies [9ee1d5fc]
+  - @leafygreen-ui/button@9.0.0
+  - @leafygreen-ui/text-input@4.1.1
+  - @leafygreen-ui/modal@5.1.0
+  - @leafygreen-ui/palette@3.1.0
+  - @leafygreen-ui/lib@6.1.1
+
 ## 2.0.1
 
 ### Patch Changes

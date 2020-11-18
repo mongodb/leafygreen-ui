@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/side-nav",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "leafyGreen UI Kit Side Nav",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,13 +20,13 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^6.0.1",
+    "@leafygreen-ui/lib": "^6.1.1",
     "@leafygreen-ui/emotion": "3.0.1",
-    "@leafygreen-ui/palette": "3.0.1",
-    "@leafygreen-ui/menu": "9.0.2", 
+    "@leafygreen-ui/palette": "3.1.0",
+    "@leafygreen-ui/menu": "9.1.0", 
     "@leafygreen-ui/box": "^2.1.5"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^2.0.1"
+    "@leafygreen-ui/leafygreen-provider": "^2.0.2"
   }
 }
