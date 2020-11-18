@@ -1,6 +1,7 @@
 # @leafygreen-ui/copyable
 
 ## 1.0.0
+
 ### Major Changes
 
 - a6060b21: Initial release of Copyable component
