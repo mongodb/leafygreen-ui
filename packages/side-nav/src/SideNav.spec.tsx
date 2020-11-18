@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, cleanup, screen, fireEvent } from '@testing-library/react';
-import { SideNav, SideNavGroup, SideNavItem } from './index';
+import { SideNav, SideNavGroup, SideNavItem } from '.';
 import { SideNavItemProps } from './SideNavItem';
 import { SideNavGroupProps } from './SideNavGroup';
 

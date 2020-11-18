@@ -83,6 +83,7 @@ npm install @leafygreen-ui/pipeline
 | `className` | `string`                                           | Adds a className to the class attribute.                                                                                                                                                                   | `''`        |
 | `children`  | `node`                                             | The content that will render inside of the component. If any nodes other than `Stage` components are passed in as children, the `Pipeline` component will automatically wrap them with `Stage` components. | `undefined` |
 | `size`      | `'xsmall'` \| `'small'` \| `'normal'` \| `'large'` | Sets the size variant of the Pipeline.                                                                                                                                                                     | `'xsmall'`  |
+| ...         | native `li` attributes                             | Any other props will be spread on the root `li` element                                                                                                                                                    |             |
 
 _All other props will be spread onto the root element._
 

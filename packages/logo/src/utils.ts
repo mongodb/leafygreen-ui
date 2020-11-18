@@ -39,7 +39,7 @@ export interface SVGLogoProps {
   className: string;
 }
 
-export type ProductLogoProps = HTMLElementProps<'svg'> & {
+export type ProductLogoProps = HTMLElementProps<'svg', never> & {
   knockout?: boolean;
   size?: number;
 };

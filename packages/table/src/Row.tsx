@@ -3,7 +3,11 @@ import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
 import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
-import { isComponentType, IdAllocator } from '@leafygreen-ui/lib';
+import {
+  isComponentType,
+  IdAllocator,
+  HTMLElementProps,
+} from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
@@ -95,7 +99,7 @@ function getIndentLevelStyle(indentLevel: number) {
 
 const idAllocator = IdAllocator.create('table-row');
 
-interface RowProps extends React.ComponentPropsWithRef<'tr'> {
+interface RowProps extends HTMLElementProps<'tr', HTMLTableRowElement> {
   expanded?: boolean;
   disabled?: boolean;
   indentLevel?: number;

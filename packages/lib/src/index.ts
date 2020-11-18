@@ -5,13 +5,12 @@ export { IdAllocator, typeIs };
 
 /** Helper type to extract an HTML element's valid props */
 export type HTMLElementProps<
-  Element extends keyof JSX.IntrinsicElements
-> = JSX.IntrinsicElements[Element] extends React.DetailedHTMLProps<
-  infer Props,
-  any
->
-  ? Props
-  : never;
+  Element extends keyof JSX.IntrinsicElements,
+  RefType extends HTMLElement = never
+> = Omit<JSX.IntrinsicElements[Element], 'ref'> & {
+  ref?: [RefType] extends [never] ? never : React.Ref<RefType>;
+  key?: React.Key | null;
+};
 
 /**
  * Helper that constructs a type requiring at least one of the passed keys

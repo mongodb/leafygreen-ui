@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 
@@ -90,7 +91,7 @@ function Badge({
   variant = Variant.LightGray,
   className,
   ...rest
-}: BadgeProps & React.HTMLAttributes<HTMLDivElement>) {
+}: BadgeProps & HTMLElementProps<'div', never>) {
   return (
     <div {...rest} className={cx(baseStyle, badgeVariants[variant], className)}>
       {children}
