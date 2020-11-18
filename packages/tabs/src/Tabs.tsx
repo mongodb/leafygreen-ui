@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -121,6 +121,8 @@ function Tabs({
   as = 'button',
   ...rest
 }: TabsProps) {
+  const containerNode = useRef(null)
+
   const childrenArray = React.Children.toArray(children) as Array<
     React.ReactElement
   >;
@@ -158,7 +160,7 @@ function Tabs({
         const [enabledIndexes, current] = getEnabledIndexes();
         setSelected(
           enabledIndexes[
-            (current - 1 + enabledIndexes.length) % enabledIndexes.length
+          (current - 1 + enabledIndexes.length) % enabledIndexes.length
           ],
         );
       }
@@ -185,6 +187,7 @@ function Tabs({
         className={cx(listStyle, modeColors[mode].underlineColor)}
         role="tablist"
         tabIndex={0}
+        ref={containerNode}
       >
         {tabs?.map((tab, index) => {
           if (!isComponentType(tab, 'Tab')) {
@@ -204,6 +207,7 @@ function Tabs({
             <TabTitle
               {...filteredRest}
               key={index}
+              ref={containerNode}
               ariaControl={`tab-${index}`}
               disabled={disabled}
               selected={selected}

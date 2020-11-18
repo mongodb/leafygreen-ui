@@ -113,6 +113,23 @@ const listTitle = css`
   }
 `;
 
+function useDocumentActiveElement() {
+  const [activeEl, setActiveEl] = React.useState<Element | null>(null)
+
+  const handleFocusIn = (e) => {
+    setActiveEl(document.activeElement);
+  }
+
+  React.useEffect(() => {
+    document.addEventListener('focusin', handleFocusIn)
+    return () => {
+      document.removeEventListener('focusin', handleFocusIn)
+    };
+  }, [])
+
+  return activeEl
+}
+
 interface BaseTabProps {
   ariaControl: string;
   darkMode: boolean;
@@ -124,7 +141,7 @@ interface BaseTabProps {
   disabled?: boolean;
 }
 
-const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
+const TabTitle: ExtendableBox<BaseTabProps, 'button'> = React.forwardRef(({
   selected = false,
   disabled = false,
   children,
@@ -133,16 +150,21 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
   index,
   darkMode,
   ...rest
-}: BaseTabProps) => {
+}: BaseTabProps, containerNode) => {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const mode = darkMode ? Mode.Dark : Mode.Light;
+  const activeEl = useDocumentActiveElement()
 
   useEffect(() => {
-    if (!disabled && selected && titleRef.current) {
-      titleRef.current.focus();
+    const tabsList = Array.from(containerNode?.current.children)
+
+    if (tabsList.indexOf(activeEl) !== -1) {
+      if (!disabled && selected && titleRef.current) {
+        titleRef.current.focus()
+      }
     }
-  }, [disabled, selected]);
+  }, [activeEl, disabled, selected, titleRef, containerNode])
 
   const sharedTabProps = {
     className: cx(
@@ -184,7 +206,7 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
       {children}
     </Box>
   );
-};
+});
 
 TabTitle.displayName = 'TabTitle';
 
