@@ -1,21 +1,23 @@
 import { css } from '@emotion/core';
 
+const cdn = 'https://d2va9gm4j17fy9.cloudfront.net/fonts'
+
 export const globalStyles = css`
   @font-face {
     font-family: 'Akzidenz';
     font-weight: normal;
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/akzidgrostdreg.eot');
+    src: url('${cdn}/akzidgrostdreg.eot');
     /* IE9 Compat Modes */
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/akzidgrostdreg.eot?#iefix')
+    src: url('${cdn}/akzidgrostdreg.eot?#iefix')
         format('embedded-opentype'),
       /* IE6-IE8 */
-        url('https://d2va9gm4j17fy9.cloudfront.net/fonts/akzidgrostdreg.woff')
+        url('${cdn}.akzidgrostdreg.woff')
         format('woff'),
       /* Pretty Modern Browsers */
-        url('https://d2va9gm4j17fy9.cloudfront.net/fonts/akzidgrostdreg.ttf')
+        url('${cdn}/akzidgrostdreg.ttf')
         format('truetype'),
       /* Safari, Android, iOS */
-        url('https://d2va9gm4j17fy9.cloudfront.net/fonts/akzidgrostdreg.svg#Akzidenz')
+        url('${cdn}/akzidgrostdreg.svg#Akzidenz')
         format('svg');
     /* Legacy iOS */
   }
@@ -23,18 +25,18 @@ export const globalStyles = css`
   @font-face {
     font-family: 'Akzidenz';
     font-weight: 600;
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/akzidgrostdmed.eot');
+    src: url('${cdn}/akzidgrostdmed.eot');
     /* IE9 Compat Modes */
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/akzidgrostdmed.eot?#iefix')
+    src: url('${cdn}/akzidgrostdmed.eot?#iefix')
         format('embedded-opentype'),
       /* IE6-IE8 */
-        url('https://d2va9gm4j17fy9.cloudfront.net/fonts/akzidgrostdmed.woff')
+        url('${cdn}/akzidgrostdmed.woff')
         format('woff'),
       /* Pretty Modern Browsers */
-        url('https://d2va9gm4j17fy9.cloudfront.net/fonts/akzidgrostdmed.ttf')
+        url('${cdn}/akzidgrostdmed.ttf')
         format('truetype'),
       /* Safari, Android, iOS */
-        url('https://d2va9gm4j17fy9.cloudfront.net/fonts/akzidgrostdmed.svg#Akzidenz')
+        url('${cdn}/akzidgrostdmed.svg#Akzidenz')
         format('svg');
     /* Legacy iOS */
   }
@@ -42,18 +44,18 @@ export const globalStyles = css`
   @font-face {
     font-family: 'Akzidenz';
     font-weight: bold;
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/akzidgrostdmed.eot');
+    src: url('${cdn}/akzidgrostdmed.eot');
     /* IE9 Compat Modes */
-    src: url('https://d2va9gm4j17fy9.cloudfront.net/fonts/akzidgrostdmed.eot?#iefix')
+    src: url('${cdn}/akzidgrostdmed.eot?#iefix')
         format('embedded-opentype'),
       /* IE6-IE8 */
-        url('https://d2va9gm4j17fy9.cloudfront.net/fonts/akzidgrostdmed.woff')
+        url('${cdn}/akzidgrostdmed.woff')
         format('woff'),
       /* Pretty Modern Browsers */
-        url('https://d2va9gm4j17fy9.cloudfront.net/fonts/akzidgrostdmed.ttf')
+        url('${cdn}/akzidgrostdmed.ttf')
         format('truetype'),
       /* Safari, Android, iOS */
-        url('https://d2va9gm4j17fy9.cloudfront.net/fonts/akzidgrostdmed.svg#Akzidenz')
+        url('${cdn}/akzidgrostdmed.svg#Akzidenz')
         format('svg');
     /* Legacy iOS */
   }
