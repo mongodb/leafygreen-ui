@@ -333,7 +333,9 @@ const idAllocator = IdAllocator.create('text-input');
  * @param props.className className supplied to the TextInput container.
  * @param props.darkMode determines whether or not the component appears in dark mode.
  */
-const TextInput: React.ComponentType<React.PropsWithRef<AccessibleTextInputProps>> = React.forwardRef(
+const TextInput: React.ComponentType<React.PropsWithRef<
+  AccessibleTextInputProps
+>> = React.forwardRef(
   (
     {
       label,
