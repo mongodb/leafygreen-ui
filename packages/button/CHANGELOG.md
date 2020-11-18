@@ -1,5 +1,19 @@
 # @leafygreen-ui/button
 
+## 9.0.0
+
+### Major Changes
+
+- 10bdc295: Adjusts `large` Button height from 45px to 48px
+
+### Patch Changes
+
+- Updated dependencies [c9a0d89f]
+- Updated dependencies [9ee1d5fc]
+  - @leafygreen-ui/palette@3.1.0
+  - @leafygreen-ui/lib@6.1.1
+  - @leafygreen-ui/leafygreen-provider@2.0.2
+
 ## 8.0.1
 
 ### Patch Changes
