@@ -75,8 +75,8 @@ const codeStyle = css`
   border: 1px solid;
   border-radius: 4px;
   font-size: 14px;
-  overflow: hidden;
   white-space: nowrap;
+  overflow: hidden;
 `;
 
 const largeCodeStyle = css`
@@ -87,7 +87,6 @@ const buttonWrapperStyle = css`
   display: inline-block;
   height: 100%;
   position: absolute;
-  z-index: 1;
   right: 0;
   top: 0;
 
@@ -129,7 +128,7 @@ const iconStyle = css`
 interface CopyableProps {
   darkMode?: boolean;
   children: string;
-  label: string;
+  label?: string;
   description?: string;
   className?: string;
   copyable?: boolean;
@@ -175,7 +174,7 @@ export default function Copyable({
     }
 
     // Forward darkMode prop for future versions of Button that support it
-    const buttonRestProps: {} = { darkMode };
+    const buttonRestProps = 'darkMode' in Button.propTypes! ? { darkMode } : {};
 
     const trigger = (
       <Button
@@ -273,7 +272,7 @@ Copyable.propTypes = {
   darkMode: PropTypes.bool,
   size: PropTypes.oneOf(Object.values(Size)),
   children: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   description: PropTypes.string,
   className: PropTypes.string,
   copyable: PropTypes.bool,

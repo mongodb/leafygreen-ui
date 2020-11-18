@@ -121,7 +121,7 @@ const productStates = {
       color: ${uiColors.blue.base};
 
       &:after {
-        background-color: #9dd0e7;
+        background-color: ${uiColors.blue.light1};
         opacity: 1;
         transform: scale(1);
       }

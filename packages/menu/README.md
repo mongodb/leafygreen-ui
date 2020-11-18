@@ -140,7 +140,7 @@ Self-closing component that provides a way to group `MenuItems` in a `Menu` comp
 | `onClick`     | `function`                               | Function that will be called when a `<MenuItem />` is clicked                                    |             |
 | `active`      | `boolean`                                | Determines if the `<MenuItem />` is `active`                                                     | `false`     |
 | `disabled`    | `boolean`                                | Determines if the `<MenuItem />` is `disabled`                                                   | `false`     |
-| `description` | `React.ReactElement`                     | Content to appear below main text of the `<MenuItem />`                                          |             |
+| `description` | `node`                                   | Content to appear below main text of the `<MenuItem />`                                          |             |
 | `as`          | `React.ElementType`                      | Determines what the `<MenuItem />` will be rendered as                                           |             |
 | `size`        | `default` \| `large`                     | Size of the `<MenuItem />` component                                                             | `'default'` |
 | `glyph`       | `React.ReactElement`                     | Slot to pass in an Icon rendered to the left of `<MenuItem />` text.                             |             |
@@ -155,7 +155,7 @@ Self-closing component that provides a way to group `MenuItems` in a `Menu` comp
 | `open`        | `boolean`                                        | Determines if `<SubMenu />` item appears open                                                   | `false` |
 | `setOpen`     | `function`                                       | Function to set the value of `open` in `<SubMenu />`                                            |         |
 | `className`   | `string`                                         | className applied to `SubMenu` root element                                                     |         |
-| `description` | `React.ReactElement`                             | Content to appear below main text of SubMenu                                                    |         |
+| `description` | `string` \| `React.ReactElement`                 | Content to appear below main text of SubMenu                                                    |         |
 | `active`      | `boolean`                                        | Determines if `<SubMenu />` appears `active`                                                    | `false` |
 | `disabled`    | `boolean`                                        | Determines if `<SubMenu />` appears `disabled`                                                  | `false` |
 | `glyph`       | `React.ReactElement`                             | Slot to pass in an Icon rendered to the left of `<SubMenu />` text.                             |         |

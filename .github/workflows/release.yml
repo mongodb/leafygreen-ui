@@ -30,22 +30,3 @@ jobs:
         uses: changesets/action@master
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-
-      - name: Checkout changeset-release/master
-        uses: actions/checkout@v2
-        with:
-          ref: changeset-release/master
-
-      - name: Run prettier
-        run: |
-          yarn
-          yarn format
-          git status
-
-      - name: Commit files
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit -m "Automated publish with prettier" || exit 0
-          git pull --rebase publisher @changeset-release/master
-          git push publisher @changeset-release/master
