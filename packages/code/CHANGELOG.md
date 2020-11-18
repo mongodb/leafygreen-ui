@@ -1,5 +1,18 @@
 # @leafygreen-ui/code
 
+## 7.3.0
+
+### Minor Changes
+
+- c18f16e6: Improves compatibility with React v17
+
+### Patch Changes
+
+- Updated dependencies [c18f16e6]
+- Updated dependencies [9ee1d5fc]
+  - @leafygreen-ui/hooks@6.0.0
+  - @leafygreen-ui/lib@6.1.1
+
 ## 7.2.0
 
 ### Minor Changes

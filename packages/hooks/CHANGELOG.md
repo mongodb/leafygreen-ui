@@ -1,5 +1,25 @@
 # @leafygreen-ui/hooks
 
+## 6.0.0
+
+### Major Changes
+
+- c18f16e6: The `useElementNode` hook has been removed. It's recommended to use `useState` directly instead.
+
+  # Example
+
+  ## Before
+
+  ```tsx
+  const [node, setNode] = useElementNode<HTMLDivElement>();
+  ```
+
+  ## After
+
+  ```tsx
+  const [node, setNode] = useState<HTMLDivElement | null>(null);
+  ```
+
 ## 5.0.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 3.1.0
+
+### Minor Changes
+
+- c9a0d89f: Defined a color value for `uiColors.blue.light1'
+
 ## 3.0.1
 
 ### Patch Changes

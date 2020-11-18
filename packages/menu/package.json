@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/menu",
-  "version": "9.0.2",
+  "version": "9.1.0",
   "description": "LeafyGreen UI Kit Menu",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -24,15 +24,15 @@
   },
   "dependencies": {
     "react-transition-group": "^4.4.1",
-    "@leafygreen-ui/hooks": "^5.0.1",
-    "@leafygreen-ui/lib": "^6.0.1",
-    "@leafygreen-ui/popover": "^7.0.1",
-    "@leafygreen-ui/palette": "^3.0.1",
+    "@leafygreen-ui/hooks": "^6.0.0",
+    "@leafygreen-ui/lib": "^6.1.1",
+    "@leafygreen-ui/popover": "^7.1.0",
+    "@leafygreen-ui/palette": "^3.1.0",
     "@leafygreen-ui/box": "^3.0.1",
     "@leafygreen-ui/icon-button": "^9.0.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^2.0.1"
+    "@leafygreen-ui/leafygreen-provider": "^2.0.2"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0"
 }
