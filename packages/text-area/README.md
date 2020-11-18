@@ -34,3 +34,4 @@ npm install @leafygreen-ui/text-area
 | `state`       | `'none'` \| `'valid'` \| `'error'` | Determines the state of the `<textarea>`                          | `'none'` |
 | `className`   | `string`                           | className applied to the `<textarea>` element                     |          |
 | `disabled`    | `boolean`                          | Determines if the component is disabled                           | `false`  |
+| ...           | native `textarea` attributes       | Any other props will be spread on the root `textarea` element     |          |

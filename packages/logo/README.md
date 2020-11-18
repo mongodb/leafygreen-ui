@@ -121,7 +121,8 @@ import {
 </svg>
 ```
 
-| Prop       | Type      | Description                                                                      | Default |
-| ---------- | --------- | -------------------------------------------------------------------------------- | ------- |
-| `size`     | `number`  | Height of the Product Logo                                                       | `18`    |
-| `knockout` | `boolean` | Determines whether or not a `knockout` version of the Product Logo will be used. |
+| Prop       | Type                    | Description                                                                      | Default |
+| ---------- | ----------------------- | -------------------------------------------------------------------------------- | ------- |
+| `size`     | `number`                | Height of the Product Logo                                                       | `18`    |
+| `knockout` | `boolean`               | Determines whether or not a `knockout` version of the Product Logo will be used. |         |
+| ...        | native `svg` attributes | Any other props will be spread on the root `svg` element                         |         |

@@ -1,6 +1,7 @@
 import React from 'react';
 import debounce from 'lodash/debounce';
 import { transparentize } from 'polished';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import {
@@ -85,8 +86,7 @@ interface TableRowInterface<Shape = {}> {
   datum: Shape;
 }
 
-export interface TableProps<Shape>
-  extends React.ComponentPropsWithoutRef<'table'> {
+export interface TableProps<Shape> extends HTMLElementProps<'table', never> {
   data: Array<Shape>;
   columns:
     | Array<React.ReactElement<HeaderRowProps | TableHeaderProps<Shape>>>

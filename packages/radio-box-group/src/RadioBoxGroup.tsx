@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import RadioBox, { RadioBoxProps } from './RadioBox';
 import Size from './Size';
-import { IdAllocator } from '@leafygreen-ui/lib';
+import { IdAllocator, HTMLElementProps } from '@leafygreen-ui/lib';
 
 const baseGroupStyle = css`
   display: flex;
 `;
 
-interface RadioBoxGroupProps extends React.HTMLAttributes<HTMLDivElement> {
+interface RadioBoxGroupProps extends HTMLElementProps<'div', never> {
   /**
    * Content that will appear inside of RadioBoxGroup component.
    */
