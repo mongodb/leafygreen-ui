@@ -42,7 +42,7 @@ const Mode = {
 
 type Mode = typeof Mode[keyof typeof Mode];
 
-interface BaseTextInputProps {
+interface TextInputProps extends HTMLElementProps<'input', HTMLInputElement> {
   /**
    * id associated with the TextInput component.
    */
@@ -51,7 +51,7 @@ interface BaseTextInputProps {
   /**
    * Text shown in bold above the input element.
    */
-  label?: string;
+  label?: string | null;
 
   /**
    * Text that gives more detail about the requirements for the input.
@@ -110,8 +110,6 @@ interface BaseTextInputProps {
   ['aria-labelledby']?: string;
 }
 
-type TextInputProps = BaseTextInputProps &
-  Omit<HTMLElementProps<'input', never>, keyof BaseTextInputProps>;
 type AriaLabels = 'label' | 'aria-labelledby';
 type AccessibleTextInputProps = Either<TextInputProps, AriaLabels>;
 
@@ -335,7 +333,7 @@ const idAllocator = IdAllocator.create('text-input');
  * @param props.className className supplied to the TextInput container.
  * @param props.darkMode determines whether or not the component appears in dark mode.
  */
-const TextInput = React.forwardRef(
+const TextInput: React.ComponentType<AccessibleTextInputProps> = React.forwardRef(
   (
     {
       label,
