@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 6.1.1
+
+### Patch Changes
+
+- 9ee1d5fc: The "prop-types" package has moved from being a peer dependency to an explicit dependency
+
 ## 6.1.0
 
 ### Minor Changes

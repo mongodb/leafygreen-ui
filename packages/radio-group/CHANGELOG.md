@@ -1,5 +1,15 @@
 # @leafygreen-ui/radio-group
 
+## 6.0.2
+
+### Patch Changes
+
+- 374430ea: Updates string color value to reference the same color from uiColors palette
+- Updated dependencies [c9a0d89f]
+- Updated dependencies [9ee1d5fc]
+  - @leafygreen-ui/palette@3.1.0
+  - @leafygreen-ui/lib@6.1.1
+
 ## 6.0.1
 
 ### Patch Changes
