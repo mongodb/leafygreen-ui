@@ -60,7 +60,6 @@ function Header({ component, changelog, readme }: BaseLayoutProps) {
     <div>
       <div className={marginBotton}>
         <small className={componentsStyle}>Components</small>
-        <div className={css`height: 800px; width: 100%; background-color: pink`}></div>
         <div className={flexContainer}>
           <H2 className={caps}>{component.split('-').join(' ')}</H2>
 

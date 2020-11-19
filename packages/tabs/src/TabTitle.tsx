@@ -114,20 +114,20 @@ const listTitle = css`
 `;
 
 function useDocumentActiveElement() {
-  const [activeEl, setActiveEl] = React.useState<Element | null>(null)
+  const [activeEl, setActiveEl] = React.useState<Element | null>(null);
 
-  const handleFocusIn = (e) => {
+  const handleFocusIn = () => {
     setActiveEl(document.activeElement);
-  }
+  };
 
   React.useEffect(() => {
-    document.addEventListener('focusin', handleFocusIn)
+    document.addEventListener('focusin', handleFocusIn);
     return () => {
-      document.removeEventListener('focusin', handleFocusIn)
+      document.removeEventListener('focusin', handleFocusIn);
     };
-  }, [])
+  }, []);
 
-  return activeEl
+  return activeEl;
 }
 
 interface BaseTabProps {
@@ -139,9 +139,10 @@ interface BaseTabProps {
   children?: React.ReactNode;
   className?: string;
   disabled?: boolean;
+  containerNode?: React.RefObject<HTMLDivElement>;
 }
 
-const TabTitle: ExtendableBox<BaseTabProps, 'button'> = React.forwardRef(({
+const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
   selected = false,
   disabled = false,
   children,
@@ -149,22 +150,23 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = React.forwardRef(({
   ariaControl,
   index,
   darkMode,
+  containerNode,
   ...rest
-}: BaseTabProps, containerNode) => {
+}: BaseTabProps) => {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  const activeEl = useDocumentActiveElement()
+  const activeEl = useDocumentActiveElement();
 
   useEffect(() => {
-    const tabsList = Array.from(containerNode?.current.children)
+    const tabsList = Array.from(containerNode?.current?.children || []);
 
-    if (tabsList.indexOf(activeEl) !== -1) {
+    if (activeEl !== null && tabsList.indexOf(activeEl) !== -1) {
       if (!disabled && selected && titleRef.current) {
-        titleRef.current.focus()
+        titleRef.current.focus();
       }
     }
-  }, [activeEl, disabled, selected, titleRef, containerNode])
+  }, [activeEl, disabled, selected, titleRef, containerNode]);
 
   const sharedTabProps = {
     className: cx(
@@ -206,7 +208,7 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = React.forwardRef(({
       {children}
     </Box>
   );
-});
+};
 
 TabTitle.displayName = 'TabTitle';
 

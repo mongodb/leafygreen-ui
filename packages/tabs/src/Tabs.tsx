@@ -121,7 +121,7 @@ function Tabs({
   as = 'button',
   ...rest
 }: TabsProps) {
-  const containerNode = useRef(null)
+  const containerNode = useRef(null);
 
   const childrenArray = React.Children.toArray(children) as Array<
     React.ReactElement
@@ -160,7 +160,7 @@ function Tabs({
         const [enabledIndexes, current] = getEnabledIndexes();
         setSelected(
           enabledIndexes[
-          (current - 1 + enabledIndexes.length) % enabledIndexes.length
+            (current - 1 + enabledIndexes.length) % enabledIndexes.length
           ],
         );
       }
@@ -207,18 +207,18 @@ function Tabs({
             <TabTitle
               {...filteredRest}
               key={index}
-              ref={containerNode}
+              containerNode={containerNode}
               ariaControl={`tab-${index}`}
               disabled={disabled}
               selected={selected}
               index={index}
               as={as}
               darkMode={darkMode}
+              onKeyDown={handleArrowKeyPress}
               className={cx({
                 [modeColors[mode].activeStyle]: selected,
                 [cx(modeColors[mode].disabledColor, disabledStyle)]: disabled,
               })}
-              onKeyDown={handleArrowKeyPress}
               onClick={
                 !disabled
                   ? (event: React.MouseEvent) => handleChange(event, index)
