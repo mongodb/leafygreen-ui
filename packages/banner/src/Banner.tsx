@@ -6,6 +6,7 @@ import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircl
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 const Variant = {
   Info: 'info',
@@ -184,7 +185,7 @@ const getTextStyle = (image: boolean, dismissible: boolean) => {
   `;
 };
 
-interface BannerProps extends React.ComponentPropsWithoutRef<'div'> {
+interface BannerProps extends HTMLElementProps<'div', never> {
   /**
    * Sets the variant for the Banner
    *

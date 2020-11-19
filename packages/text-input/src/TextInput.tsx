@@ -42,7 +42,7 @@ const Mode = {
 
 type Mode = typeof Mode[keyof typeof Mode];
 
-interface BaseTextInputProps extends HTMLElementProps<'input'> {
+interface TextInputProps extends HTMLElementProps<'input', HTMLInputElement> {
   /**
    * id associated with the TextInput component.
    */
@@ -51,7 +51,7 @@ interface BaseTextInputProps extends HTMLElementProps<'input'> {
   /**
    * Text shown in bold above the input element.
    */
-  label?: string;
+  label?: string | null;
 
   /**
    * Text that gives more detail about the requirements for the input.
@@ -106,10 +106,12 @@ interface BaseTextInputProps extends HTMLElementProps<'input'> {
   darkMode?: boolean;
 
   type?: TextInputType;
+
+  ['aria-labelledby']?: string;
 }
 
 type AriaLabels = 'label' | 'aria-labelledby';
-type TextInputProps = Either<BaseTextInputProps, AriaLabels>;
+type AccessibleTextInputProps = Either<TextInputProps, AriaLabels>;
 
 const interactionRing = css`
   transition: all 150ms ease-in-out;
@@ -169,7 +171,7 @@ const inputStyle = css`
   &:focus {
     outline: none;
     z-index: 2;
-    border-color: #9dd0e7;
+    border-color: ${uiColors.blue.light1};
     transition: border-color 150ms ease-in-out;
 
     & ~ ${iconSelectorProp.selector} {
@@ -242,7 +244,7 @@ interface ColorSets {
 const colorSets: Record<Mode, ColorSets> = {
   [Mode.Light]: {
     interactionRing: uiColors.gray.light2,
-    interactionRingFocus: '#9dd0e7',
+    interactionRingFocus: uiColors.blue.light1,
     labelColor: uiColors.gray.dark2,
     disabledLabelColor: uiColors.gray.dark1,
     descriptionColor: uiColors.gray.dark1,
@@ -331,7 +333,9 @@ const idAllocator = IdAllocator.create('text-input');
  * @param props.className className supplied to the TextInput container.
  * @param props.darkMode determines whether or not the component appears in dark mode.
  */
-const TextInput = React.forwardRef(
+const TextInput: React.ComponentType<React.PropsWithRef<
+  AccessibleTextInputProps
+>> = React.forwardRef(
   (
     {
       label,
@@ -349,7 +353,7 @@ const TextInput = React.forwardRef(
       className,
       darkMode = false,
       ...rest
-    }: TextInputProps,
+    }: AccessibleTextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
   ) => {
     const mode = darkMode ? Mode.Dark : Mode.Light;

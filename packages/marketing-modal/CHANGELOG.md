@@ -1,5 +1,23 @@
 # @leafygreen-ui/marketing-modal
 
+## 2.0.3
+
+### Patch Changes
+
+- e14fbae7: Fixes bug where scrollbars were displayed when content was not scrollable
+- Updated dependencies [10bdc295]
+- Updated dependencies [374430ea]
+- Updated dependencies [c18f16e6]
+- Updated dependencies [fe861d52]
+- Updated dependencies [c9a0d89f]
+- Updated dependencies [9ee1d5fc]
+- Updated dependencies [aab4e65b]
+  - @leafygreen-ui/button@9.0.0
+  - @leafygreen-ui/typography@7.1.0
+  - @leafygreen-ui/modal@5.1.0
+  - @leafygreen-ui/palette@3.1.0
+  - @leafygreen-ui/lib@6.1.1
+
 ## 2.0.2
 
 ### Patch Changes

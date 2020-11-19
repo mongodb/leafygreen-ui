@@ -41,6 +41,6 @@ import Badge from '@leafygreen-ui/badge';
 | `variant`   | `'lightgray'` \| `'darkgray'`\| `'red'`\| `'blue'`\| `'green'`\| `'yellow'` | Sets the style variant of the badge.                              | `'lightgray'` |
 | `className` | `string`                                                                    | Adds a className to the class attribute                           |               |
 | `children`  | `node`                                                                      | The content that will appear inside of the `<Badge />` component. |               |
-| ...         | `React.HTMLAttributes<HTMLDivElement>`                                      | Any other properties will be spread on the root element.          |               |
+| ...         | native `div` attributes                                                     | Any other props will be spread on the root `div` element          |               |
 
 _Note: Specifying the `onClick` attribute will change the cursor style to pointer._

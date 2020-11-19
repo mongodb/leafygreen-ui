@@ -13,7 +13,7 @@ function ControlledTooltip() {
       setOpen={setOpen}
       align={select('Align', Object.values(Align), 'top')}
       justify={select('Justify', Object.values(Justify), 'start')}
-      trigger={<Button>Trigger</Button>}
+      trigger={<Button>trigger</Button>}
       usePortal={boolean('Use Portal', true)}
       enabled={boolean('Enabled', true)}
       triggerEvent={select(

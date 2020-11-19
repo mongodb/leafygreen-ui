@@ -79,7 +79,7 @@ import { H1, H2, Subtitle, Body, InlineCode, Disclaimer, Overline } from '@leafy
 
 ## Properties
 
-All props extend the HTMLElementProps of their root tag, however `<Body />` and `<Overline/>` accept extra props
+All props extend the HTMLElementProps of their root tag, however the below components accept extra props
 
 | Component       | Root    |
 | --------------- | ------- |

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
@@ -240,7 +240,7 @@ export default function RadioBox({
   children,
   name,
   ...rest
-}: RadioBoxProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>) {
+}: RadioBoxProps & Omit<HTMLElementProps<'input', never>, 'size'>) {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const styles = getStatefulStyles({ checked, disabled, showFocus });
 

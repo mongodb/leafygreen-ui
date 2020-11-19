@@ -237,33 +237,44 @@ function Code({
   highlightLines,
   ...rest
 }: CodeProps) {
-  const scrollableElement = useRef<HTMLPreElement>(null);
+  const scrollableElementRef = useRef<HTMLPreElement>(null);
+  const [buttonNode, setButtonNode] = useState<HTMLButtonElement | null>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [copied, setCopied] = useState(false);
-  const showCopyBar = !showWindowChrome && copyable;
+  const [showCopyBar, setShowCopyBar] = useState(false);
   const mode = darkMode ? Mode.Dark : Mode.Light;
   const isMultiline = useMemo(() => children.includes('\n'), [children]);
 
   useEffect(() => {
-    let timeoutId: any;
-    const clipboard = new ClipboardJS('.copy-btn');
+    setShowCopyBar(!showWindowChrome && copyable && ClipboardJS.isSupported());
+  }, [copyable, showWindowChrome]);
 
-    if (copied) {
-      timeoutId = setTimeout(() => {
-        setCopied(false);
-        clipboard.destroy();
-      }, 1500);
+  useEffect(() => {
+    if (!buttonNode) {
+      return;
     }
 
-    return () => clearTimeout(timeoutId);
-  }, [copied]);
+    const clipboard = new ClipboardJS(buttonNode, {
+      text: () => children,
+    });
+
+    if (copied) {
+      const timeoutId = setTimeout(() => {
+        setCopied(false);
+      }, 1500);
+
+      return () => clearTimeout(timeoutId);
+    }
+
+    return () => clipboard.destroy();
+  }, [buttonNode, children, copied]);
 
   useIsomorphicLayoutEffect(() => {
-    const scrollableElementRef = scrollableElement.current;
+    const scrollableElement = scrollableElementRef.current;
 
     if (
-      scrollableElementRef != null &&
-      scrollableElementRef.scrollWidth > scrollableElementRef.clientWidth
+      scrollableElement != null &&
+      scrollableElement.scrollWidth > scrollableElement.clientWidth
     ) {
       setScrollState(ScrollState.Right);
     }
@@ -341,11 +352,11 @@ function Code({
       )}
     >
       <IconButton
+        ref={setButtonNode}
         darkMode={darkMode}
         aria-label="Copy"
-        className={cx(getCopyButtonStyle(mode, copied), 'copy-btn')}
+        className={getCopyButtonStyle(mode, copied)}
         onClick={handleClick}
-        data-clipboard-text={children}
       >
         {copied ? <CheckmarkIcon /> : <CopyIcon />}
       </IconButton>
@@ -367,7 +378,7 @@ function Code({
           {...(rest as DetailedElementProps<HTMLPreElement>)}
           className={wrapperClassName}
           onScroll={onScroll}
-          ref={scrollableElement}
+          ref={scrollableElementRef}
         >
           {renderedSyntaxComponent}
         </pre>
