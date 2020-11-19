@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 1216f5f5597549f0e2a59e107f6a1e7e
+ * @checksum f443d02e55328f964545995ce8ff6982
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -27,9 +27,8 @@ const ArrowRight = ({
   const fillStyle = css`
     color: ${fill};
   `;
-  const noFlexSizing = css`
+  const noFlexShrink = css`
     flex-shrink: 0;
-    flex-grow: 0;
   `;
   title = getGlyphTitle('ArrowRight', title);
   return (
@@ -38,7 +37,7 @@ const ArrowRight = ({
         {
           [fillStyle]: fill != null,
         },
-        noFlexSizing,
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

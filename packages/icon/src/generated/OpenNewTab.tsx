@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum f7fbdfb25c16bfe0f613413d333be1cf
+ * @checksum 7971b5d9fbcd15ba39997cc53a982c11
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -27,9 +27,8 @@ const OpenNewTab = ({
   const fillStyle = css`
     color: ${fill};
   `;
-  const noFlexSizing = css`
+  const noFlexShrink = css`
     flex-shrink: 0;
-    flex-grow: 0;
   `;
   title = getGlyphTitle('OpenNewTab', title);
   return (
@@ -38,7 +37,7 @@ const OpenNewTab = ({
         {
           [fillStyle]: fill != null,
         },
-        noFlexSizing,
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

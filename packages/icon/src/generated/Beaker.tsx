@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 68df8cdce479956a96ada3c4aace84f4
+ * @checksum f4c9f9a59362ea6b101f8657f7164c15
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -27,9 +27,8 @@ const Beaker = ({
   const fillStyle = css`
     color: ${fill};
   `;
-  const noFlexSizing = css`
+  const noFlexShrink = css`
     flex-shrink: 0;
-    flex-grow: 0;
   `;
   title = getGlyphTitle('Beaker', title);
   return (
@@ -38,7 +37,7 @@ const Beaker = ({
         {
           [fillStyle]: fill != null,
         },
-        noFlexSizing,
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

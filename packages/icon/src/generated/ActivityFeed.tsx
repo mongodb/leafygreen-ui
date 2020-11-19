@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 6788ee3012b08bcd760e2c34eecf5289
+ * @checksum 43b86c973ed06b778b2abb1e9bc78893
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -27,9 +27,8 @@ const ActivityFeed = ({
   const fillStyle = css`
     color: ${fill};
   `;
-  const noFlexSizing = css`
+  const noFlexShrink = css`
     flex-shrink: 0;
-    flex-grow: 0;
   `;
   title = getGlyphTitle('ActivityFeed', title);
   return (
@@ -38,7 +37,7 @@ const ActivityFeed = ({
         {
           [fillStyle]: fill != null,
         },
-        noFlexSizing,
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

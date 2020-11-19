@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum cd857d03bfabb37a8229ea19923e8559
+ * @checksum 38807d19c23a41324163b06fce760208
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -27,9 +27,8 @@ const Folder = ({
   const fillStyle = css`
     color: ${fill};
   `;
-  const noFlexSizing = css`
+  const noFlexShrink = css`
     flex-shrink: 0;
-    flex-grow: 0;
   `;
   title = getGlyphTitle('Folder', title);
   return (
@@ -38,7 +37,7 @@ const Folder = ({
         {
           [fillStyle]: fill != null,
         },
-        noFlexSizing,
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}
