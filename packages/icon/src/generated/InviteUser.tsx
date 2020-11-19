@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 5712f6c7ee39dbd29f8a6e1c8046bbcc
+ * @checksum f8de59b53cfde50afc9a2967a3d31f2b
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -27,6 +27,10 @@ const InviteUser = ({
   const fillStyle = css`
     color: ${fill};
   `;
+  const noFlexSizing = css`
+    flex-shrink: 0;
+    flex-grow: 0;
+  `;
   title = getGlyphTitle('InviteUser', title);
   return (
     <svg
@@ -34,6 +38,7 @@ const InviteUser = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexSizing,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

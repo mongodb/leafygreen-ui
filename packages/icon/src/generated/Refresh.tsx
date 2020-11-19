@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum d6bd6255335de2a0be9e3223ea942e0f
+ * @checksum a9101bd672761f5ad4737d99d960170d
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -27,6 +27,10 @@ const Refresh = ({
   const fillStyle = css`
     color: ${fill};
   `;
+  const noFlexSizing = css`
+    flex-shrink: 0;
+    flex-grow: 0;
+  `;
   title = getGlyphTitle('Refresh', title);
   return (
     <svg
@@ -34,6 +38,7 @@ const Refresh = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexSizing,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 4b55dfac2ccda796d9449b1f33d0064b
+ * @checksum 7e10f65c8a7115236a864ed316fbb658
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -27,6 +27,10 @@ const Menu = ({
   const fillStyle = css`
     color: ${fill};
   `;
+  const noFlexSizing = css`
+    flex-shrink: 0;
+    flex-grow: 0;
+  `;
   title = getGlyphTitle('Menu', title);
   return (
     <svg
@@ -34,6 +38,7 @@ const Menu = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexSizing,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

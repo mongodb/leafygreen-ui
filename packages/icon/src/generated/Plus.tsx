@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum b1097078e0952f5a5a849139b748f54c
+ * @checksum bc9365f43eae09cdebb85264d22d90e7
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -27,6 +27,10 @@ const Plus = ({
   const fillStyle = css`
     color: ${fill};
   `;
+  const noFlexSizing = css`
+    flex-shrink: 0;
+    flex-grow: 0;
+  `;
   title = getGlyphTitle('Plus', title);
   return (
     <svg
@@ -34,6 +38,7 @@ const Plus = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexSizing,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

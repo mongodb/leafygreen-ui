@@ -32,6 +32,7 @@ module.exports = function template(
         {
           [fillStyle]: fill != null,
         },
+        noFlexSizing,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}
@@ -71,6 +72,11 @@ module.exports = function template(
 
       const fillStyle = css\`
         color: \${fill};
+      \`;
+
+      const noFlexSizing = css\`
+        flex-shrink: 0;
+        flex-grow: 0;
       \`;
 
       title = getGlyphTitle('${componentName}', title);
