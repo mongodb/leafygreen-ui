@@ -4,13 +4,7 @@ import { cx, css } from '@leafygreen-ui/emotion';
 import Card from '@leafygreen-ui/card';
 import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
-import {
-  KnobType,
-  BooleanKnob,
-  TextKnob,
-  NumberKnob,
-  SelectKnob,
-} from './Knobs';
+import { Knob, Boolean, Text, Number, Select } from './Knobs';
 
 const previewStyle = css`
   display: flex;
@@ -79,12 +73,12 @@ interface ComponentPropsInterface {
 
 export type KnobsConfigInterface<
   ComponentProps extends ComponentPropsInterface
-> = {
-  [K in keyof ComponentProps]: Extract<
-    PropsType<ComponentProps[K]>,
-    { default: ComponentProps[K] }
-  >;
-};
+  > = {
+    [K in keyof ComponentProps]: Extract<
+      PropsType<ComponentProps[K]>,
+      { default: ComponentProps[K] }
+    >;
+  };
 
 interface LiveExampleInterface<ComponentProps extends ComponentPropsInterface> {
   knobsConfig: KnobsConfigInterface<ComponentProps>;
@@ -130,26 +124,26 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
       };
 
       switch (knobConfig.type) {
-        case KnobType.Boolean:
+        case Knob.Boolean:
           return (
-            <BooleanKnob {...sharedProps} value={props[propName] as boolean} />
+            <Boolean {...sharedProps} value={props[propName] as boolean} />
           );
-        case KnobType.Number:
+
+        case Knob.Number:
+          return <Number {...sharedProps} value={props[propName] as number} />;
+
+        case Knob.Text:
+          return <Text {...sharedProps} value={props[propName] as string} />;
+
+        case Knob.Select:
           return (
-            <NumberKnob {...sharedProps} value={props[propName] as number} />
-          );
-        case KnobType.Text:
-          return (
-            <TextKnob {...sharedProps} value={props[propName] as string} />
-          );
-        case KnobType.Select:
-          return (
-            <SelectKnob
+            <Select
               {...sharedProps}
               options={knobConfig?.options as Array<string>}
               value={props[propName] as string}
             />
           );
+
         default:
           enforceExhaustive(knobConfig.type);
       }

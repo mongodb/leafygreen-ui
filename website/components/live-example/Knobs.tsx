@@ -25,14 +25,14 @@ const labelDarkMode = css`
   color: ${uiColors.gray.light1};
 `;
 
-const KnobType = {
+const Knob = {
   Select: 'select',
   Number: 'number',
   Text: 'text',
   Boolean: 'boolean',
 } as const;
 
-type KnobType = typeof KnobType[keyof typeof KnobType];
+type Knob = typeof Knob[keyof typeof Knob];
 
 interface KnobInterface {
   label: string;
@@ -40,28 +40,28 @@ interface KnobInterface {
   darkMode: boolean;
 }
 
-export interface BooleanKnobInterface extends KnobInterface {
+export interface BooleanInterface extends KnobInterface {
   onChange: (value: boolean, prop: string) => void;
   value: boolean;
 }
 
-export interface TextKnobInterface extends KnobInterface {
+export interface TextInterface extends KnobInterface {
   onChange: (value: string, prop: string) => void;
   value: string;
 }
 
-export interface NumberKnobInterface extends KnobInterface {
+export interface NumberInterface extends KnobInterface {
   onChange: (value: number, prop: string) => void;
   value: number;
 }
 
-export interface BasicSelectKnobInterface extends KnobInterface {
+export interface BasicSelectInterface extends KnobInterface {
   onChange: (value: string, prop: string) => void;
   value: string;
   options: Array<string>;
 }
 
-export interface GlyphSelectKnobInterface {
+export interface GlyphSelectInterface {
   onChange: (value: string, prop: string) => void;
   value: React.ReactElement;
   options: Array<string>;
@@ -70,13 +70,7 @@ export interface GlyphSelectKnobInterface {
   darkMode: boolean;
 }
 
-function BooleanKnob({
-  onChange,
-  label,
-  value,
-  prop,
-  darkMode,
-}: BooleanKnobInterface) {
+function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
   const handleChange = () => {
     onChange(!value, prop);
   };
@@ -96,13 +90,7 @@ function BooleanKnob({
   );
 }
 
-function NumberKnob({
-  onChange,
-  label,
-  value,
-  prop,
-  darkMode,
-}: NumberKnobInterface) {
+function Number({ onChange, label, value, prop, darkMode }: NumberInterface) {
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     onChange(parseInt(target.value), prop);
   };
@@ -128,13 +116,7 @@ function NumberKnob({
   );
 }
 
-function TextKnob({
-  onChange,
-  label,
-  value,
-  prop,
-  darkMode,
-}: TextKnobInterface) {
+function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
   const handleChange = ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
     onChange(target.value, prop);
   };
@@ -162,14 +144,14 @@ function TextKnob({
   );
 }
 
-function SelectKnob({
+function Select({
   onChange,
   label,
   value,
   prop,
   options,
   darkMode,
-}: BasicSelectKnobInterface | GlyphSelectKnobInterface) {
+}: BasicSelectInterface | GlyphSelectInterface) {
   const handleChange = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
     onChange(target.value, prop);
   };
@@ -200,4 +182,4 @@ function SelectKnob({
   );
 }
 
-export { KnobType, BooleanKnob, TextKnob, NumberKnob, SelectKnob };
+export { Knob, Boolean, Text, Number, Select };
