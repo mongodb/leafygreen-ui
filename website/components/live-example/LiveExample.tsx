@@ -107,7 +107,11 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
   };
 
   const renderKnobs = () => {
-    return Object.entries(knobsConfig).map(entry => {
+    if (!Object.keys(knobsConfig).length) {
+      return null;
+    }
+
+    const knobs = Object.entries(knobsConfig).map(entry => {
       const propName = entry[0] as string;
       const knobConfig = entry[1] as KnobsConfigInterface<
         ComponentProps
@@ -148,6 +152,8 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
           enforceExhaustive(knobConfig.type);
       }
     });
+
+    return <div className={knobContainer}>{knobs}</div>;
   };
 
   return (
@@ -166,9 +172,9 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
         >
           {children(props)}
         </div>
-        {Object.keys(knobsConfig).length > 0 && (
-          <div className={knobContainer}>{renderKnobs()}</div>
-        )}
+
+        {renderKnobs()}
+
       </Card>
     </div>
   );
