@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -59,6 +59,23 @@ const listStyle = css`
 const disabledStyle = css`
   cursor: not-allowed;
 `;
+
+function useDocumentActiveElement() {
+  const [activeEl, setActiveEl] = React.useState<Element | null>(null);
+
+  const handleFocusIn = useCallback(() => {
+    setActiveEl(document.activeElement);
+  }, [setActiveEl]);
+
+  React.useEffect(() => {
+    document.addEventListener('focusin', handleFocusIn);
+    return () => {
+      document.removeEventListener('focusin', handleFocusIn);
+    };
+  }, [handleFocusIn]);
+
+  return activeEl;
+}
 
 type ReactEmpty = null | undefined | false | '';
 
@@ -121,7 +138,17 @@ function Tabs({
   as = 'button',
   ...rest
 }: TabsProps) {
-  const containerNode = useRef(null);
+  const containerNode = useRef<HTMLDivElement | null>(null);
+  const activeEl = useDocumentActiveElement();
+  const [isAnyTabFocused, setIsAnyTabFocused] = useState(false);
+
+  useEffect(() => {
+    const tabsList = Array.from(containerNode?.current?.children || []);
+
+    if (activeEl !== null && tabsList.indexOf(activeEl) !== -1) {
+      setIsAnyTabFocused(true);
+    }
+  }, [activeEl, containerNode]);
 
   const childrenArray = React.Children.toArray(children) as Array<
     React.ReactElement
@@ -207,13 +234,13 @@ function Tabs({
             <TabTitle
               {...filteredRest}
               key={index}
-              containerNode={containerNode}
               ariaControl={`tab-${index}`}
               disabled={disabled}
               selected={selected}
               index={index}
               as={as}
               darkMode={darkMode}
+              isAnyTabFocused={isAnyTabFocused}
               onKeyDown={handleArrowKeyPress}
               className={cx({
                 [modeColors[mode].activeStyle]: selected,
