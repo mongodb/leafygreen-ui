@@ -61,7 +61,7 @@ const changelogStyles = css`
     color: ${uiColors.gray.dark3};
     text-decoration: none;
   }
-`
+`;
 
 interface VersionCardProps {
   version?: string;
@@ -190,12 +190,12 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
           changelog={changelog}
         />
       ) : (
-          <DesktopInstall
-            component={component}
-            version={version}
-            changelog={changelog}
-          />
-        )}
+        <DesktopInstall
+          component={component}
+          version={version}
+          changelog={changelog}
+        />
+      )}
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
           <Tabs className={tabsPadding}>
