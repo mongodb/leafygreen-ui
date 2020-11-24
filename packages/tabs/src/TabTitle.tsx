@@ -111,6 +111,11 @@ const listTitle = css`
   &:hover:after {
     transform: scaleX(0.95);
   }
+
+  &:active:after {
+    transform: scaleX(1);
+    background-color: ${uiColors.green.base};
+  }
 `;
 
 interface BaseTabProps {
