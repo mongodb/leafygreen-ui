@@ -43,6 +43,7 @@ storiesOf('Tabs', module)
           darkMode={darkMode}
           className={css`
             background-color: ${!darkMode ? 'white' : uiColors.gray.dark3};
+            color: ${!darkMode ? uiColors.gray.dark3 : uiColors.white};
             padding: 20px;
           `}
         >
@@ -59,11 +60,12 @@ storiesOf('Tabs', module)
             Hello 3
           </Tab>
         </Tabs>
-        <div>hi</div>
+
         <Tabs
           darkMode={darkMode}
           className={css`
             background-color: ${!darkMode ? 'white' : uiColors.gray.dark3};
+            color: ${!darkMode ? uiColors.gray.dark3 : uiColors.white};
             padding: 20px;
           `}
         >
