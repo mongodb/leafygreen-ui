@@ -174,9 +174,9 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
     ? viewport?.width < breakpoints.Tablet
     : false;
 
-  const version = changelog.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
-  const example = readme.match(/(?<=js).*?(?=```)/s)?.[0];
-  const outputHTML = readme.match(/(?<=html).*?(?=```)/s)?.[0];
+  const version = changelog?.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
+  const example = readme?.match(/(?<=js).*?(?=```)/s)?.[0];
+  const outputHTML = readme?.match(/(?<=html).*?(?=```)/s)?.[0];
   const markdownAst = (unified()
     .use(markdown)
     .parse(readme) as unknown) as ReadmeMarkdown;
@@ -190,12 +190,12 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
           changelog={changelog}
         />
       ) : (
-        <DesktopInstall
-          component={component}
-          version={version}
-          changelog={changelog}
-        />
-      )}
+          <DesktopInstall
+            component={component}
+            version={version}
+            changelog={changelog}
+          />
+        )}
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
           <Tabs className={tabsPadding}>

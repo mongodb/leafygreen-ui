@@ -79,6 +79,8 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
     const isGuideline = type === GroupType.Guideline;
     const items = isGuideline ? coreGuidelines : components;
 
+
+
     if (isTouchDevice) {
       return (
         <MobileNavigationGroup
@@ -87,12 +89,12 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
           initialCollapsed={!router.asPath.includes(type)}
         >
           {items.map(item => {
-            const path = `/${type}/${item}`;
+            const path = type === GroupType.Guideline ? `/${type}/${item}` : `/${type}/${item}/example`;
             return (
               <MobileNavigationItem
                 key={item}
                 onClick={() => router.push(path)}
-                active={router.asPath === path}
+                active={router.asPath.includes(item)}
               >
                 {item.split('-').join(' ')}
               </MobileNavigationItem>
@@ -110,12 +112,12 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
         initialCollapsed={false}
       >
         {items.map(item => {
-          const path = `/${type}/${item}`;
+          const path = type === GroupType.Guideline ? `/${type}/${item}` : `/${type}/${item}/example`;
           return (
             <SideNavItem
               key={item}
               onClick={() => router.push(path)}
-              active={router.asPath === path}
+              active={router.asPath.includes(item)}
             >
               {item.split('-').join(' ')}
             </SideNavItem>

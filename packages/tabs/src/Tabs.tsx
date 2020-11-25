@@ -158,7 +158,7 @@ function Tabs({
         const [enabledIndexes, current] = getEnabledIndexes();
         setSelected(
           enabledIndexes[
-            (current - 1 + enabledIndexes.length) % enabledIndexes.length
+          (current - 1 + enabledIndexes.length) % enabledIndexes.length
           ],
         );
       }
@@ -191,7 +191,7 @@ function Tabs({
             return tab;
           }
 
-          const { selected, disabled, ...rest } = tab.props;
+          const { selected, disabled, onClick, ...rest } = tab.props;
 
           const filteredRest = omit(rest, [
             'ariaControl',
@@ -217,7 +217,10 @@ function Tabs({
               onKeyDown={handleArrowKeyPress}
               onClick={
                 !disabled
-                  ? (event: React.MouseEvent) => handleChange(event, index)
+                  ? (event: React.MouseEvent) => {
+                    onClick?.(event)
+                    handleChange(event, index)
+                  }
                   : undefined
               }
             >

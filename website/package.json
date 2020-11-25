@@ -20,6 +20,8 @@
     "polished": "^4.0.1"
   },
   "devDependencies": {
+    "@mdx-js/loader": "^1.6.21",
+    "@next/mdx": "^10.0.3",
     "@types/react": "^16.9.56",
     "@typescript-eslint/eslint-plugin": "^3.7.1",
     "@typescript-eslint/parser": "^3.7.1",
