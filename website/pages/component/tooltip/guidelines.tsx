@@ -1,3 +1,3 @@
 export default function Guidelines() {
-  return (<div>Guidelines coming soon</div>)
+  return <div>Guidelines coming soon</div>;
 }

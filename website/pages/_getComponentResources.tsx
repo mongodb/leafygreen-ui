@@ -6,7 +6,9 @@ import type { BaseLayoutProps } from 'utils/types';
 
 const getFileContent = util.promisify(fs.readFile);
 
-export const getStaticProps = async (component: BaseLayoutProps['component']) => {
+export const getStaticProps = async (
+  component: BaseLayoutProps['component'],
+) => {
   const props: Partial<BaseLayoutProps> = { component };
 
   let changelogMarkdown: '' | Buffer = '';
@@ -37,4 +39,3 @@ export const getStaticProps = async (component: BaseLayoutProps['component']) =>
     props,
   };
 };
-

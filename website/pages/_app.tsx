@@ -57,8 +57,8 @@ export default MyApp;
 
 const getFileContent = util.promisify(fs.readFile);
 
-export const getStaticProps: GetStaticProps = async (params) => {
-  console.log(params)
+export const getStaticProps: GetStaticProps = async params => {
+  console.log(params);
 
   const props: Partial<BaseLayoutProps> = { component: 'badge' };
 
@@ -90,4 +90,3 @@ export const getStaticProps: GetStaticProps = async (params) => {
     props,
   };
 };
-

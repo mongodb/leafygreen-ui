@@ -158,7 +158,7 @@ function Tabs({
         const [enabledIndexes, current] = getEnabledIndexes();
         setSelected(
           enabledIndexes[
-          (current - 1 + enabledIndexes.length) % enabledIndexes.length
+            (current - 1 + enabledIndexes.length) % enabledIndexes.length
           ],
         );
       }
@@ -218,9 +218,9 @@ function Tabs({
               onClick={
                 !disabled
                   ? (event: React.MouseEvent) => {
-                    onClick?.(event)
-                    handleChange(event, index)
-                  }
+                      onClick?.(event);
+                      handleChange(event, index);
+                    }
                   : undefined
               }
             >
