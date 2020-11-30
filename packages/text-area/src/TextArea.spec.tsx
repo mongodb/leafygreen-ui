@@ -31,7 +31,7 @@ describe('packages/text-area', () => {
 
   test(`renders ${defaultProps.className} in the classList`, () => {
     const utils = renderTextArea(defaultProps);
-    const container = utils.container.firstChild as HTMLDivElement
+    const container = utils.container.firstChild as HTMLDivElement;
     expect(container.classList.contains(defaultProps.className)).toBe(true);
   });
 
