@@ -26,6 +26,7 @@ import {
   Environment,
 } from '../types';
 import { FullWidthGovBanner, MobileGovTooltip } from './GovBanner';
+import { VersionNumber, Style as VersionNumberStyle } from './VersionNumber';
 
 export const orgNavHeight = 60;
 
@@ -55,17 +56,6 @@ const supportContainer = css`
 const rightLinkMargin = css`
   ${mq({
     marginRight: ['16px', '16px', '24px'],
-  })}
-`;
-
-const versionStyle = css`
-  position: relative;
-  display: inline-block;
-  font-size: 10px;
-  color: ${uiColors.green.base};
-
-  ${mq({
-    marginRight: ['16px', '16px', '16px'],
   })}
 `;
 
@@ -215,49 +205,18 @@ function NavLinks({
   }
 
   if (onPremVersion) {
-    const versionNumber = (
-      <Tooltip
-        usePortal={true}
-        darkMode={true}
-        align="bottom"
-        justify="middle"
-        className={css`
-          width: 165px;
-        `}
-        trigger={
-          showMoreDropdownMenu ? (
-            <MenuItem
-              size="large"
-              className={css(`background-color: ${uiColors.gray.light3};`)}
-            >
-              <div
-                className={css(`
-                  color: ${uiColors.green.dark2};
-                  font-size: 14px;
-                `)}
-              >
-                {onPremVersion}
-              </div>
-            </MenuItem>
-          ) : (
-            <span
-              className={versionStyle}
-              data-testid="org-nav-on-prem-version"
-            >
-              {onPremVersion}
-            </span>
-          )
-        }
-        key="ops manager version"
-      >
-        Ops Manager Version
-      </Tooltip>
-    );
-
     if (showMoreDropdownMenu) {
-      items.push(versionNumber);
+      items.push(
+        <VersionNumber style={VersionNumberStyle.Menu}>
+          {onPremVersion}
+        </VersionNumber>,
+      );
     } else {
-      items.unshift(versionNumber);
+      items.unshift(
+        <VersionNumber style={VersionNumberStyle.Nav}>
+          {onPremVersion}
+        </VersionNumber>,
+      );
     }
   }
 
