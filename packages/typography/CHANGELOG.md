@@ -1,5 +1,15 @@
 # @leafygreen-ui/typography
 
+## 7.1.1
+
+### Patch Changes
+
+- ee7923d3: Changes how we extend the types of HTMLElements, and standardizes how we document this across readmes
+- Updated dependencies [ee7923d3]
+- Updated dependencies [7b71da8f]
+  - @leafygreen-ui/lib@6.1.2
+  - @leafygreen-ui/icon@7.0.2
+
 ## 7.1.0
 
 ### Minor Changes
