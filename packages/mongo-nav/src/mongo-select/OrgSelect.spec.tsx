@@ -187,7 +187,7 @@ describe('packages/mongo-select/OrgSelect', () => {
       });
     });
 
-    describe('when all organizations have the same planType ', () => {
+    describe('when all organizations have the same planType', () => {
       beforeEach(() =>
         renderComponent({
           data: [
@@ -228,7 +228,7 @@ describe('packages/mongo-select/OrgSelect', () => {
 
       beforeEach(() => renderComponent({ onChange }));
 
-      it('it filters the organizations based on the onChange callback', () => {
+      it('filters the organizations based on the onChange callback', () => {
         fireEvent.click(getByTestId('org-trigger'));
 
         const input = getByTestId('org-filter-input');

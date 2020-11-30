@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import Box, { BoxProps, ExtendableBox } from '@leafygreen-ui/box';
 import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -162,7 +162,7 @@ interface SubMenuProps {
   /**
    * Function to set the value of `open` in `<SubMenu />`
    */
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen?: (value: boolean) => void;
 
   /**
    * className applied to `SubMenu` root element
@@ -428,3 +428,8 @@ SubMenu.propTypes = {
 };
 
 export default SubMenu;
+
+export type SubMenuElement = React.ReactComponentElement<
+  typeof SubMenu,
+  BoxProps<'button', SubMenuProps & { ref?: React.Ref<any> }>
+>;

@@ -45,7 +45,7 @@ describe('packages/Icon/glyphs/', () => {
   });
 
   glyphPaths.forEach(glyphPath => {
-    describe(getBaseName(glyphPath), () => {
+    describe(`${getBaseName(glyphPath)}`, () => {
       const { svg } = require(glyphPath);
 
       type SVGNodeObject = {
@@ -185,7 +185,7 @@ describe('Generated glyphs', () => {
     glyphPaths.forEach(glyphPath => {
       const baseName = getBaseName(glyphPath);
 
-      test(baseName, () => {
+      test(`${baseName}`, () => {
         const svgFileContents = fs.readFileSync(glyphPath, {
           encoding: 'utf8',
         });
