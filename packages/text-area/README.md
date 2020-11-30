@@ -65,5 +65,5 @@ return (
 | `label`       | `string`                           | Label for `<textarea>`                                            |          |
 | `description` | `string`                           | Description below label                                           |          |
 | `state`       | `'none'` \| `'valid'` \| `'error'` | Determines the state of the `<textarea>`                          | `'none'` |
-| `className`   | `string`                           | className applied to the `<textarea>` element                     |          |
+| `className`   | `string`                           | className applied to the container element                        |          |
 | `disabled`    | `boolean`                          | Determines if the component is disabled                           | `false`  |
