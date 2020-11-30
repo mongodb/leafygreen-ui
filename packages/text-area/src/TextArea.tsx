@@ -250,7 +250,7 @@ export default function TextArea({
   }
 
   return (
-    <div className={containerStyles}>
+    <div className={cx(containerStyles, className)}>
       {label && (
         <label
           htmlFor={id}
@@ -270,17 +270,12 @@ export default function TextArea({
           {...rest}
           title={label}
           id={id}
-          className={cx(
-            textAreaStyle,
-            colorSets[mode].textArea,
-            {
-              [colorSets[mode].errorBorder]: state === State.Error,
-              [css`
-                background-color: #5a3c3b;
-              `]: state === State.Error && darkMode,
-            },
-            className,
-          )}
+          className={cx(textAreaStyle, colorSets[mode].textArea, {
+            [colorSets[mode].errorBorder]: state === State.Error,
+            [css`
+              background-color: #5a3c3b;
+            `]: state === State.Error && darkMode,
+          })}
           disabled={disabled}
           onChange={onValueChange}
           value={value}

@@ -30,8 +30,9 @@ describe('packages/text-area', () => {
   });
 
   test(`renders ${defaultProps.className} in the classList`, () => {
-    const { textArea } = renderTextArea(defaultProps);
-    expect(textArea.classList.contains(defaultProps.className)).toBe(true);
+    const utils = renderTextArea(defaultProps);
+    const container = utils.container.firstChild as HTMLDivElement;
+    expect(container.classList.contains(defaultProps.className)).toBe(true);
   });
 
   test('key presses are reflected in component and onChange function is called when value changes', () => {
