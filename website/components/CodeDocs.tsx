@@ -48,6 +48,21 @@ const mobileInstallMargin = css`
   margin-top: 50px;
 `;
 
+const changelogStyles = css`
+  color: ${uiColors.gray.dark3};
+  pointer-events: none;
+
+  & > h2 {
+    padding-top: ${spacing[3]}px;
+    border-top: 1px solid ${uiColors.gray.light2};
+  }
+
+  a {
+    color: ${uiColors.gray.dark3};
+    text-decoration: none;
+  }
+`;
+
 interface VersionCardProps {
   version?: string;
   changelog: string;
@@ -85,10 +100,7 @@ function VersionCard({
       </Button>
       <Modal open={openModal} setOpen={setOpenModal}>
         <div
-          className={css`
-            text-decoration: none;
-            color: ${uiColors.gray.dark3};
-          `}
+          className={changelogStyles}
           dangerouslySetInnerHTML={{ __html: changelog }}
         ></div>
       </Modal>
@@ -162,9 +174,9 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
     ? viewport?.width < breakpoints.Tablet
     : false;
 
-  const version = changelog.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
-  const example = readme.match(/(?<=js).*?(?=```)/s)?.[0];
-  const outputHTML = readme.match(/(?<=html).*?(?=```)/s)?.[0];
+  const version = changelog?.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
+  const example = readme?.match(/(?<=js).*?(?=```)/s)?.[0];
+  const outputHTML = readme?.match(/(?<=html).*?(?=```)/s)?.[0];
   const markdownAst = (unified()
     .use(markdown)
     .parse(readme) as unknown) as ReadmeMarkdown;

@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum c0a0a957835b67fc82ec7a4317528d10
+ * @checksum d4df8eb32a9bdbd523c8231664203e5b
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -27,6 +27,9 @@ const ChevronDown = ({
   const fillStyle = css`
     color: ${fill};
   `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
+  `;
   title = getGlyphTitle('ChevronDown', title);
   return (
     <svg
@@ -34,6 +37,7 @@ const ChevronDown = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

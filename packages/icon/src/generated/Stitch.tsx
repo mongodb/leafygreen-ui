@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum b19c1b780302330a872c55a4664e8c48
+ * @checksum 21c5e6a5ee6b5ea19ab58dff73838970
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -27,6 +27,9 @@ const Stitch = ({
   const fillStyle = css`
     color: ${fill};
   `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
+  `;
   title = getGlyphTitle('Stitch', title);
   return (
     <svg
@@ -34,6 +37,7 @@ const Stitch = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

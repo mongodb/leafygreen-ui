@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 6686d0b57b3494f6ae36a3283efb9a80
+ * @checksum a1ebc3549ec6f45fb59d3ead2734bae4
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -27,6 +27,9 @@ const Laptop = ({
   const fillStyle = css`
     color: ${fill};
   `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
+  `;
   title = getGlyphTitle('Laptop', title);
   return (
     <svg
@@ -34,6 +37,7 @@ const Laptop = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

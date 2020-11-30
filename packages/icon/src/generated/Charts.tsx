@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 6d2eea5dc97665ec6240e72055ed9c3f
+ * @checksum 99d943a146f12abc3b5bf8d4ed5c8f08
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -27,6 +27,9 @@ const Charts = ({
   const fillStyle = css`
     color: ${fill};
   `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
+  `;
   title = getGlyphTitle('Charts', title);
   return (
     <svg
@@ -34,6 +37,7 @@ const Charts = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}
