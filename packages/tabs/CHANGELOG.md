@@ -1,5 +1,15 @@
 # @leafygreen-ui/tabs
 
+## 4.0.5
+
+### Patch Changes
+
+- ee7923d3: Changes how we extend the types of HTMLElements, and standardizes how we document this across readmes
+- dc88bac1: Ensures Tabs have an active state
+- d12fe9f7: Fixes bug where on new page load, browser would automatically scroll to Tabs due to prematurely manually focusing of the component
+- Updated dependencies [ee7923d3]
+  - @leafygreen-ui/lib@6.1.2
+
 ## 4.0.4
 
 ### Patch Changes

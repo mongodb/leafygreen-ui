@@ -1,5 +1,13 @@
 # @leafygreen-ui/icon
 
+## 7.0.2
+
+### Patch Changes
+
+- 7b71da8f: Fixes issue where icons could inadvertently be resized by flexbox default behavior.
+- Updated dependencies [ee7923d3]
+  - @leafygreen-ui/lib@6.1.2
+
 ## 7.0.1
 
 ### Patch Changes
