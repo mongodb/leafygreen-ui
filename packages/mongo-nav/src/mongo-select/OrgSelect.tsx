@@ -9,6 +9,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { usePrevious, useViewportSize } from '@leafygreen-ui/hooks';
+import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   Menu,
@@ -19,11 +20,7 @@ import {
 
 // mongo-nav
 import { useOnElementClick } from '../on-element-click-provider';
-import {
-  InteractionRingWrapper,
-  CloudManagerIcon,
-  AtlasIcon,
-} from '../helpers';
+import { CloudManagerIcon, AtlasIcon } from '../helpers';
 import { mq, breakpoints } from '../breakpoints';
 import {
   CurrentOrganizationInterface,
@@ -102,15 +99,6 @@ const orgTriggerContainerStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 20px;
-`;
-
-const orgTriggerRingStyle = css`
-  border-radius: 7px 0 0 7px;
-`;
-
-const orgStandaloneTriggerRingStyle = css`
-  border-radius: 7px;
 `;
 
 const orgOptionContainerStyle = css`
@@ -161,6 +149,14 @@ const focusedLinkStyle = css`
 const activeIconStyle = css`
   color: ${uiColors.green.base};
 `;
+
+const interactionRingStyle = css`
+  margin-left: 20px;
+`;
+
+function getInteractionRingBorderRadius({ disabled }: { disabled: boolean }) {
+  return disabled ? '5px' : '5px 0 0 5px';
+}
 
 // types
 interface OrganizationMongoSelectProps extends BaseMongoSelectProps {
@@ -340,106 +336,115 @@ function OrgSelect({
     );
   };
 
+  const [buttonElement, setButtonElement] = useState<HTMLElement | null>(null);
+
   const caretIconStyle = cx(caretBaseStyle, { [iconLoadingStyle]: loading });
 
   return (
     <>
-      <InteractionRingWrapper
-        className={orgTriggerContainerStyle}
-        ringClassName={cx(orgTriggerRingStyle, {
-          [orgStandaloneTriggerRingStyle]: disabled,
-        })}
-        selector={triggerDataProp.selector}
+      <InteractionRing
+        className={interactionRingStyle}
+        borderRadius={getInteractionRingBorderRadius({ disabled })}
+        focusTargetElement={buttonElement}
+        forceState={{ hovered: open ? false : undefined }}
+        disabled={loading}
       >
-        <button
-          {...triggerDataProp.prop}
-          aria-disabled={loading}
-          data-testid="org-trigger"
-          disabled={loading}
-          onClick={onElementClick(
-            NavElement.OrgNavOrgSelectTrigger,
-            toggleOpen,
-          )}
-          className={cx(baseButtonStyle, orgButtonStyle, {
-            [activeButtonStyle]: open,
-            [textLoadingStyle]: loading,
-            [orgStandaloneButtonStyle]: disabled,
-          })}
-        >
-          {!isTablet && (
-            <BuildingIcon
-              size="small"
-              className={cx(iconColorStyle, { [iconLoadingStyle]: loading })}
-            />
-          )}
-          <span
-            data-testid="org-select-active-org"
-            className={cx(selectedStyle, {
+        <div className={orgTriggerContainerStyle}>
+          <button
+            {...triggerDataProp.prop}
+            ref={setButtonElement}
+            aria-disabled={loading}
+            data-testid="org-trigger"
+            disabled={loading}
+            onClick={onElementClick(
+              NavElement.OrgNavOrgSelectTrigger,
+              toggleOpen,
+            )}
+            className={cx(baseButtonStyle, orgButtonStyle, {
+              [activeButtonStyle]: open,
               [textLoadingStyle]: loading,
+              [orgStandaloneButtonStyle]: disabled,
             })}
           >
-            {disabled ? 'All Organizations' : current?.orgName ?? ''}
-          </span>
-          {open ? (
-            <CaretUpIcon size="small" className={caretIconStyle} />
-          ) : (
-            <CaretDownIcon size="small" className={caretIconStyle} />
-          )}
-        </button>
-        <Menu
-          usePortal={false}
-          className={menuContainerStyle}
-          justify="start"
-          spacing={0}
-          setOpen={toggleOpen}
-          open={open}
-        >
-          {data && (
-            <FocusableMenuItem>
-              <Input
-                data-testid="org-filter-input"
-                variant="organization"
-                onChange={onChange}
-                onKeyDown={onKeyDown}
-                value={value}
+            {!isTablet && (
+              <BuildingIcon
+                size="small"
+                className={cx(iconColorStyle, { [iconLoadingStyle]: loading })}
               />
-            </FocusableMenuItem>
-          )}
+            )}
+            <span
+              data-testid="org-select-active-org"
+              className={cx(selectedStyle, {
+                [textLoadingStyle]: loading,
+              })}
+            >
+              {disabled ? 'All Organizations' : current?.orgName ?? ''}
+            </span>
+            {open ? (
+              <CaretUpIcon size="small" className={caretIconStyle} />
+            ) : (
+              <CaretDownIcon size="small" className={caretIconStyle} />
+            )}
+          </button>
+          <Menu
+            usePortal={false}
+            className={menuContainerStyle}
+            justify="start"
+            spacing={0}
+            setOpen={toggleOpen}
+            open={open}
+          >
+            {data && (
+              <FocusableMenuItem>
+                <Input
+                  data-testid="org-filter-input"
+                  variant="organization"
+                  onChange={onChange}
+                  onKeyDown={onKeyDown}
+                  value={value}
+                />
+              </FocusableMenuItem>
+            )}
 
-          <ul className={ulStyle}>
-            {isAdminSearch && isFetching && (
-              <li className={emptyStateStyle}>Searching...</li>
-            )}
-            {isAdminSearch && !isFetching && renderedData.length === 0 && (
-              <li className={emptyStateStyle}>No matches found</li>
-            )}
-            {renderedData?.map(renderOrganizationOption) ?? (
-              <li className={emptyStateStyle}>
-                You do not belong to any organizations. Create an organization
-                on the{' '}
-                <a href={urls.viewAllOrganizations} className={linkStyle}>
-                  Organizations
-                </a>{' '}
-                page.
-              </li>
-            )}
-          </ul>
+            <ul className={ulStyle}>
+              {isAdminSearch && isFetching && (
+                <li className={emptyStateStyle}>Searching...</li>
+              )}
+              {isAdminSearch && !isFetching && renderedData.length === 0 && (
+                <li className={emptyStateStyle}>No matches found</li>
+              )}
+              {renderedData?.map(renderOrganizationOption) ?? (
+                <li className={emptyStateStyle}>
+                  You do not belong to any organizations. Create an organization
+                  on the{' '}
+                  <a href={urls.viewAllOrganizations} className={linkStyle}>
+                    Organizations
+                  </a>{' '}
+                  page.
+                </li>
+              )}
+            </ul>
 
-          {renderedData && (
-            <>
-              <MenuSeparator />
-              <MenuItem
-                onKeyDown={onKeyDown}
-                href={urls.viewAllOrganizations}
-                data-testid="org-select-view-all-orgs"
-                onClick={onElementClick(NavElement.OrgNavViewAllOrganizations)}
-              >
-                <strong className={viewAllStyle}>View All Organizations</strong>
-              </MenuItem>
-            </>
-          )}
-        </Menu>
-      </InteractionRingWrapper>
+            {renderedData && (
+              <>
+                <MenuSeparator />
+                <MenuItem
+                  onKeyDown={onKeyDown}
+                  href={urls.viewAllOrganizations}
+                  data-testid="org-select-view-all-orgs"
+                  onClick={onElementClick(
+                    NavElement.OrgNavViewAllOrganizations,
+                  )}
+                >
+                  <strong className={viewAllStyle}>
+                    View All Organizations
+                  </strong>
+                </MenuItem>
+              </>
+            )}
+          </Menu>
+        </div>
+      </InteractionRing>
 
       {!disabled && (
         <a

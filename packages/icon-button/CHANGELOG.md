@@ -1,5 +1,16 @@
 # @leafygreen-ui/icon-button
 
+## 9.1.0
+
+### Minor Changes
+
+- 627333c2: `Size` is now a named export from the package
+
+### Patch Changes
+
+- Updated dependencies [ee7923d3]
+  - @leafygreen-ui/lib@6.1.2
+
 ## 9.0.1
 
 ### Patch Changes

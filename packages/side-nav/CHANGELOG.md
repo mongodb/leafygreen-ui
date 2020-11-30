@@ -1,5 +1,19 @@
 # @leafygreen-ui/side-nav
 
+## 5.0.0
+
+### Major Changes
+
+- ee7923d3: Performs some internal code refactoring with improved typing.
+
+### Patch Changes
+
+- ee7923d3: Changes how we extend the types of HTMLElements, and standardizes how we document this across readmes
+- Updated dependencies [ee7923d3]
+- Updated dependencies [ee7923d3]
+  - @leafygreen-ui/menu@9.1.1
+  - @leafygreen-ui/lib@6.1.2
+
 ## 4.0.3
 
 ### Patch Changes

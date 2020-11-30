@@ -1,5 +1,13 @@
 # @leafygreen-ui/badge
 
+## 4.0.2
+
+### Patch Changes
+
+- ee7923d3: Changes how we extend the types of HTMLElements, and standardizes how we document this across readmes
+- Updated dependencies [ee7923d3]
+  - @leafygreen-ui/lib@6.1.2
+
 ## 4.0.1
 
 ### Patch Changes

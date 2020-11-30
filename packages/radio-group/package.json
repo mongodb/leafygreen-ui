@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/radio-group",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "description": "leafyGreen UI Kit RadioGroup",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,7 +20,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^6.1.1",
+    "@leafygreen-ui/interaction-ring": "^0.9.0",
+    "@leafygreen-ui/lib": "^6.1.2",
     "@leafygreen-ui/palette": "^3.1.0"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0"

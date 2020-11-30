@@ -1,16 +1,12 @@
 import React, { useState, useMemo } from 'react';
-import {
-  HTMLElementProps,
-  IdAllocator,
-  Either,
-  createDataProp,
-} from '@leafygreen-ui/lib';
+import { Either, HTMLElementProps, IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
+import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
+import { Description, Label } from '@leafygreen-ui/typography';
 
 const idAllocator = IdAllocator.create('textarea');
-const textAreaProp = createDataProp('area-selector');
 
 export const State = {
   None: 'none',
@@ -31,34 +27,12 @@ const containerStyles = css`
   flex-direction: column;
 `;
 
-const labelStyle = css`
-  font-size: 14px;
-  font-weight: bold;
-  line-height: 16px;
-  padding-bottom: 4px;
-`;
-
-const descriptionStyle = css`
-  font-size: 14px;
-  line-height: 16px;
-  font-weight: normal;
-  padding-bottom: 4px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-`;
-
-const textAreaContainer = css`
-  position: relative;
-  display: flex;
-  align-items: center;
-  z-index: 0;
-`;
-
 const textAreaStyle = css`
   width: 100%;
   min-height: ${spacing[6]}px;
   resize: none;
   border-radius: 4px;
+  margin: 0;
   padding: 10px 12px 1px 12px;
   font-size: 14px;
   font-weight: normal;
@@ -78,26 +52,6 @@ const textAreaStyle = css`
   }
 `;
 
-const interactionRingStyles = css`
-  transition: all 150ms ease-in-out;
-  transform: scale(0.9, 0.8);
-  border-radius: 7px;
-  position: absolute;
-  top: -3px;
-  bottom: -3px;
-  left: -3px;
-  right: -3px;
-  pointer-events: none;
-
-  ${textAreaProp.selector}:focus ~ & {
-    transform: scale(1);
-  }
-
-  ${textAreaProp.selector}:hover ~ & {
-    transform: scale(1);
-  }
-`;
-
 const errorMessageStyle = css`
   font-size: 14px;
   height: 20px;
@@ -106,23 +60,14 @@ const errorMessageStyle = css`
 `;
 
 interface ColorSets {
-  labelColor: string;
-  descriptionColor: string;
   defaultBorder: string;
   textArea: string;
   errorBorder: string;
   errorMessage: string;
-  interactionRing: string;
 }
 
 const colorSets: Record<Mode, ColorSets> = {
   [Mode.Light]: {
-    labelColor: css`
-      color: ${uiColors.gray.dark2};
-    `,
-    descriptionColor: css`
-      color: ${uiColors.gray.dark1};
-    `,
     defaultBorder: css`
       border-color: ${uiColors.gray.light1};
     `,
@@ -146,23 +91,8 @@ const colorSets: Record<Mode, ColorSets> = {
     errorMessage: css`
       color: ${uiColors.red.base};
     `,
-    interactionRing: css`
-      background-color: ${uiColors.gray.light2};
-
-      ${textAreaProp.selector}:focus ~ & {
-        background-color: #9dd0e7;
-      }
-    `,
   },
   [Mode.Dark]: {
-    labelColor: css`
-      color: ${uiColors.white};
-    `,
-
-    descriptionColor: css`
-      color: ${uiColors.gray.light1};
-    `,
-
     defaultBorder: css`
       border-color: #394f5a;
     `,
@@ -188,14 +118,6 @@ const colorSets: Record<Mode, ColorSets> = {
 
     errorMessage: css`
       color: #ef8d6f;
-    `,
-
-    interactionRing: css`
-      background-color: ${uiColors.gray.dark1};
-
-      ${textAreaProp.selector}:focus ~ & {
-        background-color: ${uiColors.blue.base};
-      }
     `,
   },
 };
@@ -250,51 +172,31 @@ export default function TextArea({
   }
 
   return (
-    <div className={containerStyles}>
+    <div className={cx(containerStyles, className)}>
       {label && (
-        <label
-          htmlFor={id}
-          className={cx(labelStyle, colorSets[mode].labelColor)}
-        >
+        <Label darkMode={darkMode} htmlFor={id} disabled={disabled}>
           {label}
-        </label>
+        </Label>
       )}
       {description && (
-        <p className={cx(descriptionStyle, colorSets[mode].descriptionColor)}>
-          {description}
-        </p>
+        <Description darkMode={darkMode}>{description}</Description>
       )}
-      <div className={textAreaContainer}>
+      <InteractionRing darkMode={darkMode} disabled={disabled}>
         <textarea
-          {...textAreaProp.prop}
           {...rest}
           title={label}
           id={id}
-          className={cx(
-            textAreaStyle,
-            colorSets[mode].textArea,
-            {
-              [colorSets[mode].errorBorder]: state === State.Error,
-              [css`
-                background-color: #5a3c3b;
-              `]: state === State.Error && darkMode,
-            },
-            className,
-          )}
+          className={cx(textAreaStyle, colorSets[mode].textArea, {
+            [colorSets[mode].errorBorder]: state === State.Error,
+            [css`
+              background-color: #5a3c3b;
+            `]: state === State.Error && darkMode,
+          })}
           disabled={disabled}
           onChange={onValueChange}
           value={value}
         />
-
-        {!disabled && (
-          <div
-            className={cx(
-              interactionRingStyles,
-              colorSets[mode].interactionRing,
-            )}
-          />
-        )}
-      </div>
+      </InteractionRing>
       {!disabled && state === State.Error && errorMessage && (
         <div className={cx(errorMessageStyle, colorSets[mode].errorMessage)}>
           <label>{errorMessage}</label>
