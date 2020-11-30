@@ -7,7 +7,10 @@ const menuItemHeight = 36;
 export const menuContainerStyle = css`
   position: relative;
   width: 280px;
-  padding-top: 20px;
+
+  & > ul {
+    padding-top: 20px;
+  }
 `;
 
 export const menuItemContainerStyle = css`
