@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
-import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import Size from './Size';
 
@@ -189,7 +189,7 @@ export default function RadioBox({
   children,
   name,
   ...rest
-}: RadioBoxProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>) {
+}: RadioBoxProps & Omit<HTMLElementProps<'input', never>, 'size'>) {
   const radioDisplayStyle = getRadioDisplayStyles({ checked, disabled, size });
   const interactionContainerStyle = getInteractionRingStyles({
     checked,

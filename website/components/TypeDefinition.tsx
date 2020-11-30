@@ -14,7 +14,7 @@ function TypeDefinition({ markdownAst, readme }) {
     .map(treeItem => treeItem.children?.[0].value);
 
   // Gets types defined in readmes to expand upon below the prop table
-  const interfaceDefinitions = readme.match(/(?<=typescript).*?(?=```)/gs);
+  const interfaceDefinitions = readme?.match(/(?<=typescript).*?(?=```)/gs);
 
   if (typeNames.length < 1) {
     return null;

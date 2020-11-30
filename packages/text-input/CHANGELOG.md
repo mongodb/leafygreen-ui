@@ -1,5 +1,30 @@
 # @leafygreen-ui/text-input
 
+## 4.2.0
+
+### Minor Changes
+
+- 627333c2: `State` is now a named export from the package
+
+### Patch Changes
+
+- ee7923d3: Changes how we extend the types of HTMLElements, and standardizes how we document this across readmes
+- Updated dependencies [ee7923d3]
+- Updated dependencies [7b71da8f]
+  - @leafygreen-ui/lib@6.1.2
+  - @leafygreen-ui/icon@7.0.2
+
+## 4.1.1
+
+### Patch Changes
+
+- 374430ea: Updates string color value to reference the same color from uiColors palette
+- Updated dependencies [c9a0d89f]
+- Updated dependencies [9ee1d5fc]
+  - @leafygreen-ui/palette@3.1.0
+  - @leafygreen-ui/lib@6.1.1
+  - @leafygreen-ui/leafygreen-provider@2.0.2
+
 ## 4.1.0
 
 ### Minor Changes

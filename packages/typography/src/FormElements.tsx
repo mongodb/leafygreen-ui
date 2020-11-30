@@ -1,4 +1,5 @@
 import React from 'react';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 
@@ -47,7 +48,7 @@ const labelStyle = css`
   padding-bottom: 4px;
 `;
 
-type LabelProps = JSX.IntrinsicElements['label'] & {
+type LabelProps = HTMLElementProps<'label', never> & {
   darkMode?: boolean;
   htmlFor: string;
   disabled?: boolean;
@@ -88,7 +89,7 @@ const descriptionStyle = css`
   margin-bottom: 0;
 `;
 
-type DescriptionProps = JSX.IntrinsicElements['p'] & {
+type DescriptionProps = HTMLElementProps<'p', never> & {
   darkMode?: boolean;
 };
 

@@ -104,12 +104,12 @@ _Any other properties will be spread on the root element._
 
 ## Properties
 
-| Prop               | Type                                      | Description                                                                                               | Default |
-| ------------------ | ----------------------------------------- | --------------------------------------------------------------------------------------------------------- | ------- |
-| `value` (Required) | `string` \| `number`                      | Every `<Radio />` needs a value prop.                                                                     |         |
-| `className`        | `string`                                  | Adds a className to the label                                                                             | `''`    |
-| `disabled`         | `boolean`                                 | Indicates whether or not the radio can be clicked by a user                                               | `false` |
-| `children`         | `node`                                    | Text that appears adjacent to the radio input; label text.                                                |         |
-| `default`          | `boolean`                                 | If `<RadioGroup />` is uncontrolled, the default property makes this Radio checked on the initial render. |         |
-| `checked`          | `boolean`                                 | Determines if `<Radio />` will appear checked                                                             | `false` |
-| ...                | `React.ComponentPropsWithoutRef<'input'>` | Any other properties will be spread on the `input` element.                                               |         |
+| Prop               | Type                      | Description                                                                                               | Default |
+| ------------------ | ------------------------- | --------------------------------------------------------------------------------------------------------- | ------- |
+| `value` (Required) | `string` \| `number`      | Every `<Radio />` needs a value prop.                                                                     |         |
+| `className`        | `string`                  | Adds a className to the label                                                                             | `''`    |
+| `disabled`         | `boolean`                 | Indicates whether or not the radio can be clicked by a user                                               | `false` |
+| `children`         | `node`                    | Text that appears adjacent to the radio input; label text.                                                |         |
+| `default`          | `boolean`                 | If `<RadioGroup />` is uncontrolled, the default property makes this Radio checked on the initial render. |         |
+| `checked`          | `boolean`                 | Determines if `<Radio />` will appear checked                                                             | `false` |
+| ...                | native `input` attributes | Any other props will be spread on the root `input` element                                                |         |

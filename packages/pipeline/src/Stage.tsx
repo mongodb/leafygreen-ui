@@ -2,7 +2,6 @@ import React, { forwardRef, ReactNode, Ref, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import mergeRefs from 'react-merge-refs';
 import { useInView } from 'react-intersection-observer';
-
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import {

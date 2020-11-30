@@ -1,152 +1,183 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { Tabs, Tab } from './index';
+import userEvent from '@testing-library/user-event';
+import { Tabs, Tab } from '.';
 
-const setSelected = jest.fn();
 const tabsClassName = 'tabs-class-name';
+const tabsTestId = 'tabs-component';
+const setSelected = jest.fn();
 
-function renderTabs(props = {}, useDefault?: boolean) {
-  const utils = render(
-    <Tabs {...props} data-testid="tabs-component">
-      <Tab default={useDefault} name="Name A">
-        Test Content 1
+const renderTabs = (tabsProps = {}, tabProps = {}) => {
+  render(
+    <Tabs {...tabsProps} data-testid={tabsTestId}>
+      <Tab {...tabProps} name="First">
+        Content 1
       </Tab>
-      <Tab name="Name B">Test Content 2</Tab>
-      <Tab disabled name="Name C">
-        Test Content 3
-      </Tab>
+      <Tab name="Second">Content 2</Tab>
+      <Tab name="Third"> Content 3</Tab>
     </Tabs>,
   );
-  return utils;
-}
+};
 
 describe('packages/tab', () => {
-  test('clicking a tab fires setSelected callback', () => {
-    const { getByText } = renderTabs({ setSelected, selected: 1 });
-    const tabListItem = getByText('Name A');
-    fireEvent.click(tabListItem);
-
-    expect(setSelected).toHaveBeenCalled();
-  });
-
-  test(`renders "${tabsClassName}" in the Tabs componenet's classList`, () => {
-    const { getByTestId } = renderTabs({
-      setSelected,
-      selected: 1,
-      className: tabsClassName,
+  describe('when controlled', () => {
+    test('clicking a tab fires setSelected callback', () => {
+      renderTabs({ setSelected, selected: 1 });
+      const tabListItem = screen.getByText('Second');
+      fireEvent.click(tabListItem);
+      expect(setSelected).toHaveBeenCalled();
     });
 
-    const tabs = getByTestId('tabs-component');
-    expect(tabs.classList.contains(tabsClassName)).toBe(true);
-  });
+    test(`renders "${tabsClassName}" to the tabs classList`, () => {
+      renderTabs({
+        setSelected,
+        selected: 1,
+        className: tabsClassName,
+      });
 
-  test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
-    const { getByText } = renderTabs({
-      setSelected,
-      selected: 1,
-      as: 'a',
+      const tabs = screen.getByTestId(tabsTestId);
+      expect(tabs.classList.contains(tabsClassName)).toBe(true);
     });
 
-    const tabListItem = getByText('Name A');
-    expect(tabListItem.tagName.toLowerCase()).toBe('a');
-  });
+    test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
+      renderTabs({
+        setSelected,
+        selected: 1,
+        as: 'a',
+      });
 
-  test('renders correct number of elements in the tablist', () => {
-    const { container } = renderTabs({
-      setSelected,
-      selected: 1,
+      const tabListItem = screen.getByText('First');
+      expect(tabListItem.tagName.toLowerCase()).toBe('a');
     });
-    expect(container.querySelectorAll('[role="tab"]').length).toBe(3);
-  });
 
-  test('renders only one tabpanel at a time', () => {
-    const { container } = renderTabs({
-      setSelected,
-      selected: 1,
+    test('renders correct number of elements in the tablist', () => {
+      renderTabs({
+        setSelected,
+        selected: 1,
+      });
+
+      const container = screen.getByTestId(tabsTestId);
+      expect(container.querySelectorAll('[role="tab"]').length).toBe(3);
     });
-    expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
-  });
 
-  describe('when the component is controlled', () => {
+    test('renders only one tabpanel at a time', () => {
+      renderTabs({
+        setSelected,
+        selected: 1,
+      });
+
+      const container = screen.getByTestId(tabsTestId);
+      expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
+    });
+
     test('selected tab is active on first render', () => {
-      const { getByText } = renderTabs({ setSelected, selected: 1 });
-      const activeTab = getByText('Test Content 2');
+      renderTabs({ setSelected, selected: 1 });
+      const activeTab = screen.getByText('Content 2');
       expect(activeTab).toBeVisible();
     });
 
     test('clicking a tab does not change the active tab', () => {
-      const { getByText } = renderTabs({ setSelected, selected: 1 });
-      const tab = getByText('Name A');
+      renderTabs({ setSelected, selected: 1 });
+      const tab = screen.getByText('First');
       fireEvent.click(tab);
 
-      const secondContent = getByText('Test Content 2');
+      const secondContent = screen.getByText('Content 2');
       expect(secondContent).toBeInTheDocument();
     });
 
     test('keyboard nav is not supported', () => {
-      const { getByText } = renderTabs({ setSelected, selected: 1 });
-      const activeTabListItem = getByText('Name B');
-      const activeTab = getByText('Test Content 2');
+      renderTabs({ setSelected, selected: 1 });
+      const activeTabListItem = screen.getByText('Second');
+      const activeTab = screen.getByText('Content 2');
       fireEvent.keyDown(activeTabListItem, { key: 'ArrowLeft', keyCode: 37 });
       expect(activeTab).toBeVisible();
     });
   });
 
-  describe('when the component is uncontrolled', () => {
-    test('default tab is active on first render', () => {
-      const { getByText } = renderTabs({ setSelected }, true);
-
-      const defaultTab = getByText('Test Content 1');
-      expect(defaultTab).toBeInTheDocument();
+  describe('when uncontrolled', () => {
+    test('default tab is visible by default', () => {
+      renderTabs({}, { default: true });
+      const defaultTabContent = screen.getByText('Content 1');
+      expect(defaultTabContent).toBeInTheDocument();
     });
 
-    test('clicking a tab changes the active tab', () => {
-      const { container, getByText } = renderTabs({ setSelected }, true);
-      const tab = getByText('Name B');
-      fireEvent.click(tab);
+    test('clicking a tab changes the activeTab', () => {
+      renderTabs({}, { default: true });
+      const defaultTabContent = screen.getByText('Content 1');
+      expect(defaultTabContent).toBeInTheDocument();
 
-      const newlyActiveTab = getByText('Test Content 2');
-      expect(newlyActiveTab).toBeInTheDocument();
+      const newActiveTabTitle = screen.getByText('Second');
+      fireEvent.click(newActiveTabTitle);
+      expect(screen.getByText('Content 2')).toBeInTheDocument();
+
+      const container = screen.getByTestId(tabsTestId);
       expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
     });
 
-    test('keyboard nav is supported', () => {
-      const { container, getByText } = renderTabs({ setSelected }, true);
+    test('keyboard navigation is supported', () => {
+      renderTabs({}, { default: true });
+      const tabs = screen.getByRole('tablist');
+      const activeTabList = screen.getByText('First');
 
-      const activeTabListItem = getByText('Name A');
-      fireEvent.keyDown(activeTabListItem, {
+      // Focus on tablist
+      userEvent.click(tabs);
+      expect(tabs).toHaveFocus();
+
+      // Tab to active TabList
+      userEvent.tab();
+      expect(activeTabList).toHaveFocus();
+
+      // Keyboard navigate between tabs
+      fireEvent.keyDown(activeTabList, {
         key: 'ArrowRight',
-        keyCode: 37,
-      });
-
-      const nextActiveTab = getByText('Test Content 2');
-      expect(nextActiveTab).toBeVisible();
-      expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
-    });
-
-    test('keyboard nav skips tab if tab is disabled', () => {
-      const { getByText } = renderTabs({ setSelected }, true);
-
-      const activeTabListItem = getByText('Name A');
-      fireEvent.keyDown(activeTabListItem, {
-        key: 'ArrowLeft',
         keyCode: 39,
       });
+      expect(screen.getByText('Second')).toHaveFocus();
+    });
 
-      const activeTab = getByText('Test Content 2');
-      expect(activeTab).toBeVisible();
+    test('keyboard navigation skips disabled tabs', () => {
+      render(
+        <Tabs data-testid={tabsTestId}>
+          <Tab default name="First">
+            Content 1
+          </Tab>
+          <Tab disabled name="Second">
+            Content 2
+          </Tab>
+          <Tab name="Third"> Content 3</Tab>
+        </Tabs>,
+      );
+
+      const tabs = screen.getByRole('tablist');
+      const activeTabList = screen.getByText('First');
+
+      // Focus on tablist
+      userEvent.click(tabs);
+      expect(tabs).toHaveFocus();
+
+      // Tab to active TabList
+      userEvent.tab();
+      expect(activeTabList).toHaveFocus();
+
+      // Keyboard navigate between tabs
+      fireEvent.keyDown(activeTabList, {
+        key: 'ArrowRight',
+        keyCode: 39,
+      });
+      expect(screen.getByText('Third')).toHaveFocus();
     });
 
     test('keyboard nav does not work if modifier key is also pressed', () => {
-      const { getByText } = renderTabs({ setSelected }, true);
-      const activeTabListItem = getByText('Name A');
+      renderTabs({}, { default: true });
+      const activeTabListItem = screen.getByText('First');
+
       fireEvent.keyDown(activeTabListItem, {
         key: 'ArrowRight',
         keyCode: 39,
         metaKey: true,
       });
 
-      const activeTab = getByText('Test Content 1');
+      const activeTab = screen.getByText('Content 1');
       expect(activeTab).toBeVisible();
     });
   });
@@ -172,21 +203,23 @@ describe('packages/tab', () => {
     });
 
     test('only the current Tabs set is toggled when the arrow keys are pressed', () => {
-      const tabSet2A = screen.getByText('Tab Set 2-A');
+      const tabs = screen.getAllByRole('tablist')[0];
+      const activeTabList = screen.getByText('Tab Set 1-A');
 
-      const tabSet1AContent = screen.getByText('Content 1-A');
-      const tabSet2AContent = screen.getByText('Content 2-A');
-      expect(tabSet1AContent).toBeInTheDocument();
-      expect(tabSet2AContent).toBeInTheDocument();
+      // Focus on tablist
+      userEvent.click(tabs);
+      expect(tabs).toHaveFocus();
 
-      tabSet2A.focus();
+      // Tab to active TabList
+      userEvent.tab();
+      expect(activeTabList).toHaveFocus();
 
-      fireEvent.keyDown(tabSet2A, {
+      fireEvent.keyDown(activeTabList, {
         key: 'ArrowRight',
-        keyCode: 37,
+        keyCode: 39,
       });
 
-      expect(screen.getByText('Tab Set 2-B')).toHaveFocus();
+      expect(screen.getByText('Tab Set 1-B')).toHaveFocus();
     });
   });
 });

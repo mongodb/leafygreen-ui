@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 4.0.2
+
+### Patch Changes
+
+- ee7923d3: Changes how we extend the types of HTMLElements, and standardizes how we document this across readmes
+
 ## 4.0.1
 
 ### Patch Changes

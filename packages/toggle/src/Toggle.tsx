@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { useState, useMemo } from 'react';
+import {
+  createDataProp,
+  HTMLElementProps,
+  IdAllocator,
+} from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
-import { createDataProp, IdAllocator } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 
 export const Size = {
@@ -370,7 +374,7 @@ interface BaseToggleProps {
 }
 
 type ToggleProps = BaseToggleProps &
-  Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof BaseToggleProps>;
+  Omit<HTMLElementProps<'input', never>, keyof BaseToggleProps>;
 
 const idAllocator = IdAllocator.create('toggle');
 

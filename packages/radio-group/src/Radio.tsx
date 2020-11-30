@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { createDataProp, HTMLElementProps } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { RadioGroupProps } from './RadioGroup';
 import { Size } from './types';
@@ -231,7 +231,7 @@ const radioBoxStyle = css`
   flex-shrink: 0;
 `;
 
-export type RadioProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> &
+export type RadioProps = Omit<HTMLElementProps<'input', never>, 'size'> &
   Pick<RadioGroupProps, 'darkMode' | 'size'> & {
     default?: boolean;
     id?: string | number;

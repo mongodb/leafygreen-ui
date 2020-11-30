@@ -43,19 +43,19 @@ import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 
 ## Table Properties
 
-| Prop       | Type                                                                                              | Description                                                                     | Default |
-| ---------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------- |
-| `data`     | `Array<unknown>`                                                                                  | Data that will be rendered inside of the table                                  |         |
-| `columns`  | `Array<React.ReactElement<HeaderRowProps` \| `TableHeaderProps<Shape>>>` \| `React.ReactFragment` | Columns in the Table                                                            |         |
-| `children` | `(datum, string) => JSX.Element`                                                                  | Rows of the table                                                               |         |
-| ...        | `React.ComponentPropsWithoutRef<'table'>`                                                         | Any property that can be passed to a `table` element will be spread on the root |         |
+| Prop       | Type                                                                                              | Description                                                | Default |
+| ---------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ------- |
+| `data`     | `Array<unknown>`                                                                                  | Data that will be rendered inside of the table             |         |
+| `columns`  | `Array<React.ReactElement<HeaderRowProps` \| `TableHeaderProps<Shape>>>` \| `React.ReactFragment` | Columns in the Table                                       |         |
+| `children` | `(datum, string) => JSX.Element`                                                                  | Rows of the table                                          |         |
+| ...        | native `table` attributes                                                                         | Any other props will be spread on the root `table` element |         |
 
 # HeaderRow
 
-| Prop       | Type                                   | Description                                                                  | Default |
-| ---------- | -------------------------------------- | ---------------------------------------------------------------------------- | ------- |
-| `children` | `TableHeader` components               | `TableHeader` components that comprise a header row in the table.            |         |
-| ...        | `React.ComponentPropsWithoutRef<'tr'>` | Any property that can be passed to a `tr` element will be spread on the root |         |
+| Prop       | Type                     | Description                                                       | Default |
+| ---------- | ------------------------ | ----------------------------------------------------------------- | ------- |
+| `children` | `TableHeader` components | `TableHeader` components that comprise a header row in the table. |         |
+| ...        | native `tr` attributes   | Any other props will be spread on the root `tr` element           |         |
 
 # TableHeader
 
@@ -64,7 +64,7 @@ import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 | `label`    | `string`                                                  | Content that will be rendered inside of the `th` tags                              |         |
 | `sortBy`   | `(data: any) => string` \| `string`                       | String or function that provides information about how the column should be sorted |         |
 | `dataType` | `'number'`, `'weight'`, `'zipCode'`, `'string'`, `'date'` | Describes the type of data in the column                                           |         |
-| ...        | `React.ComponentPropsWithoutRef<'th'>`                    | Any property that can be passed to a `th` element will be spread on the root       |         |
+| ...        | native `th` attributes                                    | Any other props will be spread on the root `th` element                            |         |
 
 # Row
 
@@ -76,8 +76,8 @@ import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 
 # Cell
 
-| Prop        | Type                                | Description                                                                  | Default |
-| ----------- | ----------------------------------- | ---------------------------------------------------------------------------- | ------- |
-| `children`  | `React.ReactNode`                   | Contents to appear inside of the Cell                                        |         |
-| `className` | `string`                            | className applied to `td` wrapper                                            |         |
-| ...         | `React.ComponentPropsWithRef<'td'>` | Any property that can be passed to a `td` element will be spread on the root |         |
+| Prop        | Type                   | Description                                             | Default |
+| ----------- | ---------------------- | ------------------------------------------------------- | ------- |
+| `children`  | `React.ReactNode`      | Contents to appear inside of the Cell                   |         |
+| `className` | `string`               | className applied to `td` wrapper                       |         |
+| ...         | native `td` attributes | Any other props will be spread on the root `td` element |         |

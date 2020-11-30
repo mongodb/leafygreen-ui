@@ -1,0 +1,15 @@
+import Code from '@leafygreen-ui/code';
+
+### The code component can be used in any area where you want to surface snippets of code to the user. Code components are often found in University & Documentation, but can also be used in product.
+
+##### IMPORTANT: This component uses the font Source Code Pro in Regular, Italic, Bold, and Bold Italic weights. You can download these fonts here. Additionally, in order to view or change syntax highlighting you will need to install the Sketch Syntax Highlighter plugin. Unfortunately, there's no way (yet) to emulate the exact syntax highlighting that occurs in production — in production we use highlight.js. The syntax highlighter theme used in light mode is "Docco" and the one used in dark mode is "Agate", but feel free to use whichever one you prefer.
+
+The default code component you should use most of the time is the sidebar version you see below. (The code snippet in this component does not wrap within its container. Instead, when code gets long, the user can scroll to see the rest of it. We decided on this interaction in order to keep the original structure of the code intact.)
+
+#### Stateless (default)
+
+<Code language="js">console.log('hello world')</Code>
+
+This sidebar on the right can contain actions that the user can perform on the snippet of code, such as copying it to their clipboard. Eventually, we’ll be able to extend new actions and functions to the code component, such as linking out a GitHub page or enlarging the code component viewport.
+
+Only use Source Code Pro within the code component. Do not use Akzidenz-Grotesk or any other font.

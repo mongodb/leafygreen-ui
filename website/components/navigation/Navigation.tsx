@@ -36,8 +36,11 @@ const components = [
   'box',
   'button',
   'callout',
+  'card',
+  'checkbox',
   'code',
   'confirmation-modal',
+  'copyable',
   'icon',
   'icon-button',
   'inline-definition',
@@ -57,6 +60,7 @@ const components = [
   'syntax',
   'table',
   'tabs',
+  'text-area',
   'text-input',
   'toast',
   'toggle',
@@ -74,6 +78,7 @@ type GroupType = typeof GroupType[keyof typeof GroupType];
 
 function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
   const router = useRouter();
+  const activePage = router.asPath.split('/')[2];
 
   const renderGroup = (type: GroupType) => {
     const isGuideline = type === GroupType.Guideline;
@@ -87,12 +92,15 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
           initialCollapsed={!router.asPath.includes(type)}
         >
           {items.map(item => {
-            const path = `/${type}/${item}`;
+            const path =
+              type === GroupType.Guideline
+                ? `/${type}/${item}`
+                : `/${type}/${item}/example`;
             return (
               <MobileNavigationItem
                 key={item}
                 onClick={() => router.push(path)}
-                active={router.asPath === path}
+                active={item === activePage}
               >
                 {item.split('-').join(' ')}
               </MobileNavigationItem>
@@ -110,12 +118,15 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
         initialCollapsed={false}
       >
         {items.map(item => {
-          const path = `/${type}/${item}`;
+          const path =
+            type === GroupType.Guideline
+              ? `/${type}/${item}`
+              : `/${type}/${item}/example`;
           return (
             <SideNavItem
               key={item}
               onClick={() => router.push(path)}
-              active={router.asPath === path}
+              active={item === activePage}
             >
               {item.split('-').join(' ')}
             </SideNavItem>

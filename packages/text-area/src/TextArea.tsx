@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
+import { Either, HTMLElementProps, IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
-import { IdAllocator, Either } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
@@ -122,7 +122,7 @@ const colorSets: Record<Mode, ColorSets> = {
   },
 };
 
-type BaseTextAreaProps = JSX.IntrinsicElements['textarea'] & {
+type BaseTextAreaProps = HTMLElementProps<'textarea', never> & {
   id?: string;
   darkMode?: boolean;
   label: string;
@@ -172,7 +172,7 @@ export default function TextArea({
   }
 
   return (
-    <div className={containerStyles}>
+    <div className={cx(containerStyles, className)}>
       {label && (
         <Label darkMode={darkMode} htmlFor={id} disabled={disabled}>
           {label}
@@ -186,17 +186,12 @@ export default function TextArea({
           {...rest}
           title={label}
           id={id}
-          className={cx(
-            textAreaStyle,
-            colorSets[mode].textArea,
-            {
-              [colorSets[mode].errorBorder]: state === State.Error,
-              [css`
-                background-color: #5a3c3b;
-              `]: state === State.Error && darkMode,
-            },
-            className,
-          )}
+          className={cx(textAreaStyle, colorSets[mode].textArea, {
+            [colorSets[mode].errorBorder]: state === State.Error,
+            [css`
+              background-color: #5a3c3b;
+            `]: state === State.Error && darkMode,
+          })}
           disabled={disabled}
           onChange={onValueChange}
           value={value}
