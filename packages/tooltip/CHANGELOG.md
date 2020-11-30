@@ -1,5 +1,13 @@
 # @leafygreen-ui/tooltip
 
+## 6.1.1
+
+### Patch Changes
+
+- ee7923d3: Changes how we extend the types of HTMLElements, and standardizes how we document this across readmes
+- Updated dependencies [ee7923d3]
+  - @leafygreen-ui/lib@6.1.2
+
 ## 6.1.0
 
 ### Minor Changes
