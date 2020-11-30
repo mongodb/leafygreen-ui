@@ -147,7 +147,6 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       name={name}
       value={value}
       disabled={disabled}
-      focused={open ? true : undefined}
       onClick={onClick}
       onKeyDown={onKeyDown}
       variant={mode === Mode.Dark ? Variant.Dark : Variant.Default}

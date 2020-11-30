@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useViewportSize } from '@leafygreen-ui/hooks';
 import { IdAllocator } from '@leafygreen-ui/lib';
 import { breakpoints } from '@leafygreen-ui/tokens';
 import { colorSets, mobileSizeSet, Mode, Size, sizeSets } from './styleSets';
@@ -17,7 +18,6 @@ import {
   traverseSelectChildren,
   useStateRef,
 } from './utils';
-import { useViewportSize } from '@leafygreen-ui/hooks/src';
 
 const labelStyle = css`
   display: inline-block;

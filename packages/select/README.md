@@ -118,6 +118,7 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 | `className` | `string`             | Adds a className to the outermost element.                                                            |                             |
 | `glyph`     | `React.ReactElement` | Icon to display next to the option text.                                                              |                             |
 | `value`     | `string`             | Corresponds to the value passed into the `onChange` prop of `<Select />` when the option is selected. | text contents of `children` |
+| `name`      | `string`             | The name that will be used when submitted as part of a form.                                          |
 | `disabled`  | `boolean`            | Prevents the option from being selectable.                                                            | `false`                     |
 
 # OptionGroup
