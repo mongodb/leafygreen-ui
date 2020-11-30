@@ -43,6 +43,29 @@ storiesOf('Tabs', module)
           darkMode={darkMode}
           className={css`
             background-color: ${!darkMode ? 'white' : uiColors.gray.dark3};
+            color: ${!darkMode ? uiColors.gray.dark3 : uiColors.white};
+            padding: 20px;
+          `}
+        >
+          <Tab
+            default={boolean('default', true)}
+            name={text('name', 'Brooke Scarlett Yalof')}
+          >
+            {text('Tab Content', 'Hello 1')}
+          </Tab>
+          <Tab name="Robert Arnold Audroue Robert Arnold Audroue Robert Arnold Audroue Robert Arnold Audroue Robert Arnold Audroue Robert Arnold Audroue">
+            Hello 2
+          </Tab>
+          <Tab disabled={boolean('disabled', true)} name="David Scott McCarthy">
+            Hello 3
+          </Tab>
+        </Tabs>
+
+        <Tabs
+          darkMode={darkMode}
+          className={css`
+            background-color: ${!darkMode ? 'white' : uiColors.gray.dark3};
+            color: ${!darkMode ? uiColors.gray.dark3 : uiColors.white};
             padding: 20px;
           `}
         >

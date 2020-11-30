@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 46d1c92051941d3e20e29f6a0be86d41
+ * @checksum 5e9210392defc5684d57a68baac06e78
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ChevronLeftProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `ChevronLeft-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('ChevronLeft');
 
 const ChevronLeft = ({
   className,
@@ -23,11 +21,14 @@ const ChevronLeft = ({
   fill,
   ...props
 }: ChevronLeftProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('ChevronLeft', title);
   return (
@@ -36,6 +37,7 @@ const ChevronLeft = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

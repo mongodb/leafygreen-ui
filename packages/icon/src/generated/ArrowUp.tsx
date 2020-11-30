@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 271052902d6601c69e883ece7e7c8ebb
+ * @checksum b3b2366c94f8d7320aae945397796ffc
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ArrowUpProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `ArrowUp-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('ArrowUp');
 
 const ArrowUp = ({
   className,
@@ -23,11 +21,14 @@ const ArrowUp = ({
   fill,
   ...props
 }: ArrowUpProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('ArrowUp', title);
   return (
@@ -36,6 +37,7 @@ const ArrowUp = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

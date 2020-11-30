@@ -15,10 +15,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js 12.x
+      - name: Setup Node.js 14.x
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: 14.x
 
       - name: Install Dependencies
         run: yarn
@@ -30,22 +30,3 @@ jobs:
         uses: changesets/action@master
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-
-      - name: Checkout changeset-release/master
-        uses: actions/checkout@v2
-        with:
-          ref: changeset-release/master
-
-      - name: Run prettier
-        run: |
-          yarn
-          yarn format
-          git status
-
-      - name: Commit files
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit -m "Automated publish with prettier" || exit 0
-          git pull --rebase publisher @changeset-release/master
-          git push publisher @changeset-release/master

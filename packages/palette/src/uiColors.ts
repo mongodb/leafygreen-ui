@@ -23,6 +23,7 @@ export const blue = {
   dark3: '#0D324F',
   dark2: '#1A567E',
   base: '#007CAD',
+  light1: '#9DD0E7',
   light2: '#C5E4F2',
   light3: '#E1F2F6',
 } as const;

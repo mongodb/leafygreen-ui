@@ -3,6 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 import { Mode } from './Tabs';
 
 const modeColors = {
@@ -85,7 +86,8 @@ const listTitle = css`
   white-space: nowrap;
   max-width: 300px;
   transition: 150ms color ease-in-out;
-  font-family: Akzidenz Medium;
+  font-family: ${fontFamilies.default};
+  font-weight: 600;
   font-size: 16px;
   position: relative;
 
@@ -109,6 +111,13 @@ const listTitle = css`
   &:hover:after {
     transform: scaleX(0.95);
   }
+
+  &:active:after {
+    &:after {
+      transform: scaleX(1);
+      background-color: ${uiColors.green.base};
+    }
+  }
 `;
 
 interface BaseTabProps {
@@ -120,6 +129,7 @@ interface BaseTabProps {
   children?: React.ReactNode;
   className?: string;
   disabled?: boolean;
+  isAnyTabFocused?: boolean;
 }
 
 const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
@@ -130,6 +140,7 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
   ariaControl,
   index,
   darkMode,
+  isAnyTabFocused,
   ...rest
 }: BaseTabProps) => {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -137,10 +148,10 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
   useEffect(() => {
-    if (!disabled && selected && titleRef.current) {
+    if (isAnyTabFocused && !disabled && selected && titleRef.current) {
       titleRef.current.focus();
     }
-  }, [disabled, selected]);
+  }, [isAnyTabFocused, disabled, selected, titleRef]);
 
   const sharedTabProps = {
     className: cx(

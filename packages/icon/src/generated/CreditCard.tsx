@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 5bb942e28773edcc85d391b89cf44fe9
+ * @checksum 66a3ce98074c57ade97d9bb296f72d0e
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CreditCardProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `CreditCard-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('CreditCard');
 
 const CreditCard = ({
   className,
@@ -23,11 +21,14 @@ const CreditCard = ({
   fill,
   ...props
 }: CreditCardProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('CreditCard', title);
   return (
@@ -36,6 +37,7 @@ const CreditCard = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

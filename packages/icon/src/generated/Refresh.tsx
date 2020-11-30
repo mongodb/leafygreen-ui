@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 301ba4449b8730213af937c64bf4a351
+ * @checksum 5839c98dff05ac7936cee3a787aa098c
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface RefreshProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Refresh-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Refresh');
 
 const Refresh = ({
   className,
@@ -23,11 +21,14 @@ const Refresh = ({
   fill,
   ...props
 }: RefreshProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('Refresh', title);
   return (
@@ -36,6 +37,7 @@ const Refresh = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

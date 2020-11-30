@@ -20,12 +20,12 @@ npm install @leafygreen-ui/callout
 
 ## Example
 
-```jsx
+```js
 <Callout variant={Variant.Note} title="Title">
   Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-  Lorem Ipsum has been the industry&#39;s standard dummy text ever since the
-  1500s, when an unknown printer took a galley of type and scrambled it to make
-  a type specimen book.
+  Lorem Ipsum has been the industrys standard dummy text ever since the 1500s,
+  when an unknown printer took a galley of type and scrambled it to make a type
+  specimen book.
 </Callout>
 ```
 
@@ -66,9 +66,9 @@ npm install @leafygreen-ui/callout
 
 ## Properties
 
-| Prop        | Type                                             | Description                                       | Default |
-| ----------- | ------------------------------------------------ | ------------------------------------------------- | ------- |
-| `variant`   | `note`, `tip`, `important`, `warning`, `example` | Sets the variant for the Callout                  |         |
-| `children`  | `node`                                           | The contents to display within the Callout        |         |
-| `title`     | `string`                                         | Optional title text to display above Callout text |         |
-| `className` | `string`                                         | Adds a className to the outermost element         |         |
+| Prop        | Type                                                               | Description                                       | Default |
+| ----------- | ------------------------------------------------------------------ | ------------------------------------------------- | ------- |
+| `variant`   | `'note'` \| `'tip'` \| `'important'` \| `'warning'` \| `'example'` | Sets the variant for the Callout                  |         |
+| `children`  | `node`                                                             | The contents to display within the Callout        |         |
+| `title`     | `string`                                                           | Optional title text to display above Callout text |         |
+| `className` | `string`                                                           | Adds a className to the outermost element         |         |

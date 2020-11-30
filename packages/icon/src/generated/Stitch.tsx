@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 286b4a8b1f9eb5eeafab939437eacd68
+ * @checksum 21c5e6a5ee6b5ea19ab58dff73838970
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface StitchProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Stitch-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Stitch');
 
 const Stitch = ({
   className,
@@ -23,11 +21,14 @@ const Stitch = ({
   fill,
   ...props
 }: StitchProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('Stitch', title);
   return (
@@ -36,6 +37,7 @@ const Stitch = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

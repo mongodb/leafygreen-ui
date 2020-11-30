@@ -119,10 +119,10 @@ describe('packages/confirmation-modal', () => {
         requiredInputText: 'Confirm',
       });
 
-      const confirmationButton = getByText('Confirm');
+      const confirmationButton = getByText('Confirm').closest('button');
       expect(confirmationButton).toBeDisabled();
 
-      const cancelButton = getByText('Cancel');
+      const cancelButton = getByText('Cancel').closest('button');
       expect(cancelButton).not.toBeDisabled();
 
       const textInput = getByLabelText('Type "Confirm" to confirm your action');
@@ -143,6 +143,42 @@ describe('packages/confirmation-modal', () => {
 
       // Case matters
       fireEvent.change(textInput, { target: { value: 'confirm' } });
+      expect(confirmationButton).toBeDisabled();
+    });
+  });
+
+  describe('submit is disabled when', () => {
+    test('"submitDisabled" prop is set', () => {
+      const { getByText } = renderModal({
+        open: true,
+        submitDisabled: true,
+      });
+
+      const confirmationButton = getByText('Confirm').closest('button');
+      expect(confirmationButton).toBeDisabled();
+
+      const button = getByText('Confirm');
+      expect(button).toBeVisible();
+
+      // Modal doesn't close when button is clicked
+      fireEvent.click(button);
+      expect(button).toBeVisible();
+    });
+
+    test('"submitDisabled" prop is set and the "requiredInputText" prop is also set', () => {
+      const { getByText, getByLabelText } = renderModal({
+        open: true,
+        submitDisabled: true,
+        requiredInputText: 'Confirm',
+      });
+
+      const confirmationButton = getByText('Confirm').closest('button');
+      expect(confirmationButton).toBeDisabled();
+
+      const textInput = getByLabelText('Type "Confirm" to confirm your action');
+      expect(textInput).toBeVisible();
+
+      fireEvent.change(textInput, { target: { value: 'Confirm' } });
       expect(confirmationButton).toBeDisabled();
     });
   });

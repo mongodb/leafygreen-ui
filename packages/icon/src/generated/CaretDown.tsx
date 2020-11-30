@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 55b55b1156e81f072965adab8111701c
+ * @checksum 85189ebf1966e0e7e02ada01d3733f00
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CaretDownProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `CaretDown-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('CaretDown');
 
 const CaretDown = ({
   className,
@@ -23,11 +21,14 @@ const CaretDown = ({
   fill,
   ...props
 }: CaretDownProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('CaretDown', title);
   return (
@@ -36,6 +37,7 @@ const CaretDown = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum d4a07955cbeb942fd5bc3b656c790bb3
+ * @checksum 4d83650b6d3a4c34dd597b64e2c2216c
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface PlusWithCircleProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `PlusWithCircle-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('PlusWithCircle');
 
 const PlusWithCircle = ({
   className,
@@ -23,11 +21,14 @@ const PlusWithCircle = ({
   fill,
   ...props
 }: PlusWithCircleProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('PlusWithCircle', title);
   return (
@@ -36,6 +37,7 @@ const PlusWithCircle = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 6c29437fcf5de50fe2757146f79afd8e
+ * @checksum 9f6baa21dc26d8800e6a34cb6bc387af
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface BulbProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Bulb-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Bulb');
 
 const Bulb = ({
   className,
@@ -23,11 +21,14 @@ const Bulb = ({
   fill,
   ...props
 }: BulbProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('Bulb', title);
   return (
@@ -36,6 +37,7 @@ const Bulb = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

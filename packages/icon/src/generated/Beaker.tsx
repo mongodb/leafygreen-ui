@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum e41c1de9c59628f589c0d1385d4bfb73
+ * @checksum f4c9f9a59362ea6b101f8657f7164c15
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface BeakerProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Beaker-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Beaker');
 
 const Beaker = ({
   className,
@@ -23,11 +21,14 @@ const Beaker = ({
   fill,
   ...props
 }: BeakerProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('Beaker', title);
   return (
@@ -36,6 +37,7 @@ const Beaker = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

@@ -16,22 +16,6 @@ yarn add @leafygreen-ui/hooks
 npm install @leafygreen-ui/hooks
 ```
 
-## useElementNode
-
-Hook to subscribe to changes in a ref
-
-### Example
-
-```js
-import { useElementNode } from '@leafygreen-ui/hooks';
-
-const Example = () => {
-  [refNode, setRefNode] = useElementNode();
-
-  return <div ref={setRefNode}>I am a ref</div>;
-};
-```
-
 ## useEventListener
 
 Hook to create and remove eventListeners
@@ -143,7 +127,7 @@ Hook to retrieve a value from the previous render.
 
 ### Example
 
-```jsx
+```js
 import { usePrevious } from '@leafygreen-ui/hooks';
 
 const Example = ({nextValue: number}) => {

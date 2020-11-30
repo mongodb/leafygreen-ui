@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum f7da943a2248d0e0ebc955ed80cfdc22
+ * @checksum 04fb98fbe0c974931a9d9be2410af539
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface PersonProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Person-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Person');
 
 const Person = ({
   className,
@@ -23,11 +21,14 @@ const Person = ({
   fill,
   ...props
 }: PersonProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('Person', title);
   return (
@@ -36,6 +37,7 @@ const Person = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -172,7 +172,7 @@ interface SubMenuProps {
   /**
    * Content to appear below main text of SubMenu
    */
-  description?: React.ReactElement;
+  description?: string | React.ReactElement;
 
   /**
    * Determines if `<SubMenu />` item appears disabled
@@ -201,7 +201,7 @@ interface SubMenuProps {
 
   onClick?: React.MouseEventHandler;
 
-  onExited?: ExitHandler;
+  onExited?: ExitHandler<HTMLElement>;
 
   href?: string;
 }
@@ -229,18 +229,25 @@ const SubMenu: ExtendableBox<
   ) => {
     const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const nodeRef = React.useRef(null);
-    const iconButtonRef: React.RefObject<HTMLElement | null> = useRef(null);
 
-    const onRootClick = (
-      e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
-        React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    ) => {
-      if (iconButtonRef.current?.contains(e.target as HTMLElement)) {
-        e.preventDefault();
-      } else if (onClick) {
-        onClick(e);
-      }
-    };
+    const [
+      iconButtonElement,
+      setIconButtonElement,
+    ] = useState<HTMLElement | null>(null);
+
+    const onRootClick = useCallback(
+      (
+        e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
+          React.MouseEvent<HTMLButtonElement, MouseEvent>,
+      ) => {
+        if (iconButtonElement?.contains(e.target as HTMLElement)) {
+          e.preventDefault();
+        } else if (onClick) {
+          onClick(e);
+        }
+      },
+      [iconButtonElement, onClick],
+    );
 
     const numberOfMenuItems = React.Children.toArray(children).length;
 
@@ -323,7 +330,7 @@ const SubMenu: ExtendableBox<
         {renderBox}
         <IconButton
           {...iconButton.prop}
-          ref={iconButtonRef}
+          ref={setIconButtonElement}
           aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
           className={cx(iconButtonStyle, {
             [openIconButtonStyle]: open,
@@ -402,15 +409,11 @@ const SubMenu: ExtendableBox<
   },
 );
 
-// @ts-ignore Property 'displayName' does not exist on type 'OverrideComponentCast<SubMenuProps>'.
 SubMenu.displayName = 'SubMenu';
 
-// @ts-ignore: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37660
 SubMenu.propTypes = {
   title: PropTypes.string,
-  // @ts-ignore
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  // @ts-ignore
   href: PropTypes.string,
   children: PropTypes.node,
   setOpen: PropTypes.func,

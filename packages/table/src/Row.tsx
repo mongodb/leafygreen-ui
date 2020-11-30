@@ -3,7 +3,11 @@ import { Transition } from 'react-transition-group';
 import IconButton from '@leafygreen-ui/icon-button';
 import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
-import { isComponentType, IdAllocator } from '@leafygreen-ui/lib';
+import {
+  isComponentType,
+  IdAllocator,
+  HTMLElementProps,
+} from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
@@ -14,7 +18,7 @@ const rowStyle = css`
   color: ${uiColors.gray.dark2};
 
   & > td > ${tdInnerDiv.selector} {
-    height: 40px;
+    min-height: 40px;
     transition: all 150ms ease-in-out;
   }
 `;
@@ -45,13 +49,6 @@ const displayFlex = css`
   align-items: center;
 `;
 
-const truncation = css`
-  max-width: 100px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-`;
-
 const transitionStyles = {
   default: css`
     transition: border 150ms ease-in-out;
@@ -71,7 +68,7 @@ const transitionStyles = {
     border-top-color: ${uiColors.gray.light2};
 
     & > td > ${tdInnerDiv.selector} {
-      max-height: 40px;
+      min-height: 40px;
     }
   `,
 };
@@ -102,7 +99,7 @@ function getIndentLevelStyle(indentLevel: number) {
 
 const idAllocator = IdAllocator.create('table-row');
 
-interface RowProps extends React.ComponentPropsWithRef<'tr'> {
+interface RowProps extends HTMLElementProps<'tr', HTMLTableRowElement> {
   expanded?: boolean;
   disabled?: boolean;
   indentLevel?: number;
@@ -198,9 +195,7 @@ const Row = React.forwardRef(
 
           renderedChildren.push(
             React.cloneElement(child, {
-              children: (
-                <span className={truncation}>{child.props.children}</span>
-              ),
+              children: <span>{child.props.children}</span>,
               key: `${indexRef.current}-${index}`,
               disabled: child.props.disabled || disabled,
             }),
@@ -217,9 +212,7 @@ const Row = React.forwardRef(
           children: (
             <>
               {chevronButton}
-              <span className={truncation}>
-                {renderedChildren[0].props.children}
-              </span>
+              <span>{renderedChildren[0].props.children}</span>
             </>
           ),
           className: cx(displayFlex, className),

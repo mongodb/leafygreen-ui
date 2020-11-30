@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum c1ebeb174b71cbfaa7c40b8655c2a992
+ * @checksum 08e3f4e5d8567d94ee0049f647ab142a
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface EllipsisProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Ellipsis-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Ellipsis');
 
 const Ellipsis = ({
   className,
@@ -23,11 +21,14 @@ const Ellipsis = ({
   fill,
   ...props
 }: EllipsisProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('Ellipsis', title);
   return (
@@ -36,6 +37,7 @@ const Ellipsis = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

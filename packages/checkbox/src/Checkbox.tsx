@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createDataProp, IdAllocator } from '@leafygreen-ui/lib';
+import {
+  HTMLElementProps,
+  createDataProp,
+  IdAllocator,
+} from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
   spritesheetLight,
@@ -125,7 +129,7 @@ const disabledTextStyle = css`
   color: #babdbe; // theme colors.gray[5]
 `;
 
-interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface CheckboxProps extends HTMLElementProps<'input', never> {
   darkMode?: boolean;
   checked?: boolean;
   label: React.ReactNode;

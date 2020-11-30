@@ -18,12 +18,12 @@ APPLICATION_HOME=$1
 if cd $APPLICATION_HOME/node_modules/@leafygreen-ui; then
     echo "leafygreen modules successfully found"
 else
-    echo "The application either does not have it's node_modules installed or does not have leafygreen-ui components installed"
+    echo "The application either does not have its node_modules installed or does not have leafygreen-ui components installed"
     exit 1
 fi
 INSTALLED_PACKAGES_ARRAY=()
 for d in *; do
-    if [ "$d" != "lib" ] && [ "$d" != "theme" ]; then
+    if [ "$d" != "lib" ] && [ "$d" != "theme" ] && [ "$d" != "mongo-menu" ]; then
         INSTALLED_PACKAGES_ARRAY+=($d)
     fi
 done

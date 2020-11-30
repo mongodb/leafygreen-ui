@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum f92334965491c5ed5de8a65f609bdb9f
+ * @checksum b08ea74fdecd052b7c68adc491de380f
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface WarningProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Warning-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Warning');
 
 const Warning = ({
   className,
@@ -23,11 +21,14 @@ const Warning = ({
   fill,
   ...props
 }: WarningProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('Warning', title);
   return (
@@ -36,6 +37,7 @@ const Warning = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

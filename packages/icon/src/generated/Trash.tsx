@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 386a4e5197581498e3016f7f37dce709
+ * @checksum ed63c458440f69d29b60980d1c93503f
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface TrashProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Trash-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Trash');
 
 const Trash = ({
   className,
@@ -23,11 +21,14 @@ const Trash = ({
   fill,
   ...props
 }: TrashProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('Trash', title);
   return (
@@ -36,6 +37,7 @@ const Trash = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

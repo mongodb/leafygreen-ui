@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 2f6186236b53860194080cfe2b7f129f
+ * @checksum 324b8fa4c26406b13fcb9d4762e9aede
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface GovernmentBuildingProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `GovernmentBuilding-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('GovernmentBuilding');
 
 const GovernmentBuilding = ({
   className,
@@ -23,11 +21,14 @@ const GovernmentBuilding = ({
   fill,
   ...props
 }: GovernmentBuildingProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('GovernmentBuilding', title);
   return (
@@ -36,6 +37,7 @@ const GovernmentBuilding = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

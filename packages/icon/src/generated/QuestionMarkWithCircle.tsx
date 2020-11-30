@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 01acc179466ec589cffcc00d35d5aeea
+ * @checksum 646afef2657ca3c3b48ca353297324db
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface QuestionMarkWithCircleProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `QuestionMarkWithCircle-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('QuestionMarkWithCircle');
 
 const QuestionMarkWithCircle = ({
   className,
@@ -23,11 +21,14 @@ const QuestionMarkWithCircle = ({
   fill,
   ...props
 }: QuestionMarkWithCircleProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('QuestionMarkWithCircle', title);
   return (
@@ -36,6 +37,7 @@ const QuestionMarkWithCircle = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

@@ -13,6 +13,7 @@ A set of CSS styles and React components built with design in mind.
 - [Checkbox](https://github.com/mongodb/leafygreen-ui/tree/master/packages/checkbox)
 - [Code](https://github.com/mongodb/leafygreen-ui/tree/master/packages/code)
 - [Confirmation Modal](https://github.com/mongodb/leafygreen-ui/tree/master/packages/confirmation-modal)
+- [Copyable](https://github.com/mongodb/leafygreen-ui/tree/master/packages/copyable)
 - [Emotion](https://github.com/mongodb/leafygreen-ui/tree/master/packages/emotion)
 - [Hooks](https://github.com/mongodb/leafygreen-ui/tree/master/packages/hooks)
 - [Icon](https://github.com/mongodb/leafygreen-ui/tree/master/packages/icon)
@@ -37,6 +38,7 @@ A set of CSS styles and React components built with design in mind.
 - [Table](https://github.com/mongodb/leafygreen-ui/tree/master/packages/table)
 - [Tabs](https://github.com/mongodb/leafygreen-ui/tree/master/packages/tabs)
 - [Testing Lib](https://github.com/mongodb/leafygreen-ui/tree/master/packages/testing-lib)
+- [Text Area](https://github.com/mongodb/leafygreen-ui/tree/master/packages/text-area)
 - [Text Input](https://github.com/mongodb/leafygreen-ui/tree/master/packages/text-input)
 - [Toast](https://github.com/mongodb/leafygreen-ui/tree/master/packages/toast)
 - [Toggle](https://github.com/mongodb/leafygreen-ui/tree/master/packages/toggle)
@@ -94,17 +96,37 @@ To get started quickly and easily run `yarn create-package my-new-package`. When
 
 Note: it's important to follow the kebab-casing convention described above.
 
-## Linting
+## Formatting and linting
 
-When you run `yarn lint`, we do the following:
+When you run `yarn fix`, we do the following:
 
-- We check to ensure `yarn prettier` has been run so that we have consistently formatted code.
-- We run `eslint` to catch any syntax errors, unused variables, and any other easy-to-catch issues.
+- We run `yarn prettier:fix` so that we have consistently formatted code.
+- We run `yarn eslint:fix` to catch any syntax errors, unused variables, and any other easy-to-catch issues.
 
-To lint all files in the repository, run the following:
+To fix all files in the repository, run the following:
 
 ```
-yarn lint
+yarn fix
+```
+
+To check if any files need formatting without automatically formatting them, run the following:
+
+```
+yarn prettier:check
+```
+
+To run linting without automatically fixing issues, run the following:
+
+```
+yarn eslint:check
+```
+
+## Typechecking
+
+To run typechecking without compiling the code, run the following:
+
+```
+yarn ts
 ```
 
 ## Testing
@@ -138,9 +160,8 @@ Make sure that the PR includes the changes made by running this command.
 yarn build
 # To build TypeScript type definition files
 yarn ts:build
-# To only typecheck all TypeScript files
-yarn ts
-
+# To build TypeScript type definition files for older TypeScript versions
+yarn ts:downlevel
 ```
 
 3. Publish all packages to NPM using changesets. This can be done from master.

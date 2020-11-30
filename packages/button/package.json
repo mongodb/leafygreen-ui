@@ -1,27 +1,35 @@
 {
   "name": "@leafygreen-ui/button",
-  "version": "7.0.1",
+  "version": "9.0.0",
   "description": "leafyGreen UI Kit Button",
-  "main": "./dist/index.bundle.js",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "scripts": {
-    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.js"
+    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
   },
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^5.1.1",
-    "@leafygreen-ui/palette": "^2.0.2",
-    "@leafygreen-ui/box": "^2.1.5",
+    "@leafygreen-ui/lib": "^6.1.1",
+    "@leafygreen-ui/palette": "^3.1.0",
+    "@leafygreen-ui/box": "^3.0.1",
     "lodash": "^4.17.20"
   },
   "devDependencies": {
-    "@leafygreen-ui/icon": "^6.6.0"
+    "@leafygreen-ui/icon": "^7.0.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^1.1.4"
+    "@leafygreen-ui/leafygreen-provider": "^2.0.2"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0"
 }

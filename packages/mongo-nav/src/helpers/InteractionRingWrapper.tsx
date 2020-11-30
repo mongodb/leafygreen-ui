@@ -23,67 +23,77 @@ interface InteractionRingWrapperProps {
   selector: string;
 }
 
-const InteractionRingWrapper = ({
-  className,
-  ringClassName,
-  children,
-  selector,
-}: InteractionRingWrapperProps) => {
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const [hasFocus, setHasFocus] = useState(false);
+const InteractionRingWrapper = React.forwardRef<
+  HTMLDivElement,
+  InteractionRingWrapperProps
+>(
+  (
+    {
+      className,
+      ringClassName,
+      children,
+      selector,
+    }: InteractionRingWrapperProps,
+    ref,
+  ) => {
+    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+    const [hasFocus, setHasFocus] = useState(false);
 
-  const interactionRingFocusStyle = css`
-    ${selector}:focus + & {
-      background-color: #9dd0e7;
-      transform: scale(1);
-      z-index: 1;
-    }
-  `;
+    const interactionRingFocusStyle = css`
+      ${selector}:focus + & {
+        background-color: ${uiColors.blue.light1};
+        transform: scale(1);
+        z-index: 1;
+      }
+    `;
 
-  const interactionRingHoverStyle = css`
-    ${selector}:hover + & {
-      transform: scale(1);
-    }
-  `;
+    const interactionRingHoverStyle = css`
+      ${selector}:hover + & {
+        transform: scale(1);
+      }
+    `;
 
-  const defaultPosition = css`
-    position: relative;
-    z-index: 0;
-  `;
+    const defaultPosition = css`
+      position: relative;
+      z-index: 0;
+    `;
 
-  const modifiedChildren = React.Children.map(children, child => {
-    if (!React.isValidElement(child)) {
-      return child;
-    } else {
-      return React.cloneElement(child, {
-        onFocus: () => setHasFocus(true),
-        onBlur: () => setHasFocus(false),
-        className: cx(
-          child.props.className,
-          css`
-            position: relative;
-            z-index: ${hasFocus ? 2 : 1};
-          `,
-        ),
-      });
-    }
-  });
+    const modifiedChildren = React.Children.map(children, child => {
+      if (!React.isValidElement(child)) {
+        return child;
+      } else {
+        return React.cloneElement(child, {
+          onFocus: () => setHasFocus(true),
+          onBlur: () => setHasFocus(false),
+          className: cx(
+            child.props.className,
+            css`
+              position: relative;
+              z-index: ${hasFocus ? 2 : 1};
+            `,
+          ),
+        });
+      }
+    });
 
-  return (
-    <div className={cx(defaultPosition, className)}>
-      {modifiedChildren}
-      <div
-        className={cx(
-          interactionRing,
-          interactionRingHoverStyle,
-          {
-            [interactionRingFocusStyle]: showFocus,
-          },
-          ringClassName,
-        )}
-      />
-    </div>
-  );
-};
+    return (
+      <div className={cx(defaultPosition, className)} ref={ref}>
+        {modifiedChildren}
+        <div
+          className={cx(
+            interactionRing,
+            interactionRingHoverStyle,
+            {
+              [interactionRingFocusStyle]: showFocus,
+            },
+            ringClassName,
+          )}
+        />
+      </div>
+    );
+  },
+);
+
+InteractionRingWrapper.displayName = 'InteractionRingWrapper';
 
 export default InteractionRingWrapper;

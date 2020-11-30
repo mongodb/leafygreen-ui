@@ -10,7 +10,6 @@ import { useSortContext } from './SortContext';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
 
 const thStyle = css`
-  width: 144px;
   border-width: 0px 1px 3px 1px;
   border-color: ${uiColors.gray.light2};
   border-style: solid;
@@ -19,6 +18,7 @@ const thStyle = css`
 const flexDisplay = css`
   display: flex;
   justify-content: space-between;
+  min-height: 32px;
 `;
 
 const labelStyle = css`

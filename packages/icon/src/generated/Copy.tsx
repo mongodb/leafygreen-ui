@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 4fafdb829635c4a5783600b7c87e7351
+ * @checksum bddcfc5580efca4d814e375d0e7e4346
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CopyProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Copy-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Copy');
 
 const Copy = ({
   className,
@@ -23,11 +21,14 @@ const Copy = ({
   fill,
   ...props
 }: CopyProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('Copy', title);
   return (
@@ -36,6 +37,7 @@ const Copy = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

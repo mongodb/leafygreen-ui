@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum bda544952886555f829e93f081e6c390
+ * @checksum 06cb8968f7c6c0cec5ff3ebdca1e07b1
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CheckmarkProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Checkmark-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Checkmark');
 
 const Checkmark = ({
   className,
@@ -23,11 +21,14 @@ const Checkmark = ({
   fill,
   ...props
 }: CheckmarkProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('Checkmark', title);
   return (
@@ -36,6 +37,7 @@ const Checkmark = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

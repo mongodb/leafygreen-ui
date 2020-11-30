@@ -54,6 +54,7 @@ const truncate = css`
 const menuStyle = css`
   width: 300px;
   font-weight: normal;
+  overflow: auto;
 `;
 
 const headerStyle = css`
@@ -308,6 +309,14 @@ function UserMenu({
     rel: 'noopener noreferrer',
   };
 
+  const [triggerNode, setTriggerNode] = useState<HTMLDivElement | null>(null);
+
+  let menuPositionTop = 0;
+
+  if (triggerNode) {
+    menuPositionTop = triggerNode.getBoundingClientRect().bottom + 10;
+  }
+
   return (
     <div className={triggerWrapper}>
       <UserMenuTrigger
@@ -315,11 +324,15 @@ function UserMenu({
         name={account?.firstName ?? ''}
         setOpen={setOpen}
         data-testid="user-menu-trigger"
+        ref={setTriggerNode}
       />
       <Menu
         open={open}
         setOpen={setOpen}
-        className={menuStyle}
+        className={cx(
+          menuStyle,
+          css(`max-height: calc(100vh - ${menuPositionTop}px - 10px);`),
+        )}
         usePortal={false}
       >
         <li role="none" className={headerStyle}>

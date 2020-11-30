@@ -1,5 +1,62 @@
 # @leafygreen-ui/side-nav
 
+## 4.0.3
+
+### Patch Changes
+
+- Updated dependencies [c18f16e6]
+- Updated dependencies [c9a0d89f]
+- Updated dependencies [9ee1d5fc]
+  - @leafygreen-ui/menu@9.1.0
+  - @leafygreen-ui/palette@3.1.0
+  - @leafygreen-ui/lib@6.1.1
+  - @leafygreen-ui/leafygreen-provider@2.0.2
+
+## 4.0.2
+
+### Patch Changes
+
+- Updated dependencies [f7b3d668]
+  - @leafygreen-ui/menu@9.0.2
+
+## 4.0.1
+
+### Patch Changes
+
+- dac3f38b: Fixes a publishing error that prevented UMD modules from being distributed
+- Updated dependencies [dac3f38b]
+  - @leafygreen-ui/emotion@3.0.1
+  - @leafygreen-ui/leafygreen-provider@2.0.1
+  - @leafygreen-ui/lib@6.0.1
+  - @leafygreen-ui/menu@9.0.1
+  - @leafygreen-ui/palette@3.0.1
+
+## 4.0.0
+
+### Major Changes
+
+- 0267bfd2: The underlying structure of distributed module definition files have changed and now have official support for ES modules. Module definition files are now generated using Rollup instead of Webpack. This should not affect functionality, but some thorough testing and caution should be exercised when upgrading.
+
+### Patch Changes
+
+- Updated dependencies [0267bfd2]
+  - @leafygreen-ui/emotion@3.0.0
+  - @leafygreen-ui/leafygreen-provider@2.0.0
+  - @leafygreen-ui/lib@6.0.0
+  - @leafygreen-ui/menu@9.0.0
+  - @leafygreen-ui/palette@3.0.0
+
+## 3.2.0
+
+### Minor Changes
+
+- f8b285a7: Adds `initialCollapsed` prop
+
+### Patch Changes
+
+- Updated dependencies [a18b4e1b]
+  - @leafygreen-ui/menu@8.0.0
+
 ## 3.1.0
 
 ### Minor Changes

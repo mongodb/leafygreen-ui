@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum c2eac64797ce559ed2d3af6c73d6518b
+ * @checksum 9d1dfc4213b3bef83f88bb690aa16639
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface PersonWithLockProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `PersonWithLock-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('PersonWithLock');
 
 const PersonWithLock = ({
   className,
@@ -23,11 +21,14 @@ const PersonWithLock = ({
   fill,
   ...props
 }: PersonWithLockProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('PersonWithLock', title);
   return (
@@ -36,6 +37,7 @@ const PersonWithLock = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 14291c6050ebbf9865f78c65d5a2df3e
+ * @checksum 345e684660ce5a2264efed2ad7483ef2
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface MagnifyingGlassProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `MagnifyingGlass-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('MagnifyingGlass');
 
 const MagnifyingGlass = ({
   className,
@@ -23,11 +21,14 @@ const MagnifyingGlass = ({
   fill,
   ...props
 }: MagnifyingGlassProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('MagnifyingGlass', title);
   return (
@@ -36,6 +37,7 @@ const MagnifyingGlass = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

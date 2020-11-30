@@ -16,20 +16,15 @@ yarn add @leafygreen-ui/tokens
 npm install @leafygreen-ui/tokens
 ```
 
-### Usage
-
-## Spacing
+## Example
 
 ```js
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
 
-const example = () => <span style={{ margin: spacing[1] }}>Hello World</span>;
-```
-
-## Fonts
-
-```js
-import { fontFamilies } from '@leafygreen-ui/tokens';
-
-const example = () => <span style={{ font-family: fontFamilies.default }}>Hello World</span>;
+const spacingExample = () => <span style={{ margin: spacing[1] }}>Hello World</span>;
+const fontFamiliesExample = () => <span style={{ font-family: fontFamilies.default }}>Hello World</span>;
+const mq = facepaint(
+  breakpoints.map(bp => `@media (min-width: ${bp}px)`),
+  { literal: true },
+);
 ```

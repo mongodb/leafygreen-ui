@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 3e8a42b51be3e611809684a3c8e21165
+ * @checksum c975b586aa2f14989a28d92fe11ec182
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface MenuProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `Menu-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('Menu');
 
 const Menu = ({
   className,
@@ -23,11 +21,14 @@ const Menu = ({
   fill,
   ...props
 }: MenuProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('Menu', title);
   return (
@@ -36,6 +37,7 @@ const Menu = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

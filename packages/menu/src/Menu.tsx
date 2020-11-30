@@ -1,4 +1,10 @@
-import React, { useState, useRef, useMemo, useEffect } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { useEventListener } from '@leafygreen-ui/hooks';
@@ -13,6 +19,10 @@ const rootMenuStyle = css`
   overflow: hidden;
   box-shadow: 0 2px 6px ${transparentize(0.8, uiColors.black)};
   background-color: ${uiColors.white};
+`;
+
+const scrollContainerStyle = css`
+  overflow: auto;
   list-style: none;
   margin-block-start: 0px;
   margin-block-end: 0px;
@@ -230,7 +240,7 @@ function Menu({
     return updateChildren(children);
   }, [children, currentSubMenu, open, refs, titleArr]);
 
-  const popoverRef: React.RefObject<HTMLUListElement> = useRef(null);
+  const [popoverNode, setPopoverNode] = useState<HTMLUListElement | null>(null);
 
   const setFocus = (el: HTMLElement) => {
     if (el == null) {
@@ -248,22 +258,20 @@ function Menu({
     }
   }, [open]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     if (shouldClose()) {
       setOpen(false);
     }
-  };
+  }, [setOpen, shouldClose]);
 
-  const handleBackdropClick = (e: MouseEvent) => {
-    const popoverReference = popoverRef && popoverRef.current;
-
-    if (
-      popoverReference &&
-      !popoverReference.contains(e.target as HTMLElement)
-    ) {
-      handleClose();
-    }
-  };
+  const handleBackdropClick = useCallback(
+    (e: MouseEvent) => {
+      if (popoverNode && !popoverNode.contains(e.target as HTMLElement)) {
+        handleClose();
+      }
+    },
+    [handleClose, popoverNode],
+  );
 
   useEventListener('click', handleBackdropClick, {
     enabled: open,
@@ -342,17 +350,19 @@ function Menu({
       spacing={spacing}
       adjustOnMutation={adjustOnMutation}
     >
-      {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
-      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
-      <ul
-        {...rest}
-        className={cx(rootMenuStyle, className)}
-        role="menu"
-        ref={popoverRef}
-        onClick={e => e.stopPropagation()}
-      >
-        {updatedChildren}
-      </ul>
+      <div className={cx(rootMenuStyle, className)}>
+        {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
+        <ul
+          {...rest}
+          className={scrollContainerStyle}
+          role="menu"
+          ref={setPopoverNode}
+          onClick={e => e.stopPropagation()}
+        >
+          {updatedChildren}
+        </ul>
+      </div>
     </Popover>
   );
 

@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum cd3e2108210e5ceebd592afae65c8a43
+ * @checksum e0e73631cee972bc44f77f6d4476360d
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface UpDownCaretsProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `UpDownCarets-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('UpDownCarets');
 
 const UpDownCarets = ({
   className,
@@ -23,11 +21,14 @@ const UpDownCarets = ({
   fill,
   ...props
 }: UpDownCaretsProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('UpDownCarets', title);
   return (
@@ -36,6 +37,7 @@ const UpDownCarets = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

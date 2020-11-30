@@ -2,18 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 6f77778c819195146393ba5e90864800
+ * @checksum 091d123c10b7141c2ae3a039f923725d
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { IdAllocator } from '@leafygreen-ui/lib';
 import { getGlyphTitle, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface InviteUserProps extends LGGlyph.ComponentProps {}
-
-function generateGlyphTitle(): string {
-  return `InviteUser-${Math.floor(Math.random() * 1000000)}`;
-}
+const idAllocator = IdAllocator.create('InviteUser');
 
 const InviteUser = ({
   className,
@@ -23,11 +21,14 @@ const InviteUser = ({
   fill,
   ...props
 }: InviteUserProps) => {
-  const titleId = React.useMemo(() => customTitleId || generateGlyphTitle(), [
+  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
     customTitleId,
   ]);
   const fillStyle = css`
     color: ${fill};
+  `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
   `;
   title = getGlyphTitle('InviteUser', title);
   return (
@@ -36,6 +37,7 @@ const InviteUser = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}
