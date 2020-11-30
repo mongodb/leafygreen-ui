@@ -146,7 +146,7 @@ describe('packages/mongo-select/ProjectSelect', () => {
       const onChange = jest.fn();
       beforeEach(() => renderComponent({ onChange }));
 
-      it('it does not filter the projects and calls the onChange callback', () => {
+      it('does not filter the projects and calls the onChange callback', () => {
         fireEvent.click(getByTestId('project-select-trigger'));
 
         const input = getByTestId('project-filter-input');
