@@ -129,6 +129,7 @@ interface BaseTabProps {
   children?: React.ReactNode;
   className?: string;
   disabled?: boolean;
+  isAnyTabFocused?: boolean;
 }
 
 const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
@@ -139,6 +140,7 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
   ariaControl,
   index,
   darkMode,
+  isAnyTabFocused,
   ...rest
 }: BaseTabProps) => {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
@@ -146,10 +148,10 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
   useEffect(() => {
-    if (!disabled && selected && titleRef.current) {
+    if (isAnyTabFocused && !disabled && selected && titleRef.current) {
       titleRef.current.focus();
     }
-  }, [disabled, selected]);
+  }, [isAnyTabFocused, disabled, selected, titleRef]);
 
   const sharedTabProps = {
     className: cx(
