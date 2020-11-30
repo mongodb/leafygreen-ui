@@ -1,5 +1,19 @@
 # @leafygreen-ui/table
 
+## 1.2.1
+
+### Patch Changes
+
+- ee7923d3: Changes how we extend the types of HTMLElements, and standardizes how we document this across readmes
+- Updated dependencies [ee7923d3]
+- Updated dependencies [ee7923d3]
+- Updated dependencies [627333c2]
+- Updated dependencies [7b71da8f]
+  - @leafygreen-ui/checkbox@6.0.2
+  - @leafygreen-ui/lib@6.1.2
+  - @leafygreen-ui/icon-button@9.1.0
+  - @leafygreen-ui/icon@7.0.2
+
 ## 1.2.0
 
 ### Minor Changes

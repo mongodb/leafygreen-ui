@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 6.1.2
+
+### Patch Changes
+
+- ee7923d3: Updates `HTMLElementProps` type, now accepting a generic for describing a RefType
+
 ## 6.1.1
 
 ### Patch Changes
