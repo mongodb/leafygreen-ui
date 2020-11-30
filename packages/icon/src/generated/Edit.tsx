@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 91b9e8897a508d52346347b367afbb1d
+ * @checksum 8ca31e8a442e301cdaf34a7494edf5fe
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -27,6 +27,9 @@ const Edit = ({
   const fillStyle = css`
     color: ${fill};
   `;
+  const noFlexShrink = css`
+    flex-shrink: 0;
+  `;
   title = getGlyphTitle('Edit', title);
   return (
     <svg
@@ -34,6 +37,7 @@ const Edit = ({
         {
           [fillStyle]: fill != null,
         },
+        noFlexShrink,
         className,
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}

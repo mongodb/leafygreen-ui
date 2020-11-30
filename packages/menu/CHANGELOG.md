@@ -1,5 +1,39 @@
 # @leafygreen-ui/menu
 
+## 9.1.1
+
+### Patch Changes
+
+- ee7923d3: Changes how we extend the types of HTMLElements, and standardizes how we document this across readmes
+- Updated dependencies [ee7923d3]
+- Updated dependencies [627333c2]
+  - @leafygreen-ui/lib@6.1.2
+  - @leafygreen-ui/icon-button@9.1.0
+
+## 9.1.0
+
+### Minor Changes
+
+- c18f16e6: Improves compatibility with React v17
+
+### Patch Changes
+
+- Updated dependencies [c18f16e6]
+- Updated dependencies [c18f16e6]
+- Updated dependencies [c9a0d89f]
+- Updated dependencies [9ee1d5fc]
+  - @leafygreen-ui/hooks@6.0.0
+  - @leafygreen-ui/popover@7.1.0
+  - @leafygreen-ui/palette@3.1.0
+  - @leafygreen-ui/lib@6.1.1
+  - @leafygreen-ui/leafygreen-provider@2.0.2
+
+## 9.0.2
+
+### Patch Changes
+
+- f7b3d668: Fixes issue where scrollbar is always visible
+
 ## 9.0.1
 
 ### Patch Changes

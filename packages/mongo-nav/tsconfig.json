@@ -8,6 +8,9 @@
   "include": ["src/**/*"],
   "references": [
     {
+      "path": "../interaction-ring"
+    },
+    {
       "path": "../lib"
     },
     {

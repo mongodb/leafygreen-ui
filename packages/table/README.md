@@ -43,50 +43,41 @@ import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 
 ## Table Properties
 
-| Prop       | Type                               | Description                                    | Default |
-| ---------- | ---------------------------------- | ---------------------------------------------- | ------- |
-| `data`     | `Array<unknown>`                   | Data that will be rendered inside of the table |         |
-| `columns`  | `ColumnInterface`                  | Columns in the Table                           |         |
-| `children` | `(datum, string) => {JSX.Element}` | Rows of the table                              |         |
+| Prop       | Type                                                                                              | Description                                                | Default |
+| ---------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ------- |
+| `data`     | `Array<unknown>`                                                                                  | Data that will be rendered inside of the table             |         |
+| `columns`  | `Array<React.ReactElement<HeaderRowProps` \| `TableHeaderProps<Shape>>>` \| `React.ReactFragment` | Columns in the Table                                       |         |
+| `children` | `(datum, string) => JSX.Element`                                                                  | Rows of the table                                          |         |
+| ...        | native `table` attributes                                                                         | Any other props will be spread on the root `table` element |         |
 
-### ColumnInterface
-
-Columns can receive a `React.Fragment` or `<HeaderRow />` containing `<TableHeader />` components, `string` labels, or a mix of the two. Alternatively, columns can receive an Array of `<TableHeader>` components or strings.
-
-_Any property that can be passed to a `table` element will be spread on the root_
-
-## HeaderRow Properties
+# HeaderRow
 
 | Prop       | Type                     | Description                                                       | Default |
 | ---------- | ------------------------ | ----------------------------------------------------------------- | ------- |
-| `children` | `TableHeader` components | `TableHeader` components that comprise a header row in the table. |
+| `children` | `TableHeader` components | `TableHeader` components that comprise a header row in the table. |         |
+| ...        | native `tr` attributes   | Any other props will be spread on the root `tr` element           |         |
 
-_Any property that can be passed to a `tr` element will be spread on the root_
+# TableHeader
 
-## TableHeader Properties
+| Prop       | Type                                                      | Description                                                                        | Default |
+| ---------- | --------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------- |
+| `label`    | `string`                                                  | Content that will be rendered inside of the `th` tags                              |         |
+| `sortBy`   | `(data: any) => string` \| `string`                       | String or function that provides information about how the column should be sorted |         |
+| `dataType` | `'number'`, `'weight'`, `'zipCode'`, `'string'`, `'date'` | Describes the type of data in the column                                           |         |
+| ...        | native `th` attributes                                    | Any other props will be spread on the root `th` element                            |         |
 
-| Prop       | Type                                                      | Description                                           | Default                                                                            |
-| ---------- | --------------------------------------------------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `label`    | `string`                                                  | Content that will be rendered inside of the `th` tags |                                                                                    |
-| `sortBy`   | `(data: any) => string                                    | string`                                               | String or function that provides information about how the column should be sorted |  |
-| `dataType` | `'number'`, `'weight'`, `'zipCode'`, `'string'`, `'date'` | Describes the type of data in the column              |                                                                                    |
+# Row
 
-_Any property that can be passed to a `th` element will be spread on the root_
+| Prop       | Type                                | Description                                                                  | Default |
+| ---------- | ----------------------------------- | ---------------------------------------------------------------------------- | ------- |
+| `disabled` | `boolean`                           | Determines whether or not the row is disabled                                | `false` |
+| `expanded` | `boolean`                           | Determines whether or not the row is expanded on first render                | `false` |
+| ...        | `React.ComponentPropsWithRef<'tr'>` | Any property that can be passed to a `tr` element will be spread on the root |         |
 
-## Row Properties
+# Cell
 
-| Prop       | Type      | Description                                                   | Default |
-| ---------- | --------- | ------------------------------------------------------------- | ------- |
-| `disabled` | `boolean` | Determines whether or not the row is disabled                 | `false` |
-| `expanded` | `boolean` | Determines whether or not the row is expanded on first render | `false` |
-
-_Any property that can be passed to a `tr` element will be spread on the root_
-
-## Cell Properties
-
-| Prop        | Type              | Description                           | Default |
-| ----------- | ----------------- | ------------------------------------- | ------- |
-| `children`  | `React.ReactNode` | Contents to appear inside of the Cell |         |
-| `className` | `string`          | className applied to `td` wrapper     |         |
-
-_Any property that can be passed to a `td` element will be spread on the root_
+| Prop        | Type                   | Description                                             | Default |
+| ----------- | ---------------------- | ------------------------------------------------------- | ------- |
+| `children`  | `React.ReactNode`      | Contents to appear inside of the Cell                   |         |
+| `className` | `string`               | className applied to `td` wrapper                       |         |
+| ...         | native `td` attributes | Any other props will be spread on the root `td` element |         |

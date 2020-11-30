@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/typography",
-  "version": "6.0.1",
+  "version": "7.1.1",
   "description": "leafyGreen UI Kit Typography",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,13 +20,13 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^6.0.1",
-    "@leafygreen-ui/palette": "^3.0.1",
-    "@leafygreen-ui/box": "^3.0.1",
-    "@leafygreen-ui/icon": "^7.0.1",
+    "@leafygreen-ui/lib": "^6.1.2",
+    "@leafygreen-ui/palette": "^3.1.0",
+    "@leafygreen-ui/box": "^3.0.2",
+    "@leafygreen-ui/icon": "^7.0.2",
     "@leafygreen-ui/tokens": "^0.5.0"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^2.0.1"
+    "@leafygreen-ui/leafygreen-provider": "^2.0.2"
   }
 }

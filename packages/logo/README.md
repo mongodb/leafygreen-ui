@@ -21,7 +21,13 @@ npm install @leafygreen-ui/logo
 ## Example
 
 ```js
-import { Logo } from '@leafygreen-ui/logo';
+import {
+  Logo,
+  LogoMark,
+  AtlasLogo,
+  RealmLogo,
+  CloudManagerLogo,
+} from '@leafygreen-ui/logo';
 
 <Logo />;
 ```
@@ -52,76 +58,27 @@ import { Logo } from '@leafygreen-ui/logo';
 
 ## Properties
 
-| Prop       | Type                | Description                                                             | Default  |
-| ---------- | ------------------- | ----------------------------------------------------------------------- | -------- |
-| `height`   | `number`            | Height of the `<Logo />` component                                      | `40`     |
-| `knockout` | `boolean`           | Determines whether or not a `knockout` version of the Logo will be used | `false`  |
-| `variant`  | `'light'`, `'dark'` | Determines if `<Logo />` will be white or dark gray                     | `'dark'` |
+| Prop       | Type                  | Description                                                             | Default  |
+| ---------- | --------------------- | ----------------------------------------------------------------------- | -------- |
+| `height`   | `number`              | Height of the `<Logo />` component                                      | `40`     |
+| `knockout` | `boolean`             | Determines whether or not a `knockout` version of the Logo will be used | `false`  |
+| `variant`  | `'light'` \| `'dark'` | Determines if `<Logo />` will be white or dark gray                     | `'dark'` |
 
 # LogoMark
 
-## Example
+## Properties
 
-```js
-import { LogoMark } from '@leafygreen-ui/logo';
-
-<LogoMark />;
-```
-
-**Output HTML**
-
-```html
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 216.56 448.5"
-  height="40"
-  width="auto"
->
-  <title>MongoDB LogoMark</title>
-  <path class="leafygreen-ui-17842x1"></path>
-  <path class="leafygreen-ui-197s9ut"></path>
-  <path class="leafygreen-ui-1wkd47u"></path>
-</svg>
-```
-
-| Prop       | Type                | Description                                                                                                                         | Default |
-| ---------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `height`   | `number`            | Height of the `<Logo />` component                                                                                                  | `40`    |
-| `knockout` | `boolean`           | Determines whether or not a `knockout` version of the Logo will be used.                                                            | `false` |
-| `variant`  | `'light'`, `'dark'` | Determines if `<Logo />` will be white or dark gray. Do not pass a value to this prop, if you wish to render a full-color logomark. |         |
+| Prop       | Type                  | Description                                                                                                                         | Default |
+| ---------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `height`   | `number`              | Height of the `<Logo />` component                                                                                                  | `40`    |
+| `knockout` | `boolean`             | Determines whether or not a `knockout` version of the Logo will be used.                                                            | `false` |
+| `variant`  | `'light'` \| `'dark'` | Determines if `<Logo />` will be white or dark gray. Do not pass a value to this prop, if you wish to render a full-color logomark. |         |
 
 # Product Logos
 
-## Example
-
-```js
-import {
-  CloudManagerLogo,
-  AtlasLogo,
-  RealmLogo,
-  ChartsLogo,
-} from '@leafygreen-ui/logo';
-
-<CloudManagerLogo />;
-```
-
-**Output HTML**
-
-```html
-<svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 216.56 448.5"
-  height="40"
-  width="auto"
->
-  <title>MongoDB LogoMark</title>
-  <path class="leafygreen-ui-17842x1"></path>
-  <path class="leafygreen-ui-197s9ut"></path>
-  <path class="leafygreen-ui-1wkd47u"></path>
-</svg>
-```
+## Properties
 
 | Prop       | Type      | Description                                                                      | Default |
 | ---------- | --------- | -------------------------------------------------------------------------------- | ------- |
 | `size`     | `number`  | Height of the Product Logo                                                       | `18`    |
-| `knockout` | `boolean` | Determines whether or not a `knockout` version of the Product Logo will be used. |
+| `knockout` | `boolean` | Determines whether or not a `knockout` version of the Product Logo will be used. |         |

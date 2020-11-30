@@ -1,5 +1,12 @@
 # @leafygreen-ui/toast
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [ac0f3ff1]
+  - @leafygreen-ui/typography@7.0.0
+
 ## 0.2.1
 
 ### Patch Changes

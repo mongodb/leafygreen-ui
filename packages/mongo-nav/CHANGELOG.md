@@ -1,5 +1,47 @@
 # @leafygreen-ui/mongo-nav
 
+## 4.1.0
+
+### Minor Changes
+
+- c18f16e6: Improves compatibility with React v17
+
+### Patch Changes
+
+- 374430ea: Updates string color value to reference the same color from uiColors palette
+- Updated dependencies [10bdc295]
+- Updated dependencies [374430ea]
+- Updated dependencies [c18f16e6]
+- Updated dependencies [c18f16e6]
+- Updated dependencies [fe861d52]
+- Updated dependencies [7359e552]
+- Updated dependencies [c9a0d89f]
+- Updated dependencies [9ee1d5fc]
+- Updated dependencies [aab4e65b]
+  - @leafygreen-ui/button@9.0.0
+  - @leafygreen-ui/typography@7.1.0
+  - @leafygreen-ui/hooks@6.0.0
+  - @leafygreen-ui/menu@9.1.0
+  - @leafygreen-ui/tooltip@6.1.0
+  - @leafygreen-ui/palette@3.1.0
+  - @leafygreen-ui/lib@6.1.1
+  - @leafygreen-ui/leafygreen-provider@2.0.2
+
+## 4.0.3
+
+### Patch Changes
+
+- f7b3d668: Fixes issue where menu scrollbar is always visible
+- Updated dependencies [f7b3d668]
+  - @leafygreen-ui/menu@9.0.2
+
+## 4.0.2
+
+### Patch Changes
+
+- Updated dependencies [ac0f3ff1]
+  - @leafygreen-ui/typography@7.0.0
+
 ## 4.0.1
 
 ### Patch Changes

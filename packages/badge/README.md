@@ -36,12 +36,11 @@ import Badge from '@leafygreen-ui/badge';
 
 ## Properties
 
-| Prop        | Type                                                                  | Description                                                       | Default       |
-| ----------- | --------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------- |
-| `variant`   | `'lightgray'`, `'darkgray'`, `'red'`, `'blue'`, `'green'`, `'yellow'` | Sets the style variant of the badge.                              | `'lightgray'` |
-| `className` | `string`                                                              | Adds a className to the class attribute                           |               |
-| `children`  | `node`                                                                | The content that will appear inside of the `<Badge />` component. |               |
+| Prop        | Type                                                                        | Description                                                       | Default       |
+| ----------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------- |
+| `variant`   | `'lightgray'` \| `'darkgray'`\| `'red'`\| `'blue'`\| `'green'`\| `'yellow'` | Sets the style variant of the badge.                              | `'lightgray'` |
+| `className` | `string`                                                                    | Adds a className to the class attribute                           |               |
+| `children`  | `node`                                                                      | The content that will appear inside of the `<Badge />` component. |               |
+| ...         | native `div` attributes                                                     | Any other props will be spread on the root `div` element          |               |
 
-_Any other properties will be spread on the root element._
-
-Note: Specifying the `onClick` attribute will change the cursor style to pointer.
+_Note: Specifying the `onClick` attribute will change the cursor style to pointer._

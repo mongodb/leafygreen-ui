@@ -30,6 +30,9 @@
       "path": "./packages/confirmation-modal"
     },
     {
+      "path": "./packages/copyable"
+    },
+    {
       "path": "./packages/emotion"
     },
     {
@@ -43,6 +46,9 @@
     },
     {
       "path": "./packages/inline-definition"
+    },
+    {
+      "path": "./packages/interaction-ring"
     },
     {
       "path": "./packages/lib"
@@ -97,6 +103,9 @@
     },
     {
       "path": "./packages/testing-lib"
+    },
+    {
+      "path": "./packages/text-area"
     },
     {
       "path": "./packages/text-input"

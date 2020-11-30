@@ -1,14 +1,11 @@
-import React, { ReactNode, ElementType } from 'react';
+import React, { ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import {
-  AriaCurrentValue,
-  HTMLElementProps,
-  createDataProp,
-} from '@leafygreen-ui/lib';
+import { AriaCurrentValue, createDataProp } from '@leafygreen-ui/lib';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { sideNavItemSidePadding } from './styles';
 
 const sideNavItemContainer = createDataProp('side-nav-item-container');
@@ -132,7 +129,7 @@ const disabledTextStyle = css`
   color: ${uiColors.gray.light1};
 `;
 
-interface SharedSideNavItemProps {
+export interface SideNavItemProps {
   /**
    * Whether or not the component should be rendered in an active state.
    */
@@ -157,38 +154,10 @@ interface SharedSideNavItemProps {
    * Content that will be rendered inside the root-level element.
    */
   children?: ReactNode;
+
+  href?: string;
 }
 
-interface LinkProps extends HTMLElementProps<'a'>, SharedSideNavItemProps {
-  href: string;
-}
-
-interface DivProps extends HTMLElementProps<'div'>, SharedSideNavItemProps {
-  href?: null;
-}
-
-type CustomElementProps = SharedSideNavItemProps & {
-  as: ElementType<any>;
-  [key: string]: any;
-};
-
-export type SideNavItemProps = LinkProps | DivProps | CustomElementProps;
-
-function usesCustomElement(
-  props: SideNavItemProps,
-): props is CustomElementProps {
-  return (props as any).as != null;
-}
-
-function usesLinkElement(props: LinkProps | DivProps): props is LinkProps {
-  return props.href != null;
-}
-
-const RootComponentTypes = {
-  Button: 'button',
-  Link: 'a',
-  Custom: 'as',
-} as const;
 /**
  * # SideNavItem
  *
@@ -212,7 +181,10 @@ const RootComponentTypes = {
  *  by this prop. Other additional props will be spread on the anchor element.
  */
 
-const SideNavItem = React.forwardRef((props: SideNavItemProps, forwardRef) => {
+const SideNavItem: ExtendableBox<
+  SideNavItemProps & { ref?: React.Ref<any> },
+  'button'
+> = React.forwardRef((props: SideNavItemProps, forwardRef) => {
   const {
     active = false,
     disabled = false,
@@ -222,7 +194,6 @@ const SideNavItem = React.forwardRef((props: SideNavItemProps, forwardRef) => {
   } = props;
 
   const rest = omit(props, [
-    'as',
     'active',
     'disabled',
     'ariaCurrentValue',
@@ -232,23 +203,11 @@ const SideNavItem = React.forwardRef((props: SideNavItemProps, forwardRef) => {
 
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
 
-  let Root: ElementType<any>;
-  let role: string | null;
-
-  if (usesLinkElement(props)) {
-    Root = RootComponentTypes.Link;
-    role = props.role || 'menuitem';
-  } else if (usesCustomElement(props)) {
-    Root = props[RootComponentTypes.Custom];
-    role = props.role || null;
-  } else {
-    Root = RootComponentTypes.Button;
-    role = props.role || 'menuitem';
-  }
-
   return (
     <li role="none">
-      <Root
+      <Box
+        as={props.href ? 'a' : 'button'}
+        role="menuitem"
         {...rest}
         {...sideNavItemContainer.prop}
         className={cx(
@@ -260,7 +219,6 @@ const SideNavItem = React.forwardRef((props: SideNavItemProps, forwardRef) => {
           },
           className,
         )}
-        role={role}
         aria-current={active ? ariaCurrentValue : AriaCurrentValue.Unset}
         aria-disabled={disabled}
         tabIndex={disabled ? -1 : undefined}
@@ -274,7 +232,7 @@ const SideNavItem = React.forwardRef((props: SideNavItemProps, forwardRef) => {
         >
           {children}
         </div>
-      </Root>
+      </Box>
     </li>
   );
 });

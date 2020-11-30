@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { createDataProp } from '@leafygreen-ui/lib';
+import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
+import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { uiColors } from '@leafygreen-ui/palette';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Size from './Size';
 
 const radioBoxWrapper = createDataProp('radio-box-wrapper');
@@ -11,7 +11,7 @@ const radioBoxInput = createDataProp('radio-box-input');
 
 export const radioBoxSizes: { [K in Size]: string } = {
   [Size.Default]: css`
-    width: 139px;
+    width: 169px;
   `,
 
   [Size.Compact]: css`
@@ -33,33 +33,70 @@ const inputStyles = css`
 interface StateForStyles {
   checked: boolean;
   disabled: boolean;
-  showFocus: boolean;
+  size: Size;
 }
 
-const getRadioDisplayStyles = ({
-  checked,
-  disabled,
-  showFocus,
-}: StateForStyles) => {
+const getInteractionRingStyles = ({ checked }: StateForStyles) => {
   const baseStyles = css`
-    transition: border 150ms ease-in-out;
-    box-sizing: content-box;
+    width: 100%;
+    // Display behind border
+    z-index: -1;
+  `;
+
+  if (checked) {
+    return cx(
+      baseStyles,
+      css`
+        // Bring in front of border (covering it)
+        z-index: 0;
+      `,
+    );
+  }
+
+  return baseStyles;
+};
+
+const getBorderStyles = ({ disabled, size }: StateForStyles) => {
+  const baseStyles = cx(
+    css`
+      border: 1px solid ${uiColors.gray.light1};
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+      pointer-events: none;
+    `,
+    {
+      [radioBoxSizes[size]]: size === Size.Full,
+    },
+  );
+
+  if (disabled) {
+    return cx(
+      baseStyles,
+      css`
+        border-color: ${uiColors.gray.light2};
+        cursor: not-allowed;
+      `,
+    );
+  }
+
+  return baseStyles;
+};
+
+const getRadioDisplayStyles = ({ disabled }: StateForStyles) => {
+  const baseStyles = css`
+    transition: box-shadow 150ms ease-in-out;
     padding: 15px;
-    cursor: pointer;
     font-size: 14px;
     font-weight: bold;
     text-align: center;
     vertical-align: top;
     overflow-wrap: break-word;
     background-color: white;
-    border: 1px solid ${uiColors.gray.light1};
+    border-radius: 2px;
     color: ${uiColors.gray.dark2};
-    border-radius: 3px;
+    pointer-events: auto;
     z-index: 2;
-
-    ${radioBoxWrapper.selector}:hover & {
-      border-color: ${uiColors.gray.base};
-    }
   `;
 
   if (disabled) {
@@ -67,95 +104,12 @@ const getRadioDisplayStyles = ({
       baseStyles,
       css`
         color: ${uiColors.gray.light1};
-        cursor: not-allowed;
-
-        &,
-        ${radioBoxWrapper.selector}:hover & {
-          background: ${uiColors.gray.light3};
-          border-color: ${uiColors.gray.light2};
-        }
+        background: ${uiColors.gray.light3};
       `,
-    );
-  }
-
-  if (checked) {
-    const focusState = css`
-      ${radioBoxInput.selector}:focus ~ & {
-        border-color: #63b0d0;
-      }
-    `;
-
-    return cx(
-      baseStyles,
-      css`
-        border-color: ${uiColors.green.base};
-
-        ${radioBoxWrapper.selector}:hover & {
-          border-color: ${uiColors.green.base};
-        }
-      `,
-      { [focusState]: showFocus },
     );
   }
 
   return baseStyles;
-};
-
-// We use a div for the checked state rather than a pseudo-element
-// because said pseudo-element would need to be on the label element
-// which can't use the contained input's checked pseudo-class.
-const getInteractionIndicatorStyle = ({
-  checked,
-  disabled,
-  showFocus,
-}: StateForStyles) => {
-  if (disabled) {
-    return '';
-  }
-
-  const baseStyles = css`
-    position: absolute;
-    transition: all 150ms ease-in-out;
-    top: -2px;
-    bottom: -2px;
-    right: -2px;
-    left: -2px;
-    transform: scale(0.9, 0.8);
-    z-index: -1;
-    border-radius: 4px;
-
-    ${radioBoxWrapper.selector}:hover & {
-      background-color: ${uiColors.gray.light2};
-      transform: scale(1);
-      z-index: 1;
-    }
-  `;
-
-  const focusStyle = css`
-    ${radioBoxInput.selector}:focus ~ & {
-      transform: scale(1);
-      background-color: #63b0d0;
-      z-index: 1;
-    }
-  `;
-
-  if (checked) {
-    return cx(
-      baseStyles,
-      css`
-        background-color: ${uiColors.green.base};
-        transform: scale(1);
-        z-index: 1;
-
-        ${radioBoxWrapper.selector}:hover & {
-          background-color: ${uiColors.green.base};
-        }
-      `,
-      { [focusStyle]: showFocus },
-    );
-  }
-
-  return cx(baseStyles, { [focusStyle]: showFocus });
 };
 
 export const radioWrapper = css`
@@ -171,11 +125,6 @@ export const radioWrapper = css`
     margin-right: 12px;
   }
 `;
-
-const getStatefulStyles = (state: StateForStyles) => ({
-  radioDisplay: getRadioDisplayStyles(state),
-  interactionIndicator: getInteractionIndicatorStyle(state),
-});
 
 export interface RadioBoxProps {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
@@ -240,9 +189,15 @@ export default function RadioBox({
   children,
   name,
   ...rest
-}: RadioBoxProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>) {
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const styles = getStatefulStyles({ checked, disabled, showFocus });
+}: RadioBoxProps & Omit<HTMLElementProps<'input', never>, 'size'>) {
+  const radioDisplayStyle = getRadioDisplayStyles({ checked, disabled, size });
+  const interactionContainerStyle = getInteractionRingStyles({
+    checked,
+    disabled,
+    size,
+  });
+
+  const [inputElement, setInputElement] = useState<HTMLElement | null>(null);
 
   return (
     <label
@@ -259,6 +214,7 @@ export default function RadioBox({
       <input
         {...rest}
         {...radioBoxInput.prop}
+        ref={setInputElement}
         type="radio"
         id={id}
         name={name}
@@ -271,10 +227,21 @@ export default function RadioBox({
         className={inputStyles}
       />
 
-      <div className={styles.interactionIndicator} />
-
-      <div className={cx(styles.radioDisplay, radioBoxSizes[size])}>
-        {children}
+      <div className={getBorderStyles({ checked, disabled, size })}>
+        <InteractionRing
+          className={interactionContainerStyle}
+          disabled={disabled}
+          focusTargetElement={inputElement}
+          borderRadius="2px"
+          color={{ hovered: checked ? uiColors.green.base : undefined }}
+          forceState={{
+            hovered: checked ? true : undefined,
+          }}
+        >
+          <div className={cx(radioDisplayStyle, radioBoxSizes[size])}>
+            {children}
+          </div>
+        </InteractionRing>
       </div>
     </label>
   );

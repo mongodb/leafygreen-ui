@@ -1,5 +1,26 @@
 # @leafygreen-ui/tabs
 
+## 4.0.5
+
+### Patch Changes
+
+- ee7923d3: Changes how we extend the types of HTMLElements, and standardizes how we document this across readmes
+- dc88bac1: Ensures Tabs have an active state
+- d12fe9f7: Fixes bug where on new page load, browser would automatically scroll to Tabs due to prematurely manually focusing of the component
+- Updated dependencies [ee7923d3]
+  - @leafygreen-ui/lib@6.1.2
+
+## 4.0.4
+
+### Patch Changes
+
+- 1e9d336c: Tabs now accepts an empty React element as children, which makes it easier to conditionally render individual Tab components
+- Updated dependencies [c9a0d89f]
+- Updated dependencies [9ee1d5fc]
+  - @leafygreen-ui/palette@3.1.0
+  - @leafygreen-ui/lib@6.1.1
+  - @leafygreen-ui/leafygreen-provider@2.0.2
+
 ## 4.0.3
 
 ### Patch Changes

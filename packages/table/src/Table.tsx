@@ -1,6 +1,7 @@
 import React from 'react';
 import debounce from 'lodash/debounce';
 import { transparentize } from 'polished';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import {
@@ -85,8 +86,7 @@ interface TableRowInterface<Shape = {}> {
   datum: Shape;
 }
 
-export interface TableProps<Shape>
-  extends React.ComponentPropsWithoutRef<'table'> {
+export interface TableProps<Shape> extends HTMLElementProps<'table', never> {
   data: Array<Shape>;
   columns:
     | Array<React.ReactElement<HeaderRowProps | TableHeaderProps<Shape>>>
@@ -109,17 +109,17 @@ export default function Table<Shape>({
   const viewportSize = useViewportSize();
 
   useIsomorphicLayoutEffect(() => {
-    const ref = divRef.current;
+    const divNode = divRef.current;
 
-    if (ref == null) {
+    if (divNode == null) {
       return;
     }
 
-    if (ref.scrollWidth > ref.clientWidth) {
+    if (divNode.scrollWidth > divNode.clientWidth) {
       setScrollState(ScrollState.Right);
     } else if (
       viewportSize != null &&
-      ref.getBoundingClientRect().width <= viewportSize.width
+      divNode.getBoundingClientRect().width <= viewportSize.width
     ) {
       setScrollState(ScrollState.None);
     }

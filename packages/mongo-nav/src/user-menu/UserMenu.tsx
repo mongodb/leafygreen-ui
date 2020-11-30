@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import defaultsDeep from 'lodash/defaultsDeep';
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
-import { useElementNode } from '@leafygreen-ui/hooks';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import { LogoMark } from '@leafygreen-ui/logo';
 import {
@@ -55,7 +54,7 @@ const truncate = css`
 const menuStyle = css`
   width: 300px;
   font-weight: normal;
-  overflow: scroll;
+  overflow: auto;
 `;
 
 const headerStyle = css`
@@ -310,12 +309,12 @@ function UserMenu({
     rel: 'noopener noreferrer',
   };
 
-  const [refEl, setRefEl] = useElementNode();
+  const [triggerNode, setTriggerNode] = useState<HTMLDivElement | null>(null);
 
   let menuPositionTop = 0;
 
-  if (refEl) {
-    menuPositionTop = refEl.getBoundingClientRect().bottom + 10;
+  if (triggerNode) {
+    menuPositionTop = triggerNode.getBoundingClientRect().bottom + 10;
   }
 
   return (
@@ -325,7 +324,7 @@ function UserMenu({
         name={account?.firstName ?? ''}
         setOpen={setOpen}
         data-testid="user-menu-trigger"
-        ref={setRefEl}
+        ref={setTriggerNode}
       />
       <Menu
         open={open}

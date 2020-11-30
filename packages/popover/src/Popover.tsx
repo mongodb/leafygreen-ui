@@ -6,7 +6,6 @@ import Portal from '@leafygreen-ui/portal';
 import {
   useViewportSize,
   useMutationObserver,
-  useElementNode,
   useIsomorphicLayoutEffect,
   useObjectDependency,
   usePrevious,
@@ -68,8 +67,10 @@ function Popover({
   refEl,
   ...rest
 }: PopoverProps) {
-  const [placeholderNode, setPlaceholderNode] = useElementNode();
-  const [contentNode, setContentNode] = useElementNode();
+  const [placeholderNode, setPlaceholderNode] = useState<HTMLElement | null>(
+    null,
+  );
+  const [contentNode, setContentNode] = useState<HTMLElement | null>(null);
   const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
 
   // To remove StrictMode warnings produced by react-transition-group we need

@@ -36,8 +36,11 @@ const components = [
   'box',
   'button',
   'callout',
+  'card',
+  'checkbox',
   'code',
   'confirmation-modal',
+  'copyable',
   'icon',
   'icon-button',
   'inline-definition',
@@ -57,6 +60,7 @@ const components = [
   'syntax',
   'table',
   'tabs',
+  'text-area',
   'text-input',
   'toast',
   'toggle',
@@ -74,34 +78,61 @@ type GroupType = typeof GroupType[keyof typeof GroupType];
 
 function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
   const router = useRouter();
-
-  const Group = isTouchDevice ? MobileNavigationGroup : SideNavGroup;
-  const Item = isTouchDevice ? MobileNavigationItem : SideNavItem;
+  const activePage = router.asPath.split('/')[2];
 
   const renderGroup = (type: GroupType) => {
     const isGuideline = type === GroupType.Guideline;
     const items = isGuideline ? coreGuidelines : components;
 
+    if (isTouchDevice) {
+      return (
+        <MobileNavigationGroup
+          key={type}
+          header={isGuideline ? 'Core Guidelines' : 'Components'}
+          initialCollapsed={!router.asPath.includes(type)}
+        >
+          {items.map(item => {
+            const path =
+              type === GroupType.Guideline
+                ? `/${type}/${item}`
+                : `/${type}/${item}/example`;
+            return (
+              <MobileNavigationItem
+                key={item}
+                onClick={() => router.push(path)}
+                active={item === activePage}
+              >
+                {item.split('-').join(' ')}
+              </MobileNavigationItem>
+            );
+          })}
+        </MobileNavigationGroup>
+      );
+    }
+
     return (
-      <Group
+      <SideNavGroup
         key={type}
         header={isGuideline ? 'Core Guidelines' : 'Components'}
-        collapsible={isTouchDevice ? undefined : true}
-        initialCollapsed={isTouchDevice ? !router.asPath.includes(type) : false}
+        collapsible
+        initialCollapsed={false}
       >
         {items.map(item => {
-          const path = `/${type}/${item}`;
+          const path =
+            type === GroupType.Guideline
+              ? `/${type}/${item}`
+              : `/${type}/${item}/example`;
           return (
-            <Item
+            <SideNavItem
               key={item}
               onClick={() => router.push(path)}
-              active={router.asPath === path}
+              active={item === activePage}
             >
               {item.split('-').join(' ')}
-            </Item>
+            </SideNavItem>
           );
         })}
-      </Group>
+      </SideNavGroup>
     );
   };
 

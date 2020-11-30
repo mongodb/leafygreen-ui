@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -60,11 +60,30 @@ const disabledStyle = css`
   cursor: not-allowed;
 `;
 
+function useDocumentActiveElement() {
+  const [activeEl, setActiveEl] = useState<Element | null>(null);
+
+  const handleFocusIn = useCallback(() => {
+    setActiveEl(document.activeElement);
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('focusin', handleFocusIn);
+    return () => {
+      document.removeEventListener('focusin', handleFocusIn);
+    };
+  }, [handleFocusIn]);
+
+  return activeEl;
+}
+
+type ReactEmpty = null | undefined | false | '';
+
 interface TabsProps {
   /**
    * Content that will appear inside of Tabs component. Should be comprised of at least two Tabs.
    */
-  children: Array<React.ReactElement>;
+  children: Array<React.ReactElement | ReactEmpty>;
 
   /**
    * Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
@@ -119,6 +138,18 @@ function Tabs({
   as = 'button',
   ...rest
 }: TabsProps) {
+  const containerNode = useRef<HTMLDivElement | null>(null);
+  const activeEl = useDocumentActiveElement();
+  const [isAnyTabFocused, setIsAnyTabFocused] = useState(false);
+
+  useEffect(() => {
+    const tabsList = Array.from(containerNode.current?.children ?? []);
+
+    if (activeEl !== null && tabsList.indexOf(activeEl) !== -1) {
+      setIsAnyTabFocused(true);
+    }
+  }, [activeEl, containerNode]);
+
   const childrenArray = React.Children.toArray(children) as Array<
     React.ReactElement
   >;
@@ -183,9 +214,14 @@ function Tabs({
         className={cx(listStyle, modeColors[mode].underlineColor)}
         role="tablist"
         tabIndex={0}
+        ref={containerNode}
       >
-        {tabs.map((tab, index) => {
-          const { selected, disabled, ...rest } = tab.props;
+        {tabs?.map((tab, index) => {
+          if (!isComponentType(tab, 'Tab')) {
+            return tab;
+          }
+
+          const { selected, disabled, onClick, ...rest } = tab.props;
 
           const filteredRest = omit(rest, [
             'ariaControl',
@@ -204,14 +240,18 @@ function Tabs({
               index={index}
               as={as}
               darkMode={darkMode}
+              isAnyTabFocused={isAnyTabFocused}
+              onKeyDown={handleArrowKeyPress}
               className={cx({
                 [modeColors[mode].activeStyle]: selected,
                 [cx(modeColors[mode].disabledColor, disabledStyle)]: disabled,
               })}
-              onKeyDown={handleArrowKeyPress}
               onClick={
                 !disabled
-                  ? (event: React.MouseEvent) => handleChange(event, index)
+                  ? (event: React.MouseEvent) => {
+                      onClick?.(event);
+                      handleChange(event, index);
+                    }
                   : undefined
               }
             >

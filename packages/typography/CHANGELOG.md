@@ -1,5 +1,42 @@
 # @leafygreen-ui/typography
 
+## 7.1.1
+
+### Patch Changes
+
+- ee7923d3: Changes how we extend the types of HTMLElements, and standardizes how we document this across readmes
+- Updated dependencies [ee7923d3]
+- Updated dependencies [7b71da8f]
+  - @leafygreen-ui/lib@6.1.2
+  - @leafygreen-ui/icon@7.0.2
+
+## 7.1.0
+
+### Minor Changes
+
+- fe861d52: Adds `Label` and `Description` components
+- aab4e65b: Rest props are now forwarded for InlineDefinition components when not rendered as a link
+
+### Patch Changes
+
+- 374430ea: Updates string color value to reference the same color from uiColors palette
+- Updated dependencies [c9a0d89f]
+- Updated dependencies [9ee1d5fc]
+  - @leafygreen-ui/palette@3.1.0
+  - @leafygreen-ui/lib@6.1.1
+  - @leafygreen-ui/leafygreen-provider@2.0.2
+
+## 7.0.0
+
+### Major Changes
+
+- ac0f3ff1: Visual updates to focus and hover states of <InlineCode /> component. The HTML structure has been returned to that of `v4.*` (the previous change in `v5` was not reflected in the README). Styles provided through `className` prop may need to be updated to accordingly.
+
+### Patch Changes
+
+- Updated dependencies [90996818]
+  - @leafygreen-ui/box@3.0.2
+
 ## 6.0.1
 
 ### Patch Changes

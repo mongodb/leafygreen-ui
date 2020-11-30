@@ -14,11 +14,12 @@ function renderButton(props = {}) {
 }
 
 describe('packages/button', () => {
-  test(`renders "${className}" in the button's classList`, () => {
+  test(`renders "${className}" in the component's markup`, () => {
     const { button } = renderButton({
       className,
     });
-    expect(button.classList.contains(className)).toBe(true);
+
+    expect(button.closest(`.${className}`)).toBeVisible();
   });
 
   test(`renders "${child}" as the button's textContent`, () => {

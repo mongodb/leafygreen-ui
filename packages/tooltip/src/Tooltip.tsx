@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useMemo, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import Popover, {
   PopoverProps,
@@ -68,6 +68,7 @@ const baseStyles = css`
   border-radius: 3px;
   box-shadow: 0px 2px 4px ${transparentize(0.85, uiColors.black)};
   cursor: default;
+  overflow-wrap: break-word;
 `;
 
 const positionRelative = css`
@@ -249,68 +250,66 @@ function Tooltip({
   const setOpen =
     isControlled && controlledSetOpen ? controlledSetOpen : uncontrolledSetOpen;
 
-  const tooltipRef = useRef<HTMLDivElement>(null);
+  const [tooltipNode, setTooltipNode] = useState<HTMLDivElement | null>(null);
 
-  const existingId = id ?? tooltipRef.current?.id;
+  const existingId = id ?? tooltipNode?.id;
   const tooltipId = useMemo(() => existingId ?? idAllocator.generate(), [
     existingId,
   ]);
 
-  const createTriggerProps = (
-    triggerEvent: TriggerEvent,
-    triggerProps?: any,
-  ) => {
-    if (triggerEvent === TriggerEvent.Hover) {
-      return {
-        onMouseEnter: debounce(() => {
-          setOpen(true);
-        }, 35),
-        onMouseLeave: debounce(handleClose, 35),
-        onFocus: () => setOpen(true),
-        onBlur: handleClose,
-      };
+  const handleClose = useCallback(() => {
+    if (typeof shouldClose !== 'function' || shouldClose()) {
+      setOpen(false);
     }
+  }, [setOpen, shouldClose]);
 
-    if (triggerProps && triggerProps.onClick) {
+  const createTriggerProps = useCallback(
+    (triggerEvent: TriggerEvent, triggerProps?: any) => {
+      if (triggerEvent === TriggerEvent.Hover) {
+        return {
+          onMouseEnter: debounce(() => {
+            setOpen(true);
+          }, 35),
+          onMouseLeave: debounce(handleClose, 35),
+          onFocus: () => setOpen(true),
+          onBlur: handleClose,
+        };
+      }
+
+      if (triggerProps && triggerProps.onClick) {
+        return {
+          onClick: (e: MouseEvent) => {
+            // ensure that we don't close the tooltip when content inside tooltip is clicked
+            if (e.target !== tooltipNode) {
+              triggerProps.onClick();
+              setOpen((curr: boolean) => !curr);
+            }
+          },
+        };
+      }
+
       return {
         onClick: (e: MouseEvent) => {
           // ensure that we don't close the tooltip when content inside tooltip is clicked
-          if (e.target !== tooltipRef.current) {
-            triggerProps.onClick();
+          if (e.target !== tooltipNode) {
             setOpen((curr: boolean) => !curr);
           }
         },
       };
-    }
-
-    return {
-      onClick: (e: MouseEvent) => {
-        // ensure that we don't close the tooltip when content inside tooltip is clicked
-        if (e.target !== tooltipRef.current) {
-          setOpen((curr: boolean) => !curr);
-        }
-      },
-    };
-  };
-
-  const handleClose = () => {
-    if (typeof shouldClose !== 'function' || shouldClose()) {
-      setOpen(false);
-    }
-  };
+    },
+    [handleClose, setOpen, tooltipNode],
+  );
 
   useEscapeKey(handleClose, { enabled: open });
 
-  const handleBackdropClick = (e: MouseEvent) => {
-    const tooltipReference = tooltipRef && tooltipRef.current;
-
-    if (
-      tooltipReference &&
-      !tooltipReference.contains(e.target as HTMLElement)
-    ) {
-      handleClose();
-    }
-  };
+  const handleBackdropClick = useCallback(
+    (e: MouseEvent) => {
+      if (tooltipNode && !tooltipNode.contains(e.target as HTMLElement)) {
+        handleClose();
+      }
+    },
+    [handleClose, tooltipNode],
+  );
 
   useEventListener('click', handleBackdropClick, {
     enabled: open && triggerEvent === 'click',
@@ -350,7 +349,7 @@ function Tooltip({
               colorSet[mode].tooltip,
               className,
             )}
-            ref={tooltipRef}
+            ref={setTooltipNode}
           >
             <div className={notchContainerStyle}>
               <div className={cx(notchStyle, colorSet[mode].notch)} />

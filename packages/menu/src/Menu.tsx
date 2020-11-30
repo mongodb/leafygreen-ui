@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { useEventListener } from '@leafygreen-ui/hooks';
@@ -19,7 +19,7 @@ const rootMenuStyle = css`
 `;
 
 const scrollContainerStyle = css`
-  overflow: scroll;
+  overflow: auto;
   list-style: none;
   margin-block-start: 0px;
   margin-block-end: 0px;
@@ -225,7 +225,7 @@ function Menu({
 
   const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
 
-  const popoverRef: React.RefObject<HTMLUListElement> = useRef(null);
+  const [popoverNode, setPopoverNode] = useState<HTMLUListElement | null>(null);
 
   const setFocus = (el: HTMLElement) => {
     if (el == null) {
@@ -243,22 +243,20 @@ function Menu({
     }
   }, [open]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     if (shouldClose()) {
       setOpen(false);
     }
-  };
+  }, [setOpen, shouldClose]);
 
-  const handleBackdropClick = (e: MouseEvent) => {
-    const popoverReference = popoverRef && popoverRef.current;
-
-    if (
-      popoverReference &&
-      !popoverReference.contains(e.target as HTMLElement)
-    ) {
-      handleClose();
-    }
-  };
+  const handleBackdropClick = useCallback(
+    (e: MouseEvent) => {
+      if (popoverNode && !popoverNode.contains(e.target as HTMLElement)) {
+        handleClose();
+      }
+    },
+    [handleClose, popoverNode],
+  );
 
   useEventListener('click', handleBackdropClick, {
     enabled: open,
@@ -344,7 +342,7 @@ function Menu({
           {...rest}
           className={scrollContainerStyle}
           role="menu"
-          ref={popoverRef}
+          ref={setPopoverNode}
           onClick={e => e.stopPropagation()}
         >
           {updatedChildren}

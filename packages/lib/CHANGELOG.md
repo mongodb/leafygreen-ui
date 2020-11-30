@@ -1,5 +1,17 @@
 # @leafygreen-ui/lib
 
+## 6.1.2
+
+### Patch Changes
+
+- ee7923d3: Updates `HTMLElementProps` type, now accepting a generic for describing a RefType
+
+## 6.1.1
+
+### Patch Changes
+
+- 9ee1d5fc: The "prop-types" package has moved from being a peer dependency to an explicit dependency
+
 ## 6.1.0
 
 ### Minor Changes

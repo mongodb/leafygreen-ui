@@ -10,3 +10,4 @@ export {
   Overline,
 } from './Typography';
 export { Link } from './Link';
+export { Label, Description } from './FormElements';
