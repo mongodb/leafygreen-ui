@@ -5,7 +5,7 @@ import markdownToHtml from 'utils/markdownToHtml';
 import type { BaseLayoutProps } from 'utils/types';
 
 export default function () {
-  return null
+  return null;
 }
 
 const getFileContent = util.promisify(fs.readFile);
@@ -14,7 +14,7 @@ export const getStaticProps = async (
   component: BaseLayoutProps['component'],
 ) => {
   if (typeof component !== 'string') {
-    return { props: { component: null } }
+    return { props: { component: null } };
   }
 
   const props: Partial<BaseLayoutProps> = { component };
