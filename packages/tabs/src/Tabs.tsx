@@ -61,13 +61,13 @@ const disabledStyle = css`
 `;
 
 function useDocumentActiveElement() {
-  const [activeEl, setActiveEl] = React.useState<Element | null>(null);
+  const [activeEl, setActiveEl] = useState<Element | null>(null);
 
   const handleFocusIn = useCallback(() => {
     setActiveEl(document.activeElement);
-  }, [setActiveEl]);
+  }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener('focusin', handleFocusIn);
     return () => {
       document.removeEventListener('focusin', handleFocusIn);
@@ -143,7 +143,7 @@ function Tabs({
   const [isAnyTabFocused, setIsAnyTabFocused] = useState(false);
 
   useEffect(() => {
-    const tabsList = Array.from(containerNode?.current?.children || []);
+    const tabsList = Array.from(containerNode.current?.children ?? []);
 
     if (activeEl !== null && tabsList.indexOf(activeEl) !== -1) {
       setIsAnyTabFocused(true);
