@@ -8,6 +8,9 @@
   "include": ["src/**/*"],
   "references": [
     {
+      "path": "../box"
+    },
+    {
       "path": "../emotion"
     },
     {
@@ -20,13 +23,13 @@
       "path": "../icon"
     },
     {
-      "path": "../leafygreen-provider"
+      "path": "../interaction-ring"
     },
     {
       "path": "../palette"
     },
     {
-      "path": "../box"
+      "path": "../typography"
     }
   ]
 }

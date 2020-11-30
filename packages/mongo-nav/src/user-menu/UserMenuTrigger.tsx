@@ -1,13 +1,13 @@
 import React, { useRef } from 'react';
 import CaretUpIcon from '@leafygreen-ui/icon/dist/CaretUp';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
+import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { createDataProp } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { breakpoints, mq } from '../breakpoints';
 import { NavElement } from '../types';
-import { InteractionRingWrapper } from '../helpers';
 import { useOnElementClick } from '../on-element-click-provider';
 
 const buttonDataProp = createDataProp('button-data-prop');
@@ -54,9 +54,7 @@ const baseButtonStyles = css`
   }
 `;
 
-const ringClassName = css`
-  border-radius: 50px;
-`;
+const interactionRingBorderRadius = '50px';
 
 const openBaseButtonStyle = css`
   background-color: ${uiColors.gray.light2};
@@ -114,41 +112,45 @@ const UserMenuTrigger = React.forwardRef<HTMLDivElement, UserMenuTriggerProps>(
     `;
 
     return (
-      <InteractionRingWrapper
-        ringClassName={ringClassName}
-        selector={buttonDataProp.selector}
-        ref={ref}
-      >
-        <button
-          {...rest}
-          {...buttonDataProp.prop}
-          ref={buttonRef}
-          className={cx(baseButtonStyles, {
-            [openBaseButtonStyle]: open,
-            [activeWidth]: open,
-          })}
-          onClick={onElementClick(NavElement.UserMenuTrigger, () => {
-            setOpen(curr => !curr);
-          })}
+      <div ref={ref}>
+        <InteractionRing
+          borderRadius={interactionRingBorderRadius}
+          forceState={{ hovered: open ? false : undefined }}
         >
-          <span
-            className={cx(menuNameStyle, truncate, {
-              [css`
-                margin-right: unset;
-              `]: open,
+          <button
+            {...rest}
+            {...buttonDataProp.prop}
+            ref={buttonRef}
+            className={cx(baseButtonStyles, {
+              [openBaseButtonStyle]: open,
+              [activeWidth]: open,
+            })}
+            onClick={onElementClick(NavElement.UserMenuTrigger, () => {
+              setOpen(curr => !curr);
             })}
           >
-            {displayName}
-          </span>
+            <span
+              className={cx(menuNameStyle, truncate, {
+                [css`
+                  margin-right: unset;
+                `]: open,
+              })}
+            >
+              {displayName}
+            </span>
 
-          {open ? (
-            <CaretUpIcon {...iconDataProp.prop} className={openIconStyle} />
-          ) : (
-            <CaretDownIcon {...iconDataProp.prop} className={closedIconStyle} />
-          )}
-          {children}
-        </button>
-      </InteractionRingWrapper>
+            {open ? (
+              <CaretUpIcon {...iconDataProp.prop} className={openIconStyle} />
+            ) : (
+              <CaretDownIcon
+                {...iconDataProp.prop}
+                className={closedIconStyle}
+              />
+            )}
+            {children}
+          </button>
+        </InteractionRing>
+      </div>
     );
   },
 );

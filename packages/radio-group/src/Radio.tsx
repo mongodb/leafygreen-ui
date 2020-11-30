@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { uiColors } from '@leafygreen-ui/palette';
-import { HTMLElementProps, createDataProp } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
+import InteractionRing from '@leafygreen-ui/interaction-ring';
+import { createDataProp, HTMLElementProps } from '@leafygreen-ui/lib';
+import { uiColors } from '@leafygreen-ui/palette';
 import { RadioGroupProps } from './RadioGroup';
 import { Size } from './types';
 
-const styledDiv = createDataProp('styled-div');
-const inputDisplayWrapper = createDataProp('input-display-wrapper');
+const inputDisplay = createDataProp('radio-input-display');
+const inputDisplayWrapper = createDataProp('radio-input-display-wrapper');
 const inputDataProp = createDataProp('input-element');
 
 const Mode = {
@@ -67,7 +68,7 @@ const labelStyle = css`
 // Note colors are not in our palette
 const inputColorSet = {
   [Mode.Light]: css`
-    &:checked + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+    &:checked + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
       background-color: #2798bd;
       border-color: #2798bd;
 
@@ -76,20 +77,20 @@ const inputColorSet = {
       }
     }
 
-    &:focus + ${inputDisplayWrapper.selector}:before {
+    &:focus + div:before {
       transform: scale(1);
       opacity: 1;
       border-color: ${uiColors.blue.light1};
     }
 
-    &:disabled + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+    &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
       border-color: ${uiColors.gray.light1};
       background-color: ${uiColors.gray.light2};
     }
   `,
 
   [Mode.Dark]: css`
-    &:checked + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+    &:checked + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
       background-color: #43b1e5;
       border-color: #43b1e5;
 
@@ -98,13 +99,13 @@ const inputColorSet = {
       }
     }
 
-    &:focus + ${inputDisplayWrapper.selector}:before {
+    &:focus + div:before {
       transform: scale(1);
       opacity: 1;
       border-color: ${uiColors.blue.base};
     }
 
-    &:disabled + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+    &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
       background-color: ${uiColors.gray.dark2};
       border-color: rgba(255, 255, 255, 0.15);
     }
@@ -113,7 +114,7 @@ const inputColorSet = {
 
 const disabledChecked = {
   [Mode.Light]: css`
-    &:disabled + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+    &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
       background-color: ${uiColors.gray.light1};
       border-color: ${uiColors.gray.light1};
 
@@ -125,7 +126,7 @@ const disabledChecked = {
   `,
 
   [Mode.Dark]: css`
-    &:disabled + ${inputDisplayWrapper.selector} > ${styledDiv.selector} {
+    &:disabled + ${inputDisplayWrapper.selector} ${inputDisplay.selector} {
       border-color: ${uiColors.gray.dark2};
 
       &:after {
@@ -186,7 +187,7 @@ const divStyle = css`
     transform: scale(0);
   }
 
-  ${inputDataProp.selector}:disabled + ${inputDisplayWrapper.selector} > & {
+  ${inputDataProp.selector}:disabled + ${inputDisplayWrapper.selector} & {
     cursor: not-allowed;
 
     &:after {
@@ -214,7 +215,7 @@ const divSize = {
   `,
 };
 
-const interactionRingSize = {
+const radioBoxSize = {
   [Size.Small]: css`
     height: 14px;
     width: 14px;
@@ -225,49 +226,10 @@ const interactionRingSize = {
   `,
 };
 
-const interactionRing = css`
+const radioBoxStyle = css`
   position: relative;
   flex-shrink: 0;
-
-  &:before {
-    content: '';
-    transition: all 0.2s ease-in-out;
-    position: absolute;
-    top: -3px;
-    bottom: -3px;
-    left: -3px;
-    right: -3px;
-    transform: scale(0.8);
-    opacity: 0;
-    border-radius: 100%;
-    display: flex;
-    flex-shrink: 0;
-    border: 3px solid transparent;
-  }
-
-  &:hover:before {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  ${inputDataProp.selector}:disabled + &:before {
-    opacity: 0;
-  }
 `;
-
-const interactionRingHoverStyles = {
-  [Mode.Light]: css`
-    &:before {
-      border-color: rgba(184, 196, 194, 0.3);
-    }
-  `,
-
-  [Mode.Dark]: css`
-    &:before {
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-  `,
-};
 
 export type RadioProps = Omit<HTMLElementProps<'input', never>, 'size'> &
   Pick<RadioGroupProps, 'darkMode' | 'size'> & {
@@ -296,10 +258,10 @@ function Radio({
   className,
   onChange = () => {},
   value,
-  disabled,
+  disabled = false,
   id,
   name,
-  darkMode,
+  darkMode = false,
   checked,
   size = Size.Default,
   ...rest
@@ -308,6 +270,8 @@ function Radio({
     size === Size.Small || size === Size.XSmall ? Size.Small : Size.Default;
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
+
+  const [inputElement, setInputElement] = useState<HTMLElement | null>(null);
 
   return (
     <div className={containerMargin}>
@@ -328,6 +292,7 @@ function Radio({
         <input
           {...rest}
           {...inputDataProp.prop}
+          ref={setInputElement}
           checked={checked}
           id={id}
           name={name}
@@ -342,19 +307,19 @@ function Radio({
           })}
         />
 
-        <div
+        <InteractionRing
+          darkMode={darkMode}
+          disabled={disabled}
+          focusTargetElement={inputElement}
+          className={cx(radioBoxStyle, radioBoxSize[normalizedSize])}
+          borderRadius="100%"
           {...inputDisplayWrapper.prop}
-          className={cx(
-            interactionRing,
-            interactionRingHoverStyles[mode],
-            interactionRingSize[normalizedSize],
-          )}
         >
           <div
-            {...styledDiv.prop}
+            {...inputDisplay.prop}
             className={cx(divStyle, divColorSet[mode], divSize[normalizedSize])}
           />
-        </div>
+        </InteractionRing>
 
         <div
           className={cx(

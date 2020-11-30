@@ -8,22 +8,16 @@
   "include": ["src/**/*"],
   "references": [
     {
-      "path": "../lib"
-    },
-    {
       "path": "../emotion"
     },
     {
-      "path": "../interaction-ring"
+      "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../lib"
     },
     {
       "path": "../palette"
-    },
-    {
-      "path": "../tokens"
-    },
-    {
-      "path": "../typography"
     }
   ]
 }
