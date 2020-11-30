@@ -174,9 +174,9 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
     ? viewport?.width < breakpoints.Tablet
     : false;
 
-  const version = changelog.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
-  const example = readme.match(/(?<=js).*?(?=```)/s)?.[0];
-  const outputHTML = readme.match(/(?<=html).*?(?=```)/s)?.[0];
+  const version = changelog?.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
+  const example = readme?.match(/(?<=js).*?(?=```)/s)?.[0];
+  const outputHTML = readme?.match(/(?<=html).*?(?=```)/s)?.[0];
   const markdownAst = (unified()
     .use(markdown)
     .parse(readme) as unknown) as ReadmeMarkdown;

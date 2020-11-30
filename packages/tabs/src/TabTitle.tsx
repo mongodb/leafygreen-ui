@@ -113,8 +113,10 @@ const listTitle = css`
   }
 
   &:active:after {
-    transform: scaleX(1);
-    background-color: ${uiColors.green.base};
+    &:after {
+      transform: scaleX(1);
+      background-color: ${uiColors.green.base};
+    }
   }
 `;
 
