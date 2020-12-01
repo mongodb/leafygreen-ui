@@ -141,6 +141,7 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
 }
 
 function Navigation() {
+  const { push } = useRouter();
   const viewport = useViewportSize();
   const isTouchDevice = !!viewport && viewport.width < breakpoints.Desktop;
 
@@ -154,7 +155,7 @@ function Navigation() {
 
   return (
     <nav className={navContainer}>
-      <MDBDesignLogo className={logoStyles} />
+      <MDBDesignLogo className={logoStyles} onClick={() => push('/')} />
       <SideNav>
         <Content />
       </SideNav>
