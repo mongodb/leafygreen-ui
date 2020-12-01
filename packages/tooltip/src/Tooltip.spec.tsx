@@ -256,7 +256,7 @@ describe('packages/tooltip', () => {
 
     describe('clicking content inside of tooltip does not force tooltip to close', () => {
       function testCase(name: string, usePortal: boolean): void {
-        test(name, () => {
+        test(`${name}`, () => {
           const { button, getByTestId } = renderTooltip({
             open: true,
             setOpen,
