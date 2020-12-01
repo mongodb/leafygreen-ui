@@ -27,7 +27,7 @@ const textAreaClassName = css`
   flex-shrink: 1;
   padding-left: 16px;
   width: 300px;
-`
+`;
 
 const labelDarkMode = css`
   color: ${uiColors.gray.light1};

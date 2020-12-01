@@ -58,7 +58,7 @@ export default function ComponentLayout({
     viewport !== null ? viewport.width < breakpoints.Tablet : false;
 
   return (
-    <>
+    <div className={marginBottom}>
       <div className={marginBottom}>
         <small className={componentsStyle}>Components</small>
         <div className={flexContainer}>
@@ -93,6 +93,6 @@ export default function ComponentLayout({
           {children}
         </Tab>
       </Tabs>
-    </>
+    </div>
   );
 }
