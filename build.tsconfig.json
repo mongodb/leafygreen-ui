@@ -27,6 +27,9 @@
       "path": "./packages/code"
     },
     {
+      "path": "./packages/collapsible-side-nav"
+    },
+    {
       "path": "./packages/confirmation-modal"
     },
     {

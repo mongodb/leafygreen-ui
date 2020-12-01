@@ -12,6 +12,7 @@ A set of CSS styles and React components built with design in mind.
 - [Card](https://github.com/mongodb/leafygreen-ui/tree/master/packages/card)
 - [Checkbox](https://github.com/mongodb/leafygreen-ui/tree/master/packages/checkbox)
 - [Code](https://github.com/mongodb/leafygreen-ui/tree/master/packages/code)
+- [Collapsible Side Nav](https://github.com/mongodb/leafygreen-ui/tree/master/packages/collapsible-side-nav)
 - [Confirmation Modal](https://github.com/mongodb/leafygreen-ui/tree/master/packages/confirmation-modal)
 - [Copyable](https://github.com/mongodb/leafygreen-ui/tree/master/packages/copyable)
 - [Emotion](https://github.com/mongodb/leafygreen-ui/tree/master/packages/emotion)

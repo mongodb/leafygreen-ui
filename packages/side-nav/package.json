@@ -24,7 +24,8 @@
     "@leafygreen-ui/emotion": "3.0.1",
     "@leafygreen-ui/palette": "3.1.0",
     "@leafygreen-ui/menu": "9.1.2",
-    "@leafygreen-ui/box": "^2.1.5"
+    "@leafygreen-ui/box": "^2.1.5",
+    "lodash": "^4.17.20"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^2.0.2"

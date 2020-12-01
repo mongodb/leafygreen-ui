@@ -3,6 +3,7 @@ import { LGGlyph } from '../types';
 
 // Glyphs
 import ActivityFeed from './ActivityFeed.svg';
+import Apps from './Apps.svg';
 import ArrowDown from './ArrowDown.svg';
 import ArrowLeft from './ArrowLeft.svg';
 import ArrowRight from './ArrowRight.svg';
@@ -30,6 +31,7 @@ import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
 import Folder from './Folder.svg';
 import GovernmentBuilding from './GovernmentBuilding.svg';
+import Home from './Home.svg';
 import ImportantWithCircle from './ImportantWithCircle.svg';
 import InfoWithCircle from './InfoWithCircle.svg';
 import InviteUser from './InviteUser.svg';
@@ -63,6 +65,7 @@ import XWithCircle from './XWithCircle.svg';
 
 const glyphs = {
   ActivityFeed,
+  Apps,
   ArrowDown,
   ArrowLeft,
   ArrowRight,
@@ -90,6 +93,7 @@ const glyphs = {
   Ellipsis,
   Folder,
   GovernmentBuilding,
+  Home,
   ImportantWithCircle,
   InfoWithCircle,
   InviteUser,
