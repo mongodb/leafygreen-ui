@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import Button, { Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
@@ -138,6 +138,12 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     ref.current!.focus();
   }, [onClose, onOpen, open, ref]);
 
+  const forceState = useMemo(() => {
+    if (open && !disabled) {
+      return { focused: true, active: true };
+    }
+  }, [open, disabled]);
+
   return (
     <Button
       // eslint-disable-next-line jsx-a11y/role-has-required-aria-props
@@ -150,6 +156,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       onClick={onClick}
       onKeyDown={onKeyDown}
       variant={mode === Mode.Dark ? Variant.Dark : Variant.Default}
+      forceState={forceState}
       className={cx(
         menuButtonStyle,
         css`

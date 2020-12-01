@@ -1986,16 +1986,6 @@
     "@leafygreen-ui/lib" "^5.1.1"
     lodash "^4.17.20"
 
-"@leafygreen-ui/button@^8.0.1":
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/button/-/button-8.0.1.tgz#b80c1cc93384fef50896623e39ae727b28a7aa81"
-  integrity sha512-3yIi1QHITOHc1w4jWb1TVS3ZpqiQP99IyjJOUGOFMwUV8xOW/qBOAneWu2MLIA1MHDMZIod1GQNvugagfTWztQ==
-  dependencies:
-    "@leafygreen-ui/box" "^3.0.1"
-    "@leafygreen-ui/lib" "^6.0.1"
-    "@leafygreen-ui/palette" "^3.0.1"
-    lodash "^4.17.20"
-
 "@leafygreen-ui/emotion@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/emotion/-/emotion-2.0.2.tgz#032eff2814010da94621e4dfdf4cf7ff0a2e7279"
@@ -2004,13 +1994,6 @@
     create-emotion "^10.0.7"
     create-emotion-server "10.0.27"
     emotion "^10.0.7"
-
-"@leafygreen-ui/hooks@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/hooks/-/hooks-5.0.1.tgz#83b079643c168f4082a37b394b817bd6084e6c6d"
-  integrity sha512-P48TtfREBH7YVXt9fJA7CKDMaUk8cX8/ZoPsH/hQpNBUjmxBGuQ45eadwSr1KplS7C0pMp5oOasNgXeK28lJxw==
-  dependencies:
-    lodash "^4.17.20"
 
 "@leafygreen-ui/lib@^5.1.1":
   version "5.1.1"
@@ -4331,10 +4314,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-is@^16.7.1":
-  version "16.7.1"
-  resolved "https://registry.yarnpkg.com/@types/react-is/-/react-is-16.7.1.tgz#d3f1c68c358c00ce116b55ef5410cf486dd08539"
-  integrity sha512-dMLFD2cCsxtDgMkTydQCM0PxDq8vwc6uN5M/jRktDfYvH3nQj6pjC9OrCXS2lKlYoYTNJorI/dI8x9dpLshexQ==
+"@types/react-is@^17.0.0":
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/@types/react-is/-/react-is-17.0.0.tgz#6b60190ae60591ae0c83d6f3854e61e08f5a7976"
+  integrity sha512-A0DQ1YWZ0RG2+PV7neAotNCIh8gZ3z7tQnDJyS2xRPDNtAtSPcJ9YyfMP8be36Ha0kQRzbZCrrTMznA4blqO5g==
   dependencies:
     "@types/react" "*"
 
@@ -14769,7 +14752,7 @@ react-intersection-observer@8.25.1:
   dependencies:
     tiny-invariant "^1.0.6"
 
-react-is@16.13.1, react-is@^16.12.0, react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
+react-is@16.13.1, react-is@^16.12.0, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
