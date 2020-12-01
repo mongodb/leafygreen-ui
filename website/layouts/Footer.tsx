@@ -2,15 +2,17 @@ import React from 'react';
 import { css } from 'emotion';
 import { Logo } from '@leafygreen-ui/logo';
 import { uiColors } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
 
 const footerContainer = css`
   background-color: ${uiColors.gray.dark3};
   width: 100%;
   display: flex;
-  padding-left: 52px;
-  padding-top: 36px;
   align-items: flex-start;
   justify-content: flex-start;
+  margin-top: ${spacing[7]}px;
+  padding-left: 52px;
+  padding-top: 36px;
 `;
 
 const linksContainer = css`
