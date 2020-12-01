@@ -36,7 +36,7 @@ type Props = {
   children: React.ReactNode;
   value: string;
   text: React.ReactNode;
-  name: string;
+  name?: string;
   deselected: boolean;
   readOnly?: boolean;
   onFocusFirstOption: () => void;

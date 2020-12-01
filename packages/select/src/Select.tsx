@@ -35,7 +35,7 @@ export type Props = {
   label: string;
   description?: string;
   placeholder?: string;
-  name: string;
+  name?: string;
 } & (
   | // Uncontrolled
   ({
