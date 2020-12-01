@@ -163,10 +163,19 @@ const productStates = {
 
     &:hover {
       color: ${uiColors.gray.light1};
+      cursor: default;
+
+      &:after {
+        opacity: 0;
+      }
 
       > ${productIconProp.selector} {
         color: ${uiColors.gray.light2};
       }
+    }
+
+    &:focus {
+      outline: none;
     }
 
     &:active {
