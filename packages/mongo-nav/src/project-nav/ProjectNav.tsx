@@ -156,6 +156,23 @@ const productStates = {
   `,
 
   loading: textLoadingStyle,
+
+  disabled: css`
+    color: ${uiColors.gray.light1};
+    font-weight: unset;
+
+    &:hover {
+      color: ${uiColors.gray.light1};
+
+      > ${productIconProp.selector} {
+        color: ${uiColors.gray.light2};
+      }
+    }
+
+    &:active {
+      pointer-events: none;
+    }
+  `,
 };
 
 const productStyle = css`
@@ -296,6 +313,11 @@ export default function ProjectNav({
   const isCloudManager = current?.planType === PlanType.Cloud;
   const isLoading = !!current;
   const currentProjectId = current?.projectId;
+  const useCNRegionsOnly =
+    current?.useCNRegionsOnly === true && current?.planType === PlanType.Atlas;
+
+  const useCNRegionsOnlyMessage =
+    'This product is not available for AWS China regions-only projects';
 
   usePoller(fetchAlertsCount, {
     interval: alertPollingInterval,
@@ -326,12 +348,16 @@ export default function ProjectNav({
       [productStates.active]: !!(activeProduct === product && current),
       [productStates.focus]: showFocus,
       [productStates.loading]: !current,
+      [productStates.disabled]:
+        useCNRegionsOnly && ['realm', 'charts'].includes(product),
       [cloudManagerStyle]: isCloudManager,
     });
 
-  const iconStyle = cx(productIconStyle, {
-    [iconLoadingStyle]: !current,
-  });
+  const getIconStyle = (product: Product) =>
+    cx(productIconStyle, {
+      [iconLoadingStyle]:
+        !current || (useCNRegionsOnly && ['realm', 'charts'].includes(product)),
+    });
 
   return (
     <nav
@@ -426,13 +452,13 @@ export default function ProjectNav({
               <CloudManagerIcon
                 {...productIconProp.prop}
                 active={activeProduct === Product.Cloud && isLoading}
-                className={iconStyle}
+                className={getIconStyle(Product.Cloud)}
               />
             ) : (
               <AtlasIcon
                 {...productIconProp.prop}
                 active={activeProduct === Product.Cloud && isLoading}
-                className={iconStyle}
+                className={getIconStyle(Product.Cloud)}
               />
             )}
             {isCloudManager ? 'Cloud Manager' : 'Atlas'}
@@ -442,43 +468,69 @@ export default function ProjectNav({
         {!isGovernment && !isCloudManager && (
           <>
             <li role="none" className={productTabStyle}>
-              <a
-                data-testid="project-nav-realm"
-                href={projectNav.realm}
-                className={getProductClassName('realm')}
-                aria-disabled={!current}
-                tabIndex={current ? 0 : -1}
-                onClick={onElementClick(ProjectNavRealm)}
+              <Tooltip
+                {...sharedTooltipProps}
+                tabIndex={-1}
+                align="bottom"
+                justify="middle"
+                usePortal={false}
+                darkMode={true}
+                enabled={useCNRegionsOnly}
+                trigger={
+                  <a
+                    data-testid="project-nav-realm"
+                    href={useCNRegionsOnly ? hosts.cloud : projectNav.realm}
+                    className={getProductClassName('realm')}
+                    aria-disabled={!current}
+                    tabIndex={current ? 0 : -1}
+                    onClick={onElementClick(ProjectNavRealm)}
+                  >
+                    {!isMobile && (
+                      <RealmIcon
+                        {...productIconProp.prop}
+                        active={activeProduct === Product.Realm && isLoading}
+                        className={getIconStyle(Product.Realm)}
+                      />
+                    )}
+                    Realm
+                  </a>
+                }
               >
-                {!isMobile && (
-                  <RealmIcon
-                    {...productIconProp.prop}
-                    active={activeProduct === Product.Realm && isLoading}
-                    className={iconStyle}
-                  />
-                )}
-                Realm
-              </a>
+                {useCNRegionsOnlyMessage}
+              </Tooltip>
             </li>
 
             <li role="none" className={productTabStyle}>
-              <a
-                data-testid="project-nav-charts"
-                href={projectNav.charts}
-                className={getProductClassName('charts')}
-                aria-disabled={!current}
-                tabIndex={current ? 0 : -1}
-                onClick={onElementClick(ProjectNavCharts)}
+              <Tooltip
+                {...sharedTooltipProps}
+                tabIndex={-1}
+                align="bottom"
+                justify="middle"
+                usePortal={false}
+                darkMode={true}
+                enabled={useCNRegionsOnly}
+                trigger={
+                  <a
+                    data-testid="project-nav-charts"
+                    href={useCNRegionsOnly ? hosts.cloud : projectNav.charts}
+                    className={getProductClassName('charts')}
+                    aria-disabled={!current}
+                    tabIndex={current ? 0 : -1}
+                    onClick={onElementClick(ProjectNavCharts)}
+                  >
+                    {!isMobile && (
+                      <ChartsIcon
+                        {...productIconProp.prop}
+                        className={getIconStyle(Product.Charts)}
+                        active={activeProduct === Product.Charts && isLoading}
+                      />
+                    )}
+                    Charts
+                  </a>
+                }
               >
-                {!isMobile && (
-                  <ChartsIcon
-                    {...productIconProp.prop}
-                    className={iconStyle}
-                    active={activeProduct === Product.Charts && isLoading}
-                  />
-                )}
-                Charts
-              </a>
+                {useCNRegionsOnlyMessage}
+              </Tooltip>
             </li>
           </>
         )}
