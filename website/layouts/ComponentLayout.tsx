@@ -2,13 +2,13 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { css } from 'emotion';
 import Button from '@leafygreen-ui/button';
-import DownloadIcon from '@leafygreen-ui/icon/dist/Download';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { breakpoints } from '@leafygreen-ui/tokens';
 import { H2 } from '@leafygreen-ui/typography';
 import ReactIcon from 'components/svgs/ReactIcon';
+import FigmaIcon from 'components/svgs/FigmaIcon';
 
 const componentsStyle = css`
   height: 16px;
@@ -83,7 +83,7 @@ export default function ComponentLayout({
           <H2 className={caps}>{componentName.split('-').join(' ')}</H2>
 
           {!isMobile && (
-            <Button glyph={<DownloadIcon />} variant="primary">
+            <Button glyph={<FigmaIcon />} variant="primary">
               View on Figma
             </Button>
           )}
