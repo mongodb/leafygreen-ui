@@ -84,7 +84,7 @@ export default function ComponentLayout({
 
           {!isMobile && (
             <Button glyph={<FigmaIcon />} variant="primary">
-              View on Figma
+              View in Figma
             </Button>
           )}
         </div>
