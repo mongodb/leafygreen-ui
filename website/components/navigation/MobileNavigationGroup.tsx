@@ -95,7 +95,9 @@ function MobileNavigationGroup({
     >
       <button
         className={cx(buttonResetStyles, groupButtonStyles)}
-        onClick={() => setOpen(curr => !curr)}
+        onClick={() => {
+          setOpen(curr => !curr);
+        }}
       >
         <ChevronRightIcon
           size={20}

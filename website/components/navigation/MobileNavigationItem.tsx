@@ -1,7 +1,9 @@
 import React from 'react';
 import { css, cx } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
+import { keyMap } from '@leafygreen-ui/lib';
 import { borderColor, leftRightPadding } from './styles';
+import { useMobileNavigation } from './NavigationContext';
 
 const listItemStyle = css`
   ${leftRightPadding}
@@ -33,10 +35,27 @@ type MobileNavigationItemProps = JSX.IntrinsicElements['li'] & {
 function MobileNavigationItem({
   children,
   active,
+  onClick,
   ...rest
 }: MobileNavigationItemProps) {
+  const { setOpen } = useMobileNavigation();
+
   return (
-    <li className={cx(listItemStyle, { [activeStyle]: active })} {...rest}>
+    <li
+      role="menuitem"
+      onClick={e => {
+        setOpen(curr => !curr);
+        onClick?.(e);
+      }}
+      onKeyDown={e => {
+        if (e.keyCode === keyMap.Space || e.keyCode === keyMap.Enter) {
+          setOpen(curr => !curr);
+          onClick?.(e as any); // onClick expecting React.MouseEvent
+        }
+      }}
+      className={cx(listItemStyle, { [activeStyle]: active })}
+      {...rest}
+    >
       {children}
     </li>
   );
