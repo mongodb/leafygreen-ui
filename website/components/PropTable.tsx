@@ -192,7 +192,7 @@ function PropTable({
         return (
           <div key={index}>
             <Subtitle className={subtitleBottomMargin}>
-              <InlineCode>{header.replace(/ /g, '')}</InlineCode> Props
+              {header.replace(/ /g, '')} Props
             </Subtitle>
 
             {tableData[index] && (
