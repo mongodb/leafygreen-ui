@@ -7,6 +7,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import MenuIcon from '@leafygreen-ui/icon/dist/Menu';
 import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
 import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
+import MobileNavigationProvider from './NavigationContext';
 
 const closedContainer = css`
   display: flex;
@@ -84,59 +85,61 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <div
-      className={css`
-        margin-top: ${spacing[5]}px;
-      `}
-    >
-      <div className={closedContainer}>
-        <IconButton
-          aria-label="menu"
-          onClick={() => setOpen(true)}
-          className={iconMargin}
-          size="large"
-        >
-          <MenuIcon size={20} />
-        </IconButton>
-        <MDBDesignLogo />
-      </div>
-
-      <Transition in={open} timeout={300} mountOnEnter unmountOnExit>
-        {(state: string) => (
-          <div
-            // Setting role to 'none', because elements with a click event should have a specific role
-            // Here we are just using a div to handle backdrop clicks, so this is the most appropriate value
-            role="none"
-            onClick={handleBackdropClick}
-            className={cx(backdrop, {
-              [css`
-                opacity: 1;
-              `]: state === 'entered',
-            })}
+    <MobileNavigationProvider open={open} setOpen={setOpen}>
+      <div
+        className={css`
+          margin-top: ${spacing[5]}px;
+        `}
+      >
+        <div className={closedContainer}>
+          <IconButton
+            aria-label="menu"
+            onClick={() => setOpen(true)}
+            className={iconMargin}
+            size="large"
           >
-            <nav
-              className={cx(navStyle, {
+            <MenuIcon size={20} />
+          </IconButton>
+          <MDBDesignLogo />
+        </div>
+
+        <Transition in={open} timeout={300} mountOnEnter unmountOnExit>
+          {(state: string) => (
+            <div
+              // Setting role to 'none', because elements with a click event should have a specific role
+              // Here we are just using a div to handle backdrop clicks, so this is the most appropriate value
+              role="none"
+              onClick={handleBackdropClick}
+              className={cx(backdrop, {
                 [css`
-                  transform: translate3d(0, 0, 0);
                   opacity: 1;
                 `]: state === 'entered',
               })}
-              ref={setScrollContainerNode}
             >
-              <div className={logoContainer}>
-                <MDBDesignLogo />
-              </div>
-              <ol className={ulStyleOverrides}>
-                <li>
-                  <h4 className={h4Style}>Home</h4>
-                </li>
-                {children}
-              </ol>
-            </nav>
-          </div>
-        )}
-      </Transition>
-    </div>
+              <nav
+                className={cx(navStyle, {
+                  [css`
+                    transform: translate3d(0, 0, 0);
+                    opacity: 1;
+                  `]: state === 'entered',
+                })}
+                ref={setScrollContainerNode}
+              >
+                <div className={logoContainer}>
+                  <MDBDesignLogo />
+                </div>
+                <ol className={ulStyleOverrides}>
+                  <li>
+                    <h4 className={h4Style}>Home</h4>
+                  </li>
+                  {children}
+                </ol>
+              </nav>
+            </div>
+          )}
+        </Transition>
+      </div>
+    </MobileNavigationProvider>
   );
 }
 
