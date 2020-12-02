@@ -86,8 +86,6 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
     const isGuideline = type === GroupType.Guideline;
     const items = isGuideline ? coreGuidelines : components;
 
-    console.log(activeType);
-
     if (isTouchDevice) {
       return (
         <MobileNavigationGroup
