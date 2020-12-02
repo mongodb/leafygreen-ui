@@ -2,7 +2,9 @@ import React from 'react';
 import facepaint from 'facepaint';
 import { css } from 'emotion';
 import { breakpoints } from '@leafygreen-ui/tokens';
+
 import Navigation from 'components/navigation';
+import Footer from './Footer';
 
 const mq = facepaint(
   Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
@@ -34,10 +36,19 @@ export default function BaseLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className={containerStyle}>
-      <Navigation />
+    <div
+      className={css`
+        display: flex;
+        flex-direction: column;
+      `}
+    >
+      <div className={containerStyle}>
+        <Navigation />
 
-      <div className={topMargin}>{children}</div>
+        <div className={topMargin}>{children}</div>
+      </div>
+
+      <Footer />
     </div>
   );
 }

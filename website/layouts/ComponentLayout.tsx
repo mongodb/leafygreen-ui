@@ -58,7 +58,7 @@ export default function ComponentLayout({
     viewport !== null ? viewport.width < breakpoints.Tablet : false;
 
   return (
-    <>
+    <div>
       <div className={marginBottom}>
         <small className={componentsStyle}>Components</small>
         <div className={flexContainer}>
@@ -66,7 +66,7 @@ export default function ComponentLayout({
 
           {!isMobile && (
             <Button glyph={<DownloadIcon />} variant="primary">
-              Download Sketch Library
+              View on Figma
             </Button>
           )}
         </div>
@@ -82,7 +82,17 @@ export default function ComponentLayout({
           name="Design Guidelines"
           onClick={() => router.push(`/component/${componentName}/guidelines`)}
         >
-          {children}
+          <div
+            className={css`
+              color: ${uiColors.gray.dark3};
+              & > p {
+                font-size: 16px;
+                line-height: 24px;
+              }
+            `}
+          >
+            {children}
+          </div>
         </Tab>
         <Tab
           name="Code Docs"
@@ -93,6 +103,6 @@ export default function ComponentLayout({
           {children}
         </Tab>
       </Tabs>
-    </>
+    </div>
   );
 }

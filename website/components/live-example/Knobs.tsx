@@ -21,6 +21,14 @@ const labelStyle = css`
   font-weight: 600;
 `;
 
+const textAreaClassName = css`
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+  padding-left: 16px;
+  width: 300px;
+`;
+
 const labelDarkMode = css`
   color: ${uiColors.gray.light1};
 `;
@@ -136,9 +144,7 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
         value={value.toString()}
         aria-labelledby={labelId}
         darkMode={darkMode}
-        className={css`
-          flex-grow: 1;
-        `}
+        className={textAreaClassName}
       />
     </div>
   );

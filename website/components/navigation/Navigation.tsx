@@ -9,16 +9,17 @@ import MobileNavigationGroup from './MobileNavigationGroup';
 import MobileNavigationItem from './MobileNavigationItem';
 import MobileNavigation from './MobileNavigation';
 
-const navWidth = css`
+const navContainer = css`
   width: 270px;
   // spacing[3] already built into side nav
   padding-left: ${spacing[5] - spacing[3]}px;
   padding-right: 60px;
+  padding-bottom: ${spacing[4]}px;
 `;
 
 const logoStyles = css`
   // adds back spacing that was already built into side nav
-  margin: 12px 0 ${spacing[4]}px ${spacing[3]}px;
+  margin: 12px 0 ${spacing[4]} px ${spacing[3]} px;
 `;
 
 const coreGuidelines = [
@@ -94,7 +95,7 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
           {items.map(item => {
             const path =
               type === GroupType.Guideline
-                ? `/${type}/${item}`
+                ? `/ ${type} /${item}`
                 : `/${type}/${item}/example`;
             return (
               <MobileNavigationItem
@@ -140,6 +141,7 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
 }
 
 function Navigation() {
+  const { push } = useRouter();
   const viewport = useViewportSize();
   const isTouchDevice = !!viewport && viewport.width < breakpoints.Desktop;
 
@@ -152,8 +154,8 @@ function Navigation() {
   }
 
   return (
-    <nav className={navWidth}>
-      <MDBDesignLogo className={logoStyles} />
+    <nav className={navContainer}>
+      <MDBDesignLogo className={logoStyles} onClick={() => push('/')} />
       <SideNav>
         <Content />
       </SideNav>
