@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import Tooltip from '@leafygreen-ui/tooltip';
 import IconButton from '@leafygreen-ui/icon-button';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
@@ -27,6 +27,7 @@ import {
   ProjectStatus,
   URLS,
   Environment,
+  OnChangeInterface,
 } from '../types';
 import {
   AtlasIcon,
@@ -159,11 +160,9 @@ const productStates = {
 
   disabled: css`
     color: ${uiColors.gray.light1};
-    font-weight: unset;
 
     &:hover {
       color: ${uiColors.gray.light1};
-      cursor: default;
 
       &:after {
         opacity: 0;
@@ -176,10 +175,6 @@ const productStates = {
 
     &:focus {
       outline: none;
-    }
-
-    &:active {
-      pointer-events: none;
     }
   `,
 };
@@ -273,6 +268,13 @@ type ProjectNavProps = Pick<
   | 'environment'
   | 'alertPollingInterval'
 > & {
+  admin?: boolean;
+  activeProduct?: Product;
+  activeNav?: ActiveNavElement;
+  onProjectChange?: (onChangeInterface: OnChangeInterface) => void;
+  mode?: Mode;
+  alertPollingInterval?: number;
+  environment?: Environment;
   current?: CurrentProjectInterface;
   data?: Array<ProjectInterface>;
   onPremEnabled?: boolean;
@@ -325,8 +327,13 @@ export default function ProjectNav({
   const useCNRegionsOnly =
     current?.useCNRegionsOnly === true && current?.planType === PlanType.Atlas;
 
-  const useCNRegionsOnlyMessage =
-    'This product is not available for AWS China regions-only projects';
+  const isCNRegionsOnly = useCallback(
+    (product: Product) => {
+      const disabledProducts: Array<Product> = [Product.Realm, Product.Charts];
+      return useCNRegionsOnly && disabledProducts.includes(product);
+    },
+    [useCNRegionsOnly],
+  );
 
   usePoller(fetchAlertsCount, {
     interval: alertPollingInterval,
@@ -346,27 +353,67 @@ export default function ProjectNav({
   const isProjectAlerts =
     activeNav === ActiveNavElement.ProjectNavAlerts && isLoading;
 
-  const sharedTooltipProps = {
-    variant: 'dark',
-    usePortal: false,
-    className: tooltipStyles,
-  } as const;
+  const sharedTooltipProps = useMemo(() => {
+    return { variant: 'dark', usePortal: false, className: tooltipStyles };
+  }, []);
 
   const getProductClassName = (product: Product) =>
     cx(anchorOverrides, projectNavAnchorOverrides, productStyle, {
       [productStates.active]: !!(activeProduct === product && current),
       [productStates.focus]: showFocus,
       [productStates.loading]: !current,
-      [productStates.disabled]:
-        useCNRegionsOnly && ['realm', 'charts'].includes(product),
+      [productStates.disabled]: isCNRegionsOnly(product),
       [cloudManagerStyle]: isCloudManager,
     });
 
   const getIconStyle = (product: Product) =>
     cx(productIconStyle, {
-      [iconLoadingStyle]:
-        !current || (useCNRegionsOnly && ['realm', 'charts'].includes(product)),
+      [iconLoadingStyle]: !current || isCNRegionsOnly(product),
     });
+
+  const WithCNRegionsOnlyTooltip = useCallback(
+    ({ children }: { children: React.ReactElement }) => {
+      return (
+        <Tooltip
+          {...sharedTooltipProps}
+          tabIndex={-1}
+          align="bottom"
+          justify="middle"
+          usePortal={false}
+          darkMode={true}
+          enabled={useCNRegionsOnly}
+          trigger={children}
+        >
+          This product is not available for AWS China regions-only projects
+        </Tooltip>
+      );
+    },
+    [sharedTooltipProps, useCNRegionsOnly],
+  );
+
+  const getRealmIcon = () => {
+    return (
+      !isMobile && (
+        <RealmIcon
+          {...productIconProp.prop}
+          active={activeProduct === Product.Realm && isLoading}
+          className={getIconStyle(Product.Realm)}
+        />
+      )
+    );
+  };
+
+  const getChartsIcon = () => {
+    return (
+      !isMobile && (
+        <ChartsIcon
+          {...productIconProp.prop}
+          className={getIconStyle(Product.Charts)}
+          active={activeProduct === Product.Charts && isLoading}
+        />
+      )
+    );
+  };
 
   return (
     <nav
@@ -477,69 +524,51 @@ export default function ProjectNav({
         {!isGovernment && !isCloudManager && (
           <>
             <li role="none" className={productTabStyle}>
-              <Tooltip
-                {...sharedTooltipProps}
-                tabIndex={-1}
-                align="bottom"
-                justify="middle"
-                usePortal={false}
-                darkMode={true}
-                enabled={useCNRegionsOnly}
-                trigger={
-                  <a
-                    data-testid="project-nav-realm"
-                    href={useCNRegionsOnly ? hosts.cloud : projectNav.realm}
-                    className={getProductClassName('realm')}
-                    aria-disabled={!current}
-                    tabIndex={current ? 0 : -1}
-                    onClick={onElementClick(ProjectNavRealm)}
-                  >
-                    {!isMobile && (
-                      <RealmIcon
-                        {...productIconProp.prop}
-                        active={activeProduct === Product.Realm && isLoading}
-                        className={getIconStyle(Product.Realm)}
-                      />
-                    )}
+              {useCNRegionsOnly && (
+                <WithCNRegionsOnlyTooltip>
+                  <div className={getProductClassName(Product.Realm)}>
+                    {getRealmIcon()}
                     Realm
-                  </a>
-                }
-              >
-                {useCNRegionsOnlyMessage}
-              </Tooltip>
+                  </div>
+                </WithCNRegionsOnlyTooltip>
+              )}
+              {!useCNRegionsOnly && (
+                <a
+                  data-testid="project-nav-realm"
+                  href={projectNav.realm}
+                  className={getProductClassName(Product.Realm)}
+                  aria-disabled={!current}
+                  tabIndex={current ? 0 : -1}
+                  onClick={onElementClick(ProjectNavRealm)}
+                >
+                  {getRealmIcon()}
+                  Realm
+                </a>
+              )}
             </li>
 
             <li role="none" className={productTabStyle}>
-              <Tooltip
-                {...sharedTooltipProps}
-                tabIndex={-1}
-                align="bottom"
-                justify="middle"
-                usePortal={false}
-                darkMode={true}
-                enabled={useCNRegionsOnly}
-                trigger={
-                  <a
-                    data-testid="project-nav-charts"
-                    href={useCNRegionsOnly ? hosts.cloud : projectNav.charts}
-                    className={getProductClassName('charts')}
-                    aria-disabled={!current}
-                    tabIndex={current ? 0 : -1}
-                    onClick={onElementClick(ProjectNavCharts)}
-                  >
-                    {!isMobile && (
-                      <ChartsIcon
-                        {...productIconProp.prop}
-                        className={getIconStyle(Product.Charts)}
-                        active={activeProduct === Product.Charts && isLoading}
-                      />
-                    )}
+              {useCNRegionsOnly && (
+                <WithCNRegionsOnlyTooltip>
+                  <div className={getProductClassName(Product.Charts)}>
+                    {getChartsIcon()}
                     Charts
-                  </a>
-                }
-              >
-                {useCNRegionsOnlyMessage}
-              </Tooltip>
+                  </div>
+                </WithCNRegionsOnlyTooltip>
+              )}
+              {!useCNRegionsOnly && (
+                <a
+                  data-testid="project-nav-charts"
+                  href={projectNav.charts}
+                  className={getProductClassName(Product.Charts)}
+                  aria-disabled={!current}
+                  tabIndex={current ? 0 : -1}
+                  onClick={onElementClick(ProjectNavCharts)}
+                >
+                  {getChartsIcon()}
+                  Charts
+                </a>
+              )}
             </li>
           </>
         )}
