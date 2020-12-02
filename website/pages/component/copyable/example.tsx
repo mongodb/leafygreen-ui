@@ -40,7 +40,11 @@ const knobsConfig: KnobsConfigInterface<{
 export default function CopyableLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {props => <div><Copyable {...props} /></div>}
+      {props => (
+        <div>
+          <Copyable {...props} />
+        </div>
+      )}
     </LiveExample>
   );
 }
