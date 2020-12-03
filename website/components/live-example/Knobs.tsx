@@ -37,6 +37,7 @@ const Knob = {
   Select: 'select',
   Number: 'number',
   Text: 'text',
+  Area: 'area',
   Boolean: 'boolean',
 } as const;
 
@@ -125,6 +126,31 @@ function Number({ onChange, label, value, prop, darkMode }: NumberInterface) {
 }
 
 function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
+  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(target.value, prop);
+  };
+
+  const labelId = `${label}-id`;
+
+  return (
+    <div className={knobContainerStyle}>
+      <label
+        className={cx(labelStyle, { [labelDarkMode]: darkMode })}
+        id={labelId}
+      >
+        {label}
+      </label>
+      <TextInput
+        onChange={handleChange}
+        value={value.toString()}
+        aria-labelledby={labelId}
+        darkMode={darkMode}
+      />
+    </div>
+  );
+}
+
+function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
   const handleChange = ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
     onChange(target.value, prop);
   };
@@ -188,4 +214,4 @@ function Select({
   );
 }
 
-export { Knob, Boolean, Text, Number, Select };
+export { Knob, Boolean, Text, Area, Number, Select };

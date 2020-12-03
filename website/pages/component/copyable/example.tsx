@@ -20,7 +20,7 @@ const knobsConfig: KnobsConfigInterface<{
     label: 'Description',
   },
   children: {
-    type: 'text',
+    type: 'area',
     default: 'npm install @leafygreen-ui/copyable',
     label: 'Children',
   },

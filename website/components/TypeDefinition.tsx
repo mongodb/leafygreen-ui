@@ -2,7 +2,7 @@ import React from 'react';
 import { css } from 'emotion';
 import Code from '@leafygreen-ui/code';
 import { InlineCode } from '@leafygreen-ui/typography';
-import { spacing } from '@leafygreen-ui/tokens'
+import { spacing } from '@leafygreen-ui/tokens';
 import { readmeDepthMap, HeadingType } from './PropTable';
 
 function TypeDefinition({ markdownAst, readme }) {

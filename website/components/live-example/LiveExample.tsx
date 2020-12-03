@@ -7,7 +7,7 @@ import { cx, css } from '@leafygreen-ui/emotion';
 import Card from '@leafygreen-ui/card';
 import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
-import { Knob, Boolean, Text, Number, Select } from './Knobs';
+import { Knob, Boolean, Text, Area, Number, Select } from './Knobs';
 
 const previewStyle = css`
   display: flex;
@@ -64,10 +64,18 @@ interface TextConfigInterface {
   label: string;
 }
 
+interface AreaConfigInterface {
+  type: 'area';
+  options?: undefined;
+  default: string;
+  label: string;
+}
+
 export type PropsType<T = string> =
   | BooleanConfigInterface
   | NumberConfigInterface
   | TextConfigInterface
+  | AreaConfigInterface
   | SelectConfigInterface<T>;
 
 interface ComponentPropsInterface {
@@ -77,12 +85,12 @@ interface ComponentPropsInterface {
 
 export type KnobsConfigInterface<
   ComponentProps extends ComponentPropsInterface
-  > = {
-    [K in keyof ComponentProps]: Extract<
-      PropsType<ComponentProps[K]>,
-      { default: ComponentProps[K] }
-    >;
-  };
+> = {
+  [K in keyof ComponentProps]: Extract<
+    PropsType<ComponentProps[K]>,
+    { default: ComponentProps[K] }
+  >;
+};
 
 interface LiveExampleInterface<ComponentProps extends ComponentPropsInterface> {
   knobsConfig: KnobsConfigInterface<ComponentProps>;
@@ -142,6 +150,9 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
 
         case Knob.Text:
           return <Text {...sharedProps} value={props[propName] as string} />;
+
+        case Knob.Area:
+          return <Area {...sharedProps} value={props[propName] as string} />;
 
         case Knob.Select:
           return (
