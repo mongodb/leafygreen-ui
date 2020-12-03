@@ -2,6 +2,7 @@ import React from 'react';
 import { css } from 'emotion';
 import Code from '@leafygreen-ui/code';
 import { InlineCode } from '@leafygreen-ui/typography';
+import { spacing } from '@leafygreen-ui/tokens'
 import { readmeDepthMap, HeadingType } from './PropTable';
 
 function TypeDefinition({ markdownAst, readme }) {
@@ -14,7 +15,11 @@ function TypeDefinition({ markdownAst, readme }) {
     .map(treeItem => treeItem.children?.[0].value);
 
   // Gets types defined in readmes to expand upon below the prop table
-  const interfaceDefinitions = readme?.match(/(?<=typescript).*?(?=```)/gs);
+  const getTypes: Array<string> = readme?.split('typescript');
+  getTypes.shift();
+  const interfaceDefinitions = getTypes?.map(id => {
+    return id.split('```')[0];
+  });
 
   if (typeNames.length < 1) {
     return null;
@@ -29,7 +34,7 @@ function TypeDefinition({ markdownAst, readme }) {
       >
         <div
           className={css`
-            margin-bottom: 16px;
+            margin-bottom: ${spacing[3]}px;
           `}
         >
           <InlineCode>{typeName}</InlineCode>
