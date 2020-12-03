@@ -3,23 +3,32 @@ import { css } from 'emotion';
 import Code from '@leafygreen-ui/code';
 import { InlineCode } from '@leafygreen-ui/typography';
 import { spacing } from '@leafygreen-ui/tokens';
-import { readmeDepthMap, HeadingType } from './PropTable';
+import {
+  readmeDepthMap,
+  HeadingType,
+  ReadmeMarkdown,
+  Heading,
+} from './PropTable';
 
-function TypeDefinition({ markdownAst, readme }) {
+function TypeDefinition({
+  markdownAst,
+  readme,
+}: {
+  readme: string;
+  markdownAst: ReadmeMarkdown;
+}) {
   const typeNames = markdownAst.children
     .filter(
       treeItem =>
         treeItem.type === 'heading' &&
         treeItem.depth === readmeDepthMap[HeadingType.TypeDefinition],
     )
-    .map(treeItem => treeItem.children?.[0].value);
+    .map((treeItem: Heading) => treeItem.children?.[0].value);
 
   // Gets types defined in readmes to expand upon below the prop table
-  const getTypes: Array<string> = readme?.split('typescript');
+  const getTypes = readme.split('typescript');
   getTypes.shift();
-  const interfaceDefinitions = getTypes?.map(id => {
-    return id.split('```')[0];
-  });
+  const interfaceDefinitions = getTypes?.map(id => id.split('```')[0]);
 
   if (typeNames.length < 1) {
     return null;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -126,9 +126,12 @@ function Number({ onChange, label, value, prop, darkMode }: NumberInterface) {
 }
 
 function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
-  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(target.value, prop);
-  };
+  const handleChange = useCallback(
+    ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+      onChange(target.value, prop);
+    },
+    [prop, onChange],
+  );
 
   const labelId = `${label}-id`;
 
@@ -142,7 +145,7 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
       </label>
       <TextInput
         onChange={handleChange}
-        value={value.toString()}
+        value={value}
         aria-labelledby={labelId}
         darkMode={darkMode}
       />
@@ -151,9 +154,12 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
 }
 
 function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
-  const handleChange = ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
-    onChange(target.value, prop);
-  };
+  const handleChange = useCallback(
+    ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
+      onChange(target.value, prop);
+    },
+    [onChange, prop],
+  );
 
   const labelId = `${label}-id`;
 
@@ -167,7 +173,7 @@ function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
       </label>
       <TextArea
         onChange={handleChange}
-        value={value.toString()}
+        value={value}
         aria-labelledby={labelId}
         darkMode={darkMode}
         className={textAreaClassName}
