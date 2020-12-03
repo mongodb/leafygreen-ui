@@ -27,7 +27,6 @@ import {
   ProjectStatus,
   URLS,
   Environment,
-  OnChangeInterface,
 } from '../types';
 import {
   AtlasIcon,
@@ -268,13 +267,6 @@ type ProjectNavProps = Pick<
   | 'environment'
   | 'alertPollingInterval'
 > & {
-  admin?: boolean;
-  activeProduct?: Product;
-  activeNav?: ActiveNavElement;
-  onProjectChange?: (onChangeInterface: OnChangeInterface) => void;
-  mode?: Mode;
-  alertPollingInterval?: number;
-  environment?: Environment;
   current?: CurrentProjectInterface;
   data?: Array<ProjectInterface>;
   onPremEnabled?: boolean;
@@ -287,6 +279,7 @@ type ProjectNavProps = Pick<
 };
 
 export default function ProjectNav({
+  /* eslint-disable react/prop-types */
   admin,
   current,
   data,
@@ -299,7 +292,8 @@ export default function ProjectNav({
   mode,
   alertPollingInterval,
   environment = Environment.Commercial,
-}: ProjectNavProps) {
+}: /* eslint-enable react/prop-types */
+ProjectNavProps) {
   const [open, setOpen] = useState(false);
   const [alerts, setAlerts] = useState(current?.alertsOpen ?? 0);
 
@@ -357,63 +351,86 @@ export default function ProjectNav({
     return { variant: 'dark', usePortal: false, className: tooltipStyles };
   }, []);
 
-  const getProductClassName = (product: Product) =>
-    cx(anchorOverrides, projectNavAnchorOverrides, productStyle, {
-      [productStates.active]: !!(activeProduct === product && current),
-      [productStates.focus]: showFocus,
-      [productStates.loading]: !current,
-      [productStates.disabled]: isCNRegionsOnly(product),
-      [cloudManagerStyle]: isCloudManager,
-    });
+  const getProductClassName = useCallback(
+    (product: Product) =>
+      cx(anchorOverrides, projectNavAnchorOverrides, productStyle, {
+        [productStates.active]: !!(activeProduct === product && current),
+        [productStates.focus]: showFocus,
+        [productStates.loading]: !current,
+        [productStates.disabled]: isCNRegionsOnly(product),
+        [cloudManagerStyle]: isCloudManager,
+      }),
+    [activeProduct, current, isCNRegionsOnly, isCloudManager, showFocus],
+  );
 
   const getIconStyle = (product: Product) =>
     cx(productIconStyle, {
       [iconLoadingStyle]: !current || isCNRegionsOnly(product),
     });
 
-  const WithCNRegionsOnlyTooltip = useCallback(
-    ({ children }: { children: React.ReactElement }) => {
+  const WithTooltipIfCNRegionsOnly = useCallback(
+    ({
+      tooltipTestid,
+      projectNavTestid,
+      product,
+      projectNavUrl,
+      projectNavElement,
+      children,
+    }: {
+      tooltipTestid?: string;
+      projectNavTestid?: string;
+      product: Product;
+      projectNavUrl: string | undefined;
+      projectNavElement: NavElement;
+      children: React.ReactElement;
+    }) => {
       return (
-        <Tooltip
-          {...sharedTooltipProps}
-          tabIndex={-1}
-          align="bottom"
-          justify="middle"
-          usePortal={false}
-          darkMode={true}
-          enabled={useCNRegionsOnly}
-          trigger={children}
-        >
-          This product is not available for AWS China regions-only projects
-        </Tooltip>
+        <>
+          {useCNRegionsOnly && (
+            <Tooltip
+              {...sharedTooltipProps}
+              data-testid={tooltipTestid}
+              tabIndex={-1}
+              align="bottom"
+              justify="middle"
+              usePortal={false}
+              darkMode={true}
+              enabled={useCNRegionsOnly}
+              trigger={
+                <div
+                  data-testid={projectNavTestid}
+                  className={getProductClassName(product)}
+                >
+                  {children}
+                </div>
+              }
+            >
+              This product is not available for AWS China regions-only projects
+            </Tooltip>
+          )}
+          {!useCNRegionsOnly && (
+            <a
+              data-testid={projectNavTestid}
+              href={projectNavUrl}
+              className={getProductClassName(product)}
+              aria-disabled={!current}
+              tabIndex={current ? 0 : -1}
+              onClick={onElementClick(projectNavElement)}
+            >
+              {children}
+            </a>
+          )}
+        </>
       );
     },
-    [sharedTooltipProps, useCNRegionsOnly],
+    [
+      sharedTooltipProps,
+      useCNRegionsOnly,
+      current,
+      getProductClassName,
+      onElementClick,
+    ],
   );
-
-  const getRealmIcon = () => {
-    return (
-      !isMobile && (
-        <RealmIcon
-          {...productIconProp.prop}
-          active={activeProduct === Product.Realm && isLoading}
-          className={getIconStyle(Product.Realm)}
-        />
-      )
-    );
-  };
-
-  const getChartsIcon = () => {
-    return (
-      !isMobile && (
-        <ChartsIcon
-          {...productIconProp.prop}
-          className={getIconStyle(Product.Charts)}
-          active={activeProduct === Product.Charts && isLoading}
-        />
-      )
-    );
-  };
 
   return (
     <nav
@@ -524,51 +541,45 @@ export default function ProjectNav({
         {!isGovernment && !isCloudManager && (
           <>
             <li role="none" className={productTabStyle}>
-              {useCNRegionsOnly && (
-                <WithCNRegionsOnlyTooltip>
-                  <div className={getProductClassName(Product.Realm)}>
-                    {getRealmIcon()}
-                    Realm
-                  </div>
-                </WithCNRegionsOnlyTooltip>
-              )}
-              {!useCNRegionsOnly && (
-                <a
-                  data-testid="project-nav-realm"
-                  href={projectNav.realm}
-                  className={getProductClassName(Product.Realm)}
-                  aria-disabled={!current}
-                  tabIndex={current ? 0 : -1}
-                  onClick={onElementClick(ProjectNavRealm)}
-                >
-                  {getRealmIcon()}
+              <WithTooltipIfCNRegionsOnly
+                tooltipTestid="project-nav-tooltip-realm"
+                projectNavTestid="project-nav-realm"
+                product={Product.Realm}
+                projectNavUrl={projectNav.realm}
+                projectNavElement={ProjectNavRealm}
+              >
+                <>
+                  {!isMobile && (
+                    <RealmIcon
+                      {...productIconProp.prop}
+                      active={activeProduct === Product.Realm && isLoading}
+                      className={getIconStyle(Product.Realm)}
+                    />
+                  )}
                   Realm
-                </a>
-              )}
+                </>
+              </WithTooltipIfCNRegionsOnly>
             </li>
 
             <li role="none" className={productTabStyle}>
-              {useCNRegionsOnly && (
-                <WithCNRegionsOnlyTooltip>
-                  <div className={getProductClassName(Product.Charts)}>
-                    {getChartsIcon()}
-                    Charts
-                  </div>
-                </WithCNRegionsOnlyTooltip>
-              )}
-              {!useCNRegionsOnly && (
-                <a
-                  data-testid="project-nav-charts"
-                  href={projectNav.charts}
-                  className={getProductClassName(Product.Charts)}
-                  aria-disabled={!current}
-                  tabIndex={current ? 0 : -1}
-                  onClick={onElementClick(ProjectNavCharts)}
-                >
-                  {getChartsIcon()}
+              <WithTooltipIfCNRegionsOnly
+                tooltipTestid="project-nav-tooltip-charts"
+                projectNavTestid="project-nav-charts"
+                product={Product.Charts}
+                projectNavUrl={projectNav.charts}
+                projectNavElement={ProjectNavCharts}
+              >
+                <>
+                  {!isMobile && (
+                    <ChartsIcon
+                      {...productIconProp.prop}
+                      className={getIconStyle(Product.Charts)}
+                      active={activeProduct === Product.Charts && isLoading}
+                    />
+                  )}
                   Charts
-                </a>
-              )}
+                </>
+              </WithTooltipIfCNRegionsOnly>
             </li>
           </>
         )}
