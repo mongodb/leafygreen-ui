@@ -1,12 +1,23 @@
-import { css } from 'emotion';
+import Image from 'next/image';
 import Callout from '@leafygreen-ui/callout';
+import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
+import XWithCircleIcon from '@leafygreen-ui/icon/dist/XWithCircle';
+import InlineDefinition from '@leafygreen-ui/inline-definition';
+import { css } from 'emotion';
 import { InlineCode } from '@leafygreen-ui/typography';
+import { uiColors } from '@leafygreen-ui/palette';
 
 Call-outs should be used when you want to call out information to the user. Call-outs look similar to banners but serve a different use case. Unlike banners, call-outs cannot be dismissed. They are optimized for long form copy (banners are optimized to save space and work at different widths). Also, there is no green call-out (there is a green banner). Call-outs should not have a CTA within them. Banners may sometimes have a button.
 
 Below is the general spacing structure for call-outs:
 
-## image
+<Image
+  src="/images/callout-header.png"
+  alt="Callout spacing example"
+  layout="responsive"
+  width={700}
+  height={260}
+/>
 
 The type of call-out you use, should be used to convey a specific message to your user.
 
@@ -40,13 +51,6 @@ Don’t use colors to signify the intensity, but instead the type of information
 "Important" call-outs are yellow and are used to show something that “may be important so pay attention”.
 
 <Callout variant="important">
-  For replica sets, <InlineCode>mongofiles</InlineCode> can only read from the
-  set's primary.
-</Callout>
-
-<br />
-
-<Callout variant="important">
   <InlineCode>bsondump</InlineCode> is a diagnostic tool for inspecting{' '}
   <InlineCode>BSON</InlineCode>, not a tool for data ingestion or other
   application use.
@@ -63,6 +67,40 @@ Don’t use colors to signify the intensity, but instead the type of information
 </Callout>
 
 <br />
+
+<div
+  className={css`
+    display: flex;
+  `}
+>
+  <div className={css`display: flex; flex-direction: column; align-items: center`}>
+    <Callout
+    variant="important"
+      className={css`
+        margin-right: 10px;
+      `}
+    >
+      Your API keys are like passwords. The configuration file stores <InlineDefinition definition="Application Programming Interface">API</InlineDefinition> keys in plaintext, so ensure that you secure the configuration appropriately.
+    </Callout>
+    <CheckmarkWithCircleIcon size="xlarge" fill={uiColors.green.base} className={css`margin-top: 10px`}/>
+  </div>
+
+
+  <div className={css`display: flex; flex-direction: column; align-items: center`}>
+    <Callout
+    variant="important"
+      className={css`
+        margin-left: 10px;
+      `}
+    >
+      Your API keys are like passwords. The configuration file stores <span className={css`cursor: help; text-decoration: underline;`}>API</span> keys in plaintext, so ensure that you secure the configuration appropriately.
+    </Callout>
+    <XWithCircleIcon size="xlarge" fill={uiColors.red.base} className={css`margin-top: 10px`}/>
+
+
+  </div>
+</div>
+
 
 There’s now also a purple "tip" call-out, which can be used to add a more personal note or suggestion from the Doc writer.
 
@@ -121,12 +159,30 @@ Each call-out variant allows for a secondary title.
 
 We understand that sometimes it may be necessary, but try to avoid nesting call-outs in tables and other elements.
 
-## example
+<Image
+  src="/images/callout-table-example.png"
+  alt="Bad example: Do not use Callout in Table component"
+  layout="responsive"
+  width={700}
+  height={365}
+/>
 
 Avoid nesting code components within call-outs.
 
-## example
+<Image
+  src="/images/callout-code-example.png"
+  alt="Example of using code component near callout"
+  layout="responsive"
+  width={700}
+  height={380}
+/>
 
 The example call-out is now deprecated. Don’t use it. Instead opt for integrating your example within body copy.
 
-## example
+<Image
+  src="/images/callout-example-example.png"
+  alt="Callout example is now deprecated"
+  layout="responsive"
+  width={700}
+  height={250}
+/>

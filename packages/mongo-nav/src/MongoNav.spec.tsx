@@ -11,8 +11,9 @@ import MongoNav from './MongoNav';
 
 describe('packages/mongo-nav', () => {
   let queryByTestId: RenderResult['queryByTestId'];
+  let queryByText: RenderResult['queryByText'];
   let getByTestId: RenderResult['getByTestId'];
-  let findByTestId: RenderResult['findByTestId'];
+  let findByText: RenderResult['findByText'];
   let getByText: RenderResult['getByText'];
 
   let fetchMock: jest.Mock;
@@ -33,9 +34,13 @@ describe('packages/mongo-nav', () => {
 
   const renderComponent = async (props = {}) => {
     await act(async () => {
-      ({ findByTestId, getByTestId, queryByTestId, getByText } = render(
-        <MongoNav activeProduct="cloud" {...props} />,
-      ));
+      ({
+        findByText,
+        getByTestId,
+        queryByTestId,
+        queryByText,
+        getByText,
+      } = render(<MongoNav activeProduct="cloud" {...props} />));
     });
   };
 
@@ -119,7 +124,7 @@ describe('packages/mongo-nav', () => {
     });
 
     test('admin UI is not shown', () => {
-      expect(queryByTestId('org-nav-admin-link')).toBeNull();
+      expect(queryByText('Admin')).toBeNull();
     });
   });
 
@@ -455,7 +460,7 @@ describe('packages/mongo-nav', () => {
     );
 
     test('admin UI is shown', async () => {
-      expect(await findByTestId('org-nav-admin-link')).toBeVisible();
+      expect(await findByText('Admin')).toBeVisible();
     });
   });
 
