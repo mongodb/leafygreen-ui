@@ -23,6 +23,7 @@ const componentContainer = css`
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
+  min-height: 400px;
 `;
 
 const componentContainerDarkMode = css`

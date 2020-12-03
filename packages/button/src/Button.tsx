@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import InteractionRing from '@leafygreen-ui/interaction-ring';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { transparentize } from 'polished';
@@ -261,6 +262,11 @@ const baseStyle = css`
   transition: all 120ms ease;
   user-select: none;
   padding: 0;
+  overflow: hidden;
+
+  &:focus {
+    outline: none;
+  }
 
   &:hover {
     text-decoration: none;
@@ -305,12 +311,20 @@ const disabledStyle = css`
 
 interface BaseButtonProps {
   disabled?: boolean;
+  darkMode?: boolean;
   variant?: Variant;
   size?: Size;
   glyph?: React.ReactElement;
   className?: string;
+  borderRadius?: string;
   children?: React.ReactNode;
   href?: string;
+  forceState?: {
+    focused?: boolean;
+    active?: boolean;
+    // Supporting "hovered" requires factoring out all the &:hover
+    // styles from the the base style and each variant's styles
+  };
 }
 
 const Button: ExtendableBox<
@@ -320,11 +334,14 @@ const Button: ExtendableBox<
   (
     {
       className,
+      borderRadius,
       children,
       disabled = false,
+      darkMode = false,
       variant = Variant.Default,
       size = Size.Normal,
       glyph,
+      forceState = {},
       ...rest
     }: BaseButtonProps,
     ref: React.Ref<any>,
@@ -335,11 +352,28 @@ const Button: ExtendableBox<
       ref,
       className: cx(
         baseStyle,
-        buttonSizes[size],
         buttonVariants[variant],
         { [disabledStyle]: disabled },
         { [focusStyle]: showFocus },
-        className,
+        {
+          [css`
+            border-radius: ${borderRadius};
+          `]: borderRadius !== undefined,
+        },
+        {
+          [css`
+            &:before {
+              opacity: 1;
+            }
+          `]: forceState.focused === true,
+        },
+        {
+          [css`
+            &:after {
+              opacity: 1;
+            }
+          `]: forceState.active === true,
+        },
       ),
       // only add a disabled prop if not an anchor
       ...(typeof rest.href !== 'string' && { disabled }),
@@ -374,20 +408,34 @@ const Button: ExtendableBox<
       </span>
     );
 
+    let button;
+
     if (typeof rest.href === 'string') {
-      return (
+      button = (
         <Box as="a" {...commonProps} {...rest}>
+          {content}
+        </Box>
+      );
+    } else {
+      // we give button a default "as" value based on the `href` prop, if a custom
+      // "as" prop is supplied, it will overwrite this value through {...rest}
+      button = (
+        <Box as="button" type="button" {...commonProps} {...rest}>
           {content}
         </Box>
       );
     }
 
     return (
-      // we give button a default "as" value based on the `href` prop, if a custom
-      // "as" prop is supplied, it will overwrite this value through {...rest}
-      <Box as="button" type="button" {...commonProps} {...rest}>
-        {content}
-      </Box>
+      <InteractionRing
+        className={cx(buttonSizes[size], className)}
+        borderRadius={borderRadius}
+        darkMode={darkMode}
+        disabled={disabled}
+        forceState={forceState}
+      >
+        {button}
+      </InteractionRing>
     );
   },
 );
@@ -395,6 +443,7 @@ const Button: ExtendableBox<
 Button.displayName = 'Button';
 
 Button.propTypes = {
+  darkMode: PropTypes.bool,
   variant: PropTypes.oneOf(Object.values(Variant)),
   size: PropTypes.oneOf(Object.values(Size)),
   className: PropTypes.string,
@@ -408,6 +457,7 @@ Button.propTypes = {
   ]),
   href: PropTypes.string,
   glyph: PropTypes.element,
+  borderRadius: PropTypes.string,
 };
 
 export default Button;

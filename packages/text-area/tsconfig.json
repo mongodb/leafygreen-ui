@@ -14,10 +14,16 @@
       "path": "../emotion"
     },
     {
+      "path": "../interaction-ring"
+    },
+    {
       "path": "../palette"
     },
     {
       "path": "../tokens"
+    },
+    {
+      "path": "../typography"
     }
   ]
 }

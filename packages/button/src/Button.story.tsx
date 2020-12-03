@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, select, boolean } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
@@ -20,6 +20,15 @@ storiesOf('Button', module)
         Object.values(Variant) as Array<Variant>,
         Variant.Default,
       )}
+      darkMode={boolean('Dark mode', false)}
+      forceState={{
+        active: { true: true, false: false, undefined }[
+          select('Active', ['true', 'false', 'undefined'], 'undefined')
+        ],
+        focused: { true: true, false: false, undefined }[
+          select('Focused', ['true', 'false', 'undefined'], 'undefined')
+        ],
+      }}
       title={text('Title', 'The button title')}
       disabled={boolean('Disabled', false)}
       href={
@@ -61,7 +70,7 @@ storiesOf('Button', module)
       'Edit',
     );
 
-    function CustomElement(props: object): React.ReactElement {
+    function CustomElement(props: HTMLAttributes<any>): React.ReactElement {
       return <CustomRoot {...props} />;
     }
 
@@ -77,6 +86,7 @@ storiesOf('Button', module)
         disabled={boolean('Disabled', false)}
         className={buttonClass}
         glyph={<Icon glyph={selectedGlyph} />}
+        tabIndex={0}
       >
         {text('Children', 'Button')}
       </Button>

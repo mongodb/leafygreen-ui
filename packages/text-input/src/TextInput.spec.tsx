@@ -63,7 +63,7 @@ describe('packages/text-input', () => {
     expect(textInput.getAttribute('type')).toBe('password');
   });
 
-  test('does not render "optional" text when the prop is set to false ', () => {
+  test('does not render "optional" text when the prop is set to false', () => {
     const { container } = renderTextInput({ optional: false, ...defaultProps });
     expect(container.innerHTML).not.toContain('Optional');
   });
