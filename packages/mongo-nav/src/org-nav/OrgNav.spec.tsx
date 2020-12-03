@@ -30,16 +30,17 @@ const linkNamesToUrls: Record<string, string | undefined> = {
   admin,
 };
 
-const linkNamesToTestIds: Record<string, string> = {
-  allClusters: 'org-nav-all-clusters-link',
-  admin: 'org-nav-admin-link',
-  support: 'org-nav-support',
-  billing: 'org-nav-billing',
+const linkNamesToText: Record<string, string> = {
+  allClusters: 'All Clusters',
+  admin: 'Admin',
+  support: 'Support',
+  billing: 'Billing',
 };
 
 describe('packages/mongo-nav/src/org-nav', () => {
   let getByTestId: RenderResult['getByTestId'];
   let queryByTestId: RenderResult['queryByTestId'];
+  let queryByText: RenderResult['queryByText'];
 
   let onOrganizationChange: jest.Mock;
 
@@ -53,7 +54,7 @@ describe('packages/mongo-nav/src/org-nav', () => {
   });
 
   const renderComponent = (props = {}) => {
-    ({ getByTestId, queryByTestId } = render(
+    ({ getByTestId, queryByTestId, queryByText } = render(
       <OrgNav
         account={account}
         activeNav={NavElement.OrgNavOrgSettings}
@@ -136,7 +137,8 @@ describe('packages/mongo-nav/src/org-nav', () => {
     it(`${isVisible ? 'displays' : 'does not display'} the ${startCase(
       linkName,
     )} nav`, () => {
-      const navLink = queryByTestId(linkNamesToTestIds[linkName]);
+      const navLink =
+        queryByText(linkNamesToText[linkName])?.closest('a, button') ?? null;
 
       if (isVisible) {
         expect(navLink).toBeVisible();
