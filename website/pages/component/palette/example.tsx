@@ -1,8 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import ClipboardJS from 'clipboard';
+import { css } from 'emotion';
 import styled from '@emotion/styled';
 import { lighten, darken, readableColor, transparentize } from 'polished';
+import { keyMap } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
+import InteractionRing from '@leafygreen-ui/interaction-ring';
+import Tooltip from '@leafygreen-ui/tooltip';
 import LiveExample from 'components/live-example';
+
+const resetButtonStyles = css`
+  display: inline;
+  border: none;
+  background-color: transparent;
+  margin: unset;
+  padding: unset;
+
+  &:focus {
+    outline: none;
+  }
+`;
 
 interface ColorBlockProps {
   color: string;
@@ -47,6 +64,56 @@ const ColorBlock = styled<'div', ColorBlockProps>('div')`
   }
 `;
 
+function WrappedColorBlock({ color, name }: ColorBlockProps) {
+  const [copied, setCopied] = useState(false);
+  const [blockRef, setBlockRef] = useState<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (!blockRef) {
+      return;
+    }
+
+    const clipboard = new ClipboardJS(blockRef, {
+      text: () => color,
+    });
+
+    if (copied) {
+      const timeoutId = setTimeout(() => {
+        setCopied(false);
+      }, 1500);
+
+      return () => clearTimeout(timeoutId);
+    }
+
+    return () => clipboard.destroy();
+  }, [blockRef, color, copied]);
+
+  return (
+    <InteractionRing borderRadius="0px">
+      <button
+        onClick={() => setCopied(true)}
+        onKeyDown={e => {
+          if (e.keyCode === keyMap.Space) {
+            setCopied(true);
+          }
+        }}
+        ref={setBlockRef}
+        className={resetButtonStyles}
+      >
+        <Tooltip
+          open={copied}
+          align="top"
+          justify="middle"
+          trigger={<ColorBlock key={color} color={color} name={name} />}
+          triggerEvent="click"
+        >
+          Copied!
+        </Tooltip>
+      </button>
+    </InteractionRing>
+  );
+}
+
 function renderColors() {
   const ranges = Object.keys(uiColors) as Array<keyof typeof uiColors>;
 
@@ -54,14 +121,14 @@ function renderColors() {
     const currentVal = uiColors[range];
 
     if (typeof currentVal === 'string') {
-      return <ColorBlock key={range} color={currentVal} name={range} />;
+      return <WrappedColorBlock key={range} color={currentVal} name={range} />;
     }
 
     return (
       <div key={range}>
         {(Object.keys(currentVal) as Array<keyof typeof currentVal>).map(
           name => (
-            <ColorBlock
+            <WrappedColorBlock
               key={currentVal[name]}
               color={currentVal[name]}
               name={`${range} ${name}`}
