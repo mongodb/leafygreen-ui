@@ -14,7 +14,7 @@ const knobsConfig: KnobsConfigInterface<{
     label: 'Variant',
   },
   children: {
-    type: 'text',
+    type: 'area',
     default:
       'If you are running your mongod instance with the default host (localhost) and port (27017), you can leave those parameters out when running mongo shell.',
     label: 'Children',

@@ -14,7 +14,7 @@ const knobsConfig: KnobsConfigInterface<{
   justify: Justify;
 }> = {
   definition: {
-    type: 'text',
+    type: 'area',
     default: shardDefinition,
     label: 'Definition',
   },

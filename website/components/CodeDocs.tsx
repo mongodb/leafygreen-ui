@@ -174,9 +174,9 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
     ? viewport?.width < breakpoints.Tablet
     : false;
 
-  const version = changelog?.match(/(?<=<h2>)(.+?)(?=<\/h2>)/s)?.[1];
-  const example = readme?.match(/(?<=js).*?(?=```)/s)?.[0];
-  const outputHTML = readme?.match(/(?<=html).*?(?=```)/s)?.[0];
+  const version = changelog?.split('h2')[1]?.replace(/[>/<]+/g, '');
+  const example = readme?.split('js')[1]?.split('```')[0]?.trimStart();
+  const outputHTML = readme?.split('html')[1]?.split('```')[0]?.trimStart();
   const markdownAst = (unified()
     .use(markdown)
     .parse(readme) as unknown) as ReadmeMarkdown;
@@ -201,13 +201,17 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
           <Tabs className={tabsPadding}>
             {example && (
               <Tab default name="Example" className={mt3}>
-                <Code language="js">{example}</Code>
+                <Code showLineNumbers language="js">
+                  {example}
+                </Code>
               </Tab>
             )}
 
             {outputHTML && (
               <Tab name="Output HTML" className={mt3} default={!example}>
-                <Code language="xml">{outputHTML}</Code>
+                <Code showLineNumbers language="xml">
+                  {outputHTML}
+                </Code>
               </Tab>
             )}
           </Tabs>
