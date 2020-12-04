@@ -56,8 +56,12 @@ function TypeDefinition({
     );
   }
 
-  return typeNames.map((typeName: string, index: number) =>
-    formatType(typeName, interfaceDefinitions[index]),
+  return (
+    <>
+      {typeNames.map((typeName: string, index: number) =>
+        formatType(typeName, interfaceDefinitions[index]),
+      )}
+    </>
   );
 }
 
