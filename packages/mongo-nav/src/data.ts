@@ -29,6 +29,7 @@ export const dataFixtures: DataInterface = {
     projectId: 'fakeProjectId1',
     projectName: 'Demo Project 1',
     status: 'ACTIVE',
+    useCNRegionsOnly: false,
   },
   organizations: [
     {
