@@ -81,6 +81,19 @@ describe('packages/text-input', () => {
       expect(container.innerHTML).not.toContain('Optional');
       expect(getByTitle('Checkmark Icon')).toBeInTheDocument();
     });
+
+    test('displays checkmark icon when input is valid even when input is disabled', () => {
+      const { container, textInput, getByTitle } = renderTextInput({
+        value: validEmail,
+        state: State.Valid,
+        disabled: true,
+        ...defaultProps,
+      });
+
+      expect((textInput as HTMLInputElement).value).toBe(validEmail);
+      expect(container.innerHTML).not.toContain('Optional');
+      expect(getByTitle('Checkmark Icon')).toBeInTheDocument();
+    });
   });
 
   describe('when the "state" is "error"', () => {
@@ -89,6 +102,19 @@ describe('packages/text-input', () => {
         value: invalidEmail,
         state: State.Error,
         optional: true,
+        ...defaultProps,
+      });
+
+      expect((textInput as HTMLInputElement).value).toBe(invalidEmail);
+      expect(container.innerHTML).not.toContain('Optional');
+      expect(getByTitle('Warning Icon')).toBeInTheDocument();
+    });
+
+    test('displays warning icon even when input is disabled', () => {
+      const { container, textInput, getByTitle } = renderTextInput({
+        value: invalidEmail,
+        state: State.Error,
+        disabled: true,
         ...defaultProps,
       });
 
