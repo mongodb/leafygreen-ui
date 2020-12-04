@@ -1,5 +1,11 @@
 # @leafygreen-ui/typography
 
+## 7.2.0
+
+### Minor Changes
+
+- 8b0ea602: - `Label` component now supports a `disabled` prop
+
 ## 7.1.1
 
 ### Patch Changes
