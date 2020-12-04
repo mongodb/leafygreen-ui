@@ -31,8 +31,32 @@ function MyApp({ Component, pageProps }: AppProps) {
     <LeafyGreenProvider>
       <Global styles={globalStyles} />
       <Head>
+        <html lang="en"></html>
+
         <title>LeafyGreen - MongoDB Design System</title>
+        <meta
+          name="description"
+          content="MongoDB's open-source, accessible design system for designing and building web applications with React."
+        />
+
+        <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="generator" content="LeafyGreen UI" />
+
+        <meta
+          property="og:title"
+          content="LeafyGreen - MongoDB Design System"
+        />
+        <meta
+          property="og:site_name"
+          content="LeafyGreen - MongoDB Design System"
+        />
+        <meta property="og:url" content="https://mongodb.design" />
+        <meta
+          property="og:description"
+          content="MongoDB's open-source, accessible design system for designing and building web applications with React."
+        />
+
         <link
           href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap"
           rel="stylesheet"
