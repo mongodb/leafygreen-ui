@@ -1,5 +1,19 @@
 # @leafygreen-ui/copyable
 
+## 2.0.0
+
+### Major Changes
+
+- 8b0ea602: Form-compatible components now display more visually consistent hover and focus states
+
+### Patch Changes
+
+- Updated dependencies [8b0ea602]
+- Updated dependencies [8b0ea602]
+- Updated dependencies [8b0ea602]
+  - @leafygreen-ui/button@10.0.0
+  - @leafygreen-ui/typography@7.2.0
+
 ## 1.0.0
 
 ### Major Changes
