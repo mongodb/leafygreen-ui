@@ -11,7 +11,7 @@ type ModalKnobs = {
 
 const knobsConfig: KnobsConfigInterface<ModalKnobs> = {
   children: {
-    type: 'text',
+    type: 'area',
     default: 'This is the modal content',
     label: 'Children',
   },

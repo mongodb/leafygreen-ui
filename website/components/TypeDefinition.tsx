@@ -2,19 +2,33 @@ import React from 'react';
 import { css } from 'emotion';
 import Code from '@leafygreen-ui/code';
 import { InlineCode } from '@leafygreen-ui/typography';
-import { readmeDepthMap, HeadingType } from './PropTable';
+import { spacing } from '@leafygreen-ui/tokens';
+import {
+  readmeDepthMap,
+  HeadingType,
+  ReadmeMarkdown,
+  Heading,
+} from './PropTable';
 
-function TypeDefinition({ markdownAst, readme }) {
+function TypeDefinition({
+  markdownAst,
+  readme,
+}: {
+  readme: string;
+  markdownAst: ReadmeMarkdown;
+}) {
   const typeNames = markdownAst.children
     .filter(
       treeItem =>
         treeItem.type === 'heading' &&
         treeItem.depth === readmeDepthMap[HeadingType.TypeDefinition],
     )
-    .map(treeItem => treeItem.children?.[0].value);
+    .map((treeItem: Heading) => treeItem.children?.[0].value);
 
   // Gets types defined in readmes to expand upon below the prop table
-  const interfaceDefinitions = readme?.match(/(?<=typescript).*?(?=```)/gs);
+  const getTypes = readme.split('typescript');
+  getTypes.shift();
+  const interfaceDefinitions = getTypes?.map(id => id.split('```')[0]);
 
   if (typeNames.length < 1) {
     return null;
@@ -29,7 +43,7 @@ function TypeDefinition({ markdownAst, readme }) {
       >
         <div
           className={css`
-            margin-bottom: 16px;
+            margin-bottom: ${spacing[3]}px;
           `}
         >
           <InlineCode>{typeName}</InlineCode>
@@ -42,8 +56,12 @@ function TypeDefinition({ markdownAst, readme }) {
     );
   }
 
-  return typeNames.map((typeName: string, index: number) =>
-    formatType(typeName, interfaceDefinitions[index]),
+  return (
+    <>
+      {typeNames.map((typeName: string, index: number) =>
+        formatType(typeName, interfaceDefinitions[index]),
+      )}
+    </>
   );
 }
 

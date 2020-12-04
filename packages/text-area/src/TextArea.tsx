@@ -195,6 +195,7 @@ export default function TextArea({
           disabled={disabled}
           onChange={onValueChange}
           value={value}
+          aria-labelledby={ariaLabelledBy}
         />
       </InteractionRing>
       {!disabled && state === State.Error && errorMessage && (
