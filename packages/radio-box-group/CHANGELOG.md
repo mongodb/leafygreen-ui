@@ -1,5 +1,16 @@
 # @leafygreen-ui/radio-box-group
 
+## 5.0.0
+
+### Major Changes
+
+- 8b0ea602: Form-compatible components now display more visually consistent hover and focus states
+
+### Patch Changes
+
+- Updated dependencies [8b0ea602]
+  - @leafygreen-ui/interaction-ring@1.0.0
+
 ## 4.1.0
 
 ### Minor Changes
