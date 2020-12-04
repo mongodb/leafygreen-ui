@@ -194,6 +194,7 @@ function SideNavGroup({
               className={cx(iconStyle, {
                 [openIconStyle]: open,
               })}
+              title={open ? 'Chevron Down' : 'Chevron Right'}
             />
           </h4>
         </button>
