@@ -31,6 +31,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     <LeafyGreenProvider>
       <Global styles={globalStyles} />
       <Head>
+        <html lang="en"></html>
+
         <title>LeafyGreen - MongoDB Design System</title>
         <meta
           name="description"

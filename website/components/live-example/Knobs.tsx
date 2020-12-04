@@ -1,10 +1,17 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
+import { IdAllocator } from '@leafygreen-ui/lib'
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
 import TextArea from '@leafygreen-ui/text-area';
 import Toggle from '@leafygreen-ui/toggle';
+
+const booleanIdAllocator = IdAllocator.create('boolean');
+const textIdAllocator = IdAllocator.create('text');
+const areaIdAllocator = IdAllocator.create('area');
+const numberIdAllocator = IdAllocator.create('number');
+const selectIdAllocator = IdAllocator.create('select');
 
 const knobContainerStyle = css`
   display: flex;
@@ -84,9 +91,11 @@ function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
     onChange(!value, prop);
   };
 
+  const labelId = useMemo(() => booleanIdAllocator.generate(), []);;
+
   return (
     <div className={knobContainerStyle}>
-      <label className={cx(labelStyle, { [labelDarkMode]: darkMode })}>
+      <label id={labelId} className={cx(labelStyle, { [labelDarkMode]: darkMode })}>
         {label}
       </label>
       <Toggle
@@ -94,6 +103,7 @@ function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
         checked={value}
         size="small"
         darkMode={darkMode}
+        aria-labelledby={labelId}
       />
     </div>
   );
@@ -104,7 +114,7 @@ function Number({ onChange, label, value, prop, darkMode }: NumberInterface) {
     onChange(parseInt(target.value), prop);
   };
 
-  const labelId = `${label}-id`;
+  const labelId = useMemo(() => numberIdAllocator.generate(), []);;
 
   return (
     <div className={knobContainerStyle}>
@@ -133,7 +143,7 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
     [prop, onChange],
   );
 
-  const labelId = `${label}-id`;
+  const labelId = useMemo(() => textIdAllocator.generate(), []);;
 
   return (
     <div className={knobContainerStyle}>
@@ -161,7 +171,7 @@ function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
     [onChange, prop],
   );
 
-  const labelId = `${label}-id`;
+  const labelId = useMemo(() => areaIdAllocator.generate(), []);;
 
   return (
     <div className={knobContainerStyle}>
@@ -190,6 +200,8 @@ function Select({
   options,
   darkMode,
 }: BasicSelectInterface | GlyphSelectInterface) {
+  const labelId = useMemo(() => selectIdAllocator.generate(), []);;
+
   const handleChange = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
     onChange(target.value, prop);
   };
@@ -211,11 +223,11 @@ function Select({
 
   return (
     <div className={knobContainerStyle}>
-      <label className={cx(labelStyle, { [labelDarkMode]: darkMode })}>
+      <label id={labelId} className={cx(labelStyle, { [labelDarkMode]: darkMode })}>
         {label}
       </label>
       {/* eslint-disable-next-line jsx-a11y/no-onchange */}
-      <select onChange={handleChange}>{generateOptions()}</select>
+      <select aria-labelledby={labelId} onChange={handleChange}>{generateOptions()}</select>
     </div>
   );
 }
