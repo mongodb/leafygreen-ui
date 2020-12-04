@@ -28,7 +28,7 @@ const knobsConfig: KnobsConfigInterface<ConfirmationModalExampleProps> = {
     label: 'Title',
   },
   children: {
-    type: 'text',
+    type: 'area',
     default: 'Analyze your data in S3 with MQL.',
     label: 'Children',
   },

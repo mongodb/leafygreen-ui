@@ -37,7 +37,7 @@ const trademarkStyle = css`
 
 export default function Footer() {
   return (
-    <div className={footerContainer}>
+    <div role="contentinfo" className={footerContainer}>
       <div>
         <Logo darkMode knockout height={20} />
       </div>

@@ -19,7 +19,7 @@ const knobsConfig: KnobsConfigInterface<{
     label: 'Label',
   },
   description: {
-    type: 'text',
+    type: 'area',
     default: 'Team names have to be unique within the organization',
     label: 'Description',
   },
@@ -56,7 +56,7 @@ const knobsConfig: KnobsConfigInterface<{
     label: 'Dark Mode',
   },
   errorMessage: {
-    type: 'text',
+    type: 'area',
     default:
       'The team name that you entered is not unique, please pick another',
     label: 'Error Message',

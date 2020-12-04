@@ -1,5 +1,24 @@
 # @leafygreen-ui/mongo-nav
 
+## 4.2.0
+
+### Minor Changes
+
+- e0e6076b: Admin and clusters links and version now appear in a dropdown menu for narrower screen sizes.
+
+### Patch Changes
+
+- 8b0ea602: Performs some internal code refactoring with no change in external functionality.
+- Updated dependencies [8b0ea602]
+- Updated dependencies [8b0ea602]
+- Updated dependencies [8b0ea602]
+- Updated dependencies [8b0ea602]
+- Updated dependencies [f3523462]
+  - @leafygreen-ui/interaction-ring@1.0.0
+  - @leafygreen-ui/button@10.0.0
+  - @leafygreen-ui/typography@7.2.0
+  - @leafygreen-ui/menu@9.1.2
+
 ## 4.1.0
 
 ### Minor Changes
