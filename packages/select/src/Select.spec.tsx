@@ -38,11 +38,11 @@ const defaultProps = {
     <Option key="orange" disabled>
       Orange
     </Option>,
-    <OptionGroup key="enabled group" label="Enabled">
+    <OptionGroup key="enabled group" label="Enabled group">
       <Option>Green</Option>
       <Option>Yellow</Option>
     </OptionGroup>,
-    <OptionGroup key="disabled group" label="Disabled" disabled>
+    <OptionGroup key="disabled group" label="Disabled group" disabled>
       <Option>Indigo</Option>
       <>
         <Option>Violet</Option>
@@ -437,9 +437,10 @@ describe('packages/select', () => {
       ['list menu', 'listbox'],
     ] as const)('closing when %p is focused', (_, focusedElementRole) => {
       let getByRole: RenderResult['getByRole'];
+      let getByText: RenderResult['getByText'];
 
       beforeEach(async () => {
-        ({ getByRole } = render(<Select {...defaultProps} />));
+        ({ getByRole, getByText } = render(<Select {...defaultProps} />));
 
         userEvent.click(getByRole('combobox'));
 
@@ -506,6 +507,18 @@ describe('packages/select', () => {
         default:
           enforceExhaustive(focusedElementRole);
       }
+
+      test('does not occur by clicking on option group label', async () => {
+        userEvent.click(getByText('Enabled group'));
+
+        const listbox = await waitFor(() => {
+          const listbox = getByRole('listbox');
+          expect(listbox).toBeVisible();
+          return listbox;
+        });
+
+        expect(listbox).toHaveFocus();
+      });
     });
 
     test('Escape key clears selected option', () => {
@@ -530,7 +543,10 @@ describe('packages/select', () => {
       let getByRole: RenderResult['getByRole'];
 
       let combobox: HTMLElement;
-      let onChangeSpy: jest.MockedFunction<(value: string) => void>;
+      let onChangeSpy: jest.MockedFunction<(
+        value: string,
+        event: React.MouseEvent | React.KeyboardEvent,
+      ) => void>;
 
       beforeEach(() => {
         onChangeSpy = jest.fn();
@@ -542,9 +558,9 @@ describe('packages/select', () => {
                 <Select
                   {...defaultProps}
                   value={value}
-                  onChange={value => {
+                  onChange={(value, event) => {
                     setValue(value);
-                    onChangeSpy(value);
+                    onChangeSpy(value, event);
                   }}
                 />
               )}
@@ -581,7 +597,10 @@ describe('packages/select', () => {
           fireEvent.keyDown(targetOption!, { keyCode });
 
           expect(onChangeSpy).toHaveBeenCalledTimes(1);
-          expect(onChangeSpy).toHaveBeenCalledWith(optionValue);
+          expect(onChangeSpy).toHaveBeenCalledWith(
+            optionValue,
+            expect.anything(),
+          );
 
           await waitForElementToBeRemoved(listbox);
 
@@ -602,7 +621,10 @@ describe('packages/select', () => {
           userEvent.click(getByTextFor(listbox, optionText));
 
           expect(onChangeSpy).toHaveBeenCalledTimes(1);
-          expect(onChangeSpy).toHaveBeenCalledWith(optionValue);
+          expect(onChangeSpy).toHaveBeenCalledWith(
+            optionValue,
+            expect.anything(),
+          );
 
           await waitForElementToBeRemoved(listbox);
 
@@ -684,10 +706,10 @@ describe('packages/select', () => {
           ).toHaveFocus();
         });
 
-        // Doesn't move when the end is reached
+        // Moves to first option when the end is reached
         fireEvent.keyDown(listbox, { keyCode: keyMap.ArrowDown });
 
-        expect(getByTextFor(listbox, 'Yellow').closest('li')).toHaveFocus();
+        expect(getByTextFor(listbox, 'Select').closest('li')).toHaveFocus();
       });
 
       test('moves to previous option by arrow down key', async () => {
@@ -709,10 +731,10 @@ describe('packages/select', () => {
           ).toHaveFocus();
         });
 
-        // Doesn't move when the top is reached
+        // Moves to last option when the top is reached
         fireEvent.keyDown(listbox, { keyCode: keyMap.ArrowUp });
 
-        expect(getByTextFor(listbox, 'Select').closest('li')).toHaveFocus();
+        expect(getByTextFor(listbox, 'Yellow').closest('li')).toHaveFocus();
       });
     });
   });

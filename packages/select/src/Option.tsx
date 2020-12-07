@@ -19,6 +19,7 @@ const optionStyle = css`
   padding: 10px 12px;
   outline: none;
   overflow-wrap: anywhere;
+  transition: background-color 150ms ease-in-out;
 `;
 
 const optionTextStyle = css`

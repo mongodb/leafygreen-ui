@@ -24,7 +24,7 @@ interface ListMenuProps {
   id: string;
   referenceElement: React.MutableRefObject<HTMLElement | null>;
   onClose: () => void;
-  onSelectFocusedOption: () => void;
+  onSelectFocusedOption: React.KeyboardEventHandler;
   onFocusPreviousOption: () => void;
   onFocusNextOption: () => void;
   className?: string;
@@ -64,7 +64,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         switch (event.keyCode) {
           case keyMap.Tab:
           case keyMap.Enter:
-            onSelectFocusedOption();
+            onSelectFocusedOption(event);
             break;
           case keyMap.Escape:
             onClose();
@@ -101,19 +101,24 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         ? 0
         : viewportSize.height - ref.current.getBoundingClientRect().top - 10;
 
+    const onClick = useCallback(
+      (event: React.MouseEvent) => {
+        if (ref.current) {
+          ref.current.focus();
+        }
+        event.stopPropagation();
+      },
+      [ref],
+    );
+
     return (
       <Popover
         active={open && !disabled}
         spacing={4}
         align={Align.Bottom}
-        justify={Justify.End}
+        justify={Justify.Middle}
         adjustOnMutation
-        className={cx(
-          css`
-            transform: none; // prevent default scaling transition
-          `,
-          className,
-        )}
+        className={className}
         refEl={referenceElement}
       >
         <ul
@@ -121,6 +126,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
           ref={ref}
           tabIndex={-1}
           onKeyDown={onKeyDown}
+          onClick={onClick}
           className={cx(
             menuStyle,
             css`

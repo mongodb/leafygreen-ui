@@ -32,6 +32,10 @@ const menuButtonTextStyle = css`
   text-overflow: ellipsis;
 `;
 
+const caretIconStyle = css`
+  min-width: 16px;
+`;
+
 type Props = {
   children: React.ReactNode;
   value: string;
@@ -41,7 +45,7 @@ type Props = {
   readOnly?: boolean;
   onFocusFirstOption: () => void;
   onFocusLastOption: () => void;
-  onDeselect: () => void;
+  onDeselect: React.KeyboardEventHandler;
   onClose: () => void;
   onOpen: () => void;
 } & Required<
@@ -97,7 +101,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
           if (open) {
             onClose();
           } else {
-            onDeselect();
+            onDeselect(event);
           }
           break;
         case keyMap.ArrowUp:
@@ -188,31 +192,9 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       )}
     >
       <div className={menuButtonContentsStyle}>
-        <span
-          className={cx(
-            menuButtonTextStyle,
-            css`
-              margin-left: ${sizeSet.option.margin}px;
+        <span className={menuButtonTextStyle}>{text}</span>
 
-              @media only screen and (max-width: ${breakpoints.Desktop}px) {
-                margin-left: ${mobileSizeSet.option.margin}px;
-              }
-            `,
-          )}
-        >
-          {text}
-        </span>
-
-        <CaretDownIcon
-          className={css`
-            min-width: 16px;
-            margin: 0 ${sizeSet.icon.margin}px 0 0;
-
-            @media only screen and (max-width: ${breakpoints.Desktop}px) {
-              margin: 0 ${mobileSizeSet.icon.margin}px 0 0;
-            }
-          `}
-        />
+        <CaretDownIcon className={caretIconStyle} />
       </div>
       {children}
     </Button>

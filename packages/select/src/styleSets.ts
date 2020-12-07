@@ -154,11 +154,7 @@ interface SizeSet {
     text: number;
     lineHeight: number;
   };
-  icon: {
-    margin: number;
-  };
   option: {
-    margin: number;
     text: number;
   };
 }
@@ -176,11 +172,7 @@ export const sizeSets: Record<Size, SizeSet> = {
       text: 14,
       lineHeight: 16,
     },
-    icon: {
-      margin: 4,
-    },
     option: {
-      margin: 12,
       text: 14,
     },
   },
@@ -196,11 +188,7 @@ export const sizeSets: Record<Size, SizeSet> = {
       text: 14,
       lineHeight: 16,
     },
-    icon: {
-      margin: 4,
-    },
     option: {
-      margin: 12,
       text: 14,
     },
   },
@@ -216,11 +204,7 @@ export const sizeSets: Record<Size, SizeSet> = {
       text: 14,
       lineHeight: 20,
     },
-    icon: {
-      margin: 8,
-    },
     option: {
-      margin: 12,
       text: 14,
     },
   },
@@ -236,11 +220,7 @@ export const sizeSets: Record<Size, SizeSet> = {
       text: 18,
       lineHeight: 24,
     },
-    icon: {
-      margin: 8,
-    },
     option: {
-      margin: 16,
       text: 16,
     },
   },
@@ -258,11 +238,7 @@ export const mobileSizeSet: SizeSet = {
     text: 16,
     lineHeight: 22,
   },
-  icon: {
-    margin: 8,
-  },
   option: {
-    margin: 12,
     text: 16,
   },
 };

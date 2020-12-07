@@ -94,21 +94,22 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 
 ## Select Properties
 
-| Prop           | Type                                                | Description                                                                                                   | Default     |
-| -------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ----------- |
-| `children`     | `node`                                              | `<Option />` and `<OptionGroup />` elements.                                                                  |             |
-| `className`    | `string`                                            | Adds a className to the outermost element.                                                                    |             |
-| `darkMode`     | `boolean`                                           | Determines whether or not the component will appear in dark mode.                                             | `false`     |
-| `size`         | `'xsmall'` \| `'small'` \| `'default'` \| `'large'` | Sets the size of the component's elements.                                                                    | `'default'` |
-| `id`           | `string`                                            | id associated with the Select component.                                                                      |             |
-| `label`        | `string`                                            | Text shown in bold above the input element.                                                                   |             |
-| `description`  | `string`                                            | Text that gives more detail about the requirements for the input.                                             |             |
-| `placeholder`  | `string`                                            | The placeholder text shown in the input element when an option is not selected.                               | `'Select'`  |
-| `disabled`     | `boolean`                                           | Disables the component from being edited.                                                                     | `false`     |
-| `value`        | `string`                                            | Sets the `<Option />` that will appear selected and makes the component a controlled component.               | `''`        |
-| `defaultValue` | `string`                                            | Sets the `<Option />` that will appear selected on page load when the component is uncontrolled.              | `''`        |
-| `onChange`     | `function`                                          | A function that gets called when the selected value changes. Receives the value string as the first argument. | `() => {}`  |
-| `readOnly`     | `boolean`                                           | Disables the console warning when the component is controlled and no `onChange` prop is provided.             | `false`     |
+| Prop              | Type                                                | Description                                                                                                   | Default     |
+| ----------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ----------- |
+| `children`        | `node`                                              | `<Option />` and `<OptionGroup />` elements.                                                                  |             |
+| `className`       | `string`                                            | Adds a className to the outermost element.                                                                    |             |
+| `darkMode`        | `boolean`                                           | Determines whether or not the component will appear in dark mode.                                             | `false`     |
+| `size`            | `'xsmall'` \| `'small'` \| `'default'` \| `'large'` | Sets the size of the component's elements.                                                                    | `'default'` |
+| `id`              | `string`                                            | id associated with the Select component.                                                                      |             |
+| `label`           | `string`                                            | Text shown in bold above the input element.                                                                   |             |
+| `aria-labelledby` | `string`                                            | Must be provided if and only if `label` is not provided.                                                      |             |
+| `description`     | `string`                                            | Text that gives more detail about the requirements for the input.                                             |             |
+| `placeholder`     | `string`                                            | The placeholder text shown in the input element when an option is not selected.                               | `'Select'`  |
+| `disabled`        | `boolean`                                           | Disables the component from being edited.                                                                     | `false`     |
+| `value`           | `string`                                            | Sets the `<Option />` that will appear selected and makes the component a controlled component.               | `''`        |
+| `defaultValue`    | `string`                                            | Sets the `<Option />` that will appear selected on page load when the component is uncontrolled.              | `''`        |
+| `onChange`        | `function`                                          | A function that gets called when the selected value changes. Receives the value string as the first argument. | `() => {}`  |
+| `readOnly`        | `boolean`                                           | Disables the console warning when the component is controlled and no `onChange` prop is provided.             | `false`     |
 
 # Option
 
@@ -127,5 +128,5 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 | ----------- | --------- | --------------------------------------------------------- | ------- |
 | `children`  | `node`    | `<Option />` elements                                     |         |
 | `className` | `string`  | Adds a className to the outermost element.                |         |
-| `label`     | `string`  | Text shown above the group's options                      |         |
+| `label`     | `string`  | Text shown above the group's options.                     |         |
 | `disabled`  | `boolean` | Prevents all the contained options from being selectable. | `false` |

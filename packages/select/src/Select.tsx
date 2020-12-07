@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize } from '@leafygreen-ui/hooks';
-import { IdAllocator } from '@leafygreen-ui/lib';
+import { IdAllocator, OneOf } from '@leafygreen-ui/lib';
 import { breakpoints } from '@leafygreen-ui/tokens';
 import { colorSets, mobileSizeSet, Mode, Size, sizeSets } from './styleSets';
 import ListMenu from './ListMenu';
@@ -32,7 +32,6 @@ export type Props = {
   darkMode?: boolean;
   size?: Size;
   disabled?: boolean;
-  label: string;
   description?: string;
   placeholder?: string;
   name?: string;
@@ -42,18 +41,25 @@ export type Props = {
       defaultValue?: string;
       value?: undefined;
     } & {
-      onChange?: (value: string) => void;
+      onChange?: (
+        value: string,
+        event: React.MouseEvent | React.KeyboardEvent,
+      ) => void;
       readOnly?: false;
     })
   // Controlled
   | ({ value: string; defaultValue?: undefined } & (
       | {
-          onChange: (value: string) => void;
+          onChange: (
+            value: string,
+            event: React.MouseEvent | React.KeyboardEvent,
+          ) => void;
           readOnly?: false;
         }
       | { readOnly: true; onChange?: undefined }
     ))
-);
+) &
+  OneOf<{ label: string }, { 'aria-labelledby': string }>;
 
 const idAllocator = IdAllocator.create('select');
 
@@ -72,9 +78,10 @@ export default function Select({
   value,
   onChange,
   readOnly,
+  'aria-labelledby': ariaLabelledBy,
 }: Props) {
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
-  const labelId = `${id}-label`;
+  const labelId = 'aria-labelledby' ?? `${id}-label`;
   const descriptionId = `${id}-description`;
   const menuId = `${id}-menu`;
 
@@ -101,6 +108,12 @@ export default function Select({
       );
     }
   }, [onChange, readOnly, value]);
+
+  if (!label && !ariaLabelledBy) {
+    console.error(
+      'For screen-reader accessibility, label or aria-labelledby must be provided to IconButton.',
+    );
+  }
 
   /**
    * Open / close state
@@ -186,11 +199,14 @@ export default function Select({
   }, [children, uncontrolledSelectedOption, value]);
 
   const onSelect = useCallback(
-    (option: OptionElement | null) => {
+    (
+      option: OptionElement | null,
+      event: React.MouseEvent | React.KeyboardEvent,
+    ) => {
       if (value === undefined) {
         setUncontrolledSelectedOption(option);
       }
-      onChange?.(getOptionValue(option));
+      onChange?.(getOptionValue(option), event);
       setFocusedOption(undefined);
       onClose();
     },
@@ -204,7 +220,7 @@ export default function Select({
         event.stopPropagation();
 
         if (!disabled && !optionDisabled) {
-          onSelect(option);
+          onSelect(option, event);
           onClose();
         }
       };
@@ -212,9 +228,12 @@ export default function Select({
     [disabled, onClose, onSelect],
   );
 
-  const onDeselect = useCallback(() => {
-    onSelect(null);
-  }, [onSelect]);
+  const onDeselect = useCallback(
+    (event: React.KeyboardEvent) => {
+      onSelect(null, event);
+    },
+    [onSelect],
+  );
 
   /**
    * Focus
@@ -236,11 +255,14 @@ export default function Select({
     return enabledOptions;
   }, [children]);
 
-  const onSelectFocusedOption = useCallback(() => {
-    if (focusedOption !== undefined) {
-      onSelect(focusedOption);
-    }
-  }, [focusedOption, onSelect]);
+  const onSelectFocusedOption = useCallback(
+    (event: React.KeyboardEvent) => {
+      if (focusedOption !== undefined) {
+        onSelect(focusedOption, event);
+      }
+    },
+    [focusedOption, onSelect],
+  );
 
   const onFocusFirstOption = useCallback(() => {
     setFocusedOption(null);
@@ -251,22 +273,25 @@ export default function Select({
   }, [enabledOptions]);
 
   const onFocusPreviousOption = useCallback(() => {
-    if (focusedOption === undefined) {
+    if (
+      focusedOption === undefined ||
+      enabledOptions.indexOf(focusedOption) === 0
+    ) {
       onFocusLastOption();
     } else {
-      const index = Math.max(0, enabledOptions.indexOf(focusedOption) - 1);
+      const index = enabledOptions.indexOf(focusedOption) - 1;
       setFocusedOption(enabledOptions[index]);
     }
   }, [enabledOptions, focusedOption, onFocusLastOption]);
 
   const onFocusNextOption = useCallback(() => {
-    if (focusedOption === undefined) {
+    if (
+      focusedOption === undefined ||
+      enabledOptions.indexOf(focusedOption) === enabledOptions.length - 1
+    ) {
       onFocusFirstOption();
     } else {
-      const index = Math.min(
-        enabledOptions.length - 1,
-        enabledOptions.indexOf(focusedOption) + 1,
-      );
+      const index = enabledOptions.indexOf(focusedOption) + 1;
       setFocusedOption(enabledOptions[index]);
     }
   }, [enabledOptions, focusedOption, onFocusFirstOption]);
@@ -386,29 +411,33 @@ export default function Select({
         className,
       )}
     >
-      <label
-        id={labelId}
-        className={cx(
-          labelStyle,
-          css`
-            color: ${disabled ? colorSet.label.disabled : colorSet.label.base};
-            font-size: ${sizeSet.label.text}px;
-            line-height: ${sizeSet.label.lineHeight}px;
+      {label && (
+        <label
+          id={labelId}
+          className={cx(
+            labelStyle,
+            css`
+              color: ${disabled
+                ? colorSet.label.disabled
+                : colorSet.label.base};
+              font-size: ${sizeSet.label.text}px;
+              line-height: ${sizeSet.label.lineHeight}px;
 
-            @media only screen and (max-width: ${breakpoints.Desktop}px) {
-              font-size: ${mobileSizeSet.label.text}px;
-              line-height: ${mobileSizeSet.label.lineHeight}px;
-            }
-          `,
-          {
-            [css`
-              cursor: not-allowed;
-            `]: disabled,
-          },
-        )}
-      >
-        {label}
-      </label>
+              @media only screen and (max-width: ${breakpoints.Desktop}px) {
+                font-size: ${mobileSizeSet.label.text}px;
+                line-height: ${mobileSizeSet.label.lineHeight}px;
+              }
+            `,
+            {
+              [css`
+                cursor: not-allowed;
+              `]: disabled,
+            },
+          )}
+        >
+          {label}
+        </label>
+      )}
 
       {description && (
         <div
@@ -473,7 +502,8 @@ export default function Select({
 Select.displayName = 'Select';
 
 Select.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  'aria-labelledby': PropTypes.string,
   description: PropTypes.string,
   placeholder: PropTypes.string,
   className: PropTypes.string,
