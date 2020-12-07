@@ -377,36 +377,35 @@ const TextInput: React.ComponentType<React.PropsWithRef<
               id={id}
             />
           </InteractionRing>
-          {!disabled && (
-            <div {...iconSelectorProp.prop} className={inputIconStyle}>
-              {state === State.Valid && (
-                <RenderedCheckmarkIcon className={validIconStyle} />
-              )}
 
-              {state === State.Error && (
-                <WarningIcon
-                  className={css`
-                    color: ${colorSets[mode].errorIconColor};
-                  `}
-                />
-              )}
+          <div {...iconSelectorProp.prop} className={inputIconStyle}>
+            {state === State.Valid && (
+              <RenderedCheckmarkIcon className={validIconStyle} />
+            )}
 
-              {state === State.None && optional && (
-                <div
-                  className={cx(
-                    optionalStyle,
-                    css`
-                      color: ${colorSets[mode].optional};
-                    `,
-                  )}
-                >
-                  <p>Optional</p>
-                </div>
-              )}
-            </div>
-          )}
+            {state === State.Error && (
+              <WarningIcon
+                className={css`
+                  color: ${colorSets[mode].errorIconColor};
+                `}
+              />
+            )}
+
+            {state === State.None && optional && (
+              <div
+                className={cx(
+                  optionalStyle,
+                  css`
+                    color: ${colorSets[mode].optional};
+                  `,
+                )}
+              >
+                <p>Optional</p>
+              </div>
+            )}
+          </div>
         </div>
-        {!disabled && state === State.Error && errorMessage && (
+        {state === State.Error && errorMessage && (
           <div
             className={cx(
               errorMessageStyle,
