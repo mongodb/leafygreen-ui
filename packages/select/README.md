@@ -101,6 +101,8 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 | `darkMode`        | `boolean`                                           | Determines whether or not the component will appear in dark mode.                                             | `false`     |
 | `size`            | `'xsmall'` \| `'small'` \| `'default'` \| `'large'` | Sets the size of the component's elements.                                                                    | `'default'` |
 | `id`              | `string`                                            | id associated with the Select component.                                                                      |             |
+| `name`      | `string`             | The name that will be used when submitted as part of a form.                                          |
+
 | `label`           | `string`                                            | Text shown in bold above the input element.                                                                   |             |
 | `aria-labelledby` | `string`                                            | Must be provided if and only if `label` is not provided.                                                      |             |
 | `description`     | `string`                                            | Text that gives more detail about the requirements for the input.                                             |             |
@@ -119,7 +121,6 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 | `className` | `string`             | Adds a className to the outermost element.                                                            |                             |
 | `glyph`     | `React.ReactElement` | Icon to display next to the option text.                                                              |                             |
 | `value`     | `string`             | Corresponds to the value passed into the `onChange` prop of `<Select />` when the option is selected. | text contents of `children` |
-| `name`      | `string`             | The name that will be used when submitted as part of a form.                                          |
 | `disabled`  | `boolean`            | Prevents the option from being selectable.                                                            | `false`                     |
 
 # OptionGroup
