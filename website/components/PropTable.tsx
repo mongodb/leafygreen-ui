@@ -39,7 +39,7 @@ export interface ReadmeMarkdown {
   children: Array<Heading | Table>;
 }
 
-interface Heading {
+export interface Heading {
   type: 'heading';
   depth: typeof readmeDepthMap[keyof typeof readmeDepthMap];
   children: Array<{ value: string }>;

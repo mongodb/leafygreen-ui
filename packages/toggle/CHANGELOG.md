@@ -1,5 +1,17 @@
 # @leafygreen-ui/toggle
 
+## 6.0.0
+
+### Major Changes
+
+- 8b0ea602: Removed `interactionRingSize` prop. Previously the interaction ring could cause the toggle to overflow its container. Since the interaction ring is now based on box-shadows, this should no longer be necessary.
+- 8b0ea602: Form-compatible components now display more visually consistent hover and focus states
+
+### Patch Changes
+
+- Updated dependencies [8b0ea602]
+  - @leafygreen-ui/interaction-ring@1.0.0
+
 ## 5.0.2
 
 ### Patch Changes

@@ -32,7 +32,7 @@ const knobsConfig: KnobsConfigInterface<{
     label: 'Language',
   },
   children: {
-    type: 'text',
+    type: 'area',
     default: jsSnippet,
     label: 'Children',
   },

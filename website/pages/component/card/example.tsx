@@ -15,7 +15,7 @@ const knobsConfig: KnobsConfigInterface<{ as: string; children: string }> = {
     label: 'As',
   },
   children: {
-    type: 'text',
+    type: 'area',
     default:
       'Sync user data between mobile devices and Atlas, without writing any conflict resolution or networking code. Easily backup user data, build collaborative features, and keep data up-to-date whenever devices are online.',
     label: 'Children',

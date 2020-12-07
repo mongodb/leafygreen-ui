@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 9.1.2
+
+### Patch Changes
+
+- f3523462: Implementation update that avoids some unnecessary rerenders
+
 ## 9.1.1
 
 ### Patch Changes

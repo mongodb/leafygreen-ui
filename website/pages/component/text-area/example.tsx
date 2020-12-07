@@ -16,7 +16,7 @@ const knobsConfig: KnobsConfigInterface<{
     label: 'Label',
   },
   description: {
-    type: 'text',
+    type: 'area',
     default:
       'This is the name of your function. You can use this name to call your function from a client.',
     label: 'Description',
@@ -38,7 +38,7 @@ const knobsConfig: KnobsConfigInterface<{
     label: 'Dark Mode',
   },
   errorMessage: {
-    type: 'text',
+    type: 'area',
     default: 'Not a valid name, please try again',
     label: 'Error Message',
   },
