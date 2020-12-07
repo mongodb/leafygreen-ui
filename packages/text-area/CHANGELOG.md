@@ -1,5 +1,11 @@
 # @leafygreen-ui/text-area
 
+## 3.0.1
+
+### Patch Changes
+
+- ee766843: Fixes bug where aria-labelledby prop was not appropriately applied to textarea element
+
 ## 3.0.0
 
 ### Major Changes

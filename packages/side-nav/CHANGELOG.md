@@ -1,5 +1,11 @@
 # @leafygreen-ui/side-nav
 
+## 5.0.2
+
+### Patch Changes
+
+- ee766843: Updates Chevron title in SideNavGroup based on its open state. When open, the title is appropriately Chevron Down Icon and when closed, Chevron Right Icon.
+
 ## 5.0.1
 
 ### Patch Changes
