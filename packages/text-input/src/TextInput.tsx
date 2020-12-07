@@ -363,7 +363,7 @@ const TextInput: React.ComponentType<React.PropsWithRef<
                   &:disabled {
                     color: ${colorSets[mode].disabledColor};
                     background-color: ${colorSets[mode]
-                      .disabledBackgroundColor};
+                    .disabledBackgroundColor};
                   }
                 `,
                 { [getStatefulInputStyles(state, optional, mode)]: !disabled },
@@ -405,7 +405,7 @@ const TextInput: React.ComponentType<React.PropsWithRef<
             )}
           </div>
         </div>
-        {!disabled && state === State.Error && errorMessage && (
+        {state === State.Error && errorMessage && (
           <div
             className={cx(
               errorMessageStyle,
