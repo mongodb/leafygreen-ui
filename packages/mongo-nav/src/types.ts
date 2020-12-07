@@ -204,6 +204,7 @@ export interface CurrentProjectInterface extends ProjectInterface {
   alertsOpen: number;
   chartsActivated: boolean;
   status?: ProjectStatus;
+  useCNRegionsOnly: boolean;
 }
 
 export interface OrganizationInterface {
