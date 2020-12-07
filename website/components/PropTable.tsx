@@ -39,7 +39,7 @@ export interface ReadmeMarkdown {
   children: Array<Heading | Table>;
 }
 
-interface Heading {
+export interface Heading {
   type: 'heading';
   depth: typeof readmeDepthMap[keyof typeof readmeDepthMap];
   children: Array<{ value: string }>;
@@ -192,7 +192,7 @@ function PropTable({
         return (
           <div key={index}>
             <Subtitle className={subtitleBottomMargin}>
-              <InlineCode>{header.replace(/ /g, '')}</InlineCode> Props
+              {header.replace(/ /g, '')} Props
             </Subtitle>
 
             {tableData[index] && (

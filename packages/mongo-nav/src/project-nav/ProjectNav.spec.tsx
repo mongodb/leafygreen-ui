@@ -1,5 +1,13 @@
 import React from 'react';
-import { act, cleanup, render, RenderResult } from '@testing-library/react';
+import {
+  act,
+  cleanup,
+  render,
+  RenderResult,
+  fireEvent,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import {
   dataFixtures,
   urlFixtures,
@@ -183,6 +191,76 @@ describe('packages/mongo-nav/src/project-nav', () => {
       expect(getByTestId('project-nav-atlas')).toBeVisible();
       expect(queryByTestId('project-nav-charts')).toBeNull();
       expect(queryByTestId('project-nav-realm')).toBeNull();
+    });
+  });
+
+  describe('when useCNRegionsOnly is "true"', () => {
+    beforeEach(async () => {
+      const useCNRegionsOnlyProject = {
+        ...currentProject,
+        useCNRegionsOnly: true,
+      };
+      fetchData = [{}, {}];
+      await renderComponent({ current: useCNRegionsOnlyProject });
+    });
+
+    it('atlas tab shows the correct link', () => {
+      expect(getByTestId(productToTestId['atlas'])).toBeVisible();
+      expect(
+        getByTestId(productToTestId['atlas']).getAttribute('href'),
+      ).toEqual('https://cloud.mongodb.com/v2/fakeProjectId1#');
+    });
+
+    it('realm tab shows no link', () => {
+      expect(getByTestId(productToTestId['realm'])).toBeVisible();
+      expect(
+        getByTestId(productToTestId['realm']).getAttribute('href'),
+      ).toBeNull();
+    });
+
+    it('hovering over realm tab shows a tooltip', async () => {
+      fireEvent.mouseEnter(getByTestId(productToTestId['realm']));
+      await waitFor(() => getByTestId('project-nav-tooltip-realm'), {
+        timeout: 500,
+      });
+
+      expect(getByTestId('project-nav-tooltip-realm')).toBeInTheDocument();
+
+      fireEvent.mouseLeave(getByTestId(productToTestId['realm']));
+      await waitForElementToBeRemoved(
+        getByTestId('project-nav-tooltip-realm'),
+        { timeout: 500 },
+      );
+
+      expect(
+        queryByTestId('project-nav-tooltip-realm'),
+      ).not.toBeInTheDocument();
+    });
+
+    it('charts tab shows no link', () => {
+      expect(getByTestId(productToTestId['charts'])).toBeVisible();
+      expect(
+        getByTestId(productToTestId['charts']).getAttribute('href'),
+      ).toBeNull();
+    });
+
+    it('hovering over charts tab shows a tooltip', async () => {
+      fireEvent.mouseEnter(getByTestId(productToTestId['charts']));
+      await waitFor(() => getByTestId('project-nav-tooltip-charts'), {
+        timeout: 500,
+      });
+
+      expect(getByTestId('project-nav-tooltip-charts')).toBeInTheDocument();
+
+      fireEvent.mouseLeave(getByTestId(productToTestId['charts']));
+      await waitForElementToBeRemoved(
+        getByTestId('project-nav-tooltip-charts'),
+        { timeout: 500 },
+      );
+
+      expect(
+        queryByTestId('project-nav-tooltip-charts'),
+      ).not.toBeInTheDocument();
     });
   });
 

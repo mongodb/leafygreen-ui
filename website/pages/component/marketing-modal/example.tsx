@@ -14,7 +14,7 @@ const knobsConfig: KnobsConfigInterface<{
 }> = {
   title: {
     type: 'text',
-    default: 'Introducing New Feature',
+    default: 'New Feature',
     label: 'Title',
   },
   graphicStyle: {
@@ -34,7 +34,7 @@ const knobsConfig: KnobsConfigInterface<{
     label: 'Link Text',
   },
   children: {
-    type: 'text',
+    type: 'area',
     default: children,
     label: 'Children',
   },

@@ -2,12 +2,13 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { css } from 'emotion';
 import Button from '@leafygreen-ui/button';
-import DownloadIcon from '@leafygreen-ui/icon/dist/Download';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { breakpoints } from '@leafygreen-ui/tokens';
-import { H2 } from '@leafygreen-ui/typography';
+import { H1 } from '@leafygreen-ui/typography';
+import ReactIcon from 'components/svgs/ReactIcon';
+import FigmaIcon from 'components/svgs/FigmaIcon';
 
 const componentsStyle = css`
   height: 16px;
@@ -29,8 +30,29 @@ const flexContainer = css`
   align-items: center;
 `;
 
-const caps = css`
+const h1Style = css`
   text-transform: capitalize;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: 0px;
+  font-weight: bolder;
+`;
+
+const componentGuidelineStyles = css`
+  color: ${uiColors.gray.dark3};
+  & > p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+`;
+
+const codeDocsWrapper = css`
+  display: flex;
+  align-items: center;
+`;
+
+const reactIconStyle = css`
+  margin-right: 4px;
 `;
 
 export default function ComponentLayout({
@@ -58,15 +80,15 @@ export default function ComponentLayout({
     viewport !== null ? viewport.width < breakpoints.Tablet : false;
 
   return (
-    <>
+    <div role="main">
       <div className={marginBottom}>
         <small className={componentsStyle}>Components</small>
         <div className={flexContainer}>
-          <H2 className={caps}>{componentName.split('-').join(' ')}</H2>
+          <H1 className={h1Style}>{componentName.split('-').join(' ')}</H1>
 
           {!isMobile && (
-            <Button glyph={<DownloadIcon />} variant="primary">
-              Download Sketch Library
+            <Button glyph={<FigmaIcon />} variant="primary">
+              View in Figma
             </Button>
           )}
         </div>
@@ -82,10 +104,15 @@ export default function ComponentLayout({
           name="Design Guidelines"
           onClick={() => router.push(`/component/${componentName}/guidelines`)}
         >
-          {children}
+          <div className={componentGuidelineStyles}>{children}</div>
         </Tab>
         <Tab
-          name="Code Docs"
+          name={
+            <div className={codeDocsWrapper}>
+              <ReactIcon className={reactIconStyle} />
+              Code Docs
+            </div>
+          }
           onClick={() =>
             router.push(`/component/${componentName}/documentation`)
           }
@@ -93,6 +120,6 @@ export default function ComponentLayout({
           {children}
         </Tab>
       </Tabs>
-    </>
+    </div>
   );
 }

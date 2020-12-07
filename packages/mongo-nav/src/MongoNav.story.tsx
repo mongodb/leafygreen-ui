@@ -75,6 +75,12 @@ storiesOf('MongoNav', module).add('Default', () => {
                 'Demo Organization',
               ),
             },
+            currentProject: {
+              useCNRegionsOnly: boolean(
+                'dataFixtures.currentProject.useCNRegionsOnly',
+                false,
+              ),
+            },
           }}
         />
       </div>

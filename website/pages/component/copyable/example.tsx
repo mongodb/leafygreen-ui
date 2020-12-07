@@ -20,7 +20,7 @@ const knobsConfig: KnobsConfigInterface<{
     label: 'Description',
   },
   children: {
-    type: 'text',
+    type: 'area',
     default: 'npm install @leafygreen-ui/copyable',
     label: 'Children',
   },
@@ -40,7 +40,11 @@ const knobsConfig: KnobsConfigInterface<{
 export default function CopyableLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {props => <Copyable {...props} />}
+      {props => (
+        <div>
+          <Copyable {...props} />
+        </div>
+      )}
     </LiveExample>
   );
 }

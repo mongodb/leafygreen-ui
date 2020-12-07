@@ -14,6 +14,7 @@ const NavElement = {
   OrgNavViewAllOrganizations: 'orgNavViewAllOrganizations',
   OrgNavDropdownOrgAccessManager: 'orgNavDropdownOrgAccessManager',
   OrgNavDropdownProjectAccessManager: 'orgNavDropdownProjectAccessManager',
+  OrgNavDropdownMoreMenu: 'orgNavDropdownMoreMenu',
   ProjectNavProjectSelectTrigger: 'projectNavProjectSelectTrigger',
   ProjectNavProjectSelectSearch: 'projectNavProjectSelectSearch',
   ProjectNavViewAllProjects: 'projectNavViewAllProjects',
@@ -203,6 +204,7 @@ export interface CurrentProjectInterface extends ProjectInterface {
   alertsOpen: number;
   chartsActivated: boolean;
   status?: ProjectStatus;
+  useCNRegionsOnly: boolean;
 }
 
 export interface OrganizationInterface {

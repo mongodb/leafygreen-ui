@@ -19,7 +19,7 @@ const knobsConfig: KnobsConfigInterface<{
     label: 'Dismissable',
   },
   children: {
-    type: 'text',
+    type: 'area',
     default:
       'To avoid disrupting majority writes, new members are now added to replica sets as priority=0, votes=0 until they reach secondary state, after which Cloud Manager automatically updates the configuration to match the priority and votes value specified in the deployment.',
     label: 'Children',

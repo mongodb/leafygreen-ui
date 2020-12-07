@@ -1,27 +1,52 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
+import { OneOf } from '@leafygreen-ui/lib';
 import { JestDOM } from '@leafygreen-ui/testing-lib';
 import MongoNav from '../MongoNav';
 import { NavElement } from '../types';
 
-const defaultElements = {
-  [NavElement.OrgNavLeaf]: 'org-nav-leaf',
-  [NavElement.OrgNavOrgSettings]: 'org-trigger-settings',
-  [NavElement.OrgNavAccessManagerDropdown]: 'org-nav-access-manager-dropdown',
-  [NavElement.OrgNavSupport]: 'org-nav-support',
-  [NavElement.OrgNavBilling]: 'org-nav-billing',
-  [NavElement.OrgNavAllClusters]: 'org-nav-all-clusters-link',
-  [NavElement.ProjectNavProjectDropdown]: 'project-nav-project-menu',
-  [NavElement.ProjectNavCloud]: 'project-nav-atlas',
-  [NavElement.ProjectNavRealm]: 'project-nav-realm',
-  [NavElement.ProjectNavCharts]: 'project-nav-charts',
-  [NavElement.ProjectNavInvite]: 'project-nav-invite',
-  [NavElement.ProjectNavActivityFeed]: 'project-nav-activity-feed',
-  [NavElement.ProjectNavAlerts]: 'project-nav-alerts',
-  [NavElement.UserMenuTrigger]: 'user-menu-trigger',
-};
+const defaultElements: Array<
+  { navElement: NavElement; shouldNavigate?: boolean } & OneOf<
+    { testId: string },
+    { text: string }
+  >
+> = [
+  { navElement: NavElement.OrgNavLeaf, testId: 'org-nav-leaf' },
+  { navElement: NavElement.OrgNavOrgSettings, testId: 'org-trigger-settings' },
+  {
+    navElement: NavElement.OrgNavAccessManagerDropdown,
+    testId: 'org-nav-access-manager-dropdown',
+    shouldNavigate: false,
+  },
+  { navElement: NavElement.OrgNavSupport, testId: 'org-nav-support' },
+  { navElement: NavElement.OrgNavBilling, testId: 'org-nav-billing' },
+  { navElement: NavElement.OrgNavAllClusters, text: 'All Clusters' },
+  {
+    navElement: NavElement.ProjectNavProjectDropdown,
+    testId: 'project-nav-project-menu',
+    shouldNavigate: false,
+  },
+  { navElement: NavElement.ProjectNavCloud, testId: 'project-nav-atlas' },
+  { navElement: NavElement.ProjectNavRealm, testId: 'project-nav-realm' },
+  { navElement: NavElement.ProjectNavCharts, testId: 'project-nav-charts' },
+  { navElement: NavElement.ProjectNavInvite, testId: 'project-nav-invite' },
+  {
+    navElement: NavElement.ProjectNavActivityFeed,
+    testId: 'project-nav-activity-feed',
+  },
+  { navElement: NavElement.ProjectNavAlerts, testId: 'project-nav-alerts' },
+  {
+    navElement: NavElement.UserMenuTrigger,
+    testId: 'user-menu-trigger',
+    shouldNavigate: false,
+  },
+];
 
 const onElementClick = jest.fn();
+
+beforeEach(() => {
+  onElementClick.mockReset();
+});
 
 function renderMongoNav() {
   const utils = render(
@@ -38,24 +63,31 @@ function renderMongoNav() {
 
 function testForCallback({
   navElement,
+  text,
   testId,
   trigger,
   shouldNavigate = true,
 }: {
   navElement: string;
-  testId: string;
   trigger?: string;
   shouldNavigate?: boolean;
-}) {
-  test(`the onElementClick value is successfully passed to the ${testId}`, async () => {
-    const { getByTestId, findByTestId } = renderMongoNav();
+} & OneOf<{ text: string }, { testId: string }>) {
+  test(`the onElementClick value is successfully passed to the "${
+    text ?? testId
+  }" element`, async () => {
+    const { getByTestId, findByTestId, findByText } = renderMongoNav();
 
     if (trigger) {
       fireEvent.click(getByTestId(trigger));
     }
 
     await JestDOM.silenceNavigationErrors(async waitForNavigation => {
-      fireEvent.click(await findByTestId(testId));
+      const link = text
+        ? (await findByText(text)).closest('a, button')
+        : await findByTestId(testId!);
+
+      await waitFor(() => expect(link).toBeVisible());
+      fireEvent.click(link!);
 
       if (shouldNavigate) {
         await waitForNavigation();
@@ -69,14 +101,8 @@ function testForCallback({
 
 describe('packages/mongo-nav/on-element-click-provider', () => {
   describe('by default', () => {
-    Object.keys(defaultElements).map(el => {
-      testForCallback({
-        navElement: el,
-        testId: defaultElements[el as keyof typeof defaultElements],
-        shouldNavigate: !['-dropdown', '-menu', 'menu-trigger'].some(suffix =>
-          defaultElements[el as keyof typeof defaultElements].endsWith(suffix),
-        ),
-      });
+    defaultElements.forEach(element => {
+      testForCallback(element);
     });
   });
 
