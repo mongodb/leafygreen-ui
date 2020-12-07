@@ -1,5 +1,11 @@
 # @leafygreen-ui/mongo-nav
 
+## 5.0.0
+
+### Major Changes
+
+- 9a92418e: Allows Realm and Charts icons to be disabled in MongoNav when an Atlas project is designated as a China regions-only project.
+
 ## 4.2.0
 
 ### Minor Changes
