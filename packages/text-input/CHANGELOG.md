@@ -1,5 +1,11 @@
 # @leafygreen-ui/text-input
 
+## 5.0.1
+
+### Patch Changes
+
+- 988c4e3d: Allows error and valid states to display when component is disabled
+
 ## 5.0.0
 
 ### Major Changes
