@@ -25,7 +25,12 @@ const h1 = css`
 
 type H1Props = HTMLElementProps<'h1'>;
 
-const H1: ExtendableBox<H1Props> = ({ className, ...rest }: { className?: string }) => {
+const H1: ExtendableBox<H1Props> = ({
+  className,
+  ...rest
+}: {
+  className?: string;
+}) => {
   return <Box as="h1" className={cx(sharedStyles, h1, className)} {...rest} />;
 };
 
@@ -39,7 +44,12 @@ const h2 = css`
 
 type H2Props = HTMLElementProps<'h2'>;
 
-const H2: ExtendableBox<H2Props> = ({ className, ...rest }: { className?: string }) => {
+const H2: ExtendableBox<H2Props> = ({
+  className,
+  ...rest
+}: {
+  className?: string;
+}) => {
   return <Box as="h2" className={cx(sharedStyles, h2, className)} {...rest} />;
 };
 
@@ -54,7 +64,12 @@ const h3 = css`
 
 type H3Props = HTMLElementProps<'h3'>;
 
-const H3: ExtendableBox<H3Props> = ({ className, ...rest }: { className?: string }) => {
+const H3: ExtendableBox<H3Props> = ({
+  className,
+  ...rest
+}: {
+  className?: string;
+}) => {
   return <Box as="h3" className={cx(sharedStyles, h3, className)} {...rest} />;
 };
 
@@ -68,8 +83,15 @@ const subtitle = css`
 
 type SubtitleProps = HTMLElementProps<'h6'>;
 
-const Subtitle: ExtendableBox<SubtitleProps> = ({ className, ...rest }: { className?: string }) => {
-  return <Box as="h6" className={cx(sharedStyles, subtitle, className)} {...rest} />;
+const Subtitle: ExtendableBox<SubtitleProps> = ({
+  className,
+  ...rest
+}: {
+  className?: string;
+}) => {
+  return (
+    <Box as="h6" className={cx(sharedStyles, subtitle, className)} {...rest} />
+  );
 };
 
 Subtitle.displayName = 'Subtitle';
