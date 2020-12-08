@@ -13,8 +13,10 @@ const resetButtonStyles = css`
   display: inline;
   border: none;
   background-color: transparent;
-  margin: unset;
-  padding: unset;
+  margin: 0px;
+  padding: 0px;
+  height: 60px;
+  cursor: pointer;
 
   &:focus {
     outline: none;
@@ -34,8 +36,7 @@ const ColorBlock = styled<'div', ColorBlockProps>('div')`
   height: 60px;
   width: 60px;
   border-radius: 8px;
-  margin: 10px;
-  margin-bottom: 20px;
+
   box-shadow: 0 8px 6px -8px ${props => transparentize(0.7, darken(0.2, props.color))},
     0 2px 3px ${props => transparentize(0.8, darken(0.5, props.color))};
   &:before {
@@ -88,8 +89,8 @@ function WrappedColorBlock({ color, name }: ColorBlockProps) {
     return () => clipboard.destroy();
   }, [blockRef, color, copied]);
 
-  return (
-    <InteractionRing borderRadius="0px">
+  const trigger = (
+    <InteractionRing borderRadius="8px">
       <button
         onClick={() => setCopied(true)}
         onKeyDown={e => {
@@ -100,17 +101,29 @@ function WrappedColorBlock({ color, name }: ColorBlockProps) {
         ref={setBlockRef}
         className={resetButtonStyles}
       >
-        <Tooltip
-          open={copied}
-          align="top"
-          justify="middle"
-          trigger={<ColorBlock key={color} color={color} name={name} />}
-          triggerEvent="click"
-        >
-          Copied!
-        </Tooltip>
+        <ColorBlock key={color} color={color} name={name} />
       </button>
     </InteractionRing>
+  );
+
+  return (
+    <div
+      className={css`
+        margin: 10px;
+        margin-bottom: 20px;
+        display: inline-block;
+      `}
+    >
+      <Tooltip
+        open={copied}
+        align="top"
+        justify="middle"
+        trigger={trigger}
+        triggerEvent="click"
+      >
+        Copied!
+      </Tooltip>
+    </div>
   );
 }
 

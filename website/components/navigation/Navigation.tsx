@@ -138,7 +138,7 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
     );
   };
 
-  return <>{[GroupType.Guideline, GroupType.Component].map(renderGroup)}</>;
+  return <>{[GroupType.Component].map(renderGroup)}</>;
 }
 
 function Navigation() {
@@ -157,7 +157,11 @@ function Navigation() {
   return (
     <nav className={navContainer}>
       <MDBDesignLogo className={logoStyles} onClick={() => push('/')} />
-      <SideNav>
+      <SideNav
+        className={css`
+          margin-top: ${spacing[4]}px;
+        `}
+      >
         <Content />
       </SideNav>
     </nav>
