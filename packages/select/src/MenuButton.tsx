@@ -160,6 +160,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       onClick={onClick}
       onKeyDown={onKeyDown}
       variant={mode === Mode.Dark ? Variant.Dark : Variant.Default}
+      darkMode={mode === Mode.Dark}
       forceState={forceState}
       className={cx(
         menuButtonStyle,
