@@ -25,13 +25,9 @@ const h1 = css`
 
 type H1Props = HTMLElementProps<'h1'>;
 
-function H1({ children, className, ...rest }: H1Props) {
-  return (
-    <h1 {...rest} className={cx(sharedStyles, h1, className)}>
-      {children}
-    </h1>
-  );
-}
+const H1: ExtendableBox<H1Props> = ({ className, ...rest }: { className?: string }) => {
+  return <Box as="h1" className={cx(sharedStyles, h1, className)} {...rest} />;
+};
 
 H1.displayName = 'H1';
 
@@ -43,13 +39,9 @@ const h2 = css`
 
 type H2Props = HTMLElementProps<'h2'>;
 
-function H2({ children, className, ...rest }: H2Props) {
-  return (
-    <h2 {...rest} className={cx(sharedStyles, h2, className)}>
-      {children}
-    </h2>
-  );
-}
+const H2: ExtendableBox<H2Props> = ({ className, ...rest }: { className?: string }) => {
+  return <Box as="h2" className={cx(sharedStyles, h2, className)} {...rest} />;
+};
 
 H2.displayName = 'H2';
 
@@ -62,13 +54,9 @@ const h3 = css`
 
 type H3Props = HTMLElementProps<'h3'>;
 
-function H3({ children, className, ...rest }: H3Props) {
-  return (
-    <h3 {...rest} className={cx(sharedStyles, h3, className)}>
-      {children}
-    </h3>
-  );
-}
+const H3: ExtendableBox<H3Props> = ({ className, ...rest }: { className?: string }) => {
+  return <Box as="h3" className={cx(sharedStyles, h3, className)} {...rest} />;
+};
 
 H3.displayName = 'H3';
 
@@ -80,13 +68,9 @@ const subtitle = css`
 
 type SubtitleProps = HTMLElementProps<'h6'>;
 
-function Subtitle({ children, className, ...rest }: SubtitleProps) {
-  return (
-    <h6 {...rest} className={cx(sharedStyles, subtitle, className)}>
-      {children}
-    </h6>
-  );
-}
+const Subtitle: ExtendableBox<SubtitleProps> = ({ className, ...rest }: { className?: string }) => {
+  return <Box as="h6" className={cx(sharedStyles, subtitle, className)} {...rest} />;
+};
 
 Subtitle.displayName = 'Subtitle';
 
