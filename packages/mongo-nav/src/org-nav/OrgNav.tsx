@@ -137,7 +137,7 @@ function MoreDropdownMenu({
     >
       More
       <DropdownMenuIcon open={isOpen} />
-      <Menu open={isOpen} setOpen={setIsOpen}>
+      <Menu open={isOpen} setOpen={setIsOpen} usePortal={false}>
         {children}
       </Menu>
     </OrgNavLink>
