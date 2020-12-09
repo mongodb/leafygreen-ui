@@ -66,22 +66,13 @@ export function InternalOption({
   const ref = useRef<HTMLLIElement>(null);
 
   const scrollIntoView = useCallback(
-    ({ smooth }: { smooth?: boolean } = {}) => {
+    () => {
       const element = ref.current!;
-
-      /* istanbul ignore else */
-      if (element.scrollTo === undefined) {
-        const parent = element.offsetParent!;
-        // IE11 has a `scrollIntoView` method, but it does not support
-        // the options parameter, so `scrollTo` is used for feature detection
-        parent.scrollTop =
-          element.offsetTop + (element.clientHeight - parent.clientHeight) / 2;
-      } else {
-        element.scrollIntoView({
-          behavior: smooth ? 'smooth' : 'auto',
-          block: 'center',
-        });
-      }
+      const parent = element.offsetParent!;
+      // Can't use Element.scrollIntoView because it might
+      // cause scrolling outside the immediate parent.
+      parent.scrollTop =
+        element.offsetTop + (element.clientHeight - parent.clientHeight) / 2;
     },
     [ref],
   );
@@ -101,7 +92,7 @@ export function InternalOption({
 
   useEffect(() => {
     if (shouldFocus) {
-      scrollIntoView({ smooth: true });
+      scrollIntoView();
       ref.current!.focus();
     }
   }, [scrollIntoView, shouldFocus]);
