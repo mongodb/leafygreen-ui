@@ -25,7 +25,7 @@ const h1 = css`
 
 type H1Props = HTMLElementProps<'h1'>;
 
-const H1: ExtendableBox<H1Props> = ({
+const H1: ExtendableBox<H1Props, 'h1'> = ({
   className,
   ...rest
 }: {
@@ -44,7 +44,7 @@ const h2 = css`
 
 type H2Props = HTMLElementProps<'h2'>;
 
-const H2: ExtendableBox<H2Props> = ({
+const H2: ExtendableBox<H2Props, 'h2'> = ({
   className,
   ...rest
 }: {
@@ -64,7 +64,7 @@ const h3 = css`
 
 type H3Props = HTMLElementProps<'h3'>;
 
-const H3: ExtendableBox<H3Props> = ({
+const H3: ExtendableBox<H3Props, 'h3'> = ({
   className,
   ...rest
 }: {
@@ -83,7 +83,7 @@ const subtitle = css`
 
 type SubtitleProps = HTMLElementProps<'h6'>;
 
-const Subtitle: ExtendableBox<SubtitleProps> = ({
+const Subtitle: ExtendableBox<SubtitleProps, 'h6'> = ({
   className,
   ...rest
 }: {
