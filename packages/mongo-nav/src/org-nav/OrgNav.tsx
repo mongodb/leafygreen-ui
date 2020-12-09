@@ -172,7 +172,7 @@ function NavLinks({
     href: urls.allClusters,
     navId: ActiveNavElement.OrgNavAllClusters,
     text: 'All Clusters',
-    testid: "org-nav-all-clusters-link",
+    testid: 'org-nav-all-clusters-link',
   });
 
   if (admin) {
@@ -180,7 +180,7 @@ function NavLinks({
       href: urls.admin,
       navId: ActiveNavElement.OrgNavAdmin,
       text: 'Admin',
-      testid: "org-nav-admin-link",
+      testid: 'org-nav-admin-link',
     });
   }
 
