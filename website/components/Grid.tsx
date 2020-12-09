@@ -52,11 +52,6 @@ type GridContainerProps = JSX.IntrinsicElements['div'] & {
 };
 
 const GridContainer = styled<'div', GridContainerProps>('div')`
-  ${mq({
-    width: breakpointGaps.map(gap => `calc(100% + ${gap})`),
-    margin: breakpointGaps.map(gap => `calc(-1 * ${gap} / 2)`),
-  })}
-
   display: flex;
   ${['flex-direction']}: ${props =>
     props.direction ? props.direction : Direction.Row};
@@ -70,13 +65,10 @@ export { GridContainer };
 
 const baseGridItemStyles = css`
   box-sizing: border-box;
-  ${mq({
-    padding: breakpointGaps.map(gap => `calc(${gap} / 2)`),
-  })}
 `;
 
 const visibleGridItemStyles = css`
-  flex-shrink: 0;
+  flex - shrink: 0;
 `;
 
 interface BreakpointArgs {
@@ -147,7 +139,7 @@ function getItemStyle(num: number | undefined) {
   }
 
   if (num) {
-    const width = `${(100 / 12) * num}%`;
+    const width = `${(100 / 12) * num}% `;
 
     return {
       width,
@@ -204,7 +196,7 @@ export function GridItem({
       className={css`
         ${baseGridItemStyles}
         ${visibleGridItemStyles}
-        margin-left: ${Math.round(100 / 12) * colStart}%;
+margin - left: ${Math.round(100 / 12) * colStart}%;
         ${mq({
           width: [
             styles.sm.width,
