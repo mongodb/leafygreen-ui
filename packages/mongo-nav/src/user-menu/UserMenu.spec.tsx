@@ -9,16 +9,17 @@ import { JestDOM } from '@leafygreen-ui/testing-lib';
 import { urlFixtures, hostDefaults } from '../data';
 import UserMenu from '.';
 
-const account = {
+const defaultAccount = {
   firstName: 'Leafy',
   lastName: 'Green',
   email: 'leafy@mongodb.com',
+  hasLegacy2fa: true,
   admin: false,
 };
 const onLogout = jest.fn();
 const onProductChange = jest.fn();
 
-function renderUserMenu(props = {}) {
+function renderUserMenu(props = {}, account = defaultAccount) {
   const utils = render(
     <UserMenu
       account={account}
@@ -40,7 +41,7 @@ describe('packages/mongo-nav/user-menu', () => {
     expect(trigger).toBeInTheDocument();
   });
 
-  test('when "activePlatform" is set to "cloud, renders Cloud MenuItems', () => {
+  test('when "activePlatform" is set to "cloud", renders Cloud MenuItems', () => {
     const { getByTestId, getByText } = renderUserMenu({
       activePlatform: 'cloud',
     });
@@ -50,7 +51,7 @@ describe('packages/mongo-nav/user-menu', () => {
     const userPreferences = getByText('User Preferences');
     const invitations = getByText('Invitations');
     const organizations = getByText('Organizations');
-    const mfa = getByText('Two-Factor Authentication');
+    const mfa = getByText('Legacy 2FA');
 
     expect(userPreferences).toBeInTheDocument();
     expect(invitations).toBeInTheDocument();
@@ -78,6 +79,22 @@ describe('packages/mongo-nav/user-menu', () => {
     expect(universityItem).toBeVisible();
   });
 
+  test('when "hasLegacy2fa" is set to false, does not render mfa menu item', () => {
+    const { queryByText, getByTestId } = renderUserMenu({
+      activePlatform: 'cloud',
+      account: {
+        firstName: 'Leafy',
+        lastName: 'Green',
+        email: 'leafy@mongodb.com',
+        hasLegacy2fa: false,
+        admin: false,
+      },
+    });
+
+    const trigger = getByTestId('user-menu-trigger');
+    fireEvent.click(trigger);
+    expect(queryByText('Legacy 2FA')).not.toBeInTheDocument();
+  });
   test('atlas MenuItem links to cloud.mongodb.com', () => {
     const { getByTestId } = renderUserMenu({
       activePlatform: 'cloud',
@@ -223,7 +240,7 @@ describe('packages/mongo-nav/user-menu', () => {
 
       const trigger = getByTestId('user-menu-trigger');
       fireEvent.click(trigger);
-      expect(queryByText('Two-Factor Authentication')).not.toBeInTheDocument();
+      expect(queryByText('Legacy 2FA')).not.toBeInTheDocument();
     });
   });
 
