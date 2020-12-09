@@ -429,7 +429,7 @@ const Button: ExtendableBox<
     return (
       <InteractionRing
         className={cx(buttonSizes[size], className)}
-        borderRadius={borderRadius}
+        borderRadius={borderRadius ?? "3px"}
         darkMode={darkMode}
         disabled={disabled}
         forceState={forceState}
