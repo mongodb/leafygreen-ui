@@ -6,7 +6,7 @@ import { useViewportSize } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
 import { breakpoints } from '@leafygreen-ui/tokens';
-import { H1 } from '@leafygreen-ui/typography';
+import { H2 } from '@leafygreen-ui/typography';
 import ReactIcon from 'components/svgs/ReactIcon';
 import FigmaIcon from 'components/svgs/FigmaIcon';
 
@@ -30,12 +30,8 @@ const flexContainer = css`
   align-items: center;
 `;
 
-const h1Style = css`
+const caps = css`
   text-transform: capitalize;
-  font-size: 32px;
-  line-height: 40px;
-  letter-spacing: 0px;
-  font-weight: bolder;
 `;
 
 const componentGuidelineStyles = css`
@@ -84,7 +80,7 @@ export default function ComponentLayout({
       <div className={marginBottom}>
         <small className={componentsStyle}>Components</small>
         <div className={flexContainer}>
-          <H1 className={h1Style}>{componentName.split('-').join(' ')}</H1>
+          <H2 as="h1" className={caps}>{componentName.split('-').join(' ')}</H2>
 
           {!isMobile && (
             <Button glyph={<FigmaIcon />} variant="primary">

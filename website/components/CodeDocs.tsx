@@ -85,7 +85,7 @@ function VersionCard({
   return (
     <Card className={cx(topAlignment, versionCard)}>
       {/* TODO: Provide fallback if no version */}
-      <Subtitle className={subtitlePadding}>Version {version}</Subtitle>
+      <Subtitle as="h2" className={subtitlePadding}>Version {version}</Subtitle>
       <Button
         size={isMobile ? 'large' : 'normal'}
         glyph={<ActivityFeedIcon />}
@@ -113,7 +113,7 @@ function MobileInstall({ component, version, changelog }: InstallProps) {
     <GridContainer>
       <GridItem sm={12}>
         <div className={mobileInstallMargin}>
-          <Subtitle>Installation</Subtitle>
+          <Subtitle as="h2">Installation</Subtitle>
           <Body weight="medium" className={mt3}>
             Yarn
           </Body>
@@ -140,6 +140,7 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
         <GridItem md={7} lg={7}>
           <div className={topAlignment}>
             <Subtitle
+              as="h2"
               className={css`
                 margin-bottom: ${spacing[3]}px;
               `}
@@ -190,12 +191,12 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
           changelog={changelog}
         />
       ) : (
-        <DesktopInstall
-          component={component}
-          version={version}
-          changelog={changelog}
-        />
-      )}
+          <DesktopInstall
+            component={component}
+            version={version}
+            changelog={changelog}
+          />
+        )}
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
           <Tabs className={tabsPadding}>

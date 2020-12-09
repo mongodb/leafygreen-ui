@@ -191,7 +191,7 @@ function PropTable({
       {headers.map((header: string, index: number) => {
         return (
           <div key={index}>
-            <Subtitle className={subtitleBottomMargin}>
+            <Subtitle className={subtitleBottomMargin} as="h3">
               {header.replace(/ /g, '')} Props
             </Subtitle>
 
