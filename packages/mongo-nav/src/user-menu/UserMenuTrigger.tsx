@@ -125,8 +125,9 @@ const UserMenuTrigger = React.forwardRef<HTMLDivElement, UserMenuTriggerProps>(
               [openBaseButtonStyle]: open,
               [activeWidth]: open,
             })}
-            onClick={onElementClick(NavElement.UserMenuTrigger, () => {
+            onClick={onElementClick(NavElement.UserMenuTrigger, event => {
               setOpen(curr => !curr);
+              event.stopPropagation();
             })}
           >
             <span

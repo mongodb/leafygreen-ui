@@ -359,25 +359,26 @@ function Menu({
       });
     }
 
-    const { children: triggerChildren } = trigger.props;
+    return (
+      <div
+        className={css`
+          position: relative;
+        `}
+      >
+        {React.cloneElement(trigger, {
+          onClick: (e: React.MouseEvent) => {
+            setOpen((curr: boolean) => !curr);
 
-    return React.cloneElement(trigger, {
-      onClick: (e: React.MouseEvent) => {
-        setOpen((curr: boolean) => !curr);
+            if (trigger.props.onClick) {
+              trigger.props.onClick(e);
+            }
 
-        if (trigger.props.onClick) {
-          trigger.props.onClick(e);
-        }
-      },
-      children: triggerChildren
-        ? [
-            ...(triggerChildren instanceof Array
-              ? triggerChildren
-              : [triggerChildren]),
-            popoverContent,
-          ]
-        : popoverContent,
-    });
+            e.stopPropagation();
+          },
+        })}
+        {popoverContent}
+      </div>
+    );
   }
 
   return popoverContent;

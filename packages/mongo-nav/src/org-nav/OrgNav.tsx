@@ -435,7 +435,10 @@ function OrgNav({
               data-testid="org-nav-access-manager-dropdown"
               onClick={onElementClick(
                 NavElement.OrgNavAccessManagerDropdown,
-                () => setAccessManagerOpen(curr => !curr),
+                event => {
+                  setAccessManagerOpen(curr => !curr);
+                  event.stopPropagation();
+                },
               )}
               isButton={true}
             >

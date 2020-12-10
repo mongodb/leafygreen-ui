@@ -225,6 +225,11 @@ function OrgSelect({
     }
   };
 
+  const onClick = (event: React.MouseEvent) => {
+    toggleOpen();
+    event.stopPropagation();
+  };
+
   const hasOnChangeProp = !!onChangeProp;
 
   useEffect(() => {
@@ -356,10 +361,7 @@ function OrgSelect({
             aria-disabled={loading}
             data-testid="org-trigger"
             disabled={loading}
-            onClick={onElementClick(
-              NavElement.OrgNavOrgSelectTrigger,
-              toggleOpen,
-            )}
+            onClick={onElementClick(NavElement.OrgNavOrgSelectTrigger, onClick)}
             className={cx(baseButtonStyle, orgButtonStyle, {
               [activeButtonStyle]: open,
               [textLoadingStyle]: loading,

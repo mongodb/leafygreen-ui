@@ -15,6 +15,7 @@ function Uncontrolled() {
         justify={select('Justify', Object.values(Justify), Justify.Start)}
         trigger={<button>trigger</button>}
         spacing={number('spacing', 15)}
+        usePortal={boolean('Use Portal', true)}
       >
         <MenuItem
           active

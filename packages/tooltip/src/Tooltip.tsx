@@ -278,7 +278,7 @@ function Tooltip({
 
       if (triggerProps && triggerProps.onClick) {
         return {
-          onClick: (e: MouseEvent) => {
+          onClick: (e: React.MouseEvent) => {
             // ensure that we don't close the tooltip when content inside tooltip is clicked
             if (e.target !== tooltipNode) {
               triggerProps.onClick();
@@ -289,7 +289,7 @@ function Tooltip({
       }
 
       return {
-        onClick: (e: MouseEvent) => {
+        onClick: (e: React.MouseEvent) => {
           // ensure that we don't close the tooltip when content inside tooltip is clicked
           if (e.target !== tooltipNode) {
             setOpen((curr: boolean) => !curr);
@@ -380,17 +380,14 @@ function Tooltip({
       });
     }
 
-    return React.cloneElement(trigger, {
-      ...createTriggerProps(triggerEvent, trigger.props),
-      'aria-describedby': tooltipId,
-      children: (
-        <>
-          {trigger.props.children}
-          {tooltip}
-        </>
-      ),
-      className: cx(positionRelative, trigger.props.className),
-    });
+    return (
+      <div className={positionRelative} {...createTriggerProps(triggerEvent)}>
+        {React.cloneElement(trigger, {
+          'aria-describedby': tooltipId,
+        })}
+        {tooltip}
+      </div>
+    );
   }
 
   return tooltip;

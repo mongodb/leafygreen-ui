@@ -8,6 +8,7 @@ const knobsConfig: KnobsConfigInterface<{
   active: boolean;
   disabled: boolean;
   children: string;
+  usePortal: boolean;
 }> = {
   active: {
     type: 'boolean',
@@ -23,6 +24,11 @@ const knobsConfig: KnobsConfigInterface<{
     type: 'text',
     default: 'Unlink Data source',
     label: 'Children',
+  },
+  usePortal: {
+    type: 'boolean',
+    default: true,
+    label: 'Use Portal',
   },
 };
 

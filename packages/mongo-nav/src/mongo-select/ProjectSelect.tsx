@@ -136,6 +136,11 @@ function ProjectSelect({
     }
   };
 
+  const onClick = (event: React.MouseEvent) => {
+    toggleOpen();
+    event.stopPropagation();
+  };
+
   const hasOnChangeProp = !!onChangeProp;
 
   useEffect(() => {
@@ -250,7 +255,7 @@ function ProjectSelect({
           ref={setButtonElement}
           onClick={onElementClick(
             NavElement.ProjectNavProjectSelectTrigger,
-            toggleOpen,
+            onClick,
           )}
           data-testid="project-select-trigger"
           className={cx(
