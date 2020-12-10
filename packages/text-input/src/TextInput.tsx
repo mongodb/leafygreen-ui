@@ -5,6 +5,7 @@ import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { uiColors } from '@leafygreen-ui/palette';
 import {
   createDataProp,
@@ -138,21 +139,12 @@ const inputStyle = css`
   font-weight: normal;
   font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
   border: 1px solid;
+  transition: border-color 150ms ease-in-out;
   z-index: 1;
   outline: none;
 
   &::placeholder {
     color: ${uiColors.gray.base};
-  }
-
-  &:focus {
-    z-index: 2;
-    border-color: ${uiColors.blue.light1};
-    transition: border-color 150ms ease-in-out;
-
-    & ~ ${iconSelectorProp.selector} {
-      z-index: 2;
-    }
   }
 
   &:disabled {
@@ -305,6 +297,7 @@ const TextInput: React.ComponentType<React.PropsWithRef<
     forwardRef: React.Ref<HTMLInputElement>,
   ) => {
     const mode = darkMode ? Mode.Dark : Mode.Light;
+    const { usingKeyboard: showFocus } = useUsingKeyboardContext();
     const isControlled = typeof controlledValue === 'string';
     const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
@@ -356,17 +349,20 @@ const TextInput: React.ComponentType<React.PropsWithRef<
                   color: ${colorSets[mode].inputColor};
                   background-color: ${colorSets[mode].inputBackgroundColor};
 
-                  &:focus {
-                    border: 1px solid ${colorSets[mode].inputBackgroundColor};
-                  }
-
                   &:disabled {
                     color: ${colorSets[mode].disabledColor};
                     background-color: ${colorSets[mode]
                       .disabledBackgroundColor};
                   }
                 `,
-                { [getStatefulInputStyles(state, optional, mode)]: !disabled },
+                {
+                  [getStatefulInputStyles(state, optional, mode)]: !disabled,
+                  [css`
+                    &:focus {
+                      border: 1px solid ${colorSets[mode].inputBackgroundColor};
+                    }
+                  `]: showFocus,
+                },
               )}
               value={value}
               required={!optional}
