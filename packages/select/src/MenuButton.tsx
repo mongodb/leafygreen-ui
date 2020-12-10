@@ -194,8 +194,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     >
       <div className={menuButtonContentsStyle}>
         <span className={menuButtonTextStyle}>{text}</span>
-
-        <CaretDownIcon className={caretIconStyle} />
+        <CaretDownIcon aria-hidden className={caretIconStyle} />
       </div>
       {children}
     </Button>
