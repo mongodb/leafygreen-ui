@@ -28,6 +28,8 @@ const linkStyle = css`
   font-size: 14px;
   line-height: 16px;
   margin-bottom: 24px;
+  text-decoration: none;
+  color: ${uiColors.white}
 `;
 
 const trademarkStyle = css`
@@ -35,18 +37,29 @@ const trademarkStyle = css`
   font-size: 14px;
 `;
 
+function FooterLink({ href, children }: JSX.IntrinsicElements['a']) {
+  const linkProps = {
+    target: "_blank",
+    rel: "noopener noreferrer"
+  } as const
+
+
+  return (<a href={href} className={linkStyle} {...linkProps}>{children}</a>)
+}
+
 export default function Footer() {
+
+
   return (
     <div role="contentinfo" className={footerContainer}>
       <div>
         <Logo darkMode knockout height={20} />
       </div>
       <div className={linksContainer}>
-        <p className={linkStyle}>About Design at MongoDB</p>
-        <p className={linkStyle}>About LeafyGreen</p>
-        <p className={linkStyle}>Blog</p>
-        <p className={linkStyle}>Events</p>
-        <p className={linkStyle}>Careers</p>
+        <FooterLink href="https://www.mongodb.com/blog/post/meet-our-product-design-team-part-1">About Design at MongoDB</FooterLink>
+        <FooterLink href="https://www.mongodb.com/blog">Blog</FooterLink>
+        <FooterLink href="https://www.mongodb.com/blog/channel/events">Events</FooterLink>
+        <FooterLink href="https://www.mongodb.com/careers">Careers</FooterLink>
         <p className={trademarkStyle}>© 2020 MongoDB, Inc.</p>
       </div>
     </div>
