@@ -346,10 +346,12 @@ function UserMenu({
         )}
         usePortal={false}
       >
-        <li role="none" className={mfaBannerStyle}>
-          <BellIcon size="small" />
-          MFA is now available for your MongoDB Account!
-        </li>
+        {account?.shouldSeeAccountMfaBanner && (
+          <li role="none" className={mfaBannerStyle}>
+            <BellIcon size="small" />
+            MFA is now available for your MongoDB Account!
+          </li>
+        )}
         <li role="none" className={headerStyle}>
           <div className={logoMarkBackground}>
             <LogoMark height={30} />
@@ -428,7 +430,7 @@ function UserMenu({
             >
               Organizations
             </MenuItem>
-            {!isGovernment && !!account?.hasLegacy2fa && (
+            {!isGovernment && account?.hasLegacy2fa && (
               <MenuItem
                 as={cloudUrls.mfa ? 'a' : 'button'}
                 href={cloudUrls.mfa}

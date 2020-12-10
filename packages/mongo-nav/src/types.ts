@@ -189,6 +189,7 @@ export interface AccountInterface {
   firstName: string;
   lastName: string;
   hasLegacy2fa?: boolean;
+  shouldSeeAccountMfaBanner?: boolean;
   openInvitations?: number;
   username?: string;
   admin?: boolean;

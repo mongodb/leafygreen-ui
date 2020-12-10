@@ -11,6 +11,7 @@ export const dataFixtures: DataInterface = {
     email: 'dev+only+mode@example.com',
     firstName: 'DevMode',
     lastName: 'Developer',
+    shouldSeeAccountMfaBanner: true,
     hasLegacy2fa: true,
     openInvitations: 1,
     username: 'dev+only+mode@example.com',

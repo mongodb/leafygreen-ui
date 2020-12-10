@@ -79,15 +79,44 @@ describe('packages/mongo-nav/user-menu', () => {
     expect(universityItem).toBeVisible();
   });
 
+  test('when "shouldSeeAccountMfaBanner" is set to false, does not render the Account MFA Banner', () => {
+    const { getByTestId, queryByText } = renderUserMenu({
+      account: {
+        ...defaultAccount,
+        shouldSeeAccountMfaBanner: false,
+      },
+    });
+
+    const trigger = getByTestId('user-menu-trigger');
+    fireEvent.click(trigger);
+
+    expect(
+      queryByText('MFA is now available for your MongoDB Account!'),
+    ).not.toBeInTheDocument();
+  });
+
+  test('when "shouldSeeAccountMfaBanner" is set to true, renders the Account MFA Banner', () => {
+    const { getByTestId, getByText } = renderUserMenu({
+      account: {
+        ...defaultAccount,
+        shouldSeeAccountMfaBanner: true,
+      },
+    });
+    const trigger = getByTestId('user-menu-trigger');
+    fireEvent.click(trigger);
+
+    const accountMfaBanner = getByText(
+      'MFA is now available for your MongoDB Account!',
+    );
+    expect(accountMfaBanner).toBeInTheDocument();
+  });
+
   test('when "hasLegacy2fa" is set to false, does not render mfa menu item', () => {
     const { queryByText, getByTestId } = renderUserMenu({
       activePlatform: 'cloud',
       account: {
-        firstName: 'Leafy',
-        lastName: 'Green',
-        email: 'leafy@mongodb.com',
+        ...defaultAccount,
         hasLegacy2fa: false,
-        admin: false,
       },
     });
 
