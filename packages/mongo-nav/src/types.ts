@@ -188,8 +188,8 @@ export interface AccountInterface {
   email: string;
   firstName: string;
   lastName: string;
-  hasLegacy2fa?: boolean;
   shouldSeeAccountMfaBanner?: boolean;
+  hasLegacy2fa?: boolean;
   openInvitations?: number;
   username?: string;
   admin?: boolean;
