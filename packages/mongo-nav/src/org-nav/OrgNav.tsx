@@ -165,12 +165,14 @@ function NavLinks({
     href?: string;
     navId: NavElement;
     text: string;
+    testid: string;
   }> = [];
 
   navLinks.push({
     href: urls.allClusters,
     navId: ActiveNavElement.OrgNavAllClusters,
     text: 'All Clusters',
+    testid: 'org-nav-all-clusters-link',
   });
 
   if (admin) {
@@ -178,19 +180,20 @@ function NavLinks({
       href: urls.admin,
       navId: ActiveNavElement.OrgNavAdmin,
       text: 'Admin',
+      testid: 'org-nav-admin-link',
     });
   }
 
   let items: Array<React.ReactNode>;
 
   if (showMoreDropdownMenu) {
-    items = navLinks.map(({ href, navId, text }) => (
-      <MenuItem size="large" key={navId} href={href}>
+    items = navLinks.map(({ href, navId, text, testid }) => (
+      <MenuItem size="large" key={navId} href={href} data-testid={testid}>
         <div className={css(`font-size: 16px;`)}>{text}</div>
       </MenuItem>
     ));
   } else {
-    items = navLinks.map(({ href, navId, text }) => (
+    items = navLinks.map(({ href, navId, text, testid }) => (
       <OrgNavLink
         href={href}
         loading={loading}
@@ -198,6 +201,7 @@ function NavLinks({
         className={rightLinkMargin}
         key={navId}
         onClick={onElementClick(navId)}
+        data-testid={testid}
       >
         {text}
       </OrgNavLink>
