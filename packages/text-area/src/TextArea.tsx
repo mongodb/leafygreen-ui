@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Either, HTMLElementProps, IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, fontFamilies } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
@@ -41,11 +42,6 @@ const textAreaStyle = css`
   z-index: 1;
   border: 1px solid;
   transition: border-color 150ms ease-in-out;
-
-  &:focus {
-    outline: none;
-    border: 1px solid;
-  }
 
   &:disabled {
     cursor: not-allowed;
@@ -151,6 +147,8 @@ export default function TextArea({
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+
   const isControlled = typeof controlledValue === 'string';
   const [uncontrolledValue, setValue] = useState('');
   const value = isControlled ? controlledValue : uncontrolledValue;
@@ -191,6 +189,11 @@ export default function TextArea({
             [css`
               background-color: #5a3c3b;
             `]: state === State.Error && darkMode,
+            [css`
+              &:focus {
+                outline: none;
+              }
+            `]: showFocus,
           })}
           disabled={disabled}
           onChange={onValueChange}
