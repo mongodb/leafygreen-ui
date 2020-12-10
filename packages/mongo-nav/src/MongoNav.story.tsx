@@ -13,7 +13,7 @@ import {
 } from './types';
 
 const storybookStyles = css`
-  position: fixed;
+  position: absolute;
   top: 0;
 
   width: 100%;
