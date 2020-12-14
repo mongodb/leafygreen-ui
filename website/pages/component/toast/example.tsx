@@ -15,7 +15,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
   progress: {
     type: 'number',
-    default: 1,
+    default: 0.5,
     label: 'Progress',
     min: 0,
     max: 1,
@@ -41,8 +41,8 @@ export default function ToastLiveExample() {
             close={
               close
                 ? () => {
-                    setOpen(false);
-                  }
+                  setOpen(false);
+                }
                 : undefined
             }
             open={open}
