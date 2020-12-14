@@ -36,6 +36,7 @@ const caps = css`
 `;
 
 const componentGuidelineStyles = css`
+  overflow-wrap: anywhere;
   color: ${uiColors.gray.dark3};
   & > p {
     font-size: 16px;

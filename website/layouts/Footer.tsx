@@ -11,7 +11,7 @@ const footerContainer = css`
   align-items: flex-start;
   justify-content: flex-start;
   margin-top: ${spacing[7]}px;
-  padding-left: 52px;
+  padding-left: ${spacing[5]}px;
   padding-top: 36px;
 `;
 

@@ -14,6 +14,10 @@ const tableBottomMargin = css`
   margin-bottom: 56px;
 `;
 
+const verticalAlign = css`
+  vertical-align: top;
+`;
+
 const tableHeaderNames: Array<'prop' | 'type' | 'description' | 'default'> = [
   'prop',
   'type',
@@ -217,34 +221,16 @@ function PropTable({
               >
                 {({ datum }) => (
                   <Row key={datum.prop.value}>
-                    <Cell
-                      className={css`
-                        vertical-align: top;
-                      `}
-                    >
-                      {formatProp(datum)}
-                    </Cell>
-                    <Cell
-                      className={css`
-                        vertical-align: top;
-                      `}
-                    >
+                    <Cell className={verticalAlign}>{formatProp(datum)}</Cell>
+                    <Cell className={verticalAlign}>
                       <InlineCode href={datum.type.url}>
                         {datum.type.value}
                       </InlineCode>
                     </Cell>
-                    <Cell
-                      className={css`
-                        vertical-align: top;
-                      `}
-                    >
+                    <Cell className={verticalAlign}>
                       {datum.description.value}
                     </Cell>
-                    <Cell
-                      className={css`
-                        vertical-align: top;
-                      `}
-                    >
+                    <Cell className={verticalAlign}>
                       {formatDefault(datum)}
                     </Cell>
                   </Row>
