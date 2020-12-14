@@ -52,7 +52,11 @@ function Update({ date, story, path, href }: UpdateProps) {
 
 function News() {
   return (
-    <div>
+    <div
+      className={css`
+        height: 100%;
+      `}
+    >
       <H2>What's New</H2>
       <Update
         date="December 8, 2020"
