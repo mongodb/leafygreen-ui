@@ -5,7 +5,7 @@ import Button from '@leafygreen-ui/button';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Tabs, Tab } from '@leafygreen-ui/tabs';
-import { breakpoints } from '@leafygreen-ui/tokens';
+import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { H2 } from '@leafygreen-ui/typography';
 import ReactIcon from 'components/svgs/ReactIcon';
 import FigmaIcon from 'components/svgs/FigmaIcon';
@@ -20,9 +20,9 @@ const componentsStyle = css`
   font-weight: bold;
 `;
 
-const marginBottom = css`
-  margin-top: 24px;
-  margin-bottom: 24px;
+const margin4 = css`
+  margin-top: ${spacing[4]}px;
+  margin-bottom: ${spacing[4]}px;
 `;
 
 const flexContainer = css`
@@ -79,7 +79,7 @@ export default function ComponentLayout({
 
   return (
     <div role="main">
-      <div className={marginBottom}>
+      <div className={margin4}>
         <small className={componentsStyle}>Components</small>
         <div className={flexContainer}>
           <H2 as="h1" className={caps}>

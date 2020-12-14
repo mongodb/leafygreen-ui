@@ -27,7 +27,7 @@ const linkStyle = css`
   margin: 0;
   font-size: 14px;
   line-height: 16px;
-  margin-bottom: 24px;
+  margin-bottom: ${spacing[4]}px;
   text-decoration: none;
   color: ${uiColors.white};
 `;
@@ -35,7 +35,7 @@ const linkStyle = css`
 const trademarkStyle = css`
   margin-top: 72px;
   font-size: 14px;
-  padding-bottom: 24px;
+  padding-bottom: ${spacing[4]}px;
 `;
 
 function FooterLink({ href, children }: JSX.IntrinsicElements['a']) {
