@@ -41,8 +41,8 @@ export default function ToastLiveExample() {
             close={
               close
                 ? () => {
-                  setOpen(false);
-                }
+                    setOpen(false);
+                  }
                 : undefined
             }
             open={open}

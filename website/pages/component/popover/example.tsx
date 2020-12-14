@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
+import Button from '@leafygreen-ui/button';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const containerStyle = css`
@@ -72,7 +73,11 @@ function DefaultExample({
   const [active, setActive] = useState(false);
   return (
     <div>
-      <button onClick={() => setActive(!active)} className={containerStyle}>
+      <Button
+        onClick={() => setActive(!active)}
+        className={containerStyle}
+        variant="primary"
+      >
         Popover
         <Popover
           align={align}
@@ -84,7 +89,7 @@ function DefaultExample({
         >
           <div className={popoverStyle}>Popover content</div>
         </Popover>
-      </button>
+      </Button>
     </div>
   );
 }
