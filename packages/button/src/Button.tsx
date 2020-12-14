@@ -297,6 +297,7 @@ const baseStyle = css`
     bottom: 0;
     left: 0;
     right: 0;
+    border-radius: 2px;
   }
 
   &:not(:disabled) {
@@ -372,6 +373,10 @@ const Button: ExtendableBox<
         {
           [css`
             border-radius: ${borderRadius};
+
+            &:before, &:after {
+              border-radius: calc(${borderRadius} - 1px);
+            }
           `]: borderRadius !== undefined,
         },
         {
