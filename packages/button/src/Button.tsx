@@ -276,7 +276,6 @@ const baseStyle = css`
   transition: all 120ms ease;
   user-select: none;
   padding: 0;
-  overflow: hidden;
 
   &:focus {
     outline: none;
