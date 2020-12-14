@@ -2,6 +2,7 @@ import React from 'react';
 import { css } from 'emotion';
 import { Tab, Tabs } from '@leafygreen-ui/tabs';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+import { uiColors } from '@leafygreen-ui/palette/dist';
 
 const knobsConfig: KnobsConfigInterface<{
   darkMode: boolean;
@@ -42,10 +43,32 @@ export default function TabsLiveExample() {
         >
           <Tabs darkMode={darkMode}>
             <Tab default disabled={disabled} name={name}>
-              {children}
+              <div
+                className={css`
+                  color: ${darkMode ? uiColors.white : uiColors.gray.dark3};
+                `}
+              >
+                {children}
+              </div>
             </Tab>
-            <Tab name="Teams">Grant teams of users access to projects</Tab>
-            <Tab name="API Keys">Manage your infrastructure in code</Tab>
+            <Tab name="Teams">
+              <div
+                className={css`
+                  color: ${darkMode ? uiColors.white : uiColors.gray.dark3};
+                `}
+              >
+                Grant teams of users access to projects
+              </div>
+            </Tab>
+            <Tab name="API Keys">
+              <div
+                className={css`
+                  color: ${darkMode ? uiColors.white : uiColors.gray.dark3};
+                `}
+              >
+                Manage your infrastructure in code
+              </div>
+            </Tab>
           </Tabs>
         </div>
       )}

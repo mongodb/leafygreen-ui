@@ -50,12 +50,12 @@ const knobsConfig: KnobsConfigInterface<LogoProps> = {
   darkMode: {
     type: 'boolean',
     default: false,
-    label: 'Dark Mode - Logo and LogoMark',
+    label: 'Dark Mode - Logo and Logo Mark',
   },
   height: {
     type: 'number',
     default: 40,
-    label: 'Height - Logo and LogoMark',
+    label: 'Height - Logo and Logo Mark',
   },
   size: {
     type: 'number',
@@ -91,7 +91,7 @@ export default function LogoLiveExample() {
               `}
               weight="medium"
             >
-              LogoMark
+              Logo Mark
             </Overline>
             <LogoMark darkMode={darkMode} knockout={knockout} height={height} />
           </div>

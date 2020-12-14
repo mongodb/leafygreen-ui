@@ -21,6 +21,7 @@ const componentsStyle = css`
 `;
 
 const marginBottom = css`
+  margin-top: 24px;
   margin-bottom: 24px;
 `;
 
@@ -80,7 +81,9 @@ export default function ComponentLayout({
       <div className={marginBottom}>
         <small className={componentsStyle}>Components</small>
         <div className={flexContainer}>
-          <H2 as="h1" className={caps}>{componentName.split('-').join(' ')}</H2>
+          <H2 as="h1" className={caps}>
+            {componentName.split('-').join(' ')}
+          </H2>
 
           {!isMobile && (
             <Button glyph={<FigmaIcon />} variant="primary">

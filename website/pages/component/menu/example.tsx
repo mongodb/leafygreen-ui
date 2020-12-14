@@ -1,7 +1,5 @@
-import React from 'react';
-import Icon from '@leafygreen-ui/icon';
+import React, { useState } from 'react';
 import { Menu, MenuItem } from '@leafygreen-ui/menu';
-import Button from '@leafygreen-ui/button';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
@@ -27,15 +25,28 @@ const knobsConfig: KnobsConfigInterface<{
 };
 
 export default function MenuLiveExample() {
+  const [open, setOpen] = useState(false);
+
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {({ children, active, disabled }) => (
-        <Menu trigger={<Button glyph={<Icon glyph="Ellipsis" />}></Button>}>
-          <MenuItem active={active}>Edit Data Source Configuration</MenuItem>
-          <MenuItem disabled={disabled}>Edit Rules</MenuItem>
-          <MenuItem>{children}</MenuItem>
-        </Menu>
-      )}
+      {({ children, active, disabled }) => {
+        return (
+          <button onClick={() => setOpen(!open)}>
+            Trigger
+            <Menu open={open} setOpen={setOpen}>
+              <MenuItem active={active}>
+                Edit Data Source Configuration
+              </MenuItem>
+              <MenuItem disabled={disabled} size="large">
+                Edit Rules
+              </MenuItem>
+              <MenuItem description="I am a description" size="large">
+                {children}
+              </MenuItem>
+            </Menu>
+          </button>
+        );
+      }}
     </LiveExample>
   );
 }

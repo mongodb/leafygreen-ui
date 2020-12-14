@@ -55,6 +55,9 @@ interface NumberConfigInterface {
   options?: undefined;
   default: number;
   label: string;
+  min?: number;
+  max?: number;
+  step?: number;
 }
 
 interface TextConfigInterface {
@@ -88,7 +91,12 @@ export type KnobsConfigInterface<
 > = {
   [K in keyof ComponentProps]: Extract<
     PropsType<ComponentProps[K]>,
-    { default: ComponentProps[K] }
+    {
+      default: ComponentProps[K];
+      min?: number;
+      max?: number;
+      step?: number;
+    }
   >;
 };
 
@@ -146,7 +154,15 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
           );
 
         case Knob.Number:
-          return <Number {...sharedProps} value={props[propName] as number} />;
+          return (
+            <Number
+              {...sharedProps}
+              value={props[propName] as number}
+              min={knobConfig?.min}
+              max={knobConfig?.max}
+              step={knobConfig?.step}
+            />
+          );
 
         case Knob.Text:
           return <Text {...sharedProps} value={props[propName] as string} />;

@@ -17,6 +17,9 @@ const knobsConfig: KnobsConfigInterface<{
     type: 'number',
     default: 1,
     label: 'Progress',
+    min: 0,
+    max: 1,
+    step: 0.01,
   },
   close: {
     type: 'boolean',
@@ -35,7 +38,13 @@ export default function ToastLiveExample() {
           <button onClick={() => setOpen(curr => !curr)}>Trigger toast</button>
           <Toast
             progress={progress}
-            close={close ? () => {} : undefined}
+            close={
+              close
+                ? () => {
+                    setOpen(false);
+                  }
+                : undefined
+            }
             open={open}
             variant={variant}
             body={

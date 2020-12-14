@@ -85,7 +85,9 @@ function VersionCard({
   return (
     <Card className={cx(topAlignment, versionCard)}>
       {/* TODO: Provide fallback if no version */}
-      <Subtitle as="h2" className={subtitlePadding}>Version {version}</Subtitle>
+      <Subtitle as="h2" className={subtitlePadding}>
+        Version {version}
+      </Subtitle>
       <Button
         size={isMobile ? 'large' : 'normal'}
         glyph={<ActivityFeedIcon />}
@@ -191,28 +193,24 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
           changelog={changelog}
         />
       ) : (
-          <DesktopInstall
-            component={component}
-            version={version}
-            changelog={changelog}
-          />
-        )}
+        <DesktopInstall
+          component={component}
+          version={version}
+          changelog={changelog}
+        />
+      )}
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
           <Tabs className={tabsPadding}>
             {example && (
               <Tab default name="Example" className={mt3}>
-                <Code showLineNumbers language="js">
-                  {example}
-                </Code>
+                <Code language="js">{example}</Code>
               </Tab>
             )}
 
             {outputHTML && (
               <Tab name="Output HTML" className={mt3} default={!example}>
-                <Code showLineNumbers language="xml">
-                  {outputHTML}
-                </Code>
+                <Code language="xml">{outputHTML}</Code>
               </Tab>
             )}
           </Tabs>

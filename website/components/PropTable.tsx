@@ -217,14 +217,36 @@ function PropTable({
               >
                 {({ datum }) => (
                   <Row key={datum.prop.value}>
-                    <Cell>{formatProp(datum)}</Cell>
-                    <Cell>
+                    <Cell
+                      className={css`
+                        vertical-align: top;
+                      `}
+                    >
+                      {formatProp(datum)}
+                    </Cell>
+                    <Cell
+                      className={css`
+                        vertical-align: top;
+                      `}
+                    >
                       <InlineCode href={datum.type.url}>
                         {datum.type.value}
                       </InlineCode>
                     </Cell>
-                    <Cell>{datum.description.value}</Cell>
-                    <Cell>{formatDefault(datum)}</Cell>
+                    <Cell
+                      className={css`
+                        vertical-align: top;
+                      `}
+                    >
+                      {datum.description.value}
+                    </Cell>
+                    <Cell
+                      className={css`
+                        vertical-align: top;
+                      `}
+                    >
+                      {formatDefault(datum)}
+                    </Cell>
                   </Row>
                 )}
               </Table>

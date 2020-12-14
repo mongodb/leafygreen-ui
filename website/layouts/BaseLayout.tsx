@@ -12,7 +12,7 @@ const mq = facepaint(
 );
 
 const containerStyle = css`
-  margin-top: 12px;
+  margin-top: 24px;
   width: 100%;
   display: flex;
   align-items: flex-start;

@@ -84,7 +84,7 @@ export default function TokensLiveExample() {
                 font-size: 14px;
               `}
             >
-              default
+              Akzidenz, Helvetica Neue, Helvetica, Arial, sans-serif
             </p>
             <p
               className={css`
@@ -92,7 +92,7 @@ export default function TokensLiveExample() {
                 font-size: 14px;
               `}
             >
-              code
+              Source Code Pro, Menlo, monospace
             </p>
           </div>
         </div>

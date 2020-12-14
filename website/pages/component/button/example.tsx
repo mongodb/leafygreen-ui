@@ -31,8 +31,8 @@ const knobsConfig: KnobsConfigInterface<{
   },
   href: {
     type: 'select',
-    options: ['/component/box', undefined],
-    default: '/component/box',
+    options: ['/component/box/example', undefined],
+    default: '/component/box/example',
     label: 'href',
   },
   title: {
