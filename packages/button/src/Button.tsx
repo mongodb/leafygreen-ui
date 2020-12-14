@@ -374,7 +374,8 @@ const Button: ExtendableBox<
           [css`
             border-radius: ${borderRadius};
 
-            &:before, &:after {
+            &:before,
+            &:after {
               border-radius: calc(${borderRadius} - 1px);
             }
           `]: borderRadius !== undefined,
