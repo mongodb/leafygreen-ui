@@ -41,7 +41,7 @@ storiesOf('Tooltip', module)
       )}
       enabled={boolean('Enabled', true)}
       darkMode={boolean('darkMode', false)}
-      usePortal={boolean('Enabled', false)}
+      usePortal={boolean('Use Portal', false)}
     >
       I am an uncontrolled Tooltip!
     </Tooltip>
