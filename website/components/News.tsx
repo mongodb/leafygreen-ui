@@ -1,7 +1,16 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { css } from 'emotion';
+import { uiColors } from "@leafygreen-ui/palette";
 import { Overline, Subtitle, H2 } from '@leafygreen-ui/typography';
+
+const newsContainer = css`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 24px;
+`
 
 interface UpdateProps {
   date: string;
@@ -44,7 +53,7 @@ function Update({ date, story, path, href }: UpdateProps) {
         margin-top: 28px;
       `}
     >
-      <Overline>{date}</Overline>
+      <Overline className={css`color: ${uiColors.gray.dark1}`}>{date}</Overline>
       {renderedStory}
     </div>
   );
@@ -53,9 +62,7 @@ function Update({ date, story, path, href }: UpdateProps) {
 function News() {
   return (
     <div
-      className={css`
-        height: 100%;
-      `}
+      className={newsContainer}
     >
       <H2>What's New</H2>
       <Update
@@ -73,11 +80,7 @@ function News() {
         story="Installing LeafyGreen in Figma"
         path=""
       />
-      <Update
-        date="August 2, 2020"
-        story="New arrival, toasts!"
-        path="/component/toast/example"
-      />
+
     </div>
   );
 }

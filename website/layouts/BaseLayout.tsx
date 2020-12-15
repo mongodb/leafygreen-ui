@@ -2,7 +2,6 @@ import React from 'react';
 import facepaint from 'facepaint';
 import { css } from 'emotion';
 import { breakpoints } from '@leafygreen-ui/tokens';
-
 import Navigation from 'components/navigation';
 import Footer from './Footer';
 
@@ -12,23 +11,24 @@ const mq = facepaint(
 );
 
 const containerStyle = css`
-  margin-top: 12px;
   width: 100%;
   display: flex;
   align-items: flex-start;
   ${mq({
-    flexDirection: ['column', 'column', 'row'],
-    paddingLeft: ['24px', '24px', '0px'],
-    paddingRight: ['24px', '24px', '0px'],
-  })}
+  flexDirection: ['column', 'column', 'row'],
+  paddingLeft: ['24px', '24px', '0px'],
+  paddingRight: ['24px', '24px', '0px'],
+})}
 `;
 
-const topMargin = css`
-  margin-top: 36px;
-  ${mq({
-    width: ['100%', '100%', '700px', '700px'],
-  })}
-`;
+
+const layout = css`
+ 
+${mq({
+  width: ['100%', '100%', '700px', '700px'],
+})
+  }
+`
 
 export default function BaseLayout({
   children,
@@ -45,7 +45,7 @@ export default function BaseLayout({
       <div className={containerStyle}>
         <Navigation />
 
-        <div className={topMargin}>{children}</div>
+        <div className={layout}>{children}</div>
       </div>
 
       <Footer />

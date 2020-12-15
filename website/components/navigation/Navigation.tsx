@@ -11,6 +11,7 @@ import MobileNavigation from './MobileNavigation';
 
 const navContainer = css`
   width: 270px;
+  padding-top: 12px;
   // spacing[3] already built into side nav
   padding-left: ${spacing[5] - spacing[3]}px;
   padding-right: 60px;
@@ -58,7 +59,6 @@ const components = [
   'radio-group',
   'side-nav',
   'stepper',
-  'syntax',
   'table',
   'tabs',
   'text-area',
