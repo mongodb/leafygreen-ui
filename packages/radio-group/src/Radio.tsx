@@ -43,6 +43,7 @@ const labelColorSet = {
     `,
 
     disabled: css`
+      cursor: not-allowed;
       color ${uiColors.gray.base};
     `,
   },
@@ -53,6 +54,7 @@ const labelColorSet = {
     `,
 
     disabled: css`
+      cursor: not-allowed;
       color: ${uiColors.gray.light1};
     `,
   },
@@ -63,6 +65,7 @@ const labelStyle = css`
   align-items: flex-start;
   font-size: 14px;
   line-height: 20px;
+  cursor: pointer;
 `;
 
 // Note colors are not in our palette
@@ -188,8 +191,6 @@ const divStyle = css`
   }
 
   ${inputDataProp.selector}:disabled + ${inputDisplayWrapper.selector} & {
-    cursor: not-allowed;
-
     &:after {
       box-shadow: none;
     }
@@ -256,7 +257,7 @@ export type RadioProps = Omit<HTMLElementProps<'input', never>, 'size'> &
 function Radio({
   children,
   className,
-  onChange = () => {},
+  onChange = () => { },
   value,
   disabled = false,
   id,
