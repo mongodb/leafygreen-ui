@@ -1,4 +1,5 @@
 import React from 'react';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 function MDBDesignLogo(props: JSX.IntrinsicElements['svg']) {
   return (
@@ -92,7 +93,7 @@ function MDBDesignLogo(props: JSX.IntrinsicElements['svg']) {
               ></path>
               <text
                 id="Design"
-                fontFamily="AkzidenzGroteskStd-Regular, Akzidenz-Grotesk Std"
+                fontFamily={fontFamilies.default}
                 fontSize="15.6"
                 fontWeight="normal"
                 fill="#21313C"

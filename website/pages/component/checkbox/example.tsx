@@ -27,7 +27,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
   label: {
     type: 'text',
-    default: 'Insert',
+    default: 'I accept the Privacy Policy and the Terms of Service',
     label: 'Label',
   },
   bold: {
