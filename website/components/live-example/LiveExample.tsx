@@ -93,9 +93,6 @@ export type KnobsConfigInterface<
     PropsType<ComponentProps[K]>,
     {
       default: ComponentProps[K];
-      min?: number;
-      max?: number;
-      step?: number;
     }
   >;
 };
@@ -133,9 +130,7 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
 
     const knobs = Object.entries(knobsConfig).map(entry => {
       const propName = entry[0] as string;
-      const knobConfig = entry[1] as KnobsConfigInterface<
-        ComponentProps
-      >[keyof ComponentProps];
+      const knobConfig = entry[1] as PropsType;
 
       const sharedProps = {
         onChange,
@@ -143,7 +138,6 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
         label: knobConfig.label,
         prop: propName,
         key: propName,
-        options: knobConfig?.options,
         darkMode: !!props.darkMode,
       };
 
@@ -180,7 +174,7 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
           );
 
         default:
-          enforceExhaustive(knobConfig.type);
+          enforceExhaustive(knobConfig);
       }
     });
 
