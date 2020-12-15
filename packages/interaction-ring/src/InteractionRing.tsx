@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useCallback, useMemo, useState } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { createDataProp } from '@leafygreen-ui/lib';
@@ -172,16 +172,26 @@ export default function InteractionRing({
 
   const childIsFocusTarget = focusTargetElement === undefined;
 
-  const onFocus = useMemo(
-    () =>
-      childIsFocusTarget ? () => setFocused(true) : children.props.onFocus,
-    [children.props.onFocus, childIsFocusTarget],
+  const onFocusProp = children.props.onFocus;
+  const onFocus = useCallback(
+    (event: React.FocusEvent) => {
+      if (childIsFocusTarget) {
+        setFocused(true);
+      }
+      onFocusProp?.(event);
+    },
+    [childIsFocusTarget, onFocusProp],
   );
 
-  const onBlur = useMemo(
-    () =>
-      childIsFocusTarget ? () => setFocused(false) : children.props.onBlur,
-    [children.props.onBlur, childIsFocusTarget],
+  const onBlurProp = children.props.onBlur;
+  const onBlur = useCallback(
+    (event: React.FocusEvent) => {
+      if (childIsFocusTarget) {
+        setFocused(false);
+      }
+      onBlurProp?.(event);
+    },
+    [childIsFocusTarget, onBlurProp],
   );
 
   const content = useMemo(
