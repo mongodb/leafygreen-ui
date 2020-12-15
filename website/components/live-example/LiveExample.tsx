@@ -55,6 +55,9 @@ interface NumberConfigInterface {
   options?: undefined;
   default: number;
   label: string;
+  min?: number;
+  max?: number;
+  step?: number;
 }
 
 interface TextConfigInterface {
@@ -88,7 +91,9 @@ export type KnobsConfigInterface<
 > = {
   [K in keyof ComponentProps]: Extract<
     PropsType<ComponentProps[K]>,
-    { default: ComponentProps[K] }
+    {
+      default: ComponentProps[K];
+    }
   >;
 };
 
@@ -125,9 +130,7 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
 
     const knobs = Object.entries(knobsConfig).map(entry => {
       const propName = entry[0] as string;
-      const knobConfig = entry[1] as KnobsConfigInterface<
-        ComponentProps
-      >[keyof ComponentProps];
+      const knobConfig = entry[1] as PropsType;
 
       const sharedProps = {
         onChange,
@@ -135,7 +138,6 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
         label: knobConfig.label,
         prop: propName,
         key: propName,
-        options: knobConfig?.options,
         darkMode: !!props.darkMode,
       };
 
@@ -146,7 +148,15 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
           );
 
         case Knob.Number:
-          return <Number {...sharedProps} value={props[propName] as number} />;
+          return (
+            <Number
+              {...sharedProps}
+              value={props[propName] as number}
+              min={knobConfig?.min}
+              max={knobConfig?.max}
+              step={knobConfig?.step}
+            />
+          );
 
         case Knob.Text:
           return <Text {...sharedProps} value={props[propName] as string} />;
@@ -164,7 +174,7 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
           );
 
         default:
-          enforceExhaustive(knobConfig.type);
+          enforceExhaustive(knobConfig);
       }
     });
 

@@ -10,7 +10,7 @@ const gutter = css`
 
 const textWrapper = css`
   margin-bottom: ${spacing[2]}px;
-  font-size: 10px;
+  font-size: 12px;
 `;
 
 const colors = [
@@ -39,9 +39,11 @@ const spacingBlockVariants = Object.keys(spacing).reduce(
 function SpacingBlock({ space }: { space: keyof typeof spacing }) {
   return (
     <div className={gutter}>
-      <div
-        className={textWrapper}
-      >{`spacing[${space}]: ${spacing[space]}`}</div>
+      <div className={textWrapper}>
+        {`spacing[${space}]:`}
+        <br />
+        {`${spacing[space]}`}
+      </div>
       <div className={spacingBlockVariants[space]}></div>
     </div>
   );
@@ -84,7 +86,7 @@ export default function TokensLiveExample() {
                 font-size: 14px;
               `}
             >
-              default
+              Akzidenz, Helvetica Neue, Helvetica, Arial, sans-serif
             </p>
             <p
               className={css`
@@ -92,7 +94,7 @@ export default function TokensLiveExample() {
                 font-size: 14px;
               `}
             >
-              code
+              Source Code Pro, Menlo, monospace
             </p>
           </div>
         </div>

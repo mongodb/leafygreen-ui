@@ -20,7 +20,7 @@ const navContainer = css`
 
 const logoStyles = css`
   // adds back spacing that was already built into side nav
-  margin: 12px 0 ${spacing[4]} px ${spacing[3]} px;
+  margin: 12px 0 ${spacing[4]}px ${spacing[3]}px;
 `;
 
 const coreGuidelines = [
