@@ -1,5 +1,13 @@
 # @leafygreen-ui/button
 
+## 10.0.1
+
+### Patch Changes
+
+- 572ced14: Internal change that makes Button integrate better with components like Tooltip and Popover.
+- 6e26200a: Small correction to border radius of the interaction ring for hover and focused states
+- 78c60261: Fix regression where XSmall size button text was not all uppercased
+
 ## 10.0.0
 
 ### Major Changes
