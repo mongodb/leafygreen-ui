@@ -55,6 +55,7 @@ const marketingImageWrapper = css`
   height: 100%;
   background-size: cover;
   background-repeat: no-repeat;
+  box-shadow: 0 0 0 1px ${uiColors.gray.light1};
 `;
 
 const textWrapper = css`
