@@ -170,22 +170,28 @@ export default function InteractionRing({
 
   const { className: contentClassName } = children.props;
 
+  const childIsFocusTarget = focusTargetElement === undefined;
+
   const onFocusProp = children.props.onFocus;
   const onFocus = useCallback(
     (event: React.FocusEvent) => {
-      setFocused(true);
+      if (childIsFocusTarget) {
+        setFocused(true);
+      }
       onFocusProp?.(event);
     },
-    [onFocusProp],
+    [childIsFocusTarget, onFocusProp],
   );
 
   const onBlurProp = children.props.onBlur;
   const onBlur = useCallback(
     (event: React.FocusEvent) => {
-      setFocused(false);
+      if (childIsFocusTarget) {
+        setFocused(false);
+      }
       onBlurProp?.(event);
     },
-    [onBlurProp],
+    [childIsFocusTarget, onBlurProp],
   );
 
   const content = useMemo(
