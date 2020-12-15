@@ -42,7 +42,7 @@ export default function TabsLiveExample() {
           `}
         >
           <Tabs darkMode={darkMode}>
-            <Tab default disabled={disabled} name={name}>
+            <Tab default name={name}>
               <div
                 className={css`
                   color: ${darkMode ? uiColors.white : uiColors.gray.dark3};
@@ -60,7 +60,7 @@ export default function TabsLiveExample() {
                 Grant teams of users access to projects
               </div>
             </Tab>
-            <Tab name="API Keys">
+            <Tab name="API Keys" disabled={disabled}>
               <div
                 className={css`
                   color: ${darkMode ? uiColors.white : uiColors.gray.dark3};

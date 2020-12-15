@@ -10,7 +10,7 @@ const gutter = css`
 
 const textWrapper = css`
   margin-bottom: ${spacing[2]}px;
-  font-size: 10px;
+  font-size: 12px;
 `;
 
 const colors = [
@@ -39,9 +39,11 @@ const spacingBlockVariants = Object.keys(spacing).reduce(
 function SpacingBlock({ space }: { space: keyof typeof spacing }) {
   return (
     <div className={gutter}>
-      <div
-        className={textWrapper}
-      >{`spacing[${space}]: ${spacing[space]}`}</div>
+      <div className={textWrapper}>
+        {`spacing[${space}]:`}
+        <br />
+        {`${spacing[space]}`}
+      </div>
       <div className={spacingBlockVariants[space]}></div>
     </div>
   );

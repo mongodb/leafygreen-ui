@@ -1,5 +1,6 @@
 import React from 'react';
 import { css } from 'emotion';
+import Button from '@leafygreen-ui/button';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
@@ -53,13 +54,14 @@ export default function TooltipLiveExample() {
         <Tooltip
           {...props}
           trigger={
-            <button
+            <Button
+              variant="dark"
               className={css`
                 position: relative;
               `}
             >
               Linked Data Sources
-            </button>
+            </Button>
           }
         >
           Your clusters and data lakes.
