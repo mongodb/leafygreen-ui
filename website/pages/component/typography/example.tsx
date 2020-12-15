@@ -43,7 +43,7 @@ const knobsConfig: KnobsConfigInterface<{
       'https://mongodb.github.io/leafygreen-ui/?path=/story/*',
     ],
     default: 'http://localhost:3000',
-    label: 'Href',
+    label: 'href',
   },
   arrowAppearance: {
     type: 'select',

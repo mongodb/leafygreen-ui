@@ -118,16 +118,6 @@ import { Menu, MenuSeparator, MenuItem } from '@leafygreen-ui/menu';
 
 _Any other properties will be spread on the Menu `ul` container_
 
-# MenuSeparator
-
-## Properties
-
-| Prop | Type | Description | Default |
-| ---- | ---- | ----------- | ------- |
-|      |      |             |         |
-
-Self-closing component that provides a way to group `MenuItems` in a `Menu` component.
-
 # MenuItem
 
 ## Properties

@@ -75,8 +75,8 @@ function DefaultExample({
     <div>
       <Button
         onClick={() => setActive(!active)}
-        variant="primary"
         className={containerStyle}
+        variant="primary"
       >
         Popover
         <Popover

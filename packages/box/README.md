@@ -43,9 +43,9 @@ import Box from '@leafygreen-ui/box';
 
 ## Properties
 
-| Prop       | Type                                       | Description                                                                                                                         | Default |
-| ---------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `as`       | `React.ElementType`                        | The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `div`   |
-| `href`     | `string`                                   | When provided, `<Box />` will render an anchor tag with this `href` value.                                                          |         |
-| `children` | `React.ReactElement`                       | Content to be rendered in an HTML element, or provided as a prop to the rendered component                                          |         |
-| ...        | `React.ComponentPropsWithRef<[typeof as]>` | Any other properties will be spread on the rendered HTML element or component.                                                      |         |
+| Prop       | Type                                             | Description                                                                                                                         | Default |
+| ---------- | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `as`       | `React.ElementType`                              | The component or HTML tag to be rendered by the `<Box />` component. **Note**: This will supersede the behavior of any other props. | `div`   |
+| `href`     | `string`                                         | When provided, `<Box />` will render an anchor tag with this `href` value.                                                          |         |
+| `children` | `React.ReactElement`                             | Content to be rendered in an HTML element, or provided as a prop to the rendered component                                          |         |
+| ...        | native attributes of component passed to as prop | Any other properties will be spread on the rendered HTML element or component.                                                      |         |

@@ -14,6 +14,10 @@ const tableBottomMargin = css`
   margin-bottom: 56px;
 `;
 
+const verticalAlign = css`
+  vertical-align: top;
+`;
+
 const tableHeaderNames: Array<'prop' | 'type' | 'description' | 'default'> = [
   'prop',
   'type',
@@ -191,7 +195,7 @@ function PropTable({
       {headers.map((header: string, index: number) => {
         return (
           <div key={index}>
-            <Subtitle className={subtitleBottomMargin}>
+            <Subtitle className={subtitleBottomMargin} as="h3">
               {header.replace(/ /g, '')} Props
             </Subtitle>
 
@@ -217,14 +221,18 @@ function PropTable({
               >
                 {({ datum }) => (
                   <Row key={datum.prop.value}>
-                    <Cell>{formatProp(datum)}</Cell>
-                    <Cell>
+                    <Cell className={verticalAlign}>{formatProp(datum)}</Cell>
+                    <Cell className={verticalAlign}>
                       <InlineCode href={datum.type.url}>
                         {datum.type.value}
                       </InlineCode>
                     </Cell>
-                    <Cell>{datum.description.value}</Cell>
-                    <Cell>{formatDefault(datum)}</Cell>
+                    <Cell className={verticalAlign}>
+                      {datum.description.value}
+                    </Cell>
+                    <Cell className={verticalAlign}>
+                      {formatDefault(datum)}
+                    </Cell>
                   </Row>
                 )}
               </Table>

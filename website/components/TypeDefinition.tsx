@@ -37,6 +37,7 @@ function TypeDefinition({
   function formatType(typeName: string, interfaceDefinition: string) {
     return (
       <div
+        key={typeName}
         className={css`
           margin-top: 56px;
         `}

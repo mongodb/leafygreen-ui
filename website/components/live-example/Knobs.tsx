@@ -69,6 +69,9 @@ export interface TextInterface extends KnobInterface {
 export interface NumberInterface extends KnobInterface {
   onChange: (value: number, prop: string) => void;
   value: number;
+  min?: number;
+  max?: number;
+  step?: number;
 }
 
 export interface BasicSelectInterface extends KnobInterface {
@@ -112,9 +115,18 @@ function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
   );
 }
 
-function Number({ onChange, label, value, prop, darkMode }: NumberInterface) {
+function Number({
+  onChange,
+  label,
+  value,
+  prop,
+  darkMode,
+  min,
+  max,
+  step,
+}: NumberInterface) {
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(parseInt(target.value), prop);
+    onChange(parseFloat(target.value), prop);
   };
 
   const labelId = useMemo(() => numberIdAllocator.generate(), []);
@@ -133,6 +145,9 @@ function Number({ onChange, label, value, prop, darkMode }: NumberInterface) {
         value={value.toString()}
         aria-labelledby={labelId}
         darkMode={darkMode}
+        min={min}
+        max={max}
+        step={step}
       />
     </div>
   );
