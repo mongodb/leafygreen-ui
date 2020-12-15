@@ -153,34 +153,6 @@ describe('packages/collapsible-side-nav', () => {
         // @ts-expect-error
         <SideNavItem glyphVisibility={GlyphVisibility.Visible}> </SideNavItem>;
       });
-
-      test('`href` and `path` cannot both be provided', () => {
-        <SideNavItem href="/item"> </SideNavItem>;
-
-        <SideNavItem path="/item"> </SideNavItem>;
-
-        // @ts-expect-error
-        <SideNavItem href="/item" path="/item">
-          {' '}
-        </SideNavItem>;
-      });
-
-      test('`href` and `onClick` cannot both be provided', () => {
-        <SideNavItem href="/item"> </SideNavItem>;
-
-        <SideNavItem onClick={() => {}}> </SideNavItem>;
-
-        // @ts-expect-error
-        <SideNavItem href="/item" onClick={() => {}}>
-          {' '}
-        </SideNavItem>;
-      });
-
-      test('`path` and `onClick` can both be provided', () => {
-        <SideNavItem path="/item" onClick={() => {}}>
-          {' '}
-        </SideNavItem>;
-      });
     });
     /* eslint-enable jest/expect-expect */
   });

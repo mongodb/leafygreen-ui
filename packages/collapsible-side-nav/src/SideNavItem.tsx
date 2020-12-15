@@ -75,11 +75,10 @@ const sideNavItemWithGlyphCollapsedStyle = css`
 type Props = {
   className?: string;
   children: React.ReactNode;
-} & OneOf<
-  { path?: string; onClick?: React.MouseEventHandler },
-  { href?: string }
-> &
-  OneOf<{ glyph: GlyphElement; glyphVisibility?: GlyphVisibility }, {}>;
+  path?: string;
+  href?: string;
+  onClick?: React.MouseEventHandler;
+} & OneOf<{ glyph: GlyphElement; glyphVisibility?: GlyphVisibility }, {}>;
 
 export default function SideNavItem({
   className,
