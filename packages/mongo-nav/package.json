@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/mongo-nav",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "description": "LeafyGreen UI Kit Mongo Nav",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
