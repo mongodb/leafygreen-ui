@@ -1,5 +1,11 @@
 # @leafygreen-ui/text-input
 
+## 5.0.3
+
+### Patch Changes
+
+- 117fc702: Overwrites chrome browser defaults for autocompleted input values, and disables autocomplete when component is disabled
+
 ## 5.0.2
 
 ### Patch Changes

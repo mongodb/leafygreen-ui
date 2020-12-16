@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-group
 
+## 7.0.1
+
+### Patch Changes
+
+- 03acbf6e: Sets `cursor:pointer` on Radio labels that are not disabled
+
 ## 7.0.0
 
 ### Major Changes
