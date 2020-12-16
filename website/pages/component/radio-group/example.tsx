@@ -51,7 +51,7 @@ function DefaultExample({ darkMode, size, disabled, children }: Knobs) {
       <Radio value="1">Application Authentication</Radio>
       <Radio value="2">{children}</Radio>
       <Radio default value="3">
-        User Id
+        User ID
       </Radio>
       <Radio disabled={disabled} value="Selection-4">
         Script

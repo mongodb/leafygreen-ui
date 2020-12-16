@@ -1,5 +1,17 @@
 # @leafygreen-ui/marketing-modal
 
+## 2.0.5
+
+### Patch Changes
+
+- 084b082a: Fixes visual regression with button
+- Updated dependencies [572ced14]
+- Updated dependencies [6e26200a]
+- Updated dependencies [78c60261]
+- Updated dependencies [fc18e572]
+  - @leafygreen-ui/button@10.0.1
+  - @leafygreen-ui/typography@7.3.0
+
 ## 2.0.4
 
 ### Patch Changes

@@ -36,7 +36,7 @@ const knobsConfig: KnobsConfigInterface<Knobs> = {
   children: {
     type: 'text',
     default: 'Admin',
-    label: 'children',
+    label: 'Children',
   },
 };
 

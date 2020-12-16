@@ -39,7 +39,7 @@ const knobsConfig: KnobsConfigInterface<{
   },
   errorMessage: {
     type: 'area',
-    default: 'Not a valid name, please try again',
+    default: 'Please enter a valid name.',
     label: 'Error Message',
   },
 };

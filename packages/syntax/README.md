@@ -23,8 +23,7 @@ npm install @leafygreen-ui/syntax
 ```js
 import Syntax from '@leafygreen-ui/syntax';
 
-const codeSnippet = `
-function greeting(entity) {
+const codeSnippet = `function greeting(entity) {
   return \`Hello, \${entity}!\`;
 }
 

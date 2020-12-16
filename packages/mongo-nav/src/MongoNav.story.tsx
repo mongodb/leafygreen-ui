@@ -81,6 +81,13 @@ storiesOf('MongoNav', module).add('Default', () => {
                 false,
               ),
             },
+            account: {
+              hasLegacy2fa: boolean('dataFixtures.account.hasLegacy2fa', true),
+              shouldSeeAccountMfaBanner: boolean(
+                'dataFixtures.account.shouldSeeAccountMfaBanner',
+                true,
+              ),
+            },
           }}
         />
       </div>

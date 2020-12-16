@@ -10,7 +10,7 @@ const knobsConfig: KnobsConfigInterface<{
   darkMode: {
     type: 'boolean',
     default: false,
-    label: 'Dark mode',
+    label: 'Dark Mode',
   },
   size: {
     type: 'select',

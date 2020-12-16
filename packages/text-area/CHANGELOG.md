@@ -1,5 +1,13 @@
 # @leafygreen-ui/text-area
 
+## 3.0.2
+
+### Patch Changes
+
+- 358a072e: Fixes visual regression where the border of inputs do not appear until text is entered
+- Updated dependencies [fc18e572]
+  - @leafygreen-ui/typography@7.3.0
+
 ## 3.0.1
 
 ### Patch Changes
