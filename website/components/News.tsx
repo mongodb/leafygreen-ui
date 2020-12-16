@@ -26,8 +26,10 @@ function Update({ date, story, path, href }: UpdateProps) {
   if (path) {
     renderedStory = (
       <Subtitle
+        as="p"
         className={css`
           cursor: pointer;
+          font-weight: bolder;
         `}
         onClick={() => push(path)}
       >
@@ -37,8 +39,11 @@ function Update({ date, story, path, href }: UpdateProps) {
   } else {
     renderedStory = (
       <Subtitle
+        as="a"
         className={css`
           cursor: pointer;
+          text-decoration: none;
+          font-weight: bolder;
         `}
         href={href}
       >
@@ -64,7 +69,7 @@ function News() {
     <div
       className={newsContainer}
     >
-      <H2>What's New</H2>
+      <H2 as="h1">Whats New</H2>
       <Update
         date="December 8, 2020"
         story="Copyable v1.0.0 – @leafygreen-ui/copyable"
