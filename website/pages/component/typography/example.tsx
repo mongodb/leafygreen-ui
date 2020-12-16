@@ -39,8 +39,8 @@ const knobsConfig: KnobsConfigInterface<{
   href: {
     type: 'select',
     options: [
-      'http://localhost:3000',
-      'https://mongodb.github.io/leafygreen-ui/?path=/story/*',
+      `${window.location.protocol}//${window.location.host}`,
+      'https://cloud.mongodb.com',
     ],
     default: 'http://localhost:3000',
     label: 'href',
