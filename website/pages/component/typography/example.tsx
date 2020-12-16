@@ -39,7 +39,7 @@ const knobsConfig: KnobsConfigInterface<{
   href: {
     type: 'select',
     options: [
-      `${window.location.protocol}//${window.location.host}`,
+      typeof window !== 'undefined' ? window.location.origin : '',
       'https://cloud.mongodb.com',
     ],
     default: 'http://localhost:3000',
