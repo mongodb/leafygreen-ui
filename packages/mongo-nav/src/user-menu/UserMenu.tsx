@@ -4,6 +4,7 @@ import defaultsDeep from 'lodash/defaultsDeep';
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
+import BellIcon from '@leafygreen-ui/icon/dist/Bell';
 import { LogoMark } from '@leafygreen-ui/logo';
 import {
   Menu,
@@ -65,6 +66,16 @@ const headerStyle = css`
   background-color: ${uiColors.gray.dark3};
   color: ${uiColors.white};
   max-width: 100%;
+`;
+
+const mfaBannerStyle = css`
+  padding: 8px;
+  display: flex;
+  font-size: 12px;
+  line-height: 14px;
+  justify-content: space-around;
+  background-color: ${uiColors.yellow.light3};
+  color: ${uiColors.yellow.dark2};
 `;
 
 const logoMarkBackground = css`
@@ -335,6 +346,12 @@ function UserMenu({
         )}
         usePortal={false}
       >
+        {account?.shouldSeeAccountMfaBanner && (
+          <li role="none" className={mfaBannerStyle}>
+            <BellIcon size="small" />
+            MFA is now available for your MongoDB Account!
+          </li>
+        )}
         <li role="none" className={headerStyle}>
           <div className={logoMarkBackground}>
             <LogoMark height={30} />
@@ -413,7 +430,7 @@ function UserMenu({
             >
               Organizations
             </MenuItem>
-            {!isGovernment && (
+            {!isGovernment && account?.hasLegacy2fa && (
               <MenuItem
                 as={cloudUrls.mfa ? 'a' : 'button'}
                 href={cloudUrls.mfa}
@@ -421,7 +438,7 @@ function UserMenu({
                 data-testid="user-menuitem-cloud-mfa"
                 onClick={onElementClick(NavElement.UserMenuCloudMFA)}
               >
-                Two-Factor Authentication
+                Legacy 2FA
               </MenuItem>
             )}
           </SubMenu>
@@ -442,7 +459,6 @@ function UserMenu({
             {isGovernment ? 'Cloud for Government' : 'Cloud'}
           </MenuItem>
         )}
-
         <SubMenu
           {...subMenuContainer.prop}
           {...sharedProps}
@@ -466,7 +482,6 @@ function UserMenu({
             University Preferences
           </MenuItem>
         </SubMenu>
-
         <SubMenu
           {...subMenuContainer.prop}
           {...sharedProps}
@@ -488,9 +503,7 @@ function UserMenu({
             User Preferences
           </MenuItem>
         </SubMenu>
-
         <MenuSeparator />
-
         <MenuItem
           {...feedbackAnchorProps}
           size="large"
@@ -500,9 +513,7 @@ function UserMenu({
         >
           {isGovernment ? 'Feature Requests' : 'Give us feedback'}
         </MenuItem>
-
         <MenuSeparator />
-
         <MenuItem
           onClick={onLogout}
           href={userMenu.logout}

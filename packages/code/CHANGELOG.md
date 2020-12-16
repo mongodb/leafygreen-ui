@@ -1,5 +1,11 @@
 # @leafygreen-ui/code
 
+## 7.3.1
+
+### Patch Changes
+
+- aae1e47e: Adds component to browser's Tab order when scrollable so those navigating via keyboard are able to scroll and view content appropriately
+
 ## 7.3.0
 
 ### Minor Changes
