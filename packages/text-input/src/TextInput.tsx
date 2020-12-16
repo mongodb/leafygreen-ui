@@ -352,7 +352,7 @@ const TextInput: React.ComponentType<React.PropsWithRef<
                   &:disabled {
                     color: ${colorSets[mode].disabledColor};
                     background-color: ${colorSets[mode]
-                      .disabledBackgroundColor};
+                    .disabledBackgroundColor};
 
                     &:-webkit-autofill {
                       &,
@@ -362,7 +362,7 @@ const TextInput: React.ComponentType<React.PropsWithRef<
                         border: 1px solid
                           ${colorSets[mode].disabledBackgroundColor};
                         -webkit-text-fill-color: ${colorSets[mode]
-                          .disabledColor};
+                    .disabledColor};
                         -webkit-box-shadow: 0 0 0px 1000px
                           ${colorSets[mode].disabledBackgroundColor} inset;
                       }
@@ -385,7 +385,7 @@ const TextInput: React.ComponentType<React.PropsWithRef<
               onChange={onValueChange}
               ref={forwardRef}
               id={id}
-              autoComplete={disabled ? 'off' : rest?.autoComplete}
+              autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}
             />
           </InteractionRing>
 
