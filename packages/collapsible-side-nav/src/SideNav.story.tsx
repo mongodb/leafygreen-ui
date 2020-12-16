@@ -114,7 +114,7 @@ storiesOf('CollapsibleSideNav', module)
                 <SideNavItem>3rd Party Services</SideNavItem>
               </WithPath>
               <WithPath {...createItemProps('/secrets')}>
-                <SideNavItem>Values {'&'} Secrets</SideNavItem>
+                <SideNavItem>Values & Secrets</SideNavItem>
               </WithPath>
             </SideNavGroup>
             <SideNavGroup label="Manage" glyph={<SettingsIcon />}>

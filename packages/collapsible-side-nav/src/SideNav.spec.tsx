@@ -130,7 +130,7 @@ describe('packages/collapsible-side-nav', () => {
         },
       } as const;
 
-      test.each(Object.keys(actions))(
+      test.each(Object.keys(actions) as Array<keyof typeof actions>)(
         'collapses and expands when %s',
         action => {
           const { getByText, getByLabelText, queryByLabelText } = render(
@@ -303,10 +303,12 @@ describe('packages/collapsible-side-nav', () => {
         const { expectHovered } = expectCollapsed();
 
         const nav = container.querySelector('nav');
-        fireEvent.mouseOver(nav);
+        expect(nav).toBeVisible();
+
+        fireEvent.mouseOver(nav!);
         await waitFor(() => expectHovered());
 
-        fireEvent.mouseLeave(nav);
+        fireEvent.mouseLeave(nav!);
         await waitFor(() => expectCollapsed());
       });
     });
