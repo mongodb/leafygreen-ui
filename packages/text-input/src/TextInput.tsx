@@ -354,6 +354,17 @@ const TextInput: React.ComponentType<React.PropsWithRef<
                     background-color: ${colorSets[mode]
                       .disabledBackgroundColor};
                   }
+
+                  /* Change Autocomplete styles in Chrome*/
+                  &:-webkit-autofill,
+                  &:-webkit-autofill:hover,
+                  &:-webkit-autofill:focus {
+                    appearance: none;
+                    border: 1px solid ${colorSets[mode].disabledBackgroundColor};
+                    -webkit-text-fill-color: ${colorSets[mode].disabledColor};
+                    -webkit-box-shadow: 0 0 0px 1000px
+                      ${colorSets[mode].disabledBackgroundColor} inset;
+                  }
                 `,
                 {
                   [getStatefulInputStyles(state, optional, mode)]: !disabled,
@@ -371,6 +382,7 @@ const TextInput: React.ComponentType<React.PropsWithRef<
               onChange={onValueChange}
               ref={forwardRef}
               id={id}
+              autoComplete={disabled ? 'off' : 'on'}
             />
           </InteractionRing>
 
