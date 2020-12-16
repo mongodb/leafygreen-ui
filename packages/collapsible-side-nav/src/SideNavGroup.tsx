@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { IdAllocator } from '@leafygreen-ui/lib';
+import { IdAllocator, OneOf } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { SideNavContext, SideNavGroupContext } from './contexts';
 import { GlyphElement, transitionDurationMilliseconds } from './utils';
@@ -16,6 +16,9 @@ const sideNavGroupStyle = css`
 
 const sideNavGroupCollapsedStyle = css`
   margin: 0;
+`;
+
+const sideNavGroupWithGlyphCollapsedStyle = css`
   border-top-width: 1px;
 
   &:last-of-type {
@@ -41,8 +44,11 @@ const sideNavGroupHeaderStyle = css`
 `;
 
 const sideNavGroupHeaderCollapsedStyle = css`
-  height: 40px;
   margin-bottom: 0;
+`;
+
+const sideNavGroupHeaderWithGlyphCollapsedStyle = css`
+  height: 40px;
 `;
 
 const glyphStyle = css`
@@ -52,20 +58,20 @@ const glyphStyle = css`
   margin-right: 4px;
 `;
 
-interface Props {
+type Props = {
   className?: string;
   children: React.ReactNode;
-  label: string;
-  glyph: GlyphElement;
-}
+  glyph?: GlyphElement;
+} & OneOf<{ label: string }, { label: React.ReactNode; 'aria-label': string }>;
 
 const idAllocator = IdAllocator.create('side-nav-group');
 
 export default function SideNavGroup({
   className,
   children,
-  label,
   glyph,
+  label,
+  'aria-label': ariaLabel,
 }: Props) {
   const { collapsed, hovered, currentPath } = useContext(SideNavContext);
 
@@ -104,6 +110,7 @@ export default function SideNavGroup({
   ]);
 
   const showCollapsed = collapsed && !hovered;
+  const hasGlyph = glyph !== undefined;
   const containsCurrentPath =
     currentPath !== undefined && containedPaths.has(currentPath);
 
@@ -111,11 +118,16 @@ export default function SideNavGroup({
     <div
       role={showCollapsed ? undefined : 'group'}
       aria-labelledby={showCollapsed ? undefined : id}
-      aria-label={showCollapsed ? label : undefined}
+      aria-label={
+        showCollapsed
+          ? ariaLabel ?? (typeof label === 'string' ? label : undefined)
+          : undefined
+      }
       className={cx(
         sideNavGroupStyle,
         {
           [sideNavGroupCollapsedStyle]: showCollapsed,
+          [sideNavGroupWithGlyphCollapsedStyle]: hasGlyph && showCollapsed,
           [sideNavGroupCollapsedAndCurrentStyle]:
             showCollapsed && containsCurrentPath,
         },
@@ -127,9 +139,11 @@ export default function SideNavGroup({
         aria-hidden={showCollapsed}
         className={cx(sideNavGroupHeaderStyle, {
           [sideNavGroupHeaderCollapsedStyle]: showCollapsed,
+          [sideNavGroupHeaderWithGlyphCollapsedStyle]:
+            hasGlyph && showCollapsed,
         })}
       >
-        {glyph && <div className={glyphStyle}>{glyph}</div>}
+        {hasGlyph && <div className={glyphStyle}>{glyph}</div>}
         {!showCollapsed && label}
       </div>
       <SideNavGroupContext.Provider value={providerData}>
@@ -143,6 +157,7 @@ SideNavGroup.displayName = 'SideNavGroup';
 
 SideNavGroup.propTypes = {
   className: PropTypes.string,
-  label: PropTypes.string,
+  label: PropTypes.node,
+  'aria-label': PropTypes.string,
   glyph: PropTypes.element,
 };

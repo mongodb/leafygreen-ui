@@ -45,8 +45,9 @@ const buttonIconStyle = css`
   transition: opacity ${transitionDurationMilliseconds}ms ease-in-out;
 `;
 
-const inactivebuttonIconStyle = css`
+const inactiveButtonIconStyle = css`
   opacity: 0;
+  visibility: hidden;
 `;
 
 interface Props {
@@ -114,12 +115,12 @@ export default function CollapseButton({
     >
       <ChevronLeftIcon
         className={cx(buttonIconStyle, {
-          [inactivebuttonIconStyle]: collapsed,
+          [inactiveButtonIconStyle]: collapsed,
         })}
       />
       <ChevronRightIcon
         className={cx(buttonIconStyle, {
-          [inactivebuttonIconStyle]: !collapsed,
+          [inactiveButtonIconStyle]: !collapsed,
         })}
       />
     </IconButton>

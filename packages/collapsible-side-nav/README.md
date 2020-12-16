@@ -444,19 +444,21 @@ import {
 
 # SideNavGroup
 
-| Prop        | Type                 | Description                                      | Default |
-| ----------- | -------------------- | ------------------------------------------------ | ------- |
-| `className` | `string`             | The className applied to the outermost element.  |
-| `glyph`     | `React.ReactElement` | The icon to display in the group's header.       |
-| `label`     | `string`             | The label text to display in the group's header. |
+| Prop         | Type                 | Description                                      | Default                      |
+| ------------ | -------------------- | ------------------------------------------------ | ---------------------------- |
+| `className`  | `string`             | The className applied to the outermost element.  |
+| `glyph`      | `React.ReactElement` | The icon to display in the group's header.       |
+| `label`      | `node`               | The label text to display in the group's header. |
+| `aria-label` | `string`             | Must be provided if `label` is not a `string`.   | `label` when it's a `string` |
 
 # SideNavItem
 
-| Prop              | Type                                                   | Description                                                                                                                                | Default            |
-| ----------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
+| Prop              | Type                                                   | Description                                                                                                                                | Default                         |
+| ----------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------- |
 | `className`       | `string`                                               | The className applied to the outermost element.                                                                                            |
 | `glyph`           | `React.ReactElement`                                   | The icon to display for the item.                                                                                                          |
-| `glyphVisibility` | `'visible'` \| `'only-collapsed'` \| `'only-expanded'` | Value which indicates when the glyph should be visible.                                                                                    | `'only-collapsed'` |
+| `glyphVisibility` | `'visible'` \| `'only-collapsed'` \| `'only-expanded'` | Value which indicates when the glyph should be visible.                                                                                    | `'only-collapsed'`              |
 | `href`            | `string`                                               | The link that the anchor tag will navigate to.                                                                                             |
 | `path`            | `string`                                               | Renders the item as active when it corresponds to the `currentPath` prop of the containing `SideNav`.                                      |
 | `onClick`         | `function`                                             | Callback that is executed when the item is clicked which, for example, can be used to set the `currentPath` to be passed to the `SideNav`. |
+| `aria-label`      | `string`                                               | Must be provided if `children` is not a `string`.                                                                                          | `children` when it's a `string` |

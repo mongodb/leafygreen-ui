@@ -78,7 +78,11 @@ type Props = {
   path?: string;
   href?: string;
   onClick?: React.MouseEventHandler;
-} & OneOf<{ glyph: GlyphElement; glyphVisibility?: GlyphVisibility }, {}>;
+} & OneOf<{ glyph: GlyphElement; glyphVisibility?: GlyphVisibility }, {}> &
+  OneOf<
+    { children: string },
+    { 'aria-label': string; children: React.ReactNode }
+  >;
 
 export default function SideNavItem({
   className,
@@ -88,6 +92,7 @@ export default function SideNavItem({
   path,
   href,
   onClick,
+  'aria-label': ariaLabel,
 }: Props) {
   const { collapsed, hovered, currentPath } = useContext(SideNavContext);
   const groupContextData = useContext(SideNavGroupContext);
@@ -129,23 +134,29 @@ export default function SideNavItem({
 
   let showGlyph: boolean;
 
-  switch (glyphVisibility) {
-    case GlyphVisibility.OnlyCollapsed:
-      showGlyph = showCollapsed;
-      break;
-    case GlyphVisibility.OnlyExpanded:
-      showGlyph = !showCollapsed;
-      break;
-    case GlyphVisibility.Visible:
-      showGlyph = true;
-      break;
-    default:
-      enforceExhaustive(glyphVisibility);
+  if (hasGlyph) {
+    switch (glyphVisibility) {
+      case GlyphVisibility.OnlyCollapsed:
+        showGlyph = showCollapsed;
+        break;
+      case GlyphVisibility.OnlyExpanded:
+        showGlyph = !showCollapsed;
+        break;
+      case GlyphVisibility.Visible:
+        showGlyph = true;
+        break;
+      default:
+        enforceExhaustive(glyphVisibility);
+    }
+  } else {
+    showGlyph = false;
   }
 
   return (
     <a
-      aria-label={children?.toString()}
+      aria-label={
+        ariaLabel ?? (typeof children === 'string' ? children : undefined)
+      }
       aria-current={isActive ? AriaCurrentValue.Page : AriaCurrentValue.Unset}
       tabIndex={!isLink ? 0 : undefined}
       ref={setRef}
@@ -156,7 +167,7 @@ export default function SideNavItem({
           [sideNavItemActiveStyle]: isActive,
           [sideNavItemNonGroupStyle]: groupContextData === null,
           [sideNavItemCollapsedStyle]: showCollapsed,
-          [sideNavItemWithGlyphCollapsedStyle]: showCollapsed && hasGlyph,
+          [sideNavItemWithGlyphCollapsedStyle]: showCollapsed && showGlyph,
           [sideNavItemLinkStyle]: isLink,
         },
         className,
@@ -179,4 +190,5 @@ SideNavItem.propTypes = {
   onClick: PropTypes.func,
   glyph: PropTypes.element,
   glyphVisibility: PropTypes.oneOf(Object.values(GlyphVisibility)),
+  'aria-label': PropTypes.string,
 };
