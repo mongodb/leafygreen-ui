@@ -61,18 +61,21 @@ type Props = {
   | { collapsible: false; initialCollapsed?: undefined }
   | { collapsible?: true; initialCollapsed?: boolean }
 ) &
-  HTMLElementProps<'nav'>;
+  Omit<HTMLElementProps<'nav'>, 'ref'>;
 
 const idAllocator = IdAllocator.create('side-nav');
 
-export default function SideNav({
-  children,
-  className,
-  currentPath,
-  collapsible = true,
-  initialCollapsed = false,
-  ...navProps
-}: Props) {
+const SideNav = React.forwardRef<HTMLElement, Props>(function SideNav(
+  {
+    children,
+    className,
+    currentPath,
+    collapsible = true,
+    initialCollapsed = false,
+    ...rest
+  }: Props,
+  ref,
+) {
   const id = useMemo(() => idAllocator.generate(), []);
 
   const [collapsed, setCollapsed] = useState(initialCollapsed);
@@ -155,6 +158,7 @@ export default function SideNav({
       <div className={cx({ [collapsedSpacerStyle]: collapsed })} />
       {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
       <nav
+        ref={ref}
         aria-label="side-nav"
         className={cx(
           navStyle,
@@ -166,7 +170,7 @@ export default function SideNav({
         )}
         onMouseOver={collapsed ? onMouseOver : undefined}
         onMouseLeave={collapsed ? onMouseLeave : undefined}
-        {...navProps}
+        {...rest}
       >
         {collapsible && (
           <CollapseButton
@@ -185,13 +189,16 @@ export default function SideNav({
       </nav>
     </SideNavContext.Provider>
   );
-}
+});
+
+export default SideNav;
 
 SideNav.displayName = 'SideNav';
 
 SideNav.propTypes = {
   className: PropTypes.string,
   currentPath: PropTypes.string,
+  // @ts-expect-error PropTypes typing doesn't work well with OneOf
   collapsible: PropTypes.bool,
   initialCollapsed: PropTypes.bool,
 };

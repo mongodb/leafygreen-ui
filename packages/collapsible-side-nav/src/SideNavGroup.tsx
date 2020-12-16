@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { IdAllocator, OneOf } from '@leafygreen-ui/lib';
+import { HTMLElementProps, IdAllocator, OneOf } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { SideNavContext, SideNavGroupContext } from './contexts';
 import { GlyphElement, transitionDurationMilliseconds } from './utils';
@@ -62,102 +62,115 @@ type Props = {
   className?: string;
   children: React.ReactNode;
   glyph?: GlyphElement;
-} & OneOf<{ label: string }, { label: React.ReactNode; 'aria-label': string }>;
+} & OneOf<{ label: string }, { label: React.ReactNode; 'aria-label': string }> &
+  Omit<HTMLElementProps<'div'>, 'aria-label' | 'ref'>;
 
 const idAllocator = IdAllocator.create('side-nav-group');
 
-export default function SideNavGroup({
-  className,
-  children,
-  glyph,
-  label,
-  'aria-label': ariaLabel,
-}: Props) {
-  const { collapsed, hovered, currentPath } = useContext(SideNavContext);
+const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
+  function SideNavGroup(
+    {
+      className,
+      children,
+      glyph,
+      label,
+      'aria-label': ariaLabel,
+      ...rest
+    }: Props,
+    ref,
+  ) {
+    const { collapsed, hovered, currentPath } = useContext(SideNavContext);
 
-  const id = useMemo(() => idAllocator.generate(), []);
+    const id = useMemo(() => idAllocator.generate(), []);
 
-  const [containedPaths, setContainedPaths] = useState<Set<string>>(
-    () => new Set(),
-  );
+    const [containedPaths, setContainedPaths] = useState<Set<string>>(
+      () => new Set(),
+    );
 
-  const addPath = useCallback((path: string) => {
-    setContainedPaths(containedPaths => {
-      if (!containedPaths.has(path)) {
-        const updatedPaths = new Set(containedPaths);
-        return updatedPaths.add(path);
-      } else {
-        return containedPaths;
-      }
-    });
-  }, []);
+    const addPath = useCallback((path: string) => {
+      setContainedPaths(containedPaths => {
+        if (!containedPaths.has(path)) {
+          const updatedPaths = new Set(containedPaths);
+          return updatedPaths.add(path);
+        } else {
+          return containedPaths;
+        }
+      });
+    }, []);
 
-  const removePath = useCallback((path: string) => {
-    setContainedPaths(containedPaths => {
-      if (containedPaths.has(path)) {
-        const updatedPaths = new Set(containedPaths);
-        updatedPaths.delete(path);
-        return updatedPaths;
-      } else {
-        return containedPaths;
-      }
-    });
-  }, []);
+    const removePath = useCallback((path: string) => {
+      setContainedPaths(containedPaths => {
+        if (containedPaths.has(path)) {
+          const updatedPaths = new Set(containedPaths);
+          updatedPaths.delete(path);
+          return updatedPaths;
+        } else {
+          return containedPaths;
+        }
+      });
+    }, []);
 
-  const providerData = useMemo(() => ({ addPath, removePath }), [
-    addPath,
-    removePath,
-  ]);
+    const providerData = useMemo(() => ({ addPath, removePath }), [
+      addPath,
+      removePath,
+    ]);
 
-  const showCollapsed = collapsed && !hovered;
-  const hasGlyph = glyph !== undefined;
-  const containsCurrentPath =
-    currentPath !== undefined && containedPaths.has(currentPath);
+    const showCollapsed = collapsed && !hovered;
+    const hasGlyph = glyph !== undefined;
+    const containsCurrentPath =
+      currentPath !== undefined && containedPaths.has(currentPath);
 
-  return (
-    <div
-      role={showCollapsed ? undefined : 'group'}
-      aria-labelledby={showCollapsed ? undefined : id}
-      aria-label={
-        showCollapsed
-          ? ariaLabel ?? (typeof label === 'string' ? label : undefined)
-          : undefined
-      }
-      className={cx(
-        sideNavGroupStyle,
-        {
-          [sideNavGroupCollapsedStyle]: showCollapsed,
-          [sideNavGroupWithGlyphCollapsedStyle]: hasGlyph && showCollapsed,
-          [sideNavGroupCollapsedAndCurrentStyle]:
-            showCollapsed && containsCurrentPath,
-        },
-        className,
-      )}
-    >
+    return (
       <div
-        id={id}
-        aria-hidden={showCollapsed}
-        className={cx(sideNavGroupHeaderStyle, {
-          [sideNavGroupHeaderCollapsedStyle]: showCollapsed,
-          [sideNavGroupHeaderWithGlyphCollapsedStyle]:
-            hasGlyph && showCollapsed,
-        })}
+        ref={ref}
+        role={showCollapsed ? undefined : 'group'}
+        aria-labelledby={showCollapsed ? undefined : id}
+        aria-label={
+          showCollapsed
+            ? ariaLabel ?? (typeof label === 'string' ? label : undefined)
+            : undefined
+        }
+        className={cx(
+          sideNavGroupStyle,
+          {
+            [sideNavGroupCollapsedStyle]: showCollapsed,
+            [sideNavGroupWithGlyphCollapsedStyle]: hasGlyph && showCollapsed,
+            [sideNavGroupCollapsedAndCurrentStyle]:
+              showCollapsed && containsCurrentPath,
+          },
+          className,
+        )}
+        {...rest}
       >
-        {hasGlyph && <div className={glyphStyle}>{glyph}</div>}
-        {!showCollapsed && label}
+        <div
+          id={id}
+          aria-hidden={showCollapsed}
+          className={cx(sideNavGroupHeaderStyle, {
+            [sideNavGroupHeaderCollapsedStyle]: showCollapsed,
+            [sideNavGroupHeaderWithGlyphCollapsedStyle]:
+              hasGlyph && showCollapsed,
+          })}
+        >
+          {hasGlyph && <div className={glyphStyle}>{glyph}</div>}
+          {!showCollapsed && label}
+        </div>
+        <SideNavGroupContext.Provider value={providerData}>
+          {children}
+        </SideNavGroupContext.Provider>
       </div>
-      <SideNavGroupContext.Provider value={providerData}>
-        {children}
-      </SideNavGroupContext.Provider>
-    </div>
-  );
-}
+    );
+  },
+);
+
+export default SideNavGroup;
 
 SideNavGroup.displayName = 'SideNavGroup';
 
 SideNavGroup.propTypes = {
   className: PropTypes.string,
   label: PropTypes.node,
+  // @ts-expect-error PropTypes typing doesn't work well with OneOf
   'aria-label': PropTypes.string,
+  // @ts-expect-error PropTypes typing doesn't work well with OneOf
   glyph: PropTypes.element,
 };

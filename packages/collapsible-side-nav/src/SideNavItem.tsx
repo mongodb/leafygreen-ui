@@ -1,7 +1,12 @@
 import React, { useCallback, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { AriaCurrentValue, enforceExhaustive, OneOf } from '@leafygreen-ui/lib';
+import {
+  AriaCurrentValue,
+  enforceExhaustive,
+  HTMLElementProps,
+  OneOf,
+} from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import { SideNavContext, SideNavGroupContext } from './contexts';
 import {
@@ -74,26 +79,28 @@ const sideNavItemWithGlyphCollapsedStyle = css`
 
 type Props = {
   className?: string;
-  children: React.ReactNode;
   path?: string;
-  href?: string;
-  onClick?: React.MouseEventHandler;
 } & OneOf<{ glyph: GlyphElement; glyphVisibility?: GlyphVisibility }, {}> &
   OneOf<
     { children: string },
     { 'aria-label': string; children: React.ReactNode }
-  >;
+  > &
+  Omit<HTMLElementProps<'a'>, 'ref'>;
 
-export default function SideNavItem({
-  className,
-  children,
-  glyph,
-  glyphVisibility = GlyphVisibility.OnlyCollapsed,
-  path,
-  href,
-  onClick,
-  'aria-label': ariaLabel,
-}: Props) {
+const SideNavItem = React.forwardRef(function SideNavItem(
+  {
+    className,
+    children,
+    glyph,
+    glyphVisibility = GlyphVisibility.OnlyCollapsed,
+    path,
+    href,
+    onClick,
+    'aria-label': ariaLabel,
+    ...rest
+  }: Props,
+  refProp,
+) {
   const { collapsed, hovered, currentPath } = useContext(SideNavContext);
   const groupContextData = useContext(SideNavGroupContext);
 
@@ -123,8 +130,14 @@ export default function SideNavItem({
       if (ref === null && path !== undefined) {
         removePath(path);
       }
+
+      if (typeof refProp === 'function') {
+        refProp(ref);
+      } else if (refProp) {
+        refProp.current = ref;
+      }
     },
-    [groupContextData, path],
+    [groupContextData, path, refProp],
   );
 
   const isActive = path !== undefined && currentPath === path;
@@ -174,12 +187,15 @@ export default function SideNavItem({
       )}
       href={href}
       onClick={onClick}
+      {...rest}
     >
       {showGlyph && glyph}
       {!showCollapsed && children}
     </a>
   );
-}
+});
+
+export default SideNavItem;
 
 SideNavItem.displayName = 'SideNavItem';
 
@@ -188,7 +204,10 @@ SideNavItem.propTypes = {
   path: PropTypes.string,
   href: PropTypes.string,
   onClick: PropTypes.func,
+  // @ts-expect-error PropTypes typing doesn't work well with OneOf
   glyph: PropTypes.element,
+  // @ts-expect-error PropTypes typing doesn't work well with OneOf
   glyphVisibility: PropTypes.oneOf(Object.values(GlyphVisibility)),
+  // @ts-expect-error PropTypes typing doesn't work well with OneOf
   'aria-label': PropTypes.string,
 };
