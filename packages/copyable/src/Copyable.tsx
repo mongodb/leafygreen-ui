@@ -248,11 +248,6 @@ export default function Copyable({
               border-color: ${colorSet.code.border};
             `,
             { [largeCodeStyle]: size === Size.Large },
-            {
-              [css`
-                border-radius: 0 4px 4px 0;
-              `]: showCopyButton,
-            },
           )}
         >
           {children}
