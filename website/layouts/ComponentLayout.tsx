@@ -20,10 +20,9 @@ const layout = css`
   margin-top: 72px;
 
   ${mq({
-  width: ['100%', '100%', '700px', '700px'],
-})}
+    width: ['100%', '100%', '700px', '700px'],
+  })}
 `;
-
 
 const componentsStyle = css`
   height: 16px;

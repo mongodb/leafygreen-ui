@@ -1,7 +1,8 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import { css } from 'emotion';
-import { uiColors } from "@leafygreen-ui/palette";
+import { uiColors } from '@leafygreen-ui/palette';
 import { Overline, Subtitle, H2 } from '@leafygreen-ui/typography';
 
 const newsContainer = css`
@@ -10,7 +11,28 @@ const newsContainer = css`
   flex-direction: column;
   justify-content: center;
   padding-bottom: 24px;
-`
+`;
+
+const subtitleStyle = css`
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bolder;
+  display: inline-flex;
+  align-items: center;
+
+  &:hover {
+    & > svg {
+      opacity: 1;
+      transform: translate3d(3px, 0, 0px);
+    }
+  }
+`;
+
+const iconStyle = css`
+  opacity: 0;
+  transform: translate3d(-3px, 0, 0px);
+  transition: all 100ms ease-in;
+`;
 
 interface UpdateProps {
   date: string;
@@ -25,29 +47,16 @@ function Update({ date, story, path, href }: UpdateProps) {
 
   if (path) {
     renderedStory = (
-      <Subtitle
-        as="p"
-        className={css`
-          cursor: pointer;
-          font-weight: bolder;
-        `}
-        onClick={() => push(path)}
-      >
+      <Subtitle as="p" className={subtitleStyle} onClick={() => push(path)}>
         {story}
+        <ArrowRightIcon className={iconStyle} />
       </Subtitle>
     );
   } else {
     renderedStory = (
-      <Subtitle
-        as="a"
-        className={css`
-          cursor: pointer;
-          text-decoration: none;
-          font-weight: bolder;
-        `}
-        href={href}
-      >
+      <Subtitle as="a" className={subtitleStyle} href={href}>
         {story}
+        <ArrowRightIcon className={iconStyle} />
       </Subtitle>
     );
   }
@@ -58,7 +67,13 @@ function Update({ date, story, path, href }: UpdateProps) {
         margin-top: 28px;
       `}
     >
-      <Overline className={css`color: ${uiColors.gray.dark1}`}>{date}</Overline>
+      <Overline
+        className={css`
+          color: ${uiColors.gray.dark1};
+        `}
+      >
+        {date}
+      </Overline>
       {renderedStory}
     </div>
   );
@@ -66,9 +81,7 @@ function Update({ date, story, path, href }: UpdateProps) {
 
 function News() {
   return (
-    <div
-      className={newsContainer}
-    >
+    <div className={newsContainer}>
       <H2 as="h1">Whats New</H2>
       <Update
         date="December 8, 2020"
@@ -85,7 +98,6 @@ function News() {
         story="Installing LeafyGreen in Figma"
         path=""
       />
-
     </div>
   );
 }

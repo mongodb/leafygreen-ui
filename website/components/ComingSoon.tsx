@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image'
+import Image from 'next/image';
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Subtitle } from '@leafygreen-ui/typography';
@@ -23,7 +23,9 @@ const subtitleStyle = css`
 function ComingSoon() {
   return (
     <div className={containerStyle}>
-      <Subtitle as="p" className={subtitleStyle}>Coming soon!</Subtitle>
+      <Subtitle as="p" className={subtitleStyle}>
+        Coming soon!
+      </Subtitle>
       <Image src="/images/coming-soon.gif" unsized />
     </div>
   );
