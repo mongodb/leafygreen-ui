@@ -82,6 +82,8 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
   const activeType = router.asPath.split('/')[1] as GroupType;
   const activePage = router.asPath.split('/')[2];
 
+
+
   const renderGroup = (type: GroupType) => {
     const isGuideline = type === GroupType.Guideline;
     const items = isGuideline ? coreGuidelines : components;
@@ -116,8 +118,8 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
       <SideNavGroup
         key={type}
         header={isGuideline ? 'Core Guidelines' : 'Components'}
-        collapsible
-        initialCollapsed={false}
+      // collapsible
+      // initialCollapsed={false}
       >
         {items.map(item => {
           const path =
