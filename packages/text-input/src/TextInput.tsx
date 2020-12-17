@@ -352,7 +352,7 @@ const TextInput: React.ComponentType<React.PropsWithRef<
                   &:disabled {
                     color: ${colorSets[mode].disabledColor};
                     background-color: ${colorSets[mode]
-                    .disabledBackgroundColor};
+                      .disabledBackgroundColor};
 
                     &:-webkit-autofill {
                       &,
@@ -361,7 +361,7 @@ const TextInput: React.ComponentType<React.PropsWithRef<
                         appearance: none;
                         border: 1px solid ${colorSets[mode].defaultBorder};
                         -webkit-text-fill-color: ${colorSets[mode]
-                    .disabledColor};
+                          .disabledColor};
                         -webkit-box-shadow: 0 0 0px 1000px
                           ${colorSets[mode].disabledBackgroundColor} inset;
                       }
