@@ -98,6 +98,7 @@ export const keyMap = {
   ArrowDown: 40,
   ArrowLeft: 37,
   ArrowRight: 39,
+  BracketLeft: 219,
   Enter: 13,
   Escape: 27,
   Space: 32,

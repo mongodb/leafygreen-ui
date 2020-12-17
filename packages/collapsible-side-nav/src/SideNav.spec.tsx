@@ -126,7 +126,10 @@ describe('packages/collapsible-side-nav', () => {
           });
         },
         'pressing "[" key': () => {
-          fireEvent.keyDown(document, { key: 'BracketLeft', keyCode: 219 });
+          fireEvent.keyDown(document, {
+            key: 'BracketLeft',
+            keyCode: keyMap.BracketLeft,
+          });
         },
       } as const;
 

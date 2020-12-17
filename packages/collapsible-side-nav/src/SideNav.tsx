@@ -4,7 +4,7 @@ import debounce from 'lodash/debounce';
 import { transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useEventListener } from '@leafygreen-ui/hooks';
-import { HTMLElementProps, IdAllocator } from '@leafygreen-ui/lib';
+import { HTMLElementProps, IdAllocator, keyMap } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import CollapseButton from './CollapseButton';
 import { SideNavContext } from './contexts';
@@ -129,7 +129,7 @@ const SideNav = React.forwardRef<HTMLElement, Props>(function SideNav(
   useEventListener(
     'keydown',
     event => {
-      if (event.keyCode === 219 /* BracketLeft */) {
+      if (keyMap.BracketLeft) {
         event.preventDefault();
         event.stopImmediatePropagation();
         toggleCollapse();
