@@ -174,29 +174,43 @@ const buttonVariants: { readonly [K in Variant]: string } = {
   `,
 };
 
-const buttonSizes: Record<Size, string> = {
+const interactionRingSizes: Record<Size, string> = {
   [Size.XSmall]: css`
     height: 22px;
+  `,
+
+  [Size.Small]: css`
+    height: 25px;
+  `,
+
+  [Size.Normal]: css`
+    height: 32px;
+  `,
+
+  [Size.Large]: css`
+    height: 48px;
+  `,
+} as const;
+
+const buttonSizes: Record<Size, string> = {
+  [Size.XSmall]: css`
     font-size: 11px;
     text-transform: uppercase;
     font-weight: bold;
   `,
 
   [Size.Small]: css`
-    height: 25px;
     font-size: 14px;
   `,
 
   [Size.Normal]: css`
-    height: 32px;
     font-size: 14px;
   `,
 
   [Size.Large]: css`
-    height: 48px;
     font-size: 16px;
   `,
-} as const;
+};
 
 const spanSizes: Record<Size, string> = {
   [Size.XSmall]: css`
@@ -262,7 +276,6 @@ const baseStyle = css`
   transition: all 120ms ease;
   user-select: none;
   padding: 0;
-  overflow: hidden;
 
   &:focus {
     outline: none;
@@ -284,6 +297,7 @@ const baseStyle = css`
     bottom: 0;
     left: 0;
     right: 0;
+    border-radius: 2px;
   }
 
   &:not(:disabled) {
@@ -352,12 +366,18 @@ const Button: ExtendableBox<
       ref,
       className: cx(
         baseStyle,
+        buttonSizes[size],
         buttonVariants[variant],
         { [disabledStyle]: disabled },
         { [focusStyle]: showFocus },
         {
           [css`
             border-radius: ${borderRadius};
+
+            &:before,
+            &:after {
+              border-radius: calc(${borderRadius} - 1px);
+            }
           `]: borderRadius !== undefined,
         },
         {
@@ -428,8 +448,8 @@ const Button: ExtendableBox<
 
     return (
       <InteractionRing
-        className={cx(buttonSizes[size], className)}
-        borderRadius={borderRadius}
+        className={cx(interactionRingSizes[size], className)}
+        borderRadius={borderRadius ?? '3px'}
         darkMode={darkMode}
         disabled={disabled}
         forceState={forceState}

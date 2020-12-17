@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-box-group
 
+## 5.0.1
+
+### Patch Changes
+
+- 6e26200a: Small correction to border radius of the interaction ring for hover and focused states
+
 ## 5.0.0
 
 ### Major Changes

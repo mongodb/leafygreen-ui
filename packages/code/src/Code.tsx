@@ -214,7 +214,7 @@ type DetailedElementProps<T> = React.DetailedHTMLProps<
  *
  * ```
 <Code>Hello world!</Code>
-	```
+  ```
  * ---
  * @param props.children The string to be formatted.
  * @param props.className An additional CSS class added to the root element of Code.
@@ -379,6 +379,9 @@ function Code({
           className={wrapperClassName}
           onScroll={onScroll}
           ref={scrollableElementRef}
+          // Adds to Tab order when content is scrollable, otherwise overflowing content is inaccessible via keyboard navigation
+          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+          tabIndex={scrollState !== ScrollState.None ? 0 : -1}
         >
           {renderedSyntaxComponent}
         </pre>

@@ -19,7 +19,7 @@ const navContainer = css`
 
 const logoStyles = css`
   // adds back spacing that was already built into side nav
-  margin: 12px 0 ${spacing[4]} px ${spacing[3]} px;
+  margin: 12px 0 ${spacing[4]}px ${spacing[3]}px;
 `;
 
 const coreGuidelines = [
@@ -138,7 +138,7 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
     );
   };
 
-  return <>{[GroupType.Guideline, GroupType.Component].map(renderGroup)}</>;
+  return renderGroup(GroupType.Component);
 }
 
 function Navigation() {
@@ -157,7 +157,11 @@ function Navigation() {
   return (
     <nav className={navContainer}>
       <MDBDesignLogo className={logoStyles} onClick={() => push('/')} />
-      <SideNav>
+      <SideNav
+        className={css`
+          margin-top: ${spacing[4]}px;
+        `}
+      >
         <Content />
       </SideNav>
     </nav>

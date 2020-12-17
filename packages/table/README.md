@@ -68,11 +68,11 @@ import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 
 # Row
 
-| Prop       | Type                                | Description                                                                  | Default |
-| ---------- | ----------------------------------- | ---------------------------------------------------------------------------- | ------- |
-| `disabled` | `boolean`                           | Determines whether or not the row is disabled                                | `false` |
-| `expanded` | `boolean`                           | Determines whether or not the row is expanded on first render                | `false` |
-| ...        | `React.ComponentPropsWithRef<'tr'>` | Any property that can be passed to a `tr` element will be spread on the root |         |
+| Prop       | Type                   | Description                                                                  | Default |
+| ---------- | ---------------------- | ---------------------------------------------------------------------------- | ------- |
+| `disabled` | `boolean`              | Determines whether or not the row is disabled                                | `false` |
+| `expanded` | `boolean`              | Determines whether or not the row is expanded on first render                | `false` |
+| ...        | native `tr` attributes | Any property that can be passed to a `tr` element will be spread on the root |         |
 
 # Cell
 

@@ -13,7 +13,7 @@ import {
 } from './types';
 
 const storybookStyles = css`
-  position: fixed;
+  position: absolute;
   top: 0;
 
   width: 100%;
@@ -79,6 +79,13 @@ storiesOf('MongoNav', module).add('Default', () => {
               useCNRegionsOnly: boolean(
                 'dataFixtures.currentProject.useCNRegionsOnly',
                 false,
+              ),
+            },
+            account: {
+              hasLegacy2fa: boolean('dataFixtures.account.hasLegacy2fa', true),
+              shouldSeeAccountMfaBanner: boolean(
+                'dataFixtures.account.shouldSeeAccountMfaBanner',
+                true,
               ),
             },
           }}

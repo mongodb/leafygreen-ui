@@ -1,5 +1,30 @@
 # @leafygreen-ui/mongo-nav
 
+## 5.1.0
+
+### Minor Changes
+
+- 1d8f922f: Adds banner to advertise Account MFA. Renames Two-Factor Authentication -> Legacy 2FA and removes this menu item for users that do not already have it set up.
+
+## 5.0.1
+
+### Patch Changes
+
+- 4911e893: Adds missing data-testid attributes to All Clusters and Admin links in OrgNav
+- 1e2de22a: Resolves issue where "More" menu would appear behind the nav when a z-index was set on the nav.
+- Updated dependencies [572ced14]
+- Updated dependencies [6e26200a]
+- Updated dependencies [78c60261]
+- Updated dependencies [fc18e572]
+  - @leafygreen-ui/button@10.0.1
+  - @leafygreen-ui/typography@7.3.0
+
+## 5.0.0
+
+### Major Changes
+
+- 9a92418e: Allows Realm and Charts icons to be disabled in MongoNav when an Atlas project is designated as a China regions-only project.
+
 ## 4.2.0
 
 ### Minor Changes

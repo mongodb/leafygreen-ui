@@ -85,7 +85,9 @@ function VersionCard({
   return (
     <Card className={cx(topAlignment, versionCard)}>
       {/* TODO: Provide fallback if no version */}
-      <Subtitle className={subtitlePadding}>Version {version}</Subtitle>
+      <Subtitle as="h2" className={subtitlePadding}>
+        Version {version}
+      </Subtitle>
       <Button
         size={isMobile ? 'large' : 'normal'}
         glyph={<ActivityFeedIcon />}
@@ -113,7 +115,7 @@ function MobileInstall({ component, version, changelog }: InstallProps) {
     <GridContainer>
       <GridItem sm={12}>
         <div className={mobileInstallMargin}>
-          <Subtitle>Installation</Subtitle>
+          <Subtitle as="h2">Installation</Subtitle>
           <Body weight="medium" className={mt3}>
             Yarn
           </Body>
@@ -140,6 +142,7 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
         <GridItem md={7} lg={7}>
           <div className={topAlignment}>
             <Subtitle
+              as="h2"
               className={css`
                 margin-bottom: ${spacing[3]}px;
               `}
@@ -201,17 +204,13 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
           <Tabs className={tabsPadding}>
             {example && (
               <Tab default name="Example" className={mt3}>
-                <Code showLineNumbers language="js">
-                  {example}
-                </Code>
+                <Code language="js">{example}</Code>
               </Tab>
             )}
 
             {outputHTML && (
               <Tab name="Output HTML" className={mt3} default={!example}>
-                <Code showLineNumbers language="xml">
-                  {outputHTML}
-                </Code>
+                <Code language="xml">{outputHTML}</Code>
               </Tab>
             )}
           </Tabs>

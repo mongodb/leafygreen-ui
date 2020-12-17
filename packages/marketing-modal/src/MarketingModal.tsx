@@ -72,7 +72,7 @@ const footerContentStyle = css`
   justify-content: center;
 
   & > * {
-    padding: 4px;
+    margin: 4px;
   }
 `;
 

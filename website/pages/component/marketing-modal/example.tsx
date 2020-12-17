@@ -58,12 +58,12 @@ export default function MarketingModalLiveExample() {
               graphicStyle === GraphicStyle.Center ? (
                 <img
                   alt=""
-                  src="/assets/examples/DataLake.png"
+                  src="/images/examples/DataLake.png"
                   width={275}
                   height={220}
                 />
               ) : (
-                <img alt="" src="/assets/examples/Realm_Rebrand_Image.png" />
+                <img alt="" src="/images/examples/Realm_Rebrand_Image.png" />
               )
             }
             graphicStyle={graphicStyle}

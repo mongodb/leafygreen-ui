@@ -1,6 +1,7 @@
 import React from 'react';
-import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
+import { css } from 'emotion';
 import Button from '@leafygreen-ui/button';
+import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
@@ -50,7 +51,19 @@ export default function TooltipLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
       {props => (
-        <Tooltip {...props} trigger={<Button>Linked Data Sources</Button>}>
+        <Tooltip
+          {...props}
+          trigger={
+            <Button
+              variant="dark"
+              className={css`
+                position: relative;
+              `}
+            >
+              Linked Data Sources
+            </Button>
+          }
+        >
           Your clusters and data lakes.
         </Tooltip>
       )}
