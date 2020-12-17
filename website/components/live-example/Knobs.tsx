@@ -217,13 +217,11 @@ function Select({
   };
 
   const generateOptionsCallback = () => {
-    return options
-      .sort((a, b) => a.localeCompare(b))
-      .map(option => (
-        <Option key={option} value={option}>
-          {option}
-        </Option>
-      ));
+    return options.map(option => (
+      <Option key={option} value={option}>
+        {option}
+      </Option>
+    ));
   };
 
   const generateOptions = React.useCallback(generateOptionsCallback, [options]);

@@ -8,7 +8,7 @@ export default function Documentation({ changelog, readme }: BaseLayoutProps) {
   return <CodeDocs component="select" changelog={changelog} readme={readme} />;
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = () => {
   const props = getComponentResources('select');
   return props;
 };

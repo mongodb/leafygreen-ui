@@ -5,7 +5,7 @@ import { Subtitle, InlineCode } from '@leafygreen-ui/typography/dist';
 import { OneOf } from '@leafygreen-ui/lib';
 import PropDefinition from 'components/PropDefinition';
 import TypographyPropTable from 'components/TypographyPropTable';
-import { formatType } from 'utils/formatType';
+import formatType from 'utils/formatType';
 
 const subtitleBottomMargin = css`
   margin-bottom: 24px;
@@ -234,7 +234,9 @@ function PropTable({
                   <Row key={datum.prop.value}>
                     <Cell className={verticalAlign}>{formatProp(datum)}</Cell>
                     <Cell className={verticalAlign}>
-                      {formatType(datum.type.value, datum.type.url)}
+                      {typeof datum.type.value === 'string'
+                        ? formatType(datum.type.value, datum.type.url)
+                        : null}
                     </Cell>
                     <Cell className={verticalAlign}>
                       {datum.description.value}

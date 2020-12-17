@@ -4,7 +4,7 @@ import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
   as: 'div' | 'span' | 'button';
-  href: boolean;
+  hasHrefProp: boolean;
   children: string;
 }> = {
   as: {
@@ -18,7 +18,7 @@ const knobsConfig: KnobsConfigInterface<{
     default: 'Box component',
     label: 'Children',
   },
-  href: {
+  hasHrefProp: {
     type: 'boolean',
     default: false,
     label: 'href',
@@ -28,10 +28,13 @@ const knobsConfig: KnobsConfigInterface<{
 export default function BoxLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {({ as, children, href }) => {
-        if (href) {
-          // @ts-expect-error
-          return <Box href={href}>{children}</Box>;
+      {({ as, children, hasHrefProp }) => {
+        if (hasHrefProp) {
+          return (
+            <Box as="a" href="https://cloud.mongodb.com">
+              {children}
+            </Box>
+          );
         }
 
         return <Box as={as}>{children}</Box>;

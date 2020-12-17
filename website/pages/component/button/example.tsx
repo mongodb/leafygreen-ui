@@ -9,7 +9,7 @@ const knobsConfig: KnobsConfigInterface<{
   size: Size;
   glyph: string;
   children: React.ReactNode;
-  href: boolean;
+  hasHrefProp: boolean;
   title: string;
 }> = {
   variant: {
@@ -29,7 +29,7 @@ const knobsConfig: KnobsConfigInterface<{
     default: false,
     label: 'Disabled',
   },
-  href: {
+  hasHrefProp: {
     type: 'boolean',
     default: false,
     label: 'href',
@@ -56,9 +56,9 @@ export default function ButtonLiveExample() {
   return (
     <>
       <LiveExample knobsConfig={knobsConfig}>
-        {({ glyph, href, ...props }) => (
+        {({ glyph, hasHrefProp, ...props }) => (
           <Button
-            href={href ? 'https://cloud.mongodb.com' : undefined}
+            href={hasHrefProp ? 'https://cloud.mongodb.com' : undefined}
             glyph={<Icon glyph={glyph} />}
             {...props}
           />

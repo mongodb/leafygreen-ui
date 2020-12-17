@@ -3,7 +3,7 @@ import { css } from 'emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { InlineCode } from '@leafygreen-ui/typography';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
-import { formatType } from 'utils/formatType';
+import formatType from 'utils/formatType';
 
 interface PropDefinitionProps {
   defaultValue: string;
