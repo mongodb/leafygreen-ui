@@ -5,6 +5,7 @@ import { Subtitle, InlineCode } from '@leafygreen-ui/typography/dist';
 import { OneOf } from '@leafygreen-ui/lib';
 import PropDefinition from 'components/PropDefinition';
 import TypographyPropTable from 'components/TypographyPropTable';
+import { formatType } from 'utils/formatType';
 
 const subtitleBottomMargin = css`
   margin-bottom: 24px;
@@ -162,6 +163,16 @@ function PropTable({
     tableData.shift();
   }
 
+  const formatHeader = (string: string) => {
+    const header = string.replace(/ /g, '');
+
+    if (header.toLowerCase() === 'advancedusecase') {
+      return 'Advanced Use Case';
+    }
+
+    return `${header} Props`;
+  };
+
   const formatProp = (datum: TableDataInterface) => {
     if (datum.prop.value === '...') {
       return datum.prop.value;
@@ -196,7 +207,7 @@ function PropTable({
         return (
           <div key={index}>
             <Subtitle className={subtitleBottomMargin} as="h3">
-              {header.replace(/ /g, '')} Props
+              {formatHeader(header)}
             </Subtitle>
 
             {tableData[index] && (
@@ -223,9 +234,7 @@ function PropTable({
                   <Row key={datum.prop.value}>
                     <Cell className={verticalAlign}>{formatProp(datum)}</Cell>
                     <Cell className={verticalAlign}>
-                      <InlineCode href={datum.type.url}>
-                        {datum.type.value}
-                      </InlineCode>
+                      {formatType(datum.type.value, datum.type.url)}
                     </Cell>
                     <Cell className={verticalAlign}>
                       {datum.description.value}

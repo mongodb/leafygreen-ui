@@ -32,12 +32,12 @@ useEventListener('click', handleClick, { enabled });
 
 | Prop                    | Type                                       | Description                                                                                                                                                                    | Default           |
 | ----------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------- |
-| `type`                  | `Global Event Handler` or `string`         | Type of event to listen for.                                                                                                                                                   |                   |
+| `type`                  | `Global Event Handler`, `string`           | Type of event to listen for.                                                                                                                                                   |                   |
 | `eventCallback`         | `function`                                 | Callback executed when event is triggered.                                                                                                                                     |                   |  | `optional` | `object` | Optional third argument passed to function with implementation specifications. |  |
 | `optional.options`      | `AddEventListenerOptions` excluding `once` | Parameter to specify options passed to the eventListener. To enable the `once` option, see `optional.enabled`.                                                                 |                   |
-| `optional.enabled`      | `boolean` or `"once"`                      | Determines whether the event handler is attached or not. Setting this to `"once"` will ensure the event handler will be detached after the initial time an event is triggered. | `true`            |
+| `optional.enabled`      | `boolean`, `'once'`                        | Determines whether the event handler is attached or not. Setting this to `"once"` will ensure the event handler will be detached after the initial time an event is triggered. | `true`            |
 | `optional.dependencies` | `Array`                                    | Array to be passed to useEffect hook, such that the hook will only run if the array's values have changed.                                                                     | `[enabled, type]` |
-| `optional.element`      | `Document` or `HTMLElement`                | The DOM node to attach the event handler to. Defaults to `document`.                                                                                                           | `document`        |
+| `optional.element`      | `Document`, `HTMLElement`                  | The DOM node to attach the event handler to. Defaults to `document`.                                                                                                           | `document`        |
 
 ## useEscapeKey
 
@@ -75,12 +75,12 @@ const lastTimeContentElMutated = useMutationObserver(
 
 ### Properties
 
-| Prop       | Type                    | Description                                                                                                                                        | Default |
-| ---------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `target`   | `HTMLElement` or `null` | `HTMLElement` to subscribe to changes to.                                                                                                          |         |
-| `options`  | `MutationObserverInit`  | Object with information about what DOM changes to subscribe to. [Docs here](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserverInit) |         |
-| `callback` | `function`              | Callback function to execute inside of MutationObserver instance.                                                                                  |         |
-| `enabled`  | `boolean`               | Determines whether the event handler is attached or not.                                                                                           | `true`  |
+| Prop       | Type                   | Description                                                                                                                                        | Default |
+| ---------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `target`   | `HTMLElement`, `null`  | `HTMLElement` to subscribe to changes to.                                                                                                          |         |
+| `options`  | `MutationObserverInit` | Object with information about what DOM changes to subscribe to. [Docs here](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserverInit) |         |
+| `callback` | `function`             | Callback function to execute inside of MutationObserver instance.                                                                                  |         |
+| `enabled`  | `boolean`              | Determines whether the event handler is attached or not.                                                                                           | `true`  |
 
 ## useViewportSize
 
