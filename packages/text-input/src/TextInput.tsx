@@ -359,8 +359,7 @@ const TextInput: React.ComponentType<React.PropsWithRef<
                       &:hover,
                       &:focus {
                         appearance: none;
-                        border: 1px solid
-                          ${colorSets[mode].disabledBackgroundColor};
+                        border: 1px solid ${colorSets[mode].defaultBorder};
                         -webkit-text-fill-color: ${colorSets[mode]
                           .disabledColor};
                         -webkit-box-shadow: 0 0 0px 1000px
