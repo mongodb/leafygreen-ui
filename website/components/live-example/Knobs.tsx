@@ -3,6 +3,7 @@ import { IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
+import { Select as LGUISelect, Option } from '@leafygreen-ui/select';
 import TextInput from '@leafygreen-ui/text-input';
 import TextArea from '@leafygreen-ui/text-area';
 import Toggle from '@leafygreen-ui/toggle';
@@ -17,7 +18,7 @@ const knobContainerStyle = css`
   display: flex;
   flex-grow: 1;
   justify-content: space-between;
-  margin-bottom: ${spacing[4]}px;
+  padding: ${spacing[3]}px 0px;
 `;
 
 const labelStyle = css`
@@ -78,15 +79,6 @@ export interface BasicSelectInterface extends KnobInterface {
   onChange: (value: string, prop: string) => void;
   value: string;
   options: Array<string>;
-}
-
-export interface GlyphSelectInterface {
-  onChange: (value: string, prop: string) => void;
-  value: React.ReactElement;
-  options: Array<string>;
-  label: string;
-  prop: 'glyph';
-  darkMode: boolean;
 }
 
 function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
@@ -217,27 +209,24 @@ function Select({
   prop,
   options,
   darkMode,
-}: BasicSelectInterface | GlyphSelectInterface) {
+}: BasicSelectInterface) {
   const labelId = useMemo(() => selectIdAllocator.generate(), []);
 
-  const handleChange = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
-    onChange(target.value, prop);
+  const handleChange = (value: string) => {
+    onChange(value, prop);
   };
 
   const generateOptionsCallback = () => {
     return options
       .sort((a, b) => a.localeCompare(b))
       .map(option => (
-        <option key={option} value={option} selected={option === value}>
+        <Option key={option} value={option}>
           {option}
-        </option>
+        </Option>
       ));
   };
 
-  const generateOptions = React.useCallback(generateOptionsCallback, [
-    options,
-    value,
-  ]);
+  const generateOptions = React.useCallback(generateOptionsCallback, [options]);
 
   return (
     <div className={knobContainerStyle}>
@@ -247,10 +236,14 @@ function Select({
       >
         {label}
       </label>
-      {/* eslint-disable-next-line jsx-a11y/no-onchange */}
-      <select aria-labelledby={labelId} onChange={handleChange}>
+      <LGUISelect
+        aria-labelledby={labelId}
+        onChange={handleChange}
+        darkMode={darkMode}
+        value={value}
+      >
         {generateOptions()}
-      </select>
+      </LGUISelect>
     </div>
   );
 }

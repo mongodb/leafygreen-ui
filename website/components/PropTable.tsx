@@ -183,7 +183,7 @@ function PropTable({
         prop={datum.prop.value ?? ''}
         type={datum.type.value ?? ''}
         description={datum.description.value ?? ''}
-        defaultValue={datum.default.value ?? ''}
+        defaultValue={datum.default?.value ?? ''}
       />
     );
   };
@@ -193,7 +193,7 @@ function PropTable({
       return '-';
     }
 
-    return <InlineCode>{datum.default.value}</InlineCode>;
+    return <InlineCode>{datum.default?.value}</InlineCode>;
   };
 
   return (

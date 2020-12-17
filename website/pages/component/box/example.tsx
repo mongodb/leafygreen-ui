@@ -3,8 +3,8 @@ import Box from '@leafygreen-ui/box';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
-  as: string;
-  href: string | undefined;
+  as: 'div' | 'span' | 'button';
+  href: boolean;
   children: string;
 }> = {
   as: {
@@ -13,28 +13,29 @@ const knobsConfig: KnobsConfigInterface<{
     default: 'div',
     label: 'As',
   },
-  href: {
-    type: 'select',
-    options: ['mongodb.design', undefined],
-    default: undefined,
-    label: 'href',
-  },
   children: {
     type: 'text',
     default: 'Box component',
     label: 'Children',
+  },
+  href: {
+    type: 'boolean',
+    default: false,
+    label: 'href',
   },
 };
 
 export default function BoxLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {({ as, href, children }) => (
-        // @ts-ignore
-        <Box as={as} href={href}>
-          {children}
-        </Box>
-      )}
+      {({ as, children, href }) => {
+        if (href) {
+          // @ts-expect-error
+          return <Box href={href}>{children}</Box>;
+        }
+
+        return <Box as={as}>{children}</Box>;
+      }}
     </LiveExample>
   );
 }

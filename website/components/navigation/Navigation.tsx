@@ -56,6 +56,7 @@ const components = [
   'portal',
   'radio-box-group',
   'radio-group',
+  'select',
   'side-nav',
   'stepper',
   'syntax',
@@ -116,8 +117,6 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
       <SideNavGroup
         key={type}
         header={isGuideline ? 'Core Guidelines' : 'Components'}
-        // collapsible
-        // initialCollapsed={false}
       >
         {items.map(item => {
           const path =

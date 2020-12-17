@@ -3,7 +3,7 @@ import { InlineCode } from '@leafygreen-ui/typography';
 
 export const formatType = (
   string: string | undefined,
-  href: string | undefined,
+  href: string | undefined = undefined,
 ) => {
   const valueArray = string?.split(',');
 
