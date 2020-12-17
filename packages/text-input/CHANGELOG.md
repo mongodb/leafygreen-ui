@@ -1,5 +1,11 @@
 # @leafygreen-ui/text-input
 
+## 5.0.4
+
+### Patch Changes
+
+- 919d9911: Fixes border on autoComplete disabled TextInput components
+
 ## 5.0.3
 
 ### Patch Changes
