@@ -1,5 +1,11 @@
 # @leafygreen-ui/copyable
 
+## 2.0.1
+
+### Patch Changes
+
+- b5e98393: Sets top and bottom border-radius to 4px from 0px
+
 ## 2.0.0
 
 ### Major Changes
