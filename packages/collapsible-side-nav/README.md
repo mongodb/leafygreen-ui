@@ -453,12 +453,12 @@ import {
 
 # SideNavItem
 
-| Prop              | Type                                                   | Description                                                                                                                                | Default                         |
-| ----------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------- |
-| `className`       | `string`                                               | The className applied to the outermost element.                                                                                            |
-| `glyph`           | `React.ReactElement`                                   | The icon to display for the item.                                                                                                          |
-| `glyphVisibility` | `'visible'` \| `'only-collapsed'` \| `'only-expanded'` | Value which indicates when the glyph should be visible.                                                                                    | `'only-collapsed'`              |
-| `href`            | `string`                                               | The link that the anchor tag will navigate to.                                                                                             |
-| `path`            | `string`                                               | Renders the item as active when it corresponds to the `currentPath` prop of the containing `SideNav`.                                      |
-| `onClick`         | `function`                                             | Callback that is executed when the item is clicked which, for example, can be used to set the `currentPath` to be passed to the `SideNav`. |
-| `aria-label`      | `string`                                               | Must be provided if `children` is not a `string`.                                                                                          | `children` when it's a `string` |
+| Prop              | Type                                                   | Description                                                                                                                                 | Default                         |
+| ----------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| `className`       | `string`                                               | The className applied to the outermost element.                                                                                             |
+| `glyph`           | `React.ReactElement`                                   | The icon to display for the item.                                                                                                           |
+| `glyphVisibility` | `'visible'` \| `'only-collapsed'` \| `'only-expanded'` | Value which indicates when the glyph should be visible.                                                                                     | `'only-collapsed'`              |
+| `href`            | `string`                                               | The link that the anchor tag will navigate to.                                                                                              |
+| `path`            | `string`                                               | Renders the item as active when it corresponds to the `currentPath` prop of the containing `SideNav`.                                       |
+| `onSelect`        | `function`                                             | Callback that is executed when the item is selected which, for example, can be used to set the `currentPath` to be passed to the `SideNav`. |
+| `aria-label`      | `string`                                               | Must be provided if `children` is not a `string`.                                                                                           | `children` when it's a `string` |

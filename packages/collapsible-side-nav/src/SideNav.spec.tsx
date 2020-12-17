@@ -214,7 +214,6 @@ describe('packages/collapsible-side-nav', () => {
                 itemWithOnlyExpandedGlyph,
                 groupItem,
                 groupWithGlyphItem,
-                // groupHeader
               ].forEach(item => {
                 expect(item).not.toBeVisible();
                 expect(item).not.toHaveGlyph('Cloud');
@@ -284,7 +283,7 @@ describe('packages/collapsible-side-nav', () => {
           expect(expandButton).toHaveAttribute('aria-expanded', 'false');
 
           function expectHovered() {
-            // Button is still for expanding even when hovered
+            // Button is still for expanding even when nav is hovered
             expect(expandButton).toBeVisible();
             expect(
               queryByLabelText('Collapse sidebar'),

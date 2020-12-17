@@ -49,12 +49,50 @@ Context.within(new ArtificialServerContext(), () => {
 });
 
 const { CacheProvider } = require('@emotion/core');
-const { cache, extractCritical } = require('@leafygreen-ui/emotion');
+const { cache } = require('@leafygreen-ui/emotion');
 
 const originalRender = ReactDOM.render;
 
 const stylesToCleanup = new Set();
 let registeredStyleCleanup = false;
+
+function insertStylesFromEmotion() {
+  if (typeof document !== 'undefined') {
+    let style = document.querySelector('[data-emotion-css]');
+
+    if (!style) {
+      style = document.createElement('style');
+      document.head.appendChild(style);
+      stylesToCleanup.add(style);
+
+      if (!registeredStyleCleanup) {
+        registeredStyleCleanup = true;
+        afterEach(() => {
+          stylesToCleanup.forEach(style => {
+            style.remove();
+            stylesToCleanup.delete(style);
+          });
+        });
+      }
+    }
+
+    const ids = Object.keys(cache.inserted).join(' ');
+    style.setAttribute('data-emotion-css', ids);
+    style.innerHTML = Object.values(cache.inserted).join('');
+  }
+}
+
+// Since Emotion was initialized in a server context, it won't append
+// new styles to the document when new CSS classes are created. We have
+// to detect when new classes are created and update the styles of the
+// page when that happens.
+cache.inserted = new Proxy(cache.inserted, {
+  set: (target, prop, value) => {
+    target[prop] = value;
+    insertStylesFromEmotion();
+    return true;
+  },
+});
 
 ReactDOM.render = (element, container, callback) => {
   element = React.createElement(CacheProvider, { value: cache }, element);
@@ -64,30 +102,13 @@ ReactDOM.render = (element, container, callback) => {
     return originalRender(element, container, callback);
   }
 
-  const { html, css, ids } = extractCritical(
-    Context.within(new ArtificialServerContext(), () =>
-      ReactDOMServer.renderToString(element),
-    ),
+  container.innerHTML = Context.within(new ArtificialServerContext(), () =>
+    ReactDOMServer.renderToString(element),
   );
 
   // Client-only Emotion renders the style tags inline, but SSR requires
   // manually adding the style tags https://emotion.sh/docs/ssr#on-server
-  const style = document.createElement('style');
-  style.setAttribute('data-emotion-css', ids.join(' '));
-  style.innerHTML = css;
-  document.head.appendChild(style);
-  stylesToCleanup.add(style);
+  insertStylesFromEmotion();
 
-  if (!registeredStyleCleanup) {
-    registeredStyleCleanup = true;
-    afterEach(() => {
-      stylesToCleanup.forEach(style => {
-        style.remove();
-        stylesToCleanup.delete(style);
-      });
-    });
-  }
-
-  container.innerHTML = html;
   return ReactDOM.hydrate(element, container, callback);
 };

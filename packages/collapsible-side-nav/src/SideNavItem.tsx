@@ -1,10 +1,12 @@
 import React, { useCallback, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   AriaCurrentValue,
   enforceExhaustive,
   HTMLElementProps,
+  keyMap,
   OneOf,
 } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -26,9 +28,18 @@ const sideNavItemStyle = css`
   border: 0 solid ${uiColors.gray.light2};
   color: ${uiColors.gray.dark2};
   transition: all ${transitionDurationMilliseconds}ms ease-in-out;
+  text-decoration: none;
+  outline: none;
 
   &:hover {
     background-color: ${uiColors.gray.light2};
+  }
+`;
+
+const sideNavItemFocusStyle = css`
+  &:focus {
+    color: ${uiColors.blue.dark3};
+    background-color: ${uiColors.blue.light3};
   }
 `;
 
@@ -50,6 +61,11 @@ const sideNavItemActiveStyle = css`
 
   &:hover {
     background-color: ${uiColors.green.light3};
+  }
+
+  &:focus {
+    background-color: ${uiColors.green.light3};
+    color: ${uiColors.green.dark3};
   }
 `;
 
@@ -80,6 +96,10 @@ const sideNavItemWithGlyphCollapsedStyle = css`
 type Props = {
   className?: string;
   path?: string;
+  onSelect?: (
+    path: string | undefined,
+    event: React.MouseEvent | React.KeyboardEvent,
+  ) => void;
 } & OneOf<{ glyph: GlyphElement; glyphVisibility?: GlyphVisibility }, {}> &
   OneOf<
     { children: string },
@@ -95,14 +115,17 @@ const SideNavItem = React.forwardRef(function SideNavItem(
     glyphVisibility = GlyphVisibility.OnlyCollapsed,
     path,
     href,
-    onClick,
+    onSelect,
     'aria-label': ariaLabel,
+    onClick: onClickProp,
+    onKeyDown: onKeyDownProp,
     ...rest
   }: Props,
   refProp,
 ) {
   const { collapsed, hovered, currentPath } = useContext(SideNavContext);
   const groupContextData = useContext(SideNavGroupContext);
+  const { usingKeyboard } = useUsingKeyboardContext();
 
   useEffect(() => {
     if (groupContextData === null) {
@@ -140,6 +163,29 @@ const SideNavItem = React.forwardRef(function SideNavItem(
     [groupContextData, path, refProp],
   );
 
+  const onClick = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
+      onSelect?.(path, event);
+      onClickProp?.(event);
+    },
+    [onClickProp, onSelect, path],
+  );
+
+  const onKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLAnchorElement>) => {
+      if (event.ctrlKey || event.shiftKey || event.altKey) {
+        return onKeyDownProp?.(event);
+      }
+
+      if (event.keyCode === keyMap.Enter) {
+        onSelect?.(path, event);
+      }
+
+      onKeyDownProp?.(event);
+    },
+    [onKeyDownProp, onSelect, path],
+  );
+
   const isActive = path !== undefined && currentPath === path;
   const showCollapsed = collapsed && !hovered;
   const hasGlyph = glyph !== undefined;
@@ -171,11 +217,12 @@ const SideNavItem = React.forwardRef(function SideNavItem(
         ariaLabel ?? (typeof children === 'string' ? children : undefined)
       }
       aria-current={isActive ? AriaCurrentValue.Page : AriaCurrentValue.Unset}
-      tabIndex={!isLink ? 0 : undefined}
+      tabIndex={!isLink && !showCollapsed ? 0 : -1}
       ref={setRef}
       className={cx(
         sideNavItemStyle,
         {
+          [sideNavItemFocusStyle]: usingKeyboard,
           [sideNavItemWithGlyphStyle]: hasGlyph,
           [sideNavItemActiveStyle]: isActive,
           [sideNavItemNonGroupStyle]: groupContextData === null,
@@ -185,8 +232,9 @@ const SideNavItem = React.forwardRef(function SideNavItem(
         },
         className,
       )}
-      href={href}
-      onClick={onClick}
+      href={showCollapsed ? undefined : href}
+      onClick={showCollapsed ? undefined : onClick}
+      onKeyDown={showCollapsed ? undefined : onKeyDown}
       {...rest}
     >
       {showGlyph && glyph}
@@ -203,7 +251,7 @@ SideNavItem.propTypes = {
   className: PropTypes.string,
   path: PropTypes.string,
   href: PropTypes.string,
-  onClick: PropTypes.func,
+  onSelect: PropTypes.func,
   // @ts-expect-error PropTypes typing doesn't work well with OneOf
   glyph: PropTypes.element,
   // @ts-expect-error PropTypes typing doesn't work well with OneOf
