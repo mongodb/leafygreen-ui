@@ -119,6 +119,8 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
 
   const [props, setProps] = useState<ComponentProps>(initialProps);
 
+  console.log(props);
+
   const onChange = <T extends PropsType['default']>(value: T, prop: string) => {
     setProps({ ...props, [prop]: value });
   };
@@ -170,6 +172,9 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
               {...sharedProps}
               options={knobConfig?.options as Array<string>}
               value={props[propName] as string}
+              // Disables `as` dropdown when hasHrefProp is true in order to accurately portray the effects of each respesctively.
+              // In our live examples, we give precedence to the hasHrefProp to demonstrate that passing an href to a Box component renders it as an anchor tag.
+              disabled={propName === 'as' && props.hasHrefProp ? true : false}
             />
           );
 

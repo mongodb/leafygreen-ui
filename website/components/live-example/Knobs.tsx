@@ -75,10 +75,11 @@ export interface NumberInterface extends KnobInterface {
   step?: number;
 }
 
-export interface BasicSelectInterface extends KnobInterface {
+export interface SelectInterface extends KnobInterface {
   onChange: (value: string, prop: string) => void;
   value: string;
   options: Array<string>;
+  disabled?: boolean;
 }
 
 function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
@@ -209,7 +210,8 @@ function Select({
   prop,
   options,
   darkMode,
-}: BasicSelectInterface) {
+  disabled = false,
+}: SelectInterface) {
   const labelId = useMemo(() => selectIdAllocator.generate(), []);
 
   const handleChange = (value: string) => {
@@ -239,6 +241,7 @@ function Select({
         onChange={handleChange}
         darkMode={darkMode}
         value={value}
+        disabled={disabled}
       >
         {generateOptions()}
       </LGUISelect>

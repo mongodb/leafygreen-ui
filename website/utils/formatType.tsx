@@ -4,9 +4,9 @@ import { InlineCode } from '@leafygreen-ui/typography';
 // Takes a string of possible `type` values of a component's prop and separates them such that they are more readable.
 // This is used in PropTables and PropDefintions
 // formatType(`'primary', 'info'`)
-// => <InlineCode>primary</InlineCode>, <InlineCode>info</InlineCode>
+// => <InlineCode>'primary'</InlineCode>, <InlineCode>'info'</InlineCode>
 // formatType('Function')
-// => <InlineCode>Function</InlineCode>
+// => <InlineCode>'Function'</InlineCode>
 export default function formatType(
   typeString: string,
   linkURL: string | undefined = undefined,
