@@ -5,7 +5,7 @@ import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Overline, Subtitle, H2 } from '@leafygreen-ui/typography';
-import { breakpoints } from '@leafygreen-ui/tokens';
+import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 
 const mq = facepaint(
   Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
@@ -17,12 +17,12 @@ const newsContainer = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-bottom: 24px;
+  padding-bottom: ${spacing[4]}px;
 
   ${mq({
-    marginTop: ['24px', 'unset', 'unset', 'unset'],
-    marginBottom: ['24px', 'unset', 'unset', 'unset'],
-    paddingLeft: ['24px', 'unset', 'unset', 'unset'],
+    marginTop: [`${spacing[4]}px`, 'unset'],
+    marginBottom: [`${spacing[4]}px`, 'unset'],
+    paddingLeft: [`${spacing[4]}px`, 'unset'],
   })}
 `;
 
@@ -42,19 +42,22 @@ const subtitleStyle = css`
 `;
 
 const iconStyle = css`
+  transform: translate3d(-3px, 0, 0px);
   transition: all 100ms ease-in;
-  margin-left: 2px;
 
   ${mq({
     opacity: [1, 1, 0, 0],
-    transform: [
-      'transform: translate3d(3px, 0, 0px)',
-      'transform: translate3d(3px, 0, 0px)',
-      'transform: translate3d(-3px, 0, 0px)',
-    ],
+    marginLeft: [`${spacing[2]}px`, `${spacing[2]}px`, 0],
   })}
 `;
 
+const overlineMargin = css`
+  margin-top: 28px;
+`;
+
+const overlineColor = css`
+  color: ${uiColors.gray.dark1};
+`;
 interface UpdateProps {
   date: string;
   story: string;
@@ -83,18 +86,8 @@ function Update({ date, story, path, href }: UpdateProps) {
   }
 
   return (
-    <div
-      className={css`
-        margin-top: 28px;
-      `}
-    >
-      <Overline
-        className={css`
-          color: ${uiColors.gray.dark1};
-        `}
-      >
-        {date}
-      </Overline>
+    <div className={overlineMargin}>
+      <Overline className={overlineColor}>{date}</Overline>
       {renderedStory}
     </div>
   );

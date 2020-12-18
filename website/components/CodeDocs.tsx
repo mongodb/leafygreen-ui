@@ -24,6 +24,10 @@ const topAlignment = css`
   margin-bottom: ${spacing[3]}px;
 `;
 
+const versionCardDesktopMargin = css`
+  margin-left: 20px;
+`;
+
 const mt3 = css`
   margin-top: ${spacing[3]}px;
 `;
@@ -138,7 +142,7 @@ function MobileInstall({ component, version, changelog }: InstallProps) {
 
 function DesktopInstall({ component, changelog, version }: InstallProps) {
   return (
-    <div>
+    <>
       <GridContainer justify="space-between" align="flex-start">
         <GridItem md={7} lg={7}>
           <div className={topAlignment}>
@@ -157,11 +161,7 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
           </div>
         </GridItem>
         <GridItem md={5} lg={5}>
-          <div
-            className={css`
-              margin-left: 20px;
-            `}
-          >
+          <div className={versionCardDesktopMargin}>
             <VersionCard changelog={changelog} version={version} />
           </div>
         </GridItem>
@@ -174,7 +174,7 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
           <Copyable>{`npm install @leafygreen-ui/${component}`}</Copyable>
         </GridItem>
       </GridContainer>
-    </div>
+    </>
   );
 }
 
