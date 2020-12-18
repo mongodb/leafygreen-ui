@@ -25,10 +25,10 @@ const backdrop = css`
 `;
 
 const pageWidth = css`
-  padding-right: ${spacing[4]}px;
-
   ${mq({
-    width: ['100%', '100%', '900px', '1077px'],
+    width: ['calc(100% + 48px)', '100%', '100%', '1077px'],
+    paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, `${spacing[4]}px`],
+    marginLeft: ['-24px', 'unset', 'unset', 'unset'],
   })}
 `;
 
@@ -73,13 +73,16 @@ const previewWrapper = css`
 `;
 
 const overlineContainer = css`
-  opacity: 0;
   position: absolute;
   bottom: 0;
   left: 0;
   padding-left: ${spacing[3]}px;
   padding-bottom: ${spacing[3]}px;
   transition: opacity 300ms ease-in-out;
+
+  ${mq({
+    opacity: [1, 1, 0, 0],
+  })}
 `;
 
 const marketingWrapper = css`
@@ -97,19 +100,27 @@ const textWrapper = css`
   top: 0;
   bottom: 0;
   left: 0;
-  font-size: 60px;
+  font-weight: medium;
   padding-top: ${spacing[4]}px;
   padding-left: ${spacing[4]}px;
   text-align: left;
   overflow: hidden;
+
+  ${mq({
+    fontSize: ['24px', '60px', '60px', '60px'],
+  })}
 `;
 
 const lgHeight = css`
-  height: 350px;
+  ${mq({
+    height: ['calc(100vw / 2)', '350px', '350px', '350px'],
+  })}
 `;
 
 const smHeight = css`
-  height: 175px;
+  ${mq({
+    height: ['calc(100vw / 2)', '175px', '175px', '175px'],
+  })}
 `;
 
 const halfWidth = css`
@@ -166,7 +177,15 @@ function MarketingPreview({ href, children, background }: MarketingPreview) {
       rel="noopener noreferrer"
     >
       <div className={marketingWrapper}>
-        <img src={background} alt="" aria-hidden="true" />
+        <img
+          src={background}
+          alt=""
+          aria-hidden="true"
+          height="100%"
+          className={css`
+            min-width: 100%;
+          `}
+        />
         <div className={textWrapper}>{children}</div>
       </div>
     </a>
@@ -224,7 +243,7 @@ export default function Home() {
           >
             <div className={cx(smHeight, halfWidth, boxShadow)}>
               <ComponentPreview
-                path="/component/radio-box/example"
+                path="/component/radio-box-group/example"
                 background="/images/radioBox-thumbnail.png"
                 content="Radio boxes"
               />
@@ -263,7 +282,7 @@ export default function Home() {
         )}
 
         {/* Third Row */}
-        <GridItem sm={6} md={6} lg={3}>
+        <GridItem sm={6} md={3} lg={3}>
           <div className={smHeight}>
             <ComponentPreview
               path="/component/icon/example"
@@ -272,7 +291,7 @@ export default function Home() {
             />
           </div>
         </GridItem>
-        <GridItem sm={6} md={6} lg={3}>
+        <GridItem sm={6} md={3} lg={3}>
           <div className={cx(smHeight)}>
             <ComponentPreview
               path="/component/card/example"
@@ -281,7 +300,7 @@ export default function Home() {
             />
           </div>
         </GridItem>
-        <GridItem sm={6} md={6} lg={3}>
+        <GridItem sm={6} md={3} lg={3}>
           <div className={smHeight}>
             <ComponentPreview
               path="/component/tooltip/example"
@@ -290,7 +309,7 @@ export default function Home() {
             />
           </div>
         </GridItem>
-        <GridItem sm={6} md={6} lg={3}>
+        <GridItem sm={6} md={3} lg={3}>
           <div className={smHeight}>
             <ComponentPreview
               path="/component/checkbox/example"

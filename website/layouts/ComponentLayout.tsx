@@ -17,7 +17,7 @@ const mq = facepaint(
 );
 
 const layout = css`
-  margin-top: 72px;
+  margin-top: 70px;
 
   ${mq({
     width: ['100%', '100%', '700px', '700px'],
@@ -35,7 +35,6 @@ const componentsStyle = css`
 `;
 
 const margin4 = css`
-  margin-top: ${spacing[4]}px;
   margin-bottom: ${spacing[4]}px;
 `;
 

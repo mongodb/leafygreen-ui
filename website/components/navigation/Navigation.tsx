@@ -21,6 +21,7 @@ const navContainer = css`
 const logoStyles = css`
   // adds back spacing that was already built into side nav
   margin: 12px 0 ${spacing[4]}px ${spacing[3]}px;
+  cursor: pointer;
 `;
 
 const coreGuidelines = [
@@ -159,7 +160,7 @@ function Navigation() {
       <MDBDesignLogo className={logoStyles} onClick={() => push('/')} />
       <SideNav
         className={css`
-          margin-top: ${spacing[4]}px;
+          margin-top: ${spacing[3]}px;
         `}
       >
         <Content />

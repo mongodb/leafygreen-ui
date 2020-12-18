@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import facepaint from 'facepaint';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
-const breakpointGaps = ['16px', '16px', '32px', '32px'];
 const mq = facepaint(
   Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
   { literal: true },
@@ -198,25 +197,25 @@ export function GridItem({
         ${visibleGridItemStyles}
 margin - left: ${Math.round(100 / 12) * colStart}%;
         ${mq({
-          width: [
-            styles.sm.width,
-            styles.md.width,
-            styles.lg.width,
-            styles.xl.width,
-          ],
-          flexBasis: [
-            styles.sm.flexBasis,
-            styles.md.flexBasis,
-            styles.lg.flexBasis,
-            styles.xl.flexBasis,
-          ],
-          display: [
-            styles.sm.display,
-            styles.md.display,
-            styles.lg.display,
-            styles.xl.display,
-          ],
-        })}
+        width: [
+          styles.sm.width,
+          styles.md.width,
+          styles.lg.width,
+          styles.xl.width,
+        ],
+        flexBasis: [
+          styles.sm.flexBasis,
+          styles.md.flexBasis,
+          styles.lg.flexBasis,
+          styles.xl.flexBasis,
+        ],
+        display: [
+          styles.sm.display,
+          styles.md.display,
+          styles.lg.display,
+          styles.xl.display,
+        ],
+      })}
       `}
     >
       {children}

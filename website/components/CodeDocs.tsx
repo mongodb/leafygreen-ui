@@ -21,6 +21,7 @@ import TypeDefinition from 'components/TypeDefinition';
 const topAlignment = css`
   margin-top: ${spacing[4]}px;
   padding-top: ${spacing[3]}px;
+  margin-bottom: ${spacing[3]}px;
 `;
 
 const mt3 = css`
@@ -137,7 +138,7 @@ function MobileInstall({ component, version, changelog }: InstallProps) {
 
 function DesktopInstall({ component, changelog, version }: InstallProps) {
   return (
-    <>
+    <div>
       <GridContainer justify="space-between" align="flex-start">
         <GridItem md={7} lg={7}>
           <div className={topAlignment}>
@@ -156,7 +157,13 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
           </div>
         </GridItem>
         <GridItem md={5} lg={5}>
-          <VersionCard changelog={changelog} version={version} />
+          <div
+            className={css`
+              margin-left: 20px;
+            `}
+          >
+            <VersionCard changelog={changelog} version={version} />
+          </div>
         </GridItem>
       </GridContainer>
       <GridContainer align="flex-start" justify="flex-start">
@@ -167,7 +174,7 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
           <Copyable>{`npm install @leafygreen-ui/${component}`}</Copyable>
         </GridItem>
       </GridContainer>
-    </>
+    </div>
   );
 }
 

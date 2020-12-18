@@ -1,9 +1,16 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import facepaint from 'facepaint';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Overline, Subtitle, H2 } from '@leafygreen-ui/typography';
+import { breakpoints } from '@leafygreen-ui/tokens';
+
+const mq = facepaint(
+  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
+  { literal: true },
+);
 
 const newsContainer = css`
   height: 100%;
@@ -11,6 +18,12 @@ const newsContainer = css`
   flex-direction: column;
   justify-content: center;
   padding-bottom: 24px;
+
+  ${mq({
+    marginTop: ['24px', 'unset', 'unset', 'unset'],
+    marginBottom: ['24px', 'unset', 'unset', 'unset'],
+    paddingLeft: ['24px', 'unset', 'unset', 'unset'],
+  })}
 `;
 
 const subtitleStyle = css`
@@ -29,9 +42,17 @@ const subtitleStyle = css`
 `;
 
 const iconStyle = css`
-  opacity: 0;
-  transform: translate3d(-3px, 0, 0px);
   transition: all 100ms ease-in;
+  margin-left: 2px;
+
+  ${mq({
+    opacity: [1, 1, 0, 0],
+    transform: [
+      'transform: translate3d(3px, 0, 0px)',
+      'transform: translate3d(3px, 0, 0px)',
+      'transform: translate3d(-3px, 0, 0px)',
+    ],
+  })}
 `;
 
 interface UpdateProps {
@@ -84,17 +105,17 @@ function News() {
     <div className={newsContainer}>
       <H2 as="h1">Whats New</H2>
       <Update
-        date="December 8, 2020"
-        story="Copyable v1.0.0 – @leafygreen-ui/copyable"
+        date="Dec 8, 2020"
+        story="Copyable v1.0.0"
         path="/component/copyable/example"
       />
       <Update
-        date="December 2, 2020"
+        date="Dec 2, 2020"
         story="Support for React 17"
         href="https://github.com/mongodb/leafygreen-ui/commit/c18f16e6632a6688e771334fd1672c9ef7e0f9b4"
       />
       <Update
-        date="November 29, 2020"
+        date="Nov 29, 2020"
         story="Installing LeafyGreen in Figma"
         path=""
       />
