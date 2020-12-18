@@ -31,9 +31,7 @@ const componentContainerDarkMode = css`
 `;
 
 const knobContainer = css`
-  padding-left: ${spacing[4]}px;
-  padding-right: ${spacing[4]}px;
-  padding-top: 42px;
+  padding: ${spacing[5]}px;
 `;
 
 interface SelectConfigInterface<T> {
@@ -118,8 +116,6 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
   ) as ComponentProps;
 
   const [props, setProps] = useState<ComponentProps>(initialProps);
-
-  console.log(props);
 
   const onChange = <T extends PropsType['default']>(value: T, prop: string) => {
     setProps({ ...props, [prop]: value });

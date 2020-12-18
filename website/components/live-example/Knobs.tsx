@@ -14,10 +14,12 @@ const areaIdAllocator = IdAllocator.create('area');
 const numberIdAllocator = IdAllocator.create('number');
 const selectIdAllocator = IdAllocator.create('select');
 
+const knobsWidth = 318; // totalWidth (700px) - padding on both sides (24px on each side) / 2
+
 const knobContainerStyle = css`
   display: flex;
   flex-grow: 1;
-  justify-content: space-between;
+  // justify-content: space-between;
   padding: ${spacing[3]}px 0px;
 `;
 
@@ -27,14 +29,13 @@ const labelStyle = css`
   letter-spacing: 0;
   line-height: 20px;
   font-weight: 600;
+  width: ${knobsWidth}px;
 `;
 
 const textAreaClassName = css`
   display: flex;
   flex-direction: column;
-  flex-shrink: 1;
-  padding-left: 16px;
-  width: 300px;
+  width: ${knobsWidth}px;
 `;
 
 const labelDarkMode = css`
@@ -141,6 +142,9 @@ function Number({
         min={min}
         max={max}
         step={step}
+        className={css`
+          width: ${knobsWidth}px;
+        `}
       />
     </div>
   );
@@ -169,6 +173,9 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
         value={value}
         aria-labelledby={labelId}
         darkMode={darkMode}
+        className={css`
+          width: ${knobsWidth}px;
+        `}
       />
     </div>
   );
@@ -242,6 +249,9 @@ function Select({
         darkMode={darkMode}
         value={value}
         disabled={disabled}
+        className={css`
+          width: ${knobsWidth}px;
+        `}
       >
         {generateOptions()}
       </LGUISelect>

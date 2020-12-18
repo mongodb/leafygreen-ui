@@ -2,7 +2,6 @@ import React from 'react';
 import facepaint from 'facepaint';
 import { css } from 'emotion';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
-
 import Navigation from 'components/navigation';
 import Footer from './Footer';
 
@@ -12,7 +11,7 @@ const mq = facepaint(
 );
 
 const containerStyle = css`
-  margin-top: ${spacing[4]}px;
+  padding-top: ${spacing[4]}px;
   width: 100%;
   display: flex;
   align-items: flex-start;
