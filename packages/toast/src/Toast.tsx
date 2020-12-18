@@ -9,7 +9,10 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 import IconButton from '@leafygreen-ui/icon-button';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
+import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
+import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import RefreshIcon from '@leafygreen-ui/icon/dist/Refresh';
+import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import ProgressBar from './ToastProgressBar';
 
@@ -60,6 +63,9 @@ const baseElementStyles: Partial<Record<StyledElements, string>> = {
 
 const Variant = {
   Success: 'success',
+  Note: 'note',
+  Warning: 'warning',
+  Important: 'important',
   Progress: 'progress',
 } as const;
 
@@ -102,6 +108,99 @@ const variantStyles: Record<
     `,
   },
 
+  [Variant.Note]: {
+    toast: css`
+      background-color: ${uiColors.blue.light3};
+    `,
+
+    icon: css`
+      color: ${uiColors.blue.dark2};
+    `,
+
+    contentWrapper: css`
+      border-radius: 4px;
+      border: 1px solid ${uiColors.blue.light2};
+    `,
+
+    body: css`
+      color: ${uiColors.blue.dark2};
+    `,
+
+    dismissButton: css`
+      color: ${uiColors.blue.dark2};
+
+      &:hover {
+        color: ${uiColors.blue.dark3};
+
+        &:before {
+          background-color: ${uiColors.blue.light2};
+        }
+      }
+    `,
+  },
+
+  [Variant.Warning]: {
+    toast: css`
+      background-color: ${uiColors.red.light3};
+    `,
+
+    icon: css`
+      color: ${uiColors.red.base};
+    `,
+
+    contentWrapper: css`
+      border-radius: 4px;
+      border: 1px solid ${uiColors.red.light2};
+    `,
+
+    body: css`
+      color: ${uiColors.red.dark2};
+    `,
+
+    dismissButton: css`
+      color: ${uiColors.red.dark2};
+
+      &:hover {
+        color: ${uiColors.green.dark3};
+
+        &:before {
+          background-color: ${uiColors.red.light2};
+        }
+      }
+    `,
+  },
+
+  [Variant.Important]: {
+    toast: css`
+      background-color: ${uiColors.yellow.light3};
+    `,
+
+    icon: css`
+      color: ${uiColors.yellow.dark2};
+    `,
+
+    contentWrapper: css`
+      border-radius: 4px;
+      border: 1px solid ${uiColors.yellow.light2};
+    `,
+
+    body: css`
+      color: ${uiColors.yellow.dark2};
+    `,
+
+    dismissButton: css`
+      color: ${uiColors.yellow.dark2};
+
+      &:hover {
+        color: ${uiColors.yellow.dark3};
+
+        &:before {
+          background-color: ${uiColors.yellow.light2};
+        }
+      }
+    `,
+  },
+
   [Variant.Progress]: {
     toast: css`
       background-color: ${uiColors.white};
@@ -122,6 +221,14 @@ const variantStyles: Record<
       color: ${uiColors.gray.dark2};
     `,
   },
+};
+
+const variantIcons: Record<Variant, React.ComponentType<any>> = {
+  [Variant.Success]: CheckmarkWithCircleIcon,
+  [Variant.Note]: CloudIcon,
+  [Variant.Warning]: WarningIcon,
+  [Variant.Important]: ImportantWithCircleIcon,
+  [Variant.Progress]: RefreshIcon,
 };
 
 const RTGStates = {
@@ -194,15 +301,7 @@ function Toast({
   const nodeRef = useRef(null);
   const dismissible = typeof close === 'function';
 
-  let VariantIcon: React.ComponentType<any>;
-
-  if (variant === Variant.Progress) {
-    VariantIcon = RefreshIcon;
-  } else if (variant === Variant.Success) {
-    VariantIcon = CheckmarkWithCircleIcon;
-  } else {
-    VariantIcon = CheckmarkWithCircleIcon;
-  }
+  const VariantIcon = variantIcons[variant];
 
   const currentVariantStyles = variantStyles[variant];
 
