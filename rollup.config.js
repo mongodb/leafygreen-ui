@@ -144,6 +144,7 @@ const config = ['esm', 'umd'].flatMap(format => {
         'create-emotion-server',
         'polished',
         'prop-types',
+        'react-is',
         'react-transition-group',
         '@testing-library/react',
         'lodash',

@@ -15,6 +15,7 @@ const closedContainer = css`
 `;
 
 const iconMargin = css`
+  margin-left: -${spacing[2]}px;
   margin-right: ${spacing[3]}px;
 `;
 
