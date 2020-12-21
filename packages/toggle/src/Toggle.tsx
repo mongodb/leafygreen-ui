@@ -47,8 +47,8 @@ interface StateForStyle {
   disabled: boolean;
 }
 
-const getContainerStyles = ({ size, disabled }: StateForStyle) => {
-  const sizeStyle: { [K in Size]: string } = {
+const sizeStyles: Record<string, Record<Size, any>> = {
+  container: {
     [Size.Default]: css`
       height: 32px;
       width: 62px;
@@ -63,17 +63,62 @@ const getContainerStyles = ({ size, disabled }: StateForStyle) => {
       height: 14px;
       width: 26px;
     `,
-  };
+  },
 
-  return cx(
-    css`
-      position: relative;
-      display: inline-block;
-      cursor: ${disabled ? 'not-allowed' : 'pointer'};
+  slider: {
+    [Size.Default]: css`
+      height: 28px;
+      width: 28px;
     `,
-    sizeStyle[size],
-  );
+
+    [Size.Small]: css`
+      height: 20px;
+      width: 20px;
+    `,
+
+    [Size.XSmall]: css`
+      height: 12px;
+      width: 12px;
+    `,
+  },
+
+  disabledSlider: {
+    [Size.Default]: css`
+      height: 28px;
+      width: 28px;
+    `,
+
+    [Size.Small]: css`
+      height: 18px;
+      width: 18px;
+    `,
+
+    [Size.XSmall]: css`
+      height: 10px;
+      width: 10px;
+    `,
+  },
 };
+
+const baseSliderStyles = css`
+  transition: all ${transitionInMS}ms ease-in-out;
+  border-radius: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  overflow: hidden;
+`
+
+const baseContainerStyles = css`
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+`;
+
+const disabledContainerStyles = css`
+  cursor: not-allowed;
+`
 
 const getGrooveStyles = ({ mode, checked, disabled }: StateForStyle) => {
   const colorSets: { [K in Mode]: string } = {
@@ -255,34 +300,8 @@ const getSliderStyles = ({ size, mode, checked, disabled }: StateForStyle) => {
     })(),
   };
 
-  const transformBySize: { [K in Size]: number } = {
-    default: 30,
-    small: 18,
-    xsmall: 12,
-  };
-
-  const sizes: { [K in Size]: number } = {
-    default: 28,
-    small: disabled ? 18 : 20,
-    xsmall: disabled ? 10 : 12,
-  };
-
-  const baseStyles = css`
-    transition: all ${transitionInMS}ms ease-in-out;
-    border-radius: 100%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    overflow: hidden;
-    height: ${sizes[size]}px;
-    width: ${sizes[size]}px;
-    transform: translate3d(${checked ? transformBySize[size] : 0}px, 0, 0);
-  `;
-
   if (disabled) {
     return cx(
-      baseStyles,
       css`
         left: 1px;
 
@@ -296,7 +315,6 @@ const getSliderStyles = ({ size, mode, checked, disabled }: StateForStyle) => {
   }
 
   return cx(
-    baseStyles,
     css`
       left: ${size === 'default' ? 1 : 0}px;
 
@@ -365,7 +383,6 @@ const offLabelStyle = cx(
 const getStatefulStyles = (states: StateForStyle) => ({
   slider: getSliderStyles(states),
   groove: getGrooveStyles(states),
-  container: getContainerStyles(states),
 });
 
 interface BaseToggleProps {
@@ -403,6 +420,16 @@ function Toggle({
     }
   };
 
+  const transformBySize: { [K in Size]: number } = {
+    default: 30,
+    small: 18,
+    xsmall: 12,
+  };
+
+  const sliderPositionStyle = css`
+    transform: translate3d(${checked ? transformBySize[size] : 0}px, 0, 0);
+  `;
+
   const statefulStyles = getStatefulStyles({
     disabled,
     size,
@@ -420,7 +447,12 @@ function Toggle({
       focusTargetElement={inputElement}
     >
       <label
-        className={cx(statefulStyles.container, className)}
+        className={cx(
+          baseContainerStyles,
+          sizeStyles.container[size],
+          { [disabledContainerStyles]: disabled },
+          className,
+        )}
         htmlFor={toggleId}
       >
         <input
@@ -446,7 +478,17 @@ function Toggle({
             </>
           )}
 
-          <div className={statefulStyles.slider} />
+          <div
+            className={cx(
+              baseSliderStyles,
+              sizeStyles.slider[size],
+              {
+                [sizeStyles.disabledSlider[size]]: disabled,
+              },
+              statefulStyles.slider,
+              sliderPositionStyle,
+            )}
+          />
         </div>
       </label>
     </InteractionRing>
