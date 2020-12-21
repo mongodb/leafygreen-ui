@@ -163,16 +163,6 @@ function PropTable({
     tableData.shift();
   }
 
-  const formatHeader = (string: string) => {
-    const header = string.replace(/ /g, '');
-
-    if (header.toLowerCase() === 'advancedusecase') {
-      return 'Advanced Use Case';
-    }
-
-    return `${header} Props`;
-  };
-
   const formatProp = (datum: TableDataInterface) => {
     if (datum.prop.value === '...') {
       return datum.prop.value;
@@ -207,7 +197,7 @@ function PropTable({
         return (
           <div key={index}>
             <Subtitle className={subtitleBottomMargin} as="h3">
-              {formatHeader(header)}
+              {`${header.replace(/ /g, '')} Props`}
             </Subtitle>
 
             {tableData[index] && (

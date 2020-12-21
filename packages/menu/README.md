@@ -29,6 +29,7 @@ npm install @leafygreen-ui/menu
 ```js
 import { Menu, MenuSeparator, MenuItem } from '@leafygreen-ui/menu';
 
+// Trigger as an HTML Element
 <Menu align="bottom" justify="start" trigger={<button>trigger</button>}>
   <MenuItem active>Active Menu Item</MenuItem>
   <MenuItem
@@ -42,11 +43,28 @@ import { Menu, MenuSeparator, MenuItem } from '@leafygreen-ui/menu';
   </MenuItem>
   <MenuItem href="http://mongodb.design">I am a link!</MenuItem>
 </Menu>;
+
+// Trigger as a function
+<Menu
+  align="bottom"
+  justify="start"
+  trigger={({ onClick, children }) => (
+    <button onClick={onClick}>
+      Example Trigger
+      {children}
+    </button>
+  )}
+>
+  <MenuItem>Menu Item 1</MenuItem>
+  <MenuItem>Menu Item 2</MenuItem>
+  <MenuItem>Menu Item 3</MenuItem>
+</Menu>;
 ```
 
 **Output HTML**
 
 ```html
+<!-- Trigger as an HTML Element -->
 <button>
   trigger
   <div class="leafygreen-ui-1hyfx7x"></div>
@@ -100,86 +118,8 @@ import { Menu, MenuSeparator, MenuItem } from '@leafygreen-ui/menu';
     </li>
   </ul>
 </div>
-```
 
-## Properties
-
-| Prop               | Type                                     | Description                                                                                                                                                                                                                                                             | Default      |
-| ------------------ | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
-| `open`             | `boolean`                                | Determines whether or not the `<Menu />` will appear as open or closed                                                                                                                                                                                                  | `false`      |
-| `setOpen`          | `function`                               | When controlling the component, use `setOpen` to keep track of the `<Menu />` component's state so that clicks on the document's backdrop as well as a user pressing the Escape Key will close the Menu and update the consuming application's local state accordingly. |              |
-| `shouldClose`      | `function`                               | Determines if the `Menu` should close when the backdrop or Escape keys are clicked. Defaults to true.                                                                                                                                                                   | `() => true` |
-| `align`            | `'top'`, `'bottom'`, `'left'`, `'right'` | Determines the alignment of the `<Menu />` component relative to a reference element, or the element's nearest parent                                                                                                                                                   | `'bottom'`   |
-| `justify`          | `'start'`, `'middle'`, `'end'`           | Determines the justification of the `Menu` component (based on the alignment) relative to a reference element or the element's nearest parent                                                                                                                           | `'end'`      |
-| `refEl`            | `HTMLElement`                            | Pass a reference to an element that the `Menu` component should be positioned against                                                                                                                                                                                   |              |
-| `trigger`          | `function`, `React.ReactNode`            | A `React.ReactNode` against which the Menu will be positioned.                                                                                                                                                                                                          |              |
-| `usePortal`        | `boolean`                                | Will position Menu's children relative to its parent without using a Portal if `usePortal` is set to false. NOTE: The parent element should be CSS position relative, fixed, or absolute if using this option.                                                          | `true`       |
-| `adjustOnMutation` | `boolean`                                | Determines whether or not the `<Menu/>` should reposition itself based on changes to `trigger` or reference element position.                                                                                                                                           | `false`      |
-
-_Any other properties will be spread on the Menu `ul` container_
-
-# MenuItem
-
-## Properties
-
-| Prop          | Type                                               | Description                                                                                      | Default     |
-| ------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ----------- |
-| `href`        | `string`                                           | If supplied, will render the `<MenuItem />` inside of an `<a>` tag, rather than a `<button>` tag |             |
-| `children`    | `node`                                             | Content to appear inside of `<MenuItem />` component                                             |             |
-| `className`   | `string`                                           | Classname applied to `li` element                                                                |             |
-| `onClick`     | `function`                                         | Function that will be called when a `<MenuItem />` is clicked                                    |             |
-| `active`      | `boolean`                                          | Determines if the `<MenuItem />` is `active`                                                     | `false`     |
-| `disabled`    | `boolean`                                          | Determines if the `<MenuItem />` is `disabled`                                                   | `false`     |
-| `description` | `node`                                             | Content to appear below main text of the `<MenuItem />`                                          |             |
-| `as`          | `React.ElementType`                                | Determines what the `<MenuItem />` will be rendered as                                           |             |
-| `size`        | `default`, `large`                                 | Size of the `<MenuItem />` component                                                             | `'default'` |
-| `glyph`       | `React.ReactElement`                               | Slot to pass in an Icon rendered to the left of `<MenuItem />` text.                             |             |
-| ...           | native attributes of component passed to `as` prop | Any other props will be spread on the root element                                               |             |
-
-# SubMenu
-
-## Properties
-
-| Prop          | Type                                   | Description                                                                                     | Default |
-| ------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------- | ------- |
-| `open`        | `boolean`                              | Determines if `<SubMenu />` item appears open                                                   | `false` |
-| `setOpen`     | `function`                             | Function to set the value of `open` in `<SubMenu />`                                            |         |
-| `className`   | `string`                               | className applied to `SubMenu` root element                                                     |         |
-| `description` | `string`, `React.ReactElement`         | Content to appear below main text of SubMenu                                                    |         |
-| `active`      | `boolean`                              | Determines if `<SubMenu />` appears `active`                                                    | `false` |
-| `disabled`    | `boolean`                              | Determines if `<SubMenu />` appears `disabled`                                                  | `false` |
-| `glyph`       | `React.ReactElement`                   | Slot to pass in an Icon rendered to the left of `<SubMenu />` text.                             |         |
-| `title`       | `string`                               | Main text rendered in `<SubMenu />`                                                             |         |
-| `href`        | `string`                               | If supplied, will render the `<SubMenu />` inside of an `<a>` tag, rather than a `<button>` tag |         |
-| `spacing`     | `number`                               | Distance between the content rendered inside of the Menu and the trigger                        | `15`    |
-| ...           | native `anchor` or `button` attributes | Any other props will be spread on the root element                                              |         |
-
-# Advanced Use Case
-
-## Example
-
-```js
-import { Menu, MenuSeparator, MenuItem } from '@leafygreen-ui/menu';
-
-<Menu
-  align="bottom"
-  justify="start"
-  trigger={({ onClick, children }) => (
-    <button onClick={onClick}>
-      Example Trigger
-      {children}
-    </button>
-  )}
->
-  <MenuItem>Menu Item 1</MenuItem>
-  <MenuItem>Menu Item 2</MenuItem>
-  <MenuItem>Menu Item 3</MenuItem>
-</Menu>;
-```
-
-## Output HTML
-
-```html
+<!-- Trigger as a function -->
 <button>
   Example Trigger
   <div class="leafygreen-ui-1hyfx7x"></div>
@@ -220,6 +160,54 @@ import { Menu, MenuSeparator, MenuItem } from '@leafygreen-ui/menu';
 </div>
 ```
 
-| Prop      | Type                          | Description                                                                                                                                                                                            | Default |
-| --------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
-| `trigger` | `function`, `React.ReactNode` | The trigger prop can also support being passed a function. To work as expected, the function must accept an argument of `children`, which should be rendered inside of the function passed to trigger. |         |
+## Properties
+
+| Prop               | Type                                     | Description                                                                                                                                                                                                                                                             | Default      |
+| ------------------ | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| `open`             | `boolean`                                | Determines whether or not the `<Menu />` will appear as open or closed                                                                                                                                                                                                  | `false`      |
+| `setOpen`          | `function`                               | When controlling the component, use `setOpen` to keep track of the `<Menu />` component's state so that clicks on the document's backdrop as well as a user pressing the Escape Key will close the Menu and update the consuming application's local state accordingly. |              |
+| `shouldClose`      | `function`                               | Determines if the `Menu` should close when the backdrop or Escape keys are clicked. Defaults to true.                                                                                                                                                                   | `() => true` |
+| `align`            | `'top'`, `'bottom'`, `'left'`, `'right'` | Determines the alignment of the `<Menu />` component relative to a reference element, or the element's nearest parent                                                                                                                                                   | `'bottom'`   |
+| `justify`          | `'start'`, `'middle'`, `'end'`           | Determines the justification of the `Menu` component (based on the alignment) relative to a reference element or the element's nearest parent                                                                                                                           | `'end'`      |
+| `refEl`            | `HTMLElement`                            | Pass a reference to an element that the `Menu` component should be positioned against                                                                                                                                                                                   |              |
+| `trigger`          | `function`, `React.ReactNode`            | A `ReactNode` against which the Menu will be positioned. The trigger prop can also support being passed a function. To work as expected, the function must accept an argument of `children`, which should be rendered inside of the function passed to trigger.         |              |
+| `usePortal`        | `boolean`                                | Will position Menu's children relative to its parent without using a Portal if `usePortal` is set to false. NOTE: The parent element should be CSS position relative, fixed, or absolute if using this option.                                                          | `true`       |
+| `adjustOnMutation` | `boolean`                                | Determines whether or not the `<Menu/>` should reposition itself based on changes to `trigger` or reference element position.                                                                                                                                           | `false`      |
+
+_Any other properties will be spread on the Menu `ul` container_
+
+# MenuItem
+
+## Properties
+
+| Prop          | Type                                               | Description                                                                                      | Default     |
+| ------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ----------- |
+| `href`        | `string`                                           | If supplied, will render the `<MenuItem />` inside of an `<a>` tag, rather than a `<button>` tag |             |
+| `children`    | `node`                                             | Content to appear inside of `<MenuItem />` component                                             |             |
+| `className`   | `string`                                           | Classname applied to `li` element                                                                |             |
+| `onClick`     | `function`                                         | Function that will be called when a `<MenuItem />` is clicked                                    |             |
+| `active`      | `boolean`                                          | Determines if the `<MenuItem />` is `active`                                                     | `false`     |
+| `disabled`    | `boolean`                                          | Determines if the `<MenuItem />` is `disabled`                                                   | `false`     |
+| `description` | `node`                                             | Content to appear below main text of the `<MenuItem />`                                          |             |
+| `as`          | `React.ElementType`                                | Determines what the `<MenuItem />` will be rendered as                                           |             |
+| `size`        | `default`, `large`                                 | Size of the `<MenuItem />` component                                                             | `'default'` |
+| `glyph`       | `React.ReactElement`                               | Slot to pass in an Icon rendered to the left of `<MenuItem />` text.                             |             |
+| ...           | native attributes of component passed to `as` prop | Any other props will be spread on the root element                                               |             |
+
+# SubMenu
+
+## Properties
+
+| Prop          | Type                                   | Description                                                                                     | Default |
+| ------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------- | ------- |
+| `open`        | `boolean`                              | Determines if `<SubMenu />` item appears open                                                   | `false` |
+| `setOpen`     | `function`                             | Function to set the value of `open` in `<SubMenu />`                                            |         |
+| `className`   | `string`                               | className applied to `SubMenu` root element                                                     |         |
+| `description` | `string`, `React.ReactElement`         | Content to appear below main text of SubMenu                                                    |         |
+| `active`      | `boolean`                              | Determines if `<SubMenu />` appears `active`                                                    | `false` |
+| `disabled`    | `boolean`                              | Determines if `<SubMenu />` appears `disabled`                                                  | `false` |
+| `glyph`       | `React.ReactElement`                   | Slot to pass in an Icon rendered to the left of `<SubMenu />` text.                             |         |
+| `title`       | `string`                               | Main text rendered in `<SubMenu />`                                                             |         |
+| `href`        | `string`                               | If supplied, will render the `<SubMenu />` inside of an `<a>` tag, rather than a `<button>` tag |         |
+| `spacing`     | `number`                               | Distance between the content rendered inside of the Menu and the trigger                        | `15`    |
+| ...           | native `anchor` or `button` attributes | Any other props will be spread on the root element                                              |         |

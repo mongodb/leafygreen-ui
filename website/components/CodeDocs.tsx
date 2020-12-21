@@ -84,7 +84,6 @@ function VersionCard({
 
   return (
     <Card className={cx(topAlignment, versionCard)}>
-      {/* TODO: Provide fallback if no version */}
       <Subtitle as="h2" className={subtitlePadding}>
         Version {version}
       </Subtitle>
