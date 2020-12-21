@@ -7,7 +7,7 @@ export const tdInnerDiv = createDataProp('td-inner-div');
 
 interface HeaderCellProps
   extends HTMLElementProps<'th', HTMLTableHeaderCellElement> {
-  isHeader?: true;
+  isHeader: true;
 }
 
 interface TableCellProps extends HTMLElementProps<'td', HTMLTableCellElement> {
