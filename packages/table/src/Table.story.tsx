@@ -1,13 +1,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { boolean } from '@storybook/addon-knobs'
+import { boolean } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
 import { defaultData, testHeavierDataSet, multiRowData } from './fixtures';
 
 storiesOf('Table', module)
   .add('Default', () => {
-    const withHeaders = boolean('Use Headers', false)
+    const withHeaders = boolean('Use Headers', false);
 
     return (
       <Table
@@ -25,7 +25,9 @@ storiesOf('Table', module)
               dataType={DataType.Number}
               label="Age"
               key="age"
-              sortBy={(data: typeof testHeavierDataSet[0]) => data.age.toString()}
+              sortBy={(data: typeof testHeavierDataSet[0]) =>
+                data.age.toString()
+              }
             />
 
             <TableHeader
@@ -60,7 +62,9 @@ storiesOf('Table', module)
 
                 {datum.age > 25 && (
                   <Row>
-                    <Cell isHeader={withHeaders}>expanded name: {datum.name}</Cell>
+                    <Cell isHeader={withHeaders}>
+                      expanded name: {datum.name}
+                    </Cell>
                     <Cell>expanded age: {datum.age}</Cell>
                     <Cell>expanded color: {datum.color}</Cell>
                     <Cell>{datum.location}</Cell>
@@ -80,7 +84,7 @@ storiesOf('Table', module)
           </Row>
         )}
       </Table>
-    )
+    );
   })
   .add('Multi-row Header', () => (
     <Table

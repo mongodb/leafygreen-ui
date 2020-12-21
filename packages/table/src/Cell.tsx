@@ -5,7 +5,8 @@ import { commonCellStyles } from './styles';
 
 export const tdInnerDiv = createDataProp('td-inner-div');
 
-interface HeaderCellProps extends HTMLElementProps<'th', HTMLTableHeaderCellElement> {
+interface HeaderCellProps
+  extends HTMLElementProps<'th', HTMLTableHeaderCellElement> {
   isHeader?: true;
 }
 
@@ -22,7 +23,7 @@ const baseStyles = css`
 
 const thStyles = css`
   font-weight: bold;
-`
+`;
 
 const innerDivStyles = css`
   display: flex;
@@ -30,7 +31,10 @@ const innerDivStyles = css`
 `;
 
 const Cell = React.forwardRef(
-  ({ children, className, isHeader = false, ...rest }: CellProps, ref: React.Ref<any>) => {
+  (
+    { children, className, isHeader = false, ...rest }: CellProps,
+    ref: React.Ref<any>,
+  ) => {
     const Element = isHeader ? 'th' : 'td';
 
     const props: Partial<CellProps> = {
@@ -38,20 +42,17 @@ const Cell = React.forwardRef(
       className: cx(
         commonCellStyles,
         baseStyles,
-        {[thStyles]: isHeader},
+        { [thStyles]: isHeader },
         className,
       ),
-    }
+    };
 
     if (isHeader) {
       props.scope = 'row';
     }
 
     return (
-      <Element
-        {...props}
-        {...rest}
-      >
+      <Element {...props} {...rest}>
         <div className={innerDivStyles} {...tdInnerDiv.prop}>
           {children}
         </div>
