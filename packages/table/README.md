@@ -76,8 +76,9 @@ import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 
 # Cell
 
-| Prop        | Type                   | Description                                             | Default |
-| ----------- | ---------------------- | ------------------------------------------------------- | ------- |
-| `children`  | `React.ReactNode`      | Contents to appear inside of the Cell                   |         |
-| `className` | `string`               | className applied to `td` wrapper                       |         |
-| ...         | native `td` attributes | Any other props will be spread on the root `td` element |         |
+| Prop        | Type                           | Description                                                     | Default |
+| ----------- | ------------------------------ | --------------------------------------------------------------- | ------- |
+| `children`  | `React.ReactNode`              | Contents to appear inside of the Cell                           |         |
+| `className` | `string`                       | className applied to `td` or `th` wrapper (see `isHeader` prop) |         |
+| `isHeader`  | `boolean`                      | Renders the cell as a `th` element                              | `false` |
+| ...         | native `td` or `th` attributes | Any other props will be spread on the root `td` or `th` element |         |
