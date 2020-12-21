@@ -52,7 +52,7 @@ function FooterLink({ href, children }: JSX.IntrinsicElements['a']) {
   );
 }
 
-export default function Footer() {
+function Footer() {
   return (
     <div role="contentinfo" className={footerContainer}>
       <a href="https://mongodb.com" target="_blank" rel="noopener noreferrer">
@@ -72,3 +72,7 @@ export default function Footer() {
     </div>
   );
 }
+
+Footer.displayName = 'Footer';
+
+export default Footer;

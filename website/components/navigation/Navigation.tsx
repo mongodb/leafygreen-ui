@@ -140,6 +140,8 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
   return renderGroup(GroupType.Component);
 }
 
+Content.displayName = 'Content';
+
 function Navigation() {
   const { push } = useRouter();
   const viewport = useViewportSize();
@@ -166,5 +168,7 @@ function Navigation() {
     </nav>
   );
 }
+
+Navigation.displayName = 'Navigation';
 
 export default Navigation;

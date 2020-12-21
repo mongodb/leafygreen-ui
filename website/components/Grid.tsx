@@ -66,6 +66,8 @@ const GridContainer = styled<'div', GridContainerProps>('div')`
     props.justify ? props.justify : Justify.Center};
 `;
 
+GridContainer.displayName = 'GridContainer';
+
 export { GridContainer };
 
 const baseGridItemStyles = css`
@@ -171,7 +173,7 @@ type GridItemProps = JSX.IntrinsicElements['div'] & {
   colStart?: number;
 };
 
-export function GridItem({
+function GridItem({
   sm: smProp,
   md: mdProp,
   lg: lgProp,
@@ -231,3 +233,7 @@ export function GridItem({
     </div>
   );
 }
+
+GridItem.displayName = 'Grid';
+
+export { GridItem };

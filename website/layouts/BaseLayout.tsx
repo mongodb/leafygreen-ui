@@ -29,11 +29,7 @@ const topMargin = css`
   })}
 `;
 
-export default function BaseLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function BaseLayout({ children }: { children: React.ReactNode }) {
   return (
     <div
       className={css`
@@ -51,3 +47,7 @@ export default function BaseLayout({
     </div>
   );
 }
+
+BaseLayout.displayName = 'BaseLayout';
+
+export default BaseLayout;

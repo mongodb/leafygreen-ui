@@ -36,6 +36,8 @@ function PropBlock({ header, value }: { header: string; value: string }) {
   );
 }
 
+PropBlock.displayName = 'PropBlock';
+
 function TypeBlock({ header, value }: { header: string; value: string }) {
   return (
     <div className={propBlockContainer}>
@@ -44,6 +46,8 @@ function TypeBlock({ header, value }: { header: string; value: string }) {
     </div>
   );
 }
+
+TypeBlock.displayName = 'TypeBlock';
 
 const flexContainer = css`
   display: flex;
@@ -82,6 +86,8 @@ function Definition({
   );
 }
 
+Definition.displayName = 'Definition';
+
 const inlineDefinitionStyle = css`
   padding: 0;
   font-weight: 600;
@@ -109,5 +115,7 @@ function PropDefinition({
     </InlineDefinition>
   );
 }
+
+PropDefinition.displayName = 'PropDefinition';
 
 export default PropDefinition;

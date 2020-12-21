@@ -109,6 +109,8 @@ function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
   );
 }
 
+Boolean.displayName = 'Boolean';
+
 function Number({
   onChange,
   label,
@@ -150,6 +152,8 @@ function Number({
   );
 }
 
+Number.displayName = 'Number';
+
 function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
   const handleChange = useCallback(
     ({ target }: React.ChangeEvent<HTMLInputElement>) => {
@@ -181,6 +185,8 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
   );
 }
 
+Text.displayName = 'Text';
+
 function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
   const handleChange = useCallback(
     ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -209,6 +215,8 @@ function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
     </div>
   );
 }
+
+Area.displayName = 'Area';
 
 function Select({
   onChange,
@@ -258,5 +266,7 @@ function Select({
     </div>
   );
 }
+
+Select.displayName = 'Select';
 
 export { Knob, Boolean, Text, Area, Number, Select };

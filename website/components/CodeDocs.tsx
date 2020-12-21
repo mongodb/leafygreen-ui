@@ -110,6 +110,8 @@ function VersionCard({
   );
 }
 
+VersionCard.displayName = 'VersionCard';
+
 function MobileInstall({ component, version, changelog }: InstallProps) {
   return (
     <GridContainer>
@@ -134,6 +136,8 @@ function MobileInstall({ component, version, changelog }: InstallProps) {
     </GridContainer>
   );
 }
+
+MobileInstall.displayName = 'MobileInstall';
 
 function DesktopInstall({ component, changelog, version }: InstallProps) {
   return (
@@ -170,6 +174,8 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
     </>
   );
 }
+
+DesktopInstall.displayName = 'DesktopInstall';
 
 function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
   const viewport = useViewportSize();
@@ -225,5 +231,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
     </>
   );
 }
+
+CodeDocs.displayName = 'CodeDocs';
 
 export default CodeDocs;

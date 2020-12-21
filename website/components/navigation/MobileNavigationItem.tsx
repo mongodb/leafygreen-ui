@@ -61,4 +61,6 @@ function MobileNavigationItem({
   );
 }
 
+MobileNavigationItem.displayName = 'MobileNavigationItem';
+
 export default MobileNavigationItem;

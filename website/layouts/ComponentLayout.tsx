@@ -53,11 +53,7 @@ const reactIconStyle = css`
   margin-right: 4px;
 `;
 
-export default function ComponentLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function ComponentLayout({ children }: { children: React.ReactNode }) {
   const [selected, setSelected] = React.useState(0);
   const router = useRouter();
   const componentName = router.pathname
@@ -126,3 +122,7 @@ export default function ComponentLayout({
     </div>
   );
 }
+
+ComponentLayout.displayName = 'ComponentLayout';
+
+export default ComponentLayout;
