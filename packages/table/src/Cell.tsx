@@ -33,15 +33,23 @@ const Cell = React.forwardRef(
   ({ children, className, isHeader = false, ...rest }: CellProps, ref: React.Ref<any>) => {
     const Element = isHeader ? 'th' : 'td';
 
+    const props: Partial<CellProps> = {
+      ref,
+      className: cx(
+        commonCellStyles,
+        baseStyles,
+        {[thStyles]: isHeader},
+        className,
+      ),
+    }
+
+    if (isHeader) {
+      props.scope = 'row';
+    }
+
     return (
       <Element
-        ref={ref}
-        className={cx(
-          commonCellStyles,
-          baseStyles,
-          // {[thStyles]: isHeader},
-          className,
-        )}
+        {...props}
         {...rest}
       >
         <div className={innerDivStyles} {...tdInnerDiv.prop}>
