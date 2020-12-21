@@ -19,7 +19,6 @@ const knobsWidth = 318; // totalWidth (700px) - padding on both sides (24px on e
 const knobContainerStyle = css`
   display: flex;
   flex-grow: 1;
-  // justify-content: space-between;
   padding: ${spacing[3]}px 0px;
 `;
 
