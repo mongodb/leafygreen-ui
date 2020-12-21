@@ -4,48 +4,48 @@ A set of CSS styles and React components built with design in mind.
 
 ## Package Table of Contents
 
-- [Badge](https://github.com/mongodb/leafygreen-ui/tree/master/packages/badge)
-- [Banner](https://github.com/mongodb/leafygreen-ui/tree/master/packages/banner)
-- [Box](https://github.com/mongodb/leafygreen-ui/tree/master/packages/box)
-- [Button](https://github.com/mongodb/leafygreen-ui/tree/master/packages/button)
-- [Callout](https://github.com/mongodb/leafygreen-ui/tree/master/packages/callout)
-- [Card](https://github.com/mongodb/leafygreen-ui/tree/master/packages/card)
-- [Checkbox](https://github.com/mongodb/leafygreen-ui/tree/master/packages/checkbox)
-- [Code](https://github.com/mongodb/leafygreen-ui/tree/master/packages/code)
-- [Confirmation Modal](https://github.com/mongodb/leafygreen-ui/tree/master/packages/confirmation-modal)
-- [Copyable](https://github.com/mongodb/leafygreen-ui/tree/master/packages/copyable)
-- [Emotion](https://github.com/mongodb/leafygreen-ui/tree/master/packages/emotion)
-- [Hooks](https://github.com/mongodb/leafygreen-ui/tree/master/packages/hooks)
-- [Icon](https://github.com/mongodb/leafygreen-ui/tree/master/packages/icon)
-- [Icon Button](https://github.com/mongodb/leafygreen-ui/tree/master/packages/icon-button)
-- [Inline Definition](https://github.com/mongodb/leafygreen-ui/tree/master/packages/inline-definition)
-- [Interaction Ring](https://github.com/mongodb/leafygreen-ui/tree/master/packages/interaction-ring)
-- [LeafyGreen Provider](https://github.com/mongodb/leafygreen-ui/tree/master/packages/leafygreen-provider)
-- [Lib](https://github.com/mongodb/leafygreen-ui/tree/master/packages/lib)
-- [Logo](https://github.com/mongodb/leafygreen-ui/tree/master/packages/logo)
-- [Marketing Modal](https://github.com/mongodb/leafygreen-ui/tree/master/packages/marketing-modal)
-- [Menu](https://github.com/mongodb/leafygreen-ui/tree/master/packages/menu)
-- [Modal](https://github.com/mongodb/leafygreen-ui/tree/master/packages/modal)
-- [MongoMenu](https://github.com/mongodb/leafygreen-ui/tree/master/packages/mongo-menu)
-- [Palette](https://github.com/mongodb/leafygreen-ui/tree/master/packages/palette)
-- [Pipeline](https://github.com/mongodb/leafygreen-ui/tree/master/packages/pipeline)
-- [Popover](https://github.com/mongodb/leafygreen-ui/tree/master/packages/popover)
-- [Portal](https://github.com/mongodb/leafygreen-ui/tree/master/packages/portal)
-- [Radio Box Group](https://github.com/mongodb/leafygreen-ui/tree/master/packages/radio-box-group)
-- [Radio Group](https://github.com/mongodb/leafygreen-ui/tree/master/packages/radio-group)
-- [Select](https://github.com/mongodb/leafygreen-ui/tree/master/packages/select)
-- [Side Nav](https://github.com/mongodb/leafygreen-ui/tree/master/packages/side-nav)
-- [Stepper](https://github.com/mongodb/leafygreen-ui/tree/master/packages/stepper)
-- [Syntax](https://github.com/mongodb/leafygreen-ui/tree/master/packages/syntax)
-- [Table](https://github.com/mongodb/leafygreen-ui/tree/master/packages/table)
-- [Tabs](https://github.com/mongodb/leafygreen-ui/tree/master/packages/tabs)
-- [Testing Lib](https://github.com/mongodb/leafygreen-ui/tree/master/packages/testing-lib)
-- [Text Area](https://github.com/mongodb/leafygreen-ui/tree/master/packages/text-area)
-- [Text Input](https://github.com/mongodb/leafygreen-ui/tree/master/packages/text-input)
-- [Toast](https://github.com/mongodb/leafygreen-ui/tree/master/packages/toast)
-- [Toggle](https://github.com/mongodb/leafygreen-ui/tree/master/packages/toggle)
-- [Tooltip](https://github.com/mongodb/leafygreen-ui/tree/master/packages/tooltip)
-- [Typography](https://github.com/mongodb/leafygreen-ui/tree/master/packages/typography)
+- [Badge](https://github.com/mongodb/leafygreen-ui/tree/main/packages/badge)
+- [Banner](https://github.com/mongodb/leafygreen-ui/tree/main/packages/banner)
+- [Box](https://github.com/mongodb/leafygreen-ui/tree/main/packages/box)
+- [Button](https://github.com/mongodb/leafygreen-ui/tree/main/packages/button)
+- [Callout](https://github.com/mongodb/leafygreen-ui/tree/main/packages/callout)
+- [Card](https://github.com/mongodb/leafygreen-ui/tree/main/packages/card)
+- [Checkbox](https://github.com/mongodb/leafygreen-ui/tree/main/packages/checkbox)
+- [Code](https://github.com/mongodb/leafygreen-ui/tree/main/packages/code)
+- [Confirmation Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/confirmation-modal)
+- [Copyable](https://github.com/mongodb/leafygreen-ui/tree/main/packages/copyable)
+- [Emotion](https://github.com/mongodb/leafygreen-ui/tree/main/packages/emotion)
+- [Hooks](https://github.com/mongodb/leafygreen-ui/tree/main/packages/hooks)
+- [Icon](https://github.com/mongodb/leafygreen-ui/tree/main/packages/icon)
+- [Icon Button](https://github.com/mongodb/leafygreen-ui/tree/main/packages/icon-button)
+- [Inline Definition](https://github.com/mongodb/leafygreen-ui/tree/main/packages/inline-definition)
+- [Interaction Ring](https://github.com/mongodb/leafygreen-ui/tree/main/packages/interaction-ring)
+- [LeafyGreen Provider](https://github.com/mongodb/leafygreen-ui/tree/main/packages/leafygreen-provider)
+- [Lib](https://github.com/mongodb/leafygreen-ui/tree/main/packages/lib)
+- [Logo](https://github.com/mongodb/leafygreen-ui/tree/main/packages/logo)
+- [Marketing Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/marketing-modal)
+- [Menu](https://github.com/mongodb/leafygreen-ui/tree/main/packages/menu)
+- [Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/modal)
+- [MongoMenu](https://github.com/mongodb/leafygreen-ui/tree/main/packages/mongo-menu)
+- [Palette](https://github.com/mongodb/leafygreen-ui/tree/main/packages/palette)
+- [Pipeline](https://github.com/mongodb/leafygreen-ui/tree/main/packages/pipeline)
+- [Popover](https://github.com/mongodb/leafygreen-ui/tree/main/packages/popover)
+- [Portal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/portal)
+- [Radio Box Group](https://github.com/mongodb/leafygreen-ui/tree/main/packages/radio-box-group)
+- [Radio Group](https://github.com/mongodb/leafygreen-ui/tree/main/packages/radio-group)
+- [Select](https://github.com/mongodb/leafygreen-ui/tree/main/packages/select)
+- [Side Nav](https://github.com/mongodb/leafygreen-ui/tree/main/packages/side-nav)
+- [Stepper](https://github.com/mongodb/leafygreen-ui/tree/main/packages/stepper)
+- [Syntax](https://github.com/mongodb/leafygreen-ui/tree/main/packages/syntax)
+- [Table](https://github.com/mongodb/leafygreen-ui/tree/main/packages/table)
+- [Tabs](https://github.com/mongodb/leafygreen-ui/tree/main/packages/tabs)
+- [Testing Lib](https://github.com/mongodb/leafygreen-ui/tree/main/packages/testing-lib)
+- [Text Area](https://github.com/mongodb/leafygreen-ui/tree/main/packages/text-area)
+- [Text Input](https://github.com/mongodb/leafygreen-ui/tree/main/packages/text-input)
+- [Toast](https://github.com/mongodb/leafygreen-ui/tree/main/packages/toast)
+- [Toggle](https://github.com/mongodb/leafygreen-ui/tree/main/packages/toggle)
+- [Tooltip](https://github.com/mongodb/leafygreen-ui/tree/main/packages/tooltip)
+- [Typography](https://github.com/mongodb/leafygreen-ui/tree/main/packages/typography)
 
 ## Developer Setup
 
@@ -166,7 +166,7 @@ yarn ts:build
 yarn ts:downlevel
 ```
 
-3. Publish all packages to NPM using changesets. This can be done from master.
+3. Publish all packages to NPM using changesets. This can be done from the `main` branch.
 
 ```
 yarn release
@@ -180,7 +180,7 @@ git push --follow-tags
 
 ## Deploy gh-pages
 
-You can deploy a static build of our Storybook site to gh-pages from the master branch.
+You can deploy a static build of our Storybook site to gh-pages from the `main` branch.
 
 1. First be sure you've built a static version of Storybook: `yarn build:storybook`
 2. Then deploy to gh-pages: `yarn release:site`
