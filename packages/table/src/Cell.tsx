@@ -35,7 +35,7 @@ const Cell = React.forwardRef(
     { children, className, isHeader = false, ...rest }: CellProps,
     ref: React.Ref<any>,
   ) => {
-    const Element = isHeader ? 'th' : 'td';
+    const Root = isHeader ? 'th' : 'td';
 
     const props: Partial<CellProps> = {
       ref,
@@ -52,11 +52,11 @@ const Cell = React.forwardRef(
     }
 
     return (
-      <Element {...props} {...rest}>
+      <Root {...props} {...rest}>
         <div className={innerDivStyles} {...tdInnerDiv.prop}>
           {children}
         </div>
-      </Element>
+      </Root>
     );
   },
 );
