@@ -123,6 +123,7 @@ interface InteractionRingProps {
   children: React.ReactElement;
   disabled?: boolean;
   forceState?: State;
+  useProvider?: boolean;
 }
 
 export default function InteractionRing({

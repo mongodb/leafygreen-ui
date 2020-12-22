@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import {
   createDataProp,
   HTMLElementProps,
-  IdAllocator,
+  Either,
+  validateAriaLabelling,
 } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
@@ -24,81 +25,21 @@ export const Mode = {
 
 export type Mode = typeof Mode[keyof typeof Mode];
 
-const toggleInput = createDataProp('toggle-input');
-const toggleGroove = createDataProp('toggle-groove');
+const toggleButton = createDataProp('toggle-button');
+
+const buttonSelectors = {
+  checked: `${toggleButton.selector}[aria-checked="true"]`,
+  unchecked: `${toggleButton.selector}[aria-checked="false"]`,
+  disabled: `${toggleButton.selector}:disabled`,
+};
+
+const sliderSelector = {
+  checked: `${buttonSelectors.checked} > &`,
+  unchecked: `${buttonSelectors.unchecked} > &`,
+  disabled: `${buttonSelectors.disabled} > &`,
+};
 
 const transitionInMS = 150;
-
-const inputStyle = css`
-  position: absolute;
-  margin: 0;
-  left: 0;
-  top: 0;
-  height: 0;
-  width: 0;
-  pointer-events: none;
-  opacity: 0;
-`;
-
-interface StateForStyle {
-  size: Size;
-  mode: Mode;
-  checked: boolean;
-  disabled: boolean;
-}
-
-const sizeStyles: Record<string, Record<Size, any>> = {
-  container: {
-    [Size.Default]: css`
-      height: 32px;
-      width: 62px;
-    `,
-
-    [Size.Small]: css`
-      height: 22px;
-      width: 40px;
-    `,
-
-    [Size.XSmall]: css`
-      height: 14px;
-      width: 26px;
-    `,
-  },
-
-  slider: {
-    [Size.Default]: css`
-      height: 28px;
-      width: 28px;
-    `,
-
-    [Size.Small]: css`
-      height: 20px;
-      width: 20px;
-    `,
-
-    [Size.XSmall]: css`
-      height: 12px;
-      width: 12px;
-    `,
-  },
-
-  disabledSlider: {
-    [Size.Default]: css`
-      height: 28px;
-      width: 28px;
-    `,
-
-    [Size.Small]: css`
-      height: 18px;
-      width: 18px;
-    `,
-
-    [Size.XSmall]: css`
-      height: 10px;
-      width: 10px;
-    `,
-  },
-};
 
 const baseSliderStyles = css`
   transition: all ${transitionInMS}ms ease-in-out;
@@ -108,247 +49,66 @@ const baseSliderStyles = css`
   bottom: 0;
   margin: auto;
   overflow: hidden;
-`
-
-const baseContainerStyles = css`
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
+  transform: translate3d(0, 0, 0);
 `;
 
-const disabledContainerStyles = css`
-  cursor: not-allowed;
-`
+const baseButtonStyles = css`
+  transition: ${transitionInMS}ms all ease-in-out, 0 background-color linear;
+  display: inline-block;
+  flex-shrink: 0;
+  position: relative;
+  padding: 0;
+  border-radius: 50px;
+  border: 1px solid;
+  cursor: pointer;
 
-const getGrooveStyles = ({ mode, checked, disabled }: StateForStyle) => {
-  const colorSets: { [K in Mode]: string } = {
-    [Mode.Light]: (() => {
-      if (disabled) {
-        return css`
-          background-color: rgba(6, 22, 33, 0.09);
-          border-color: rgba(6, 22, 33, 0.04);
-        `;
-      }
+  &:disabled {
+    cursor: not-allowed;
+  }
 
-      const colorSet = css`
-        box-shadow: inset 0 0 5px rgba(6, 22, 33, 0.1);
-      `;
+  &:focus {
+    outline: none;
+  }
 
-      if (checked) {
-        return colorSet;
-      }
+  &[aria-checked='true'] {
+    // We set background-color here to avoid a small issue with overflow clipping
+    // that makes this look less seamless than it should.
+    background-color: #43b1e5;
+    border-color: #2e9ed3;
+    transition-delay: ${transitionInMS}ms;
 
-      return cx(
-        colorSet,
-        css`
-          background-color: rgba(61, 79, 88, 0.1);
-          border-color: rgba(18, 22, 22, 0.03);
-        `,
-      );
-    })(),
+    &:before {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
 
-    [Mode.Dark]: (() => {
-      if (disabled) {
-        return css`
-          background-color: rgba(255, 255, 255, 0.15);
-          border-color: rgba(255, 255, 255, 0.1);
-        `;
-      }
-
-      const colorSet = css`
-        box-shadow: inset 0 0 10px rgba(6, 22, 33, 0.15);
-      `;
-
-      if (checked) {
-        return colorSet;
-      }
-
-      return cx(
-        colorSet,
-        css`
-          background-color: rgba(6, 22, 33, 0.4);
-          border-color: rgba(6, 22, 33, 0.1);
-        `,
-      );
-    })(),
-  };
-
-  const baseStyle = css`
-    transition: ${transitionInMS}ms all ease-in-out, 0 background-color linear;
-    display: inline-block;
-    flex-shrink: 0;
-    position: relative;
-    border-radius: 50px;
-    overflow: hidden;
+  // We're animating this pseudo-element in order to give the toggle groove
+  // background an animation in and out.
+  &:before {
+    content: '';
+    transition: ${transitionInMS}ms all ease-in-out;
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    border: 1px solid;
-
-    // We're animating this pseudo-element in order to give the toggle groove
-    // background an animation in and out.
-    &:before {
-      content: '';
-      transition: ${transitionInMS}ms all ease-in-out;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      border-radius: 50px;
-      background-color: #43b1e5;
-      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
-      opacity: 0;
-      transform: scale(0.85);
-    }
-  `;
-
-  if (disabled) {
-    return cx(
-      baseStyle,
-      css`
-        &:before {
-          opacity: 0;
-        }
-      `,
-      colorSets[mode],
-    );
+    border-radius: 50px;
+    background-color: #43b1e5;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: scale(0.85);
   }
 
-  if (checked) {
-    return cx(
-      baseStyle,
-      css`
-        // We set background-color here to avoid a small issue with overflow clipping
-        // that makes this look less seamless than it should.
-        background-color: #43b1e5;
-        border-color: #2e9ed3;
-        transition-delay: ${transitionInMS}ms;
-
-        &:before {
-          transform: scale(1);
-          opacity: 1;
-        }
-      `,
-      colorSets[mode],
-    );
+  &:disabled:before {
+    opacity: 0;
   }
-
-  return cx(baseStyle, colorSets[mode]);
-};
-
-const getSliderStyles = ({ size, mode, checked, disabled }: StateForStyle) => {
-  const colorSets: { [K in Mode]: string } = {
-    [Mode.Light]: (() => {
-      const colorSet = css`
-        &:before {
-          background-image: linear-gradient(${uiColors.white}, #f6f6f6);
-        }
-      `;
-
-      if (disabled) {
-        return cx(
-          colorSet,
-          css`
-            background-color: rgba(6, 22, 33, 0.09);
-          `,
-        );
-      }
-
-      return cx(
-        colorSet,
-        css`
-          ${colorSet}
-          background-color: white;
-          box-shadow: 0 0 2px rgba(28, 192, 97, 0.08),
-            0 1px 2px rgba(0, 0, 0, 0.25), inset 0 -1px 0 #f1f1f1;
-        `,
-      );
-    })(),
-
-    [Mode.Dark]: (() => {
-      if (disabled) {
-        return css`
-          background-color: rgba(255, 255, 255, 0.15);
-          background-image: none;
-        `;
-      }
-
-      if (checked) {
-        return css`
-          background-color: white;
-          box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.25),
-            inset 0 -1px 0 #cdcdcd;
-
-          &:before {
-            opacity: 0;
-          }
-
-          &:after {
-            opacity: 1;
-          }
-        `;
-      }
-
-      return css`
-        background-color: #6f767b;
-        box-shadow: 0 0 2px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.25),
-          inset 0 -1px 0 ${uiColors.gray.dark2};
-      `;
-    })(),
-  };
-
-  if (disabled) {
-    return cx(
-      css`
-        left: 1px;
-
-        &:before,
-        &:after {
-          display: none;
-        }
-      `,
-      colorSets[mode],
-    );
-  }
-
-  return cx(
-    css`
-      left: ${size === 'default' ? 1 : 0}px;
-
-      &:before,
-      &:after {
-        content: '';
-        transition: opacity ${transitionInMS}ms ease-in-out;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-      }
-
-      &:before {
-        opacity: 1;
-      }
-
-      &:after {
-        opacity: 0;
-        background-image: linear-gradient(
-          rgba(220, 220, 220, 0),
-          rgba(220, 220, 220, 0.5)
-        );
-      }
-    `,
-    colorSets[mode],
-  );
-};
+`;
 
 const baseLabelStyle = css`
   transition: all ${transitionInMS}ms ease-in-out;
   position: absolute;
-  top: 0;
+  top: 1px;
   bottom: 0;
   margin: auto;
   height: 11px;
@@ -360,137 +120,326 @@ const baseLabelStyle = css`
   user-select: none;
 `;
 
-const onLabelStyle = cx(
-  baseLabelStyle,
-  css`
-    left: 9px;
+const onLabelStyle = css`
+  left: 9px;
+`;
 
-    ${toggleInput.selector}:hover ~ ${toggleGroove.selector} > &,
-    ${toggleInput.selector}:focus ~ ${toggleGroove.selector} > & {
-      color: white;
-    }
-  `,
-);
+const offLabelStyle = css`
+  right: 6px;
+`;
 
-const offLabelStyle = cx(
-  baseLabelStyle,
-  css`
-    right: 6px;
-    color: ${uiColors.gray.base};
-  `,
-);
+const sizeStyles = {
+  [Size.Default]: {
+    button: css`
+      height: 32px;
+      width: 62px;
+    `,
 
-const getStatefulStyles = (states: StateForStyle) => ({
-  slider: getSliderStyles(states),
-  groove: getGrooveStyles(states),
-});
+    slider: css`
+      height: 28px;
+      width: 28px;
+      left: 1px;
+
+      ${sliderSelector.checked} {
+        transform: translate3d(30px, 0, 0);
+      }
+
+      ${sliderSelector.disabled} {
+        height: 28px;
+        width: 28px;
+      }
+    `,
+  },
+
+  [Size.Small]: {
+    button: css`
+      height: 22px;
+      width: 40px;
+    `,
+
+    slider: css`
+      height: 20px;
+      width: 20px;
+
+      ${sliderSelector.checked} {
+        transform: translate3d(18px, 0, 0);
+      }
+
+      ${sliderSelector.disabled} {
+        height: 18px;
+        width: 18px;
+        left: 1px;
+      }
+
+      ${buttonSelectors.checked}:disabled {
+        transform: translate3d(17px, 0, 0);
+      }
+    `,
+  },
+
+  [Size.XSmall]: {
+    button: css`
+      height: 14px;
+      width: 26px;
+    `,
+
+    slider: css`
+      height: 12px;
+      width: 12px;
+
+      ${sliderSelector.checked} {
+        transform: translate3d(12px, 0, 0);
+      }
+
+      ${sliderSelector.disabled} {
+        height: 10px;
+        width: 10px;
+        left: 1px;
+      }
+
+      ${buttonSelectors.checked}:disabled {
+        transform: translate3d(11px, 0, 0);
+      }
+    `,
+  },
+} as const;
+
+const modeStyles = {
+  [Mode.Light]: {
+    button: css`
+      box-shadow: inset 0 0 5px rgba(6, 22, 33, 0.1);
+
+      &[aria-checked='false']:not(:disabled) {
+        background-color: rgba(61, 79, 88, 0.1);
+        border-color: rgba(18, 22, 22, 0.03);
+      }
+
+      &:disabled {
+        background-color: rgba(6, 22, 33, 0.09);
+        border-color: rgba(6, 22, 33, 0.04);
+        box-shadow: none;
+      }
+    `,
+
+    slider: css`
+      background-color: white;
+      box-shadow: 0 0 2px rgba(28, 192, 97, 0.08), 0 1px 2px rgba(0, 0, 0, 0.25),
+        inset 0 -1px 0 #f1f1f1;
+
+      &:before {
+        background-image: linear-gradient(${uiColors.white}, #f6f6f6);
+      }
+
+      ${sliderSelector.disabled} {
+        box-shadow: none;
+        background-color: rgba(6, 22, 33, 0.09);
+      }
+    `,
+
+    offLabel: css`
+      color: ${uiColors.gray.dark1};
+    `,
+
+    onLabel: css`
+      color: ${uiColors.white};
+    `,
+  },
+
+  [Mode.Dark]: {
+    button: css`
+      box-shadow: inset 0 0 10px rgba(6, 22, 33, 0.15);
+
+      &[aria-checked='false']:not(:disabled) {
+        background-color: rgba(6, 22, 33, 0.4);
+        border-color: rgba(6, 22, 33, 0.1);
+      }
+
+      &:disabled {
+        background-color: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+    `,
+
+    slider: css`
+      ${sliderSelector.checked} {
+        background-color: white;
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.25),
+          inset 0 -1px 0 #cdcdcd;
+
+        &:before {
+          opacity: 0;
+        }
+
+        &:after {
+          opacity: 1;
+        }
+      }
+
+      ${sliderSelector.unchecked} {
+        background-color: #6f767b;
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.25),
+          inset 0 -1px 0 ${uiColors.gray.dark2};
+      }
+
+      ${sliderSelector.disabled} {
+        background-color: rgba(255, 255, 255, 0.15);
+        background-image: none;
+        box-shadow: none;
+      }
+    `,
+
+    offLabel: css`
+      color: ${uiColors.gray.light1};
+    `,
+
+    onLabel: css`
+      color: ${uiColors.white};
+      text-shadow: 0 0 2px ${uiColors.blue.base};
+    `,
+  },
+} as const;
 
 interface BaseToggleProps {
+  /**
+   * Sets the size of the toggle.
+   *
+   * default: `'default'`
+   */
   size?: Size;
+
+  /**
+   * Determines if the Toggle will render the dark mode styles.
+   *
+   * default: `false`
+   */
   darkMode?: boolean;
+
+  /**
+   * Set's the checked state of the Toggle. We recommend not passing this prop, and instead using the onChange event to sync your application's state in most cases.
+   */
+  checked?: boolean;
+
+
+  /**
+   * Disables the Toggle.
+   *
+   * default: `false`
+   */
+  disabled?: boolean;
+
+  /**
+   * Event handler that receives the updated checked state of the toggle, and the initiating mouse event.
+   */
+  onChange?: (
+    checked: boolean,
+    mouseEvent: React.MouseEvent<HTMLButtonElement>,
+  ) => void;
+
+  /**
+   * The event handler function for the 'onchange' event. Receives the associated event object as the first argument.
+   */
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+
+  /**
+   * Adds a className to the outermost element.
+   */
+  className?: string;
 }
 
-type ToggleProps = BaseToggleProps &
-  Omit<HTMLElementProps<'input', never>, keyof BaseToggleProps>;
-
-const idAllocator = IdAllocator.create('toggle');
+type ToggleProps = Either<
+  BaseToggleProps &
+    Omit<HTMLElementProps<'button', never>, keyof BaseToggleProps>,
+  'aria-label' | 'aria-labelledby'
+>;
 
 function Toggle({
-  name,
   className,
   size = Size.Default,
   darkMode = false,
   disabled = false,
-  onChange: onChangeProp = () => {},
+  onChange: onChangeProp,
+  onClick: onClickProp,
   checked: checkedProp,
-  id: idProp,
   ...rest
 }: ToggleProps) {
-  const [checked, setChecked] = useState(false);
-  const toggleId = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
-  const normalizedChecked = checkedProp || checked;
+  validateAriaLabelling(rest, 'Toggle');
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (onChangeProp) {
-      onChangeProp(e);
+  const [buttonElement, setButtonElement] = useState<HTMLElement | null>(null);
+  const [checked, setChecked] = useState<boolean>(checkedProp || false);
+  const normalizedChecked = checkedProp ?? checked;
+
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (onClickProp) {
+      onClickProp(e);
     }
 
-    if (checkedProp == null) {
-      setChecked(e.target.checked);
-    }
+    setChecked(curr => {
+      const updatedState = !curr;
+
+      if (onChangeProp) {
+        onChangeProp(updatedState, e);
+      }
+
+      return updatedState;
+    });
   };
 
-  const transformBySize: { [K in Size]: number } = {
-    default: 30,
-    small: 18,
-    xsmall: 12,
-  };
+  const {
+    button: buttonModeStyles,
+    slider: sliderModeStyles,
+    offLabel: offLabelModeStyles,
+    onLabel: onLabelModeStyles,
+  } = modeStyles[darkMode ? Mode.Dark : Mode.Light];
 
-  const sliderPositionStyle = css`
-    transform: translate3d(${checked ? transformBySize[size] : 0}px, 0, 0);
-  `;
-
-  const statefulStyles = getStatefulStyles({
-    disabled,
-    size,
-    checked: normalizedChecked,
-    mode: darkMode ? Mode.Dark : Mode.Light,
-  });
-
-  const [inputElement, setInputElement] = useState<HTMLElement | null>(null);
+  const { button: buttonSizeStyles, slider: sliderSizeStyles } = sizeStyles[
+    size
+  ];
 
   return (
     <InteractionRing
       darkMode={darkMode}
       disabled={disabled}
       borderRadius="50px"
-      focusTargetElement={inputElement}
+      focusTargetElement={buttonElement}
+      className={className}
     >
-      <label
+      <button
+        role="switch"
+        onClick={onClick}
+        aria-checked={normalizedChecked}
+        disabled={disabled}
+        aria-disabled={disabled}
+        ref={setButtonElement}
         className={cx(
-          baseContainerStyles,
-          sizeStyles.container[size],
-          { [disabledContainerStyles]: disabled },
-          className,
+          baseButtonStyles,
+          buttonModeStyles,
+          buttonSizeStyles,
         )}
-        htmlFor={toggleId}
+        {...toggleButton.prop}
+        {...rest}
       >
-        <input
-          {...toggleInput.prop}
-          {...rest}
-          ref={setInputElement}
-          id={toggleId}
-          className={inputStyle}
-          type="checkbox"
-          name={name}
-          disabled={disabled}
-          aria-disabled={disabled}
-          checked={normalizedChecked}
-          aria-checked={normalizedChecked}
-          onChange={onChange}
+        {size === 'default' && !disabled && (
+          <>
+            <span
+              aria-hidden={true}
+              className={cx(baseLabelStyle, onLabelStyle, onLabelModeStyles)}
+            >
+              On
+            </span>
+
+            <span
+              aria-hidden={true}
+              className={cx(baseLabelStyle, offLabelStyle, offLabelModeStyles)}
+            >
+              Off
+            </span>
+          </>
+        )}
+
+        <div
+          className={cx(baseSliderStyles, sliderSizeStyles, sliderModeStyles)}
         />
-
-        <div {...toggleGroove.prop} className={statefulStyles.groove}>
-          {size === 'default' && !disabled && (
-            <>
-              <div className={onLabelStyle}>On</div>
-              <div className={offLabelStyle}>Off</div>
-            </>
-          )}
-
-          <div
-            className={cx(
-              baseSliderStyles,
-              sizeStyles.slider[size],
-              {
-                [sizeStyles.disabledSlider[size]]: disabled,
-              },
-              statefulStyles.slider,
-              sliderPositionStyle,
-            )}
-          />
-        </div>
-      </label>
+      </button>
     </InteractionRing>
   );
 }
@@ -504,8 +453,7 @@ Toggle.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
   onChange: PropTypes.func,
-  name: PropTypes.string,
-  id: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default Toggle;

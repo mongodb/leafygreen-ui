@@ -1,7 +1,8 @@
 import IdAllocator from './IdAllocator';
+import { validateAriaLabelling } from './accessibilityHelpers'
 import * as typeIs from './typeIs';
 
-export { IdAllocator, typeIs };
+export { IdAllocator, typeIs, validateAriaLabelling };
 
 /** Helper type to extract an HTML element's valid props */
 export type HTMLElementProps<
