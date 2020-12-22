@@ -1,5 +1,11 @@
 # @leafygreen-ui/toast
 
+## 0.3.0
+
+### Minor Changes
+
+- 7e7dc210: Added new Toast variants
+
 ## 0.2.2
 
 ### Patch Changes
