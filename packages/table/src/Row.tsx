@@ -30,8 +30,6 @@ const altColor = css`
 `;
 
 const iconButtonMargin = css`
-  flex-grow: 1;
-  flex-shrink: 0;
   margin-right: 4px;
   margin-left: -8px;
 `;
@@ -42,11 +40,6 @@ const disabledStyle = css`
   cursor: not-allowed;
   border-top: 1px solid ${uiColors.gray.light1};
   border-bottom: 1px solid ${uiColors.gray.light1};
-`;
-
-const displayFlex = css`
-  display: flex;
-  align-items: center;
 `;
 
 const transitionStyles = {
@@ -215,13 +208,12 @@ const Row = React.forwardRef(
               <span>{renderedChildren[0].props.children}</span>
             </>
           ),
-          className: cx(displayFlex, className),
           key: `${indexRef.current}-${renderedChildren[0].props.children}`,
         });
       }
 
       return renderedChildren;
-    }, [children, disabled, className, isExpanded, setIsExpanded]);
+    }, [children, disabled, isExpanded, setIsExpanded]);
 
     const nestedRows = React.useMemo(() => {
       if (!isExpanded) {
