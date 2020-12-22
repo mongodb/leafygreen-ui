@@ -39,6 +39,7 @@ interface SelectConfigInterface<T> {
   options: Array<T | undefined>;
   default: T;
   label: string;
+  disabled?: (props: any) => boolean;
 }
 
 interface BooleanConfigInterface {
@@ -86,14 +87,14 @@ interface ComponentPropsInterface {
 
 export type KnobsConfigInterface<
   ComponentProps extends ComponentPropsInterface
-> = {
-  [K in keyof ComponentProps]: Extract<
-    PropsType<ComponentProps[K]>,
-    {
-      default: ComponentProps[K];
-    }
-  >;
-};
+  > = {
+    [K in keyof ComponentProps]: Extract<
+      PropsType<ComponentProps[K]>,
+      {
+        default: ComponentProps[K];
+      }
+    >;
+  };
 
 interface LiveExampleInterface<ComponentProps extends ComponentPropsInterface> {
   knobsConfig: KnobsConfigInterface<ComponentProps>;
@@ -168,9 +169,8 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
               {...sharedProps}
               options={knobConfig?.options as Array<string>}
               value={props[propName] as string}
-              // Disables `as` dropdown when hasHrefProp is true in order to accurately portray the effects of each respesctively.
-              // In our live examples, we give precedence to the hasHrefProp to demonstrate that passing an href to a Box component renders it as an anchor tag.
-              disabled={propName === 'as' && props.hasHrefProp ? true : false}
+              // Allows us to disable Select dropdown based on current component props
+              disabled={knobConfig.disabled?.(props)}
             />
           );
 

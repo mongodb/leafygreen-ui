@@ -1,4 +1,5 @@
 import React from 'react';
+import { css } from 'emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { Select, Option, OptionGroup, Size } from '@leafygreen-ui/select';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
@@ -72,6 +73,9 @@ export default function MongoNavLiveExample() {
           name="readPreferences"
           defaultValue="primary"
           disabled={disabled}
+          className={css`
+            width: 600px;
+          `}
         >
           <OptionGroup label="Primary">
             <Option

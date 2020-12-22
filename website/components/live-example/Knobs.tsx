@@ -224,7 +224,7 @@ function Select({
   prop,
   options,
   darkMode,
-  disabled = false,
+  disabled,
 }: SelectInterface) {
   const labelId = useMemo(() => selectIdAllocator.generate(), []);
 
