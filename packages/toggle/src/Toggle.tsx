@@ -315,7 +315,7 @@ interface BaseToggleProps {
   darkMode?: boolean;
 
   /**
-   * Set's the checked state of the Toggle. We recommend not passing this prop, and instead using the onChange event to sync your application's state in most cases.
+   * Sets the checked state of the Toggle.
    */
   checked?: boolean;
 
@@ -327,7 +327,7 @@ interface BaseToggleProps {
   disabled?: boolean;
 
   /**
-   * Event handler that receives the updated checked state of the toggle, and the initiating mouse event.
+   * `onChange` fires when the internally-managed `checked` state of the component is updated. Receives the updated checked state of the toggle as its first argument, and the associated mouse event as the second.
    */
   onChange?: (
     checked: boolean,
@@ -335,7 +335,7 @@ interface BaseToggleProps {
   ) => void;
 
   /**
-   * The event handler function for the 'onchange' event. Receives the associated event object as the first argument.
+   * The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument.
    */
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 
