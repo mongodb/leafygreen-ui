@@ -1,7 +1,7 @@
 <!--
 Thanks for contributing to LeafyGreen!
 
-Before you submit your pull request, please be sure that you've reviewed our contributing guidelines: https://github.com/mongodb/leafygreen-ui/blob/master/DEVELOPER.md
+Before you submit your pull request, please be sure that you've reviewed our contributing guidelines: https://github.com/mongodb/leafygreen-ui/blob/main/DEVELOPER.md
 
 Please fill out the information below to help speed the review along, and hopefully
 the merge of your pull request!
