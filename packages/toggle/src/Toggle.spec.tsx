@@ -7,9 +7,16 @@ import Toggle from '.';
 function renderToggle(props = {}) {
   const utils = render(
     <>
-      <label id="label" htmlFor="toggle">test</label>
-      <Toggle aria-labelledby="label" id="toggle" data-testid="toggle-test-id" {...props} />
-    </>
+      <label id="label" htmlFor="toggle">
+        test
+      </label>
+      <Toggle
+        aria-labelledby="label"
+        id="toggle"
+        data-testid="toggle-test-id"
+        {...props}
+      />
+    </>,
   );
   const toggle = utils.getByRole('switch') as HTMLButtonElement;
 

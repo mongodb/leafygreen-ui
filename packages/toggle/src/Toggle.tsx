@@ -319,7 +319,6 @@ interface BaseToggleProps {
    */
   checked?: boolean;
 
-
   /**
    * Disables the Toggle.
    *
@@ -410,11 +409,7 @@ function Toggle({
         disabled={disabled}
         aria-disabled={disabled}
         ref={setButtonElement}
-        className={cx(
-          baseButtonStyles,
-          buttonModeStyles,
-          buttonSizeStyles,
-        )}
+        className={cx(baseButtonStyles, buttonModeStyles, buttonSizeStyles)}
         {...toggleButton.prop}
         {...rest}
       >

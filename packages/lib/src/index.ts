@@ -1,5 +1,5 @@
 import IdAllocator from './IdAllocator';
-import { validateAriaLabelling } from './accessibilityHelpers'
+import { validateAriaLabelling } from './accessibilityHelpers';
 import * as typeIs from './typeIs';
 
 export { IdAllocator, typeIs, validateAriaLabelling };
