@@ -2,8 +2,6 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import Toggle from '.';
 
-// const className = 'test-toggle-class';
-
 function renderToggle(props = {}) {
   const utils = render(
     <>

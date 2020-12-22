@@ -9,23 +9,21 @@ import Toggle, { Size } from '.';
 storiesOf('Toggle', module).add('Default', () => {
   const darkMode = boolean('darkMode', false);
 
+  const wrapperStyles = css`
+    background-color: ${darkMode ? uiColors.gray.dark2 : uiColors.white};
+    padding: 20px;
+  `;
+
+  const labelStyles = css`
+    display: block;
+    margin-bottom: 16px;
+    color: ${darkMode ? uiColors.white : uiColors.gray.dark2};
+  `;
+
   return (
     <LeafyGreenProvider>
-      <div
-        className={css`
-          background-color: ${darkMode ? uiColors.gray.dark2 : uiColors.white};
-          padding: 20px;
-        `}
-      >
-        <label
-          htmlFor="toggle"
-          id="label"
-          className={css`
-            display: block;
-            margin-bottom: 16px;
-            color: ${darkMode ? uiColors.white : uiColors.gray.dark2};
-          `}
-        >
+      <div className={wrapperStyles}>
+        <label htmlFor="toggle" id="label" className={labelStyles}>
           This is a label for my toggle.
         </label>
 
@@ -33,11 +31,7 @@ storiesOf('Toggle', module).add('Default', () => {
           id="toggle"
           aria-labelledby="label"
           darkMode={darkMode}
-          size={select(
-            'Size',
-            Object.values(Size) as Array<Size>,
-            Size.Default,
-          )}
+          size={select('Size', Object.values(Size), Size.Default)}
           disabled={boolean('Disabled', false)}
         />
       </div>
