@@ -23,49 +23,55 @@ npm install @leafygreen-ui/toggle
 ```js
 import Toggle from '@leafygreen-ui/toggle';
 
+<label id="label" htmlFor="toggle">Change setting</label>
+
 <Toggle
-  className="my-toggle"
-  onChange={event => {
-    /* Something to handle the change event */
-  }}
-  checked={true}
+  id="toggle"
+  aria-labelledby="label"
+  onChange={(checked, event) => { /* Handle the change event */ }}
 />;
 ```
 
 **Output HTML**
 
 ```html
-<label class="my-toggle css-1rgbgdt css-3jdsksdd" for="toggle-14827892">
-  <input
-    checked
-    type="checkbox"
-    role="checkbox"
-    class="css-32kjhsdaf"
-    id="toggle-14827892"
-    name="toggle-14827892"
+<label for="toggle" id="label" class="leafygreen-ui-r8mbam"
+  >Change setting</label
+>
+
+<div class="leafygreen-ui-19odf8z">
+  <button
+    id="toggle"
+    aria-labelledby="label"
+    role="switch"
+    aria-checked="false"
     aria-disabled="false"
-    aria-checked="true"
-  />
+    class="leafygreen-ui-1vdkpyx"
+    data-leafygreen-ui="toggle-button"
+  >
+    <span aria-hidden="true" class="leafygreen-ui-u8d1r2">On</span>
+    <span aria-hidden="true" class="leafygreen-ui-1eonihm">Off</span>
+    <div class="leafygreen-ui-uyx43a"></div>
+  </button>
 
-  <div class="css-328akljss"></div>
-
-  <div class="css-34kjkdfg css-8sjlkdjcx">
-    <div class="css-38kjdsjkdf">On</div>
-    <div class="css-22kjdsmncf">Off</div>
-    <div class="css-98sdfjsad css-2dsfdsli css-78kljdfva"></div>
-  </div>
-</label>
+  <div data-leafygreen-ui="interaction-ring" class="leafygreen-ui-igvj0l"></div>
+</div>
 ```
 
 ## Properties
 
-| Prop        | Type                                   | Description                                                                                                        | Default                   |
-| ----------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------- |
-| `darkMode`  | `boolean`                              | Determines if the Toggle will appear in dark mode.                                                                 | `false`                   |
-| `size`      | `'default'` \| `'small'` \| `'xsmall'` | Sets the size of the toggle.                                                                                       | `'default'`               |
-| `checked`   | `boolean`                              | Checks the `<Toggle />`.                                                                                           |                           |
-| `disabled`  | `boolean`                              | Disables the `<Toggle />`.                                                                                         | `false`                   |
-| `onChange`  | `function`                             | The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument. | `() => {}`                |
-| `id`        | `string` \| `number`                   | Adds an ID only to the input, and it's used elsewhere for accessibility props.                                     | Randomly generated string |
-| `className` | `string`                               | Adds a className to the outermost element.                                                                         | `''`                      |
-| ...         | native `input` attributes              | Any other props will be spread on the root `input` element                                                         |                           |
+| Prop        | Type                               | Description                                                                                                                                                                                        | Default     |
+| ----------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `darkMode`  | `boolean`                          | Determines if the Toggle will render the dark mode styles.                                                                                                                                         | `false`     |
+| `size`      | `'default'`, `'small'`, `'xsmall'` | Sets the size of the toggle.                                                                                                                                                                       | `'default'` |
+| `checked`   | `boolean`                          | Set's the checked state of the Toggle.                                                                                                                                                             |             |
+| `disabled`  | `boolean`                          | Disables the Toggle.                                                                                                                                                                               | `false`     |
+| `onChange`  | `(checked, MouseEvent) => void`    | `onChange` fires when the `checked` state of the component is being updated. Receives the updated checked state of the toggle as its first argument, and the associated mouse event as the second. |             |
+| `className` | `string`                           | Adds a className to the outermost element.                                                                                                                                                         | `''`        |
+| ...         | HTML `button` attributes           | Any supported HTML button properties will be applied to the `button` element.                                                                                                                      |             |
+
+## Accessibility
+
+For the Toggle to be accessible to screen readers, you **must** pass either [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute) or [`aria-labelledby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-labelledby_attribute) to Toggle. Please note, if this is a part of a form, this is in addition to using `htmlFor` to associate a label with the Toggle. You will see TypeScript and console errors if this isn't done.
+
+Please reach out if you would like further guidance on how to programmatically associate text with the Toggle component.
