@@ -50,6 +50,21 @@ const baseSliderStyles = css`
   margin: auto;
   overflow: hidden;
   transform: translate3d(0, 0, 0);
+
+  &:before, &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  ${sliderSelector.disabled} {
+    &:before, &:after {
+      content: none;
+    }
+  }
 `;
 
 const baseButtonStyles = css`
