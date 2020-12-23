@@ -352,11 +352,6 @@ interface BaseToggleProps {
   ) => void;
 
   /**
-   * The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument.
-   */
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-
-  /**
    * Adds a className to the outermost element.
    */
   className?: string;

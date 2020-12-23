@@ -66,11 +66,9 @@ import Toggle from '@leafygreen-ui/toggle';
 | `size`      | `'default'`, `'small'`, `'xsmall'` | Sets the size of the toggle.                                                                                                                                                                       | `'default'` |
 | `checked`   | `boolean`                          | Set's the checked state of the Toggle.                                                                                                                                                             |             |
 | `disabled`  | `boolean`                          | Disables the Toggle.                                                                                                                                                                               | `false`     |
-| `onClick`   | `(MouseEvent) => void`             | The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument.                                                                                 |             |
 | `onChange`  | `(checked, MouseEvent) => void`    | `onChange` fires when the `checked` state of the component is being updated. Receives the updated checked state of the toggle as its first argument, and the associated mouse event as the second. |             |
 | `className` | `string`                           | Adds a className to the outermost element.                                                                                                                                                         | `''`        |
-| ...         | HTML `button` attributes           | Any natively-supported HTML button attributes will be applied to the `button` element                                                                                                              |             |
-| ...         | native `div` attributes            | Any other props will be spread on the root `div` element                                                                                                                                           |             |
+| ...         | HTML `button` attributes           | Any supported HTML button properties will be applied to the `button` element.                                                                                                                      |             |
 
 ## Accessibility
 
