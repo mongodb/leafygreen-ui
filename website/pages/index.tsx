@@ -115,15 +115,15 @@ const textWrapper = css`
   })}
 `;
 
-const lgHeight = css`
+const largeHeight = css`
   ${mq({
-    height: ['calc(100vw / 2)', '350px', '350px', '350px'],
+    height: ['50vw', '350px', '350px', '350px'],
   })}
 `;
 
-const smHeight = css`
+const smallHeight = css`
   ${mq({
-    height: ['calc(100vw / 2)', '175px', '175px', '175px'],
+    height: ['50vw', '175px', '175px', '175px'],
   })}
 `;
 
@@ -137,25 +137,25 @@ const secondRowContainer = css`
 `;
 
 interface ComponentPreviewProps {
-  path: string;
-  background: string;
+  route: string;
+  backgroundURL: string;
   content?: string;
   children?: string;
   className?: string;
 }
 
 function ComponentPreview({
-  path,
-  background,
+  route,
+  backgroundURL,
   content,
   className,
 }: ComponentPreviewProps) {
   const { push } = useRouter();
   return (
     <div className={className}>
-      <button className={previewWrapper} onClick={() => push(path)}>
+      <button className={previewWrapper} onClick={() => push(route)}>
         <img
-          src={background}
+          src={backgroundURL}
           alt={`Learn more about ${content} component`}
           width="100%"
         />
@@ -168,23 +168,27 @@ function ComponentPreview({
 }
 
 interface MarketingPreview {
-  href: string;
+  marketingURL: string;
   children: string;
-  background: string;
+  backgroundURL: string;
 }
 
-function MarketingPreview({ href, children, background }: MarketingPreview) {
+function MarketingPreview({
+  marketingURL,
+  children,
+  backgroundURL,
+}: MarketingPreview) {
   return (
-    <div className={lgHeight}>
+    <div className={largeHeight}>
       <a
-        href={href}
+        href={marketingURL}
         className={container}
         target="_blank"
         rel="noopener noreferrer"
       >
         <div className={marketingWrapper}>
           <img
-            src={background}
+            src={backgroundURL}
             alt=""
             aria-hidden="true"
             height="100%"
@@ -217,25 +221,25 @@ export default function Home() {
       >
         {/* First Row */}
         <GridItem sm={12} md={6} lg={6}>
-          <div className={lgHeight}>
+          <div className={largeHeight}>
             <News />
           </div>
         </GridItem>
         <GridItem sm={6} md={6} lg={6}>
           <ComponentPreview
-            path="/component/banner/example"
-            background="/images/banner-thumbnail.png"
+            route="/component/banner/example"
+            backgroundURL="/images/banner-thumbnail.png"
             content="Banner"
-            className={lgHeight}
+            className={largeHeight}
           />
         </GridItem>
 
         {/* Second Row */}
         {isTouchDevice && (
           <GridItem sm={6} md={6} lg={6}>
-            <div className={lgHeight}>
+            <div className={largeHeight}>
               {/* @ts-expect-error, awaiting URL for marketing page */}
-              <MarketingPreview background="/images/personas-thumbnail.png">
+              <MarketingPreview backgroundURL="/images/personas-thumbnail.png">
                 Meet our Personas
               </MarketingPreview>
             </div>
@@ -244,35 +248,35 @@ export default function Home() {
         <GridItem sm={12} md={6} lg={6}>
           <div className={secondRowContainer}>
             <ComponentPreview
-              path="/component/radio-box-group/example"
-              background="/images/radioBox-thumbnail.png"
+              route="/component/radio-box-group/example"
+              backgroundURL="/images/radioBox-thumbnail.png"
               content="Radio boxes"
-              className={cx(smHeight, halfWidth, boxShadow)}
+              className={cx(smallHeight, halfWidth, boxShadow)}
             />
             <ComponentPreview
-              path="/component/text-input/example"
-              background="/images/textInput-thumbnail.png"
+              route="/component/text-input/example"
+              backgroundURL="/images/textInput-thumbnail.png"
               content="Text input"
-              className={cx(smHeight, halfWidth, boxShadow)}
+              className={cx(smallHeight, halfWidth, boxShadow)}
             />
             <ComponentPreview
-              path="/component/logo/example"
-              background="/images/logos-thumbnail.png"
+              route="/component/logo/example"
+              backgroundURL="/images/logos-thumbnail.png"
               content="Logos"
-              className={cx(smHeight, halfWidth)}
+              className={cx(smallHeight, halfWidth)}
             />
             <ComponentPreview
-              path="/component/tokens/example"
-              background="/images/spacers-thumbnail.png"
+              route="/component/tokens/example"
+              backgroundURL="/images/spacers-thumbnail.png"
               content="Tokens"
-              className={cx(smHeight, halfWidth)}
+              className={cx(smallHeight, halfWidth)}
             />
           </div>
         </GridItem>
         {!isTouchDevice && (
           <GridItem sm={6} md={6} lg={6}>
             {/* @ts-expect-error, awaiting URL for marketing page */}
-            <MarketingPreview background="/images/personas-thumbnail.png">
+            <MarketingPreview backgroundURL="/images/personas-thumbnail.png">
               Meet our Personas
             </MarketingPreview>
           </GridItem>
@@ -281,42 +285,42 @@ export default function Home() {
         {/* Third Row */}
         <GridItem sm={6} md={3} lg={3}>
           <ComponentPreview
-            path="/component/icon/example"
-            background="/images/icons-thumbnail.png"
+            route="/component/icon/example"
+            backgroundURL="/images/icons-thumbnail.png"
             content="Icons"
-            className={smHeight}
+            className={smallHeight}
           />
         </GridItem>
         <GridItem sm={6} md={3} lg={3}>
           <ComponentPreview
-            path="/component/card/example"
-            background="/images/card-thumbnail.png"
+            route="/component/card/example"
+            backgroundURL="/images/card-thumbnail.png"
             content="Card"
-            className={smHeight}
+            className={smallHeight}
           />
         </GridItem>
         <GridItem sm={6} md={3} lg={3}>
           <ComponentPreview
-            path="/component/tooltip/example"
-            background="/images/tooltip-thumbnail.png"
+            route="/component/tooltip/example"
+            backgroundURL="/images/tooltip-thumbnail.png"
             content="Tooltip"
-            className={smHeight}
+            className={smallHeight}
           />
         </GridItem>
         <GridItem sm={6} md={3} lg={3}>
           <ComponentPreview
-            path="/component/checkbox/example"
-            background="/images/checkbox-thumbnail.png"
+            route="/component/checkbox/example"
+            backgroundURL="/images/checkbox-thumbnail.png"
             content="Checkbox"
-            className={smHeight}
+            className={smallHeight}
           />
         </GridItem>
 
         {/* Fourth Row */}
         <GridItem sm={6} md={6} lg={6}>
           <MarketingPreview
-            href="https://www.mongodb.com/blog/post/meet-our-product-design-team-part-1"
-            background="/images/team-thumbnail.png"
+            marketingURL="https://www.mongodb.com/blog/post/meet-our-product-design-team-part-1"
+            backgroundURL="/images/team-thumbnail.png"
           >
             Meet our Team
           </MarketingPreview>

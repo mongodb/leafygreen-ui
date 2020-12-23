@@ -138,7 +138,7 @@ function getItemStyle(num: number | undefined) {
   }
 
   if (num) {
-    const width = `${(100 / 12) * num}% `;
+    const width = `${(100 * num) / 12}% `;
 
     return {
       width,

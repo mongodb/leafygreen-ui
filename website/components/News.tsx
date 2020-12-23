@@ -33,11 +33,9 @@ const subtitleStyle = css`
   display: inline-flex;
   align-items: center;
 
-  &:hover {
-    & > svg {
-      opacity: 1;
-      transform: translate3d(3px, 0, 0px);
-    }
+  &:hover > svg {
+    opacity: 1;
+    transform: translate3d(3px, 0, 0px);
   }
 `;
 
@@ -46,12 +44,13 @@ const iconStyle = css`
   transition: all 100ms ease-in;
 
   ${mq({
+    visibility: ['hidden', 'hidden', 'visible'],
     opacity: [1, 1, 0, 0],
     marginLeft: [`${spacing[2]}px`, `${spacing[2]}px`, 0],
   })}
 `;
 
-const overlineMargin = css`
+const updateMargin = css`
   margin-top: 28px;
 `;
 
@@ -59,36 +58,26 @@ const overlineColor = css`
   color: ${uiColors.gray.dark1};
 `;
 interface UpdateProps {
-  date: string;
-  story: string;
-  path?: string;
-  href?: string;
+  dateText: string;
+  storyText: string;
+  route?: string;
+  updateURL?: string;
 }
 
-function Update({ date, story, path, href }: UpdateProps) {
+function Update({ dateText, storyText, route, updateURL }: UpdateProps) {
   const { push } = useRouter();
-  let renderedStory: React.ReactElement | null;
 
-  if (path) {
-    renderedStory = (
-      <Subtitle as="p" className={subtitleStyle} onClick={() => push(path)}>
-        {story}
-        <ArrowRightIcon className={iconStyle} />
-      </Subtitle>
-    );
-  } else {
-    renderedStory = (
-      <Subtitle as="a" className={subtitleStyle} href={href}>
-        {story}
-        <ArrowRightIcon className={iconStyle} />
-      </Subtitle>
-    );
-  }
+  const subtitleProps = route
+    ? ({ onClick: () => push(route), as: 'p' } as const)
+    : ({ href: updateURL, as: 'a' } as const);
 
   return (
-    <div className={overlineMargin}>
-      <Overline className={overlineColor}>{date}</Overline>
-      {renderedStory}
+    <div className={updateMargin}>
+      <Overline className={overlineColor}>{dateText}</Overline>
+      <Subtitle className={subtitleStyle} {...subtitleProps}>
+        {storyText}
+        <ArrowRightIcon className={iconStyle} />
+      </Subtitle>
     </div>
   );
 }
@@ -98,19 +87,19 @@ function News() {
     <div className={newsContainer}>
       <H2 as="h1">Whats New</H2>
       <Update
-        date="Dec 8, 2020"
-        story="Copyable v1.0.0"
-        path="/component/copyable/example"
+        dateText="Dec 8, 2020"
+        storyText="Copyable v1.0.0"
+        route="/component/copyable/example"
       />
       <Update
-        date="Dec 2, 2020"
-        story="Support for React 17"
-        href="https://github.com/mongodb/leafygreen-ui/commit/c18f16e6632a6688e771334fd1672c9ef7e0f9b4"
+        dateText="Dec 2, 2020"
+        storyText="Support for React 17"
+        updateURL="https://github.com/mongodb/leafygreen-ui/commit/c18f16e6632a6688e771334fd1672c9ef7e0f9b4"
       />
       <Update
-        date="Nov 29, 2020"
-        story="Installing LeafyGreen in Figma"
-        path=""
+        dateText="Nov 29, 2020"
+        storyText="Installing LeafyGreen in Figma"
+        route=""
       />
     </div>
   );
