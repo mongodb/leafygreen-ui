@@ -51,8 +51,9 @@ const baseSliderStyles = css`
   overflow: hidden;
   transform: translate3d(0, 0, 0);
 
-  &:before, &:after {
-    content: "";
+  &:before,
+  &:after {
+    content: '';
     position: absolute;
     top: 0;
     bottom: 0;
@@ -61,7 +62,8 @@ const baseSliderStyles = css`
   }
 
   ${sliderSelector.disabled} {
-    &:before, &:after {
+    &:before,
+    &:after {
       content: none;
     }
   }
