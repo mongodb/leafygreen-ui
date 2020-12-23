@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   createDataProp,
   HTMLElementProps,
   Either,
-  validateAriaLabelling,
+  validateAriaLabelProps,
 } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
@@ -335,7 +335,7 @@ interface BaseToggleProps {
   ) => void;
 
   /**
-   * The event handler function for the 'onchange' event. Receives the associated `event` object as the first argument.
+   * The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument.
    */
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 
@@ -361,27 +361,26 @@ function Toggle({
   checked: checkedProp,
   ...rest
 }: ToggleProps) {
-  validateAriaLabelling(rest, 'Toggle');
+  validateAriaLabelProps(rest, Toggle.displayName);
 
-  const [buttonElement, setButtonElement] = useState<HTMLElement | null>(null);
-  const [checked, setChecked] = useState<boolean>(checkedProp || false);
+  const [buttonElement, setButtonElement] = useState<HTMLButtonElement | null>(null);
+  const [checked, setChecked] = useState(checkedProp ?? false);
   const normalizedChecked = checkedProp ?? checked;
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (onClickProp) {
-      onClickProp(e);
-    }
+  const onClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(
+    e => {
+      onClickProp?.(e);
 
-    setChecked(curr => {
-      const updatedState = !curr;
+      setChecked(curr => {
+        const updatedState = !(checkedProp ?? curr);
 
-      if (onChangeProp) {
-        onChangeProp(updatedState, e);
-      }
+        onChangeProp?.(updatedState, e);
 
-      return updatedState;
-    });
-  };
+        return updatedState;
+      });
+    },
+    [checkedProp, onClickProp, onChangeProp],
+  );
 
   const {
     button: buttonModeStyles,

@@ -1,5 +1,5 @@
 // Validate that either aria-label or aria-labelledby are present within props.
-export function validateAriaLabelling(
+export function validateAriaLabelProps(
   props: Record<string, any>,
   componentName?: string,
 ): void {
