@@ -8,10 +8,22 @@ interface TokenProps {
   children: React.ReactNode;
 }
 
-function Token({ kind, children }: TokenProps) {
-  const className = kind ? `lg-highlight-${kind}` : '';
+function generateKindClassName(...args: Array<any>): string {
+  return args.filter(isString).map(kind => {
+    const prefix = 'lg-highlight-'
 
-  return <span className={className}>{children}</span>;
+    // Sometimes, a kind will have run through this function before.
+    // This ensures we don't duplicate prefixes.
+    if (kind.startsWith(prefix)) {
+      return kind
+    }
+
+    return `${prefix}${kind}`;
+  }).join(' ')
+}
+
+function Token({ kind, children }: TokenProps) {
+  return <span className={kind}>{children}</span>;
 }
 
 type TreeItem =
@@ -180,18 +192,18 @@ function flattenNestedTree(
     if (isString(val)) {
       // If there's a kind, we construct a custom token object with that kind to preserve highlighting.
       // Without this, the value will simply render without highlighting.
-      const child = kind ? { kind, children: [val] } : val;
+      const child = kind ? { kind: generateKindClassName(kind), children: [val] } : val;
 
       return [...acc, child];
     }
 
     if (val?.children?.length > 1) {
       // Pass the kind here so that the function can highlight nested tokens if applicable
-      return [...acc, ...flattenNestedTree(val.children, val.kind)];
+      return [...acc, ...flattenNestedTree(val.children, generateKindClassName(kind, val.kind))];
     }
 
     if (isFlattenedTokenObject(val)) {
-      return [...acc, val];
+      return [...acc, {kind: generateKindClassName(kind, val.kind), children: val.children}];
     }
 
     return acc

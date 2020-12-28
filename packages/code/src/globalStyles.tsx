@@ -53,8 +53,8 @@ const getStyles = (mode: Mode): string => `
     .lg-highlight-class,
     .lg-highlight-section,
     .lg-highlight-name,
-    .lg-highlight-class > .lg-highlight-keyword,
-    .lg-highlight-function > .lg-highlight-keyword {
+    .lg-highlight-class.lg-highlight-keyword,
+    .lg-highlight-function.lg-highlight-keyword {
       color: ${variantColors[mode][9]};
     }
   
