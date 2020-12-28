@@ -2,6 +2,7 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useSyntaxContext } from './SyntaxContext';
+import { spacing } from '@leafygreen-ui/tokens'
 
 interface TokenProps {
   kind?: string;
@@ -73,14 +74,8 @@ const cellStyle = css`
   border-spacing: 0;
   padding: 0;
   vertical-align: top;
-
-  &:first-of-type {
-    padding-left: 12px;
-  }
-
-  &:last-of-type {
-    padding-right: 12px;
-  }
+  padding-right: ${spacing[3]}px;
+  padding-left: ${spacing[3]}px;
 `;
 
 function getHighlightedRowStyle(darkMode: boolean) {
@@ -148,8 +143,10 @@ export function LineTableRow({
           className={cx(
             cellStyle,
             css`
-              padding-right: 24px;
               user-select: none;
+              text-align: right;
+              padding-left: ${spacing[2]}px;
+              padding-right: 0;
               color: ${highlighted ? highlightedNumberColor : numberColor};
             `,
           )}
@@ -170,7 +167,8 @@ interface FlatTokenObject {
 
 // Check if object is a TokenObject which has an array with a single string element within it.
 function isFlattenedTokenObject(obj: TokenObject): obj is FlatTokenObject {
-  const { children } = obj
+  // default to an empty object in the off-chance "obj" is null or undefined.
+  const { children } = obj ?? {}
 
   if (isArray(children) && children.length === 1 && isString(children[0])) {
     return true
@@ -209,7 +207,6 @@ function flattenNestedTree(
     return acc
   }, [] as Array<string | FlatTokenObject>)
 }
-
 
 function containsLineBreak(token: TreeItem): boolean {
   if (isArray(token)) {

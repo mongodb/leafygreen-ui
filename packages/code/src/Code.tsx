@@ -8,6 +8,7 @@ import { Language, SyntaxProps, Mode } from './types';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import WindowChrome from './WindowChrome';
 import debounce from 'lodash/debounce';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -230,6 +231,7 @@ function Code({
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
+  const {usingKeyboard: showFocus} = useUsingKeyboardContext()
   const [buttonNode, setButtonNode] = useState<HTMLButtonElement | null>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [copied, setCopied] = useState(false);
@@ -280,6 +282,13 @@ function Code({
     },
     className,
     getScrollShadowStyle(scrollState, mode),
+    {
+      [css`
+        &:focus {
+          outline: none;
+        }
+      `]: !showFocus,
+  },
   );
 
   const renderedSyntaxComponent = (
