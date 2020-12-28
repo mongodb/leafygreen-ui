@@ -2,7 +2,6 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useSyntaxContext } from './SyntaxContext';
-import { create } from 'lodash';
 
 interface TokenProps {
   kind?: string;
@@ -152,20 +151,36 @@ export function LineTableRow({
   );
 }
 
+interface FlatTokenObject {
+  kind: string;
+  children: Array<string>
+}
+
+// Check if object is a TokenObject which has an array with a single string element within it.
+function isFlattenedTokenObject(obj: TokenObject): obj is FlatTokenObject {
+  const { children } = obj
+
+  if (isArray(children) && children.length === 1 && isString(children[0])) {
+    return true
+  }
+
+  return false
+}
+
 // If an array of tokens contains an object with more than one children, this function will flatten that tree recursively.
 function flattenNestedTree(
   children: Array<string | TokenObject>,
   kind?: string,
-): Array<string | TokenObject> {
+): Array<string | FlatTokenObject> {
   if (typeof children === 'string') {
     return children;
   }
 
   return children.reduce((acc, val) => {
-    if (typeof val === 'string') {
+    if (isString(val)) {
       // If there's a kind, we construct a custom token object with that kind to preserve highlighting.
       // Without this, the value will simply render without highlighting.
-      const child = kind ? { kind, children: [val] } as TokenObject : val;
+      const child = kind ? { kind, children: [val] } : val;
 
       return [...acc, child];
     }
@@ -175,8 +190,12 @@ function flattenNestedTree(
       return [...acc, ...flattenNestedTree(val.children, val.kind)];
     }
 
-    return [...acc, val]
-  }, [] as Array<string | TokenObject>)
+    if (isFlattenedTokenObject(val)) {
+      return [...acc, val];
+    }
+
+    return acc
+  }, [] as Array<string | FlatTokenObject>)
 }
 
 
@@ -196,10 +215,12 @@ function containsLineBreak(token: TreeItem): boolean {
   return false;
 }
 
+type LineDefinition = Array<Array<string | FlatTokenObject>>
+
 export function treeToLines(
   children: Array<string | TokenObject>,
-): Array<Array<TreeItem>> {
-  const lines: Array<Array<TreeItem>> = [];
+): LineDefinition {
+  const lines: LineDefinition = [];
   let currentLineIndex = 0;
 
   // Create a new line, if no lines exist yet
@@ -209,58 +230,34 @@ export function treeToLines(
 
   const createNewLine = () => {
     currentLineIndex++;
-    lines[currentLineIndex] = [''];
+    lines[currentLineIndex] = [];
   }
 
-  flattenNestedTree(children).forEach(child => {
-    const currentIndexInLine = lines[currentLineIndex].length - 1;
 
+  flattenNestedTree(children).forEach(child => {
     // If the current element includes a line break, we need to handle it differently
     if (containsLineBreak(child)) {
       if (isString(child)) {
-        child.split('').forEach(fragment => {
-          if (containsLineBreak(fragment)) {
-            // If the fragment is a new line character, we create a new line
-            createNewLine()
-          } else {
-            if (isString(lines[currentLineIndex][currentIndexInLine])) {
-              // If the last element in the line is a string, we append this string to it
-              lines[currentLineIndex][currentIndexInLine] += fragment;
-            } else {
-              // Otherwise, we push the string fragment on its own
-              lines[currentLineIndex].push(fragment);
-            }
+        child.split('\n').forEach((fragment, i) => {
+          if (i > 0) {
+            createNewLine();
           }
-        });
+
+          // Empty new lines should be represented as an empty array
+          if (fragment) {
+            lines[currentLineIndex].push(fragment)
+          }
+        })
       } else {
-        if (isString(child.children) || isArray(child.children)) {
-          // TODO: we know that the child will not be a TokenObject.
-          // Why we need to typecast here is likely because of poor typing in flattenNestedTree()
-          const tokenString = isArray(child.children) ? child.children[0] as string : child.children
-          const newTokens: Array<string> = []
+        const tokenString = child.children[0]
 
-          let newTokenIndex = 0
-          tokenString.split('').forEach(fragment => {
-            if (!newTokens[newTokenIndex]) {
-              newTokens[newTokenIndex] = ''
-            }
+        tokenString.split('\n').forEach((fragment, i) => {
+          if (i > 0) {
+            createNewLine();
+          }
 
-            if (containsLineBreak(fragment)) {
-              newTokenIndex++
-              newTokens[newTokenIndex] = ''
-            } else {
-              newTokens[newTokenIndex] += fragment
-            }
-          })
-
-          newTokens.forEach((string, i) => {
-            lines[currentLineIndex].push({kind: child.kind, children: [string]});
-
-            if (i !== newTokens.length - 1 ) {
-              createNewLine();
-            }
-          })
-        }
+          lines[currentLineIndex].push({kind: child.kind, children: [fragment]})
+        })
       }
 
     } else {
@@ -272,7 +269,7 @@ export function treeToLines(
 }
 
 interface TableContentProps {
-  lines: Array<Array<TreeItem>>;
+  lines: LineDefinition;
 }
 
 export function TableContent({ lines }: TableContentProps) {
