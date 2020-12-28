@@ -2,6 +2,7 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useSyntaxContext } from './SyntaxContext';
+import { create } from 'lodash';
 
 interface TokenProps {
   kind?: string;
@@ -151,6 +152,50 @@ export function LineTableRow({
   );
 }
 
+// If an array of tokens contains an object with more than one children, this function will flatten that tree recursively.
+function flattenNestedTree(
+  children: Array<string | TokenObject>,
+  kind?: string,
+): Array<string | TokenObject> {
+  if (typeof children === 'string') {
+    return children;
+  }
+
+  return children.reduce((acc, val) => {
+    if (typeof val === 'string') {
+      // If there's a kind, we construct a custom token object with that kind to preserve highlighting.
+      // Without this, the value will simply render without highlighting.
+      const child = kind ? { kind, children: [val] } as TokenObject : val;
+
+      return [...acc, child];
+    }
+
+    if (val?.children?.length > 1) {
+      // Pass the kind here so that the function can highlight nested tokens if applicable
+      return [...acc, ...flattenNestedTree(val.children, val.kind)];
+    }
+
+    return [...acc, val]
+  }, [] as Array<string | TokenObject>)
+}
+
+
+function containsLineBreak(token: TreeItem): boolean {
+  if (isArray(token)) {
+    return token.some(containsLineBreak);
+  }
+
+  if (isString(token)) {
+    return token.includes('\n');
+  }
+
+  if (isObject(token)) {
+    return token.children?.includes('\n') || (isString(token.children?.[0]) && token.children[0].includes('\n'));
+  }
+
+  return false;
+}
+
 export function treeToLines(
   children: Array<string | TokenObject>,
 ): Array<Array<TreeItem>> {
@@ -162,18 +207,22 @@ export function treeToLines(
     lines[currentLineIndex] = [];
   }
 
-  children.forEach(child => {
-    if (isString(child)) {
-      // If the current element is a string that includes a line break, we need to handle it differently
-      if (child.includes('\n')) {
-        child.split('').forEach(fragment => {
-          if (fragment === '\n') {
-            // If the fragment is a new line character, we create a new line
-            currentLineIndex++;
-            lines[currentLineIndex] = [];
-          } else {
-            const currentIndexInLine = lines[currentLineIndex].length - 1;
+  const createNewLine = () => {
+    currentLineIndex++;
+    lines[currentLineIndex] = [''];
+  }
 
+  flattenNestedTree(children).forEach(child => {
+    const currentIndexInLine = lines[currentLineIndex].length - 1;
+
+    // If the current element includes a line break, we need to handle it differently
+    if (containsLineBreak(child)) {
+      if (isString(child)) {
+        child.split('').forEach(fragment => {
+          if (containsLineBreak(fragment)) {
+            // If the fragment is a new line character, we create a new line
+            createNewLine()
+          } else {
             if (isString(lines[currentLineIndex][currentIndexInLine])) {
               // If the last element in the line is a string, we append this string to it
               lines[currentLineIndex][currentIndexInLine] += fragment;
@@ -184,13 +233,37 @@ export function treeToLines(
           }
         });
       } else {
-        // We don't need to do anything special in the case where the string doesn't contain a line break
-        lines[currentLineIndex].push(child);
-      }
-    }
+        if (isString(child.children) || isArray(child.children)) {
+          // TODO: we know that the child will not be a TokenObject.
+          // Why we need to typecast here is likely because of poor typing in flattenNestedTree()
+          const tokenString = isArray(child.children) ? child.children[0] as string : child.children
+          const newTokens: Array<string> = []
 
-    // Line breaks aren't a part of token objects, so we can assume those objects go on the current line
-    if (isObject(child)) {
+          let newTokenIndex = 0
+          tokenString.split('').forEach(fragment => {
+            if (!newTokens[newTokenIndex]) {
+              newTokens[newTokenIndex] = ''
+            }
+
+            if (containsLineBreak(fragment)) {
+              newTokenIndex++
+              newTokens[newTokenIndex] = ''
+            } else {
+              newTokens[newTokenIndex] += fragment
+            }
+          })
+
+          newTokens.forEach((string, i) => {
+            lines[currentLineIndex].push({kind: child.kind, children: [string]});
+
+            if (i !== newTokens.length - 1 ) {
+              createNewLine();
+            }
+          })
+        }
+      }
+
+    } else {
       lines[currentLineIndex].push(child);
     }
   });

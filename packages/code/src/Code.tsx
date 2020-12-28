@@ -2,11 +2,9 @@ import React, { useRef, useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
-import Syntax, {
-  SyntaxProps,
-  Language,
-  variantColors,
-} from '@leafygreen-ui/syntax';
+import Syntax from './Syntax';
+import { variantColors } from './globalStyles';
+import { Language, SyntaxProps, Mode } from './types';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -14,13 +12,6 @@ import WindowChrome from './WindowChrome';
 import debounce from 'lodash/debounce';
 import { uiColors } from '@leafygreen-ui/palette';
 import ClipboardJS from 'clipboard';
-
-const Mode = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
-
-type Mode = typeof Mode[keyof typeof Mode];
 
 const whiteSpace = 12;
 
@@ -74,6 +65,7 @@ function getSidebarVariantStyle(mode: Mode): string {
         border-color: ${colors[1]};
         background-color: white;
       `;
+
     case Mode.Dark:
       return css`
         border-color: ${colors[1]};

@@ -2,15 +2,18 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean, text } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
-import { Language } from '@leafygreen-ui/syntax';
+import { Language } from './types';
 import Code from '.';
 
 const jsSnippet = `
-function greeting(entity) {
-  return \`Hello, \${entity}!\`;
-}
+export function treeToLines(
+  children: Array<string | TokenObject>,
+): Array<Array<TreeItem>> {
+  const lines: Array<Array<TreeItem>> = [];
+  let currentLineIndex = 0;
 
-console.log(greeting('World'));
+  return lines;
+}
 `;
 
 storiesOf('Code', module).add(
@@ -33,7 +36,7 @@ storiesOf('Code', module).add(
           language={select(
             'Language',
             Object.values(Language),
-            Language.JavaScript,
+            Language.TypeScript,
           )}
           highlightLines={select(
             'highlight lines',
