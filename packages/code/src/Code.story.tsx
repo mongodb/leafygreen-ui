@@ -45,12 +45,14 @@ storiesOf('Code', module).add(
             highlightLines={select(
               'highlight lines',
               {
-                none: undefined,
+                none: [],
                 single: [1],
-                multiple: [2, 3, 5],
+                // @ts-expect-error
+                // Knobs typing seems to be off – it says that this isn't assignable to a string.
+                multiple: [[2, 4], 6],
               },
-              undefined,
-            )}
+              [],
+            ) as Array<number | [number, number]>}
           >
             {text('Code snippet', jsSnippet)}
           </Code>

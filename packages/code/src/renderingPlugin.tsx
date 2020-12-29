@@ -46,6 +46,10 @@ function isString(item: any): item is string {
   return item != null && typeof item === 'string';
 }
 
+function isNumber(item: any): item is number {
+  return item != null && typeof item === 'number';
+}
+
 export function processToken(token: TreeItem, key?: number): React.ReactNode {
   if (token == null) {
     return null;
@@ -298,11 +302,26 @@ export function TableContent({ lines }: TableContentProps) {
     trimmedLines.pop();
   }
 
+  const lineShouldHighlight = (line: number) => {
+    return highlightLines.some(def => {
+      if (isNumber(def)) {
+        return line === def;
+      }
+
+      if (isArray(def)) {
+        const sortedArr = def.sort();
+        return line >= sortedArr[0] && line <= sortedArr[1]
+      }
+
+      return false
+    })
+  }
+
   return (
     <>
       {trimmedLines.map((line, index) => {
         const currentLineNumber = index + 1;
-        const highlightLine = highlightLines.includes(currentLineNumber);
+        const highlightLine = lineShouldHighlight(currentLineNumber)
 
         let displayLineNumber;
 
