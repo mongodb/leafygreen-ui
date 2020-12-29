@@ -94,6 +94,9 @@ function getHighlightedRowStyle(darkMode: boolean) {
   return css`
     background-color: ${backgroundColor};
     background-image: ${backgroundImage};
+    // Fixes an issue in Safari where the gradient applied to the table row would be applied
+    // to each cell in the row instead of being continuous across cells.
+    background-attachment: fixed;
 
     // Selects all children of a highlighted row, and adds a border top
     & > td {
