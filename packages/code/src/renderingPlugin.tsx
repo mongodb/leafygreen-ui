@@ -2,7 +2,7 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useSyntaxContext } from './SyntaxContext';
-import { spacing } from '@leafygreen-ui/tokens'
+import { spacing } from '@leafygreen-ui/tokens';
 
 interface TokenProps {
   kind?: string;
@@ -10,17 +10,20 @@ interface TokenProps {
 }
 
 function generateKindClassName(...args: Array<any>): string {
-  return args.filter(isString).map(kind => {
-    const prefix = 'lg-highlight-'
+  return args
+    .filter(isString)
+    .map(kind => {
+      const prefix = 'lg-highlight-';
 
-    // Sometimes, a kind will have run through this function before.
-    // This ensures we don't duplicate prefixes.
-    if (kind.startsWith(prefix)) {
-      return kind
-    }
+      // Sometimes, a kind will have run through this function before.
+      // This ensures we don't duplicate prefixes.
+      if (kind.startsWith(prefix)) {
+        return kind;
+      }
 
-    return `${prefix}${kind}`;
-  }).join(' ')
+      return `${prefix}${kind}`;
+    })
+    .join(' ');
 }
 
 function Token({ kind, children }: TokenProps) {
@@ -169,19 +172,19 @@ export function LineTableRow({
 
 interface FlatTokenObject {
   kind: string;
-  children: Array<string>
+  children: Array<string>;
 }
 
 // Check if object is a TokenObject which has an array with a single string element within it.
 function isFlattenedTokenObject(obj: TokenObject): obj is FlatTokenObject {
   // default to an empty object in the off-chance "obj" is null or undefined.
-  const { children } = obj ?? {}
+  const { children } = obj ?? {};
 
   if (isArray(children) && children.length === 1 && isString(children[0])) {
-    return true
+    return true;
   }
 
-  return false
+  return false;
 }
 
 // If an array of tokens contains an object with more than one children, this function will flatten that tree recursively.
@@ -197,22 +200,33 @@ function flattenNestedTree(
     if (isString(val)) {
       // If there's a kind, we construct a custom token object with that kind to preserve highlighting.
       // Without this, the value will simply render without highlighting.
-      const child = kind ? { kind: generateKindClassName(kind), children: [val] } : val;
+      const child = kind
+        ? { kind: generateKindClassName(kind), children: [val] }
+        : val;
 
       return [...acc, child];
     }
 
     if (val?.children?.length > 1) {
       // Pass the kind here so that the function can highlight nested tokens if applicable
-      return [...acc, ...flattenNestedTree(val.children, generateKindClassName(kind, val.kind))];
+      return [
+        ...acc,
+        ...flattenNestedTree(
+          val.children,
+          generateKindClassName(kind, val.kind),
+        ),
+      ];
     }
 
     if (isFlattenedTokenObject(val)) {
-      return [...acc, {kind: generateKindClassName(kind, val.kind), children: val.children}];
+      return [
+        ...acc,
+        { kind: generateKindClassName(kind, val.kind), children: val.children },
+      ];
     }
 
-    return acc
-  }, [] as Array<string | FlatTokenObject>)
+    return acc;
+  }, [] as Array<string | FlatTokenObject>);
 }
 
 function containsLineBreak(token: TreeItem): boolean {
@@ -225,13 +239,16 @@ function containsLineBreak(token: TreeItem): boolean {
   }
 
   if (isObject(token)) {
-    return token.children?.includes('\n') || (isString(token.children?.[0]) && token.children[0].includes('\n'));
+    return (
+      token.children?.includes('\n') ||
+      (isString(token.children?.[0]) && token.children[0].includes('\n'))
+    );
   }
 
   return false;
 }
 
-type LineDefinition = Array<Array<string | FlatTokenObject>>
+type LineDefinition = Array<Array<string | FlatTokenObject>>;
 
 export function treeToLines(
   children: Array<string | TokenObject>,
@@ -247,8 +264,7 @@ export function treeToLines(
   const createNewLine = () => {
     currentLineIndex++;
     lines[currentLineIndex] = [];
-  }
-
+  };
 
   flattenNestedTree(children).forEach(child => {
     // If the current element includes a line break, we need to handle it differently
@@ -261,21 +277,23 @@ export function treeToLines(
 
           // Empty new lines should be represented as an empty array
           if (fragment) {
-            lines[currentLineIndex].push(fragment)
+            lines[currentLineIndex].push(fragment);
           }
-        })
+        });
       } else {
-        const tokenString = child.children[0]
+        const tokenString = child.children[0];
 
         tokenString.split('\n').forEach((fragment, i) => {
           if (i > 0) {
             createNewLine();
           }
 
-          lines[currentLineIndex].push({kind: child.kind, children: [fragment]})
-        })
+          lines[currentLineIndex].push({
+            kind: child.kind,
+            children: [fragment],
+          });
+        });
       }
-
     } else {
       lines[currentLineIndex].push(child);
     }
@@ -310,18 +328,18 @@ export function TableContent({ lines }: TableContentProps) {
 
       if (isArray(def)) {
         const sortedArr = def.sort();
-        return line >= sortedArr[0] && line <= sortedArr[1]
+        return line >= sortedArr[0] && line <= sortedArr[1];
       }
 
-      return false
-    })
-  }
+      return false;
+    });
+  };
 
   return (
     <>
       {trimmedLines.map((line, index) => {
         const currentLineNumber = index + 1;
-        const highlightLine = lineShouldHighlight(currentLineNumber)
+        const highlightLine = lineShouldHighlight(currentLineNumber);
 
         let displayLineNumber;
 

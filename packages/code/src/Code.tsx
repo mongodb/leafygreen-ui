@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import Syntax from './Syntax';
-import {spacing} from '@leafygreen-ui/tokens';
+import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { variantColors } from './globalStyles';
 import { Language, SyntaxProps, Mode } from './types';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
@@ -14,6 +14,14 @@ import WindowChrome from './WindowChrome';
 import debounce from 'lodash/debounce';
 import { uiColors } from '@leafygreen-ui/palette';
 import ClipboardJS from 'clipboard';
+import facepaint from 'facepaint';
+
+export const mq = facepaint([
+  `@media only screen and (max-width: ${breakpoints.Mobile}px)`,
+  `@media only screen and (min-width: ${breakpoints.Tablet}px)`,
+  `@media only screen and (min-width: ${breakpoints.Desktop}px)`,
+  `@media only screen and (min-width: ${breakpoints.XLDesktop}px)`,
+]);
 
 const codeWrapperStyle = css`
   overflow-x: auto;
@@ -24,6 +32,12 @@ const codeWrapperStyle = css`
   margin: 0;
   position: relative;
   flex-grow: 1;
+
+  ${mq({
+    // Fixes annoying issue where font size is overridden in mobile Safari to be 20px.
+    // Ideally, we wouldn't need to set the text to wrap, but from what I can tell, this is the one possible solution to the problem.
+    whiteSpace: ['pre-wrap', 'pre', 'pre', 'pre'],
+  })}
 `;
 
 const codeWrapperStyleWithWindowChrome = css`
@@ -44,12 +58,19 @@ const singleLineCopyStyle = css`
 `;
 
 const singleLineWrapperStyle = css`
-  height: 36px;
   align-items: center;
   display: flex;
 
+  ${mq({
+    // Keeps the component from breaking on mobile.
+    height: ['auto', '36px', '36px', '36px'],
+  })}
+
   & > code {
-    line-height: 1em;
+    ${mq({
+      // Keeps the component from breaking on mobile.
+      lineHeight: ['24px', '1em', '1em', '1em'],
+    })}
   }
 `;
 
@@ -240,7 +261,7 @@ function Code({
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
-  const {usingKeyboard: showFocus} = useUsingKeyboardContext()
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const [buttonNode, setButtonNode] = useState<HTMLButtonElement | null>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [copied, setCopied] = useState(false);
@@ -298,7 +319,7 @@ function Code({
           outline: none;
         }
       `]: !showFocus,
-  },
+    },
   );
 
   const renderedSyntaxComponent = (

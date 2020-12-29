@@ -42,17 +42,19 @@ storiesOf('Code', module).add(
               Object.values(Language),
               Language.JavaScript,
             )}
-            highlightLines={select(
-              'highlight lines',
-              {
-                none: [],
-                single: [1],
-                // @ts-expect-error
-                // Knobs typing seems to be off – it says that this isn't assignable to a string.
-                multiple: [[2, 4], 6],
-              },
-              [],
-            ) as Array<number | [number, number]>}
+            highlightLines={
+              select(
+                'highlight lines',
+                {
+                  none: [],
+                  single: [1],
+                  // @ts-expect-error
+                  // Knobs typing seems to be off – it says that this isn't assignable to a string.
+                  multiple: [[2, 4], 6],
+                },
+                [],
+              ) as Array<number | [number, number]>
+            }
           >
             {text('Code snippet', jsSnippet)}
           </Code>
