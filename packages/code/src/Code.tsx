@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import Syntax from './Syntax';
+import {spacing} from '@leafygreen-ui/tokens';
 import { variantColors } from './globalStyles';
 import { Language, SyntaxProps, Mode } from './types';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
@@ -14,14 +15,12 @@ import debounce from 'lodash/debounce';
 import { uiColors } from '@leafygreen-ui/palette';
 import ClipboardJS from 'clipboard';
 
-const whiteSpace = 12;
-
 const codeWrapperStyle = css`
   overflow-x: auto;
   border-left: 2px solid;
   // We apply left / right padding in Syntax to support line highlighting
-  padding-top: ${whiteSpace}px;
-  padding-bottom: ${whiteSpace}px;
+  padding-top: ${spacing[2]}px;
+  padding-bottom: ${spacing[2]}px;
   margin: 0;
   position: relative;
   flex-grow: 1;
@@ -41,7 +40,17 @@ const copyStyle = css`
 `;
 
 const singleLineCopyStyle = css`
-  padding: 10px;
+  height: 36px;
+`;
+
+const singleLineWrapperStyle = css`
+  height: 36px;
+  align-items: center;
+  display: flex;
+
+  & > code {
+    line-height: 1em;
+  }
 `;
 
 function getWrapperVariantStyle(mode: Mode): string {
@@ -227,7 +236,7 @@ function Code({
   chromeTitle = '',
   copyable = true,
   onCopy,
-  highlightLines,
+  highlightLines = [],
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
@@ -282,6 +291,7 @@ function Code({
     },
     className,
     getScrollShadowStyle(scrollState, mode),
+    { [singleLineWrapperStyle]: !isMultiline },
     {
       [css`
         &:focus {
@@ -296,7 +306,7 @@ function Code({
       showLineNumbers={showLineNumbers}
       darkMode={darkMode}
       language={language}
-      highlightLines={highlightLines}
+      highlightLines={highlightLines || []}
     >
       {children}
     </Syntax>

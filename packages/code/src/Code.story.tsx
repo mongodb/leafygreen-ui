@@ -8,35 +8,13 @@ import Code from '.';
 
 const jsSnippet = `
 
-// If an array of tokens contains an object with more than one children, this function will flatten that tree recursively.
-function flattenNestedTree(
-  children: Array<string | TokenObject>,
-  kind?: string,
-): Array<string | FlatTokenObject> {
-  if (typeof children === 'string') {
-    return children;
-  }
-
-  return children.reduce((acc, val) => {
-    if (isString(val)) {
-      // If there's a kind, we construct a custom token object with that kind to preserve highlighting.
-      // Without this, the value will simply render without highlighting.
-      const child = kind ? { kind: generateKindClassName(kind), children: [val] } : val;
-
-      return [...acc, child];
-    }
-
-    if (val?.children?.length > 1) {
-      // Pass the kind here so that the function can highlight nested tokens if applicable
-      return [...acc, ...flattenNestedTree(val.children, generateKindClassName(kind, val.kind))];
-    }
-
-    if (isFlattenedTokenObject(val)) {
-      return [...acc, {kind: generateKindClassName(kind, val.kind), children: val.children}];
-    }
-
-    return acc
-  }, [] as Array<string | FlatTokenObject>)
+try {
+  db.products.insertOne(
+    { "item": "envelopes", "qty": 100, "type": "Self-Sealing" },
+    { writeConcern: { w: "majority", wtimeout: 100 } }
+  );
+} catch(e) {
+  print(e);
 }
 
 `;
@@ -62,7 +40,7 @@ storiesOf('Code', module).add(
             language={select(
               'Language',
               Object.values(Language),
-              Language.TypeScript,
+              Language.JavaScript,
             )}
             highlightLines={select(
               'highlight lines',
