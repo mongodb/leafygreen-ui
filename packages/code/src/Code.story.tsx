@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { select, boolean, text } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Language } from './types';
+import { Language, LineHighlightingDefinition } from './types';
 import Code from '.';
 
 const jsSnippet = `
@@ -53,7 +53,7 @@ storiesOf('Code', module).add(
                   multiple: [[2, 4], 6],
                 },
                 [],
-              ) as Array<number | [number, number]>
+              ) as LineHighlightingDefinition
             }
           >
             {text('Code snippet', jsSnippet)}

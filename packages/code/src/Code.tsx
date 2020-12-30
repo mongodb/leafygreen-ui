@@ -5,7 +5,7 @@ import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import Syntax from './Syntax';
 import { spacing } from '@leafygreen-ui/tokens';
 import { variantColors } from './globalStyles';
-import { Language, SyntaxProps, Mode } from './types';
+import { Language, CodeProps, Mode } from './types';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -17,7 +17,7 @@ import ClipboardJS from 'clipboard';
 import facepaint from 'facepaint';
 
 // We use max-device-width to select specifically for iOS devices
-export const mq = facepaint([
+const mq = facepaint([
   `@media only screen and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 2)`,
   `@media only screen and (min-device-width: 813px) and (-webkit-min-device-pixel-ratio: 2)`,
 ]);
@@ -185,45 +185,6 @@ function getScrollShadowStyle(scrollState: ScrollState, mode: Mode): string {
   }
 
   return '';
-}
-
-interface CodeProps extends Omit<SyntaxProps, 'onCopy'> {
-  /**
-   * Shows line numbers in preformatted code blocks.
-   *
-   * default: `false`
-   */
-  showLineNumbers?: boolean;
-
-  /**
-   * Shows window chrome for code block;
-   *
-   * default: `false`
-   */
-  showWindowChrome?: boolean;
-
-  /**
-   * Renders a file name or other descriptor for a block of code
-   */
-  chromeTitle?: string;
-
-  /**
-   * When true, allows the code block to be copied to the user's clipboard by clicking the rendered copy button.
-   *
-   * default: `true`
-   */
-  copyable?: boolean;
-
-  /**
-   * Callback fired when Code is copied via the copy button.
-   *
-   */
-  onCopy?: Function;
-
-  /**
-   * An array of the line numbers to highlight
-   */
-  highlightLines?: Array<number | [number, number]>;
 }
 
 type DetailedElementProps<T> = React.DetailedHTMLProps<

@@ -14,6 +14,8 @@ export const Language = {
 
 export type Language = typeof Language[keyof typeof Language];
 
+export type LineHighlightingDefinition = Array<number | [number, number]>;
+
 export interface SyntaxProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * The children to render inside Code. This is usually going to be a formatted code block or line.
@@ -47,5 +49,44 @@ export interface SyntaxProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * An array of lines to highlight. The array can only contain numbers corresponding to the line numbers to highlight, and / or tuples representing a range (e.g. `[6, 10]`);
    */
-  highlightLines?: Array<number | [number, number]>;
+  highlightLines?: LineHighlightingDefinition;
+}
+
+export interface CodeProps extends Omit<SyntaxProps, 'onCopy'> {
+  /**
+   * Shows line numbers in preformatted code blocks.
+   *
+   * default: `false`
+   */
+  showLineNumbers?: boolean;
+
+  /**
+   * Shows window chrome for code block;
+   *
+   * default: `false`
+   */
+  showWindowChrome?: boolean;
+
+  /**
+   * Renders a file name or other descriptor for a block of code
+   */
+  chromeTitle?: string;
+
+  /**
+   * When true, allows the code block to be copied to the user's clipboard by clicking the rendered copy button.
+   *
+   * default: `true`
+   */
+  copyable?: boolean;
+
+  /**
+   * Callback fired when Code is copied via the copy button.
+   *
+   */
+  onCopy?: Function;
+
+  /**
+   * An array of the line numbers to highlight
+   */
+  highlightLines?: LineHighlightingDefinition;
 }
