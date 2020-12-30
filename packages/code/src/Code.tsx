@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import Syntax from './Syntax';
-import { spacing, breakpoints } from '@leafygreen-ui/tokens';
+import { spacing } from '@leafygreen-ui/tokens';
 import { variantColors } from './globalStyles';
 import { Language, SyntaxProps, Mode } from './types';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
@@ -16,11 +16,10 @@ import { uiColors } from '@leafygreen-ui/palette';
 import ClipboardJS from 'clipboard';
 import facepaint from 'facepaint';
 
+// We use max-device-width to select specifically for iOS devices
 export const mq = facepaint([
-  `@media only screen and (max-width: ${breakpoints.Mobile}px)`,
-  `@media only screen and (min-width: ${breakpoints.Tablet}px)`,
-  `@media only screen and (min-width: ${breakpoints.Desktop}px)`,
-  `@media only screen and (min-width: ${breakpoints.XLDesktop}px)`,
+  `@media only screen and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 2)`,
+  `@media only screen and (min-device-width: 813px) and (-webkit-min-device-pixel-ratio: 2)`,
 ]);
 
 const codeWrapperStyle = css`
@@ -36,7 +35,7 @@ const codeWrapperStyle = css`
   ${mq({
     // Fixes annoying issue where font size is overridden in mobile Safari to be 20px.
     // Ideally, we wouldn't need to set the text to wrap, but from what I can tell, this is the one possible solution to the problem.
-    whiteSpace: ['pre-wrap', 'pre', 'pre', 'pre'],
+    whiteSpace: ['pre', 'pre-wrap', 'pre'],
   })}
 `;
 
@@ -55,6 +54,8 @@ const copyStyle = css`
 
 const singleLineCopyStyle = css`
   height: 36px;
+  padding-top: 0;
+  justify-content: center;
 `;
 
 const singleLineWrapperStyle = css`
@@ -63,13 +64,13 @@ const singleLineWrapperStyle = css`
 
   ${mq({
     // Keeps the component from breaking on mobile.
-    height: ['auto', '36px', '36px', '36px'],
+    height: ['36px', 'auto', '36px'],
   })}
 
   & > code {
     ${mq({
       // Keeps the component from breaking on mobile.
-      lineHeight: ['24px', '1em', '1em', '1em'],
+      lineHeight: ['1em', '24px', '1em'],
     })}
   }
 `;
