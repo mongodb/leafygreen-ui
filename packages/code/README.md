@@ -18,6 +18,23 @@ yarn add @leafygreen-ui/code
 npm install @leafygreen-ui/code
 ```
 
+### Source Code Pro Font
+
+In addition to using a limited amount of our standard brand font, this component uses the open-source monospace font "Source Code Pro". For this component to display correctly, loading the following weights / styles of "Source Code Pro" is necessary:
+
+- `400 / normal`
+- `400 / italic`
+- `600 / normal`
+
+You can find instructions for using Google's CDN for font delivery, and download "Source Code Pro" on [Google Fonts](https://fonts.google.com/specimen/Source+Code+Pro?query=+source+code+pro&selection.family=Source+Code+Pro:ital,wght@0,400;0,600;1,400&sidebar.open=true#glyphs). 
+
+We recommend using Google's CDN for loading this font to optimize for caching the assets, speeding up loading times for webpages as a result. We use the following HTML in our `<head>` tags to load the necessary variants of "Source Code Pro":
+
+```HTML
+<link rel="preconnect" href="https://fonts.gstatic.com" />
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+```
+
 ## Example
 
 ```js
