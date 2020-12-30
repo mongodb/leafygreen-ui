@@ -14,7 +14,7 @@ try {
     { writeConcern: { w: "majority", wtimeout: 100 } }
   );
 } catch(e) {
-  print(e);
+  console.error(e);
 }
 
 `;
