@@ -26,7 +26,7 @@ In addition to using a limited amount of our standard brand font, this component
 - `400 / italic`
 - `600 / normal`
 
-You can find instructions for using Google's CDN for font delivery, and download "Source Code Pro" on [Google Fonts](https://fonts.google.com/specimen/Source+Code+Pro?query=+source+code+pro&selection.family=Source+Code+Pro:ital,wght@0,400;0,600;1,400&sidebar.open=true#glyphs). 
+You can find instructions for using Google's CDN for font delivery, and download "Source Code Pro" on [Google Fonts](https://fonts.google.com/specimen/Source+Code+Pro?query=+source+code+pro&selection.family=Source+Code+Pro:ital,wght@0,400;0,600;1,400&sidebar.open=true#glyphs).
 
 We recommend using Google's CDN for loading this font to optimize for caching the assets, speeding up loading times for webpages as a result. We use the following HTML in our `<head>` tags to load the necessary variants of "Source Code Pro":
 
