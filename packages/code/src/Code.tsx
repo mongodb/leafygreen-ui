@@ -286,7 +286,7 @@ function Code({
       showLineNumbers={showLineNumbers}
       darkMode={darkMode}
       language={language}
-      highlightLines={highlightLines || []}
+      highlightLines={highlightLines}
     >
       {children}
     </Syntax>
