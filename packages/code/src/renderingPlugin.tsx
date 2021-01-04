@@ -3,6 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useSyntaxContext } from './SyntaxContext';
 import { spacing } from '@leafygreen-ui/tokens';
+import { transparentize } from 'polished';
 
 interface TokenProps {
   kind?: string;
@@ -90,7 +91,11 @@ function getHighlightedRowStyle(darkMode: boolean) {
 
   if (darkMode) {
     backgroundColor = 'transparent';
-    backgroundImage = `linear-gradient(90deg, ${uiColors.gray.dark3}, transparent)`;
+    // Browsers inconsistently render the value "transparent" within gradients.
+    // We explicitly set it to transparent dark3 here to solve for that.
+    backgroundImage = `linear-gradient(90deg, ${
+      uiColors.gray.dark3
+    }, ${transparentize(100, uiColors.gray.dark3)})`;
     borderColor = uiColors.gray.dark3;
   } else {
     backgroundColor = uiColors.yellow.light3;
