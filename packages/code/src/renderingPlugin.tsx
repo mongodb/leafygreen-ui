@@ -80,10 +80,8 @@ export function processToken(token: TreeItem, key?: number): React.ReactNode {
 
 const cellStyle = css`
   border-spacing: 0;
-  padding: 0;
   vertical-align: top;
-  padding-right: ${spacing[3]}px;
-  padding-left: ${spacing[3]}px;
+  padding: 0 ${spacing[3]}px;
 `;
 
 function getHighlightedRowStyle(darkMode: boolean) {
@@ -194,14 +192,14 @@ function isFlattenedTokenObject(obj: TokenObject): obj is FlatTokenObject {
 
 // If an array of tokens contains an object with more than one children, this function will flatten that tree recursively.
 export function flattenNestedTree(
-  children: Array<string | TokenObject>,
+  children: TokenObject['children'],
   kind?: string,
 ): Array<string | FlatTokenObject> {
   if (typeof children === 'string') {
     return children;
   }
 
-  return children.reduce((acc, val) => {
+  return children.reduce((acc: Array<string | FlatTokenObject>, val) => {
     if (isString(val)) {
       // If there's a kind, we construct a custom token object with that kind to preserve highlighting.
       // Without this, the value will simply render without highlighting.
@@ -212,7 +210,7 @@ export function flattenNestedTree(
       return [...acc, child];
     }
 
-    if (val?.children?.length > 1) {
+    if ((val?.children?.length ?? 0) > 1) {
       // Pass the kind here so that the function can highlight nested tokens if applicable
       return [
         ...acc,
@@ -231,7 +229,7 @@ export function flattenNestedTree(
     }
 
     return acc;
-  }, [] as Array<string | FlatTokenObject>);
+  }, []);
 }
 
 function containsLineBreak(token: TreeItem): boolean {
@@ -332,7 +330,7 @@ export function TableContent({ lines }: TableContentProps) {
       }
 
       if (isArray(def)) {
-        const sortedArr = def.sort();
+        const sortedArr = [...def].sort();
         return line >= sortedArr[0] && line <= sortedArr[1];
       }
 
