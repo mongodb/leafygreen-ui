@@ -1,5 +1,3 @@
-import Code from './Code';
-
 export { Language, Mode } from './types';
 export type {
   SyntaxProps,
@@ -7,4 +5,5 @@ export type {
   LineHighlightingDefinition,
 } from './types';
 export { variantColors } from './globalStyles';
-export default Code;
+
+export { default } from './Code';
