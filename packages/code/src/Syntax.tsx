@@ -13,6 +13,7 @@ import { SyntaxContext } from './SyntaxContext';
 
 type FilteredSupportedLanguagesEnum = Omit<
   typeof SupportedLanguages,
+  // Aliases for languages
   'Cs' | 'JS' | 'TS'
 >;
 type FilteredSupportedLanguages = FilteredSupportedLanguagesEnum[keyof FilteredSupportedLanguagesEnum];
