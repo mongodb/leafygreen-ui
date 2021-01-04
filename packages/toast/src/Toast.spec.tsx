@@ -150,6 +150,31 @@ describe('packages/toast', () => {
     });
   });
 
+  describe('the correct icon is rendered', () => {
+    const expectedVariantIcons: Record<Variant, string> = {
+      [Variant.Success]: 'Checkmark With Circle Icon',
+      [Variant.Note]: 'Cloud Icon',
+      [Variant.Warning]: 'Warning Icon',
+      [Variant.Important]: 'Important With Circle Icon',
+      [Variant.Progress]: 'Refresh Icon',
+    };
+
+    test.each(Object.values(Variant) as Array<Variant>)(
+      `when 'variant' is '%s'`,
+      variant => {
+        const { getByTitle } = renderToast({
+          open: true,
+          body: 'hello world',
+          variant,
+        });
+
+        expect(
+          getByTitle(expectedVariantIcons[variant]).closest('svg'),
+        ).toBeVisible();
+      },
+    );
+  });
+
   describe(`when 'title' prop is`, () => {
     test('undefined, the title element does not render', () => {
       const { queryByTestId } = renderToast({
