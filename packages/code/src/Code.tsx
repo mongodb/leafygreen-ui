@@ -72,6 +72,12 @@ const singleLineWrapperStyle = css`
   })}
 `;
 
+const wrapperFocusStyle = css`
+  &:focus {
+    outline: none;
+  }
+`;
+
 function getWrapperVariantStyle(mode: Mode): string {
   const colors = variantColors[mode];
 
@@ -272,13 +278,7 @@ function Code({
     className,
     getScrollShadowStyle(scrollState, mode),
     { [singleLineWrapperStyle]: !isMultiline },
-    {
-      [css`
-        &:focus {
-          outline: none;
-        }
-      `]: !showFocus,
-    },
+    { [wrapperFocusStyle]: !showFocus },
   );
 
   const renderedSyntaxComponent = (

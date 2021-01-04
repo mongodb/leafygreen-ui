@@ -35,14 +35,14 @@ export interface SyntaxProps extends React.HTMLAttributes<HTMLElement> {
   /**
    * Determines whether or not the syntax will be rendered in dark mode.
    *
-   * @default: `false`
+   * default: `false`
    */
   darkMode?: boolean;
 
   /**
    * Shows line numbers. This is specifically used for the Code component implementation.
    *
-   * @default: `false`
+   * default: `false`
    */
   showLineNumbers?: boolean;
 
@@ -53,13 +53,6 @@ export interface SyntaxProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 export interface CodeProps extends Omit<SyntaxProps, 'onCopy'> {
-  /**
-   * Shows line numbers in preformatted code blocks.
-   *
-   * default: `false`
-   */
-  showLineNumbers?: boolean;
-
   /**
    * Shows window chrome for code block;
    *
@@ -84,9 +77,4 @@ export interface CodeProps extends Omit<SyntaxProps, 'onCopy'> {
    *
    */
   onCopy?: Function;
-
-  /**
-   * An array of the line numbers to highlight
-   */
-  highlightLines?: LineHighlightingDefinition;
 }
