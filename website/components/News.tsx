@@ -20,10 +20,10 @@ const newsContainer = css`
   padding-bottom: ${spacing[4]}px;
 
   ${mq({
-    marginTop: [`${spacing[4]}px`, 'unset'],
-    marginBottom: [`${spacing[4]}px`, 'unset'],
-    paddingLeft: [`${spacing[4]}px`, 'unset'],
-  })}
+  marginTop: [`${spacing[4]}px`, 'unset'],
+  marginBottom: [`${spacing[4]}px`, 'unset'],
+  paddingLeft: [`${spacing[4]}px`, 'unset'],
+})}
 `;
 
 const subtitleStyle = css`
@@ -44,10 +44,10 @@ const iconStyle = css`
   transition: all 100ms ease-in;
 
   ${mq({
-    visibility: ['hidden', 'hidden', 'visible'],
-    opacity: [1, 1, 0, 0],
-    marginLeft: [`${spacing[2]}px`, `${spacing[2]}px`, 0],
-  })}
+  visibility: ['hidden', 'hidden', 'visible'],
+  opacity: [1, 1, 0, 0],
+  marginLeft: [`${spacing[2]}px`, `${spacing[2]}px`, 0],
+})}
 `;
 
 const updateMargin = css`
@@ -75,8 +75,8 @@ function Update({ dateText, storyText, route, updateURL }: UpdateProps) {
 
   React.useEffect(() => {
     if (navigator) {
-      // @ts-expect-error typescript complaining that dateStyle is not a valid option, but according to Mozilla docs it is: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
       setDisplayedDate(
+        // @ts-expect-error typescript complaining that dateStyle is not a valid option, but according to Mozilla docs it is: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
         new Intl.DateTimeFormat(undefined, { dateStyle: 'long' }).format(
           new Date(dateText),
         ),
