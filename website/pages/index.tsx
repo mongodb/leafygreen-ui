@@ -7,6 +7,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { GridContainer, GridItem } from 'components/Grid';
+import { getAllUpdates, UpdateProps } from 'utils/fetchUpdates';
 import News from 'components/News';
 
 const mq = facepaint(
@@ -205,7 +206,7 @@ function MarketingPreview({
   );
 }
 
-export default function Home() {
+export default function Home({ updates }: { updates: Array<UpdateProps> }) {
   const viewport = useViewportSize();
   const isTouchDevice = viewport?.width
     ? viewport?.width < breakpoints.Tablet
@@ -224,7 +225,7 @@ export default function Home() {
         {/* First Row */}
         <GridItem sm={12} md={6} lg={6}>
           <div className={largeHeight}>
-            <News />
+            <News updates={updates} />
           </div>
         </GridItem>
         <GridItem sm={6} md={6} lg={6}>
@@ -330,4 +331,9 @@ export default function Home() {
       </GridContainer>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const updates = getAllUpdates();
+  return { props: { updates } };
 }

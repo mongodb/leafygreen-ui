@@ -6,6 +6,7 @@ import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Overline, Subtitle, H2 } from '@leafygreen-ui/typography';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
+import { UpdateProps } from 'utils/fetchUpdates';
 
 const mq = facepaint(
   Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
@@ -57,14 +58,8 @@ const updateMargin = css`
 const overlineColor = css`
   color: ${uiColors.gray.dark1};
 `;
-interface UpdateProps {
-  dateText: string;
-  storyText: string;
-  route?: string;
-  updateURL?: string;
-}
 
-function Update({ dateText, storyText, route, updateURL }: UpdateProps) {
+function Update({ date, story, route, updateURL }: UpdateProps) {
   const [displayedDate, setDisplayedDate] = useState('');
 
   const { push } = useRouter();
@@ -74,46 +69,39 @@ function Update({ dateText, storyText, route, updateURL }: UpdateProps) {
     : ({ href: updateURL, as: 'a' } as const);
 
   useEffect(() => {
-    if (navigator) {
+    if (typeof navigator !== 'undefined') {
       setDisplayedDate(
         // @ts-expect-error typescript complaining that dateStyle is not a valid option, but according to Mozilla docs it is: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
         new Intl.DateTimeFormat(undefined, { dateStyle: 'long' }).format(
-          new Date(dateText),
+          new Date(date),
         ),
       );
     }
-  }, [dateText]);
+  }, [date]);
 
   return (
     <div className={updateMargin}>
       <Overline className={overlineColor}>{displayedDate}</Overline>
       <Subtitle className={subtitleStyle} {...subtitleProps}>
-        {storyText}
+        {story}
         <ArrowRightIcon aria-hidden="true" className={iconStyle} />
       </Subtitle>
     </div>
   );
 }
 
-function News() {
+function News({ updates }: { updates: Array<UpdateProps> }) {
   return (
     <div className={newsContainer}>
       <H2 as="h1">Whats New</H2>
-      <Update
-        dateText="2020-12-08"
-        storyText="Copyable v1.0.0"
-        route="/component/copyable/example"
-      />
-      <Update
-        dateText="2020-12-02"
-        storyText="Support for React 17"
-        updateURL="https://github.com/mongodb/leafygreen-ui/commit/c18f16e6632a6688e771334fd1672c9ef7e0f9b4"
-      />
-      <Update
-        dateText="2020-11-29"
-        storyText="Installing LeafyGreen in Figma"
-        route=""
-      />
+      {updates.map(update => (
+        <Update
+          key={update.story}
+          date={update.date}
+          story={update.story}
+          route={update.route}
+        />
+      ))}
     </div>
   );
 }
