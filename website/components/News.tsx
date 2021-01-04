@@ -71,9 +71,11 @@ function Update({ dateText, storyText, route, updateURL }: UpdateProps) {
     ? ({ onClick: () => push(route), as: 'p' } as const)
     : ({ href: updateURL, as: 'a' } as const);
 
+  const displayedDate = new Date(dateText).toLocaleDateString();
+
   return (
     <div className={updateMargin}>
-      <Overline className={overlineColor}>{dateText}</Overline>
+      <Overline className={overlineColor}>{displayedDate}</Overline>
       <Subtitle className={subtitleStyle} {...subtitleProps}>
         {storyText}
         <ArrowRightIcon className={iconStyle} />
@@ -87,17 +89,17 @@ function News() {
     <div className={newsContainer}>
       <H2 as="h1">Whats New</H2>
       <Update
-        dateText="Dec 8, 2020"
+        dateText="2020-12-08"
         storyText="Copyable v1.0.0"
         route="/component/copyable/example"
       />
       <Update
-        dateText="Dec 2, 2020"
+        dateText="2020-12-02"
         storyText="Support for React 17"
         updateURL="https://github.com/mongodb/leafygreen-ui/commit/c18f16e6632a6688e771334fd1672c9ef7e0f9b4"
       />
       <Update
-        dateText="Nov 29, 2020"
+        dateText="2020-11-29"
         storyText="Installing LeafyGreen in Figma"
         route=""
       />
