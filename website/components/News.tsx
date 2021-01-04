@@ -65,20 +65,31 @@ interface UpdateProps {
 }
 
 function Update({ dateText, storyText, route, updateURL }: UpdateProps) {
+  const [displayedDate, setDisplayedDate] = React.useState('');
+
   const { push } = useRouter();
 
   const subtitleProps = route
     ? ({ onClick: () => push(route), as: 'p' } as const)
     : ({ href: updateURL, as: 'a' } as const);
 
-  const displayedDate = new Date(dateText).toLocaleDateString();
+  React.useEffect(() => {
+    if (navigator) {
+      // @ts-expect-error typescript complaining that dateStyle is not a valid option, but according to Mozilla docs it is: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
+      setDisplayedDate(
+        new Intl.DateTimeFormat(undefined, { dateStyle: 'long' }).format(
+          new Date(dateText),
+        ),
+      );
+    }
+  }, [dateText]);
 
   return (
     <div className={updateMargin}>
       <Overline className={overlineColor}>{displayedDate}</Overline>
       <Subtitle className={subtitleStyle} {...subtitleProps}>
         {storyText}
-        <ArrowRightIcon className={iconStyle} />
+        <ArrowRightIcon aria-hidden="true" className={iconStyle} />
       </Subtitle>
     </div>
   );

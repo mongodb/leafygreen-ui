@@ -157,7 +157,9 @@ function ComponentPreview({
         <img
           src={backgroundURL}
           alt={`Learn more about ${content} component`}
-          width="100%"
+          className={css`
+            width: 100%;
+          `}
         />
         <div className={overlineContainer}>
           <Overline className={overlineColor}>{content}</Overline>
@@ -191,9 +193,9 @@ function MarketingPreview({
             src={backgroundURL}
             alt=""
             aria-hidden="true"
-            height="100%"
             className={css`
               min-width: 100%;
+              height: 100%;
             `}
           />
           <div className={textWrapper}>{children}</div>
