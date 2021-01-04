@@ -65,14 +65,11 @@ const singleLineWrapperStyle = css`
   ${mq({
     // Keeps the component from breaking on mobile.
     height: ['36px', 'auto', '36px'],
-  })}
 
-  & > code {
-    ${mq({
-      // Keeps the component from breaking on mobile.
+    '& > code': {
       lineHeight: ['1em', '24px', '1em'],
-    })}
-  }
+    },
+  })}
 `;
 
 function getWrapperVariantStyle(mode: Mode): string {
