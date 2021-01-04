@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import facepaint from 'facepaint';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
@@ -20,10 +20,10 @@ const newsContainer = css`
   padding-bottom: ${spacing[4]}px;
 
   ${mq({
-  marginTop: [`${spacing[4]}px`, 'unset'],
-  marginBottom: [`${spacing[4]}px`, 'unset'],
-  paddingLeft: [`${spacing[4]}px`, 'unset'],
-})}
+    marginTop: [`${spacing[4]}px`, 'unset'],
+    marginBottom: [`${spacing[4]}px`, 'unset'],
+    paddingLeft: [`${spacing[4]}px`, 'unset'],
+  })}
 `;
 
 const subtitleStyle = css`
@@ -44,10 +44,10 @@ const iconStyle = css`
   transition: all 100ms ease-in;
 
   ${mq({
-  visibility: ['hidden', 'hidden', 'visible'],
-  opacity: [1, 1, 0, 0],
-  marginLeft: [`${spacing[2]}px`, `${spacing[2]}px`, 0],
-})}
+    visibility: ['hidden', 'hidden', 'visible'],
+    opacity: [1, 1, 0, 0],
+    marginLeft: [`${spacing[2]}px`, `${spacing[2]}px`, 0],
+  })}
 `;
 
 const updateMargin = css`
@@ -65,7 +65,7 @@ interface UpdateProps {
 }
 
 function Update({ dateText, storyText, route, updateURL }: UpdateProps) {
-  const [displayedDate, setDisplayedDate] = React.useState('');
+  const [displayedDate, setDisplayedDate] = useState('');
 
   const { push } = useRouter();
 
@@ -73,7 +73,7 @@ function Update({ dateText, storyText, route, updateURL }: UpdateProps) {
     ? ({ onClick: () => push(route), as: 'p' } as const)
     : ({ href: updateURL, as: 'a' } as const);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (navigator) {
       setDisplayedDate(
         // @ts-expect-error typescript complaining that dateStyle is not a valid option, but according to Mozilla docs it is: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
