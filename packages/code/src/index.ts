@@ -5,4 +5,4 @@ export type {
   LineHighlightingDefinition,
 } from './types';
 export { variantColors } from './globalStyles';
-export {default} from './Code';
+export { default } from './Code';
