@@ -10,9 +10,9 @@ interface TokenProps {
   children: React.ReactNode;
 }
 
-function generateKindClassName(...args: Array<any>): string {
+export function generateKindClassName(...args: Array<any>): string {
   return args
-    .filter(isString)
+    .filter((str): str is string => isString(str) && str.length > 0)
     .map(kind => {
       const prefix = 'lg-highlight-';
 
@@ -193,7 +193,7 @@ function isFlattenedTokenObject(obj: TokenObject): obj is FlatTokenObject {
 }
 
 // If an array of tokens contains an object with more than one children, this function will flatten that tree recursively.
-function flattenNestedTree(
+export function flattenNestedTree(
   children: Array<string | TokenObject>,
   kind?: string,
 ): Array<string | FlatTokenObject> {

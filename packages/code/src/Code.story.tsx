@@ -8,14 +8,11 @@ import Code from '.';
 
 const jsSnippet = `
 
-try {
-  db.products.insertOne(
-    { "item": "envelopes", "qty": 100, "type": "Self-Sealing" },
-    { writeConcern: { w: "majority", wtimeout: 100 } }
-  );
-} catch(e) {
-  console.error(e);
+function greeting(entity) {
+  return \`Hello, \${entity}!\`;
 }
+
+console.log(greeting('World'));
 
 `;
 
