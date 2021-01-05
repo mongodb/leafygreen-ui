@@ -1,4 +1,5 @@
 import fs from 'fs';
+import util from 'util';
 import { join } from 'path';
 import matter from 'gray-matter';
 
@@ -9,22 +10,32 @@ export interface UpdateProps {
   updateURL?: string;
 }
 
+const getDirContent = util.promisify(fs.readdir);
+const getFileContent = util.promisify(fs.readFile);
+
 const updatesDirectory = join(process.cwd(), 'updates');
 
-function getUpdateSlugs() {
-  return fs.readdirSync(updatesDirectory);
+async function getUpdateFileNames() {
+  const fileNames = await getDirContent(updatesDirectory);
+  return fileNames;
 }
 
-function getIndividualUpdate(updateName) {
-  const slug = updateName.replace(/\.md$/, '');
+async function getIndividualUpdate(fileName: string): Promise<UpdateProps> {
+  const slug = fileName.replace(/\.md$/, '');
   const fullPath = join(updatesDirectory, `${slug}.md`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const fileContents = await getFileContent(fullPath, 'utf-8');
   const { data } = matter(fileContents);
 
-  return data;
+  return data as UpdateProps;
 }
 
-export function getAllUpdates() {
-  const slugs = getUpdateSlugs();
-  return slugs.map(slug => getIndividualUpdate(slug));
+export async function getAllUpdates(): Promise<Array<UpdateProps>> {
+  const fileNames = await getUpdateFileNames();
+  const updates = await Promise.all(
+    fileNames.map(fileName => getIndividualUpdate(fileName)),
+  );
+
+  return updates.sort((update1, update2) =>
+    update1.date > update2.date ? -1 : 1,
+  );
 }

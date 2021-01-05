@@ -334,6 +334,6 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
 }
 
 export async function getStaticProps() {
-  const updates = getAllUpdates();
+  const updates = await getAllUpdates();
   return { props: { updates } };
 }
