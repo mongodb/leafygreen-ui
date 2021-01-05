@@ -21,6 +21,11 @@ import TypeDefinition from 'components/TypeDefinition';
 const topAlignment = css`
   margin-top: ${spacing[4]}px;
   padding-top: ${spacing[3]}px;
+  margin-bottom: ${spacing[3]}px;
+`;
+
+const versionCardDesktopMargin = css`
+  margin-left: 20px;
 `;
 
 const mt3 = css`
@@ -156,7 +161,9 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
           </div>
         </GridItem>
         <GridItem md={5} lg={5}>
-          <VersionCard changelog={changelog} version={version} />
+          <div className={versionCardDesktopMargin}>
+            <VersionCard changelog={changelog} version={version} />
+          </div>
         </GridItem>
       </GridContainer>
       <GridContainer align="flex-start" justify="flex-start">

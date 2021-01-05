@@ -12,7 +12,6 @@ const mq = facepaint(
 );
 
 const containerStyle = css`
-  margin-top: ${spacing[4]}px;
   width: 100%;
   display: flex;
   align-items: flex-start;
@@ -23,8 +22,7 @@ const containerStyle = css`
   })}
 `;
 
-const topMargin = css`
-  margin-top: 36px;
+const layout = css`
   ${mq({
     width: ['100%', '100%', '700px', '700px'],
   })}
@@ -45,7 +43,7 @@ export default function BaseLayout({
       <div className={containerStyle}>
         <Navigation />
 
-        <div className={topMargin}>{children}</div>
+        <div className={layout}>{children}</div>
       </div>
 
       <Footer />

@@ -34,6 +34,7 @@ const linkStyle = css`
 
 const trademarkStyle = css`
   margin-top: 72px;
+  margin-bottom: 40px;
   font-size: 14px;
   padding-bottom: ${spacing[4]}px;
 `;
