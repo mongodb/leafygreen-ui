@@ -1,6 +1,12 @@
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
-import { processToken, LineTableRow, treeToLines } from './renderingPlugin';
+import {
+  processToken,
+  LineTableRow,
+  treeToLines,
+  flattenNestedTree,
+  generateKindClassName,
+} from './renderingPlugin';
 
 describe('processToken()', () => {
   test('when passed `null`, it returns `null`', () => {
@@ -150,6 +156,108 @@ const sampleChildren: Array<string | TokenObject> = [
   // Line break at the end should be stripped.
   ';\n',
 ];
+
+describe('generateKindClassName()', () => {
+  test('when passed nothing, returns an empty string', () => {
+    const kindClassName = generateKindClassName() as any;
+
+    expect(typeof kindClassName === 'string').toBeTruthy();
+    expect(kindClassName.length).toBe(0);
+  });
+
+  test('when passed an empty string, returns an empty string', () => {
+    const kindClassName = generateKindClassName('') as any;
+
+    expect(typeof kindClassName === 'string').toBeTruthy();
+    expect(kindClassName.length).toBe(0);
+  });
+
+  test('when passed a single argument, returns a string of the appropriate className', () => {
+    const kind = 'string';
+    const kindClassName = generateKindClassName(kind) as any;
+
+    expect(typeof kindClassName === 'string').toBeTruthy();
+    expect(kindClassName).toEqual(`lg-highlight-${kind}`);
+  });
+
+  test('when passed multiple arguments, returns a string containing the appropriate classNames', () => {
+    const kind1 = 'string';
+    const kind2 = 'function';
+    const kindClassName = generateKindClassName(kind1, kind2) as any;
+
+    expect(typeof kindClassName === 'string').toBeTruthy();
+    expect(kindClassName).toEqual(
+      `lg-highlight-${kind1} lg-highlight-${kind2}`,
+    );
+  });
+});
+
+describe('flattenNestedTree()', () => {
+  test('when passed an array of strings, returns an array of strings', () => {
+    const flattenedArray = flattenNestedTree(['test1', 'test2']);
+
+    expect(flattenedArray instanceof Array).toBeTruthy();
+    expect(flattenedArray[0]).toEqual('test1');
+    expect(flattenedArray[1]).toEqual('test2');
+  });
+
+  test('when passed an array of objects, returns an array of objects with updated kind', () => {
+    const obj1 = { children: ['obj1'], kind: 'string' };
+    const obj2 = { children: ['obj2'], kind: 'function' };
+
+    const [modifiedObj1, modifiedObj2] = flattenNestedTree([obj1, obj2]);
+
+    console.log(modifiedObj2);
+
+    expect(typeof modifiedObj1 === 'object').toBeTruthy();
+    expect((modifiedObj1 as any).children[0]).toEqual('obj1');
+    expect((modifiedObj1 as any).kind).toEqual(
+      generateKindClassName(obj1.kind),
+    );
+
+    expect(typeof modifiedObj2 === 'object').toBeTruthy();
+    expect((modifiedObj2 as any).children[0]).toEqual('obj2');
+    expect((modifiedObj2 as any).kind).toEqual(
+      generateKindClassName(obj2.kind),
+    );
+  });
+
+  test('when passed an array with a nested object, returns a flattened array of objects with updated kind', () => {
+    expect(true).toBe(true);
+
+    const tokenChildren = ['test', 'test2', 'test3'];
+    const tokenKind = ['kind1', 'kind2', 'kind3'];
+
+    const [obj1, obj2, obj3] = flattenNestedTree([
+      {
+        kind: tokenKind[0],
+        children: [
+          tokenChildren[0],
+          {
+            kind: tokenKind[1],
+            children: [
+              tokenChildren[1],
+              { kind: tokenKind[2], children: [tokenChildren[2]] },
+            ],
+          },
+        ],
+      },
+    ]);
+
+    expect((obj1 as any).children[0]).toEqual(tokenChildren[0]);
+    expect((obj1 as any).kind).toEqual(generateKindClassName(tokenKind[0]));
+
+    expect((obj2 as any).children[0]).toEqual(tokenChildren[1]);
+    expect((obj2 as any).kind).toEqual(
+      generateKindClassName(tokenKind[0], tokenKind[1]),
+    );
+
+    expect((obj3 as any).children[0]).toEqual(tokenChildren[2]);
+    expect((obj3 as any).kind).toEqual(
+      generateKindClassName(tokenKind[0], tokenKind[1], tokenKind[2]),
+    );
+  });
+});
 
 describe('treeToLines()', () => {
   function validateLine(line: any) {

@@ -1,7 +1,8 @@
 import { createContext, useContext } from 'react';
+import { LineHighlightingDefinition } from './types';
 
 interface SyntaxContext {
-  highlightLines: Array<number>;
+  highlightLines: LineHighlightingDefinition;
   showLineNumbers?: boolean;
   darkMode: boolean;
 }
