@@ -96,9 +96,6 @@
       "path": "./packages/stepper"
     },
     {
-      "path": "./packages/syntax"
-    },
-    {
       "path": "./packages/table"
     },
     {

@@ -21,6 +21,11 @@ import TypeDefinition from 'components/TypeDefinition';
 const topAlignment = css`
   margin-top: ${spacing[4]}px;
   padding-top: ${spacing[3]}px;
+  margin-bottom: ${spacing[3]}px;
+`;
+
+const versionCardDesktopMargin = css`
+  margin-left: 20px;
 `;
 
 const mt3 = css`
@@ -159,7 +164,9 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
           </div>
         </GridItem>
         <GridItem md={5} lg={5}>
-          <VersionCard changelog={changelog} version={version} />
+          <div className={versionCardDesktopMargin}>
+            <VersionCard changelog={changelog} version={version} />
+          </div>
         </GridItem>
       </GridContainer>
       <GridContainer align="flex-start" justify="flex-start">
@@ -209,13 +216,17 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
           <Tabs className={tabsPadding}>
             {example && (
               <Tab default name="Example" className={mt3}>
-                <Code language="js">{example}</Code>
+                <Code showLineNumbers language="js">
+                  {example}
+                </Code>
               </Tab>
             )}
 
             {outputHTML && (
               <Tab name="Output HTML" className={mt3} default={!example}>
-                <Code language="xml">{outputHTML}</Code>
+                <Code showLineNumbers language="xml">
+                  {outputHTML}
+                </Code>
               </Tab>
             )}
           </Tabs>

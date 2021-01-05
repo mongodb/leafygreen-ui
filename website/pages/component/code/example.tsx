@@ -1,6 +1,5 @@
 import React from 'react';
-import Code from '@leafygreen-ui/code';
-import { Language } from '@leafygreen-ui/syntax';
+import Code, { Language } from '@leafygreen-ui/code';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const jsSnippet = `function greeting(entity) {

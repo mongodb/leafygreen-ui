@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import facepaint from 'facepaint';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
-const breakpointGaps = ['16px', '16px', '32px', '32px'];
 const mq = facepaint(
   Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
   { literal: true },
@@ -52,11 +51,6 @@ type GridContainerProps = JSX.IntrinsicElements['div'] & {
 };
 
 const GridContainer = styled<'div', GridContainerProps>('div')`
-  ${mq({
-    width: breakpointGaps.map(gap => `calc(100% + ${gap})`),
-    margin: breakpointGaps.map(gap => `calc(-1 * ${gap} / 2)`),
-  })}
-
   display: flex;
   ${['flex-direction']}: ${props =>
     props.direction ? props.direction : Direction.Row};
@@ -72,9 +66,6 @@ export { GridContainer };
 
 const baseGridItemStyles = css`
   box-sizing: border-box;
-  ${mq({
-    padding: breakpointGaps.map(gap => `calc(${gap} / 2)`),
-  })}
 `;
 
 const visibleGridItemStyles = css`
@@ -149,7 +140,7 @@ function getItemStyle(num: number | undefined) {
   }
 
   if (num) {
-    const width = `${(100 / 12) * num}%`;
+    const width = `${(100 * num) / 12}% `;
 
     return {
       width,

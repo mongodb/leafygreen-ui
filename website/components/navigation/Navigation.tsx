@@ -11,6 +11,7 @@ import MobileNavigation from './MobileNavigation';
 
 const navContainer = css`
   width: 270px;
+  padding-top: 12px;
   // spacing[3] already built into side nav
   padding-left: ${spacing[5] - spacing[3]}px;
   padding-right: 60px;
@@ -20,6 +21,7 @@ const navContainer = css`
 const logoStyles = css`
   // adds back spacing that was already built into side nav
   margin: 12px 0 ${spacing[4]}px ${spacing[3]}px;
+  cursor: pointer;
 `;
 
 const coreGuidelines = [
@@ -59,7 +61,6 @@ const components = [
   'select',
   'side-nav',
   'stepper',
-  'syntax',
   'table',
   'tabs',
   'text-area',
@@ -160,7 +161,7 @@ function Navigation() {
       <MDBDesignLogo className={logoStyles} onClick={() => push('/')} />
       <SideNav
         className={css`
-          margin-top: ${spacing[4]}px;
+          margin-top: ${spacing[3]}px;
         `}
       >
         <Content />
