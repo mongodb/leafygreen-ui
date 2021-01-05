@@ -173,7 +173,7 @@ const optionalStyle = css`
 
 const errorMessageStyle = css`
   font-size: 14px;
-  height: 20px;
+  min-height: 20px;
   padding-top: 4px;
   font-weight: normal;
 `;

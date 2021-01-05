@@ -47,7 +47,7 @@ A set of CSS styles and React components built with design in mind.
 
 ## Developer Setup
 
-1. Node >= 6.11.5 required.
+1. Node >= 14.0.0 required.
 
    via [homebrew](https://brew.sh/) with `brew install node`
 
