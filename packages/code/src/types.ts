@@ -14,7 +14,9 @@ export const Language = {
 
 export type Language = typeof Language[keyof typeof Language];
 
-export type LineHighlightingDefinition = Array<number | [number, number]>;
+export type LineHighlightingDefinition = ReadonlyArray<
+  number | readonly [number, number]
+>;
 
 export interface SyntaxProps extends React.HTMLAttributes<HTMLElement> {
   /**

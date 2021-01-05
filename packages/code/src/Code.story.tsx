@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { select, boolean, text } from '@storybook/addon-knobs';
 import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Language, LineHighlightingDefinition } from './types';
+import { Language } from './types';
 import Code from '.';
 
 const jsSnippet = `
@@ -25,6 +25,12 @@ storiesOf('Code', module).add(
       max-width: calc(100% - ${margin * 2}px);
     `;
 
+    const lineHighlightOptions = {
+      none: [],
+      single: [1],
+      multiple: [[2, 4], 6],
+    } as const;
+
     return (
       <LeafyGreenProvider>
         <div className={wrapperStyle}>
@@ -40,17 +46,13 @@ storiesOf('Code', module).add(
               Language.JavaScript,
             )}
             highlightLines={
-              select(
-                'highlight lines',
-                {
-                  none: [],
-                  single: [1],
-                  // @ts-expect-error
-                  // Knobs typing seems to be off – it says that this isn't assignable to a string.
-                  multiple: [[2, 4], 6],
-                },
-                [],
-              ) as LineHighlightingDefinition
+              lineHighlightOptions[
+                select(
+                  'highlight lines',
+                  ['none', 'single', 'multiple'],
+                  'none',
+                )
+              ]
             }
           >
             {text('Code snippet', jsSnippet)}
