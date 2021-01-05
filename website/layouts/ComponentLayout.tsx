@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import facepaint from 'facepaint';
 import { css } from 'emotion';
 import Button from '@leafygreen-ui/button';
 import { useViewportSize } from '@leafygreen-ui/hooks';
@@ -9,6 +10,19 @@ import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { H2 } from '@leafygreen-ui/typography';
 import ReactIcon from 'components/svgs/ReactIcon';
 import FigmaIcon from 'components/svgs/FigmaIcon';
+
+const mq = facepaint(
+  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
+  { literal: true },
+);
+
+const layout = css`
+  margin-top: 70px;
+
+  ${mq({
+    width: ['100%', '100%', '700px', '700px'],
+  })}
+`;
 
 const componentsStyle = css`
   height: 16px;
@@ -21,7 +35,6 @@ const componentsStyle = css`
 `;
 
 const margin4 = css`
-  margin-top: ${spacing[4]}px;
   margin-bottom: ${spacing[4]}px;
 `;
 
@@ -78,7 +91,7 @@ export default function ComponentLayout({
     viewport !== null ? viewport.width < breakpoints.Tablet : false;
 
   return (
-    <div role="main">
+    <div role="main" className={layout}>
       <div className={margin4}>
         <small className={componentsStyle}>Components</small>
         <div className={flexContainer}>
