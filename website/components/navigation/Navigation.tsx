@@ -58,7 +58,6 @@ const components = [
   'radio-group',
   'side-nav',
   'stepper',
-  'syntax',
   'table',
   'tabs',
   'text-area',

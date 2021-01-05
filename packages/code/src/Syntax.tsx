@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import flatten from 'lodash/flatten';
 import { cx, css } from '@leafygreen-ui/emotion';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 // Import from core so we can register the appropriate languages ourselves
@@ -12,38 +11,9 @@ import { injectGlobalStyles } from './globalStyles';
 import renderingPlugin, { TableContent } from './renderingPlugin';
 import { SyntaxContext } from './SyntaxContext';
 
-export function expandRangeTuple(tuple: [number, number]): Array<number> {
-  const [lower, upper] = [...tuple].map(bound => Math.max(bound, 0)).sort();
-  const maxHighlightingDifference = 499;
-
-  // Make sure passing large numbers doesn't freeze the browser
-  const clampedUpperBound = Math.min(lower + maxHighlightingDifference, upper);
-
-  const expandedRange = [];
-
-  for (let i = lower; i <= clampedUpperBound; i++) {
-    expandedRange.push(i);
-  }
-
-  return expandedRange;
-}
-
-export function normalizeLineHighlightingDefinition(
-  numbers: Array<number | [number, number]>,
-): Array<number> {
-  return flatten(
-    numbers.map(item => {
-      if (item instanceof Array) {
-        return expandRangeTuple(item);
-      }
-
-      return item;
-    }),
-  );
-}
-
 type FilteredSupportedLanguagesEnum = Omit<
   typeof SupportedLanguages,
+  // Aliases for languages
   'Cs' | 'JS' | 'TS'
 >;
 type FilteredSupportedLanguages = FilteredSupportedLanguagesEnum[keyof FilteredSupportedLanguagesEnum];
@@ -123,14 +93,11 @@ function Syntax({
     );
 
   const mode = darkMode ? Mode.Dark : Mode.Light;
-  const parsedHighlightLines = normalizeLineHighlightingDefinition(
-    highlightLines,
-  );
 
   return (
     <SyntaxContext.Provider
       value={{
-        highlightLines: parsedHighlightLines,
+        highlightLines,
         showLineNumbers,
         darkMode,
       }}

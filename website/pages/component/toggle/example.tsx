@@ -28,7 +28,14 @@ const knobsConfig: KnobsConfigInterface<{
 export default function ToggleLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {props => <Toggle {...props} />}
+      {props => (
+        <>
+          <label style={{ display: 'block' }} id="label" htmlFor="toggle">
+            This is an accessible label for the Toggle
+          </label>
+          <Toggle id="toggle" aria-labelledby="label" {...props} />
+        </>
+      )}
     </LiveExample>
   );
 }

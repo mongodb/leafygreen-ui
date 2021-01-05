@@ -20,21 +20,21 @@ export const variantColors: { readonly [K in Mode]: Base16Palette } = {
   [Mode.Light]: {
     0: uiColors.gray.light3,
     1: uiColors.gray.light2,
-    2: uiColors.gray.dark2,
-    3: uiColors.gray.dark3,
+    2: uiColors.gray.dark1,
+    3: uiColors.black,
     4: uiColors.white,
-    5: '#CA4821',
+    5: '#D83713',
     6: '#EDB210',
     7: '#12824D',
-    8: uiColors.blue.dark2,
-    9: uiColors.blue.base,
+    8: '#016EE9',
+    9: '#016EE9',
     10: '#CC3887',
   },
 
   [Mode.Dark]: {
     0: uiColors.black,
     1: uiColors.gray.dark3,
-    2: uiColors.gray.light1,
+    2: '#919DA1',
     3: uiColors.gray.light3,
     4: uiColors.gray.dark2,
     5: '#FF6F44',
@@ -53,8 +53,18 @@ const getStyles = (mode: Mode): string => `
     .lg-highlight-class,
     .lg-highlight-section,
     .lg-highlight-name,
-    .lg-highlight-class > .lg-highlight-keyword,
-    .lg-highlight-function > .lg-highlight-keyword {
+    .lg-highlight-number,
+    .lg-highlight-class.lg-highlight-keyword,
+    .lg-highlight-function.lg-highlight-keyword {
+      color: ${variantColors[mode][9]};
+    }
+
+    .lg-highlight-function.lg-highlight-params {
+      color: ${variantColors[mode][5]}
+    }
+
+    .lg-highlight-function.lg-highlight-keyword,
+    .lg-highlight-function.lg-highlight-built_in {
       color: ${variantColors[mode][9]};
     }
   
@@ -91,7 +101,6 @@ const getStyles = (mode: Mode): string => `
     .lg-highlight-subst,
     .lg-highlight-meta,
     .lg-highlight-link,
-    .lg-highlight-number,
     .lg-highlight-attr,
     .lg-highlight-attribute,
     .lg-highlight-built_in,
@@ -100,6 +109,9 @@ const getStyles = (mode: Mode): string => `
       color: ${variantColors[mode][5]}
     }
   
+    .lg-highlight-string {
+      font-weight: 600;
+    }
     .lg-highlight-string,
     .lg-highlight-addition,
     .lg-highlight-title {

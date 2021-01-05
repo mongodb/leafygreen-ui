@@ -57,12 +57,15 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="MongoDB's open-source, accessible design system for designing and building web applications with React."
         />
 
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,600;1,400&display=swap"
           rel="stylesheet"
         />
+
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <BaseLayout>
         <SubLayout>
           <Component {...pageProps} />

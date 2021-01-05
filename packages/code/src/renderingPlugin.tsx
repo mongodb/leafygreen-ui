@@ -2,16 +2,33 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useSyntaxContext } from './SyntaxContext';
+import { spacing } from '@leafygreen-ui/tokens';
+import { transparentize } from 'polished';
 
 interface TokenProps {
   kind?: string;
   children: React.ReactNode;
 }
 
-function Token({ kind, children }: TokenProps) {
-  const className = kind ? `lg-highlight-${kind}` : '';
+export function generateKindClassName(...args: Array<any>): string {
+  return args
+    .filter((str): str is string => isString(str) && str.length > 0)
+    .map(kind => {
+      const prefix = 'lg-highlight-';
 
-  return <span className={className}>{children}</span>;
+      // Sometimes, a kind will have run through this function before.
+      // This ensures we don't duplicate prefixes.
+      if (kind.startsWith(prefix)) {
+        return kind;
+      }
+
+      return `${prefix}${kind}`;
+    })
+    .join(' ');
+}
+
+function Token({ kind, children }: TokenProps) {
+  return <span className={kind}>{children}</span>;
 }
 
 type TreeItem =
@@ -31,6 +48,10 @@ function isObject(item: any): item is object {
 
 function isString(item: any): item is string {
   return item != null && typeof item === 'string';
+}
+
+function isNumber(item: any): item is number {
+  return item != null && typeof item === 'number';
 }
 
 export function processToken(token: TreeItem, key?: number): React.ReactNode {
@@ -59,16 +80,8 @@ export function processToken(token: TreeItem, key?: number): React.ReactNode {
 
 const cellStyle = css`
   border-spacing: 0;
-  padding: 0;
   vertical-align: top;
-
-  &:first-of-type {
-    padding-left: 12px;
-  }
-
-  &:last-of-type {
-    padding-right: 12px;
-  }
+  padding: 0 ${spacing[3]}px;
 `;
 
 function getHighlightedRowStyle(darkMode: boolean) {
@@ -76,7 +89,11 @@ function getHighlightedRowStyle(darkMode: boolean) {
 
   if (darkMode) {
     backgroundColor = 'transparent';
-    backgroundImage = `linear-gradient(90deg, ${uiColors.gray.dark3}, transparent)`;
+    // Browsers inconsistently render the value "transparent" within gradients.
+    // We explicitly set it to transparent dark3 here to solve for that.
+    backgroundImage = `linear-gradient(90deg, ${
+      uiColors.gray.dark3
+    }, ${transparentize(100, uiColors.gray.dark3)})`;
     borderColor = uiColors.gray.dark3;
   } else {
     backgroundColor = uiColors.yellow.light3;
@@ -87,6 +104,9 @@ function getHighlightedRowStyle(darkMode: boolean) {
   return css`
     background-color: ${backgroundColor};
     background-image: ${backgroundImage};
+    // Fixes an issue in Safari where the gradient applied to the table row would be applied
+    // to each cell in the row instead of being continuous across cells.
+    background-attachment: fixed;
 
     // Selects all children of a highlighted row, and adds a border top
     & > td {
@@ -136,8 +156,10 @@ export function LineTableRow({
           className={cx(
             cellStyle,
             css`
-              padding-right: 24px;
               user-select: none;
+              text-align: right;
+              padding-left: ${spacing[2]}px;
+              padding-right: 0;
               color: ${highlighted ? highlightedNumberColor : numberColor};
             `,
           )}
@@ -151,10 +173,90 @@ export function LineTableRow({
   );
 }
 
+interface FlatTokenObject {
+  kind: string;
+  children: Array<string>;
+}
+
+// Check if object is a TokenObject which has an array with a single string element within it.
+function isFlattenedTokenObject(obj: TokenObject): obj is FlatTokenObject {
+  // default to an empty object in the off-chance "obj" is null or undefined.
+  const { children } = obj ?? {};
+
+  if (isArray(children) && children.length === 1 && isString(children[0])) {
+    return true;
+  }
+
+  return false;
+}
+
+// If an array of tokens contains an object with more than one children, this function will flatten that tree recursively.
+export function flattenNestedTree(
+  children: TokenObject['children'],
+  kind?: string,
+): Array<string | FlatTokenObject> {
+  if (typeof children === 'string') {
+    return children;
+  }
+
+  return children.reduce((acc: Array<string | FlatTokenObject>, val) => {
+    if (isString(val)) {
+      // If there's a kind, we construct a custom token object with that kind to preserve highlighting.
+      // Without this, the value will simply render without highlighting.
+      const child = kind
+        ? { kind: generateKindClassName(kind), children: [val] }
+        : val;
+
+      return [...acc, child];
+    }
+
+    if ((val?.children?.length ?? 0) > 1) {
+      // Pass the kind here so that the function can highlight nested tokens if applicable
+      return [
+        ...acc,
+        ...flattenNestedTree(
+          val.children,
+          generateKindClassName(kind, val.kind),
+        ),
+      ];
+    }
+
+    if (isFlattenedTokenObject(val)) {
+      return [
+        ...acc,
+        { kind: generateKindClassName(kind, val.kind), children: val.children },
+      ];
+    }
+
+    return acc;
+  }, []);
+}
+
+function containsLineBreak(token: TreeItem): boolean {
+  if (isArray(token)) {
+    return token.some(containsLineBreak);
+  }
+
+  if (isString(token)) {
+    return token.includes('\n');
+  }
+
+  if (isObject(token)) {
+    return (
+      token.children?.includes('\n') ||
+      (isString(token.children?.[0]) && token.children[0].includes('\n'))
+    );
+  }
+
+  return false;
+}
+
+type LineDefinition = Array<Array<string | FlatTokenObject>>;
+
 export function treeToLines(
   children: Array<string | TokenObject>,
-): Array<Array<TreeItem>> {
-  const lines: Array<Array<TreeItem>> = [];
+): LineDefinition {
+  const lines: LineDefinition = [];
   let currentLineIndex = 0;
 
   // Create a new line, if no lines exist yet
@@ -162,35 +264,40 @@ export function treeToLines(
     lines[currentLineIndex] = [];
   }
 
-  children.forEach(child => {
-    if (isString(child)) {
-      // If the current element is a string that includes a line break, we need to handle it differently
-      if (child.includes('\n')) {
-        child.split('').forEach(fragment => {
-          if (fragment === '\n') {
-            // If the fragment is a new line character, we create a new line
-            currentLineIndex++;
-            lines[currentLineIndex] = [];
-          } else {
-            const currentIndexInLine = lines[currentLineIndex].length - 1;
+  const createNewLine = () => {
+    currentLineIndex++;
+    lines[currentLineIndex] = [];
+  };
 
-            if (isString(lines[currentLineIndex][currentIndexInLine])) {
-              // If the last element in the line is a string, we append this string to it
-              lines[currentLineIndex][currentIndexInLine] += fragment;
-            } else {
-              // Otherwise, we push the string fragment on its own
-              lines[currentLineIndex].push(fragment);
-            }
+  flattenNestedTree(children).forEach(child => {
+    // If the current element includes a line break, we need to handle it differently
+    if (containsLineBreak(child)) {
+      if (isString(child)) {
+        child.split('\n').forEach((fragment, i) => {
+          if (i > 0) {
+            createNewLine();
+          }
+
+          // Empty new lines should be represented as an empty array
+          if (fragment) {
+            lines[currentLineIndex].push(fragment);
           }
         });
       } else {
-        // We don't need to do anything special in the case where the string doesn't contain a line break
-        lines[currentLineIndex].push(child);
-      }
-    }
+        const tokenString = child.children[0];
 
-    // Line breaks aren't a part of token objects, so we can assume those objects go on the current line
-    if (isObject(child)) {
+        tokenString.split('\n').forEach((fragment, i) => {
+          if (i > 0) {
+            createNewLine();
+          }
+
+          lines[currentLineIndex].push({
+            kind: child.kind,
+            children: [fragment],
+          });
+        });
+      }
+    } else {
       lines[currentLineIndex].push(child);
     }
   });
@@ -199,7 +306,7 @@ export function treeToLines(
 }
 
 interface TableContentProps {
-  lines: Array<Array<TreeItem>>;
+  lines: LineDefinition;
 }
 
 export function TableContent({ lines }: TableContentProps) {
@@ -216,11 +323,26 @@ export function TableContent({ lines }: TableContentProps) {
     trimmedLines.pop();
   }
 
+  const lineShouldHighlight = (line: number) => {
+    return highlightLines.some(def => {
+      if (isNumber(def)) {
+        return line === def;
+      }
+
+      if (isArray(def)) {
+        const sortedArr = [...def].sort();
+        return line >= sortedArr[0] && line <= sortedArr[1];
+      }
+
+      return false;
+    });
+  };
+
   return (
     <>
       {trimmedLines.map((line, index) => {
         const currentLineNumber = index + 1;
-        const highlightLine = highlightLines.includes(currentLineNumber);
+        const highlightLine = lineShouldHighlight(currentLineNumber);
 
         let displayLineNumber;
 
