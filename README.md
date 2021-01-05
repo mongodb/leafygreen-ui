@@ -26,7 +26,6 @@ A set of CSS styles and React components built with design in mind.
 - [Marketing Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/marketing-modal)
 - [Menu](https://github.com/mongodb/leafygreen-ui/tree/main/packages/menu)
 - [Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/modal)
-- [MongoMenu](https://github.com/mongodb/leafygreen-ui/tree/main/packages/mongo-menu)
 - [Palette](https://github.com/mongodb/leafygreen-ui/tree/main/packages/palette)
 - [Pipeline](https://github.com/mongodb/leafygreen-ui/tree/main/packages/pipeline)
 - [Popover](https://github.com/mongodb/leafygreen-ui/tree/main/packages/popover)

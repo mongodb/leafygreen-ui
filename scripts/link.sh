@@ -23,7 +23,7 @@ else
 fi
 INSTALLED_PACKAGES_ARRAY=()
 for d in *; do
-    if [ "$d" != "lib" ] && [ "$d" != "theme" ] && [ "$d" != "mongo-menu" ]; then
+    if [ "$d" != "lib" ] && [ "$d" != "theme" ]; then
         INSTALLED_PACKAGES_ARRAY+=($d)
     fi
 done
