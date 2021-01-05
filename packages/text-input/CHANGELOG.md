@@ -1,5 +1,13 @@
 # @leafygreen-ui/text-input
 
+## 5.0.5
+
+### Patch Changes
+
+- 522217db: CLOUDP-79746: Allowing text input error message to expand its container
+- Updated dependencies [7df69248]
+  - @leafygreen-ui/lib@6.2.0
+
 ## 5.0.4
 
 ### Patch Changes
