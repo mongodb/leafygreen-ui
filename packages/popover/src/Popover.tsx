@@ -185,7 +185,7 @@ function Popover({
   const {
     align: windowSafeAlign,
     justify: windowSafeJustify,
-    positionCSS: {transform, ...positionCSS},
+    positionCSS: { transform, ...positionCSS },
   } = calculatePosition({
     useRelativePositioning: !usePortal,
     spacing,
