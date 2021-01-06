@@ -5,8 +5,9 @@ import {
   fireEvent,
   waitFor,
   waitForElementToBeRemoved,
+  screen,
 } from '@testing-library/react';
-import Tooltip, { TooltipProps } from './Tooltip';
+import Tooltip, { TooltipProps, TriggerEvent } from './Tooltip';
 import { OneOf } from '@leafygreen-ui/lib';
 
 const buttonText = 'trigger button';
@@ -372,6 +373,77 @@ describe('packages/tooltip', () => {
 
       fireEvent.click(button);
       await waitForElementToBeRemoved(tooltip);
+    });
+  });
+
+  describe('when glyph prop is supplied', () => {
+    describe('and the tooltip is uncontrolled', () => {
+      function renderUncontrolledGlyphTooltip() {
+        render(
+          <Tooltip triggerEvent={TriggerEvent.Click} glyph="Edit">
+            Glyph tooltip content
+          </Tooltip>,
+        );
+      }
+
+      test('Renders Edit glyph as trigger when "glyph" prop is supplied with "Edit" value', () => {
+        renderUncontrolledGlyphTooltip();
+        const button = screen.getByRole('button');
+        expect(button).toBeInTheDocument();
+        expect(button.getAttribute('aria-label')).toBe('Edit');
+      });
+
+      test('Clicking glyph triggers opening and closing of tooltip', async () => {
+        renderUncontrolledGlyphTooltip();
+        const button = screen.getByRole('button');
+
+        fireEvent.click(button);
+
+        const tooltip = screen.getByText('Glyph tooltip content');
+        // checking that in the Document, because in the document before opacity hits 1
+        expect(tooltip).toBeInTheDocument();
+
+        // checking for visibility, because opacity changes before tooltip transitions out of the DOM
+        fireEvent.click(button);
+        await waitForElementToBeRemoved(tooltip);
+      });
+    });
+
+    describe('and the tooltip is controlled', () => {
+      const setOpen = jest.fn();
+
+      function renderControlledGlyphTooltip(
+        props: Omit<TooltipProps, 'children'>,
+      ) {
+        render(
+          <Tooltip triggerEvent={TriggerEvent.Click} glyph="Edit" {...props}>
+            Controlled Glyph tooltip content
+          </Tooltip>,
+        );
+      }
+
+      test('renders initial state based on "open" prop', () => {
+        renderControlledGlyphTooltip({
+          open: true,
+          setOpen,
+        });
+
+        expect(
+          screen.getByText('Controlled Glyph tooltip content'),
+        ).toBeVisible();
+      });
+
+      test('setOpen fires when trigger is clicked', () => {
+        renderControlledGlyphTooltip({
+          open: true,
+          setOpen,
+        });
+
+        const button = screen.getByRole('button');
+
+        fireEvent.click(button);
+        expect(setOpen).toHaveBeenCalled();
+      });
     });
   });
 

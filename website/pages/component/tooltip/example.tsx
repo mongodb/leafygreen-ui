@@ -11,6 +11,7 @@ const knobsConfig: KnobsConfigInterface<{
   enabled: boolean;
   darkMode: boolean;
   usePortal: boolean;
+  glyph: boolean;
 }> = {
   align: {
     type: 'select',
@@ -45,28 +46,45 @@ const knobsConfig: KnobsConfigInterface<{
     default: false,
     label: 'Use Portal',
   },
+  glyph: {
+    type: 'boolean',
+    default: false,
+    label: 'Glyph'
+  }
 };
 
 export default function TooltipLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {props => (
-        <Tooltip
-          {...props}
-          trigger={
-            <Button
-              variant="dark"
-              className={css`
+      {({ glyph, ...props }) => {
+        if (glyph) {
+          <Tooltip
+            {...props}
+            glyph="Edit">
+            Your clusters and data lakes.
+          </Tooltip>
+
+        }
+
+        return (
+
+          <Tooltip
+            {...props}
+            trigger={
+              <Button
+                variant="dark"
+                className={css`
                 position: relative;
               `}
-            >
-              Linked Data Sources
+              >
+                Linked Data Sources
             </Button>
-          }
-        >
-          Your clusters and data lakes.
-        </Tooltip>
-      )}
-    </LiveExample>
+            }
+          >
+            Your clusters and data lakes.
+          </Tooltip>
+        )
+      }}
+    </LiveExample >
   );
 }

@@ -1,4 +1,6 @@
 import React, { useMemo, useCallback, useState } from 'react';
+import { transparentize } from 'polished';
+import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
 import Popover, {
   PopoverProps,
@@ -6,14 +8,19 @@ import Popover, {
   Justify,
   ElementPosition,
 } from '@leafygreen-ui/popover';
+import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
 import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { OneOf, HTMLElementProps, IdAllocator } from '@leafygreen-ui/lib';
+import {
+  OneOf,
+  HTMLElementProps,
+  IdAllocator,
+  Either,
+} from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
-import { transparentize } from 'polished';
-import debounce from 'lodash/debounce';
 import { notchPositionStyles } from './tooltipUtils';
 
 // The typographic styles below are largely copied from the Body component.
@@ -137,7 +144,7 @@ type PortalProps = OneOf<
   }
 >;
 
-export type TooltipProps = Omit<
+type BaseTooltipProps = Omit<
   HTMLElementProps<'div'>,
   keyof ModifiedPopoverProps
 > &
@@ -146,7 +153,7 @@ export type TooltipProps = Omit<
      * A slot for the element used to trigger the `Tooltip`.
      * @default: hover
      */
-    trigger: React.ReactElement | Function;
+    trigger?: React.ReactElement | Function;
 
     /**
      * Determines if a `hover` or `click` event will trigger the opening of a `Tooltip`.
@@ -187,7 +194,12 @@ export type TooltipProps = Omit<
      * @default: true
      */
     enabled?: boolean;
+
+    glyph?: string;
   } & PortalProps;
+
+type TriggerOptions = 'glyph' | 'trigger';
+export type TooltipProps = Either<BaseTooltipProps, TriggerOptions>;
 
 const idAllocator = IdAllocator.create('tooltip');
 
@@ -240,6 +252,7 @@ function Tooltip({
   id,
   shouldClose,
   portalClassName,
+  glyph,
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
@@ -391,6 +404,23 @@ function Tooltip({
       ),
       className: cx(positionRelative, trigger.props.className),
     });
+  }
+
+  if (glyph) {
+    return (
+      // @ts-expect-error
+      <IconButton
+        aria-label={glyph}
+        as="button"
+        darkMode={darkMode}
+        {...createTriggerProps(triggerEvent)}
+        className={positionRelative}
+        aria-describedby={tooltipId}
+      >
+        <Icon glyph={glyph} />
+        {tooltip}
+      </IconButton>
+    );
   }
 
   return tooltip;

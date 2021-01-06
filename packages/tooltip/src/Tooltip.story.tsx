@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
 import Tooltip, { TriggerEvent, Align, Justify } from '.';
 import Button from '@leafygreen-ui/button';
+import { glyphs } from '@leafygreen-ui/icon';
 
 function ControlledTooltip() {
   const [open, setOpen] = useState(false);
@@ -46,4 +47,21 @@ storiesOf('Tooltip', module)
       I am an uncontrolled Tooltip!
     </Tooltip>
   ))
-  .add('Controlled', () => <ControlledTooltip />);
+  .add('Controlled', () => <ControlledTooltip />)
+  .add('With Glyph', () => (
+    <Tooltip
+      align={select('Align', Object.values(Align), 'top')}
+      justify={select('justify', Object.values(Justify), 'start')}
+      glyph={select('Glyph', Object.keys(glyphs), 'Menu')}
+      triggerEvent={select(
+        'triggerEvent',
+        Object.values(TriggerEvent),
+        TriggerEvent.Hover,
+      )}
+      enabled={boolean('Enabled', true)}
+      darkMode={boolean('darkMode', false)}
+      usePortal={boolean('Use Portal', false)}
+    >
+      I am an uncontrolled Tooltip!
+    </Tooltip>
+  ));
