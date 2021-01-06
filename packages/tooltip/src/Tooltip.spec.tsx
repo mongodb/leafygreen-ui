@@ -235,13 +235,13 @@ describe('packages/tooltip', () => {
   describe('when controlled', () => {
     const setOpen = jest.fn();
 
-    test('renders initial state based on "open" prop', () => {
+    test('renders initial state based on "open" prop', async () => {
       const { getByTestId } = renderTooltip({
         open: true,
         setOpen,
       });
 
-      expect(getByTestId(tooltipTestId)).toBeVisible();
+      await waitFor(() => expect(getByTestId(tooltipTestId)).toBeVisible());
     });
 
     test('onClick fires when trigger is clicked', () => {
@@ -256,7 +256,7 @@ describe('packages/tooltip', () => {
 
     describe('clicking content inside of tooltip does not force tooltip to close', () => {
       function testCase(name: string, usePortal: boolean): void {
-        test(`${name}`, () => {
+        test(`${name}`, async () => {
           const { button, getByTestId } = renderTooltip({
             open: true,
             setOpen,
@@ -266,7 +266,7 @@ describe('packages/tooltip', () => {
           fireEvent.click(button);
 
           const tooltip = getByTestId(tooltipTestId);
-          expect(tooltip).toBeVisible();
+          await waitFor(() => expect(tooltip).toBeVisible());
 
           onClick.mockClear();
 
