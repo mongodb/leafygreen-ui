@@ -218,12 +218,22 @@ const colorSets: Record<Mode, ColorSets> = {
   },
 } as const;
 
-function getStatefulInputStyles(state: State, optional: boolean, mode: Mode) {
+function getStatefulInputStyles({
+  state,
+  optional,
+  mode,
+  disabled,
+}: {
+  state: State;
+  optional: boolean;
+  mode: Mode;
+  disabled: boolean;
+}) {
   switch (state) {
     case State.Valid: {
       return css`
         padding-right: 30px;
-        border-color: ${colorSets[mode].validBorder};
+        border-color: ${!disabled ? colorSets[mode].validBorder : 'inherit'};
       `;
     }
 
@@ -231,7 +241,7 @@ function getStatefulInputStyles(state: State, optional: boolean, mode: Mode) {
       return cx(
         css`
           padding-right: 30px;
-          border-color: ${colorSets[mode].errorBorder};
+          border-color: ${!disabled ? colorSets[mode].errorBorder : 'inherit'};
         `,
         {
           [css`
@@ -368,8 +378,8 @@ const TextInput: React.ComponentType<React.PropsWithRef<
                     }
                   }
                 `,
+                getStatefulInputStyles({ state, optional, mode, disabled }),
                 {
-                  [getStatefulInputStyles(state, optional, mode)]: !disabled,
                   [css`
                     &:focus {
                       border: 1px solid ${colorSets[mode].inputBackgroundColor};
