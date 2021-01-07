@@ -106,7 +106,7 @@ const ConfirmationModal = ({
   return (
     <Modal {...modalProps} contentClassName={baseModalStyle} setOpen={onCancel}>
       <div className={contentStyle}>
-        <div className={titleStyle}>{title}</div>
+        <h1 className={titleStyle}>{title}</h1>
         {children}
         {textEntryConfirmation}
       </div>
