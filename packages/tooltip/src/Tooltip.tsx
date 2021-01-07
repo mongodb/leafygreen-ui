@@ -1,5 +1,7 @@
 import React, { useMemo, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import { transparentize } from 'polished';
+import debounce from 'lodash/debounce';
 import Popover, {
   PopoverProps,
   Align as PopoverAlign,
@@ -10,10 +12,14 @@ import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { fontFamilies } from '@leafygreen-ui/tokens';
-import { OneOf, HTMLElementProps, IdAllocator } from '@leafygreen-ui/lib';
+import {
+  OneOf,
+  HTMLElementProps,
+  IdAllocator,
+  isComponentType,
+} from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
-import { transparentize } from 'polished';
-import debounce from 'lodash/debounce';
+import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { notchPositionStyles } from './tooltipUtils';
 
 // The typographic styles below are largely copied from the Body component.
@@ -256,6 +262,16 @@ function Tooltip({
   const tooltipId = useMemo(() => existingId ?? idAllocator.generate(), [
     existingId,
   ]);
+
+  // If consumer is using Icon or Glyph component as trigger, the tooltip will not be visible as these components do not render their children
+  if (
+    (trigger && isComponentType(trigger, 'Icon')) ||
+    isComponentGlyph(trigger)
+  ) {
+    console.warn(
+      'Using a LeafyGreenUI Icon or Glyph component as a trigger will not render a Tooltip, as these components do not render their children. To use, please wrap your trigger element in another HTML tag.',
+    );
+  }
 
   const handleClose = useCallback(() => {
     if (typeof shouldClose !== 'function' || shouldClose()) {

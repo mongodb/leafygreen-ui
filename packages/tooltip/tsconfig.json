@@ -27,6 +27,9 @@
     },
     {
       "path": "../typography"
+    },
+    {
+      "path": "../icon"
     }
   ]
 }
