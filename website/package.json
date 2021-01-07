@@ -10,7 +10,8 @@
     "ts": "tsc --project tsconfig.json"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.35",
+    "@emotion/css": "^11.0.0",
+    "@emotion/server": "^11.0.0",
     "clipboard": "^2.0.6",
     "gray-matter": "4.0.2",
     "next": "^10.0.0",
@@ -22,7 +23,7 @@
     "polished": "^4.0.1"
   },
   "devDependencies": {
-     "@emotion/babel-preset-css-prop": "10.0.27",
+    "@emotion/babel-plugin": "11.0.0",
     "@mdx-js/loader": "^1.6.21",
     "@next/mdx": "^10.0.3",
     "@types/react": "^16.9.56",

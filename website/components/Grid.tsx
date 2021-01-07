@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { css } from 'emotion';
-import styled from '@emotion/styled';
 import facepaint from 'facepaint';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
@@ -50,15 +49,27 @@ type GridContainerProps = JSX.IntrinsicElements['div'] & {
   wrap?: Wrap;
 };
 
-const GridContainer = styled<'div', GridContainerProps>('div')`
-  display: flex;
-  ${['flex-direction']}: ${props =>
-    props.direction ? props.direction : Direction.Row};
-  ${['flex-wrap']}: ${props => (props.wrap ? props.wrap : Wrap.Wrap)};
-  ${['align-items']}: ${props => (props.align ? props.align : Align.Center)};
-  ${['justify-content']}: ${props =>
-    props.justify ? props.justify : Justify.Center};
-`;
+function GridContainer({
+  children,
+  direction = Direction.Row,
+  align = Align.Center,
+  justify = Justify.Center,
+  wrap = Wrap.Wrap,
+}: GridContainerProps) {
+  return (
+    <div
+      className={css`
+        display: flex;
+        flex-direction: ${direction};
+        align-items: ${align};
+        justify-content: ${justify};
+        flex-wrap: ${wrap};
+      `}
+    >
+      {children}
+    </div>
+  );
+}
 
 GridContainer.displayName = 'GridContainer';
 
