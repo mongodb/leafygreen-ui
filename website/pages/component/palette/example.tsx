@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ClipboardJS from 'clipboard';
-import { css } from 'emotion';
-import styled from '@emotion/styled';
+import { cx, css } from 'emotion';
 import { lighten, darken, readableColor, transparentize } from 'polished';
 import { keyMap } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -23,13 +22,7 @@ const resetButtonStyles = css`
   }
 `;
 
-interface ColorBlockProps {
-  color: string;
-  name: string;
-}
-
-const ColorBlock = styled<'div', ColorBlockProps>('div')`
-  background-color: ${props => props.color};
+const colorBlockStyles = css`
   border-top-color: transparent;
   display: inline-block;
   position: relative;
@@ -37,8 +30,6 @@ const ColorBlock = styled<'div', ColorBlockProps>('div')`
   width: 60px;
   border-radius: 8px;
 
-  box-shadow: 0 8px 6px -8px ${props => transparentize(0.7, darken(0.2, props.color))},
-    0 2px 3px ${props => transparentize(0.8, darken(0.5, props.color))};
   &:before {
     content: attr(color);
     position: absolute;
@@ -48,10 +39,9 @@ const ColorBlock = styled<'div', ColorBlockProps>('div')`
     font-size: 9px;
     text-align: center;
     padding: 3px 0.3rem;
-    color: ${props => readableColor(lighten(0.2, props.color))};
-    // background-color: ${props => lighten(0.2, props.color)};
     border-radius: 4px;
   }
+
   &:after {
     content: attr(name);
     position: absolute;
@@ -64,6 +54,36 @@ const ColorBlock = styled<'div', ColorBlockProps>('div')`
     right: -10px;
   }
 `;
+
+interface ColorBlockProps {
+  color: string;
+  name: string;
+}
+
+function ColorBlock({ color, name }: ColorBlockProps) {
+  return (
+    <div
+      className={cx(
+        colorBlockStyles,
+        css`
+          background-color: ${color};
+          box-shadow: 0 8px 6px -8px ${transparentize(0.7, darken(0.2, color))},
+            0 2px 3px ${transparentize(0.8, darken(0.5, color))};
+
+          &:before {
+            content: '${color}';
+            background-color: ${lighten(0.2, color)};
+            color: ${readableColor(lighten(0.2, color))};
+          }
+
+          &:after {
+            content: '${name}';
+          }
+        `,
+      )}
+    ></div>
+  );
+}
 
 function WrappedColorBlock({ color, name }: ColorBlockProps) {
   const [copied, setCopied] = useState(false);
