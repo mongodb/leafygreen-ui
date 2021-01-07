@@ -8,6 +8,7 @@ import {
   screen,
 } from '@testing-library/react';
 import Tooltip, { TooltipProps, TriggerEvent } from './Tooltip';
+import EditIcon from '@leafygreen-ui/icon/dist/Edit';
 import { OneOf } from '@leafygreen-ui/lib';
 
 const buttonText = 'trigger button';
@@ -380,7 +381,7 @@ describe('packages/tooltip', () => {
     describe('and the tooltip is uncontrolled', () => {
       function renderUncontrolledGlyphTooltip() {
         render(
-          <Tooltip triggerEvent={TriggerEvent.Click} glyph="Edit">
+          <Tooltip triggerEvent={TriggerEvent.Click} glyph={<EditIcon />}>
             Glyph tooltip content
           </Tooltip>,
         );
@@ -416,7 +417,11 @@ describe('packages/tooltip', () => {
         props: Omit<TooltipProps, 'children'>,
       ) {
         render(
-          <Tooltip triggerEvent={TriggerEvent.Click} glyph="Edit" {...props}>
+          <Tooltip
+            triggerEvent={TriggerEvent.Click}
+            glyph={<EditIcon />}
+            {...props}
+          >
             Controlled Glyph tooltip content
           </Tooltip>,
         );

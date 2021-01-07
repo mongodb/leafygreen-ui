@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, boolean } from '@storybook/addon-knobs';
+import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import Tooltip, { TriggerEvent, Align, Justify } from '.';
 import Button from '@leafygreen-ui/button';
-import { glyphs } from '@leafygreen-ui/icon';
 
 function ControlledTooltip() {
   const [open, setOpen] = useState(false);
@@ -52,7 +52,7 @@ storiesOf('Tooltip', module)
     <Tooltip
       align={select('Align', Object.values(Align), 'top')}
       justify={select('justify', Object.values(Justify), 'start')}
-      glyph={select('Glyph', Object.keys(glyphs), 'Menu')}
+      glyph={<CloudIcon />}
       triggerEvent={select(
         'triggerEvent',
         Object.values(TriggerEvent),

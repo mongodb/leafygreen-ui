@@ -20,7 +20,8 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^10.0.0"
+    "@leafygreen-ui/button": "^10.0.0",
+    "@leafygreen-ui/icon": "^7.0.2"
   },
   "dependencies": {
     "@leafygreen-ui/popover": "^7.1.0",
@@ -29,7 +30,6 @@
     "@leafygreen-ui/hooks": "^6.0.0",
     "@leafygreen-ui/tokens": "^0.5.0",
     "@leafygreen-ui/icon-button": "^9.1.0",
-    "@leafygreen-ui/icon": "^7.0.2",
     "lodash": "^4.17.20"
   }
 }

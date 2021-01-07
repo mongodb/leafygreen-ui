@@ -8,7 +8,6 @@ import Popover, {
   Justify,
   ElementPosition,
 } from '@leafygreen-ui/popover';
-import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useEventListener, useEscapeKey } from '@leafygreen-ui/hooks';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -195,7 +194,12 @@ type BaseTooltipProps = Omit<
      */
     enabled?: boolean;
 
-    glyph?: string;
+    /**
+     * Can be supplied instead of a trigger, to render the Tooltip's trigger as an IconButton with the supplied glyph.
+     * Trigger will still defer to the designated trigger prop, so supplying a value here will have no effect if trigger prop value is provided.
+     *
+     */
+    glyph?: React.ReactNode;
   } & PortalProps;
 
 type TriggerOptions = 'glyph' | 'trigger';
@@ -235,6 +239,7 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
  * @param props.id id given to Tooltip content.
  * @param props.usePortal Determines whether or not Tooltip will be Portaled
  * @param props.portalClassName Classname applied to root element of the portal.
+ * @param props.glyph Can be supplied instead of a trigger, to render the Tooltip's trigger as an IconButton with the supplied glyph. Trigger will still defer to the designated trigger prop, so supplying a value here will have no effect if trigger prop value is provided.
  */
 function Tooltip({
   open: controlledOpen,
@@ -408,16 +413,16 @@ function Tooltip({
 
   if (glyph) {
     return (
-      // @ts-expect-error
       <IconButton
-        aria-label={glyph}
-        as="button"
-        darkMode={darkMode}
         {...createTriggerProps(triggerEvent)}
+        // @ts-expect-error
+        as="button"
+        aria-label="Tooltip trigger"
+        darkMode={darkMode}
         className={positionRelative}
         aria-describedby={tooltipId}
       >
-        <Icon glyph={glyph} />
+        {glyph}
         {tooltip}
       </IconButton>
     );

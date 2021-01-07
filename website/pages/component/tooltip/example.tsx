@@ -1,6 +1,7 @@
 import React from 'react';
 import { css } from 'emotion';
 import Button from '@leafygreen-ui/button';
+import Icon, { glyphs } from '@leafygreen-ui/icon';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
@@ -11,7 +12,7 @@ const knobsConfig: KnobsConfigInterface<{
   enabled: boolean;
   darkMode: boolean;
   usePortal: boolean;
-  glyph: boolean;
+  glyph?: string;
 }> = {
   align: {
     type: 'select',
@@ -47,10 +48,11 @@ const knobsConfig: KnobsConfigInterface<{
     label: 'Use Portal',
   },
   glyph: {
-    type: 'boolean',
-    default: false,
-    label: 'Glyph'
-  }
+    type: 'select',
+    options: Object.keys(glyphs),
+    default: 'Edit',
+    label: 'Glyph',
+  },
 };
 
 export default function TooltipLiveExample() {
@@ -58,33 +60,29 @@ export default function TooltipLiveExample() {
     <LiveExample knobsConfig={knobsConfig}>
       {({ glyph, ...props }) => {
         if (glyph) {
-          <Tooltip
-            {...props}
-            glyph="Edit">
+          <Tooltip {...props} glyph={<Icon glyph={glyph} />}>
             Your clusters and data lakes.
-          </Tooltip>
-
+          </Tooltip>;
         }
 
         return (
-
           <Tooltip
             {...props}
             trigger={
               <Button
                 variant="dark"
                 className={css`
-                position: relative;
-              `}
+                  position: relative;
+                `}
               >
                 Linked Data Sources
-            </Button>
+              </Button>
             }
           >
             Your clusters and data lakes.
           </Tooltip>
-        )
+        );
       }}
-    </LiveExample >
+    </LiveExample>
   );
 }
