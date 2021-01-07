@@ -2,6 +2,10 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 import * as React from 'react';
 import { renderStatic } from 'utils/renderer';
 
+/**
+ * We create a custom _document.tsx in order to support vanilla emotion with Next.js
+ * https://github.com/vercel/next.js/pull/20228/files
+ */
 export default class AppDocument extends Document {
   static async getInitialProps(ctx) {
     const page = await ctx.renderPage();
@@ -10,13 +14,13 @@ export default class AppDocument extends Document {
     return {
       ...initialProps,
       styles: (
-        <React.Fragment>
+        <>
           {initialProps.styles}
           <style
             data-emotion={`css ${ids.join(' ')}`}
             dangerouslySetInnerHTML={{ __html: css }}
           />
-        </React.Fragment>
+        </>
       ),
     };
   }
