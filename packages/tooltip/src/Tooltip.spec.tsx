@@ -7,6 +7,9 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import Tooltip, { TooltipProps } from './Tooltip';
+import Icon from '@leafygreen-ui/icon';
+import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
+import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 import { OneOf } from '@leafygreen-ui/lib';
 
 const buttonText = 'trigger button';
@@ -448,6 +451,57 @@ describe('packages/tooltip', () => {
       usePortal: false,
       // @ts-expect-error
       portalClassName: 'test-classname',
+    });
+  });
+
+  const defaultProps: TooltipProps = {
+    children: 'Tooltip content',
+    trigger: <button>hi</button>,
+  };
+
+  describe('Renders warning when', () => {
+    test('LeafyGreen UI Glyph is passed to trigger', () => {
+      Context.within(Jest.spyContext(console, 'warn'), spy => {
+        spy.mockImplementation();
+
+        render(<Tooltip trigger={<CloudIcon />}>TooltipContent</Tooltip>);
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith(
+          'Using a LeafyGreenUI Icon or Glyph component as a trigger will not render a Tooltip,' +
+            ' as these components do not render their children.' +
+            ' To use, please wrap your trigger element in another HTML tag.',
+        );
+
+        spy.mockClear();
+
+        render(<Tooltip {...defaultProps} />);
+
+        expect(spy).not.toHaveBeenCalled();
+      });
+    });
+
+    test('LeafyGreen UI Icon is passed to trigger', () => {
+      Context.within(Jest.spyContext(console, 'warn'), spy => {
+        spy.mockImplementation();
+
+        render(
+          <Tooltip trigger={<Icon glyph="Cloud" />}>TooltipContent</Tooltip>,
+        );
+
+        expect(spy).toHaveBeenCalledTimes(1);
+        expect(spy).toHaveBeenCalledWith(
+          'Using a LeafyGreenUI Icon or Glyph component as a trigger will not render a Tooltip,' +
+            ' as these components do not render their children.' +
+            ' To use, please wrap your trigger element in another HTML tag.',
+        );
+
+        spy.mockClear();
+
+        render(<Tooltip {...defaultProps} />);
+
+        expect(spy).not.toHaveBeenCalled();
+      });
     });
   });
 });
