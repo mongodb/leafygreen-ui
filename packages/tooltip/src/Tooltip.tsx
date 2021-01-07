@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useState } from 'react';
+import React, { useEffect, useMemo, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { transparentize } from 'polished';
 import debounce from 'lodash/debounce';
@@ -263,15 +263,17 @@ function Tooltip({
     existingId,
   ]);
 
-  // If consumer is using Icon or Glyph component as trigger, the tooltip will not be visible as these components do not render their children
-  if (
-    (trigger && isComponentType(trigger, 'Icon')) ||
-    isComponentGlyph(trigger)
-  ) {
-    console.warn(
-      'Using a LeafyGreenUI Icon or Glyph component as a trigger will not render a Tooltip, as these components do not render their children. To use, please wrap your trigger element in another HTML tag.',
-    );
-  }
+  useEffect(() => {
+    // If consumer is using Icon or Glyph component as trigger, the tooltip will not be visible as these components do not render their children
+    if (
+      (trigger && isComponentType(trigger, 'Icon')) ||
+      isComponentGlyph(trigger)
+    ) {
+      console.warn(
+        'Using a LeafyGreenUI Icon or Glyph component as a trigger will not render a Tooltip, as these components do not render their children. To use, please wrap your trigger element in another HTML tag.',
+      );
+    }
+  }, [trigger]);
 
   const handleClose = useCallback(() => {
     if (typeof shouldClose !== 'function' || shouldClose()) {
