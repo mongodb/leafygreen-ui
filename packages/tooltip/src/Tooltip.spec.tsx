@@ -435,7 +435,7 @@ describe('packages/tooltip', () => {
 
         expect(
           screen.getByText('Controlled Glyph tooltip content'),
-        ).toBeVisible();
+        ).toBeInTheDocument();
       });
 
       test('setOpen fires when trigger is clicked', () => {
