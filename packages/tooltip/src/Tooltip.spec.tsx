@@ -391,7 +391,7 @@ describe('packages/tooltip', () => {
         renderUncontrolledGlyphTooltip();
         const button = screen.getByRole('button');
         expect(button).toBeInTheDocument();
-        expect(button.getAttribute('aria-label')).toBe('Edit');
+        expect(button.getAttribute('aria-label')).toBe('Tooltip trigger');
       });
 
       test('Clicking glyph triggers opening and closing of tooltip', async () => {
