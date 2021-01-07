@@ -12,8 +12,8 @@ const knobsConfig: KnobsConfigInterface<{
     options: ['div', 'span', 'button'],
     default: 'div',
     label: 'As',
-    disabled: ({ hasHrefProp }: { hasHrefProp: boolean }) =>
-      hasHrefProp ? true : false,
+    shouldDisable: ({ hasHrefProp }: { hasHrefProp: boolean }) =>
+      hasHrefProp,
   },
   children: {
     type: 'text',

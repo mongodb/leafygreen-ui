@@ -14,7 +14,7 @@ const areaIdAllocator = IdAllocator.create('area');
 const numberIdAllocator = IdAllocator.create('number');
 const selectIdAllocator = IdAllocator.create('select');
 
-const knobsWidth = 318; // totalWidth (700px) - padding on both sides (24px on each side) / 2
+const knobsWidth = 326; // totalWidth (700px) - padding on both sides (24px on each side) / 2
 
 const knobContainerStyle = css`
   display: flex;

@@ -39,7 +39,7 @@ interface SelectConfigInterface<T> {
   options: Array<T | undefined>;
   default: T;
   label: string;
-  disabled?: (props: any) => boolean;
+  shouldDisable?: (props: any) => boolean;
 }
 
 interface BooleanConfigInterface {
@@ -87,14 +87,14 @@ interface ComponentPropsInterface {
 
 export type KnobsConfigInterface<
   ComponentProps extends ComponentPropsInterface
-> = {
-  [K in keyof ComponentProps]: Extract<
-    PropsType<ComponentProps[K]>,
-    {
-      default: ComponentProps[K];
-    }
-  >;
-};
+  > = {
+    [K in keyof ComponentProps]: Extract<
+      PropsType<ComponentProps[K]>,
+      {
+        default: ComponentProps[K];
+      }
+    >;
+  };
 
 interface LiveExampleInterface<ComponentProps extends ComponentPropsInterface> {
   knobsConfig: KnobsConfigInterface<ComponentProps>;
@@ -170,7 +170,7 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
               options={knobConfig?.options as Array<string>}
               value={props[propName] as string}
               // Allows us to disable Select dropdown based on current component props
-              disabled={knobConfig.disabled?.(props)}
+              disabled={knobConfig.shouldDisable?.(props)}
             />
           );
 
