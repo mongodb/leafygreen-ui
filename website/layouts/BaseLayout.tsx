@@ -30,19 +30,21 @@ const layout = css`
 
 function BaseLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      className={css`
-        display: flex;
-        flex-direction: column;
-      `}
-    >
-      <div className={containerStyle}>
-        <Navigation />
+    <div>
+      <div
+        className={css`
+          display: flex;
+          flex-direction: column;
+        `}
+      >
+        <div className={containerStyle}>
+          <Navigation />
 
-        <div className={layout}>{children}</div>
+          <div className={layout}>{children}</div>
+        </div>
+
+        <Footer />
       </div>
-
-      <Footer />
     </div>
   );
 }

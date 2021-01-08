@@ -1,4 +1,10 @@
-import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  DocumentContext,
+} from 'next/document';
 import * as React from 'react';
 import { renderStatic } from 'utils/renderer';
 
@@ -34,6 +40,6 @@ export default class AppDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    )
+    );
   }
 }
