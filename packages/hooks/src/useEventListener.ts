@@ -27,9 +27,9 @@ export default function useEventListener<Type extends keyof DocumentEventMap>(
     element,
   }: UseEventOptions = {},
 ) {
-  const memoizedEventCallback: React.MutableRefObject<
-    (e: DocumentEventMap[Type]) => void
-  > = useRef(() => {});
+  const memoizedEventCallback: React.MutableRefObject<(
+    e: DocumentEventMap[Type],
+  ) => void> = useRef(() => {});
 
   useEffect(() => {
     memoizedEventCallback.current = eventCallback;
