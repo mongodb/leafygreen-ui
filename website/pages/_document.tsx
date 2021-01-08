@@ -1,4 +1,4 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
 import * as React from 'react';
 import { renderStatic } from 'utils/renderer';
 
@@ -7,7 +7,7 @@ import { renderStatic } from 'utils/renderer';
  * @see https://github.com/vercel/next.js/pull/20228/files
  */
 export default class AppDocument extends Document {
-  static async getInitialProps(ctx) {
+  static async getInitialProps(ctx: DocumentContext) {
     const page = await ctx.renderPage();
     const { css, ids } = await renderStatic(() => page.html);
     const initialProps = await Document.getInitialProps(ctx);
@@ -27,13 +27,13 @@ export default class AppDocument extends Document {
 
   render() {
     return (
-      <Html lang="en">
+      <Html>
         <Head />
         <body>
           <Main />
           <NextScript />
         </body>
       </Html>
-    );
+    )
   }
 }
