@@ -58,4 +58,6 @@ function TableBody<Shape>({ children }: TableBodyProps<Shape>) {
   return <tbody>{rows}</tbody>;
 }
 
+TableBody.displayName = 'TableBody';
+
 export default TableBody;

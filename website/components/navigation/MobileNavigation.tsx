@@ -23,7 +23,7 @@ const navStyle = css`
   border-right: 1px solid ${borderColor};
   background-color: white;
   z-index: 10;
-  width: 374px;
+  width: 80%;
   position: absolute;
   min-height: 100%;
   opacity: 0;

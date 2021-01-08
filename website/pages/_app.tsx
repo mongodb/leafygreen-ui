@@ -29,7 +29,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <LeafyGreenProvider>
-      <Global styles={globalStyles} />
       <Head>
         <title>Home – LeafyGreen Design System | MongoDB</title>
         <meta
@@ -63,7 +62,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <Global styles={globalStyles} />
       <BaseLayout>
         <SubLayout>
           <Component {...pageProps} />

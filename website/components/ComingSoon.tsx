@@ -26,7 +26,12 @@ function ComingSoon() {
       <Subtitle as="p" className={subtitleStyle}>
         Coming soon!
       </Subtitle>
-      <Image src="/images/coming-soon.gif" unsized />
+      <Image
+        src="/images/coming-soon.gif"
+        height="450"
+        width="700"
+        layout="intrinsic"
+      />
     </div>
   );
 }

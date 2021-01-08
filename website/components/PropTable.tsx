@@ -5,6 +5,7 @@ import { Subtitle, InlineCode } from '@leafygreen-ui/typography/dist';
 import { OneOf } from '@leafygreen-ui/lib';
 import PropDefinition from 'components/PropDefinition';
 import TypographyPropTable from 'components/TypographyPropTable';
+import formatType from 'utils/formatType';
 
 const subtitleBottomMargin = css`
   margin-bottom: 24px;
@@ -172,7 +173,7 @@ function PropTable({
         prop={datum.prop.value ?? ''}
         type={datum.type.value ?? ''}
         description={datum.description.value ?? ''}
-        defaultValue={datum.default.value ?? ''}
+        defaultValue={datum.default?.value ?? ''}
       />
     );
   };
@@ -182,7 +183,7 @@ function PropTable({
       return '-';
     }
 
-    return <InlineCode>{datum.default.value}</InlineCode>;
+    return <InlineCode>{datum.default?.value}</InlineCode>;
   };
 
   return (
@@ -196,7 +197,7 @@ function PropTable({
         return (
           <div key={index}>
             <Subtitle className={subtitleBottomMargin} as="h3">
-              {header.replace(/ /g, '')} Props
+              {`${header.replace(/ /g, '')} Props`}
             </Subtitle>
 
             {tableData[index] && (
@@ -223,9 +224,9 @@ function PropTable({
                   <Row key={datum.prop.value}>
                     <Cell className={verticalAlign}>{formatProp(datum)}</Cell>
                     <Cell className={verticalAlign}>
-                      <InlineCode href={datum.type.url}>
-                        {datum.type.value}
-                      </InlineCode>
+                      {typeof datum.type.value === 'string'
+                        ? formatType(datum.type.value, datum.type.url)
+                        : null}
                     </Cell>
                     <Cell className={verticalAlign}>
                       {datum.description.value}

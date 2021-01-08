@@ -2,8 +2,7 @@ import React from 'react';
 import Code, { Language } from '@leafygreen-ui/code';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
-const jsSnippet = `
-function greeting(entity) {
+const jsSnippet = `function greeting(entity) {
   return \`Hello, \${entity}!\`;
 }
 console.log(greeting('World'));

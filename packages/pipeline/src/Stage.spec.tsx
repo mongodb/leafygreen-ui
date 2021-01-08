@@ -59,9 +59,7 @@ describe('packages/pipeline/Stage', () => {
 
     const {
       value: { root },
-    } = (window.IntersectionObserver as jest.Mock<
-      IntersectionObserver
-    >).mock.results[0];
+    } = (window.IntersectionObserver as jest.Mock<IntersectionObserver>).mock.results[0];
 
     expect(root).toBe(parentElement);
   });
@@ -71,9 +69,9 @@ describe('packages/pipeline/Stage', () => {
 
     const {
       value: { thresholds },
-    } = (window.IntersectionObserver as jest.Mock<
-      IntersectionObserver
-    >).mock.results.slice(-1)[0];
+    } = (window.IntersectionObserver as jest.Mock<IntersectionObserver>).mock.results.slice(
+      -1,
+    )[0];
 
     expect(thresholds).toContain(0.8);
   });
@@ -83,9 +81,9 @@ describe('packages/pipeline/Stage', () => {
 
     const {
       value: { thresholds },
-    } = (window.IntersectionObserver as jest.Mock<
-      IntersectionObserver
-    >).mock.results.slice(-1)[0];
+    } = (window.IntersectionObserver as jest.Mock<IntersectionObserver>).mock.results.slice(
+      -1,
+    )[0];
 
     expect(thresholds).toContain(0.5);
     expect(thresholds).toContain(0.75);

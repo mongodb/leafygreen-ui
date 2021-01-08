@@ -66,7 +66,12 @@ function Update({ date, story, route, updateURL }: UpdateProps) {
 
   const subtitleProps = route
     ? ({ onClick: () => push(route), as: 'p' } as const)
-    : ({ href: updateURL, as: 'a' } as const);
+    : ({
+        href: updateURL,
+        as: 'a',
+        target: '_blank',
+        rel: 'noopener noreferrer',
+      } as const);
 
   useEffect(() => {
     if (typeof navigator !== 'undefined') {
@@ -100,6 +105,7 @@ function News({ updates }: { updates: Array<UpdateProps> }) {
           date={update.date}
           story={update.story}
           route={update.route}
+          updateURL={update.updateURL}
         />
       ))}
     </div>
