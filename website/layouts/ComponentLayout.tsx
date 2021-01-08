@@ -21,8 +21,8 @@ const layout = css`
   margin-top: 70px;
 
   ${mq({
-  width: ['100%', '100%', '700px', '700px'],
-})}
+    width: ['100%', '100%', '700px', '700px'],
+  })}
 `;
 
 const componentsStyle = css`
@@ -74,11 +74,7 @@ function toTitleCase(component: string) {
     .join(' ');
 }
 
-function ComponentLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function ComponentLayout({ children }: { children: React.ReactNode }) {
   const [selected, setSelected] = React.useState(0);
   const router = useRouter();
   const componentName = router.pathname

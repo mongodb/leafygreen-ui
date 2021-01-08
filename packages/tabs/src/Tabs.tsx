@@ -150,9 +150,9 @@ function Tabs({
     }
   }, [activeEl, containerNode]);
 
-  const childrenArray = React.Children.toArray(
-    children,
-  ) as Array<React.ReactElement>;
+  const childrenArray = React.Children.toArray(children) as Array<
+    React.ReactElement
+  >;
 
   const isControlled = typeof controlledSelected === 'number';
   const [uncontrolledSelected, setUncontrolledSelected] = useState(

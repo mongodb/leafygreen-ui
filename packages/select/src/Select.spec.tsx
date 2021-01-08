@@ -543,9 +543,10 @@ describe('packages/select', () => {
       let getByRole: RenderResult['getByRole'];
 
       let combobox: HTMLElement;
-      let onChangeSpy: jest.MockedFunction<
-        (value: string, event: React.MouseEvent | React.KeyboardEvent) => void
-      >;
+      let onChangeSpy: jest.MockedFunction<(
+        value: string,
+        event: React.MouseEvent | React.KeyboardEvent,
+      ) => void>;
 
       beforeEach(() => {
         onChangeSpy = jest.fn();
