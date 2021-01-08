@@ -21,6 +21,7 @@ const linksContainer = css`
   margin-left: 72px;
   margin-right: 72px;
   color: white;
+  margin-top: 4px;
 `;
 
 const linkStyle = css`
@@ -52,12 +53,12 @@ function FooterLink({ href, children }: JSX.IntrinsicElements['a']) {
   );
 }
 
-export default function Footer() {
+function Footer() {
   return (
     <div role="contentinfo" className={footerContainer}>
-      <div>
-        <Logo darkMode knockout height={20} />
-      </div>
+      <a href="https://mongodb.com" target="_blank" rel="noopener noreferrer">
+        <Logo darkMode knockout height={20} aria-hidden="true" />
+      </a>
       <div className={linksContainer}>
         <FooterLink href="https://www.mongodb.com/blog/post/meet-our-product-design-team-part-1">
           About Design at MongoDB
@@ -72,3 +73,7 @@ export default function Footer() {
     </div>
   );
 }
+
+Footer.displayName = 'Footer';
+
+export default Footer;

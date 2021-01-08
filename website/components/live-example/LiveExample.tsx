@@ -31,9 +31,7 @@ const componentContainerDarkMode = css`
 `;
 
 const knobContainer = css`
-  padding-left: ${spacing[4]}px;
-  padding-right: ${spacing[4]}px;
-  padding-top: 42px;
+  padding: ${spacing[5]}px;
 `;
 
 interface SelectConfigInterface<T> {
@@ -41,6 +39,7 @@ interface SelectConfigInterface<T> {
   options: Array<T | undefined>;
   default: T;
   label: string;
+  shouldDisable?: (props: any) => boolean;
 }
 
 interface BooleanConfigInterface {
@@ -170,6 +169,8 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
               {...sharedProps}
               options={knobConfig?.options as Array<string>}
               value={props[propName] as string}
+              // Allows us to disable Select dropdown based on current component props
+              disabled={knobConfig.shouldDisable?.(props)}
             />
           );
 

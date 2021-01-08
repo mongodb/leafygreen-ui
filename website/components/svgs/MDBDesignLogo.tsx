@@ -110,4 +110,6 @@ function MDBDesignLogo(props: JSX.IntrinsicElements['svg']) {
   );
 }
 
+MDBDesignLogo.displayName = 'MDBDesignLogo';
+
 export default MDBDesignLogo;

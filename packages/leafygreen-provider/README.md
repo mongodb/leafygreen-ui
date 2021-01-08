@@ -44,10 +44,10 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 ### Properties
 
-| Prop           | Type         | Description                                                                                                                                                                               | Default |
-| -------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `children`     | `node`       | Children passed to `LeafyGreenProvider` will be unmodified, aside from having access to its state.                                                                                        |         |
-| `baseFontSize` | `14` or `16` | Describes the `font-size` that the application is using. `<Body/>` and `<InlineCode />` components use this value to determine the `font-size` and `line-height` applied to their content | `14`    |
+| Prop           | Type       | Description                                                                                                                                                                               | Default |
+| -------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `children`     | `node`     | Children passed to `LeafyGreenProvider` will be unmodified, aside from having access to its state.                                                                                        |         |
+| `baseFontSize` | `14`, `16` | Describes the `font-size` that the application is using. `<Body/>` and `<InlineCode />` components use this value to determine the `font-size` and `line-height` applied to their content | `14`    |
 
 ## useUsingKeyboardContext
 

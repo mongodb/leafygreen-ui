@@ -58,6 +58,7 @@ const components = [
   'portal',
   'radio-box-group',
   'radio-group',
+  'select',
   'side-nav',
   'stepper',
   'table',
@@ -117,8 +118,6 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
       <SideNavGroup
         key={type}
         header={isGuideline ? 'Core Guidelines' : 'Components'}
-        collapsible
-        initialCollapsed={false}
       >
         {items.map(item => {
           const path =
@@ -141,6 +140,8 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
 
   return renderGroup(GroupType.Component);
 }
+
+Content.displayName = 'Content';
 
 function Navigation() {
   const { push } = useRouter();
@@ -168,5 +169,7 @@ function Navigation() {
     </nav>
   );
 }
+
+Navigation.displayName = 'Navigation';
 
 export default Navigation;

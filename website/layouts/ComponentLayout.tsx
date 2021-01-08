@@ -74,11 +74,7 @@ function toTitleCase(component: string) {
     .join(' ');
 }
 
-export default function ComponentLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function ComponentLayout({ children }: { children: React.ReactNode }) {
   const [selected, setSelected] = React.useState(0);
   const router = useRouter();
   const componentName = router.pathname
@@ -107,7 +103,10 @@ export default function ComponentLayout({
       </Head>
 
       <div className={margin4}>
-        <small className={componentsStyle}>Components</small>
+        {/* Intentionally left blank, as we want to preserve this space for when we */}
+        {/* Have other sections on the SideNav and want to add back 'components' above */}
+        {/* The name of each component */}
+        <small className={componentsStyle}>‎‎‎‎‏‏‎ ‎</small>
         <div className={flexContainer}>
           <H2 as="h1" className={caps}>
             {componentName.split('-').join(' ')}
@@ -150,3 +149,7 @@ export default function ComponentLayout({
     </div>
   );
 }
+
+ComponentLayout.displayName = 'ComponentLayout';
+
+export default ComponentLayout;
