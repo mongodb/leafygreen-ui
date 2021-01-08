@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import facepaint from 'facepaint';
 import { css } from 'emotion';
@@ -20,8 +21,8 @@ const layout = css`
   margin-top: 70px;
 
   ${mq({
-    width: ['100%', '100%', '700px', '700px'],
-  })}
+  width: ['100%', '100%', '700px', '700px'],
+})}
 `;
 
 const componentsStyle = css`
@@ -66,7 +67,18 @@ const reactIconStyle = css`
   margin-right: 4px;
 `;
 
-function ComponentLayout({ children }: { children: React.ReactNode }) {
+function toTitleCase(component: string) {
+  return component
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.substr(1).toLowerCase())
+    .join(' ');
+}
+
+function ComponentLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [selected, setSelected] = React.useState(0);
   const router = useRouter();
   const componentName = router.pathname
@@ -88,6 +100,12 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div role="main" className={layout}>
+      <Head>
+        <title>
+          {toTitleCase(componentName)} – LeafyGreen Design System | MongoDB
+        </title>
+      </Head>
+
       <div className={margin4}>
         {/* Intentionally left blank, as we want to preserve this space for when we */}
         {/* Have other sections on the SideNav and want to add back 'components' above */}

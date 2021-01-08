@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <LeafyGreenProvider>
       <Head>
-        <title>LeafyGreen - MongoDB Design System</title>
+        <title>Home – LeafyGreen Design System | MongoDB</title>
         <meta
           name="description"
           content="MongoDB's open-source, accessible design system for designing and building web applications with React."
