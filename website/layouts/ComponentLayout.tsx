@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import facepaint from 'facepaint';
 import { css } from 'emotion';
@@ -66,6 +67,13 @@ const reactIconStyle = css`
   margin-right: 4px;
 `;
 
+function toTitleCase(component: string) {
+  return component
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.substr(1).toLowerCase())
+    .join(' ');
+}
+
 export default function ComponentLayout({
   children,
 }: {
@@ -92,6 +100,12 @@ export default function ComponentLayout({
 
   return (
     <div role="main" className={layout}>
+      <Head>
+        <title>
+          {toTitleCase(componentName)} – LeafyGreen Design System | MongoDB
+        </title>
+      </Head>
+
       <div className={margin4}>
         <small className={componentsStyle}>Components</small>
         <div className={flexContainer}>
