@@ -241,9 +241,11 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
         {isTouchDevice && (
           <GridItem sm={6} md={6} lg={6}>
             <div className={largeHeight}>
-              {/* @ts-expect-error, awaiting URL for marketing page */}
-              <MarketingPreview backgroundURL="/images/personas-thumbnail.png">
-                Meet our Personas
+              <MarketingPreview
+                marketingURL="https://www.mongodb.com/blog/post/meet-our-product-design-team-part-1"
+                backgroundURL="/images/team-thumbnail.png"
+              >
+                Meet our Team
               </MarketingPreview>
             </div>
           </GridItem>
@@ -278,9 +280,11 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
         </GridItem>
         {!isTouchDevice && (
           <GridItem sm={6} md={6} lg={6}>
-            {/* @ts-expect-error, awaiting URL for marketing page */}
-            <MarketingPreview backgroundURL="/images/personas-thumbnail.png">
-              Meet our Personas
+            <MarketingPreview
+              marketingURL="https://www.mongodb.com/blog/post/meet-our-product-design-team-part-1"
+              backgroundURL="/images/team-thumbnail.png"
+            >
+              Meet our Team
             </MarketingPreview>
           </GridItem>
         )}
@@ -317,16 +321,6 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             content="Checkbox"
             className={smallHeight}
           />
-        </GridItem>
-
-        {/* Fourth Row */}
-        <GridItem sm={6} md={6} lg={6}>
-          <MarketingPreview
-            marketingURL="https://www.mongodb.com/blog/post/meet-our-product-design-team-part-1"
-            backgroundURL="/images/team-thumbnail.png"
-          >
-            Meet our Team
-          </MarketingPreview>
         </GridItem>
       </GridContainer>
     </>
