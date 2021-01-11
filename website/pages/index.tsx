@@ -30,10 +30,10 @@ const backdrop = css`
 
 const layoutProperties = css`
   ${mq({
-    width: ['calc(100% + 48px)', '100%', '100%', '1077px'],
-    paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, `${spacing[4]}px`],
-    marginLeft: ['-24px', 'unset', 'unset', 'unset'],
-  })}
+  width: ['calc(100% + 48px)', '100%', '100%', '1077px'],
+  paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, `${spacing[4]}px`],
+  marginLeft: ['-24px', 'unset', 'unset', 'unset'],
+})}
 `;
 
 const boxShadow = css`
@@ -72,6 +72,7 @@ const previewWrapper = css`
   &:hover {
     & > div {
       opacity: 1;
+      transform: translate3d(0, -${spacing[3]}px, 0) scale(0.95);
     }
   }
 `;
@@ -81,12 +82,13 @@ const overlineContainer = css`
   bottom: 0;
   left: 0;
   padding-left: ${spacing[3]}px;
-  padding-bottom: ${spacing[3]}px;
-  transition: opacity 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
 
   ${mq({
-    opacity: [1, 1, 0, 0],
-  })}
+  opacity: [1, 1, 0],
+  transform: ['none', 'none', `translate3d(0, 0, 0) scale(0.95)`],
+  paddingBottom: [`${spacing[3]}px`, `${spacing[3]}px`, 0]
+})}
 `;
 
 const overlineColor = css`
@@ -115,20 +117,20 @@ const textWrapper = css`
   overflow: hidden;
 
   ${mq({
-    fontSize: ['24px', '60px', '60px', '60px'],
-  })}
+  fontSize: ['24px', '60px', '60px', '60px'],
+})}
 `;
 
 const largeHeight = css`
   ${mq({
-    height: ['50vw', '350px', '350px', '350px'],
-  })}
+  height: ['50vw', '350px', '350px', '350px'],
+})}
 `;
 
 const smallHeight = css`
   ${mq({
-    height: ['50vw', '175px', '175px', '175px'],
-  })}
+  height: ['50vw', '175px', '175px', '175px'],
+})}
 `;
 
 const halfWidth = css`
