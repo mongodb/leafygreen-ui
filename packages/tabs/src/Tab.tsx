@@ -68,7 +68,8 @@ function Tab({ selected, children, ariaControl, ...rest }: TabProps) {
   }
 
   // default and name are not an HTML properties
-  delete rest.default, delete rest.name;
+  // onClick applies to TabTitle component, not Tab component
+  delete rest.default, delete rest.name, delete rest.onClick;
 
   return (
     <div {...rest} aria-controls={ariaControl} id={ariaControl} role="tabpanel">
