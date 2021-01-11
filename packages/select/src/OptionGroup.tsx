@@ -5,12 +5,14 @@ import { IdAllocator } from '@leafygreen-ui/lib';
 import Option from './Option';
 import SelectContext from './SelectContext';
 import { colorSets } from './styleSets';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const optionGroupStyle = css`
   padding-top: 8px;
 `;
 
 const optionGroupLabelStyle = css`
+  font-family: ${fontFamilies.default};
   cursor: default;
   width: 100%;
   padding: 0 12px 2px;
@@ -76,13 +78,13 @@ interface Props {
   label: string;
   disabled?: boolean;
   children:
-    | React.ReactFragment
+  | React.ReactFragment
+  | React.ReactComponentElement<typeof Option>
+  | Array<
     | React.ReactComponentElement<typeof Option>
-    | Array<
-        | React.ReactComponentElement<typeof Option>
-        | React.ReactFragment
-        | ReactEmpty
-      >;
+    | React.ReactFragment
+    | ReactEmpty
+  >;
 }
 
 export default function OptionGroup(_: Props): JSX.Element {

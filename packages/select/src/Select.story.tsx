@@ -19,6 +19,7 @@ storiesOf('Select', module)
     const glyph = withIcons ? <BeakerIcon /> : undefined;
     const useProvider = boolean('Use LeafygreenProvider', false);
     const Provider = useProvider ? LeafygreenProvider : React.Fragment;
+    const usePortal = boolean('usePortal', false)
 
     return (
       <div
@@ -39,6 +40,7 @@ storiesOf('Select', module)
             name="pets"
             defaultValue="cat"
             disabled={disabled}
+            usePortal={usePortal}
           >
             <OptionGroup label="Common">
               <Option value="dog" glyph={glyph}>
@@ -72,6 +74,7 @@ storiesOf('Select', module)
     const disabled = boolean('Disabled', false);
     const withIcons = boolean('With icons', false);
     const glyph = withIcons ? <BeakerIcon /> : undefined;
+    const usePortal = boolean('usePortal', false)
     const useProvider = boolean('Use LeafygreenProvider', false);
     const Provider = useProvider ? LeafygreenProvider : React.Fragment;
 
@@ -97,6 +100,7 @@ storiesOf('Select', module)
             value={value}
             onChange={setValue}
             disabled={disabled}
+            usePortal={usePortal}
           >
             <OptionGroup label="Common">
               <Option value="dog" glyph={glyph}>

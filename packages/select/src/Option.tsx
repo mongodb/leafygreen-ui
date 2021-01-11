@@ -6,6 +6,7 @@ import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 import { colorSets } from './styleSets';
 import SelectContext from './SelectContext';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 type GlyphElement = React.ReactElement<LGGlyph.ComponentProps> & {
   type?: { isGlyph?: boolean };
@@ -17,6 +18,7 @@ const optionStyle = css`
   display: flex;
   width: 100%;
   padding: 10px 12px;
+  font-family: ${fontFamilies.default};
   outline: none;
   overflow-wrap: anywhere;
   transition: background-color 150ms ease-in-out;
@@ -160,8 +162,8 @@ export function InternalOption({
         )}
       />
     ) : (
-      iconPlaceholder
-    );
+        iconPlaceholder
+      );
 
   let renderedChildren: React.ReactNode;
 
