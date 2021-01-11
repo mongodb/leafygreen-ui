@@ -72,6 +72,7 @@ const previewWrapper = css`
   &:hover {
     & > div {
       opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
     }
   }
 `;
@@ -82,10 +83,15 @@ const overlineContainer = css`
   left: 0;
   padding-left: ${spacing[3]}px;
   padding-bottom: ${spacing[3]}px;
-  transition: opacity 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
 
   ${mq({
-    opacity: [1, 1, 0, 0],
+    opacity: [1, 1, 0],
+    transform: [
+      'none',
+      'none',
+      `translate3d(0, ${spacing[3]}px, 0) scale(0.95)`,
+    ],
   })}
 `;
 
