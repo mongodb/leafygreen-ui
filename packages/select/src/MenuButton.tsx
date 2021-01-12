@@ -3,13 +3,12 @@ import Button, { Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { keyMap } from '@leafygreen-ui/lib';
-import { breakpoints, fontFamilies } from '@leafygreen-ui/tokens';
+import { breakpoints } from '@leafygreen-ui/tokens';
 import { colorSets, mobileSizeSet, Mode, sizeSets } from './styleSets';
 import SelectContext from './SelectContext';
 import { useForwardedRef } from './utils';
 
 const menuButtonStyle = css`
-  font-family: ${fontFamilies.default};
   margin-top: 2px;
 
   // reset default Button padding

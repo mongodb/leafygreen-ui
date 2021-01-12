@@ -162,8 +162,8 @@ export function InternalOption({
         )}
       />
     ) : (
-        iconPlaceholder
-      );
+      iconPlaceholder
+    );
 
   let renderedChildren: React.ReactNode;
 

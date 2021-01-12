@@ -22,7 +22,7 @@ import {
 const sharedTextStyles = css`
   font-family: ${fontFamilies.default};
   display: block;
-`
+`;
 
 const labelStyle = css`
   margin-bottom: 2px;
@@ -41,8 +41,8 @@ export type Props = {
   usePortal?: boolean;
   name?: string;
 } & (
-    | // Uncontrolled
-    ({
+  | // Uncontrolled
+  ({
       defaultValue?: string;
       value?: undefined;
     } & {
@@ -52,18 +52,18 @@ export type Props = {
       ) => void;
       readOnly?: false;
     })
-    // Controlled
-    | ({ value: string; defaultValue?: undefined } & (
+  // Controlled
+  | ({ value: string; defaultValue?: undefined } & (
       | {
-        onChange: (
-          value: string,
-          event: React.MouseEvent | React.KeyboardEvent,
-        ) => void;
-        readOnly?: false;
-      }
+          onChange: (
+            value: string,
+            event: React.MouseEvent | React.KeyboardEvent,
+          ) => void;
+          readOnly?: false;
+        }
       | { readOnly: true; onChange?: undefined }
     ))
-  ) &
+) &
   OneOf<{ label: string }, { 'aria-labelledby': string }>;
 
 const idAllocator = IdAllocator.create('select');
@@ -83,7 +83,7 @@ export default function Select({
   value,
   onChange,
   readOnly,
-  usePortal = false,
+  usePortal = true,
   'aria-labelledby': ariaLabelledBy,
 }: Props) {
   const id = useMemo(() => idProp ?? idAllocator.generate(), [idProp]);
@@ -108,9 +108,9 @@ export default function Select({
     if (value !== undefined && onChange === undefined && readOnly !== true) {
       console.warn(
         'You provided a `value` prop to a form field without an `onChange` handler. ' +
-        'This will render a read-only field. ' +
-        'If the field should be mutable use `defaultValue`. ' +
-        'Otherwise, set either `onChange` or `readOnly`.',
+          'This will render a read-only field. ' +
+          'If the field should be mutable use `defaultValue`. ' +
+          'Otherwise, set either `onChange` or `readOnly`.',
       );
     }
   }, [onChange, readOnly, value]);
@@ -184,7 +184,7 @@ export default function Select({
     if (uncontrolledSelectedOption !== null) {
       setUncontrolledSelectedOption(
         reconcileOption(children, uncontrolledSelectedOption) ??
-        initialUncontrolledSelectedOption,
+          initialUncontrolledSelectedOption,
       );
     }
   }, [children, initialUncontrolledSelectedOption, uncontrolledSelectedOption]);
@@ -449,16 +449,19 @@ export default function Select({
       {description && (
         <div
           id={descriptionId}
-          className={cx(sharedTextStyles, css`
-            color: ${colorSet.description};
-            font-size: ${sizeSet.description.text}px;
-            line-height: ${sizeSet.description.lineHeight}px;
+          className={cx(
+            sharedTextStyles,
+            css`
+              color: ${colorSet.description};
+              font-size: ${sizeSet.description.text}px;
+              line-height: ${sizeSet.description.lineHeight}px;
 
-            @media only screen and (max-width: ${breakpoints.Desktop}px) {
-              font-size: ${mobileSizeSet.description.text}px;
-              line-height: ${mobileSizeSet.description.lineHeight}px;
-            }
-          `)}
+              @media only screen and (max-width: ${breakpoints.Desktop}px) {
+                font-size: ${mobileSizeSet.description.text}px;
+                line-height: ${mobileSizeSet.description.lineHeight}px;
+              }
+            `,
+          )}
         >
           {description}
         </div>

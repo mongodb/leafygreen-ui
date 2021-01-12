@@ -78,13 +78,13 @@ interface Props {
   label: string;
   disabled?: boolean;
   children:
-  | React.ReactFragment
-  | React.ReactComponentElement<typeof Option>
-  | Array<
-    | React.ReactComponentElement<typeof Option>
     | React.ReactFragment
-    | ReactEmpty
-  >;
+    | React.ReactComponentElement<typeof Option>
+    | Array<
+        | React.ReactComponentElement<typeof Option>
+        | React.ReactFragment
+        | ReactEmpty
+      >;
 }
 
 export default function OptionGroup(_: Props): JSX.Element {
