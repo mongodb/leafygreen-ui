@@ -15,16 +15,16 @@ const containerStyle = css`
   display: flex;
   align-items: flex-start;
   ${mq({
-  flexDirection: ['column', 'column', 'row'],
-  paddingLeft: [`${spacing[4]}px`, `${spacing[4]}px`, '0px'],
-  paddingRight: [`${spacing[4]}px`, `${spacing[4]}px`, '0px'],
-})}
+    flexDirection: ['column', 'column', 'row'],
+    paddingLeft: [`${spacing[4]}px`, `${spacing[4]}px`, '0px'],
+    paddingRight: [`${spacing[4]}px`, `${spacing[4]}px`, '0px'],
+  })}
 `;
 
 const layout = css`
   ${mq({
-  width: ['100%', '100%', '700px', '700px'],
-})}
+    width: ['100%', '100%', '700px', '700px'],
+  })}
 `;
 
 function BaseLayout({ children }: { children: React.ReactNode }) {
