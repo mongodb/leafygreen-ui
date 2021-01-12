@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 4.0.6
+
+### Patch Changes
+
+- b06ce7fd: Prevents onClick from being fired when Tab is clicked, as it should only be fired when the TabTitle is clicked
+
 ## 4.0.5
 
 ### Patch Changes

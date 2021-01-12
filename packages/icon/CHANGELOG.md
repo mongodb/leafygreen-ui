@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 7.1.0
+
+### Minor Changes
+
+- 2daf1808: Exports `isGlyph` function, which returns a boolean based on whether or not a ReactElement is a LeafyGreenUI Glyph component
+
 ## 7.0.2
 
 ### Patch Changes
