@@ -19,7 +19,6 @@ const newsContainer = css`
   flex-direction: column;
   justify-content: center;
   padding-bottom: ${spacing[4]}px;
-
   ${mq({
   marginTop: [`${spacing[4]}px`, 'unset'],
   marginBottom: [`${spacing[4]}px`, 'unset'],
@@ -33,7 +32,6 @@ const subtitleStyle = css`
   font-weight: bolder;
   display: inline-flex;
   align-items: center;
-
   &:hover > svg {
     opacity: 1;
     transform: translate3d(3px, 0, 0px);
@@ -43,7 +41,6 @@ const subtitleStyle = css`
 const iconStyle = css`
   transform: translate3d(-3px, 0, 0px);
   transition: all 100ms ease-in;
-
   ${mq({
   visibility: ['hidden', 'hidden', 'visible'],
   opacity: [1, 1, 0, 0],

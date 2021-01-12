@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { IdAllocator, OneOf } from '@leafygreen-ui/lib';
-import { breakpoints } from '@leafygreen-ui/tokens';
+import { fontFamilies, breakpoints } from '@leafygreen-ui/tokens';
 import { colorSets, mobileSizeSet, Mode, Size, sizeSets } from './styleSets';
 import ListMenu from './ListMenu';
 import MenuButton from './MenuButton';
@@ -19,8 +19,12 @@ import {
   useStateRef,
 } from './utils';
 
+const sharedTextStyles = css`
+  font-family: ${fontFamilies.default};
+  display: block;
+`;
+
 const labelStyle = css`
-  display: inline-block;
   margin-bottom: 2px;
   font-weight: bold;
 `;
@@ -34,6 +38,7 @@ export type Props = {
   disabled?: boolean;
   description?: string;
   placeholder?: string;
+  usePortal?: boolean;
   name?: string;
 } & (
   | // Uncontrolled
@@ -68,11 +73,12 @@ export default function Select({
   darkMode = false,
   size = Size.Default,
   disabled = false,
+  usePortal = true,
+  placeholder = 'Select',
   className,
   id: idProp,
   label,
   description,
-  placeholder = 'Select',
   name,
   defaultValue,
   value,
@@ -415,6 +421,7 @@ export default function Select({
         <label
           id={labelId}
           className={cx(
+            sharedTextStyles,
             labelStyle,
             css`
               color: ${disabled
@@ -442,16 +449,19 @@ export default function Select({
       {description && (
         <div
           id={descriptionId}
-          className={css`
-            color: ${colorSet.description};
-            font-size: ${sizeSet.description.text}px;
-            line-height: ${sizeSet.description.lineHeight}px;
+          className={cx(
+            sharedTextStyles,
+            css`
+              color: ${colorSet.description};
+              font-size: ${sizeSet.description.text}px;
+              line-height: ${sizeSet.description.lineHeight}px;
 
-            @media only screen and (max-width: ${breakpoints.Desktop}px) {
-              font-size: ${mobileSizeSet.description.text}px;
-              line-height: ${mobileSizeSet.description.lineHeight}px;
-            }
-          `}
+              @media only screen and (max-width: ${breakpoints.Desktop}px) {
+                font-size: ${mobileSizeSet.description.text}px;
+                line-height: ${mobileSizeSet.description.lineHeight}px;
+              }
+            `,
+          )}
         >
           {description}
         </div>
@@ -486,6 +496,7 @@ export default function Select({
             onSelectFocusedOption={onSelectFocusedOption}
             onFocusPreviousOption={onFocusPreviousOption}
             onFocusNextOption={onFocusNextOption}
+            usePortal={usePortal}
             className={css`
               width: ${menuButtonRef.current?.clientWidth}px;
             `}

@@ -89,10 +89,9 @@ export function InternalOption({
 
   useEffect(() => {
     if (shouldFocus) {
-      scrollIntoView();
       ref.current!.focus();
     }
-  }, [scrollIntoView, shouldFocus]);
+  }, [shouldFocus]);
 
   const styledChildren: React.ReactNode = (
     <span
