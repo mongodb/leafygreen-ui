@@ -21,10 +21,10 @@ const newsContainer = css`
   padding-bottom: ${spacing[4]}px;
 
   ${mq({
-    marginTop: [`${spacing[4]}px`, 'unset'],
-    marginBottom: [`${spacing[4]}px`, 'unset'],
-    paddingLeft: [`${spacing[4]}px`, 'unset'],
-  })}
+  marginTop: [`${spacing[4]}px`, 'unset'],
+  marginBottom: [`${spacing[4]}px`, 'unset'],
+  paddingLeft: [`${spacing[4]}px`, 'unset'],
+})}
 `;
 
 const subtitleStyle = css`
@@ -45,10 +45,10 @@ const iconStyle = css`
   transition: all 100ms ease-in;
 
   ${mq({
-    visibility: ['hidden', 'hidden', 'visible'],
-    opacity: [1, 1, 0, 0],
-    marginLeft: [`${spacing[2]}px`, `${spacing[2]}px`, 0],
-  })}
+  visibility: ['hidden', 'hidden', 'visible'],
+  opacity: [1, 1, 0, 0],
+  marginLeft: [`${spacing[2]}px`, `${spacing[2]}px`, 0],
+})}
 `;
 
 const updateMargin = css`
@@ -67,11 +67,11 @@ function Update({ date, story, route, updateURL }: UpdateProps) {
   const subtitleProps = route
     ? ({ onClick: () => push(route), as: 'p' } as const)
     : ({
-        href: updateURL,
-        as: 'a',
-        target: '_blank',
-        rel: 'noopener noreferrer',
-      } as const);
+      href: updateURL,
+      as: 'a',
+      target: '_blank',
+      rel: 'noopener noreferrer',
+    } as const);
 
   useEffect(() => {
     if (typeof navigator !== 'undefined') {
@@ -98,7 +98,7 @@ function Update({ date, story, route, updateURL }: UpdateProps) {
 function News({ updates }: { updates: Array<UpdateProps> }) {
   return (
     <div className={newsContainer}>
-      <H2 as="h1">Whats New</H2>
+      <H2 as="h1">What's New</H2>
       {updates.map(update => (
         <Update
           key={update.story}

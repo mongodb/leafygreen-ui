@@ -30,10 +30,6 @@ const componentContainerDarkMode = css`
   border-bottom: 1px solid ${uiColors.gray.dark2};
 `;
 
-const knobContainer = css`
-  padding: ${spacing[5]}px;
-`;
-
 interface SelectConfigInterface<T> {
   type: 'select';
   options: Array<T | undefined>;
@@ -87,14 +83,14 @@ interface ComponentPropsInterface {
 
 export type KnobsConfigInterface<
   ComponentProps extends ComponentPropsInterface
-> = {
-  [K in keyof ComponentProps]: Extract<
-    PropsType<ComponentProps[K]>,
-    {
-      default: ComponentProps[K];
-    }
-  >;
-};
+  > = {
+    [K in keyof ComponentProps]: Extract<
+      PropsType<ComponentProps[K]>,
+      {
+        default: ComponentProps[K];
+      }
+    >;
+  };
 
 interface LiveExampleInterface<ComponentProps extends ComponentPropsInterface> {
   knobsConfig: KnobsConfigInterface<ComponentProps>;
@@ -179,7 +175,7 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
       }
     });
 
-    return <div className={knobContainer}>{knobs}</div>;
+    return <div>{knobs}</div>;
   };
 
   return (
