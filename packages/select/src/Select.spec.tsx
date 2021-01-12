@@ -113,37 +113,6 @@ describe('packages/select', () => {
     expect(getByTextFor(listbox, 'Explicit placeholder')).toBeVisible();
   });
 
-  test('when "usePortal" is not set, content is portaled to the end of the DOM', async () => {
-    const { queryByText, getByRole } = render(<Select {...defaultProps} />);
-    const combobox = getByRole('combobox');
-    userEvent.click(combobox);
-    await waitFor(() => getByRole('listbox'));
-
-    expect(document.body.lastChild.contains(queryByText('Label'))).not.toBe(
-      true,
-    );
-    expect(
-      (document.body.lastChild.firstChild as HTMLElement).getAttribute(
-        'data-testid',
-      ),
-    ).toBe('popover-container');
-  });
-
-  test('when "usePortal" is false, content is not portaled to the end of the DOM', async () => {
-    const props = { usePortal: false, ...defaultProps };
-    const { getByText, getByRole } = render(<Select {...props} />);
-    const combobox = getByRole('combobox');
-    userEvent.click(combobox);
-    await waitFor(() => getByRole('listbox'));
-
-    expect(document.body.lastChild.contains(getByText('Label'))).toBe(true);
-    expect(
-      (document.body.lastChild.firstChild as HTMLElement).getAttribute(
-        'data-testid',
-      ),
-    ).not.toBe('popover-container');
-  });
-
   test('combobox button has selected value', () => {
     const { getByRole, rerender } = render(<Select {...defaultProps} />);
 
