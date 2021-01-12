@@ -1,5 +1,11 @@
 # @leafygreen-ui/popover
 
+## 7.1.1
+
+### Patch Changes
+
+- a6360ea1: Fixes issue where Popover used without a portal did not animate from the correct direction when appearing
+
 ## 7.1.0
 
 ### Minor Changes
