@@ -5,14 +5,12 @@ import { IdAllocator } from '@leafygreen-ui/lib';
 import Option from './Option';
 import SelectContext from './SelectContext';
 import { colorSets } from './styleSets';
-import { fontFamilies } from '@leafygreen-ui/tokens';
 
 const optionGroupStyle = css`
   padding-top: 8px;
 `;
 
 const optionGroupLabelStyle = css`
-  font-family: ${fontFamilies.default};
   cursor: default;
   width: 100%;
   padding: 0 12px 2px;

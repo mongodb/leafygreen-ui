@@ -111,7 +111,7 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 | `defaultValue`    | `string`                                      | Sets the `<Option />` that will appear selected on page load when the component is uncontrolled.              | `''`        |
 | `onChange`        | `function`                                    | A function that gets called when the selected value changes. Receives the value string as the first argument. | `() => {}`  |
 | `readOnly`        | `boolean`                                     | Disables the console warning when the component is controlled and no `onChange` prop is provided.             | `false`     |
-| `usePortal`       | `boolean`                                     | Determines if Select ListMenu will be portaled to the end of the DOM                                          | `true`      |
+| `usePortal`       | `boolean`                                     | Determines if Select dropdown will be portaled to the end of the DOM                                          | `true`      |
 
 # Option
 

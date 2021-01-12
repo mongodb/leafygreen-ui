@@ -3,7 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
-import { breakpoints } from '@leafygreen-ui/tokens';
+import { breakpoints, fontFamilies } from '@leafygreen-ui/tokens';
 import SelectContext from './SelectContext';
 import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
 import { useForwardedRef } from './utils';
@@ -124,7 +124,6 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         className={className}
         refEl={referenceElement}
         usePortal={usePortal}
-        data-testid="popover-container"
       >
         <ul
           role="listbox"
@@ -135,6 +134,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
           className={cx(
             menuStyle,
             css`
+              font-family: ${fontFamilies.default};
               font-size: ${sizeSet.option.text}px;
               max-height: ${maxHeight}px;
               background-color: ${colorSet.option.background.base};
