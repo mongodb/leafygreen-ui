@@ -1,5 +1,13 @@
 # @leafygreen-ui/tooltip
 
+## 6.1.2
+
+### Patch Changes
+
+- 2daf1808: Warns developer not to use a LeafyGreen UI Icon or Glyph component as a trigger, and instead suggests wrapping one of those components in another HTML tag so that the Tooltip can render properly.
+- Updated dependencies [a6360ea1]
+  - @leafygreen-ui/popover@7.1.1
+
 ## 6.1.1
 
 ### Patch Changes
