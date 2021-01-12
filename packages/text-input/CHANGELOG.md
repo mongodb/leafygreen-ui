@@ -1,5 +1,13 @@
 # @leafygreen-ui/text-input
 
+## 5.0.6
+
+### Patch Changes
+
+- 36ec9078: Preserves right padding when icons are visible in a disabled text input
+- Updated dependencies [2daf1808]
+  - @leafygreen-ui/icon@7.1.0
+
 ## 5.0.5
 
 ### Patch Changes

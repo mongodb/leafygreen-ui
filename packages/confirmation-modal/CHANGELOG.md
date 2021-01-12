@@ -1,5 +1,13 @@
 # @leafygreen-ui/confirmation-modal
 
+## 2.1.2
+
+### Patch Changes
+
+- 23feeb60: Ensures that text that appears and functions like heading text is marked up as such
+- Updated dependencies [36ec9078]
+  - @leafygreen-ui/text-input@5.0.6
+
 ## 2.1.1
 
 ### Patch Changes
