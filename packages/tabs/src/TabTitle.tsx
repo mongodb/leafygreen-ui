@@ -121,8 +121,7 @@ const listTitle = css`
 `;
 
 interface BaseTabProps {
-  darkMode: boolean;
-  index: number;
+  darkMode?: boolean;
   selected?: boolean;
   href?: string;
   children?: React.ReactNode;
@@ -136,7 +135,6 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
   disabled = false,
   children,
   className,
-  index,
   darkMode,
   isAnyTabFocused,
   ...rest

@@ -34,7 +34,6 @@ const InternalTab = React.memo(
     ]);
 
     const tab = (
-      // @ts-expect-error
       <TabTitle
         {...tabProps}
         as={as}
