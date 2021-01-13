@@ -160,9 +160,9 @@ function Tabs({
     }
   }, [activeEl, containerNode]);
 
-  const childrenArray = React.Children.toArray(
+  const childrenArray = useMemo(() => React.Children.toArray(
     children,
-  ) as Array<React.ReactElement>;
+  ) as Array<React.ReactElement>, [children]);
 
   const isControlled = typeof controlledSelected === 'number';
   const [uncontrolledSelected, setUncontrolledSelected] = useState(
@@ -198,7 +198,7 @@ function Tabs({
           const [enabledIndexes, current] = getEnabledIndexes();
           setSelected(
             enabledIndexes[
-              (current - 1 + enabledIndexes.length) % enabledIndexes.length
+            (current - 1 + enabledIndexes.length) % enabledIndexes.length
             ],
           );
         }
@@ -211,12 +211,12 @@ function Tabs({
     const tabs: Array<React.ReactElement> = [];
 
     const tabpanels = React.Children.map(children, (child, index) => {
-      if (!isComponentType<'Tab'>(child, 'Tab')) {
+      if (!isComponentType(child, 'Tab')) {
         return child;
       }
 
       const { id: idProp, name, disabled, onClick } = child.props;
-      const tabpanelId = idProp ?? tabpanelIdAllocator.generate();
+      const tabpanelId = tabpanelIdAllocator.generate();
       const tabId = idProp ?? tabIdAllocator.generate();
       const isTabSelected = selected === index;
 
@@ -240,9 +240,9 @@ function Tabs({
           onClick={
             !disabled
               ? (event: React.MouseEvent) => {
-                  onClick?.(event);
-                  handleChange(event, index);
-                }
+                onClick?.(event);
+                handleChange(event, index);
+              }
               : undefined
           }
         >
