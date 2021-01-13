@@ -18,17 +18,22 @@ const knobsWidth = 326; // totalWidth (700px) - padding on both sides (24px on e
 
 const knobContainerStyle = css`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   flex-grow: 1;
-  padding: ${spacing[3]}px 0px;
+  padding: ${spacing[3]}px ${spacing[5]}px;
+`;
+
+const knobContainerHeight = css`
+  height: 71px;
 `;
 
 const labelStyle = css`
   color: ${uiColors.gray.dark2};
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: 0;
   line-height: 20px;
   font-weight: 600;
-  width: ${knobsWidth}px;
 `;
 
 const textAreaClassName = css`
@@ -90,7 +95,16 @@ function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
   const labelId = useMemo(() => booleanIdAllocator.generate(), []);
 
   return (
-    <div className={knobContainerStyle}>
+    <div
+      className={cx(
+        knobContainerStyle,
+        knobContainerHeight,
+        css`
+          border-bottom: 1px solid
+            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
+        `,
+      )}
+    >
       <label
         id={labelId}
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
@@ -127,7 +141,16 @@ function Number({
   const labelId = useMemo(() => numberIdAllocator.generate(), []);
 
   return (
-    <div className={knobContainerStyle}>
+    <div
+      className={cx(
+        knobContainerStyle,
+        knobContainerHeight,
+        css`
+          border-bottom: 1px solid
+            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
+        `,
+      )}
+    >
       <label
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
         id={labelId}
@@ -164,7 +187,16 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
   const labelId = useMemo(() => textIdAllocator.generate(), []);
 
   return (
-    <div className={knobContainerStyle}>
+    <div
+      className={cx(
+        knobContainerStyle,
+        knobContainerHeight,
+        css`
+          border-bottom: 1px solid
+            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
+        `,
+      )}
+    >
       <label
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
         id={labelId}
@@ -197,7 +229,15 @@ function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
   const labelId = useMemo(() => areaIdAllocator.generate(), []);
 
   return (
-    <div className={knobContainerStyle}>
+    <div
+      className={cx(
+        knobContainerStyle,
+        css`
+          border-bottom: 1px solid
+            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
+        `,
+      )}
+    >
       <label
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
         id={labelId}
@@ -243,7 +283,16 @@ function Select({
   const generateOptions = React.useCallback(generateOptionsCallback, [options]);
 
   return (
-    <div className={knobContainerStyle}>
+    <div
+      className={cx(
+        knobContainerStyle,
+        knobContainerHeight,
+        css`
+          border-bottom: 1px solid
+            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
+        `,
+      )}
+    >
       <label
         id={labelId}
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
@@ -256,9 +305,6 @@ function Select({
         darkMode={darkMode}
         value={value}
         disabled={disabled}
-        className={css`
-          width: ${knobsWidth}px;
-        `}
       >
         {generateOptions()}
       </LGUISelect>
