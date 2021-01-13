@@ -101,7 +101,7 @@ function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
         knobContainerHeight,
         css`
           border-bottom: 1px solid
-            ${darkMode ? '#3d4f58' : uiColors.gray.light2};
+            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
         `,
       )}
     >
@@ -147,7 +147,7 @@ function Number({
         knobContainerHeight,
         css`
           border-bottom: 1px solid
-            ${darkMode ? '#3d4f58' : uiColors.gray.light2};
+            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
         `,
       )}
     >
@@ -193,7 +193,7 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
         knobContainerHeight,
         css`
           border-bottom: 1px solid
-            ${darkMode ? '#3d4f58' : uiColors.gray.light2};
+            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
         `,
       )}
     >
@@ -234,7 +234,7 @@ function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
         knobContainerStyle,
         css`
           border-bottom: 1px solid
-            ${darkMode ? '#3d4f58' : uiColors.gray.light2};
+            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
         `,
       )}
     >
@@ -289,7 +289,7 @@ function Select({
         knobContainerHeight,
         css`
           border-bottom: 1px solid
-            ${darkMode ? '#3d4f58' : uiColors.gray.light2};
+            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
         `,
       )}
     >
