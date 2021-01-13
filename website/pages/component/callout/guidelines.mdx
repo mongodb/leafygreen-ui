@@ -5,13 +5,14 @@ import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { css } from 'emotion';
 import { InlineCode } from '@leafygreen-ui/typography';
 import { uiColors } from '@leafygreen-ui/palette';
+import CDN from 'utils/cdnURL';
 
 Callouts should be used when you want to call out information to the user. Callouts look similar to banners but serve a different use case. Unlike banners, callouts cannot be dismissed. They are optimized for long form copy (banners are optimized to save space and work at different widths). Also, there is no green callout (there is a green banner). Callouts should not have a CTA within them. Banners may sometimes have a button.
 
 Below is the general spacing structure for callouts:
 
 <img
-  src={`${process.env.NEXT_PUBLIC_CDN}/images/guidelines/callout-header-guidelines.png`}
+  src={`${CDN}/images/guidelines/callout-header-guidelines.png`}
   alt="Callout spacing example"
   width="100%"
 />
@@ -154,7 +155,7 @@ Each callout variant allows for a secondary title.
 We understand that sometimes it may be necessary, but try to avoid nesting callouts in tables and other elements.
 
 <img
-  src={`${process.env.NEXT_PUBLIC_CDN}/images/guidelines/callout-table-example-guidelines.png`}
+  src={`${CDN}/images/guidelines/callout-table-example-guidelines.png`}
   alt="Bad example: Do not use Callout in Table component"
   width="100%"
 />
@@ -162,7 +163,7 @@ We understand that sometimes it may be necessary, but try to avoid nesting callo
 Avoid nesting code components within callouts.
 
 <img
-  src={`${process.env.NEXT_PUBLIC_CDN}/images/guidelines/callout-code-example-guidelines.png`}
+  src={`${CDN}/images/guidelines/callout-code-example-guidelines.png`}
   alt="Example of using code component near callout"
   width="100%"
 />
@@ -170,7 +171,7 @@ Avoid nesting code components within callouts.
 The example callout is now deprecated. Don’t use it. Instead opt for integrating your example within body copy.
 
 <img
-  src={`${process.env.NEXT_PUBLIC_CDN}/images/guidelines/callout-example-example-guidelines.png`}
+  src={`${CDN}/images/guidelines/callout-example-example-guidelines.png`}
   alt="Callout example is now deprecated"
   width="100%"
 />

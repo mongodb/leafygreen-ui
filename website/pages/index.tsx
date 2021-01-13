@@ -9,8 +9,9 @@ import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { GridContainer, GridItem } from 'components/Grid';
 import { getAllUpdates, UpdateProps } from 'utils/fetchUpdates';
 import News from 'components/News';
+import CDN from 'utils/cdnURL';
 
-const landingURL = `${process.env.NEXT_PUBLIC_CDN}/images/landing`;
+const landingURL = `${CDN}/images/landing`;
 
 const mq = facepaint(
   Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
