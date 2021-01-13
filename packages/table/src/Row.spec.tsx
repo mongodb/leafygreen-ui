@@ -19,20 +19,21 @@ describe('packages/table/row', () => {
 
   test('it renders an expandable icon, when the row is expandable', () => {
     renderTable();
-    const chevrons = screen.getAllByRole('button', { name: 'chevron' });
+    const chevrons = screen.getAllByLabelText(/Expand row|Collapse row/);
     expect(chevrons.length).toBe(4);
   });
 
   test('the expandable icon reveals a hidden row when clicked', () => {
     renderTable();
 
-    const chevron = screen.getAllByRole('button', { name: 'chevron' })[0];
+    const chevrons = screen.getAllByLabelText(/Expand row|Collapse row/);
+    const chevron = chevrons[0];
     fireEvent.click(chevron);
 
-    const revealedRow = screen
-      .getAllByRole('row')
-      .filter(row => row.getAttribute('aria-expanded') === 'true');
+    const expandedChevrons = chevrons.filter(
+      chevron => chevron.getAttribute('aria-expanded') === 'true',
+    );
 
-    expect(revealedRow.length).toBe(1);
+    expect(expandedChevrons.length).toBe(1);
   });
 });
