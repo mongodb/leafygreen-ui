@@ -62,7 +62,7 @@ export interface TabProps {
  * @param props.to Destination when name is rendered as `Link` tag.
  *
  */
-function Tab({ selected, children, ariaControl, ...rest }: TabProps) {
+function Tab({ selected, children, ...rest }: TabProps) {
   if (!selected) {
     return null;
   }
@@ -72,7 +72,7 @@ function Tab({ selected, children, ariaControl, ...rest }: TabProps) {
   delete rest.default, delete rest.name, delete rest.onClick;
 
   return (
-    <div {...rest} aria-controls={ariaControl} id={ariaControl} role="tabpanel">
+    <div {...rest} role="tabpanel">
       {children}
     </div>
   );

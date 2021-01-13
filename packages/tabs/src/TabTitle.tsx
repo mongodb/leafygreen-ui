@@ -121,7 +121,6 @@ const listTitle = css`
 `;
 
 interface BaseTabProps {
-  ariaControl: string;
   darkMode: boolean;
   index: number;
   selected?: boolean;
@@ -137,7 +136,6 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
   disabled = false,
   children,
   className,
-  ariaControl,
   index,
   darkMode,
   isAnyTabFocused,
@@ -165,9 +163,6 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
       className,
     ),
     role: 'tab',
-    ['aria-controls']: ariaControl,
-    ['aria-selected']: selected,
-    ['aria-disabled']: disabled,
     tabIndex: selected ? 0 : -1,
     ...rest,
   } as const;
