@@ -10,8 +10,6 @@ import { GridContainer, GridItem } from 'components/Grid';
 import { getAllUpdates, UpdateProps } from 'utils/fetchUpdates';
 import News from 'components/News';
 
-// React Transition Group to transition sharedHoverInteraction
-// Spacing on the top (align What's new with some text on the left?)
 const landingURL = `${process.env.NEXT_PUBLIC_CDN}/images/landing`;
 
 const mq = facepaint(
@@ -31,10 +29,10 @@ const backdrop = css`
 
 const layoutProperties = css`
   ${mq({
-    width: ['calc(100% + 48px)', '100%', '100%', '1077px'],
-    paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, `${spacing[4]}px`],
-    marginLeft: ['-24px', 'unset', 'unset', 'unset'],
-  })}
+  width: ['calc(100% + 48px)', '100%', '100%', '1077px'],
+  paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, `${spacing[4]}px`],
+  marginLeft: ['-24px', 'unset', 'unset', 'unset'],
+})}
 `;
 
 const boxShadow = css`
@@ -87,13 +85,13 @@ const overlineContainer = css`
   transition: all 300ms ease-in-out;
 
   ${mq({
-    opacity: [1, 1, 0],
-    transform: [
-      'none',
-      'none',
-      `translate3d(0, ${spacing[3]}px, 0) scale(0.95)`,
-    ],
-  })}
+  opacity: [1, 1, 0],
+  transform: [
+    'none',
+    'none',
+    `translate3d(0, ${spacing[3]}px, 0) scale(0.95)`,
+  ],
+})}
 `;
 
 const overlineColor = css`
@@ -122,20 +120,20 @@ const textWrapper = css`
   overflow: hidden;
 
   ${mq({
-    fontSize: ['24px', '60px', '60px', '60px'],
-  })}
+  fontSize: ['24px', '60px', '60px', '60px'],
+})}
 `;
 
 const largeHeight = css`
   ${mq({
-    height: ['50vw', '350px', '350px', '350px'],
-  })}
+  height: ['50vw', '350px', '350px', '350px'],
+})}
 `;
 
 const smallHeight = css`
   ${mq({
-    height: ['50vw', '175px', '175px', '175px'],
-  })}
+  height: ['50vw', '175px', '175px', '175px'],
+})}
 `;
 
 const halfWidth = css`
