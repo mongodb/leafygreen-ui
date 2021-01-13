@@ -317,6 +317,7 @@ function Toast({
         <Portal>
           <div
             role="status"
+            aria-live="polite"
             ref={nodeRef}
             className={cx(
               baseElementStyles.toast,
