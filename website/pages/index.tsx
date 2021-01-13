@@ -12,6 +12,7 @@ import News from 'components/News';
 
 // React Transition Group to transition sharedHoverInteraction
 // Spacing on the top (align What's new with some text on the left?)
+const landingURL = `${process.env.NEXT_PUBLIC_CDN}/images/landing`;
 
 const mq = facepaint(
   Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
@@ -240,7 +241,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
         <GridItem sm={6} md={6} lg={6}>
           <ComponentPreview
             route="/component/banner/example"
-            backgroundURL="/images/banner-thumbnail.png"
+            backgroundURL={`${landingURL}/banner-thumbnail.png`}
             content="Banner"
             className={largeHeight}
           />
@@ -252,7 +253,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             <div className={largeHeight}>
               <MarketingPreview
                 marketingURL="https://www.mongodb.com/blog/post/meet-our-product-design-team-part-1"
-                backgroundURL="/images/team-thumbnail.png"
+                backgroundURL={`${landingURL}/team-thumbnail.png`}
               >
                 Meet our Team
               </MarketingPreview>
@@ -263,25 +264,25 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
           <div className={secondRowContainer}>
             <ComponentPreview
               route="/component/radio-box-group/example"
-              backgroundURL="/images/radioBox-thumbnail.png"
+              backgroundURL={`${landingURL}/radioBox-thumbnail.png`}
               content="Radio boxes"
               className={cx(smallHeight, halfWidth, boxShadow)}
             />
             <ComponentPreview
               route="/component/text-input/example"
-              backgroundURL="/images/textInput-thumbnail.png"
+              backgroundURL={`${landingURL}/textInput-thumbnail.png`}
               content="Text input"
               className={cx(smallHeight, halfWidth, boxShadow)}
             />
             <ComponentPreview
               route="/component/logo/example"
-              backgroundURL="/images/logos-thumbnail.png"
+              backgroundURL={`${landingURL}/logos-thumbnail.png`}
               content="Logos"
               className={cx(smallHeight, halfWidth)}
             />
             <ComponentPreview
               route="/component/tokens/example"
-              backgroundURL="/images/spacers-thumbnail.png"
+              backgroundURL={`${landingURL}/spacers-thumbnail.png`}
               content="Tokens"
               className={cx(smallHeight, halfWidth)}
             />
@@ -291,7 +292,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
           <GridItem sm={6} md={6} lg={6}>
             <MarketingPreview
               marketingURL="https://www.mongodb.com/blog/post/meet-our-product-design-team-part-1"
-              backgroundURL="/images/team-thumbnail.png"
+              backgroundURL={`${landingURL}/team-thumbnail.png`}
             >
               Meet our Team
             </MarketingPreview>
@@ -302,7 +303,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
         <GridItem sm={6} md={3} lg={3}>
           <ComponentPreview
             route="/component/icon/example"
-            backgroundURL="/images/icons-thumbnail.png"
+            backgroundURL={`${landingURL}/icons-thumbnail.png`}
             content="Icons"
             className={smallHeight}
           />
@@ -310,7 +311,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
         <GridItem sm={6} md={3} lg={3}>
           <ComponentPreview
             route="/component/card/example"
-            backgroundURL="/images/card-thumbnail.png"
+            backgroundURL={`${landingURL}/card-thumbnail.png`}
             content="Card"
             className={smallHeight}
           />
@@ -318,7 +319,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
         <GridItem sm={6} md={3} lg={3}>
           <ComponentPreview
             route="/component/tooltip/example"
-            backgroundURL="/images/tooltip-thumbnail.png"
+            backgroundURL={`${landingURL}/tooltip-thumbnail.png`}
             content="Tooltip"
             className={smallHeight}
           />
@@ -326,7 +327,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
         <GridItem sm={6} md={3} lg={3}>
           <ComponentPreview
             route="/component/checkbox/example"
-            backgroundURL="/images/checkbox-thumbnail.png"
+            backgroundURL={`${landingURL}/checkbox-thumbnail.png`}
             content="Checkbox"
             className={smallHeight}
           />

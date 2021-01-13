@@ -1,6 +1,6 @@
 import { css } from '@emotion/core';
 
-const cdn = 'https://d2va9gm4j17fy9.cloudfront.net/fonts';
+const cdn = `${process.env.NEXT_PUBLIC_CDN}/fonts`;
 
 export const globalStyles = css`
   @font-face {
