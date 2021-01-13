@@ -1,15 +1,14 @@
-import React, {
-  useState,
-  useMemo,
-  useRef,
-  useCallback,
-  useEffect,
-} from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { keyMap, isComponentType, IdAllocator } from '@leafygreen-ui/lib';
-import TabTitle from './TabTitle';
+import {
+  keyMap,
+  isComponentType,
+  validateAriaLabelProps,
+  Either,
+} from '@leafygreen-ui/lib';
+import InternalTab from './InternalTab';
 
 const Mode = {
   Dark: 'dark',
@@ -82,12 +81,9 @@ function useDocumentActiveElement() {
   return activeEl;
 }
 
-const tabIdAllocator = IdAllocator.create('tab');
-const tabpanelIdAllocator = IdAllocator.create('tab-panel');
-
 type ReactEmpty = null | undefined | false | '';
 
-interface TabsProps {
+export interface TabsProps {
   /**
    * Content that will appear inside of Tabs component. Should be comprised of at least two Tabs.
    */
@@ -118,7 +114,21 @@ interface TabsProps {
    * HTML Element that wraps title in Tab List.
    */
   as?: React.ElementType<any>;
+
+  /**
+   * Accessible label that describes the set of tabs
+   */
+  ['aria-label']?: string;
+
+  /**
+   * References id of label external to the component that describes the set of tabs
+   */
+  ['aria-labelledby']?: string;
 }
+
+type AriaLabels = 'aria-label' | 'aria-labelledby';
+
+type AccessibleTabsProps = Either<TabsProps, AriaLabels>;
 
 /**
  * # Tabs
@@ -145,20 +155,27 @@ function Tabs({
   darkMode = false,
   as = 'button',
   ...rest
-}: TabsProps) {
+}: AccessibleTabsProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
-  const containerNode = useRef<HTMLDivElement | null>(null);
+  const [tabNode, setTabNode] = useState<HTMLDivElement | null>(null);
+  const [panelNode, setPanelNode] = useState<HTMLDivElement | null>(null);
   const activeEl = useDocumentActiveElement();
   const [isAnyTabFocused, setIsAnyTabFocused] = useState(false);
 
+  validateAriaLabelProps({ ...rest }, 'Tabs');
+  const accessibleLabel = {
+    ['aria-label']: rest?.['aria-label'],
+    ['aria-labelledby']: rest?.['aria-labelledby'],
+  };
+
   useEffect(() => {
-    const tabsList = Array.from(containerNode.current?.children ?? []);
+    const tabsList = Array.from(tabNode?.children ?? []);
 
     if (activeEl !== null && tabsList.indexOf(activeEl) !== -1) {
       setIsAnyTabFocused(true);
     }
-  }, [activeEl, containerNode]);
+  }, [activeEl, tabNode]);
 
   const childrenArray = useMemo(
     () => React.Children.toArray(children) as Array<React.ReactElement>,
@@ -208,82 +225,56 @@ function Tabs({
     [getEnabledIndexes, setSelected],
   );
 
-  const { tabs, tabpanels } = useMemo(() => {
-    const tabs: Array<React.ReactElement> = [];
+  const renderedChildren = React.Children.map(children, (child, index) => {
+    if (!isComponentType(child, 'Tab')) {
+      return child;
+    }
 
-    const tabpanels = React.Children.map(children, (child, index) => {
-      if (!isComponentType(child, 'Tab')) {
-        return child;
-      }
+    const isTabSelected = index === selected;
+    const { disabled, onClick } = child.props;
 
-      const { id: idProp, name, disabled, onClick } = child.props;
-      const tabpanelId = tabpanelIdAllocator.generate();
-      const tabId = idProp ?? tabIdAllocator.generate();
-      const isTabSelected = selected === index;
-
-      const tabTitle = (
-        <TabTitle
-          aria-controls={tabpanelId}
-          aria-selected={isTabSelected}
-          id={tabId}
-          key={index}
-          disabled={disabled}
-          selected={isTabSelected}
-          index={index}
-          as={as}
-          darkMode={darkMode}
-          isAnyTabFocused={isAnyTabFocused}
-          onKeyDown={handleArrowKeyPress}
-          className={cx({
-            [modeColors[mode].activeStyle]: isTabSelected,
-            [cx(modeColors[mode].disabledColor, disabledStyle)]: disabled,
-          })}
-          onClick={
-            !disabled
-              ? (event: React.MouseEvent) => {
-                  onClick?.(event);
-                  handleChange(event, index);
-                }
-              : undefined
+    const tabProps = {
+      disabled,
+      as,
+      darkMode,
+      isAnyTabFocused,
+      onKeyDown: handleArrowKeyPress,
+      className: cx({
+        [modeColors[mode].activeStyle]: isTabSelected,
+        [cx(modeColors[mode].disabledColor, disabledStyle)]: disabled,
+      }),
+      onClick: !disabled
+        ? (event: React.MouseEvent) => {
+            onClick?.(event);
+            handleChange(event, index);
           }
-        >
-          {name}
-        </TabTitle>
-      );
+        : undefined,
+    };
 
-      tabs.push(tabTitle);
-
-      return React.cloneElement(child, {
-        id: tabpanelId,
-        ['aria-labelledby']: tabId,
-        selected: isTabSelected,
-      });
-    });
-
-    return { tabs, tabpanels };
-  }, [
-    children,
-    as,
-    darkMode,
-    handleArrowKeyPress,
-    handleChange,
-    isAnyTabFocused,
-    selected,
-    mode,
-  ]);
+    return (
+      <InternalTab
+        child={child}
+        selected={isTabSelected}
+        tabRef={tabNode}
+        panelRef={panelNode}
+        {...tabProps}
+      />
+    );
+  });
 
   return (
     <div {...rest} className={className}>
+      {renderedChildren}
       <div
         className={cx(listStyle, modeColors[mode].underlineColor)}
         role="tablist"
         tabIndex={0}
+        ref={setTabNode}
         aria-orientation="horizontal"
-        ref={containerNode}
-      >
-        {tabs}
-      </div>
-      {tabpanels}
+        {...accessibleLabel}
+      />
+
+      <div ref={setPanelNode} />
     </div>
   );
 }

@@ -63,17 +63,13 @@ export interface TabProps {
  *
  */
 function Tab({ selected, children, ...rest }: TabProps) {
-  if (!selected) {
-    return null;
-  }
-
   // default and name are not an HTML properties
   // onClick applies to TabTitle component, not Tab component
   delete rest.default, delete rest.name, delete rest.onClick;
 
   return (
     <div {...rest} role="tabpanel">
-      {children}
+      {selected ? children : null}
     </div>
   );
 }
