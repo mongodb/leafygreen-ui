@@ -9,16 +9,6 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Knob, Boolean, Text, Area, Number, Select } from './Knobs';
 
-const backdrop = css`
-  background-color: ${uiColors.gray.light3};
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-`;
-
 const previewStyle = css`
   display: flex;
   flex-direction: column;
@@ -38,6 +28,10 @@ const componentContainer = css`
 
 const componentContainerDarkMode = css`
   border-bottom: 1px solid ${uiColors.gray.dark2};
+`;
+
+const knobContainer = css`
+  padding: ${spacing[5]}px;
 `;
 
 interface SelectConfigInterface<T> {
@@ -185,12 +179,11 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
       }
     });
 
-    return <div>{knobs}</div>;
+    return <div className={knobContainer}>{knobs}</div>;
   };
 
   return (
     <div>
-      <div className={backdrop} />
       <Card
         className={cx(previewStyle, {
           [css`

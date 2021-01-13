@@ -9,6 +9,7 @@ export const globalStyles = css`
     src: url('${cdn}/akzidgrostdreg.eot');
     /* IE9 Compat Modes */
     src: url('${cdn}/akzidgrostdreg.eot?#iefix') format('embedded-opentype'),
+      /* IE6-IE8 */ url('${cdn}.akzidgrostdreg.woff') format('woff'),
       /* Pretty Modern Browsers */ url('${cdn}/akzidgrostdreg.ttf')
         format('truetype'),
       /* Safari, Android, iOS */ url('${cdn}/akzidgrostdreg.svg#Akzidenz')

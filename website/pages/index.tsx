@@ -10,6 +10,9 @@ import { GridContainer, GridItem } from 'components/Grid';
 import { getAllUpdates, UpdateProps } from 'utils/fetchUpdates';
 import News from 'components/News';
 
+// React Transition Group to transition sharedHoverInteraction
+// Spacing on the top (align What's new with some text on the left?)
+
 const mq = facepaint(
   Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
   { literal: true },
