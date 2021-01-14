@@ -120,10 +120,8 @@ const listTitle = css`
   }
 `;
 
-interface BaseTabProps {
-  ariaControl: string;
-  darkMode: boolean;
-  index: number;
+interface BaseTabTitleProps {
+  darkMode?: boolean;
   selected?: boolean;
   href?: string;
   children?: React.ReactNode;
@@ -132,17 +130,15 @@ interface BaseTabProps {
   isAnyTabFocused?: boolean;
 }
 
-const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
+const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   selected = false,
   disabled = false,
   children,
   className,
-  ariaControl,
-  index,
   darkMode,
   isAnyTabFocused,
   ...rest
-}: BaseTabProps) => {
+}: BaseTabTitleProps) => {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const mode = darkMode ? Mode.Dark : Mode.Light;
@@ -165,10 +161,8 @@ const TabTitle: ExtendableBox<BaseTabProps, 'button'> = ({
       className,
     ),
     role: 'tab',
-    ['aria-controls']: ariaControl,
-    ['aria-selected']: selected,
-    ['aria-disabled']: disabled,
     tabIndex: selected ? 0 : -1,
+    ['aria-selected']: selected,
     ...rest,
   } as const;
 

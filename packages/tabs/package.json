@@ -25,6 +25,6 @@
     "@leafygreen-ui/tokens": "^0.5.0",
     "@leafygreen-ui/box": "^3.0.1",
     "@leafygreen-ui/leafygreen-provider": "^2.0.2",
-    "lodash": "^4.17.20"
+    "@leafygreen-ui/portal": "^3.1.0"
   }
 }
