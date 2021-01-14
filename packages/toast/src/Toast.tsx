@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Transition } from 'react-transition-group';
+import Transition, {
+  TransitionStatus,
+} from 'react-transition-group/Transition';
 import { transparentize } from 'polished';
 import { cx, css } from '@leafygreen-ui/emotion';
 import Portal from '@leafygreen-ui/portal';
@@ -231,17 +233,8 @@ const variantIcons: Record<Variant, React.ComponentType<any>> = {
   [Variant.Progress]: RefreshIcon,
 };
 
-const RTGStates = {
-  Entering: 'entering',
-  Entered: 'entered',
-  Exiting: 'exiting',
-  Exited: 'exited',
-} as const;
-
-type RTGStates = typeof RTGStates[keyof typeof RTGStates];
-
-const toastTransitionStateStyles: Partial<Record<RTGStates, string>> = {
-  [RTGStates.Entered]: css`
+const toastTransitionStateStyles: Partial<Record<TransitionStatus, string>> = {
+  entered: css`
     transform: translate3d(0, 0, 0) scale(1);
     opacity: 1;
   `,
@@ -306,85 +299,91 @@ function Toast({
   const currentVariantStyles = variantStyles[variant];
 
   return (
-    <Transition
-      in={open}
-      timeout={transitionDuration}
-      mountOnEnter
-      unmountOnExit
-      nodeRef={nodeRef}
-    >
-      {(state: RTGStates) => (
-        <Portal>
-          <div
-            role="status"
-            aria-live="polite"
-            ref={nodeRef}
-            className={cx(
-              baseElementStyles.toast,
-              currentVariantStyles.toast,
-              toastTransitionStateStyles[state],
-              className,
-            )}
-            {...rest}
-          >
+    <Portal>
+      <div
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        aria-relevant="all"
+      >
+        <Transition
+          in={open}
+          timeout={transitionDuration}
+          mountOnEnter
+          unmountOnExit
+          nodeRef={nodeRef}
+        >
+          {state => (
             <div
+              ref={nodeRef}
               className={cx(
-                baseElementStyles.contentWrapper,
-                currentVariantStyles.contentWrapper,
-                {
-                  [css`
-                    padding-right: ${spacing[3] * 2}px;
-                  `]: dismissible,
-                },
+                baseElementStyles.toast,
+                currentVariantStyles.toast,
+                toastTransitionStateStyles[state],
+                className,
               )}
+              {...rest}
             >
-              <VariantIcon
+              <div
                 className={cx(
-                  baseElementStyles.icon,
-                  currentVariantStyles.icon,
+                  baseElementStyles.contentWrapper,
+                  currentVariantStyles.contentWrapper,
+                  {
+                    [css`
+                      padding-right: ${spacing[3] * 2}px;
+                    `]: dismissible,
+                  },
                 )}
-                size={30}
-              />
-
-              <div>
-                {title && (
-                  <Body
-                    data-testid="toast-title"
-                    className={cx(
-                      currentVariantStyles.body,
-                      css`
-                        font-weight: bold;
-                      `,
-                    )}
-                  >
-                    {title}
-                  </Body>
-                )}
-
-                <Body className={currentVariantStyles.body}>{body}</Body>
-              </div>
-            </div>
-
-            {dismissible && (
-              <IconButton
-                className={cx(
-                  baseElementStyles.dismissButton,
-                  currentVariantStyles.dismissButton,
-                )}
-                aria-label="Close Message"
-                onClick={close}
               >
-                <XIcon />
-              </IconButton>
-            )}
+                <VariantIcon
+                  aria-hidden
+                  className={cx(
+                    baseElementStyles.icon,
+                    currentVariantStyles.icon,
+                  )}
+                  size={30}
+                />
 
-            {variant === Variant.Progress && (
-              <ProgressBar progress={progress} />
-            )}
-          </div>
-        </Portal>
-      )}
-    </Transition>
+                <div>
+                  {title && (
+                    <Body
+                      data-testid="toast-title"
+                      className={cx(
+                        currentVariantStyles.body,
+                        css`
+                          font-weight: bold;
+                        `,
+                      )}
+                    >
+                      {title}
+                    </Body>
+                  )}
+
+                  <Body className={currentVariantStyles.body}>{body}</Body>
+                </div>
+              </div>
+
+              {dismissible && (
+                <IconButton
+                  className={cx(
+                    baseElementStyles.dismissButton,
+                    currentVariantStyles.dismissButton,
+                  )}
+                  aria-label="Close Message"
+                  onClick={close}
+                >
+                  <XIcon />
+                </IconButton>
+              )}
+
+              {variant === Variant.Progress && (
+                <ProgressBar progress={progress} />
+              )}
+            </div>
+          )}
+        </Transition>
+      </div>
+    </Portal>
   );
 }
 
