@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Portal from '@leafygreen-ui/portal';
 import { IdAllocator } from '@leafygreen-ui/lib';
 import TabTitle from './TabTitle';
@@ -18,25 +18,15 @@ type InternalTabProps = Pick<TabsProps, 'as' | 'darkMode' | 'className'> & {
 };
 
 const InternalTab = React.memo(
-  ({
-    child,
-    selected,
-    as,
-    tabRef,
-    panelRef,
-    ...tabProps
-  }: InternalTabProps) => {
+  ({ child, selected, tabRef, panelRef, ...tabProps }: InternalTabProps) => {
     const { id: idProp, name } = child.props;
 
-    const panelId = React.useMemo(() => tabpanelIdAllocator.generate(), []);
-    const tabId = React.useMemo(() => idProp ?? tabIdAllocator.generate(), [
-      idProp,
-    ]);
+    const panelId = useMemo(() => tabpanelIdAllocator.generate(), []);
+    const tabId = useMemo(() => idProp ?? tabIdAllocator.generate(), [idProp]);
 
     const tab = (
       <TabTitle
         {...tabProps}
-        as={as}
         selected={selected}
         id={tabId}
         aria-controls={panelId}
@@ -45,11 +35,15 @@ const InternalTab = React.memo(
       </TabTitle>
     );
 
-    const panel = React.cloneElement(child, {
-      id: panelId,
-      ['aria-labelledby']: tabId,
-      selected: selected,
-    });
+    const panel = useMemo(
+      () =>
+        React.cloneElement(child, {
+          id: panelId,
+          selected: selected,
+          ['aria-labelledby']: tabId,
+        }),
+      [child, panelId, selected, tabId],
+    );
 
     return (
       <>
