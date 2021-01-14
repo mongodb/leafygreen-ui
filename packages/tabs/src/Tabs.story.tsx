@@ -13,6 +13,7 @@ function ControlledTabs() {
   return (
     <LeafyGreenProvider>
       <Tabs
+        aria-label="Tabs to demonstrate usage of Leafygreen UI Tab Components"
         setSelected={setSelected}
         selected={selected}
         darkMode={darkMode}
@@ -40,6 +41,7 @@ storiesOf('Tabs', module)
     return (
       <LeafyGreenProvider>
         <Tabs
+          aria-label="Tabs to demonstrate usage of Leafygreen UI Tab Components"
           darkMode={darkMode}
           className={css`
             background-color: ${!darkMode ? 'white' : uiColors.gray.dark3};
@@ -62,6 +64,7 @@ storiesOf('Tabs', module)
         </Tabs>
 
         <Tabs
+          aria-label="Tabs to demonstrate usage of Leafygreen UI Tab Components"
           darkMode={darkMode}
           className={css`
             background-color: ${!darkMode ? 'white' : uiColors.gray.dark3};
