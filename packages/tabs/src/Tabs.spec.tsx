@@ -9,7 +9,7 @@ const setSelected = jest.fn();
 
 const renderTabs = (tabsProps = {}, tabProps = {}) => {
   render(
-    <Tabs {...tabsProps} data-testid={tabsTestId}>
+    <Tabs {...tabsProps} data-testid={tabsTestId} aria-label="Testing tabs">
       <Tab {...tabProps} name="First">
         Content 1
       </Tab>
@@ -66,8 +66,8 @@ describe('packages/tab', () => {
         selected: 1,
       });
 
-      const container = screen.getByTestId(tabsTestId);
-      expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
+      expect(screen.getByText('Content 2')).toBeInTheDocument();
+      expect(screen.queryByText('Content 1')).not.toBeInTheDocument();
     });
 
     test('selected tab is active on first render', () => {
@@ -109,9 +109,6 @@ describe('packages/tab', () => {
       const newActiveTabTitle = screen.getByText('Second');
       fireEvent.click(newActiveTabTitle);
       expect(screen.getByText('Content 2')).toBeInTheDocument();
-
-      const container = screen.getByTestId(tabsTestId);
-      expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
     });
 
     test('keyboard navigation is supported', () => {
@@ -137,7 +134,10 @@ describe('packages/tab', () => {
 
     test('keyboard navigation skips disabled tabs', () => {
       render(
-        <Tabs data-testid={tabsTestId}>
+        <Tabs
+          data-testid={tabsTestId}
+          aria-label="Description of our test tabs"
+        >
           <Tab default name="First">
             Content 1
           </Tab>
@@ -186,13 +186,13 @@ describe('packages/tab', () => {
     beforeEach(() => {
       render(
         <>
-          <Tabs>
+          <Tabs aria-label="Description of another set of test tabs">
             <Tab default name="Tab Set 1-A">
               Content 1-A
             </Tab>
             <Tab name="Tab Set 1-B">Content 1-B</Tab>
           </Tabs>
-          <Tabs>
+          <Tabs aria-label="Description of another set of test tabs">
             <Tab default name="Tab Set 2-A">
               Content 2-A
             </Tab>
@@ -220,6 +220,31 @@ describe('packages/tab', () => {
       });
 
       expect(screen.getByText('Tab Set 1-B')).toHaveFocus();
+    });
+  });
+
+  describe('it maintains accessible props', () => {
+    beforeEach(() => {
+      render(
+        <Tabs aria-label="testing accessible labels">
+          <Tab default name="Name 1">
+            Content 1
+          </Tab>
+          <Tab name="Name 2">Content 2</Tab>
+        </Tabs>,
+      );
+    });
+
+    test('tabs and panels render with appropriately related aria tags', () => {
+      const tab = screen.getAllByRole('tab')[0];
+      const panel = screen.getAllByRole('tabpanel')[0];
+
+      expect(tab.getAttribute('id')).toEqual(
+        panel.getAttribute('aria-labelledby'),
+      );
+      expect(tab.getAttribute('aria-controls')).toEqual(
+        panel.getAttribute('id'),
+      );
     });
   });
 });
