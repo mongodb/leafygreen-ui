@@ -20,19 +20,26 @@ interface AccessibleFunctionParams {
   ariaLabel?: string;
 }
 
+interface AccessibleFunctionReturnType {
+  'aria-labelledby'?: string;
+  'aria-label'?: string;
+  title?: string;
+  'aria-hidden'?: boolean;
+}
+
 export function generateAccessibleProps(
   role: 'img' | 'presentation',
   glyphName: string,
-  accessibleParams: AccessibleFunctionParams,
-) {
+  { ariaLabel, ariaLabelledby, title }: AccessibleFunctionParams,
+): AccessibleFunctionReturnType {
   switch (role) {
     case 'img':
-      if (accessibleParams.ariaLabelledby) {
-        return { 'aria-labelledby': accessibleParams.ariaLabelledby };
-      } else if (accessibleParams.ariaLabel) {
-        return { 'aria-label': accessibleParams.ariaLabel };
-      } else if (accessibleParams.title) {
-        return { title: accessibleParams.title };
+      if (ariaLabelledby) {
+        return { 'aria-labelledby': ariaLabelledby };
+      } else if (ariaLabel) {
+        return { 'aria-label': ariaLabel };
+      } else if (title) {
+        return { title: title };
       } else {
         return { 'aria-label': getGlyphLabel(glyphName) };
       }
