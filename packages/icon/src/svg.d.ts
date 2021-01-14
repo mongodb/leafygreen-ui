@@ -1,7 +1,8 @@
 declare module '*.svg' {
   const value: React.ComponentType<
     React.SVGProps<SVGSVGElement> & {
-      title?: string | null | boolean;
+      title?: string | null;
+      role: 'img' | 'presentation';
     }
   >;
 

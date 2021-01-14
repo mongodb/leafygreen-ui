@@ -2,35 +2,36 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum adb5e28365d5746d652169ac16b8fdd1
+ * @checksum 04f53d70c78b950ed4c70253b202a0f2
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { IdAllocator } from '@leafygreen-ui/lib';
-import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CloudProps extends LGGlyph.ComponentProps {}
-const idAllocator = IdAllocator.create('Cloud');
 
 const Cloud = ({
   className,
   size = 16,
   title,
-  titleId: customTitleId,
+  ['aria-label']: ariaLabel,
+  ['aria-labelledby']: ariaLabelledby,
   fill,
+  role = 'img',
   ...props
 }: CloudProps) => {
-  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
-    customTitleId,
-  ]);
   const fillStyle = css`
     color: ${fill};
   `;
   const noFlexShrink = css`
     flex-shrink: 0;
   `;
-  title = getGlyphTitle('Cloud', title);
+  const accessibleProps = generateAccessibleProps(role, 'Cloud', {
+    title,
+    ariaLabel,
+    ariaLabelledby,
+  });
   return (
     <svg
       className={cx(
@@ -42,17 +43,11 @@ const Cloud = ({
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}
       width={typeof size === 'number' ? size : sizeMap[size]}
+      role={role}
+      {...accessibleProps}
       {...props}
       viewBox="0 0 16 16"
-      role="img"
-      aria-labelledby={titleId}
     >
-      {title === undefined ? (
-        <title id={titleId}>{'Cloud'}</title>
-      ) : title ? (
-        <title id={titleId}>{title}</title>
-      ) : null}
-      <desc>{'Created with Sketch.'}</desc>
       <g
         id="Cloud-Copy"
         stroke="none"

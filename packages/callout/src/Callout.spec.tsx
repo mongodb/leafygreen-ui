@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Callout, { headerIcons, headerLabels, Variant } from './Callout';
-import { getGlyphTitle } from '../../icon/src/glyphCommon';
 
 const title = 'this is the callout title';
 const children = 'this is the callout content.';
@@ -23,8 +22,7 @@ describe('packages/callout', () => {
         render(<Callout {...defaultProps} variant={variant} />);
 
         expect(typeof icon.displayName).toBe('string');
-        const glyph = screen.getByTitle(getGlyphTitle(icon.displayName!)!)
-          .parentElement;
+        const glyph = screen.getByRole('img');
         expect(glyph).toBeInstanceOf(SVGSVGElement);
         expect(glyph).toBeVisible();
 

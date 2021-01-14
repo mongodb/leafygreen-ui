@@ -2,35 +2,36 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 345e684660ce5a2264efed2ad7483ef2
+ * @checksum 4e1128dfa5914901e775a8934a5947a7
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { IdAllocator } from '@leafygreen-ui/lib';
-import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface MagnifyingGlassProps extends LGGlyph.ComponentProps {}
-const idAllocator = IdAllocator.create('MagnifyingGlass');
 
 const MagnifyingGlass = ({
   className,
   size = 16,
   title,
-  titleId: customTitleId,
+  ['aria-label']: ariaLabel,
+  ['aria-labelledby']: ariaLabelledby,
   fill,
+  role = 'img',
   ...props
 }: MagnifyingGlassProps) => {
-  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
-    customTitleId,
-  ]);
   const fillStyle = css`
     color: ${fill};
   `;
   const noFlexShrink = css`
     flex-shrink: 0;
   `;
-  title = getGlyphTitle('MagnifyingGlass', title);
+  const accessibleProps = generateAccessibleProps(role, 'MagnifyingGlass', {
+    title,
+    ariaLabel,
+    ariaLabelledby,
+  });
   return (
     <svg
       className={cx(
@@ -42,17 +43,11 @@ const MagnifyingGlass = ({
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}
       width={typeof size === 'number' ? size : sizeMap[size]}
+      role={role}
+      {...accessibleProps}
       {...props}
       viewBox="0 0 16 16"
-      role="img"
-      aria-labelledby={titleId}
     >
-      {title === undefined ? (
-        <title id={titleId}>{'Glyphs / Magnifying Glass'}</title>
-      ) : title ? (
-        <title id={titleId}>{title}</title>
-      ) : null}
-      <desc>{'Created with Sketch.'}</desc>
       <g
         id="Glyphs-/-Magnifying-Glass"
         stroke="none"

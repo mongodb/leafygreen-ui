@@ -2,35 +2,36 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 27067e92ec9b79e6093dd76f65138d4c
+ * @checksum 537d63b0e7086d3c12848300920836c0
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { IdAllocator } from '@leafygreen-ui/lib';
-import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface UniversityProps extends LGGlyph.ComponentProps {}
-const idAllocator = IdAllocator.create('University');
 
 const University = ({
   className,
   size = 16,
   title,
-  titleId: customTitleId,
+  ['aria-label']: ariaLabel,
+  ['aria-labelledby']: ariaLabelledby,
   fill,
+  role = 'img',
   ...props
 }: UniversityProps) => {
-  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
-    customTitleId,
-  ]);
   const fillStyle = css`
     color: ${fill};
   `;
   const noFlexShrink = css`
     flex-shrink: 0;
   `;
-  title = getGlyphTitle('University', title);
+  const accessibleProps = generateAccessibleProps(role, 'University', {
+    title,
+    ariaLabel,
+    ariaLabelledby,
+  });
   return (
     <svg
       className={cx(
@@ -42,17 +43,11 @@ const University = ({
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}
       width={typeof size === 'number' ? size : sizeMap[size]}
+      role={role}
+      {...accessibleProps}
       {...props}
       viewBox="0 0 16 16"
-      role="img"
-      aria-labelledby={titleId}
     >
-      {title === undefined ? (
-        <title id={titleId}>{'Glyphs / University'}</title>
-      ) : title ? (
-        <title id={titleId}>{title}</title>
-      ) : null}
-      <desc>{'Created with Sketch.'}</desc>
       <g
         id="Glyphs-/-University"
         stroke="none"

@@ -1,6 +1,7 @@
 export namespace SVGR {
   export interface ComponentProps extends React.SVGProps<SVGSVGElement> {
-    title?: string | null | boolean;
+    title?: string | null;
+    role?: 'presentation' | 'img';
   }
 
   export type Component = React.ComponentType<ComponentProps>;

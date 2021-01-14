@@ -14,15 +14,34 @@ export const sizeMap: Record<Size, number> = {
   xlarge: 24,
 } as const;
 
-export function getGlyphTitle(name: string, title?: string | boolean | null) {
-  if (title === false) {
-    // If title is null, we unset the title entirely, otherwise we generate one.
-    return null;
-  }
+interface AccessibleFunctionParams {
+  title?: string | null;
+  ariaLabelledby?: string;
+  ariaLabel?: string;
+}
 
-  if (title == null || title === true) {
-    return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
-  }
+export function generateAccessibleProps(
+  role: 'img' | 'presentation',
+  glyphName: string,
+  accessibleParams: AccessibleFunctionParams,
+) {
+  switch (role) {
+    case 'img':
+      if (accessibleParams.ariaLabelledby) {
+        return { 'aria-labelledby': accessibleParams.ariaLabelledby };
+      } else if (accessibleParams.ariaLabel) {
+        return { 'aria-label': accessibleParams.ariaLabel };
+      } else if (accessibleParams.title) {
+        return { title: accessibleParams.title };
+      } else {
+        return { 'aria-label': getGlyphLabel(glyphName) };
+      }
 
-  return title;
+    case 'presentation':
+      return { 'aria-hidden': true };
+  }
+}
+
+export function getGlyphLabel(name: string) {
+  return `${name.replace(/([a-z])([A-Z])/g, '$1 $2')} Icon`;
 }

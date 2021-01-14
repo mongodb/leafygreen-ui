@@ -299,7 +299,7 @@ describe('packages/select', () => {
       });
 
       test('glyph', async () => {
-        const { getByRole, getAllByTitle } = render(
+        const { getByRole, getAllByRole } = render(
           <Select {...defaultProps} darkMode={darkMode} defaultValue="selected">
             <Option glyph={<BeakerIcon />} value="nonselected">
               Non-selected with glyph
@@ -316,9 +316,11 @@ describe('packages/select', () => {
           expect(getByRole('listbox')).toBeVisible();
         });
 
-        getAllByTitle('Beaker Icon').forEach(element =>
-          expect(element.closest('svg')).toBeVisible(),
-        );
+        getAllByRole('img')
+          .filter(
+            element => element.getAttribute('aria-label') === 'Beaker Icon',
+          )
+          .forEach(icon => expect(icon).toBeVisible());
       });
 
       test('invalid glyph', () => {

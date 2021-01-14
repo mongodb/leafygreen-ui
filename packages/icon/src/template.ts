@@ -37,6 +37,8 @@ module.exports = function template(
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}
       width={typeof size === 'number' ? size : sizeMap[size]}
+      role={role}
+      {...accessibleProps}
       {...props}
     />`;
 
@@ -49,27 +51,21 @@ module.exports = function template(
     %%imports%%
     import PropTypes from 'prop-types';
     import { css, cx } from '@leafygreen-ui/emotion';
-    import { IdAllocator } from '@leafygreen-ui/lib';
-    import { getGlyphTitle, sizeMap } from '../glyphCommon';
+    import { generateAccessibleProps, sizeMap } from '../glyphCommon';
     import { LGGlyph } from '../types';
   
     export interface ${componentName}Props extends LGGlyph.ComponentProps {}
-
-    const idAllocator = IdAllocator.create('${componentName}');
 
     const ${componentName} = ({
       className,
       size = 16,
       title,
-      titleId: customTitleId,
+      ['aria-label']: ariaLabel,
+      ['aria-labelledby']: ariaLabelledby,
       fill,
+      role = 'img',
       ...props
     }: ${componentName}Props) => {
-      const titleId = React.useMemo(
-        () => customTitleId || idAllocator.generate(),
-        [customTitleId]
-      );
-
       const fillStyle = css\`
         color: \${fill};
       \`;
@@ -78,7 +74,7 @@ module.exports = function template(
         flex-shrink: 0;
       \`;
 
-      title = getGlyphTitle('${componentName}', title);
+      const accessibleProps = generateAccessibleProps(role, '${componentName}', { title, ariaLabel, ariaLabelledby })
 
       return %%jsx%%;
     }
