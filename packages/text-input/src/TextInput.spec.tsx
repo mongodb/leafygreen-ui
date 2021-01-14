@@ -70,7 +70,7 @@ describe('packages/text-input', () => {
 
   describe('when the "state" is "valid"', () => {
     test('displays checkmark icon when input is valid', () => {
-      const { container, textInput, getByTitle } = renderTextInput({
+      const { container, textInput, getByRole } = renderTextInput({
         value: validEmail,
         state: State.Valid,
         optional: true,
@@ -79,11 +79,13 @@ describe('packages/text-input', () => {
 
       expect((textInput as HTMLInputElement).value).toBe(validEmail);
       expect(container.innerHTML).not.toContain('Optional');
-      expect(getByTitle('Checkmark Icon')).toBeInTheDocument();
+      expect(getByRole('img').getAttribute('aria-label')).toBe(
+        'Checkmark Icon',
+      );
     });
 
     test('displays checkmark icon when input is valid even when input is disabled', () => {
-      const { container, textInput, getByTitle } = renderTextInput({
+      const { container, textInput, getByRole } = renderTextInput({
         value: validEmail,
         state: State.Valid,
         disabled: true,
@@ -92,13 +94,15 @@ describe('packages/text-input', () => {
 
       expect((textInput as HTMLInputElement).value).toBe(validEmail);
       expect(container.innerHTML).not.toContain('Optional');
-      expect(getByTitle('Checkmark Icon')).toBeInTheDocument();
+      expect(getByRole('img').getAttribute('aria-label')).toBe(
+        'Checkmark Icon',
+      );
     });
   });
 
   describe('when the "state" is "error"', () => {
     test('displays warning icon when input is invalid', () => {
-      const { container, textInput, getByTitle } = renderTextInput({
+      const { container, textInput, getByRole } = renderTextInput({
         value: invalidEmail,
         state: State.Error,
         optional: true,
@@ -107,11 +111,11 @@ describe('packages/text-input', () => {
 
       expect((textInput as HTMLInputElement).value).toBe(invalidEmail);
       expect(container.innerHTML).not.toContain('Optional');
-      expect(getByTitle('Warning Icon')).toBeInTheDocument();
+      expect(getByRole('img').getAttribute('aria-label')).toBe('Warning Icon');
     });
 
     test('displays warning icon even when input is disabled', () => {
-      const { container, textInput, getByTitle } = renderTextInput({
+      const { container, textInput, getByRole } = renderTextInput({
         value: invalidEmail,
         state: State.Error,
         disabled: true,
@@ -120,7 +124,7 @@ describe('packages/text-input', () => {
 
       expect((textInput as HTMLInputElement).value).toBe(invalidEmail);
       expect(container.innerHTML).not.toContain('Optional');
-      expect(getByTitle('Warning Icon')).toBeInTheDocument();
+      expect(getByRole('img').getAttribute('aria-label')).toBe('Warning Icon');
     });
 
     test('displays error message when input is invalid', () => {
