@@ -1,7 +1,7 @@
 import React from 'react';
 export namespace SVGR {
   export interface ComponentProps extends React.SVGProps<SVGSVGElement> {
-    title?: string;
+    title?: string | null;
     role?: 'presentation' | 'img';
   }
 

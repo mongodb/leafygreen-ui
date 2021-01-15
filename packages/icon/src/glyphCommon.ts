@@ -15,7 +15,7 @@ export const sizeMap: Record<Size, number> = {
 } as const;
 
 interface AccessibleFunctionParams {
-  title?: string;
+  title?: string | null;
   ariaLabelledby?: string;
   ariaLabel?: string;
 }
@@ -23,7 +23,7 @@ interface AccessibleFunctionParams {
 interface AccessibleFunctionReturnType {
   'aria-labelledby'?: string;
   'aria-label'?: string;
-  title?: string;
+  title?: string | null;
   'aria-hidden'?: boolean;
 }
 
