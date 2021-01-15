@@ -79,7 +79,7 @@ describe('packages/text-input', () => {
 
       expect((textInput as HTMLInputElement).value).toBe(validEmail);
       expect(container.innerHTML).not.toContain('Optional');
-      expect(getByLabelText('Checkmark Icon')).toBeInTheDocument()
+      expect(getByLabelText('Checkmark Icon')).toBeInTheDocument();
     });
 
     test('displays checkmark icon when input is valid even when input is disabled', () => {
@@ -92,7 +92,7 @@ describe('packages/text-input', () => {
 
       expect((textInput as HTMLInputElement).value).toBe(validEmail);
       expect(container.innerHTML).not.toContain('Optional');
-      expect(getByLabelText('Checkmark Icon')).toBeInTheDocument()
+      expect(getByLabelText('Checkmark Icon')).toBeInTheDocument();
     });
   });
 
@@ -107,7 +107,7 @@ describe('packages/text-input', () => {
 
       expect((textInput as HTMLInputElement).value).toBe(invalidEmail);
       expect(container.innerHTML).not.toContain('Optional');
-      expect(getByLabelText('Warning Icon')).toBeInTheDocument()
+      expect(getByLabelText('Warning Icon')).toBeInTheDocument();
     });
 
     test('displays warning icon even when input is disabled', () => {
@@ -120,7 +120,7 @@ describe('packages/text-input', () => {
 
       expect((textInput as HTMLInputElement).value).toBe(invalidEmail);
       expect(container.innerHTML).not.toContain('Optional');
-      expect(getByLabelText('Warning Icon')).toBeInTheDocument()
+      expect(getByLabelText('Warning Icon')).toBeInTheDocument();
     });
 
     test('displays error message when input is invalid', () => {

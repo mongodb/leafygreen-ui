@@ -171,7 +171,7 @@ describe('packages/toast', () => {
           variant,
         });
 
-        expect(getByLabelText(expectedVariantIcons[variant])).toBeVisible()
+        expect(getByLabelText(expectedVariantIcons[variant])).toBeVisible();
       },
     );
   });

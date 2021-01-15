@@ -16,16 +16,16 @@ describe('packages/typography', () => {
           arrowAppearance: 'hover',
         });
 
-        const icon = screen.getByLabelText('Open New Tab Icon')
-        expect(icon).toBeInTheDocument()
+        const icon = screen.getByLabelText('Open New Tab Icon');
+        expect(icon).toBeInTheDocument();
       });
 
       test('and the "arrowAppearance" prop is not set', () => {
         renderLink({
           href: 'http://mongodb.design',
         });
-        const icon = screen.getByLabelText('Open New Tab Icon')
-        expect(icon).toBeInTheDocument()
+        const icon = screen.getByLabelText('Open New Tab Icon');
+        expect(icon).toBeInTheDocument();
       });
 
       test('and the "hideExternalIcon" prop is set', () => {
@@ -59,7 +59,7 @@ describe('packages/typography', () => {
         expect(icon).not.toBeVisible();
 
         fireEvent.mouseEnter(anchor);
-        expect(icon).toBeInTheDocument()
+        expect(icon).toBeInTheDocument();
       });
 
       test('and the "arrowAppearance" prop is set to "persist"', () => {
@@ -69,7 +69,7 @@ describe('packages/typography', () => {
         });
 
         const icon = screen.getByLabelText('Arrow Right Icon');
-        expect(icon).toBeInTheDocument()
+        expect(icon).toBeInTheDocument();
       });
 
       test('and the "arrowAppearance" prop is not specified', () => {
@@ -88,8 +88,8 @@ describe('packages/typography', () => {
           target: '_blank',
         });
 
-        const icon = screen.getByLabelText('Open New Tab Icon')
-        expect(icon).toBeInTheDocument()
+        const icon = screen.getByLabelText('Open New Tab Icon');
+        expect(icon).toBeInTheDocument();
       });
     });
   });
