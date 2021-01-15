@@ -165,17 +165,13 @@ describe('packages/toast', () => {
     test.each(Object.values(Variant) as Array<Variant>)(
       `when 'variant' is '%s'`,
       variant => {
-        const { getAllByRole } = renderToast({
+        const { getByLabelText } = renderToast({
           open: true,
           body: 'hello world',
           variant,
         });
 
-        const foundIcon = getAllByRole('img').filter(
-          icon =>
-            icon.getAttribute('aria-label') === expectedVariantIcons[variant],
-        )[0];
-        expect(foundIcon).toBeVisible();
+        expect(getByLabelText(expectedVariantIcons[variant])).toBeVisible()
       },
     );
   });

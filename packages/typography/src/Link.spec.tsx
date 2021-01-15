@@ -15,16 +15,17 @@ describe('packages/typography', () => {
           href: 'http://mongodb.design',
           arrowAppearance: 'hover',
         });
-        const icon = screen.getByRole('img');
-        expect(icon.getAttribute('aria-label')).toBe('Open New Tab Icon');
+
+        const icon = screen.getByLabelText('Open New Tab Icon')
+        expect(icon).toBeInTheDocument()
       });
 
       test('and the "arrowAppearance" prop is not set', () => {
         renderLink({
           href: 'http://mongodb.design',
         });
-        const icon = screen.getByRole('img');
-        expect(icon.getAttribute('aria-label')).toBe('Open New Tab Icon');
+        const icon = screen.getByLabelText('Open New Tab Icon')
+        expect(icon).toBeInTheDocument()
       });
 
       test('and the "hideExternalIcon" prop is set', () => {
@@ -54,11 +55,11 @@ describe('packages/typography', () => {
           arrowAppearance: 'hover',
         });
         const anchor = screen.getByText('Link');
-        const icon = screen.queryByRole('img');
+        const icon = screen.queryByLabelText('Arrow Right Icon');
         expect(icon).not.toBeVisible();
 
         fireEvent.mouseEnter(anchor);
-        expect(icon!.getAttribute('aria-label')).toBe('Arrow Right Icon');
+        expect(icon).toBeInTheDocument()
       });
 
       test('and the "arrowAppearance" prop is set to "persist"', () => {
@@ -67,8 +68,8 @@ describe('packages/typography', () => {
           arrowAppearance: 'persist',
         });
 
-        const icon = screen.queryByRole('img');
-        expect(icon!.getAttribute('aria-label')).toBe('Arrow Right Icon');
+        const icon = screen.getByLabelText('Arrow Right Icon');
+        expect(icon).toBeInTheDocument()
       });
 
       test('and the "arrowAppearance" prop is not specified', () => {
@@ -87,8 +88,8 @@ describe('packages/typography', () => {
           target: '_blank',
         });
 
-        const icon = screen.getByRole('img');
-        expect(icon.getAttribute('aria-label')).toBe('Open New Tab Icon');
+        const icon = screen.getByLabelText('Open New Tab Icon')
+        expect(icon).toBeInTheDocument()
       });
     });
   });

@@ -219,16 +219,16 @@ describe('packages/select', () => {
       expect(spy).toHaveBeenCalledTimes(1);
       expect(spy).toHaveBeenCalledWith(
         'You provided a `value` prop to a form field without an `onChange` handler. ' +
-          'This will render a read-only field. ' +
-          'If the field should be mutable use `defaultValue`. ' +
-          'Otherwise, set either `onChange` or `readOnly`.',
+        'This will render a read-only field. ' +
+        'If the field should be mutable use `defaultValue`. ' +
+        'Otherwise, set either `onChange` or `readOnly`.',
       );
 
       spy.mockClear();
 
       render(<Select {...defaultProps} defaultValue="" />);
       render(<Select {...defaultProps} value="" readOnly />);
-      render(<Select {...defaultProps} value="" onChange={() => {}} />);
+      render(<Select {...defaultProps} value="" onChange={() => { }} />);
 
       expect(spy).not.toHaveBeenCalled();
     });
@@ -284,7 +284,7 @@ describe('packages/select', () => {
             <Select {...defaultProps} darkMode={darkMode}>
               {defaultProps.children}
               <></>
-              {}
+              { }
               {''}
               {false}
               {null}
@@ -299,7 +299,7 @@ describe('packages/select', () => {
       });
 
       test('glyph', async () => {
-        const { getByRole, getAllByRole } = render(
+        const { getByRole, getAllByLabelText } = render(
           <Select {...defaultProps} darkMode={darkMode} defaultValue="selected">
             <Option glyph={<BeakerIcon />} value="nonselected">
               Non-selected with glyph
@@ -316,11 +316,7 @@ describe('packages/select', () => {
           expect(getByRole('listbox')).toBeVisible();
         });
 
-        getAllByRole('img')
-          .filter(
-            element => element.getAttribute('aria-label') === 'Beaker Icon',
-          )
-          .forEach(icon => expect(icon).toBeVisible());
+        getAllByLabelText('Beaker Icon').forEach(element => expect(element).toBeVisible())
       });
 
       test('invalid glyph', () => {
@@ -567,8 +563,8 @@ describe('packages/select', () => {
               )}
             </Controller>
           ) : (
-            <Select {...defaultProps} onChange={onChangeSpy} />
-          ),
+              <Select {...defaultProps} onChange={onChangeSpy} />
+            ),
         ));
 
         combobox = getByRole('combobox');
