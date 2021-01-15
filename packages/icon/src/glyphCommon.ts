@@ -15,7 +15,7 @@ export const sizeMap: Record<Size, number> = {
 } as const;
 
 interface AccessibleFunctionParams {
-  title?: string | null;
+  title?: string;
   ariaLabelledby?: string;
   ariaLabel?: string;
 }
@@ -34,15 +34,15 @@ export function generateAccessibleProps(
 ): AccessibleFunctionReturnType {
   switch (role) {
     case 'img':
-      if (ariaLabelledby) {
-        return { 'aria-labelledby': ariaLabelledby };
-      } else if (ariaLabel) {
-        return { 'aria-label': ariaLabel };
-      } else if (title) {
-        return { title: title };
-      } else {
+      if (!ariaLabel && !ariaLabelledby && !title) {
         return { 'aria-label': getGlyphLabel(glyphName) };
       }
+
+      return {
+        ['aria-labelledby']: ariaLabelledby,
+        ['aria-label']: ariaLabel,
+        title,
+      };
 
     case 'presentation':
       return { 'aria-hidden': true };
