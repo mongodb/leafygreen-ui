@@ -49,19 +49,6 @@ describe('packages/typography', () => {
         });
       });
 
-      test('and the "arrowAppearance" prop is set to "hover"', () => {
-        renderLink({
-          href: 'http://localhost:9001',
-          arrowAppearance: 'hover',
-        });
-        const anchor = screen.getByText('Link').parentNode;
-        const icon = screen.queryByLabelText('Arrow Right Icon');
-        expect(icon).not.toBeVisible();
-
-        fireEvent.mouseEnter(anchor);
-        expect(icon).toBeVisible();
-      });
-
       test('and the "arrowAppearance" prop is set to "persist"', () => {
         renderLink({
           href: 'http://localhost:9001',
