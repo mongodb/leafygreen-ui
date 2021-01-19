@@ -41,7 +41,7 @@ export default function TabsLiveExample() {
             min-width: 400px;
           `}
         >
-          <Tabs darkMode={darkMode}>
+          <Tabs darkMode={darkMode} aria-label="Example usage of Tab component">
             <Tab default name={name}>
               <div
                 className={css`
