@@ -21,8 +21,8 @@ const layout = css`
   margin-top: 70px;
 
   ${mq({
-  width: ['100%', '100%', '700px', '700px'],
-})}
+    width: ['100%', '100%', '700px', '700px'],
+  })}
 `;
 
 const componentsStyle = css`
@@ -119,7 +119,13 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
           )}
         </div>
       </div>
-      <Tabs selected={selected} setSelected={setSelected} aria-label={`Information on LeafyGreen UI ${componentName.split('-').join(' ')} component`}>
+      <Tabs
+        selected={selected}
+        setSelected={setSelected}
+        aria-label={`Information on LeafyGreen UI ${componentName
+          .split('-')
+          .join(' ')} component`}
+      >
         <Tab
           name="Live Example"
           onClick={() => router.push(`/component/${componentName}/example`)}
