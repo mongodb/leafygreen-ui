@@ -119,7 +119,13 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
           )}
         </div>
       </div>
-      <Tabs selected={selected} setSelected={setSelected}>
+      <Tabs
+        selected={selected}
+        setSelected={setSelected}
+        aria-label={`Information on LeafyGreen UI ${componentName
+          .split('-')
+          .join(' ')} component`}
+      >
         <Tab
           name="Live Example"
           onClick={() => router.push(`/component/${componentName}/example`)}
