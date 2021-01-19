@@ -213,7 +213,10 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
       )}
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
-          <Tabs className={tabsPadding}>
+          <Tabs
+            className={tabsPadding}
+            aria-label={`View source code for ${component} component`}
+          >
             {example && (
               <Tab default name="Example" className={mt3}>
                 <Code showLineNumbers language="js">
