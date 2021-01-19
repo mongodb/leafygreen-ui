@@ -10,13 +10,13 @@ import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { H2 } from '@leafygreen-ui/typography';
 import ReactIcon from 'components/svgs/ReactIcon';
 import FigmaIcon from 'components/svgs/FigmaIcon';
-import { mq } from 'utils/mediaQuery'
+import { mq } from 'utils/mediaQuery';
 
 const layout = css`
   ${mq({
-  marginTop: [`${spacing[4]}px`, '70px'],
-  width: ['100%', '100%', '700px', '700px'],
-})}
+    marginTop: [`${spacing[4]}px`, '70px'],
+    width: ['100%', '100%', '700px', '700px'],
+  })}
 `;
 
 const componentsStyle = css`

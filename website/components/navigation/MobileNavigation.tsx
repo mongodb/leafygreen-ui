@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { useRouter } from 'next/router';
 import { css, cx } from 'emotion';
 import { Transition } from 'react-transition-group';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -8,6 +9,12 @@ import MenuIcon from '@leafygreen-ui/icon/dist/Menu';
 import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
 import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
 import MobileNavigationProvider from './NavigationContext';
+
+const resetButtonStyle = css`
+  background-color: white;  
+  width: 100%;
+  border: unset;
+`;
 
 const closedContainer = css`
   display: flex;
@@ -75,6 +82,7 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
     setScrollContainerNode,
   ] = useState<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);
+  const { push } = useRouter();
 
   const handleBackdropClick = useCallback(
     (e: React.MouseEvent) => {
@@ -131,7 +139,15 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
                 </div>
                 <ol className={ulStyleOverrides}>
                   <li>
-                    <h4 className={h4Style}>Home</h4>
+                    <button
+                      onClick={() => {
+                        push('/');
+                        setOpen(false);
+                      }}
+                      className={resetButtonStyle}
+                    >
+                      <h4 className={h4Style}>Home</h4>
+                    </button>
                   </li>
                   {children}
                 </ol>

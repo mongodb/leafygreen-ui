@@ -6,15 +6,14 @@ import { OneOf } from '@leafygreen-ui/lib';
 import PropDefinition from 'components/PropDefinition';
 import TypographyPropTable from 'components/TypographyPropTable';
 import formatType from 'utils/formatType';
-import { mq } from 'utils/mediaQuery'
-
+import { mq } from 'utils/mediaQuery';
 
 const tableWrapper = css`
   ${mq({
-  marginLeft: ['-22px', 'unset'],
-  marginRight: ['-22px', 'unset'],
-  overflow: ['hidden', 'unset'],
-})}
+    marginLeft: ['-18px', 'unset'],
+    marginRight: ['-18px', 'unset'],
+    overflow: ['hidden', 'unset'],
+  })}
 `;
 
 const subtitleBottomMargin = css`

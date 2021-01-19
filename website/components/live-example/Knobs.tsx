@@ -7,7 +7,7 @@ import { Select as LGUISelect, Option } from '@leafygreen-ui/select';
 import TextInput from '@leafygreen-ui/text-input';
 import TextArea from '@leafygreen-ui/text-area';
 import Toggle from '@leafygreen-ui/toggle';
-import { mq } from 'utils/mediaQuery'
+import { mq } from 'utils/mediaQuery';
 
 const booleanIdAllocator = IdAllocator.create('boolean');
 const textIdAllocator = IdAllocator.create('text');
@@ -24,11 +24,11 @@ const knobContainerStyle = css`
   flex-grow: 1;
 
   ${mq({
-  padding: [
-    `${spacing[3]}px ${spacing[4]}px`,
-    `${spacing[3]}px ${spacing[5]}px`,
-  ],
-})}
+    padding: [
+      `${spacing[3]}px ${spacing[4]}px`,
+      `${spacing[3]}px ${spacing[5]}px`,
+    ],
+  })}
 `;
 
 const knobContainerHeight = css`
@@ -49,14 +49,14 @@ const textAreaClassName = css`
   width: ${knobsWidth}px;
 
   ${mq({
-  width: ['200px', `${knobsWidth}px`],
-})}
+    width: ['200px', `${knobsWidth}px`],
+  })}
 `;
 
 const textClassName = css`
   ${mq({
-  width: ['200px', `${knobsWidth}px`],
-})}
+    width: ['200px', `${knobsWidth}px`],
+  })}
 `;
 
 const labelDarkMode = css`
