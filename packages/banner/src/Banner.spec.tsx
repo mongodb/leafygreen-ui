@@ -31,8 +31,8 @@ describe('packages/banner', () => {
 
     test('renders banner with "info" variant by default', () => {
       renderBanner();
-      const infoIcon = screen.getByTitle('Info With Circle Icon');
-      expect(infoIcon).toBeInTheDocument();
+      const circleIcon = screen.getByLabelText('Info With Circle Icon');
+      expect(circleIcon).toBeInTheDocument();
     });
 
     test('does not render the banner as dismissible by default', () => {
@@ -44,33 +44,33 @@ describe('packages/banner', () => {
   describe('when the "variant" prop is set', () => {
     test('and the value is "warning"', () => {
       renderBanner({ variant: Variant.Warning });
-      const icon = screen.getByTitle('Important With Circle Icon');
-      expect(icon).toBeInTheDocument();
+      const warningIcon = screen.getByLabelText('Important With Circle Icon');
+      expect(warningIcon).toBeInTheDocument();
     });
 
     test('and the value is "danger"', () => {
       renderBanner({ variant: Variant.Danger });
-      const icon = screen.getByTitle('Warning Icon');
-      expect(icon).toBeInTheDocument();
+      const dangerIcon = screen.getByLabelText('Warning Icon');
+      expect(dangerIcon).toBeInTheDocument();
     });
 
     test('and the value is "success"', () => {
       renderBanner({ variant: Variant.Success });
-      const icon = screen.getByTitle('Checkmark With Circle Icon');
-      expect(icon).toBeInTheDocument();
+      const successIcon = screen.getByLabelText('Checkmark With Circle Icon');
+      expect(successIcon).toBeInTheDocument();
     });
   });
 
   describe('when the "dismissible" prop is set', () => {
     test('the X icon is present', () => {
       renderBanner({ dismissible: true });
-      const xButton = screen.getByTitle('X Icon');
+      const xButton = screen.getByLabelText('X Icon');
       expect(xButton).toBeInTheDocument();
     });
 
     test('onClose fires when the dismiss button is clicked', () => {
       renderBanner({ dismissible: true, onClose });
-      const xButton = screen.getByTitle('X Icon');
+      const xButton = screen.getByLabelText('X Icon');
       fireEvent.click(xButton);
       expect(onClose).toHaveBeenCalledTimes(1);
     });
@@ -83,7 +83,7 @@ describe('packages/banner', () => {
       });
 
       expect(banner.innerHTML.includes('Info With Circle')).not.toBe(true);
-      const image = screen.getByTitle('Vertical Ellipsis Icon');
+      const image = screen.getByLabelText('Vertical Ellipsis Icon');
       expect(image).toBeInTheDocument();
     });
   });
