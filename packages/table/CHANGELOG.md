@@ -1,5 +1,11 @@
 # @leafygreen-ui/table
 
+## 1.3.1
+
+### Patch Changes
+
+- 8ac6e396: Updates some of the attributes of internal elements to provide better accessibility to screen readers.
+
 ## 1.3.0
 
 ### Minor Changes
