@@ -1,7 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import facepaint from 'facepaint';
 import { css } from 'emotion';
 import Button from '@leafygreen-ui/button';
 import { useViewportSize } from '@leafygreen-ui/hooks';
@@ -11,17 +10,13 @@ import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { H2 } from '@leafygreen-ui/typography';
 import ReactIcon from 'components/svgs/ReactIcon';
 import FigmaIcon from 'components/svgs/FigmaIcon';
-
-const mq = facepaint(
-  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
-  { literal: true },
-);
+import { mq } from 'utils/mediaQuery'
 
 const layout = css`
   ${mq({
-    marginTop: [`${spacing[4]}px`, '70px'],
-    width: ['100%', '100%', '700px', '700px'],
-  })}
+  marginTop: [`${spacing[4]}px`, '70px'],
+  width: ['100%', '100%', '700px', '700px'],
+})}
 `;
 
 const componentsStyle = css`

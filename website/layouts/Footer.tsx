@@ -1,14 +1,10 @@
 import React from 'react';
 import { css } from 'emotion';
-import facepaint from 'facepaint';
 import { Logo } from '@leafygreen-ui/logo';
 import { uiColors } from '@leafygreen-ui/palette';
-import { spacing, breakpoints } from '@leafygreen-ui/tokens';
+import { spacing } from '@leafygreen-ui/tokens';
+import { mq } from 'utils/mediaQuery'
 
-const mq = facepaint(
-  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
-  { literal: true },
-);
 
 const footerContainer = css`
   background-color: ${uiColors.gray.dark3};
@@ -20,8 +16,8 @@ const footerContainer = css`
   padding-top: 36px;
 
   ${mq({
-    marginTop: ['1px', `${spacing[7]}px`],
-  })}
+  marginTop: ['1px', `${spacing[7]}px`],
+})}
 `;
 
 const linksContainer = css`
@@ -33,8 +29,8 @@ const linksContainer = css`
   margin-top: 2px;
 
   ${mq({
-    marginRight: ['36px', '72px'],
-  })}
+  marginRight: ['36px', '72px'],
+})}
 `;
 
 const linkStyle = css`

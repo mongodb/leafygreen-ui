@@ -1,25 +1,20 @@
 import React from 'react';
-import facepaint from 'facepaint';
 import { css } from 'emotion';
 import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 import { Subtitle, InlineCode } from '@leafygreen-ui/typography/dist';
 import { OneOf } from '@leafygreen-ui/lib';
-import { breakpoints } from '@leafygreen-ui/tokens';
 import PropDefinition from 'components/PropDefinition';
 import TypographyPropTable from 'components/TypographyPropTable';
 import formatType from 'utils/formatType';
+import { mq } from 'utils/mediaQuery'
 
-const mq = facepaint(
-  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
-  { literal: true },
-);
 
 const tableWrapper = css`
   ${mq({
-    marginLeft: ['-22px', 'unset'],
-    marginRight: ['-22px', 'unset'],
-    overflow: ['hidden', 'unset'],
-  })}
+  marginLeft: ['-22px', 'unset'],
+  marginRight: ['-22px', 'unset'],
+  overflow: ['hidden', 'unset'],
+})}
 `;
 
 const subtitleBottomMargin = css`

@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import facepaint from 'facepaint';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Overline, Subtitle, H2 } from '@leafygreen-ui/typography';
-import { spacing, breakpoints } from '@leafygreen-ui/tokens';
+import { spacing } from '@leafygreen-ui/tokens';
 import { UpdateProps } from 'utils/fetchUpdates';
+import { mq } from 'utils/mediaQuery'
 
-const mq = facepaint(
-  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
-  { literal: true },
-);
 
 const newsContainer = css`
   display: flex;
@@ -19,11 +15,11 @@ const newsContainer = css`
   justify-content: center;
   padding-bottom: ${spacing[4]}px;
   ${mq({
-    height: ['auto', '100%'],
-    marginTop: [`${spacing[4]}px`, 'unset'],
-    marginBottom: [`${spacing[4]}px`, 'unset'],
-    paddingLeft: ['43px', 'unset'],
-  })}
+  height: ['auto', '100%'],
+  marginTop: [`${spacing[4]}px`, 'unset'],
+  marginBottom: [`${spacing[4]}px`, 'unset'],
+  paddingLeft: ['43px', 'unset'],
+})}
 `;
 
 const subtitleStyle = css`
@@ -42,10 +38,10 @@ const iconStyle = css`
   transform: translate3d(-3px, 0, 0px);
   transition: all 100ms ease-in;
   ${mq({
-    visibility: ['hidden', 'hidden', 'visible'],
-    opacity: [1, 1, 0, 0],
-    marginLeft: [`${spacing[2]}px`, `${spacing[2]}px`, 0],
-  })}
+  visibility: ['hidden', 'hidden', 'visible'],
+  opacity: [1, 1, 0, 0],
+  marginLeft: [`${spacing[2]}px`, `${spacing[2]}px`, 0],
+})}
 `;
 
 const updateMargin = css`
@@ -64,11 +60,11 @@ function Update({ date, story, route, updateURL }: UpdateProps) {
   const subtitleProps = route
     ? ({ onClick: () => push(route), as: 'p' } as const)
     : ({
-        href: updateURL,
-        as: 'a',
-        target: '_blank',
-        rel: 'noopener noreferrer',
-      } as const);
+      href: updateURL,
+      as: 'a',
+      target: '_blank',
+      rel: 'noopener noreferrer',
+    } as const);
 
   useEffect(() => {
     if (typeof navigator !== 'undefined') {
