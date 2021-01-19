@@ -111,14 +111,20 @@ const textWrapper = css`
   top: 0;
   bottom: 0;
   left: 0;
-  font-weight: medium;
-  padding-top: ${spacing[4]}px;
-  padding-left: ${spacing[4]}px;
+  font-weight: 600;
   text-align: left;
   overflow: hidden;
 
   ${mq({
+    paddingTop: [`${spacing[2]}px`, `${spacing[4]}px`],
+    paddingLeft: [`${spacing[2]}px`, `${spacing[4]}px`],
     fontSize: ['24px', '60px', '60px', '60px'],
+  })}
+`;
+
+const newsContainer = css`
+  ${mq({
+    height: ['unset', '350px'],
   })}
 `;
 
@@ -230,7 +236,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
       >
         {/* First Row */}
         <GridItem sm={12} md={6} lg={6}>
-          <div className={largeHeight}>
+          <div className={newsContainer}>
             <News updates={updates} />
           </div>
         </GridItem>

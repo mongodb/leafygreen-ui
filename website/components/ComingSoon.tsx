@@ -10,6 +10,7 @@ const containerStyle = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: ${spacing[6]}px;
 `;
 
 const subtitleStyle = css`

@@ -2,12 +2,21 @@
 /* eslint react/prop-types: 0 */
 
 import React, { useState } from 'react';
+import facepaint from 'facepaint';
+import { transparentize } from 'polished';
 import { enforceExhaustive } from '@leafygreen-ui/lib';
 import { cx, css } from '@leafygreen-ui/emotion';
 import Card from '@leafygreen-ui/card';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Knob, Boolean, Text, Area, Number, Select } from './Knobs';
+
+const mq = facepaint(
+  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
+  { literal: true },
+);
+
+const baseBoxShadow = `0 4px 10px -4px ${transparentize(0.7, uiColors.black)}`;
 
 const backdrop = css`
   background-color: ${uiColors.gray.light3};
@@ -23,6 +32,13 @@ const previewStyle = css`
   display: flex;
   flex-direction: column;
   margin-top: ${spacing[5]}px;
+
+  ${mq({
+    boxShadow: ['none', baseBoxShadow],
+    borderRadius: ['0px', '7px'],
+    marginLeft: ['-24px', 'unset'],
+    marginRight: ['-24px', 'unset'],
+  })}
 `;
 
 const componentContainer = css`
@@ -34,6 +50,11 @@ const componentContainer = css`
   flex-direction: row;
   flex-wrap: wrap;
   min-height: 400px;
+
+  ${mq({
+    padding: [`${spacing[4]}px`, `${spacing[6]}px`],
+    minHeight: ['200px', '400px'],
+  })}
 `;
 
 const componentContainerDarkMode = css`

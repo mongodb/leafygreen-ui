@@ -1,12 +1,18 @@
 import React, { useCallback, useMemo } from 'react';
+import facepaint from 'facepaint';
 import { IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Select as LGUISelect, Option } from '@leafygreen-ui/select';
 import TextInput from '@leafygreen-ui/text-input';
 import TextArea from '@leafygreen-ui/text-area';
 import Toggle from '@leafygreen-ui/toggle';
+
+const mq = facepaint(
+  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
+  { literal: true },
+);
 
 const booleanIdAllocator = IdAllocator.create('boolean');
 const textIdAllocator = IdAllocator.create('text');
@@ -21,7 +27,13 @@ const knobContainerStyle = css`
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
-  padding: ${spacing[3]}px ${spacing[5]}px;
+
+  ${mq({
+    padding: [
+      `${spacing[3]}px ${spacing[4]}px`,
+      `${spacing[3]}px ${spacing[5]}px`,
+    ],
+  })}
 `;
 
 const knobContainerHeight = css`
@@ -40,6 +52,16 @@ const textAreaClassName = css`
   display: flex;
   flex-direction: column;
   width: ${knobsWidth}px;
+
+  ${mq({
+    width: ['200px', `${knobsWidth}px`],
+  })}
+`;
+
+const textClassName = css`
+  ${mq({
+    width: ['200px', `${knobsWidth}px`],
+  })}
 `;
 
 const labelDarkMode = css`
@@ -208,9 +230,7 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
         value={value}
         aria-labelledby={labelId}
         darkMode={darkMode}
-        className={css`
-          width: ${knobsWidth}px;
-        `}
+        className={textClassName}
       />
     </div>
   );

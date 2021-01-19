@@ -1,8 +1,14 @@
 import React from 'react';
 import { css } from 'emotion';
+import facepaint from 'facepaint';
 import { Logo } from '@leafygreen-ui/logo';
 import { uiColors } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, breakpoints } from '@leafygreen-ui/tokens';
+
+const mq = facepaint(
+  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
+  { literal: true },
+);
 
 const footerContainer = css`
   background-color: ${uiColors.gray.dark3};
@@ -10,9 +16,12 @@ const footerContainer = css`
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  margin-top: ${spacing[7]}px;
   padding-left: ${spacing[5]}px;
   padding-top: 36px;
+
+  ${mq({
+    marginTop: ['1px', `${spacing[7]}px`],
+  })}
 `;
 
 const linksContainer = css`
@@ -21,13 +30,17 @@ const linksContainer = css`
   margin-left: 72px;
   margin-right: 72px;
   color: white;
-  margin-top: 4px;
+  margin-top: 2px;
+
+  ${mq({
+    marginRight: ['36px', '72px'],
+  })}
 `;
 
 const linkStyle = css`
   margin: 0;
   font-size: 14px;
-  line-height: 16px;
+  line-height: 20px;
   margin-bottom: ${spacing[4]}px;
   text-decoration: none;
   color: ${uiColors.white};

@@ -18,9 +18,8 @@ const mq = facepaint(
 );
 
 const layout = css`
-  margin-top: 70px;
-
   ${mq({
+    marginTop: [`${spacing[4]}px`, '70px'],
     width: ['100%', '100%', '700px', '700px'],
   })}
 `;
@@ -52,6 +51,8 @@ const caps = css`
 const componentGuidelineStyles = css`
   overflow-wrap: anywhere;
   color: ${uiColors.gray.dark3};
+  padding-bottom: ${spacing[6]}px;
+
   & > p {
     font-size: 16px;
     line-height: 24px;
@@ -61,6 +62,7 @@ const componentGuidelineStyles = css`
 const codeDocsWrapper = css`
   display: flex;
   align-items: center;
+  overflow: hidden;
 `;
 
 const reactIconStyle = css`
@@ -119,7 +121,13 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
           )}
         </div>
       </div>
-      <Tabs selected={selected} setSelected={setSelected}>
+      <Tabs
+        selected={selected}
+        setSelected={setSelected}
+        aria-label={`Information on LeafyGreen UI ${componentName
+          .split('-')
+          .join(' ')} component`}
+      >
         <Tab
           name="Live Example"
           onClick={() => router.push(`/component/${componentName}/example`)}

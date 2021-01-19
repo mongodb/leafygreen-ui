@@ -1,14 +1,30 @@
 import React from 'react';
+import facepaint from 'facepaint';
 import { css } from 'emotion';
 import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 import { Subtitle, InlineCode } from '@leafygreen-ui/typography/dist';
 import { OneOf } from '@leafygreen-ui/lib';
+import { breakpoints } from '@leafygreen-ui/tokens';
 import PropDefinition from 'components/PropDefinition';
 import TypographyPropTable from 'components/TypographyPropTable';
 import formatType from 'utils/formatType';
 
+const mq = facepaint(
+  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
+  { literal: true },
+);
+
+const tableWrapper = css`
+  ${mq({
+    marginLeft: ['-22px', 'unset'],
+    marginRight: ['-22px', 'unset'],
+    overflow: ['hidden', 'unset'],
+  })}
+`;
+
 const subtitleBottomMargin = css`
   margin-bottom: 24px;
+  margin-left: 24px;
 `;
 
 const tableBottomMargin = css`
@@ -195,7 +211,7 @@ function PropTable({
       {component === 'typography' && <TypographyPropTable />}
       {headers.map((header: string, index: number) => {
         return (
-          <div key={index}>
+          <div key={index} className={tableWrapper}>
             <Subtitle className={subtitleBottomMargin} as="h3">
               {`${header.replace(/ /g, '')} Props`}
             </Subtitle>

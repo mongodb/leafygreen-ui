@@ -14,15 +14,15 @@ const mq = facepaint(
 );
 
 const newsContainer = css`
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding-bottom: ${spacing[4]}px;
   ${mq({
+    height: ['auto', '100%'],
     marginTop: [`${spacing[4]}px`, 'unset'],
     marginBottom: [`${spacing[4]}px`, 'unset'],
-    paddingLeft: [`${spacing[4]}px`, 'unset'],
+    paddingLeft: ['43px', 'unset'],
   })}
 `;
 
