@@ -59,6 +59,9 @@ describe('packages/typography', () => {
         expect(icon).toBeInTheDocument();
       });
 
+      // Related ticket here: https://jira.mongodb.org/browse/PD-1090
+      test.todo('and the "arrowAppearance" prop is set to "hover"', () => { })
+
       test('and the "arrowAppearance" prop is not specified', () => {
         renderLink({
           href: 'http://localhost:9001',

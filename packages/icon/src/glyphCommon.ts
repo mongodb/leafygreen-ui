@@ -20,12 +20,15 @@ interface AccessibleFunctionParams {
   ariaLabel?: string;
 }
 
-interface AccessibleFunctionReturnType {
+interface AccessibleFunctionParams {
   'aria-labelledby'?: string;
   'aria-label'?: string;
   title?: string | null;
-  'aria-hidden'?: boolean;
 }
+
+type AccessibleFunctionReturnType =
+  | AccessibleFunctionParams
+  | { 'aria-hidden': true };
 
 export function generateAccessibleProps(
   role: 'img' | 'presentation',
