@@ -11,7 +11,7 @@ import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
 import MobileNavigationProvider from './NavigationContext';
 
 const resetButtonStyle = css`
-  background-color: white;  
+  background-color: white;
   width: 100%;
   border: unset;
 `;
