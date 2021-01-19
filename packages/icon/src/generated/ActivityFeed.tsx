@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum f3eef8b9d2cb62f5318f423e98424de3
+ * @checksum c32df7ce2fd6841d93323bac4b753209
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const ActivityFeed = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'ActivityFeed', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

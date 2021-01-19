@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum de99fd554d3e0400ce8124eec80e1f38
+ * @checksum e09ce5d0c75b4e67b5e9a46a243d3c42
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const Warning = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'Warning', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

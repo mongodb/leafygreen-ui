@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum b954107ed85a359bce5fbc60a4923488
+ * @checksum b97eb988b5ce89f2e888966b4fd2902d
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const SortDescending = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'SortDescending', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

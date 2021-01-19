@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 096390cd1f6f1d4e56c6d4461c3dff72
+ * @checksum e86465f760606950d6066d0b58ed1a79
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const Checkmark = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'Checkmark', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

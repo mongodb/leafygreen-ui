@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum dac78821913dd27200607863f7d50f3a
+ * @checksum df2c4e1517c4205c63d2eea7918c4f6a
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const VerticalEllipsis = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'VerticalEllipsis', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

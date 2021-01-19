@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum a6615583880c1a8c300f0319b3643aa0
+ * @checksum 8135ab6ed9e8fb231f6fda13ff926307
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const ChevronLeft = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'ChevronLeft', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

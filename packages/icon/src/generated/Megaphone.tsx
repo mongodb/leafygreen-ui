@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 713c92b212475a27e6e92cf19adcbf73
+ * @checksum 6f666abf9fdbb7c368426d07a4e419bb
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const Megaphone = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'Megaphone', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

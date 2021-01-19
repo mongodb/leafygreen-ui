@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum a6a5b8c3564e3f398ee3568808bfc1aa
+ * @checksum 60a4e311813567554affafb6c283c6e6
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const InviteUser = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'InviteUser', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

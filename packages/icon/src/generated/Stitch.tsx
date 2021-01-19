@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 4e4e8eebd1e78a96d6b7fa6eb8e4453f
+ * @checksum c55651f84d36f04474c8a98c18ceae53
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const Stitch = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'Stitch', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

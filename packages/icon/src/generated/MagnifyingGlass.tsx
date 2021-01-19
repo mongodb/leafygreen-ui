@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 4e1128dfa5914901e775a8934a5947a7
+ * @checksum 59fcc67d0f5be22e57ac3d21c6cd0f27
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const MagnifyingGlass = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'MagnifyingGlass', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

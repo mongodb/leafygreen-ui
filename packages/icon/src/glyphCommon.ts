@@ -15,12 +15,6 @@ export const sizeMap: Record<Size, number> = {
 } as const;
 
 interface AccessibleFunctionParams {
-  title?: string | null;
-  ariaLabelledby?: string;
-  ariaLabel?: string;
-}
-
-interface AccessibleFunctionParams {
   'aria-labelledby'?: string;
   'aria-label'?: string;
   title?: string | null;
@@ -33,7 +27,11 @@ type AccessibleFunctionReturnType =
 export function generateAccessibleProps(
   role: 'img' | 'presentation',
   glyphName: string,
-  { ariaLabel, ariaLabelledby, title }: AccessibleFunctionParams,
+  {
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
+    title,
+  }: AccessibleFunctionParams,
 ): AccessibleFunctionReturnType {
   switch (role) {
     case 'img':

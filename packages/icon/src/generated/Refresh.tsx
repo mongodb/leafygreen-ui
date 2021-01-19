@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 880308f56e9d0c7d499d7c1eefdf57b8
+ * @checksum e787aa0e3b9d4e88d7a3fac23ae0fb0a
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const Refresh = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'Refresh', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 0275ddeaa8216579a1a5cf5dba5d5420
+ * @checksum 9b7b8b58fca33e1a2714bc38d5a7031b
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const Beaker = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'Beaker', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

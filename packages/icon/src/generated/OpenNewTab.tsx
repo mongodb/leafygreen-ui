@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 84e67197975193e8d368cbee4b585be9
+ * @checksum 83dd99fb570207c339752c36a9c145b2
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const OpenNewTab = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'OpenNewTab', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum e8f5a75e5c05271e08adc8b03916d77d
+ * @checksum 9037d3d0e8ccd1c8dcc7bd886383639f
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const CaretDown = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'CaretDown', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

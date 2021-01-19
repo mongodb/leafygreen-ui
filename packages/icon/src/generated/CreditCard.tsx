@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum cf4ffc7a47e33de5c944ab35b3e64657
+ * @checksum 15cf534e42e0a0b2f99d924df1d9ab4e
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const CreditCard = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'CreditCard', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

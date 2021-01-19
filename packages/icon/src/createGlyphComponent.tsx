@@ -43,8 +43,8 @@ export default function createGlyphComponent(
         role={role}
         {...generateAccessibleProps(role, glyphName, {
           title,
-          ariaLabel,
-          ariaLabelledby,
+          ['aria-label']: ariaLabel,
+          ['aria-labelledby']: ariaLabelledby,
         })}
         {...rest}
       />

@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 10750bb54a6e3cc70e891ea7bf487483
+ * @checksum 415f4133ca1b29e43d1c45f7edc2abad
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const CaretRight = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'CaretRight', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

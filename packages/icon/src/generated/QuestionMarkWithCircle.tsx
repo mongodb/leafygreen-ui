@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 00a2ec35d312152e90bfb6e067dbc2e1
+ * @checksum 20a0a355f2d2d2402dd35685fcc9ed78
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -32,8 +32,8 @@ const QuestionMarkWithCircle = ({
     'QuestionMarkWithCircle',
     {
       title,
-      ariaLabel,
-      ariaLabelledby,
+      ['aria-label']: ariaLabel,
+      ['aria-labelledby']: ariaLabelledby,
     },
   );
   return (

@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum b29cf4cff9d1a428522d28afb06f3e23
+ * @checksum 71f6da5741dbe32d2529f3c2d78f1577
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const ArrowLeft = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'ArrowLeft', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

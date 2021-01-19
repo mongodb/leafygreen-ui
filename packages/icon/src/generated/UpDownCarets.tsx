@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum b8e202e619c9cd59f0334f75c4bee35c
+ * @checksum f7dffe9562d257deca676b1005d76b49
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const UpDownCarets = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'UpDownCarets', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

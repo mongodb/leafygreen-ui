@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum f0c2ee6ed55e2c11a9af3bf17a649e6e
+ * @checksum b21913f0e846633b41ae6e9004e868dd
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const PersonWithLock = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'PersonWithLock', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 3ecd349cd015bc9bf8627a711c20cad1
+ * @checksum c445c130a961799e1b47f0e70cc1f7a8
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const ImportantWithCircle = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'ImportantWithCircle', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

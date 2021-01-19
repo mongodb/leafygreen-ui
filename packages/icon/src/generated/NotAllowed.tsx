@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum fb0906a408c3c05123472b2eaee3a2cb
+ * @checksum cb11c1ee9247427201d0320c30e83648
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -29,8 +29,8 @@ const NotAllowed = ({
   `;
   const accessibleProps = generateAccessibleProps(role, 'NotAllowed', {
     title,
-    ariaLabel,
-    ariaLabelledby,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   });
   return (
     <svg

@@ -74,7 +74,7 @@ module.exports = function template(
         flex-shrink: 0;
       \`;
 
-      const accessibleProps = generateAccessibleProps(role, '${componentName}', { title, ariaLabel, ariaLabelledby })
+      const accessibleProps = generateAccessibleProps(role, '${componentName}', { title, ['aria-label']: ariaLabel, ['aria-labelledby']: ariaLabelledby })
 
       return %%jsx%%;
     }
