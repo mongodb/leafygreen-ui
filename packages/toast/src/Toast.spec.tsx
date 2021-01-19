@@ -165,15 +165,13 @@ describe('packages/toast', () => {
     test.each(Object.values(Variant) as Array<Variant>)(
       `when 'variant' is '%s'`,
       variant => {
-        const { getByTitle } = renderToast({
+        const { getByLabelText } = renderToast({
           open: true,
           body: 'hello world',
           variant,
         });
 
-        expect(
-          getByTitle(expectedVariantIcons[variant]).closest('svg'),
-        ).toBeVisible();
+        expect(getByLabelText(expectedVariantIcons[variant])).toBeVisible();
       },
     );
   });
