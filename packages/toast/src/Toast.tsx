@@ -1,8 +1,6 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import Transition, {
-  TransitionStatus,
-} from 'react-transition-group/Transition';
+import { Transition } from 'react-transition-group';
 import { transparentize } from 'polished';
 import { cx, css } from '@leafygreen-ui/emotion';
 import Portal from '@leafygreen-ui/portal';
@@ -232,6 +230,10 @@ const variantIcons: Record<Variant, React.ComponentType<any>> = {
   [Variant.Important]: ImportantWithCircleIcon,
   [Variant.Progress]: RefreshIcon,
 };
+
+type TransitionStatus = Parameters<
+  Extract<React.ComponentProps<typeof Transition>['children'], Function>
+>[0];
 
 const toastTransitionStateStyles: Partial<Record<TransitionStatus, string>> = {
   entered: css`
