@@ -1,8 +1,9 @@
 import React from 'react';
 import { boolean } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import Card from './Card';
+import { uiColors } from '@leafygreen-ui/palette';
 
 const containerStyle = css`
   padding: 16px;
@@ -15,12 +16,19 @@ const containerStyle = css`
 
 storiesOf('Card', module).add('Default', () => {
   const hasClickBehavior = boolean('Has click behavior', true);
+  const darkMode = boolean('darkMode', false);
 
   return (
     <Card
       as="div"
-      className={containerStyle}
       onClick={hasClickBehavior ? () => alert('hello') : undefined}
+      darkMode={darkMode}
+      className={cx(
+        containerStyle,
+        css`
+          color: ${darkMode ? uiColors.white : uiColors.gray.dark3};
+        `,
+      )}
     >
       This is a card component
     </Card>
