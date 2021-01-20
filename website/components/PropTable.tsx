@@ -6,9 +6,19 @@ import { OneOf } from '@leafygreen-ui/lib';
 import PropDefinition from 'components/PropDefinition';
 import TypographyPropTable from 'components/TypographyPropTable';
 import formatType from 'utils/formatType';
+import { mq } from 'utils/mediaQuery';
+
+const tableWrapper = css`
+  ${mq({
+    marginLeft: ['-24px', 'unset'],
+    marginRight: ['-24px', 'unset'],
+    overflow: ['hidden', 'unset'],
+  })}
+`;
 
 const subtitleBottomMargin = css`
   margin-bottom: 24px;
+  margin-left: 24px;
 `;
 
 const tableBottomMargin = css`
@@ -195,7 +205,7 @@ function PropTable({
       {component === 'typography' && <TypographyPropTable />}
       {headers.map((header: string, index: number) => {
         return (
-          <div key={index}>
+          <div key={index} className={tableWrapper}>
             <Subtitle className={subtitleBottomMargin} as="h3">
               {`${header.replace(/ /g, '')} Props`}
             </Subtitle>

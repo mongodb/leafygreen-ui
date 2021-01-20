@@ -1,14 +1,9 @@
 import React from 'react';
-import facepaint from 'facepaint';
 import { css } from 'emotion';
-import { spacing, breakpoints } from '@leafygreen-ui/tokens';
+import { spacing } from '@leafygreen-ui/tokens';
 import Navigation from 'components/navigation';
+import { mq } from 'utils/mediaQuery';
 import Footer from './Footer';
-
-const mq = facepaint(
-  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
-  { literal: true },
-);
 
 const containerStyle = css`
   width: 100%;
@@ -23,7 +18,8 @@ const containerStyle = css`
 
 const layout = css`
   ${mq({
-    width: ['100%', '100%', '700px', '700px'],
+    width: ['100%', '100%', 'calc(100% - 32px)', 'calc(1440px - 270px - 32px)'],
+    marginRight: ['inherit', 'inherit', '32px'],
   })}
 `;
 

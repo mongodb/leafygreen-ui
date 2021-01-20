@@ -1,7 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { css, cx } from 'emotion';
-import facepaint from 'facepaint';
 import { Overline } from '@leafygreen-ui/typography';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useViewportSize } from '@leafygreen-ui/hooks';
@@ -9,11 +8,7 @@ import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { GridContainer, GridItem } from 'components/Grid';
 import { getAllUpdates, UpdateProps } from 'utils/fetchUpdates';
 import News from 'components/News';
-
-const mq = facepaint(
-  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
-  { literal: true },
-);
+import { mq } from 'utils/mediaQuery';
 
 const backdrop = css`
   background-color: ${uiColors.gray.light3};
@@ -111,26 +106,32 @@ const textWrapper = css`
   top: 0;
   bottom: 0;
   left: 0;
-  font-weight: medium;
-  padding-top: ${spacing[4]}px;
-  padding-left: ${spacing[4]}px;
+  font-weight: 600;
   text-align: left;
   overflow: hidden;
 
   ${mq({
+    paddingTop: [`${spacing[3]}px`, `${spacing[4]}px`],
+    paddingLeft: [`${spacing[3]}px`, `${spacing[4]}px`],
     fontSize: ['24px', '60px', '60px', '60px'],
+  })}
+`;
+
+const newsContainer = css`
+  ${mq({
+    height: ['unset', '350px'],
   })}
 `;
 
 const largeHeight = css`
   ${mq({
-    height: ['50vw', '350px', '350px', '350px'],
+    height: ['50vw', '350px'],
   })}
 `;
 
 const smallHeight = css`
   ${mq({
-    height: ['50vw', '175px', '175px', '175px'],
+    height: ['50vw', '175px'],
   })}
 `;
 
@@ -230,7 +231,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
       >
         {/* First Row */}
         <GridItem sm={12} md={6} lg={6}>
-          <div className={largeHeight}>
+          <div className={newsContainer}>
             <News updates={updates} />
           </div>
         </GridItem>
