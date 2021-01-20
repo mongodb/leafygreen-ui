@@ -1,5 +1,6 @@
 import React from 'react';
 import Box from '@leafygreen-ui/box';
+import { Body } from '@leafygreen-ui/typography';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const knobsConfig: KnobsConfigInterface<{
@@ -33,12 +34,16 @@ export default function BoxLiveExample() {
         if (hasHrefProp) {
           return (
             <Box as="a" href="https://cloud.mongodb.com">
-              {children}
+              <Body>{children}</Body>
             </Box>
           );
         }
 
-        return <Box as={as}>{children}</Box>;
+        return (
+          <Box as={as}>
+            <Body>{children}</Body>
+          </Box>
+        );
       }}
     </LiveExample>
   );

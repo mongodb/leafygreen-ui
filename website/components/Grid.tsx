@@ -1,12 +1,6 @@
 import React, { useMemo } from 'react';
 import { css } from 'emotion';
-import facepaint from 'facepaint';
-import { breakpoints } from '@leafygreen-ui/tokens';
-
-const mq = facepaint(
-  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
-  { literal: true },
-);
+import { mq } from 'utils/mediaQuery';
 
 const Direction = {
   Row: 'row',

@@ -66,15 +66,11 @@ The blue note banners mean “this is something that may be nice to know”. Ban
   This is an example of a note banner. It spans a single line.
 </Banner>
 
-<br />
-
 The yellow warning banner means “this might be important so pay attention”.
 
 <Banner variant="warning" dismissible>
   This is an example of a warning banner. It spans a single line.
 </Banner>
-
-<br />
 
 The danger red banner mean “something is broken, or actively going wrong”.
 
@@ -82,15 +78,11 @@ The danger red banner mean “something is broken, or actively going wrong”.
   We have detected a potential problem while deploying.
 </Banner>
 
-<br />
-
 The success green banner should be used sparingly and are used to indicate success, or confirmation. When using a green banner, consider using toasts instead.
 
 <Banner variant="success" dismissible>
   Your cluster has finished provisioning!
 </Banner>
-
-<br />
 
 This is what a multiline banner looks like.
 
@@ -103,8 +95,6 @@ This is what a multiline banner looks like.
 ## image
 
 Links are underlined and set to medium weight to ensure legibility on colored backgrounds.
-
-<br />
 
 We recommend not including CTAs within banners. However, if your specific use-case
 calls for it we suggest using the default color button in the extra-small size and
@@ -126,7 +116,6 @@ not having any other buttons in the banner.
     </Banner>
     <CheckmarkWithCircleIcon size="xlarge" fill={uiColors.green.base} className={css`margin-top: 10px`}/>
   </div>
-
 
   <div className={css`display: flex; flex-direction: column; align-items: center`}>
     <Banner
@@ -151,9 +140,6 @@ not having any other buttons in the banner.
   </div>
 </div>
 
-
-<br />
-
 Never center content within the banner.
 
 <div
@@ -173,7 +159,6 @@ Never center content within the banner.
     <CheckmarkWithCircleIcon size="xlarge" fill={uiColors.green.base} className={css`margin-top: 10px`}/>
   </div>
 
-
   <div className={css`display: flex; flex-direction: column; align-items: center`}>
     <Banner
       variant="warning"
@@ -187,7 +172,6 @@ Never center content within the banner.
     <XWithCircleIcon size="xlarge" fill={uiColors.red.base} className={css`margin-top: 10px`}/>
   </div>
 </div>
-
 
 <br />
 
@@ -218,8 +202,6 @@ Try to restrict the banner max-width to 700px. (It’s okay if this pushes some 
     `}
   />
 </div>
-
-<br />
 
 If you want, you can customize your banner and add a 32px by 32px feature icon. Make sure the feature icons ties well with the content it’s supporting.
 

@@ -1,28 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import facepaint from 'facepaint';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Overline, Subtitle, H2 } from '@leafygreen-ui/typography';
-import { spacing, breakpoints } from '@leafygreen-ui/tokens';
+import { spacing } from '@leafygreen-ui/tokens';
 import { UpdateProps } from 'utils/fetchUpdates';
-
-const mq = facepaint(
-  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
-  { literal: true },
-);
+import { mq } from 'utils/mediaQuery';
 
 const newsContainer = css`
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding-bottom: ${spacing[4]}px;
   ${mq({
-    marginTop: [`${spacing[4]}px`, 'unset'],
-    marginBottom: [`${spacing[4]}px`, 'unset'],
-    paddingLeft: [`${spacing[4]}px`, 'unset'],
+    height: ['auto', '100%'],
+    marginTop: ['48px', 'unset'],
+    marginBottom: ['40px', 'unset'],
   })}
 `;
 
