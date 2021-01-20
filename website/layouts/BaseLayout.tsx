@@ -18,7 +18,8 @@ const containerStyle = css`
 
 const layout = css`
   ${mq({
-    width: ['100%', '100%', '700px', '700px'],
+    width: ['100%', '100%', 'calc(100% - 32px)', 'calc(1440px - 270px - 32px)'],
+    marginRight: ['inherit', 'inherit', '32px'],
   })}
 `;
 

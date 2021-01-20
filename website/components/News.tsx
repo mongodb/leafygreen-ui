@@ -15,9 +15,8 @@ const newsContainer = css`
   padding-bottom: ${spacing[4]}px;
   ${mq({
     height: ['auto', '100%'],
-    marginTop: [`${spacing[4]}px`, 'unset'],
-    marginBottom: [`${spacing[4]}px`, 'unset'],
-    paddingLeft: ['43px', 'unset'],
+    marginTop: ['48px', 'unset'],
+    marginBottom: ['40px', 'unset'],
   })}
 `;
 

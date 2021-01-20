@@ -42,6 +42,11 @@ const container = css`
   cursor: pointer;
   position: relative;
   color: ${uiColors.gray.dark3};
+
+  ${mq({
+    // marginLeft: ['-24px', 'unset', 'unset', 'unset'],
+    // marginRight: ['24px', 'unset', 'unset', 'unset'],
+  })}
 `;
 
 const sharedHoverInteraction = css`
@@ -111,8 +116,8 @@ const textWrapper = css`
   overflow: hidden;
 
   ${mq({
-    paddingTop: [`${spacing[2]}px`, `${spacing[4]}px`],
-    paddingLeft: [`${spacing[2]}px`, `${spacing[4]}px`],
+    paddingTop: [`${spacing[3]}px`, `${spacing[4]}px`],
+    paddingLeft: [`${spacing[3]}px`, `${spacing[4]}px`],
     fontSize: ['24px', '60px', '60px', '60px'],
   })}
 `;
@@ -125,13 +130,13 @@ const newsContainer = css`
 
 const largeHeight = css`
   ${mq({
-    height: ['50vw', '350px', '350px', '350px'],
+    height: ['50vw', '350px'],
   })}
 `;
 
 const smallHeight = css`
   ${mq({
-    height: ['50vw', '175px', '175px', '175px'],
+    height: ['50vw', '175px'],
   })}
 `;
 

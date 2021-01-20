@@ -56,6 +56,7 @@ const tabsPadding = css`
 
 const mobileInstallMargin = css`
   margin-top: 50px;
+  margin-bottom: ${spacing[3]}px;
 `;
 
 const changelogStyles = css`

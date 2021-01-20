@@ -10,8 +10,8 @@ import { mq } from 'utils/mediaQuery';
 
 const tableWrapper = css`
   ${mq({
-    marginLeft: ['-18px', 'unset'],
-    marginRight: ['-18px', 'unset'],
+    marginLeft: ['-24px', 'unset'],
+    marginRight: ['-24px', 'unset'],
     overflow: ['hidden', 'unset'],
   })}
 `;

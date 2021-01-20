@@ -22,12 +22,11 @@ const footerContainer = css`
 const linksContainer = css`
   display: flex;
   flex-direction: column;
-  margin-left: 72px;
-  margin-right: 72px;
   color: white;
   margin-top: 2px;
 
   ${mq({
+    marginLeft: ['36px', '72px'],
     marginRight: ['36px', '72px'],
   })}
 `;
