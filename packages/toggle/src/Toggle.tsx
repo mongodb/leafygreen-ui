@@ -359,7 +359,7 @@ interface BaseToggleProps {
 
 type ToggleProps = Either<
   BaseToggleProps &
-  Omit<HTMLElementProps<'button', never>, keyof BaseToggleProps>,
+    Omit<HTMLElementProps<'button', never>, keyof BaseToggleProps>,
   'aria-label' | 'aria-labelledby'
 >;
 
@@ -380,7 +380,7 @@ function Toggle({
   );
   const [checked, setChecked] = useState(false);
 
-  const isControlled = typeof controlledChecked === 'boolean' ? true : false
+  const isControlled = typeof controlledChecked === 'boolean' ? true : false;
   const normalizedChecked = controlledChecked ?? checked;
 
   const onClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(
@@ -388,11 +388,14 @@ function Toggle({
       onClickProp?.(e);
 
       if (isControlled) {
-        onChangeProp?.(!controlledChecked, e)
+        onChangeProp?.(!controlledChecked, e);
       } else {
-        setChecked(curr => !curr)
+        setChecked(curr => {
+          const updatedState = !curr;
+          onChangeProp?.(updatedState, e);
+          return updatedState;
+        });
       }
-
     },
     [isControlled, controlledChecked, onClickProp, onChangeProp],
   );

@@ -24,11 +24,11 @@ const knobContainerStyle = css`
   flex-grow: 1;
 
   ${mq({
-  padding: [
-    `${spacing[3]}px ${spacing[4]}px`,
-    `${spacing[3]}px ${spacing[5]}px`,
-  ],
-})}
+    padding: [
+      `${spacing[3]}px ${spacing[4]}px`,
+      `${spacing[3]}px ${spacing[5]}px`,
+    ],
+  })}
 `;
 
 const knobContainerHeight = css`
@@ -49,14 +49,14 @@ const textAreaClassName = css`
   width: ${knobsWidth}px;
 
   ${mq({
-  width: ['200px', `${knobsWidth}px`],
-})}
+    width: ['200px', `${knobsWidth}px`],
+  })}
 `;
 
 const textClassName = css`
   ${mq({
-  width: ['200px', `${knobsWidth}px`],
-})}
+    width: ['200px', `${knobsWidth}px`],
+  })}
 `;
 
 const labelDarkMode = css`
