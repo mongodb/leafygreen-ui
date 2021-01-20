@@ -109,7 +109,7 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
           >
             <MenuIcon size={20} />
           </IconButton>
-          <MDBDesignLogo />
+          <MDBDesignLogo onClick={() => push('/')} />
         </div>
 
         <Transition in={open} timeout={300} mountOnEnter unmountOnExit>
@@ -135,7 +135,12 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
                 ref={setScrollContainerNode}
               >
                 <div className={logoContainer}>
-                  <MDBDesignLogo />
+                  <MDBDesignLogo
+                    onClick={() => {
+                      push('/');
+                      setOpen(false);
+                    }}
+                  />
                 </div>
                 <ol className={ulStyleOverrides}>
                   <li>
