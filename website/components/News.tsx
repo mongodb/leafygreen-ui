@@ -17,6 +17,7 @@ const newsContainer = css`
   height: ['auto', '100%'],
   marginTop: ['48px', 'unset'],
   marginBottom: ['40px', 'unset'],
+  marginLeft: ['24px', 'unset']
 })}
 `;
 

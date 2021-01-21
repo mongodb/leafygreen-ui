@@ -59,14 +59,6 @@ const previewWrapper = css`
   ${container}
   overflow: hidden;
   transition: transform 300ms ease-in-out;
-  // ${sharedHoverInteraction}
-
-  // &:hover {
-  //   & > div {
-  //     opacity: 1;
-  //     transform: translate3d(0, 0, 0) scale(1);
-  //   }
-  // }
 `;
 
 const overlineContainer = css`
@@ -98,7 +90,6 @@ const marketingWrapper = css`
   overflow: hidden;
   position: relative;
   transition: transform 300ms ease-in-out;
-  // ${sharedHoverInteraction}
 `;
 
 const textWrapper = css`
@@ -144,6 +135,11 @@ const secondRowContainer = css`
   flex-wrap: wrap;
 `;
 
+const eraseMargin = css`
+  margin-left: -24px;
+  margin-right: -24px;
+`
+
 interface ComponentPreviewProps {
   route: string;
   backgroundURL: string;
@@ -163,7 +159,7 @@ function ComponentPreview({
   const { push } = useRouter();
 
   return (
-    <div className={className}>
+    <div className={cx(className)}>
       <button className={cx(previewWrapper, { [sharedHoverInteraction]: !isTouchDevice })} onClick={() => push(route)}>
         <img
           src={backgroundURL}
@@ -245,8 +241,9 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             route="/component/banner/example"
             backgroundURL="/images/banner-thumbnail.png"
             content="Banner"
-            className={largeHeight}
+            className={cx(largeHeight)}
             isTouchDevice={isTouchDevice}
+
           />
         </GridItem>
 
