@@ -128,7 +128,7 @@ const SideNav = React.forwardRef<HTMLElement, Props>(function SideNav(
   useEventListener(
     'keydown',
     event => {
-      if (keyMap.BracketLeft) {
+      if (event.keyCode === keyMap.BracketLeft) {
         event.preventDefault();
         event.stopImmediatePropagation();
         toggleCollapse();
@@ -150,7 +150,7 @@ const SideNav = React.forwardRef<HTMLElement, Props>(function SideNav(
     hovered,
   ]);
 
-  const showCollapsed = collapsed && !hovered;
+  const shouldRenderCollapsedState = collapsed && !hovered;
 
   return (
     <SideNavContext.Provider value={providerData}>
@@ -162,7 +162,7 @@ const SideNav = React.forwardRef<HTMLElement, Props>(function SideNav(
         className={cx(
           navStyle,
           {
-            [collapsedNavStyle]: showCollapsed,
+            [collapsedNavStyle]: shouldRenderCollapsedState,
             [collapsedHoveredNavStyle]: collapsed && hovered,
           },
           className,
@@ -180,7 +180,7 @@ const SideNav = React.forwardRef<HTMLElement, Props>(function SideNav(
         )}
         <div
           className={cx(navListStyle, {
-            [collapsedNavListStyle]: showCollapsed,
+            [collapsedNavListStyle]: shouldRenderCollapsedState,
           })}
         >
           {children}

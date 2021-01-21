@@ -126,7 +126,7 @@ const SideNavItem: ExtendableBox<
     glyphVisibility = GlyphVisibility.OnlyCollapsed,
     path,
     onSelect,
-    'aria-label': ariaLabel,
+    'aria-label': ariaLabelProp,
     onClick: onClickProp,
     onKeyDown: onKeyDownProp,
     href,
@@ -198,40 +198,44 @@ const SideNavItem: ExtendableBox<
   );
 
   const isActive = path !== undefined && currentPath === path;
-  const showCollapsed = collapsed && !hovered;
+  const shouldRenderCollapsedState = collapsed && !hovered;
   const hasGlyph = glyph !== undefined;
-  const isInGroup = groupContextData !== null
+  const isInGroup = groupContextData !== null;
   const isLink = href !== undefined;
 
-  let showGlyph: boolean;
+  let shouldRenderGlyph: boolean;
 
   if (hasGlyph) {
     switch (glyphVisibility) {
       case GlyphVisibility.OnlyCollapsed:
-        showGlyph = showCollapsed;
+        shouldRenderGlyph = shouldRenderCollapsedState;
         break;
       case GlyphVisibility.OnlyExpanded:
-        showGlyph = !showCollapsed;
+        shouldRenderGlyph = !shouldRenderCollapsedState;
         break;
       case GlyphVisibility.Visible:
-        showGlyph = true;
+        shouldRenderGlyph = true;
         break;
       default:
         enforceExhaustive(glyphVisibility);
     }
   } else {
-    showGlyph = false;
+    shouldRenderGlyph = false;
   }
 
-  if (showCollapsed) {
+  const ariaLabel =
+    ariaLabelProp ?? (typeof children === 'string' ? children : undefined);
+
+  if (shouldRenderCollapsedState) {
     return (
       <div
+        aria-label={shouldRenderGlyph ? ariaLabel : undefined}
         className={cx(sideNavItemStyle, sideNavItemCollapsedStyle, {
-          [sideNavItemWithGlyphCollapsedStyle]: showGlyph,
+          [sideNavItemWithGlyphCollapsedStyle]: shouldRenderGlyph,
           [sideNavItemNonGroupLinkStyle]: !isInGroup && isLink,
         })}
       >
-        {showGlyph && glyph}
+        {shouldRenderGlyph && glyph}
       </div>
     );
   }
@@ -239,9 +243,7 @@ const SideNavItem: ExtendableBox<
   return (
     <Box
       as="a"
-      aria-label={
-        ariaLabel ?? (typeof children === 'string' ? children : undefined)
-      }
+      aria-label={ariaLabel}
       aria-current={isActive ? AriaCurrentValue.Page : AriaCurrentValue.Unset}
       tabIndex={0}
       ref={setRef}
@@ -261,8 +263,8 @@ const SideNavItem: ExtendableBox<
       href={href}
       {...rest}
     >
-      {showGlyph && glyph}
-      {!showCollapsed && children}
+      {shouldRenderGlyph && glyph}
+      {children}
     </Box>
   );
 });

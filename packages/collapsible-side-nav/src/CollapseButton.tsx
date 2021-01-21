@@ -99,7 +99,7 @@ export default function CollapseButton({
 
   const description = `${collapsed ? 'Expand' : 'Collapse'} sidebar`;
 
-  const showCollapsed = collapsed && !hovered;
+  const shouldRenderCollapsedState = collapsed && !hovered;
 
   let content = (
     <IconButton
@@ -108,7 +108,7 @@ export default function CollapseButton({
       })}
       aria-label={description}
       aria-controls={navId}
-      aria-expanded={!showCollapsed}
+      aria-expanded={!shouldRenderCollapsedState}
       onClick={onTrigger}
       onKeyDown={onKeyDown}
       onMouseOver={onMouseOver}

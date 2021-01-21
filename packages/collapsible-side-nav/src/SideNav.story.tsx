@@ -56,7 +56,7 @@ storiesOf('CollapsibleSideNav', module)
       [],
     );
 
-    const showlink = boolean('Show link', true);
+    const showLink = boolean('Show link', true);
     const showTopLevel = boolean('Show top-level item', true);
 
     return (
@@ -68,7 +68,7 @@ storiesOf('CollapsibleSideNav', module)
               currentPath={currentPath}
               collapsible={boolean('Collapsible', true)}
             >
-              {showlink && (
+              {showLink && (
                 <SideNavItem
                   glyph={<AppsIcon />}
                   glyphVisibility={GlyphVisibility.Visible}

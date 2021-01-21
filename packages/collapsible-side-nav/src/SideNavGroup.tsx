@@ -74,7 +74,7 @@ const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
       children,
       glyph,
       label,
-      'aria-label': ariaLabel,
+      'aria-label': ariaLabelProp,
       ...rest
     }: Props,
     ref,
@@ -115,28 +115,30 @@ const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
       removePath,
     ]);
 
-    const showCollapsed = collapsed && !hovered;
+    const shouldRenderCollapsedState = collapsed && !hovered;
     const hasGlyph = glyph !== undefined;
     const containsCurrentPath =
       currentPath !== undefined && containedPaths.has(currentPath);
 
+    const ariaLabel =
+      ariaLabelProp ?? (typeof label === 'string' ? label : undefined);
+
     return (
       <div
         ref={ref}
-        role={showCollapsed ? undefined : 'group'}
-        aria-labelledby={showCollapsed ? undefined : id}
+        role={shouldRenderCollapsedState ? undefined : 'group'}
+        aria-labelledby={shouldRenderCollapsedState ? undefined : id}
         aria-label={
-          showCollapsed
-            ? ariaLabel ?? (typeof label === 'string' ? label : undefined)
-            : undefined
+          shouldRenderCollapsedState && !hasGlyph ? ariaLabel : undefined
         }
         className={cx(
           sideNavGroupStyle,
           {
-            [sideNavGroupCollapsedStyle]: showCollapsed,
-            [sideNavGroupWithGlyphCollapsedStyle]: hasGlyph && showCollapsed,
+            [sideNavGroupCollapsedStyle]: shouldRenderCollapsedState,
+            [sideNavGroupWithGlyphCollapsedStyle]:
+              hasGlyph && shouldRenderCollapsedState,
             [sideNavGroupCollapsedAndCurrentStyle]:
-              showCollapsed && containsCurrentPath,
+              shouldRenderCollapsedState && containsCurrentPath,
           },
           className,
         )}
@@ -144,15 +146,15 @@ const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
       >
         <div
           id={id}
-          aria-hidden={showCollapsed}
+          aria-hidden={shouldRenderCollapsedState}
           className={cx(sideNavGroupHeaderStyle, {
-            [sideNavGroupHeaderCollapsedStyle]: showCollapsed,
+            [sideNavGroupHeaderCollapsedStyle]: shouldRenderCollapsedState,
             [sideNavGroupHeaderWithGlyphCollapsedStyle]:
-              hasGlyph && showCollapsed,
+              hasGlyph && shouldRenderCollapsedState,
           })}
         >
           {hasGlyph && <div className={glyphStyle}>{glyph}</div>}
-          {!showCollapsed && label}
+          {!shouldRenderCollapsedState && label}
         </div>
         <SideNavGroupContext.Provider value={providerData}>
           {children}

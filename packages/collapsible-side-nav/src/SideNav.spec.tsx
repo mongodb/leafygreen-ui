@@ -1,23 +1,24 @@
 import React from 'react';
-import { fireEvent, getByTitle, render, waitFor } from '@testing-library/react';
+import {
+  fireEvent,
+  getByLabelText,
+  render,
+  waitFor,
+} from '@testing-library/react';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import { keyMap } from '@leafygreen-ui/lib';
 import { GlyphVisibility, SideNav, SideNavGroup, SideNavItem } from '.';
-import { getGlyphTitle } from '../../icon/src/glyphCommon';
 
 function toHaveGlyph(
   item: HTMLElement,
-  glyphName: string,
+  glyphLabel: string,
 ): jest.CustomMatcherResult {
   try {
-    const glyphTitle = getGlyphTitle(glyphName);
-    expect(glyphTitle).not.toBeNull();
-
-    const icon = getByTitle(item, glyphTitle!).closest('svg');
+    const icon = getByLabelText(item, glyphLabel);
     expect(icon).toBeVisible();
 
     try {
-      expect(icon).not.toBeVisible();
+      expect(icon).not.toBeInTheDocument();
     } catch (exception) {
       return { pass: true, message: () => exception.toString() };
     }
@@ -163,6 +164,17 @@ describe('packages/collapsible-side-nav', () => {
             </SideNav>,
           );
 
+          function queryAllItems() {
+            return [
+              'Item',
+              'Item With Only Collapsed Glyph',
+              'Item With Only Expanded Glyph',
+              'Item With Always Visible Glyph',
+              'Group Item',
+              'Group With Glyph Item',
+            ].map(label => queryByLabelText(label));
+          }
+
           function expectExpanded() {
             const [
               item,
@@ -171,14 +183,7 @@ describe('packages/collapsible-side-nav', () => {
               itemWithAlwaysVisibleGlyph,
               groupItem,
               groupWithGlyphItem,
-            ] = [
-              'Item',
-              'Item With Only Collapsed Glyph',
-              'Item With Only Expanded Glyph',
-              'Item With Always Visible Glyph',
-              'Group Item',
-              'Group With Glyph Item',
-            ].map(label => getByText(label));
+            ] = queryAllItems();
 
             const groupHeader = getByText('Group');
             const groupWithGlyphHeader = getByText('Group with Glyph');
@@ -191,7 +196,7 @@ describe('packages/collapsible-side-nav', () => {
               groupHeader,
             ].forEach(item => {
               expect(item).toBeVisible();
-              expect(item).not.toHaveGlyph('Cloud');
+              expect(item).not.toHaveGlyph('Cloud Icon');
             });
 
             [
@@ -200,7 +205,7 @@ describe('packages/collapsible-side-nav', () => {
               groupWithGlyphHeader,
             ].forEach(item => {
               expect(item).toBeVisible();
-              expect(item).toHaveGlyph('Cloud');
+              expect(item).toHaveGlyph('Cloud Icon');
             });
 
             // Button should have correct aria attributes
@@ -210,6 +215,15 @@ describe('packages/collapsible-side-nav', () => {
             expect(collapseButton).toHaveAttribute('aria-expanded', 'true');
 
             function expectCollapsed() {
+              const [
+                item,
+                itemWithOnlyCollapsedGlyph,
+                itemWithOnlyExpandedGlyph,
+                itemWithAlwaysVisibleGlyph,
+                groupItem,
+                groupWithGlyphItem,
+              ] = queryAllItems();
+
               expect(collapseButton).not.toBeInTheDocument();
 
               [
@@ -218,12 +232,11 @@ describe('packages/collapsible-side-nav', () => {
                 groupItem,
                 groupWithGlyphItem,
               ].forEach(item => {
-                expect(item).not.toBeVisible();
-                expect(item).not.toHaveGlyph('Cloud');
+                expect(item).not.toBeInTheDocument();
               });
 
               expect(groupHeader).toBeVisible();
-              expect(groupHeader).not.toHaveGlyph('Cloud');
+              expect(groupHeader).not.toHaveGlyph('Cloud Icon');
 
               [
                 itemWithOnlyCollapsedGlyph,
@@ -231,7 +244,7 @@ describe('packages/collapsible-side-nav', () => {
                 groupWithGlyphHeader,
               ].forEach(item => {
                 expect(item).toBeVisible();
-                expect(item).toHaveGlyph('Cloud');
+                expect(item).toHaveGlyph('Cloud Icon');
               });
 
               // aria attributes have been updated

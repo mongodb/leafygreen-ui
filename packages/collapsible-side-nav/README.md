@@ -88,7 +88,8 @@ import {
         viewBox="0 0 16 16"
         role="img"
         aria-labelledby="ChevronLeft-43"
-      >...</svg
+      >
+        ...</svg
       ><svg
         class="leafygreen-ui-16xqsmu"
         height="16"
@@ -96,7 +97,9 @@ import {
         viewBox="0 0 16 16"
         role="img"
         aria-labelledby="ChevronRight-43"
-      >...</svg>
+      >
+        ...
+      </svg>
     </div>
   </button>
   <div class="leafygreen-ui-1orcjpq">
@@ -112,7 +115,8 @@ import {
         viewBox="0 0 16 16"
         role="img"
         aria-labelledby="Apps-11"
-      >...</svg
+      >
+        ...</svg
       >Realm Apps</a
     ><a
       aria-label="Investments"
@@ -139,7 +143,9 @@ import {
             viewBox="0 0 16 16"
             role="img"
             aria-labelledby="Cloud-11"
-          >...</svg>
+          >
+            ...
+          </svg>
         </div>
         Data Access
       </div>
@@ -187,7 +193,9 @@ import {
             viewBox="0 0 16 16"
             role="img"
             aria-labelledby="Laptop-11"
-          >...</svg>
+          >
+            ...
+          </svg>
         </div>
         Build
       </div>
@@ -253,7 +261,9 @@ import {
             viewBox="0 0 16 16"
             role="img"
             aria-labelledby="Settings-21"
-          >...</svg>
+          >
+            ...
+          </svg>
         </div>
         Manage
       </div>
@@ -313,7 +323,9 @@ import {
             viewBox="0 0 16 16"
             role="img"
             aria-labelledby="Support-11"
-          >...</svg>
+          >
+            ...
+          </svg>
         </div>
         Help
       </div>
