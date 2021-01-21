@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Overline, Subtitle, H2 } from '@leafygreen-ui/typography';
@@ -14,11 +13,11 @@ const newsContainer = css`
   justify-content: center;
   padding-bottom: ${spacing[4]}px;
   ${mq({
-  height: ['auto', '100%'],
-  marginTop: ['48px', 'unset'],
-  marginBottom: ['40px', 'unset'],
-  marginLeft: ['24px', 'unset']
-})}
+    height: ['auto', '100%'],
+    marginTop: ['48px', 'unset'],
+    marginBottom: ['40px', 'unset'],
+    marginLeft: ['24px', 'unset'],
+  })}
 `;
 
 const subtitleStyle = css`
@@ -44,11 +43,11 @@ function Update({ date, story, route, updateURL }: UpdateProps) {
   const subtitleProps = route
     ? ({ onClick: () => push(route), as: 'p' } as const)
     : ({
-      href: updateURL,
-      as: 'a',
-      target: '_blank',
-      rel: 'noopener noreferrer',
-    } as const);
+        href: updateURL,
+        as: 'a',
+        target: '_blank',
+        rel: 'noopener noreferrer',
+      } as const);
 
   useEffect(() => {
     if (typeof navigator !== 'undefined') {

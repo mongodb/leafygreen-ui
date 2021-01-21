@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from 'emotion';
-import Card from '@leafygreen-ui/card'
+import Card from '@leafygreen-ui/card';
 import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 import { Subtitle, InlineCode } from '@leafygreen-ui/typography/dist';
 import { OneOf } from '@leafygreen-ui/lib';
@@ -11,18 +11,14 @@ import { mq } from 'utils/mediaQuery';
 
 const tableWrapper = css`
   ${mq({
-  marginLeft: ['-24px', 'unset'],
-  marginRight: ['-24px', 'unset'],
-  overflow: ['hidden', 'unset'],
-})}
+    marginLeft: ['-24px', 'unset'],
+    marginRight: ['-24px', 'unset'],
+    overflow: ['hidden', 'unset'],
+  })}
 `;
 
 const subtitleBottomMargin = css`
   margin-bottom: 24px;
-`;
-
-const tableBottomMargin = css`
-  
 `;
 
 const verticalAlign = css`
@@ -211,7 +207,12 @@ function PropTable({
             </Subtitle>
 
             {tableData[index] && (
-              <Card className={css`padding: 24px; margin-bottom: 56px;`}>
+              <Card
+                className={css`
+                  padding: 24px;
+                  margin-bottom: 56px;
+                `}
+              >
                 <Table
                   key={header}
                   data={tableData[index]}

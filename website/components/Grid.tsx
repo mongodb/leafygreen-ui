@@ -53,13 +53,16 @@ function GridContainer({
 }: GridContainerProps) {
   return (
     <div
-      className={cx(css`
-        display: flex;
-        flex-direction: ${direction};
-        align-items: ${align};
-        justify-content: ${justify};
-        flex-wrap: ${wrap};
-      `, className)}
+      className={cx(
+        css`
+          display: flex;
+          flex-direction: ${direction};
+          align-items: ${align};
+          justify-content: ${justify};
+          flex-wrap: ${wrap};
+        `,
+        className,
+      )}
     >
       {children}
     </div>
@@ -205,25 +208,25 @@ function GridItem({
         ${visibleGridItemStyles}
         margin-left: ${Math.round(100 / 12) * colStart}%;
         ${mq({
-        width: [
-          styles.sm.width,
-          styles.md.width,
-          styles.lg.width,
-          styles.xl.width,
-        ],
-        flexBasis: [
-          styles.sm.flexBasis,
-          styles.md.flexBasis,
-          styles.lg.flexBasis,
-          styles.xl.flexBasis,
-        ],
-        display: [
-          styles.sm.display,
-          styles.md.display,
-          styles.lg.display,
-          styles.xl.display,
-        ],
-      })}
+          width: [
+            styles.sm.width,
+            styles.md.width,
+            styles.lg.width,
+            styles.xl.width,
+          ],
+          flexBasis: [
+            styles.sm.flexBasis,
+            styles.md.flexBasis,
+            styles.lg.flexBasis,
+            styles.xl.flexBasis,
+          ],
+          display: [
+            styles.sm.display,
+            styles.md.display,
+            styles.lg.display,
+            styles.xl.display,
+          ],
+        })}
       `}
     >
       {children}
