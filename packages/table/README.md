@@ -43,12 +43,12 @@ import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 
 ## Table Properties
 
-| Prop       | Type                                                                                              | Description                                                | Default |
-| ---------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ------- |
-| `data`     | `Array<unknown>`                                                                                  | Data that will be rendered inside of the table             |         |
-| `columns`  | `Array<React.ReactElement<HeaderRowProps` \| `TableHeaderProps<Shape>>>` \| `React.ReactFragment` | Columns in the Table                                       |         |
-| `children` | `(datum, string) => JSX.Element`                                                                  | Rows of the table                                          |         |
-| ...        | native `table` attributes                                                                         | Any other props will be spread on the root `table` element |         |
+| Prop       | Type                                                                                          | Description                                                | Default |
+| ---------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ------- |
+| `data`     | `Array<unknown>`                                                                              | Data that will be rendered inside of the table             |         |
+| `columns`  | `Array<React.ReactElement<HeaderRowProps`, `TableHeaderProps<Shape>>>`, `React.ReactFragment` | Columns in the Table                                       |         |
+| `children` | `(datum, string) => JSX.Element`                                                              | Rows of the table                                          |         |
+| ...        | native `table` attributes                                                                     | Any other props will be spread on the root `table` element |         |
 
 # HeaderRow
 
@@ -62,7 +62,7 @@ import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 | Prop       | Type                                                      | Description                                                                        | Default |
 | ---------- | --------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------- |
 | `label`    | `string`                                                  | Content that will be rendered inside of the `th` tags                              |         |
-| `sortBy`   | `(data: any) => string` \| `string`                       | String or function that provides information about how the column should be sorted |         |
+| `sortBy`   | `(data: any) => string`, `string`                         | String or function that provides information about how the column should be sorted |         |
 | `dataType` | `'number'`, `'weight'`, `'zipCode'`, `'string'`, `'date'` | Describes the type of data in the column                                           |         |
 | ...        | native `th` attributes                                    | Any other props will be spread on the root `th` element                            |         |
 
@@ -76,8 +76,9 @@ import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 
 # Cell
 
-| Prop        | Type                   | Description                                             | Default |
-| ----------- | ---------------------- | ------------------------------------------------------- | ------- |
-| `children`  | `React.ReactNode`      | Contents to appear inside of the Cell                   |         |
-| `className` | `string`               | className applied to `td` wrapper                       |         |
-| ...         | native `td` attributes | Any other props will be spread on the root `td` element |         |
+| Prop        | Type                           | Description                                                     | Default |
+| ----------- | ------------------------------ | --------------------------------------------------------------- | ------- |
+| `children`  | `React.ReactNode`              | Contents to appear inside of the Cell                           |         |
+| `className` | `string`                       | className applied to `td` or `th` wrapper (see `isHeader` prop) |         |
+| `isHeader`  | `boolean`                      | Renders the cell as a `th` element                              | `false` |
+| ...         | native `td` or `th` attributes | Any other props will be spread on the root `td` or `th` element |         |

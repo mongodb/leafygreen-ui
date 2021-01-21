@@ -9,7 +9,10 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 import IconButton from '@leafygreen-ui/icon-button';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
+import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
+import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
 import RefreshIcon from '@leafygreen-ui/icon/dist/Refresh';
+import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import ProgressBar from './ToastProgressBar';
 
@@ -60,6 +63,9 @@ const baseElementStyles: Partial<Record<StyledElements, string>> = {
 
 const Variant = {
   Success: 'success',
+  Note: 'note',
+  Warning: 'warning',
+  Important: 'important',
   Progress: 'progress',
 } as const;
 
@@ -102,6 +108,99 @@ const variantStyles: Record<
     `,
   },
 
+  [Variant.Note]: {
+    toast: css`
+      background-color: ${uiColors.blue.light3};
+    `,
+
+    icon: css`
+      color: ${uiColors.blue.dark2};
+    `,
+
+    contentWrapper: css`
+      border-radius: 4px;
+      border: 1px solid ${uiColors.blue.light2};
+    `,
+
+    body: css`
+      color: ${uiColors.blue.dark2};
+    `,
+
+    dismissButton: css`
+      color: ${uiColors.blue.dark2};
+
+      &:hover {
+        color: ${uiColors.blue.dark3};
+
+        &:before {
+          background-color: ${uiColors.blue.light2};
+        }
+      }
+    `,
+  },
+
+  [Variant.Warning]: {
+    toast: css`
+      background-color: ${uiColors.red.light3};
+    `,
+
+    icon: css`
+      color: ${uiColors.red.base};
+    `,
+
+    contentWrapper: css`
+      border-radius: 4px;
+      border: 1px solid ${uiColors.red.light2};
+    `,
+
+    body: css`
+      color: ${uiColors.red.dark2};
+    `,
+
+    dismissButton: css`
+      color: ${uiColors.red.dark2};
+
+      &:hover {
+        color: ${uiColors.green.dark3};
+
+        &:before {
+          background-color: ${uiColors.red.light2};
+        }
+      }
+    `,
+  },
+
+  [Variant.Important]: {
+    toast: css`
+      background-color: ${uiColors.yellow.light3};
+    `,
+
+    icon: css`
+      color: ${uiColors.yellow.dark2};
+    `,
+
+    contentWrapper: css`
+      border-radius: 4px;
+      border: 1px solid ${uiColors.yellow.light2};
+    `,
+
+    body: css`
+      color: ${uiColors.yellow.dark2};
+    `,
+
+    dismissButton: css`
+      color: ${uiColors.yellow.dark2};
+
+      &:hover {
+        color: ${uiColors.yellow.dark3};
+
+        &:before {
+          background-color: ${uiColors.yellow.light2};
+        }
+      }
+    `,
+  },
+
   [Variant.Progress]: {
     toast: css`
       background-color: ${uiColors.white};
@@ -124,17 +223,20 @@ const variantStyles: Record<
   },
 };
 
-const RTGStates = {
-  Entering: 'entering',
-  Entered: 'entered',
-  Exiting: 'exiting',
-  Exited: 'exited',
-} as const;
+const variantIcons: Record<Variant, React.ComponentType<any>> = {
+  [Variant.Success]: CheckmarkWithCircleIcon,
+  [Variant.Note]: CloudIcon,
+  [Variant.Warning]: WarningIcon,
+  [Variant.Important]: ImportantWithCircleIcon,
+  [Variant.Progress]: RefreshIcon,
+};
 
-type RTGStates = typeof RTGStates[keyof typeof RTGStates];
+type TransitionStatus = Parameters<
+  Extract<React.ComponentProps<typeof Transition>['children'], Function>
+>[0];
 
-const toastTransitionStateStyles: Partial<Record<RTGStates, string>> = {
-  [RTGStates.Entered]: css`
+const toastTransitionStateStyles: Partial<Record<TransitionStatus, string>> = {
+  entered: css`
     transform: translate3d(0, 0, 0) scale(1);
     opacity: 1;
   `,
@@ -194,97 +296,96 @@ function Toast({
   const nodeRef = useRef(null);
   const dismissible = typeof close === 'function';
 
-  let VariantIcon: React.ComponentType<any>;
-
-  if (variant === Variant.Progress) {
-    VariantIcon = RefreshIcon;
-  } else if (variant === Variant.Success) {
-    VariantIcon = CheckmarkWithCircleIcon;
-  } else {
-    VariantIcon = CheckmarkWithCircleIcon;
-  }
+  const VariantIcon = variantIcons[variant];
 
   const currentVariantStyles = variantStyles[variant];
 
   return (
-    <Transition
-      in={open}
-      timeout={transitionDuration}
-      mountOnEnter
-      unmountOnExit
-      nodeRef={nodeRef}
-    >
-      {(state: RTGStates) => (
-        <Portal>
-          <div
-            role="status"
-            ref={nodeRef}
-            className={cx(
-              baseElementStyles.toast,
-              currentVariantStyles.toast,
-              toastTransitionStateStyles[state],
-              className,
-            )}
-            {...rest}
-          >
+    <Portal>
+      <div
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        aria-relevant="all"
+      >
+        <Transition
+          in={open}
+          timeout={transitionDuration}
+          mountOnEnter
+          unmountOnExit
+          nodeRef={nodeRef}
+        >
+          {state => (
             <div
+              ref={nodeRef}
               className={cx(
-                baseElementStyles.contentWrapper,
-                currentVariantStyles.contentWrapper,
-                {
-                  [css`
-                    padding-right: ${spacing[3] * 2}px;
-                  `]: dismissible,
-                },
+                baseElementStyles.toast,
+                currentVariantStyles.toast,
+                toastTransitionStateStyles[state],
+                className,
               )}
+              {...rest}
             >
-              <VariantIcon
+              <div
                 className={cx(
-                  baseElementStyles.icon,
-                  currentVariantStyles.icon,
+                  baseElementStyles.contentWrapper,
+                  currentVariantStyles.contentWrapper,
+                  {
+                    [css`
+                      padding-right: ${spacing[3] * 2}px;
+                    `]: dismissible,
+                  },
                 )}
-                size={30}
-              />
-
-              <div>
-                {title && (
-                  <Body
-                    data-testid="toast-title"
-                    className={cx(
-                      currentVariantStyles.body,
-                      css`
-                        font-weight: bold;
-                      `,
-                    )}
-                  >
-                    {title}
-                  </Body>
-                )}
-
-                <Body className={currentVariantStyles.body}>{body}</Body>
-              </div>
-            </div>
-
-            {dismissible && (
-              <IconButton
-                className={cx(
-                  baseElementStyles.dismissButton,
-                  currentVariantStyles.dismissButton,
-                )}
-                aria-label="Close Message"
-                onClick={close}
               >
-                <XIcon />
-              </IconButton>
-            )}
+                <VariantIcon
+                  aria-hidden
+                  className={cx(
+                    baseElementStyles.icon,
+                    currentVariantStyles.icon,
+                  )}
+                  size={30}
+                />
 
-            {variant === Variant.Progress && (
-              <ProgressBar progress={progress} />
-            )}
-          </div>
-        </Portal>
-      )}
-    </Transition>
+                <div>
+                  {title && (
+                    <Body
+                      data-testid="toast-title"
+                      className={cx(
+                        currentVariantStyles.body,
+                        css`
+                          font-weight: bold;
+                        `,
+                      )}
+                    >
+                      {title}
+                    </Body>
+                  )}
+
+                  <Body className={currentVariantStyles.body}>{body}</Body>
+                </div>
+              </div>
+
+              {dismissible && (
+                <IconButton
+                  className={cx(
+                    baseElementStyles.dismissButton,
+                    currentVariantStyles.dismissButton,
+                  )}
+                  aria-label="Close Message"
+                  onClick={close}
+                >
+                  <XIcon />
+                </IconButton>
+              )}
+
+              {variant === Variant.Progress && (
+                <ProgressBar progress={progress} />
+              )}
+            </div>
+          )}
+        </Transition>
+      </div>
+    </Portal>
   );
 }
 

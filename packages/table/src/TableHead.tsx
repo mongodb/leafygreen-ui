@@ -1,6 +1,7 @@
 import React from 'react';
-import HeaderRow from './HeaderRow';
+import HeaderRow, { HeaderRowElement } from './HeaderRow';
 import { TableProps } from './Table';
+import { TableHeaderElement } from './TableHeader';
 import { isComponentType } from '@leafygreen-ui/lib';
 
 type TableHeaderProps<Shape> = Pick<TableProps<Shape>, 'columns'>;
@@ -15,7 +16,7 @@ function TableHead<Shape>({ columns = [] }: TableHeaderProps<Shape>) {
         index,
       };
 
-      if (isComponentType(child, 'HeaderRow')) {
+      if (isComponentType<HeaderRowElement>(child, 'HeaderRow')) {
         usingHeaderRow.current = true;
 
         const { children } = child?.props;
@@ -25,7 +26,7 @@ function TableHead<Shape>({ columns = [] }: TableHeaderProps<Shape>) {
         });
       }
 
-      if (isComponentType(child, 'TableHeader')) {
+      if (isComponentType<TableHeaderElement>(child, 'TableHeader')) {
         return React.cloneElement(child, tableHeaderCommonProps);
       }
 
@@ -34,8 +35,9 @@ function TableHead<Shape>({ columns = [] }: TableHeaderProps<Shape>) {
   }
 
   const columnArray: Array<React.ReactElement> =
-    // @ts-ignore Property 'type' does not exist on type '{}'.ts(2339)
-    columns.type === React.Fragment || isComponentType(columns, 'HeaderRow')
+    // @ts-expect-error Property 'type' does not exist on type '{}'.ts(2339)
+    columns.type === React.Fragment ||
+    isComponentType<HeaderRowElement>(columns, 'HeaderRow')
       ? React.Children.toArray((columns as React.ReactElement).props.children)
       : (columns as Array<any>);
 

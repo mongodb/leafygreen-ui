@@ -15,20 +15,17 @@ describe('packages/typography', () => {
           href: 'http://mongodb.design',
           arrowAppearance: 'hover',
         });
-        const openInNewTab = screen.getByTitle('Open New Tab Icon');
-        const rightArrow = screen.queryByTitle('Arrow Right Icon');
-        expect(openInNewTab).toBeInTheDocument();
-        expect(rightArrow).not.toBeInTheDocument();
+
+        const icon = screen.getByLabelText('Open New Tab Icon');
+        expect(icon).toBeInTheDocument();
       });
 
       test('and the "arrowAppearance" prop is not set', () => {
         renderLink({
           href: 'http://mongodb.design',
         });
-        const openInNewTab = screen.getByTitle('Open New Tab Icon');
-        const rightArrow = screen.queryByTitle('Arrow Right Icon');
-        expect(openInNewTab).toBeInTheDocument();
-        expect(rightArrow).not.toBeInTheDocument();
+        const icon = screen.getByLabelText('Open New Tab Icon');
+        expect(icon).toBeInTheDocument();
       });
 
       test('and the "hideExternalIcon" prop is set', () => {
@@ -36,8 +33,8 @@ describe('packages/typography', () => {
           hideExternalIcon: true,
           href: 'http://mongodb.design',
         });
-        const openInNewTab = screen.queryByTitle('Open New Tab Icon');
-        expect(openInNewTab).not.toBeInTheDocument();
+        const icon = screen.queryByRole('img');
+        expect(icon).not.toBeInTheDocument();
       });
     });
 
@@ -52,44 +49,27 @@ describe('packages/typography', () => {
         });
       });
 
-      test('and the "arrowAppearance" prop is set to "hover"', () => {
-        renderLink({
-          href: 'http://localhost:9001',
-          arrowAppearance: 'hover',
-        });
-        const anchor = screen.getByText('Link');
-        const openInNewTab = screen.queryByTitle('Open New Tab Icon');
-        const rightArrow = screen.queryByTitle('Arrow Right Icon');
-        expect(rightArrow).not.toBeVisible();
-
-        fireEvent.mouseEnter(anchor);
-        expect(rightArrow).toBeInTheDocument();
-        expect(openInNewTab).not.toBeInTheDocument();
-      });
-
       test('and the "arrowAppearance" prop is set to "persist"', () => {
         renderLink({
           href: 'http://localhost:9001',
           arrowAppearance: 'persist',
         });
 
-        const openInNewTab = screen.queryByTitle('Open New Tab Icon');
-        const rightArrow = screen.getByTitle('Arrow Right Icon');
-        expect(rightArrow).toBeInTheDocument();
-        expect(openInNewTab).not.toBeInTheDocument();
+        const icon = screen.getByLabelText('Arrow Right Icon');
+        expect(icon).toBeInTheDocument();
       });
+
+      // Related ticket here: https://jira.mongodb.org/browse/PD-1090
+      test.todo('and the "arrowAppearance" prop is set to "hover"');
 
       test('and the "arrowAppearance" prop is not specified', () => {
         renderLink({
           href: 'http://localhost:9001',
         });
         const anchor = screen.getByText('Link');
-        const openInNewTab = screen.queryByTitle('Open New Tab Icon');
-        const rightArrow = screen.queryByTitle('Arrow Right Icon');
 
         fireEvent.mouseEnter(anchor);
-        expect(rightArrow).not.toBeInTheDocument();
-        expect(openInNewTab).not.toBeInTheDocument();
+        expect(screen.queryByRole('img')).not.toBeInTheDocument();
       });
 
       test('and the "target" prop is set to "_blank"', () => {
@@ -97,8 +77,9 @@ describe('packages/typography', () => {
           href: 'http://localhost:9001',
           target: '_blank',
         });
-        const openInNewTab = screen.getByTitle('Open New Tab Icon');
-        expect(openInNewTab).toBeInTheDocument();
+
+        const icon = screen.getByLabelText('Open New Tab Icon');
+        expect(icon).toBeInTheDocument();
       });
     });
   });

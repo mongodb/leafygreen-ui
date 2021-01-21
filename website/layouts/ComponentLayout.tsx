@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { css } from 'emotion';
 import Button from '@leafygreen-ui/button';
@@ -9,6 +10,14 @@ import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { H2 } from '@leafygreen-ui/typography';
 import ReactIcon from 'components/svgs/ReactIcon';
 import FigmaIcon from 'components/svgs/FigmaIcon';
+import { mq } from 'utils/mediaQuery';
+
+const layout = css`
+  ${mq({
+    marginTop: [`${spacing[4]}px`, '70px'],
+    width: ['100%', '100%', '700px', '700px'],
+  })}
+`;
 
 const componentsStyle = css`
   height: 16px;
@@ -21,7 +30,6 @@ const componentsStyle = css`
 `;
 
 const margin4 = css`
-  margin-top: ${spacing[4]}px;
   margin-bottom: ${spacing[4]}px;
 `;
 
@@ -38,6 +46,8 @@ const caps = css`
 const componentGuidelineStyles = css`
   overflow-wrap: anywhere;
   color: ${uiColors.gray.dark3};
+  padding-bottom: ${spacing[6]}px;
+
   & > p {
     font-size: 16px;
     line-height: 24px;
@@ -47,17 +57,21 @@ const componentGuidelineStyles = css`
 const codeDocsWrapper = css`
   display: flex;
   align-items: center;
+  overflow: hidden;
 `;
 
 const reactIconStyle = css`
   margin-right: 4px;
 `;
 
-export default function ComponentLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function toTitleCase(component: string) {
+  return component
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.substr(1).toLowerCase())
+    .join(' ');
+}
+
+function ComponentLayout({ children }: { children: React.ReactNode }) {
   const [selected, setSelected] = React.useState(0);
   const router = useRouter();
   const componentName = router.pathname
@@ -78,9 +92,18 @@ export default function ComponentLayout({
     viewport !== null ? viewport.width < breakpoints.Tablet : false;
 
   return (
-    <div role="main">
+    <div role="main" className={layout}>
+      <Head>
+        <title>
+          {toTitleCase(componentName)} – LeafyGreen Design System | MongoDB
+        </title>
+      </Head>
+
       <div className={margin4}>
-        <small className={componentsStyle}>Components</small>
+        {/* Intentionally left blank, as we want to preserve this space for when we */}
+        {/* Have other sections on the SideNav and want to add back 'components' above */}
+        {/* The name of each component */}
+        <small className={componentsStyle}>‎‎‎‎‏‏‎ ‎</small>
         <div className={flexContainer}>
           <H2 as="h1" className={caps}>
             {componentName.split('-').join(' ')}
@@ -93,7 +116,13 @@ export default function ComponentLayout({
           )}
         </div>
       </div>
-      <Tabs selected={selected} setSelected={setSelected}>
+      <Tabs
+        selected={selected}
+        setSelected={setSelected}
+        aria-label={`Information on LeafyGreen UI ${componentName
+          .split('-')
+          .join(' ')} component`}
+      >
         <Tab
           name="Live Example"
           onClick={() => router.push(`/component/${componentName}/example`)}
@@ -123,3 +152,7 @@ export default function ComponentLayout({
     </div>
   );
 }
+
+ComponentLayout.displayName = 'ComponentLayout';
+
+export default ComponentLayout;

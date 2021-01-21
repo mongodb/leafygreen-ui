@@ -11,6 +11,7 @@ import MobileNavigation from './MobileNavigation';
 
 const navContainer = css`
   width: 270px;
+  padding-top: 12px;
   // spacing[3] already built into side nav
   padding-left: ${spacing[5] - spacing[3]}px;
   padding-right: 60px;
@@ -20,6 +21,7 @@ const navContainer = css`
 const logoStyles = css`
   // adds back spacing that was already built into side nav
   margin: 12px 0 ${spacing[4]}px ${spacing[3]}px;
+  cursor: pointer;
 `;
 
 const coreGuidelines = [
@@ -56,9 +58,9 @@ const components = [
   'portal',
   'radio-box-group',
   'radio-group',
+  'select',
   'side-nav',
   'stepper',
-  'syntax',
   'table',
   'tabs',
   'text-area',
@@ -116,8 +118,6 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
       <SideNavGroup
         key={type}
         header={isGuideline ? 'Core Guidelines' : 'Components'}
-        collapsible
-        initialCollapsed={false}
       >
         {items.map(item => {
           const path =
@@ -141,6 +141,8 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
   return renderGroup(GroupType.Component);
 }
 
+Content.displayName = 'Content';
+
 function Navigation() {
   const { push } = useRouter();
   const viewport = useViewportSize();
@@ -159,7 +161,7 @@ function Navigation() {
       <MDBDesignLogo className={logoStyles} onClick={() => push('/')} />
       <SideNav
         className={css`
-          margin-top: ${spacing[4]}px;
+          margin-top: ${spacing[3]}px;
         `}
       >
         <Content />
@@ -167,5 +169,7 @@ function Navigation() {
     </nav>
   );
 }
+
+Navigation.displayName = 'Navigation';
 
 export default Navigation;

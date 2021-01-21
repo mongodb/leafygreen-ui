@@ -1,5 +1,17 @@
 # @leafygreen-ui/table
 
+## 1.3.1
+
+### Patch Changes
+
+- 8ac6e396: Updates some of the attributes of internal elements to provide better accessibility to screen readers.
+
+## 1.3.0
+
+### Minor Changes
+
+- 3bf125b7: Adds isHeader prop to Cell component to allow for row headers.
+
 ## 1.2.1
 
 ### Patch Changes

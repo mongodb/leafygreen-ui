@@ -8,6 +8,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { commonCellStyles } from './styles';
 import { useSortContext } from './SortContext';
 import { useTableContext, TableActionTypes, DataType } from './TableContext';
+import { enforceExhaustive } from '@leafygreen-ui/lib';
 
 const thStyle = css`
   border-width: 0px 1px 3px 1px;
@@ -80,6 +81,10 @@ export type TableHeaderProps<Shape> = Omit<
 > &
   TableHeaderInterface<Shape>;
 
+export type TableHeaderElement = React.ReactComponentElement<
+  typeof TableHeader
+>;
+
 function TableHeader<Shape>({
   label,
   onClick,
@@ -107,14 +112,8 @@ function TableHeader<Shape>({
 
   const normalizedAccessor = sortBy && normalizeAccessor(sortBy);
 
-  let glyph: 'unsorted' | 'asc' | 'desc';
-
-  if (sort?.columnId === index) {
-    glyph = sort?.direction ?? 'unsorted';
-  } else {
-    glyph = 'unsorted';
-  }
-
+  const sortDirection = sort && sort.columnId === index ? sort.direction : null;
+  const glyph: 'unsorted' | 'asc' | 'desc' = sortDirection ?? 'unsorted';
   const Glyph = glyphMap[glyph];
 
   const sortRows = () => {
@@ -132,8 +131,29 @@ function TableHeader<Shape>({
     }
   };
 
+  let ariaSort: React.AriaAttributes['aria-sort'];
+
+  switch (sortDirection) {
+    case 'asc':
+      ariaSort = 'ascending';
+      break;
+    case 'desc':
+      ariaSort = 'descending';
+      break;
+    case null:
+      ariaSort = 'none';
+      break;
+    default:
+      enforceExhaustive(sortDirection);
+  }
+
   return (
-    <th {...rest} className={cx(thStyle, commonCellStyles, className)}>
+    <th
+      role="columnheader"
+      aria-sort={ariaSort}
+      {...rest}
+      className={cx(thStyle, commonCellStyles, className)}
+    >
       <div className={flexDisplay}>
         <span className={labelStyle}>{label}</span>
         {sortBy != null && (

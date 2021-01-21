@@ -21,6 +21,11 @@ import TypeDefinition from 'components/TypeDefinition';
 const topAlignment = css`
   margin-top: ${spacing[4]}px;
   padding-top: ${spacing[3]}px;
+  margin-bottom: ${spacing[3]}px;
+`;
+
+const versionCardDesktopMargin = css`
+  margin-left: 20px;
 `;
 
 const mt3 = css`
@@ -29,6 +34,11 @@ const mt3 = css`
 
 const mb1 = css`
   margin-bottom: ${spacing[1]}px;
+`;
+
+const copyableStyles = css`
+  width: 100%;
+  max-width: 400px;
 `;
 
 const versionCard = css`
@@ -46,6 +56,7 @@ const tabsPadding = css`
 
 const mobileInstallMargin = css`
   margin-top: 50px;
+  margin-bottom: ${spacing[3]}px;
 `;
 
 const changelogStyles = css`
@@ -84,7 +95,6 @@ function VersionCard({
 
   return (
     <Card className={cx(topAlignment, versionCard)}>
-      {/* TODO: Provide fallback if no version */}
       <Subtitle as="h2" className={subtitlePadding}>
         Version {version}
       </Subtitle>
@@ -110,6 +120,8 @@ function VersionCard({
   );
 }
 
+VersionCard.displayName = 'VersionCard';
+
 function MobileInstall({ component, version, changelog }: InstallProps) {
   return (
     <GridContainer>
@@ -119,11 +131,15 @@ function MobileInstall({ component, version, changelog }: InstallProps) {
           <Body weight="medium" className={mt3}>
             Yarn
           </Body>
-          <Copyable>{`yarn add @leafygreen-ui/${component}`}</Copyable>
+          <Copyable
+            className={copyableStyles}
+          >{`yarn add @leafygreen-ui/${component}`}</Copyable>
           <Body weight="medium" className={mt3}>
             NPM
           </Body>
-          <Copyable>{`npm install @leafygreen-ui/${component}`}</Copyable>
+          <Copyable
+            className={copyableStyles}
+          >{`npm install @leafygreen-ui/${component}`}</Copyable>
         </div>
       </GridItem>
       <GridItem sm={12}>
@@ -134,6 +150,8 @@ function MobileInstall({ component, version, changelog }: InstallProps) {
     </GridContainer>
   );
 }
+
+MobileInstall.displayName = 'MobileInstall';
 
 function DesktopInstall({ component, changelog, version }: InstallProps) {
   return (
@@ -156,7 +174,9 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
           </div>
         </GridItem>
         <GridItem md={5} lg={5}>
-          <VersionCard changelog={changelog} version={version} />
+          <div className={versionCardDesktopMargin}>
+            <VersionCard changelog={changelog} version={version} />
+          </div>
         </GridItem>
       </GridContainer>
       <GridContainer align="flex-start" justify="flex-start">
@@ -170,6 +190,8 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
     </>
   );
 }
+
+DesktopInstall.displayName = 'DesktopInstall';
 
 function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
   const viewport = useViewportSize();
@@ -201,16 +223,23 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
       )}
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
-          <Tabs className={tabsPadding}>
+          <Tabs
+            className={tabsPadding}
+            aria-label={`View source code for ${component} component`}
+          >
             {example && (
               <Tab default name="Example" className={mt3}>
-                <Code language="js">{example}</Code>
+                <Code showLineNumbers language="js">
+                  {example}
+                </Code>
               </Tab>
             )}
 
             {outputHTML && (
               <Tab name="Output HTML" className={mt3} default={!example}>
-                <Code language="xml">{outputHTML}</Code>
+                <Code showLineNumbers language="xml">
+                  {outputHTML}
+                </Code>
               </Tab>
             )}
           </Tabs>
@@ -225,5 +254,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
     </>
   );
 }
+
+CodeDocs.displayName = 'CodeDocs';
 
 export default CodeDocs;

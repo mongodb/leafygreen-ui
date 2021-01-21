@@ -173,7 +173,7 @@ const optionalStyle = css`
 
 const errorMessageStyle = css`
   font-size: 14px;
-  height: 20px;
+  min-height: 20px;
   padding-top: 4px;
   font-weight: normal;
 `;
@@ -218,12 +218,22 @@ const colorSets: Record<Mode, ColorSets> = {
   },
 } as const;
 
-function getStatefulInputStyles(state: State, optional: boolean, mode: Mode) {
+function getStatefulInputStyles({
+  state,
+  optional,
+  mode,
+  disabled,
+}: {
+  state: State;
+  optional: boolean;
+  mode: Mode;
+  disabled: boolean;
+}) {
   switch (state) {
     case State.Valid: {
       return css`
         padding-right: 30px;
-        border-color: ${colorSets[mode].validBorder};
+        border-color: ${!disabled ? colorSets[mode].validBorder : 'inherit'};
       `;
     }
 
@@ -231,7 +241,7 @@ function getStatefulInputStyles(state: State, optional: boolean, mode: Mode) {
       return cx(
         css`
           padding-right: 30px;
-          border-color: ${colorSets[mode].errorBorder};
+          border-color: ${!disabled ? colorSets[mode].errorBorder : 'inherit'};
         `,
         {
           [css`
@@ -273,9 +283,9 @@ const idAllocator = IdAllocator.create('text-input');
  * @param props.className className supplied to the TextInput container.
  * @param props.darkMode determines whether or not the component appears in dark mode.
  */
-const TextInput: React.ComponentType<React.PropsWithRef<
-  AccessibleTextInputProps
->> = React.forwardRef(
+const TextInput: React.ComponentType<
+  React.PropsWithRef<AccessibleTextInputProps>
+> = React.forwardRef(
   (
     {
       label,
@@ -359,8 +369,7 @@ const TextInput: React.ComponentType<React.PropsWithRef<
                       &:hover,
                       &:focus {
                         appearance: none;
-                        border: 1px solid
-                          ${colorSets[mode].disabledBackgroundColor};
+                        border: 1px solid ${colorSets[mode].defaultBorder};
                         -webkit-text-fill-color: ${colorSets[mode]
                           .disabledColor};
                         -webkit-box-shadow: 0 0 0px 1000px
@@ -369,8 +378,8 @@ const TextInput: React.ComponentType<React.PropsWithRef<
                     }
                   }
                 `,
+                getStatefulInputStyles({ state, optional, mode, disabled }),
                 {
-                  [getStatefulInputStyles(state, optional, mode)]: !disabled,
                   [css`
                     &:focus {
                       border: 1px solid ${colorSets[mode].inputBackgroundColor};

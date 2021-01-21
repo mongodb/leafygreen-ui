@@ -5,6 +5,14 @@ import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import Button from '@leafygreen-ui/button';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
+const wrapper = css`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const containerStyle = css`
   position: absolute;
 `;
@@ -72,7 +80,7 @@ function DefaultExample({
 }: Knobs) {
   const [active, setActive] = useState(false);
   return (
-    <div>
+    <div className={wrapper}>
       <Button
         onClick={() => setActive(!active)}
         className={containerStyle}

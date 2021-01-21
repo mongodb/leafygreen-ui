@@ -3,11 +3,10 @@ import path from 'path';
 import fs from 'fs';
 import { createHash } from 'crypto';
 import { toJson } from 'xml2json';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { typeIs } from '@leafygreen-ui/lib';
 import { SVGR } from './types';
 import { createIconComponent, glyphs } from '.';
-import { getGlyphTitle } from './glyphCommon';
 import createGlyphComponent from './createGlyphComponent';
 import EditIcon from '@leafygreen-ui/icon/dist/Edit';
 
@@ -106,34 +105,6 @@ describe('packages/Icon/createGlyphComponent createGlyphComponent()', () => {
   });
 });
 
-describe('packages/Icon/createGlyphComponent getGlyphTitle()', () => {
-  const glyphName = 'MyCustomGlyph';
-
-  test('When the title is "false", getGlyphTitle returns `null`', () => {
-    expect(getGlyphTitle(glyphName, false)).toBeNull();
-  });
-
-  const generatedTitle = 'My Custom Glyph Icon';
-
-  test(`When the title is "undefined", getGlyphTitle returns "${generatedTitle}"`, () => {
-    expect(getGlyphTitle(glyphName)).toBe(generatedTitle);
-  });
-
-  test(`When the title is "null", getGlyphTitle returns "${generatedTitle}"`, () => {
-    expect(getGlyphTitle(glyphName, null)).toBe(generatedTitle);
-  });
-
-  test(`When the title is "true", getGlyphTitle returns "${generatedTitle}"`, () => {
-    expect(getGlyphTitle(glyphName, true)).toBe(generatedTitle);
-  });
-
-  const testTitle = 'This is a test';
-
-  test(`When the title is the string "${testTitle}", getGlyphTitle returns "${testTitle}"`, () => {
-    expect(getGlyphTitle(glyphName, testTitle)).toBe(testTitle);
-  });
-});
-
 const customGlyphs = { MyGlyph };
 
 describe('packages/Icon/createIconComponent', () => {
@@ -223,6 +194,41 @@ describe('Generated glyphs', () => {
           );
         }
       });
+    });
+  });
+
+  describe('accessible props handled correctly', () => {
+    test('when no prop is supplied, aria-label is genereated', () => {
+      render(<EditIcon />);
+      const editIcon = screen.getByRole('img');
+      expect(editIcon.getAttribute('aria-label')).toBe('Edit Icon');
+    });
+
+    test('when aria-label is supplied it overrides default label', () => {
+      render(<EditIcon aria-label="Test label" />);
+      const editIcon = screen.getByRole('img');
+      expect(editIcon.getAttribute('aria-label')).toBe('Test label');
+    });
+
+    test('when aria-labelledby is supplied it overrides default label', () => {
+      render(<EditIcon aria-labelledby="Test label" />);
+      const editIcon = screen.getByRole('img');
+      expect(editIcon.getAttribute('aria-label')).toBe(null);
+      expect(editIcon.getAttribute('aria-labelledby')).toBe('Test label');
+    });
+
+    test('when title is supplied it overrides default label', () => {
+      render(<EditIcon title="Test title" />);
+      const editIcon = screen.getByRole('img');
+      expect(editIcon.getAttribute('aria-label')).toBe(null);
+      expect(editIcon.getAttribute('title')).toBe('Test title');
+    });
+
+    test('when role="presentation", aria-hidden is true', () => {
+      render(<EditIcon role="presentation" />);
+      const editIcon = screen.getByRole('presentation', { hidden: true });
+      expect(editIcon.getAttribute('aria-label')).toBe(null);
+      expect(editIcon.getAttribute('aria-hidden')).toBe('true');
     });
   });
 });

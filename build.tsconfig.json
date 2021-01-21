@@ -90,13 +90,13 @@
       "path": "./packages/radio-group"
     },
     {
+      "path": "./packages/select"
+    },
+    {
       "path": "./packages/side-nav"
     },
     {
       "path": "./packages/stepper"
-    },
-    {
-      "path": "./packages/syntax"
     },
     {
       "path": "./packages/table"

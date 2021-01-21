@@ -3,6 +3,7 @@ import { css } from 'emotion';
 import { Logo } from '@leafygreen-ui/logo';
 import { uiColors } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
+import { mq } from 'utils/mediaQuery';
 
 const footerContainer = css`
   background-color: ${uiColors.gray.dark3};
@@ -10,23 +11,30 @@ const footerContainer = css`
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  margin-top: ${spacing[7]}px;
   padding-left: ${spacing[5]}px;
   padding-top: 36px;
+
+  ${mq({
+    marginTop: ['1px', `${spacing[7]}px`],
+  })}
 `;
 
 const linksContainer = css`
   display: flex;
   flex-direction: column;
-  margin-left: 72px;
-  margin-right: 72px;
   color: white;
+  margin-top: 2px;
+
+  ${mq({
+    marginLeft: ['36px', '72px'],
+    marginRight: ['36px', '72px'],
+  })}
 `;
 
 const linkStyle = css`
   margin: 0;
   font-size: 14px;
-  line-height: 16px;
+  line-height: 20px;
   margin-bottom: ${spacing[4]}px;
   text-decoration: none;
   color: ${uiColors.white};
@@ -34,6 +42,7 @@ const linkStyle = css`
 
 const trademarkStyle = css`
   margin-top: 72px;
+  margin-bottom: 40px;
   font-size: 14px;
   padding-bottom: ${spacing[4]}px;
 `;
@@ -51,12 +60,12 @@ function FooterLink({ href, children }: JSX.IntrinsicElements['a']) {
   );
 }
 
-export default function Footer() {
+function Footer() {
   return (
     <div role="contentinfo" className={footerContainer}>
-      <div>
-        <Logo darkMode knockout height={20} />
-      </div>
+      <a href="https://mongodb.com" target="_blank" rel="noopener noreferrer">
+        <Logo darkMode knockout height={20} aria-hidden="true" />
+      </a>
       <div className={linksContainer}>
         <FooterLink href="https://www.mongodb.com/blog/post/meet-our-product-design-team-part-1">
           About Design at MongoDB
@@ -71,3 +80,7 @@ export default function Footer() {
     </div>
   );
 }
+
+Footer.displayName = 'Footer';
+
+export default Footer;

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/confirmation-modal",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "leafyGreen UI Kit Confirmation Modal",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -24,6 +24,6 @@
     "@leafygreen-ui/lib": "^6.1.1",
     "@leafygreen-ui/modal": "^5.1.0",
     "@leafygreen-ui/palette": "^3.1.0",
-    "@leafygreen-ui/text-input": "^5.0.0"
+    "@leafygreen-ui/text-input": "^5.0.6"
   }
 }

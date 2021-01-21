@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { Either, isComponentType } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
-import { LGGlyph } from '@leafygreen-ui/icon/src/types';
+import { isComponentGlyph } from '@leafygreen-ui/icon';
 
 const Mode = {
   Light: 'light',
@@ -178,17 +178,6 @@ interface BaseIconButtonProps {
 type AriaLabels = 'aria-label' | 'aria-labelledby';
 
 type AccessibleIconButtonProps = Either<BaseIconButtonProps, AriaLabels>;
-
-function isComponentGlyph(
-  child: React.ReactNode,
-): child is React.ReactElement<LGGlyph.ComponentProps> {
-  return (
-    child != null &&
-    typeof child === 'object' &&
-    'type' in child &&
-    (child.type as any).isGlyph === true
-  );
-}
 
 const IconButton: ExtendableBox<
   AccessibleIconButtonProps & { ref?: React.Ref<any> },

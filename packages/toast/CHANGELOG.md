@@ -1,5 +1,17 @@
 # @leafygreen-ui/toast
 
+## 0.4.0
+
+### Minor Changes
+
+- b010bdfe: This change improves screenreader compatibility by adding additonal aria attributes to the Toast component. This is being released as a breaking version since previously the root element of the Toast element would only be in the DOM when the toast is open, but now the element will always be in the DOM.
+
+## 0.3.0
+
+### Minor Changes
+
+- 7e7dc210: Added new Toast variants
+
 ## 0.2.2
 
 ### Patch Changes

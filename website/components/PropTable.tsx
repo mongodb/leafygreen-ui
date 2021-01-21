@@ -5,9 +5,20 @@ import { Subtitle, InlineCode } from '@leafygreen-ui/typography/dist';
 import { OneOf } from '@leafygreen-ui/lib';
 import PropDefinition from 'components/PropDefinition';
 import TypographyPropTable from 'components/TypographyPropTable';
+import formatType from 'utils/formatType';
+import { mq } from 'utils/mediaQuery';
+
+const tableWrapper = css`
+  ${mq({
+    marginLeft: ['-24px', 'unset'],
+    marginRight: ['-24px', 'unset'],
+    overflow: ['hidden', 'unset'],
+  })}
+`;
 
 const subtitleBottomMargin = css`
   margin-bottom: 24px;
+  margin-left: 24px;
 `;
 
 const tableBottomMargin = css`
@@ -172,7 +183,7 @@ function PropTable({
         prop={datum.prop.value ?? ''}
         type={datum.type.value ?? ''}
         description={datum.description.value ?? ''}
-        defaultValue={datum.default.value ?? ''}
+        defaultValue={datum.default?.value ?? ''}
       />
     );
   };
@@ -182,7 +193,7 @@ function PropTable({
       return '-';
     }
 
-    return <InlineCode>{datum.default.value}</InlineCode>;
+    return <InlineCode>{datum.default?.value}</InlineCode>;
   };
 
   return (
@@ -194,9 +205,9 @@ function PropTable({
       {component === 'typography' && <TypographyPropTable />}
       {headers.map((header: string, index: number) => {
         return (
-          <div key={index}>
+          <div key={index} className={tableWrapper}>
             <Subtitle className={subtitleBottomMargin} as="h3">
-              {header.replace(/ /g, '')} Props
+              {`${header.replace(/ /g, '')} Props`}
             </Subtitle>
 
             {tableData[index] && (
@@ -223,9 +234,9 @@ function PropTable({
                   <Row key={datum.prop.value}>
                     <Cell className={verticalAlign}>{formatProp(datum)}</Cell>
                     <Cell className={verticalAlign}>
-                      <InlineCode href={datum.type.url}>
-                        {datum.type.value}
-                      </InlineCode>
+                      {typeof datum.type.value === 'string'
+                        ? formatType(datum.type.value, datum.type.url)
+                        : null}
                     </Cell>
                     <Cell className={verticalAlign}>
                       {datum.description.value}

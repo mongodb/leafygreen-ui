@@ -51,8 +51,6 @@ Context.within(new ArtificialServerContext(), () => {
 const { CacheProvider } = require('@emotion/core');
 const { cache } = require('@leafygreen-ui/emotion');
 
-const originalRender = ReactDOM.render;
-
 const stylesToCleanup = new Set();
 let registeredStyleCleanup = false;
 
@@ -97,18 +95,15 @@ cache.inserted = new Proxy(cache.inserted, {
 ReactDOM.render = (element, container, callback) => {
   element = React.createElement(CacheProvider, { value: cache }, element);
 
-  if (container._reactRootContainer) {
-    // No need to hydrate since component is already mounted
-    return originalRender(element, container, callback);
+  if (!container._reactRootContainer) {
+    container.innerHTML = Context.within(new ArtificialServerContext(), () =>
+      ReactDOMServer.renderToString(element),
+    );
+
+    // Client-only Emotion renders the style tags inline, but SSR requires
+    // manually adding the style tags https://emotion.sh/docs/ssr#on-server
+    insertStylesFromEmotion();
   }
-
-  container.innerHTML = Context.within(new ArtificialServerContext(), () =>
-    ReactDOMServer.renderToString(element),
-  );
-
-  // Client-only Emotion renders the style tags inline, but SSR requires
-  // manually adding the style tags https://emotion.sh/docs/ssr#on-server
-  insertStylesFromEmotion();
 
   return ReactDOM.hydrate(element, container, callback);
 };

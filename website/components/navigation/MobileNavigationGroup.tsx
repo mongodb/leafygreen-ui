@@ -138,4 +138,6 @@ function MobileNavigationGroup({
   );
 }
 
+MobileNavigationGroup.displayName = 'MobileNavigationGroup';
+
 export default MobileNavigationGroup;
