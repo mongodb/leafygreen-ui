@@ -16,8 +16,7 @@ const navStyle = css`
   min-width: 184px;
   background-color: ${uiColors.gray.light3};
   border-right: 1px solid ${uiColors.gray.light2};
-  transition: min-width ${transitionDurationMilliseconds}ms ease-in-out,
-    box-shadow ${transitionDurationMilliseconds}ms ease-in-out;
+  transition: all ${transitionDurationMilliseconds}ms ease-in-out;
 `;
 
 const collapsedNavStyle = css`

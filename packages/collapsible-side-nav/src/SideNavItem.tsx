@@ -1,11 +1,11 @@
 import React, { useCallback, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   AriaCurrentValue,
   enforceExhaustive,
-  HTMLElementProps,
   keyMap,
   OneOf,
 } from '@leafygreen-ui/lib';
@@ -27,7 +27,9 @@ const sideNavItemStyle = css`
   text-decoration: none;
   border: 0 solid ${uiColors.gray.light2};
   color: ${uiColors.gray.dark2};
-  transition: all ${transitionDurationMilliseconds}ms ease-in-out;
+  // Chrome has a bug that makes the border black during transition
+  // so just disable the transition since it's hard to notice anyway
+  transition: all ${transitionDurationMilliseconds}ms ease-in-out, border none;
   text-decoration: none;
   outline: none;
 
@@ -47,11 +49,6 @@ const sideNavItemWithGlyphStyle = css`
   & > svg:first-child {
     margin-right: 5px;
   }
-`;
-
-const sideNavItemLinkStyle = css`
-  font-weight: normal;
-  color: ${uiColors.blue.base};
 `;
 
 const sideNavItemActiveStyle = css`
@@ -74,10 +71,19 @@ const sideNavItemNonGroupStyle = css`
   font-weight: bold;
 `;
 
+const sideNavItemNonGroupLinkStyle = css`
+  font-weight: normal;
+  color: ${uiColors.blue.base};
+`;
+
 const sideNavItemCollapsedStyle = css`
   height: 0;
   opacity: 0;
   visibility: hidden;
+
+  &:hover {
+    background-color: initial;
+  }
 `;
 
 const sideNavItemWithGlyphCollapsedStyle = css`
@@ -96,6 +102,9 @@ const sideNavItemWithGlyphCollapsedStyle = css`
 type Props = {
   className?: string;
   path?: string;
+  href?: string;
+  onClick?: React.MouseEventHandler;
+  onKeyDown?: React.KeyboardEventHandler;
   onSelect?: (
     path: string | undefined,
     event: React.MouseEvent | React.KeyboardEvent,
@@ -104,21 +113,23 @@ type Props = {
   OneOf<
     { children: string },
     { 'aria-label': string; children: React.ReactNode }
-  > &
-  Omit<HTMLElementProps<'a'>, 'ref'>;
+  >;
 
-const SideNavItem = React.forwardRef(function SideNavItem(
+const SideNavItem: ExtendableBox<
+  Props & { ref?: React.Ref<any> },
+  'a'
+> = React.forwardRef(function SideNavItem(
   {
     className,
     children,
     glyph,
     glyphVisibility = GlyphVisibility.OnlyCollapsed,
     path,
-    href,
     onSelect,
     'aria-label': ariaLabel,
     onClick: onClickProp,
     onKeyDown: onKeyDownProp,
+    href,
     ...rest
   }: Props,
   refProp,
@@ -189,6 +200,7 @@ const SideNavItem = React.forwardRef(function SideNavItem(
   const isActive = path !== undefined && currentPath === path;
   const showCollapsed = collapsed && !hovered;
   const hasGlyph = glyph !== undefined;
+  const isInGroup = groupContextData !== null
   const isLink = href !== undefined;
 
   let showGlyph: boolean;
@@ -211,13 +223,27 @@ const SideNavItem = React.forwardRef(function SideNavItem(
     showGlyph = false;
   }
 
+  if (showCollapsed) {
+    return (
+      <div
+        className={cx(sideNavItemStyle, sideNavItemCollapsedStyle, {
+          [sideNavItemWithGlyphCollapsedStyle]: showGlyph,
+          [sideNavItemNonGroupLinkStyle]: !isInGroup && isLink,
+        })}
+      >
+        {showGlyph && glyph}
+      </div>
+    );
+  }
+
   return (
-    <a
+    <Box
+      as="a"
       aria-label={
         ariaLabel ?? (typeof children === 'string' ? children : undefined)
       }
       aria-current={isActive ? AriaCurrentValue.Page : AriaCurrentValue.Unset}
-      tabIndex={!isLink && !showCollapsed ? 0 : -1}
+      tabIndex={0}
       ref={setRef}
       className={cx(
         sideNavItemStyle,
@@ -225,21 +251,19 @@ const SideNavItem = React.forwardRef(function SideNavItem(
           [sideNavItemFocusStyle]: usingKeyboard,
           [sideNavItemWithGlyphStyle]: hasGlyph,
           [sideNavItemActiveStyle]: isActive,
-          [sideNavItemNonGroupStyle]: groupContextData === null,
-          [sideNavItemCollapsedStyle]: showCollapsed,
-          [sideNavItemWithGlyphCollapsedStyle]: showCollapsed && showGlyph,
-          [sideNavItemLinkStyle]: isLink,
+          [sideNavItemNonGroupStyle]: !isInGroup,
+          [sideNavItemNonGroupLinkStyle]: !isInGroup && isLink,
         },
         className,
       )}
-      href={showCollapsed ? undefined : href}
-      onClick={showCollapsed ? undefined : onClick}
-      onKeyDown={showCollapsed ? undefined : onKeyDown}
+      onClick={onClick}
+      onKeyDown={onKeyDown}
+      href={href}
       {...rest}
     >
       {showGlyph && glyph}
       {!showCollapsed && children}
-    </a>
+    </Box>
   );
 });
 
