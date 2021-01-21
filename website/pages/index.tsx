@@ -22,10 +22,10 @@ const backdrop = css`
 
 const layoutProperties = css`
   ${mq({
-    width: ['calc(100% + 48px)', '100%', '100%', '1077px'],
-    paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, `${spacing[4]}px`],
-    marginLeft: ['-24px', 'unset', 'unset', 'unset'],
-  })}
+  width: ['calc(100% + 48px)', '100%', '100%', '1077px'],
+  paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, `${spacing[4]}px`],
+  marginLeft: ['-24px', 'unset', 'unset', 'unset'],
+})}
 `;
 
 const boxShadow = css`
@@ -59,14 +59,14 @@ const previewWrapper = css`
   ${container}
   overflow: hidden;
   transition: transform 300ms ease-in-out;
-  ${sharedHoverInteraction}
+  // ${sharedHoverInteraction}
 
-  &:hover {
-    & > div {
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale(1);
-    }
-  }
+  // &:hover {
+  //   & > div {
+  //     opacity: 1;
+  //     transform: translate3d(0, 0, 0) scale(1);
+  //   }
+  // }
 `;
 
 const overlineContainer = css`
@@ -78,13 +78,13 @@ const overlineContainer = css`
   transition: all 300ms ease-in-out;
 
   ${mq({
-    opacity: [1, 1, 0],
-    transform: [
-      'none',
-      'none',
-      `translate3d(0, ${spacing[3]}px, 0) scale(0.95)`,
-    ],
-  })}
+  opacity: [1, 1, 0],
+  transform: [
+    'none',
+    'none',
+    `translate3d(0, ${spacing[3]}px, 0) scale(0.95)`,
+  ],
+})}
 `;
 
 const overlineColor = css`
@@ -98,7 +98,7 @@ const marketingWrapper = css`
   overflow: hidden;
   position: relative;
   transition: transform 300ms ease-in-out;
-  ${sharedHoverInteraction}
+  // ${sharedHoverInteraction}
 `;
 
 const textWrapper = css`
@@ -111,28 +111,28 @@ const textWrapper = css`
   overflow: hidden;
 
   ${mq({
-    paddingTop: [`${spacing[3]}px`, `${spacing[4]}px`],
-    paddingLeft: [`${spacing[3]}px`, `${spacing[4]}px`],
-    fontSize: ['24px', '60px', '60px', '60px'],
-  })}
+  paddingTop: [`${spacing[3]}px`, `${spacing[4]}px`],
+  paddingLeft: [`${spacing[3]}px`, `${spacing[4]}px`],
+  fontSize: ['24px', '60px', '60px', '60px'],
+})}
 `;
 
 const newsContainer = css`
   ${mq({
-    height: ['unset', '350px'],
-  })}
+  height: ['unset', '350px'],
+})}
 `;
 
 const largeHeight = css`
   ${mq({
-    height: ['50vw', '350px'],
-  })}
+  height: ['50vw', '350px'],
+})}
 `;
 
 const smallHeight = css`
   ${mq({
-    height: ['50vw', '175px'],
-  })}
+  height: ['50vw', '175px'],
+})}
 `;
 
 const halfWidth = css`
@@ -150,6 +150,7 @@ interface ComponentPreviewProps {
   content?: string;
   children?: string;
   className?: string;
+  isTouchDevice?: boolean;
 }
 
 function ComponentPreview({
@@ -157,11 +158,13 @@ function ComponentPreview({
   backgroundURL,
   content,
   className,
+  isTouchDevice = false,
 }: ComponentPreviewProps) {
   const { push } = useRouter();
+
   return (
     <div className={className}>
-      <button className={previewWrapper} onClick={() => push(route)}>
+      <button className={cx(previewWrapper, { [sharedHoverInteraction]: !isTouchDevice })} onClick={() => push(route)}>
         <img
           src={backgroundURL}
           alt={`Learn more about ${content} component`}
@@ -181,12 +184,14 @@ interface MarketingPreview {
   marketingURL: string;
   children: string;
   backgroundURL: string;
+  isTouchDevice?: boolean;
 }
 
 function MarketingPreview({
   marketingURL,
   children,
   backgroundURL,
+  isTouchDevice,
 }: MarketingPreview) {
   return (
     <div className={largeHeight}>
@@ -196,7 +201,7 @@ function MarketingPreview({
         target="_blank"
         rel="noopener noreferrer"
       >
-        <div className={marketingWrapper}>
+        <div className={cx(marketingWrapper, { [sharedHoverInteraction]: !isTouchDevice })}>
           <img
             src={backgroundURL}
             alt=""
@@ -241,6 +246,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             backgroundURL="/images/banner-thumbnail.png"
             content="Banner"
             className={largeHeight}
+            isTouchDevice={isTouchDevice}
           />
         </GridItem>
 
@@ -251,6 +257,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
               <MarketingPreview
                 marketingURL="https://www.mongodb.com/blog/post/meet-our-product-design-team-part-1"
                 backgroundURL="/images/team-thumbnail.png"
+                isTouchDevice={isTouchDevice}
               >
                 Meet our Team
               </MarketingPreview>
@@ -264,24 +271,28 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
               backgroundURL="/images/radioBox-thumbnail.png"
               content="Radio boxes"
               className={cx(smallHeight, halfWidth, boxShadow)}
+              isTouchDevice={isTouchDevice}
             />
             <ComponentPreview
               route="/component/text-input/example"
               backgroundURL="/images/textInput-thumbnail.png"
               content="Text input"
               className={cx(smallHeight, halfWidth, boxShadow)}
+              isTouchDevice={isTouchDevice}
             />
             <ComponentPreview
               route="/component/logo/example"
               backgroundURL="/images/logos-thumbnail.png"
               content="Logos"
               className={cx(smallHeight, halfWidth)}
+              isTouchDevice={isTouchDevice}
             />
             <ComponentPreview
               route="/component/tokens/example"
               backgroundURL="/images/spacers-thumbnail.png"
               content="Tokens"
               className={cx(smallHeight, halfWidth)}
+              isTouchDevice={isTouchDevice}
             />
           </div>
         </GridItem>
@@ -303,6 +314,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             backgroundURL="/images/icons-thumbnail.png"
             content="Icons"
             className={smallHeight}
+            isTouchDevice={isTouchDevice}
           />
         </GridItem>
         <GridItem sm={6} md={3} lg={3}>
@@ -311,6 +323,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             backgroundURL="/images/card-thumbnail.png"
             content="Card"
             className={smallHeight}
+            isTouchDevice={isTouchDevice}
           />
         </GridItem>
         <GridItem sm={6} md={3} lg={3}>
@@ -319,6 +332,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             backgroundURL="/images/tooltip-thumbnail.png"
             content="Tooltip"
             className={smallHeight}
+            isTouchDevice={isTouchDevice}
           />
         </GridItem>
         <GridItem sm={6} md={3} lg={3}>
@@ -327,6 +341,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             backgroundURL="/images/checkbox-thumbnail.png"
             content="Checkbox"
             className={smallHeight}
+            isTouchDevice={isTouchDevice}
           />
         </GridItem>
       </GridContainer>

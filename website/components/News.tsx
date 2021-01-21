@@ -14,32 +14,17 @@ const newsContainer = css`
   justify-content: center;
   padding-bottom: ${spacing[4]}px;
   ${mq({
-    height: ['auto', '100%'],
-    marginTop: ['48px', 'unset'],
-    marginBottom: ['40px', 'unset'],
-  })}
+  height: ['auto', '100%'],
+  marginTop: ['48px', 'unset'],
+  marginBottom: ['40px', 'unset'],
+})}
 `;
 
 const subtitleStyle = css`
   cursor: pointer;
   text-decoration: none;
   font-weight: bolder;
-  display: inline-flex;
-  align-items: center;
-  &:hover > svg {
-    opacity: 1;
-    transform: translate3d(3px, 0, 0px);
-  }
-`;
-
-const iconStyle = css`
-  transform: translate3d(-3px, 0, 0px);
-  transition: all 100ms ease-in;
-  ${mq({
-    visibility: ['hidden', 'hidden', 'visible'],
-    opacity: [1, 1, 0, 0],
-    marginLeft: [`${spacing[2]}px`, `${spacing[2]}px`, 0],
-  })}
+  padding-right: ${spacing[5]}px;
 `;
 
 const updateMargin = css`
@@ -58,16 +43,15 @@ function Update({ date, story, route, updateURL }: UpdateProps) {
   const subtitleProps = route
     ? ({ onClick: () => push(route), as: 'p' } as const)
     : ({
-        href: updateURL,
-        as: 'a',
-        target: '_blank',
-        rel: 'noopener noreferrer',
-      } as const);
+      href: updateURL,
+      as: 'a',
+      target: '_blank',
+      rel: 'noopener noreferrer',
+    } as const);
 
   useEffect(() => {
     if (typeof navigator !== 'undefined') {
       setDisplayedDate(
-        // @ts-expect-error typescript complaining that dateStyle is not a valid option, but according to Mozilla docs it is: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
         new Intl.DateTimeFormat(undefined, { dateStyle: 'long' }).format(
           new Date(date),
         ),
@@ -80,7 +64,6 @@ function Update({ date, story, route, updateURL }: UpdateProps) {
       <Overline className={overlineColor}>{displayedDate}</Overline>
       <Subtitle className={subtitleStyle} {...subtitleProps}>
         {story}
-        <ArrowRightIcon aria-hidden="true" className={iconStyle} />
       </Subtitle>
     </div>
   );
