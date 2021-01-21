@@ -1,5 +1,4 @@
-import createEmotionServer from '@emotion/server/create-instance';
-import { cache } from '@emotion/css';
+import { extractCritical } from '@leafygreen-ui/emotion';
 
 export const renderStatic = async (callback: () => string) => {
   const html = callback();
@@ -8,7 +7,6 @@ export const renderStatic = async (callback: () => string) => {
     throw new Error('did you forget to return html from renderToString?');
   }
 
-  const { extractCritical } = createEmotionServer(cache);
   const { ids, css } = extractCritical(html);
 
   return { html, ids, css };
