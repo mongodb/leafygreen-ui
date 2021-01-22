@@ -1,9 +1,9 @@
 import React from 'react';
-import Image from 'next/image';
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Subtitle } from '@leafygreen-ui/typography';
 import { spacing } from '@leafygreen-ui/tokens';
+import { CDN } from 'utils/routes';
 
 const containerStyle = css`
   width: 100%;
@@ -27,11 +27,12 @@ function ComingSoon() {
       <Subtitle as="p" className={subtitleStyle}>
         Coming soon!
       </Subtitle>
-      <Image
-        src="/images/coming-soon.gif"
+      <img
+        src={`${CDN}/images/guidelines/coming-soon.gif`}
         height="450"
         width="700"
-        layout="intrinsic"
+        alt=""
+        aria-hidden
       />
     </div>
   );
