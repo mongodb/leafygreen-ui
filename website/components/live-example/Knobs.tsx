@@ -284,6 +284,10 @@ function Select({
   const labelId = useMemo(() => selectIdAllocator.generate(), []);
 
   const handleChange = (value: string) => {
+    if (value === '') {
+      return;
+    }
+
     onChange(value, prop);
   };
 

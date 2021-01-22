@@ -380,7 +380,7 @@ function Toggle({
   );
   const [checked, setChecked] = useState(false);
 
-  const isControlled = typeof controlledChecked === 'boolean' ? true : false;
+  const isControlled = typeof controlledChecked === 'boolean';
   const normalizedChecked = controlledChecked ?? checked;
 
   const onClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(

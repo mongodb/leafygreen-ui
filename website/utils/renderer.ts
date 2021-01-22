@@ -11,7 +11,5 @@ export const renderStatic = async (callback: () => string) => {
   // https://github.com/mongodb/leafygreen-ui/tree/main/packages/emotion#server-side-rendering
   const { ids, css } = extractCritical(html);
 
-  console.log({ ids, css });
-
   return { html, ids, css };
 };
