@@ -1,5 +1,13 @@
 # @leafygreen-ui/tooltip
 
+## 6.1.3
+
+### Patch Changes
+
+- 2cb0d077: Fixes an issue with the Tooltip package by making the Icon package an explicit requirement
+- Updated dependencies [ba56b1cc]
+  - @leafygreen-ui/icon@8.0.0
+
 ## 6.1.2
 
 ### Patch Changes
