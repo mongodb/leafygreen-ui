@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/typography",
-  "version": "7.3.0",
+  "version": "7.3.1",
   "description": "leafyGreen UI Kit Typography",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,7 +23,7 @@
     "@leafygreen-ui/lib": "^6.1.2",
     "@leafygreen-ui/palette": "^3.1.0",
     "@leafygreen-ui/box": "^3.0.2",
-    "@leafygreen-ui/icon": "^7.0.2",
+    "@leafygreen-ui/icon": "^8.0.0",
     "@leafygreen-ui/tokens": "^0.5.0"
   },
   "peerDependencies": {
