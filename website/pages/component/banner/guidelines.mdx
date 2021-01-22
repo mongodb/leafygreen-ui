@@ -2,12 +2,11 @@ import { css } from 'emotion';
 import Banner from '@leafygreen-ui/banner';
 import Button from '@leafygreen-ui/button';
 import BulbIcon from '@leafygreen-ui/icon/dist/Bulb';
+import Card from '@leafygreen-ui/card';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import XWithCircleIcon from '@leafygreen-ui/icon/dist/XWithCircle';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
-
-<br />{' '}
 
 Banners look similar to Call-Outs but serve a different use case. They are usually contextual to the product or task. If you are looking for a way to communicate a global message, like “you are offline” consider using a Toast.
 
@@ -15,38 +14,67 @@ Below is handy table to help you choose when to pick which pattern.
 
 <br />
 
-<Table
-  data={[
-    {
-      component: 'Toast',
-      priority: 'Low priority',
-      userAction: 'Optional: Toasts dissappear automatically',
-    },
-    {
-      component: 'Banner',
-      priority: 'Medium priority',
-      userAction: 'Optional: Banners etc.',
-    },
-    {
-      component: 'Modal',
-      priority: 'Highest priority',
-      userAction: 'Required',
-    },
-  ]}
-  columns={[
-    <TableHeader key="component" label="Component" />,
-    <TableHeader key="priority" label="Priority" />,
-    <TableHeader key="userAction" label="User Action" />,
-  ]}
+<Card
+  className={css`
+    padding: 32px;
+  `}
 >
-  {({ datum }) => (
-    <tr key={datum.component}>
-      <Cell>{datum.component}</Cell>
-      <Cell>{datum.priority}</Cell>
-      <Cell>{datum.userAction}</Cell>
-    </tr>
-  )}
-</Table>
+  <Table
+    data={[
+      {
+        component: 'Toast',
+        priority: 'Low priority',
+        userAction: 'Optional: Toasts disappear automatically',
+      },
+      {
+        component: 'Banner',
+        priority: 'Medium priority',
+        userAction: 'Optional: Banners etc.',
+      },
+      {
+        component: 'Modal',
+        priority: 'Highest priority',
+        userAction: 'Required',
+      },
+    ]}
+    columns={[
+      <TableHeader key="component" label="Component" />,
+      <TableHeader key="priority" label="Priority" />,
+      <TableHeader key="userAction" label="User Action" />,
+    ]}
+  >
+    {({ datum }) => (
+      <tr
+        key={datum.component}
+        className={css`
+          border-bottom: 1px solid ${uiColors.gray.light2};
+        `}
+      >
+        <Cell
+          className={css`
+            padding: 16px 0 16px 10px;
+          `}
+        >
+          {datum.component}
+        </Cell>
+        <Cell
+          className={css`
+            padding: 16px 0 16px 10px;
+          `}
+        >
+          {datum.priority}
+        </Cell>
+        <Cell
+          className={css`
+            padding: 16px 0 16px 10px;
+          `}
+        >
+          {datum.userAction}
+        </Cell>
+      </tr>
+    )}
+  </Table>
+</Card>
 
 <br />
 
