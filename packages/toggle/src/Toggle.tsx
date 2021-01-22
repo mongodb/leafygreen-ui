@@ -370,7 +370,7 @@ function Toggle({
   disabled = false,
   onChange: onChangeProp,
   onClick: onClickProp,
-  checked: checkedProp,
+  checked: controlledChecked,
   ...rest
 }: ToggleProps) {
   validateAriaLabelProps(rest, Toggle.displayName);
@@ -378,22 +378,26 @@ function Toggle({
   const [buttonElement, setButtonElement] = useState<HTMLButtonElement | null>(
     null,
   );
-  const [checked, setChecked] = useState(checkedProp ?? false);
-  const normalizedChecked = checkedProp ?? checked;
+  const [checked, setChecked] = useState(false);
+
+  const isControlled = typeof controlledChecked === 'boolean';
+  const normalizedChecked = controlledChecked ?? checked;
 
   const onClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(
     e => {
       onClickProp?.(e);
 
-      setChecked(curr => {
-        const updatedState = !(checkedProp ?? curr);
-
-        onChangeProp?.(updatedState, e);
-
-        return updatedState;
-      });
+      if (isControlled) {
+        onChangeProp?.(!controlledChecked, e);
+      } else {
+        setChecked(curr => {
+          const updatedState = !curr;
+          onChangeProp?.(updatedState, e);
+          return updatedState;
+        });
+      }
     },
-    [checkedProp, onClickProp, onChangeProp],
+    [isControlled, controlledChecked, onClickProp, onChangeProp],
   );
 
   const {

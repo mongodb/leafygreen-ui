@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Overline, Subtitle, H2 } from '@leafygreen-ui/typography';
@@ -17,6 +16,7 @@ const newsContainer = css`
     height: ['auto', '100%'],
     marginTop: ['48px', 'unset'],
     marginBottom: ['40px', 'unset'],
+    marginLeft: ['24px', 'unset'],
   })}
 `;
 
@@ -24,22 +24,7 @@ const subtitleStyle = css`
   cursor: pointer;
   text-decoration: none;
   font-weight: bolder;
-  display: inline-flex;
-  align-items: center;
-  &:hover > svg {
-    opacity: 1;
-    transform: translate3d(3px, 0, 0px);
-  }
-`;
-
-const iconStyle = css`
-  transform: translate3d(-3px, 0, 0px);
-  transition: all 100ms ease-in;
-  ${mq({
-    visibility: ['hidden', 'hidden', 'visible'],
-    opacity: [1, 1, 0, 0],
-    marginLeft: [`${spacing[2]}px`, `${spacing[2]}px`, 0],
-  })}
+  padding-right: ${spacing[5]}px;
 `;
 
 const updateMargin = css`
@@ -80,7 +65,6 @@ function Update({ date, story, route, updateURL }: UpdateProps) {
       <Overline className={overlineColor}>{displayedDate}</Overline>
       <Subtitle className={subtitleStyle} {...subtitleProps}>
         {story}
-        <ArrowRightIcon aria-hidden="true" className={iconStyle} />
       </Subtitle>
     </div>
   );

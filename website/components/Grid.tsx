@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import { mq } from 'utils/mediaQuery';
 
 const Direction = {
@@ -49,16 +49,20 @@ function GridContainer({
   align = Align.Center,
   justify = Justify.Center,
   wrap = Wrap.Wrap,
+  className,
 }: GridContainerProps) {
   return (
     <div
-      className={css`
-        display: flex;
-        flex-direction: ${direction};
-        align-items: ${align};
-        justify-content: ${justify};
-        flex-wrap: ${wrap};
-      `}
+      className={cx(
+        css`
+          display: flex;
+          flex-direction: ${direction};
+          align-items: ${align};
+          justify-content: ${justify};
+          flex-wrap: ${wrap};
+        `,
+        className,
+      )}
     >
       {children}
     </div>
