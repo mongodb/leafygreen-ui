@@ -15,7 +15,8 @@ describe('packages/toast', () => {
       });
 
       const toast = queryByRole('status');
-      expect(toast).not.toBeInTheDocument();
+      expect(toast).toBeVisible();
+      expect(toast).toBeEmptyDOMElement();
     });
 
     test(`false, Toast doesn't render`, () => {
@@ -26,7 +27,8 @@ describe('packages/toast', () => {
       });
 
       const toast = queryByRole('status');
-      expect(toast).not.toBeInTheDocument();
+      expect(toast).toBeVisible();
+      expect(toast).toBeEmptyDOMElement();
     });
 
     test('true, Toast is visible', () => {
@@ -38,6 +40,7 @@ describe('packages/toast', () => {
 
       const toast = queryByRole('status');
       expect(toast).toBeVisible();
+      expect(toast).not.toBeEmptyDOMElement();
     });
   });
 
@@ -162,15 +165,13 @@ describe('packages/toast', () => {
     test.each(Object.values(Variant) as Array<Variant>)(
       `when 'variant' is '%s'`,
       variant => {
-        const { getByTitle } = renderToast({
+        const { getByLabelText } = renderToast({
           open: true,
           body: 'hello world',
           variant,
         });
 
-        expect(
-          getByTitle(expectedVariantIcons[variant]).closest('svg'),
-        ).toBeVisible();
+        expect(getByLabelText(expectedVariantIcons[variant])).toBeVisible();
       },
     );
   });

@@ -30,6 +30,8 @@ const innerDivStyles = css`
   align-items: center;
 `;
 
+export type CellElement = React.ReactComponentElement<typeof Cell>;
+
 const Cell = React.forwardRef(
   (
     { children, className, isHeader = false, ...rest }: CellProps,
@@ -49,6 +51,7 @@ const Cell = React.forwardRef(
 
     if (isHeader) {
       props.scope = 'row';
+      props.role = 'rowheader';
     }
 
     return (

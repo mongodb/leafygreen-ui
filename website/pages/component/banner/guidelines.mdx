@@ -2,12 +2,11 @@ import { css } from 'emotion';
 import Banner from '@leafygreen-ui/banner';
 import Button from '@leafygreen-ui/button';
 import BulbIcon from '@leafygreen-ui/icon/dist/Bulb';
+import Card from '@leafygreen-ui/card';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import XWithCircleIcon from '@leafygreen-ui/icon/dist/XWithCircle';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
-
-<br />{' '}
 
 Banners look similar to Call-Outs but serve a different use case. They are usually contextual to the product or task. If you are looking for a way to communicate a global message, like “you are offline” consider using a Toast.
 
@@ -15,38 +14,67 @@ Below is handy table to help you choose when to pick which pattern.
 
 <br />
 
-<Table
-  data={[
-    {
-      component: 'Toast',
-      priority: 'Low priority',
-      userAction: 'Optional: Toasts dissappear automatically',
-    },
-    {
-      component: 'Banner',
-      priority: 'Medium priority',
-      userAction: 'Optional: Banners etc.',
-    },
-    {
-      component: 'Modal',
-      priority: 'Highest priority',
-      userAction: 'Required',
-    },
-  ]}
-  columns={[
-    <TableHeader key="component" label="Component" />,
-    <TableHeader key="priority" label="Priority" />,
-    <TableHeader key="userAction" label="User Action" />,
-  ]}
+<Card
+  className={css`
+    padding: 32px;
+  `}
 >
-  {({ datum }) => (
-    <tr key={datum.component}>
-      <Cell>{datum.component}</Cell>
-      <Cell>{datum.priority}</Cell>
-      <Cell>{datum.userAction}</Cell>
-    </tr>
-  )}
-</Table>
+  <Table
+    data={[
+      {
+        component: 'Toast',
+        priority: 'Low priority',
+        userAction: 'Optional: Toasts disappear automatically',
+      },
+      {
+        component: 'Banner',
+        priority: 'Medium priority',
+        userAction: 'Optional: Banners etc.',
+      },
+      {
+        component: 'Modal',
+        priority: 'Highest priority',
+        userAction: 'Required',
+      },
+    ]}
+    columns={[
+      <TableHeader key="component" label="Component" />,
+      <TableHeader key="priority" label="Priority" />,
+      <TableHeader key="userAction" label="User Action" />,
+    ]}
+  >
+    {({ datum }) => (
+      <tr
+        key={datum.component}
+        className={css`
+          border-bottom: 1px solid ${uiColors.gray.light2};
+        `}
+      >
+        <Cell
+          className={css`
+            padding: 16px 0 16px 10px;
+          `}
+        >
+          {datum.component}
+        </Cell>
+        <Cell
+          className={css`
+            padding: 16px 0 16px 10px;
+          `}
+        >
+          {datum.priority}
+        </Cell>
+        <Cell
+          className={css`
+            padding: 16px 0 16px 10px;
+          `}
+        >
+          {datum.userAction}
+        </Cell>
+      </tr>
+    )}
+  </Table>
+</Card>
 
 <br />
 
@@ -66,15 +94,11 @@ The blue note banners mean “this is something that may be nice to know”. Ban
   This is an example of a note banner. It spans a single line.
 </Banner>
 
-<br />
-
 The yellow warning banner means “this might be important so pay attention”.
 
 <Banner variant="warning" dismissible>
   This is an example of a warning banner. It spans a single line.
 </Banner>
-
-<br />
 
 The danger red banner mean “something is broken, or actively going wrong”.
 
@@ -82,15 +106,11 @@ The danger red banner mean “something is broken, or actively going wrong”.
   We have detected a potential problem while deploying.
 </Banner>
 
-<br />
-
 The success green banner should be used sparingly and are used to indicate success, or confirmation. When using a green banner, consider using toasts instead.
 
 <Banner variant="success" dismissible>
   Your cluster has finished provisioning!
 </Banner>
-
-<br />
 
 This is what a multiline banner looks like.
 
@@ -103,8 +123,6 @@ This is what a multiline banner looks like.
 ## image
 
 Links are underlined and set to medium weight to ensure legibility on colored backgrounds.
-
-<br />
 
 We recommend not including CTAs within banners. However, if your specific use-case
 calls for it we suggest using the default color button in the extra-small size and
@@ -126,7 +144,6 @@ not having any other buttons in the banner.
     </Banner>
     <CheckmarkWithCircleIcon size="xlarge" fill={uiColors.green.base} className={css`margin-top: 10px`}/>
   </div>
-
 
   <div className={css`display: flex; flex-direction: column; align-items: center`}>
     <Banner
@@ -151,9 +168,6 @@ not having any other buttons in the banner.
   </div>
 </div>
 
-
-<br />
-
 Never center content within the banner.
 
 <div
@@ -173,7 +187,6 @@ Never center content within the banner.
     <CheckmarkWithCircleIcon size="xlarge" fill={uiColors.green.base} className={css`margin-top: 10px`}/>
   </div>
 
-
   <div className={css`display: flex; flex-direction: column; align-items: center`}>
     <Banner
       variant="warning"
@@ -187,7 +200,6 @@ Never center content within the banner.
     <XWithCircleIcon size="xlarge" fill={uiColors.red.base} className={css`margin-top: 10px`}/>
   </div>
 </div>
-
 
 <br />
 
@@ -218,8 +230,6 @@ Try to restrict the banner max-width to 700px. (It’s okay if this pushes some 
     `}
   />
 </div>
-
-<br />
 
 If you want, you can customize your banner and add a 32px by 32px feature icon. Make sure the feature icons ties well with the content it’s supporting.
 

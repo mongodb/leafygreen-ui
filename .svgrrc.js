@@ -1,8 +1,8 @@
 // https://www.smooth-code.com/open-source/svgr/docs/configuration-files/
 module.exports = {
-  titleProp: true,
+  titleProp: false,
+  expandProps: 'end',
   svgProps: {
-    role: 'img',
     viewBox: '0 0 16 16',
   },
   jsx: {

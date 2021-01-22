@@ -1,6 +1,7 @@
 import React from 'react';
 import { css } from 'emotion';
 import Card from '@leafygreen-ui/card';
+import { Body } from '@leafygreen-ui/typography';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const cardPadding = css`
@@ -25,14 +26,16 @@ const knobsConfig: KnobsConfigInterface<{ as: string; children: string }> = {
 export default function CardLiveExample() {
   return (
     <LiveExample knobsConfig={knobsConfig}>
-      {({ as = 'div', ...rest }) => (
+      {({ as = 'div', children, ...rest }) => (
         <Card
           {...rest}
           className={cardPadding}
           // @ts-ignore
           as={as}
           href={as === 'a' ? 'http://mongodb.design' : undefined}
-        />
+        >
+          <Body>{children}</Body>
+        </Card>
       )}
     </LiveExample>
   );

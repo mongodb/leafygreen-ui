@@ -1,22 +1,17 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { css, cx } from 'emotion';
-import facepaint from 'facepaint';
 import { Overline } from '@leafygreen-ui/typography';
 import { uiColors } from '@leafygreen-ui/palette';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { GridContainer, GridItem } from 'components/Grid';
 import { getAllUpdates, UpdateProps } from 'utils/fetchUpdates';
+import { mq } from 'utils/mediaQuery';
 import News from 'components/News';
 import CDN from 'utils/cdnURL';
 
 const landingURL = `${CDN}/images/landing`;
-
-const mq = facepaint(
-  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
-  { literal: true },
-);
 
 const backdrop = css`
   background-color: ${uiColors.gray.light3};
@@ -30,10 +25,10 @@ const backdrop = css`
 
 const layoutProperties = css`
   ${mq({
-    width: ['calc(100% + 48px)', '100%', '100%', '1077px'],
-    paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, `${spacing[4]}px`],
-    marginLeft: ['-24px', 'unset', 'unset', 'unset'],
-  })}
+  width: ['calc(100% + 48px)', '100%', '100%', '1077px'],
+  paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, `${spacing[4]}px`],
+  marginLeft: ['-24px', 'unset', 'unset', 'unset'],
+})}
 `;
 
 const boxShadow = css`
@@ -67,7 +62,6 @@ const previewWrapper = css`
   ${container}
   overflow: hidden;
   transition: transform 300ms ease-in-out;
-  ${sharedHoverInteraction}
 
   &:hover {
     & > div {
@@ -86,13 +80,13 @@ const overlineContainer = css`
   transition: all 300ms ease-in-out;
 
   ${mq({
-    opacity: [1, 1, 0],
-    transform: [
-      'none',
-      'none',
-      `translate3d(0, ${spacing[3]}px, 0) scale(0.95)`,
-    ],
-  })}
+  opacity: [1, 1, 0],
+  transform: [
+    'none',
+    'none',
+    `translate3d(0, ${spacing[3]}px, 0) scale(0.95)`,
+  ],
+})}
 `;
 
 const overlineColor = css`
@@ -106,7 +100,6 @@ const marketingWrapper = css`
   overflow: hidden;
   position: relative;
   transition: transform 300ms ease-in-out;
-  ${sharedHoverInteraction}
 `;
 
 const textWrapper = css`
@@ -114,27 +107,34 @@ const textWrapper = css`
   top: 0;
   bottom: 0;
   left: 0;
-  font-weight: medium;
-  padding-top: ${spacing[4]}px;
-  padding-left: ${spacing[4]}px;
+  font-weight: 600;
   text-align: left;
   overflow: hidden;
 
   ${mq({
-    fontSize: ['24px', '60px', '60px', '60px'],
-  })}
+  paddingTop: [`${spacing[3]}px`, `${spacing[4]}px`],
+  paddingLeft: [`${spacing[3]}px`, `${spacing[4]}px`],
+  paddingRight: [`${spacing[3]}px`, `${spacing[4]}px`],
+  fontSize: ['24px', '60px', '60px', '60px'],
+})}
+`;
+
+const newsContainer = css`
+  ${mq({
+  height: ['unset', '350px'],
+})}
 `;
 
 const largeHeight = css`
   ${mq({
-    height: ['50vw', '350px', '350px', '350px'],
-  })}
+  height: ['50vw', '350px'],
+})}
 `;
 
 const smallHeight = css`
   ${mq({
-    height: ['50vw', '175px', '175px', '175px'],
-  })}
+  height: ['50vw', '175px'],
+})}
 `;
 
 const halfWidth = css`
@@ -152,6 +152,7 @@ interface ComponentPreviewProps {
   content?: string;
   children?: string;
   className?: string;
+  isTouchDevice?: boolean;
 }
 
 function ComponentPreview({
@@ -159,11 +160,18 @@ function ComponentPreview({
   backgroundURL,
   content,
   className,
+  isTouchDevice = false,
 }: ComponentPreviewProps) {
   const { push } = useRouter();
+
   return (
     <div className={className}>
-      <button className={previewWrapper} onClick={() => push(route)}>
+      <button
+        className={cx(previewWrapper, {
+          [sharedHoverInteraction]: isTouchDevice,
+        })}
+        onClick={() => push(route)}
+      >
         <img
           src={backgroundURL}
           alt={`Learn more about ${content} component`}
@@ -183,12 +191,14 @@ interface MarketingPreview {
   marketingURL: string;
   children: string;
   backgroundURL: string;
+  isTouchDevice?: boolean;
 }
 
 function MarketingPreview({
   marketingURL,
   children,
   backgroundURL,
+  isTouchDevice,
 }: MarketingPreview) {
   return (
     <div className={largeHeight}>
@@ -198,7 +208,11 @@ function MarketingPreview({
         target="_blank"
         rel="noopener noreferrer"
       >
-        <div className={marketingWrapper}>
+        <div
+          className={cx(marketingWrapper, {
+            [sharedHoverInteraction]: !isTouchDevice,
+          })}
+        >
           <img
             src={backgroundURL}
             alt=""
@@ -233,7 +247,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
       >
         {/* First Row */}
         <GridItem sm={12} md={6} lg={6}>
-          <div className={largeHeight}>
+          <div className={newsContainer}>
             <News updates={updates} />
           </div>
         </GridItem>
@@ -243,6 +257,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             backgroundURL={`${landingURL}/banner-thumbnail.png`}
             content="Banner"
             className={largeHeight}
+            isTouchDevice={isTouchDevice}
           />
         </GridItem>
 
@@ -252,7 +267,12 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             <div className={largeHeight}>
               <MarketingPreview
                 marketingURL="https://www.mongodb.com/blog/post/meet-our-product-design-team-part-1"
+<<<<<<< HEAD
                 backgroundURL={`${landingURL}/team-thumbnail.png`}
+=======
+                backgroundURL="/images/team-thumbnail.png"
+                isTouchDevice={isTouchDevice}
+>>>>>>> main
               >
                 Meet our Team
               </MarketingPreview>
@@ -266,24 +286,28 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
               backgroundURL={`${landingURL}/radioBox-thumbnail.png`}
               content="Radio boxes"
               className={cx(smallHeight, halfWidth, boxShadow)}
+              isTouchDevice={isTouchDevice}
             />
             <ComponentPreview
               route="/component/text-input/example"
               backgroundURL={`${landingURL}/textInput-thumbnail.png`}
               content="Text input"
               className={cx(smallHeight, halfWidth, boxShadow)}
+              isTouchDevice={isTouchDevice}
             />
             <ComponentPreview
               route="/component/logo/example"
               backgroundURL={`${landingURL}/logos-thumbnail.png`}
               content="Logos"
               className={cx(smallHeight, halfWidth)}
+              isTouchDevice={isTouchDevice}
             />
             <ComponentPreview
               route="/component/tokens/example"
               backgroundURL={`${landingURL}/spacers-thumbnail.png`}
               content="Tokens"
               className={cx(smallHeight, halfWidth)}
+              isTouchDevice={isTouchDevice}
             />
           </div>
         </GridItem>
@@ -305,6 +329,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             backgroundURL={`${landingURL}/icons-thumbnail.png`}
             content="Icons"
             className={smallHeight}
+            isTouchDevice={isTouchDevice}
           />
         </GridItem>
         <GridItem sm={6} md={3} lg={3}>
@@ -313,6 +338,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             backgroundURL={`${landingURL}/card-thumbnail.png`}
             content="Card"
             className={smallHeight}
+            isTouchDevice={isTouchDevice}
           />
         </GridItem>
         <GridItem sm={6} md={3} lg={3}>
@@ -321,6 +347,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             backgroundURL={`${landingURL}/tooltip-thumbnail.png`}
             content="Tooltip"
             className={smallHeight}
+            isTouchDevice={isTouchDevice}
           />
         </GridItem>
         <GridItem sm={6} md={3} lg={3}>
@@ -329,6 +356,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             backgroundURL={`${landingURL}/checkbox-thumbnail.png`}
             content="Checkbox"
             className={smallHeight}
+            isTouchDevice={isTouchDevice}
           />
         </GridItem>
       </GridContainer>

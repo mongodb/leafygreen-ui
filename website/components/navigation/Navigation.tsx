@@ -8,6 +8,7 @@ import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
 import MobileNavigationGroup from './MobileNavigationGroup';
 import MobileNavigationItem from './MobileNavigationItem';
 import MobileNavigation from './MobileNavigation';
+import { HOME_PAGE } from 'utils/routes';
 
 const navContainer = css`
   width: 270px;
@@ -158,7 +159,7 @@ function Navigation() {
 
   return (
     <nav className={navContainer}>
-      <MDBDesignLogo className={logoStyles} onClick={() => push('/')} />
+      <MDBDesignLogo className={logoStyles} onClick={() => push(HOME_PAGE)} />
       <SideNav
         className={css`
           margin-top: ${spacing[3]}px;

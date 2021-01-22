@@ -2,35 +2,36 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum b08ea74fdecd052b7c68adc491de380f
+ * @checksum e09ce5d0c75b4e67b5e9a46a243d3c42
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { IdAllocator } from '@leafygreen-ui/lib';
-import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface WarningProps extends LGGlyph.ComponentProps {}
-const idAllocator = IdAllocator.create('Warning');
 
 const Warning = ({
   className,
   size = 16,
   title,
-  titleId: customTitleId,
+  ['aria-label']: ariaLabel,
+  ['aria-labelledby']: ariaLabelledby,
   fill,
+  role = 'img',
   ...props
 }: WarningProps) => {
-  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
-    customTitleId,
-  ]);
   const fillStyle = css`
     color: ${fill};
   `;
   const noFlexShrink = css`
     flex-shrink: 0;
   `;
-  title = getGlyphTitle('Warning', title);
+  const accessibleProps = generateAccessibleProps(role, 'Warning', {
+    title,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
+  });
   return (
     <svg
       className={cx(
@@ -42,17 +43,11 @@ const Warning = ({
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}
       width={typeof size === 'number' ? size : sizeMap[size]}
+      role={role}
+      {...accessibleProps}
       {...props}
       viewBox="0 0 16 16"
-      role="img"
-      aria-labelledby={titleId}
     >
-      {title === undefined ? (
-        <title id={titleId}>{'Glyphs / Warning'}</title>
-      ) : title ? (
-        <title id={titleId}>{title}</title>
-      ) : null}
-      <desc>{'Created with Sketch.'}</desc>
       <g
         id="Glyphs-/-Warning"
         stroke="none"

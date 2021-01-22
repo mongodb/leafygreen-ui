@@ -36,6 +36,11 @@ const mb1 = css`
   margin-bottom: ${spacing[1]}px;
 `;
 
+const copyableStyles = css`
+  width: 100%;
+  max-width: 400px;
+`;
+
 const versionCard = css`
   min-height: 106px;
   padding: ${spacing[3]}px ${spacing[4]}px;
@@ -51,6 +56,7 @@ const tabsPadding = css`
 
 const mobileInstallMargin = css`
   margin-top: 50px;
+  margin-bottom: ${spacing[3]}px;
 `;
 
 const changelogStyles = css`
@@ -125,11 +131,15 @@ function MobileInstall({ component, version, changelog }: InstallProps) {
           <Body weight="medium" className={mt3}>
             Yarn
           </Body>
-          <Copyable>{`yarn add @leafygreen-ui/${component}`}</Copyable>
+          <Copyable
+            className={copyableStyles}
+          >{`yarn add @leafygreen-ui/${component}`}</Copyable>
           <Body weight="medium" className={mt3}>
             NPM
           </Body>
-          <Copyable>{`npm install @leafygreen-ui/${component}`}</Copyable>
+          <Copyable
+            className={copyableStyles}
+          >{`npm install @leafygreen-ui/${component}`}</Copyable>
         </div>
       </GridItem>
       <GridItem sm={12}>
@@ -213,7 +223,10 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
       )}
       <GridContainer align="flex-start" justify="flex-start">
         <GridItem sm={12} md={12} xl={12}>
-          <Tabs className={tabsPadding}>
+          <Tabs
+            className={tabsPadding}
+            aria-label={`View source code for ${component} component`}
+          >
             {example && (
               <Tab default name="Example" className={mt3}>
                 <Code showLineNumbers language="js">

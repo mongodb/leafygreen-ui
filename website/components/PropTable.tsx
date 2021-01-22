@@ -1,18 +1,24 @@
 import React from 'react';
 import { css } from 'emotion';
+import Card from '@leafygreen-ui/card';
 import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table';
 import { Subtitle, InlineCode } from '@leafygreen-ui/typography/dist';
 import { OneOf } from '@leafygreen-ui/lib';
 import PropDefinition from 'components/PropDefinition';
 import TypographyPropTable from 'components/TypographyPropTable';
 import formatType from 'utils/formatType';
+import { mq } from 'utils/mediaQuery';
+
+const tableWrapper = css`
+  ${mq({
+    marginLeft: ['-24px', 'unset'],
+    marginRight: ['-24px', 'unset'],
+    overflow: ['hidden', 'unset'],
+  })}
+`;
 
 const subtitleBottomMargin = css`
   margin-bottom: 24px;
-`;
-
-const tableBottomMargin = css`
-  margin-bottom: 56px;
 `;
 
 const verticalAlign = css`
@@ -195,48 +201,54 @@ function PropTable({
       {component === 'typography' && <TypographyPropTable />}
       {headers.map((header: string, index: number) => {
         return (
-          <div key={index}>
+          <div key={index} className={tableWrapper}>
             <Subtitle className={subtitleBottomMargin} as="h3">
               {`${header.replace(/ /g, '')} Props`}
             </Subtitle>
 
             {tableData[index] && (
-              <Table
-                className={tableBottomMargin}
-                key={header}
-                data={tableData[index]}
-                columns={[
-                  <TableHeader dataType="string" label="Prop" key="prop" />,
-                  <TableHeader dataType="string" label="Type" key="type" />,
-                  <TableHeader
-                    dataType="string"
-                    label="Description"
-                    key="description"
-                  />,
-                  <TableHeader
-                    dataType="string"
-                    label="Default"
-                    key="default"
-                  />,
-                ]}
+              <Card
+                className={css`
+                  padding: 24px;
+                  margin-bottom: 56px;
+                `}
               >
-                {({ datum }) => (
-                  <Row key={datum.prop.value}>
-                    <Cell className={verticalAlign}>{formatProp(datum)}</Cell>
-                    <Cell className={verticalAlign}>
-                      {typeof datum.type.value === 'string'
-                        ? formatType(datum.type.value, datum.type.url)
-                        : null}
-                    </Cell>
-                    <Cell className={verticalAlign}>
-                      {datum.description.value}
-                    </Cell>
-                    <Cell className={verticalAlign}>
-                      {formatDefault(datum)}
-                    </Cell>
-                  </Row>
-                )}
-              </Table>
+                <Table
+                  key={header}
+                  data={tableData[index]}
+                  columns={[
+                    <TableHeader dataType="string" label="Prop" key="prop" />,
+                    <TableHeader dataType="string" label="Type" key="type" />,
+                    <TableHeader
+                      dataType="string"
+                      label="Description"
+                      key="description"
+                    />,
+                    <TableHeader
+                      dataType="string"
+                      label="Default"
+                      key="default"
+                    />,
+                  ]}
+                >
+                  {({ datum }) => (
+                    <Row key={datum.prop.value}>
+                      <Cell className={verticalAlign}>{formatProp(datum)}</Cell>
+                      <Cell className={verticalAlign}>
+                        {typeof datum.type.value === 'string'
+                          ? formatType(datum.type.value, datum.type.url)
+                          : null}
+                      </Cell>
+                      <Cell className={verticalAlign}>
+                        {datum.description.value}
+                      </Cell>
+                      <Cell className={verticalAlign}>
+                        {formatDefault(datum)}
+                      </Cell>
+                    </Row>
+                  )}
+                </Table>
+              </Card>
             )}
           </div>
         );
