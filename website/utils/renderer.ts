@@ -1,6 +1,4 @@
-import { extractCritical as lgExtractCritical } from '@leafygreen-ui/emotion';
-import createEmotionServer from '@emotion/server/create-instance';
-import { cache } from '@emotion/css';
+import { extractCritical } from '@leafygreen-ui/emotion';
 
 export const renderStatic = async (callback: () => string) => {
   const html = callback();
@@ -9,15 +7,11 @@ export const renderStatic = async (callback: () => string) => {
     throw new Error('did you forget to return html from renderToString?');
   }
 
-  const { extractCritical: websiteExtractCritical } = createEmotionServer(
-    cache,
-  );
+  // Extracts critical styles from the custom LeafyGreen UI Emotion Server
+  // https://github.com/mongodb/leafygreen-ui/tree/main/packages/emotion#server-side-rendering
+  const { ids, css } = extractCritical(html);
 
-  const { ids: websiteIds, css: websiteCss } = websiteExtractCritical(html);
-  const { ids: lgIds, css: lgCss } = lgExtractCritical(html);
-
-  const ids = [...websiteIds, ...lgIds];
-  const css = websiteCss + lgCss;
+  console.log({ ids, css });
 
   return { html, ids, css };
 };
