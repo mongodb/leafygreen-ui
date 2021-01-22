@@ -1,5 +1,14 @@
 # @leafygreen-ui/toast
 
+## 0.4.1
+
+### Patch Changes
+
+- b0cbb63a: Fixes issue preventing bundlers from bundling the toast package as a dependency
+- Updated dependencies [ba56b1cc]
+  - @leafygreen-ui/icon@8.0.0
+  - @leafygreen-ui/typography@7.3.1
+
 ## 0.4.0
 
 ### Minor Changes

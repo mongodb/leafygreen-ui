@@ -1,5 +1,13 @@
 # @leafygreen-ui/table
 
+## 1.3.2
+
+### Patch Changes
+
+- bf58e7d5: Improves default accessibility of Table component by adding the "scope" attribute to column header elements.
+- Updated dependencies [ba56b1cc]
+  - @leafygreen-ui/icon@8.0.0
+
 ## 1.3.1
 
 ### Patch Changes

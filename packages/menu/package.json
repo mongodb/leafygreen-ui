@@ -20,7 +20,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/icon": "^7.0.2"
+    "@leafygreen-ui/icon": "^8.0.0"
   },
   "dependencies": {
     "react-transition-group": "^4.4.1",

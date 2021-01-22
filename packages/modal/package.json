@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/modal",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "description": "LeafyGreen UI Kit Modal",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,7 +22,7 @@
   "dependencies": {
     "react-transition-group": "^4.4.1",
     "@leafygreen-ui/hooks": "^6.0.0",
-    "@leafygreen-ui/icon": "^7.0.1",
+    "@leafygreen-ui/icon": "^8.0.0",
     "@leafygreen-ui/icon-button": "^9.0.1",
     "@leafygreen-ui/lib": "^6.1.1",
     "@leafygreen-ui/palette": "^3.1.0",
