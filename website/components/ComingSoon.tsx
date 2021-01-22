@@ -3,7 +3,7 @@ import { css } from 'emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Subtitle } from '@leafygreen-ui/typography';
 import { spacing } from '@leafygreen-ui/tokens';
-import CDN from 'utils/cdnURL';
+import { CDN } from 'utils/routes';
 
 const containerStyle = css`
   width: 100%;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MarketingModal, { GraphicStyle } from '@leafygreen-ui/marketing-modal';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
-import CDN from 'utils/cdnURL';
+import { CDN } from 'utils/routes';
 
 const children =
   'This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here.';

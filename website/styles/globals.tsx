@@ -1,5 +1,5 @@
 import { css } from '@emotion/core';
-import CDN from 'utils/cdnURL';
+import { CDN } from 'utils/routes';
 
 const fontsURL = `${CDN}/fonts`;
 
