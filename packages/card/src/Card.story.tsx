@@ -3,6 +3,7 @@ import { boolean } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import Card from './Card';
+import { uiColors } from '@leafygreen-ui/palette';
 
 const containerStyle = css`
   padding: 16px;
@@ -15,14 +16,23 @@ const containerStyle = css`
 
 storiesOf('Card', module).add('Default', () => {
   const hasClickBehavior = boolean('Has click behavior', true);
+  const darkMode = boolean('darkMode', false);
 
   return (
-    <Card
-      as="div"
-      className={containerStyle}
-      onClick={hasClickBehavior ? () => alert('hello') : undefined}
+    <div
+      className={css`
+        padding: 24px;
+        background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
+      `}
     >
-      This is a card component
-    </Card>
+      <Card
+        as="div"
+        onClick={hasClickBehavior ? () => alert('hello') : undefined}
+        darkMode={darkMode}
+        className={containerStyle}
+      >
+        This is a card component
+      </Card>
+    </div>
   );
 });
