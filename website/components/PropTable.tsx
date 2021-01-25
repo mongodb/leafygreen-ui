@@ -11,10 +11,11 @@ import { mq } from 'utils/mediaQuery';
 
 const tableWrapper = css`
   ${mq({
-    marginLeft: ['-24px', 'unset'],
-    marginRight: ['-24px', 'unset'],
-    overflow: ['hidden', 'unset'],
-  })}
+  marginLeft: ['-24px', 'unset'],
+  marginRight: ['-24px', 'unset'],
+  overflow: ['hidden', 'unset'],
+  width: ['inherit', 'inherit', 'inherit', '1053px']
+})}
 `;
 
 const subtitleBottomMargin = css`

@@ -15,7 +15,7 @@ import { mq } from 'utils/mediaQuery';
 const layout = css`
   ${mq({
   marginTop: [`${spacing[4]}px`, '70px'],
-  width: ['100%', '100%', '700px', '700px'],
+  width: ['100%', '100%', '100%', '1053px'],
 })}
 `;
 
