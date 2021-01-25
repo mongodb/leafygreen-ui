@@ -12,45 +12,99 @@ export const ContentStyle = {
 
 export type ContentStyle = typeof ContentStyle[keyof typeof ContentStyle];
 
-const baseBoxShadow = `0 4px 10px -4px ${transparentize(0.7, uiColors.black)}`;
-const hoverBoxShadow = `0 2px 6px -2px ${transparentize(0.4, uiColors.black)}`;
-const focusBoxShadow = `0 0 0 3px ${uiColors.blue.light1}`;
+const Mode = {
+  Dark: 'dark',
+  Light: 'light',
+} as const;
+
+type Mode = typeof Mode[keyof typeof Mode];
+
+interface ColorSet {
+  containerStyle: string;
+  clickableStyle: string;
+}
+
+const lightBaseBoxShadow = `0 4px 10px -4px ${transparentize(
+  0.7,
+  uiColors.black,
+)}`;
+const darkBaseBoxShadow = `0 4px 20px -4px  ${transparentize(0.3, '#000')}`;
+const lightHoverBoxShadow = `0 2px 6px -2px ${transparentize(
+  0.4,
+  uiColors.black,
+)}`;
+const darkHoverBoxShadow = `0 2px 12px -2px ${transparentize(0.1, '#000')}`;
+const lightFocusBoxShadow = `0 0 0 3px ${uiColors.blue.light1}`;
+const darkFocusBoxShadow = `0 0 0 3px ${uiColors.blue.base}`;
+
+const colorSet: Record<Mode, ColorSet> = {
+  [Mode.Light]: {
+    containerStyle: css`
+      border: 1px solid ${uiColors.gray.light2};
+      box-shadow: 0 4px 10px -4px ${transparentize(0.7, uiColors.black)};
+      background-color: white;
+      color: ${uiColors.gray.dark3};
+    `,
+    clickableStyle: css`
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+        box-shadow: ${lightBaseBoxShadow}, ${lightFocusBoxShadow};
+      }
+
+      &:hover {
+        border: 1px solid ${uiColors.gray.light2};
+        box-shadow: ${lightHoverBoxShadow};
+
+        &:focus {
+          box-shadow: ${lightHoverBoxShadow}, ${lightFocusBoxShadow};
+        }
+      }
+    `,
+  },
+  [Mode.Dark]: {
+    containerStyle: css`
+      border: 1px solid ${uiColors.gray.dark2};
+      box-shadow: ${darkBaseBoxShadow};
+      background-color: ${uiColors.gray.dark2};
+      color: ${uiColors.white};
+    `,
+    clickableStyle: css`
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+        box-shadow: ${darkBaseBoxShadow}, ${darkFocusBoxShadow};
+      }
+
+      &:hover {
+        box-shadow: ${darkHoverBoxShadow};
+
+        &:focus {
+          box-shadow: ${darkHoverBoxShadow}, ${darkFocusBoxShadow};
+        }
+      }
+    `,
+  },
+};
 
 const containerStyle = css`
   position: relative;
-  background-color: white;
-  border: 1px solid ${uiColors.gray.light2};
   border-radius: 7px;
-  box-shadow: ${baseBoxShadow};
   transition: border 300ms ease-in-out, box-shadow 300ms ease-in-out;
-`;
-
-const clickableStyle = css`
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-    box-shadow: ${baseBoxShadow}, ${focusBoxShadow};
-  }
-
-  &:hover {
-    border: 1px solid ${uiColors.gray.light2};
-    box-shadow: ${hoverBoxShadow};
-
-    &:focus {
-      box-shadow: ${hoverBoxShadow}, ${focusBoxShadow};
-    }
-  }
 `;
 
 interface CardProps {
   className?: string;
   contentStyle?: ContentStyle;
+  darkMode?: boolean;
 }
 
 const Card: ExtendableBox<CardProps> = ({
   className,
   contentStyle,
+  darkMode = false,
   ...rest
 }: BoxProps<'div', CardProps>) => {
   if (
@@ -61,12 +115,18 @@ const Card: ExtendableBox<CardProps> = ({
     contentStyle = ContentStyle.Clickable;
   }
 
+  const mode = darkMode ? Mode.Dark : Mode.Light;
+
   return (
     <Box
       // @ts-expect-error
       className={cx(
         containerStyle,
-        { [clickableStyle]: contentStyle === ContentStyle.Clickable },
+        colorSet[mode].containerStyle,
+        {
+          [colorSet[mode].clickableStyle]:
+            contentStyle === ContentStyle.Clickable,
+        },
         className,
       )}
       {...rest}

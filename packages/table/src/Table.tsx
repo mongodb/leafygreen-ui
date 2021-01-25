@@ -54,7 +54,7 @@ const leftShadow = css`
 
   &:after {
     right: 100%;
-    box-shadow: 3px 0 4px ${shadowColor};
+    box-shadow: 4px 0 4px ${shadowColor};
   }
 `;
 
@@ -63,7 +63,7 @@ const rightShadow = css`
 
   &:after {
     left: 100%;
-    box-shadow: -3px 0 4px ${shadowColor};
+    box-shadow: -4px 0 4px ${shadowColor};
   }
 `;
 
