@@ -43,6 +43,7 @@ const colorSet: Record<Mode, ColorSet> = {
       border: 1px solid ${uiColors.gray.light2};
       box-shadow: 0 4px 10px -4px ${transparentize(0.7, uiColors.black)};
       background-color: white;
+      color: ${uiColors.gray.dark3};
     `,
     clickableStyle: css`
       cursor: pointer;
@@ -67,6 +68,7 @@ const colorSet: Record<Mode, ColorSet> = {
       border: 1px solid ${uiColors.gray.dark2};
       box-shadow: ${darkBaseBoxShadow};
       background-color: ${uiColors.gray.dark2};
+      color: ${uiColors.white};
     `,
     clickableStyle: css`
       cursor: pointer;

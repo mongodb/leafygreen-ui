@@ -1,7 +1,7 @@
 import React from 'react';
 import { boolean } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import Card from './Card';
 import { uiColors } from '@leafygreen-ui/palette';
 
@@ -29,12 +29,7 @@ storiesOf('Card', module).add('Default', () => {
         as="div"
         onClick={hasClickBehavior ? () => alert('hello') : undefined}
         darkMode={darkMode}
-        className={cx(
-          containerStyle,
-          css`
-            color: ${darkMode ? uiColors.white : uiColors.gray.dark3};
-          `,
-        )}
+        className={containerStyle}
       >
         This is a card component
       </Card>
