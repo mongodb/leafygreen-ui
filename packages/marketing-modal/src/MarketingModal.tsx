@@ -64,16 +64,12 @@ const contentStyle = css`
 
 const footerContentStyle = css`
   line-height: 24px;
-  padding-bottom: 50px;
+  padding-bottom: 40px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  & > * {
-    margin: 4px;
-  }
 `;
 
 interface MarketingModalProps {
@@ -124,7 +120,14 @@ const MarketingModal = ({
         <Button variant="primary" onClick={onButtonClick}>
           {buttonText}
         </Button>
-        <Link tabIndex={0} onClick={onLinkClick} hideExternalIcon>
+        <Link
+          tabIndex={0}
+          onClick={onLinkClick}
+          hideExternalIcon
+          className={css`
+            margin-top: 24px;
+          `}
+        >
           {linkText}
         </Link>
       </div>

@@ -19,18 +19,25 @@ storiesOf('Card', module).add('Default', () => {
   const darkMode = boolean('darkMode', false);
 
   return (
-    <Card
-      as="div"
-      onClick={hasClickBehavior ? () => alert('hello') : undefined}
-      darkMode={darkMode}
-      className={cx(
-        containerStyle,
-        css`
-          color: ${darkMode ? uiColors.white : uiColors.gray.dark3};
-        `,
-      )}
+    <div
+      className={css`
+        padding: 24px;
+        background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
+      `}
     >
-      This is a card component
-    </Card>
+      <Card
+        as="div"
+        onClick={hasClickBehavior ? () => alert('hello') : undefined}
+        darkMode={darkMode}
+        className={cx(
+          containerStyle,
+          css`
+            color: ${darkMode ? uiColors.white : uiColors.gray.dark3};
+          `,
+        )}
+      >
+        This is a card component
+      </Card>
+    </div>
   );
 });

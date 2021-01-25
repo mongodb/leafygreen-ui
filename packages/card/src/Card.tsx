@@ -34,7 +34,8 @@ const lightHoverBoxShadow = `0 2px 6px -2px ${transparentize(
   uiColors.black,
 )}`;
 const darkHoverBoxShadow = `0 2px 12px -2px ${transparentize(0.1, '#000')}`;
-const focusBoxShadow = `0 0 0 3px ${uiColors.blue.light1}`;
+const lightFocusBoxShadow = `0 0 0 3px ${uiColors.blue.light1}`;
+const darkFocusBoxShadow = `0 0 0 3px ${uiColors.blue.base}`;
 
 const colorSet: Record<Mode, ColorSet> = {
   [Mode.Light]: {
@@ -48,7 +49,7 @@ const colorSet: Record<Mode, ColorSet> = {
 
       &:focus {
         outline: none;
-        box-shadow: ${lightBaseBoxShadow}, ${focusBoxShadow};
+        box-shadow: ${lightBaseBoxShadow}, ${lightFocusBoxShadow};
       }
 
       &:hover {
@@ -56,7 +57,7 @@ const colorSet: Record<Mode, ColorSet> = {
         box-shadow: ${lightHoverBoxShadow};
 
         &:focus {
-          box-shadow: ${lightHoverBoxShadow}, ${focusBoxShadow};
+          box-shadow: ${lightHoverBoxShadow}, ${lightFocusBoxShadow};
         }
       }
     `,
@@ -72,15 +73,14 @@ const colorSet: Record<Mode, ColorSet> = {
 
       &:focus {
         outline: none;
-        box-shadow: ${darkBaseBoxShadow}, ${focusBoxShadow};
+        box-shadow: ${darkBaseBoxShadow}, ${darkFocusBoxShadow};
       }
 
       &:hover {
-        // border: 1px solid ${uiColors.gray.dark2};
         box-shadow: ${darkHoverBoxShadow};
 
         &:focus {
-          box-shadow: ${darkHoverBoxShadow}, ${focusBoxShadow};
+          box-shadow: ${darkHoverBoxShadow}, ${darkFocusBoxShadow};
         }
       }
     `,
