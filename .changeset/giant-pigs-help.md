@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/collapsible-side-nav': major
+'@leafygreen-ui/side-nav': major
 ---
 
-Initial release of Collapsible Side Nav component
+Visual redesign and API overhaul of the `SideNav` component. See `UPGRADE.md` for assistance in upgrading.

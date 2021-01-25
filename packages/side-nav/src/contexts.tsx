@@ -15,6 +15,7 @@ export const SideNavContext = createContext<SideNavData>({
 interface SideNavGroupData {
   addPath: (path: string) => void;
   removePath: (path: string) => void;
+  collapsed: boolean;
 }
 
 export const SideNavGroupContext = createContext<SideNavGroupData | null>(null);

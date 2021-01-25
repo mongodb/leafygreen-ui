@@ -67,13 +67,13 @@ const ulStyles = css`
 `;
 
 type MobileNavigationGroupProps = JSX.IntrinsicElements['li'] & {
-  header: string;
+  label: string;
   children: React.ReactNode;
   initialCollapsed?: boolean;
 };
 
 function MobileNavigationGroup({
-  header,
+  label,
   children,
   className,
   initialCollapsed = true,
@@ -108,7 +108,7 @@ function MobileNavigationGroup({
             { [openIconStyle]: open },
           )}
         />
-        <h4 className={navItemStyle}>{header}</h4>
+        <h4 className={navItemStyle}>{label}</h4>
       </button>
       <Transition
         in={open}

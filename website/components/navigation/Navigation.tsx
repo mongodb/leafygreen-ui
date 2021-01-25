@@ -92,7 +92,7 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
       return (
         <MobileNavigationGroup
           key={type}
-          header={isGuideline ? 'Core Guidelines' : 'Components'}
+          label={isGuideline ? 'Core Guidelines' : 'Components'}
           initialCollapsed={activeType !== type}
         >
           {items.map(item => {
@@ -117,7 +117,7 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
     return (
       <SideNavGroup
         key={type}
-        header={isGuideline ? 'Core Guidelines' : 'Components'}
+        label={isGuideline ? 'Core Guidelines' : 'Components'}
       >
         {items.map(item => {
           const path =
@@ -128,7 +128,7 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
             <SideNavItem
               key={item}
               onClick={() => router.push(path)}
-              active={item === activePage}
+              path={path}
             >
               {item.split('-').join(' ')}
             </SideNavItem>
@@ -144,7 +144,7 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
 Content.displayName = 'Content';
 
 function Navigation() {
-  const { push } = useRouter();
+  const { pathname, push } = useRouter();
   const viewport = useViewportSize();
   const isTouchDevice = !!viewport && viewport.width < breakpoints.Desktop;
 
@@ -160,8 +160,10 @@ function Navigation() {
     <nav className={navContainer}>
       <MDBDesignLogo className={logoStyles} onClick={() => push('/')} />
       <SideNav
+        collapsible={false}
+        currentPath={pathname}
         className={css`
-          margin-top: ${spacing[3]}px;
+          border-right: 0;
         `}
       >
         <Content />

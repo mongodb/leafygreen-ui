@@ -1,22 +1,29 @@
 import React from 'react';
-import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
+import { css } from 'emotion';
+import {
+  SideNav,
+  SideNavGroup,
+  SideNavItem,
+  sideNavWidth,
+} from '@leafygreen-ui/side-nav';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 // When interface is used, ts complains that index signature is missing
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 type Knobs = {
-  header: string;
+  label: string;
   active: boolean;
   disabled: boolean;
   collapsible: boolean;
+  collapsibleGroup: boolean;
   children: string;
 };
 
 const knobsConfig: KnobsConfigInterface<Knobs> = {
-  header: {
+  label: {
     type: 'text',
     default: 'Organization',
-    label: 'Header',
+    label: 'Label',
   },
   active: {
     type: 'boolean',
@@ -33,6 +40,11 @@ const knobsConfig: KnobsConfigInterface<Knobs> = {
     default: true,
     label: 'Collapsible',
   },
+  collapsibleGroup: {
+    type: 'boolean',
+    default: true,
+    label: 'Collapsible group',
+  },
   children: {
     type: 'text',
     default: 'Admin',
@@ -41,10 +53,11 @@ const knobsConfig: KnobsConfigInterface<Knobs> = {
 };
 
 function DefaultExample({
-  header,
+  label,
   active,
   disabled,
   collapsible,
+  collapsibleGroup,
   children,
 }: Knobs) {
   const collapsibleProps = collapsible
@@ -56,19 +69,39 @@ function DefaultExample({
         collapsible: false,
       } as const);
 
+  const collapsibleGroupProps = collapsibleGroup
+    ? ({
+        collapsible: true,
+        initialCollapsed: false,
+      } as const)
+    : ({
+        collapsible: false,
+      } as const);
+
   return (
-    <SideNav>
-      <SideNavGroup {...collapsibleProps} header={header}>
-        <SideNavItem active={active}>Projects</SideNavItem>
-        <SideNavItem disabled={disabled}>Alerts</SideNavItem>
-        <SideNavItem>Activity Feed</SideNavItem>
-        <SideNavItem>Settings</SideNavItem>
-        <SideNavItem>Access Manager</SideNavItem>
-        <SideNavItem>Billing</SideNavItem>
-        <SideNavItem>Support</SideNavItem>
-        <SideNavItem>{children}</SideNavItem>
-      </SideNavGroup>
-    </SideNav>
+    <div
+      className={css`
+        position: relative;
+        height: 400px;
+        width: ${sideNavWidth}px;
+      `}
+    >
+      <SideNav
+        {...collapsibleProps}
+        currentPath={active ? 'Projects' : undefined}
+      >
+        <SideNavGroup {...collapsibleGroupProps} label={label}>
+          <SideNavItem>Projects</SideNavItem>
+          <SideNavItem disabled={disabled}>Alerts</SideNavItem>
+          <SideNavItem>Activity Feed</SideNavItem>
+          <SideNavItem>Settings</SideNavItem>
+          <SideNavItem>Access Manager</SideNavItem>
+          <SideNavItem>Billing</SideNavItem>
+          <SideNavItem>Support</SideNavItem>
+          <SideNavItem>{children}</SideNavItem>
+        </SideNavGroup>
+      </SideNav>
+    </div>
   );
 }
 

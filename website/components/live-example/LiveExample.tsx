@@ -39,6 +39,7 @@ const previewStyle = css`
 const componentContainer = css`
   border-bottom: 1px solid ${uiColors.gray.light2};
   padding: ${spacing[6]}px;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -8,16 +8,25 @@
   "include": ["src/**/*"],
   "references": [
     {
-      "path": "../lib"
+      "path": "../emotion"
     },
     {
-      "path": "../emotion"
+      "path": "../hooks"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../icon-button"
+    },
+    {
+      "path": "../lib"
     },
     {
       "path": "../palette"
     },
     {
-      "path": "../menu"
+      "path": "../tooltip"
     }
   ]
 }

@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/side-nav.svg)
 
-#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/sidenav--default)
+#### [View on Storybook](https://mongodb.github.io/leafygreen-ui/?path=/story/side-nav--default)
 
 ## Installation
 
@@ -18,174 +18,367 @@ yarn add @leafygreen-ui/side-nav
 npm install @leafygreen-ui/side-nav
 ```
 
-## Peer Dependencies
-
-| Package                              | Version  |
-| ------------------------------------ | -------- |
-| `@leafygreen-ui/leafygreen-provider` | `^1.1.0` |
-
 ## Example
 
 ```js
-import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
+import {
+  GlyphVisibility,
+  SideNav,
+  SideNavItem,
+  SideNavGroup,
+} from '@leafygreen-ui/side-nav';
 
-const header = (
-  <div>
-    <strong>Polymorphism</strong>
-    <br />
-    <small>(content header)</small>
-  </div>
-);
-
-return (
-  <SideNav>
-    <SideNavGroup header="States">
-      <SideNavItem active>Active State</SideNavItem>
-      <SideNavItem disabled>Disabled State</SideNavItem>
-    </SideNavGroup>
-    <SideNavGroup header={header}>
-      <SideNavItem>Default root element (button)</SideNavItem>
-      <SideNavItem href="/">Anchor root element</SideNavItem>
-      <SideNavItem as="label" htmlFor="docs-input">
-        Custom root element (label)
-        <input
-          id="docs-input"
-          type="text"
-          value=""
-          placeholder="placeholder text"
-          disabled
-        />
-      </SideNavItem>
-    </SideNavGroup>
-  </SideNav>
-);
+<SideNav>
+  <SideNavItem
+    glyph={<AppsIcon />}
+    glyphVisibility={GlyphVisibility.Visible}
+    href="https://www.mongodb.com/realm"
+  >
+    Realm Apps
+  </SideNavItem>
+  <SideNavItem glyph={<HomeIcon />}>Investments</SideNavItem>
+  <SideNavGroup label="Data Access" glyph={<CloudIcon />}>
+    <SideNavItem>Rules</SideNavItem>
+    <SideNavItem>Schema</SideNavItem>
+    <SideNavItem>App Users</SideNavItem>
+    <SideNavItem>Authentication</SideNavItem>
+  </SideNavGroup>
+  <SideNavGroup label="Build" glyph={<LaptopIcon />}>
+    <SideNavItem>SDKs</SideNavItem>
+    <SideNavItem>Sync</SideNavItem>
+    <SideNavItem>GraphQL</SideNavItem>
+    <SideNavItem>Functions</SideNavItem>
+    <SideNavItem>Triggers</SideNavItem>
+    <SideNavItem>3rd Party Services</SideNavItem>
+    <SideNavItem>Values {'&'} Secrets</SideNavItem>
+  </SideNavGroup>
+  <SideNavGroup label="Manage" glyph={<SettingsIcon />}>
+    <SideNavItem>Linked Data Sources</SideNavItem>
+    <SideNavItem>Deploy</SideNavItem>
+    <SideNavItem>Hosting</SideNavItem>
+    <SideNavItem>Logs</SideNavItem>
+    <SideNavItem>App Settings</SideNavItem>
+    <SideNavItem>Push Notifications</SideNavItem>
+  </SideNavGroup>
+  <SideNavGroup label="Help" glyph={<SupportIcon />}>
+    <SideNavItem>Documentation</SideNavItem>
+    <SideNavItem>Feature Requests</SideNavItem>
+  </SideNavGroup>
+</SideNav>;
 ```
 
 **Output HTML**
 
 ```html
-<nav class="leafygreen-ui-1inivuc" aria-label="side-nav">
-  <ul class="leafygreen-ui-bdnco">
-    <li>
-      <h4 class="leafygreen-ui-19w7vet">States</h4>
-      <ul role="menu" class="leafygreen-ui-bdnco">
-        <li role="none">
-          <button
-            data-leafygreen-ui="side-nav-item-container"
-            class="leafygreen-ui-d18uaj"
-            role="menuitem"
-            aria-current="page"
-            aria-disabled="false"
+<nav aria-label="side-nav" class="leafygreen-ui-wrjhix">
+  <button
+    aria-controls="side-nav-11"
+    aria-expanded="true"
+    aria-describedby="tooltip-69"
+    aria-label="Collapse sidebar"
+    tabindex="0"
+    aria-disabled="false"
+    class="leafygreen-ui-1alp393"
+  >
+    <div class="leafygreen-ui-xhlipt">
+      <svg
+        class="leafygreen-ui-cw4n9e"
+        height="16"
+        width="16"
+        viewBox="0 0 16 16"
+        role="img"
+        aria-labelledby="ChevronLeft-43"
+      >
+        ...</svg
+      ><svg
+        class="leafygreen-ui-16xqsmu"
+        height="16"
+        width="16"
+        viewBox="0 0 16 16"
+        role="img"
+        aria-labelledby="ChevronRight-43"
+      >
+        ...
+      </svg>
+    </div>
+  </button>
+  <div class="leafygreen-ui-1orcjpq">
+    <a
+      aria-label="Realm Apps"
+      aria-current="false"
+      class="leafygreen-ui-17t5x0n"
+      href="https://www.mongodb.com/realm"
+      ><svg
+        class="leafygreen-ui-13p6dfv"
+        height="16"
+        width="16"
+        viewBox="0 0 16 16"
+        role="img"
+        aria-labelledby="Apps-11"
+      >
+        ...</svg
+      >Realm Apps</a
+    ><a
+      aria-label="Investments"
+      aria-current="false"
+      tabindex="0"
+      class="leafygreen-ui-r3tfmb"
+      >Investments</a
+    >
+    <div
+      role="group"
+      aria-labelledby="side-nav-group-41"
+      class="leafygreen-ui-1ka9xum"
+    >
+      <div
+        id="side-nav-group-41"
+        aria-hidden="false"
+        class="leafygreen-ui-18egciw"
+      >
+        <div class="leafygreen-ui-a0xhem">
+          <svg
+            class="leafygreen-ui-13p6dfv"
+            height="16"
+            width="16"
+            viewBox="0 0 16 16"
+            role="img"
+            aria-labelledby="Cloud-11"
           >
-            <div class="leafygreen-ui-1mikaeo">Active State</div>
-          </button>
-        </li>
-        <li role="none">
-          <button
-            data-leafygreen-ui="side-nav-item-container"
-            class="leafygreen-ui-g84goy"
-            role="menuitem"
-            aria-current="false"
-            aria-disabled="true"
-            tabindex="-1"
-          >
-            <div class="leafygreen-ui-18g544y">Disabled State</div>
-          </button>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <div>
-        <strong>Polymorphism</strong><br />
-        <small>(content header)</small>
+            ...
+          </svg>
+        </div>
+        Data Access
       </div>
-      <ul role="menu" class="leafygreen-ui-bdnco">
-        <li role="none">
-          <button
-            data-leafygreen-ui="side-nav-item-container"
-            class="leafygreen-ui-1b8asku"
-            role="menuitem"
-            aria-current="false"
-            aria-disabled="false"
+      <a
+        aria-label="Rules"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >Rules</a
+      ><a
+        aria-label="Schema"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >Schema</a
+      ><a
+        aria-label="App Users"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >App Users</a
+      ><a
+        aria-label="Authentication"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >Authentication</a
+      >
+    </div>
+    <div
+      role="group"
+      aria-labelledby="side-nav-group-43"
+      class="leafygreen-ui-1ka9xum"
+    >
+      <div
+        id="side-nav-group-43"
+        aria-hidden="false"
+        class="leafygreen-ui-18egciw"
+      >
+        <div class="leafygreen-ui-a0xhem">
+          <svg
+            class="leafygreen-ui-13p6dfv"
+            height="16"
+            width="16"
+            viewBox="0 0 16 16"
+            role="img"
+            aria-labelledby="Laptop-11"
           >
-            <div class="leafygreen-ui-f3d0a6">
-              Default root element (button)
-            </div>
-          </button>
-        </li>
-        <li role="none">
-          <a
-            href="/"
-            data-leafygreen-ui="side-nav-item-container"
-            class="leafygreen-ui-1b8asku"
-            role="menuitem"
-            aria-current="false"
-            aria-disabled="false"
+            ...
+          </svg>
+        </div>
+        Build
+      </div>
+      <a
+        aria-label="SDKs"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >SDKs</a
+      ><a
+        aria-label="Sync"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >Sync</a
+      ><a
+        aria-label="GraphQL"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >GraphQL</a
+      ><a
+        aria-label="Functions"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >Functions</a
+      ><a
+        aria-label="Triggers"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >Triggers</a
+      ><a
+        aria-label="3rd Party Services"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >3rd Party Services</a
+      ><a
+        aria-label="Values ,&amp;, Secrets"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >Values &amp; Secrets</a
+      >
+    </div>
+    <div
+      role="group"
+      aria-labelledby="side-nav-group-45"
+      class="leafygreen-ui-1ka9xum"
+    >
+      <div
+        id="side-nav-group-45"
+        aria-hidden="false"
+        class="leafygreen-ui-18egciw"
+      >
+        <div class="leafygreen-ui-a0xhem">
+          <svg
+            class="leafygreen-ui-13p6dfv"
+            height="16"
+            width="16"
+            viewBox="0 0 16 16"
+            role="img"
+            aria-labelledby="Settings-21"
           >
-            <div class="leafygreen-ui-f3d0a6">Anchor root element</div>
-          </a>
-        </li>
-        <li role="none">
-          <label
-            for="docs-input"
-            data-leafygreen-ui="side-nav-item-container"
-            class="leafygreen-ui-1b8asku"
-            role="menuitem"
-            aria-current="false"
-            aria-disabled="false"
+            ...
+          </svg>
+        </div>
+        Manage
+      </div>
+      <a
+        aria-label="Linked Data Sources"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >Linked Data Sources</a
+      ><a
+        aria-label="Deploy"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >Deploy</a
+      ><a
+        aria-label="Hosting"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >Hosting</a
+      ><a
+        aria-label="Logs"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >Logs</a
+      ><a
+        aria-label="App Settings"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >App Settings</a
+      ><a
+        aria-label="Push Notifications"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >Push Notifications</a
+      >
+    </div>
+    <div
+      role="group"
+      aria-labelledby="side-nav-group-47"
+      class="leafygreen-ui-1ka9xum"
+    >
+      <div
+        id="side-nav-group-47"
+        aria-hidden="false"
+        class="leafygreen-ui-18egciw"
+      >
+        <div class="leafygreen-ui-a0xhem">
+          <svg
+            class="leafygreen-ui-13p6dfv"
+            height="16"
+            width="16"
+            viewBox="0 0 16 16"
+            role="img"
+            aria-labelledby="Support-11"
           >
-            <div class="leafygreen-ui-f3d0a6">
-              Custom root element (label)
-              <input
-                id="docs-input"
-                type="text"
-                placeholder="placeholder text"
-                disabled=""
-                value=""
-              />
-            </div>
-          </label>
-        </li>
-      </ul>
-    </li>
-  </ul>
+            ...
+          </svg>
+        </div>
+        Help
+      </div>
+      <a
+        aria-label="Documentation"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >Documentation</a
+      ><a
+        aria-label="Feature Requests"
+        aria-current="false"
+        tabindex="0"
+        class="leafygreen-ui-j568gn"
+        >Feature Requests</a
+      >
+    </div>
+  </div>
 </nav>
 ```
 
-## Properties
+## SideNav Properties
 
-| Prop        | Type     | Description                                                  | Default     |
-| ----------- | -------- | ------------------------------------------------------------ | ----------- |
-| `className` | `string` | Class name that will be applied to the root-level element.   | `undefined` |
-| `children`  | `node`   | Content that will be rendered inside the root-level element. | `undefined` |
+| Prop               | Type                    | Description                                                                                                                           | Default |
+| ------------------ | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `className`        | `string`                | The className applied to the nav element.                                                                                             |
+| `collapsible`      | `boolean`               | Whether the navigation can be collapsed and the collapse button should be displayed.                                                  | `true`  |
+| `initialCollapsed` | `boolean`               | Whether the navigation bar should be collapsed when initially rendered.                                                               | `false` |
+| `currentPath`      | `string`                | Indicate which `SideNavItem` with the matching `path` prop is currently active. This will typically be the path provided by a router. |
+| ...                | native `nav` attributes | Any other props will be spread on the root `nav` element.                                                                             |         |
 
-_Any other properties will be spread on the root-level element._
+# SideNavGroup
 
-# Side Nav Group
+| Prop               | Type                 | Description                                                                         | Default                      |
+| ------------------ | -------------------- | ----------------------------------------------------------------------------------- | ---------------------------- |
+| `className`        | `string`             | The className applied to the outermost element.                                     |
+| `glyph`            | `React.ReactElement` | The icon to display in the group's header.                                          |
+| `label`            | `node`               | The label text to display in the group's header.                                    |
+| `aria-label`       | `string`             | Must be provided if `label` is not a `string`.                                      | `label` when it's a `string` |
+| `collapsible`      | `boolean`            | Determines whether or not the Group is collapsible                                  | `false`                      |
+| `initialCollapsed` | `boolean`            | Determines whether or not the SideNavGroup should be collapsed on the first render. | `true`                       |
 
-## Properties
+# SideNavItem
 
-| Prop               | Type             | Description                                                                                                                                      | Default     |
-| ------------------ | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
-| `className`        | `string`         | Class name that will be applied to the root-level element.                                                                                       | `undefined` |
-| `header`           | `string`, `node` | Content that will be rendered as the component's header.<br />If a string is provided, it will be rendered with default styling as a header tag. | `undefined` |
-| `children`         | `node`           | Content that will be rendered inside the root-level element.                                                                                     | `undefined` |
-| `collapsible`      | `boolean`        | Determines whether or not the Group is collapsible                                                                                               | `false`     |
-| `initialCollapsed` | `boolean`        | Determines whether or not the SideNavGroup should be collapsed on the first render.                                                              | `true`      |
-
-_Any other properties will be spread on the root-level element._
-
-# Side Nav Item
-
-## Properties
-
-| Prop               | Type                                               | Description                                                                                                                                                                                                                                                                              | Default     |
-| ------------------ | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `active`           | `boolean`                                          | Whether or not the component should be rendered in an active state.                                                                                                                                                                                                                      | `false`     |
-| `disabled`         | `boolean`                                          | Whether or not the component should be rendered in a disabled state.                                                                                                                                                                                                                     | `false`     |
-| `ariaCurrentValue` | `enum`                                             | The aria-current attribute value set when the component is active. See the [WAI-ARIA 1.1 spec](https://www.w3.org/TR/wai-aria-1.1/#aria-current 'WAI-ARIA 1.1 Spec') for a list of accepted values.                                                                                      | `'page'`    |
-| `className`        | `string`                                           | Class name that will be applied to the component's header.                                                                                                                                                                                                                               | `undefined` |
-| `children`         | `node`                                             | Content that will be rendered inside the root-level element.                                                                                                                                                                                                                             | `undefined` |
-| `href`             | `string`                                           | When provided, the component will be rendered as an anchor element.                                                                                                                                                                                                                      | `undefined` |
-| `as`               | `React.ElementType`                                | When provided, the component will be rendered as the component or html tag indicated by this prop. Other additional props will be spread on the anchor element. For example, `Link` or `a` tags can be supplied to replace `button` from being the DOM element that wraps the component. | `undefined` |
-| ...                | native attributes of component passed to `as` prop | Any other props will be spread on the root element                                                                                                                                                                                                                                       |             |
+| Prop              | Type                                                   | Description                                                                                                                                           | Default                         |
+| ----------------- | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| `as`              | `React.ElementType`                                    | Determines the root element. For example, `Link` or `button` tags can be supplied to replace `a` from being the DOM element that wraps the component. | `a`                             |
+| `className`       | `string`                                               | The className applied to the outermost element.                                                                                                       |
+| `glyph`           | `React.ReactElement`                                   | The icon to display for the item.                                                                                                                     |
+| `glyphVisibility` | `'visible'` \| `'only-collapsed'` \| `'only-expanded'` | Value which indicates when the glyph should be visible. The glyph will never be visible when the nav is collapsed when the item is disabled.          | `'only-collapsed'`              |
+| `href`            | `string`                                               | The link that the anchor tag will navigate to.                                                                                                        |
+| `path`            | `string`                                               | Renders the item as active when it corresponds to the `currentPath` prop of the containing `SideNav`.                                                 |
+| `onSelect`        | `function`                                             | Callback that is executed when the item is selected which, for example, can be used to set the `currentPath` to be passed to the `SideNav`.           |
+| `aria-label`      | `string`                                               | Must be provided if `children` is not a `string`.                                                                                                     | `children` when it's a `string` |
+| `disabled`        | `boolean`                                              | Whether the item can be selected.                                                                                                                     | `false`                         |
+| ...               | native attributes of component passed to as prop       | Any other properties will be spread on the root element                                                                                               |                                 |

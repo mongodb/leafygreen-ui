@@ -1,251 +1,317 @@
-import React, { ReactNode } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import omit from 'lodash/omit';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { uiColors } from '@leafygreen-ui/palette';
-import { AriaCurrentValue, createDataProp } from '@leafygreen-ui/lib';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
-import { sideNavItemSidePadding } from './styles';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import {
+  AriaCurrentValue,
+  enforceExhaustive,
+  keyMap,
+  OneOf,
+} from '@leafygreen-ui/lib';
+import { uiColors } from '@leafygreen-ui/palette';
+import { SideNavContext, SideNavGroupContext } from './contexts';
+import {
+  GlyphElement,
+  GlyphVisibility,
+  transitionDurationMilliseconds,
+} from './utils';
 
-const sideNavItemContainer = createDataProp('side-nav-item-container');
-
-// container styles
-const defaultStyle = css`
-  box-sizing: border-box;
-  position: relative;
-  width: 100%;
-  margin: unset;
-  padding: 8px ${sideNavItemSidePadding}px 8px ${sideNavItemSidePadding}px;
-  min-height: 0;
+const sideNavItemStyle = css`
   display: flex;
-  flex-direction: column;
-  border: none;
-  border-radius: 5px;
+  align-items: center;
+  padding: 0 16px;
+  height: 32px;
   cursor: pointer;
-  color: inherit;
-  text-align: left;
+  font-size: 14px;
   text-decoration: none;
-  font-family: Akzidenz, ‘Helvetica Neue’, Helvetica, Arial, sans-serif;
-  appearance: none;
-  background: none;
-  z-index: 0;
+  border: 0 solid ${uiColors.gray.light2};
+  color: ${uiColors.gray.dark2};
+  // Chrome has a bug that makes the border black during transition
+  // so just disable the transition since it's hard to notice anyway
+  transition: all ${transitionDurationMilliseconds}ms ease-in-out, border none;
+  text-decoration: none;
+  outline: none;
 
-  &::-moz-focus-inner {
-    border: 0;
+  &:hover {
+    background-color: ${uiColors.gray.light2};
   }
+`;
 
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    border-radius: 5px;
-    background-color: transparent;
-    transform: scale(0.9, 0.7);
-    transition: all 150ms ease-in-out;
+const sideNavItemFocusStyle = css`
+  &:focus {
+    color: ${uiColors.blue.dark3};
+    background-color: ${uiColors.blue.light3};
   }
+`;
+
+const sideNavItemDisabledStyle = css`
+  color: ${uiColors.gray.dark1};
+  cursor: not-allowed;
 
   &:hover,
   &:focus {
-    &:before {
-      transform: scale(1);
-      background-color: ${uiColors.gray.light2};
-    }
-  }
-
-  &:active:before {
-    transform: scale(1);
-  }
-
-  &:hover {
-    text-decoration: none;
-  }
-
-  &:focus {
-    text-decoration: none;
-    outline: none;
+    color: ${uiColors.gray.dark1};
+    background-color: inherit;
   }
 `;
 
-const activeStyle = css`
-  cursor: default;
-  text-decoration: none;
+const sideNavItemWithGlyphStyle = css`
+  & > svg:first-child {
+    margin-right: 5px;
+  }
+`;
 
-  &:before {
-    transform: scale(1);
+const sideNavItemActiveStyle = css`
+  background-color: ${uiColors.green.light3};
+  color: ${uiColors.green.dark3};
+  font-weight: bold;
+
+  &:hover {
     background-color: ${uiColors.green.light3};
   }
 
-  &:hover {
-    color: ${uiColors.green.dark3};
-
-    &:before {
-      transform: scale(1);
-      background-color: ${uiColors.green.light3};
-    }
-  }
-`;
-
-const disabledStyle = css`
-  pointer-events: none;
-  background-color: transparent;
-`;
-
-const focusedStyle = css`
   &:focus {
-    text-decoration: none;
-    color: ${uiColors.blue.dark3};
-
-    &:before {
-      background-color: ${uiColors.blue.light3};
-    }
+    color: ${uiColors.green.dark3};
+    background-color: ${uiColors.green.light3};
   }
 `;
 
-// text content styles
-const textStyle = css`
-  position: relative;
-  z-index: 1;
-  font-size: 14px;
-  font-weight: normal;
-  text-transform: capitalize;
-  color: ${uiColors.gray.dark2};
-
-  ${sideNavItemContainer.selector}:focus & {
-    color: ${uiColors.blue.dark3};
-  }
-`;
-
-const activeTextStyle = css`
+const sideNavItemNonGroupStyle = css`
+  margin-top: 4px;
   font-weight: bold;
-  color: ${uiColors.green.dark3};
 `;
 
-const disabledTextStyle = css`
-  color: ${uiColors.gray.light1};
+const sideNavItemNonGroupLinkStyle = css`
+  font-weight: normal;
+  color: ${uiColors.blue.base};
 `;
 
-export interface SideNavItemProps {
-  /**
-   * Whether or not the component should be rendered in an active state.
-   */
-  active?: boolean;
+const sideNavItemNavCollapsedStyle = css`
+  height: 0;
+  opacity: 0;
+  visibility: hidden;
 
-  /**
-   * Whether or not the component should be rendered in a disabled state.
-   */
-  disabled?: boolean;
+  &:hover {
+    background-color: inherit;
+  }
+`;
 
-  /**
-   * The aria-current attribute value set when the component is active.
-   */
-  ariaCurrentValue?: AriaCurrentValue;
+const sideNavItemWithGlyphNavCollapsedStyle = css`
+  margin-top: 0;
+  height: 40px;
+  opacity: 1;
+  visibility: visible;
+  border-top-width: 1px;
+  color: ${uiColors.green.dark2};
 
-  /**
-   * Class name that will be applied to the root-level element.
-   */
+  &:hover {
+    cursor: inherit;
+  }
+`;
+
+type Props = {
   className?: string;
-
-  /**
-   * Content that will be rendered inside the root-level element.
-   */
-  children?: ReactNode;
-
+  path?: string;
   href?: string;
-}
-
-/**
- * # SideNavItem
- *
- * ```
-  <SideNavItem href="/">
-    Back to Home
-  </SideNavItem>
- * ```
- *
- ### Component Props
- @param props.active Whether or not the component should be rendered in an active state.
- @param props.disabled Whether or not the component should be rendered in a disabled state.
- @param props.ariaCurrentValue The aria-current attribute value set when the component is active.
- @param props.className Class name that will be applied to the root-level element.
- @param props.children Content that will be rendered inside the root-level element.
- *
- ### Optional Polymorphic Props
- @param props.href When provided, the component will be rendered as an anchor element. This and
- *  other additional props will be spread on the anchor element.
- @param props.as When provided, the component will be rendered as the component or html tag indicated
- *  by this prop. Other additional props will be spread on the anchor element.
- */
+  onClick?: React.MouseEventHandler;
+  onKeyDown?: React.KeyboardEventHandler;
+  onSelect?: (
+    path: string | undefined,
+    event: React.MouseEvent | React.KeyboardEvent,
+  ) => void;
+  disabled?: boolean;
+} & OneOf<{ glyph: GlyphElement; glyphVisibility?: GlyphVisibility }, {}> &
+  OneOf<
+    { children: string },
+    { 'aria-label': string; children: React.ReactNode }
+  >;
 
 const SideNavItem: ExtendableBox<
-  SideNavItemProps & { ref?: React.Ref<any> },
-  'button'
-> = React.forwardRef((props: SideNavItemProps, forwardRef) => {
-  const {
-    active = false,
-    disabled = false,
-    ariaCurrentValue = AriaCurrentValue.Page,
+  Props & { ref?: React.Ref<any> },
+  'a'
+> = React.forwardRef(function SideNavItem(
+  {
     className,
     children,
-  } = props;
+    glyph,
+    glyphVisibility = GlyphVisibility.OnlyCollapsed,
+    path,
+    onSelect,
+    'aria-label': ariaLabelProp,
+    onClick: onClickProp,
+    onKeyDown: onKeyDownProp,
+    href,
+    disabled = false,
+    ...rest
+  }: Props,
+  refProp,
+) {
+  const { collapsed: navCollapsed, hovered, currentPath } = useContext(
+    SideNavContext,
+  );
+  const groupContextData = useContext(SideNavGroupContext);
+  const { usingKeyboard } = useUsingKeyboardContext();
 
-  const rest = omit(props, [
-    'active',
-    'disabled',
-    'ariaCurrentValue',
-    'className',
-    'children',
-  ]);
+  useEffect(() => {
+    if (groupContextData === null) {
+      return;
+    }
 
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+    const { addPath, removePath } = groupContextData;
+
+    if (path) {
+      addPath(path);
+
+      return () => removePath(path);
+    }
+  }, [groupContextData, path]);
+
+  const setRef = useCallback(
+    (ref: HTMLElement | null) => {
+      if (groupContextData === null) {
+        return;
+      }
+
+      const { removePath } = groupContextData;
+
+      // Remove the path from the item's group if it was unmounted
+      if (ref === null && path !== undefined) {
+        removePath(path);
+      }
+
+      if (typeof refProp === 'function') {
+        refProp(ref);
+      } else if (refProp) {
+        refProp.current = ref;
+      }
+    },
+    [groupContextData, path, refProp],
+  );
+
+  const onClick = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
+      if (disabled) {
+        return;
+      }
+
+      onSelect?.(path, event);
+      onClickProp?.(event);
+    },
+    [disabled, onClickProp, onSelect, path],
+  );
+
+  const onKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLAnchorElement>) => {
+      if (disabled) {
+        return;
+      }
+
+      if (event.ctrlKey || event.shiftKey || event.altKey) {
+        return onKeyDownProp?.(event);
+      }
+
+      if (event.keyCode === keyMap.Enter) {
+        onSelect?.(path, event);
+      }
+
+      onKeyDownProp?.(event);
+    },
+    [disabled, onKeyDownProp, onSelect, path],
+  );
+
+  const isActive = path !== undefined && currentPath === path;
+  const shouldRenderNavCollapsedState = navCollapsed && !hovered;
+  const hasGlyph = glyph !== undefined;
+  const isInGroup = groupContextData !== null;
+  const isLink = href !== undefined;
+
+  let shouldRenderGlyph: boolean;
+
+  if (hasGlyph) {
+    if (!disabled) {
+      switch (glyphVisibility) {
+        case GlyphVisibility.OnlyCollapsed:
+          shouldRenderGlyph = shouldRenderNavCollapsedState;
+          break;
+        case GlyphVisibility.OnlyExpanded:
+          shouldRenderGlyph = !shouldRenderNavCollapsedState;
+          break;
+        case GlyphVisibility.Visible:
+          shouldRenderGlyph = true;
+          break;
+        default:
+          enforceExhaustive(glyphVisibility);
+      }
+    } else {
+      shouldRenderGlyph = !shouldRenderNavCollapsedState;
+    }
+  } else {
+    shouldRenderGlyph = false;
+  }
+
+  const ariaLabel =
+    ariaLabelProp ?? (typeof children === 'string' ? children : undefined);
+
+  if (shouldRenderNavCollapsedState) {
+    return (
+      <div
+        aria-label={shouldRenderGlyph ? ariaLabel : undefined}
+        className={cx(sideNavItemStyle, sideNavItemNavCollapsedStyle, {
+          [sideNavItemWithGlyphNavCollapsedStyle]: shouldRenderGlyph,
+          [sideNavItemNonGroupLinkStyle]: !isInGroup && isLink,
+        })}
+      >
+        {shouldRenderGlyph && glyph}
+      </div>
+    );
+  }
 
   return (
-    <li role="none">
-      <Box
-        as={props.href ? 'a' : 'button'}
-        role="menuitem"
-        {...rest}
-        {...sideNavItemContainer.prop}
-        className={cx(
-          defaultStyle,
-          {
-            [activeStyle]: active,
-            [disabledStyle]: disabled,
-            [focusedStyle]: showFocus,
-          },
-          className,
-        )}
-        aria-current={active ? ariaCurrentValue : AriaCurrentValue.Unset}
-        aria-disabled={disabled}
-        tabIndex={disabled ? -1 : undefined}
-        ref={forwardRef}
-      >
-        <div
-          className={cx(textStyle, {
-            [activeTextStyle]: active,
-            [disabledTextStyle]: disabled,
-          })}
-        >
-          {children}
-        </div>
-      </Box>
-    </li>
+    <Box
+      as="a"
+      aria-label={ariaLabel}
+      aria-current={isActive ? AriaCurrentValue.Page : AriaCurrentValue.Unset}
+      aria-disabled={disabled}
+      tabIndex={disabled ? -1 : 0}
+      ref={setRef}
+      className={cx(
+        sideNavItemStyle,
+        {
+          [sideNavItemFocusStyle]: usingKeyboard,
+          [sideNavItemWithGlyphStyle]: hasGlyph,
+          [sideNavItemActiveStyle]: isActive,
+          [sideNavItemNonGroupStyle]: !isInGroup,
+          [sideNavItemNonGroupLinkStyle]: !isInGroup && isLink,
+          [sideNavItemDisabledStyle]: disabled,
+        },
+        className,
+      )}
+      onClick={onClick}
+      onKeyDown={onKeyDown}
+      href={href}
+      {...rest}
+    >
+      {shouldRenderGlyph && glyph}
+      {children}
+    </Box>
   );
 });
+
+export default SideNavItem;
 
 SideNavItem.displayName = 'SideNavItem';
 
 SideNavItem.propTypes = {
-  active: PropTypes.bool,
-  disabled: PropTypes.bool,
   className: PropTypes.string,
-  ariaCurrentValue: PropTypes.oneOf(Object.values(AriaCurrentValue)),
-  children: PropTypes.node,
+  path: PropTypes.string,
   href: PropTypes.string,
+  onSelect: PropTypes.func,
+  // @ts-expect-error PropTypes typing doesn't work well with unions
+  glyph: PropTypes.element,
+  // @ts-expect-error PropTypes typing doesn't work well with unions
+  glyphVisibility: PropTypes.oneOf(Object.values(GlyphVisibility)),
+  // @ts-expect-error PropTypes typing doesn't work well with unions
+  'aria-label': PropTypes.string,
+  disabled: PropTypes.bool,
 };
-
-export default SideNavItem;

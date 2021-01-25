@@ -1,255 +1,194 @@
-import React from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Transition } from 'react-transition-group';
-import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { HTMLElementProps, IdAllocator, OneOf } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
-import { createDataProp, OneOf } from '@leafygreen-ui/lib';
-import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
-import {
-  ulStyleOverrides,
-  sideNavItemSidePadding,
-  sideNavWidth,
-} from './styles';
+import { SideNavContext, SideNavGroupContext } from './contexts';
+import { GlyphElement, transitionDurationMilliseconds } from './utils';
 
-const button = createDataProp('side-nav-group-button');
-
-const sideNavLabelStyle = css`
-  font-size: 12px;
-  letter-spacing: 0.3px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: ${uiColors.green.dark2};
-  margin-top: 12px;
-  margin-bottom: 0;
-  padding: 4px ${sideNavItemSidePadding}px 4px ${sideNavItemSidePadding}px;
-  line-height: 1.3em;
-  position: relative;
-`;
-
-const collapsibleHeaderStyle = css`
+const sideNavGroupStyle = css`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  margin: 15px 0;
+  border: 0 solid ${uiColors.gray.light2};
+  transition: all ${transitionDurationMilliseconds}ms ease-in-out;
+`;
+
+const sideNavGroupNavCollapsedStyle = css`
+  margin: 0;
+`;
+
+const sideNavGroupWithGlyphNavCollapsedStyle = css`
+  border-top-width: 1px;
+
+  &:last-of-type {
+    border-bottom-width: 1px;
+  }
+`;
+
+const sideNavGroupNavCollapsedAndCurrentStyle = css`
+  background-color: ${uiColors.green.light3};
+`;
+
+const sideNavGroupHeaderStyle = css`
+  display: flex;
   align-items: center;
-  padding-bottom: 2px; // padding-bottom is 4px for not collapsible groups, but spec has the border closer to the element
-  margin-bottom: 2px; // adds the remaining 2px of space between group header and subsequent content
-  cursor: pointer;
-  width: ${sideNavWidth}px;
-
-  &:before {
-    content: '';
-    position: absolute;
-    height: 2px;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-color: ${uiColors.green.light3};
-    border-radius: 2px;
-    margin-left: 16px;
-    margin-right: 16px;
-    transition: background-color 150ms ease-in-out;
-  }
-
-  &:hover:before {
-    background-color: ${uiColors.green.base};
-  }
+  margin-bottom: 4px;
+  padding: 0 16px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 16px;
+  color: ${uiColors.green.dark2};
 `;
 
-const collapsibleHeaderFocusStyle = css`
-  ${button.selector}:focus & {
-    color: ${uiColors.blue.base};
-
-    &:before {
-      background-color: ${uiColors.blue.light3};
-    }
-  }
+const sideNavGroupHeaderNavCollapsedStyle = css`
+  margin-bottom: 0;
 `;
 
-const buttonResetStyles = css`
-  background-color: transparent;
-  border: none;
-  padding: 0px;
-  margin: 0px;
-
-  &:focus {
-    outline: none;
-  }
+const sideNavGroupHeaderWithGlyphNavCollapsedStyle = css`
+  height: 40px;
 `;
 
-const iconStyle = css`
-  transition: 150ms all ease-in-out;
+const glyphStyle = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 4px;
 `;
 
-const openIconStyle = css`
-  transform: rotate(90deg);
-  transition: 150ms all ease-in-out;
-`;
-
-const defaultStyle = css`
-  transition: all 150ms ease-in-out;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 1;
-`;
-
-const transitionStyles = {
-  entering: css`
-    opacity: 0;
-  `,
-  exiting: css`
-    opacity: 0;
-  `,
-  exited: css`
-    opacity: 0;
-  `,
-};
-
-interface SideNavGroupBaseProps {
-  /**
-   * Class name that will be applied to the root-level element.
-   */
+type Props = {
   className?: string;
+  children: React.ReactNode;
+  glyph?: GlyphElement;
+} & (
+  | { collapsible: false; initialCollapsed?: undefined }
+  | { collapsible?: true; initialCollapsed?: boolean }
+) &
+  OneOf<{ label: string }, { label: React.ReactNode; 'aria-label': string }> &
+  Omit<HTMLElementProps<'div'>, 'aria-label' | 'ref'>;
 
-  /**
-   * Content that will be rendered as the component's header. If a string is provided,
-   * it will be rendered with default styling as a header tag.
-   */
-  header?: React.ReactNode;
+const idAllocator = IdAllocator.create('side-nav-group');
 
-  /**
-   * Content that will be rendered inside the root-level element.
-   */
-  children?: React.ReactNode;
-}
-
-type CollapsedProps = OneOf<
-  {
-    /**
-     * Determines whether or not the Group can be collapsed.
-     *
-     * @defaultValue `false`
-     */
-    collapsible: true;
-
-    /**
-     * If collapsible, determines whether or not the group should be XX or collapsed by default.
-     *
-     * @defaultValue `true`
-     */
-    initialCollapsed?: boolean;
-  },
-  {
-    collapsible?: false;
-  }
->;
-
-export type SideNavGroupProps = CollapsedProps & SideNavGroupBaseProps;
-
-/**
- * # SideNavGroup
- *
- * ```
-<SideNavGroup headerText="Section Header">
-  <SideNavItem href="/">
-    Back to Home
-  </SideNavItem>
-</SideNavGroup>
- * ```
- *
- * @param props.className Class name that will be applied to the root-level element.
- * @param props.header Content that will be rendered as the component's header
- *   If a string is provided, it will be rendered with default styling as a header tag.
- * @param props.children Class name that will be applied to the component's header.
- * @param props.collapsible Determines whether or not the Group can be collapsed. @defaultValue false
- * @param props.initialCollapsed Determines whether or not the Group is open by default. @defaultValue true
- */
-function SideNavGroup({
-  header,
-  children,
-  collapsible = false,
-  initialCollapsed = true,
-  ...rest
-}: SideNavGroupProps) {
-  const [open, setOpen] = React.useState(!initialCollapsed);
-  const nodeRef = React.useRef(null);
-  const ulRef = React.useRef<HTMLUListElement>(null);
-  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-
-  if (collapsible) {
-    return (
-      <li {...rest}>
-        <button
-          {...button.prop}
-          className={buttonResetStyles}
-          onClick={() => setOpen(curr => !curr)}
-        >
-          <h4
-            className={cx(sideNavLabelStyle, collapsibleHeaderStyle, {
-              [collapsibleHeaderFocusStyle]: showFocus,
-            })}
-          >
-            {header}
-            <ChevronRightIcon
-              size={12}
-              className={cx(iconStyle, {
-                [openIconStyle]: open,
-              })}
-              title={open ? 'Chevron Down Icon' : 'Chevron Right Icon'}
-            />
-          </h4>
-        </button>
-        <Transition
-          in={open}
-          appear
-          timeout={150}
-          nodeRef={nodeRef}
-          mountOnEnter
-          unmountOnExit
-        >
-          {(state: string) => (
-            <div
-              ref={nodeRef}
-              className={cx(defaultStyle, {
-                [transitionStyles.entering]: state === 'entering',
-                [css`
-                  opacity: 1;
-                  max-height: ${ulRef?.current?.getBoundingClientRect()
-                    .height}px;
-                `]: state === 'entered',
-                [transitionStyles.exiting]: state === 'exiting',
-                [transitionStyles.exited]: state === 'exited',
-              })}
-            >
-              <ul ref={ulRef} role="menu" className={ulStyleOverrides}>
-                {children}
-              </ul>
-            </div>
-          )}
-        </Transition>
-      </li>
+const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
+  function SideNavGroup(
+    {
+      className,
+      children,
+      glyph,
+      label,
+      collapsible = false,
+      initialCollapsed = true,
+      'aria-label': ariaLabelProp,
+      ...rest
+    }: Props,
+    ref,
+  ) {
+    const { collapsed: navCollapsed, hovered, currentPath } = useContext(
+      SideNavContext,
     );
-  }
 
-  return (
-    <li {...rest}>
-      <h4 className={sideNavLabelStyle}>{header}</h4>
-      <ul role="menu" className={ulStyleOverrides}>
-        {children}
-      </ul>
-    </li>
-  );
-}
+    const [collapsed, setCollapsed] = useState(
+      collapsible ? initialCollapsed : false,
+    );
+
+    const id = useMemo(() => idAllocator.generate(), []);
+
+    const [containedPaths, setContainedPaths] = useState<Set<string>>(
+      () => new Set(),
+    );
+
+    const addPath = useCallback((path: string) => {
+      setContainedPaths(containedPaths => {
+        if (!containedPaths.has(path)) {
+          const updatedPaths = new Set(containedPaths);
+          return updatedPaths.add(path);
+        } else {
+          return containedPaths;
+        }
+      });
+    }, []);
+
+    const removePath = useCallback((path: string) => {
+      setContainedPaths(containedPaths => {
+        if (containedPaths.has(path)) {
+          const updatedPaths = new Set(containedPaths);
+          updatedPaths.delete(path);
+          return updatedPaths;
+        } else {
+          return containedPaths;
+        }
+      });
+    }, []);
+
+    const providerData = useMemo(() => ({ addPath, removePath, collapsed }), [
+      addPath,
+      removePath,
+      collapsed,
+    ]);
+
+    const shouldRenderNavCollapsedState = navCollapsed && !hovered;
+    const hasGlyph = glyph !== undefined;
+    const containsCurrentPath =
+      currentPath !== undefined && containedPaths.has(currentPath);
+
+    const ariaLabel =
+      ariaLabelProp ?? (typeof label === 'string' ? label : undefined);
+
+    return (
+      <div
+        ref={ref}
+        role={shouldRenderNavCollapsedState ? undefined : 'group'}
+        aria-labelledby={shouldRenderNavCollapsedState ? undefined : id}
+        aria-label={
+          shouldRenderNavCollapsedState && !hasGlyph ? ariaLabel : undefined
+        }
+        className={cx(
+          sideNavGroupStyle,
+          {
+            [sideNavGroupNavCollapsedStyle]: shouldRenderNavCollapsedState,
+            [sideNavGroupWithGlyphNavCollapsedStyle]:
+              hasGlyph && shouldRenderNavCollapsedState,
+            [sideNavGroupNavCollapsedAndCurrentStyle]:
+              shouldRenderNavCollapsedState && containsCurrentPath,
+          },
+          className,
+        )}
+        {...rest}
+      >
+        <div
+          id={id}
+          aria-hidden={shouldRenderNavCollapsedState}
+          className={cx(sideNavGroupHeaderStyle, {
+            [sideNavGroupHeaderNavCollapsedStyle]: shouldRenderNavCollapsedState,
+            [sideNavGroupHeaderWithGlyphNavCollapsedStyle]:
+              hasGlyph && shouldRenderNavCollapsedState,
+          })}
+        >
+          {hasGlyph && <div className={glyphStyle}>{glyph}</div>}
+          {!shouldRenderNavCollapsedState && label}
+        </div>
+        <SideNavGroupContext.Provider value={providerData}>
+          {children}
+        </SideNavGroupContext.Provider>
+      </div>
+    );
+  },
+);
+
+export default SideNavGroup;
 
 SideNavGroup.displayName = 'SideNavGroup';
 
 SideNavGroup.propTypes = {
   className: PropTypes.string,
-  header: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-    PropTypes.node,
-  ]),
-  children: PropTypes.node,
+  label: PropTypes.node,
+  // @ts-expect-error PropTypes typing doesn't work well with unions
+  collapsible: PropTypes.bool,
+  initialCollapsed: PropTypes.bool,
+  // @ts-expect-error PropTypes typing doesn't work well with unions
+  'aria-label': PropTypes.string,
+  // @ts-expect-error PropTypes typing doesn't work well with unions
+  glyph: PropTypes.element,
 };
-
-export default SideNavGroup;

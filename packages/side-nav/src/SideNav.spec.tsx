@@ -1,333 +1,446 @@
 import React from 'react';
-import { render, cleanup, screen, fireEvent } from '@testing-library/react';
-import { SideNav, SideNavGroup, SideNavItem } from '.';
-import { SideNavItemProps } from './SideNavItem';
-import { SideNavGroupProps } from './SideNavGroup';
+import {
+  fireEvent,
+  getByLabelText,
+  render,
+  waitFor,
+} from '@testing-library/react';
+import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
+import { keyMap } from '@leafygreen-ui/lib';
+import { GlyphVisibility, SideNav, SideNavGroup, SideNavItem } from '.';
 
-type renderedElement = HTMLElement | null;
+function toHaveGlyph(
+  item: HTMLElement,
+  glyphLabel: string,
+): jest.CustomMatcherResult {
+  try {
+    const icon = getByLabelText(item, glyphLabel);
+    expect(icon).toBeVisible();
 
-interface RenderedElements {
-  navEl?: renderedElement;
-  groupEl?: renderedElement;
-  headerContentEl?: renderedElement;
-  defaultHeaderEl?: renderedElement;
-  itemEl?: renderedElement;
-  childEl?: renderedElement;
-}
-
-describe('packages/side-nav', () => {
-  const testIds = {
-    sideNav: 'side-nav',
-    sideNavGroup: 'side-nav-group',
-    sideNavHeader: 'side-nav-header',
-    sideNavItem: 'side-nav-item',
-    sideNavLink: 'side-nav-link',
-  };
-  let renderedEls: RenderedElements = {};
-
-  const className = 'test-class-name';
-  const headerText = 'test-header-text';
-  const headerContent = (
-    <div data-testid={testIds.sideNavHeader}>Header As Content</div>
-  );
-
-  afterEach(() => {
-    document.body.innerHTML = '';
-    renderedEls = {};
-    cleanup();
-  });
-
-  describe('SideNavItem', () => {
-    function renderSideNavItem(props: SideNavItemProps = {}) {
-      const { sideNavItem, sideNavLink } = testIds;
-      const { children, ...rest } = props;
-      const { getByTestId, queryByTestId } = render(
-        <SideNavItem data-testid={sideNavItem} {...rest}>
-          {children}
-        </SideNavItem>,
-      );
-
-      renderedEls.itemEl = getByTestId(sideNavItem);
-      renderedEls.childEl = queryByTestId(sideNavLink);
+    try {
+      expect(icon).not.toBeInTheDocument();
+    } catch (exception) {
+      return { pass: true, message: () => exception.toString() };
     }
 
-    describe('when rendered with a custom class name', () => {
-      beforeEach(() => {
-        renderSideNavItem({ className });
-      });
+    throw Error('unreachable');
+  } catch (exception) {
+    return { pass: false, message: () => exception.toString() };
+  }
+}
 
-      test('it renders the item as a button', () => {
-        expect(renderedEls.itemEl).toBeInTheDocument();
-        expect(renderedEls.itemEl?.tagName).toEqual('BUTTON');
-      });
+declare global {
+  namespace jest {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    interface Matchers<R, T> {
+      toHaveGlyph(glyphName: string): R;
+    }
+  }
+}
 
-      test('it sets the correct role for the item', () => {
-        expect(renderedEls.itemEl).toHaveAttribute('role', 'menuitem');
-        expect(renderedEls.itemEl?.parentNode).toHaveAttribute('role', 'none');
-      });
+expect.extend({ toHaveGlyph });
 
-      test('it renders with the provided class name', () => {
-        expect(renderedEls.itemEl).toHaveClass(className);
-      });
+describe('packages/collapsible-side-nav', () => {
+  describe('SideNav', () => {
+    test('renders items and groups', () => {
+      const { getByText } = render(
+        <SideNav>
+          <SideNavItem path="/one">One</SideNavItem>
+          <SideNavGroup label="group">
+            <SideNavItem path="/two">Two</SideNavItem>
+          </SideNavGroup>
+        </SideNav>,
+      );
+
+      expect(getByText('One')).toBeVisible();
+      expect(getByText('group')).toBeVisible();
+      expect(getByText('Two')).toBeVisible();
     });
 
-    describe('when rendered as active', () => {
-      beforeEach(() => {
-        renderSideNavItem({ active: true });
-      });
+    test('item corresponding to current path is current', () => {
+      render(
+        <SideNav currentPath="/current">
+          <SideNavItem path="/before">Before</SideNavItem>
+          <SideNavItem path="/current">Current</SideNavItem>
+          <SideNavItem path="/after">After</SideNavItem>
+        </SideNav>,
+      );
 
-      test('it sets the aria attribute for the active item', () => {
-        expect(renderedEls.itemEl).toHaveAttribute('aria-current', 'page');
-      });
+      const currentItems = document.querySelectorAll('[aria-current=page]');
+      expect(currentItems).toHaveLength(1);
+
+      const otherItems = document.querySelectorAll('[aria-current=false]');
+      expect(otherItems).toHaveLength(2);
+
+      const [currentItem] = Array.from(currentItems);
+      expect(currentItem).toHaveTextContent('Current');
     });
 
-    describe('when rendered as disabled', () => {
-      beforeEach(() => {
-        renderSideNavItem({ disabled: true });
-      });
+    test('group item corresponding to current path is current', () => {
+      render(
+        <SideNav currentPath="/current">
+          <SideNavItem path="/before">Before</SideNavItem>
+          <SideNavGroup label="group">
+            <SideNavItem path="/current">Current</SideNavItem>
+          </SideNavGroup>
+          <SideNavItem path="/after">After</SideNavItem>
+        </SideNav>,
+      );
 
-      test('it sets the aria attribute for the disabled item', () => {
-        expect(renderedEls.itemEl).toHaveAttribute('aria-disabled', 'true');
-      });
+      const currentItems = document.querySelectorAll('[aria-current=page]');
+      expect(currentItems).toHaveLength(1);
+
+      const otherItems = document.querySelectorAll('[aria-current=false]');
+      expect(otherItems).toHaveLength(2);
+
+      const [currentItem] = Array.from(currentItems);
+      expect(currentItem).toHaveTextContent('Current');
     });
 
-    describe('when rendered as a link', () => {
-      beforeEach(() => {
-        renderSideNavItem({ href: '/v2#' });
-      });
+    test('all items not corresponding to current path are not current', () => {
+      render(
+        <SideNav currentPath="/no-match">
+          <SideNavItem path="/one">One</SideNavItem>
+          <SideNavItem path="/two">Two</SideNavItem>
+          <SideNavGroup label="group">
+            <SideNavItem path="/three">Three</SideNavItem>
+          </SideNavGroup>
+        </SideNav>,
+      );
 
-      test('it renders as an link menu item', () => {
-        expect(renderedEls.itemEl).toBeInTheDocument();
-        expect(renderedEls.itemEl?.tagName).toEqual('A');
-        expect(renderedEls.itemEl).toHaveAttribute('href', '/v2#');
-      });
+      const currentItems = document.querySelectorAll('[aria-current=page]');
+      expect(currentItems).toHaveLength(0);
+
+      const otherItems = document.querySelectorAll('[aria-current=false]');
+      expect(otherItems).toHaveLength(3);
     });
 
-    describe('when rendered with children', () => {
-      beforeEach(() => {
-        const { sideNavLink } = testIds;
-        const children = (
-          <a href="#clusters" data-testid={sideNavLink}>
-            Clusters
-          </a>
-        );
+    describe('collapsibility', () => {
+      const actions = {
+        'clicking button': (collapseButton: HTMLElement) => {
+          fireEvent.click(collapseButton);
+        },
+        'pressing space on focused button': (collapseButton: HTMLElement) => {
+          fireEvent.keyDown(collapseButton, {
+            key: 'Space',
+            keyCode: keyMap.Space,
+          });
+        },
+        'pressing "[" key': () => {
+          fireEvent.keyDown(document, {
+            key: 'BracketLeft',
+            keyCode: keyMap.BracketLeft,
+          });
+        },
+      } as const;
 
-        renderSideNavItem({ children });
-      });
-
-      test('it renders the children', () => {
-        expect(renderedEls.childEl).toBeInTheDocument();
-        expect(renderedEls.childEl?.tagName).toEqual('A');
-        expect(renderedEls.childEl).toHaveAttribute('href', '#clusters');
-      });
-    });
-
-    describe('when rendered as a custom component', () => {
-      beforeEach(() => {
-        interface ImageFigureProps {
-          imageUrl: string;
-          imageAlt: string;
-          caption: string;
-        }
-
-        function ImageFigure({
-          imageUrl,
-          imageAlt,
-          caption,
-          ...rest
-        }: ImageFigureProps) {
-          return (
-            <figure {...rest}>
-              <img src={imageUrl} alt={imageAlt} />
-              <figcaption>{caption}</figcaption>
-            </figure>
+      test.each(Object.keys(actions) as Array<keyof typeof actions>)(
+        'collapses and expands when %s',
+        action => {
+          const { getByText, getByLabelText, queryByLabelText } = render(
+            <SideNav>
+              <SideNavItem>Item</SideNavItem>
+              <SideNavItem glyph={<CloudIcon />}>
+                Item With Only Collapsed Glyph
+              </SideNavItem>
+              <SideNavItem
+                glyph={<CloudIcon />}
+                glyphVisibility={GlyphVisibility.OnlyExpanded}
+              >
+                Item With Only Expanded Glyph
+              </SideNavItem>
+              <SideNavItem
+                glyph={<CloudIcon />}
+                glyphVisibility={GlyphVisibility.Visible}
+              >
+                Item With Always Visible Glyph
+              </SideNavItem>
+              <SideNavGroup label="Group">
+                <SideNavItem>Group Item</SideNavItem>
+              </SideNavGroup>
+              <SideNavGroup label="Group with Glyph" glyph={<CloudIcon />}>
+                <SideNavItem>Group With Glyph Item</SideNavItem>
+              </SideNavGroup>
+            </SideNav>,
           );
-        }
 
-        const { sideNavItem } = testIds;
-        const props = {
-          as: ImageFigure,
-          imageUrl: '/dogeSelfPortrait',
-          imageAlt: 'such wow',
-          caption: 'such art',
-        };
+          function queryAllItems() {
+            return [
+              'Item',
+              'Item With Only Collapsed Glyph',
+              'Item With Only Expanded Glyph',
+              'Item With Always Visible Glyph',
+              'Group Item',
+              'Group With Glyph Item',
+            ].map(label => queryByLabelText(label));
+          }
 
-        const { getByTestId } = render(
-          <SideNavItem data-testid={sideNavItem} {...props} />,
+          function expectExpanded() {
+            const [
+              item,
+              itemWithOnlyCollapsedGlyph,
+              itemWithOnlyExpandedGlyph,
+              itemWithAlwaysVisibleGlyph,
+              groupItem,
+              groupWithGlyphItem,
+            ] = queryAllItems();
+
+            const groupHeader = getByText('Group');
+            const groupWithGlyphHeader = getByText('Group with Glyph');
+
+            [
+              item,
+              itemWithOnlyCollapsedGlyph,
+              groupItem,
+              groupWithGlyphItem,
+              groupHeader,
+            ].forEach(item => {
+              expect(item).toBeVisible();
+              expect(item).not.toHaveGlyph('Cloud Icon');
+            });
+
+            [
+              itemWithOnlyExpandedGlyph,
+              itemWithAlwaysVisibleGlyph,
+              groupWithGlyphHeader,
+            ].forEach(item => {
+              expect(item).toBeVisible();
+              expect(item).toHaveGlyph('Cloud Icon');
+            });
+
+            // Button should have correct aria attributes
+            expect(queryByLabelText('Expand sidebar')).not.toBeInTheDocument();
+            const collapseButton = getByLabelText('Collapse sidebar');
+            expect(collapseButton).toBeVisible();
+            expect(collapseButton).toHaveAttribute('aria-expanded', 'true');
+
+            function expectCollapsed() {
+              const [
+                item,
+                itemWithOnlyCollapsedGlyph,
+                itemWithOnlyExpandedGlyph,
+                itemWithAlwaysVisibleGlyph,
+                groupItem,
+                groupWithGlyphItem,
+              ] = queryAllItems();
+
+              expect(collapseButton).not.toBeInTheDocument();
+
+              [
+                item,
+                itemWithOnlyExpandedGlyph,
+                groupItem,
+                groupWithGlyphItem,
+              ].forEach(item => {
+                expect(item).not.toBeInTheDocument();
+              });
+
+              expect(groupHeader).toBeVisible();
+              expect(groupHeader).not.toHaveGlyph('Cloud Icon');
+
+              [
+                itemWithOnlyCollapsedGlyph,
+                itemWithAlwaysVisibleGlyph,
+                groupWithGlyphHeader,
+              ].forEach(item => {
+                expect(item).toBeVisible();
+                expect(item).toHaveGlyph('Cloud Icon');
+              });
+
+              // aria attributes have been updated
+              const expandButton = getByLabelText('Expand sidebar');
+              expect(expandButton).toBeVisible();
+              expect(expandButton).toHaveAttribute('aria-expanded', 'false');
+              return { expandButton };
+            }
+
+            return { collapseButton, expectCollapsed };
+          }
+
+          const { collapseButton, expectCollapsed } = expectExpanded();
+
+          actions[action](collapseButton);
+          const { expandButton } = expectCollapsed();
+
+          // Toggling back should return things to how they were before
+          actions[action](expandButton);
+          expectExpanded();
+        },
+      );
+    });
+
+    describe('when collapsed', () => {
+      test('hovering', async () => {
+        const {
+          getByText,
+          queryByText,
+          getByLabelText,
+          queryByLabelText,
+          container,
+        } = render(
+          <SideNav initialCollapsed>
+            <SideNavItem>One</SideNavItem>
+            <SideNavGroup label="group" glyph={<CloudIcon />}>
+              <SideNavItem>Two</SideNavItem>
+            </SideNavGroup>
+          </SideNav>,
         );
 
-        renderedEls.itemEl = getByTestId(sideNavItem);
+        function expectCollapsed() {
+          const items = ['One', 'Two'].map(label => queryByText(label));
+          const header = queryByText('group');
+          items.forEach(item => expect(item).not.toBeInTheDocument());
+          expect(header).not.toBeInTheDocument();
+
+          // Button should have correct aria attributes
+          expect(queryByLabelText('Collapse sidebar')).not.toBeInTheDocument();
+          const expandButton = getByLabelText('Expand sidebar');
+          expect(expandButton).toBeVisible();
+          expect(expandButton).toHaveAttribute('aria-expanded', 'false');
+
+          function expectHovered() {
+            // Button is still for expanding even when nav is hovered
+            expect(expandButton).toBeVisible();
+            expect(
+              queryByLabelText('Collapse sidebar'),
+            ).not.toBeInTheDocument();
+
+            // Items are now fully visible
+            const items = ['One', 'Two'].map(label => getByText(label));
+            const header = getByText('group');
+            items.forEach(item => expect(item).toBeVisible());
+            expect(header).toBeVisible();
+          }
+
+          return { expectHovered };
+        }
+
+        const { expectHovered } = expectCollapsed();
+
+        const nav = container.querySelector('nav');
+        expect(nav).toBeVisible();
+
+        fireEvent.mouseOver(nav!);
+        await waitFor(() => expectHovered());
+
+        fireEvent.mouseLeave(nav!);
+        await waitFor(() => expectCollapsed());
       });
+    });
 
-      test('it renders as the custom component', () => {
-        expect(renderedEls.itemEl).toBeInTheDocument();
-        expect(renderedEls.itemEl?.tagName).toEqual('FIGURE');
+    /* eslint-disable jest/expect-expect */
+    // eslint-disable-next-line jest/no-disabled-tests
+    describe.skip('types work as expected', () => {
+      test('`initialCollapsed` can only `false` when not collapsible', () => {
+        <SideNav> </SideNav>;
 
-        const imgEl = renderedEls.itemEl?.querySelector('img');
-        expect(imgEl).toBeInTheDocument();
-        expect(imgEl).toHaveAttribute('src', '/dogeSelfPortrait');
-        expect(imgEl).toHaveAttribute('alt', 'such wow');
+        <SideNav initialCollapsed={false}> </SideNav>;
+        <SideNav initialCollapsed> </SideNav>;
 
-        const figcaptionEl = renderedEls.itemEl?.querySelector('figcaption');
-        expect(figcaptionEl).toBeInTheDocument();
-        expect(figcaptionEl).toHaveTextContent('such art');
+        <SideNav collapsible initialCollapsed={false}>
+          {' '}
+        </SideNav>;
+        <SideNav collapsible initialCollapsed>
+          {' '}
+        </SideNav>;
+
+        <SideNav collapsible initialCollapsed={false}>
+          {' '}
+        </SideNav>;
+        <SideNav collapsible initialCollapsed>
+          {' '}
+        </SideNav>;
+
+        <SideNav collapsible initialCollapsed={false}>
+          {' '}
+        </SideNav>;
+        // @ts-expect-error
+        <SideNav collapsible={false} initialCollapsed>
+          {' '}
+        </SideNav>;
       });
     });
   });
 
   describe('SideNavGroup', () => {
-    const renderGroup = ({ header, ...rest }: SideNavGroupProps = {}) => {
-      const { sideNavGroup, sideNavLink } = testIds;
-      render(
-        <SideNavGroup
-          className={className}
-          header={header}
-          data-testid={sideNavGroup}
-          {...rest}
-        >
-          <SideNavItem>
-            <a href="#clusters" data-testid={sideNavLink}>
-              Clusters
-            </a>
-          </SideNavItem>
-        </SideNavGroup>,
-      );
-    };
+    /* eslint-disable jest/expect-expect */
+    // eslint-disable-next-line jest/no-disabled-tests
+    describe.skip('types work as expected', () => {
+      test('valid `aria-label` is always provided or derived from label', () => {
+        <SideNavGroup label="group"> </SideNavGroup>;
 
-    const { sideNavGroup, sideNavHeader, sideNavLink } = testIds;
+        <SideNavGroup label={<>group</>} aria-label="group">
+          {' '}
+        </SideNavGroup>;
 
-    describe('when the group includes a string header', () => {
-      beforeEach(() => {
-        renderGroup({ header: headerText });
-      });
+        <SideNavGroup label="group" aria-label="group">
+          {' '}
+        </SideNavGroup>;
 
-      test('renders the side nav group with a default header', () => {
-        expect(screen.getByTestId(sideNavGroup)).toBeInTheDocument();
-        expect(screen.queryByText(headerText)).toBeInTheDocument();
-        expect(screen.queryByTestId(sideNavHeader)).toBeNull();
-      });
-
-      test('sets the role of the list as a menu', () => {
-        const listEl = screen.getByTestId(sideNavGroup)?.querySelector('ul');
-        expect(listEl).toBeInTheDocument();
-        expect(listEl).toHaveAttribute('role', 'menu');
-      });
-
-      test('it displays the header text in a header', () => {
-        expect(screen.queryByText(headerText)?.tagName).toEqual('H4');
-      });
-
-      test('renders the children of the side nav group', () => {
-        expect(screen.getByTestId(sideNavLink)).toBeInTheDocument();
-      });
-
-      test('it renders with the provided class name', () => {
-        expect(screen.getByTestId(sideNavGroup)).toHaveClass(className);
+        // @ts-expect-error
+        <SideNavGroup label={<>group</>}> </SideNavGroup>;
       });
     });
-
-    describe('when the group includes header content', () => {
-      beforeEach(() => {
-        renderGroup({ header: headerContent });
-      });
-
-      test('renders the side nav group with the header content', () => {
-        expect(screen.getByTestId(sideNavGroup)).toBeInTheDocument();
-        expect(screen.queryByText(headerText)).toBeNull();
-        expect(screen.queryByTestId(sideNavHeader)).toBeInTheDocument();
-      });
-    });
-
-    describe('when the group does not include a header', () => {
-      beforeEach(() => {
-        renderGroup();
-      });
-
-      test('renders the side nav group without a header', () => {
-        expect(screen.getByTestId(sideNavGroup)).toBeInTheDocument();
-        expect(screen.queryByText(headerText)).toBeNull();
-        expect(screen.queryByTestId(sideNavHeader)).toBeNull();
-      });
-    });
-
-    describe('when `collapsible` is true', () => {
-      beforeEach(() => {
-        renderGroup({ collapsible: true });
-      });
-
-      test('it renders an icon in the header', () => {
-        const icon = screen.getByTitle('Chevron Right Icon');
-        expect(icon).toBeInTheDocument();
-      });
-
-      test('the content is collapsed by default', () => {
-        const childContent = screen.queryByTestId(sideNavLink);
-        expect(childContent).not.toBeInTheDocument();
-      });
-
-      test('the content expands when icon is clicked', () => {
-        const hiddenChildContent = screen.queryByTestId(sideNavLink);
-        expect(hiddenChildContent).not.toBeInTheDocument();
-
-        const icon = screen.getByTitle('Chevron Right Icon');
-        fireEvent.click(icon);
-
-        const childContent = screen.getByTestId(sideNavLink);
-        expect(childContent).toBeInTheDocument();
-      });
-    });
-
-    describe('when `collapsible` is true and `initialCollapsed` is false', () => {
-      beforeEach(() => {
-        renderGroup({ collapsible: true, initialCollapsed: false });
-      });
-
-      test('the content appears on the page by default', () => {
-        const childContent = screen.getByTestId(sideNavLink);
-        expect(childContent).toBeInTheDocument();
-      });
-    });
+    /* eslint-enable jest/expect-expect */
   });
 
-  describe('SideNav', () => {
-    describe('when rendered to the dom', () => {
-      beforeEach(() => {
-        const { sideNav, sideNavGroup, sideNavItem, sideNavLink } = testIds;
-        const { getByTestId } = render(
-          <SideNav className={className} data-testid={sideNav}>
-            <SideNavGroup data-testid={sideNavGroup}>
-              <SideNavItem data-testid={sideNavItem}>
-                <a href="#clusters" data-testid={sideNavLink}>
-                  Clusters
-                </a>
-              </SideNavItem>
-            </SideNavGroup>
-          </SideNav>,
-        );
+  describe('SideNavItem', () => {
+    test('`href` is rendered', () => {
+      const { getByText } = render(
+        <SideNavItem href="/link">Link</SideNavItem>,
+      );
 
-        renderedEls.navEl = getByTestId(sideNav);
-        renderedEls.groupEl = getByTestId(sideNavGroup);
-        renderedEls.itemEl = getByTestId(sideNavItem);
-        renderedEls.childEl = getByTestId(sideNavLink);
+      const item = getByText('Link');
+      expect(item).toHaveAttribute('href', '/link');
+    });
+
+    test('`onClick` is called when clicked', () => {
+      const clickSpy = jest.fn();
+      const { getByText } = render(
+        <SideNavItem onClick={clickSpy}>click</SideNavItem>,
+      );
+
+      const item = getByText('click');
+
+      expect(clickSpy).not.toHaveBeenCalled();
+      fireEvent.click(item);
+      expect(clickSpy).toHaveBeenCalledTimes(1);
+    });
+
+    /* eslint-disable jest/expect-expect */
+    // eslint-disable-next-line jest/no-disabled-tests
+    describe.skip('types work as expected', () => {
+      test('`glyphVisibilty` can only be provided with `glyph`', () => {
+        <SideNavItem> </SideNavItem>;
+
+        <SideNavItem glyph={<CloudIcon />}> </SideNavItem>;
+
+        <SideNavItem
+          glyph={<CloudIcon />}
+          glyphVisibility={GlyphVisibility.Visible}
+        >
+          {' '}
+        </SideNavItem>;
+
+        // @ts-expect-error
+        <SideNavItem glyphVisibility={GlyphVisibility.Visible}> </SideNavItem>;
       });
 
-      test('renders the side nav to the dom', () => {
-        expect(renderedEls.navEl).toBeInTheDocument();
-      });
+      test('valid `aria-label` is always provided or derived from children', () => {
+        <SideNavItem>item</SideNavItem>;
 
-      test('it provides an aria label for the nav', () => {
-        expect(renderedEls.navEl).toHaveAttribute('aria-label', 'side-nav');
-      });
+        <SideNavItem aria-label="item">
+          <>item</>
+        </SideNavItem>;
 
-      test('renders the children of the side nav', () => {
-        expect(renderedEls.groupEl).toBeInTheDocument();
-        expect(renderedEls.itemEl).toBeInTheDocument();
-        expect(renderedEls.childEl).toBeInTheDocument();
-      });
+        <SideNavItem aria-label="item">item</SideNavItem>;
 
-      test('it renders with the provided class name', () => {
-        expect(renderedEls.navEl).toHaveClass(className);
+        // @ts-expect-error
+        <SideNavItem>
+          <>item</>
+        </SideNavItem>;
       });
     });
+    /* eslint-enable jest/expect-expect */
   });
 });
