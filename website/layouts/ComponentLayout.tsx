@@ -14,9 +14,9 @@ import { mq } from 'utils/mediaQuery';
 
 const layout = css`
   ${mq({
-    marginTop: [`${spacing[4]}px`, '70px'],
-    width: ['100%', '100%', '700px', '700px'],
-  })}
+  marginTop: [`${spacing[4]}px`, '70px'],
+  width: ['100%', '100%', '700px', '700px'],
+})}
 `;
 
 const componentsStyle = css`
@@ -46,6 +46,7 @@ const caps = css`
 const componentGuidelineStyles = css`
   overflow-wrap: anywhere;
   color: ${uiColors.gray.dark3};
+  padding-top: ${spacing[5]}px;
   padding-bottom: ${spacing[6]}px;
 
   & > p {

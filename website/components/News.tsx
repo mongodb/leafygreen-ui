@@ -13,11 +13,11 @@ const newsContainer = css`
   justify-content: center;
   padding-bottom: ${spacing[4]}px;
   ${mq({
-    height: ['auto', '100%'],
-    marginTop: ['48px', 'unset'],
-    marginBottom: ['40px', 'unset'],
-    marginLeft: ['24px', 'unset'],
-  })}
+  height: ['auto', '100%'],
+  marginTop: ['48px', 'unset'],
+  marginBottom: ['40px', 'unset'],
+  marginLeft: ['24px', 'unset'],
+})}
 `;
 
 const subtitleStyle = css`
@@ -43,20 +43,15 @@ function Update({ date, story, route, updateURL }: UpdateProps) {
   const subtitleProps = route
     ? ({ onClick: () => push(route), as: 'p' } as const)
     : ({
-        href: updateURL,
-        as: 'a',
-        target: '_blank',
-        rel: 'noopener noreferrer',
-      } as const);
+      href: updateURL,
+      as: 'a',
+      target: '_blank',
+      rel: 'noopener noreferrer',
+    } as const);
 
   useEffect(() => {
     if (typeof navigator !== 'undefined') {
-      setDisplayedDate(
-        // @ts-expect-error typescript complaining that dateStyle is not a valid option, but according to Mozilla docs it is: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
-        new Intl.DateTimeFormat(undefined, { dateStyle: 'long' }).format(
-          new Date(date),
-        ),
-      );
+      setDisplayedDate(new Date(date).toLocaleString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }));
     }
   }, [date]);
 
