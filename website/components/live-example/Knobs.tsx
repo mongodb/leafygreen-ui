@@ -7,6 +7,7 @@ import { Select as LGUISelect, Option } from '@leafygreen-ui/select';
 import TextInput from '@leafygreen-ui/text-input';
 import TextArea from '@leafygreen-ui/text-area';
 import Toggle from '@leafygreen-ui/toggle';
+import { mq } from 'utils/mediaQuery';
 
 const booleanIdAllocator = IdAllocator.create('boolean');
 const textIdAllocator = IdAllocator.create('text');
@@ -21,7 +22,13 @@ const knobContainerStyle = css`
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
-  padding: ${spacing[3]}px ${spacing[5]}px;
+
+  ${mq({
+    padding: [
+      `${spacing[3]}px ${spacing[4]}px`,
+      `${spacing[3]}px ${spacing[5]}px`,
+    ],
+  })}
 `;
 
 const knobContainerHeight = css`
@@ -40,6 +47,16 @@ const textAreaClassName = css`
   display: flex;
   flex-direction: column;
   width: ${knobsWidth}px;
+
+  ${mq({
+    width: ['200px', `${knobsWidth}px`],
+  })}
+`;
+
+const textClassName = css`
+  ${mq({
+    width: ['200px', `${knobsWidth}px`],
+  })}
 `;
 
 const labelDarkMode = css`
@@ -208,9 +225,7 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
         value={value}
         aria-labelledby={labelId}
         darkMode={darkMode}
-        className={css`
-          width: ${knobsWidth}px;
-        `}
+        className={textClassName}
       />
     </div>
   );
@@ -269,6 +284,10 @@ function Select({
   const labelId = useMemo(() => selectIdAllocator.generate(), []);
 
   const handleChange = (value: string) => {
+    if (value === '') {
+      return;
+    }
+
     onChange(value, prop);
   };
 

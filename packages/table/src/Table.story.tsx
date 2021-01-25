@@ -68,15 +68,6 @@ storiesOf('Table', module)
                     <Cell>expanded age: {datum.age}</Cell>
                     <Cell>expanded color: {datum.color}</Cell>
                     <Cell>{datum.location}</Cell>
-
-                    {datum.name === 'Jill' && (
-                      <Row>
-                        <Cell isHeader={withHeaders}>1</Cell>
-                        <Cell>1</Cell>
-                        <Cell>1</Cell>
-                        <Cell>1</Cell>
-                      </Row>
-                    )}
                   </Row>
                 )}
               </Row>
@@ -167,40 +158,4 @@ storiesOf('Table', module)
         )}
       </Table>
     </div>
-  ))
-  .add('test', () => (
-    <Table
-      data={[
-        {
-          component: 'Toast',
-          priority: 'Low priority',
-          userAction: 'Optional: Toasts dissappear automatically',
-        },
-        {
-          component: 'Banner',
-          priority: 'Medium priority',
-          userAction: 'Optional: Banners etc.',
-        },
-        {
-          component: 'Modal',
-          priority: 'Highest priority',
-          userAction: 'Required',
-        },
-      ]}
-      columns={
-        <>
-          <TableHeader key="component" label="Component" />
-          <TableHeader key="priority" label="Priority" />
-          <TableHeader key="userAction" label="User Action" />
-        </>
-      }
-    >
-      {({ datum }) => (
-        <Row key={datum.component}>
-          <Cell>{datum.component}</Cell>
-          <Cell>{datum.priority}</Cell>
-          <Cell>{datum.userAction}</Cell>
-        </Row>
-      )}
-    </Table>
   ));

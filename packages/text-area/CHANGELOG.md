@@ -1,5 +1,12 @@
 # @leafygreen-ui/text-area
 
+## 3.0.3
+
+### Patch Changes
+
+- d6829357: Removes outline from focus state, in favor of allowing our InteractionRing component to handle displaying focus.
+  - @leafygreen-ui/typography@7.3.1
+
 ## 3.0.2
 
 ### Patch Changes

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Callout from '@leafygreen-ui/callout';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import XWithCircleIcon from '@leafygreen-ui/icon/dist/XWithCircle';
@@ -6,17 +5,16 @@ import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { css } from 'emotion';
 import { InlineCode } from '@leafygreen-ui/typography';
 import { uiColors } from '@leafygreen-ui/palette';
+import { CDN } from 'utils/routes';
 
 Callouts should be used when you want to call out information to the user. Callouts look similar to banners but serve a different use case. Unlike banners, callouts cannot be dismissed. They are optimized for long form copy (banners are optimized to save space and work at different widths). Also, there is no green callout (there is a green banner). Callouts should not have a CTA within them. Banners may sometimes have a button.
 
 Below is the general spacing structure for callouts:
 
-<Image
-  src="/images/callout-header.png"
+<img
+  src={`${CDN}/images/guidelines/callout-header-guidelines.png`}
   alt="Callout spacing example"
-  layout="responsive"
-  width={700}
-  height={260}
+  width="100%"
 />
 
 The type of callout you use, should be used to convey a specific message to your user.
@@ -85,7 +83,6 @@ Don’t use colors to signify the intensity, but instead the type of information
     <CheckmarkWithCircleIcon size="xlarge" fill={uiColors.green.base} className={css`margin-top: 10px`}/>
   </div>
 
-
   <div className={css`display: flex; flex-direction: column; align-items: center`}>
     <Callout
     variant="important"
@@ -97,10 +94,8 @@ Don’t use colors to signify the intensity, but instead the type of information
     </Callout>
     <XWithCircleIcon size="xlarge" fill={uiColors.red.base} className={css`margin-top: 10px`}/>
 
-
   </div>
 </div>
-
 
 There’s now also a purple "tip" callout, which can be used to add a more personal note or suggestion from the Doc writer.
 
@@ -159,30 +154,24 @@ Each callout variant allows for a secondary title.
 
 We understand that sometimes it may be necessary, but try to avoid nesting callouts in tables and other elements.
 
-<Image
-  src="/images/callout-table-example.png"
+<img
+  src={`${CDN}/images/guidelines/callout-table-example-guidelines.png`}
   alt="Bad example: Do not use Callout in Table component"
-  layout="responsive"
-  width={700}
-  height={365}
+  width="100%"
 />
 
 Avoid nesting code components within callouts.
 
-<Image
-  src="/images/callout-code-example.png"
+<img
+  src={`${CDN}/images/guidelines/callout-code-example-guidelines.png`}
   alt="Example of using code component near callout"
-  layout="responsive"
-  width={700}
-  height={380}
+  width="100%"
 />
 
 The example callout is now deprecated. Don’t use it. Instead opt for integrating your example within body copy.
 
-<Image
-  src="/images/callout-example-example.png"
+<img
+  src={`${CDN}/images/guidelines/callout-example-example-guidelines.png`}
   alt="Callout example is now deprecated"
-  layout="responsive"
-  width={700}
-  height={250}
+  width="100%"
 />
