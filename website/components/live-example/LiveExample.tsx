@@ -33,7 +33,7 @@ const previewStyle = css`
     borderRadius: ['0px', '7px'],
     marginLeft: ['-24px', 'unset'],
     marginRight: ['-24px', 'unset'],
-    width: ['inherit', 'inherit', 'inherit', '1138px'],
+    width: ['inherit', 'inherit', 'inherit', `${largestSize}px`],
   })}
 `;
 

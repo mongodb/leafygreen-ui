@@ -9,6 +9,7 @@ import { GridContainer, GridItem } from 'components/Grid';
 import { getAllUpdates, UpdateProps } from 'utils/fetchUpdates';
 import { mq } from 'utils/mediaQuery';
 import { CDN } from 'utils/routes';
+import { largestSize } from 'utils/styleConstants';
 import News from 'components/News';
 
 const landingURL = `${CDN}/images/landing`;
@@ -27,7 +28,7 @@ const layoutProperties = css`
   margin-right: 0;
 
   ${mq({
-    width: ['calc(100% + 48px)', '100%', '100%', '1138px'],
+    width: ['calc(100% + 48px)', '100%', '100%', `${largestSize}px`],
     paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, 0],
     marginLeft: ['-24px', '0px', '0px', '0px'],
   })}

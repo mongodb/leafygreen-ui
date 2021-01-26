@@ -10,13 +10,14 @@ import PropDefinition from 'components/PropDefinition';
 import TypographyPropTable from 'components/TypographyPropTable';
 import formatType from 'utils/formatType';
 import { mq } from 'utils/mediaQuery';
+import { largestSize } from 'utils/styleConstants';
 
 const tableWrapper = css`
   ${mq({
     marginLeft: ['-24px', 'unset'],
     marginRight: ['-24px', 'unset'],
     overflow: ['hidden', 'unset'],
-    width: ['inherit', 'inherit', 'inherit', '1138px'],
+    width: ['inherit', 'inherit', 'inherit', `${largestSize}px`],
   })}
 `;
 

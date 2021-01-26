@@ -14,6 +14,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { BaseLayoutProps } from 'utils/types';
+import { largeSize } from 'utils/styleConstants';
 import { GridContainer, GridItem } from 'components/Grid';
 import PropTable, { ReadmeMarkdown } from 'components/PropTable';
 import TypeDefinition from 'components/TypeDefinition';
@@ -160,7 +161,7 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
         justify="space-between"
         align="flex-start"
         className={css`
-          max-width: 700px;
+          max-width: ${largeSize}px;
         `}
       >
         <GridItem md={7} lg={7}>
@@ -231,7 +232,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
         align="flex-start"
         justify="flex-start"
         className={css`
-          max-width: 700px;
+          max-width: ${largeSize}px;
         `}
       >
         <GridItem sm={12} md={12} xl={12}>
