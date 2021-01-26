@@ -81,10 +81,8 @@ const listTitle = css`
   border: 0px;
   padding: 12px 16px;
   text-decoration: none;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   max-width: 300px;
+  white-space: nowrap;
   transition: 150ms color ease-in-out;
   font-family: ${fontFamilies.default};
   font-weight: 600;

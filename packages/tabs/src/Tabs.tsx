@@ -58,6 +58,17 @@ const listStyle = css`
   padding: 0;
   display: flex;
   width: 100%;
+  overflow-x: auto;
+
+  /* Remove scrollbar */
+
+  /* Chrome, Edge, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none; /* IE */
+  scrollbar-width: none; /* Firefox */
 `;
 
 const disabledStyle = css`
@@ -154,6 +165,8 @@ function Tabs({
   className,
   darkMode = false,
   as = 'button',
+  'aria-labelledby': ariaLabelledby,
+  'aria-label': ariaLabel,
   ...rest
 }: AccessibleTabsProps) {
   const mode = darkMode ? Mode.Dark : Mode.Light;
@@ -163,11 +176,12 @@ function Tabs({
   const activeEl = useDocumentActiveElement();
   const [isAnyTabFocused, setIsAnyTabFocused] = useState(false);
 
-  validateAriaLabelProps({ ...rest }, 'Tabs');
-  const accessibleLabel = {
-    ['aria-label']: rest?.['aria-label'],
-    ['aria-labelledby']: rest?.['aria-labelledby'],
+  const accessibilityProps = {
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
   };
+
+  validateAriaLabelProps(accessibilityProps, 'Tabs');
 
   useEffect(() => {
     const tabsList = Array.from(tabNode?.children ?? []);
@@ -268,10 +282,9 @@ function Tabs({
       <div
         className={cx(listStyle, modeColors[mode].underlineColor)}
         role="tablist"
-        tabIndex={0}
         ref={setTabNode}
         aria-orientation="horizontal"
-        {...accessibleLabel}
+        {...accessibilityProps}
       />
 
       <div ref={setPanelNode} />
