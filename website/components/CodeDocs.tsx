@@ -75,6 +75,9 @@ const changelogStyles = css`
   }
 `;
 
+const maxWidth700 = css`
+  max-width: ${largeSize}px;
+`;
 interface VersionCardProps {
   version?: string;
   changelog: string;
@@ -160,9 +163,7 @@ function DesktopInstall({ component, changelog, version }: InstallProps) {
       <GridContainer
         justify="space-between"
         align="flex-start"
-        className={css`
-          max-width: ${largeSize}px;
-        `}
+        className={maxWidth700}
       >
         <GridItem md={7} lg={7}>
           <div className={topAlignment}>
@@ -231,9 +232,7 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
       <GridContainer
         align="flex-start"
         justify="flex-start"
-        className={css`
-          max-width: ${largeSize}px;
-        `}
+        className={maxWidth700}
       >
         <GridItem sm={12} md={12} xl={12}>
           <Tabs
