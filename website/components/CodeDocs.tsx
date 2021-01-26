@@ -156,7 +156,13 @@ MobileInstall.displayName = 'MobileInstall';
 function DesktopInstall({ component, changelog, version }: InstallProps) {
   return (
     <>
-      <GridContainer justify="space-between" align="flex-start">
+      <GridContainer
+        justify="space-between"
+        align="flex-start"
+        className={css`
+          max-width: 700px;
+        `}
+      >
         <GridItem md={7} lg={7}>
           <div className={topAlignment}>
             <Subtitle
@@ -221,7 +227,13 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
           changelog={changelog}
         />
       )}
-      <GridContainer align="flex-start" justify="flex-start">
+      <GridContainer
+        align="flex-start"
+        justify="flex-start"
+        className={css`
+          max-width: 700px;
+        `}
+      >
         <GridItem sm={12} md={12} xl={12}>
           <Tabs
             className={tabsPadding}

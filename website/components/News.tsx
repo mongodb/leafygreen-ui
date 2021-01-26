@@ -13,11 +13,11 @@ const newsContainer = css`
   justify-content: center;
   padding-bottom: ${spacing[4]}px;
   ${mq({
-  height: ['auto', '100%'],
-  marginTop: ['48px', 'unset'],
-  marginBottom: ['40px', 'unset'],
-  marginLeft: ['24px', 'unset'],
-})}
+    height: ['auto', '100%'],
+    marginTop: ['48px', 'unset'],
+    marginBottom: ['40px', 'unset'],
+    marginLeft: ['24px', 'unset'],
+  })}
 `;
 
 const subtitleStyle = css`
@@ -43,15 +43,21 @@ function Update({ date, story, route, updateURL }: UpdateProps) {
   const subtitleProps = route
     ? ({ onClick: () => push(route), as: 'p' } as const)
     : ({
-      href: updateURL,
-      as: 'a',
-      target: '_blank',
-      rel: 'noopener noreferrer',
-    } as const);
+        href: updateURL,
+        as: 'a',
+        target: '_blank',
+        rel: 'noopener noreferrer',
+      } as const);
 
   useEffect(() => {
     if (typeof navigator !== 'undefined') {
-      setDisplayedDate(new Date(date).toLocaleString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }));
+      setDisplayedDate(
+        new Date(date).toLocaleString(undefined, {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        }),
+      );
     }
   }, [date]);
 

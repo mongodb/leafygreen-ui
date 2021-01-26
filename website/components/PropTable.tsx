@@ -13,15 +13,18 @@ import { mq } from 'utils/mediaQuery';
 
 const tableWrapper = css`
   ${mq({
-  marginLeft: ['-24px', 'unset'],
-  marginRight: ['-24px', 'unset'],
-  overflow: ['hidden', 'unset'],
-  width: ['inherit', 'inherit', 'inherit', '1053px']
-})}
+    marginLeft: ['-24px', 'unset'],
+    marginRight: ['-24px', 'unset'],
+    overflow: ['hidden', 'unset'],
+    width: ['inherit', 'inherit', 'inherit', '1138px'],
+  })}
 `;
 
 const subtitleBottomMargin = css`
   margin-bottom: 24px;
+  ${mq({
+    marginLeft: ['24px', 'unset'],
+  })}
 `;
 
 const verticalAlign = css`
@@ -130,12 +133,35 @@ function getTableData(rows: Table['children']): Array<TableDataInterface> {
   return rowMap as Array<TableDataInterface>;
 }
 
-function Wrapper({ children, isTouchDevice }: { children: React.ReactNode; isTouchDevice: boolean }) {
+function Wrapper({
+  children,
+  isTouchDevice,
+}: {
+  children: React.ReactNode;
+  isTouchDevice: boolean;
+}) {
   if (isTouchDevice) {
-    return (<div className={css`margin-bottom: 56px`}>{children}</div>)
+    return (
+      <div
+        className={css`
+          margin-bottom: 56px;
+        `}
+      >
+        {children}
+      </div>
+    );
   }
 
-  return <Card className={css`padding: 24px; margin-bottom: 56px`}>{children}</Card>
+  return (
+    <Card
+      className={css`
+        padding: 24px;
+        margin-bottom: 56px;
+      `}
+    >
+      {children}
+    </Card>
+  );
 }
 
 function PropTable({
