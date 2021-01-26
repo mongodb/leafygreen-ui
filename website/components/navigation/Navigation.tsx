@@ -5,10 +5,11 @@ import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
+import { HOME_PAGE } from 'utils/routes';
+import { Component } from 'utils/types';
 import MobileNavigationGroup from './MobileNavigationGroup';
 import MobileNavigationItem from './MobileNavigationItem';
 import MobileNavigation from './MobileNavigation';
-import { HOME_PAGE } from 'utils/routes';
 
 const navContainer = css`
   width: 270px;
@@ -34,7 +35,7 @@ const coreGuidelines = [
   'typography',
 ];
 
-const components = [
+const components: Array<Component> = [
   'badge',
   'banner',
   'box',

@@ -10,6 +10,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Knob, Boolean, Text, Area, Number, Select } from './Knobs';
 import { mq } from 'utils/mediaQuery';
+import { largestSize } from 'utils/styleConstants';
 
 const baseBoxShadow = `0 4px 10px -4px ${transparentize(0.7, uiColors.black)}`;
 

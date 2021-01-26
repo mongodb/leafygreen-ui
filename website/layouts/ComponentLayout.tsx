@@ -12,6 +12,8 @@ import ReactIcon from 'components/svgs/ReactIcon';
 import FigmaIcon from 'components/svgs/FigmaIcon';
 import { mq } from 'utils/mediaQuery';
 import { largeSize, largestSize } from 'utils/styleConstants';
+import { figmaLinks } from 'utils/figmaLinks';
+import { Component } from 'utils/types';
 
 const layout = css`
   ${mq({
@@ -79,7 +81,7 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const componentName = router.pathname
     .split('/')
-    .filter(subStr => !!subStr)[1];
+    .filter(subStr => !!subStr)[1] as Component;
 
   React.useEffect(() => {
     const activeRoute = router.pathname
@@ -112,8 +114,14 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
             {componentName.split('-').join(' ')}
           </H2>
 
-          {!isMobile && (
-            <Button glyph={<FigmaIcon />} variant="primary">
+          {!isMobile && figmaLinks[componentName] && (
+            <Button
+              glyph={<FigmaIcon />}
+              variant="primary"
+              href={figmaLinks[componentName]}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               View in Figma
             </Button>
           )}
