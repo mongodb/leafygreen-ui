@@ -209,6 +209,7 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
     <div>
       <div className={backdrop} />
       <Card
+        darkMode={props?.darkMode}
         className={cx(previewStyle, {
           [css`
             background-color: ${uiColors.gray.dark3};

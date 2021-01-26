@@ -2,8 +2,10 @@ import React from 'react';
 import { css } from 'emotion';
 import Card from '@leafygreen-ui/card';
 import { Table, TableHeader, Row, Cell } from '@leafygreen-ui/table';
-import { Subtitle, InlineCode } from '@leafygreen-ui/typography/dist';
+import { Subtitle, InlineCode } from '@leafygreen-ui/typography';
 import { OneOf } from '@leafygreen-ui/lib';
+import { useViewportSize } from '@leafygreen-ui/hooks';
+import { breakpoints } from '@leafygreen-ui/tokens';
 import PropDefinition from 'components/PropDefinition';
 import TypographyPropTable from 'components/TypographyPropTable';
 import formatType from 'utils/formatType';
@@ -128,6 +130,14 @@ function getTableData(rows: Table['children']): Array<TableDataInterface> {
   return rowMap as Array<TableDataInterface>;
 }
 
+function Wrapper({ children, isTouchDevice }: { children: React.ReactNode; isTouchDevice: boolean }) {
+  if (isTouchDevice) {
+    return (<div className={css`margin-bottom: 56px`}>{children}</div>)
+  }
+
+  return <Card className={css`padding: 24px; margin-bottom: 56px`}>{children}</Card>
+}
+
 function PropTable({
   markdownAst,
   component,
@@ -135,6 +145,11 @@ function PropTable({
   markdownAst: ReadmeMarkdown;
   component: string;
 }) {
+  const viewport = useViewportSize();
+  const isTouchDevice = viewport?.width
+    ? viewport?.width < breakpoints.Tablet
+    : false;
+
   let peerDepIndex: number | undefined;
 
   const headers = markdownAst.children
@@ -208,12 +223,7 @@ function PropTable({
             </Subtitle>
 
             {tableData[index] && (
-              <Card
-                className={css`
-                  padding: 24px;
-                  margin-bottom: 56px;
-                `}
-              >
+              <Wrapper isTouchDevice={isTouchDevice}>
                 <Table
                   key={header}
                   data={tableData[index]}
@@ -249,7 +259,7 @@ function PropTable({
                     </Row>
                   )}
                 </Table>
-              </Card>
+              </Wrapper>
             )}
           </div>
         );
