@@ -1,9 +1,10 @@
-import React, { useRef, useEffect, RefObject } from 'react';
+import React, { useState, useRef, useEffect, RefObject } from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { fontFamilies } from '@leafygreen-ui/tokens';
+import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import { Mode } from './Tabs';
 
 const modeColors = {
@@ -118,6 +119,11 @@ const listTitle = css`
   }
 `;
 
+const textOverflowStyles = css`
+  overflow: hidden;	
+  text-overflow: ellipsis;
+`
+
 interface BaseTabTitleProps {
   darkMode?: boolean;
   selected?: boolean;
@@ -138,6 +144,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   ...rest
 }: BaseTabTitleProps) => {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
+  const [showEllipsis, setShowEllipsis] = useState(false)
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
@@ -147,6 +154,18 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
     }
   }, [isAnyTabFocused, disabled, selected, titleRef]);
 
+  useIsomorphicLayoutEffect(() => {
+    const titleNode = titleRef.current;
+
+    if (titleNode == null) {
+      return;
+    }
+
+    if (titleNode.scrollWidth > titleNode.clientWidth) {
+      setShowEllipsis(true)
+    }
+  }, [titleRef, setShowEllipsis])
+
   const sharedTabProps = {
     className: cx(
       listTitle,
@@ -155,6 +174,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
         [modeColors[mode].listTitleHover]: !disabled,
         [listTitleSelected]: selected,
         [modeColors[mode].listTitleFocus]: showFocus,
+        [textOverflowStyles]: showEllipsis,
       },
       className,
     ),
