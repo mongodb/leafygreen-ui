@@ -18,9 +18,13 @@ const popoverStyle = css`
   border: 1px solid ${uiColors.gray.light1};
   text-align: center;
   padding: 20px;
-  background-color: ${uiColors.white};
   max-height: 100%;
   overflow: hidden;
+  // Reset these properties since they'll be inherited
+  // from the container element when not using a portal.
+  font-size: initial;
+  color: initial;
+  background-color: initial;
 `;
 
 const referenceElPositions = {

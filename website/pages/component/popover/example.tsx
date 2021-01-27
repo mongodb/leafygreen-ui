@@ -21,8 +21,12 @@ const popoverStyle = css`
   border: 1px solid ${uiColors.gray.light1};
   text-align: center;
   padding: 20px;
-  background-color: ${uiColors.white};
   overflow: hidden;
+  // Reset these properties since they'll be inherited
+  // from the container element when not using a portal.
+  font-size: initial;
+  color: initial;
+  background-color: initial;
 `;
 
 // When interface is used, ts complains that index signature is missing
