@@ -1,6 +1,6 @@
 import { Component } from 'utils/types';
 
-// @ts-expect-error
+// @ts-expect-error as not every component has a corresponding Figma link
 export const figmaLinks: Record<Component, string> = {
   [Component.Badge]:
     'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=9%3A4145',
