@@ -10,7 +10,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Knob, Boolean, Text, Area, Number, Select } from './Knobs';
 import { mq } from 'utils/mediaQuery';
-import { largestWidth } from 'utils/styleConstants';
+import { pageContainerWidth } from 'styles/constants';
 
 const baseBoxShadow = `0 4px 10px -4px ${transparentize(0.7, uiColors.black)}`;
 
@@ -34,7 +34,7 @@ const previewStyle = css`
     borderRadius: ['0px', '7px'],
     marginLeft: ['-24px', 'unset'],
     marginRight: ['-24px', 'unset'],
-    width: ['inherit', 'inherit', 'inherit', `${largestWidth}px`],
+    width: ['inherit', 'inherit', 'inherit', `${pageContainerWidth.largest}px`],
   })}
 `;
 

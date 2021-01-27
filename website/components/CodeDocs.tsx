@@ -14,7 +14,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { BaseLayoutProps } from 'utils/types';
-import { largeWidth } from 'utils/styleConstants';
+import { pageContainerWidth } from 'styles/constants';
 import { GridContainer, GridItem } from 'components/Grid';
 import PropTable, { ReadmeMarkdown } from 'components/PropTable';
 import TypeDefinition from 'components/TypeDefinition';
@@ -76,7 +76,7 @@ const changelogStyles = css`
 `;
 
 const maxWidth = css`
-  max-width: ${largeWidth}px;
+  max-width: ${pageContainerWidth.large}px;
 `;
 interface VersionCardProps {
   version?: string;
