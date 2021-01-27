@@ -12,14 +12,14 @@ const containerStyle = css`
   ${mq({
     flexDirection: ['column', 'column', 'row'],
     paddingLeft: [`${spacing[4]}px`, `${spacing[4]}px`, '0px'],
-    paddingRight: [`${spacing[4]}px`, `${spacing[4]}px`, '0px'],
+    paddingRight: [`${spacing[4]}px`, '0px'],
   })}
 `;
 
 const layout = css`
   ${mq({
     width: ['100%', '100%', 'calc(100% - 32px)', 'calc(1440px - 270px - 32px)'],
-    marginRight: ['inherit', 'inherit', '32px'],
+    marginRight: [0, 0, '32px'],
   })}
 `;
 

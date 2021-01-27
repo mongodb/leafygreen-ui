@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from '@leafygreen-ui/button';
 import MarketingModal, { GraphicStyle } from '@leafygreen-ui/marketing-modal';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 import { CDN } from 'utils/routes';
@@ -48,7 +49,7 @@ export default function MarketingModalLiveExample() {
     <LiveExample knobsConfig={knobsConfig}>
       {({ title, graphicStyle, buttonText, linkText, children }) => (
         <>
-          <button onClick={() => setOpen(!open)}>Open Modal</button>
+          <Button onClick={() => setOpen(!open)}>Open Modal</Button>
           <MarketingModal
             open={open}
             onButtonClick={() => setOpen(false)}

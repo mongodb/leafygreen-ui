@@ -9,6 +9,7 @@ import { GridContainer, GridItem } from 'components/Grid';
 import { getAllUpdates, UpdateProps } from 'utils/fetchUpdates';
 import { mq } from 'utils/mediaQuery';
 import { CDN } from 'utils/routes';
+import { pageContainerWidth } from 'styles/constants';
 import News from 'components/News';
 
 const landingURL = `${CDN}/images/landing`;
@@ -24,10 +25,17 @@ const backdrop = css`
 `;
 
 const layoutProperties = css`
+  margin-right: 0;
+
   ${mq({
-    width: ['calc(100% + 48px)', '100%', '100%', '1077px'],
-    paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, `${spacing[4]}px`],
-    marginLeft: ['-24px', 'unset', 'unset', 'unset'],
+    width: [
+      'calc(100% + 48px)',
+      '100%',
+      '100%',
+      `${pageContainerWidth.dataGraphic}px`,
+    ],
+    paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, 0],
+    marginLeft: [`-${spacing[4]}px`, '0px', '0px', '0px'],
   })}
 `;
 
@@ -165,10 +173,10 @@ function ComponentPreview({
   const { push } = useRouter();
 
   return (
-    <div className={className}>
+    <div className={cx(className, boxShadow)}>
       <button
         className={cx(previewWrapper, {
-          [sharedHoverInteraction]: isTouchDevice,
+          [sharedHoverInteraction]: !isTouchDevice,
         })}
         onClick={() => push(route)}
       >
@@ -281,14 +289,14 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
               route="/component/radio-box-group/example"
               backgroundURL={`${landingURL}/radioBox-thumbnail.png`}
               content="Radio boxes"
-              className={cx(smallHeight, halfWidth, boxShadow)}
+              className={cx(smallHeight, halfWidth)}
               isTouchDevice={isTouchDevice}
             />
             <ComponentPreview
               route="/component/text-input/example"
               backgroundURL={`${landingURL}/textInput-thumbnail.png`}
               content="Text input"
-              className={cx(smallHeight, halfWidth, boxShadow)}
+              className={cx(smallHeight, halfWidth)}
               isTouchDevice={isTouchDevice}
             />
             <ComponentPreview

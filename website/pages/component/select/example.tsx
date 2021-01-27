@@ -1,4 +1,5 @@
 import React from 'react';
+import { css } from 'emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { Select, Option, OptionGroup, Size } from '@leafygreen-ui/select';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
@@ -63,43 +64,49 @@ export default function MongoNavLiveExample() {
         disabled,
         withIcons,
       }) => (
-        <Select
-          darkMode={darkMode}
-          size={size}
-          label={label}
-          description={description}
-          placeholder={placeholder}
-          name="readPreferences"
-          defaultValue="primary"
-          disabled={disabled}
+        <div
+          className={css`
+            width: 400px;
+          `}
         >
-          <OptionGroup label="Primary">
-            <Option
-              value="primary"
-              glyph={withIcons ? <BeakerIcon /> : undefined}
-            >
-              primary
+          <Select
+            darkMode={darkMode}
+            size={size}
+            label={label}
+            description={description}
+            placeholder={placeholder}
+            name="readPreferences"
+            defaultValue="primary"
+            disabled={disabled}
+          >
+            <OptionGroup label="Primary">
+              <Option
+                value="primary"
+                glyph={withIcons ? <BeakerIcon /> : undefined}
+              >
+                primary
+              </Option>
+              <Option
+                value="primPreferred"
+                glyph={withIcons ? <BeakerIcon /> : undefined}
+              >
+                primaryPreferred
+              </Option>
+            </OptionGroup>
+            <OptionGroup label="Secondary">
+              <Option
+                value="secondary"
+                glyph={withIcons ? <BeakerIcon /> : undefined}
+              >
+                secondary
+              </Option>
+              <Option value="secondaryPreferred">secondaryPreferred</Option>
+            </OptionGroup>
+            <Option glyph={withIcons ? <BeakerIcon /> : undefined}>
+              nearest
             </Option>
-            <Option
-              value="primPreferred"
-              glyph={withIcons ? <BeakerIcon /> : undefined}
-            >
-              primaryPreferred
-            </Option>
-          </OptionGroup>
-          <OptionGroup label="Secondary">
-            <Option
-              value="secondary"
-              glyph={withIcons ? <BeakerIcon /> : undefined}
-            >
-              secondary
-            </Option>
-            <Option value="secondaryPreferred">secondaryPreferred</Option>
-          </OptionGroup>
-          <Option glyph={withIcons ? <BeakerIcon /> : undefined}>
-            nearest
-          </Option>
-        </Select>
+          </Select>
+        </div>
       )}
     </LiveExample>
   );

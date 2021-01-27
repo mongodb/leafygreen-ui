@@ -15,7 +15,7 @@ const footerContainer = css`
   padding-top: 36px;
 
   ${mq({
-    marginTop: ['1px', `${spacing[7]}px`],
+    marginTop: ['0px', `${spacing[7]}px`],
   })}
 `;
 

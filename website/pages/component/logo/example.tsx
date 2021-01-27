@@ -10,6 +10,7 @@ import {
   LogoMark,
 } from '@leafygreen-ui/logo';
 import { uiColors } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
 const flexContainer = css`
@@ -25,11 +26,11 @@ const logoContainer = css`
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-  margin-right: 64px;
+  margin-right: ${spacing[6]}px;
 `;
 
 const productLogoPadding = css`
-  padding: 8px;
+  padding: ${spacing[2]}px;
 `;
 
 // When interface is used, ts complains that index signature is missing
@@ -109,7 +110,7 @@ export default function LogoLiveExample() {
             <div>
               <AtlasLogo
                 className={css`
-                  padding: 8px 8px 8px 0;
+                  padding: ${spacing[2]}px ${spacing[2]}px ${spacing[2]}px 0;
                 `}
                 knockout={knockout}
                 size={size}
