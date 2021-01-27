@@ -7,6 +7,7 @@ import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircl
 import XWithCircleIcon from '@leafygreen-ui/icon/dist/XWithCircle';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Table, HeaderRow, TableHeader, Row, Cell } from '@leafygreen-ui/table';
+import { CDN } from 'utils/routes';
 
 Banners look similar to Call-Outs but serve a different use case. They are usually contextual to the product or task. If you are looking for a way to communicate a global message, like “you are offline” consider using a Toast.
 
@@ -112,15 +113,26 @@ The success green banner should be used sparingly and are used to indicate succe
   Your cluster has finished provisioning!
 </Banner>
 
+<br />
+
 This is what a multiline banner looks like.
 
-<Banner>
-  Add the provided Atlas user ARN and external ID to the trust policy of your
-  role. If you wish to create a new role via the AWS CLI, follow the
-  instructions provided below.
-</Banner>
+<div
+  className={css`
+    display: inline-flex;
+    align-items: center;
+  `}
+>
+  <img
+    src={`${CDN}/images/guidelines/banner-example.png`}
+    alt="Example of a multiline banner"
+    width="100%"
+  />
+</div>
 
-## image
+<br />
+
+<br />
 
 Links are underlined and set to medium weight to ensure legibility on colored backgrounds.
 

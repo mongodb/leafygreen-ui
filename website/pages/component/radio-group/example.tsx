@@ -46,6 +46,7 @@ function DefaultExample({ darkMode, size, disabled, children }: Knobs) {
       className={css`
         background-color: ${darkMode ? uiColors.gray.dark3 : uiColors.white};
         padding: 20px;
+        width: 300px;
       `}
     >
       <Radio value="1">Application Authentication</Radio>
