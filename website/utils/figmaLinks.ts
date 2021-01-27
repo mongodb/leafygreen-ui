@@ -1,6 +1,7 @@
 import { Component } from 'utils/types';
 
-// @ts-expect-error as not every component has a corresponding Figma link
+// Not every Component has a corresponding Figma link, but want to be sure we're appropriately keeping track of which components do not
+// @ts-expect-error
 export const figmaLinks: Record<Component, string> = {
   [Component.Badge]:
     'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=9%3A4145',
@@ -32,7 +33,6 @@ export const figmaLinks: Record<Component, string> = {
     'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=8%3A471',
   [Component.Modal]:
     'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=283%3A14380',
-  [Component.MongoNav]: '',
   [Component.Palette]:
     'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=7%3A7282',
   [Component.RadioBoxGroup]:
