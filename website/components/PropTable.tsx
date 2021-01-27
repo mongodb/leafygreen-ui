@@ -173,9 +173,9 @@ function PropTable({
   component: string;
 }) {
   const viewport = useViewportSize();
-  const isTouchDevice = viewport?.width
-    ? viewport?.width < breakpoints.Tablet
-    : false;
+
+  const isTouchDevice =
+    viewport !== null ? viewport.width < breakpoints.Tablet : false;
 
   let peerDepIndex: number | undefined;
 

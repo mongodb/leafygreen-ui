@@ -12,7 +12,7 @@ import ReactIcon from 'components/svgs/ReactIcon';
 import FigmaIcon from 'components/svgs/FigmaIcon';
 import { mq } from 'utils/mediaQuery';
 import { largeWidth, largestWidth } from 'utils/styleConstants';
-import { figmaLinks } from 'utils/figmaLinks';
+import figmaLinks from 'utils/figmaLinks';
 import { Component } from 'utils/types';
 
 const layout = css`

@@ -1,8 +1,6 @@
 import { Component } from 'utils/types';
 
-// Not every Component has a corresponding Figma link, but want to be sure we're appropriately keeping track of which components do not
-// @ts-expect-error
-export const figmaLinks: Record<Component, string> = {
+const figmaLinks: Partial<Record<Component, string>> = {
   [Component.Badge]:
     'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=9%3A4145',
   [Component.Banner]:
@@ -62,3 +60,5 @@ export const figmaLinks: Record<Component, string> = {
   [Component.Typography]:
     'https://www.figma.com/file/4h2VwjCuJUbeZ7hzD2J1rq/LeafyGreen-Design-System?node-id=7%3A7169',
 };
+
+export default figmaLinks;
