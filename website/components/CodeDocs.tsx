@@ -14,7 +14,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { BaseLayoutProps } from 'utils/types';
-import { largeSize } from 'utils/styleConstants';
+import { largeWidth } from 'utils/styleConstants';
 import { GridContainer, GridItem } from 'components/Grid';
 import PropTable, { ReadmeMarkdown } from 'components/PropTable';
 import TypeDefinition from 'components/TypeDefinition';
@@ -76,7 +76,7 @@ const changelogStyles = css`
 `;
 
 const maxWidth700 = css`
-  max-width: ${largeSize}px;
+  max-width: ${largeWidth}px;
 `;
 interface VersionCardProps {
   version?: string;
@@ -223,12 +223,12 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
           changelog={changelog}
         />
       ) : (
-        <DesktopInstall
-          component={component}
-          version={version}
-          changelog={changelog}
-        />
-      )}
+          <DesktopInstall
+            component={component}
+            version={version}
+            changelog={changelog}
+          />
+        )}
       <GridContainer
         align="flex-start"
         justify="flex-start"

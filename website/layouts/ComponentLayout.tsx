@@ -11,15 +11,15 @@ import { H2 } from '@leafygreen-ui/typography';
 import ReactIcon from 'components/svgs/ReactIcon';
 import FigmaIcon from 'components/svgs/FigmaIcon';
 import { mq } from 'utils/mediaQuery';
-import { largeSize, largestSize } from 'utils/styleConstants';
+import { largeWidth, largestWidth } from 'utils/styleConstants';
 import { figmaLinks } from 'utils/figmaLinks';
 import { Component } from 'utils/types';
 
 const layout = css`
   ${mq({
-    marginTop: [`${spacing[4]}px`, `${spacing[4]}px`, '70px'],
-    width: ['100%', '100%', '100%', `${largestSize}px`],
-  })}
+  marginTop: [`${spacing[4]}px`, `${spacing[4]}px`, '70px'],
+  width: ['100%', '100%', '100%', `${largestWidth}px`],
+})}
 `;
 
 const componentsStyle = css`
@@ -51,7 +51,7 @@ const componentGuidelineStyles = css`
   color: ${uiColors.gray.dark3};
   padding-top: ${spacing[2]}px;
   padding-bottom: ${spacing[6]}px;
-  max-width: ${largeSize}px;
+  max-width: ${largeWidth}px;
 
   & > p {
     font-size: 16px;

@@ -1,2 +1,3 @@
-export const largeSize = 700;
-export const largestSize = 1138;
+// Layout Constants
+export const largeWidth = 700;
+export const largestWidth = 1138;
