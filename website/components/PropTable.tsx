@@ -14,18 +14,18 @@ import { largestWidth } from 'utils/styleConstants';
 
 const tableWrapper = css`
   ${mq({
-  marginLeft: ['-24px', 'unset'],
-  marginRight: ['-24px', 'unset'],
-  overflow: ['hidden', 'unset'],
-  width: ['inherit', 'inherit', 'inherit', `${largestWidth}px`],
-})}
+    marginLeft: ['-24px', 'unset'],
+    marginRight: ['-24px', 'unset'],
+    overflow: ['hidden', 'unset'],
+    width: ['inherit', 'inherit', 'inherit', `${largestWidth}px`],
+  })}
 `;
 
 const subtitleBottomMargin = css`
   margin-bottom: 24px;
   ${mq({
-  marginLeft: ['24px', 'unset'],
-})}
+    marginLeft: ['24px', 'unset'],
+  })}
 `;
 
 const verticalAlign = css`
