@@ -16,7 +16,7 @@ const newsContainer = css`
     height: ['auto', '100%'],
     marginTop: ['48px', 'unset'],
     marginBottom: ['40px', 'unset'],
-    marginLeft: ['24px', 'unset'],
+    marginLeft: [`${spacing[4]}px`, 'unset'],
   })}
 `;
 
@@ -52,10 +52,11 @@ function Update({ date, story, route, updateURL }: UpdateProps) {
   useEffect(() => {
     if (typeof navigator !== 'undefined') {
       setDisplayedDate(
-        // @ts-expect-error typescript complaining that dateStyle is not a valid option, but according to Mozilla docs it is: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat
-        new Intl.DateTimeFormat(undefined, { dateStyle: 'long' }).format(
-          new Date(date),
-        ),
+        new Date(date).toLocaleString(undefined, {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        }),
       );
     }
   }, [date]);

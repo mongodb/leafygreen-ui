@@ -55,7 +55,6 @@ export default function TooltipLiveExample() {
           {...props}
           trigger={
             <Button
-              variant="dark"
               className={css`
                 position: relative;
               `}
