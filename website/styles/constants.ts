@@ -1,5 +1,5 @@
 // Layout Constants
 export const pageContainerWidth = {
-  large: 700,
-  largest: 1138,
+  default: 700,
+  dataGraphic: 1138,
 } as const;

@@ -32,7 +32,7 @@ const layoutProperties = css`
       'calc(100% + 48px)',
       '100%',
       '100%',
-      `${pageContainerWidth.largest}px`,
+      `${pageContainerWidth.dataGraphic}px`,
     ],
     paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, 0],
     marginLeft: [`-${spacing[4]}px`, '0px', '0px', '0px'],

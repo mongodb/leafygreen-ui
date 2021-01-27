@@ -17,7 +17,12 @@ const tableWrapper = css`
     marginLeft: ['-24px', 'unset'],
     marginRight: ['-24px', 'unset'],
     overflow: ['hidden', 'unset'],
-    width: ['inherit', 'inherit', 'inherit', `${pageContainerWidth.largest}px`],
+    width: [
+      'inherit',
+      'inherit',
+      'inherit',
+      `${pageContainerWidth.dataGraphic}px`,
+    ],
   })}
 `;
 

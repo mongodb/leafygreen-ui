@@ -76,7 +76,7 @@ const changelogStyles = css`
 `;
 
 const maxWidth = css`
-  max-width: ${pageContainerWidth.large}px;
+  max-width: ${pageContainerWidth.default}px;
 `;
 interface VersionCardProps {
   version?: string;

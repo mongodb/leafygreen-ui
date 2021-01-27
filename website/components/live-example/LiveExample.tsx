@@ -34,7 +34,12 @@ const previewStyle = css`
     borderRadius: ['0px', '7px'],
     marginLeft: ['-24px', 'unset'],
     marginRight: ['-24px', 'unset'],
-    width: ['inherit', 'inherit', 'inherit', `${pageContainerWidth.largest}px`],
+    width: [
+      'inherit',
+      'inherit',
+      'inherit',
+      `${pageContainerWidth.dataGraphic}px`,
+    ],
   })}
 `;
 
