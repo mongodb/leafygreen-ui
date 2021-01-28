@@ -16,7 +16,7 @@ const containerStyle = css`
 const subtitleStyle = css`
   text-align: center;
   font-weight: bolder;
-  margin-top: ${spacing[6]}px;
+  margin-top: ${spacing[5]}px;
   margin-bottom: ${spacing[4]}px;
   color: ${uiColors.gray.dark3};
 `;

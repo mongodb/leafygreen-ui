@@ -85,11 +85,7 @@ function DefaultExample({
   const [active, setActive] = useState(false);
   return (
     <div className={wrapper}>
-      <Button
-        onClick={() => setActive(!active)}
-        className={containerStyle}
-        variant="primary"
-      >
+      <Button onClick={() => setActive(!active)} className={containerStyle}>
         Popover
         <Popover
           align={align}

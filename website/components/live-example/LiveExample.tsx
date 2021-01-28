@@ -10,6 +10,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Knob, Boolean, Text, Area, Number, Select } from './Knobs';
 import { mq } from 'utils/mediaQuery';
+import { pageContainerWidth } from 'styles/constants';
 
 const baseBoxShadow = `0 4px 10px -4px ${transparentize(0.7, uiColors.black)}`;
 
@@ -26,13 +27,19 @@ const backdrop = css`
 const previewStyle = css`
   display: flex;
   flex-direction: column;
-  margin-top: ${spacing[5]}px;
+  margin-top: ${spacing[4]}px;
 
   ${mq({
     boxShadow: ['none', baseBoxShadow],
     borderRadius: ['0px', '7px'],
     marginLeft: ['-24px', 'unset'],
     marginRight: ['-24px', 'unset'],
+    width: [
+      'inherit',
+      'inherit',
+      'inherit',
+      `${pageContainerWidth.dataGraphic}px`,
+    ],
   })}
 `;
 
@@ -208,6 +215,7 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
     <div>
       <div className={backdrop} />
       <Card
+        darkMode={props?.darkMode}
         className={cx(previewStyle, {
           [css`
             background-color: ${uiColors.gray.dark3};

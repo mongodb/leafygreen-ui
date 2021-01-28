@@ -1,5 +1,11 @@
 # @leafygreen-ui/table
 
+## 1.3.3
+
+### Patch Changes
+
+- 7ba9f4a8: Increases shadow when Table is scrollable
+
 ## 1.3.2
 
 ### Patch Changes
