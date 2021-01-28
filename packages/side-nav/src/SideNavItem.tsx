@@ -25,6 +25,7 @@ const sideNavItemStyle = css`
   cursor: pointer;
   font-size: 14px;
   text-decoration: none;
+  text-transform: capitalize;
   border: 0 solid ${uiColors.gray.light2};
   color: ${uiColors.gray.dark2};
   // Chrome has a bug that makes the border black during transition
