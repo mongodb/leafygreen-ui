@@ -234,6 +234,7 @@ function Tabs({
     const { disabled, onClick } = child.props;
 
     const tabProps = {
+      ...child.props,
       disabled,
       as,
       darkMode,
