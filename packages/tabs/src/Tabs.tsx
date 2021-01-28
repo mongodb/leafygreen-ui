@@ -246,8 +246,8 @@ function Tabs({
         className,
       ),
       onKeyDown: (event: KeyboardEvent) => {
-        handleArrowKeyPress(event);
         onKeyDown?.(event);
+        handleArrowKeyPress(event);
       },
       onClick: !disabled
         ? (event: React.MouseEvent) => {
