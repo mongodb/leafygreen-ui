@@ -245,24 +245,31 @@ function Tabs({
     }
 
     const isTabSelected = index === selected;
-    const { disabled, onClick } = child.props;
+    const { disabled, onClick, onKeyDown, className, ...rest } = child.props;
 
     const tabProps = {
-      disabled,
       as,
+      disabled,
       darkMode,
       isAnyTabFocused,
-      onKeyDown: handleArrowKeyPress,
-      className: cx({
-        [modeColors[mode].activeStyle]: isTabSelected,
-        [cx(modeColors[mode].disabledColor, disabledStyle)]: disabled,
-      }),
+      className: cx(
+        {
+          [modeColors[mode].activeStyle]: isTabSelected,
+          [cx(modeColors[mode].disabledColor, disabledStyle)]: disabled,
+        },
+        className,
+      ),
+      onKeyDown: (event: KeyboardEvent) => {
+        onKeyDown?.(event);
+        handleArrowKeyPress(event);
+      },
       onClick: !disabled
         ? (event: React.MouseEvent) => {
             onClick?.(event);
             handleChange(event, index);
           }
         : undefined,
+      ...rest,
     };
 
     return (

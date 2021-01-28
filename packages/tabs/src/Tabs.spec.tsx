@@ -19,7 +19,7 @@ const renderTabs = (tabsProps = {}, tabProps = {}) => {
   );
 };
 
-describe('packages/tab', () => {
+describe('packages/tabs', () => {
   describe('when controlled', () => {
     test('clicking a tab fires setSelected callback', () => {
       renderTabs({ setSelected, selected: 1 });
@@ -246,5 +246,14 @@ describe('packages/tab', () => {
         panel.getAttribute('id'),
       );
     });
+  });
+});
+
+describe('packages/tab', () => {
+  test('props are passed to tab element through rest', () => {
+    renderTabs({}, { 'data-testid': 'test-prop' });
+    expect(screen.getAllByRole('tab')[0].getAttribute('data-testid')).toBe(
+      'test-prop',
+    );
   });
 });

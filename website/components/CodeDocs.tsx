@@ -14,6 +14,7 @@ import { uiColors } from '@leafygreen-ui/palette';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import { BaseLayoutProps } from 'utils/types';
+import { pageContainerWidth } from 'styles/constants';
 import { GridContainer, GridItem } from 'components/Grid';
 import PropTable, { ReadmeMarkdown } from 'components/PropTable';
 import TypeDefinition from 'components/TypeDefinition';
@@ -74,6 +75,9 @@ const changelogStyles = css`
   }
 `;
 
+const maxWidth = css`
+  max-width: ${pageContainerWidth.default}px;
+`;
 interface VersionCardProps {
   version?: string;
   changelog: string;
@@ -156,7 +160,11 @@ MobileInstall.displayName = 'MobileInstall';
 function DesktopInstall({ component, changelog, version }: InstallProps) {
   return (
     <>
-      <GridContainer justify="space-between" align="flex-start">
+      <GridContainer
+        justify="space-between"
+        align="flex-start"
+        className={maxWidth}
+      >
         <GridItem md={7} lg={7}>
           <div className={topAlignment}>
             <Subtitle
@@ -221,7 +229,11 @@ function CodeDocs({ component, readme, changelog }: BaseLayoutProps) {
           changelog={changelog}
         />
       )}
-      <GridContainer align="flex-start" justify="flex-start">
+      <GridContainer
+        align="flex-start"
+        justify="flex-start"
+        className={maxWidth}
+      >
         <GridItem sm={12} md={12} xl={12}>
           <Tabs
             className={tabsPadding}

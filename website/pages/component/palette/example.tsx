@@ -4,6 +4,7 @@ import { cx, css } from 'emotion';
 import { lighten, darken, readableColor, transparentize } from 'polished';
 import { keyMap } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
 import InteractionRing from '@leafygreen-ui/interaction-ring';
 import Tooltip from '@leafygreen-ui/tooltip';
 import LiveExample from 'components/live-example';
@@ -45,7 +46,7 @@ const colorBlockStyles = css`
   &:after {
     content: attr(name);
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + ${spacing[2]}px);
     font-size: 12px;
     text-align: center;
     color: ${uiColors.gray.dark1};
