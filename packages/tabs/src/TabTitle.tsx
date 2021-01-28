@@ -120,9 +120,10 @@ const listTitle = css`
 `;
 
 const textOverflowStyles = css`
-  overflow: hidden;	
+  cursor: pointer;
+  overflow: hidden;
   text-overflow: ellipsis;
-`
+`;
 
 interface BaseTabTitleProps {
   darkMode?: boolean;
@@ -144,7 +145,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   ...rest
 }: BaseTabTitleProps) => {
   const { usingKeyboard: showFocus } = useUsingKeyboardContext();
-  const [showEllipsis, setShowEllipsis] = useState(false)
+  const [showEllipsis, setShowEllipsis] = useState(false);
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const mode = darkMode ? Mode.Dark : Mode.Light;
 
@@ -161,20 +162,22 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
       return;
     }
 
-    if (titleNode.scrollWidth > titleNode.clientWidth) {
-      setShowEllipsis(true)
+    // Max-width of TabTitle is 300 pixels, and we only want to show ellipsis when the title exceeds this length
+    // When this style isn't conditionally applied, TabTitle will automatically truncate based on available space in the viewport.
+    if (titleNode.scrollWidth > 300) {
+      setShowEllipsis(true);
     }
-  }, [titleRef, setShowEllipsis])
+  }, [titleRef, setShowEllipsis]);
 
   const sharedTabProps = {
     className: cx(
       listTitle,
       modeColors[mode].listTitleColor,
       {
-        [modeColors[mode].listTitleHover]: !disabled,
         [listTitleSelected]: selected,
         [modeColors[mode].listTitleFocus]: showFocus,
         [textOverflowStyles]: showEllipsis,
+        [modeColors[mode].listTitleHover]: !disabled,
       },
       className,
     ),

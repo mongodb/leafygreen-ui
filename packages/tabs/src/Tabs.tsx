@@ -173,8 +173,8 @@ function Tabs({
 
   const [tabNode, setTabNode] = useState<HTMLDivElement | null>(null);
   const [panelNode, setPanelNode] = useState<HTMLDivElement | null>(null);
-  const activeEl = useDocumentActiveElement();
   const [isAnyTabFocused, setIsAnyTabFocused] = useState(false);
+  const activeEl = useDocumentActiveElement();
 
   const accessibilityProps = {
     ['aria-label']: ariaLabel,
