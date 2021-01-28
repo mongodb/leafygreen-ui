@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import Button from '@leafygreen-ui/button';
 import MarketingModal, { GraphicStyle } from '@leafygreen-ui/marketing-modal';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
+import { CDN } from 'utils/routes';
 
 const children =
   'This is some description text, and it is extra long so it fills up this modal. Another thing about the modals here.';
@@ -47,7 +49,7 @@ export default function MarketingModalLiveExample() {
     <LiveExample knobsConfig={knobsConfig}>
       {({ title, graphicStyle, buttonText, linkText, children }) => (
         <>
-          <button onClick={() => setOpen(!open)}>Open Modal</button>
+          <Button onClick={() => setOpen(!open)}>Open Modal</Button>
           <MarketingModal
             open={open}
             onButtonClick={() => setOpen(false)}
@@ -58,12 +60,15 @@ export default function MarketingModalLiveExample() {
               graphicStyle === GraphicStyle.Center ? (
                 <img
                   alt=""
-                  src="/images/examples/DataLake.png"
+                  src={`${CDN}/images/examples/DataLake.png`}
                   width={275}
                   height={220}
                 />
               ) : (
-                <img alt="" src="/images/examples/Realm_Rebrand_Image.png" />
+                <img
+                  alt=""
+                  src={`${CDN}/images/examples/Realm_Rebrand_Image.png.png`}
+                />
               )
             }
             graphicStyle={graphicStyle}

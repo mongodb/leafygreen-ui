@@ -5,6 +5,8 @@ import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
+import { HOME_PAGE } from 'utils/routes';
+import { Component } from 'utils/types';
 import MobileNavigationGroup from './MobileNavigationGroup';
 import MobileNavigationItem from './MobileNavigationItem';
 import MobileNavigation from './MobileNavigation';
@@ -33,7 +35,7 @@ const coreGuidelines = [
   'typography',
 ];
 
-const components = [
+const components: Array<Component> = [
   'badge',
   'banner',
   'box',
@@ -81,7 +83,6 @@ type GroupType = typeof GroupType[keyof typeof GroupType];
 
 function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
   const router = useRouter();
-  const activeType = router.asPath.split('/')[1] as GroupType;
   const activePage = router.asPath.split('/')[2];
 
   const renderGroup = (type: GroupType) => {
@@ -93,7 +94,7 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
         <MobileNavigationGroup
           key={type}
           label={isGuideline ? 'Core Guidelines' : 'Components'}
-          initialCollapsed={activeType !== type}
+          initialCollapsed={false} // Always false until we add more sections to navigation
         >
           {items.map(item => {
             const path =
@@ -158,7 +159,7 @@ function Navigation() {
 
   return (
     <nav className={navContainer}>
-      <MDBDesignLogo className={logoStyles} onClick={() => push('/')} />
+      <MDBDesignLogo className={logoStyles} onClick={() => push(HOME_PAGE)} />
       <SideNav
         collapsible={false}
         currentPath={pathname}

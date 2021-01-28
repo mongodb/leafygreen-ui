@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 5.0.1
+
+### Patch Changes
+
+- 926e0a13: Ensures that props are properly spread on Tab element
+
 ## 5.0.0
 
 ### Major Changes

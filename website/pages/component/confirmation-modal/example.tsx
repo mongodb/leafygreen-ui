@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from '@leafygreen-ui/button';
 import ConfirmationModal from '@leafygreen-ui/confirmation-modal';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
@@ -45,7 +46,7 @@ function Confirm({
 
   return (
     <>
-      <button onClick={() => setOpen(!open)}>Open Modal</button>
+      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
       <ConfirmationModal
         open={open}
         onConfirm={() => setOpen(false)}

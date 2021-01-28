@@ -38,9 +38,10 @@ import Card from '@leafygreen-ui/card';
 
 Card is a styled wrapper for the Box component. Any properties you would pass to Box can also be passed to Card.
 
-| Prop           | Type                    | Description                                                      | Default                                                                 |
-| -------------- | ----------------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| `className`    | `string`                | Adds a className to the class attribute                          |                                                                         |
-| `contentStyle` | `'none'`, `'clickable'` | Whether the card should display as a visually clickable element. | `'clickable'` when a valid `onClick` handler or `href` link is provided |
+| Prop           | Type                    | Description                                                       | Default                                                                 |
+| -------------- | ----------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `className`    | `string`                | Adds a className to the class attribute                           |                                                                         |
+| `contentStyle` | `'none'`, `'clickable'` | Whether the card should display as a visually clickable element.  | `'clickable'` when a valid `onClick` handler or `href` link is provided |
+| `darkMode`     | `boolean`               | Determines whether or not the component will appear in dark mode. | `false`                                                                 |
 
 _Any other properties will be spread on the Box element._

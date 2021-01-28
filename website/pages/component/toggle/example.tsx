@@ -1,4 +1,5 @@
 import React from 'react';
+import { Label } from '@leafygreen-ui/typography';
 import Toggle, { Size } from '@leafygreen-ui/toggle';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
@@ -30,9 +31,9 @@ export default function ToggleLiveExample() {
     <LiveExample knobsConfig={knobsConfig}>
       {props => (
         <>
-          <label style={{ display: 'block' }} id="label" htmlFor="toggle">
+          <Label id="label" htmlFor="toggle">
             This is an accessible label for the Toggle
-          </label>
+          </Label>
           <Toggle id="toggle" aria-labelledby="label" {...props} />
         </>
       )}

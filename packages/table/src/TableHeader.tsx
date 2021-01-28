@@ -150,6 +150,7 @@ function TableHeader<Shape>({
   return (
     <th
       role="columnheader"
+      scope="col"
       aria-sort={ariaSort}
       {...rest}
       className={cx(thStyle, commonCellStyles, className)}

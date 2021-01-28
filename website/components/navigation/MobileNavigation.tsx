@@ -9,6 +9,7 @@ import MenuIcon from '@leafygreen-ui/icon/dist/Menu';
 import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
 import { borderColor, leftRightPadding, ulStyleOverrides } from './styles';
 import MobileNavigationProvider from './NavigationContext';
+import { HOME_PAGE } from 'utils/routes';
 
 const resetButtonStyle = css`
   background-color: white;
@@ -109,7 +110,7 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
           >
             <MenuIcon size={20} />
           </IconButton>
-          <MDBDesignLogo />
+          <MDBDesignLogo onClick={() => push(HOME_PAGE)} />
         </div>
 
         <Transition in={open} timeout={300} mountOnEnter unmountOnExit>
@@ -135,13 +136,18 @@ function MobileNavigation({ children }: { children: React.ReactNode }) {
                 ref={setScrollContainerNode}
               >
                 <div className={logoContainer}>
-                  <MDBDesignLogo />
+                  <MDBDesignLogo
+                    onClick={() => {
+                      push(HOME_PAGE);
+                      setOpen(false);
+                    }}
+                  />
                 </div>
                 <ol className={ulStyleOverrides}>
                   <li>
                     <button
                       onClick={() => {
-                        push('/');
+                        push(HOME_PAGE);
                         setOpen(false);
                       }}
                       className={resetButtonStyle}

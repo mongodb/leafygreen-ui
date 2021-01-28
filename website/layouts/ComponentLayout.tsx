@@ -11,11 +11,14 @@ import { H2 } from '@leafygreen-ui/typography';
 import ReactIcon from 'components/svgs/ReactIcon';
 import FigmaIcon from 'components/svgs/FigmaIcon';
 import { mq } from 'utils/mediaQuery';
+import { pageContainerWidth } from 'styles/constants';
+import figmaLinks from 'utils/figmaLinks';
+import { Component } from 'utils/types';
 
 const layout = css`
   ${mq({
-    marginTop: [`${spacing[4]}px`, '70px'],
-    width: ['100%', '100%', '700px', '700px'],
+    marginTop: [`${spacing[4]}px`, `${spacing[4]}px`, '70px'],
+    width: ['100%', '100%', '100%', `${pageContainerWidth.dataGraphic}px`],
   })}
 `;
 
@@ -46,7 +49,9 @@ const caps = css`
 const componentGuidelineStyles = css`
   overflow-wrap: anywhere;
   color: ${uiColors.gray.dark3};
+  padding-top: ${spacing[2]}px;
   padding-bottom: ${spacing[6]}px;
+  max-width: ${pageContainerWidth.default}px;
 
   & > p {
     font-size: 16px;
@@ -76,7 +81,7 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const componentName = router.pathname
     .split('/')
-    .filter(subStr => !!subStr)[1];
+    .filter(subStr => !!subStr)[1] as Component;
 
   React.useEffect(() => {
     const activeRoute = router.pathname
@@ -109,8 +114,14 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
             {componentName.split('-').join(' ')}
           </H2>
 
-          {!isMobile && (
-            <Button glyph={<FigmaIcon />} variant="primary">
+          {!isMobile && figmaLinks[componentName] && (
+            <Button
+              glyph={<FigmaIcon />}
+              variant="primary"
+              href={figmaLinks[componentName]}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               View in Figma
             </Button>
           )}

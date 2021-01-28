@@ -7,8 +7,12 @@ import { useViewportSize } from '@leafygreen-ui/hooks';
 import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { GridContainer, GridItem } from 'components/Grid';
 import { getAllUpdates, UpdateProps } from 'utils/fetchUpdates';
-import News from 'components/News';
 import { mq } from 'utils/mediaQuery';
+import { CDN } from 'utils/routes';
+import { pageContainerWidth } from 'styles/constants';
+import News from 'components/News';
+
+const landingURL = `${CDN}/images/landing`;
 
 const backdrop = css`
   background-color: ${uiColors.gray.light3};
@@ -21,10 +25,17 @@ const backdrop = css`
 `;
 
 const layoutProperties = css`
+  margin-right: 0;
+
   ${mq({
-    width: ['calc(100% + 48px)', '100%', '100%', '1077px'],
-    paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, `${spacing[4]}px`],
-    marginLeft: ['-24px', 'unset', 'unset', 'unset'],
+    width: [
+      'calc(100% + 48px)',
+      '100%',
+      '100%',
+      `${pageContainerWidth.dataGraphic}px`,
+    ],
+    paddingRight: [0, `${spacing[4]}px`, `${spacing[4]}px`, 0],
+    marginLeft: [`-${spacing[4]}px`, '0px', '0px', '0px'],
   })}
 `;
 
@@ -59,7 +70,6 @@ const previewWrapper = css`
   ${container}
   overflow: hidden;
   transition: transform 300ms ease-in-out;
-  ${sharedHoverInteraction}
 
   &:hover {
     & > div {
@@ -98,7 +108,6 @@ const marketingWrapper = css`
   overflow: hidden;
   position: relative;
   transition: transform 300ms ease-in-out;
-  ${sharedHoverInteraction}
 `;
 
 const textWrapper = css`
@@ -113,6 +122,7 @@ const textWrapper = css`
   ${mq({
     paddingTop: [`${spacing[3]}px`, `${spacing[4]}px`],
     paddingLeft: [`${spacing[3]}px`, `${spacing[4]}px`],
+    paddingRight: [`${spacing[3]}px`, `${spacing[4]}px`],
     fontSize: ['24px', '60px', '60px', '60px'],
   })}
 `;
@@ -150,6 +160,7 @@ interface ComponentPreviewProps {
   content?: string;
   children?: string;
   className?: string;
+  isTouchDevice?: boolean;
 }
 
 function ComponentPreview({
@@ -157,11 +168,18 @@ function ComponentPreview({
   backgroundURL,
   content,
   className,
+  isTouchDevice = false,
 }: ComponentPreviewProps) {
   const { push } = useRouter();
+
   return (
-    <div className={className}>
-      <button className={previewWrapper} onClick={() => push(route)}>
+    <div className={cx(className, boxShadow)}>
+      <button
+        className={cx(previewWrapper, {
+          [sharedHoverInteraction]: !isTouchDevice,
+        })}
+        onClick={() => push(route)}
+      >
         <img
           src={backgroundURL}
           alt={`Learn more about ${content} component`}
@@ -181,12 +199,14 @@ interface MarketingPreview {
   marketingURL: string;
   children: string;
   backgroundURL: string;
+  isTouchDevice?: boolean;
 }
 
 function MarketingPreview({
   marketingURL,
   children,
   backgroundURL,
+  isTouchDevice,
 }: MarketingPreview) {
   return (
     <div className={largeHeight}>
@@ -196,7 +216,11 @@ function MarketingPreview({
         target="_blank"
         rel="noopener noreferrer"
       >
-        <div className={marketingWrapper}>
+        <div
+          className={cx(marketingWrapper, {
+            [sharedHoverInteraction]: !isTouchDevice,
+          })}
+        >
           <img
             src={backgroundURL}
             alt=""
@@ -238,9 +262,10 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
         <GridItem sm={6} md={6} lg={6}>
           <ComponentPreview
             route="/component/banner/example"
-            backgroundURL="/images/banner-thumbnail.png"
+            backgroundURL={`${landingURL}/banner-thumbnail.png`}
             content="Banner"
             className={largeHeight}
+            isTouchDevice={isTouchDevice}
           />
         </GridItem>
 
@@ -250,7 +275,8 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
             <div className={largeHeight}>
               <MarketingPreview
                 marketingURL="https://www.mongodb.com/blog/post/meet-our-product-design-team-part-1"
-                backgroundURL="/images/team-thumbnail.png"
+                backgroundURL={`${landingURL}/team-thumbnail.png`}
+                isTouchDevice={isTouchDevice}
               >
                 Meet our Team
               </MarketingPreview>
@@ -261,27 +287,31 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
           <div className={secondRowContainer}>
             <ComponentPreview
               route="/component/radio-box-group/example"
-              backgroundURL="/images/radioBox-thumbnail.png"
+              backgroundURL={`${landingURL}/radioBox-thumbnail.png`}
               content="Radio boxes"
-              className={cx(smallHeight, halfWidth, boxShadow)}
+              className={cx(smallHeight, halfWidth)}
+              isTouchDevice={isTouchDevice}
             />
             <ComponentPreview
               route="/component/text-input/example"
-              backgroundURL="/images/textInput-thumbnail.png"
+              backgroundURL={`${landingURL}/textInput-thumbnail.png`}
               content="Text input"
-              className={cx(smallHeight, halfWidth, boxShadow)}
+              className={cx(smallHeight, halfWidth)}
+              isTouchDevice={isTouchDevice}
             />
             <ComponentPreview
               route="/component/logo/example"
-              backgroundURL="/images/logos-thumbnail.png"
+              backgroundURL={`${landingURL}/logos-thumbnail.png`}
               content="Logos"
               className={cx(smallHeight, halfWidth)}
+              isTouchDevice={isTouchDevice}
             />
             <ComponentPreview
               route="/component/tokens/example"
-              backgroundURL="/images/spacers-thumbnail.png"
+              backgroundURL={`${landingURL}/spacers-thumbnail.png`}
               content="Tokens"
               className={cx(smallHeight, halfWidth)}
+              isTouchDevice={isTouchDevice}
             />
           </div>
         </GridItem>
@@ -289,7 +319,7 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
           <GridItem sm={6} md={6} lg={6}>
             <MarketingPreview
               marketingURL="https://www.mongodb.com/blog/post/meet-our-product-design-team-part-1"
-              backgroundURL="/images/team-thumbnail.png"
+              backgroundURL={`${landingURL}/team-thumbnail.png`}
             >
               Meet our Team
             </MarketingPreview>
@@ -300,33 +330,37 @@ export default function Home({ updates }: { updates: Array<UpdateProps> }) {
         <GridItem sm={6} md={3} lg={3}>
           <ComponentPreview
             route="/component/icon/example"
-            backgroundURL="/images/icons-thumbnail.png"
+            backgroundURL={`${landingURL}/icons-thumbnail.png`}
             content="Icons"
             className={smallHeight}
+            isTouchDevice={isTouchDevice}
           />
         </GridItem>
         <GridItem sm={6} md={3} lg={3}>
           <ComponentPreview
             route="/component/card/example"
-            backgroundURL="/images/card-thumbnail.png"
+            backgroundURL={`${landingURL}/card-thumbnail.png`}
             content="Card"
             className={smallHeight}
+            isTouchDevice={isTouchDevice}
           />
         </GridItem>
         <GridItem sm={6} md={3} lg={3}>
           <ComponentPreview
             route="/component/tooltip/example"
-            backgroundURL="/images/tooltip-thumbnail.png"
+            backgroundURL={`${landingURL}/tooltip-thumbnail.png`}
             content="Tooltip"
             className={smallHeight}
+            isTouchDevice={isTouchDevice}
           />
         </GridItem>
         <GridItem sm={6} md={3} lg={3}>
           <ComponentPreview
             route="/component/checkbox/example"
-            backgroundURL="/images/checkbox-thumbnail.png"
+            backgroundURL={`${landingURL}/checkbox-thumbnail.png`}
             content="Checkbox"
             className={smallHeight}
+            isTouchDevice={isTouchDevice}
           />
         </GridItem>
       </GridContainer>
