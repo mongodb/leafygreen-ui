@@ -1,5 +1,11 @@
 # @leafygreen-ui/marketing-modal
 
+## 2.0.6
+
+### Patch Changes
+
+- 7ba9f4a8: Updates the space between buttons in the modal's footer
+
 ## 2.0.5
 
 ### Patch Changes

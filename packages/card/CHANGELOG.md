@@ -1,5 +1,11 @@
 # @leafygreen-ui/card
 
+## 5.1.0
+
+### Minor Changes
+
+- 7ba9f4a8: Adds darkMode prop to component
+
 ## 5.0.2
 
 ### Patch Changes
