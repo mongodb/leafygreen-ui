@@ -22,7 +22,7 @@ interface AccessibleFunctionParams {
 
 type AccessibleFunctionReturnType =
   | AccessibleFunctionParams
-  | { 'aria-hidden': true };
+  | { 'aria-hidden': true; alt: '' };
 
 export function generateAccessibleProps(
   role: 'img' | 'presentation',
@@ -46,7 +46,7 @@ export function generateAccessibleProps(
       };
 
     case 'presentation':
-      return { 'aria-hidden': true };
+      return { 'aria-hidden': true, alt: '' };
   }
 }
 

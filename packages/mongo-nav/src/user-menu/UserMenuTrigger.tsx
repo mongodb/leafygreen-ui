@@ -120,6 +120,7 @@ const UserMenuTrigger = React.forwardRef<HTMLDivElement, UserMenuTriggerProps>(
           <button
             {...rest}
             {...buttonDataProp.prop}
+            aria-expanded={open}
             ref={buttonRef}
             className={cx(baseButtonStyles, {
               [openBaseButtonStyle]: open,
