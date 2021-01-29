@@ -20,7 +20,6 @@ import {
 const rootPopoverStyle = css`
   position: absolute;
   transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
-  transform: translate3d(0, 0, 0) scale(1);
   opacity: 0;
 `;
 
