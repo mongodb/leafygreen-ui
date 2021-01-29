@@ -1,5 +1,13 @@
 # @leafygreen-ui/mongo-nav
 
+## 5.1.2
+
+### Patch Changes
+
+- b5d1edde: Adds expand/collapse states to buttons across component
+- Updated dependencies [bf8b83e1]
+  - @leafygreen-ui/icon@8.0.1
+
 ## 5.1.1
 
 ### Patch Changes

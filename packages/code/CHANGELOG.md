@@ -1,5 +1,13 @@
 # @leafygreen-ui/code
 
+## 8.0.2
+
+### Patch Changes
+
+- a85c6d8d: Prevent default behavior when copy button is clicked to prevent accidental form submissions.
+- Updated dependencies [bf8b83e1]
+  - @leafygreen-ui/icon@8.0.1
+
 ## 8.0.1
 
 ### Patch Changes
