@@ -462,6 +462,7 @@ ProjectNavProps) {
             disabled={!current}
             data-testid="project-nav-project-menu"
             onClick={onElementClick(ProjectNavProjectDropdown)}
+            aria-expanded={open}
           >
             <EllipsisIcon className={menuIconStyle} />
           </IconButton>
