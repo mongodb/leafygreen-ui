@@ -2,16 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 6ef96f55680c94b119e4aa4a17f72633
+ * @checksum 8486f07d17607e81637b3ea7cdd67e63
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
-export interface VerticalEllipsisProps extends LGGlyph.ComponentProps {}
+export interface FavoriteProps extends LGGlyph.ComponentProps {}
 
-const VerticalEllipsis = ({
+const Favorite = ({
   className,
   size = 16,
   title,
@@ -20,14 +20,14 @@ const VerticalEllipsis = ({
   fill,
   role = 'img',
   ...props
-}: VerticalEllipsisProps) => {
+}: FavoriteProps) => {
   const fillStyle = css`
     color: ${fill};
   `;
   const noFlexShrink = css`
     flex-shrink: 0;
   `;
-  const accessibleProps = generateAccessibleProps(role, 'VerticalEllipsis', {
+  const accessibleProps = generateAccessibleProps(role, 'Favorite', {
     title,
     ['aria-label']: ariaLabel,
     ['aria-labelledby']: ariaLabelledby,
@@ -49,20 +49,18 @@ const VerticalEllipsis = ({
       viewBox="0 0 16 16"
     >
       <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M9.5 2.75C9.5 3.7165 8.7165 4.5 7.75 4.5C6.7835 4.5 6 3.7165 6 2.75C6 1.7835 6.7835 1 7.75 1C8.7165 1 9.5 1.7835 9.5 2.75ZM9.5 7.75C9.5 8.7165 8.7165 9.5 7.75 9.5C6.7835 9.5 6 8.7165 6 7.75C6 6.7835 6.7835 6 7.75 6C8.7165 6 9.5 6.7835 9.5 7.75ZM7.75 14.5C8.7165 14.5 9.5 13.7165 9.5 12.75C9.5 11.7835 8.7165 11 7.75 11C6.7835 11 6 11.7835 6 12.75C6 13.7165 6.7835 14.5 7.75 14.5Z"
+        d="M7.53834 1.10997C7.70914 0.699319 8.29086 0.699318 8.46166 1.10996L9.99874 4.80556C10.0707 4.97868 10.2336 5.09696 10.4204 5.11194L14.4102 5.4318C14.8535 5.46734 15.0332 6.02059 14.6955 6.30993L11.6557 8.91378C11.5133 9.03576 11.4512 9.22715 11.4947 9.40952L12.4234 13.3028C12.5265 13.7354 12.0559 14.0773 11.6764 13.8455L8.26063 11.7592C8.10062 11.6615 7.89938 11.6615 7.73937 11.7592L4.32363 13.8455C3.94408 14.0773 3.47345 13.7354 3.57665 13.3028L4.50534 9.40952C4.54884 9.22715 4.48665 9.03576 4.34426 8.91378L1.30453 6.30993C0.966758 6.02059 1.14652 5.46734 1.58985 5.4318L5.57955 5.11194C5.76645 5.09696 5.92925 4.97868 6.00126 4.80556L7.53834 1.10997Z"
         fill={'currentColor'}
       />
     </svg>
   );
 };
 
-VerticalEllipsis.displayName = 'VerticalEllipsis';
-VerticalEllipsis.isGlyph = true;
-VerticalEllipsis.propTypes = {
+Favorite.displayName = 'Favorite';
+Favorite.isGlyph = true;
+Favorite.propTypes = {
   fill: PropTypes.string,
   size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   className: PropTypes.string,
 };
-export default VerticalEllipsis;
+export default Favorite;

@@ -59,9 +59,10 @@ const arrowRightIconHover = css`
 `;
 
 const openInNewTabStyles = css`
-  margin-bottom: 4px;
-  margin-left: -1px;
-  margin-right: -2px;
+  position: relative;
+  bottom: 4px;
+  left: -1px;
+  height: 12px;
 `;
 
 const ArrowAppearance = {

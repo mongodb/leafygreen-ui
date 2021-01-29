@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 3ce4224eac112f9d61902bbe0b0919ab
+ * @checksum e46cc460fcabebf6d079ed45816bb161
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -48,20 +48,12 @@ const ChevronDown = ({
       {...props}
       viewBox="0 0 16 16"
     >
-      <g
-        id="ChevronDown-Copy"
-        stroke="none"
-        strokeWidth={1}
-        fill="none"
+      <path
         fillRule="evenodd"
-      >
-        <path
-          d="M5.51396103,1.86396103 L12.513961,1.86396103 L12.513961,3.86396103 L5.51396103,3.86396103 L5.51396103,10.863961 L3.51396103,10.863961 L3.51396103,1.86396103 L5.51396103,1.86396103 Z"
-          id="Combined-Shape"
-          fill={'currentColor'}
-          transform="translate(8.013961, 6.363961) rotate(225.000000) translate(-8.013961, -6.363961) "
-        />
-      </g>
+        clipRule="evenodd"
+        d="M12.7524 5.24756C12.4169 4.912 11.8709 4.91841 11.5433 5.26174L8.11896 8.8506L4.42866 5.32948C4.09653 5.01257 3.57216 5.01872 3.24755 5.34333C2.91199 5.67889 2.9184 6.22488 3.26173 6.55248L7.43994 10.5392C7.49875 10.5953 7.56358 10.6412 7.63225 10.6771C7.96997 10.9547 8.47143 10.9299 8.77962 10.6069L12.7663 6.42867C13.0832 6.09654 13.077 5.57217 12.7524 5.24756Z"
+        fill={'currentColor'}
+      />
     </svg>
   );
 };
