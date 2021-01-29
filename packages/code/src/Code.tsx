@@ -292,7 +292,9 @@ function Code({
     </Syntax>
   );
 
-  function handleClick() {
+  function handleClick(e: React.MouseEvent) {
+    e.preventDefault()
+
     if (onCopy) {
       onCopy();
     }
