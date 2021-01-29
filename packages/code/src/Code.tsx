@@ -293,7 +293,7 @@ function Code({
   );
 
   function handleClick(e: React.MouseEvent) {
-    e.preventDefault()
+    e.preventDefault();
 
     if (onCopy) {
       onCopy();
