@@ -39,6 +39,7 @@ describe('packages/mongo-nav/user-menu', () => {
     const { getByTestId } = renderUserMenu();
     const trigger = getByTestId('user-menu-trigger');
     expect(trigger).toBeInTheDocument();
+    expect(trigger.getAttribute('aria-expanded')).toBe('false');
   });
 
   test('when "activePlatform" is set to "cloud", renders Cloud MenuItems', () => {
@@ -65,6 +66,8 @@ describe('packages/mongo-nav/user-menu', () => {
     });
     const trigger = getByTestId('user-menu-trigger');
     fireEvent.click(trigger);
+
+    expect(trigger.getAttribute('aria-expanded')).toBe('true');
 
     const universitySubMenu = getByText('University').closest('li');
     const universityTrigger = getByLabelText(
