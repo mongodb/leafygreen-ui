@@ -1,5 +1,11 @@
 # @leafygreen-ui/popover
 
+## 7.1.2
+
+### Patch Changes
+
+- dca5605b: Fixes bug where the border of the popover could be clipped
+
 ## 7.1.1
 
 ### Patch Changes
