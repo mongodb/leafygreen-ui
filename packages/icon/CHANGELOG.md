@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 8.0.1
+
+### Patch Changes
+
+- bf8b83e1: Sets `alt` attribute to `''` when `role="presentation"`
+
 ## 8.0.0
 
 ### Major Changes
