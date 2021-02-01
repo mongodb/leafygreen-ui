@@ -1,6 +1,5 @@
 ---
 '@leafygreen-ui/icon': minor
-'@leafygreen-ui/typography': patch
 ---
 
 Adds a number of brand-consistent glyphs, and updates some existing glyphs.
