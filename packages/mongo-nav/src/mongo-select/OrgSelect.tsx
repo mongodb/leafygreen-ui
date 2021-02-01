@@ -354,6 +354,7 @@ function OrgSelect({
             {...triggerDataProp.prop}
             ref={setButtonElement}
             aria-disabled={loading}
+            aria-expanded={open}
             data-testid="org-trigger"
             disabled={loading}
             onClick={onElementClick(

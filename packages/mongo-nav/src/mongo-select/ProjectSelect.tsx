@@ -264,6 +264,7 @@ function ProjectSelect({
           )}
           disabled={loading}
           aria-disabled={loading}
+          aria-expanded={open}
         >
           <FolderIcon
             className={cx(iconColorStyle, { [iconLoadingStyle]: loading })}

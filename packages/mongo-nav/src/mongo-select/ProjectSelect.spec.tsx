@@ -47,9 +47,21 @@ describe('packages/mongo-select/ProjectSelect', () => {
         ).toEqual('Demo Project 1');
       });
 
+      it('sets the "aria-expanded" attribute is set to false', () => {
+        expect(
+          getByTestId('project-select-trigger').getAttribute('aria-expanded'),
+        ).toBe('false');
+      });
+
       describe('when clicking the current project trigger', () => {
         beforeEach(() => {
           fireEvent.click(getByTestId('project-select-trigger'));
+        });
+
+        it('sets the "aria-expanded" attribute is set to false', () => {
+          expect(
+            getByTestId('project-select-trigger').getAttribute('aria-expanded'),
+          ).toBe('true');
         });
 
         it('displays a placeholder without an existing value', () => {
