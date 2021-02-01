@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 04f1be03b387a3c30edb1ee095457f2d
+ * @checksum 4ed07b15de60dfcd76dd3fb8d6f1b8ca
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -58,7 +58,7 @@ const Edit = ({
       </g>
       <defs>
         <clipPath id="clip0">
-          <rect width={16} height={16} fill="white" />
+          <rect width={16} height={16} fill={'currentColor'} />
         </clipPath>
       </defs>
     </svg>

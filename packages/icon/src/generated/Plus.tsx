@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 0dfa1beaa28a21eb5601d8225658deb5
+ * @checksum 7ab4e362f3601a5318d6d27418e5d508
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -51,7 +51,7 @@ const Plus = ({
       <path
         fillRule="evenodd"
         clipRule="evenodd"
-        d="M8 4C7.44772 4 7 4.44772 7 5V7H5C4.44772 7 4 7.44772 4 8C4 8.55228 4.44772 9 5 9H7V11C7 11.5523 7.44772 12 8 12C8.55228 12 9 11.5523 9 11V9H11C11.5523 9 12 8.55228 12 8C12 7.44771 11.5523 7 11 7H9V5C9 4.44772 8.55228 4 8 4Z"
+        d="M7.5 2C6.94772 2 6.5 2.44772 6.5 3V6.5H3C2.44772 6.5 2 6.94772 2 7.5V8.5C2 9.05228 2.44772 9.5 3 9.5H6.5V13C6.5 13.5523 6.94772 14 7.5 14H8.5C9.05228 14 9.5 13.5523 9.5 13V9.5H13C13.5523 9.5 14 9.05228 14 8.5V7.5C14 6.94771 13.5523 6.5 13 6.5H9.5V3C9.5 2.44772 9.05228 2 8.5 2H7.5Z"
         fill={'currentColor'}
       />
     </svg>

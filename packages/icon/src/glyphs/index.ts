@@ -3,31 +3,34 @@ import { LGGlyph } from '../types';
 
 // Glyphs
 import ActivityFeed from './ActivityFeed.svg';
+import AddFile from './AddFile.svg';
 import ArrowDown from './ArrowDown.svg';
 import ArrowLeft from './ArrowLeft.svg';
 import ArrowRight from './ArrowRight.svg';
 import ArrowUp from './ArrowUp.svg';
-import Copy from './Copy.svg';
 import Beaker from './Beaker.svg';
 import Bell from './Bell.svg';
-import Bulb from './Bulb.svg';
 import Building from './Building.svg';
-import CaretUp from './CaretUp.svg';
+import Bulb from './Bulb.svg';
+import Calendar from './Calendar.svg';
 import CaretDown from './CaretDown.svg';
-import CaretRight from './CaretRight.svg';
 import CaretLeft from './CaretLeft.svg';
+import CaretRight from './CaretRight.svg';
+import CaretUp from './CaretUp.svg';
+import Charts from './Charts.svg';
 import Checkmark from './Checkmark.svg';
 import CheckmarkWithCircle from './CheckmarkWithCircle.svg';
 import ChevronUp from './ChevronUp.svg';
 import ChevronDown from './ChevronDown.svg';
 import ChevronRight from './ChevronRight.svg';
 import ChevronLeft from './ChevronLeft.svg';
-import Charts from './Charts.svg';
 import Cloud from './Cloud.svg';
+import Copy from './Copy.svg';
 import CreditCard from './CreditCard.svg';
 import Download from './Download.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
+import Favorite from './Favorite.svg';
 import Folder from './Folder.svg';
 import GovernmentBuilding from './GovernmentBuilding.svg';
 import ImportantWithCircle from './ImportantWithCircle.svg';
@@ -56,38 +59,44 @@ import Trash from './Trash.svg';
 import University from './University.svg';
 import Unsorted from './Unsorted.svg';
 import UpDownCarets from './UpDownCarets.svg';
+import Upload from './Upload.svg';
 import VerticalEllipsis from './VerticalEllipsis.svg';
+import Visibility from './Visibility.svg';
+import VisibilityOff from './VisibilityOff.svg';
 import Warning from './Warning.svg';
 import X from './X.svg';
 import XWithCircle from './XWithCircle.svg';
 
 const glyphs = {
   ActivityFeed,
+  AddFile,
   ArrowDown,
   ArrowLeft,
   ArrowRight,
   ArrowUp,
-  Copy,
   Beaker,
   Bell,
   Building,
   Bulb,
-  CaretUp,
+  Calendar,
   CaretDown,
-  CaretRight,
   CaretLeft,
+  CaretRight,
+  CaretUp,
+  Charts,
   Checkmark,
   CheckmarkWithCircle,
   ChevronUp,
   ChevronDown,
   ChevronRight,
   ChevronLeft,
-  Charts,
   Cloud,
+  Copy,
   CreditCard,
   Download,
   Edit,
   Ellipsis,
+  Favorite,
   Folder,
   GovernmentBuilding,
   ImportantWithCircle,
@@ -116,7 +125,10 @@ const glyphs = {
   University,
   Unsorted,
   UpDownCarets,
+  Upload,
   VerticalEllipsis,
+  Visibility,
+  VisibilityOff,
   Warning,
   X,
   XWithCircle,
