@@ -1,5 +1,15 @@
 # @leafygreen-ui/mongo-nav
 
+## 5.1.3
+
+### Patch Changes
+
+- Updated dependencies [f805b772]
+- Updated dependencies [f805b772]
+  - @leafygreen-ui/icon@9.0.0
+  - @leafygreen-ui/typography@7.3.2
+  - @leafygreen-ui/tooltip@6.1.4
+
 ## 5.1.2
 
 ### Patch Changes
