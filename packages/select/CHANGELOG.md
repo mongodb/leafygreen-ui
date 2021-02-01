@@ -1,5 +1,15 @@
 # @leafygreen-ui/select
 
+## 1.1.2
+
+### Patch Changes
+
+- bf8b83e1: Sets aria `role="presentation"` on Caret in the component's menu button
+- Updated dependencies [bf8b83e1]
+- Updated dependencies [dca5605b]
+  - @leafygreen-ui/icon@8.0.1
+  - @leafygreen-ui/popover@7.1.2
+
 ## 1.1.1
 
 ### Patch Changes

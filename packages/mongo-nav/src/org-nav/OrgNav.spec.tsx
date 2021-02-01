@@ -296,6 +296,32 @@ describe('packages/mongo-nav/src/org-nav', () => {
   });
 
   describe('the Access Manager dropdown displays correctly', () => {
+    describe('and the accessibility props are properly set', () => {
+      beforeEach(() =>
+        renderComponent({
+          showProjectNav: true,
+          currentProjectName: 'Test Project',
+          currentProjectId: 'test-project-id',
+        }),
+      );
+
+      test('when closed, "aria-expanded" is set to false', () => {
+        expect(
+          getByTestId('org-nav-access-manager-dropdown').getAttribute(
+            'aria-expanded',
+          ),
+        ).toBe('false');
+      });
+
+      test('when open, "aria-expanded" is set to true', () => {
+        fireEvent.click(getByTestId('org-nav-access-manager-dropdown'));
+        expect(
+          getByTestId('org-nav-access-manager-dropdown').getAttribute(
+            'aria-expanded',
+          ),
+        ).toBe('true');
+      });
+    });
     describe('when onPrem is true', () => {
       test('and currentProject exists, the Project Access Manager link is not disabled and project name is displayed', () => {
         renderComponent({

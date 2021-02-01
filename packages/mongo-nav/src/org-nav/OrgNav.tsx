@@ -438,6 +438,7 @@ function OrgNav({
                 () => setAccessManagerOpen(curr => !curr),
               )}
               isButton={true}
+              aria-expanded={accessManagerOpen}
             >
               Access Manager
               <DropdownMenuIcon open={accessManagerOpen} />

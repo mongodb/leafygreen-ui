@@ -62,15 +62,14 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
       ><div class="leafygreen-ui-ogsjyj">
         <span class="leafygreen-ui-1ks3bq2">Cat</span
         ><svg
-          class="leafygreen-ui-msi0rg"
+          class="leafygreen-ui-1jr2j1f"
           height="16"
           width="16"
+          role="presentation"
+          aria-hidden="true"
+          alt=""
           viewBox="0 0 16 16"
-          role="img"
-          aria-labelledby="CaretDown-7"
         >
-          <title id="CaretDown-7">Caret Down Icon</title>
-          <desc>Created with Sketch.</desc>
           <g
             id="CaretDown-Copy"
             stroke="none"
