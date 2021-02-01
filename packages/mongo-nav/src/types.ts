@@ -101,6 +101,7 @@ const Platform = {
   Cloud: 'cloud',
   Account: 'account',
   DevHub: 'devHub',
+  Docs: 'docs',
 };
 
 type Platform = typeof Platform[keyof typeof Platform];

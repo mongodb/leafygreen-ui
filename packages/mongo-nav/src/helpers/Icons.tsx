@@ -71,8 +71,8 @@ export function CloudManagerIcon({
           fill: ${size <= 10
             ? '#00804b'
             : active
-            ? 'url(#cloud-manager-linear-gradient)'
-            : 'currentColor'};
+              ? 'url(#cloud-manager-linear-gradient)'
+              : 'currentColor'};
         `}
         d="M5.74,17.39h.73a2.38,2.38,0,0,0,0-4.75H.77A9,9,0,0,0,5.74,17.39Z"
       />
@@ -81,8 +81,8 @@ export function CloudManagerIcon({
           fill: ${size <= 10
             ? '#03aa4f'
             : active
-            ? 'url(#cloud-manager-linear-gradient-2)'
-            : 'currentColor'};
+              ? 'url(#cloud-manager-linear-gradient-2)'
+              : 'currentColor'};
         `}
         d="M2.84,9a3.6,3.6,0,0,1,.9-2.38H.32a9,9,0,0,0,0,4.76H3.73A3.64,3.64,0,0,1,2.84,9Z"
       />
@@ -91,8 +91,8 @@ export function CloudManagerIcon({
           fill: ${size <= 10
             ? '#00804b'
             : active
-            ? 'url(#cloud-manager-linear-gradient-3)'
-            : 'currentColor'};
+              ? 'url(#cloud-manager-linear-gradient-3)'
+              : 'currentColor'};
         `}
         d="M10.1,15a3.63,3.63,0,0,1-1.55,3H9a9,9,0,0,0,8.23-5.36h-8A3.58,3.58,0,0,1,10.1,15Z"
       />
@@ -107,8 +107,8 @@ export function CloudManagerIcon({
           fill: ${size <= 10
             ? '#03aa4f'
             : active
-            ? 'url(#cloud-manager-linear-gradient-4)'
-            : 'currentColor'};
+              ? 'url(#cloud-manager-linear-gradient-4)'
+              : 'currentColor'};
         `}
         d="M4.1,9a2.39,2.39,0,0,0,2.38,2.38h11.2a9,9,0,0,0,0-4.76H6.48A2.39,2.39,0,0,0,4.1,9Z"
       />
@@ -157,8 +157,8 @@ export function AtlasIcon({
           fill: ${size <= 10
             ? '#03aa4f'
             : active
-            ? 'url(#atlas-path-0001)'
-            : 'currentColor'};
+              ? 'url(#atlas-path-0001)'
+              : 'currentColor'};
         `}
         d="M12,11c2-1.4,4.2-1.7,6-1.7c0-0.1,0-0.3,0-0.4c0-1.7-0.5-3.3-1.3-4.7c-1.3,0.1-2.6,0.5-4,1.4
 		C11,6.8,10.1,8.4,9.6,9.5v3.8C10.2,12.6,11,11.7,12,11z"
@@ -183,8 +183,8 @@ export function AtlasIcon({
           fill: ${size <= 10
             ? '#03aa4f'
             : active
-            ? 'url(#atlas-path-0002)'
-            : 'currentColor'};
+              ? 'url(#atlas-path-0002)'
+              : 'currentColor'};
         `}
         d="M6,11c1,0.7,1.8,1.5,2.4,2.3V9.5C7.9,8.4,7,6.8,5.3,5.7C4,4.8,2.6,4.4,1.3,4.3
 		C0.5,5.6,0,7.2,0,8.9c0,0.1,0,0.3,0,0.4C1.8,9.3,4,9.6,6,11z"
@@ -209,8 +209,8 @@ export function AtlasIcon({
           fill: ${size <= 10
             ? '#00804b'
             : active
-            ? 'url(#atlas-path-0003)'
-            : 'currentColor'};
+              ? 'url(#atlas-path-0003)'
+              : 'currentColor'};
         `}
         d="M12.7,12.1c-1.7,1.1-2.6,2.7-3.1,3.8V18c4.1-0.3,7.5-3.4,8.2-7.3C16.3,10.6,14.4,10.9,12.7,12.1z
 		"
@@ -235,8 +235,8 @@ export function AtlasIcon({
           fill: ${size <= 10
             ? '#00804b'
             : active
-            ? 'url(#atlas-path-4)'
-            : 'currentColor'};
+              ? 'url(#atlas-path-4)'
+              : 'currentColor'};
         `}
         d="M8.4,15.9c-0.5-1.1-1.4-2.7-3.1-3.8c-1.7-1.2-3.6-1.5-5.1-1.4c0.8,4,4.1,7,8.2,7.3V15.9z"
       />
@@ -465,6 +465,20 @@ export function MegaphoneIcon(props: HTMLElementProps<'svg'>) {
   );
 }
 
+export function DocsIcon(props: HTMLElementProps<'svg'>) {
+  return (
+    <svg width="24px" height="28px" viewBox="0 0 16 16" version="1.1" {...props}>
+      <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round">
+        <g id="Group-2" transform="translate(1.020000, 0.986816)" stroke="currentColor" strokeWidth="0.92">
+          <path d="M6.59,2.08318384 C6.59,2.08318384 7.19,0.203183838 12.32,0.00318383811 C12.5312514,-0.0160788621 12.7410919,0.0526619947 12.9,0.193183838 C13.0613972,0.333057648 13.1618535,0.530382407 13.18,0.743183838 L13.18,8.48318384 C13.1480201,8.90771777 12.7853823,9.23055387 12.36,9.21318384 C7.2,9.40318384 6.59,11.2931838 6.59,11.2931838 L6.59,2.08318384 C6.59,2.08318384 5.99,0.203183838 0.87,0.00318383811 C0.65592093,-0.0142117819 0.44369748,0.0541313631 0.28,0.193183838 C0.118602778,0.333057648 0.0181465371,0.530382407 0,0.743183838 L0,8.48318384 C0.037058099,8.90925889 0.402680625,9.23083051 0.83,9.21318384 C5.99,9.40318384 6.59,11.2931838 6.59,11.2931838" id="Path"></path>
+          <path d="M9.95,2.31318384 C9.95,2.31318384 13.16,5.72318384 9.95,7.07318384 C6.73,5.72318384 9.95,2.31318384 9.95,2.31318384 Z" id="Path"></path>
+          <line x1="9.95" y1="7.07318384" x2="9.95" y2="7.67318384" id="Path"></line>
+        </g>
+      </g>
+    </svg>
+  )
+}
+
 export function DevHubIcon(props: HTMLElementProps<'svg'>) {
   return (
     <svg
@@ -484,7 +498,7 @@ export function DevHubIcon(props: HTMLElementProps<'svg'>) {
         <g
           id="03"
           transform="translate(-1607.000000, -498.000000)"
-          stroke="#89989B"
+          stroke="currentColor"
         >
           <g id="Group-2" transform="translate(1586.000000, 177.000000)">
             <g id="Nav" transform="translate(0.000000, 192.000000)">

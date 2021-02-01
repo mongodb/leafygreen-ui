@@ -147,6 +147,11 @@ describe('packages/mongo-nav/user-menu', () => {
       expect(cloud.href).toBe('https://university.mongodb.com/');
     });
 
+    test('docs SubMenu links to docs.mongodb.com', () => {
+      const cloud = screen.getByText('Documentation').closest('a');
+      expect(cloud.href).toBe('https://docs.mongodb.com/');
+    });
+
     test('devhub SubMenu links to developer.mongodb.com', () => {
       const cloud = screen.getByText('Developer Hub').closest('a');
       expect(cloud.href).toBe('https://developer.mongodb.com/');

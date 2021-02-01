@@ -35,6 +35,7 @@ import {
   UniversityIcon,
   MegaphoneIcon,
   DevHubIcon,
+  DocsIcon,
 } from '../helpers/Icons';
 
 const subMenuContainer = createDataProp('sub-menu-container');
@@ -150,7 +151,7 @@ const descriptionStyle = css`
 
 interface DescriptionProps {
   isActive: boolean;
-  product: 'cloud' | 'university' | 'support' | 'developer';
+  product: 'cloud' | 'university' | 'support' | 'developer' | 'docs';
   isGovernment?: boolean;
 }
 
@@ -252,7 +253,7 @@ function UserMenu({
   onLogout: onLogoutProp,
   urls: urlsProp,
   hosts: hostsProp,
-  onProductChange = () => {},
+  onProductChange = () => { },
   environment = Environment.Commercial,
 }: UserMenuProps) {
   const hosts = defaultsDeep(
@@ -305,6 +306,7 @@ function UserMenu({
   const isSupport = activePlatform === Platform.Support;
   const isUniversity = activePlatform === Platform.University;
   const isGovernment = environment === Environment.Government;
+  const isDocs = activePlatform === Platform.Docs;
   const isDevHub = activePlatform === Platform.DevHub;
 
   const sharedProps = {
@@ -451,22 +453,22 @@ function UserMenu({
             )}
           </SubMenu>
         ) : (
-          <MenuItem
-            {...menuItemContainer.prop}
-            href={hosts.cloud}
-            size="large"
-            glyph={<CloudIcon {...ariaHiddenProps} />}
-            description={
-              <Description
-                isActive={false}
-                product="cloud"
-                isGovernment={isGovernment}
-              />
-            }
-          >
-            {isGovernment ? 'Cloud for Government' : 'Cloud'}
-          </MenuItem>
-        )}
+            <MenuItem
+              {...menuItemContainer.prop}
+              href={hosts.cloud}
+              size="large"
+              glyph={<CloudIcon {...ariaHiddenProps} />}
+              description={
+                <Description
+                  isActive={false}
+                  product="cloud"
+                  isGovernment={isGovernment}
+                />
+              }
+            >
+              {isGovernment ? 'Cloud for Government' : 'Cloud'}
+            </MenuItem>
+          )}
 
         <SubMenu
           {...subMenuContainer.prop}
@@ -491,6 +493,23 @@ function UserMenu({
             University Preferences
           </MenuItem>
         </SubMenu>
+
+        <MenuItem
+          {...subMenuContainer.prop}
+          {...sharedProps}
+          size="large"
+          active={isDocs}
+          disabled={!account}
+          href="https://docs.mongodb.com"
+          title="Documentation"
+          glyph={<DocsIcon {...ariaHiddenProps} />}
+          className={cx(subMenuContainerStyle, {
+            [subMenuActiveContainerStyle]: isDocs,
+          }, css`background-color: ${uiColors.gray.light3}; border-top: 1px solid ${uiColors.gray.light2}`)}
+          description={<Description isActive={isDocs} product="docs" />}
+        >
+          Documentation
+        </MenuItem>
 
         <SubMenu
           {...subMenuContainer.prop}
