@@ -503,9 +503,16 @@ function UserMenu({
           href="https://docs.mongodb.com"
           title="Documentation"
           glyph={<DocsIcon {...ariaHiddenProps} />}
-          className={cx(subMenuContainerStyle, {
-            [subMenuActiveContainerStyle]: isDocs,
-          }, css`background-color: ${uiColors.gray.light3}; border-top: 1px solid ${uiColors.gray.light2}`)}
+          className={cx(
+            subMenuContainerStyle,
+            {
+              [subMenuActiveContainerStyle]: isDocs,
+            },
+            css`
+              background-color: ${uiColors.gray.light3};
+              border-top: 1px solid ${uiColors.gray.light2};
+            `,
+          )}
           description={<Description isActive={isDocs} product="docs" />}
         >
           Documentation
@@ -589,6 +596,7 @@ UserMenu.propTypes = {
     'support',
     'university',
     'devHub',
+    'docs'
   ]),
   onLogout: PropTypes.func,
   onProductChange: PropTypes.func,
