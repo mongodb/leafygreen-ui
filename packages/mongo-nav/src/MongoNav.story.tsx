@@ -42,7 +42,7 @@ storiesOf('MongoNav', module).add('Default', () => {
           activePlatform={select(
             'activePlatform',
             Object.values(Platform),
-            Platform.University,
+            Platform.DevHub,
           )}
           activeProduct={select(
             'activeProduct',
