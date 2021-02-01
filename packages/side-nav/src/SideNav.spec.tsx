@@ -2,6 +2,7 @@ import React from 'react';
 import {
   fireEvent,
   getByLabelText,
+  queryByLabelText,
   render,
   waitFor,
 } from '@testing-library/react';
@@ -143,7 +144,7 @@ describe('packages/collapsible-side-nav', () => {
       test.each(Object.keys(actions) as Array<keyof typeof actions>)(
         'collapses and expands when %s',
         action => {
-          const { getByText, getByLabelText, queryByLabelText } = render(
+          const { container, getByLabelText, queryByLabelText } = render(
             <SideNav>
               <SideNavItem>Item</SideNavItem>
               <SideNavItem glyph={<CloudIcon />}>
@@ -191,8 +192,11 @@ describe('packages/collapsible-side-nav', () => {
               groupWithGlyphItem,
             ] = queryAllItems();
 
-            const groupHeader = getByText('Group');
-            const groupWithGlyphHeader = getByText('Group with Glyph');
+            const groupHeader = getGroupHeaderByLabelText(container, 'Group');
+            const groupWithGlyphHeader = getGroupHeaderByLabelText(
+              container,
+              'Group with Glyph',
+            );
 
             [
               item,
@@ -278,11 +282,11 @@ describe('packages/collapsible-side-nav', () => {
     describe('when collapsed', () => {
       test('hovering', async () => {
         const {
+          container,
           getByText,
           queryByText,
           getByLabelText,
           queryByLabelText,
-          container,
         } = render(
           <SideNav initialCollapsed>
             <SideNavItem>One</SideNavItem>
@@ -294,7 +298,7 @@ describe('packages/collapsible-side-nav', () => {
 
         function expectCollapsed() {
           const items = ['One', 'Two'].map(label => queryByText(label));
-          const header = queryByText('group');
+          const header = queryGroupHeaderByLabelText(container, 'group');
           items.forEach(item => expect(item).not.toBeVisible());
           expect(header).not.toBeInTheDocument();
 
@@ -313,7 +317,7 @@ describe('packages/collapsible-side-nav', () => {
 
             // Items are now fully visible
             const items = ['One', 'Two'].map(label => getByText(label));
-            const header = getByText('group');
+            const header = queryGroupHeaderByLabelText(container, 'group');
             items.forEach(item => expect(item).toBeVisible());
             expect(header).toBeVisible();
           }
@@ -450,3 +454,15 @@ describe('packages/collapsible-side-nav', () => {
     /* eslint-enable jest/expect-expect */
   });
 });
+
+function queryGroupHeaderByLabelText(container: HTMLElement, label: string) {
+  const group = queryByLabelText(container, label);
+  const labelId = group?.getAttribute('aria-labelledby');
+  return document.getElementById(labelId);
+}
+
+function getGroupHeaderByLabelText(container: HTMLElement, label: string) {
+  const group = getByLabelText(container, label);
+  const labelId = group.getAttribute('aria-labelledby');
+  return document.getElementById(labelId);
+}

@@ -60,7 +60,6 @@ const sideNavGroupHeaderStyle = css`
   justify-content: space-between;
   padding: 4px 16px;
   text-transform: uppercase;
-  white-space: nowrap;
   font-size: 11px;
   font-weight: bold;
   line-height: 16px;
@@ -104,11 +103,17 @@ const glyphStyle = css`
 
 const chevronStyle = css`
   transition: all ${transitionDurationMilliseconds}ms ease-in-out;
-  margin-right: 6px;
+  margin: 0 6px;
 `;
 
 const chevronCollapsedStyle = css`
   transform: rotate(-90deg);
+`;
+
+const sideNavGroupHeaderTextStyle = css`
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 const sideNavGroupChildrenCollapsibleStyle = css`
@@ -279,10 +284,14 @@ const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
           <div
             className={css`
               display: flex;
+              // Leave space for chevron and its margins = 16px + 2 * 6px
+              width: calc(100% - 28px);
             `}
           >
             {hasGlyph && <div className={glyphStyle}>{glyph}</div>}
-            {!navCollapsed && label}
+            <div className={sideNavGroupHeaderTextStyle}>
+              {!navCollapsed && label}
+            </div>
           </div>
           {canRenderAsCollapsible && (
             <ChevronDownIcon
