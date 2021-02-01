@@ -49,9 +49,21 @@ describe('packages/mongo-select/OrgSelect', () => {
         expect(orgTriggerText.textContent).toEqual('Demo Organization');
       });
 
+      it('sets "aria-expanded" to false when organization dropdown is closed', () => {
+        expect(getByTestId('org-trigger').getAttribute('aria-expanded')).toBe(
+          'false',
+        );
+      });
+
       describe('when clicking the current organization trigger', () => {
         beforeEach(() => {
           fireEvent.click(getByTestId('org-trigger'));
+        });
+
+        it('sets "aria-expanded" to true', () => {
+          expect(getByTestId('org-trigger').getAttribute('aria-expanded')).toBe(
+            'true',
+          );
         });
 
         it('displays a search input with a placeholder', () => {

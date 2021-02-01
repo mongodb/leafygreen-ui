@@ -320,4 +320,21 @@ describe('packages/mongo-nav/src/project-nav', () => {
 
     testForProjectStatusBadge(true);
   });
+
+  describe('accessibility props are properly set on menu', () => {
+    beforeEach(renderComponent);
+
+    test('"aria-expanded" is set to false when menu is closed', () => {
+      expect(
+        getByTestId('project-nav-project-menu').getAttribute('aria-expanded'),
+      ).toBe('false');
+    });
+
+    test('"aria-expanded" is set to true when menu is open', () => {
+      fireEvent.click(getByTestId('project-nav-project-menu'));
+      expect(
+        getByTestId('project-nav-project-menu').getAttribute('aria-expanded'),
+      ).toBe('true');
+    });
+  });
 });
