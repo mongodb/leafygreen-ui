@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 37c1fa94dc0609a8d3c0e070261bb94a
+ * @checksum b64df88b609f4eed4e34b556dc387808
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -48,18 +48,12 @@ const PlusWithCircle = ({
       {...props}
       viewBox="0 0 16 16"
     >
-      <g
-        id="Glyphs-/-Plus-With-Circle"
-        stroke="none"
-        strokeWidth={1}
-        fill="none"
+      <path
         fillRule="evenodd"
-      >
-        <path
-          d="M8,15.5 C3.85786438,15.5 0.5,12.1421356 0.5,8 C0.5,3.85786438 3.85786438,0.5 8,0.5 C12.1421356,0.5 15.5,3.85786438 15.5,8 C15.5,12.1421356 12.1421356,15.5 8,15.5 Z M9,7 L9,4 L7,4 L7,7 L4,7 L4,9 L7,9 L7,12 L9,12 L9,9 L12,9 L12,7 L9,7 Z"
-          fill={'currentColor'}
-        />
-      </g>
+        clipRule="evenodd"
+        d="M8 15C11.866 15 15 11.866 15 8C15 4.13401 11.866 1 8 1C4.13401 1 1 4.13401 1 8C1 11.866 4.13401 15 8 15ZM7 5C7 4.44772 7.44772 4 8 4C8.55229 4 9 4.44772 9 5V7H11C11.5523 7 12 7.44771 12 8C12 8.55228 11.5523 9 11 9H9V11C9 11.5523 8.55229 12 8 12C7.44772 12 7 11.5523 7 11V9H5C4.44772 9 4 8.55229 4 8C4 7.44772 4.44772 7 5 7H7V5Z"
+        fill={'currentColor'}
+      />
     </svg>
   );
 };
