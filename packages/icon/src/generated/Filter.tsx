@@ -2,16 +2,16 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 6ef96f55680c94b119e4aa4a17f72633
+ * @checksum 6706d025fccdb6cd5532ff21c9fe69c5
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
-export interface VerticalEllipsisProps extends LGGlyph.ComponentProps {}
+export interface FilterProps extends LGGlyph.ComponentProps {}
 
-const VerticalEllipsis = ({
+const Filter = ({
   className,
   size = 16,
   title,
@@ -20,14 +20,14 @@ const VerticalEllipsis = ({
   fill,
   role = 'img',
   ...props
-}: VerticalEllipsisProps) => {
+}: FilterProps) => {
   const fillStyle = css`
     color: ${fill};
   `;
   const noFlexShrink = css`
     flex-shrink: 0;
   `;
-  const accessibleProps = generateAccessibleProps(role, 'VerticalEllipsis', {
+  const accessibleProps = generateAccessibleProps(role, 'Filter', {
     title,
     ['aria-label']: ariaLabel,
     ['aria-labelledby']: ariaLabelledby,
@@ -51,18 +51,18 @@ const VerticalEllipsis = ({
       <path
         fillRule="evenodd"
         clipRule="evenodd"
-        d="M9.5 2.75C9.5 3.7165 8.7165 4.5 7.75 4.5C6.7835 4.5 6 3.7165 6 2.75C6 1.7835 6.7835 1 7.75 1C8.7165 1 9.5 1.7835 9.5 2.75ZM9.5 7.75C9.5 8.7165 8.7165 9.5 7.75 9.5C6.7835 9.5 6 8.7165 6 7.75C6 6.7835 6.7835 6 7.75 6C8.7165 6 9.5 6.7835 9.5 7.75ZM7.75 14.5C8.7165 14.5 9.5 13.7165 9.5 12.75C9.5 11.7835 8.7165 11 7.75 11C6.7835 11 6 11.7835 6 12.75C6 13.7165 6.7835 14.5 7.75 14.5Z"
+        d="M6 6.14834L2.19955 2.20776C1.79746 1.79085 2.04373 1 2.57564 1H13.4244C13.9563 1 14.2025 1.79085 13.8005 2.20776L10 6.14834V11.7731C10 11.9173 9.93776 12.0545 9.82925 12.1494L6.82925 14.7744C6.50596 15.0573 6 14.8277 6 14.3981V6.14834Z"
         fill={'currentColor'}
       />
     </svg>
   );
 };
 
-VerticalEllipsis.displayName = 'VerticalEllipsis';
-VerticalEllipsis.isGlyph = true;
-VerticalEllipsis.propTypes = {
+Filter.displayName = 'Filter';
+Filter.isGlyph = true;
+Filter.propTypes = {
   fill: PropTypes.string,
   size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   className: PropTypes.string,
 };
-export default VerticalEllipsis;
+export default Filter;
