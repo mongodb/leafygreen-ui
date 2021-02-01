@@ -71,8 +71,8 @@ export function CloudManagerIcon({
           fill: ${size <= 10
             ? '#00804b'
             : active
-              ? 'url(#cloud-manager-linear-gradient)'
-              : 'currentColor'};
+            ? 'url(#cloud-manager-linear-gradient)'
+            : 'currentColor'};
         `}
         d="M5.74,17.39h.73a2.38,2.38,0,0,0,0-4.75H.77A9,9,0,0,0,5.74,17.39Z"
       />
@@ -81,8 +81,8 @@ export function CloudManagerIcon({
           fill: ${size <= 10
             ? '#03aa4f'
             : active
-              ? 'url(#cloud-manager-linear-gradient-2)'
-              : 'currentColor'};
+            ? 'url(#cloud-manager-linear-gradient-2)'
+            : 'currentColor'};
         `}
         d="M2.84,9a3.6,3.6,0,0,1,.9-2.38H.32a9,9,0,0,0,0,4.76H3.73A3.64,3.64,0,0,1,2.84,9Z"
       />
@@ -91,8 +91,8 @@ export function CloudManagerIcon({
           fill: ${size <= 10
             ? '#00804b'
             : active
-              ? 'url(#cloud-manager-linear-gradient-3)'
-              : 'currentColor'};
+            ? 'url(#cloud-manager-linear-gradient-3)'
+            : 'currentColor'};
         `}
         d="M10.1,15a3.63,3.63,0,0,1-1.55,3H9a9,9,0,0,0,8.23-5.36h-8A3.58,3.58,0,0,1,10.1,15Z"
       />
@@ -107,8 +107,8 @@ export function CloudManagerIcon({
           fill: ${size <= 10
             ? '#03aa4f'
             : active
-              ? 'url(#cloud-manager-linear-gradient-4)'
-              : 'currentColor'};
+            ? 'url(#cloud-manager-linear-gradient-4)'
+            : 'currentColor'};
         `}
         d="M4.1,9a2.39,2.39,0,0,0,2.38,2.38h11.2a9,9,0,0,0,0-4.76H6.48A2.39,2.39,0,0,0,4.1,9Z"
       />
@@ -157,8 +157,8 @@ export function AtlasIcon({
           fill: ${size <= 10
             ? '#03aa4f'
             : active
-              ? 'url(#atlas-path-0001)'
-              : 'currentColor'};
+            ? 'url(#atlas-path-0001)'
+            : 'currentColor'};
         `}
         d="M12,11c2-1.4,4.2-1.7,6-1.7c0-0.1,0-0.3,0-0.4c0-1.7-0.5-3.3-1.3-4.7c-1.3,0.1-2.6,0.5-4,1.4
 		C11,6.8,10.1,8.4,9.6,9.5v3.8C10.2,12.6,11,11.7,12,11z"
@@ -183,8 +183,8 @@ export function AtlasIcon({
           fill: ${size <= 10
             ? '#03aa4f'
             : active
-              ? 'url(#atlas-path-0002)'
-              : 'currentColor'};
+            ? 'url(#atlas-path-0002)'
+            : 'currentColor'};
         `}
         d="M6,11c1,0.7,1.8,1.5,2.4,2.3V9.5C7.9,8.4,7,6.8,5.3,5.7C4,4.8,2.6,4.4,1.3,4.3
 		C0.5,5.6,0,7.2,0,8.9c0,0.1,0,0.3,0,0.4C1.8,9.3,4,9.6,6,11z"
@@ -209,8 +209,8 @@ export function AtlasIcon({
           fill: ${size <= 10
             ? '#00804b'
             : active
-              ? 'url(#atlas-path-0003)'
-              : 'currentColor'};
+            ? 'url(#atlas-path-0003)'
+            : 'currentColor'};
         `}
         d="M12.7,12.1c-1.7,1.1-2.6,2.7-3.1,3.8V18c4.1-0.3,7.5-3.4,8.2-7.3C16.3,10.6,14.4,10.9,12.7,12.1z
 		"
@@ -235,8 +235,8 @@ export function AtlasIcon({
           fill: ${size <= 10
             ? '#00804b'
             : active
-              ? 'url(#atlas-path-4)'
-              : 'currentColor'};
+            ? 'url(#atlas-path-4)'
+            : 'currentColor'};
         `}
         d="M8.4,15.9c-0.5-1.1-1.4-2.7-3.1-3.8c-1.7-1.2-3.6-1.5-5.1-1.4c0.8,4,4.1,7,8.2,7.3V15.9z"
       />
@@ -467,105 +467,13 @@ export function MegaphoneIcon(props: HTMLElementProps<'svg'>) {
 
 export function DevHubIcon(props: HTMLElementProps<'svg'>) {
   return (
-    <svg width="24px" height="24px" viewBox="0 0 24 24" {...props}>
-      <defs>
-        <path
-          d="M0,3.00441575 C0,1.34512275 1.35279973,0 2.99875966,0 L1225.00124,0 C1226.65741,0 1228,1.35291908 1228,3.00441575 L1228,315.995584 C1228,317.654877 1226.6472,319 1225.00124,319 L2.99875966,319 C1.34259043,319 0,317.647081 0,315.995584 L0,3.00441575 Z"
-          id="path-1"
-        ></path>
-        <filter
-          x="-0.8%"
-          y="-2.5%"
-          width="102.0%"
-          height="107.5%"
-          filterUnits="objectBoundingBox"
-          id="filter-3"
-        >
-          <feMorphology
-            radius="1"
-            operator="erode"
-            in="SourceAlpha"
-            result="shadowSpreadOuter1"
-          ></feMorphology>
-          <feOffset
-            dx="2"
-            dy="4"
-            in="shadowSpreadOuter1"
-            result="shadowOffsetOuter1"
-          ></feOffset>
-          <feGaussianBlur
-            stdDeviation="5"
-            in="shadowOffsetOuter1"
-            result="shadowBlurOuter1"
-          ></feGaussianBlur>
-          <feComposite
-            in="shadowBlurOuter1"
-            in2="SourceAlpha"
-            operator="out"
-            result="shadowBlurOuter1"
-          ></feComposite>
-          <feColorMatrix
-            values="0 0 0 0 0.870588235   0 0 0 0 0.878431373   0 0 0 0 0.890196078  0 0 0 1 0"
-            type="matrix"
-            in="shadowBlurOuter1"
-          ></feColorMatrix>
-        </filter>
-        <path
-          d="M0,3.00257161 C0,1.3442971 1.34753252,0 2.99866331,0 L439.001337,0 C440.657453,0 442,1.34798447 442,3.00257161 L442,130.997428 C442,132.655703 440.652467,134 439.001337,134 L2.99866331,134 C1.3425473,134 0,132.652016 0,130.997428 L0,3.00257161 Z"
-          id="path-4"
-        ></path>
-        <filter
-          x="-1.6%"
-          y="-3.7%"
-          width="103.2%"
-          height="110.4%"
-          filterUnits="objectBoundingBox"
-          id="filter-6"
-        >
-          <feOffset
-            dx="0"
-            dy="2"
-            in="SourceAlpha"
-            result="shadowOffsetOuter1"
-          ></feOffset>
-          <feGaussianBlur
-            stdDeviation="2"
-            in="shadowOffsetOuter1"
-            result="shadowBlurOuter1"
-          ></feGaussianBlur>
-          <feColorMatrix
-            values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.05 0"
-            type="matrix"
-            in="shadowBlurOuter1"
-          ></feColorMatrix>
-        </filter>
-        <rect id="path-7" x="0" y="0" width="300" height="527" rx="3"></rect>
-        <filter
-          x="-3.3%"
-          y="-1.5%"
-          width="106.7%"
-          height="103.8%"
-          filterUnits="objectBoundingBox"
-          id="filter-9"
-        >
-          <feOffset
-            dx="0"
-            dy="2"
-            in="SourceAlpha"
-            result="shadowOffsetOuter1"
-          ></feOffset>
-          <feGaussianBlur
-            stdDeviation="3"
-            in="shadowOffsetOuter1"
-            result="shadowBlurOuter1"
-          ></feGaussianBlur>
-          <feColorMatrix
-            values="0 0 0 0 0.0252657699   0 0 0 0 0.0878062101   0 0 0 0 0.130802763  0 0 0 0.2 0"
-            type="matrix"
-            in="shadowBlurOuter1"
-          ></feColorMatrix>
-        </filter>
-      </defs>
+    <svg
+      width="22px"
+      height="22px"
+      viewBox="0 0 22 22"
+      version="1.1"
+      {...props}
+    >
       <g
         id="Annotations"
         stroke="none"
@@ -573,176 +481,52 @@ export function DevHubIcon(props: HTMLElementProps<'svg'>) {
         fill="none"
         fillRule="evenodd"
       >
-        <g id="03" transform="translate(-1606.000000, -497.000000)">
-          {/* <rect fill="#FFFFFF" x="0" y="0" width="1920" height="1080"></rect> */}
-          <rect
-            id="Rectangle"
-            stroke="#979797"
-            fill="#D8D8D8"
-            x="456"
-            y="121"
-            width="1440"
-            height="927"
-          ></rect>
-          <g id="Group-2" transform="translate(456.000000, 121.000000)">
-            {/* <rect
-              id="Rectangle"
-              fill="#FFFFFF"
-              x="0"
-              y="0"
-              width="1440"
-              height="927"
-            ></rect> */}
-            <g id="Body" transform="translate(189.000000, 130.000000)">
+        <g
+          id="03"
+          transform="translate(-1607.000000, -498.000000)"
+          stroke="#89989B"
+        >
+          <g id="Group-2" transform="translate(1586.000000, 177.000000)">
+            <g id="Nav" transform="translate(0.000000, 192.000000)">
               <g
-                id="core-/-cluster-card-/-hadron"
-                transform="translate(0.000000, 101.000000)"
+                id="Menu-Item-/-Base-/-Support-/-Inactive-Copy"
+                transform="translate(0.000000, 112.000000)"
               >
-                {/* <mask id="mask-2" fill="white">
-                  <use xlinkHref="#path-1"></use>
-                </mask> */}
-                {/* <g id="Mask">
-                  <use
-                    fill="black"
-                    fillOpacity="1"
-                    filter="url(#filter-3)"
-                    xlinkHref="#path-1"
-                  ></use>
-                  <path
-                    stroke="#EBEBED"
-                    strokeWidth="1"
-                    d="M1225.00124,-0.5 C1225.96641,-0.5 1226.84051,-0.106581252 1227.47365,0.527753477 C1228.1079,1.16320205 1228.5,2.04026031 1228.5,3.00441575 L1228.5,3.00441575 L1228.5,315.995584 C1228.5,316.961754 1228.10703,317.836761 1227.47426,318.470724 C1226.83924,319.106941 1225.96298,319.5 1225.00124,319.5 L1225.00124,319.5 L2.99875966,319.5 C2.03359185,319.5 1.15948825,319.106581 0.526347714,318.472247 C-0.107904573,317.836798 -0.5,316.95974 -0.5,315.995584 L-0.5,315.995584 L-0.5,3.00441575 C-0.5,2.03824585 -0.107031915,1.16323859 0.525737407,0.529275772 C1.16075616,-0.106940721 2.03702408,-0.5 2.99875966,-0.5 L2.99875966,-0.5 Z"
-                    fill="#FFFFFF"
-                    fillRule="evenodd"
-                  ></path>
-                </g> */}
-                <g id="Graphs" mask="url(#mask-2)">
-                  <g transform="translate(279.465116, 0.000000)">
+                <g id="Group" transform="translate(20.000000, 16.000000)">
+                  <g transform="translate(2.137559, 2.137559)">
                     <rect
                       id="Rectangle"
-                      fill="#F4F6F6"
-                      x="0.534883721"
-                      y="0"
-                      width="950"
-                      height="319"
+                      x="1.77635684e-15"
+                      y="3.01980663e-14"
+                      width="19.7248819"
+                      height="19.7248819"
+                      rx="2"
                     ></rect>
-                    <g
-                      id="charts"
-                      strokeWidth="1"
-                      fill="none"
-                      transform="translate(24.534884, 16.000000)"
-                    >
-                      <g
-                        id="Graph-/-Main-Clusters-View"
-                        transform="translate(468.000000, 0.000000)"
-                      >
-                        {/* <mask id="mask-5" fill="white">
-                          <use xlinkHref="#path-4"></use>
-                        </mask> */}
-                        {/* <g id="Container">
-                          <use
-                            fill="black"
-                            fillOpacity="1"
-                            filter="url(#filter-6)"
-                            xlinkHref="#path-4"
-                          ></use>
-                          <use
-                            fill="#FFFFFF"
-                            fillRule="evenodd"
-                            xlinkHref="#path-4"
-                          ></use>
-                        </g> */}
-                      </g>
-                    </g>
-                  </g>
-                </g>
-              </g>
-            </g>
-          </g>
-          <g
-            id="Menu-/-Cloud-/-Default-Copy"
-            transform="translate(1586.000000, 177.000000)"
-          >
-            {/* <rect
-              id="Rectangle"
-              fill="#FFFFFF"
-              x="0"
-              y="0"
-              width="300"
-              height="527"
-            ></rect> */}
-            <g id="Group">
-              {/* <mask id="mask-8" fill="white">
-                <use xlinkHref="#path-7"></use>
-              </mask>
-              <g id="BG">
-                <use
-                  fill="black"
-                  fillOpacity="1"
-                  filter="url(#filter-9)"
-                  xlinkHref="#path-7"
-                ></use>
-                <use
-                  fill="#FFFFFF"
-                  fillRule="evenodd"
-                  xlinkHref="#path-7"
-                ></use> */}
-              {/* </g> */}
-              <g id="Nav" mask="url(#mask-8)">
-                <g
-                  transform="translate(0.000000, 192.000000)"
-                  id="Menu-Item-/-Base-/-Support-/-Inactive-Copy"
-                >
-                  <g transform="translate(0.000000, 112.000000)">
-                    <rect
-                      id="Background"
-                      fill="#F9FBFA"
-                      x="0"
-                      y="0"
-                      width="300"
-                      height="56"
-                    ></rect>
-                    <g
-                      id="Menu-/-Base-/-Icons-/-Subbrands-/-Platforms-/-Support"
-                      transform="translate(20.000000, 16.000000)"
-                      stroke="#89989B"
-                    >
-                      <g id="Group" transform="translate(2.137559, 2.137559)">
-                        <rect
-                          id="Rectangle"
-                          x="1.77635684e-15"
-                          y="3.01980663e-14"
-                          width="19.7248819"
-                          height="19.7248819"
-                          rx="2"
-                        ></rect>
-                        <line
-                          x1="10.5684377"
-                          y1="8.9041144"
-                          x2="8.75278527"
-                          y2="14.0717614"
-                          id="Path"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        ></line>
-                        <polyline
-                          id="Path"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          points="6.2311361 14.0950598 3.62387873 11.4878024 6.2311361 8.88054505"
-                        ></polyline>
-                        <polyline
-                          id="Path"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          points="13.4937458 14.0950598 16.1010031 11.4878024 13.4937458 8.88054505"
-                        ></polyline>
-                        <path
-                          d="M1,1.24344979e-14 L18.7248819,1.24344979e-14 C19.2771666,1.23330448e-14 19.7248819,0.44771525 19.7248819,1 L19.7248819,4.38802133 L19.7248819,4.38802133 L2.66453526e-14,4.38802133 L2.66453526e-14,1 C2.65777172e-14,0.44771525 0.44771525,1.25359509e-14 1,1.24344979e-14 Z"
-                          id="Rectangle"
-                        ></path>
-                      </g>
-                    </g>
+                    <line
+                      x1="10.5684377"
+                      y1="8.9041144"
+                      x2="8.75278527"
+                      y2="14.0717614"
+                      id="Path"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    ></line>
+                    <polyline
+                      id="Path"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      points="6.2311361 14.0950598 3.62387873 11.4878024 6.2311361 8.88054505"
+                    ></polyline>
+                    <polyline
+                      id="Path"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      points="13.4937458 14.0950598 16.1010031 11.4878024 13.4937458 8.88054505"
+                    ></polyline>
+                    <path
+                      d="M1,1.24344979e-14 L18.7248819,1.24344979e-14 C19.2771666,1.23330448e-14 19.7248819,0.44771525 19.7248819,1 L19.7248819,4.38802133 L19.7248819,4.38802133 L2.66453526e-14,4.38802133 L2.66453526e-14,1 C2.65777172e-14,0.44771525 0.44771525,1.25359509e-14 1,1.24344979e-14 Z"
+                      id="Rectangle"
+                    ></path>
                   </g>
                 </g>
               </g>
@@ -750,6 +534,6 @@ export function DevHubIcon(props: HTMLElementProps<'svg'>) {
           </g>
         </g>
       </g>
-    </svg >
+    </svg>
   );
 }

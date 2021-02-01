@@ -252,7 +252,7 @@ function UserMenu({
   onLogout: onLogoutProp,
   urls: urlsProp,
   hosts: hostsProp,
-  onProductChange = () => { },
+  onProductChange = () => {},
   environment = Environment.Commercial,
 }: UserMenuProps) {
   const hosts = defaultsDeep(
@@ -320,6 +320,12 @@ function UserMenu({
     href: 'https://feedback.mongodb.com/',
     target: '_blank',
     rel: 'noopener noreferrer',
+  };
+
+  const ariaHiddenProps = {
+    'aria-hidden': true,
+    alt: '',
+    role: 'presentation',
   };
 
   const [triggerNode, setTriggerNode] = useState<HTMLDivElement | null>(null);
@@ -393,7 +399,7 @@ function UserMenu({
               />
             }
             title={isGovernment ? 'Cloud for Government' : 'Cloud'}
-            glyph={<CloudIcon />}
+            glyph={<CloudIcon {...ariaHiddenProps} />}
             className={cx(subMenuContainerStyle, {
               [subMenuActiveContainerStyle]: isCloud,
             })}
@@ -445,22 +451,22 @@ function UserMenu({
             )}
           </SubMenu>
         ) : (
-            <MenuItem
-              {...menuItemContainer.prop}
-              href={hosts.cloud}
-              size="large"
-              glyph={<CloudIcon />}
-              description={
-                <Description
-                  isActive={false}
-                  product="cloud"
-                  isGovernment={isGovernment}
-                />
-              }
-            >
-              {isGovernment ? 'Cloud for Government' : 'Cloud'}
-            </MenuItem>
-          )}
+          <MenuItem
+            {...menuItemContainer.prop}
+            href={hosts.cloud}
+            size="large"
+            glyph={<CloudIcon {...ariaHiddenProps} />}
+            description={
+              <Description
+                isActive={false}
+                product="cloud"
+                isGovernment={isGovernment}
+              />
+            }
+          >
+            {isGovernment ? 'Cloud for Government' : 'Cloud'}
+          </MenuItem>
+        )}
 
         <SubMenu
           {...subMenuContainer.prop}
@@ -469,7 +475,7 @@ function UserMenu({
           disabled={!account}
           href={hosts.university}
           title="University"
-          glyph={<UniversityIcon />}
+          glyph={<UniversityIcon {...ariaHiddenProps} />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isUniversity,
           })}
@@ -493,7 +499,7 @@ function UserMenu({
           disabled={!account}
           href="https://developer.mongodb.com"
           title="Developer Hub"
-          glyph={<DevHubIcon />}
+          glyph={<DevHubIcon {...ariaHiddenProps} />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isDevHub,
           })}
@@ -515,7 +521,7 @@ function UserMenu({
           disabled={!account}
           href={hosts.support}
           title="Support"
-          glyph={<SupportIcon />}
+          glyph={<SupportIcon {...ariaHiddenProps} />}
           description={<Description isActive={isSupport} product="support" />}
           className={cx(subMenuContainerStyle, {
             [subMenuActiveContainerStyle]: isSupport,
@@ -533,7 +539,7 @@ function UserMenu({
         <MenuItem
           {...feedbackAnchorProps}
           size="large"
-          glyph={<MegaphoneIcon />}
+          glyph={<MegaphoneIcon {...ariaHiddenProps} />}
           data-testid="user-menuitem-feedback"
           onClick={onElementClick(NavElement.UserMenuFeedback)}
         >
