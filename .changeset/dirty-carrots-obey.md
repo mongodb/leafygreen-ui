@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/icon': minor
+'@leafygreen-ui/icon': major
 ---
 
 Adds a number of brand-consistent glyphs, and updates some existing glyphs.
