@@ -1,7 +1,14 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import {
   createDataProp,
   HTMLElementProps,
@@ -63,7 +70,9 @@ const sideNavGroupHeaderStyle = css`
   &:hover + ${childContainerDataProp.selector} {
     border-color: ${uiColors.green.base};
   }
+`;
 
+const sideNavGroupHeaderFocusStyle = css`
   &:focus {
     color: ${uiColors.blue.base};
 
@@ -74,6 +83,7 @@ const sideNavGroupHeaderStyle = css`
 `;
 
 const sideNavGroupHeaderNavCollapsedStyle = css`
+  padding-top: 0;
   padding-bottom: 0;
 `;
 
@@ -116,7 +126,7 @@ type Props = {
   OneOf<{ label: string }, { label: React.ReactNode; 'aria-label': string }> &
   Omit<HTMLElementProps<'div'>, 'aria-label' | 'ref'>;
 
-const idAllocator = IdAllocator.create('side-nav-group');
+const idAllocator = IdAllocator.create('side-nav-group-header');
 
 const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
   function SideNavGroup(
@@ -132,13 +142,24 @@ const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
     }: Props,
     ref,
   ) {
-    const { collapsed: navCollapsed, hovered, currentPath } = useContext(
-      SideNavContext,
-    );
+    const { usingKeyboard } = useUsingKeyboardContext();
 
-    const [collapsed, setCollapsed] = useState(
+    const { collapsed: navCollapsed, currentPath } = useContext(SideNavContext);
+
+    // eslint-disable-next-line prefer-const
+    let [collapsed, setCollapsed] = useState(
       collapsible ? initialCollapsed : false,
     );
+
+    if (!collapsible) {
+      collapsed = false;
+    }
+
+    useEffect(() => {
+      if (!collapsible) {
+        setCollapsed(false);
+      }
+    }, [collapsible]);
 
     const id = useMemo(() => idAllocator.generate(), []);
 
@@ -169,15 +190,11 @@ const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
       });
     }, []);
 
-    const providerData = useMemo(() => ({ addPath, removePath, collapsed }), [
-      addPath,
-      removePath,
-      collapsed,
-    ]);
+    const canRenderAsCollapsible = collapsible && !navCollapsed;
 
-    const shouldRenderNavCollapsedState = navCollapsed && !hovered;
-    const canRenderAsCollapsible =
-      collapsible && !shouldRenderNavCollapsedState;
+    const toggleCollapse = useCallback(() => {
+      setCollapsed(collapsed => !collapsed);
+    }, []);
 
     const hasGlyph = glyph !== undefined;
     const containsCurrentPath =
@@ -188,8 +205,6 @@ const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
 
     const headerProps = useMemo(() => {
       if (canRenderAsCollapsible) {
-        const toggleCollapse = () => setCollapsed(collapsed => !collapsed);
-
         const onKeyDown = (event: React.KeyboardEvent) => {
           if (event.ctrlKey || event.shiftKey || event.altKey) {
             return;
@@ -206,8 +221,8 @@ const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
         };
 
         return {
-          'tabIndex': 0,
-          'aria-expanded': collapsed,
+          tabIndex: 0,
+          'aria-expanded': !collapsed,
           'aria-controls': id,
           role: 'button',
           onClick: toggleCollapse,
@@ -216,26 +231,34 @@ const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
       } else {
         return { 'tab-index': -1 };
       }
-    }, [collapsed, canRenderAsCollapsible, id]);
+    }, [canRenderAsCollapsible, collapsed, id, toggleCollapse]);
+
+    const providerData = useMemo(
+      () => ({
+        addPath,
+        removePath,
+        collapsed,
+        collapsible,
+      }),
+      [addPath, removePath, collapsible, collapsed],
+    );
 
     return (
+      /* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */
       <div
         ref={ref}
-        role={shouldRenderNavCollapsedState ? undefined : 'group'}
-        aria-labelledby={shouldRenderNavCollapsedState ? undefined : id}
-        aria-label={
-          shouldRenderNavCollapsedState && !hasGlyph ? ariaLabel : undefined
-        }
+        role={navCollapsed ? undefined : 'group'}
+        aria-labelledby={navCollapsed ? undefined : id}
+        aria-label={navCollapsed && !hasGlyph ? ariaLabel : undefined}
         className={cx(
           sideNavGroupStyle,
           {
-            [sideNavGroupNavCollapsedStyle]: shouldRenderNavCollapsedState,
+            [sideNavGroupNavCollapsedStyle]: navCollapsed,
             [sideNavGroupExpandedCollapsibleStyle]:
               canRenderAsCollapsible && !collapsed,
-            [sideNavGroupWithGlyphNavCollapsedStyle]:
-              hasGlyph && shouldRenderNavCollapsedState,
+            [sideNavGroupWithGlyphNavCollapsedStyle]: hasGlyph && navCollapsed,
             [sideNavGroupNavCollapsedAndCurrentStyle]:
-              shouldRenderNavCollapsedState && containsCurrentPath,
+              navCollapsed && containsCurrentPath,
           },
           className,
         )}
@@ -243,11 +266,12 @@ const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
       >
         <div
           id={id}
-          aria-hidden={shouldRenderNavCollapsedState}
+          aria-hidden={navCollapsed}
           className={cx(sideNavGroupHeaderStyle, {
-            [sideNavGroupHeaderNavCollapsedStyle]: shouldRenderNavCollapsedState,
+            [sideNavGroupHeaderFocusStyle]: usingKeyboard,
+            [sideNavGroupHeaderNavCollapsedStyle]: navCollapsed,
             [sideNavGroupHeaderWithGlyphNavCollapsedStyle]:
-              hasGlyph && shouldRenderNavCollapsedState,
+              hasGlyph && navCollapsed,
             [sideNavGroupHeaderCollapsibleStyle]: canRenderAsCollapsible,
           })}
           {...headerProps}
@@ -258,7 +282,7 @@ const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
             `}
           >
             {hasGlyph && <div className={glyphStyle}>{glyph}</div>}
-            {!shouldRenderNavCollapsedState && label}
+            {!navCollapsed && label}
           </div>
           {canRenderAsCollapsible && (
             <ChevronDownIcon

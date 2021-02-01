@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -21,20 +21,20 @@ import {
 const sideNavItemStyle = css`
   display: flex;
   align-items: center;
-  padding: 0 16px;
-  height: 32px;
+  padding: 8px 16px;
   width: ${sideNavWidth}px;
   cursor: pointer;
   font-size: 14px;
+  line-height: 16px;
   text-decoration: none;
   text-transform: capitalize;
+  outline: none;
+  overflow: hidden;
   border: 0 solid ${uiColors.gray.light2};
   color: ${uiColors.gray.dark2};
-  // Chrome has a bug that makes the border black during transition
-  // so just disable the transition since it's hard to notice anyway
+  // Chrome has a bug that makes the border black during transition so
+  // just disable the border transition since it's hard to notice anyway
   transition: all ${transitionDurationMilliseconds}ms ease-in-out, border none;
-  text-decoration: none;
-  outline: none;
 
   &:hover {
     background-color: ${uiColors.gray.light2};
@@ -60,7 +60,7 @@ const sideNavItemDisabledStyle = css`
 `;
 
 const sideNavItemWithGlyphStyle = css`
-  & > svg:first-child {
+  & svg:first-child {
     margin-right: 5px;
   }
 `;
@@ -81,12 +81,7 @@ const sideNavItemActiveStyle = css`
 `;
 
 const sideNavItemNonGroupStyle = css`
-  // margin-top: 4px;
   font-weight: bold;
-
-  &:first-of-type {
-    // margin-top: 4px;
-  }
 `;
 
 const sideNavItemNonGroupLinkStyle = css`
@@ -94,10 +89,13 @@ const sideNavItemNonGroupLinkStyle = css`
   color: ${uiColors.blue.base};
 `;
 
-const sideNavItemNavCollapsedStyle = css`
-  height: 0;
-  opacity: 0;
-  visibility: hidden;
+const sideNavItemExpandedCollapsibleGroupStyle = css`
+  padding-left: 24px;
+`;
+
+const sideNavItemCollapsedStyle = css`
+  padding-top: 0;
+  padding-bottom: 0;
 
   &:hover {
     background-color: inherit;
@@ -107,14 +105,23 @@ const sideNavItemNavCollapsedStyle = css`
 const sideNavItemWithGlyphNavCollapsedStyle = css`
   margin-top: 0;
   height: 40px;
-  opacity: 1;
-  visibility: visible;
   border-top-width: 1px;
   color: ${uiColors.green.dark2};
+  overflow: hidden;
 
   &:hover {
     cursor: inherit;
   }
+`;
+
+const sideNavItemContentStyle = css`
+  opacity: 1;
+  transition: all ${transitionDurationMilliseconds}ms ease-in-out;
+`;
+
+const sideNavItemContentCollapsedStyle = css`
+  opacity: 0;
+  height: 0;
 `;
 
 type Props = {
@@ -142,7 +149,7 @@ const SideNavItem: ExtendableBox<
     className,
     children,
     glyph,
-    glyphVisibility = GlyphVisibility.OnlyCollapsed,
+    glyphVisibility = GlyphVisibility.NavCollapsed,
     path,
     onSelect,
     'aria-label': ariaLabelProp,
@@ -154,11 +161,12 @@ const SideNavItem: ExtendableBox<
   }: Props,
   refProp,
 ) {
-  const { collapsed: navCollapsed, hovered, currentPath } = useContext(
-    SideNavContext,
-  );
+  const { collapsed: navCollapsed, currentPath } = useContext(SideNavContext);
+
   const groupContextData = useContext(SideNavGroupContext);
   const groupCollapsed = groupContextData?.collapsed ?? false;
+  const groupCollapsible = groupContextData?.collapsible ?? false;
+
   const { usingKeyboard } = useUsingKeyboardContext();
 
   useEffect(() => {
@@ -229,81 +237,102 @@ const SideNavItem: ExtendableBox<
   );
 
   const isActive = path !== undefined && currentPath === path;
-  const shouldRenderNavCollapsedState = navCollapsed && !hovered;
-  const shouldRenderCollapsedState =
-    groupCollapsed || shouldRenderNavCollapsedState;
+  const shouldRenderCollapsedState = groupCollapsed || navCollapsed;
   const hasGlyph = glyph !== undefined;
   const isInGroup = groupContextData !== null;
   const isLink = href !== undefined;
 
-  let shouldRenderGlyph: boolean;
-
-  if (hasGlyph) {
-    if (!disabled) {
-      switch (glyphVisibility) {
-        case GlyphVisibility.OnlyCollapsed:
-          shouldRenderGlyph = shouldRenderNavCollapsedState;
-          break;
-        case GlyphVisibility.OnlyExpanded:
-          shouldRenderGlyph = !shouldRenderNavCollapsedState;
-          break;
-        case GlyphVisibility.Visible:
-          shouldRenderGlyph = true;
-          break;
-        default:
-          enforceExhaustive(glyphVisibility);
-      }
-    } else {
-      shouldRenderGlyph = !shouldRenderNavCollapsedState;
+  const shouldRenderGlyph = useMemo(() => {
+    if (!hasGlyph || (groupCollapsed && !navCollapsed)) {
+      return false;
     }
-  } else {
-    shouldRenderGlyph = false;
-  }
+
+    if (disabled) {
+      return !navCollapsed;
+    }
+
+    switch (glyphVisibility) {
+      case GlyphVisibility.NavCollapsed:
+        return navCollapsed;
+      case GlyphVisibility.NavExpanded:
+        return !navCollapsed;
+      case GlyphVisibility.Visible:
+        return true;
+      default:
+        enforceExhaustive(glyphVisibility);
+    }
+  }, [disabled, glyphVisibility, groupCollapsed, hasGlyph, navCollapsed]);
 
   const ariaLabel =
     ariaLabelProp ?? (typeof children === 'string' ? children : undefined);
 
-  if (shouldRenderCollapsedState) {
-    return (
-      <div
-        aria-label={shouldRenderGlyph ? ariaLabel : undefined}
-        className={cx(sideNavItemStyle, sideNavItemNavCollapsedStyle, {
+  const props = useMemo(() => {
+    const commonStyles = cx(sideNavItemStyle, {
+      [sideNavItemNonGroupStyle]: !isInGroup,
+      [sideNavItemNonGroupLinkStyle]: !isInGroup && isLink,
+    });
+
+    if (shouldRenderCollapsedState) {
+      return {
+        'aria-label': shouldRenderGlyph ? ariaLabel : undefined,
+        tabIndex: -1,
+        className: cx(commonStyles, sideNavItemCollapsedStyle, {
           [sideNavItemWithGlyphNavCollapsedStyle]: shouldRenderGlyph,
-          [sideNavItemNonGroupLinkStyle]: !isInGroup && isLink,
-        })}
-      >
-        {shouldRenderGlyph && glyph}
-      </div>
-    );
-  }
+        }),
+      };
+    } else {
+      return {
+        'aria-label': ariaLabel,
+        'aria-current': isActive
+          ? AriaCurrentValue.Page
+          : AriaCurrentValue.Unset,
+        'aria-disabled': disabled,
+        tabIndex: disabled ? -1 : 0,
+        className: cx(
+          commonStyles,
+          {
+            [sideNavItemFocusStyle]: usingKeyboard,
+            [sideNavItemWithGlyphStyle]: hasGlyph,
+            [sideNavItemActiveStyle]: isActive,
+            [sideNavItemDisabledStyle]: disabled,
+            [sideNavItemExpandedCollapsibleGroupStyle]:
+              groupCollapsible && !groupCollapsed,
+          },
+          className,
+        ),
+        onClick,
+        onKeyDown,
+        href,
+      };
+    }
+  }, [
+    ariaLabel,
+    className,
+    disabled,
+    hasGlyph,
+    href,
+    isActive,
+    isInGroup,
+    isLink,
+    onClick,
+    onKeyDown,
+    groupCollapsible,
+    groupCollapsed,
+    shouldRenderCollapsedState,
+    shouldRenderGlyph,
+    usingKeyboard,
+  ]);
 
   return (
-    <Box
-      as="a"
-      aria-label={ariaLabel}
-      aria-current={isActive ? AriaCurrentValue.Page : AriaCurrentValue.Unset}
-      aria-disabled={disabled}
-      tabIndex={disabled ? -1 : 0}
-      ref={setRef}
-      className={cx(
-        sideNavItemStyle,
-        {
-          [sideNavItemFocusStyle]: usingKeyboard,
-          [sideNavItemWithGlyphStyle]: hasGlyph,
-          [sideNavItemActiveStyle]: isActive,
-          [sideNavItemNonGroupStyle]: !isInGroup,
-          [sideNavItemNonGroupLinkStyle]: !isInGroup && isLink,
-          [sideNavItemDisabledStyle]: disabled,
-        },
-        className,
-      )}
-      onClick={onClick}
-      onKeyDown={onKeyDown}
-      href={href}
-      {...rest}
-    >
+    <Box as="a" ref={setRef} {...props} {...rest}>
       {shouldRenderGlyph && glyph}
-      {children}
+      <div
+        className={cx(sideNavItemContentStyle, {
+          [sideNavItemContentCollapsedStyle]: shouldRenderCollapsedState,
+        })}
+      >
+        {children}
+      </div>
     </Box>
   );
 });

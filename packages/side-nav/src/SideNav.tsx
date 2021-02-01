@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import debounce from 'lodash/debounce';
 import { transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useEventListener } from '@leafygreen-ui/hooks';
@@ -12,6 +11,7 @@ import {
   sideNavWidth,
   sideNavCollapsedWidth,
   transitionDurationMilliseconds,
+  useHover,
 } from './utils';
 
 const navStyle = css`
@@ -78,61 +78,39 @@ const SideNav = React.forwardRef<HTMLElement, Props>(function SideNav(
     currentPath,
     collapsible = true,
     initialCollapsed = false,
+    onMouseOver: onMouseOverProp,
+    onMouseLeave: onMouseLeaveProp,
     ...rest
   }: Props,
   ref,
 ) {
   const id = useMemo(() => idAllocator.generate(), []);
 
-  const [collapsed, setCollapsed] = useState(
+  // eslint-disable-next-line prefer-const
+  let [collapsed, setCollapsed] = useState(
     collapsible ? initialCollapsed : false,
   );
 
-  // Manually detect hover so that hover state can be passed through the context.
-  // Using pure CSS would require the nav component to import a data prop selector
-  // from every sub-component or an equivalent amount of work.
-  const [hovered, setHovered] = useState(false);
-
-  // Debounce hover changes to prevent jitter when rapidly moving the mouse
-  // on and off the nav. Alternatively we could set transition-delay for this
-  // and all sub-components, but that would be less convenient and wouldn't
-  // prevent unnecessary re-renders.
-  const debouncedSetHovered = useMemo(
-    () => ({
-      toTrue: debounce(() => setHovered(true), transitionDurationMilliseconds),
-      toFalse: debounce(
-        () => setHovered(false),
-        transitionDurationMilliseconds,
-      ),
-    }),
-    [],
-  );
-
-  const onMouseOver = useCallback(() => {
-    debouncedSetHovered.toFalse.cancel();
-    debouncedSetHovered.toTrue();
-  }, [debouncedSetHovered]);
-
-  const onMouseLeave = useCallback(() => {
-    debouncedSetHovered.toTrue.cancel();
-    debouncedSetHovered.toFalse();
-  }, [debouncedSetHovered]);
+  if (!collapsible) {
+    collapsed = false;
+  }
 
   useEffect(() => {
     if (!collapsible) {
-      debouncedSetHovered.toTrue.cancel();
-      setHovered(false);
-
       setCollapsed(false);
     }
-  }, [collapsible, debouncedSetHovered]);
+  }, [collapsible]);
+
+  const { hovered, onMouseOver, onMouseLeave } = useHover({
+    transitionDurationMilliseconds,
+    onMouseOver: onMouseOverProp,
+    onMouseLeave: onMouseLeaveProp,
+    enabled: collapsed,
+  });
 
   const toggleCollapse = useCallback(() => {
-    debouncedSetHovered.toTrue.cancel();
-    setHovered(false);
-
     setCollapsed(collapsed => !collapsed);
-  }, [debouncedSetHovered]);
+  }, []);
 
   useEventListener(
     'keydown',
@@ -153,13 +131,11 @@ const SideNav = React.forwardRef<HTMLElement, Props>(function SideNav(
     event.stopPropagation();
   }, []);
 
-  const providerData = useMemo(() => ({ collapsed, hovered, currentPath }), [
-    collapsed,
-    currentPath,
-    hovered,
-  ]);
-
   const shouldRenderCollapsedState = collapsed && !hovered;
+  const providerData = useMemo(
+    () => ({ collapsed: shouldRenderCollapsedState, currentPath }),
+    [shouldRenderCollapsedState, currentPath],
+  );
 
   return (
     <SideNavContext.Provider value={providerData}>
@@ -176,8 +152,8 @@ const SideNav = React.forwardRef<HTMLElement, Props>(function SideNav(
           },
           className,
         )}
-        onMouseOver={collapsed ? onMouseOver : undefined}
-        onMouseLeave={collapsed ? onMouseLeave : undefined}
+        onMouseOver={onMouseOver}
+        onMouseLeave={onMouseLeave}
         {...rest}
       >
         {collapsible && (
@@ -185,6 +161,8 @@ const SideNav = React.forwardRef<HTMLElement, Props>(function SideNav(
             navId={id}
             onTrigger={toggleCollapse}
             onMouseOver={hovered ? undefined : stopHoverPropagation}
+            collapsed={collapsed}
+            hovered={hovered}
           />
         )}
         <div

@@ -151,7 +151,7 @@ describe('packages/collapsible-side-nav', () => {
               </SideNavItem>
               <SideNavItem
                 glyph={<CloudIcon />}
-                glyphVisibility={GlyphVisibility.OnlyExpanded}
+                glyphVisibility={GlyphVisibility.NavExpanded}
               >
                 Item With Only Expanded Glyph
               </SideNavItem>
@@ -295,7 +295,7 @@ describe('packages/collapsible-side-nav', () => {
         function expectCollapsed() {
           const items = ['One', 'Two'].map(label => queryByText(label));
           const header = queryByText('group');
-          items.forEach(item => expect(item).not.toBeInTheDocument());
+          items.forEach(item => expect(item).not.toBeVisible());
           expect(header).not.toBeInTheDocument();
 
           // Button should have correct aria attributes
@@ -396,7 +396,7 @@ describe('packages/collapsible-side-nav', () => {
         <SideNavItem href="/link">Link</SideNavItem>,
       );
 
-      const item = getByText('Link');
+      const item = getByText('Link').closest('a');
       expect(item).toHaveAttribute('href', '/link');
     });
 

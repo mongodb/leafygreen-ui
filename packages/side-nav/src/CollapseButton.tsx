@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import ChevronLeftIcon from '@leafygreen-ui/icon/dist/ChevronLeft';
@@ -8,7 +8,6 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { keyMap } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
-import { SideNavContext } from './contexts';
 import { transitionDurationMilliseconds } from './utils';
 
 const buttonStyle = css`
@@ -54,15 +53,17 @@ interface Props {
   navId: string;
   onTrigger: () => void;
   onMouseOver?: React.MouseEventHandler;
+  collapsed: boolean;
+  hovered: boolean;
 }
 
 export default function CollapseButton({
   navId,
   onTrigger,
   onMouseOver,
+  collapsed,
+  hovered,
 }: Props) {
-  const { collapsed, hovered } = useContext(SideNavContext);
-
   const [, forceRerender] = useState(false);
 
   const wasCollapsed = usePrevious(collapsed);

@@ -202,12 +202,12 @@ storiesOf('SideNav', module)
           <div className={appStyle}>
             <SideNav>
               <SideNavItem>No Glyph</SideNavItem>
-              <SideNavItem glyph={<AppsIcon />}>Only Collapsed</SideNavItem>
+              <SideNavItem glyph={<AppsIcon />}>Only Nav Collapsed</SideNavItem>
               <SideNavItem
                 glyph={<SupportIcon />}
-                glyphVisibility={GlyphVisibility.OnlyExpanded}
+                glyphVisibility={GlyphVisibility.NavExpanded}
               >
-                Only Expanded
+                Only Nav Expanded
               </SideNavItem>
               <SideNavItem
                 glyph={<LaptopIcon />}
@@ -215,7 +215,7 @@ storiesOf('SideNav', module)
               >
                 Always Visible
               </SideNavItem>
-              <SideNavGroup label="Group">
+              <SideNavGroup label="Group" collapsible initialCollapsed={false}>
                 <SideNavItem>No Glyph</SideNavItem>
                 <SideNavItem
                   glyph={<SettingsIcon />}
