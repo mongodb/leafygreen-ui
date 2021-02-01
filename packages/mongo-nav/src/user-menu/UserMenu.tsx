@@ -253,7 +253,7 @@ function UserMenu({
   onLogout: onLogoutProp,
   urls: urlsProp,
   hosts: hostsProp,
-  onProductChange = () => { },
+  onProductChange = () => {},
   environment = Environment.Commercial,
 }: UserMenuProps) {
   const hosts = defaultsDeep(
@@ -453,22 +453,22 @@ function UserMenu({
             )}
           </SubMenu>
         ) : (
-            <MenuItem
-              {...menuItemContainer.prop}
-              href={hosts.cloud}
-              size="large"
-              glyph={<CloudIcon {...ariaHiddenProps} />}
-              description={
-                <Description
-                  isActive={false}
-                  product="cloud"
-                  isGovernment={isGovernment}
-                />
-              }
-            >
-              {isGovernment ? 'Cloud for Government' : 'Cloud'}
-            </MenuItem>
-          )}
+          <MenuItem
+            {...menuItemContainer.prop}
+            href={hosts.cloud}
+            size="large"
+            glyph={<CloudIcon {...ariaHiddenProps} />}
+            description={
+              <Description
+                isActive={false}
+                product="cloud"
+                isGovernment={isGovernment}
+              />
+            }
+          >
+            {isGovernment ? 'Cloud for Government' : 'Cloud'}
+          </MenuItem>
+        )}
 
         <SubMenu
           {...subMenuContainer.prop}
@@ -596,7 +596,7 @@ UserMenu.propTypes = {
     'support',
     'university',
     'devHub',
-    'docs'
+    'docs',
   ]),
   onLogout: PropTypes.func,
   onProductChange: PropTypes.func,
