@@ -31,6 +31,7 @@ import Download from './Download.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
 import Favorite from './Favorite.svg';
+import Filter from './Filter.svg';
 import Folder from './Folder.svg';
 import GovernmentBuilding from './GovernmentBuilding.svg';
 import ImportantWithCircle from './ImportantWithCircle.svg';
@@ -86,10 +87,10 @@ const glyphs = {
   Charts,
   Checkmark,
   CheckmarkWithCircle,
-  ChevronUp,
   ChevronDown,
-  ChevronRight,
   ChevronLeft,
+  ChevronRight,
+  ChevronUp,
   Cloud,
   Copy,
   CreditCard,
@@ -97,6 +98,7 @@ const glyphs = {
   Edit,
   Ellipsis,
   Favorite,
+  Filter,
   Folder,
   GovernmentBuilding,
   ImportantWithCircle,
