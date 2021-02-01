@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 415f4133ca1b29e43d1c45f7edc2abad
+ * @checksum 5050032e6c37809035eb8e88524765c3
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -48,20 +48,10 @@ const CaretRight = ({
       {...props}
       viewBox="0 0 16 16"
     >
-      <g
-        id="CaretRight-Copy"
-        stroke="none"
-        strokeWidth={1}
-        fill="none"
-        fillRule="evenodd"
-      >
-        <path
-          d="M5.17285687,6 L11.8271431,6 C12.4254697,6 12.724633,6.775217 12.3024493,7.22717749 L8.97530616,10.7889853 C8.71248981,11.0703382 8.28751019,11.0703382 8.02748976,10.7889853 L4.69755071,7.22717749 C4.27536701,6.775217 4.57453029,6 5.17285687,6 Z"
-          id="Path-Copy-2"
-          fill={'currentColor'}
-          transform="translate(8.500000, 8.500000) rotate(-90.000000) translate(-8.500000, -8.500000) "
-        />
-      </g>
+      <path
+        d="M10.7962 7.32097C11.0679 7.54729 11.0679 7.95271 10.7962 8.17903L6.97649 11.3604C6.59428 11.6787 6 11.4176 6 10.9313L6 4.56866C6 4.0824 6.59428 3.82129 6.97649 4.13962L10.7962 7.32097Z"
+        fill={'currentColor'}
+      />
     </svg>
   );
 };
