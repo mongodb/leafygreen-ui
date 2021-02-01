@@ -14,6 +14,7 @@ import { SideNavContext, SideNavGroupContext } from './contexts';
 import {
   GlyphElement,
   GlyphVisibility,
+  sideNavWidth,
   transitionDurationMilliseconds,
 } from './utils';
 
@@ -22,6 +23,7 @@ const sideNavItemStyle = css`
   align-items: center;
   padding: 0 16px;
   height: 32px;
+  width: ${sideNavWidth}px;
   cursor: pointer;
   font-size: 14px;
   text-decoration: none;
@@ -79,8 +81,12 @@ const sideNavItemActiveStyle = css`
 `;
 
 const sideNavItemNonGroupStyle = css`
-  margin-top: 4px;
+  // margin-top: 4px;
   font-weight: bold;
+
+  &:first-of-type {
+    // margin-top: 4px;
+  }
 `;
 
 const sideNavItemNonGroupLinkStyle = css`
@@ -152,6 +158,7 @@ const SideNavItem: ExtendableBox<
     SideNavContext,
   );
   const groupContextData = useContext(SideNavGroupContext);
+  const groupCollapsed = groupContextData?.collapsed ?? false;
   const { usingKeyboard } = useUsingKeyboardContext();
 
   useEffect(() => {
@@ -223,6 +230,8 @@ const SideNavItem: ExtendableBox<
 
   const isActive = path !== undefined && currentPath === path;
   const shouldRenderNavCollapsedState = navCollapsed && !hovered;
+  const shouldRenderCollapsedState =
+    groupCollapsed || shouldRenderNavCollapsedState;
   const hasGlyph = glyph !== undefined;
   const isInGroup = groupContextData !== null;
   const isLink = href !== undefined;
@@ -254,7 +263,7 @@ const SideNavItem: ExtendableBox<
   const ariaLabel =
     ariaLabelProp ?? (typeof children === 'string' ? children : undefined);
 
-  if (shouldRenderNavCollapsedState) {
+  if (shouldRenderCollapsedState) {
     return (
       <div
         aria-label={shouldRenderGlyph ? ariaLabel : undefined}

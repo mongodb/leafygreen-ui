@@ -126,6 +126,12 @@ describe('packages/collapsible-side-nav', () => {
             keyCode: keyMap.Space,
           });
         },
+        'pressing enter on focused button': (collapseButton: HTMLElement) => {
+          fireEvent.keyDown(collapseButton, {
+            key: 'Enter',
+            keyCode: keyMap.Enter,
+          });
+        },
         'pressing "[" key': () => {
           fireEvent.keyDown(document, {
             key: 'BracketLeft',

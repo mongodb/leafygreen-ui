@@ -82,7 +82,12 @@ storiesOf('SideNav', module)
                   <SideNavItem glyph={<HomeIcon />}>Investments</SideNavItem>
                 </WithPath>
               )}
-              <SideNavGroup label="Data Access" glyph={<CloudIcon />}>
+              <SideNavGroup
+                label="Data Access"
+                glyph={<CloudIcon />}
+                collapsible
+                initialCollapsed={false}
+              >
                 <WithPath {...createItemProps('/rules')}>
                   <SideNavItem>Rules</SideNavItem>
                 </WithPath>
@@ -96,7 +101,12 @@ storiesOf('SideNav', module)
                   <SideNavItem>Authentication</SideNavItem>
                 </WithPath>
               </SideNavGroup>
-              <SideNavGroup label="Build" glyph={<LaptopIcon />}>
+              <SideNavGroup
+                label="Build"
+                glyph={<LaptopIcon />}
+                collapsible
+                initialCollapsed
+              >
                 <WithPath {...createItemProps('/sdks')}>
                   <SideNavItem>SDKs</SideNavItem>
                 </WithPath>
@@ -119,7 +129,7 @@ storiesOf('SideNav', module)
                   <SideNavItem>Values & Secrets</SideNavItem>
                 </WithPath>
               </SideNavGroup>
-              <SideNavGroup label="Manage" glyph={<SettingsIcon />}>
+              <SideNavGroup label="Manage" glyph={<SettingsIcon />} collapsible>
                 <WithPath {...createItemProps('/sources')}>
                   <SideNavItem>Linked Data Sources</SideNavItem>
                 </WithPath>

@@ -8,16 +8,19 @@ import { HTMLElementProps, IdAllocator, keyMap } from '@leafygreen-ui/lib';
 import { uiColors } from '@leafygreen-ui/palette';
 import CollapseButton from './CollapseButton';
 import { SideNavContext } from './contexts';
-import { transitionDurationMilliseconds } from './utils';
-
-export const sideNavWidth = 184;
-export const sideNavCollapsedWidth = 48;
+import {
+  sideNavWidth,
+  sideNavCollapsedWidth,
+  transitionDurationMilliseconds,
+} from './utils';
 
 const navStyle = css`
   position: relative;
   z-index: 0;
   min-height: 100%;
   min-width: ${sideNavWidth}px;
+  width: ${sideNavWidth}px;
+
   background-color: ${uiColors.gray.light3};
   border-right: 1px solid ${uiColors.gray.light2};
   transition: all ${transitionDurationMilliseconds}ms ease-in-out;
@@ -46,7 +49,7 @@ const collapsedSpacerStyle = css`
 
 const navListStyle = css`
   position: relative;
-  padding-top: 12px;
+  padding-top: 16px;
   height: 100%;
   overflow: hidden;
   transition: all ${transitionDurationMilliseconds}ms ease-in-out;

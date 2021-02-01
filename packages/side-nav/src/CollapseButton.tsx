@@ -87,7 +87,7 @@ export default function CollapseButton({
         return;
       }
 
-      if (event.keyCode === keyMap.Space) {
+      if (event.keyCode === keyMap.Space || event.keyCode === keyMap.Enter) {
         event.preventDefault();
         event.stopPropagation();
 
@@ -114,11 +114,15 @@ export default function CollapseButton({
       onMouseOver={onMouseOver}
     >
       <ChevronLeftIcon
+        aria-hidden
+        role="presentation"
         className={cx(buttonIconStyle, {
           [inactiveButtonIconStyle]: collapsed,
         })}
       />
       <ChevronRightIcon
+        aria-hidden
+        role="presentation"
         className={cx(buttonIconStyle, {
           [inactiveButtonIconStyle]: !collapsed,
         })}

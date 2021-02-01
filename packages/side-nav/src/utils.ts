@@ -1,5 +1,7 @@
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 
+export const sideNavWidth = 184;
+export const sideNavCollapsedWidth = 48;
 export const transitionDurationMilliseconds = 150;
 
 export type GlyphElement = React.ReactElement<LGGlyph.ComponentProps> & {
