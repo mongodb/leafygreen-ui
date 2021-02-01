@@ -1,5 +1,12 @@
 # @leafygreen-ui/code
 
+## 8.0.3
+
+### Patch Changes
+
+- Updated dependencies [f805b772]
+  - @leafygreen-ui/icon@9.0.0
+
 ## 8.0.2
 
 ### Patch Changes
