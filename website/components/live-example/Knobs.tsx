@@ -107,9 +107,8 @@ export interface SelectInterface extends KnobInterface {
 
 function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
   const viewport = useViewportSize();
-  const isTouchDevice = viewport !== null
-    ? viewport.width < breakpoints.Tablet
-    : false;
+  const isTouchDevice =
+    viewport !== null ? viewport.width < breakpoints.Tablet : false;
 
   const handleChange = () => {
     onChange(!value, prop);
