@@ -30,12 +30,14 @@ Below is handy table to help you choose when to pick which pattern.
       {
         component: 'Banner',
         priority: 'Medium priority',
-        userAction: 'Optional: Banners etc.',
+        userAction:
+          'Optional: Banners remain until dismissed by the user, or if the state that caused the banner is resolved',
       },
       {
         component: 'Modal',
         priority: 'Highest priority',
-        userAction: 'Required',
+        userAction:
+          'Required: Modals block usage until the user takes a modal action or exits the modal (if available)',
       },
     ]}
     columns={[
