@@ -1,3 +1,5 @@
-export const metaTagKey = {
+const metaTagKey = {
   Title: 'title',
 } as const;
+
+export default metaTagKey;

@@ -14,7 +14,7 @@ import { mq } from 'utils/mediaQuery';
 import { pageContainerWidth } from 'styles/constants';
 import figmaLinks from 'utils/figmaLinks';
 import { Component } from 'utils/types';
-import { metaTagKey } from 'utils/metaTagKey';
+import metaTagKey from 'utils/metaTagKey';
 
 const layout = css`
   ${mq({

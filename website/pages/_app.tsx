@@ -7,7 +7,7 @@ import { Global } from '@emotion/core';
 import { globalStyles } from 'styles/globals';
 import BaseLayout from 'layouts/BaseLayout';
 import ComponentLayout from 'layouts/ComponentLayout';
-import { metaTagKey } from 'utils/metaTagKey';
+import metaTagKey from 'utils/metaTagKey';
 
 function DefaultLayout({ children }) {
   return children;
