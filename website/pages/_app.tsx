@@ -43,6 +43,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta
           property="og:title"
           content="LeafyGreen - MongoDB Design System"
+          key="title"
         />
         <meta
           property="og:site_name"
