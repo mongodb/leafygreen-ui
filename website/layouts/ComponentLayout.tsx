@@ -17,9 +17,9 @@ import { Component } from 'utils/types';
 
 const layout = css`
   ${mq({
-  marginTop: [`${spacing[4]}px`, `${spacing[4]}px`, '70px'],
-  width: ['100%', '100%', '100%', `${pageContainerWidth.dataGraphic}px`],
-})}
+    marginTop: [`${spacing[4]}px`, `${spacing[4]}px`, '70px'],
+    width: ['100%', '100%', '100%', `${pageContainerWidth.dataGraphic}px`],
+  })}
 `;
 
 const componentsStyle = css`
