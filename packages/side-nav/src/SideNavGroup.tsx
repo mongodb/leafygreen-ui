@@ -26,7 +26,7 @@ const sideNavGroupStyle = css`
   display: flex;
   flex-direction: column;
   margin-top: 4px;
-  transition: all ${transitionDurationMilliseconds}ms ease-in-out;
+  transition: all ${transitionDurationMilliseconds}ms ease-in-out, margin none;
   border: 0 solid rgba(0, 0, 0, 0);
   border-top-width: 1px;
   cursor: default;
