@@ -113,19 +113,14 @@ describe('packages/tabs', () => {
 
     test('keyboard navigation is supported', () => {
       renderTabs({}, { default: true });
-      const tabs = screen.getByRole('tablist');
-      const activeTabList = screen.getByText('First');
+      const firstTab = screen.getByText('First');
 
-      // Focus on tablist
-      userEvent.click(tabs);
-      expect(tabs).toHaveFocus();
-
-      // Tab to active TabList
+      // Focus on first tab
       userEvent.tab();
-      expect(activeTabList).toHaveFocus();
+      expect(firstTab).toHaveFocus();
 
       // Keyboard navigate between tabs
-      fireEvent.keyDown(activeTabList, {
+      fireEvent.keyDown(firstTab, {
         key: 'ArrowRight',
         keyCode: 39,
       });
@@ -148,19 +143,14 @@ describe('packages/tabs', () => {
         </Tabs>,
       );
 
-      const tabs = screen.getByRole('tablist');
-      const activeTabList = screen.getByText('First');
+      const firstTab = screen.getByText('First');
 
-      // Focus on tablist
-      userEvent.click(tabs);
-      expect(tabs).toHaveFocus();
-
-      // Tab to active TabList
+      // Tab to first tab
       userEvent.tab();
-      expect(activeTabList).toHaveFocus();
+      expect(firstTab).toHaveFocus();
 
       // Keyboard navigate between tabs
-      fireEvent.keyDown(activeTabList, {
+      fireEvent.keyDown(firstTab, {
         key: 'ArrowRight',
         keyCode: 39,
       });
@@ -203,18 +193,13 @@ describe('packages/tabs', () => {
     });
 
     test('only the current Tabs set is toggled when the arrow keys are pressed', () => {
-      const tabs = screen.getAllByRole('tablist')[0];
-      const activeTabList = screen.getByText('Tab Set 1-A');
+      const firstTab = screen.getByText('Tab Set 1-A');
 
-      // Focus on tablist
-      userEvent.click(tabs);
-      expect(tabs).toHaveFocus();
-
-      // Tab to active TabList
+      // Tab to first tab
       userEvent.tab();
-      expect(activeTabList).toHaveFocus();
+      expect(firstTab).toHaveFocus();
 
-      fireEvent.keyDown(activeTabList, {
+      fireEvent.keyDown(firstTab, {
         key: 'ArrowRight',
         keyCode: 39,
       });
