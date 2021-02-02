@@ -112,7 +112,7 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
         {/* Intentionally left blank, as we want to preserve this space for when we */}
         {/* Have other sections on the SideNav and want to add back 'components' above */}
         {/* The name of each component */}
-        <small className={componentsStyle}>‎‎‎‎‏‏‎ ‎</small>
+        <small className={componentsStyle}>‎‎‎‎‏‏‎ </small>
         <div className={flexContainer}>
           <H2 as="h1" className={caps}>
             {componentName.split('-').join(' ')}
