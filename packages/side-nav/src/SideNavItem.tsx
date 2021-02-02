@@ -49,12 +49,12 @@ const sideNavItemFocusStyle = css`
 `;
 
 const sideNavItemDisabledStyle = css`
-  color: ${uiColors.gray.dark1};
+  color: ${uiColors.gray.base};
   cursor: not-allowed;
 
   &:hover,
   &:focus {
-    color: ${uiColors.gray.dark1};
+    color: ${uiColors.gray.base};
     background-color: inherit;
   }
 `;

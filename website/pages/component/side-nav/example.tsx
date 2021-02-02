@@ -88,10 +88,10 @@ function DefaultExample({
     >
       <SideNav
         {...collapsibleProps}
-        currentPath={active ? 'Projects' : undefined}
+        currentPath={active ? 'projects' : undefined}
       >
         <SideNavGroup {...collapsibleGroupProps} label={label}>
-          <SideNavItem>Projects</SideNavItem>
+          <SideNavItem path="projects">Projects</SideNavItem>
           <SideNavItem disabled={disabled}>Alerts</SideNavItem>
           <SideNavItem>Activity Feed</SideNavItem>
           <SideNavItem>Settings</SideNavItem>

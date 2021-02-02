@@ -1990,13 +1990,6 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@leafygreen-ui/icon@^8.0.1":
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/icon/-/icon-8.0.1.tgz#847a3f6ba1c84e4f07529dd6f53ba8fb8af7d3f8"
-  integrity sha512-xBTzYFgvppV+Hvl/Wo0WgOiiggNq5xeOKIyYNWJIUXpMcFDYggTYQS10X9QosYOYOJQQLF2JWyPa52TGifce5w==
-  dependencies:
-    "@leafygreen-ui/lib" "^6.1.2"
-
 "@lerna/add@3.20.0":
   version "3.20.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.20.0.tgz#bea7edf36fc93fb72ec34cb9ba854c48d4abf309"
