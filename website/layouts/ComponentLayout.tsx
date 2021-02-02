@@ -14,6 +14,7 @@ import { mq } from 'utils/mediaQuery';
 import { pageContainerWidth } from 'styles/constants';
 import figmaLinks from 'utils/figmaLinks';
 import { Component } from 'utils/types';
+import { metaTagKey } from 'utils/metaTagKey';
 
 const layout = css`
   ${mq({
@@ -105,7 +106,7 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
       <Head>
         <title>{pageTitle}</title>
 
-        <meta property="og:title" content={pageTitle} key="title" />
+        <meta property="og:title" content={pageTitle} key={metaTagKey.Title} />
       </Head>
 
       <div className={margin4}>
