@@ -50,7 +50,7 @@ const sideNavGroupWithGlyphNavCollapsedStyle = css`
   border-color: ${uiColors.gray.light2};
 `;
 
-const sideNavGroupNavCollapsedAndCurrentStyle = css`
+const sideNavGroupWithGlyphNavCollapsedAndCurrentStyle = css`
   background-color: ${uiColors.green.light3};
 `;
 
@@ -262,8 +262,8 @@ const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
             [sideNavGroupExpandedCollapsibleStyle]:
               canRenderAsCollapsible && !collapsed,
             [sideNavGroupWithGlyphNavCollapsedStyle]: hasGlyph && navCollapsed,
-            [sideNavGroupNavCollapsedAndCurrentStyle]:
-              navCollapsed && containsCurrentPath,
+            [sideNavGroupWithGlyphNavCollapsedAndCurrentStyle]:
+              navCollapsed && containsCurrentPath && hasGlyph,
           },
           className,
         )}
