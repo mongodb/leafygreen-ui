@@ -1,5 +1,14 @@
 # @leafygreen-ui/callout
 
+## 2.0.4
+
+### Patch Changes
+
+- Updated dependencies [f805b772]
+- Updated dependencies [f805b772]
+  - @leafygreen-ui/icon@9.0.0
+  - @leafygreen-ui/typography@7.3.2
+
 ## 2.0.3
 
 ### Patch Changes

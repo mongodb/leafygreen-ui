@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum c3b9646929d3d29b763126c08215be95
+ * @checksum 2697ca691ee1d6d668835db511b18a92
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -48,19 +48,12 @@ const X = ({
       {...props}
       viewBox="0 0 16 16"
     >
-      <g
-        id="Audit"
-        stroke="none"
-        strokeWidth={1}
-        fill="none"
+      <path
         fillRule="evenodd"
-      >
-        <path
-          d="M9,1.5 L8.999,7 L14.5,7 L14.5,9 L8.999,9 L9,14.5 L7,14.5 L6.999,9 L1.5,9 L1.5,7 L6.999,7 L7,1.5 L9,1.5 Z"
-          transform="translate(8.000000, 8.000000) rotate(45.000000) translate(-8.000000, -8.000000)"
-          fill={'currentColor'}
-        />
-      </g>
+        clipRule="evenodd"
+        d="M12.2028 3.40381C11.8123 3.01329 11.1791 3.01329 10.7886 3.40381L8.3137 5.87869L5.83883 3.40381C5.44831 3.01329 4.81514 3.01329 4.42462 3.40381L3.71751 4.11092C3.32699 4.50144 3.32699 5.13461 3.71751 5.52513L6.19238 8.00001L3.71751 10.4749C3.32699 10.8654 3.32699 11.4986 3.71751 11.8891L4.42462 12.5962C4.81514 12.9867 5.44831 12.9867 5.83883 12.5962L8.3137 10.1213L10.7886 12.5962C11.1791 12.9867 11.8123 12.9867 12.2028 12.5962L12.9099 11.8891C13.3004 11.4986 13.3004 10.8654 12.9099 10.4749L10.435 8.00001L12.9099 5.52513C13.3004 5.13461 13.3004 4.50144 12.9099 4.11092L12.2028 3.40381Z"
+        fill={'currentColor'}
+      />
     </svg>
   );
 };

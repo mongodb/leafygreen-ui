@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 363632afe1de01b1ad732759f6a0bbb6
+ * @checksum 7ab4e362f3601a5318d6d27418e5d508
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -48,19 +48,12 @@ const Plus = ({
       {...props}
       viewBox="0 0 16 16"
     >
-      <g
-        id="Plus-Copy"
-        stroke="none"
-        strokeWidth={1}
-        fill="none"
+      <path
         fillRule="evenodd"
-      >
-        <path
-          d="M9,7 L13,7 L13,9 L9,9 L9,13 L7,13 L7,9 L3,9 L3,7 L7,7 L7,3 L9,3 L9,7 Z"
-          id="Combined-Shape"
-          fill={'currentColor'}
-        />
-      </g>
+        clipRule="evenodd"
+        d="M7.5 2C6.94772 2 6.5 2.44772 6.5 3V6.5H3C2.44772 6.5 2 6.94772 2 7.5V8.5C2 9.05228 2.44772 9.5 3 9.5H6.5V13C6.5 13.5523 6.94772 14 7.5 14H8.5C9.05228 14 9.5 13.5523 9.5 13V9.5H13C13.5523 9.5 14 9.05228 14 8.5V7.5C14 6.94771 13.5523 6.5 13 6.5H9.5V3C9.5 2.44772 9.05228 2 8.5 2H7.5Z"
+        fill={'currentColor'}
+      />
     </svg>
   );
 };
