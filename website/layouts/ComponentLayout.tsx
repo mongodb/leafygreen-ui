@@ -96,12 +96,16 @@ function ComponentLayout({ children }: { children: React.ReactNode }) {
   const isMobile =
     viewport !== null ? viewport.width < breakpoints.Tablet : false;
 
+  const pageTitle = `${toTitleCase(
+    componentName,
+  )} – LeafyGreen Design System | MongoDB`;
+
   return (
     <div role="main" className={layout}>
       <Head>
-        <title>
-          {toTitleCase(componentName)} – LeafyGreen Design System | MongoDB
-        </title>
+        <title>{pageTitle}</title>
+
+        <meta property="og:title" content={pageTitle} />
       </Head>
 
       <div className={margin4}>
