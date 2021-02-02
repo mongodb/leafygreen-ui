@@ -43,6 +43,10 @@ const textAreaStyle = css`
   border: 1px solid;
   transition: border-color 150ms ease-in-out;
 
+  &:focus {
+    outline: none;
+  }
+
   &:disabled {
     cursor: not-allowed;
   }
@@ -73,7 +77,7 @@ const colorSets: Record<Mode, ColorSets> = {
       border-color: ${uiColors.gray.light1};
 
       &:focus {
-        border-color: ${uiColors.white};
+        border-color: ${uiColors.gray.light1};
       }
 
       &:disabled {

@@ -2,35 +2,36 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 28cad7673e8e6d9e593b0a74df68f7bc
+ * @checksum ca5a721e26644d89c7c778a227e18669
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { IdAllocator } from '@leafygreen-ui/lib';
-import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CaretLeftProps extends LGGlyph.ComponentProps {}
-const idAllocator = IdAllocator.create('CaretLeft');
 
 const CaretLeft = ({
   className,
   size = 16,
   title,
-  titleId: customTitleId,
+  ['aria-label']: ariaLabel,
+  ['aria-labelledby']: ariaLabelledby,
   fill,
+  role = 'img',
   ...props
 }: CaretLeftProps) => {
-  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
-    customTitleId,
-  ]);
   const fillStyle = css`
     color: ${fill};
   `;
   const noFlexShrink = css`
     flex-shrink: 0;
   `;
-  title = getGlyphTitle('CaretLeft', title);
+  const accessibleProps = generateAccessibleProps(role, 'CaretLeft', {
+    title,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
+  });
   return (
     <svg
       className={cx(
@@ -42,31 +43,15 @@ const CaretLeft = ({
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}
       width={typeof size === 'number' ? size : sizeMap[size]}
+      role={role}
+      {...accessibleProps}
       {...props}
       viewBox="0 0 16 16"
-      role="img"
-      aria-labelledby={titleId}
     >
-      {title === undefined ? (
-        <title id={titleId}>{'CaretLeft'}</title>
-      ) : title ? (
-        <title id={titleId}>{title}</title>
-      ) : null}
-      <desc>{'Created with Sketch.'}</desc>
-      <g
-        id="CaretLeft-Copy"
-        stroke="none"
-        strokeWidth={1}
-        fill="none"
-        fillRule="evenodd"
-      >
-        <path
-          d="M4.17285687,6 L10.8271431,6 C11.4254697,6 11.724633,6.775217 11.3024493,7.22717749 L7.97530616,10.7889853 C7.71248981,11.0703382 7.28751019,11.0703382 7.02748976,10.7889853 L3.69755071,7.22717749 C3.27536701,6.775217 3.57453029,6 4.17285687,6 Z"
-          id="Path-Copy-2"
-          fill={'currentColor'}
-          transform="translate(7.500000, 8.500000) rotate(90.000000) translate(-7.500000, -8.500000) "
-        />
-      </g>
+      <path
+        d="M5.20381 8.67903C4.93207 8.45271 4.93207 8.04729 5.20381 7.82097L9.02351 4.63963C9.40572 4.3213 10 4.5824 10 5.06866L10 11.4313C10 11.9176 9.40572 12.1787 9.02351 11.8604L5.20381 8.67903Z"
+        fill={'currentColor'}
+      />
     </svg>
   );
 };

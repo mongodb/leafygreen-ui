@@ -2,35 +2,36 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum fa1c45ca96f473c6ab7dd5138931c3cb
+ * @checksum 6ef96f55680c94b119e4aa4a17f72633
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { IdAllocator } from '@leafygreen-ui/lib';
-import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface VerticalEllipsisProps extends LGGlyph.ComponentProps {}
-const idAllocator = IdAllocator.create('VerticalEllipsis');
 
 const VerticalEllipsis = ({
   className,
   size = 16,
   title,
-  titleId: customTitleId,
+  ['aria-label']: ariaLabel,
+  ['aria-labelledby']: ariaLabelledby,
   fill,
+  role = 'img',
   ...props
 }: VerticalEllipsisProps) => {
-  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
-    customTitleId,
-  ]);
   const fillStyle = css`
     color: ${fill};
   `;
   const noFlexShrink = css`
     flex-shrink: 0;
   `;
-  title = getGlyphTitle('VerticalEllipsis', title);
+  const accessibleProps = generateAccessibleProps(role, 'VerticalEllipsis', {
+    title,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
+  });
   return (
     <svg
       className={cx(
@@ -42,30 +43,17 @@ const VerticalEllipsis = ({
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}
       width={typeof size === 'number' ? size : sizeMap[size]}
+      role={role}
+      {...accessibleProps}
       {...props}
       viewBox="0 0 16 16"
-      role="img"
-      aria-labelledby={titleId}
     >
-      {title === undefined ? (
-        <title id={titleId}>{'Glyphs / Vertical Ellipsis'}</title>
-      ) : title ? (
-        <title id={titleId}>{title}</title>
-      ) : null}
-      <desc>{'Created with Sketch.'}</desc>
-      <g
-        id="Glyphs-/-Vertical-Ellipsis"
-        stroke="none"
-        strokeWidth={1}
-        fill="none"
+      <path
         fillRule="evenodd"
-      >
-        <path
-          d="M8,12.5 L8.14439324,12.5068608 C8.90473356,12.5794844 9.5,13.2197059 9.5,13.999 L9.5,13.999 L9.49312925,14.1435595 C9.42040138,14.9047336 8.77929412,15.5 8,15.5 L8,15.5 L7.85560676,15.493129 C7.09526644,15.4203979 6.5,14.7792353 6.5,13.999 C6.5,13.171 7.172,12.5 8,12.5 L8,12.5 Z M8,6.501 L8.14439324,6.50786078 C8.90473356,6.58048443 9.5,7.22070588 9.5,8 L9.5,8 L9.49312925,8.14438327 C9.42040138,8.90461938 8.77929412,9.499 8,9.499 L8,9.499 L7.85560676,9.49213922 C7.09526644,9.41951557 6.5,8.77929412 6.5,8 C6.5,7.172 7.172,6.501 8,6.501 L8,6.501 Z M8,0.5 L8.14439324,0.506870955 C8.90473356,0.579602076 9.5,1.22076471 9.5,2.001 L9.5,2.001 L9.49312925,2.14538327 C9.42040138,2.90561938 8.77929412,3.5 8,3.5 L8,3.5 L7.85560676,3.49313922 C7.09526644,3.42051557 6.5,2.78029412 6.5,2.001 C6.5,1.172 7.172,0.5 8,0.5 L8,0.5 Z"
-          id="Combined-Shape"
-          fill={'currentColor'}
-        />
-      </g>
+        clipRule="evenodd"
+        d="M9.5 2.75C9.5 3.7165 8.7165 4.5 7.75 4.5C6.7835 4.5 6 3.7165 6 2.75C6 1.7835 6.7835 1 7.75 1C8.7165 1 9.5 1.7835 9.5 2.75ZM9.5 7.75C9.5 8.7165 8.7165 9.5 7.75 9.5C6.7835 9.5 6 8.7165 6 7.75C6 6.7835 6.7835 6 7.75 6C8.7165 6 9.5 6.7835 9.5 7.75ZM7.75 14.5C8.7165 14.5 9.5 13.7165 9.5 12.75C9.5 11.7835 8.7165 11 7.75 11C6.7835 11 6 11.7835 6 12.75C6 13.7165 6.7835 14.5 7.75 14.5Z"
+        fill={'currentColor'}
+      />
     </svg>
   );
 };

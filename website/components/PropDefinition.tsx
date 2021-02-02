@@ -3,6 +3,7 @@ import { css } from 'emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { InlineCode } from '@leafygreen-ui/typography';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
+import formatType from 'utils/formatType';
 
 interface PropDefinitionProps {
   defaultValue: string;
@@ -35,6 +36,19 @@ function PropBlock({ header, value }: { header: string; value: string }) {
   );
 }
 
+PropBlock.displayName = 'PropBlock';
+
+function TypeBlock({ header, value }: { header: string; value: string }) {
+  return (
+    <div className={propBlockContainer}>
+      <p className={propBlockPStyle}>{header}</p>
+      {formatType(value)}
+    </div>
+  );
+}
+
+TypeBlock.displayName = 'TypeBlock';
+
 const flexContainer = css`
   display: flex;
   flex-wrap: wrap;
@@ -64,13 +78,15 @@ function Definition({
     <div className={definitionContainer}>
       <div className={flexContainer}>
         <PropBlock header="Prop" value={prop} />
-        <PropBlock header="Type" value={type} />
+        <TypeBlock header="Type" value={type} />
         {showDefault && <PropBlock header="Default" value={defaultValue} />}
       </div>
       <div className={descriptionContainer}>{description}</div>
     </div>
   );
 }
+
+Definition.displayName = 'Definition';
 
 const inlineDefinitionStyle = css`
   padding: 0;
@@ -99,5 +115,7 @@ function PropDefinition({
     </InlineDefinition>
   );
 }
+
+PropDefinition.displayName = 'PropDefinition';
 
 export default PropDefinition;

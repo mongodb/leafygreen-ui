@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/toggle",
-  "version": "6.0.0",
+  "version": "7.0.1",
   "description": "LeafyGreen UI Kit Toggle",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,7 +20,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^6.1.2",
+    "@leafygreen-ui/lib": "^6.2.0",
     "@leafygreen-ui/palette": "^3.0.1",
     "@leafygreen-ui/interaction-ring": "^1.0.0"
   },

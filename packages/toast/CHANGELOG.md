@@ -1,5 +1,35 @@
 # @leafygreen-ui/toast
 
+## 0.4.2
+
+### Patch Changes
+
+- Updated dependencies [f805b772]
+- Updated dependencies [f805b772]
+  - @leafygreen-ui/icon@9.0.0
+  - @leafygreen-ui/typography@7.3.2
+
+## 0.4.1
+
+### Patch Changes
+
+- b0cbb63a: Fixes issue preventing bundlers from bundling the toast package as a dependency
+- Updated dependencies [ba56b1cc]
+  - @leafygreen-ui/icon@8.0.0
+  - @leafygreen-ui/typography@7.3.1
+
+## 0.4.0
+
+### Minor Changes
+
+- b010bdfe: This change improves screenreader compatibility by adding additonal aria attributes to the Toast component. This is being released as a breaking version since previously the root element of the Toast element would only be in the DOM when the toast is open, but now the element will always be in the DOM.
+
+## 0.3.0
+
+### Minor Changes
+
+- 7e7dc210: Added new Toast variants
+
 ## 0.2.2
 
 ### Patch Changes

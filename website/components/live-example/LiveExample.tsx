@@ -2,17 +2,45 @@
 /* eslint react/prop-types: 0 */
 
 import React, { useState } from 'react';
+import { transparentize } from 'polished';
 import { enforceExhaustive } from '@leafygreen-ui/lib';
 import { cx, css } from '@leafygreen-ui/emotion';
 import Card from '@leafygreen-ui/card';
 import { spacing } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
 import { Knob, Boolean, Text, Area, Number, Select } from './Knobs';
+import { mq } from 'utils/mediaQuery';
+import { pageContainerWidth } from 'styles/constants';
+
+const baseBoxShadow = `0 4px 10px -4px ${transparentize(0.7, uiColors.black)}`;
+
+const backdrop = css`
+  background-color: ${uiColors.gray.light3};
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+`;
 
 const previewStyle = css`
   display: flex;
   flex-direction: column;
-  margin-top: ${spacing[5]}px;
+  margin-top: ${spacing[4]}px;
+
+  ${mq({
+    boxShadow: ['none', baseBoxShadow],
+    borderRadius: ['0px', '7px'],
+    marginLeft: ['-24px', 'unset'],
+    marginRight: ['-24px', 'unset'],
+    width: [
+      'inherit',
+      'inherit',
+      'inherit',
+      `${pageContainerWidth.dataGraphic}px`,
+    ],
+  })}
 `;
 
 const componentContainer = css`
@@ -24,16 +52,15 @@ const componentContainer = css`
   flex-direction: row;
   flex-wrap: wrap;
   min-height: 400px;
+
+  ${mq({
+    padding: [`${spacing[4]}px`, `${spacing[6]}px`],
+    minHeight: ['200px', '400px'],
+  })}
 `;
 
 const componentContainerDarkMode = css`
   border-bottom: 1px solid ${uiColors.gray.dark2};
-`;
-
-const knobContainer = css`
-  padding-left: ${spacing[4]}px;
-  padding-right: ${spacing[4]}px;
-  padding-top: 42px;
 `;
 
 interface SelectConfigInterface<T> {
@@ -41,6 +68,7 @@ interface SelectConfigInterface<T> {
   options: Array<T | undefined>;
   default: T;
   label: string;
+  shouldDisable?: (props: any) => boolean;
 }
 
 interface BooleanConfigInterface {
@@ -170,6 +198,8 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
               {...sharedProps}
               options={knobConfig?.options as Array<string>}
               value={props[propName] as string}
+              // Allows us to disable Select dropdown based on current component props
+              disabled={knobConfig.shouldDisable?.(props)}
             />
           );
 
@@ -178,12 +208,14 @@ function LiveExample<ComponentProps extends ComponentPropsInterface>({
       }
     });
 
-    return <div className={knobContainer}>{knobs}</div>;
+    return <div>{knobs}</div>;
   };
 
   return (
     <div>
+      <div className={backdrop} />
       <Card
+        darkMode={props?.darkMode}
         className={cx(previewStyle, {
           [css`
             background-color: ${uiColors.gray.dark3};

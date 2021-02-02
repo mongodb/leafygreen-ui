@@ -37,6 +37,9 @@ function DefaultExample({ size, disabled, children }: Knobs) {
         overflow-x: auto;
         width: 100%;
         padding: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       `}
     >
       <RadioBoxGroup size={size} name="radio-box-group-default">

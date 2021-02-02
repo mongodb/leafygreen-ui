@@ -2,35 +2,40 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 646afef2657ca3c3b48ca353297324db
+ * @checksum 20a0a355f2d2d2402dd35685fcc9ed78
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { IdAllocator } from '@leafygreen-ui/lib';
-import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface QuestionMarkWithCircleProps extends LGGlyph.ComponentProps {}
-const idAllocator = IdAllocator.create('QuestionMarkWithCircle');
 
 const QuestionMarkWithCircle = ({
   className,
   size = 16,
   title,
-  titleId: customTitleId,
+  ['aria-label']: ariaLabel,
+  ['aria-labelledby']: ariaLabelledby,
   fill,
+  role = 'img',
   ...props
 }: QuestionMarkWithCircleProps) => {
-  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
-    customTitleId,
-  ]);
   const fillStyle = css`
     color: ${fill};
   `;
   const noFlexShrink = css`
     flex-shrink: 0;
   `;
-  title = getGlyphTitle('QuestionMarkWithCircle', title);
+  const accessibleProps = generateAccessibleProps(
+    role,
+    'QuestionMarkWithCircle',
+    {
+      title,
+      ['aria-label']: ariaLabel,
+      ['aria-labelledby']: ariaLabelledby,
+    },
+  );
   return (
     <svg
       className={cx(
@@ -42,17 +47,11 @@ const QuestionMarkWithCircle = ({
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}
       width={typeof size === 'number' ? size : sizeMap[size]}
+      role={role}
+      {...accessibleProps}
       {...props}
       viewBox="0 0 16 16"
-      role="img"
-      aria-labelledby={titleId}
     >
-      {title === undefined ? (
-        <title id={titleId}>{'Glyphs / Question Mark With Circle'}</title>
-      ) : title ? (
-        <title id={titleId}>{title}</title>
-      ) : null}
-      <desc>{'Created with Sketch.'}</desc>
       <g
         id="Glyphs-/-Question-Mark-With-Circle"
         stroke="none"

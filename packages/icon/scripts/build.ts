@@ -86,9 +86,8 @@ async function buildSvgFiles(
       const moduleCode = await svgr(
         fileContent,
         {
-          titleProp: true,
+          expandProps: 'end',
           svgProps: {
-            role: 'img',
             viewBox: '0 0 16 16',
           },
           jsx: {

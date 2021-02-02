@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/toast",
-  "version": "0.2.2",
+  "version": "0.4.2",
   "description": "leafyGreen UI Kit Toast",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -25,9 +25,9 @@
     "@leafygreen-ui/palette": "^3.0.1",
     "@leafygreen-ui/portal": "^3.0.1",
     "@leafygreen-ui/tokens": "^0.5.0",
-    "@leafygreen-ui/icon": "^7.0.1",
+    "@leafygreen-ui/icon": "^9.0.0",
     "@leafygreen-ui/icon-button": "^9.0.1",
-    "@leafygreen-ui/typography": "^7.0.0",
+    "@leafygreen-ui/typography": "^7.3.2",
     "lodash": "^4.17.20"
   }
 }

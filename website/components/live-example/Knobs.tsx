@@ -1,11 +1,14 @@
 import React, { useCallback, useMemo } from 'react';
 import { IdAllocator } from '@leafygreen-ui/lib';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { uiColors } from '@leafygreen-ui/palette';
+import { useViewportSize } from '@leafygreen-ui/hooks';
+import { Select as LGUISelect, Option } from '@leafygreen-ui/select';
 import TextInput from '@leafygreen-ui/text-input';
 import TextArea from '@leafygreen-ui/text-area';
 import Toggle from '@leafygreen-ui/toggle';
+import { mq } from 'utils/mediaQuery';
 
 const booleanIdAllocator = IdAllocator.create('boolean');
 const textIdAllocator = IdAllocator.create('text');
@@ -13,16 +16,29 @@ const areaIdAllocator = IdAllocator.create('area');
 const numberIdAllocator = IdAllocator.create('number');
 const selectIdAllocator = IdAllocator.create('select');
 
+const knobsWidth = 326; // totalWidth (700px) - padding on both sides (24px on each side) / 2
+
 const knobContainerStyle = css`
   display: flex;
-  flex-grow: 1;
   justify-content: space-between;
-  margin-bottom: ${spacing[4]}px;
+  align-items: center;
+  flex-grow: 1;
+
+  ${mq({
+    padding: [
+      `${spacing[3]}px ${spacing[4]}px`,
+      `${spacing[3]}px ${spacing[5]}px`,
+    ],
+  })}
+`;
+
+const knobContainerHeight = css`
+  height: 71px;
 `;
 
 const labelStyle = css`
   color: ${uiColors.gray.dark2};
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: 0;
   line-height: 20px;
   font-weight: 600;
@@ -31,9 +47,17 @@ const labelStyle = css`
 const textAreaClassName = css`
   display: flex;
   flex-direction: column;
-  flex-shrink: 1;
-  padding-left: 16px;
-  width: 300px;
+  width: ${knobsWidth}px;
+
+  ${mq({
+    width: ['200px', `${knobsWidth}px`],
+  })}
+`;
+
+const textClassName = css`
+  ${mq({
+    width: ['200px', `${knobsWidth}px`],
+  })}
 `;
 
 const labelDarkMode = css`
@@ -74,22 +98,18 @@ export interface NumberInterface extends KnobInterface {
   step?: number;
 }
 
-export interface BasicSelectInterface extends KnobInterface {
+export interface SelectInterface extends KnobInterface {
   onChange: (value: string, prop: string) => void;
   value: string;
   options: Array<string>;
-}
-
-export interface GlyphSelectInterface {
-  onChange: (value: string, prop: string) => void;
-  value: React.ReactElement;
-  options: Array<string>;
-  label: string;
-  prop: 'glyph';
-  darkMode: boolean;
+  disabled?: boolean;
 }
 
 function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
+  const viewport = useViewportSize();
+  const isTouchDevice =
+    viewport !== null ? viewport.width < breakpoints.Tablet : false;
+
   const handleChange = () => {
     onChange(!value, prop);
   };
@@ -97,7 +117,16 @@ function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
   const labelId = useMemo(() => booleanIdAllocator.generate(), []);
 
   return (
-    <div className={knobContainerStyle}>
+    <div
+      className={cx(
+        knobContainerStyle,
+        knobContainerHeight,
+        css`
+          border-bottom: 1px solid
+            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
+        `,
+      )}
+    >
       <label
         id={labelId}
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
@@ -107,13 +136,15 @@ function Boolean({ onChange, label, value, prop, darkMode }: BooleanInterface) {
       <Toggle
         onChange={handleChange}
         checked={value}
-        size="small"
+        size={isTouchDevice ? 'default' : 'small'}
         darkMode={darkMode}
         aria-labelledby={labelId}
       />
     </div>
   );
 }
+
+Boolean.displayName = 'Boolean';
 
 function Number({
   onChange,
@@ -132,7 +163,16 @@ function Number({
   const labelId = useMemo(() => numberIdAllocator.generate(), []);
 
   return (
-    <div className={knobContainerStyle}>
+    <div
+      className={cx(
+        knobContainerStyle,
+        knobContainerHeight,
+        css`
+          border-bottom: 1px solid
+            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
+        `,
+      )}
+    >
       <label
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
         id={labelId}
@@ -148,10 +188,15 @@ function Number({
         min={min}
         max={max}
         step={step}
+        className={css`
+          width: ${knobsWidth}px;
+        `}
       />
     </div>
   );
 }
+
+Number.displayName = 'Number';
 
 function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
   const handleChange = useCallback(
@@ -164,7 +209,16 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
   const labelId = useMemo(() => textIdAllocator.generate(), []);
 
   return (
-    <div className={knobContainerStyle}>
+    <div
+      className={cx(
+        knobContainerStyle,
+        knobContainerHeight,
+        css`
+          border-bottom: 1px solid
+            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
+        `,
+      )}
+    >
       <label
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
         id={labelId}
@@ -176,10 +230,13 @@ function Text({ onChange, label, value, prop, darkMode }: TextInterface) {
         value={value}
         aria-labelledby={labelId}
         darkMode={darkMode}
+        className={textClassName}
       />
     </div>
   );
 }
+
+Text.displayName = 'Text';
 
 function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
   const handleChange = useCallback(
@@ -192,7 +249,15 @@ function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
   const labelId = useMemo(() => areaIdAllocator.generate(), []);
 
   return (
-    <div className={knobContainerStyle}>
+    <div
+      className={cx(
+        knobContainerStyle,
+        css`
+          border-bottom: 1px solid
+            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
+        `,
+      )}
+    >
       <label
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
         id={labelId}
@@ -210,6 +275,8 @@ function Area({ onChange, label, value, prop, darkMode }: TextInterface) {
   );
 }
 
+Area.displayName = 'Area';
+
 function Select({
   onChange,
   label,
@@ -217,42 +284,58 @@ function Select({
   prop,
   options,
   darkMode,
-}: BasicSelectInterface | GlyphSelectInterface) {
+  disabled,
+}: SelectInterface) {
   const labelId = useMemo(() => selectIdAllocator.generate(), []);
 
-  const handleChange = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
-    onChange(target.value, prop);
+  const handleChange = (value: string) => {
+    if (value === '') {
+      return;
+    }
+
+    onChange(value, prop);
   };
 
   const generateOptionsCallback = () => {
-    return options
-      .sort((a, b) => a.localeCompare(b))
-      .map(option => (
-        <option key={option} value={option} selected={option === value}>
-          {option}
-        </option>
-      ));
+    return options.map(option => (
+      <Option key={option} value={option}>
+        {option}
+      </Option>
+    ));
   };
 
-  const generateOptions = React.useCallback(generateOptionsCallback, [
-    options,
-    value,
-  ]);
+  const generateOptions = React.useCallback(generateOptionsCallback, [options]);
 
   return (
-    <div className={knobContainerStyle}>
+    <div
+      className={cx(
+        knobContainerStyle,
+        knobContainerHeight,
+        css`
+          border-bottom: 1px solid
+            ${darkMode ? uiColors.gray.dark2 : uiColors.gray.light2};
+        `,
+      )}
+    >
       <label
         id={labelId}
         className={cx(labelStyle, { [labelDarkMode]: darkMode })}
       >
         {label}
       </label>
-      {/* eslint-disable-next-line jsx-a11y/no-onchange */}
-      <select aria-labelledby={labelId} onChange={handleChange}>
+      <LGUISelect
+        aria-labelledby={labelId}
+        onChange={handleChange}
+        darkMode={darkMode}
+        value={value}
+        disabled={disabled}
+      >
         {generateOptions()}
-      </select>
+      </LGUISelect>
     </div>
   );
 }
+
+Select.displayName = 'Select';
 
 export { Knob, Boolean, Text, Area, Number, Select };

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { cx, css } from '@leafygreen-ui/emotion';
-import { variantColors } from '@leafygreen-ui/syntax';
+import { variantColors } from './globalStyles';
 import { darken } from 'polished';
 
 const Mode = {

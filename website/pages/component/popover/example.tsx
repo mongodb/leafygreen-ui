@@ -5,6 +5,14 @@ import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import Button from '@leafygreen-ui/button';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
+const wrapper = css`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const containerStyle = css`
   position: absolute;
 `;
@@ -13,8 +21,12 @@ const popoverStyle = css`
   border: 1px solid ${uiColors.gray.light1};
   text-align: center;
   padding: 20px;
-  background-color: ${uiColors.white};
   overflow: hidden;
+  // Reset these properties since they'll be inherited
+  // from the container element when not using a portal.
+  font-size: initial;
+  color: initial;
+  background-color: initial;
 `;
 
 // When interface is used, ts complains that index signature is missing
@@ -72,12 +84,8 @@ function DefaultExample({
 }: Knobs) {
   const [active, setActive] = useState(false);
   return (
-    <div>
-      <Button
-        onClick={() => setActive(!active)}
-        className={containerStyle}
-        variant="primary"
-      >
+    <div className={wrapper}>
+      <Button onClick={() => setActive(!active)} className={containerStyle}>
         Popover
         <Popover
           align={align}

@@ -2,35 +2,36 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum ed63c458440f69d29b60980d1c93503f
+ * @checksum 06ef6639ce38ab47dbea8f788b07aa35
  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { IdAllocator } from '@leafygreen-ui/lib';
-import { getGlyphTitle, sizeMap } from '../glyphCommon';
+import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface TrashProps extends LGGlyph.ComponentProps {}
-const idAllocator = IdAllocator.create('Trash');
 
 const Trash = ({
   className,
   size = 16,
   title,
-  titleId: customTitleId,
+  ['aria-label']: ariaLabel,
+  ['aria-labelledby']: ariaLabelledby,
   fill,
+  role = 'img',
   ...props
 }: TrashProps) => {
-  const titleId = React.useMemo(() => customTitleId || idAllocator.generate(), [
-    customTitleId,
-  ]);
   const fillStyle = css`
     color: ${fill};
   `;
   const noFlexShrink = css`
     flex-shrink: 0;
   `;
-  title = getGlyphTitle('Trash', title);
+  const accessibleProps = generateAccessibleProps(role, 'Trash', {
+    title,
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
+  });
   return (
     <svg
       className={cx(
@@ -42,62 +43,17 @@ const Trash = ({
       )}
       height={typeof size === 'number' ? size : sizeMap[size]}
       width={typeof size === 'number' ? size : sizeMap[size]}
+      role={role}
+      {...accessibleProps}
       {...props}
       viewBox="0 0 16 16"
-      role="img"
-      aria-labelledby={titleId}
     >
-      {title === undefined ? (
-        <title id={titleId}>{'Trash'}</title>
-      ) : title ? (
-        <title id={titleId}>{title}</title>
-      ) : null}
-      <desc>{'Created with Sketch.'}</desc>
-      <g
-        id="Trash-Copy"
-        stroke="none"
-        strokeWidth={1}
-        fill="none"
+      <path
         fillRule="evenodd"
-      >
-        <rect
-          id="Rectangle"
-          fill={'currentColor'}
-          x={5}
-          y={0}
-          width={6}
-          height={1}
-        />
-        <rect
-          id="Rectangle"
-          fill={'currentColor'}
-          x={5}
-          y={1}
-          width={1}
-          height={1}
-        />
-        <rect
-          id="Rectangle-Copy-3"
-          fill={'currentColor'}
-          x={10}
-          y={1}
-          width={1}
-          height={1}
-        />
-        <rect
-          id="Rectangle"
-          fill={'currentColor'}
-          x={1}
-          y={2}
-          width={14}
-          height={2}
-        />
-        <path
-          d="M2,5 L14,5 L14,14 C14,15.1045695 13.1045695,16 12,16 L4,16 C2.8954305,16 2,15.1045695 2,14 L2,5 Z M4,6 L4,14 L5,14 L5,6 L4,6 Z M7.5,6 L7.5,14 L8.5,14 L8.5,6 L7.5,6 Z M11,6 L11,14 L12,14 L12,6 L11,6 Z"
-          id="Combined-Shape"
-          fill={'currentColor'}
-        />
-      </g>
+        clipRule="evenodd"
+        d="M5 2C5 1.44772 5.44772 1 6 1H10C10.5523 1 11 1.44772 11 2H13C13.5523 2 14 2.44772 14 3V4H2V3C2 2.44772 2.44772 2 3 2H5ZM14 5H2L3.67845 13.3922C3.86542 14.3271 4.68625 15 5.63961 15H10.3604C11.3138 15 12.1346 14.3271 12.3216 13.3922L14 5Z"
+        fill={'currentColor'}
+      />
     </svg>
   );
 };

@@ -9,7 +9,7 @@ const setSelected = jest.fn();
 
 const renderTabs = (tabsProps = {}, tabProps = {}) => {
   render(
-    <Tabs {...tabsProps} data-testid={tabsTestId}>
+    <Tabs {...tabsProps} data-testid={tabsTestId} aria-label="Testing tabs">
       <Tab {...tabProps} name="First">
         Content 1
       </Tab>
@@ -19,7 +19,7 @@ const renderTabs = (tabsProps = {}, tabProps = {}) => {
   );
 };
 
-describe('packages/tab', () => {
+describe('packages/tabs', () => {
   describe('when controlled', () => {
     test('clicking a tab fires setSelected callback', () => {
       renderTabs({ setSelected, selected: 1 });
@@ -66,8 +66,8 @@ describe('packages/tab', () => {
         selected: 1,
       });
 
-      const container = screen.getByTestId(tabsTestId);
-      expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
+      expect(screen.getByText('Content 2')).toBeInTheDocument();
+      expect(screen.queryByText('Content 1')).not.toBeInTheDocument();
     });
 
     test('selected tab is active on first render', () => {
@@ -109,26 +109,18 @@ describe('packages/tab', () => {
       const newActiveTabTitle = screen.getByText('Second');
       fireEvent.click(newActiveTabTitle);
       expect(screen.getByText('Content 2')).toBeInTheDocument();
-
-      const container = screen.getByTestId(tabsTestId);
-      expect(container.querySelectorAll('[role="tabpanel"]').length).toBe(1);
     });
 
     test('keyboard navigation is supported', () => {
       renderTabs({}, { default: true });
-      const tabs = screen.getByRole('tablist');
-      const activeTabList = screen.getByText('First');
+      const firstTab = screen.getByText('First');
 
-      // Focus on tablist
-      userEvent.click(tabs);
-      expect(tabs).toHaveFocus();
-
-      // Tab to active TabList
+      // Focus on first tab
       userEvent.tab();
-      expect(activeTabList).toHaveFocus();
+      expect(firstTab).toHaveFocus();
 
       // Keyboard navigate between tabs
-      fireEvent.keyDown(activeTabList, {
+      fireEvent.keyDown(firstTab, {
         key: 'ArrowRight',
         keyCode: 39,
       });
@@ -137,7 +129,10 @@ describe('packages/tab', () => {
 
     test('keyboard navigation skips disabled tabs', () => {
       render(
-        <Tabs data-testid={tabsTestId}>
+        <Tabs
+          data-testid={tabsTestId}
+          aria-label="Description of our test tabs"
+        >
           <Tab default name="First">
             Content 1
           </Tab>
@@ -148,19 +143,14 @@ describe('packages/tab', () => {
         </Tabs>,
       );
 
-      const tabs = screen.getByRole('tablist');
-      const activeTabList = screen.getByText('First');
+      const firstTab = screen.getByText('First');
 
-      // Focus on tablist
-      userEvent.click(tabs);
-      expect(tabs).toHaveFocus();
-
-      // Tab to active TabList
+      // Tab to first tab
       userEvent.tab();
-      expect(activeTabList).toHaveFocus();
+      expect(firstTab).toHaveFocus();
 
       // Keyboard navigate between tabs
-      fireEvent.keyDown(activeTabList, {
+      fireEvent.keyDown(firstTab, {
         key: 'ArrowRight',
         keyCode: 39,
       });
@@ -186,13 +176,13 @@ describe('packages/tab', () => {
     beforeEach(() => {
       render(
         <>
-          <Tabs>
+          <Tabs aria-label="Description of another set of test tabs">
             <Tab default name="Tab Set 1-A">
               Content 1-A
             </Tab>
             <Tab name="Tab Set 1-B">Content 1-B</Tab>
           </Tabs>
-          <Tabs>
+          <Tabs aria-label="Description of another set of test tabs">
             <Tab default name="Tab Set 2-A">
               Content 2-A
             </Tab>
@@ -203,23 +193,52 @@ describe('packages/tab', () => {
     });
 
     test('only the current Tabs set is toggled when the arrow keys are pressed', () => {
-      const tabs = screen.getAllByRole('tablist')[0];
-      const activeTabList = screen.getByText('Tab Set 1-A');
+      const firstTab = screen.getByText('Tab Set 1-A');
 
-      // Focus on tablist
-      userEvent.click(tabs);
-      expect(tabs).toHaveFocus();
-
-      // Tab to active TabList
+      // Tab to first tab
       userEvent.tab();
-      expect(activeTabList).toHaveFocus();
+      expect(firstTab).toHaveFocus();
 
-      fireEvent.keyDown(activeTabList, {
+      fireEvent.keyDown(firstTab, {
         key: 'ArrowRight',
         keyCode: 39,
       });
 
       expect(screen.getByText('Tab Set 1-B')).toHaveFocus();
     });
+  });
+
+  describe('it maintains accessible props', () => {
+    beforeEach(() => {
+      render(
+        <Tabs aria-label="testing accessible labels">
+          <Tab default name="Name 1">
+            Content 1
+          </Tab>
+          <Tab name="Name 2">Content 2</Tab>
+        </Tabs>,
+      );
+    });
+
+    test('tabs and panels render with appropriately related aria tags', () => {
+      const tab = screen.getAllByRole('tab')[0];
+      const panel = screen.getAllByRole('tabpanel')[0];
+
+      expect(tab.getAttribute('id')).toEqual(
+        panel.getAttribute('aria-labelledby'),
+      );
+      expect(tab.getAttribute('aria-controls')).toEqual(
+        panel.getAttribute('id'),
+      );
+    });
+  });
+});
+
+describe('packages/tab', () => {
+  test('props are passed to tab element through rest', () => {
+    renderTabs({}, { 'data-testid': 'test-prop' });
+    expect(screen.getAllByRole('tab')[0].getAttribute('data-testid')).toBe(
+      'test-prop',
+    );
   });
 });

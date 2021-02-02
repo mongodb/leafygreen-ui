@@ -5,12 +5,15 @@ import { spacing, breakpoints } from '@leafygreen-ui/tokens';
 import { SideNav, SideNavGroup, SideNavItem } from '@leafygreen-ui/side-nav';
 import { useViewportSize } from '@leafygreen-ui/hooks';
 import MDBDesignLogo from 'components/svgs/MDBDesignLogo';
+import { HOME_PAGE } from 'utils/routes';
+import { Component } from 'utils/types';
 import MobileNavigationGroup from './MobileNavigationGroup';
 import MobileNavigationItem from './MobileNavigationItem';
 import MobileNavigation from './MobileNavigation';
 
 const navContainer = css`
   width: 270px;
+  padding-top: 12px;
   // spacing[3] already built into side nav
   padding-left: ${spacing[5] - spacing[3]}px;
   padding-right: 60px;
@@ -20,6 +23,7 @@ const navContainer = css`
 const logoStyles = css`
   // adds back spacing that was already built into side nav
   margin: 12px 0 ${spacing[4]}px ${spacing[3]}px;
+  cursor: pointer;
 `;
 
 const coreGuidelines = [
@@ -31,7 +35,7 @@ const coreGuidelines = [
   'typography',
 ];
 
-const components = [
+const components: Array<Component> = [
   'badge',
   'banner',
   'box',
@@ -56,9 +60,9 @@ const components = [
   'portal',
   'radio-box-group',
   'radio-group',
+  'select',
   'side-nav',
   'stepper',
-  'syntax',
   'table',
   'tabs',
   'text-area',
@@ -79,7 +83,6 @@ type GroupType = typeof GroupType[keyof typeof GroupType];
 
 function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
   const router = useRouter();
-  const activeType = router.asPath.split('/')[1] as GroupType;
   const activePage = router.asPath.split('/')[2];
 
   const renderGroup = (type: GroupType) => {
@@ -91,7 +94,7 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
         <MobileNavigationGroup
           key={type}
           header={isGuideline ? 'Core Guidelines' : 'Components'}
-          initialCollapsed={activeType !== type}
+          initialCollapsed={false} // Always false until we add more sections to navigation
         >
           {items.map(item => {
             const path =
@@ -116,8 +119,6 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
       <SideNavGroup
         key={type}
         header={isGuideline ? 'Core Guidelines' : 'Components'}
-        collapsible
-        initialCollapsed={false}
       >
         {items.map(item => {
           const path =
@@ -141,6 +142,8 @@ function Content({ isTouchDevice = false }: { isTouchDevice?: boolean }) {
   return renderGroup(GroupType.Component);
 }
 
+Content.displayName = 'Content';
+
 function Navigation() {
   const { push } = useRouter();
   const viewport = useViewportSize();
@@ -156,10 +159,10 @@ function Navigation() {
 
   return (
     <nav className={navContainer}>
-      <MDBDesignLogo className={logoStyles} onClick={() => push('/')} />
+      <MDBDesignLogo className={logoStyles} onClick={() => push(HOME_PAGE)} />
       <SideNav
         className={css`
-          margin-top: ${spacing[4]}px;
+          margin-top: ${spacing[3]}px;
         `}
       >
         <Content />
@@ -167,5 +170,7 @@ function Navigation() {
     </nav>
   );
 }
+
+Navigation.displayName = 'Navigation';
 
 export default Navigation;

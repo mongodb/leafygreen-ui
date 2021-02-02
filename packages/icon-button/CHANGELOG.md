@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 9.1.1
+
+### Patch Changes
+
+- 2daf1808: Reads `isGlyph` function from icon package, rather than defining it locally
+
 ## 9.1.0
 
 ### Minor Changes

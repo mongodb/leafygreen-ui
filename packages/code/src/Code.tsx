@@ -2,37 +2,41 @@ import React, { useRef, useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
-import Syntax, {
-  SyntaxProps,
-  Language,
-  variantColors,
-} from '@leafygreen-ui/syntax';
+import Syntax from './Syntax';
+import { spacing } from '@leafygreen-ui/tokens';
+import { variantColors } from './globalStyles';
+import { Language, CodeProps, Mode } from './types';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import WindowChrome from './WindowChrome';
 import debounce from 'lodash/debounce';
 import { uiColors } from '@leafygreen-ui/palette';
 import ClipboardJS from 'clipboard';
+import facepaint from 'facepaint';
 
-const Mode = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
-
-type Mode = typeof Mode[keyof typeof Mode];
-
-const whiteSpace = 12;
+// We use max-device-width to select specifically for iOS devices
+const mq = facepaint([
+  `@media only screen and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 2)`,
+  `@media only screen and (min-device-width: 813px) and (-webkit-min-device-pixel-ratio: 2)`,
+]);
 
 const codeWrapperStyle = css`
   overflow-x: auto;
   border-left: 2px solid;
   // We apply left / right padding in Syntax to support line highlighting
-  padding-top: ${whiteSpace}px;
-  padding-bottom: ${whiteSpace}px;
+  padding-top: ${spacing[2]}px;
+  padding-bottom: ${spacing[2]}px;
   margin: 0;
   position: relative;
   flex-grow: 1;
+
+  ${mq({
+    // Fixes annoying issue where font size is overridden in mobile Safari to be 20px.
+    // Ideally, we wouldn't need to set the text to wrap, but from what I can tell, this is the one possible solution to the problem.
+    whiteSpace: ['pre', 'pre-wrap', 'pre'],
+  })}
 `;
 
 const codeWrapperStyleWithWindowChrome = css`
@@ -49,7 +53,29 @@ const copyStyle = css`
 `;
 
 const singleLineCopyStyle = css`
-  padding: 10px;
+  height: 36px;
+  padding-top: 0;
+  justify-content: center;
+`;
+
+const singleLineWrapperStyle = css`
+  align-items: center;
+  display: flex;
+
+  ${mq({
+    // Keeps the component from breaking on mobile.
+    height: ['36px', 'auto', '36px'],
+
+    '& > code': {
+      lineHeight: ['1em', '24px', '1em'],
+    },
+  })}
+`;
+
+const wrapperFocusStyle = css`
+  &:focus {
+    outline: none;
+  }
 `;
 
 function getWrapperVariantStyle(mode: Mode): string {
@@ -74,6 +100,7 @@ function getSidebarVariantStyle(mode: Mode): string {
         border-color: ${colors[1]};
         background-color: white;
       `;
+
     case Mode.Dark:
       return css`
         border-color: ${colors[1]};
@@ -163,45 +190,6 @@ function getScrollShadowStyle(scrollState: ScrollState, mode: Mode): string {
   return '';
 }
 
-interface CodeProps extends Omit<SyntaxProps, 'onCopy'> {
-  /**
-   * Shows line numbers in preformatted code blocks.
-   *
-   * default: `false`
-   */
-  showLineNumbers?: boolean;
-
-  /**
-   * Shows window chrome for code block;
-   *
-   * default: `false`
-   */
-  showWindowChrome?: boolean;
-
-  /**
-   * Renders a file name or other descriptor for a block of code
-   */
-  chromeTitle?: string;
-
-  /**
-   * When true, allows the code block to be copied to the user's clipboard by clicking the rendered copy button.
-   *
-   * default: `true`
-   */
-  copyable?: boolean;
-
-  /**
-   * Callback fired when Code is copied via the copy button.
-   *
-   */
-  onCopy?: Function;
-
-  /**
-   * An array of the line numbers to highlight
-   */
-  highlightLines?: Array<number | [number, number]>;
-}
-
 type DetailedElementProps<T> = React.DetailedHTMLProps<
   React.HTMLAttributes<T>,
   T
@@ -234,10 +222,11 @@ function Code({
   chromeTitle = '',
   copyable = true,
   onCopy,
-  highlightLines,
+  highlightLines = [],
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
+  const { usingKeyboard: showFocus } = useUsingKeyboardContext();
   const [buttonNode, setButtonNode] = useState<HTMLButtonElement | null>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [copied, setCopied] = useState(false);
@@ -288,6 +277,8 @@ function Code({
     },
     className,
     getScrollShadowStyle(scrollState, mode),
+    { [singleLineWrapperStyle]: !isMultiline },
+    { [wrapperFocusStyle]: !showFocus },
   );
 
   const renderedSyntaxComponent = (
@@ -301,7 +292,9 @@ function Code({
     </Syntax>
   );
 
-  function handleClick() {
+  function handleClick(e: React.MouseEvent) {
+    e.preventDefault();
+
     if (onCopy) {
       onCopy();
     }

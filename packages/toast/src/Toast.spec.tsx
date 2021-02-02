@@ -15,7 +15,8 @@ describe('packages/toast', () => {
       });
 
       const toast = queryByRole('status');
-      expect(toast).not.toBeInTheDocument();
+      expect(toast).toBeVisible();
+      expect(toast).toBeEmptyDOMElement();
     });
 
     test(`false, Toast doesn't render`, () => {
@@ -26,7 +27,8 @@ describe('packages/toast', () => {
       });
 
       const toast = queryByRole('status');
-      expect(toast).not.toBeInTheDocument();
+      expect(toast).toBeVisible();
+      expect(toast).toBeEmptyDOMElement();
     });
 
     test('true, Toast is visible', () => {
@@ -38,6 +40,7 @@ describe('packages/toast', () => {
 
       const toast = queryByRole('status');
       expect(toast).toBeVisible();
+      expect(toast).not.toBeEmptyDOMElement();
     });
   });
 
@@ -148,6 +151,29 @@ describe('packages/toast', () => {
       const progressBar = queryByRole('progressbar');
       expect(progressBar).not.toBeInTheDocument();
     });
+  });
+
+  describe('the correct icon is rendered', () => {
+    const expectedVariantIcons: Record<Variant, string> = {
+      [Variant.Success]: 'Checkmark With Circle Icon',
+      [Variant.Note]: 'Cloud Icon',
+      [Variant.Warning]: 'Warning Icon',
+      [Variant.Important]: 'Important With Circle Icon',
+      [Variant.Progress]: 'Refresh Icon',
+    };
+
+    test.each(Object.values(Variant) as Array<Variant>)(
+      `when 'variant' is '%s'`,
+      variant => {
+        const { getByLabelText } = renderToast({
+          open: true,
+          body: 'hello world',
+          variant,
+        });
+
+        expect(getByLabelText(expectedVariantIcons[variant])).toBeVisible();
+      },
+    );
   });
 
   describe(`when 'title' prop is`, () => {

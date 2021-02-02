@@ -98,7 +98,7 @@ _Any other properties supplied will be spread on the root element._
 
 | Prop              | Type                                               | Description                                                                                                               | Default |
 | ----------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `name` (Required) | `string` \| `ReactNode`                            | String that will appear in the list of tabs.                                                                              |         |
+| `name` (Required) | `string`, `ReactNode`                              | String that will appear in the list of tabs.                                                                              |         |
 | `disabled`        | `boolean`                                          | Indicates whether or not the `<Tab />` can be clicked by a user.                                                          | `false` |
 | `default`         | `boolean`                                          | Should be supplied when using the uncontrolled `<Tabs />` component. This determines which tab will be active by default. |         |
 | `className`       | `string`                                           | Adds a className to the root element.                                                                                     |         |

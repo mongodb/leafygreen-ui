@@ -1,5 +1,24 @@
 # @leafygreen-ui/tabs
 
+## 5.0.1
+
+### Patch Changes
+
+- 926e0a13: Ensures that props are properly spread on Tab element
+
+## 5.0.0
+
+### Major Changes
+
+- 7454941e: - Requires that Tabs receive an `aria-label` or `aria-labelledby` prop.
+  - Ensures that tabs and their corresponding panels are related properly. Specifically, this requires rendering empty tabpanel containers instead of rendering nothing at all when a tabpanel is not selected.
+
+## 4.0.6
+
+### Patch Changes
+
+- b06ce7fd: Prevents onClick from being fired when Tab is clicked, as it should only be fired when the TabTitle is clicked
+
 ## 4.0.5
 
 ### Patch Changes

@@ -1,14 +1,6 @@
 import React, { useMemo } from 'react';
-import { css } from 'emotion';
-import styled from '@emotion/styled';
-import facepaint from 'facepaint';
-import { breakpoints } from '@leafygreen-ui/tokens';
-
-const breakpointGaps = ['16px', '16px', '32px', '32px'];
-const mq = facepaint(
-  Object.values(breakpoints).map(bp => `@media (min-width: ${bp}px)`),
-  { literal: true },
-);
+import { css, cx } from 'emotion';
+import { mq } from 'utils/mediaQuery';
 
 const Direction = {
   Row: 'row',
@@ -51,28 +43,38 @@ type GridContainerProps = JSX.IntrinsicElements['div'] & {
   wrap?: Wrap;
 };
 
-const GridContainer = styled<'div', GridContainerProps>('div')`
-  ${mq({
-    width: breakpointGaps.map(gap => `calc(100% + ${gap})`),
-    margin: breakpointGaps.map(gap => `calc(-1 * ${gap} / 2)`),
-  })}
+function GridContainer({
+  children,
+  direction = Direction.Row,
+  align = Align.Center,
+  justify = Justify.Center,
+  wrap = Wrap.Wrap,
+  className,
+}: GridContainerProps) {
+  return (
+    <div
+      className={cx(
+        css`
+          display: flex;
+          flex-direction: ${direction};
+          align-items: ${align};
+          justify-content: ${justify};
+          flex-wrap: ${wrap};
+        `,
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+}
 
-  display: flex;
-  ${['flex-direction']}: ${props =>
-    props.direction ? props.direction : Direction.Row};
-  ${['flex-wrap']}: ${props => (props.wrap ? props.wrap : Wrap.Wrap)};
-  ${['align-items']}: ${props => (props.align ? props.align : Align.Center)};
-  ${['justify-content']}: ${props =>
-    props.justify ? props.justify : Justify.Center};
-`;
+GridContainer.displayName = 'GridContainer';
 
 export { GridContainer };
 
 const baseGridItemStyles = css`
   box-sizing: border-box;
-  ${mq({
-    padding: breakpointGaps.map(gap => `calc(${gap} / 2)`),
-  })}
 `;
 
 const visibleGridItemStyles = css`
@@ -147,7 +149,7 @@ function getItemStyle(num: number | undefined) {
   }
 
   if (num) {
-    const width = `${(100 / 12) * num}%`;
+    const width = `${(100 * num) / 12}% `;
 
     return {
       width,
@@ -171,7 +173,7 @@ type GridItemProps = JSX.IntrinsicElements['div'] & {
   colStart?: number;
 };
 
-export function GridItem({
+function GridItem({
   sm: smProp,
   md: mdProp,
   lg: lgProp,
@@ -231,3 +233,7 @@ export function GridItem({
     </div>
   );
 }
+
+GridItem.displayName = 'Grid';
+
+export { GridItem };

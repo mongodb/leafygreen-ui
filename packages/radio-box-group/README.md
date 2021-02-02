@@ -74,15 +74,15 @@ import { RadioBox, RadioBoxGroup } from '@leafygreen-ui/radio-box-group';
 
 ## Properties
 
-| Prop        | Type                                   | Description                                                                                                      | Default     |
-| ----------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ----------- |
-| `size`      | `'compact'` \| `'default'` \| `'full'` | Sets the style of the `<RadioBoxGroup />`.                                                                       | `'default'` |
-| `name`      | `string`                               | Sets the name of the input group.                                                                                |             |
-| `value`     | `string` \| `number`                   | Sets the `<Radio />` that will appear checked on page load, also makes the component a controlled component      |             |
-| `className` | `string`                               | Adds a className to the root element                                                                             |             |
-| `children`  | `node`                                 | Content of the component                                                                                         |             |
-| `onChange`  | `function`                             | The event handler function for the 'onChange' event. Receives the associated event object as the first argument. | `() => {}`  |
-| ...         | native `div` attributes                | Any other props will be spread on the root `div` element                                                         |             |
+| Prop        | Type                               | Description                                                                                                      | Default     |
+| ----------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ----------- |
+| `size`      | `'compact'`, `'default'`, `'full'` | Sets the style of the `<RadioBoxGroup />`.                                                                       | `'default'` |
+| `name`      | `string`                           | Sets the name of the input group.                                                                                |             |
+| `value`     | `string`, `number`                 | Sets the `<Radio />` that will appear checked on page load, also makes the component a controlled component      |             |
+| `className` | `string`                           | Adds a className to the root element                                                                             |             |
+| `children`  | `node`                             | Content of the component                                                                                         |             |
+| `onChange`  | `function`                         | The event handler function for the 'onChange' event. Receives the associated event object as the first argument. | `() => {}`  |
+| ...         | native `div` attributes            | Any other props will be spread on the root `div` element                                                         |             |
 
 # Radio Box
 
@@ -114,7 +114,7 @@ import { RadioBox, RadioBoxGroup } from '@leafygreen-ui/radio-box-group';
 
 | Prop               | Type                      | Description                                                                                                     | Default |
 | ------------------ | ------------------------- | --------------------------------------------------------------------------------------------------------------- | ------- |
-| `value` (Required) | `string` \| `number`      | Every `<RadioBox />` needs a value prop                                                                         |         |
+| `value` (Required) | `string`, `number`        | Every `<RadioBox />` needs a value prop                                                                         |         |
 | `className`        | `string`                  | Adds a className to the root element                                                                            | `''`    |
 | `checked`          | `boolean`                 | Indicates whether or not the box will be checked                                                                | `false` |
 | `disabled`         | `boolean`                 | Indicates whether or not the radio can be clicked by a user                                                     | `false` |

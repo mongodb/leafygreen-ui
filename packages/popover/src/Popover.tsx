@@ -18,8 +18,8 @@ import {
 } from './positionUtils';
 
 const rootPopoverStyle = css`
-  transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
   position: absolute;
+  transition: transform 150ms ease-in-out, opacity 150ms ease-in-out;
   opacity: 0;
 `;
 
@@ -184,7 +184,7 @@ function Popover({
   const {
     align: windowSafeAlign,
     justify: windowSafeJustify,
-    positionCSS,
+    positionCSS: { transform, ...positionCSS },
   } = calculatePosition({
     useRelativePositioning: !usePortal,
     spacing,
@@ -197,7 +197,6 @@ function Popover({
   });
 
   const activeStyle = css`
-    transform: translate3d(0, 0, 0) scale(1);
     opacity: 1;
     position: ${usePortal ? '' : 'absolute'};
     pointer-events: initial;
@@ -224,11 +223,12 @@ function Popover({
     <Transition
       nodeRef={contentNodeRef}
       in={active}
-      timeout={{ exit: 150 }}
+      timeout={150}
       mountOnEnter
       unmountOnExit
+      appear
     >
-      {(state: string) => (
+      {state => (
         <>
           <div
             ref={setPlaceholderNode}
@@ -242,7 +242,11 @@ function Popover({
               className={cx(
                 rootPopoverStyle,
                 css(positionCSS),
-                { [activeStyle]: state === 'entered' },
+                {
+                  [css({ transform })]:
+                    state === 'entering' || state === 'exiting',
+                  [activeStyle]: state === 'entered',
+                },
                 className,
               )}
             >

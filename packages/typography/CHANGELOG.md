@@ -1,5 +1,20 @@
 # @leafygreen-ui/typography
 
+## 7.3.2
+
+### Patch Changes
+
+- f805b772: Support updated glyph
+- Updated dependencies [f805b772]
+  - @leafygreen-ui/icon@9.0.0
+
+## 7.3.1
+
+### Patch Changes
+
+- Updated dependencies [ba56b1cc]
+  - @leafygreen-ui/icon@8.0.0
+
 ## 7.3.0
 
 ### Minor Changes

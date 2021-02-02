@@ -16,7 +16,7 @@ const knobsConfig: KnobsConfigInterface<{
   dismissible: {
     type: 'boolean',
     default: false,
-    label: 'Dismissable',
+    label: 'Dismissible',
   },
   children: {
     type: 'area',

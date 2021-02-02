@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SVGR, LGGlyph } from './types';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { getGlyphTitle, sizeMap, Size } from './glyphCommon';
+import { generateAccessibleProps, sizeMap, Size } from './glyphCommon';
 
 export default function createGlyphComponent(
   glyphName: string,
@@ -11,8 +11,11 @@ export default function createGlyphComponent(
   function GlyphComponent({
     className,
     size = Size.Default,
-    title,
     fill,
+    title,
+    'aria-labelledby': ariaLabelledby,
+    'aria-label': ariaLabel,
+    role = 'img',
     ...rest
   }: LGGlyph.ComponentProps) {
     const fillStyle = css`
@@ -20,6 +23,12 @@ export default function createGlyphComponent(
     `;
 
     const renderedSize = typeof size === 'number' ? size : sizeMap[size];
+
+    if (!(role === 'img' || role === 'presentation')) {
+      console.warn(
+        "Please provide a valid role to this component. Valid options are 'img' and 'presentation'. If you'd like the Icon to be accessible to screen readers please use 'img', otherwise set the role to 'presentation'.",
+      );
+    }
 
     return (
       <Glyph
@@ -29,9 +38,14 @@ export default function createGlyphComponent(
           },
           className,
         )}
-        title={getGlyphTitle(glyphName, title)}
         height={renderedSize}
         width={renderedSize}
+        role={role}
+        {...generateAccessibleProps(role, glyphName, {
+          title,
+          ['aria-label']: ariaLabel,
+          ['aria-labelledby']: ariaLabelledby,
+        })}
         {...rest}
       />
     );

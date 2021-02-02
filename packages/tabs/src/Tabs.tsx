@@ -1,10 +1,14 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { uiColors } from '@leafygreen-ui/palette';
-import { keyMap, isComponentType } from '@leafygreen-ui/lib';
-import TabTitle from './TabTitle';
-import omit from 'lodash/omit';
+import {
+  keyMap,
+  isComponentType,
+  validateAriaLabelProps,
+  Either,
+} from '@leafygreen-ui/lib';
+import InternalTab from './InternalTab';
 
 const Mode = {
   Dark: 'dark',
@@ -54,6 +58,17 @@ const listStyle = css`
   padding: 0;
   display: flex;
   width: 100%;
+  overflow-x: auto;
+
+  /* Remove scrollbar */
+
+  /* Chrome, Edge, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none; /* IE */
+  scrollbar-width: none; /* Firefox */
 `;
 
 const disabledStyle = css`
@@ -79,7 +94,7 @@ function useDocumentActiveElement() {
 
 type ReactEmpty = null | undefined | false | '';
 
-interface TabsProps {
+export interface TabsProps {
   /**
    * Content that will appear inside of Tabs component. Should be comprised of at least two Tabs.
    */
@@ -110,7 +125,21 @@ interface TabsProps {
    * HTML Element that wraps title in Tab List.
    */
   as?: React.ElementType<any>;
+
+  /**
+   * Accessible label that describes the set of tabs
+   */
+  ['aria-label']?: string;
+
+  /**
+   * References id of label external to the component that describes the set of tabs
+   */
+  ['aria-labelledby']?: string;
 }
+
+type AriaLabels = 'aria-label' | 'aria-labelledby';
+
+type AccessibleTabsProps = Either<TabsProps, AriaLabels>;
 
 /**
  * # Tabs
@@ -136,23 +165,36 @@ function Tabs({
   className,
   darkMode = false,
   as = 'button',
+  'aria-labelledby': ariaLabelledby,
+  'aria-label': ariaLabel,
   ...rest
-}: TabsProps) {
-  const containerNode = useRef<HTMLDivElement | null>(null);
-  const activeEl = useDocumentActiveElement();
+}: AccessibleTabsProps) {
+  const mode = darkMode ? Mode.Dark : Mode.Light;
+
+  const [tabNode, setTabNode] = useState<HTMLDivElement | null>(null);
+  const [panelNode, setPanelNode] = useState<HTMLDivElement | null>(null);
   const [isAnyTabFocused, setIsAnyTabFocused] = useState(false);
+  const activeEl = useDocumentActiveElement();
+
+  const accessibilityProps = {
+    ['aria-label']: ariaLabel,
+    ['aria-labelledby']: ariaLabelledby,
+  };
+
+  validateAriaLabelProps(accessibilityProps, 'Tabs');
 
   useEffect(() => {
-    const tabsList = Array.from(containerNode.current?.children ?? []);
+    const tabsList = Array.from(tabNode?.children ?? []);
 
     if (activeEl !== null && tabsList.indexOf(activeEl) !== -1) {
       setIsAnyTabFocused(true);
     }
-  }, [activeEl, containerNode]);
+  }, [activeEl, tabNode]);
 
-  const childrenArray = React.Children.toArray(children) as Array<
-    React.ReactElement
-  >;
+  const childrenArray = useMemo(
+    () => React.Children.toArray(children) as Array<React.ReactElement>,
+    [children],
+  );
 
   const isControlled = typeof controlledSelected === 'number';
   const [uncontrolledSelected, setUncontrolledSelected] = useState(
@@ -163,105 +205,96 @@ function Tabs({
     ? setControlledSelected
     : setUncontrolledSelected;
 
-  function handleChange(
-    e: React.SyntheticEvent<Element, MouseEvent>,
-    index: number,
-  ) {
-    setSelected(index);
-  }
+  const handleChange = useCallback(
+    (e: React.SyntheticEvent<Element, MouseEvent>, index: number) => {
+      setSelected(index);
+    },
+    [setSelected],
+  );
 
-  const getEnabledIndexes: () => [Array<number>, number] = () => {
+  const getEnabledIndexes: () => [Array<number>, number] = useCallback(() => {
     const enabledIndexes = childrenArray
       .filter(child => !child.props.disabled)
       .map(child => childrenArray.indexOf(child));
 
     return [enabledIndexes, enabledIndexes.indexOf(selected!)];
-  };
+  }, [childrenArray, selected]);
 
-  const handleArrowKeyPress = (e: KeyboardEvent) => {
-    if (!(e.metaKey || e.ctrlKey)) {
-      if (e.keyCode === keyMap.ArrowRight) {
-        const [enabledIndexes, current] = getEnabledIndexes();
-        setSelected(enabledIndexes[(current + 1) % enabledIndexes.length]);
-      } else if (e.keyCode === keyMap.ArrowLeft) {
-        const [enabledIndexes, current] = getEnabledIndexes();
-        setSelected(
-          enabledIndexes[
-            (current - 1 + enabledIndexes.length) % enabledIndexes.length
-          ],
-        );
+  const handleArrowKeyPress = useCallback(
+    (e: KeyboardEvent) => {
+      if (!(e.metaKey || e.ctrlKey)) {
+        if (e.keyCode === keyMap.ArrowRight) {
+          const [enabledIndexes, current] = getEnabledIndexes();
+          setSelected(enabledIndexes[(current + 1) % enabledIndexes.length]);
+        } else if (e.keyCode === keyMap.ArrowLeft) {
+          const [enabledIndexes, current] = getEnabledIndexes();
+          setSelected(
+            enabledIndexes[
+              (current - 1 + enabledIndexes.length) % enabledIndexes.length
+            ],
+          );
+        }
       }
-    }
-  };
+    },
+    [getEnabledIndexes, setSelected],
+  );
 
-  const tabs = React.Children.map(children, (child, index) => {
-    if (!isComponentType<'Tab'>(child, 'Tab')) {
+  const renderedChildren = React.Children.map(children, (child, index) => {
+    if (!isComponentType(child, 'Tab')) {
       return child;
     }
 
-    return React.cloneElement(child, {
-      key: index,
-      ariaControl: `tab-${index}`,
-      selected: selected === index,
-    });
-  });
+    const isTabSelected = index === selected;
+    const { disabled, onClick, onKeyDown, className, ...rest } = child.props;
 
-  const mode = darkMode ? Mode.Dark : Mode.Light;
+    const tabProps = {
+      as,
+      disabled,
+      darkMode,
+      isAnyTabFocused,
+      className: cx(
+        {
+          [modeColors[mode].activeStyle]: isTabSelected,
+          [cx(modeColors[mode].disabledColor, disabledStyle)]: disabled,
+        },
+        className,
+      ),
+      onKeyDown: (event: KeyboardEvent) => {
+        onKeyDown?.(event);
+        handleArrowKeyPress(event);
+      },
+      onClick: !disabled
+        ? (event: React.MouseEvent) => {
+            onClick?.(event);
+            handleChange(event, index);
+          }
+        : undefined,
+      ...rest,
+    };
+
+    return (
+      <InternalTab
+        child={child}
+        selected={isTabSelected}
+        tabRef={tabNode}
+        panelRef={panelNode}
+        {...tabProps}
+      />
+    );
+  });
 
   return (
     <div {...rest} className={className}>
+      {renderedChildren}
       <div
         className={cx(listStyle, modeColors[mode].underlineColor)}
         role="tablist"
-        tabIndex={0}
-        ref={containerNode}
-      >
-        {tabs?.map((tab, index) => {
-          if (!isComponentType(tab, 'Tab')) {
-            return tab;
-          }
+        ref={setTabNode}
+        aria-orientation="horizontal"
+        {...accessibilityProps}
+      />
 
-          const { selected, disabled, onClick, ...rest } = tab.props;
-
-          const filteredRest = omit(rest, [
-            'ariaControl',
-            'children',
-            'name',
-            'default',
-          ]);
-
-          return (
-            <TabTitle
-              {...filteredRest}
-              key={index}
-              ariaControl={`tab-${index}`}
-              disabled={disabled}
-              selected={selected}
-              index={index}
-              as={as}
-              darkMode={darkMode}
-              isAnyTabFocused={isAnyTabFocused}
-              onKeyDown={handleArrowKeyPress}
-              className={cx({
-                [modeColors[mode].activeStyle]: selected,
-                [cx(modeColors[mode].disabledColor, disabledStyle)]: disabled,
-              })}
-              onClick={
-                !disabled
-                  ? (event: React.MouseEvent) => {
-                      onClick?.(event);
-                      handleChange(event, index);
-                    }
-                  : undefined
-              }
-            >
-              {tab.props.name}
-            </TabTitle>
-          );
-        })}
-      </div>
-
-      {tabs}
+      <div ref={setPanelNode} />
     </div>
   );
 }

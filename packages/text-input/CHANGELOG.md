@@ -1,5 +1,38 @@
 # @leafygreen-ui/text-input
 
+## 5.0.8
+
+### Patch Changes
+
+- Updated dependencies [f805b772]
+- Updated dependencies [f805b772]
+  - @leafygreen-ui/icon@9.0.0
+  - @leafygreen-ui/typography@7.3.2
+
+## 5.0.7
+
+### Patch Changes
+
+- Updated dependencies [ba56b1cc]
+  - @leafygreen-ui/icon@8.0.0
+  - @leafygreen-ui/typography@7.3.1
+
+## 5.0.6
+
+### Patch Changes
+
+- 36ec9078: Preserves right padding when icons are visible in a disabled text input
+- Updated dependencies [2daf1808]
+  - @leafygreen-ui/icon@7.1.0
+
+## 5.0.5
+
+### Patch Changes
+
+- 522217db: CLOUDP-79746: Allowing text input error message to expand its container
+- Updated dependencies [7df69248]
+  - @leafygreen-ui/lib@6.2.0
+
 ## 5.0.4
 
 ### Patch Changes

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from '@leafygreen-ui/button';
 import Modal, { ModalSize } from '@leafygreen-ui/modal';
 import LiveExample, { KnobsConfigInterface } from 'components/live-example';
 
@@ -19,7 +20,7 @@ const knobsConfig: KnobsConfigInterface<ModalKnobs> = {
     type: 'select',
     options: Object.values(ModalSize),
     default: ModalSize.Default,
-    label: 'size',
+    label: 'Size',
   },
 };
 
@@ -28,7 +29,7 @@ function ModalExample(props: ModalKnobs) {
 
   return (
     <>
-      <button onClick={() => setOpen(!open)}>Open Modal</button>
+      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
       <Modal open={open} setOpen={setOpen} {...props} />
     </>
   );
