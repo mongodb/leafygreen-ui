@@ -455,14 +455,25 @@ describe('packages/collapsible-side-nav', () => {
   });
 });
 
-function queryGroupHeaderByLabelText(container: HTMLElement, label: string) {
+function queryGroupHeaderByLabelText(
+  container: HTMLElement,
+  label: string,
+): HTMLElement | null {
   const group = queryByLabelText(container, label);
   const labelId = group?.getAttribute('aria-labelledby');
+
+  if (labelId == null) {
+    return null;
+  }
+
   return document.getElementById(labelId);
 }
 
-function getGroupHeaderByLabelText(container: HTMLElement, label: string) {
-  const group = getByLabelText(container, label);
-  const labelId = group.getAttribute('aria-labelledby');
-  return document.getElementById(labelId);
+function getGroupHeaderByLabelText(
+  container: HTMLElement,
+  label: string,
+): HTMLElement {
+  const element = queryGroupHeaderByLabelText(container, label);
+  expect(element).not.toBeNull();
+  return element!;
 }
