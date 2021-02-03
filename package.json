@@ -25,6 +25,7 @@
     "start": "start-storybook -p 9001 -c storybook -s ./storybook/static --no-version-updates",
     "pre-build": "lerna run --parallel pre-build -- --env production",
     "build": "yarn pre-build && lerna run --parallel build",
+    "watch": "yarn build -- -- --watch",
     "build:storybook": "build-storybook -c storybook -o ./storybook/public -s ./storybook/static",
     "clean": "rimraf packages/*/{dist,node_modules} node_modules **/*.tsbuildinfo",
     "create-package": "node ./scripts/package-builder.js",
