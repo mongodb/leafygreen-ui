@@ -138,7 +138,7 @@ describe('packages/mongo-nav/user-menu', () => {
     });
 
     test('Atlas SubMenu links to cloud.mongodb.com', () => {
-      const cloud = screen.getByText('Cloud').closest('a');
+      const cloud = screen.getByText('MongoDB Cloud').closest('a');
       expect(cloud?.href).toBe('https://cloud.mongodb.com/');
     });
 
@@ -147,16 +147,9 @@ describe('packages/mongo-nav/user-menu', () => {
       expect(cloud?.href).toBe('https://university.mongodb.com/');
     });
 
-    test('Docs SubMenu links to docs.mongodb.com', () => {
-      const cloud = screen.getByText('Documentation').closest('a');
-      expect(cloud?.href).toBe('https://docs.mongodb.com/');
-    });
-
     test('Forums SubMenu links to developer.mongodb.com', () => {
       const cloud = screen.getByText('Forums').closest('a');
-      expect(cloud?.href).toBe(
-        'https://developer.mongodb.com/community/forums/',
-      );
+      expect(cloud?.href).toBe('https://forums.mongodb.com/');
     });
 
     test('DevHub SubMenu links to developer.mongodb.com', () => {

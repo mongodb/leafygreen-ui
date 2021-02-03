@@ -35,7 +35,7 @@ import {
   UniversityIcon,
   MegaphoneIcon,
   DevHubIcon,
-  DocsIcon,
+  ForumsIcon,
 } from '../helpers/Icons';
 
 const subMenuContainer = createDataProp('sub-menu-container');
@@ -169,8 +169,6 @@ function Description({
 
   if (isGovernment && product === 'cloud') {
     link = 'cloud.mongodbgov.com';
-  } else if (product === 'forums') {
-    link = 'developer.mongodb.com/community/forums/';
   } else {
     link = `${product}.mongodb.com`;
   }
@@ -290,12 +288,11 @@ function UserMenu({
         invitations: `${hosts.cloud}/v2#/preferences/invitations`,
         mfa: `${hosts.cloud}/v2#/preferences/2fa`,
       },
-      docs: 'https://docs.mongodb.com',
       university: {
         universityPreferences: `${hosts.university}/edit_profile`,
       },
       devHub: 'https://developer.mongodb.com',
-      forums: 'https://developer.mongodb.com/community/forums/',
+      forums: 'https://forums.mongodb.com',
       support: {
         userPreferences: `${hosts.support}/profile`,
       },
@@ -321,9 +318,8 @@ function UserMenu({
   const isSupport = activePlatform === Platform.Support;
   const isUniversity = activePlatform === Platform.University;
   const isGovernment = environment === Environment.Government;
-  const isDocs = activePlatform === Platform.Docs;
   const isDevHub = activePlatform === Platform.DevHub;
-  const isForum = activePlatform === Platform.Forum;
+  const isForums = activePlatform === Platform.Forum;
 
   const onClick = (e: React.MouseEvent) => {
     onProductChange(e);
@@ -411,7 +407,7 @@ function UserMenu({
             active={isCloud}
             disabled={!account}
             href={hosts.cloud}
-            title={isGovernment ? 'Cloud for Government' : 'Cloud'}
+            title={isGovernment ? 'Cloud for Government' : 'MongoDB Cloud'}
             glyph={<CloudIcon {...ariaHiddenProps} />}
             onClick={onElementClick(NavElement.UserMenuCloud, onClick)}
             description={
@@ -485,25 +481,9 @@ function UserMenu({
               />
             }
           >
-            {isGovernment ? 'Cloud for Government' : 'Cloud'}
+            {isGovernment ? 'Cloud for Government' : 'MongoDB Cloud'}
           </MenuItem>
         )}
-
-        <MenuItem
-          {...subMenuContainer.prop}
-          {...sharedProps}
-          size="large"
-          active={isDocs}
-          href={urls.userMenu.docs}
-          glyph={<DocsIcon {...ariaHiddenProps} />}
-          className={cx(subMenuContainerStyle, menuItemStyle, {
-            [subMenuActiveContainerStyle]: isDocs,
-          })}
-          description={<Description isActive={isDocs} product="docs" />}
-          onClick={onElementClick(NavElement.UserMenuDocs, onClick)}
-        >
-          Documentation
-        </MenuItem>
 
         <SubMenu
           {...subMenuContainer.prop}
@@ -535,15 +515,15 @@ function UserMenu({
           {...subMenuContainer.prop}
           {...sharedProps}
           size="large"
-          active={isForum}
+          active={isForums}
           data-testid="user-menuitem-forums"
           href={urls.userMenu.forums}
-          glyph={<DevHubIcon {...ariaHiddenProps} />}
+          glyph={<ForumsIcon {...ariaHiddenProps} />}
           onClick={onElementClick(NavElement.UserMenuForums, onClick)}
           className={cx(subMenuContainerStyle, menuItemStyle, {
-            [subMenuActiveContainerStyle]: isForum,
+            [subMenuActiveContainerStyle]: isForums,
           })}
-          description={<Description isActive={isForum} product="forums" />}
+          description={<Description isActive={isForums} product="forums" />}
         >
           Forums
         </MenuItem>
@@ -623,7 +603,7 @@ UserMenu.propTypes = {
     'support',
     'university',
     'devHub',
-    'docs',
+    'forums',
   ]),
   onLogout: PropTypes.func,
   onProductChange: PropTypes.func,

@@ -108,7 +108,6 @@ const Platform = {
   Cloud: 'cloud',
   Account: 'account',
   DevHub: 'devHub',
-  Docs: 'docs',
   Forum: 'forum',
 };
 
