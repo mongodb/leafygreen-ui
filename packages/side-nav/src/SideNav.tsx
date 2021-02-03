@@ -86,18 +86,15 @@ const SideNav = React.forwardRef<HTMLElement, Props>(function SideNav(
 ) {
   const id = useMemo(() => idAllocator.generate(), []);
 
-  // eslint-disable-next-line prefer-const
-  let [collapsed, setCollapsed] = useState(
+  const [collapsedState, setCollapsedState] = useState(
     collapsible ? initialCollapsed : false,
   );
 
-  if (!collapsible) {
-    collapsed = false;
-  }
+  const collapsed = collapsible && collapsedState;
 
   useEffect(() => {
     if (!collapsible) {
-      setCollapsed(false);
+      setCollapsedState(false);
     }
   }, [collapsible]);
 
@@ -109,7 +106,7 @@ const SideNav = React.forwardRef<HTMLElement, Props>(function SideNav(
   });
 
   const toggleCollapse = useCallback(() => {
-    setCollapsed(collapsed => !collapsed);
+    setCollapsedState(collapsedState => !collapsedState);
   }, []);
 
   useEventListener(

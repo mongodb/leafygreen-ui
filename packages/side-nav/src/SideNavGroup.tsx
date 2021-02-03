@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+import { Overline } from '@leafygreen-ui/typography';
 import {
   createDataProp,
   HTMLElementProps,
@@ -25,7 +26,7 @@ const childContainerDataProp = createDataProp('side-nav-group-child-container');
 const sideNavGroupStyle = css`
   display: flex;
   flex-direction: column;
-  margin-top: 4px;
+  margin-top: 8px;
   transition: all ${transitionDurationMilliseconds}ms ease-in-out, margin none;
   border: 0 solid rgba(0, 0, 0, 0);
   border-top-width: 1px;
@@ -58,11 +59,7 @@ const sideNavGroupHeaderStyle = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 4px 16px;
-  text-transform: uppercase;
-  font-size: 11px;
-  font-weight: bold;
-  line-height: 16px;
+  padding: 10px 16px 6px;
   color: ${uiColors.green.dark2};
   outline: none;
 
@@ -114,6 +111,7 @@ const sideNavGroupHeaderTextStyle = css`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  color: ${uiColors.green.dark2};
 `;
 
 const sideNavGroupChildrenCollapsibleStyle = css`
@@ -151,18 +149,15 @@ const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
 
     const { collapsed: navCollapsed, currentPath } = useContext(SideNavContext);
 
-    // eslint-disable-next-line prefer-const
-    let [collapsed, setCollapsed] = useState(
+    const [collapsedState, setCollapsedState] = useState(
       collapsible ? initialCollapsed : false,
     );
 
-    if (!collapsible) {
-      collapsed = false;
-    }
+    const collapsed = collapsible && collapsedState;
 
     useEffect(() => {
       if (!collapsible) {
-        setCollapsed(false);
+        setCollapsedState(false);
       }
     }, [collapsible]);
 
@@ -198,7 +193,7 @@ const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
     const canRenderAsCollapsible = collapsible && !navCollapsed;
 
     const toggleCollapse = useCallback(() => {
-      setCollapsed(collapsed => !collapsed);
+      setCollapsedState(collapsedState => !collapsedState);
     }, []);
 
     const hasGlyph = glyph !== undefined;
@@ -289,12 +284,16 @@ const SideNavGroup = React.forwardRef<HTMLDivElement, Props>(
             `}
           >
             {hasGlyph && <div className={glyphStyle}>{glyph}</div>}
-            <div className={sideNavGroupHeaderTextStyle}>
-              {!navCollapsed && label}
-            </div>
+
+            {!navCollapsed && (
+              <Overline className={sideNavGroupHeaderTextStyle}>
+                {label}
+              </Overline>
+            )}
           </div>
           {canRenderAsCollapsible && (
             <ChevronDownIcon
+              size="small"
               className={cx(chevronStyle, {
                 [chevronCollapsedStyle]: collapsed,
               })}

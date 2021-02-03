@@ -90,7 +90,7 @@ const sideNavItemNonGroupLinkStyle = css`
 `;
 
 const sideNavItemExpandedCollapsibleGroupStyle = css`
-  padding-left: 24px;
+  padding-left: 28px;
 `;
 
 const sideNavItemCollapsedStyle = css`

@@ -117,6 +117,7 @@ export default function CollapseButton({
       <ChevronLeftIcon
         aria-hidden
         role="presentation"
+        size="small"
         className={cx(buttonIconStyle, {
           [inactiveButtonIconStyle]: collapsed,
         })}
@@ -124,6 +125,7 @@ export default function CollapseButton({
       <ChevronRightIcon
         aria-hidden
         role="presentation"
+        size="small"
         className={cx(buttonIconStyle, {
           [inactiveButtonIconStyle]: !collapsed,
         })}
